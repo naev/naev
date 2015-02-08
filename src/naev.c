@@ -320,14 +320,14 @@ int main( int argc, char** argv )
       if (conf.joystick_nam != NULL) { /* use the joystick name to find a joystick */
          if (joystick_use(joystick_get(conf.joystick_nam))) {
             WARN("Failure to open any joystick, falling back to default keybinds");
-            input_setDefault();
+            input_setDefault(1);
          }
          free(conf.joystick_nam);
       }
       else if (conf.joystick_ind >= 0) /* use a joystick id instead */
          if (joystick_use(conf.joystick_ind)) {
             WARN("Failure to open any joystick, falling back to default keybinds");
-            input_setDefault();
+            input_setDefault(1);
          }
    }
 

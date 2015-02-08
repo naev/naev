@@ -15,7 +15,7 @@
   <spfx_armour>EmpS</spfx_armour>
   <duration blowup="shield">7</duration>
   <thrust>0</thrust>
-  <speed>200</speed>
+  <speed>250</speed>
   <damage>
    <type>impact</type>
    <penetrate>70</penetrate>

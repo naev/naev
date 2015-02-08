@@ -11,7 +11,7 @@
 
 --]]
 
-include("prng.lua")
+include("dat/scripts/prng.lua")
 
 nebulae = {
    "nebula02.png",

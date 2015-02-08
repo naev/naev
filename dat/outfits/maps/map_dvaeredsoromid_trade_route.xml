@@ -7,32 +7,29 @@
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Zacron">
-   <jump>Raelid</jump>
+  <sys name="Draygar">
+   <jump>Tau Prime</jump>
   </sys>
-  <sys name="Raelid">
-   <jump>Zacron</jump>
-   <jump>Surano</jump>
+  <sys name="Tau Prime">
+   <jump>Draconis</jump>
+   <jump>Draygar</jump>
   </sys>
-  <sys name="Surano">
-   <jump>Raelid</jump>
-   <jump>Thorndyke</jump>
-  </sys>
-  <sys name="Thorndyke">
-   <jump>Surano</jump>
+  <sys name="Draconis">
    <jump>Pilatis</jump>
+   <jump>Tau Prime</jump>
   </sys>
   <sys name="Pilatis">
-   <jump>Thorndyke</jump>
    <jump>Defa</jump>
+   <jump>Draconis</jump>
+   <asset>Wildwood Station</asset>
   </sys>
   <sys name="Defa">
-   <jump>Pilatis</jump>
    <jump>Oberon</jump>
+   <jump>Pilatis</jump>
   </sys>
   <sys name="Oberon">
-   <asset>Soromid Customs Central</asset>
    <jump>Defa</jump>
+   <asset>Soromid Customs Central</asset>
   </sys>
  </specific>
 </outfit>

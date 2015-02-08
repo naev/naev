@@ -953,11 +953,13 @@ static void map_renderPath( double x, double y, double a )
    const glColour *col;
    GLfloat vertex[8*(2+4)];
    StarSystem *jsys, *lsys;
-   double fuel;
+   int jmax, jcur;
 
    if (map_path != NULL) {
       lsys = cur_system;
-      fuel = player.p->fuel;
+      jmax = pilot_getJumps(player.p); /* Maximum jumps. */
+      jcur = jmax; /* Jump range remaining. */
+
 
       /* Generate smooth lines. */
       glShadeModel( GL_SMOOTH );
@@ -966,13 +968,13 @@ static void map_renderPath( double x, double y, double a )
 
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
-         if (fuel == player.p->fuel && fuel > 100.)
+         if (jcur == jmax && jmax > 0)
             col = &cGreen;
-         else if (fuel < player.p->fuel_consumption)
+         else if (jcur < 1)
             col = &cRed;
          else
             col = &cYellow;
-         fuel -= player.p->fuel_consumption;
+         jcur--;
 
          /* Draw the lines. */
          vertex[0]  = x + lsys->pos.x * map_zoom;

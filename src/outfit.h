@@ -97,6 +97,15 @@ typedef enum OutfitSlotSize_ {
 
 
 /**
+ * @brief Ammo AI types.
+ */
+typedef enum OutfitAmmoAI_ {
+   AMMO_AI_DUMB, /**< No AI. */
+   AMMO_AI_SEEK, /**< Aims at the target. */
+   AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
+} OutfitAmmoAI;
+
+/**
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
@@ -153,6 +162,7 @@ typedef struct OutfitBeamData_ {
    double delay;     /**< Delay between usage. */
    double warmup;    /**< How long beam takes to warm up. */
    double duration;  /**< How long the beam lasts active. */
+   double min_duration; /**< Minimum duration the beam can be fired for. */
 
    /* Beam properties. */
    double range;     /**< how far it goes */
@@ -185,6 +195,7 @@ typedef struct OutfitLauncherData_ {
    /* Lockon information. */
    double lockon;    /**< Time it takes to lock on the target */
    double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
+   double ew_target2; /**< Target ewarfare squared for quicker comparisons. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
 } OutfitLauncherData;
 
@@ -194,7 +205,7 @@ typedef struct OutfitLauncherData_ {
 typedef struct OutfitAmmoData_ {
    double duration;  /**< How long the ammo lives. */
    double resist;    /**< Lowers chance of jamming by this amount */
-   int ai;           /**< Smartness of ammo. */
+   OutfitAmmoAI ai;  /**< Smartness of ammo. */
 
    double speed;     /**< Maximum speed */
    double turn;      /**< Turn velocity in rad/s. */
@@ -241,7 +252,6 @@ typedef struct OutfitModificationData_ {
    double energy_regen; /**< Energy regeneration modifier. */
    double energy_loss;  /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
-   double nebu_absorb_shield;  /**< Reduces nebula penetration. */
 
    /* Misc. */
    double cargo;     /**< Cargo space modifier. */
@@ -392,6 +402,7 @@ int outfit_isLicense( const Outfit* o );
 int outfit_isSecondary( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
+const char* outfit_getAmmoAI( const Outfit *o );
 
 /*
  * Search.

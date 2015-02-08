@@ -85,16 +85,30 @@ function equip_pirateMilitary( p, shipsize )
    -- Equip by size and type
    if shipsize == "small" then
       local class = p:ship():class()
+
+      -- Smaller pirate vessels should have a fair amount of variance in their
+      -- core outfit quality.
+      small_engines = { "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine" }
+      large_engines = { "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine" }
+      small_hulls   = { "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+            "S&K Ultralight Combat Plating" }
+      large_hulls   = { "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
+            "S&K Light Combat Plating" }
+
+      local small_engine = small_engines[ rnd.rnd(1, #small_engines) ]
+      local large_engine = large_engines[ rnd.rnd(1, #large_engines) ]
+      local small_hull   = small_hulls[ rnd.rnd(1, #small_hulls) ]
+      local large_hull   = large_hulls[ rnd.rnd(1, #large_hulls) ]
+
       cores = {
-         {"Nexus Dart 150 Engine", "Milspec Prometheus 2203 Core System", "S&K Ultralight Combat Plating"},
-         {"Nexus Dart 300 Engine", "Milspec Prometheus 3603 Core System", "S&K Light Combat Plating"}
+         { small_engine, "Milspec Prometheus 2203 Core System", small_hull },
+         { large_engine, "Milspec Prometheus 3603 Core System", large_hull }
       }
       equip_cores(p, equip_getCores(p, shipsize, cores))
 
-
       -- Scout - shouldn't exist
       if class == "Scout" then
-         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Prometheus 2203 Core System", "S&K Ultralight Stealth Plating")
+         equip_cores(p, small_engine, "Milspec Prometheus 2203 Core System", small_hull)
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -117,7 +131,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Nexus Dart 300 Engine", "Milspec Aegis 3601 Core System", "Unicorp B-4 Light Plating")
+         equip_cores(p, large_engine, "Milspec Aegis 3601 Core System", large_hull)
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardPirLow(), use_primary )

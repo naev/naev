@@ -811,14 +811,49 @@ void pilot_shootStop( Pilot* p, int level )
 
       /* Stop beam. */
       if (ws->slots[i].slot->u.beamid > 0) {
-         beam_end( p->id, ws->slots[i].slot->u.beamid );
-         ws->slots[i].slot->u.beamid = 0;
+         /* Enforce minimum duration if set. */
+         if (slot->outfit->u.bem.min_duration > 0.) {
+
+            slot->stimer = slot->outfit->u.bem.min_duration -
+                  (slot->outfit->u.bem.duration - slot->timer);
+
+            if (slot->stimer > 0.)
+               continue;
+         }
+
+         beam_end( p->id, slot->u.beamid );
+         pilot_stopBeam(p, slot);
       }
    }
 
    /* Must recalculate. */
    if (recalc)
       pilot_calcStats( p );
+}
+
+
+/**
+ * @brief Stops a beam outfit and sets delay as appropriate.
+ *
+ *    @param p Pilot that is firing.
+ *    @param w Pilot's beam outfit.
+ */
+void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
+{
+   double rate_mod, energy_mod, used;
+
+   /* There's nothing to do if the beam isn't active. */
+   if (w->u.beamid == 0)
+      return;
+
+   /* Calculate rate modifier. */
+   pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
+
+   /* Beam duration used. */
+   used = w->outfit->u.bem.duration - w->timer;
+
+   w->timer = rate_mod * (used / w->outfit->u.bem.duration) * outfit_delay( w->outfit );
+   w->u.beamid = 0;
 }
 
 
@@ -926,6 +961,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    if (w->outfit == NULL)
       return 0;
 
+   /* Reset beam shut-off if needed. */
+   if (outfit_isBeam(w->outfit) && w->outfit->u.bem.min_duration)
+      w->stimer = INFINITY;
+
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
@@ -962,6 +1001,9 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
     * Beam weapons.
     */
    else if (outfit_isBeam(w->outfit)) {
+      /* Don't fire if the existing beam hasn't been destroyed yet. */
+      if (w->u.beamid > 0)
+         return 0;
 
       /* Check if enough energy to last a second. */
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
@@ -971,6 +1013,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       w->state = PILOT_OUTFIT_ON;
       w->u.beamid = beam_start( w->outfit, p->solid->dir,
             &vp, &p->solid->vel, p, p->target, w );
+
+      w->timer = w->outfit->u.bem.duration;
+
+      return 1; /* Return early due to custom timer logic. */
    }
 
    /*
@@ -981,7 +1027,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - sanity check for the player.p */
-      if ((w->outfit->u.lau.ammo->u.amm.ai > 0) && (p->id==p->target))
+      if ((w->outfit->u.lau.ammo->u.amm.ai != AMMO_AI_DUMB) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */
@@ -1000,6 +1046,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
+      p->solid->mass     -= w->u.ammo.outfit->mass;
+
       pilot_updateMass( p );
    }
 

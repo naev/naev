@@ -266,15 +266,6 @@ void player_autonavAbort( const char *reason )
       return;
 
    if (player_isFlag(PLAYER_AUTONAV)) {
-      if (conf.autonav_pause && reason) {
-         /* Keep it from re-pausing before you can react */
-         if (autopause_timer > 0) return;
-         player_message("\erGame paused: %s!", reason);
-         player_autonavResetSpeed();
-         autopause_timer = 2.;
-         pause_game();
-         return;
-      }
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
       else

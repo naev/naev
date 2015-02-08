@@ -50,6 +50,7 @@ static int systemL_name( lua_State *L );
 static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
+static int systemL_jumpPath( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_jumps( lua_State *L );
 static int systemL_presences( lua_State *L );
@@ -71,6 +72,7 @@ static const luaL_reg system_methods[] = {
    { "faction", systemL_faction },
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
+   { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
    { "presences", systemL_presences },
@@ -94,6 +96,7 @@ static const luaL_reg system_cond_methods[] = {
    { "faction", systemL_faction },
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
+   { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
    { "presences", systemL_presences },
@@ -194,7 +197,7 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
    else if (lua_isstring(L, ind))
       s = system_get( lua_tostring(L, ind) );
    else {
-      luaL_typerror(L, ind, FACTION_METATABLE);
+      luaL_typerror(L, ind, SYSTEM_METATABLE);
       return NULL;
    }
 
@@ -470,6 +473,86 @@ static int systemL_jumpdistance( lua_State *L )
    free(s);
 
    lua_pushnumber(L,jumps);
+   return 1;
+}
+
+
+/**
+ * @brief Gets jump path from current system, or to another.
+ *
+ * Does different things depending on the parameter type:
+ *    - nil : Gets path from current system.
+ *    - string : Gets path from system matching name.
+ *    - system : Gets path from system
+ *
+ * @usage jumps = sys:jumpPath() -- Path to current system.
+ * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from current sys to Draygar.
+ * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar to another_sys.
+ *
+ *    @luaparam s System to get path from.
+ *    @luaparam param See description.
+ *    @luaparam hidden Whether or not to consider hidden jumps.
+ *    @luareturn Table of jumps.
+ * @luafunc jumpPath( s, param, hidden )
+ */
+static int systemL_jumpPath( lua_State *L )
+{
+   LuaJump lj;
+   StarSystem *sys, *sysp;
+   StarSystem **s;
+   int i, sid, jumps, pushed, h;
+   const char *start, *goal;
+
+   h   = lua_toboolean(L,3);
+
+   /* Foo to Bar */
+   if (lua_gettop(L) > 1) {
+      sys   = luaL_validsystem(L,1);
+      start = sys->name;
+      sid   = sys->id;
+
+      if (lua_isstring(L,2))
+         goal = lua_tostring(L,2);
+      else if (lua_issystem(L,2)) {
+         sysp = luaL_validsystem(L,2);
+         goal = sysp->name;
+      }
+      else NLUA_INVALID_PARAMETER(L);
+   }
+   /* Current to Foo */
+   else {
+      start = cur_system->name;
+      sid   = cur_system->id;
+      sys   = luaL_validsystem(L,1);
+      goal  = sys->name;
+   }
+
+   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
+   if (s == NULL)
+      return 0;
+
+   /* Create the jump table. */
+   lua_newtable(L);
+   pushed = 0;
+
+   /* Map path doesn't contain the start system, push it manually. */
+   lj.srcid  = sid;
+   lj.destid = s[0]->id;
+
+   lua_pushnumber(L, ++pushed); /* key. */
+   lua_pushjump(L, lj);         /* value. */
+   lua_rawset(L, -3);
+
+   for (i=0; i<(jumps - 1); i++) {
+      lj.srcid  = s[i]->id;
+      lj.destid = s[i+1]->id;
+
+      lua_pushnumber(L, ++pushed); /* key. */
+      lua_pushjump(L, lj);         /* value. */
+      lua_rawset(L, -3);
+   }
+   free(s);
+
    return 1;
 }
 

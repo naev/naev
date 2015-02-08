@@ -14,8 +14,8 @@
   <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
   <amount>10</amount>
-  <lockon>17</lockon>
+  <lockon>12</lockon>
   <arc>6</arc>
-  <ew_target>1.2</ew_target>
+  <ew_target>1</ew_target>
  </specific>
 </outfit>

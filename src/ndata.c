@@ -361,22 +361,20 @@ static int ndata_openFile (void)
       nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
 
-      if ( ndata_isndata ( pathname ) ) {
-         ndata_filename = malloc ( PATH_MAX );
-         strcpy ( ndata_filename, pathname );
+      if (ndata_isndata(pathname)) {
+         ndata_filename = malloc(PATH_MAX);
+         strncpy(ndata_filename, pathname, PATH_MAX);
       }
-      else if ( ndata_isndata ( strcat(pathname, ".zip" )) ) {
-         ndata_filename = malloc ( PATH_MAX );
-         strcpy ( ndata_filename, pathname );
+      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX))) {
+         ndata_filename = malloc(PATH_MAX);
+         strncpy(ndata_filename, pathname, PATH_MAX);
       }
-
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
 
       /* Try to open any ndata in path. */
       else {
-
          /* Check in NDATA_DEF path. */
          buf = strdup(NDATA_DEF);
          nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
@@ -490,6 +488,8 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
+   unsigned int i;
+
    /* Destroy the name. */
    if (ndata_arcName != NULL) {
       free(ndata_arcName);
@@ -498,8 +498,11 @@ void ndata_close (void)
 
    /* Destroy the list. */
    if (ndata_fileList != NULL) {
+      for (i=0; i<ndata_fileNList; i++)
+         free(ndata_fileList[i]);
+
       free(ndata_fileList);
-      ndata_fileList = NULL;
+      ndata_fileList  = NULL;
       ndata_fileNList = 0;
    }
 
@@ -598,16 +601,8 @@ int ndata_exists( const char* filename )
             return 1;
       }
 
-      /* Load the ndata archive. */
-      ndata_openFile();
-   }
-
-   /* Wasn't able to open the file. */
-   if (ndata_archive == NULL)
       return 0;
-
-   /* Mark that we loaded a file. */
-   ndata_loadedfile = 1;
+   }
 
    /* Try to get it from the archive. */
    return nzip_hasFile( ndata_archive, filename );

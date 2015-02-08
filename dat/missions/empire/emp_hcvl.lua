@@ -37,8 +37,8 @@ else -- Default to English
    text     = {}
    title[1] = "Spaceport Bar"
    text[1]  = [[You are greeted by an Empire official while at the bar. "Hello %s, Commander Soldner has spoken well of you. He said you're a problem solver.
-   "Well, we have a problem with a pirate known as %s near the system %s. This mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]]
-   text[2]  = [["Good luck!  The pirate has already killed his last contender, although I don't think he'll be a match for you."]]
+    "Well, we have a problem with a pirate known as %s near the system %s. This mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]]
+   text[2]  = [["Good luck! The pirate has already killed his last contender, although I don't think he'll be a match for you."]]
 
    -- Messages
    msg      = {}

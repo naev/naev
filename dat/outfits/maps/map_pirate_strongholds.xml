@@ -3,16 +3,81 @@
  <general>
   <mass>0</mass>
   <price>100000</price>
-  <description>This map contains the location of the Pirate strongholds. Top secret!</description>
+  <description>This map contains the locations of the pirate clan worlds, and a few stations that are known to offer opportunities for pirates in the vicinity.</description>
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
   <sys name="New Haven">
+   <jump>Titus</jump>
+   <asset>Green Eye</asset>
    <asset>New Haven</asset>
+   <asset>Old Man Jack</asset>
+   <asset>Red Eye</asset>
   </sys>
   <sys name="Kretogg">
+   <jump>Unicorn</jump>
+   <asset>Kretogg I</asset>
+   <asset>Kretogg II</asset>
+   <asset>Kretogg III</asset>
    <asset>Vorca</asset>
    <asset>Warden's End</asset>
+  </sys>
+  <sys name="Teller">
+   <jump>Penn</jump>
+   <asset>Jezza</asset>
+   <asset>Killerog</asset>
+   <asset>Old King Cole</asset>
+   <asset>Sanchez</asset>
+  </sys>
+  <sys name="Effetey">
+   <jump>Frolina</jump>
+   <jump>Trohem</jump>
+   <asset>Efferey</asset>
+  </sys>
+  <sys name="Qorel">
+   <jump>Ekkodu</jump>
+   <jump>Trask</jump>
+   <asset>Qorellia</asset>
+  </sys>
+  <sys name="Terminus">
+   <jump>Akodu</jump>
+   <asset>Foundation Station</asset>
+  </sys>
+  <sys name="Unicorn">
+   <jump>Kretogg</jump>
+   <asset>Unicorn I</asset>
+   <asset>Unicorn II</asset>
+  </sys>
+  <sys name="Trohem">
+   <jump>Effetey</jump>
+  </sys>
+  <sys name="Frolina">
+   <jump>Effetey</jump>
+  </sys>
+  <sys name="Ekkodu">
+   <jump>Qorel</jump>
+  </sys>
+  <sys name="Trask">
+   <jump>Qorel</jump>
+  </sys>
+  <sys name="Akodu">
+   <jump>Terminus</jump>
+  </sys>
+  <sys name="Penn">
+   <jump>Teller</jump>
+  </sys>
+  <sys name="Titus">
+   <jump>New Haven</jump>
+  </sys>
+  <!-- Stations where a few “interesting” quests are available -->
+  <sys name="Suna">
+     <asset>The Wringer</asset>
+  </sys>
+  <sys name="Alteris">
+     <asset>Darkshed</asset>
+  </sys>
+  <sys name="Eridani">
+     <asset>The Crucible</asset>
   </sys>
  </specific>
 </outfit>

@@ -3,7 +3,7 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- Bar Description
 bar_desc = "You see a drunkard at the bar mumbling about how he was so close to getting his break."

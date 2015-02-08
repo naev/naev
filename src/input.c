@@ -117,7 +117,7 @@ const char *keybind_info[][3] = {
    { "overlay", "Overlay Map", "Opens the in-system overlay map." },
    { "mousefly", "Mouse Flight", "Toggles mouse flying." },
    { "cooldown", "Active Cooldown", "Engages active cooldown mode." },
-   /* CommunicationBLARGH */
+   /* Communication */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
    { "hail", "Hail Target", "Attempts to initialize communication with the targeted ship." },
@@ -166,6 +166,8 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
  */
 static double input_mouseTimer         = -1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
+static unsigned int input_mouseClickLast = 0; /**< Time of last click (in ms) */
+static void *input_lastClicked         = NULL; /**< Pointer to the last-clicked item. */
 
 
 /*
@@ -199,25 +201,53 @@ static void input_mouseMove( SDL_Event* event );
 
 /**
  * @brief Sets the default input keys.
+ *
+ *    @param wasd Whether to use the WASD layout.
  */
-void input_setDefault (void)
+void input_setDefault ( int wasd )
 {
    /* Movement */
-   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
-   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
-   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
-   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
+   if (wasd) {
+      input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_w, NMOD_ALL );
+      input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
+      input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_d, NMOD_ALL );
+      input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_s, NMOD_NONE );
+   }
+   else {
+      input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
+      input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
+      input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
+      input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
+   }
+
    /* Targeting */
-   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
-   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
-   input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
-   input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
-   input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_BACKSPACE, NMOD_ALL );
+   if (wasd) {
+      input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
+      input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_q, NMOD_CTRL );
+      input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, NMOD_ALL );
+      input_setKeybind( "target_nextHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_ALL );
+      input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_c, NMOD_ALL );
+   }
+   else {
+      input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
+      input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
+      input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
+      input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
+      input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
+      input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_BACKSPACE, NMOD_ALL );
+   }
+
    /* Combat */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ALL );
-   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
+
+   if (wasd)
+      input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_q, NMOD_NONE );
+   else
+      input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
+
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
    /* Secondary Weapons */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ALL );
@@ -232,12 +262,12 @@ void input_setDefault (void)
    input_setKeybind( "weapset9", KEYBIND_KEYBOARD, SDLK_9, NMOD_ALL );
    input_setKeybind( "weapset0", KEYBIND_KEYBOARD, SDLK_0, NMOD_ALL );
    /* Escorts */
-   input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, NMOD_NONE );
-   input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
-   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, NMOD_ALL );
-   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, NMOD_ALL );
-   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, NMOD_CTRL );
-   input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, NMOD_NONE );
+   input_setKeybind( "e_targetNext", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_targetPrev", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_attack", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_hold", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_return", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_clear", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    /* Space Navigation */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, NMOD_CTRL );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
@@ -257,7 +287,12 @@ void input_setDefault (void)
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, NMOD_ALL );
-   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
+
+   if (wasd)
+      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
+   else
+      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
+
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ALL );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ALL );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, NMOD_NONE );
@@ -684,7 +719,7 @@ void input_update( double dt )
 
 
 #define KEY(s)    (strcmp(input_keybinds[keynum].name,s)==0) /**< Shortcut for ease. */
-#define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit_isOpen()) /**< Makes sure player is in game. */
 #define NOHYP()   \
 ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
@@ -1135,13 +1170,11 @@ static void input_mouseMove( SDL_Event* event )
 static void input_clickevent( SDL_Event* event )
 {
    unsigned int pid;
-   Pilot *p;
    int mx, my, mxr, myr, pntid, jpid;
    int rx, ry, rh, rw, res;
-   double x, y, m, r, rp, d, dp, px, py;
+   int autonav;
+   double x, y, zoom, px, py;
    double ang, angp, mouseang;
-   Planet *pnt;
-   JumpPoint *jp;
    HookParam hparam[2];
 
    /* Generate hook. */
@@ -1174,15 +1207,20 @@ static void input_clickevent( SDL_Event* event )
       return;
    }
 
-   /* Mouse targeting is left only. */
-   if (event->button.button != SDL_BUTTON_LEFT)
+   /* Mouse targeting only uses left and right buttons. */
+   if (event->button.button != SDL_BUTTON_LEFT &&
+            event->button.button != SDL_BUTTON_RIGHT)
       return;
+
+   autonav = (event->button.button == SDL_BUTTON_RIGHT) ? 1 : 0;
 
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
-   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) { /* Border */
+   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) { 
+      /* Border targeting is handled as a special case, as it uses angles,
+       * not coordinates.
+       */
       x = (mx - (gl_screen.w / 2.)) + px;
       y = (my - (gl_screen.h / 2.)) + py;
       mouseang = atan2(py - y, px -  x);
@@ -1194,87 +1232,252 @@ static void input_clickevent( SDL_Event* event )
          pid = PLAYER_ID; /* Pilot angle is too great, or planet/jump is closer. */
       if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
          jpid = pntid = -1; /* Asset angle difference is too great. */
-   }
-   else { /* Radar targeting requires raw coordinates. */
-      mxr = event->button.x;
-      myr  = gl_screen.rh - event->button.y;
-      gui_radarGetPos( &rx, &ry );
-      gui_radarGetDim( &rw, &rh );
-      if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
-         m = 1;
-         gui_radarGetRes( &res );
-         x = (mxr - (rx + rw / 2.)) * res + px;
-         y = (myr - (ry + rh / 2.)) * res + py;
-      }
-      else /* Visual (on-screen) */
-         m = res = 1. / cam_getZoom();
-      dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-      d  = system_getClosest( cur_system, &pntid, &jpid, x, y );
-      rp = MAX( 1.5 * PILOT_SIZE_APROX * pilot_get(pid)->ship->gfx_space->sw / 2 * m,  10. * res);
 
-      if (pntid >=0) { /* Planet is closer. */
-         pnt = cur_system->planets[ pntid ];
-         r  = MAX( 1.5 * pnt->radius, 100. );
+      if (!autonav && pid != PLAYER_ID) {
+         if (input_clickedPilot(pid))
+            return;
       }
-      else if (jpid >= 0) {
-         jp = &cur_system->jumps[ jpid ];
-         r  = MAX( 1.5 * jp->radius, 100. );
+      else if (pntid >= 0) { /* Planet is closest. */
+         if (input_clickedPlanet(pntid, autonav))
+            return;
       }
-      else {
-         r  = 0.;
+      else if (jpid >= 0) { /* Jump point is closest. */
+         if (input_clickedJump(jpid, autonav))
+            return;
       }
-      /* Reject pilot if it's too far or a valid asset is closer. */
-      if (dp > pow2(rp) || (d < pow2(r) && dp < pow2(rp) && dp >  d))
-         pid = PLAYER_ID;
-      if (d > pow2(r)) /* Planet or jump point is too far. */
-         jpid = pntid = -1;
+
+      /* Fall-through and handle as a normal click. */
    }
 
-   if (pid != PLAYER_ID) {
-      /* Apply an action if already selected. */
-      if (pid == player.p->target) {
-         p = pilot_get(pid);
-         if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
-            player_board();
-         else
-            player_hail();
-      }
-      else
-         player_targetSet( pid );
-   }
-   else if (pntid >= 0) { /* Planet is closest. */
-      if (pntid == player.p->nav_planet) {
-         pnt = cur_system->planets[ pntid ];
-         player_hyperspacePreempt(0);
-         if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
-            if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
-               player_hailPlanet();
-            else if (vect_dist2(&player.p->solid->pos,&pnt->pos) > pow2(pnt->radius))
-               player_autonavStart();
-            else
-               player_land();
-         }
-         else
-            player_autonavStart();
-      }
-      else
-         player_targetPlanetSet( pntid );
-   }
-   else if (jpid >= 0) { /* Jump point is closest. */
-      if (!jp_isUsable(&cur_system->jumps[ jpid ]))
+   /* Radar targeting requires raw coordinates. */
+   mxr = event->button.x;
+   myr  = gl_screen.rh - event->button.y;
+   gui_radarGetPos( &rx, &ry );
+   gui_radarGetDim( &rw, &rh );
+   if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
+      zoom = 1.;
+      gui_radarGetRes( &res );
+      x = (mxr - (rx + rw / 2.)) * res + px;
+      y = (myr - (ry + rh / 2.)) * res + py;
+
+      if (input_clickPos( event, x, y, zoom, 10. * res, 15. * res ))
          return;
-
-      if (jpid == player.p->nav_hyperspace) {
-         if (space_canHyperspace(player.p))
-            player_jump();
-         else {
-            player_hyperspacePreempt(1);
-            player_autonavStart();
-         }
-      }
-      else
-         player_targetHyperspaceSet( jpid );
    }
+
+   /* Visual (on-screen) */
+   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
+   zoom = res = 1. / cam_getZoom();
+
+   input_clickPos( event, x, y, zoom, 10. * res, 15. * res );
+   return;
+}
+
+
+/**
+ * @brief Handles a click at a position in the current system
+ *
+ *    @brief event The click event itself, used for button information.
+ *    @brief x X coordinate within the system.
+ *    @brief y Y coordinate within the system.
+ *    @brief zoom Camera zoom (mostly for on-screen targeting).
+ *    @brief minpr Minimum radius to assign to pilots.
+ *    @brief minr Minimum radius to assign to planets and jumps.
+ *    @return Whether the click was used to trigger an action.
+ */
+int input_clickPos( SDL_Event *event, double x, double y, double zoom, double minpr, double minr )
+{
+   unsigned int pid;
+   Pilot *p;
+   double r, rp;
+   double d, dp;
+   Planet *pnt;
+   JumpPoint *jp;
+   int pntid, jpid;
+
+   dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
+   p  = pilot_get(pid);
+
+   d  = system_getClosest( cur_system, &pntid, &jpid, x, y );
+   rp = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
+
+   if (pntid >=0) { /* Planet is closer. */
+      pnt = cur_system->planets[ pntid ];
+      r  = MAX( 1.5 * pnt->radius * zoom, minr );
+   }
+   else if (jpid >= 0) {
+      jp = &cur_system->jumps[ jpid ];
+      r  = MAX( 1.5 * jp->radius * zoom, minr );
+   }
+   else
+      r  = 0.;
+
+   /* Reject pilot if it's too far or a valid asset is closer. */
+   if (dp > pow2(rp) || ((d < pow2(r)) && (dp >  d)))
+      pid = PLAYER_ID;
+
+   if (d > pow2(r)) /* Planet or jump point is too far. */
+      jpid = pntid = -1;
+
+   /* Target a pilot, planet or jump, and/or perform an appropriate action. */
+   if (event->button.button == SDL_BUTTON_LEFT) {
+      if (pid != PLAYER_ID) {
+         return input_clickedPilot(pid);
+      }
+      else if (pntid >= 0) { /* Planet is closest. */
+         return input_clickedPlanet(pntid, 0);
+      }
+      else if (jpid >= 0) { /* Jump point is closest. */
+         return input_clickedJump(jpid, 0);
+      }
+   }
+   /* Right click only controls autonav. */
+   else if (event->button.button == SDL_BUTTON_RIGHT) {
+      if (pntid >= 0)
+         return input_clickedPlanet(pntid, 1);
+      else if (jpid >= 0)
+         return input_clickedJump(jpid, 1);
+
+      /* Go to position, if the position is >= 1500 px away. */
+      if ((pow2(x - player.p->solid->pos.x) + pow2(y - player.p->solid->pos.y))
+            >= pow2(1500))
+
+      player_autonavPos( x, y );
+      return 1;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Performs an appropriate action when a jump point is clicked.
+ *
+ *    @param jp Index of the jump point.
+ *    @param autonav Whether to autonav to the target.
+ *    @return Whether the click was used.
+ */
+int input_clickedJump( int jump, int autonav )
+{
+   JumpPoint *jp;
+   jp = &cur_system->jumps[ jump ];
+
+   if (!jp_isUsable(jp))
+      return 0;
+
+   if (autonav) {
+      player_targetHyperspaceSet( jump );
+      player_autonavStart();
+      return 1;
+   }
+
+   if (jump == player.p->nav_hyperspace && input_isDoubleClick( (void*)jp )) {
+      if (space_canHyperspace(player.p))
+         player_jump();
+   }
+   else
+      player_targetHyperspaceSet( jump );
+
+   input_clicked( (void*)jp );
+   return 1;
+}
+
+/**
+ * @brief Performs an appropriate action when a planet is clicked.
+ *
+ *    @param planet Index of the planet.
+ *    @param autonav Whether to autonav to the target.
+ *    @return Whether the click was used.
+ */
+int input_clickedPlanet( int planet, int autonav )
+{
+   Planet *pnt;
+   pnt = cur_system->planets[ planet ];
+
+   if (!planet_isKnown(pnt))
+      return 0;
+
+   if (autonav) {
+      player_targetPlanetSet( planet );
+      player_autonavPnt( pnt->name );
+      return 1;
+   }
+
+   if (planet == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
+      player_hyperspacePreempt(0);
+      if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+         if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
+            player_hailPlanet();
+         else
+            player_land();
+      }
+   }
+   else
+      player_targetPlanetSet( planet );
+
+   input_clicked( (void*)pnt );
+   return 1;
+}
+
+/**
+ * @brief Performs an appropriate action when a pilot is clicked.
+ *
+ *    @param pilot Index of the pilot.
+ *    @return Whether the click was used.
+ */
+int input_clickedPilot( unsigned int pilot )
+{
+   Pilot *p;
+
+   if (pilot == PLAYER_ID)
+      return 0;
+
+   p = pilot_get(pilot);
+   if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
+      if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
+         player_board();
+      else
+         player_hail();
+   }
+   else
+      player_targetSet( pilot );
+
+   input_clicked( (void*)p );
+   return 1;
+}
+
+
+/**
+ * @brief Sets the last-clicked item, for double-click detection.
+ *    @param clicked Pointer to the clicked item.
+ */
+void input_clicked( void *clicked )
+{
+   if (conf.mouse_doubleclick <= 0.)
+      return;
+
+   input_lastClicked = clicked;
+   input_mouseClickLast = SDL_GetTicks();
+}
+
+
+/**
+ * @brief Checks whether a clicked item is the same as the last-clicked.
+ *    @param clicked Pointer to the clicked item.
+ */
+int input_isDoubleClick( void *clicked )
+{
+   unsigned int threshold;
+
+   if (conf.mouse_doubleclick <= 0.)
+      return 1;
+
+   /* Most recent time that constitutes a valid double-click. */
+   threshold = input_mouseClickLast + (int)(conf.mouse_doubleclick * 1000);
+
+   if ((SDL_GetTicks() <= threshold) && (clicked == input_lastClicked))
+      return 1;
+
+   return 0;
 }
 
 

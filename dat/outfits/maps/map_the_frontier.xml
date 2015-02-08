@@ -3,42 +3,61 @@
  <general>
   <mass>0</mass>
   <price>50000</price>
-  <description>This map contains the location of all twelve Frontier worlds, plus the Frontier Council.</description>
+  <description>This map contains an east-west route through Frontier space, as well as the location of the Frontier Council.</description>
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
   <sys name="Theras">
+   <jump>Haleb</jump>
+   <jump>Gilligan's Light</jump>
    <asset>Cetrat</asset>
-  </sys>
-  <sys name="Gilligan's Light">
-   <asset>Dawn</asset>
-   <asset>The Frontier Council</asset>
+   <asset>Theras II</asset>
+   <asset>Theras III</asset>
   </sys>
   <sys name="Haleb">
+   <jump>Theras</jump>
+   <jump>Triap</jump>
+   <asset>Haleb IV</asset>
    <asset>Jorlan</asset>
-  </sys>
-  <sys name="Norpin">
-   <asset>New Dortmund</asset>
+   <asset>Raglan Outpost</asset>
   </sys>
   <sys name="Triap">
+   <jump>Brimstone</jump>
+   <jump>Haleb</jump>
    <asset>Khelim</asset>
+   <asset>Megan Station</asset>
+   <asset>Triap I</asset>
   </sys>
   <sys name="Brimstone">
+   <jump>Shickhaw</jump>
+   <jump>Triap</jump>
+   <asset>Brimstone I</asset>
+   <asset>Brimstone II</asset>
+   <asset>Brimstone III</asset>
+   <asset>Brimstone Ia</asset>
+   <asset>Brimstone Ib</asset>
    <asset>Nonuri</asset>
   </sys>
   <sys name="Shickhaw">
+   <jump>Atlantis</jump>
+   <jump>Brimstone</jump>
    <asset>Avoss</asset>
+   <asset>Kotori</asset>
+   <asset>Shickhaw I</asset>
+   <asset>Shickhaw II</asset>
+   <asset>Shickhaw IV</asset>
    <asset>Tori</asset>
   </sys>
-  <sys name="Andee">
-   <asset>Varaati</asset>
+  <sys name="Atlantis">
+   <jump>Shickhaw</jump>
+   <asset>Atlantis I</asset>
   </sys>
-  <sys name="Karman">
-   <asset>Atalanta</asset>
-  </sys>
-  <sys name="Gyrios">
-   <asset>Lapra</asset>
-   <asset>Jaegnhild</asset>
+  <sys name="Gilligan's Light">
+   <jump>Theras</jump>
+   <asset>Dawn</asset>
+   <asset>Dusk</asset>
+   <asset>Gilligan's Light III</asset>
+   <asset>The Frontier Council</asset>
   </sys>
  </specific>
 </outfit>

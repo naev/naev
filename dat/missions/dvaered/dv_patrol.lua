@@ -56,7 +56,7 @@ end
 
 
 include("proximity.lua")
-include("numstring.lua")
+include("dat/scripts/numstring.lua")
 
 -- Mission parameters
 chk_range      = math.pow( 2000, 2 ) -- Radius within target
