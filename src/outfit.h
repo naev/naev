@@ -151,6 +151,7 @@ typedef struct OutfitBeamData_ {
    double delay;     /**< Delay between usage. */
    double warmup;    /**< How long beam takes to warm up. */
    double duration;  /**< How long the beam lasts active. */
+   double min_duration; /**< Minimum duration the beam can be fired for. */
 
    /* Beam properties. */
    double range;     /**< how far it goes */
