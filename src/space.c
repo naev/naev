@@ -1877,8 +1877,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      comm = commodity_get( xmlr_attr(ccur, "name", tmp) );
                      if (comm == NULL)
                         continue;
-                     planet->is_priceset[comm->index]=1;
-                     comm->changed=1;
+                     planet->is_priceset[comm->index] = 1;
+                     comm->changed = 1;
                      xmlr_float(ccur, "commodity", planet->prices[comm->index]); /* the price */
                   }
 
@@ -2430,8 +2430,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                xmlr_attr(cur, "name", tmp);
                if ((comm=commodity_get(tmp))==NULL)
                   continue;
-               sys->is_priceset[comm->index]=1;
-               comm->changed=1;
+               sys->is_priceset[comm->index] = 1;
+               comm->changed = 1;
                xmlr_float(cur, "commodity", sys->prices[comm->index]); /* the price */
             }
 

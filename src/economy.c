@@ -486,7 +486,7 @@ int econ_refreshcommprice(Commodity *comm)
       /* substitute in known values */
       for (j=i+1; j<n_unset; j++){ 
          /* sub in equation j's values into equation i */
-         if (eq[j]==0.0)
+         if (eq[j] == 0.0)
             continue;
          eq2 = eqsystem+j*sysw;
          for (v=n_unset; v<sysw; v++){
@@ -590,7 +590,10 @@ void econ_init(void)
    StarSystem *sys;
    Planet *p;
 
-   if (econ_initialized) { WARN("economy already initialized!\n"); return; }
+   if (econ_initialized) {
+      WARN("economy already initialized!\n");
+      return;
+   }
 
    /* save original values */
    for (i=0; i<systems_nstack; i++) {
@@ -620,7 +623,12 @@ void econ_destroy(void)
    int i, j;
    StarSystem *sys;
    Planet *p;
-   if (!econ_initialized) { WARN("economy not inited!\n"); return; }
+
+   if (!econ_initialized) {
+      WARN("economy not inited!\n");
+      return;
+   }
+
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
       free(sys->prices); 
