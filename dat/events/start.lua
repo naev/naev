@@ -23,7 +23,7 @@ else -- default english
 
    text[6]  = "\"You can target planets, ships, and jump points by \027bleft-clicking\0270 on them on your view, minimap, or overlay map. %s targets the nearest hostile ship, which is very useful in the heat of battle.\""
 
-   text[7]  = "\"When a target is selected, you can \027bleft-click\0270 on it again on your view or minimap to do whatever action is most appropriate.\""
+   text[7]  = "\"You can do whatever action is most appropriate with a planet, ship, or jump point by \027bdouble-clicking\0270 on it or its indicator on your radar.\""
 
    text[8]  = [["You can fire your primary weapon with %s, and your secondary weapon with %s. Don't forget that some weapons won't work properly unless you target the ship first, and some homing missile weapons require you to face your target until you get a lock."]]
 
