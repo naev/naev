@@ -50,7 +50,7 @@
 #define MAIN_WIDTH      130 /**< Main menu width. */
 
 #define MENU_WIDTH      130 /**< Escape menu width. */
-#define MENU_HEIGHT     200 /**< Escape menu height. */
+#define MENU_HEIGHT     250 /**< Escape menu height. */
 
 
 #define DEATH_WIDTH     130 /**< Death menu width. */
@@ -85,6 +85,7 @@ static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
 static void menu_small_close( unsigned int wid, char* str );
+static void menu_small_info( unsigned int wid, char *str );
 static void menu_small_exit( unsigned int wid, char* str );
 static void exit_game (void);
 /* death menu */
@@ -379,9 +380,12 @@ void menu_small (void)
 
    window_setCancel( wid, menu_small_close );
 
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnResume", "Resume", menu_small_close );
+   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnInfo", "Info", menu_small_info );
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
@@ -390,6 +394,8 @@ void menu_small (void)
 
    menu_Open(MENU_SMALL);
 }
+
+
 /**
  * @brief Closes the small ingame menu.
  *    @param str Unused.
@@ -400,6 +406,21 @@ static void menu_small_close( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_SMALL);
 }
+
+
+/**
+ * @brief Opens the info window.
+ *    @param wid Unused.
+ *    @param str Unused.
+ */
+static void menu_small_info( unsigned int wid, char *str )
+{
+   (void) str;
+   (void) wid;
+
+   menu_info( INFO_MAIN );
+}
+
 /**
  * @brief Closes the small ingame menu and goes back to the main menu.
  *    @param str Unused.
