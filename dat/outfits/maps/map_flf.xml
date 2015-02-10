@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: FLF Hidden Jumps">
+ <general>
+  <mass>0</mass>
+  <price>100000</price>
+  <description>This map contains the location of hidden jump points between the FLF base and Frontier space.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Sigur">
+   <jump>Arcanis</jump>
+  </sys>
+  <sys name="Arcanis">
+   <jump>Sigur</jump>
+  </sys>
+  <sys name="Ingot">
+   <jump>Tuoladis</jump>
+   <jump>Gilligan's Light</jump>
+  </sys>
+  <sys name="Tuoladis">
+   <jump>Ingot</jump>
+  </sys>
+  <sys name="Gilligan's Light">
+   <jump>Ingot</jump>
+  </sys>
+  <sys name="Theras">
+   <jump>Klantar</jump>
+  </sys>
+  <sys name="Klantar">
+   <jump>Theras</jump>
+  </sys>
+ </specific>
+</outfit>
