@@ -68,7 +68,7 @@ void dout_csvBolt( const char *path )
             o->name, outfit_getType(o), outfit_slotName(o), o->license,
             o->mass, o->price,
             o->u.blt.delay, o->u.blt.speed, o->u.blt.range, o->u.blt.falloff,
-            o->u.blt.ew_lockon, o->u.blt.energy, o->u.blt.heatup, o->u.blt.cpu,
+            o->u.blt.ew_lockon, o->u.blt.energy, o->u.blt.heatup, o->cpu,
             o->u.blt.track, o->u.blt.swivel * 180. / M_PI,
             dmg->penetration*100, dtype_damageTypeToStr(dmg->type), dmg->damage, dmg->disable
             );
