@@ -295,9 +295,8 @@
   <lua>dvaered/dv_patrol</lua>
   <avail>
    <chance>366</chance>
-   <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
    <location>Computer</location>
-   <done>Empire Shipping 3</done>
    <faction>Dvaered</faction>
   </avail>
  </mission>
@@ -472,6 +471,16 @@
    <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
+  </avail>
+ </mission>
+ <mission name="Eliminate a Dvaered Patrol">
+  <lua>flf/flf_patrol</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>550</chance>
+   <done>Disrupt the Dvaered Patrols</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
   </avail>
  </mission>
  <mission name="Defend the FLF base">

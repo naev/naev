@@ -56,22 +56,16 @@ Congratulations! This concludes the missile combat tutorial.]]
         "My shields are holding fine!",
         "You'd be dead if I'd remembered to pack my weapons!",
         "I'll end you!",
-        "... Right after I finish eating this bucket of fried chicken!",
-        "Em 5 Fried Chicken. Eat only the best.",
         "This is your last chance to surrender!",
-        "Don't do school, stay in milk.",
         "I'm going to report you to the NPC Rights watchdog.",
         "Keep going, see what happens!",
         "You don't scare me!",
         "What do you think this is, knitting hour?",
-        "I mean, good lord, man.",
-        "It's been several minutes of non-stop banter!",
-        "Haven't I sufficiently annoyed you yet?",
         "Go on, shoot me.",
         "You can do it! I believe in you.",
         "Shoot me!",
         "Okay, listen. I'm doing this for attention.",
-        "But if you don't shoot me, I'll tell the galaxy your terrible secret.",
+        "If you don't shoot me, I'll tell the galaxy your terrible secret!",
     }
     armour31 = {
         "Okay, that's about enough.",
@@ -92,9 +86,6 @@ Congratulations! This concludes the missile combat tutorial.]]
         "I'm scared! Hold me.",
         "Make the bad ship go away, mommy!",
         "If you don't stop I'll cry!",
-        "Here I go, filling my cabin up with tears.",
-        "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le.",
-        "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
     }
 end
 

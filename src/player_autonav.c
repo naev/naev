@@ -89,11 +89,6 @@ void player_autonavStart (void)
       return;
    }
 
-   /* Cooldown and autonav are mutually-exclusive. */
-   if ((pilot_isFlag(player.p, PILOT_COOLDOWN)) ||
-         (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
-      pilot_cooldownEnd(player.p, NULL);
-
    if (!player_autonavSetup())
       return;
 
@@ -112,6 +107,11 @@ static int player_autonavSetup (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
          pilot_isDisabled(player.p))
       return 0;
+
+   /* Cooldown and autonav are mutually-exclusive. */
+   if ((pilot_isFlag(player.p, PILOT_COOLDOWN)) ||
+         (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+      pilot_cooldownEnd(player.p, NULL);
 
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
