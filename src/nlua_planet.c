@@ -295,7 +295,7 @@ static int planetL_getBackend( lua_State *L, int landable )
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
-      pnt            = planet_get( space_getRndPlanet(landable) );
+      pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
       planet.id      = planet_index( pnt );
       lua_pushplanet(L,planet);
       luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );

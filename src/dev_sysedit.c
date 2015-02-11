@@ -369,7 +369,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->name  = name;
 
    /* Base planet data off another. */
-   b                    = planet_get( space_getRndPlanet(0) );
+   b                    = planet_get( space_getRndPlanet(0, 0, NULL) );
    p->class             = strdup( b->class );
    p->gfx_spacePath     = strdup( b->gfx_spacePath );
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
