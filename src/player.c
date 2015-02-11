@@ -3627,8 +3627,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   continue;
                }
 
-               /* actually add the cargo with id hack */
-               pilot_cargoAdd( ship, com, quantity );
+               /* actually add the cargo with id hack
+                * Note that the player's cargo_free is ignored here.
+                */
+               pilot_cargoAddRaw( ship, com, quantity, 0 );
                if (i != 0)
                   ship->commodities[ ship->ncommodities-1 ].id = i;
             }

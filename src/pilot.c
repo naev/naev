@@ -2444,7 +2444,7 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy commodities. */
    for (i=0; i<src->ncommodities; i++)
-      pilot_cargoAddRaw( dest, src->commodities[i].commodity,
+      pilot_cargoAdd( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 
    return dest;

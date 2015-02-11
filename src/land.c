@@ -344,7 +344,7 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
 
    /* Make the buy. */
-   q = pilot_cargoAdd( player.p, com, q );
+   q = pilot_cargoAdd( player.p, com, q, 0 );
    price *= q;
    player_modCredits( -price );
    commodity_update(wid, NULL);
