@@ -3516,6 +3516,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    ship_parsed = ship_get(model);
    if (ship_parsed == NULL) {
       WARN("Player ship '%s' not found!", model);
+
+      /* Clean up. */
+      free(name);
+      free(model);
+
       return -1;
    }
 
