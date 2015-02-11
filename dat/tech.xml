@@ -431,6 +431,17 @@
   -->
   <item>Plasma Turret MK2</item>
  </tech>
+ <tech name="Beam 1">
+  <item>Orion Lance</item>
+  <item>Orion Beam</item>
+  <item>Pulse Beam</item>
+  <item>Shattershield Lance</item>
+ </tech>
+ <tech name="Beam 2">
+  <item>Grave Lance</item>
+  <item>Grave Beam</item>
+  <item>Ragnarok Beam</item>
+ </tech>
 
  <!-- Generic Outfits -->
  <tech name="Crappy Core Systems">
