@@ -708,6 +708,9 @@
  <tech name="Goddard Ship">
   <item>Goddard</item>
  </tech>
+ <tech name="Krain Industries">
+  <item>Kestrel</item>
+ </tech>
  <tech name="Empire Military Ships">
   <item>Empire Admonisher</item>
   <item>Empire Hawking</item>
