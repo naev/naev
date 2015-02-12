@@ -75,6 +75,7 @@ static void map_drawMarker( double x, double y, double r, double a,
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
+static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
@@ -89,6 +90,8 @@ int map_init (void)
 {
    /* Create the VBO. */
    map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+
+   gl_faction_disk = gl_genFactionDisk( 150. );
    return 0;
 }
 
@@ -103,6 +106,9 @@ void map_exit (void)
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
    }
+
+   if (gl_faction_disk != NULL)
+      gl_freeTexture( gl_faction_disk );
 }
 
 
@@ -1542,9 +1548,6 @@ static void A_freeList( SysNode *first )
 void map_setZoom(double zoom)
 {
    map_zoom = zoom;
-   if (gl_faction_disk != NULL)
-      gl_freeTexture( gl_faction_disk );
-   gl_faction_disk = gl_genFactionDisk( 150 * zoom );
 }
 
 /**
