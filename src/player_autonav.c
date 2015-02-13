@@ -33,7 +33,6 @@ static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;
 static double lasta;
 static int slockons;
-static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
 static double speedup_timer = 0.; /**< Keep time from speeding up for a short time after it's reset */
 static int hostiles_last = 0;
 
@@ -576,11 +575,6 @@ void player_updateAutonav( double dt )
 
    /* We'll update the time compression here. */
    speedup_timer -= dt;
-   if (autopause_timer > 0) {
-      /* Don't start time acceleration right away.  Let the player react. */
-      autopause_timer -= dt;
-      return;
-   }
    if (tc_mod == player.tc_max)
       return;
    else
