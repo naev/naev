@@ -76,6 +76,7 @@ function enter()
         target = pilot.add("Civilian Gawain", nil, location)[1]
         target:control()
         target:rename("Credence")
+        target:setFaction("Dummy")
         target:setHilight(true)
         target:setVisplayer(true)
         hidle = hook.pilot(target, "idle", "targetIdle")
