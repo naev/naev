@@ -25,15 +25,15 @@
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
 static int commodityL_name( lua_State *L );
-static int commodityL_price( lua_State *L );
-static int commodityL_priceAt( lua_State *L );
+static int commodityL_getprice( lua_State *L );
+static int commodityL_setprice( lua_State *L );
 static const luaL_reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
    { "name", commodityL_name },
-   { "price", commodityL_price },
-   { "priceAt", commodityL_priceAt },
+   { "getprice", commodityL_getprice },
+   { "setprice", commodityL_setprice },
    {0,0}
 }; /**< Commodity metatable methods. */
 
@@ -48,7 +48,7 @@ static const luaL_reg commodityL_methods[] = {
 int nlua_loadCommodity( lua_State *L, int readonly )
 {
    (void) readonly; /* Everything is readonly. */
-
+   
    /* Create the metatable */
    luaL_newmetatable(L, COMMODITY_METATABLE);
 
@@ -252,13 +252,13 @@ static int commodityL_name( lua_State *L )
 /**
  * @brief Gets the base price of an commodity.
  *
- * @usage print( o:price() ) -- Prints the base price of the commodity
+ * @usage print( o:getprice() ) -- Prints the base price of the commodity
  *
- *    @luaparam o Commodity to get information of.
+ *    @luaparam c Commodity to get information of.
  *    @luareturn The base price of the commodity.
- * @luafunc price( o )
+ * @luafunc getprice( o )
  */
-static int commodityL_price( lua_State *L )
+static int commodityL_getprice( lua_State *L )
 {
    Commodity *c = luaL_validcommodity(L,1);
    lua_pushnumber(L, c->price);
@@ -267,38 +267,34 @@ static int commodityL_price( lua_State *L )
 
 
 /**
- * @brief Gets the base price of an commodity at a certain planet.
+ * @brief Sets the base price of an commodity.
  *
- * @usage if o:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of an outfit at polaris prime
+ * @usage o:setprice(1.5) -- sets the base price of the good
  *
- *    @luaparam o Commodity to get information of.
- *    @luaparam p Planet to get price at.
- *    @luareturn The price of the commodity at the planet.
- * @luafunc priceAt( o, p )
+ *    @luaparam c Commodity to get information of.
+ *    @luaparam new_base The new base price of the commodity.
+ * @luafunc setprice( o )
  */
-static int commodityL_priceAt( lua_State *L )
+static int commodityL_setprice( lua_State *L )
 {
    Commodity *c;
-   Planet *p;
-   StarSystem *sys;
-   char *sysname;
+   float price=-1.0;
 
    c = luaL_validcommodity(L,1);
-   p = luaL_validplanet(L,2);
-   sysname = planet_getSystem( p->name );
-   if (sysname == NULL) {
-      NLUA_ERROR( L, "Planet '%s' does not belong to a system", p->name );
+   price = lua_tonumber(L, 2);
+
+
+   if (c==NULL){
+      WARN("Invalid commodity for argument 1\n");
       return 0;
    }
-   sys = system_get( sysname );
-   if (sys == NULL) {
-      NLUA_ERROR( L, "Planet '%s' can not find its system '%s'", p->name, sysname );
+   if (price<=0.0){
+      WARN("Invalid base price for argument 2\n");
       return 0;
    }
 
-   lua_pushnumber( L, planet_commodityPrice( p, c ) );
-   return 1;
+   c->price = price;
+
+   return 0;
 }
-
-
 

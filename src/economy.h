@@ -10,9 +10,12 @@
 
 #include <stdint.h>
 
+#include "ntime.h"
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
+#define PRICE(Commodity, sys, planet)  ((Commodity)->price * ((planet)->is_priceset[(Commodity)->index] ? (planet)->prices[(Commodity)->index] : (sys)->prices[(Commodity)->index])) /**< Price of a good */
+#define DEFAULT_GLOBAL_WEIGHT 1.0 /* how much systems prefer their own given values */
 
 typedef int64_t credits_t;
 #define CREDITS_MAX        INT64_MAX
@@ -24,15 +27,15 @@ typedef int64_t credits_t;
  *
  * @brief Represents a commodity.
  *
- * @todo Use inverse normal?
  */
 typedef struct Commodity_ {
+   int index;	/**< Index of the commodity */
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
    /* Prices. */
-   double price; /**< Base price of the commodity. */
+   char changed; /**< Whether commodity prices have been changed and need refreshing */
+   float price; /**< Price multiplier of the commodity. */
 } Commodity;
-
 
 /*
  * Commodity stuff.
@@ -46,11 +49,11 @@ void commodity_free (void);
 /*
  * Economy stuff.
  */
-int economy_init (void);
-int economy_update( unsigned int dt );
-int economy_refresh (void);
-void economy_destroy (void);
-
+void econ_updateprices(void); /* to update prices when prices are changed */
+void econ_init(void);
+void econ_destroy (void);  /* frees ALL economy related values. Only to clean up values when exiting program. */
+void econ_revert(void); /* revert values back to original xml values */
+void set_showPrice(char boolean); /* set show_prices to true or false (whether to show system prices on the map) */
 
 /*
  * Misc stuff.

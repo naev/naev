@@ -359,13 +359,7 @@
   <item>Soromid Vox</item>
   <item>Za'lek Hephaestus</item>
  </tech>
- <tech name="All Commodities">
-  <item>Food</item>
-  <item>Ore</item>
-  <item>Industrial Goods</item>
-  <item>Medicine</item>
-  <item>Luxury Goods</item>
- </tech>
+ 
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>

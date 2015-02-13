@@ -104,7 +104,7 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 static int last_window = 0; /**< Default window. */
-static int commodity_mod = 10;
+int commodity_mod = 1;
 
 
 /*
@@ -115,6 +115,7 @@ static char errorreason[512];
 static int errorappend;
 static char *errorlist_ptr;
 
+extern void refresh_pl_prices(Planet *pl); /* refresh the prices of a planet */
 
 /*
  * prototypes
@@ -129,7 +130,6 @@ static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
 static int commodity_canBuy( char *name );
 static int commodity_canSell( char *name );
-static int commodity_getMod (void);
 static void commodity_renderMod( double bx, double by, double w, double h, void *data );
 /* spaceport bar */
 static void bar_getDim( int wid,
@@ -191,20 +191,20 @@ static void commodity_exchange_open( unsigned int wid )
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommoditySell",
          "Sell", commodity_sell, SDLK_s );
 
-      /* cust draws the modifier */
-   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
-         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
+      /* cust draws the modifier */ 
+   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2)+90, 60 + 2*LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)+10, LAND_BUTTON_HEIGHT*2, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
-   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 60, 0,
+   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 110, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market Price:\n"
          "\n"
          "Free Space:\n" );
-   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 60, 0,
+   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2+10, 100, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, -40, -120, LAND_BUTTON_WIDTH-20,
+   window_addText( wid, -40, -140, LAND_BUTTON_WIDTH-20,
          h-140-LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
@@ -251,12 +251,12 @@ static void commodity_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   com = commodity_get( comname );
 
    /* modify text */
+   com = commodity_get( comname );
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
-         "%"CREDITS_PRI" Credits/Ton\n"
+         "%"CREDITS_PRI"\n   Credits/Ton"
          "\n"
          "%d Tons\n",
          pilot_cargoOwned( player.p, comname ),
@@ -277,41 +277,42 @@ static void commodity_update( unsigned int wid, char* str )
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
-
 static int commodity_canBuy( char *name )
 {
    int failure;
-   unsigned int q, price;
    Commodity *com;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   q = commodity_getMod();
    com = commodity_get( name );
-   price = planet_commodityPrice( land_planet, com ) * q;
 
-   if (!player_hasCredits( price )) {
-      credits2str( buf, price - player.p->credits, 2 );
+   if (strcmp(name, "None")==0){
+      printf("commodity is \"None\", returning\n");
+      return 0;
+   }
+   if (!player_hasCredits( planet_commodityPrice(land_planet, com) )) {
+      credits2str( buf, planet_commodityPrice(land_planet, com) - player.p->credits, 2 );
       land_errDialogueBuild("You need %s more credits.", buf );
       failure = 1;
    }
-   if (pilot_cargoFree(player.p) <= 0) {
-      land_errDialogueBuild("No cargo space available!");
+   if (pilot_cargoFree(player.p) == 0) {
+      land_errDialogueBuild("You don't have any space!");
       failure = 1;
    }
 
    return !failure;
 }
 
-
 static int commodity_canSell( char *name )
 {
    int failure;
+   Commodity *com;
 
    failure = 0;
+   com = commodity_get( name );
 
-   if (pilot_cargoOwned( player.p, name ) == 0) {
-      land_errDialogueBuild("You can't sell something you don't have!");
+   if (pilot_cargoOwned( player.p, name ) <= 0) {
+      land_errDialogueBuild("You don't have any %s", com->name );
       failure = 1;
    }
 
@@ -333,19 +334,21 @@ static void commodity_buy( unsigned int wid, char* str )
    credits_t price;
    HookParam hparam[3];
 
-   /* Get selected. */
-   q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
-   com   = commodity_get( comname );
-   price = planet_commodityPrice( land_planet, com );
 
-   /* Check stuff. */
+   /* Check if you can make the transaction */
    if (land_errDialogue( comname, "buyCommodity" ))
       return;
 
+   /* Get selected. */
+   com   = commodity_get( comname );
+   q = commodity_getMod();
+   q = (q*planet_commodityPrice(land_planet, com) < player_modCredits(0) ) ? q : player_modCredits(0)/(credits_t)planet_commodityPrice(land_planet, com);
+   q = (q <= (unsigned int) pilot_cargoFree(player.p)) ? q : (unsigned int) pilot_cargoFree(player.p);
+   price = q*planet_commodityPrice(land_planet, com);
+
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q, 0 );
-   price *= q;
    player_modCredits( -price );
    commodity_update(wid, NULL);
 
@@ -359,6 +362,8 @@ static void commodity_buy( unsigned int wid, char* str )
    if (land_takeoff)
       takeoff(1);
 }
+
+
 /**
  * @brief Attempts to sell a commodity.
  *    @param wid Window selling commodity from.
@@ -373,20 +378,21 @@ static void commodity_sell( unsigned int wid, char* str )
    credits_t price;
    HookParam hparam[3];
 
-   /* Get parameters. */
-   q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
-   com   = commodity_get( comname );
-   price = planet_commodityPrice( land_planet, com );
 
-   /* Check stuff. */
+   /* Check if you can make the transaction. */
    if (land_errDialogue( comname, "sellCommodity" ))
       return;
 
+   /* Get parameters. */
+   q = (commodity_getMod() < pilot_cargoOwned( player.p, comname )) ? commodity_getMod() : pilot_cargoOwned( player.p, comname );
+   com   = commodity_get( comname );
+   price = q*planet_commodityPrice(land_planet, com);
+
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
-   price = price * (credits_t)q;
    player_modCredits( price );
+
    commodity_update(wid, NULL);
 
    /* Run hooks. */
@@ -404,13 +410,13 @@ static void commodity_sell( unsigned int wid, char* str )
  * @brief Gets the current modifier status.
  *    @return The amount modifier when buying or selling commodities.
  */
-static int commodity_getMod (void)
+int commodity_getMod (void)
 {
    SDLMod mods;
    int q;
 
    mods = SDL_GetModState();
-   q = 10;
+   q = 1;
    if (mods & (KMOD_LCTRL | KMOD_RCTRL))
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
@@ -440,7 +446,6 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    nsnprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
-
 
 /**
  * @brief Makes sure it's sane to change ships in the equipment view.
@@ -1260,6 +1265,7 @@ int land_setWindow( int window )
  */
 void land( Planet* p, int load )
 {
+
    /* Do not land twice. */
    if (landed)
       return;
@@ -1280,6 +1286,8 @@ void land( Planet* p, int load )
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
+   /* refresh economy prices */
+   econ_updateprices();
 
    /* Clear the NPC. */
    npc_clear();
