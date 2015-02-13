@@ -1338,6 +1338,13 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
                mod_damage = 1.;
                mod_shots  = 1.; /* @todo Should be: 2. - s>stats.launch_rate */
                break;
+            case OUTFIT_TYPE_BEAM:
+            case OUTFIT_TYPE_TURRET_BEAM:
+               /* Special case due to continuous fire. */
+               dps += outfit_damage(o)->damage;
+               eps += outfit_energy(o);
+
+               continue;
             default:
                continue;
          }

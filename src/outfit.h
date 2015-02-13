@@ -137,7 +137,6 @@ typedef struct OutfitBoltData_ {
    double falloff;   /**< Point at which damage falls off. */
    double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy;    /**< Energy usage */
-   double cpu;       /**< CPU usage. */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */

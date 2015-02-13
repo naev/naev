@@ -419,9 +419,13 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
 /**
  * @brief Gets the name of a random planet.
  *
+ *    @param landable Whether the planet must let the player land normally.
+ *    @param services Services the planet must have.
+ *    @param filter Filter function for including planets.
  *    @return The name of a random planet.
  */
-char* space_getRndPlanet( int landable )
+char* space_getRndPlanet( int landable, unsigned int services,
+      int (*filter)(Planet *p))
 {
    int i,j;
    Planet **tmp;
@@ -439,6 +443,12 @@ char* space_getRndPlanet( int landable )
          pnt = systems_stack[i].planets[j];
 
          if (pnt->real != ASSET_REAL)
+            continue;
+
+         if (services && planet_hasService(pnt, services) != services)
+            continue;
+
+         if (filter != NULL && !filter(pnt))
             continue;
 
          ntmp++;

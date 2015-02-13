@@ -52,6 +52,9 @@ void dev_csv (void)
    DEBUG("   bolt.csv...");
    dout_csvBolt( CSV_DIR"/bolt.csv" );
 
+   DEBUG("   beam.csv...");
+   dout_csvBeam( CSV_DIR"/beam.csv" );
+
    DEBUG("   launcher.csv...");
    dout_csvLauncher( CSV_DIR"/launcher.csv" );
 

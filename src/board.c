@@ -273,7 +273,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    q = 1;
    while ((p->ncommodities > 0) && (q!=0)) {
       q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
-            p->commodities[0].quantity );
+            p->commodities[0].quantity, 0 );
       pilot_cargoRm( p, p->commodities[0].commodity, q );
    }
 

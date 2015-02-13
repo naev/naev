@@ -53,10 +53,10 @@ void dout_csvBolt( const char *path )
 
    /* Write "header" */
    l = nsnprintf( buf, sizeof(buf),
-         "name,type,slot,license,"
-         "mass,price,"
+         "name,type,slot,size,"
+         "license,mass,price,cpu,"
          "delay,speed,range,falloff,"
-         "lockon,energy,heatup,cpu,"
+         "lockon,energy,heatup,"
          "track,swivel,"
          "penetrate,dtype,damage,disable\n"
          );
@@ -73,16 +73,73 @@ void dout_csvBolt( const char *path )
       dmg = &o->u.blt.dmg;
       l = nsnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
-            "%f,%"CREDITS_PRI","
+            "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%f,%f,%f,"
-            "%f,%f,%f,%f,"
+            "%f,%f,%f,"
             "%f,%f,"
             "%f,%s,%f,%f\n",
-            o->name, outfit_getType(o), outfit_slotName(o), o->license,
-            o->mass, o->price,
+            o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
+            o->license, o->mass, o->price, o->cpu,
             o->u.blt.delay, o->u.blt.speed, o->u.blt.range, o->u.blt.falloff,
-            o->u.blt.ew_lockon, o->u.blt.energy, o->u.blt.heatup, o->u.blt.cpu,
+            o->u.blt.ew_lockon, o->u.blt.energy, o->u.blt.heatup,
             o->u.blt.track, o->u.blt.swivel * 180. / M_PI,
+            dmg->penetration*100, dtype_damageTypeToStr(dmg->type), dmg->damage, dmg->disable
+            );
+      SDL_RWwrite( rw, buf, l, 1 );
+   }
+
+   /* Close file. */
+   SDL_RWclose( rw );
+}
+
+
+/**
+ * @brief Dumps the beam weapon data to csv.
+ */
+void dout_csvBeam( const char *path )
+{
+   Outfit *o, *o_all;
+   int i, n, l;
+   SDL_RWops *rw;
+   char buf[ 1024 ];
+   Damage *dmg;
+
+   /* File to output to. */
+   rw = SDL_RWFromFile( path, "w" );
+   if (rw == NULL) {
+      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      return;
+   }
+
+   /* Write "header" */
+   l = nsnprintf( buf, sizeof(buf),
+      "name,type,slot,size,"
+      "license,mass,price,cpu,"
+      "delay,warmup,duration,min_duration,"
+      "range,turn,energy,heatup,"
+      "penetrate,dtype,damage,disable\n"
+      );
+   SDL_RWwrite( rw, buf, l, 1 );
+
+   o_all = outfit_getAll( &n );
+   for (i=0; i<n; i++) {
+      o = &o_all[i];
+
+      /* Only handle bolt weapons. */
+      if (!outfit_isBeam(o))
+         continue;
+
+      dmg = &o->u.bem.dmg;
+      l = nsnprintf( buf, sizeof(buf),
+            "%s,%s,%s,%s,"
+            "%s,%f,%"CREDITS_PRI",%f,"
+            "%f,%f,%f,%f,"
+            "%f,%f,%f,%f,"
+            "%f,%s,%f,%f\n",
+            o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
+            o->license, o->mass, o->price, o->cpu,
+            o->u.bem.delay, o->u.bem.warmup, o->u.bem.duration, o->u.bem.min_duration,
+            o->u.bem.range, o->u.bem.turn * 180. / M_PI, o->u.bem.energy, o->u.bem.heatup,
             dmg->penetration*100, dtype_damageTypeToStr(dmg->type), dmg->damage, dmg->disable
             );
       SDL_RWwrite( rw, buf, l, 1 );
@@ -113,7 +170,7 @@ void dout_csvLauncher( const char *path )
    /* Write "header" */
    l = nsnprintf( buf, sizeof(buf),
          "name,type,slot,size,"
-         "license,mass,price,"
+         "license,mass,price,cpu,"
          "delay,ammo_name,amount,"
          "lockon,ew_target,arc\n"
          );
@@ -129,11 +186,11 @@ void dout_csvLauncher( const char *path )
 
       l = nsnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
-            "%s,%f,%"CREDITS_PRI","
+            "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%s,%d,"
             "%f,%f,%f\n",
             o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
-            o->license, o->mass, o->price,
+            o->license, o->mass, o->price, o->cpu,
             o->u.lau.delay, o->u.lau.ammo_name, o->u.lau.amount,
             o->u.lau.lockon, o->u.lau.ew_target, o->u.lau.arc * 180 / M_PI
             );
@@ -237,7 +294,7 @@ void dout_csvMod( const char *path )
    /* Write "header" */
    l = nsnprintf( buf, sizeof(buf),
          "name,type,slot,size,"
-         "license,mass,price,"
+         "license,mass,price,cpu,"
          "thrust,turn,speed,fuel,energy_usage,"
          "armour,armour_regen,"
          "shield,shield_regen,"
@@ -261,14 +318,14 @@ void dout_csvMod( const char *path )
 
       l = nsnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
-            "%s,%f,%"CREDITS_PRI","
+            "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%f,%f,%f,%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,%f\n",
             o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
-            o->license, o->mass, o->price,
+            o->license, o->mass, o->price, o->cpu,
             o->u.mod.thrust, o->u.mod.turn * 180. / M_PI, o->u.mod.speed, o->u.mod.fuel, stats.energy_usage,
             o->u.mod.armour, o->u.mod.armour_regen,
             o->u.mod.shield, o->u.mod.shield_regen,

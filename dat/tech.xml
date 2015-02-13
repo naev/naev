@@ -44,11 +44,13 @@
   <item>Plasma Cluster Cannon MK3</item>
   <item>Ragnarok Beam</item>
   <item>Grave Beam</item>
+  <item>Orion Beam</item>
   <item>Pulse Beam</item>
   <item>Grave Lance</item>
   <item>Orion Lance</item>
   <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
+  <item>Heavy Neutron Disruptor</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
@@ -125,6 +127,8 @@
   <item>Map: Sirius Core</item>
   <item>Map: Za'lek Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Map: Qorel Expanse</item>
+  <item>Map: New Haven's hidden jump points</item>
   <item>Map: FLF Hidden Jumps</item>
   <item>Ultra Map</item>
   <item>Local System Map</item>
@@ -426,6 +430,17 @@
   <item>BioPlasma Organ Stage 2</item>
   -->
   <item>Plasma Turret MK2</item>
+ </tech>
+ <tech name="Beam 1">
+  <item>Orion Lance</item>
+  <item>Orion Beam</item>
+  <item>Pulse Beam</item>
+  <item>Shattershield Lance</item>
+ </tech>
+ <tech name="Beam 2">
+  <item>Grave Lance</item>
+  <item>Grave Beam</item>
+  <item>Ragnarok Beam</item>
  </tech>
 
  <!-- Generic Outfits -->
