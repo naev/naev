@@ -187,7 +187,7 @@
  </event>
  <event name="Economic Events">
   <lua>neutral/econ_events</lua>
-  <trigger>land</trigger>
+  <trigger>enter</trigger>
   <chance>20</chance>
  </event>
  <event name="Kidnapped">
