@@ -348,7 +348,7 @@ static void commodity_buy( unsigned int wid, char* str )
    price = q*planet_commodityPrice(land_planet, com);
 
    /* Make the buy. */
-   q = pilot_cargoAdd( player.p, com, q );
+   q = pilot_cargoAdd( player.p, com, q, 0 );
    player_modCredits( -price );
    commodity_update(wid, NULL);
 

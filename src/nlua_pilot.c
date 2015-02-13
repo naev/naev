@@ -3157,7 +3157,7 @@ static int pilotL_cargoAdd( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_cargoAdd( p, cargo, quantity );
+   quantity = pilot_cargoAdd( p, cargo, quantity, 0 );
    lua_pushnumber( L, quantity );
    return 1;
 }
