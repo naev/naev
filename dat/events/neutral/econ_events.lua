@@ -148,7 +148,7 @@ function make_article( event )
    local title = event["title"]:format( event_planet:name() )
    local body = event["text"]:format( event_planet:name() )
    local article = news.add( "Generic", title, body,
-      time.get() + time.create( 0, event["time"], 0 ) )
+      time.get() + time.create( 0, math.min( 5, event["time"] ), 0 ) )
    article:bind("economic event")
 end
 
