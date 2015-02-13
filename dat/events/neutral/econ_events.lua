@@ -19,25 +19,25 @@ include "jumpdist.lua"
 events = {}
 
 events[1] = {}
-events[1]["time"] = 150
+events[1]["time"] = 20
 events[1][1] = { "Food", 3.0 }
 
 events[2] = {}
-events[2]["time"] = 100
+events[2]["time"] = 15
 events[2][1] = { "Food", 0.5 }
 
 events[3] = {}
-events[3]["time"] = 50
+events[3]["time"] = 10
 events[3][1] = { "Industrial Goods", 1.5 }
 events[3][2] = { "Ore", 1.5 }
 
 events[4] = {}
-events[4]["time"] = 25
+events[4]["time"] = 5
 events[4][1] = { "Luxury Goods", 1.5 }
 
 events[5] = {}
-events[5]["time"] = 100
-events[5][1] = { "Medicine", 2 }
+events[5]["time"] = 20
+events[5][1] = { "Medicine", 2.0 }
 
 
 lang = naev.lang()
@@ -128,7 +128,7 @@ function create ()
             original_prices[good:name()] = econ.getPrice( good, event_planet )
          end
 
-         local price = econ.getPrice( good, event_planet ) * event[i][2]
+         local price = econ.getPrice( good, event_planet ) * (event[i][2] + rnd.sigma() * event[i][2] / 10)
          econ.setPlanetPrice( good, event_planet, price )
       end
 
