@@ -743,13 +743,22 @@ PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n )
 int pilot_shoot( Pilot* p, int level )
 {
    PilotWeaponSet *ws;
+   int ret;
 
    /* Get active set. */
    ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   if (ws->type == WEAPSET_TYPE_CHANGE) /* Must be a change set or a weaponset. */
-      return pilot_weapSetFire( p, ws, level );
+   if (ws->type == WEAPSET_TYPE_CHANGE) { /* Must be a change set or a weaponset. */
+      ret = pilot_weapSetFire( p, ws, level );
+
+      /* Firing weapons aborts active cooldown. */
+      if (pilot_isFlag(p, PILOT_COOLDOWN) && ret)
+         pilot_cooldownEnd(p, NULL);
+
+      return ret;
+   }
+
    return 0;
 }
 
