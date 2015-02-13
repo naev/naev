@@ -1032,8 +1032,7 @@ void player_think( Pilot* pplayer, const double dt )
    (void) dt;
    Pilot *target;
    double turn;
-   int facing;
-   int ret;
+   int facing, fired;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -1048,10 +1047,6 @@ void player_think( Pilot* pplayer, const double dt )
       ai_think( pplayer, dt );
       return;
    }
-
-   /* Autonav voodoo. */
-   if (player.autonav_timer > 0.)
-      player.autonav_timer -= dt;
 
    /* Not facing anything yet. */
    facing = 0;
@@ -1139,12 +1134,12 @@ void player_think( Pilot* pplayer, const double dt )
    /*
     * Weapon shooting stuff
     */
+   fired = 0;
+
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      ret = pilot_shoot( pplayer, 0 );
+      fired |= pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
-      if (ret)
-         player_autonavResetSpeed();
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1152,15 +1147,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
    /* Secondary weapon - we use PLAYER_SECONDARY_L to track last frame. */
    if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
-      /* Double tap stops beams. */
-      if (!player_isFlag(PLAYER_SECONDARY_L))
-         pilot_shootStop( pplayer, 1 );
-      else {
-         ret = pilot_shoot( pplayer, 1 );
-         if (ret)
-            player_autonavResetSpeed();
-      }
-
+      fired |= pilot_shoot( pplayer, 1 );
       player_setFlag(PLAYER_SECONDARY_L);
    }
    else if (player_isFlag(PLAYER_SECONDARY_L)) {
@@ -1168,6 +1155,10 @@ void player_think( Pilot* pplayer, const double dt )
       player_rmFlag(PLAYER_SECONDARY_L);
    }
 
+   if (fired) {
+      player.autonav_timer = MAX( player.autonav_timer, 1. );
+      player_autonavResetSpeed();
+   }
 
    pilot_setThrust( pplayer, player_acc );
 }
