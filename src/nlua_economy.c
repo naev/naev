@@ -265,7 +265,7 @@ static int economyL_setPlanetPrice( lua_State *L ){
 
 
 /**
- * @brief unsets a price in a system. The new price in the will be the average price of it's neighbors.
+ * @brief unsets a price in a planet. The system price will be used.
  *    The price will change after jumping, landing/takeoff, and econ.updatePrices()
  *
  *    @luaparam c Commodity to unset the price of.
