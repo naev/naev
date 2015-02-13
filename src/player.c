@@ -197,6 +197,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
+static int player_filterSuitablePlanet( Planet *p );
 static void player_planetOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_thinkMouseFly(void);
@@ -3091,12 +3092,13 @@ Planet* player_load( xmlNodePtr parent )
  */
 static Planet* player_parse( xmlNodePtr parent )
 {
-   char* planet, *str;
-   Planet* pnt;
+   char *planet, *found, *str;
+   unsigned int services;
+   Planet *pnt;
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
-   int i, hunting, map_overlay;
+   int i, map_overlay;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
@@ -3245,32 +3247,46 @@ static Planet* player_parse( xmlNodePtr parent )
    /* Get random planet if it's NULL. */
    if ((pnt == NULL) || (planet_getSystem(planet) == NULL) ||
          !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
-      WARN("Player starts out in non-existant or invalid planet '%s', trying to find a suitable one instead.",
+      WARN("Player starts out in non-existent or invalid planet '%s',"
+            "trying to find a suitable one instead.",
             planet );
-      pnt = planet_get( space_getRndPlanet(1) );
-      /* In case the planet does not exist, we need to update some variables.
-       * While we're at it, we'll also make sure the system exists as well. */
-      hunting  = 1;
-      i        = 0;
-      while (hunting && (i<1000)) {
-         planet = pnt->name;
-         if ((planet_getSystem(planet) == NULL) ||
-               !planet_hasService(pnt, PLANET_SERVICE_LAND) ||
-               !planet_hasService(pnt, PLANET_SERVICE_INHABITED) ||
-               !planet_hasService(pnt, PLANET_SERVICE_REFUEL) ||
-               areEnemies(pnt->faction, FACTION_PLAYER)) {
-            WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
-            pnt = planet_get( space_getRndPlanet( (i>100) ? 1 : 0 ) ); /* We try landable only for the first 100 tries. */
-         }
-         else
-            hunting = 0;
 
-         i++;
+      /* Find a landable, inhabited planet that's in a system, offers refueling
+       * and meets the following additional criteria:
+       *
+       *    0: Shipyard, outfitter, non-hostile
+       *    1: Outfitter, non-hostile
+       *    2: None
+       *
+       * If no planet meeting the current criteria can be found, the next
+       * set of criteria is tried until none remain.
+       */
+      found = NULL;
+      for (i=0; i<3; i++) {
+         services = PLANET_SERVICE_LAND | PLANET_SERVICE_INHABITED |
+               PLANET_SERVICE_REFUEL;
+
+         if (i == 0)
+            services |= PLANET_SERVICE_SHIPYARD;
+
+         if (i != 2)
+            services |= PLANET_SERVICE_OUTFITS;
+
+         found = space_getRndPlanet( 1, services,
+               (i != 2) ? player_filterSuitablePlanet : NULL );
+         if (found != NULL)
+            break;
+
+         WARN("Could not find a planet satisfying criteria %d.", i);
       }
-      if (hunting)
-         WARN("Didn't manage to find suitable planet, trying at last found...");
+
+      if (found == NULL) {
+         WARN("Could not find a suitable planet. Choosing a random planet.");
+         found = space_getRndPlanet(0, 0, NULL); /* This should never, ever fail. */
+      }
+      pnt = planet_get( found );
    }
-   sys = system_get( planet_getSystem( planet ) );
+   sys = system_get( planet_getSystem( pnt->name ) );
    space_gfxLoad( sys );
    a = RNGF() * 2.*M_PI;
    r = RNGF() * pnt->radius * 0.8;
@@ -3285,6 +3301,18 @@ static Planet* player_parse( xmlNodePtr parent )
    player_initSound();
 
    return pnt;
+}
+
+
+/**
+ * @brief Filter function for space_getRndPlanet
+ *
+ *    @param p Planet.
+ *    @return Whether the planet is suitable for teleporting to.
+ */
+static int player_filterSuitablePlanet( Planet *p )
+{
+   return !areEnemies(p->faction, FACTION_PLAYER);
 }
 
 
@@ -3516,6 +3544,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    ship_parsed = ship_get(model);
    if (ship_parsed == NULL) {
       WARN("Player ship '%s' not found!", model);
+
+      /* Clean up. */
+      free(name);
+      free(model);
+
       return -1;
    }
 
@@ -3627,8 +3660,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   continue;
                }
 
-               /* actually add the cargo with id hack */
-               pilot_cargoAdd( ship, com, quantity );
+               /* actually add the cargo with id hack
+                * Note that the player's cargo_free is ignored here.
+                */
+               pilot_cargoAddRaw( ship, com, quantity, 0 );
                if (i != 0)
                   ship->commodities[ ship->ncommodities-1 ].id = i;
             }
