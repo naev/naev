@@ -1607,7 +1607,7 @@ void player_hailStart (void)
 
    /* Abort autonav. */
    player_messageRaw("\erReceiving hail!");
-   player_autonavEnd();
+   player_autonavAbort(NULL);
 }
 
 
