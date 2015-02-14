@@ -190,6 +190,7 @@ function pilot_board ()
    target_killed = false
    target_ship:changeAI( "dummy" )
    target_ship:setHilight( false )
+   target_ship:disable() -- Stop it from coming back
    if death_hook ~= nil then hook.rm( death_hook ) end
 end
 
