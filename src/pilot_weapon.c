@@ -176,6 +176,7 @@ void pilot_weapSetAIClear( Pilot* p )
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
    int i, l, on, n;
+   double d;
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
@@ -205,7 +206,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 
       case WEAPSET_TYPE_ACTIVE:
          /* The behaviour here is more complex. What we do is consider a group
-          * to be entirely off if not all outfits are either on or cooling down.
+          * to be entirely off if not all outfits are on.
           * In the case it's deemed to be off, all outfits that are off get turned
           * on, otherwise all outfits that are on are turrned to cooling down. */
          /* Only care about presses. */
@@ -220,7 +221,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          on = 1;
          l  = array_size(ws->slots);
          for (i=0; i<l; i++) {
-            if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+            if (ws->slots[i].slot->state != PILOT_OUTFIT_ON) {
                on = 0;
                break;
             }
@@ -239,13 +240,21 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them on. */
          else {
             for (i=0; i<l; i++) {
-               if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
+               if ( (ws->slots[i].slot->state != PILOT_OUTFIT_OFF) &&
+                     (ws->slots[i].slot->state != PILOT_OUTFIT_COOLDOWN) )
                   continue;
                if (outfit_isAfterburner(ws->slots[i].slot->outfit))
                   pilot_afterburn( p );
                else {
-                  ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
-                  ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+                  if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+                     ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+                     ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+                  }
+                  else {
+                     ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+                     d = outfit_duration( ws->slots[i].slot->outfit );
+                     ws->slots[i].slot->stimer = d - (d * ws->slots[i].slot->stimer / outfit_cooldown( ws->slots[i].slot->outfit ));
+                  }
                }
                n++;
             }
