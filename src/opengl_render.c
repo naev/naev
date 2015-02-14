@@ -55,8 +55,10 @@ static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
 /*
  * prototypes
  */
+#if 0
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
+#endif
 static glTexture *gl_genCircle( int radius );
 static void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
@@ -775,6 +777,61 @@ void gl_blitStatic( const glTexture* texture,
 }
 
 
+void gl_drawCircleLoop( const double cx, const double cy,
+      const double r, const glColour *c )
+{
+   int i, points;
+   double angi, cosi, sini;
+   double nxc, xc, yc;
+   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
+
+   /* Aim for 10 px between each vertex. */
+   points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
+
+   angi = 2. * M_PI / (double)points;
+   cosi = cos(angi);
+   sini = sin(angi);
+
+   vertex[0] = cx + r;
+   vertex[1] = cy;
+
+   xc = 1.;
+   yc = 0.;
+
+   /* Calculate the vertices by iterating counter-clockwise. */
+   for (i=1; i<points; i++) {
+      nxc = cosi * xc - sini * yc;
+      yc  = sini * xc + cosi * yc;
+      xc  = nxc;
+
+      vertex[i*2+0] = cx + xc * r;
+      vertex[i*2+1] = cy + yc * r;
+   }
+
+   gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set up the colour. */
+   for (i=0; i<points; i++) {
+      col[4*i+0] = c->r;
+      col[4*i+1] = c->g;
+      col[4*i+2] = c->b;
+      col[4*i+3] = c->a;
+   }
+
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, points*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_LINE_LOOP, 0, points );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+}
+
+
+#if 0
 /**
  * @brief Draws an empty circle.
  *
@@ -858,6 +915,7 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
    gl_vboDeactivate();
 }
 #undef PIXEL
+#endif
 
 
 /**
@@ -876,7 +934,7 @@ void gl_drawCircle( const double cx, const double cy,
       gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
          0., 0., gl_circle->srw, gl_circle->srh, c );
    else
-      gl_drawCircleEmpty( cx, cy, r, c );
+      gl_drawCircleLoop( cx, cy, r, c );
 }
 
 
