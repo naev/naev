@@ -735,6 +735,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.g = cRed.g;
    col.b = cRed.b;
 
+   glEnable(GL_LINE_SMOOTH);
    glEnable(GL_POINT_SMOOTH);
 
    /* Selected system. */
@@ -754,6 +755,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
          y + cur_system->pos.y * map_zoom,
          1.5*r, bx, by, w, h, &col, 0 );
 
+   glDisable(GL_LINE_SMOOTH);
    glDisable(GL_POINT_SMOOTH);
 }
 
@@ -901,6 +903,11 @@ void map_renderSystems( double bx, double by, double x, double y,
    StarSystem *sys;
    double tx, ty;
 
+
+   /* Smoother circles. */
+   glEnable( GL_LINE_SMOOTH );
+   glEnable(GL_POINT_SMOOTH);
+
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
@@ -911,9 +918,6 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
-
-      /* Smoother circles. */
-      glEnable(GL_POINT_SMOOTH);
 
       /* Draw an outer ring. */
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
@@ -933,8 +937,10 @@ void map_renderSystems( double bx, double by, double x, double y,
          gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 0 );
       }
 
-      glDisable(GL_POINT_SMOOTH);
    }
+
+   glDisable(GL_POINT_SMOOTH);
+   glDisable( GL_LINE_SMOOTH );
 }
 
 
