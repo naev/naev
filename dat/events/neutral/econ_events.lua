@@ -56,6 +56,20 @@ end
 
 
 function create ()
+   start_hook = hook.jumpin( "start" )
+   end_hook = hook.land( "early_end" )
+end
+
+
+function early_end ()
+   evt.finish()
+end
+
+
+function start ()
+   hook.rm( start_hook )
+   hook.rm( end_hook )
+
    --get the event
    local event_num = rnd.rnd( 1, #events )
    local event = events[event_num]
