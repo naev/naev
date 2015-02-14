@@ -60,6 +60,18 @@ void player_autonavResetSpeed (void)
 
 
 /**
+ * @brief Resets the game speed for a given amount of time.
+ *
+ *    @param duration Seconds to keep the speed reset
+ */
+void player_autonavKeepResetSpeed( double duration )
+{
+   player_autonavResetSpeed();
+   speedup_timer = MAX( speedup_timer, duration );
+}
+
+
+/**
  * @brief Starts autonav.
  */
 void player_autonavStart (void)
