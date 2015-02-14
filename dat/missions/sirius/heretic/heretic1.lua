@@ -1,3 +1,16 @@
+--[[
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+--]]
+
 --[[misn title - the return]]
 --[[after smuggling a small arms shipment to the an'ku system,
 	the player is asked to deliver a message to a "shady character"

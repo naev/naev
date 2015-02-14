@@ -1,9 +1,20 @@
 --[[
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
 --
--- MISSION: The complaining grandma
--- DESCRIPTION: The player is taking an old woman from Dvaered space to Sirius space.
--- The old woman keeps muttering about how the times have changed and how it used to be when she was young.
---
+
+   MISSION: The complaining grandma
+   DESCRIPTION: The player is taking an old woman from Dvaered space to Sirius space.
+   The old woman keeps muttering about how the times have changed and how it used to be when she was young.
+
 --]]
 
 include "dat/scripts/cargo_common.lua"
