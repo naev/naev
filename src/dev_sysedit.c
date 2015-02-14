@@ -382,6 +382,10 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
+
+   /* Update economy due to galaxy modification. */
+   economy_execQueued();
+
    if (conf.devautosave)
       dpl_savePlanet( p );
 
@@ -465,6 +469,9 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
          }
       }
+
+      /* Update economy due to galaxy modification. */
+      economy_execQueued();
    }
 }
 
