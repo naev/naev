@@ -79,7 +79,7 @@ end
 function create ()
    paying_faction = planet.cur():faction()
 
-   local systems = getsysatdistance( system.cur(), 0, 3,
+   local systems = getsysatdistance( system.cur(), 1, 3,
       function(s) return s:presences()["Pirate"] end )
 
    if #systems == 0 then
