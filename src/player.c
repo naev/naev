@@ -1610,7 +1610,8 @@ void player_hailStart (void)
 
    /* Abort autonav. */
    player_messageRaw("\erReceiving hail!");
-   player_autonavAbort(NULL);
+   player_autonavResetSpeed();
+   player.autonav_timer = 10.;
 }
 
 
