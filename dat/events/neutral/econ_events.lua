@@ -39,19 +39,19 @@ lang = naev.lang()
 if lang == 'es' then --not translated atm
 else --default english
    events[1]["title"] = "Famine on %s"
-   events[1]["text"] = "The planet %s is experiencing a famine due to an unexpected food shortage. Food prices have skyrocketed as a result."
+   events[1]["text"] = "%s is experiencing a famine due to an unexpected food shortage. Food prices have skyrocketed as a result."
 
    events[2]["title"] = "Bumper Crop on %s"
-   events[2]["text"] = "More crops than usual are being harvested on the planet %s, resulting in lower food prices."
+   events[2]["text"] = "More crops than usual are being harvested on %s, resulting in lower food prices."
 
    events[3]["title"] = "Worker Strike on %s"
-   events[3]["text"] = "Prices of industrial goods and ore have risen on the planet %s due to a worker's strike."
+   events[3]["text"] = "Prices of industrial goods and ore have risen on %s due to a worker's strike."
 
    events[4]["title"] = "Cat Convention on %s"
-   events[4]["text"] = "Many wealthy people are visiting the planet %s for a cat convention, resulting in a high demand for luxury goods."
+   events[4]["text"] = "Many wealthy people are visiting %s for a cat convention, resulting in a high demand for luxury goods."
 
    events[5]["title"] = "Disease Outbreak on %s"
-   events[5]["text"] = "The demand for medicine on the planet %s has spiked due to an outbreak of an unpleasent disease."
+   events[5]["text"] = "The demand for medicine on %s has spiked due to an outbreak of an unpleasent disease."
 end
 
 
@@ -109,24 +109,27 @@ function create ()
 
       --update the prices, and make the article
       econ.updatePrices()
-      make_article( event )
+      hook.land( "make_article", "bar", event )
 
       --set up the event ending
+      hook.comm_buy( "make_transaction" )
+      hook.comm_sell( "make_transaction" )
+      hook.takeoff( "check_end" )
       hook.jumpout( "end_event" )
       evt.save(true)
    end
 end
 
 
-   --make the news event for the selected event and system
+-- make the news event for the selected event and system
 function make_article( event )
    local title = event["title"]:format( event_planet:name() )
    local body = event["text"]:format( event_planet:name() )
-   local article = news.add( "Generic", title, body, time.get() + time.create( 0, 1, 0 ) )
+   news.add( "Generic", title, body, 0 )
 end
 
 
---end the event, and return the values to their original values
+-- end the event, and return the values to their original values
 function end_event ()
    local commodities = event_planet:commoditiesSold()
 
@@ -144,3 +147,19 @@ function end_event ()
    evt.finish()
 end
 
+
+-- Make a transaction (will cause event to end on takeoff, if this is
+-- the event planet)
+function make_transaction ()
+   if planet.cur() == event_planet then
+      event_used = true
+   end
+end
+
+
+-- End event if a transaction has been made on the event planet
+function check_end ()
+   if event_used then
+      end_event()
+   end
+end
