@@ -319,7 +319,8 @@ static void setgui_load( unsigned int wdw, char *str )
       return;
 
    if (player.guiOverride == 0) {
-      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+      if (dialogue_YesNo( "GUI Override is not set.",
+               "Enable GUI Override and change GUI to '%s'?", gui )) {
          player.guiOverride = 1;
          window_checkboxSet( wid, "chkOverride", player.guiOverride );
       }
