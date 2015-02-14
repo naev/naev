@@ -25,6 +25,10 @@ _fcap_misn       = 30 -- Starting mission cap, gets overwritten
 _fcap_misn_var   = nil -- Mission variable to use for limits
 _fcap_mod_sec    = 0.3 -- Modulation from secondary
 
+-- Whether or not the faction should get mad for attacking them or their
+-- allies outside of their territory.
+_fextern_penalty = false
+
 
 --[[
    @brief Clamps a value x between low and high.
@@ -107,6 +111,21 @@ function default_hit( current, amount, source, secondary )
       end
    end
 
+   if not _fextern_penalty and (source == "distress" or source == "kill") and amount < 0 then
+      -- Only take a hit if in the faction's territory
+      local has_planet
+      for _, planet in ipairs(system.cur():planets()) do
+         if planet:faction() == _fthis then
+            has_planet = true
+            break
+         end
+      end
+      if not has_planet then
+         -- Planet belonging to this faction not found. Don't modify reputation.
+         return f
+      end
+   end
+
    -- Adjust for secondary hit
    if secondary then mod = mod * _fcap_mod_sec end
    amount = mod * amount
@@ -123,12 +142,12 @@ function default_hit( current, amount, source, secondary )
             -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
             -- NOTE: virtual assets are NOT counted when determining territory!
             for _, planet in ipairs(system.cur():planets()) do
-                if planet:faction() == _fthis then
-                   -- Planet belonging to this faction found. Modify reputation.
-                   f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
-                   has_planet = true
-                   break
-                end
+               if planet:faction() == _fthis then
+                  -- Planet belonging to this faction found. Modify reputation.
+                  f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
+                  has_planet = true
+                  break
+               end
             end
             local witness = pilot.get( { _fthis } )
             if not has_planet and witness then
