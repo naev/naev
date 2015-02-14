@@ -32,7 +32,6 @@ static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;
 static double lasta;
-static int hostiles_last = 0;
 
 /*
  * Prototypes.
@@ -137,7 +136,6 @@ static int player_autonavSetup (void)
 
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
-   hostiles_last = 0;
 
    return 1;
 }
@@ -457,7 +455,7 @@ int player_autonavShouldResetSpeed (void)
       }
    }
 
-   if (hostiles && hostiles_last) {
+   if (hostiles) {
       if (failpc > .995) {
          will_reset = 1;
          player.autonav_timer = 0.;
@@ -476,7 +474,6 @@ int player_autonavShouldResetSpeed (void)
 
    lasts = shield;
    lasta = armour;
-   hostiles_last = hostiles;
 
    if (will_reset) {
       player_autonavResetSpeed();
