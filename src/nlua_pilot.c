@@ -2364,9 +2364,10 @@ static int pilotL_disable( lua_State *L )
 /**
  * @brief Gets a pilot's cooldown state.
  *
- * @usage p:cooldown()
+ * @usage cooldown, braking = p:cooldown()
  *
  *    @luaparam p Pilot to check the cooldown status of.
+ *    @luareturn Cooldown and cooldown braking status.
  * @luafunc cooldown( p )
  */
 static int pilotL_cooldown( lua_State *L )
@@ -2378,8 +2379,9 @@ static int pilotL_cooldown( lua_State *L )
 
    /* Get the cooldown status. */
    lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN) );
+   lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN_BRAKE) );
 
-   return 1;
+   return 2;
 }
 
 
@@ -2939,7 +2941,7 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour, shield nd stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
+ *    @luareturn The armour, shield and stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
