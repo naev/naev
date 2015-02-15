@@ -55,11 +55,8 @@ static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
 /*
  * prototypes
  */
-#if 0
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
-#endif
-static glTexture *gl_genCircle( int radius );
 static void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
@@ -831,7 +828,6 @@ void gl_drawCircleLoop( const double cx, const double cy,
 }
 
 
-#if 0
 /**
  * @brief Draws an empty circle.
  *
@@ -915,7 +911,6 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
    gl_vboDeactivate();
 }
 #undef PIXEL
-#endif
 
 
 /**
@@ -933,6 +928,8 @@ void gl_drawCircle( const double cx, const double cy,
    if (filled)
       gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
          0., 0., gl_circle->srw, gl_circle->srh, c );
+   else if (gl_vendorIsIntel())
+      gl_drawCircleEmpty( cx, cy, r, c );
    else
       gl_drawCircleLoop( cx, cy, r, c );
 }
@@ -1102,13 +1099,13 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *    @param radius Radius of the circle to generate.
  *    @return The tetxure containing the generated circle.
  */
-static glTexture *gl_genCircle( int radius )
+glTexture *gl_genCircle( int radius )
 {
-   int i,j,k, n,m;
+   int i, j, edge, blur;
    SDL_Surface *sur;
-   uint8_t *pix, *buf;
+   uint8_t *pix;
    int h, w;
-   double a;
+   double dist;
    char name[PATH_MAX];
 
    /* Calculate parameters. */
@@ -1122,37 +1119,24 @@ static glTexture *gl_genCircle( int radius )
    /* Generate the circle. */
    SDL_LockSurface( sur );
 
-   /* Create temporary buffer to draw circle in. */
-   k = 3;
-   buf = malloc( (h*k) * (w*k) );
-   for (i=0; i<k*h; i++) {
-      for (j=0; j<k*w; j++) {
-         if (pow2(i-k*radius)+pow2(j-k*radius) < pow2(k*radius))
-            buf[ i*k*w + j] = 0xFF;
-      }
-   }
+   edge = pow2(radius);
+   blur = pow2(radius - 1);
 
-   /* Draw the circle with filter. */
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* Calculate blur. */
-         a = 0.;
-         for (n=0; n<k; n++)
-            for (m=0; m<k; m++)
-               a += buf[ (i*k+n)*k*w + (j*k+m) ];
+   for (i=0; i<w; i++) {
+      for (j=0; j<h; j++) {
+         dist = pow2(i - radius) + pow2(j - radius);
+         if (dist > edge)
+            pix[i*sur->pitch + j*4 + 3] = 0;
+         else if (dist <= blur)
+            pix[i*sur->pitch + j*4 + 3] = 0xFF;
+         else
+            pix[i*sur->pitch + j*4 + 3] = CLAMP(0, 0xFF, (edge - dist) / (edge - blur) * 0xFF);
 
-         a /= k*k;
-
-         /* Set pixel. */
          pix[i*sur->pitch + j*4 + 0] = 0xFF;
          pix[i*sur->pitch + j*4 + 1] = 0xFF;
          pix[i*sur->pitch + j*4 + 2] = 0xFF;
-         pix[i*sur->pitch + j*4 + 3] = (uint8_t)a;
       }
    }
-
-   /* Clean up. */
-   free(buf);
 
    SDL_UnlockSurface( sur );
 

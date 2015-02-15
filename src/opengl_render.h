@@ -72,6 +72,7 @@ void gl_drawCircleLoop( const double x, const double y,
 void gl_drawCircleInRect( const double x, const double y, const double r,
       const double rx, const double ry, const double rw, const double rh,
       const glColour *c, int filled );
+glTexture *gl_genCircle( int radius );
 
 
 /* Rectangles. */
