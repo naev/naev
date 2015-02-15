@@ -95,7 +95,7 @@ else -- default english
 
    misn_title = "FLF: Small Dvaered Patrol in %s"
    misn_desc = "To prove yourself to the FLF, you must take out one of the Dvaered security patrols."
-   misn_rwrd = "A chance to make friends with FLF."
+   misn_rwrd = "A chance to make friends with the FLF."
    osd_title   = "Dvaered Patrol"
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
