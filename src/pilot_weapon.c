@@ -844,6 +844,12 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    if (w->u.beamid == 0)
       return;
 
+  /* Safeguard against a nasty race condition. */
+  if (w->outfit == NULL) {
+      w->u.beamid = 0;
+     return;
+  }
+
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
 
@@ -1309,6 +1315,10 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 
    if (outfit_isAfterburner( o->outfit )) /* Afterburners */
       pilot_afterburnOver( p );
+   else if (outfit_isBeam( o->outfit )) {
+      /* Beams use stimer to represent minimum time until shutdown. */
+      o->stimer = -1;
+   }
    else {
       c = outfit_cooldown( o->outfit );
       if (o->stimer != INFINITY)
