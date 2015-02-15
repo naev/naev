@@ -47,6 +47,7 @@ static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
+glTexture *gl_map_circle      = NULL; /**< Texture of the circle used for systems. */
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -110,6 +111,9 @@ void map_exit (void)
 
    if (gl_faction_disk != NULL)
       gl_freeTexture( gl_faction_disk );
+
+   if (gl_map_circle != NULL)
+      gl_freeTexture( gl_map_circle );
 }
 
 
@@ -707,6 +711,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
 
+   if (gl_map_circle == NULL)
+      gl_map_circle = gl_genCircle( r );
+
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
@@ -941,11 +948,15 @@ void map_renderSystems( double bx, double by, double x, double y,
          else if (editor) col = &cNeutral;
          else col = faction_getColour( sys->faction );
 
-         /* Radius slightly shorter. */
-         gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
-
-         /* @todo Fix this hack. Just serves to smooth the jagged edges. */
-         gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 0 );
+         if (editor) {
+            /* Radius slightly shorter. */
+            gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
+         }
+         else
+            gl_blitTexture(
+                  gl_map_circle,
+                  tx - r * .65, ty - r * .65, r * 1.3, r * 1.3,
+                  0., 0., gl_map_circle->srw, gl_map_circle->srh, col );
       }
 
    }
@@ -1579,6 +1590,11 @@ static void A_freeList( SysNode *first )
 void map_setZoom(double zoom)
 {
    map_zoom = zoom;
+
+   if (gl_map_circle != NULL) {
+      gl_freeTexture(gl_map_circle);
+      gl_map_circle = NULL;
+   }
 }
 
 /**
