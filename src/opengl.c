@@ -587,10 +587,7 @@ static int gl_getGLInfo (void)
 
    /* Ugly, but Intel hardware seems to be uniquely problematic. */
    vendor = (char*)glGetString(GL_VENDOR);
-   if (nstrcasestr(vendor, "Intel") != NULL)
-      intel_vendor = 1;
-   else
-      intel_vendor = 0;
+   intel_vendor = !!(nstrcasestr(vendor, "Intel") != NULL);
 
    /* Debug happiness */
    DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", SCREEN_W, SCREEN_H, gl_screen.depth,
