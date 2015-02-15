@@ -26,6 +26,7 @@
 #include "array.h"
 #include "mapData.h"
 #include "nstring.h"
+#include "nmath.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -725,7 +726,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderSystems( bx, by, x, y, w, h, r, 0 );
 
    /* Render system names. */
-   map_renderNames( x, y, 0 );
+   map_renderNames( bx, by, x, y, w, h, 0 );
 
    /* Render system markers. */
    map_renderMarkers( x, y, r, col.a );
@@ -922,6 +923,10 @@ void map_renderSystems( double bx, double by, double x, double y,
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
+         continue;
+
       /* Draw an outer ring. */
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
 
@@ -1019,9 +1024,11 @@ static void map_renderPath( double x, double y, double a )
 /**
  * @brief Renders the system names on the map.
  */
-void map_renderNames( double x, double y, int editor )
+void map_renderNames( double bx, double by, double x, double y,
+      double w, double h, int editor )
 {
    double tx,ty, vx,vy, d,n;
+   int textw;
    StarSystem *sys, *jsys;
    int i, j;
    char buf[32];
@@ -1033,15 +1040,26 @@ void map_renderNames( double x, double y, int editor )
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
+      textw = gl_printWidthRaw( &gl_smallFont, sys->name );
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
+
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
+         continue;
+
       gl_print( &gl_smallFont,
             tx, ty,
             &cWhite, sys->name );
 
-      /* Raw hidden values if we're in the editor. */
-      if (!editor || (map_zoom <= 1.0))
-         continue;
+   }
+
+   /* Raw hidden values if we're in the editor. */
+   if (!editor || (map_zoom <= 1.0))
+      return;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
       for (j=0; j<sys->njumps; j++) {
          jsys = sys->jumps[j].target;
          /* Calculate offset. */

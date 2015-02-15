@@ -429,7 +429,7 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    map_renderSystems( bx, by, x, y, w, h, r, 1 );
 
    /* Render system names. */
-   map_renderNames( x, y, 1 );
+   map_renderNames( bx, by, x, y, w, h, 1 );
 
    /* Render the selected system selections. */
    for (i=0; i<uniedit_nsys; i++) {
