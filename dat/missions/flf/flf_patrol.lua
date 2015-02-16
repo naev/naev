@@ -57,8 +57,6 @@ else -- default english
    osd_desc[2] = "Eliminate the Dvaered patrol"
    osd_desc[3] = "Return to the FLF base"
    osd_desc["__save"] = true
-
-   dv_ship_name = "Dvaered Patroller"
 end
 
 
@@ -185,15 +183,6 @@ function timer_lateFLF ()
 end
 
 
-function pilot_attacked_dv ()
-   for i, j in ipairs( fleetDV ) do
-      if j:exists() then
-         j:setHostile()
-      end
-   end
-end
-
-
 function pilot_death_dv ()
    dv_ships_left = dv_ships_left - 1
    if dv_ships_left <= 0 then
@@ -219,7 +208,7 @@ function land_flf ()
    if planet.cur() == flfplanet then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
-      faction.get("FLF"):modPlayerSingle( reputation )
+      faction.get("FLF"):modPlayer( reputation )
       misn.finish( true )
    end
 end
@@ -253,9 +242,8 @@ function patrol_spawnDV( n, boss )
       end
       local pstk = pilot.add( shipname, "dvaered_norun", vec2.new( x, y ) )
       local p = pstk[1]
-      p:rename( dv_ship_name )
-      hook.pilot( p, "attacked", "pilot_attacked_dv" )
       hook.pilot( p, "death", "pilot_death_dv" )
+      p:setHostile()
       p:setVisible( true )
       p:setHilight( true )
       fleetDV[i] = p
