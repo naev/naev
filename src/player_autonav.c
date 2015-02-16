@@ -456,7 +456,7 @@ int player_autonavShouldResetSpeed (void)
       }
       else if ((shield < lasts && shield < failpc) || armour < lasta) {
          will_reset = 1;
-         player.autonav_timer = 2.;
+         player.autonav_timer = MAX( player.autonav_timer, 2. );
       }
       else if (player.autonav_timer > 0) {
          /* This check needs to be after the second check so new hits
