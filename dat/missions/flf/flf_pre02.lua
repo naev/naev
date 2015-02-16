@@ -238,7 +238,7 @@ function hail ()
       faction.get("FLF"):modPlayerSingle( -200 )
       local standing = faction.get("Dvaered"):playerStanding()
       if standing < 0 then
-         faction.get("Dvaered"):modPlayerSingle( -standing )
+         faction.get("Dvaered"):modPlayerRaw( -standing )
       end
 
       for i, j in ipairs( fleetDV ) do
@@ -326,6 +326,10 @@ function pilot_death_dv ()
       if rehailer ~= nil then hook.rm( rehailer ) end
 
       job_done = true
+      local standing = faction.get("Dvaered"):playerStanding()
+      if standing >= 0 then
+         faction.get("Dvaered"):modPlayerRaw( -standing - 1 )
+      end
       misn.osdActive( 3 )
       misn.markerRm( marker )
       marker = misn.markerAdd( system.get( var.peek( "flfbase_sysname" ) ), "high" )
