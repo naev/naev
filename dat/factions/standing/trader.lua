@@ -20,7 +20,6 @@ _fdelta_distress = {-1.5, 0} -- Maximum change constraints
 _fdelta_kill     = {-7, 2} -- Maximum change constraints
 _fcap_misn     = 30 -- Starting mission cap, gets overwritten
 _fcap_misn_var = "_fcap_trader"
-_fextern_penalty = true
 _fthis         = faction.get("Trader")
 
 
