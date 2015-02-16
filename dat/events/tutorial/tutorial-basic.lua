@@ -13,7 +13,7 @@ else -- default english
 This tutorial will teach you what Naev is about, and show you the elementary controls of your ship.]]
     message2 = [[We will start by flying around. Use %s and %s to turn, and %s to accelerate. Try flying around the planet.]]
     message3 = [[Flying is easy, but stopping is another thing. To stop, you will need to thrust in the opposite of the direction you're heading in. To make this task easier, you can use %s to reverse your direction. Once you have turned around completely, thrust to decrease your speed. Try this now.]]
-    message4 = [[Well done. Maneuvering and stopping will be important for playing the game.
+    message4 = [[Well done. For convenience, it's also possible to automatically turn around and stop by pressing %s.
 
 Note that your ship can also fly towards the mouse, which can be toggled with %s or clicking your middle mouse button.
 
@@ -92,7 +92,8 @@ function checkBrake()
     if braketime > 4 then
         -- Have been stationary (or close enough) for long enough
         player.omsgRm(omsg)
-        tk.msg(title1, message4:format(tutGetKey("mousefly"), tutGetKey("overlay")))
+        tk.msg(title1, message4:format(tutGetKey("autobrake"),
+            tutGetKey("mousefly"), tutGetKey("overlay")))
         omsg = player.omsgAdd(mapomsg:format(tutGetKey("overlay")), 0)
         player.pilot():setVel(vec2.new()) -- Stop the player completely
         waitmap = true
