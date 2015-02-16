@@ -450,7 +450,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    }
 
    /* Stop player sounds because sometimes they hang. */
-   player_autonavAbort( "Exited game." );
+   player_restoreControl( 0, "Exited game." );
    player_soundStop();
 
    /* Clean up. */

@@ -104,7 +104,7 @@ const char *keybind_info[][3] = {
    { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
    { "overlay", "Overlay Map", "Opens the in-system overlay map." },
    { "mousefly", "Mouse Flight", "Toggles mouse flying." },
-   { "cooldown", "Active Cooldown", "Engages active cooldown mode." },
+   { "autobrake", "Autobrake", "Begins automatic braking or active cooldown, if stopped." },
    /* Communication */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
@@ -265,7 +265,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
    input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ALL );
    input_setKeybind( "mousefly", KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
-   input_setKeybind( "cooldown", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
+   input_setKeybind( "autobrake", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
    /* Communication */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ALL );
@@ -746,13 +746,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* accelerating */
    if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_accel(kabs);
          input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
-            if (!paused) player_autonavAbort(NULL);
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_ACCEL);
             player_accel(1.);
             input_accelButton = 1;
@@ -780,14 +780,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning left */
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_LEFT);
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_autonavAbort(NULL);
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_TURN_LEFT);
             player_left = 1.;
          }
@@ -800,14 +800,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning right */
    } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_RIGHT);
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_autonavAbort(NULL);
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_TURN_RIGHT);
             player_right = 1.;
          }
@@ -820,7 +820,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_REVERSE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
@@ -859,7 +859,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* face the target */
    } else if (KEY("face") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_FACE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
@@ -868,7 +868,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         player_autonavAbort(NULL);
+         player_restoreControl( 0, NULL );
          player_board();
       }
 
@@ -942,7 +942,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         player_autonavAbort(NULL);
+         player_restoreControl( 0, NULL );
          player_jump();
       }
    } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
@@ -950,10 +950,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();
-   } else if (KEY("cooldown") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS)
-         player_toggleCooldown();
-
+   } else if (KEY("autobrake") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
+      if (value==KEY_PRESS) {
+         player_restoreControl( PINPUT_BRAKING, NULL );
+         player_brake();
+      }
 
    /*
     * Communication.
@@ -1007,7 +1008,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_rmFlag(PLAYER_DOUBLESPEED);
          } else {
             if (!player_isFlag(PLAYER_AUTONAV))
-               pause_setSpeed(2.);
+               pause_setSpeed(50.);
             player_setFlag(PLAYER_DOUBLESPEED);
          }
       }

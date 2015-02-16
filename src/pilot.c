@@ -651,11 +651,11 @@ int pilot_brake( Pilot *p )
    }
 
    diff = pilot_face(p, dir);
-   if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR)
+   if (ABS(diff) < MAX_DIR_ERR && !pilot_isStopped(p))
       pilot_setThrust(p, thrust);
    else {
       pilot_setThrust(p, 0.);
-      if (VMOD(p->solid->vel) <= MIN_VEL_ERR)
+      if (pilot_isStopped(p))
          return 1;
    }
 
@@ -675,12 +675,15 @@ void pilot_cooldown( Pilot *p )
    PilotOutfitSlot *o;
 
    /* Brake if necessary. */
-   if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+   if (!pilot_isStopped(p)) {
+      pilot_setFlag(p, PILOT_BRAKING);
       pilot_setFlag(p, PILOT_COOLDOWN_BRAKE);
       return;
    }
-   else
+   else {
+      pilot_rmFlag(p, PILOT_BRAKING);
       pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+   }
 
    if (p->id == PLAYER_ID)
       player_message("\epActive cooldown engaged.");
@@ -1231,6 +1234,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       if (pilot_isFlag(p, PILOT_COOLDOWN))
          pilot_cooldownEnd(p, NULL);
 
+      /* Clear other active states. */
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+      pilot_rmFlag(p, PILOT_BRAKING);
+
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
@@ -1698,10 +1705,25 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
    }
 
-   /* Braking before cooldown. */
-   if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
-      if (pilot_brake( pilot ))
-         pilot_cooldown( pilot );
+   /* Special handling for braking. */
+   if (pilot_isFlag(pilot, PILOT_BRAKING )) {
+      if (pilot_brake( pilot )) {
+         if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
+            pilot_cooldown( pilot );
+         else {
+            /* Normal braking is done (we're below MIN_VEL_ERR), now sidestep
+             * normal physics and bring the ship to a near-complete stop.
+             */
+            pilot->solid->speed_max = 0.;
+            pilot->solid->update( pilot->solid, dt );
+
+            if (VMOD(pilot->solid->vel) < 1e-1) {
+               vectnull( &pilot->solid->vel ); /* Forcibly zero velocity. */
+               pilot_rmFlag(pilot, PILOT_BRAKING);
+            }
+         }
+      }
+   }
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
@@ -1939,7 +1961,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
-               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR))
+               !pilot_isFlag(p, PILOT_HYP_BRAKE) && !pilot_isStopped(p))
             pilot_brake(p);
          /* face target */
          else {

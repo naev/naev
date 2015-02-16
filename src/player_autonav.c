@@ -104,10 +104,8 @@ static int player_autonavSetup (void)
          pilot_isDisabled(player.p))
       return 0;
 
-   /* Cooldown and autonav are mutually-exclusive. */
-   if ((pilot_isFlag(player.p, PILOT_COOLDOWN)) ||
-         (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
-      pilot_cooldownEnd(player.p, NULL);
+   /* Autonav is mutually-exclusive with other autopilot methods. */
+   player_restoreControl( PINPUT_AUTONAV, NULL );
 
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
@@ -266,10 +264,6 @@ void player_autonavAbort( const char *reason )
       /* Reset time compression. */
       player_autonavEnd();
    }
-   else if (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))
-      pilot_cooldownEnd(player.p, NULL);
-   else if (pilot_isFlag(player.p, PILOT_COOLDOWN))
-      pilot_cooldownEnd(player.p, reason);
 }
 
 

@@ -1259,6 +1259,29 @@ void player_weapSetPress( int id, int type, int repeat )
 
 
 /**
+ * @brief Aborts autonav and other states that take control of the ship.
+ *
+ *    @param reason Reason for aborting (see player.h)
+ *    @param str String accompanying the reason.
+ */
+void player_restoreControl( int reason, char *str )
+{
+   if (reason != PINPUT_AUTONAV) {
+      /* Autonav should be harder to abort when paused. */
+      if (!paused || reason != PINPUT_MOVEMENT)
+         player_autonavAbort(str);
+   }
+
+   if (reason != PINPUT_BRAKING) {
+      pilot_rmFlag(player.p, PILOT_BRAKING);
+      pilot_rmFlag(player.p, PILOT_COOLDOWN_BRAKE);
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN))
+         pilot_cooldownEnd(player.p, str);
+   }
+}
+
+
+/**
  * @brief Sets the player's target planet.
  *
  *    @param id Target planet or -1 if none should be selected.
@@ -1429,7 +1452,7 @@ void player_land (void)
    }
 
    /* Abort autonav. */
-   player_autonavAbort(NULL);
+   player_restoreControl(0, NULL);
 
    /* Stop afterburning. */
    pilot_afterburnOver( player.p );
@@ -2120,10 +2143,12 @@ void player_toggleMouseFly(void)
 
 
 /**
- * @brief Toggles active cooldown mode.
+ * @brief Starts braking or active cooldown.
  */
-void player_toggleCooldown(void)
+void player_brake(void)
 {
+   int stopped;
+
    if (pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
@@ -2132,13 +2157,13 @@ void player_toggleCooldown(void)
          pilot_isDisabled(player.p))
       return;
 
-   if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
-            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))) {
-      player_autonavAbort(NULL);
-      pilot_cooldown( player.p );
-   }
-   else
-      pilot_cooldownEnd(player.p, NULL);
+   stopped = pilot_isStopped(player.p);
+   if (stopped && !pilot_isFlag(player.p, PILOT_COOLDOWN))
+      pilot_cooldown(player.p);
+   else if (pilot_isFlag(player.p, PILOT_BRAKING))
+      pilot_setFlag(player.p, PILOT_COOLDOWN_BRAKE);
+   else if (!stopped)
+      pilot_setFlag(player.p, PILOT_BRAKING);
 }
 
 
