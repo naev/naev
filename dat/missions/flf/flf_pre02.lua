@@ -94,8 +94,8 @@ else -- default english
    flfcomm[3] = "Let's get out of here, %s! We'll meet you back at the base."
 
    misn_title = "FLF: Small Dvaered Patrol in %s"
-   misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out one of their security patrols."
-   misn_rwrd = "A chance to make friends out of the FLF."
+   misn_desc = "To prove yourself to the FLF, you must take out one of the Dvaered security patrols."
+   misn_rwrd = "A chance to make friends with the FLF."
    osd_title   = "Dvaered Patrol"
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
