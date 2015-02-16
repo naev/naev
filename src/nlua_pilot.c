@@ -80,6 +80,7 @@ static int pilotL_dir( lua_State *L );
 static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_faction( lua_State *L );
+static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_setDir( lua_State *L );
@@ -166,6 +167,7 @@ static const luaL_reg pilotL_methods[] = {
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
@@ -259,6 +261,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
@@ -1821,6 +1824,29 @@ static int pilotL_faction( lua_State *L )
    lua_pushfaction(L,f);
    return 1;
 }
+
+
+/**
+ * @brief Checks the pilot's spaceworthiness
+ *
+ * @usage spaceworthy = p:spaceworthy()
+ *
+ *    @luaparam p Pilot to get the spaceworthy status of
+ *    @luareturn Whether the pilot's ship is spaceworthy
+ * @luafunc spaceworthy( p )
+ */
+static int pilotL_spaceworthy( lua_State *L )
+{
+   Pilot *p;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push position. */
+   lua_pushboolean( L, (pilot_checkSpaceworthy(p) == NULL) ? 1 : 0 );
+   return 1;
+}
+
 
 /**
  * @brief Sets the pilot's position.
