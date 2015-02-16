@@ -452,7 +452,7 @@ int player_autonavShouldResetSpeed (void)
    if (hostiles) {
       if (failpc > .995) {
          will_reset = 1;
-         player.autonav_timer = 0.;
+         player.autonav_timer = MAX( player.autonav_timer, 0. );
       }
       else if ((shield < lasts && shield < failpc) || armour < lasta) {
          will_reset = 1;
