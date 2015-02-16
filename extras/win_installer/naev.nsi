@@ -3,6 +3,7 @@
 
 ;Version, Arch, Icon and URL
 !define VERSION "0.6.0"
+!define VERSION_SUFFIX "" ; This string can be used for betas and release candidates.
 !define ARCH "32"
 !define URL "http://naev.org"
 !define MUI_ICON "..\logos\logo.ico"
@@ -28,7 +29,7 @@
 
 ;Name and file
 Name "Naev"
-OutFile "naev-${VERSION}-win${ARCH}.exe"
+OutFile "naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
 
 ;--------------------------------
 ;Variables
@@ -109,7 +110,7 @@ Section "Naev Engine" BinarySection
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "URLInfoAbout" "${URL}"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}"
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}${VERSION_SUFFIX}"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "Publisher" "Naev Project"
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoModify" 1
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoRepair" 1
@@ -131,7 +132,7 @@ SectionEnd
 Section "Naev Data (Download)" DataSection
    dwn:
     AddSize 302587 ;Size (kB) of Naev ndata
-    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata.zip"
+    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip
         MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
