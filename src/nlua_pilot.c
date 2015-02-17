@@ -456,6 +456,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    LuaSystem *ls;
    StarSystem *ss;
    Planet *planet;
+   JumpPoint *target;
    int jump;
    PilotFlags flags;
    int *jumpind, njumpind;
@@ -563,10 +564,17 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       njumpind = 0;
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
-         for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
-                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
+         for (i=0; i<cur_system->njumps; i++) {
+            /* The jump into the system must not be exit-only, and unless
+             * ignore_rules is set, must also be non-hidden and have faction
+             * presence matching the pilot's on the remote side.
+             */
+            target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+            if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
+                  (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
+                  (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))))
                jumpind[ njumpind++ ] = i;
+         }
       }
 
       /* Crazy case no landable nor presence, we'll just jump in randomly. */
