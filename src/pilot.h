@@ -134,6 +134,7 @@ enum {
    PILOT_INVINC_PLAYER, /**< Pilot can not be hurt by the player. */
    PILOT_COOLDOWN,     /**< Pilot is in active cooldown mode. */
    PILOT_COOLDOWN_BRAKE, /**< Pilot is braking to enter active cooldown mode. */
+   PILOT_BRAKING,      /**< Pilot is braking. */
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_FLAGS_MAX     /**< Maximum number of flags. */
 };
@@ -142,6 +143,7 @@ typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 /* makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
 #define pilot_isDisabled(p) pilot_isFlag(p,PILOT_DISABLED) /**< Checks if pilot is disabled. */
+#define pilot_isStopped(p)  (VMOD(p->solid->vel) <= MIN_VEL_ERR)
 
 
 /**

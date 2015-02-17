@@ -120,6 +120,7 @@ void gl_exit (void);
  */
 GLboolean gl_hasExt( char *name );
 GLboolean gl_hasVersion( int major, int minor );
+int gl_vendorIsIntel (void);
 
 
 /*

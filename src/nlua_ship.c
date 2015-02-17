@@ -350,9 +350,10 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_getSlots( lua_State *L )
 {
-   int i, k;
+   int i, j, k;
    Ship *s;
    OutfitSlot *slot;
+   ShipOutfitSlot *sslot;
    int outfit_type = 0;
    char *outfit_types[] = {"structure", "utility", "weapon"};
 
@@ -364,15 +365,21 @@ static int shipL_getSlots( lua_State *L )
 
          /* get the slot */
       if (i < s->outfit_nstructure){
-         slot = &s->outfit_structure[i].slot;
+         j     = i;
+         slot  = &s->outfit_structure[j].slot;
+         sslot = &s->outfit_structure[j];
          outfit_type = 0;
       }
       else if (i < s->outfit_nstructure + s->outfit_nutility){
-         slot = &s->outfit_utility[i].slot;
+         j     = i - s->outfit_nstructure;
+         slot  = &s->outfit_utility[j].slot;
+         sslot = &s->outfit_utility[j];
          outfit_type = 1;
       }
-      else{
-         slot = &s->outfit_weapon[i].slot;
+      else {
+         j     = i - (s->outfit_nstructure + s->outfit_nutility);
+         slot  = &s->outfit_weapon[j].slot;
+         sslot = &s->outfit_weapon[j];
          outfit_type = 2;
       }
 
@@ -389,8 +396,14 @@ static int shipL_getSlots( lua_State *L )
       lua_rawset(L, -3); /* table[key] = value */
 
       lua_pushstring(L, "property"); /* key */
-      lua_pushstring( L, sp_display(slot->spid)); /* value */  /* some spids seem to be random values... */
+      lua_pushstring( L, sp_display(slot->spid)); /* value */
       lua_rawset(L, -3); /* table[key] = value */
+
+      if (sslot->data != NULL) {
+         lua_pushstring(L, "default"); /* key */
+         lua_pushstring(L, sslot->data->name); /* value */
+         lua_rawset(L, -3); /* table[key] = value */
+      }
 
       lua_rawset(L, -3);   /* put the slot table in */
    }

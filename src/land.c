@@ -55,6 +55,9 @@
 #include "camera.h"
 #include "menu.h"
 #include "ndata.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nlua_tk.h"
 
 
 /* global/main window */
@@ -126,6 +129,13 @@ static char errorlist[512];
 static char errorreason[512];
 static int errorappend;
 static char *errorlist_ptr;
+
+
+/*
+ * Rescue.
+ */
+static lua_State *rescue_L = NULL; /**< Rescue Lua state. */
+static void land_stranded (void);
 
 
 /*
@@ -1473,6 +1483,10 @@ void takeoff( int delay )
       char message[512];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msg( "Ship not fit for flight", message );
+
+      /* Check whether the player needs rescuing. */
+      land_stranded();
+
       return;
    }
 
@@ -1542,6 +1556,67 @@ void takeoff( int delay )
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
+   }
+
+
+/**
+ * @brief Runs the rescue script if players are stuck.
+ */
+static void land_stranded (void)
+{
+   char *buf;
+   uint32_t bufsize;
+   const char *file = "dat/rescue.lua";
+   int errf;
+   lua_State *L;
+
+   /* Don't run the rescue script on planets that let the player re-equip. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
+         planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+      return;
+
+   /* Nothing to do if there's no rescue script. */
+   if (!ndata_exists(file))
+      return;
+
+   if (rescue_L == NULL) {
+      rescue_L = nlua_newState();
+      nlua_loadStandard( rescue_L, 0 );
+      nlua_loadTk( rescue_L );
+
+      L = rescue_L;
+
+      buf = ndata_read( file, &bufsize );
+      if (luaL_dobuffer(L, buf, bufsize, file) != 0) {
+         WARN("Error loading file: %s\n"
+             "%s\n"
+             "Most likely Lua file has improper syntax, please check",
+               file, lua_tostring(L,-1));
+         free(buf);
+         return;
+      }
+      free(buf);
+   }
+   else
+      L = rescue_L;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -2;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+
+   /* Run Lua. */
+   lua_getglobal(L,"rescue");
+   if (lua_pcall(L, 0, 0, errf)) { /* error has occurred */
+      WARN("Rescue: 'rescue' : '%s'", lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif
 }
 
 
@@ -1578,6 +1653,12 @@ void land_cleanup (void)
 
    /* Clean up bar missions. */
    npc_freeAll();
+
+   /* Clean up rescue Lua. */
+   if (rescue_L != NULL) {
+      lua_close(rescue_L);
+      rescue_L = NULL;
+   }
 }
 
 

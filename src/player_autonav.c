@@ -44,7 +44,6 @@ static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;
 static double lasta;
-static int hostiles_last = 0;
 
 /*
  * Prototypes.
@@ -117,10 +116,8 @@ static int player_autonavSetup (void)
          pilot_isDisabled(player.p))
       return 0;
 
-   /* Cooldown and autonav are mutually-exclusive. */
-   if ((pilot_isFlag(player.p, PILOT_COOLDOWN)) ||
-         (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
-      pilot_cooldownEnd(player.p, NULL);
+   /* Autonav is mutually-exclusive with other autopilot methods. */
+   player_restoreControl( PINPUT_AUTONAV, NULL );
 
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
@@ -149,7 +146,6 @@ static int player_autonavSetup (void)
 
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
-   hostiles_last = 0;
 
    return 1;
 }
@@ -280,10 +276,6 @@ void player_autonavAbort( const char *reason )
       /* Reset time compression. */
       player_autonavEnd();
    }
-   else if (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))
-      pilot_cooldownEnd(player.p, NULL);
-   else if (pilot_isFlag(player.p, PILOT_COOLDOWN))
-      pilot_cooldownEnd(player.p, reason);
 }
 
 
@@ -469,14 +461,14 @@ int player_autonavShouldResetSpeed (void)
       }
    }
 
-   if (hostiles && hostiles_last) {
+   if (hostiles) {
       if (failpc > .995) {
          will_reset = 1;
-         player.autonav_timer = 0.;
+         player.autonav_timer = MAX( player.autonav_timer, 0. );
       }
       else if ((shield < lasts && shield < failpc) || armour < lasta) {
          will_reset = 1;
-         player.autonav_timer = 2.;
+         player.autonav_timer = MAX( player.autonav_timer, 2. );
       }
       else if (player.autonav_timer > 0) {
          /* This check needs to be after the second check so new hits
@@ -488,7 +480,6 @@ int player_autonavShouldResetSpeed (void)
 
    lasts = shield;
    lasta = armour;
-   hostiles_last = hostiles;
 
    if (will_reset) {
       player_autonavResetSpeed();

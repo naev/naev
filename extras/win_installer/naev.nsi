@@ -2,7 +2,7 @@
 ;SetCompress Off
 
 ;Version, Arch, Icon and URL
-!define VERSION "0.5.3"
+!define VERSION "0.6.0"
 !define ARCH "32"
 !define URL "http://naev.org"
 !define MUI_ICON "..\logos\logo.ico"
@@ -130,13 +130,13 @@ SectionEnd
 
 Section "Naev Data (Download)" DataSection
    dwn:
-    AddSize 202159 ;Size (kB) of Naev ndata
-    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
+    AddSize 302587 ;Size (kB) of Naev ndata
+    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip
-        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
       Goto dwn
-      skip:
+   skip:
 SectionEnd
 
 Section /o "Do a portable install" Portable
@@ -174,7 +174,7 @@ FunctionEnd
 
    ;Assign descriptions to sections
    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-      !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata to run."
+      !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata.zip to run."
       !insertmacro MUI_DESCRIPTION_TEXT ${DataSection} "Provides all content and media."
      !insertmacro MUI_DESCRIPTION_TEXT ${Portable} "Perform a portable install. No uninstaller or registry entries are created and you can run off a pen drive"
    !insertmacro MUI_FUNCTION_DESCRIPTION_END
@@ -187,7 +187,7 @@ Section "Uninstall"
    Delete "$INSTDIR\Uninstall.exe"
    Delete "$INSTDIR\naev.exe"
    Delete "$INSTDIR\logo.ico"
-   Delete "$INSTDIR\ndata"
+   Delete "$INSTDIR\ndata.zip"
    Delete "$INSTDIR\*.dll"
    Delete "$INSTDIR\stderr.txt"
    Delete "$INSTDIR\stdout.txt"

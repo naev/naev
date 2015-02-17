@@ -61,7 +61,8 @@ void map_renderFactionDisks( double x, double y, int editor);
 void map_renderJumps( double x, double y, int editor);
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor );
-void map_renderNames( double x, double y, int editor );
+void map_renderNames( double bx, double by, double x, double y,
+      double w, double h, int editor );
 
 
 #endif /* MAP_H */

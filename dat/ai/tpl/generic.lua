@@ -37,7 +37,9 @@ function control ()
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
-      if not ai.getPilot():cooldown() then
+
+      cooldown, braking = ai.getPilot():cooldown()
+      if not (cooldown or braking) then
          mem.cooldown = false
       end
    else

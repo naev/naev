@@ -60,6 +60,15 @@ typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 #define player_isTut()     player_isFlag(PLAYER_TUTORIAL)
 
 
+/* Control restoration reasons. */
+enum {
+   PINPUT_NULL,     /* No specific reason. */
+   PINPUT_MOVEMENT, /* Player pressed a movement key. */
+   PINPUT_AUTONAV,  /* Player engaged autonav. */
+   PINPUT_BRAKING   /* Player engaged auto-braking. */
+};
+
+
 #include "player_autonav.h"
 
 
@@ -139,6 +148,7 @@ void player_messageRaw ( const char *str );
 /*
  * misc
  */
+void player_restoreControl( int reason, char *str );
 void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);
@@ -255,7 +265,7 @@ void player_hail (void);
 void player_hailPlanet (void);
 void player_autohail (void);
 void player_toggleMouseFly(void);
-void player_toggleCooldown(void);
+void player_brake(void);
 
 
 #endif /* PLAYER_H */

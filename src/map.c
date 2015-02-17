@@ -38,6 +38,7 @@
 #include "array.h"
 #include "mapData.h"
 #include "nstring.h"
+#include "nmath.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -58,6 +59,7 @@ static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
+glTexture *gl_map_circle      = NULL; /**< Texture of the circle used for systems. */
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -121,6 +123,9 @@ void map_exit (void)
 
    if (gl_faction_disk != NULL)
       gl_freeTexture( gl_faction_disk );
+
+   if (gl_map_circle != NULL)
+      gl_freeTexture( gl_map_circle );
 }
 
 
@@ -718,6 +723,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
 
+   if (gl_map_circle == NULL)
+      gl_map_circle = gl_genCircle( r );
+
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
@@ -737,7 +745,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderSystems( bx, by, x, y, w, h, r, 0 );
 
    /* Render system names. */
-   map_renderNames( x, y, 0 );
+   map_renderNames( bx, by, x, y, w, h, 0 );
 
    /* Render system markers. */
    map_renderMarkers( x, y, r, col.a );
@@ -747,7 +755,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.g = cRed.g;
    col.b = cRed.b;
 
-   glEnable(GL_LINE_SMOOTH);
+   if (!gl_vendorIsIntel())
+      glEnable(GL_LINE_SMOOTH);
    glEnable(GL_POINT_SMOOTH);
 
    /* Selected system. */
@@ -767,7 +776,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
          y + cur_system->pos.y * map_zoom,
          1.5*r, bx, by, w, h, &col, 0 );
 
-   glDisable(GL_LINE_SMOOTH);
+   if (!gl_vendorIsIntel())
+      glDisable(GL_LINE_SMOOTH);
    glDisable(GL_POINT_SMOOTH);
 }
 
@@ -794,7 +804,7 @@ void map_renderFactionDisks( double x, double y, int editor)
    glColour c;
    StarSystem *sys;
    int sw, sh;
-   double tx,ty;
+   double tx, ty, presence;
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -806,15 +816,18 @@ void map_renderFactionDisks( double x, double y, int editor)
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
+      /* Cache to avoid repeated sqrt() */
+      presence = sqrt(sys->ownerpresence);
+
       /* draws the disk representing the faction */
-      sw = (60 + sqrt(sys->ownerpresence) * 3) * map_zoom;
-      sh = (60 + sqrt(sys->ownerpresence) * 3) * map_zoom;
+      sw = (60 + presence * 3) * map_zoom;
+      sh = (60 + presence * 3) * map_zoom;
 
       col = faction_colour(sys->faction);
       c.r = col->r;
       c.g = col->g;
       c.b = col->b;
-      c.a = CLAMP( .6, .75, 20 / sqrt(sys->ownerpresence) );
+      c.a = CLAMP( .6, .75, 20 / presence );
 
       gl_blitTexture(
             gl_faction_disk,
@@ -917,7 +930,8 @@ void map_renderSystems( double bx, double by, double x, double y,
 
 
    /* Smoother circles. */
-   glEnable( GL_LINE_SMOOTH );
+   if (!gl_vendorIsIntel())
+      glEnable(GL_LINE_SMOOTH);
    glEnable(GL_POINT_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
@@ -931,6 +945,10 @@ void map_renderSystems( double bx, double by, double x, double y,
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
+         continue;
+
       /* Draw an outer ring. */
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
 
@@ -942,17 +960,22 @@ void map_renderSystems( double bx, double by, double x, double y,
          else if (editor) col = &cNeutral;
          else col = faction_getColour( sys->faction );
 
-         /* Radius slightly shorter. */
-         gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
-
-         /* @todo Fix this hack. Just serves to smooth the jagged edges. */
-         gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 0 );
+         if (editor) {
+            /* Radius slightly shorter. */
+            gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
+         }
+         else
+            gl_blitTexture(
+                  gl_map_circle,
+                  tx - r * .65, ty - r * .65, r * 1.3, r * 1.3,
+                  0., 0., gl_map_circle->srw, gl_map_circle->srh, col );
       }
 
    }
 
+   if (!gl_vendorIsIntel())
+      glDisable( GL_LINE_SMOOTH );
    glDisable(GL_POINT_SMOOTH);
-   glDisable( GL_LINE_SMOOTH );
 }
 
 
@@ -1028,9 +1051,11 @@ static void map_renderPath( double x, double y, double a )
 /**
  * @brief Renders the system names on the map.
  */
-void map_renderNames( double x, double y, int editor )
+void map_renderNames( double bx, double by, double x, double y,
+      double w, double h, int editor )
 {
    double tx,ty, vx,vy, d,n;
+   int textw;
    StarSystem *sys, *jsys;
    int i, j;
    char buf[32];
@@ -1042,15 +1067,26 @@ void map_renderNames( double x, double y, int editor )
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
+      textw = gl_printWidthRaw( &gl_smallFont, sys->name );
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
+
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
+         continue;
+
       gl_print( &gl_smallFont,
             tx, ty,
             &cWhite, sys->name );
 
-      /* Raw hidden values if we're in the editor. */
-      if (!editor || (map_zoom <= 1.0))
-         continue;
+   }
+
+   /* Raw hidden values if we're in the editor. */
+   if (!editor || (map_zoom <= 1.0))
+      return;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
       for (j=0; j<sys->njumps; j++) {
          jsys = sys->jumps[j].target;
          /* Calculate offset. */
@@ -1566,6 +1602,11 @@ static void A_freeList( SysNode *first )
 void map_setZoom(double zoom)
 {
    map_zoom = zoom;
+
+   if (gl_map_circle != NULL) {
+      gl_freeTexture(gl_map_circle);
+      gl_map_circle = NULL;
+   }
 }
 
 /**
