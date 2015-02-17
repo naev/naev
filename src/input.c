@@ -1008,7 +1008,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_rmFlag(PLAYER_DOUBLESPEED);
          } else {
             if (!player_isFlag(PLAYER_AUTONAV))
-               pause_setSpeed(50.);
+               pause_setSpeed(2.);
             player_setFlag(PLAYER_DOUBLESPEED);
          }
       }
