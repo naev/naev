@@ -292,7 +292,7 @@ case "$used_lua" in
     ;;
   shared)
     have_lua=no
-    m4_foreach([pkgname], [lua, lua-5.1, lua5.1, lua51], [
+    m4_foreach([pkgname], [lua-5.1, lua5.1, lua51, lua], [
         AS_IF([test "$have_lua" = "no"], [
             PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
         ])
