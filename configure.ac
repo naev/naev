@@ -292,6 +292,7 @@ case "$used_lua" in
     ;;
   shared)
     PKG_CHECK_MODULES([LUA], [lua], [have_lua=yes], [have_lua=no])
+    AS_IF([test "$have_lua" = "no"], [PKG_CHECK_MODULES([LUA], [lua-5.1], [have_lua=yes], [have_lua=no])])
     AS_IF([test "$have_lua" = "no"], [PKG_CHECK_MODULES([LUA], [lua5.1], [have_lua=yes], [have_lua=no])])
     AS_IF([test "$have_lua" = "no"], [PKG_CHECK_MODULES([LUA], [lua51], [have_lua=yes], [have_lua=no])])
     AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
