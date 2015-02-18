@@ -305,6 +305,7 @@ void conf_loadConfigPath( void )
       return;
 
    lua_State *L = nlua_newState();
+   nlua_loadBasic(L); /* For os library */
    if (luaL_dofile(L, file) == 0)
       conf_loadString("datapath",conf.datapath);
 
