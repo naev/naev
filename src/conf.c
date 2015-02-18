@@ -574,6 +574,7 @@ void conf_parseCLIPath( int argc, char** argv )
 void conf_parseCLI( int argc, char** argv )
 {
    static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
       { "vsync", no_argument, 0, 'V' },
@@ -606,6 +607,9 @@ void conf_parseCLI( int argc, char** argv )
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
+         case 'd':
+            /* Does nothing, datapath is parsed earlier. */
+            break;
          case 'f':
             conf.fullscreen = 1;
             break;
