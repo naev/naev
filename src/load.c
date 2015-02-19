@@ -224,6 +224,10 @@ int load_refresh (void)
       ok = load_load( ns, buf );
    }
 
+   /* If the save was invalid, array is 1 member too large. */
+   if (ok)
+      array_resize( &load_saves, array_size(load_saves)-1 );
+
    /* Clean up memory. */
    for (i=0; i<nfiles; i++)
       free(files[i]);
