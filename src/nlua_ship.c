@@ -17,6 +17,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_outfit.h"
 #include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
@@ -337,11 +338,11 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_getSlots( lua_State *L )
 {
-   int i, j, k;
+   int i, j, k, outfit_type;
    Ship *s;
    OutfitSlot *slot;
    ShipOutfitSlot *sslot;
-   int outfit_type = 0;
+   LuaOutfit lo;
    char *outfit_types[] = {"structure", "utility", "weapon"};
 
    s = luaL_validship(L,1);
@@ -387,8 +388,9 @@ static int shipL_getSlots( lua_State *L )
       lua_rawset(L, -3); /* table[key] = value */
 
       if (sslot->data != NULL) {
-         lua_pushstring(L, "default"); /* key */
-         lua_pushstring(L, sslot->data->name); /* value */
+         lo.outfit = sslot->data;
+         lua_pushstring(L, "outfit"); /* key */
+         lua_pushoutfit(L, lo); /* value*/
          lua_rawset(L, -3); /* table[key] = value */
       }
 
