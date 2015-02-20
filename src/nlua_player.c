@@ -32,6 +32,7 @@
 #include "event.h"
 #include "land.h"
 #include "nlua_system.h"
+#include "nlua_outfit.h"
 #include "nlua_planet.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -75,6 +76,7 @@ static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
+static int playerL_outfits( lua_State *L );
 static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_rmOutfit( lua_State *L );
@@ -110,6 +112,7 @@ static const luaL_reg playerL_methods[] = {
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
+   { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
    { "addOutfit", playerL_addOutfit },
    { "rmOutfit", playerL_rmOutfit },
@@ -133,6 +136,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
@@ -733,6 +737,36 @@ static int playerL_commclose( lua_State *L )
    (void) L;
    comm_queueClose();
    return 0;
+}
+
+
+/**
+ * @brief Gets all the outfits the player owns.
+ *
+ * If you want the quantity, call player.numOutfit() on the individual outfit.
+ *
+ * @usage player.outfits() -- A table of all the player's outfits.
+ *
+ * @luafunc outfits()
+ */
+static int playerL_outfits( lua_State *L )
+{
+   int i, noutfits;
+   const PlayerOutfit_t *outfits;
+   LuaOutfit lo;
+
+   /* @todo Directly expose player_outfits in a read-only manner. */
+   outfits = player_getOutfits( &noutfits );
+
+   lua_newtable(L);
+   for (i=0; i<noutfits; i++) {
+      lo.outfit = (Outfit*)outfits[i].o;
+      lua_pushnumber(L, i+1);
+      lua_pushoutfit(L, lo );
+      lua_rawset(L, -3);
+   }
+
+   return 1;
 }
 
 
