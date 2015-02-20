@@ -117,13 +117,6 @@ static int player_nstack            = 0;     /**< Number of ships player has. */
 /*
  * player outfit stack - outfits he has
  */
-/**
- * @brief Wrapper for outfits.
- */
-typedef struct PlayerOutfit_s {
-   const Outfit *o;  /**< Actual associated outfit. */
-   int q;            /**< Amount of outfit owned. */
-} PlayerOutfit_t;
 static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
 static int player_noutfits             = 0;     /**< Number of outfits player has. */
 static int player_moutfits             = 0;     /**< Current allocated memory. */
@@ -2441,15 +2434,15 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 
 
 /**
- * @brief Prepares two arrays for displaying in an image array.
+ * @brief Returns the player's outfits.
  *
- *    @param[out] outfits Outfits the player owns.
- *    @param[out] toutfits Optional store textures for the image array.
- *    @return Number of outfits.
+ *    @param[out] n Number of distinct outfits (not total quantity).
+ *    @return Outfits the player owns.
  */
-int player_getOutfits( Outfit **outfits, glTexture** toutfits )
+const PlayerOutfit_t* player_getOutfits( int *n )
 {
-   return player_getOutfitsFiltered( outfits, toutfits, NULL, NULL );
+   *n = player_noutfits;
+   return (const PlayerOutfit_t*) player_outfits;
 }
 
 

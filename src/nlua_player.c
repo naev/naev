@@ -821,6 +821,7 @@ static int playerL_rmOutfit( lua_State *L )
 {
    const char *str;
    Outfit *o, **outfits;
+   const PlayerOutfit_t *poutfits;
    int i, q, noutfits;
 
    /* Defaults. */
@@ -837,8 +838,11 @@ static int playerL_rmOutfit( lua_State *L )
       if (noutfits == 0)
          return 0;
 
+      poutfits = player_getOutfits( &noutfits );
       outfits = malloc( sizeof(Outfit*) * noutfits );
-      player_getOutfits(outfits, NULL);
+      for (i=0; i<noutfits; i++)
+         outfits[i] = (Outfit*)poutfits[i].o;
+
       for (i=0; i<noutfits; i++) {
          o = outfits[i];
          q = player_outfitOwned(o);
