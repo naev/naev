@@ -447,8 +447,8 @@ int nfile_backupIfExists( const char* path, ... )
       nsnprintf(backup, PATH_MAX, "%s.backup", file);
 
       /* Open files. */
-      f_in  = fopen( file, "r" );
-      f_out = fopen( backup, "w" );
+      f_in  = fopen( file, "rb" );
+      f_out = fopen( backup, "wb" );
       if ((f_in==NULL) || (f_out==NULL)) {
          WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
          if (f_in!=NULL)
