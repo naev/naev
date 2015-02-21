@@ -35,6 +35,7 @@ static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
+static int shipL_price( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -46,6 +47,7 @@ static const luaL_reg shipL_methods[] = {
    { "getSlots", shipL_getSlots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
+   { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
    {0,0}
@@ -449,6 +451,26 @@ static int shipL_outfitCPU( lua_State *L )
    /* Return parameter. */
    lua_pushnumber(L, outfit_cpu(o));
    return 1;
+}
+
+
+/**
+ * @brief Gets the ship's price, with and without default outfits.
+ *
+ * @usage price, base = s:price()
+ *
+ *    @luaparam s Ship to get the price of.
+ *    @luareturn The ship's final purchase price and base price.
+ * @luafunc price( s )
+ */
+static int shipL_price( lua_State *L )
+{
+   Ship *s;
+
+   s = luaL_validship(L,1);
+   lua_pushnumber(L, ship_buyPrice(s));
+   lua_pushnumber(L, ship_basePrice(s));
+   return 2;
 }
 
 

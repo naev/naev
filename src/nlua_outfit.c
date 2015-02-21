@@ -31,6 +31,7 @@ static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
+static int outfitL_price( lua_State *L );
 static const luaL_reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -41,6 +42,7 @@ static const luaL_reg outfitL_methods[] = {
    { "cpu", outfitL_cpu },
    { "slot", outfitL_slot },
    { "icon", outfitL_icon },
+   { "price", outfitL_price },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -343,6 +345,23 @@ static int outfitL_icon( lua_State *L )
    Outfit *o = luaL_validoutfit(L,1);
    lt.tex = gl_dupTexture( o->gfx_store );
    lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the price of an outfit.
+ *
+ * @usage price = o:price()
+ *
+ *    @luaparam o Outfit to get the price of.
+ *    @luareturn The price, in credits.
+ * @luafunc price( o )
+ */
+static int outfitL_price( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit(L,1);
+   lua_pushnumber(L, o->price);
    return 1;
 }
 
