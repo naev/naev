@@ -18,9 +18,13 @@
       There is no failure mode beyond this, as a ship that isn't spaceworthy
       in its default state already generates warnings on load.
 
-   This script has one known flaw at the moment. Players aren't considered
+   This script has two known flaws at the moment. Players aren't considered
    stranded if the outfitter sells outfits that can fill all missing slots,
    or replace existing cores. This is done without regard to affordability.
+
+   The second is that some conditions (e.g. free cargo space) are independent
+   of outfits, and because we don't explicitly check them, fall-through to the
+   final "this is a bug, please report" happens more than it ought to.
 
 --]]
 
@@ -77,43 +81,46 @@ end
 
 
 function rescue()
-   -- Do nothing unless stranded.
+   -- Do nothing if already spaceworthy.
    if player.pilot():spaceworthy() then
       return
    end
 
    buildTables()
 
-   local mnames  = {}
-   for k,v in ipairs(missing) do
-      table.insert(mnames, v.outfit:name())
-   end
-
    -- Bail out if the player has a reasonable chance of fixing their ship.
    if not check_stranded( missing ) then
       return
    end
 
+   -- Add missing core outfits.
    if #mtasks > 0 and #missing > 0 then
+      local defaults, weapons, utility, structure = assessOutfits()
+
       local suffix = "s"
       if #missing == 1 then
          suffix = ""
       end
 
-      local opts = mtasks
-      if #missing == nrequired then
+      -- Build list of suitable tasks.
+      local opts = {}
+      for k,v in ipairs(mtasks) do
+         table.insert(opts, v)
+      end
+
+      if #missing == nrequired or defaults then
          table.remove( opts, 2 )
       end
 
       local strings = {}
-      for k,v in ipairs(mtasks) do
+      for k,v in ipairs(opts) do
          strings[k] = v[1]
       end
 
       local ind, str = tk.choice( msg_title,
             string.format(msg_missing, #missing, suffix), unpack(strings) )
 
-      mtasks[ind][2]() -- Run callback.
+      opts[ind][2]() -- Run callback.
       if str == "Cancel" then
          return
       end
@@ -128,7 +135,7 @@ function rescue()
       buildTables() -- Rebuild tables, as we've added outfits.
    end
 
-
+   -- Remove non-cores, replace cores with defaults, etc.
    while true do
       local defaults, weapons, utility, structure = assessOutfits()
 
@@ -395,10 +402,10 @@ end
 
 
 function assessOutfits()
-   local defaults  = true
-   local weapons   = false
-   local utility   = false
-   local structure = false
+   local defaults  = true  -- Equipped cores are the same as defaults.
+   local weapons   = false -- Ship has weapons.
+   local utility   = false -- Ship has utility outfits.
+   local structure = false -- Ship has structure outfits.
 
    for k,v in pairs(equipped) do
       local _, _, prop = v:slot()
