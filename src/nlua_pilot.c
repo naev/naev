@@ -37,6 +37,7 @@
 #include "gui.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "land_outfits.h"
 
 
 /*
@@ -2602,6 +2603,10 @@ static int pilotL_addOutfit( lua_State *L )
    if ((added > 0) && p->autoweap)
       pilot_weaponAuto(p);
 
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && added > 0)
+      outfits_updateEquipmentOutfits();
+
    lua_pushnumber(L,added);
    return 1;
 }
@@ -2684,6 +2689,11 @@ static int pilotL_rmOutfit( lua_State *L )
          removed++;
       }
    }
+
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && removed > 0)
+      outfits_updateEquipmentOutfits();
+
    lua_pushnumber( L, removed );
    return 1;
 }
