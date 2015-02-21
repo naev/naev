@@ -235,6 +235,10 @@ static int tk_list( lua_State *L )
 
    ret = dialogue_listRaw( title, choices, opts, str );
 
+   /* Cancel returns -1, do nothing. */
+   if (ret == -1)
+      return 0;
+
    /* Push index and choice string. */
    lua_pushnumber(L, ret+1);
    lua_pushstring(L, choices[ret]);
