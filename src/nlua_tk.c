@@ -171,6 +171,10 @@ static int tk_choice( lua_State *L )
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
 
+   /* Do an initial scan for invalid arguments. */
+   for (i=0; i<opts; i++)
+      luaL_checkstring(L, i+3);
+
    /* Create dialogue. */
    dialogue_makeChoice( title, str, opts );
    for (i=0; i<opts; i++)
@@ -219,6 +223,10 @@ static int tk_list( lua_State *L )
    opts  = lua_gettop(L) - 2;
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
+
+   /* Do an initial scan for invalid arguments. */
+   for (i=0; i<opts; i++)
+      luaL_checkstring(L, i+3);
 
    /* Will be freed by the toolkit. */
    choices = malloc( sizeof(char*) * opts );
