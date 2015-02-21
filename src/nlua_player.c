@@ -434,7 +434,7 @@ static int playerL_getPilot( lua_State *L )
  * @usage jumps = player.jumps()
  *
  *    @luareturn The player's maximum number of jumps.
- * @luafunc fuel()
+ * @luafunc jumps()
  */
 static int playerL_jumps( lua_State *L )
 {
