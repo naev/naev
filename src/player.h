@@ -93,6 +93,16 @@ typedef struct PlayerOutfit_s {
 } PlayerOutfit_t;
 
 
+/**
+ * @brief Player ship.
+ */
+typedef struct PlayerShip_s {
+   Pilot* p;      /**< Pilot. */
+   char *loc;     /**< Location. */
+   int autoweap;  /**< Automatically update weapon sets. */
+} PlayerShip_t;
+
+
 /*
  * Local player.
  */
@@ -167,6 +177,7 @@ void player_soundResume (void);
  * player ships
  */
 int player_ships( char** sships, glTexture** tships );
+const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );

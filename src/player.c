@@ -102,14 +102,6 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
 /*
  * player pilot stack - ships he has
  */
-/**
- * @brief Player ship.
- */
-typedef struct PlayerShip_s {
-   Pilot* p;      /**< Pilot. */
-   char *loc;     /**< Location. */
-   int autoweap;  /**< Automatically update weapon sets. */
-} PlayerShip_t;
 static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
 static int player_nstack            = 0;     /**< Number of ships player has. */
 
@@ -2281,6 +2273,19 @@ int player_ships( char** sships, glTexture** tships )
    }
 
    return player_nstack;
+}
+
+
+/**
+ * @brief Gets all of the player's ships.
+ *
+ *    @param[out] Number of star systems gotten.
+ *    @return The player's ships.
+ */
+const PlayerShip_t* player_getShipStack( int *n )
+{
+   *n = player_nstack;
+   return player_stack;
 }
 
 
