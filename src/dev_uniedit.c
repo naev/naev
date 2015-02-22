@@ -479,11 +479,26 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
    switch (event->type) {
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         /* Must be in bounds. */
+         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+            return 0;
+
+         if (event->wheel.y > 0)
+            uniedit_buttonZoom( 0, "btnZoomIn" );
+         else
+            uniedit_buttonZoom( 0, "btnZoomOut" );
+
+         return 1;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP) {
             uniedit_buttonZoom( 0, "btnZoomIn" );
@@ -493,6 +508,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             uniedit_buttonZoom( 0, "btnZoomOut" );
             return 1;
          }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {
