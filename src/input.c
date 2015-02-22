@@ -992,7 +992,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             if (paused)
                unpause_game();
             else
-               pause_game();
+               pause_player();
          }
       }
    /* toggle speed mode */

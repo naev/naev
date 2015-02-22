@@ -2121,7 +2121,7 @@ void toolkit_update (void)
    if (windows == NULL) {
       input_mouseHide();
       toolkit_open = 0; /* disable toolkit */
-      if (paused)
+      if (paused && !player_paused)
          unpause_game();
       return; /*  No need to handle anything else. */
    }
