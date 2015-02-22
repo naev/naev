@@ -339,7 +339,7 @@ void input_init (void)
    SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
 
    /* Mouse. */
-   SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
+   SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
@@ -1168,6 +1168,7 @@ static void input_clickevent( SDL_Event* event )
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* Handle zoom. */
    if (event->button.button == SDL_BUTTON_WHEELUP) {
       input_clickZoom( 1.1 );
@@ -1177,6 +1178,7 @@ static void input_clickevent( SDL_Event* event )
       input_clickZoom( 0.9 );
       return;
    }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Player must not be NULL. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -1539,6 +1541,15 @@ void input_handle( SDL_Event* event )
       case SDL_MOUSEBUTTONDOWN:
          input_clickevent( event );
          break;
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         if (event->wheel.y > 0)
+            input_clickZoom( 1.1 );
+         else
+            input_clickZoom( 0.9 );
+         break;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEMOTION:
          input_mouseMove( event );

@@ -18,6 +18,9 @@
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
@@ -64,6 +67,9 @@ void window_addList( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
    wgt->mclickevent        = lst_mclick;
+#if SDL_VERSION_ATLEAST(2,0,0)
+   wgt->mwheelevent        = lst_mwheel;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    wgt->mmoveevent         = lst_mmove;
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
@@ -190,18 +196,41 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
       case SDL_BUTTON_LEFT:
          lst_focus( lst, x, y );
          return 1;
+
+#if !SDL_VERSION_ATLEAST(2,0,0)
       case SDL_BUTTON_WHEELUP:
          lst_scroll( lst, +5 );
          return 1;
       case SDL_BUTTON_WHEELDOWN:
          lst_scroll( lst, -5 );
          return 1;
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
       default:
          break;
    }
    return 0;
 }
+
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+/**
+ * @brief Handler for mouse wheel events for the list widget.
+ *
+ *    @param lst The widget handling the mouse wheel event.
+ *    @param event The event the widget should handle.
+ *    @return 1 if the widget uses the event.
+ */
+static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
+{
+   if (event.y > 0)
+      lst_scroll( lst, +5 );
+   else
+      lst_scroll( lst, -5 );
+
+   return 1;
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**

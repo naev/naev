@@ -28,6 +28,7 @@
 static int tab_mouse( Widget* tab, SDL_Event *event );
 static int tab_key( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
+static int tab_scroll( Widget *tab, int dir );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
@@ -126,6 +127,31 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
 
 /**
+ * @brief Handles scrolling on a tabbed window's tab bar.
+ *
+ *    @param tab Widget being scrolled on.
+ *    @param dir Direction to scroll in.
+ *    @return Index of the newly-selected tab.
+ */
+static int tab_scroll( Widget *tab, int dir )
+{
+   int new;
+
+   if (dir > 0)
+      new = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+   else {
+      /* Wrap manually to avoid undefined behaviour. */
+      if (tab->dat.tab.active == 0)
+         new = tab->dat.tab.ntabs - 1;
+      else
+         new = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+   }
+
+   return new;
+}
+
+
+/**
  * @brief Handles input for an tabbed window widget.
  *
  *    @param tab Tabbed Window widget to handle event.
@@ -207,15 +233,19 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 
       /* Mark as active. */
       change = -1;
-      if (event->button.button == SDL_BUTTON_WHEELUP) {
-         /* Wrap manually to avoid undefined behaviour. */
-         if (tab->dat.tab.active == 0)
-            change = tab->dat.tab.ntabs - 1;
-         else
-            change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
-      }
+#if !SDL_VERSION_ATLEAST(2,0,0)
+      if (event->button.button == SDL_BUTTON_WHEELUP)
+         change = tab_scroll(tab, -1);
       else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-         change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+         change = tab_scroll(tab, 1);
+#else /* !SDL_VERSION_ATLEAST(2,0,0) */
+      if (event->type == SDL_MOUSEWHEEL) {
+         if (event->wheel.y > 0)
+            change = tab_scroll(tab, -1);
+         else
+            change = tab_scroll(tab, 1);
+      }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       else
          tab->dat.tab.active = i;
 

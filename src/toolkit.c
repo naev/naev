@@ -76,7 +76,7 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
 /* input */
 static int toolkit_mouseEvent( Window *w, SDL_Event* event );
 static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint32 type, Uint8 button, int x, int y, int rx, int ry );
+      SDL_Event *event, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 #if SDL_VERSION_ATLEAST(2,0,0)
 static int toolkit_textEvent( Window *wdw, SDL_Event* event );
@@ -1643,6 +1643,9 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          case SDL_MOUSEMOTION:
          case SDL_MOUSEBUTTONDOWN:
          case SDL_MOUSEBUTTONUP:
+#if SDL_VERSION_ATLEAST(2,0,0)
+         case SDL_MOUSEWHEEL:
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
             ret |= toolkit_mouseEvent(wdw, event);
             break;
 
@@ -1696,6 +1699,10 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       *x = event->button.x;
       *y = event->button.y;
    }
+#if SDL_VERSION_ATLEAST(2,0,0)
+   else if (event->type == SDL_MOUSEWHEEL)
+      SDL_GetMouseState( x, y );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Translate offset. */
    gl_windowToScreenPos( x, y, *x, *y );
@@ -1727,12 +1734,10 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 static int toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    Widget *wgt;
-   Uint32 type;
-   Uint8 button;
    int x, y, rx, ry, ret;
 
    /* Translate mouse coords. */
-   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
+   toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
 
    /* Check each widget. */
    ret = 0;
@@ -1744,14 +1749,8 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
             ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
                   wgt->dat.cst.userdata );
       }
-      else {
-         /* Handle mouse event. */
-         if (type == SDL_MOUSEMOTION)
-            button = event->motion.state;
-         else
-            button = event->button.button;
-         ret |= toolkit_mouseEventWidget( w, wgt, type, button, x, y, rx, ry );
-      }
+      else
+         ret |= toolkit_mouseEventWidget( w, wgt, event, x, y, rx, ry );
    }
 
    return ret;
@@ -1766,20 +1765,27 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param event Event received by the window.
  */
 static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint32 type, Uint8 button, int x, int y, int rx, int ry )
+      SDL_Event *event, int x, int y, int rx, int ry )
 {
    int ret, inbounds;
+   Uint8 button;
 
    /* Widget translations. */
    x -= wgt->x;
    y -= wgt->y;
+
+   /* Handle mouse event. */
+   if (event->type == SDL_MOUSEMOTION)
+      button = event->motion.state;
+   else
+      button = event->button.button;
 
    /* Check inbounds. */
    inbounds = !((x < 0) || (x >= wgt->w) || (y < 0) || (y >= wgt->h));
 
    /* Regular widgets. */
    ret = 0;
-   switch (type) {
+   switch (event->type) {
       case SDL_MOUSEMOTION:
          /* Change the status of the widget if mouse isn't down. */
 
@@ -1804,6 +1810,18 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             ret |= (*wgt->mmoveevent)( wgt, x, y, rx, ry );
 
          break;
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         if (!inbounds)
+            break;
+
+         /* Try to give the event to the widget. */
+         if (wgt->mwheelevent != NULL)
+            ret |= (*wgt->mwheelevent)( wgt, event->wheel );
+
+         break;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEBUTTONDOWN:
          if (!inbounds)
