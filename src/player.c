@@ -1251,6 +1251,9 @@ void player_weapSetPress( int id, int type, int repeat )
  */
 void player_restoreControl( int reason, char *str )
 {
+   if (player.p==NULL)
+      return;
+
    if (reason != PINPUT_AUTONAV) {
       /* Autonav should be harder to abort when paused. */
       if (!paused || reason != PINPUT_MOVEMENT)
