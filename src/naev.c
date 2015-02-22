@@ -972,6 +972,13 @@ static void display_fps( const double dt )
    }
    if (dt_mod != 1.)
       gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod);
+
+   if (!paused || !player_paused || !conf.pause_show)
+      return;
+
+   y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
+   gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
+         NULL, "PAUSED" );
 }
 
 

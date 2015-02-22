@@ -265,6 +265,9 @@ void conf_setVideoDefaults (void)
    conf.fps_show     = SHOW_FPS_DEFAULT;
    conf.fps_max      = FPS_MAX_DEFAULT;
 
+   /* Pause. */
+   conf.pause_show   = SHOW_PAUSE_DEFAULT;
+
    /* Memory. */
    conf.engineglow   = ENGINE_GLOWS_DEFAULT;
 }
@@ -366,6 +369,9 @@ int conf_loadConfig ( const char* file )
       /* FPS */
       conf_loadBool("showfps",conf.fps_show);
       conf_loadInt("maxfps",conf.fps_max);
+
+      /*  Pause */
+      conf_loadBool("showpause",conf.pause_show);
 
       /* Sound. */
       conf_loadString("sound_backend",conf.sound_backend);
@@ -940,6 +946,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Limit the rendering framerate");
    conf_saveInt("maxfps",conf.fps_max);
+   conf_saveEmptyLine();
+
+   /* Pause */
+   conf_saveComment("Show 'PAUSED' on screen while paused");
+   conf_saveBool("showpause",conf.pause_show);
    conf_saveEmptyLine();
 
    /* Sound. */

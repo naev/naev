@@ -34,6 +34,7 @@
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
+#define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 /* Audio options */
 #define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
@@ -95,8 +96,11 @@ typedef struct PlayerConf_s {
    double music; /**< Sound level for music. */
 
    /* FPS. */
-   int fps_show; /**< Whether or not should show FPS. */
+   int fps_show; /**< Whether or not FPS should be shown */
    int fps_max; /**< Maximum FPS to limit to. */
+
+   /* Pause. */
+   int pause_show; /**< Whether pause status should be shown. */
 
    /* Joystick. */
    int joystick_ind; /**< Index of joystick to use. */
