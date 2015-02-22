@@ -336,7 +336,7 @@ void input_init (void)
    SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
@@ -853,7 +853,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("target_clear")) {
       if (value==KEY_PRESS) player_targetClear();
    /* face the target */
-   } else if (KEY("face") && !repeat) {
+   } else if (INGAME() && NODEAD() && KEY("face") && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_FACE);

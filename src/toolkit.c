@@ -78,7 +78,10 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event );
 static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint32 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
-/* focus */
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int toolkit_textEvent( Window *wdw, SDL_Event* event );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+/* Focus */
 static void toolkit_focusClear( Window *wdw );
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
@@ -837,8 +840,11 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
    }
 
    /* Defocus. */
-   if (wdw->focus == wgt->id)
+   if (wdw->focus == wgt->id) {
+      if (wgt->focusLose != NULL)
+         wgt->focusLose( wgt );
       wdw->focus = -1;
+   }
 
    /* There's dead stuff now. */
    window_dead = 1;
@@ -1644,6 +1650,14 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          case SDL_KEYUP:
             ret |= toolkit_keyEvent(wdw, event);
             break;
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+         case SDL_TEXTINPUT:
+            ret |= toolkit_textEvent(wdw, event);
+            break;
+         case SDL_TEXTEDITING:
+            break;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       }
    }
 
@@ -1803,6 +1817,8 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             toolkit_focusClear( w );
             w->focus = wgt->id;
             wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+            if (wgt->focusGain != NULL)
+               wgt->focusGain( wgt );
          }
 
          /* Try to give the event to the widget. */
@@ -1939,7 +1955,9 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDLKey key;
    SDLMod mod;
+#if !SDL_VERSION_ATLEAST(2,0,0)
    char buf[2];
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -1972,16 +1990,15 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
          if (wgt->keyevent( wgt, input_key, input_mod ))
             return 1;
       }
+#if !SDL_VERSION_ATLEAST(2,0,0)
       if (wgt->textevent != NULL) {
-#if SDL_VERSION_ATLEAST(2,0,0)
          buf[0] = key & 0x7f;
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
          buf[0] = event->key.keysym.unicode & 0x7f;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          buf[1] = '\0';
          if ((*wgt->textevent)( wgt, buf ))
             return 1;
       }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
    }
 
    /* Handle button hotkeys. */
@@ -2024,6 +2041,27 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    return 0;
 }
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int toolkit_textEvent( Window *wdw, SDL_Event* event )
+{
+   Widget *wgt;
+
+   /* See if window is valid. */
+   if (wdw == NULL)
+      return 0;
+
+   /* Get widget. */
+   wgt = toolkit_getFocus( wdw );
+
+   /* Trigger event function if exists. */
+   if ((wgt != NULL) && (wgt->textevent != NULL)) {
+      if ((*wgt->textevent)( wgt, event->text.text ))
+         return 1;
+   }
+
+   return 0;
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**
@@ -2181,8 +2219,13 @@ void toolkit_update (void)
 static void toolkit_focusClear( Window *wdw )
 {
    Widget *wgt;
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wdw->focus == wgt->id) {
+         if (wgt->focusLose != NULL)
+            wgt->focusLose( wgt );
+      }
       wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
+   }
 }
 
 
@@ -2210,8 +2253,11 @@ void toolkit_focusSanitize( Window *wdw )
             wdw->focus = -1;
             toolkit_nextFocus( wdw ); /* Get first focus. */
          }
-         else
+         else {
             wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+            if (wgt->focusGain != NULL)
+               wgt->focusGain( wgt );
+         }
          return;
       }
    }
@@ -2238,10 +2284,13 @@ void toolkit_nextFocus( Window *wdw )
       if (next) {
          wdw->focus = wgt->id;
          wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+         if (wgt->focusGain != NULL)
+            wgt->focusGain( wgt );
          return;
       }
-      else if (wdw->focus == wgt->id)
+      else if (wdw->focus == wgt->id) {
          next = 1;
+      }
    }
 
    /* Focus nothing. */
@@ -2273,6 +2322,8 @@ void toolkit_prevFocus( Window *wdw )
          else {
             wdw->focus = prev->id;
             wgt_setFlag( prev, WGT_FLAG_FOCUSED );
+            if (prev->focusGain != NULL)
+               prev->focusGain( prev );
          }
          return;
       }
@@ -2287,6 +2338,8 @@ void toolkit_prevFocus( Window *wdw )
    else {
       wdw->focus = prev->id;
       wgt_setFlag( prev, WGT_FLAG_FOCUSED );
+      if (prev->focusGain != NULL)
+         prev->focusGain( prev );
    }
    return;
 }

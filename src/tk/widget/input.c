@@ -25,6 +25,8 @@ static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, SDLKey key );
 static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
+static void inp_focusGain( Widget* inp );
+static void inp_focusLose( Widget* inp );
 
 
 /**
@@ -63,6 +65,8 @@ void window_addInput( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent        = inp_key;
    wgt->textevent       = inp_text;
+   wgt->focusGain       = inp_focusGain;
+   wgt->focusLose       = inp_focusLose;
    /*wgt->keyevent        = inp_key;*/
    wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
    wgt->dat.inp.max     = max+1;
@@ -712,3 +716,40 @@ void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(u
 
    wgt->dat.inp.fptr = fptr;
 }
+
+/**
+ * @brief Input widget gains focus.
+ *
+ *    @param inp Widget gaining the focus.
+ */
+static void inp_focusGain( Widget* inp )
+{
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_Rect input_pos;
+
+   input_pos.x = (int)inp->x;
+   input_pos.y = (int)inp->y;
+   input_pos.w = (int)inp->w;
+   input_pos.h = (int)inp->h;
+
+   SDL_StartTextInput();
+   SDL_SetTextInputRect( &input_pos );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   (void) inp;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+}
+
+/**
+ * @brief Input widget loses focus.
+ *
+ *    @param inp Widget losing the focus.
+ */
+static void inp_focusLose( Widget* inp )
+{
+   (void) inp;
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_StopTextInput();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+}
+
+
