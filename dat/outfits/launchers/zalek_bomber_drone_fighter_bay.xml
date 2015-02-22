@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Za'lek Bomber Drone Fighter Bay">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel License</license>
+  <mass>200</mass>
+  <price>1200000</price>
+  <gfx_store>zalek_drone_bomber_fighter</gfx_store>
+  <description>The Drone Fighter bay uses the advanced Collective technologies to sustain a pair of Drone Fighters. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>
+  <cpu>-25</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Za'lek Bomber Drone Fighter</ammo>
+  <delay>4</delay>
+  <amount>2</amount>
+ </specific>
+</outfit>

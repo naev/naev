@@ -26,18 +26,18 @@ else -- default english
     passtext = {}
 
     title[1] = "The job offer"
-    text[1] = [[    You walk up to the Dvaered official at his table. He mentions that he is looking for a pilot like yourself.
+    text[1] = [[You walk up to the Dvaered official at his table. He mentions that he is looking for a pilot like yourself.
     "I am looking for a skilled pilot to do a simple job for me, interested?"]]
     
     title[2] = "A small distraction"
-    text[2] = [[    "My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces do not seem sufficient enough to take on any existing planetary defense forces head on.  
+    text[2] = [["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces do not seem sufficient enough to take on any existing planetary defense forces head on.  
     "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.  
     "To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]
-    text[3] = [[    "That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]
-    text[4] = [[    "We will jump in approximately 8000 STU after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]
+    text[3] = [["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]
+    text[4] = [["We will jump in approximately 8000 STU after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]
     
     refusetitle = "Nuts"
-    refusetext = [[    "I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]
+    refusetext = [["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]
     
     failtitle[1] = "You ran away!"
     failtext[1] = "You have left the system without first completing your mission. The operation ended in failure."
@@ -51,7 +51,7 @@ else -- default english
     failtext[4] = "The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."
 
     passtitle[1] = "The Dvaered official sent you a message."
-    passtext[1] = [[   "Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 80000 credits in your account."]]
+    passtext[1] = [["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 80000 credits in your account."]]
 
     npc_desc = "A high ranking Dvaered officer. It looks like he might have a job offer for you."
     
@@ -163,13 +163,13 @@ end
 function hawk_jump () -- Got away
     tk.msg(failtitle[2], failtext[2])
     faction.get("Dvaered"):modPlayerSingle(-5)
-    hook.timer(10000, abort)
+    hook.timer(10000, "abort")
 end
 
 function hawk_land () -- Got away
     tk.msg(failtitle[3], failtext[3])
     faction.get("Dvaered"):modPlayerSingle(-5)
-    hook.timer(10000, abort)
+    hook.timer(10000, "abort")
 end
 
 function hawk_attacked () -- chased
@@ -282,7 +282,7 @@ function jump_fleet_cap_dead () -- mission failed
         j:follow(hawk)
         j:setHilight(false)
     end
-    hook.timer(10000, abort)
+    hook.timer(10000, "abort")
 end      
 
 function complete()

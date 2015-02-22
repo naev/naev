@@ -4,22 +4,22 @@
   <slot>weapon</slot>
   <size>small</size>
   <mass>1</mass>
-  <price>745000</price>
+  <price>180000</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-1</cpu>
  </general>
  <specific type="beam">
-  <delay>10000</delay>
-  <duration>5</duration>
-  <range>400</range>
+  <delay>2</delay>
+  <duration min="2">6</duration>
+  <range>500</range>
   <turn>35</turn>
   <energy>20</energy>
   <damage>
    <type>normal</type>
    <penetrate>100</penetrate>
-   <physical>150</physical>
-   <disable>1</disable>
+   <physical>130</physical>
+   <disable>18</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

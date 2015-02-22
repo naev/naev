@@ -45,7 +45,7 @@ end
 
 
 include("proximity.lua")
-include("numstring.lua")
+include("dat/scripts/numstring.lua")
 
 -- Mission parameters
 chk_range      = math.pow( 2000, 2 ) -- Radius within target
@@ -486,7 +486,6 @@ function land ()
 
       -- modify the faction standing
       faction.modPlayerSingle("Dvaered", rnd.rnd(1, num_patrol/2) )
-      faction.modPlayerSingle("FLF", -3)
 
       misn.finish(true)
    end

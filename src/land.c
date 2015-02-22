@@ -43,6 +43,9 @@
 #include "camera.h"
 #include "menu.h"
 #include "ndata.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nlua_tk.h"
 
 
 /* global/main window */
@@ -117,11 +120,18 @@ static char *errorlist_ptr;
 
 
 /*
+ * Rescue.
+ */
+static lua_State *rescue_L = NULL; /**< Rescue Lua state. */
+static void land_stranded (void);
+
+
+/*
  * prototypes
  */
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
-static void land_changeTab( unsigned int wid, char *wgt, int tab );
+static void land_changeTab( unsigned int wid, char *wgt, int old, int tab );
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
@@ -146,10 +156,6 @@ static void misn_close( unsigned int wid, char *name );
 static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, char* str );
-/* refuel */
-static credits_t refuel_price (void);
-static void spaceport_refuel( unsigned int wid, char *str );
-static void land_toggleRefuel( unsigned int wid, char *name );
 
 
 /**
@@ -348,10 +354,9 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
 
    /* Make the buy. */
-   q = pilot_cargoAdd( player.p, com, q );
+   q = pilot_cargoAdd( player.p, com, q, 0 );
    price *= q;
    player_modCredits( -price );
-   land_checkAddRefuel();
    commodity_update(wid, NULL);
 
    /* Run hooks. */
@@ -392,7 +397,6 @@ static void commodity_sell( unsigned int wid, char* str )
    q = pilot_cargoRm( player.p, com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
-   land_checkAddRefuel();
    commodity_update(wid, NULL);
 
    /* Run hooks. */
@@ -492,7 +496,7 @@ int land_errDialogue( char* name, char* type )
    if (strcmp(type,"tradeShip")==0)
       shipyard_canTrade( name );
    else if (strcmp(type,"buyShip")==0)
-      shipyard_canBuy( name );
+      shipyard_canBuy( name, land_planet );
    else if (strcmp(type,"swapEquipment")==0)
       can_swapEquipment( name );
    else if (strcmp(type,"swap")==0)
@@ -500,7 +504,7 @@ int land_errDialogue( char* name, char* type )
    else if (strcmp(type,"sellShip")==0)
       can_sell( name );
    else if (strcmp(type,"buyOutfit")==0)
-      outfit_canBuy( name );
+      outfit_canBuy( name, land_planet );
    else if (strcmp(type,"sellOutfit")==0)
       outfit_canSell( name );
    else if (strcmp(type,"buyCommodity")==0)
@@ -569,6 +573,9 @@ static void bar_open( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
    dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
+   /* Approach when pressing enter */
+   window_setAccept( wid, bar_approach );
+
    /* Buttons */
    window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseBar",
@@ -611,7 +618,7 @@ static int bar_genList( unsigned int wid )
    glTexture **portraits;
    char **names, *focused;
    int w, h, iw, ih, bw, bh;
-   int n;
+   int n, pos;
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
@@ -620,8 +627,14 @@ static int bar_genList( unsigned int wid )
    focused = strdup(window_getFocus(wid));
 
    /* Destroy widget if already exists. */
-   if (widget_exists( wid, "iarMissions" ))
+   if (widget_exists( wid, "iarMissions" )) {
+      /* Store position. */
+      pos = toolkit_getImageArrayPos( wid, "iarMissions" );
+
       window_destroyWidget( wid, "iarMissions" );
+   }
+   else
+      pos = -1;
 
    /* We sort just in case. */
    npc_sort();
@@ -648,7 +661,10 @@ static int bar_genList( unsigned int wid )
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 100, 75,
-         portraits, names, n, bar_update, NULL );
+         portraits, names, n, bar_update, bar_approach );
+
+   /* Restore position. */
+   toolkit_setImageArrayPos( wid, "iarMissions", pos );
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
@@ -773,8 +789,10 @@ static void bar_approach( unsigned int wid, char *str )
    n = npc_getArraySize();
    npc_approach( pos );
    bar_genList( wid ); /* Always just in case. */
-   if (n == npc_getArraySize())
-      toolkit_setImageArrayPos( wid, "iarMissions", pos+1 );
+
+   /* Focus the news if the number of NPCs has changed. */
+   if (n != npc_getArraySize())
+      toolkit_setImageArrayPos( wid, "iarMissions", 0 );
 
    /* Reset markers. */
    mission_sysMark();
@@ -998,103 +1016,25 @@ static void misn_update( unsigned int wid, char* str )
 
 
 /**
- * @brief Gets how much it will cost to refuel the player.
- *    @return Refuel price.
+ * @brief Refuels the player's current ship, if possible.
  */
-static credits_t refuel_price (void)
+void land_refuel (void)
 {
-   return (credits_t)((player.p->fuel_max - player.p->fuel)*3);
-}
-
-
-/**
- * @brief Refuels the player.
- *    @param wid Land window.
- *    @param str Unused.
- */
-static void spaceport_refuel( unsigned int wid, char *str )
-{
-   (void)str;
-   credits_t price;
-
-   price = refuel_price();
-
-   if (!player_hasCredits( price )) { /* player is out of money after landing */
-      dialogue_alert("You seem to not have enough credits to refuel your ship." );
-      return;
-   }
-
-   player_modCredits( -price );
-   player.p->fuel      = player.p->fuel_max;
-   if (widget_exists( land_windows[0], "btnRefuel" )) {
-      window_destroyWidget( wid, "btnRefuel" );
-      window_destroyWidget( wid, "txtRefuel" );
-   }
-}
-
-
-/**
- * @brief Checks if should add the refuel button and does if needed.
- */
-void land_checkAddRefuel (void)
-{
-   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
    unsigned int w;
 
-   /* Check to see if fuel conditions are met. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
-      if (!widget_exists( land_windows[0], "txtRefuel" ))
-         window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
-                  200, gl_defFont.h, 1, "txtRefuel",
-                  &gl_defFont, &cBlack, "No refueling services." );
-      return;
-   }
-
    /* Full fuel. */
-   if (player.p->fuel >= player.p->fuel_max) {
-      if (widget_exists( land_windows[0], "btnRefuel" ))
-         window_destroyWidget( land_windows[0], "btnRefuel" );
-      if (widget_exists( land_windows[0], "txtRefuel" ))
-         window_destroyWidget( land_windows[0], "txtRefuel" );
+   if (player.p->fuel >= player.p->fuel_max)
       return;
-   }
 
-   /* Autorefuel. */
-   if (conf.autorefuel) {
-      spaceport_refuel( land_windows[0], "btnRefuel" );
-      w = land_getWid( LAND_WINDOW_EQUIPMENT );
-      if (w > 0)
-         equipment_updateShips( w, NULL ); /* Must update counter. */
-      if (player.p->fuel >= player.p->fuel_max)
-         return;
-   }
+   /* No refuel service. */
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
+      return;
 
-   /* Just enable button if it exists. */
-   if (widget_exists( land_windows[0], "btnRefuel" )) {
-      window_enableButton( land_windows[0], "btnRefuel");
-      credits2str( cred, player.p->credits, 2 );
-      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
-      window_modifyText( land_windows[0], "txtRefuel", buf );
-   }
-   /* Else create it. */
-   else {
-      /* Refuel button. */
-      credits2str( cred, refuel_price(), 2 );
-      nsnprintf( buf, sizeof(buf), "Refuel %s", cred );
-      window_addButton( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnRefuel",
-            buf, spaceport_refuel );
-      /* Player credits. */
-      credits2str( cred, player.p->credits, 2 );
-      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
-      window_addText( land_windows[0], -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
-            &gl_smallFont, &cBlack, buf );
-   }
+   player.p->fuel = player.p->fuel_max;
 
-   /* Make sure player can click it. */
-   if (!player_hasCredits( refuel_price() ))
-      window_disableButton( land_windows[0], "btnRefuel" );
+   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   if (w > 0)
+      equipment_updateShips( w, NULL ); /* Must update counter. */
 }
 
 
@@ -1300,8 +1240,8 @@ void land_genWindows( int load, int changetab )
    if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
-   /* Add fuel button if needed - AFTER missions pay :). */
-   land_checkAddRefuel();
+   /* Refuel if necessary. */
+   land_refuel();
 
    /* Finished loading. */
    land_loaded = 1;
@@ -1410,22 +1350,12 @@ static void land_createMainTab( unsigned int wid )
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
          "Take Off", land_buttonTakeoff, SDLK_t );
 
-   /*
-    * Checkboxes.
-    */
-   window_addCheckbox( wid, -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20) + 40,
-         175, 20, "chkRefuel", "Automatic Refuel",
-         land_toggleRefuel, conf.autorefuel );
-   land_toggleRefuel( wid, "chkRefuel" );
-}
-
-
-/**
- * @brief Refuel was toggled.
- */
-static void land_toggleRefuel( unsigned int wid, char *name )
-{
-   conf.autorefuel = window_checkboxState( wid, name );
+   /* Add "no refueling" notice if needed. */
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
+      window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
+               200, gl_defFont.h, 1, "txtRefuel",
+               &gl_defFont, &cBlack, "No refueling services." );
+   }
 }
 
 
@@ -1434,13 +1364,16 @@ static void land_toggleRefuel( unsigned int wid, char *name )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Previously-active tab. (Unused)
  *    @param tab Tab changed to.
  */
-static void land_changeTab( unsigned int wid, char *wgt, int tab )
+static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
 {
    int i;
    (void) wid;
    (void) wgt;
+   (void) old;
+
    unsigned int w;
    const char *torun_hook;
    unsigned int to_visit;
@@ -1458,11 +1391,9 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
          /* Must regenerate outfits. */
          switch (i) {
             case LAND_WINDOW_MAIN:
-               land_checkAddRefuel();
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
-               outfits_updateQuantities( w );
                to_visit   = VISITED_OUTFITS;
                torun_hook = "outfits";
                break;
@@ -1540,6 +1471,10 @@ void takeoff( int delay )
       char message[512];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msg( "Ship not fit for flight", message );
+
+      /* Check whether the player needs rescuing. */
+      land_stranded();
+
       return;
    }
 
@@ -1547,7 +1482,7 @@ void takeoff( int delay )
    land_takeoff = 0;
 
    /* Refuel if needed. */
-   land_checkAddRefuel();
+   land_refuel();
 
    /* In case we had paused messy sounds. */
    sound_stopAll();
@@ -1570,10 +1505,10 @@ void takeoff( int delay )
    cam_setTargetPilot( player.p->id, 0 );
 
    /* heal the player */
-   player.p->armour = player.p->armour_max;
-   player.p->shield = player.p->shield_max;
-   player.p->energy = player.p->energy_max;
-   player.p->stimer = 0.;
+   pilot_healLanded( player.p );
+
+   /* Clear planet target. Allows for easier autonav out of the system. */
+   player_targetPlanetSet( -1 );
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;
@@ -1609,6 +1544,62 @@ void takeoff( int delay )
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
+   }
+
+
+/**
+ * @brief Runs the rescue script if players are stuck.
+ */
+static void land_stranded (void)
+{
+   char *buf;
+   uint32_t bufsize;
+   const char *file = "dat/rescue.lua";
+   int errf;
+   lua_State *L;
+
+   /* Nothing to do if there's no rescue script. */
+   if (!ndata_exists(file))
+      return;
+
+   if (rescue_L == NULL) {
+      rescue_L = nlua_newState();
+      nlua_loadStandard( rescue_L, 0 );
+      nlua_loadTk( rescue_L );
+
+      L = rescue_L;
+
+      buf = ndata_read( file, &bufsize );
+      if (luaL_dobuffer(L, buf, bufsize, file) != 0) {
+         WARN("Error loading file: %s\n"
+             "%s\n"
+             "Most likely Lua file has improper syntax, please check",
+               file, lua_tostring(L,-1));
+         free(buf);
+         return;
+      }
+      free(buf);
+   }
+   else
+      L = rescue_L;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -2;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+
+   /* Run Lua. */
+   lua_getglobal(L,"rescue");
+   if (lua_pcall(L, 0, 0, errf)) { /* error has occurred */
+      WARN("Rescue: 'rescue' : '%s'", lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif
 }
 
 
@@ -1645,6 +1636,12 @@ void land_cleanup (void)
 
    /* Clean up bar missions. */
    npc_freeAll();
+
+   /* Clean up rescue Lua. */
+   if (rescue_L != NULL) {
+      lua_close(rescue_L);
+      rescue_L = NULL;
+   }
 }
 
 
@@ -1655,6 +1652,7 @@ void land_exit (void)
 {
    land_cleanup();
    equipment_cleanup();
+   outfits_cleanup();
 }
 
 

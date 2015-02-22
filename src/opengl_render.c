@@ -57,7 +57,6 @@ static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
  */
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
-static glTexture *gl_genCircle( int radius );
 static void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
@@ -775,6 +774,60 @@ void gl_blitStatic( const glTexture* texture,
 }
 
 
+void gl_drawCircleLoop( const double cx, const double cy,
+      const double r, const glColour *c )
+{
+   int i, points;
+   double angi, cosi, sini;
+   double nxc, xc, yc;
+   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
+
+   /* Aim for 10 px between each vertex. */
+   points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
+
+   angi = 2. * M_PI / (double)points;
+   cosi = cos(angi);
+   sini = sin(angi);
+
+   vertex[0] = cx + r;
+   vertex[1] = cy;
+
+   xc = 1.;
+   yc = 0.;
+
+   /* Calculate the vertices by iterating counter-clockwise. */
+   for (i=1; i<points; i++) {
+      nxc = cosi * xc - sini * yc;
+      yc  = sini * xc + cosi * yc;
+      xc  = nxc;
+
+      vertex[i*2+0] = cx + xc * r;
+      vertex[i*2+1] = cy + yc * r;
+   }
+
+   gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set up the colour. */
+   for (i=0; i<points; i++) {
+      col[4*i+0] = c->r;
+      col[4*i+1] = c->g;
+      col[4*i+2] = c->b;
+      col[4*i+3] = c->a;
+   }
+
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, points*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_LINE_LOOP, 0, points );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+}
+
+
 /**
  * @brief Draws an empty circle.
  *
@@ -875,8 +928,10 @@ void gl_drawCircle( const double cx, const double cy,
    if (filled)
       gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
          0., 0., gl_circle->srw, gl_circle->srh, c );
-   else
+   else if (gl_vendorIsIntel())
       gl_drawCircleEmpty( cx, cy, r, c );
+   else
+      gl_drawCircleLoop( cx, cy, r, c );
 }
 
 
@@ -1044,13 +1099,13 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *    @param radius Radius of the circle to generate.
  *    @return The tetxure containing the generated circle.
  */
-static glTexture *gl_genCircle( int radius )
+glTexture *gl_genCircle( int radius )
 {
-   int i,j,k, n,m;
+   int i, j, edge, blur;
    SDL_Surface *sur;
-   uint8_t *pix, *buf;
+   uint8_t *pix;
    int h, w;
-   double a;
+   double dist;
    char name[PATH_MAX];
 
    /* Calculate parameters. */
@@ -1064,37 +1119,24 @@ static glTexture *gl_genCircle( int radius )
    /* Generate the circle. */
    SDL_LockSurface( sur );
 
-   /* Create temporary buffer to draw circle in. */
-   k = 3;
-   buf = malloc( (h*k) * (w*k) );
-   for (i=0; i<k*h; i++) {
-      for (j=0; j<k*w; j++) {
-         if (pow2(i-k*radius)+pow2(j-k*radius) < pow2(k*radius))
-            buf[ i*k*w + j] = 0xFF;
-      }
-   }
+   edge = pow2(radius);
+   blur = pow2(radius - 1);
 
-   /* Draw the circle with filter. */
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* Calculate blur. */
-         a = 0.;
-         for (n=0; n<k; n++)
-            for (m=0; m<k; m++)
-               a += buf[ (i*k+n)*k*w + (j*k+m) ];
+   for (i=0; i<w; i++) {
+      for (j=0; j<h; j++) {
+         dist = pow2(i - radius) + pow2(j - radius);
+         if (dist > edge)
+            pix[i*sur->pitch + j*4 + 3] = 0;
+         else if (dist <= blur)
+            pix[i*sur->pitch + j*4 + 3] = 0xFF;
+         else
+            pix[i*sur->pitch + j*4 + 3] = CLAMP(0, 0xFF, (edge - dist) / (edge - blur) * 0xFF);
 
-         a /= k*k;
-
-         /* Set pixel. */
          pix[i*sur->pitch + j*4 + 0] = 0xFF;
          pix[i*sur->pitch + j*4 + 1] = 0xFF;
          pix[i*sur->pitch + j*4 + 2] = 0xFF;
-         pix[i*sur->pitch + j*4 + 3] = (uint8_t)a;
       }
    }
-
-   /* Clean up. */
-   free(buf);
 
    SDL_UnlockSurface( sur );
 

@@ -15,7 +15,7 @@ else -- default English text
    bar_desc = "An old man sits at a table with some missing person papers."
    title = "The Search for Cynthia"
    misn_desc_pre_accept = [[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
-"That's my girl. She disappeared quite a few STU ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]
+    "That's my girl. She disappeared quite a few STU ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]
    misn_desc = "Search for Cynthia."
    reward_desc = "%s credits on delivery."
    cargoname = "Person"
@@ -45,8 +45,6 @@ else -- default English text
 end
 
 function create ()
-   startworld, startworld_sys = planet.cur()
-
    targetworld_sys = system.get("Dohriabi")
    targetworld = planet.get("Niflheim")
 
@@ -74,8 +72,6 @@ function accept ()
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd(system.get("Dohriabi"), "low")
-
-   misn.accept()
 
    tk.msg( title, post_accept[1] )
 
@@ -154,7 +150,9 @@ end
 
 function abort ()
   --Clean up
-   misn.cargoRm(cargoID)
+   if cargoID then
+      misn.cargoRm(cargoID)
+   end
    misn.markerRm(runawayMarker)
    misn.osdDestroy()
    misn.finish(false)

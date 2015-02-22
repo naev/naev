@@ -10,14 +10,15 @@
  <license>Heavy Combat Vessel License</license>
  <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
  <health>
-  <absorb>25</absorb>
-  <armour>500</armour>
+  <absorb>27</absorb>
+  <armour>1100</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>27</crew>
   <mass>1400</mass>
-  <cargo>25</cargo>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>80</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="-23" y="-15" h="5"/>
@@ -26,30 +27,22 @@
   <weapon size="large" x="-6" y="0" h="12"/>
   <weapon size="medium" x="-24" y="-8" h="8"/>
   <weapon size="medium" x="-24" y="8" h="8"/>
-  <utility size="large" prop="systems" exclusive="1" required="1">Basic Large Systems</utility>
+  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
-  <structure size="large" prop="engines" exclusive="1" required="1">Manufacturer Large Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unmodified Large Hull</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 4500 Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-16 Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="medium"/>
  </slots>
  <stats>
-  <fuel_consumption>400</fuel_consumption>
   <speed_mod>10</speed_mod>
-  <turn_mod>10</turn_mod>
-  <thrust_mod>0</thrust_mod>
-  <armour_mod>0</armour_mod>
-  <shield_mod>0</shield_mod>
-  <energy_mod>0</energy_mod>
-  <energy_regen_mod>10</energy_regen_mod>
-  <cargo_mod>-20</cargo_mod>
-  <ew_detect>0</ew_detect>
-  <ew_hide>0</ew_hide>
+  <turn_mod>5</turn_mod>
+  <thrust_mod>10</thrust_mod>
  </stats>
 </ship>

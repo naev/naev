@@ -4,24 +4,24 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon License</license>
-  <mass>140</mass>
-  <price>745000</price>
+  <mass>90</mass>
+  <price>180000</price>
   <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
   <gfx_store>ragnarok</gfx_store>
-  <cpu>-80</cpu>
+  <cpu>-44</cpu>
  </general>
- <specific type="turret beam" secondary="1">
-  <delay>10</delay>
-  <duration>5</duration>
-  <range>400</range>
+ <specific type="turret beam" >
+  <delay>8</delay>
+  <duration min="2">6</duration>
+  <range>500</range>
   <turn>35</turn>
-  <energy>200</energy>
+  <energy>160</energy>
   <heatup>60</heatup>
   <damage>
    <type>normal</type>
    <penetrate>90</penetrate>
-   <physical>150</physical>
-   <disable>0</disable>
+   <physical>130</physical>
+   <disable>18</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

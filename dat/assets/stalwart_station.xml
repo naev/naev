@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Stalwart Station">
  <pos>
-  <x>19653.539772</x>
-  <y>2091.424297</y>
+  <x>24.688611</x>
+  <y>59.531501</y>
  </pos>
  <GFX>
   <space>station-fleetbase.png</space>
@@ -16,7 +16,7 @@
  <general>
   <class>2</class>
   <population>12000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>dv_mil_restricted</land>
    <refuel/>
@@ -33,6 +33,7 @@
   <item>Engines Medium</item>
   <item>Kinetic 2</item>
   <item>Kinetic 3</item>
+  <item>Beam 1</item>
   <item>Heavy Weapons 1</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>

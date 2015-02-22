@@ -8,7 +8,7 @@
    NOTES: This mission requires balancing to make sure it works with all ship types, possibly normalisation of the fraction of the top speed required for mission success according to the top speed, turn, and acceleration of the player's ship.
 --]]
 
-include "cargo_common.lua"
+include "dat/scripts/cargo_common.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -151,9 +151,9 @@ Yes, this is very much the long way around.
    local uninhabited = {}
    for i,s in ipairs( getsysatdistance( system.cur(), 0, 6 )) do
       for i, v in ipairs(s:planets()) do
-         local wi, hi = v:gfxSpace():dim()
+         local r = v:radius()
          -- The set of possible dumping targets is limited to uninhabited planets of radius 190 or above.
-         if not v:services()["inhabited"] then -- and wi + hi > 760 --[[and v:system():faction() == mission_planet:faction()--]] then
+         if not v:services()["inhabited"] and r >= 190 --[[and v:system():faction() == mission_planet:faction()--]] then
             uninhabited[#uninhabited + 1] = {v, s}
          end
       end
@@ -163,8 +163,6 @@ Yes, this is very much the long way around.
      
    local nearest
    for k, v in ipairs(uninhabited) do
---      local wid, hid = v[1]:gfxSpace():dim()
---      print( v[1]:name(), (wid + hid) /4)
       distance = cargo_calculateDistance( mission_system, mission_planet:pos(), v[1]:system(), v[1])
       if not nearest or distance < nearest then
          nearest = distance
@@ -173,9 +171,11 @@ Yes, this is very much the long way around.
       end
    end
    
-   w, h = dumping_planet:gfxSpace():dim() -- Find the radius of the planet for aero-braking
-   dumping_planet_radius = 1.0 * (w + h) / 4 
---   if dumping_planet_radius < ( 90 / player_stats.turn * player_stats.speed * 1.5) then misn.finish( false) end -- only offer mission if player ship can do it
+   -- Find the radius of the planet for aero-braking
+   dumping_planet_radius = dumping_planet:radius()
+   if dumping_planet_radius < ( 90 / player_stats.turn * player_stats.speed * 1.5) then
+      misn.finish( false)
+   end -- only offer mission if player ship can do it
 
    misn.markerAdd( dumping_system, "computer" )
      
@@ -203,7 +203,7 @@ function accept ()
    if mission_system == dumping_system then
       osd["directions"] = osd["directions"]:format(dumping_planet:name())
    else
-      osd_msg["directions"] = osd_msg["directions1"]:format(dumping_planet:name(), dumping_system:name())
+      osd["directions"] = osd["directions1"]:format(dumping_planet:name(), dumping_system:name())
    end
    osd["protip"] = osd["protip"]:format( dumping_planet:name())
    osd["done1"] = osd["done1"]:format( mission_planet:name())
@@ -254,15 +254,14 @@ end
 
 -- The function of the aerobraking / dumping procedure over the destination planet
 function hardBurn ()
-
-      misn.osdActive( 2)
+   misn.osdActive( 2)
    -- Possibilities:
    if ( vec2.dist( player.pilot():pos(), dumping_planet:pos()) > dumping_planet_radius) then
       -- The player can't stay over the planet.
 --      print( "Atmospheric exit.") -- Used print statements for testing the conditions.
       entry = false
       dumpingZone()
-   elseif entry == true and player.pilot():vel():mod() <= player_stats.speed - 3 then
+   elseif entry == true and player.pilot():vel():mod() <= player.pilot():stats()['speed'] - 3 then
       -- The player executes the manoeuvre.
       if paid ~= true then
          tk.msg( title["burn1"], string.format( text["burn1"], player.ship(), mission_planet:name()))

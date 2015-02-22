@@ -24,8 +24,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>(null)</description>
-  <bar>(null)</bar>
+  <description>Before the human settlement here was established, Qoman's atmosphere was methane of an unusually high purity, an unusual circumstance for a rock-based world. A harvesting operation was placed on the planet in the days of the Old Empire, but due to the time's poor engineering practices and subsequent Dvaered mismanagement, the quality of Qoman's atmosphere and, subsequently, its exports, has fallen.</description>
+  <bar>A credit-a-dozen bar whose only distinguishing feature is an ancient plaque on the wall on which are the words "Breathe the air, but don't inhale!" Presumably it's a joke. Nobody gets it.</bar>
  </general>
  <tech>
   <item>Bulk Trade Ships</item>

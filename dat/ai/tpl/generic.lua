@@ -37,7 +37,9 @@ function control ()
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
-      if not ai.getPilot():cooldown() then
+
+      cooldown, braking = ai.getPilot():cooldown()
+      if not (cooldown or braking) then
          mem.cooldown = false
       end
    else
@@ -163,6 +165,11 @@ function control ()
 
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
+      -- Don't start new attacks while refueling.
+      if task == "refuel" then
+         return
+      end
+
       local attack = false
 
       -- See if enemy is close enough to attack
@@ -320,19 +327,19 @@ function distress ( pilot, attacker )
    end
 
    local task = ai.taskname()
-   -- If not attacking nor fleeing, begin attacking
-   if task ~= "attack" and task ~= "runaway" then
-      if mem.aggressive then
-         ai.pushtask( "attack", t )
-      else
-         ai.pushtask( "runaway", t )
-      end
    -- We're sort of busy
-   elseif task == "attack" then
+   if task == "attack" then
       local target = ai.target()
 
       if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
          ai.pushtask( "attack", t )
+      end
+   -- If not fleeing or refueling, begin attacking
+   elseif task ~= "runaway" and task ~= "refuel" then
+      if mem.aggressive then
+         ai.pushtask( "attack", t )
+      else
+         ai.pushtask( "runaway", t )
       end
    end
 end
@@ -340,7 +347,6 @@ end
 
 -- Handles generating distress messages
 function gen_distress ( target )
-
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
       return
@@ -351,12 +357,13 @@ function gen_distress ( target )
       return
    end
 
-   -- Update distres counter
+   -- Initialize if unset.
    if mem.distressed == nil then
       mem.distressed = 1
-   else
-      mem.distressed = mem.distressed + 1
    end
+
+   -- Update distress counter
+   mem.distressed = mem.distressed + 1
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then

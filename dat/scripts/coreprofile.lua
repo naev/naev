@@ -8,33 +8,33 @@ function pilot.coreProfile(p, profile)
    local profiles =  {
                   low = 
                         {
-                           small = {hull = "Unicorp C-2 Light Plating", engine = "Unicorp KRD-B12 Engine", system = "Unicorp PT-200 Core System"},
-                           medium = {hull = "Unicorp D-8 Medium Plating",  engine = "Unicorp KRD-G15 Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp C-16 Heavy Plating",  engine = "Unicorp KRD-T20 Engine", system = "Unicorp PT-1200 Core System"}
+                           small = {hull = "Unicorp D-4 Light Plating", engine = "Unicorp Hawk 300 Engine", system = "Unicorp PT-200 Core System"},
+                           medium = {hull = "Unicorp D-8 Medium Plating",  engine = "Unicorp Falcon 1200 Engine", system = "Unicorp PT-600 Core System"},
+                           large = {hull = "Unicorp D-20 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-1000 Core System"}
                         },
                   medium = 
                         {
-                           small = {hull = "Schafer & Kane Light Combat Plating",  engine = "Tricon Naga Mk3 Engine", system = "Milspec Orion 2301 Core System"},
-                           medium = {hull = "Schafer & Kane Medium Combat Plating Alpha",  engine = "Tricon Centaur Mk2 Engine", system = "Milspec Orion 3701 Core System"},
-                           large = {hull = "Schafer & Kane Heavy Combat Plating Alpha",  engine = "Tricon Harpy Mk1 Engine", system = "Milspec Gemini 3308 Core System"}
+                           small = {hull = "S&K Light Combat Plating",  engine = "Nexus Dart 300 Engine", system = "Milspec Orion 2301 Core System"},
+                           medium = {hull = "S&K Medium Combat Plating",  engine = "Nexus Arrow 550 Engine", system = "Milspec Orion 3701 Core System"},
+                           large = {hull = "S&K Heavy Combat Plating",  engine = "Nexus Bolt 4500 Engine", system = "Milspec Hermes 5402 Core System"}
                         },
                   high = 
                         {
-                           small = {hull = "Schafer & Kane Light Combat Plating",  engine = "Tricon Naga Mk9 Engine", system = "Milspec Orion 5501 Core System"},
-                           medium = {hull = "Schafer & Kane Medium Combat Plating Gamma",  engine = "Tricon Centaur Mk7 Engine", system = "Milspec Orion 5501 Core System"},
-                           large = {hull = "Schafer & Kane Heavy Combat Plating Gamma",  engine = "Tricon Harpy Mk11 Engine", system = "Milspec Orion 9901 Core System"}
+                           small = {hull = "S&K Light Combat Plating",  engine = "Tricon Zephyr Engine", system = "Milspec Orion 5501 Core System"},
+                           medium = {hull = "S&K Medium-Heavy Combat Plating",  engine = "Tricon Cyclone Engine", system = "Milspec Orion 5501 Core System"},
+                           large = {hull = "S&K Superheavy Combat Plating",  engine = "Tricon Typhoon Engine", system = "Milspec Orion 9901 Core System"}
                         },
                   low_trader = 
                         {
-                           small = {hull = "Unicorp Small Cargo Hull",  engine = "Unicorp JNS-44K Engine", system = "Unicorp PT-200 Core System"},
-                           medium = {hull = "Unicorp Medium Cargo Hull",  engine = "Unicorp JNS-54K Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp Large Cargo Hull",  engine = "Unicorp JNS-99K Engine", system = "Unicorp PT-1200 Core System"}
+                           small = {hull = "S&K Small Cargo Hull",  engine = "Melendez Ox Engine", system = "Unicorp PT-200 Core System"},
+                           medium = {hull = "S&K Medium Cargo Hull",  engine = "Melendez Buffalo Engine", system = "Unicorp PT-600 Core System"},
+                           large = {hull = "S&K Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-1000 Core System"}
                         },
                   high_trader = 
                         {
-                           small = {hull = "Schafer &amp; Kane Small Cargo Hull",  engine = "Tricon Oxen Engine", system = "Milspec Orion 2302 Core System"},
-                           medium = {hull = "Schafer &amp; Kane Medium Cargo Hull",  engine = "Tricon Buffalo Engine", system = "Milspec Orion 3702 Core System"},
-                           large = {hull = "Schafer &amp; Kane Large Cargo Hull",  engine = "Tricon Mammoth Engine", system = "Milspec Orion 4802 Core System"}
+                           small = {hull = "S&K Small Cargo Hull",  engine = "Melendez Ox XL Engine", system = "Milspec Orion 2301 Core System"},
+                           medium = {hull = "S&K Medium Cargo Hull",  engine = "Melendez Buffalo XL Engine", system = "Milspec Orion 3701 Core System"},
+                           large = {hull = "S&K Large Cargo Hull",  engine = "Melendez Mammoth XL Engine", system = "Milspec Orion 4801 Core System"}
                         },
                }
    

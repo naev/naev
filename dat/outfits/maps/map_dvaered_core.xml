@@ -9,39 +9,78 @@
  <specific type="map">
   <sys name="Dvaer">
    <jump>Beeklo</jump>
+   <jump>Gremlin</jump>
    <jump>Radix</jump>
    <jump>Urbanus</jump>
-   <jump>Gremlin</jump>
-   <asset>Dvaer Prime</asset>
-   <asset>Dvaered High Command</asset>
    <asset>Dvaer II</asset>
-   <asset>Eist Shipyard</asset>
    <asset>Dvaer III</asset>
    <asset>Dvaer IIIa</asset>
    <asset>Dvaer IV</asset>
+   <asset>Dvaer Prime</asset>
+   <asset>Dvaered High Command</asset>
+   <asset>Eist Shipyard</asset>
    <asset>Laarss</asset>
   </sys>
   <sys name="Gremlin">
+   <jump>Daravon</jump>
    <jump>Dvaer</jump>
-  </sys>
-  <sys name="Urbanus">
-   <jump>Dvaer</jump>
-   <asset>Urbanus Crops</asset>
-   <asset>Onyx Shipyard</asset>
-   <asset>Trincea</asset>
   </sys>
   <sys name="Radix">
    <jump>Dvaer</jump>
    <asset>Myuirr Station</asset>
+   <asset>Radix I</asset>
+   <asset>Radix II</asset>
+   <asset>Radix III</asset>
    <asset>Stutee</asset>
   </sys>
   <sys name="Beeklo">
+   <jump>Awowa</jump>
+   <jump>Baf</jump>
+   <jump>Darkstone</jump>
    <jump>Dvaer</jump>
-   <asset>Inios Station</asset>
-   <asset>Totoran</asset>
-   <asset>Icarus</asset>
    <asset>Adham</asset>
+   <asset>Beeklo II</asset>
    <asset>Diabolos</asset>
+   <asset>Icarus</asset>
+   <asset>Totoran</asset>
+  </sys>
+  <sys name="Baf">
+   <jump>Beeklo</jump>
+   <asset>BGG-1356</asset>
+   <asset>Baf I</asset>
+   <asset>Baf IV</asset>
+   <asset>Dumas Station</asset>
+   <asset>MGG-1294</asset>
+  </sys>
+  <sys name="Daravon">
+   <jump>Gremlin</jump>
+   <asset>Daravon I</asset>
+   <asset>Daravon III</asset>
+   <asset>Eclipse Station</asset>
+   <asset>Vilati Vilata</asset>
+  </sys>
+  <sys name="Awowa">
+   <jump>Beeklo</jump>
+   <asset>Awowa IV</asset>
+   <asset>Awowa V</asset>
+   <asset>Odonga</asset>
+   <asset>Odonga m1</asset>
+  </sys>
+  <sys name="Urbanus">
+   <jump>Dvaer</jump>
+   <asset>Onyx Shipyard</asset>
+   <asset>Trincea</asset>
+   <asset>Urbanus Crops</asset>
+   <asset>Urbanus II</asset>
+   <asset>Urbanus III</asset>
+  </sys>
+  <sys name="Darkstone">
+   <jump>Beeklo</jump>
+   <asset>Darkstone IV</asset>
+   <asset>Darkstone V</asset>
+   <asset>Sheik Hall</asset>
+   <asset>Stalwart Station</asset>
+   <asset>Varia</asset>
   </sys>
  </specific>
 </outfit>

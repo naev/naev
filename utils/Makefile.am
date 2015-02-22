@@ -1,4 +1,3 @@
-SUBDIRS = pack
 if HAVE_MKSPR
-   SUBDIRS += mkspr
+   SUBDIRS = mkspr
 endif

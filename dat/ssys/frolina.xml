@@ -12,11 +12,11 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Trask">
+  <jump target="Effetey">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Trohem">
+  <jump target="Trask">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Atryssa">
  <pos>
-  <x>-12172.954728</x>
-  <y>-9067.609133</y>
+  <x>-14448.551980</x>
+  <y>-10881.130960</y>
  </pos>
  <GFX>
-  <space>M09.png</space>
+  <space>M11.png</space>
   <exterior>oceanic2.png</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>300.000000</value>
-  <range>5</range>
+  <value>150.000000</value>
+  <range>3</range>
  </presence>
  <general>
   <class>O</class>
@@ -26,11 +26,18 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
-  <description>Atryssa is an economically rich world thanks to Za'lek technology. It is also the closest Za'lek planet, where outsiders can land, to Ruadan. Beyond these two things there is little to recommend it (though one of these may, at least, be plenty enough).</description>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Atryssa is an economically rich world thanks to Za'lek technology. It is also the closest noteworthy Za'lek planet, where outsiders can land, to Ruadan. Beyond these two things there is little to recommend it (though one of these may, at least, be plenty enough).</description>
   <bar>The archetype of a Za'lek bar, although a very crowded one. The crowd seems to be divided up into groups of people discussing things in hushed tones. There are also one or two people wandering about with notepads, though everyone goes quiet when they approach.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>
@@ -39,6 +46,8 @@
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>
   <item>Heavy Weapons 2</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>

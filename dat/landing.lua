@@ -28,7 +28,7 @@
 
 --]]
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
@@ -47,7 +47,7 @@ end
 
 -- Empire military assets.
 function emp_mil_restricted( pnt )
-   return land_military(pnt, 30,
+   return land_military(pnt, 35,
          "Permission to land granted.",
          "You are not authorized to land here.",
          "Landing request denied.",
@@ -56,7 +56,7 @@ end
 
 -- Empire Omega Station.
 function emp_mil_omega( pnt )
-   local required = 30
+   local required = 35
 
    if player.misnDone("Empire Shipping 3") or player.misnActive("Empire Shipping 3") then
       required = 0
@@ -116,7 +116,7 @@ end
 
 -- Soromid military assets.
 function srm_mil_restricted( pnt )
-   return land_military(pnt, 35,
+   return land_military(pnt, 30,
          "Permission to land granted.",
          "Permission denied. You're not truly one of us.",
          "Landing request denied.",
@@ -132,20 +132,31 @@ function srm_mil_kataka( pnt )
          "\"We don't need your money, outsider.\"")
 end
 
+
+-- Za'lek's military assets.
+function zlk_mil_restricted( pnt )
+   return land_military(pnt, 30,
+         "Docking sequence transmitted.",
+         "Authorization level too low to grant access.",
+         "Authorization denied.",
+         "Money is irrelevant.")
+end
+
+
 -- Za'lek's military center.
 function zlk_ruadan( pnt )
    return land_military(pnt, 75,
          "Docking sequence transmitted.",
-         "Authorization level too low to grant authorization.",
+         "This is a restricted area. Your clearance is far too low. Go away.",
          "Authorization denied.",
-         "Money is irrelevant.")
+         "Bribery is a crime, and will not get you on this planet.")
 end
 
 -- Pirate clanworld.
 function pir_clanworld( pnt )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing > 20
+   local can_land = standing > 20 or pnt:getLandOverride()
 
    local land_msg
    if can_land then
@@ -206,7 +217,7 @@ end
 -- Expects the planet, the lowest standing at which landing is allowed, and the lowest standing at which bribing is allowed.
 function land_civilian( pnt, land_floor, bribe_floor )
    local fct = pnt:faction()
-   local can_land = fct:playerStanding() >= land_floor
+   local can_land = fct:playerStanding() >= land_floor or pnt:getLandOverride()
 
    -- Get land message
    local land_msg
@@ -233,7 +244,7 @@ end
 function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing >= land_floor
+   local can_land = standing >= land_floor or pnt:getLandOverride()
 
    local land_msg
    if can_land then

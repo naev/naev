@@ -11,8 +11,8 @@
 
 ]]--
 
-include "cargo_common.lua"
-include "numstring.lua"
+include "dat/scripts/cargo_common.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -124,7 +124,7 @@ function accept()
    local player_best = cargoGetTransit(time_limit, num_jumps, travel_dist)
    pilot.cargoRm(player.pilot(), cargo, cargo_size)
    if time_limit < player_best then
-      if not tk.yesno(slow_title, slow_text:format((time_limit - time.get()):str(), player_best:str(), destplanet:name())) then
+      if not tk.yesno(slow_title, slow_text:format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then
          misn.finish()
       end
    end
@@ -182,7 +182,7 @@ end
 
 function abort()
    misn.cargoRm(cargo_ID)
-   player.msg(jet_msg)
+   player.msg(jet_msg:format(cargo))
    faction:modPlayerSingle(-5)
    misn.osdDestroy(osd)
    misn.markerRm(marker)

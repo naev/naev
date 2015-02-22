@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rostra">
+ <pos>
+  <x>11455.274857</x>
+  <y>9063.008622</y>
+ </pos>
+ <GFX>
+  <space>M12.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1245780</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Rostra is another enclave core world. The Straight row enclave is the larges to of the enclaves, but also the weakest, with a divided agenda and the burden of dealing with pirates trying to break into Za'lek space. As such, Rostra does not have quite the same amenities as the other enclave cores, and the intellectual elite here live here primarily to avoid the politics in other enclaves and the capital.</description>
+  <bar>This bar is loud and dirty with arguing researchers, drinking workers, and stressed out and overworked bar staff. Combined with the cramped quarters and mediocre service, the result is not likely to impress.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Beam 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

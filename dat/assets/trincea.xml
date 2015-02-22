@@ -35,6 +35,7 @@
   <bar>The spaceport bar is subject to the whims of the Warlords just like anything else on the face of the planet, so it is best to check the local rules every time you set your ship down on Trincea. Fortunately, having drinks and checking the news have never been outlawed so far.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Medium</item>
   <item>Hulls Medium</item>
   <item>Kinetic 1</item>

@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>17</mass>
+  <mass>15</mass>
   <price>31000</price>
   <gfx_store>empgrenadelauncher</gfx_store>
   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>

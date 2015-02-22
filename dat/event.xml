@@ -138,6 +138,7 @@
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>
   <chance>3</chance>
+  <cond>system.cur():presence("Pirate") &gt; 0</cond>
   <flags>
    <unique />
   </flags>

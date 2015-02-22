@@ -21,7 +21,7 @@ void map_close (void);
 int map_isOpen (void);
 
 /* misc */
-StarSystem* map_getDestination (void);
+StarSystem* map_getDestination( int *jumps );
 void map_setZoom( double zoom );
 void map_select( StarSystem *sys, char shifted );
 void map_cleanup (void);
@@ -46,8 +46,12 @@ int map_center( const char *sys );
 /* Internal rendering sort of stuff. */
 void map_renderParams( double bx, double by, double xpos, double ypos,
       double w, double h, double zoom, double *x, double *y, double *r );
-void map_renderSystems( double bx, double by, double x, double y, double w, double h, double r, int editor );
-void map_renderNames( double x, double y, int editor );
+void map_renderFactionDisks( double x, double y, int editor);
+void map_renderJumps( double x, double y, int editor);
+void map_renderSystems( double bx, double by, double x, double y,
+      double w, double h, double r, int editor );
+void map_renderNames( double bx, double by, double x, double y,
+      double w, double h, int editor );
 
 
 #endif /* MAP_H */

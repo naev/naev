@@ -33,7 +33,8 @@ Heat is also reset to the base level when you land. So every time you take off, 
 There is a third way to lose heat, however.]]
    message6 = [[Every ship has the ability to go into a special cooling mode called Active Cooldown. When in Active Cooldown, ships rapidly lose their heat. By the end of the cooldown cycle, the ship and all its outfits will have cooled to the galactic base temperature.
 
-Let's try this now. Enter Active Cooldown mode by pressing %s. If you are moving, you will automatically brake to a stop.]]
+Let's try this now. If you're moving, press %s to begin braking, and then press it again to enter Active Cooldown mode. When not moving, pressing %s will immediately enter Active Cooldown mode.]]
+
    message7 = [[You are now in Active Cooldown mode. You will see a progress bar above your ship. It is slowly draining. When the bar is completely empty, your ship will have cooled down. Don't touch any of the controls, or Active Cooldown will be canceled and you will have to restart it.
    
 While you are in active cooldown, your energy and shields will not recharge. So try to use it only in a safe spot.
@@ -50,7 +51,7 @@ Congratulations! This concludes the heat tutorial.]]
 
    wepomsg = [[Use %s to fire your weapons (%ds remaining)]]
    waitomsg = [[Observe your ship's heat (%ds remaining)]]
-   coolomsg = [[Enter Active Cooldown (%s)]]
+   coolomsg = [[Enter Active Cooldown (%s while braking or stopped)]]
 end
 
 function create()
@@ -65,8 +66,8 @@ function create()
     player.swapShip("Vendetta", "Vendetta", "Paul 2", true, true)
     pp:rmOutfit("all")
     pp:addOutfit("Milspec Orion 2301 Core System", 1, true)
-    pp:addOutfit("Tricon Naga Mk3 Engine", 1, true)
-    pp:addOutfit("Schafer & Kane Light Combat Plating", 1, true)
+    pp:addOutfit("Nexus Dart 300 Engine", 1, true)
+    pp:addOutfit("S&K Light Combat Plating", 1, true)
     pp:setEnergy(100)
     pp:setHealth(100, 100)
     pp:addOutfit("Vulcan Gun", 2)
@@ -111,9 +112,10 @@ function flyUpdate()
       if flytime < 0 then
          player.omsgRm(omsg)
          tk.msg(title1, message5)
-         tk.msg(title1, message6:format(tutGetKey("cooldown")))
+         tk.msg(title1, message6:format(tutGetKey("autobrake"),
+               tutGetKey("autobrake")))
          stage = stages.coolwait
-         omsg = player.omsgAdd(coolomsg:format(tutGetKey("cooldown")), 0)
+         omsg = player.omsgAdd(coolomsg:format(tutGetKey("autobrake")), 0)
          inputhook = hook.input("input")
       end
    elseif stage == stages.cool then
@@ -128,17 +130,35 @@ end
 
 --Input hook
 function input(inputname, inputpress)
-   if inputname == "cooldown" then
-      player.omsgRm(omsg)
-      hook.timer(2000, "cooldownPressed")
-      hook.rm(inputhook)
-      stage = stages.cool
+   cooldown, braking = player.pilot():cooldown()
+   if inputname == "autobrake" and cooldown then
+      cooldownPressed()
+   -- Braking for cooldown.
+   elseif inputname == "autobrake" and braking then
+      timerhook = hook.timer(1000, "checkCooldown")
+   end
+end
+
+function checkCooldown()
+   timerhook = nil
+   cooldown, braking = player.pilot():cooldown()
+   if cooldown then
+      cooldownPressed()
+   elseif braking then
+      timerhook = hook.timer(1000, "checkCooldown")
    end
 end
 
 --Timer called function.
 function cooldownPressed()
+   hook.rm(inputhook)
+   if timerhook then
+      hook.rm(timerhook)
+   end
+
+   player.omsgRm(omsg)
    tk.msg(title1, message7)
+   stage = stages.cool
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.

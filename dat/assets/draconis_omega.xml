@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Draconis Omega">
  <pos>
-  <x>20160.000000</x>
-  <y>66600.000000</y>
+  <x>9891.657236</x>
+  <y>30826.418758</y>
  </pos>
  <GFX>
   <space>M09.png</space>
@@ -35,6 +35,7 @@
   <bar>Ever the optimists, the people of Draconis Omega have decorated their spaceport bar with displays of past Imperial power, portraits of former Emperors and charts that show the size of the Empire when it was at its peak. It's certainly a good lesson in history and it's clear that the inhabitants truly believe that the good times will one day return.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Hulls Low</item>
   <item>Laser 1</item>
   <item>Bulk Trade Ships</item>

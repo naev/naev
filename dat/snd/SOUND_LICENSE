@@ -36,6 +36,7 @@
    * music
      * ambient1.ogg
      * ambient2.ogg
+	 * ambient2_5.ogg
      * ambient3.ogg
      * collective1.ogg
      * collective2.ogg
@@ -52,6 +53,7 @@
      * battlesomething1.ogg
      * battlesomething2.ogg
      * zalek1.ogg
+	 * zalek2.ogg
      * intrigue.ogg
      * automat.ogg
    * sound
@@ -103,6 +105,8 @@
      * dvaered1.ogg
      * dvaered2.ogg
      * sirius2.ogg
+     * eureka.ogg
+     * terminal.ogg
 
  * Author: Sean Hildebrand, License: PD
    * sound

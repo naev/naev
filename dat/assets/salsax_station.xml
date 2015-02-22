@@ -5,8 +5,8 @@
   <y>1332.614973</y>
  </pos>
  <GFX>
-  <space>M00.png</space>
-  <exterior>oceanic.png</exterior>
+  <space>station-commerce3.png</space>
+  <exterior>traderoom.png</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>3000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>

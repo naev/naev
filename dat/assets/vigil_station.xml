@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <value>50.000000</value>
-  <range>5</range>
+  <value>100.000000</value>
+  <range>3</range>
  </presence>
  <general>
   <class>0</class>
   <population>5000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>

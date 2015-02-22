@@ -10,8 +10,8 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 
 ]]--
 
-include "jumpdist.lua"
-include "numstring.lua"
+include "dat/scripts/jumpdist.lua"
+include "dat/scripts/numstring.lua"
 
 bar_desc = "You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip."
 
@@ -35,30 +35,30 @@ title = {}  --stage titles
 text = {}   --mission text
 
 title[1] = "Drinking Aristocrat"
-text[1] = [[    You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
+text[1] = [[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
     You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been %s in the %s system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]
 
 title[2] = "Leave Immediately"
-text[2] = [[    "Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." The aristocrat goes back to sipping his drink, making an awful face every time he tastes it, ignoring you. You walk away, a bit confused.]]
+text[2] = [["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." The aristocrat goes back to sipping his drink, making an awful face every time he tastes it, ignoring you. You walk away, a bit confused.]]
 
 title[3] = "Refuse"
-text[3] = [[    "What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]]
+text[3] = [["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]]
 
 cluetitle = "Clue"
-cluetxt = [[    You walk into the bar and approach the bartender, a %s %s with %s hair, wearing %s. You describe the drink to %s, but %s doesn't seem to know what you're talking about. There is another bartender that %s thinks may be able to help you though, at %s in the %s system.]]
+cluetxt = [[You walk into the bar and approach the bartender, a %s %s with %s hair, wearing %s. You describe the drink to %s, but %s doesn't seem to know what you're talking about. There is another bartender that %s thinks may be able to help you though, at %s in the %s system.]]
 
 moreinfotitle = "A bit more info..."
-moreinfotxt = [[    You walk into the bar and see a %s %s behind the bar wearing %s. When you approach %s and describe the drink, %s tells you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender that used to work here. "It's called a Swamp Bombing." Although %s is not sure where %s works now, %s can tell you where %s started working after %s left. If you're lucky, %s will still be working there. With high hopes, you decide to set off to %s in the %s system.]]
+moreinfotxt = [[You walk into the bar and see a %s %s behind the bar wearing %s. When you approach %s and describe the drink, %s tells you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender that used to work here. "It's called a Swamp Bombing." Although %s is not sure where %s works now, %s can tell you where %s started working after %s left. If you're lucky, %s will still be working there. With high hopes, you decide to set off to %s in the %s system.]]
 
 exworktitle = "Is this it?"
-exworktxt = [[    You walk into the bar fully confident that this is the bar. You walk up to the bartender, a %s %s with %s hair wearing %s, and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, %s in the %s system, and head on your way.]]
+exworktxt = [[You walk into the bar fully confident that this is the bar. You walk up to the bartender, a %s %s with %s hair wearing %s, and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, %s in the %s system, and head on your way.]]
 
 worktitle = "This is it!"
-worktxt = [[    You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, a %s %s with %s hair, wearing %s, and smile. This has to be %s. You start to describe the drink to %s and %s interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if %s can make it to go, and %s laughs and says "Sure, I guess."
+worktxt = [[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, a %s %s with %s hair, wearing %s, and smile. This has to be %s. You start to describe the drink to %s and %s interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if %s can make it to go, and %s laughs and says "Sure, I guess."
     Just as %s is about to start making it though, you stop %s and tell %s you'll have one here after all. As long as you came all this way, you might as well try it. You're amazed at how quickly and gracefully %s trained hands move, flipping bottles and shaking various containers. Before you know it, %s is setting a drink before you, and closing another container for you to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]]
 
 finishedtitle = "Delivery"
-finishedtxt = [[    "Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s credits should be appropriate."
+finishedtxt = [["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s credits should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.]]
 
 gender = {}

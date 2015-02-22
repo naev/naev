@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.6.0], [bobbens@gmail.com])
+AC_INIT([naev], [0.6.-1], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -168,7 +168,7 @@ AS_IF([test "$enable_debug" != "no"], [
 AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
 AC_ARG_WITH([sdl2],
   AC_HELP_STRING([--with-sdl2],
-     [use SDL2 instead of SDL (default: yes)]), [
+     [use SDL2 instead of SDL (default: no)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdl2=yes
     ], [
@@ -276,6 +276,9 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 # libpng
 PKG_CHECK_MODULES([PNG], [libpng])
 
+# libzip
+PKG_CHECK_MODULES([ZIP], [libzip])
+
 # lua
 case "$used_lua" in
   luajit)
@@ -288,9 +291,12 @@ case "$used_lua" in
     ])
     ;;
   shared)
-    PKG_CHECK_MODULES([LUA], [lua], [have_lua=yes], [have_lua=no])
-    AS_IF([test "$have_lua" = "no"], [PKG_CHECK_MODULES([LUA], [lua5.1], [have_lua=yes], [have_lua=no])])
-    AS_IF([test "$have_lua" = "no"], [PKG_CHECK_MODULES([LUA], [lua51], [have_lua=yes], [have_lua=no])])
+    have_lua=no
+    m4_foreach([pkgname], [lua-5.1, lua5.1, lua51, lua], [
+        AS_IF([test "$have_lua" = "no"], [
+            PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
+        ])
+    ])
     AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
     ;;
   *)
@@ -336,13 +342,14 @@ AS_IF([test "$with_openal" = "yes"], [
 ])
 
 # SDL_mixer
+AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
 AS_IF([test "$with_sdlmixer" = "yes"], [
-  PKG_CHECK_MODULES([SDLMIXER], [SDL_mixer], [have_sdlmixer=yes], [have_sdlmixer=no])
+  PKG_CHECK_MODULES([SDLMIXER], [$SDLMIXER_NAME], [have_sdlmixer=yes], [have_sdlmixer=no])
 ])
 
 # SDL_image
 VAR_SAVE([LIBS])
-AS_IF([test "$have_sdl2" = "yes"], [SDLIMAGE_NAME=SDL2_image], [SDLMIXER_NAME=SDL_image])
+AS_IF([test "$have_sdl2" = "yes"], [SDLIMAGE_NAME=SDL2_image], [SDLIMAGE_NAME=SDL_image])
 AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
   SDLIMAGE_CFLAGS=
   SDLIMAGE_LIBS="$LIBS"
@@ -409,7 +416,7 @@ AS_IF([test "$enable_debug" != "no"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
-         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic -ldl -lz"
+         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic -ldl"
          ;;
      esac
   ])
@@ -420,11 +427,11 @@ AS_IF([test "$enable_debug" = "paranoid"], [
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
     $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
-    $PNG_CFLAGS $OPENGL_CFLAGS"
+    $PNG_CFLAGS $ZIP_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
-    $PNG_LIBS $OPENGL_LIBS"
+    $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
@@ -471,11 +478,6 @@ esac
 
 AC_SUBST([LIBLUA_CFLAGS])
 
-
-PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS -DNOLOGPRINTFCONSOLE"
-PACK_LIBS="$GLOBAL_LIBS $SDL_LIBS"
-AC_SUBST([PACK_CFLAGS])
-AC_SUBST([PACK_LIBS])
 
 MKSPR_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS $PNG_CFLAGS -DNOLOGPRINTFCONSOLE"
 MKSPR_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS $PNG_LIBS"
@@ -605,7 +607,6 @@ AC_CONFIG_FILES([Makefile
       build/shave])
 AS_IF([test "x$have_utils" = "xyes"], [
   AC_CONFIG_FILES([utils/Makefile
-     utils/pack/Makefile
      utils/mkspr/Makefile])
 ])
 AS_IF([test "x$have_docs" = "xyes"], [

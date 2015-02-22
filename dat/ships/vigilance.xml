@@ -11,13 +11,14 @@
  <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
  <health>
   <absorb>18</absorb>
-  <armour>320</armour>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>
   <mass>410</mass>
-  <cargo>20</cargo>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>50</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="28" y="-3" h="-0"/>
@@ -26,28 +27,24 @@
   <weapon size="medium" x="10" y="3" h="2"/>
   <weapon size="medium" x="-22" y="-8" h="-0"/>
   <weapon size="medium" x="-22" y="8" h="-0"/>
-  <utility size="medium" prop="systems" exclusive="1" required="1">Basic Medium Systems</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
-  <structure size="medium" prop="engines" exclusive="1" required="1">Manufacturer Medium Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unmodified Medium Hull</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="large"/>
   <structure size="medium"/>
   <structure size="medium"/>
   <structure size="medium"/>
  </slots>
  <stats>
-  <fuel_consumption>200</fuel_consumption>
-  <speed_mod>0</speed_mod>
-  <turn_mod>0</turn_mod>
-  <thrust_mod>0</thrust_mod>
-  <armour_mod>10</armour_mod>
-  <shield_mod>0</shield_mod>
+  <speed_mod>-10</speed_mod>
+  <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
-  <energy_regen_mod>0</energy_regen_mod>
-  <cargo_mod>-50</cargo_mod>
-  <ew_detect>0</ew_detect>
-  <ew_hide>0</ew_hide>
+  <energy_regen_mod>-10</energy_regen_mod>
+  <fwd_heat>5</fwd_heat>
+  <fwd_damage>10</fwd_damage>
+  <fwd_energy>5</fwd_energy>
  </stats>
 </ship>

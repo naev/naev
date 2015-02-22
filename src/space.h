@@ -24,42 +24,6 @@
 #define ASSET_VIRTUAL         0 /**< The asset is virtual. */
 #define ASSET_REAL            1 /**< The asset is real. */
 
-/**
- * @brief Different planet classes.
- *
- * Planets types, taken from
- * http://en.wikipedia.org/wiki/Star_Trek_planet_classifications
- */
-typedef enum PlanetClass_ {
-   PLANET_CLASS_NULL=0, /**< Null/Not defined */
-   PLANET_CLASS_A,   /**< Geothermal */
-   PLANET_CLASS_B,   /**< Geomorteus */
-   PLANET_CLASS_C,   /**< Geoinactive */
-   PLANET_CLASS_D,   /**< Asteroid/Moon */
-   PLANET_CLASS_E,   /**< Geoplastic */
-   PLANET_CLASS_F,   /**< Geometallic */
-   PLANET_CLASS_G,   /**< GeoCrystaline */
-   PLANET_CLASS_H,   /**< Desert */
-   PLANET_CLASS_I,   /**< Gas Supergiant */
-   PLANET_CLASS_J,   /**< Gas Giant */
-   PLANET_CLASS_K,   /**< Adaptable */
-   PLANET_CLASS_L,   /**< Marginal */
-   PLANET_CLASS_M,   /**< Terrestrial */
-   PLANET_CLASS_N,   /**< Reducing */
-   PLANET_CLASS_O,   /**< Pelagic - Aquatic */
-   PLANET_CLASS_P,   /**< Glaciated */
-   PLANET_CLASS_Q,   /**< Variable */
-   PLANET_CLASS_R,   /**< Rogue */
-   PLANET_CLASS_S,   /**< Ultragiant */
-   PLANET_CLASS_T,   /**< Ultragiant */
-   PLANET_CLASS_X,   /**< Demon */
-   PLANET_CLASS_Y,   /**< Demon */
-   PLANET_CLASS_Z,   /**< Demon */
-   STATION_CLASS_A,  /**< Civilian Station */
-   STATION_CLASS_B,  /**< Military Station */
-   STATION_CLASS_C,  /**< Interfactional Station */
-   STATION_CLASS_D   /**< Robotic Station */
-} PlanetClass;
 
 /*
  * planet services
@@ -80,10 +44,12 @@ typedef enum PlanetClass_ {
  * Planet flags.
  */
 #define PLANET_KNOWN       (1<<0) /**< Planet is known. */
+#define PLANET_BLACKMARKET (1<<1) /**< Planet is a black market. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
+#define planet_isBlackMarket(p) planet_isFlag(p,PLANET_BLACKMARKET) /**< Checks if planet is a black market. */
 
 
 /**
@@ -98,7 +64,7 @@ typedef struct Planet_ {
    double radius; /**< Radius of the planet. */
 
    /* Planet details. */
-   PlanetClass class; /**< planet type */
+   char *class; /**< planet type */
    int faction; /**< planet faction */
    uint64_t population; /**< Population of the planet. */
 
@@ -193,6 +159,7 @@ typedef struct SystemPresence_ {
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
 #define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
 #define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
+#define jp_isUsable(j)    (jp_isKnown(j) && !jp_isFlag(j,JP_EXITONLY))
 
 
 
@@ -290,14 +257,13 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
+void planet_setBlackMarket( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
-char planet_getClass( const Planet *p );
 char* planet_getServiceName( int service );
 int planet_getService( char *name );
-PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 /* Misc modification. */
 int planet_setFaction( Planet *p, int faction );
@@ -371,7 +337,8 @@ int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
 int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
-char* space_getRndPlanet( int landable );
+char* space_getRndPlanet( int landable, unsigned int services,
+      int (*filter)(Planet *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang );
 

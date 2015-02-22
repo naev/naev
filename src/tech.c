@@ -218,9 +218,16 @@ static void tech_freeGroup( tech_group_t *grp )
 tech_group_t *tech_groupCreateXML( xmlNodePtr node )
 {
    tech_group_t *tech;
+
    /* Load data. */
    tech  = tech_groupCreate();
    tech_parseNodeData( tech, node );
+
+   if (tech->items == NULL) {
+      tech_groupDestroy(tech);
+      tech = NULL;
+   }
+
    return tech;
 }
 
@@ -750,6 +757,17 @@ int tech_hasItem( tech_group_t *tech, char *item )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the number of techs within a given group.
+ *
+ *   @return Number of techs.
+ */
+int tech_getItemCount( tech_group_t *tech )
+{
+   return array_size( tech->items );
 }
 
 

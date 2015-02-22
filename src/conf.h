@@ -16,8 +16,8 @@
 #define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
 #define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
-#define AUTONAV_ABORT_DEFAULT                1.    /**< Shield level (0-1) to abort autonav at. 1 means at missile lock, 0 means at armour damage. */
-#define AUTONAV_PAUSE_DEFAULT                0     /**< Whether or not the game should pause when autonav is aborted. */
+#define MOUSE_DOUBLECLICK_TIME               0.5   /**< How long to consider double-clicks for. */
+#define AUTONAV_RESET_SPEED_DEFAULT          1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
 #define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
 /* Video options */
@@ -41,13 +41,17 @@
 #define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
 #define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
-#define SOUND_VOLUME_DEFAULT                 0.4   /**< Default sound volume. */
+#define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
 #if USE_OPENAL
 #define BACKEND_DEFAULT                      "openal"
 #else /* USE_OPENAL */
 #define BACKEND_DEFAULT                      "sdlmix"
 #endif /* USE_OPENAL */
+/* Editor Options */
+#define DEV_SAVE_SYSTEM_DEFAULT           "dat/ssys/"
+#define DEV_SAVE_ASSET_DEFAULT            "dat/assets/"
+#define DEV_SAVE_MAP_DEFAULT              "dat/outfits/maps/"
 
 
 /**
@@ -98,9 +102,6 @@ typedef struct PlayerConf_s {
    int joystick_ind; /**< Index of joystick to use. */
    char *joystick_nam; /**< Name of joystick to use. */
 
-   /* Land. */
-   int autorefuel; /**< Whether or not to autorefuel when landing. */
-
    /* GUI. */
    int mesg_visible; /**< Amount of visible messages. */
 
@@ -127,14 +128,20 @@ typedef struct PlayerConf_s {
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
-   double autonav_abort; /**< Condition for aborting autonav. */
-   int autonav_pause;/**< Pauses game instead of aborting autonav. */
+   double mouse_doubleclick; /**< How long to consider double-clicks for. */
+   double autonav_reset_speed; /**< Condition for resetting autonav speed. */
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
+   int devautosave; /**< Developer mode autosave. */
    int devcsv; /**< Output CSV data. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */
+
+   /* Editor. */
+   char *dev_save_sys; /**< Path to save systems to. */
+   char *dev_save_map; /**< Path to save maps to. */
+   char *dev_save_asset; /**< Path to save assets to. */
 
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */

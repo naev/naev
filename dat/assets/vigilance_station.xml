@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vigilance Station">
+ <pos>
+  <x>2944.327674</x>
+  <y>3312.368633</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>150.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>3000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>zlk_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Vigilance Station is the defense center for Procyon. Unusually for a Za'lek military asset, it is well-supplied and cared for, with the staff being ready at a moment's notice to come to Procyon's aid.</description>
+  <bar>This bar is simple and clean. Every inch a military establishment.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Beam 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Systems Medium</item>
+  <item>Systems High</item>
+  <item>Systems Elite</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+ </tech>
+</asset>

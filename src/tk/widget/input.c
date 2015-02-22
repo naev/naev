@@ -23,6 +23,7 @@ static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, SDLKey key );
+static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 
 
@@ -69,6 +70,7 @@ void window_addInput( const unsigned int wid,
    wgt->dat.inp.pos     = 0;
    wgt->dat.inp.view    = 0;
    wgt->dat.inp.input   = calloc( wgt->dat.inp.max, 1 );
+   wgt->dat.inp.fptr    = NULL;
 
    /* position/size */
    wgt->w = (double) w;
@@ -178,6 +180,10 @@ static int inp_text( Widget* inp, const char *buf )
       ret |= inp_addKey( inp, buf[i] );
       i++;
    }
+
+   if (ret && inp->dat.inp.fptr != NULL)
+      inp->dat.inp.fptr( inp->wdw, inp->name );
+
    return ret;
 }
 
@@ -292,6 +298,8 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             }
             else
                inp->dat.inp.pos -= 1;
+
+            inp_clampView( inp );
          }
       }
       else if (key == SDLK_RIGHT) {
@@ -312,6 +320,8 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             }
             else
                inp->dat.inp.pos += 1;
+
+            inp_clampView( inp );
          }
       }
       else if (key == SDLK_UP) {
@@ -453,6 +463,11 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          if (n+10 < inp->w)
             inp->dat.inp.view--;
       }
+
+      if (inp->dat.inp.fptr != NULL)
+         inp->dat.inp.fptr( inp->wdw, inp->name );
+
+      inp_clampView( inp );
       return 1;
    }
    /* delete -> delete text */
@@ -484,16 +499,23 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             (inp->dat.inp.max - curpos) );
       inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
+      if (inp->dat.inp.fptr != NULL)
+         inp->dat.inp.fptr( inp->wdw, inp->name );
+
       return 1;
    }
    /* home -> move to start */
    else if (key == SDLK_HOME) {
       inp->dat.inp.pos = 0;
+      inp_clampView( inp );
+
       return 1;
    }
    /* end -> move to end */
    else if (key == SDLK_END) {
       inp->dat.inp.pos = strlen(inp->dat.inp.input);
+      inp_clampView( inp );
+
       return 1;
    }
 
@@ -510,6 +532,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             inp->dat.inp.max - inp->dat.inp.pos - 2 );
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
       inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0'; /* Make sure it's NUL terminated. */
+
+      if (inp->dat.inp.fptr != NULL)
+         inp->dat.inp.fptr( inp->wdw, inp->name );
+
       return 1;
    }
 
@@ -517,6 +543,34 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    return 0;
 }
 
+
+/*
+ * @brief Keeps the input widget's view in sync with its cursor
+ *
+ *    @param inp Input widget to operate on.
+ */
+static void inp_clampView( Widget *inp )
+{
+   int visible;
+
+   /* @todo Handle multiline input widgets. */
+   if (!inp->dat.inp.oneline)
+      return;
+
+   /* If the cursor is behind the view, shift the view backwards. */
+   if (inp->dat.inp.view > inp->dat.inp.pos) {
+      inp->dat.inp.view = inp->dat.inp.pos;
+      return;
+   }
+
+   visible = gl_printWidthForText( inp->dat.inp.font,
+         &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
+
+   /* Shift the view right until the cursor is visible. */
+   while (inp->dat.inp.view + visible < inp->dat.inp.pos)
+      visible = gl_printWidthForText( inp->dat.inp.font,
+            &inp->dat.inp.input[ inp->dat.inp.view++ ], inp->w - 10 );
+}
 
 
 /**
@@ -595,6 +649,9 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
    }
 
    /* Get the value. */
+   if (wgt->dat.inp.fptr != NULL)
+      wgt->dat.inp.fptr( wid, name );
+
    return wgt->dat.inp.input;
 }
 
@@ -631,3 +688,27 @@ void window_setInputFilter( const unsigned int wid, char* name, const char *filt
    wgt->dat.inp.filter = strdup( filter );
 }
 
+/**
+ * @brief Sets the callback used when the input's text is modified.
+ *
+ *    @param wid Window to which input widget belongs.
+ *    @param name Input widget to set callback for.
+ *    @param fptr Function to trigger when the input's text is modified.
+ */
+void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(unsigned int, char*) )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid, name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_INPUT) {
+      WARN("Trying to set callback on non-input widget '%s'.", name);
+      return;
+   }
+
+   wgt->dat.inp.fptr = fptr;
+}

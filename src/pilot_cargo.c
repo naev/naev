@@ -97,19 +97,19 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 
 
 /**
- * @brief Adds a cargo raw.
+ * @brief Adds cargo without checking the pilot's free space.
  *
  * Does not check if currently exists.
  *
  *    @param pilot Pilot to add cargo to.
  *    @param cargo Cargo to add.
  *    @param quantity Quantity to add.
- *    @param id Mission ID to add (0 in none).
+ *    @param id Mission ID to add (0 is none).
  */
 int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int i, f, q;
+   int i, q;
 
    q = quantity;
 
@@ -118,11 +118,6 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
       for (i=0; i<pilot->ncommodities; i++)
          if (!pilot->commodities[i].id &&
                (pilot->commodities[i].commodity == cargo)) {
-
-            /* Check to see how much to add. */
-            f = pilot_cargoFree(pilot);
-            if (f < quantity)
-               q = f;
 
             /* Tweak results. */
             pilot->commodities[i].quantity += q;
@@ -139,11 +134,6 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
    pilot->commodities = realloc( pilot->commodities,
          sizeof(PilotCommodity) * (pilot->ncommodities+1));
    pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-
-   /* See how much to add. */
-   f = pilot_cargoFree(pilot);
-   if (f < quantity)
-      q = f;
 
    /* Set parameters. */
    pilot->commodities[ pilot->ncommodities ].id       = id;
@@ -167,11 +157,20 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
  *    @param pilot Pilot to add cargo to.
  *    @param cargo Cargo to add.
  *    @param quantity Quantity to add.
+ *    @param id Mission ID to add (0 is none).
  *    @return Quantity actually added.
  */
-int pilot_cargoAdd( Pilot* pilot, Commodity* cargo, int quantity )
+int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id )
 {
-   return pilot_cargoAddRaw( pilot, cargo, quantity, 0 );
+   int free;
+
+   /* Check to see how much to add. */
+   free = pilot_cargoFree(pilot);
+   if (free < quantity)
+      quantity = free;
+
+   return pilot_cargoAddRaw( pilot, cargo, quantity, id );
 }
 
 
@@ -234,7 +233,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
    }
 
    /* Add the cargo. */
-   pilot_cargoAddRaw( pilot, cargo, quantity, id );
+   pilot_cargoAdd( pilot, cargo, quantity, id );
 
    return id;
 }

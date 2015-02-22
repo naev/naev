@@ -10,25 +10,26 @@
  <license>Large Civilian Vessel License</license>
  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
  <health>
-  <absorb>10</absorb>
-  <armour>300</armour>
+  <absorb>16</absorb>
+  <armour>350</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>13</crew>
   <mass>600</mass>
-  <cargo>100</cargo>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>180</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="25" y="0" h="0"/>
   <weapon size="medium" x="-15" y="0" h="4"/>
   <weapon size="medium" x="15" y="0" h="4"/>
-  <utility size="medium" prop="systems" exclusive="1" required="1">Basic Medium Systems</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
   <utility size="medium"/>
   <utility size="medium"/>
   <utility size="medium"/>
-  <structure size="medium" prop="engines" exclusive="1" required="1">Manufacturer Medium Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unmodified Medium Hull</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="medium"/>
   <structure size="medium"/>
   <structure size="medium"/>
@@ -37,16 +38,9 @@
   <structure size="medium"/>
  </slots>
  <stats>
-  <fuel_consumption>200</fuel_consumption>
-  <speed_mod>10</speed_mod>
   <turn_mod>-20</turn_mod>
-  <thrust_mod>-20</thrust_mod>
-  <armour_mod>0</armour_mod>
-  <shield_mod>0</shield_mod>
-  <energy_mod>0</energy_mod>
-  <energy_regen_mod>0</energy_regen_mod>
-  <cargo_mod>50</cargo_mod>
-  <ew_detect>0</ew_detect>
-  <ew_hide>-30</ew_hide>
+  <cargo_mod>40</cargo_mod>
+  <cargo_inertia>-30</cargo_inertia>
+  <ew_hide>-20</ew_hide>
  </stats>
 </ship>

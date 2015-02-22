@@ -73,6 +73,7 @@ typedef enum ShipStatsType_ {
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
+   SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
 
@@ -83,7 +84,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
    SS_TYPE_A_CPU_MAX,          /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,     /**< Engine's mass limit. */
-   SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -162,7 +162,7 @@ typedef struct ShipStats_ {
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
    double energy_flat;        /**< Energy modifier (flat). */
-   double energy_regen_flat;  /**< Energy regen modifier (flat). */
+   double energy_usage;       /**< Energy usage (flat). */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
 
@@ -177,6 +177,7 @@ typedef struct ShipStats_ {
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
+   double stress_dissipation; /**< Global stress dissipation. */
    double crew_mod;        /**< Relative crew modification. */
    double mass_mod;        /**< Relative mass modification. */
 
@@ -201,7 +202,6 @@ typedef struct ShipStats_ {
 
    /* Engine limits. */
    double engine_limit;     /**< Engine limit. */
-   double fuel_consumption; /**< Fuel consumption by engine. */
 
    /* Misc. */
    double nebu_absorb_shield; /**< Shield nebula resistance. */
@@ -234,9 +234,11 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipS
  * Lookup.
  */
 const char* ss_nameFromType( ShipStatsType type );
+size_t ss_offsetFromType( ShipStatsType type );
 ShipStatsType ss_typeFromName( const char *name );
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline );
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
+int ss_csv( const ShipStats *s, char *buf, int len );
 
 
 #endif /* SHIPSTATS_H */

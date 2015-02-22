@@ -50,7 +50,7 @@
 #define MAIN_WIDTH      130 /**< Main menu width. */
 
 #define MENU_WIDTH      130 /**< Escape menu width. */
-#define MENU_HEIGHT     200 /**< Escape menu height. */
+#define MENU_HEIGHT     250 /**< Escape menu height. */
 
 
 #define DEATH_WIDTH     130 /**< Death menu width. */
@@ -85,6 +85,7 @@ static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
 static void menu_small_close( unsigned int wid, char* str );
+static void menu_small_info( unsigned int wid, char *str );
 static void menu_small_exit( unsigned int wid, char* str );
 static void exit_game (void);
 /* death menu */
@@ -208,28 +209,28 @@ void menu_main (void)
    window_setCancel( wid, main_menu_promptClose );
 
    /* Buttons. */
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load Game", menu_main_load );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLoad", "Load Game", menu_main_load, SDLK_l );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Game", menu_main_new );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnNew", "New Game", menu_main_new, SDLK_n );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnTutorial", "Tutorial", menu_main_tutorial );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnTutorial", "Tutorial", menu_main_tutorial, SDLK_t );
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
-      window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnEditor", "Editor", uniedit_open );
+      window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnEditor", "Editor", uniedit_open, SDLK_e );
       y -= BUTTON_HEIGHT+20;
    }
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", menu_options_button );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnOptions", "Options", menu_options_button, SDLK_o );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCredits", "Credits", menu_main_credits );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCredits", "Credits", menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_exit );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnExit", "Exit", menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
    if (!save_hasSave())
@@ -379,9 +380,12 @@ void menu_small (void)
 
    window_setCancel( wid, menu_small_close );
 
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnResume", "Resume", menu_small_close );
+   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnInfo", "Info", menu_small_info );
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
@@ -390,6 +394,8 @@ void menu_small (void)
 
    menu_Open(MENU_SMALL);
 }
+
+
 /**
  * @brief Closes the small ingame menu.
  *    @param str Unused.
@@ -400,6 +406,21 @@ static void menu_small_close( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_SMALL);
 }
+
+
+/**
+ * @brief Opens the info window.
+ *    @param wid Unused.
+ *    @param str Unused.
+ */
+static void menu_small_info( unsigned int wid, char *str )
+{
+   (void) str;
+   (void) wid;
+
+   menu_info( INFO_MAIN );
+}
+
 /**
  * @brief Closes the small ingame menu and goes back to the main menu.
  *    @param str Unused.
@@ -429,7 +450,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    }
 
    /* Stop player sounds because sometimes they hang. */
-   player_autonavAbort( "Exited game." );
+   player_restoreControl( 0, "Exited game." );
    player_soundStop();
 
    /* Clean up. */

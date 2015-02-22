@@ -10,38 +10,38 @@
  <license>Light Combat Vessel License</license>
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
  <health>
-  <absorb>9</absorb>
+  <absorb>5</absorb>
   <armour>75</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
   <mass>90</mass>
-  <cargo>5</cargo>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>15</cargo>
  </characteristics>
  <slots>
   <weapon size="medium" x="4" y="0" h="0"/>
   <weapon size="small" x="4" y="0" h="0"/>
   <weapon size="small" x="-2" y="4" h="-1"/>
   <weapon size="small" x="-2" y="-4" h="-1"/>
-  <utility size="small" prop="systems" exclusive="1" required="1">Basic Small Systems</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
   <utility size="small"/>
   <utility size="small"/>
-  <structure size="small" prop="engines" exclusive="1" required="1">Manufacturer Small Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unmodified Small Hull</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small"/>
   <structure size="small"/>
   <structure size="small"/>
  </slots>
  <stats>
   <speed_mod>-15</speed_mod>
-  <turn_mod>-15</turn_mod>
+  <turn_mod>-10</turn_mod>
   <thrust_mod>-15</thrust_mod>
-  <armour_mod>20</armour_mod>
+  <armour_mod>10</armour_mod>
   <shield_mod>10</shield_mod>
-  <cargo_mod>0</cargo_mod>
-  <ew_detect>-10</ew_detect>
-  <ew_hide>-10</ew_hide>
+  <launch_rate>10</launch_rate>
+  <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>
  </stats>
 </ship>

@@ -13,7 +13,7 @@
 	happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-include "jumpdist.lua"
+include "dat/scripts/jumpdist.lua"
 
 local informer
 local refusal
@@ -31,24 +31,21 @@ else -- default english
 	informer = {
 		description = "A pirate informer is looking at you. Maybe he has some useful information to sell?";
 		title = "Ship to steal";
-		message = [[   "Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
-   "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
-   
-   Do you really want to pay to know where that ship is?]];
+		message = [["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
+    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
+    Do you really want to pay to know where that ship is?]];
 	}
 
 	approval = {
 		title = "Of course";
-		message = [[   You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
-
-   Hopefully, the pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]];
+		message = [[You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
+    Hopefully, the pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]];
 	}
 
 	success = {
 		title = "Ship successfully stolen!";
 		message = [[   It took you several hours to escape patrols, and a few more ours to get in the ship to steal and manage to access it, but you finally take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
-		
-   Enemy ships will probably be after you as soon as you'll leave the atmosphere, so you should get ready and use wisely the little time you have on this planet.]];
+    Enemy ships will probably be after you as soon as you'll leave the atmosphere, so you should get ready and use wisely the little time you have on this planet.]];
 	}
 end
 

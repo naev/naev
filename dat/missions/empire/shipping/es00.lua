@@ -7,7 +7,7 @@
 
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -25,17 +25,17 @@ else -- default english
    title[3] = "Mission Report"
    text = {}
    text[1] = [[You approach the Empire Commander.
-"Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]
+    "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]
    text[2] = [["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors."
-"Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]]
+    "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]]
    text[3] = [[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]
    text[4] = [[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
-From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]
+    From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]
    text[5] = [[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
-You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]
+    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]
    text[6] = [[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
-"It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
-He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transfered to your bank account."]]
+    "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
+    He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transfered to your bank account."]]
 end
 
 
@@ -101,8 +101,15 @@ function land ()
          misn.markerMove( misn_marker, retsys )
          misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
          misn.osdCreate(title[2], {misn_desc[2]:format(ret:name(),retsys:name())})
+
+         -- Prevent players from saving on the destination planet
+         player.allowSave(false)
+
          -- We'll take off right away again
          player.takeoff()
+
+         -- Saving should be disabled for as short a time as possible
+         player.allowSave()
       end
    elseif landed == ret and misn_stage == 1 then
 
@@ -122,11 +129,9 @@ function enter ()
    sys = system.cur()
    if misn_stage == 1 and sys == destsys then
 
-      -- Get a position near the player
-      enter_vect = player.pos()
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 100, 200 )
-      enter_vect:add( math.cos(a) * d, math.sin(a) * d )
+      -- Get a random position near the player
+      ang = rnd.rnd(0, 360)
+      enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
 
       -- Create some pilots to go after the player
       p = pilot.add( "FLF Sml Force", nil, enter_vect )
@@ -136,15 +141,15 @@ function enter ()
       end
 
       -- Get a far away position for fighting to happen
+      local battle_pos = player.pos() +
+            vec2.newP( rnd.rnd(4000, 5000), ang + 180 )
+
       -- We'll put the FLF first
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 700, 1000 )
-      enter_vect:set( math.cos(a) * d, math.sin(a) * d )
+      enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
       pilot.add( "FLF Med Force", nil, enter_vect )
+
       -- Now the Dvaered
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 200, 300 )
-      enter_vect:add( math.cos(a) * d, math.sin(a) * d )
+      enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
       pilot.add( "Dvaered Med Force", nil, enter_vect )
 
       -- Player should not be able to reland

@@ -23,8 +23,8 @@
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
 
-#define  EVASION_SCALE              1.25           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
-#define  SENSOR_DEFAULT_RANGE       7500           /**< The default sensor range for all ships. */
+#define EVASION_SCALE        1.3225 /**< 1.15 squared. Ensures that ships have higher evasion than hide. */
+#define SENSOR_DEFAULT_RANGE 7500   /**< The default sensor range for all ships. */
 
 /**
  * @brief Updates the pilot's static electronic warfare properties.
@@ -33,9 +33,14 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
  */
 void pilot_ewUpdateStatic( Pilot *p )
 {
-   p->ew_mass     = pilot_ewMass( p->solid->mass );
+   /*
+    * Unlike the other values, heat isn't squared. The ew_hide formula is thus
+    * equivalent to: ew_base_hide * ew_mass * sqrt(ew_heat)
+    */
+   p->ew_mass     = pow2( pilot_ewMass( p->solid->mass ) );
    p->ew_heat     = pilot_ewHeat( p->heat_T );
    p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
 }
 
 
@@ -88,7 +93,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (.1 + pow( mass, 0.75 ) / 120. );
+   return 1. / (.3 + sqrt(mass) / 30. );
 }
 
 
@@ -154,7 +159,8 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
-         pilot_isFlag(target, PILOT_VISIBLE))
+         pilot_isFlag(target, PILOT_VISIBLE) ||
+         target->parent == p->id)
       return 1;
 
    /* Get distance. */
@@ -194,8 +200,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   /* @TODO ew_detect should be squared upon being set. */
-   sense = sensor_curRange * pow2(p->ew_detect);
+   sense = sensor_curRange * p->ew_detect;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );

@@ -1,5 +1,5 @@
-include "jumpdist.lua"
-include "nextjump.lua"
+include "dat/scripts/jumpdist.lua"
+include "dat/scripts/nextjump.lua"
 
 -- Find an inhabited planet 0-3 jumps away.
 function cargo_selectMissionDistance ()
@@ -37,15 +37,17 @@ end
 function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
     local traveldist = 0
 
-    while routesys ~= destsys do
-        -- We're not in the destination system yet.
-        -- So, get the next system on the route, and the distance between our entry point and the jump point to the next system.
-        -- Then, set the exit jump point as the next entry point.
-        local tempsys = getNextSystem(routesys, destsys)
-        local j,r = jump.get( routesys, tempsys )
-        traveldist = traveldist + vec2.dist(routepos, j:pos())
-        routepos = r:pos()
-        routesys = tempsys
+    jumps = routesys:jumpPath( destsys )
+    if jumps then
+        for k, v in ipairs(jumps) do
+            -- We're not in the destination system yet.
+            -- So, get the next system on the route, and the distance between
+            -- our entry point and the jump point to the next system.
+            -- Then, set the exit jump point as the next entry point.
+            local j, r = jump.get( v:system(), v:dest() )
+            traveldist = traveldist + vec2.dist(routepos, j:pos())
+            routepos = r:pos()
+        end
     end
 
     -- We ARE in the destination system now, so route from the entry point to the destination planet.

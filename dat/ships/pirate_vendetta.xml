@@ -9,13 +9,14 @@
  <fabricator>Skull and Bones</fabricator>
  <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
  <health>
-  <absorb>12</absorb>
-  <armour>60</armour>
+  <absorb>6</absorb>
+  <armour>90</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
   <mass>70</mass>
+  <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
  <slots>
@@ -32,15 +33,11 @@
   <structure size="small"/>
  </slots>
  <stats>
-  <speed_mod>0</speed_mod>
-  <turn_mod>0</turn_mod>
-  <thrust_mod>0</thrust_mod>
-  <armour_mod>10</armour_mod>
-  <shield_mod>0</shield_mod>
-  <cargo_mod>0</cargo_mod>
-  <ew_detect>-20</ew_detect>
-  <ew_hide>0</ew_hide>
+  <turn_mod>5</turn_mod>
+  <thrust_mod>10</thrust_mod>
+  <cargo_mod>15</cargo_mod>
+  <energy_mod>10</energy_mod>
+  <ew_hide>10</ew_hide>
   <fwd_heat>-10</fwd_heat>
-  <fwd_firerate>-5</fwd_firerate>
  </stats>
 </ship>

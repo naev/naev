@@ -13,8 +13,13 @@
  <assets>
   <asset>Provectus Nova I</asset>
   <asset>Provectus Nova Ia</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Daan">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Effetey">
    <autopos/>
    <hidden/>
@@ -24,9 +29,13 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Pultatis">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Waterhole">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

@@ -127,9 +127,6 @@ void conf_setDefaults (void)
       free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
-   /* Land. */
-   conf.autorefuel   = 0;
-
    /* GUI. */
    conf.mesg_visible = 5;
 
@@ -153,6 +150,7 @@ void conf_setDefaults (void)
    /* Misc. */
    conf.nosave       = 0;
    conf.devmode      = 0;
+   conf.devautosave  = 0;
    conf.devcsv       = 0;
 
    /* Gameplay. */
@@ -165,10 +163,21 @@ void conf_setDefaults (void)
    conf_setVideoDefaults();
 
    /* Input */
-   input_setDefault();
+   input_setDefault(1);
 
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */
+
+   /* Editor. */
+   if (conf.dev_save_sys != NULL)
+      free( conf.dev_save_sys );
+   conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
+   if (conf.dev_save_map != NULL)
+      free( conf.dev_save_map );
+   conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
+   if (conf.dev_save_asset != NULL)
+      free( conf.dev_save_asset );
+   conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
 
@@ -182,8 +191,8 @@ void conf_setGameplayDefaults (void)
    conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
-   conf.autonav_abort         = AUTONAV_ABORT_DEFAULT;
-   conf.autonav_pause         = AUTONAV_PAUSE_DEFAULT;
+   conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
+   conf.autonav_reset_speed   = AUTONAV_RESET_SPEED_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
 
@@ -272,6 +281,13 @@ void conf_cleanup (void)
       free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
       free(conf.joystick_nam);
+   
+   if (conf.dev_save_sys != NULL)
+      free(conf.dev_save_sys);
+   if (conf.dev_save_map != NULL)
+      free(conf.dev_save_map);
+   if (conf.dev_save_asset != NULL)
+      free(conf.dev_save_asset);
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
@@ -289,6 +305,7 @@ void conf_loadConfigPath( void )
       return;
 
    lua_State *L = nlua_newState();
+   nlua_loadBasic(L); /* For os library */
    if (luaL_dofile(L, file) == 0)
       conf_loadString("datapath",conf.datapath);
 
@@ -369,9 +386,6 @@ int conf_loadConfig ( const char* file )
          conf.joystick_nam = strdup(lua_tostring(L, -1));
       lua_pop(L,1);
 
-      /* Land. */
-      conf_loadBool("autorefuel",conf.autorefuel);
-
       /* GUI. */
       conf_loadInt("mesg_visible",conf.mesg_visible);
       if (conf.mesg_visible <= 0)
@@ -400,14 +414,19 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
-      conf_loadFloat("autonav_abort",conf.autonav_abort);
-      conf_loadBool("autonav_pause",conf.autonav_pause);
+      conf_loadFloat("mouse_doubleclick",conf.mouse_doubleclick);
+      conf_loadFloat("autonav_abort",conf.autonav_reset_speed);
       conf_loadBool("devmode",conf.devmode);
+      conf_loadBool("devautosave",conf.devautosave);
       conf_loadBool("conf_nosave",conf.nosave);
 
       /* Debugging. */
       conf_loadBool("fpu_except",conf.fpu_except);
 
+      /* Editor. */
+      conf_loadString("dev_save_sys",conf.dev_save_sys);
+      conf_loadString("dev_save_map",conf.dev_save_map);
+      conf_loadString("dev_save_asset",conf.dev_save_asset);
 
       /*
        * Keybindings.
@@ -556,6 +575,7 @@ void conf_parseCLIPath( int argc, char** argv )
 void conf_parseCLI( int argc, char** argv )
 {
    static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
       { "vsync", no_argument, 0, 'V' },
@@ -588,6 +608,9 @@ void conf_parseCLI( int argc, char** argv )
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
+         case 'd':
+            /* Does nothing, datapath is parsed earlier. */
+            break;
          case 'f':
             conf.fullscreen = 1;
             break;
@@ -639,7 +662,7 @@ void conf_parseCLI( int argc, char** argv )
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CSV ouptut.");
+            LOG("Will generate CSV output.");
             break;
 #endif /* DEBUGGING */
 
@@ -963,11 +986,6 @@ int conf_saveConfig ( const char* file )
    }
    conf_saveEmptyLine();
 
-   /* Land. */
-   conf_saveComment("Whether or not to autorefuel");
-   conf_saveBool("autorefuel",conf.autorefuel);
-   conf_saveEmptyLine();
-
    /* GUI. */
    conf_saveComment("Number of lines visible in the comm window.");
    conf_saveInt("mesg_visible",conf.mesg_visible);
@@ -1031,16 +1049,23 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("mouse_thrust",conf.mouse_thrust);
    conf_saveEmptyLine();
 
+   conf_saveComment("Maximum interval to count as a double-click (0 disables).");
+   conf_saveFloat("mouse_doubleclick",conf.mouse_doubleclick);
+   conf_saveEmptyLine();
+
    conf_saveComment("Condition under which the autonav aborts.");
-   conf_saveFloat("autonav_abort",conf.autonav_abort);
+   conf_saveFloat("autonav_abort",conf.autonav_reset_speed);
    conf_saveEmptyLine();
 
    conf_saveComment("If set, the game will pause when damage is received, instead of aborting the autonav.");
-   conf_saveBool("autonav_pause",conf.autonav_pause);
    conf_saveEmptyLine();
 
-   conf_saveComment("Enables developer mode (universe editor and teh likes)");
-   conf_saveInt("devmode",conf.devmode);
+   conf_saveComment("Enables developer mode (universe editor and the likes)");
+   conf_saveBool("devmode",conf.devmode);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Automatic saving for developer mode");
+   conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
    conf_saveComment("Save the config everytime game exits (rewriting this bit)");
@@ -1050,6 +1075,13 @@ int conf_saveConfig ( const char* file )
    /* Debugging. */
    conf_saveComment("Enables FPU exceptions - only works on DEBUG builds");
    conf_saveBool("fpu_except",conf.fpu_except);
+   conf_saveEmptyLine();
+
+   /* Editor. */
+   conf_saveComment("Paths for saving different files from the editor");
+   conf_saveString("dev_save_sys",conf.dev_save_sys);
+   conf_saveString("dev_save_map",conf.dev_save_map);
+   conf_saveString("dev_save_asset",conf.dev_save_asset);
    conf_saveEmptyLine();
 
    /*

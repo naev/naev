@@ -17,9 +17,19 @@
   <asset>Virtual Pirate Unpresence</asset>
  </assets>
  <jumps>
+  <jump target="Gilligan's Light">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Toaxis">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Tuoladis">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

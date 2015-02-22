@@ -7,23 +7,22 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-122.935361</x>
-  <y>-718.774081</y>
+  <x>-150.800000</x>
+  <y>-663.800000</y>
  </pos>
  <assets/>
  <jumps>
   <jump target="Daravon">
    <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Effetey">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Gammacron">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Provectus Nova">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

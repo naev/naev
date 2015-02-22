@@ -66,14 +66,8 @@ int ovr_isOpen (void)
  */
 int ovr_input( SDL_Event *event )
 {
-   unsigned int pid;
-   Pilot *p;
    int mx, my;
-   double x, y, r, rp;
-   double d, dp;
-   Planet *pnt;
-   JumpPoint *jp;
-   int pntid, jpid;
+   double x, y;
 
    /* We only want mouse events. */
    if (event->type != SDL_MOUSEBUTTONDOWN)
@@ -83,99 +77,25 @@ int ovr_input( SDL_Event *event )
    if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return 0;
 
-   /* Ignore when jumping. */
-   if (pilot_isFlag(player.p,PILOT_HYP_PREP) ||
-         pilot_isFlag(player.p,PILOT_HYP_BEGIN) ||
-         pilot_isFlag(player.p,PILOT_HYPERSPACE))
+   /* Player must not be dead. */
+   if (pilot_isFlag(player.p, PILOT_DEAD))
       return 0;
 
-   /* Selection. */
-   if (event->button.button == SDL_BUTTON_LEFT) {
-      /* Translate from window to screen. */
-      mx = event->button.x;
-      my = event->button.y;
-      gl_windowToScreenPos( &mx, &my, mx, my );
+   /* Mouse targeting only uses left and right buttons. */
+   if (event->button.button != SDL_BUTTON_LEFT &&
+            event->button.button != SDL_BUTTON_RIGHT)
+      return 0;
 
-      /* Translate to space coords. */
-      x  = ((double)mx - SCREEN_W/2.) * ovr_res;
-      y  = ((double)my - SCREEN_H/2.) * ovr_res;
+   /* Translate from window to screen. */
+   mx = event->button.x;
+   my = event->button.y;
+   gl_windowToScreenPos( &mx, &my, mx, my );
 
-      /* Get nearest pilot and jump point/planet. */
-      dp    = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-      d     = system_getClosest( cur_system, &pntid, &jpid, x, y );
-      p     = pilot_get(pid);
-      rp    = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 20.*ovr_res );
+   /* Translate to space coords. */
+   x  = ((double)mx - SCREEN_W/2.) * ovr_res;
+   y  = ((double)my - SCREEN_H/2.) * ovr_res;
 
-      if (pntid >= 0) { /* Planet is closer. */
-         pnt = cur_system->planets[ pntid ];
-         r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
-      }
-      else if (jpid >= 0) {
-         jp = &cur_system->jumps[ jpid ];
-         r  = MAX( 1.5 * jp->radius, 20. * ovr_res );
-      }
-      else
-         r  = 0.;
-
-      /* Pilot is closest, or new jump point/planet is the same as the old. */
-      if ((dp < pow2(rp) && player.p->target != pid) && (dp < d ||
-            ((pntid >=0 && player.p->nav_planet == pntid) ||
-            (jpid >=0 && player.p->nav_planet == jpid))))
-         player_targetSet( pid );
-      else if ((pntid >= 0) && (d < pow2(r)) && planet_isKnown(pnt)) /* Planet is closest. */
-         player_targetPlanetSet( pntid );
-      else if ((jpid >= 0) && (d < pow2(r)) && jp_isKnown(jp)) /* Jump point is closest. */
-         player_targetHyperspaceSet( jpid );
-      else
-         return 0;
-      return 1;
-   }
-   /* Autogo. */
-   else if (event->button.button == SDL_BUTTON_RIGHT) {
-      if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
-            pilot_isFlag( player.p, PILOT_HYP_PREP ) ||
-            pilot_isFlag( player.p, PILOT_HYP_BEGIN ) ||
-            pilot_isFlag( player.p, PILOT_HYPERSPACE ))
-         return 1;
-
-      /* Translate from window to screen. */
-      mx = event->button.x;
-      my = event->button.y;
-      gl_windowToScreenPos( &mx, &my, mx, my );
-
-      /* Translate to space coords. */
-      x  = ((double)mx - SCREEN_W/2.) * ovr_res;
-      y  = ((double)my - SCREEN_H/2.) * ovr_res;
-
-      /* Go to planet. */
-      d = system_getClosest( cur_system, &pntid, &jpid, x, y );
-      if (pntid >= 0) {
-         pnt = cur_system->planets[ pntid ];
-         r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
-         if ((d < pow2(r)) && planet_isKnown(pnt)) {
-            player_targetPlanetSet( pntid );
-            player_autonavPnt( pnt->name );
-            return 1;
-         }
-      }
-      /* Engage regular jump autonav. */
-      else if (jpid >= 0) {
-         jp = &cur_system->jumps[ jpid ];
-         r  = MAX( 1.5 * jp->radius, 20. * ovr_res );
-         if ((d < pow2(r)) && jp_isKnown(jp)) {
-            player_targetHyperspaceSet( jpid );
-            player_autonavStart();
-            return 1;
-         }
-      }
-
-      /* Fall-through and go to position. */
-      player_autonavPos( x, y );
-
-      return 1;
-   }
-
-   return 0;
+   return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
 
 

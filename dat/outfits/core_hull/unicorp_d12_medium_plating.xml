@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp D-12 Medium Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>250</mass>
+  <price>80000</price>
+  <description>Unicorp's D-12 plating is similar to D-8 plating, but the armour plates are thicker and built atop an enlarged superstructure, increasing mass, armour, and cargo capacity.</description>
+  <gfx_store>nanobond</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>36</cargo>
+  <absorb>18</absorb>
+  <armour>470</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

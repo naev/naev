@@ -71,6 +71,10 @@ void player_board (void)
    char c;
    HookParam hparam[2];
 
+   /* Not disabled. */
+   if (pilot_isDisabled(player.p))
+      return;
+
    if (player.p->target==PLAYER_ID) {
       /* We don't try to find far away targets, only nearest and see if it matches.
        * However, perhaps looking for first boardable target within a certain range
@@ -257,7 +261,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    q = 1;
    while ((p->ncommodities > 0) && (q!=0)) {
       q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
-            p->commodities[0].quantity );
+            p->commodities[0].quantity, 0 );
       pilot_cargoRm( p, p->commodities[0].commodity, q );
    }
 
@@ -422,7 +426,7 @@ static int board_trySteal( Pilot *p )
       dmg.damage      = 100.;
       dmg.penetration = 1.;
       dmg.disable     = 0.;
-      pilot_hit( target, NULL, p->id, &dmg );
+      pilot_hit( target, NULL, p->id, &dmg, 1 );
       /* Return ship dead. */
       return -1;
    }

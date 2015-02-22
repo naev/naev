@@ -20,6 +20,7 @@
 #include "player.h"
 #include "space.h"
 #include "gui.h"
+#include "slots.h"
 #include "nstring.h"
 
 
@@ -95,7 +96,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
       /* Compensate for enemy hide factor. */
-      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_hide);
+      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide);
 
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
@@ -317,7 +318,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->ncannons++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
-      s->u.beamid = -1;
+      s->u.beamid = 0;
       pilot->nbeams++;
    }
    if (outfit_isLauncher(outfit)) {
@@ -647,10 +648,6 @@ static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
  */
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 {
-   Outfit *o_old;
-   const char *err;
-   double pa, ps, pe, pf;
-
    /* Just in case. */
    if ((p==NULL) || (s==NULL))
       return "Nothing selected.";
@@ -669,39 +666,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
          return "Recall the fighters first";
    }
 
-   /* Store health. */
-   pa = p->armour;
-   ps = p->shield;
-   pe = p->energy;
-   pf = p->fuel;
-
-   /* Swap outfit. */
-   o_old       = s->outfit;
-   s->outfit   = o;
-
-   /* Check sanity. */
-   pilot_calcStats( p );
-   /* can now equip outfit even if ship won't be spaceworthy
-    * err = pilot_checkSpaceworthy( p );*/
-   /* actually, this is also redundant */
-   if (!pilot_slotsCheckSanity(p))
-      err = "Does not fit in slot";
-   else
-      err = NULL;
-
-   /* Swap back. */
-   s->outfit   = o_old;
-
-   /* Recalc. */
-   pilot_calcStats( p );
-
-   /* Recover health. */
-   p->armour = pa;
-   p->shield = ps;
-   p->energy = pe;
-   p->fuel   = pf;
-   
-   return err;
+   return NULL;
 }
 
 
@@ -907,6 +872,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
+   pilot->base_mass     = pilot->solid->mass;
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
@@ -917,6 +883,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->crew          = pilot->ship->crew;
    /* cargo */
    pilot->cap_cargo     = pilot->ship->cap_cargo;
+   /* fuel_consumption. */
+   pilot->fuel_consumption = pilot->ship->fuel_consumption;
    /* health */
    ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
    sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
@@ -932,7 +900,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
-   pilot->nebu_absorb_shield   = 0;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */ 
    s = &pilot->stats;
@@ -958,10 +925,17 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
-      if (outfit_isAfterburner(o)) { /* Afterburner */
+      /* Keep a separate counter for required (core) outfits. */
+      if (sp_required( o->slot.spid ))
+         pilot->base_mass += o->mass;
+
+      /* Add ammo mass. */
+      if (outfit_ammo(o) != NULL)
+         if (slot->u.ammo.outfit != NULL)
+            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+
+      if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
-         continue;
-      }
 
       /* Active outfits must be on to affect stuff. */
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
@@ -973,13 +947,13 @@ void pilot_calcStats( Pilot* pilot )
          pilot->turn_base     += o->u.mod.turn;
          pilot->speed_base    += o->u.mod.speed;
          /* Health. */
+         pilot->dmg_absorb    += o->u.mod.absorb;
          pilot->armour_max    += o->u.mod.armour;
          pilot->armour_regen  += o->u.mod.armour_regen;
          pilot->shield_max    += o->u.mod.shield;
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         pilot->nebu_absorb_shield += o->u.mod.nebu_absorb_shield;
          pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
@@ -1001,36 +975,14 @@ void pilot_calcStats( Pilot* pilot )
          pilot->jamming        = 1;
          pilot->energy_loss   += o->u.jam.energy;
       }
-
-      /* Add ammo mass. */
-      if (outfit_ammo(o) != NULL) {
-         if (slot->u.ammo.outfit != NULL)
-            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
-      }
    }
 
    if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
       pilot->solid->speed_max = pilot->speed;
 
-   /* Set final energy tau. */
-   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-
    /* Slot voodoo. */
-   s        = &pilot->stats;
-   /* Fuel. */
-   if (s->fuel_consumption == 0.)
-      pilot->fuel_consumption = 100.;
-   else
-      pilot->fuel_consumption = s->fuel_consumption;
-   /*
-    * Electronic warfare setting base parameters.
-    */
-   s->ew_hide            = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect          = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jump_detect     = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1,0)) );
-   pilot->ew_base_hide   = s->ew_hide;
-   pilot->ew_detect      = s->ew_detect;
-   pilot->ew_jump_detect = s->ew_jump_detect;
+   s = &pilot->stats;
+
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -1047,14 +999,15 @@ void pilot_calcStats( Pilot* pilot )
    }
    /*
     * Electronic warfare setting base parameters.
-    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
     */
    s->ew_hide           = 1. + (s->ew_hide-1.)        * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
    s->ew_detect         = 1. + (s->ew_detect-1.)      * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
    s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
-   pilot->ew_base_hide  = s->ew_hide;
-   pilot->ew_detect     = s->ew_detect;
-   pilot->ew_jump_detect = pow2(s->ew_jump_detect);
+
+   /* Square the internal values to speed up comparisons. */
+   pilot->ew_base_hide   = pow2( s->ew_hide );
+   pilot->ew_detect      = pow2( s->ew_detect );
+   pilot->ew_jump_detect = pow2( s->ew_jump_detect );
 
    /*
     * Relative increases.
@@ -1071,7 +1024,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max   *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
    /* cpu */
-   pilot->cpu_max       = (pilot->ship->cpu + s->cpu_max)*s->cpu_mod;
+   pilot->cpu_max       = (int)floor((float)(pilot->ship->cpu + s->cpu_max)*s->cpu_mod);
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
@@ -1083,13 +1036,16 @@ void pilot_calcStats( Pilot* pilot )
     */
    pilot->energy_max   += s->energy_flat;
    pilot->energy       += s->energy_flat;
-   pilot->energy_regen += s->energy_regen_flat;
+   pilot->energy_regen -= s->energy_usage;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
    pilot->fuel   = fc * pilot->fuel_max;
+
+   /* Set final energy tau. */
+   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Cargo has to be reset. */
    pilot_cargoCalc(pilot);
@@ -1116,6 +1072,10 @@ void pilot_healLanded( Pilot *pilot )
    pilot->armour = pilot->armour_max;
    pilot->shield = pilot->shield_max;
    pilot->energy = pilot->energy_max;
+
+   pilot->stress = 0.;
+   pilot->stimer = 0.;
+   pilot->sbonus = 0.;
 }
 
 

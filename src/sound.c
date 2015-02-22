@@ -203,7 +203,7 @@ int sound_init (void)
       /* Sound settings. */
       sound_sys_volume     = sound_mix_volume;
       sound_sys_getVolume  = sound_mix_getVolume;
-      sound_sys_getVolumeLog = sound_mix_getVolume;
+      sound_sys_getVolumeLog = sound_mix_getVolumeLog;
       /* Sound playing. */
       sound_sys_play       = sound_mix_play;
       sound_sys_playPos    = sound_mix_playPos;

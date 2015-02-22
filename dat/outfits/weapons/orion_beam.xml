@@ -5,22 +5,23 @@
   <size>medium</size>
   <license>Medium Weapon License</license>
   <mass>30</mass>
-  <price>184000</price>
-  <description>The Orion Beam is a fixed-mount weapon designed to be mounted on heavy fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
+  <price>30000</price>
+  <description>The turret-mounted edition of the Orion design offers mid-sized ships exceptional short-duration firepower, a potent deterrent against lighter vessels.</description>
   <gfx_store>orion</gfx_store>
-  <cpu>-15</cpu>
+  <cpu>-16</cpu>
  </general>
- <specific type="beam" secondary="1">
-  <delay>6</delay>
-  <duration>3</duration>
-  <range>300</range>
+ <specific type="turret beam">
+  <delay>4</delay>
+  <duration>4</duration>
+  <range>450</range>
+  <turn>90</turn>
   <energy>65</energy>
-  <heatup>60</heatup>
+  <heatup>50</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>50</penetrate>
-   <physical>50</physical>
-   <disable>0</disable>
+   <penetrate>40</penetrate>
+   <physical>60</physical>
+   <disable>6</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Damien">
  <general>
-  <radius>10000.000000</radius>
+  <radius>25000.000000</radius>
   <stars>400</stars>
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
@@ -10,15 +10,29 @@
   <x>-536.295529</x>
   <y>-927.777675</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Anker</asset>
+  <asset>Damien VII</asset>
+  <asset>Naga</asset>
+  <asset>Topkapi Station</asset>
+  <asset>Virtual Civilian Standard</asset>
+ </assets>
  <jumps>
-  <jump target="Severus">
+  <jump target="Garten">
    <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Ruadan">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Severus">
+   <pos x="25200.916889" y="-17334.000223"/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Za'lek">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

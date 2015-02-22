@@ -39,8 +39,23 @@ void dev_csv (void)
    DEBUG("   bolt.csv...");
    dout_csvBolt( CSV_DIR"/bolt.csv" );
 
+   DEBUG("   beam.csv...");
+   dout_csvBeam( CSV_DIR"/beam.csv" );
+
+   DEBUG("   launcher.csv...");
+   dout_csvLauncher( CSV_DIR"/launcher.csv" );
+
+   DEBUG("   ammo.csv...");
+   dout_csvAmmo( CSV_DIR"/ammo.csv" );
+
+   DEBUG("   mod.csv...");
+   dout_csvMod( CSV_DIR"/mod.csv" );
+
    DEBUG("   ship.csv...");
    dship_csv( CSV_DIR"/ship.csv" );
+
+   DEBUG("   ship_stat.csv...");
+   dship_csvStat( CSV_DIR"/ship_stat.csv" );
 
    DEBUG("Generation complete!");
 }

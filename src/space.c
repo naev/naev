@@ -154,95 +154,6 @@ extern credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
-/**
- * @brief Basically returns a PlanetClass integer from a char
- *
- *    @param a Char to get class from.
- *    @return Identifier matching the char.
- */
-PlanetClass planetclass_get( const char a )
-{
-   switch (a) {
-      /* planets use letters */
-      case 'A': return PLANET_CLASS_A;
-      case 'B': return PLANET_CLASS_B;
-      case 'C': return PLANET_CLASS_C;
-      case 'D': return PLANET_CLASS_D;
-      case 'E': return PLANET_CLASS_E;
-      case 'F': return PLANET_CLASS_F;
-      case 'G': return PLANET_CLASS_G;
-      case 'H': return PLANET_CLASS_H;
-      case 'I': return PLANET_CLASS_I;
-      case 'J': return PLANET_CLASS_J;
-      case 'K': return PLANET_CLASS_K;
-      case 'L': return PLANET_CLASS_L;
-      case 'M': return PLANET_CLASS_M;
-      case 'N': return PLANET_CLASS_N;
-      case 'O': return PLANET_CLASS_O;
-      case 'P': return PLANET_CLASS_P;
-      case 'Q': return PLANET_CLASS_Q;
-      case 'R': return PLANET_CLASS_R;
-      case 'S': return PLANET_CLASS_S;
-      case 'T': return PLANET_CLASS_T;
-      case 'X': return PLANET_CLASS_X;
-      case 'Y': return PLANET_CLASS_Y;
-      case 'Z': return PLANET_CLASS_Z;
-      /* stations use numbers - not as many types */
-      case '0': return STATION_CLASS_A;
-      case '1': return STATION_CLASS_B;
-      case '2': return STATION_CLASS_C;
-      case '3': return STATION_CLASS_D;
-
-      default:
-         WARN("Invalid planet class.");
-         return PLANET_CLASS_NULL;
-   };
-}
-/**
- * @brief Gets the char representing the planet class from the planet.
- *
- *    @param p Planet to get the class char from.
- *    @return The planet's class char.
- */
-char planet_getClass( const Planet *p )
-{
-   switch (p->class) {
-      case PLANET_CLASS_A: return 'A';
-      case PLANET_CLASS_B: return 'B';
-      case PLANET_CLASS_C: return 'C';
-      case PLANET_CLASS_D: return 'D';
-      case PLANET_CLASS_E: return 'E';
-      case PLANET_CLASS_F: return 'F';
-      case PLANET_CLASS_G: return 'G';
-      case PLANET_CLASS_H: return 'H';
-      case PLANET_CLASS_I: return 'I';
-      case PLANET_CLASS_J: return 'J';
-      case PLANET_CLASS_K: return 'K';
-      case PLANET_CLASS_L: return 'L';
-      case PLANET_CLASS_M: return 'M';
-      case PLANET_CLASS_N: return 'N';
-      case PLANET_CLASS_O: return 'O';
-      case PLANET_CLASS_P: return 'P';
-      case PLANET_CLASS_Q: return 'Q';
-      case PLANET_CLASS_R: return 'R';
-      case PLANET_CLASS_S: return 'S';
-      case PLANET_CLASS_T: return 'T';
-      case PLANET_CLASS_X: return 'X';
-      case PLANET_CLASS_Y: return 'Y';
-      case PLANET_CLASS_Z: return 'Z';
-      /* Stations */
-      case STATION_CLASS_A: return '0';
-      case STATION_CLASS_B: return '1';
-      case STATION_CLASS_C: return '2';
-      case STATION_CLASS_D: return '3';
-
-      default:
-         WARN("Invalid planet class.");
-         return 0;
-   };
-}
-
-
 char* planet_getServiceName( int service )
 {
    switch (service) {
@@ -494,9 +405,13 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
 /**
  * @brief Gets the name of a random planet.
  *
+ *    @param landable Whether the planet must let the player land normally.
+ *    @param services Services the planet must have.
+ *    @param filter Filter function for including planets.
  *    @return The name of a random planet.
  */
-char* space_getRndPlanet( int landable )
+char* space_getRndPlanet( int landable, unsigned int services,
+      int (*filter)(Planet *p))
 {
    int i,j;
    Planet **tmp;
@@ -514,6 +429,12 @@ char* space_getRndPlanet( int landable )
          pnt = systems_stack[i].planets[j];
 
          if (pnt->real != ASSET_REAL)
+            continue;
+
+         if (services && planet_hasService(pnt, services) != services)
+            continue;
+
+         if (filter != NULL && !filter(pnt))
             continue;
 
          ntmp++;
@@ -921,6 +842,17 @@ void planet_setKnown( Planet *p )
       planet_setFlag(p, PLANET_KNOWN);
 }
 
+
+/**
+ * @brief Sets a planet as a black market, if it's real.
+ */
+void planet_setBlackMarket( Planet *p )
+{
+   if (p->real == ASSET_REAL)
+      planet_setFlag(p, PLANET_BLACKMARKET);
+}
+
+
 /**
  * @brief Check to see if a planet exists.
  *
@@ -1214,14 +1146,13 @@ void space_update( const double dt )
    if (cur_system->nebu_volatility > 0.) {
       dmg.type          = dtype_get("nebula");
       dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
+      dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = 0.;
 
       /* Damage pilots in volatile systems. */
       for (i=0; i<pilot_nstack; i++) {
          p = pilot_stack[i];
-         /* Regular absorption does nothing here. */
-         dmg.penetration = (p->shield > 0.) ? (p->dmg_absorb - p->nebu_absorb_shield) : 1.0;
-         pilot_hit( p, NULL, 0, &dmg );
+         pilot_hit( p, NULL, 0, &dmg, 0 );
       }
    }
 
@@ -1272,6 +1203,11 @@ void space_update( const double dt )
    if (space_fchg) {
       for (i=0; i<cur_system->nplanets; i++)
          planet_updateLand( cur_system->planets[i] );
+
+      /* Verify land authorization is still valid. */
+      if (player_isFlag(PLAYER_LANDACK))
+         player_checkLandAck();
+
       gui_updateFaction();
       space_fchg = 0;
    }
@@ -1459,7 +1395,6 @@ Planet *planet_new (void)
    memset( p, 0, sizeof(Planet) );
    p->id       = planet_nstack-1;
    p->faction  = -1;
-   p->class    = PLANET_CLASS_A;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -1678,6 +1613,10 @@ void planet_updateLand( Planet *p )
 #else /* DEBUGGING */
    lua_pop(L,5);
 #endif /* DEBUGGING */
+
+   /* Unset bribe status if bribing is no longer possible. */
+   if (p->bribed && p->bribe_ack_msg == NULL)
+      p->bribed = 0;
 }
 
 
@@ -1801,19 +1740,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             /* Direct reads. */
+            xmlr_strd(cur, "class", planet->class);
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
 
-            if (xml_isNode(cur,"class")) {
-               tmp = xml_get(cur);
-               if (tmp != NULL)
-                  planet->class = planetclass_get( tmp[0] );
-               else
-                  WARN("Planet '%s' has empty class tag.", planet->name);
-            }
-            else if (xml_isNode(cur, "services")) {
+            if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
                planet->services = 0;
@@ -1877,6 +1810,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
             }
+
+            else if (xml_isNode(cur, "blackmarket")) {
+               planet_setBlackMarket(planet);
+            }
          } while (xml_nextNode(cur));
          continue;
       }
@@ -1901,7 +1838,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             (planet->population==0), "population"); */
       MELEMENT((flags&FLAG_XSET)==0,"x");
       MELEMENT((flags&FLAG_YSET)==0,"y");
-      MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
+      MELEMENT(planet->class==NULL,"class");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->description==NULL,"description");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
@@ -1968,6 +1905,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    return 0;
 }
 
+
 /**
  * @brief Adds a planet to a star system.
  *
@@ -2015,8 +1953,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    planetname_stack[spacename_nstack-1] = planet->name;
    systemname_stack[spacename_nstack-1] = sys->name;
 
-   /* Regenerate the economy stuff. */
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    /* Add the presence. */
    if (!systems_loading) {
@@ -2087,14 +2024,15 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    system_setFaction(sys);
 
-   /* Regenerate the economy stuff. */
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    return 0;
 }
 
 /**
  * @brief Adds a jump point to a star system from a diff.
+ *
+ * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
  *    @param jumpname Name of the jump point to add.
@@ -2105,7 +2043,7 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPointDiff(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    return 1;
 }
@@ -2113,6 +2051,8 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
 
 /**
  * @brief Adds a jump point to a star system.
+ *
+ * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
  *    @param jumpname Name of the jump point to add.
@@ -2131,6 +2071,8 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
 
 /**
  * @brief Removes a jump point from a star system.
+ *
+ * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to remove jump point from.
  *    @param jumpname Name of the jump point to remove.
@@ -2164,8 +2106,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
    /* Refresh presence */
    system_setFaction(sys);
 
-   /* Regenerate the economy stuff. */
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    return 0;
 }
@@ -2959,7 +2900,7 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    const glColour *c;
 
-   if (jp_isFlag( jp, JP_EXITONLY ) || !jp_isKnown(jp))
+   if (!jp_isUsable(jp))
       return;
 
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
@@ -3017,7 +2958,7 @@ void space_exit (void)
       pnt = &planet_stack[i];
 
       free(pnt->name);
-
+      free(pnt->class);
       free(pnt->description);
       free(pnt->bar_description);
 

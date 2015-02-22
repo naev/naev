@@ -16,7 +16,7 @@ else -- Default to English
     ftext = {}
 
     title[1] = "Looking for a 4th"
-    text[1] = [[    "Hey man, great to see you back.  You want to have another race?"]]   
+    text[1] = [["Hey man, great to see you back. You want to have another race?"]]   
 
     title[5] = "Choose difficulty"
     text[5] = [["You can choose two different kinds of races, an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  Of course the reward is bigger too. "]]
@@ -27,30 +27,30 @@ else -- Default to English
     choice2 = "Hard"
 
     title[2] = "Easy Mode "
-    text[2] = [[    "Lets go have some fun then."]]
+    text[2] = [["Lets go have some fun then."]]
 
     title[3] = "Checkpoint %s reached"
     text[3] = "Proceed to Checkpoint %s"
 
     text[4] = "Proceed to land at %s"
     refusetitle = "Refusal"
-    refusetext = [[    "I guess we'll need to find another pilot."]]
+    refusetext = [["I guess we'll need to find another pilot."]]
     
     wintitle = "You Won!"
-    wintext = [[     A man in a suit and tie takes you up onto a stage.  A large nametag on his jacket says 'Melendez Corporation'.  "Congratulations on your win," he says, shaking your hand, "that was a great race.  On behalf of Melendez Corporation, I am here to present to you your prize money."  He hands you one of those fake Oversized Checks with %s credits written on it.]]
+    wintext = [[A man in a suit and tie takes you up onto a stage.  A large nametag on his jacket says 'Melendez Corporation'.  "Congratulations on your win," he says, shaking your hand, "that was a great race.  On behalf of Melendez Corporation, I am here to present to you your prize money."  He hands you one of those fake Oversized Checks with %s credits written on it.]]
 
     ftitle[1] = "Illegal ship!"
-    ftext[1] = [[     "You have switched to a ship that's not allowed in this race.  Mission failed."]]
+    ftext[1] = [["You have switched to a ship that's not allowed in this race.  Mission failed."]]
 
     ftitle[2] = "You left the race!"
-    ftext[2] = [[     "You left the race.  The race continued without you."]]
+    ftext[2] = [["You left the race.  The race continued without you."]]
 
     ftitle[3] = "You failed to win the race."
-    ftext[3] = [[     As you congratulate the winner on a great race, the laid back man comes up to you.
+    ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
 "That was a lot of fun, if you ever have time, lets race again."]]
 
     ftitle[4] = "Illegal ship!"
-    ftext[4] = [[     "You have outfits on your ship which is not allowed in this race in hard mode.  Mission failed."]]
+    ftext[4] = [["You have outfits on your ship which is not allowed in this race in hard mode.  Mission failed."]]
 
     NPCname = "A laid back man"
     NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."
@@ -123,9 +123,9 @@ function takeoff()
     end
     if choice ~= 1 then
         for k,v in ipairs(player.pilot():outfits()) do
-            if (("Manufacturer Small Engine" ~= v:name())
-            and ("Basic Small Systems" ~= v:name())
-            and ("Unmodified Small Hull" ~= v:name())) then
+            if (("Unicorp Hawk 150 Engine" ~= v:name())
+            and ("Unicorp PT-100 Core System" ~= v:name())
+            and ("Unicorp D-2 Light Plating" ~= v:name())) then
                 tk.msg(ftitle[4], ftext[4])
                 abort()
             end
@@ -175,9 +175,9 @@ function takeoff()
             racers[i]:rmOutfit("all")
             racers[i]:rmOutfit("cores")
             
-            racers[i]:addOutfit("Basic Small Systems")
-            racers[i]:addOutfit("Unmodified Small Hull")
-            racers[i]:addOutfit("Manufacturer Small Engine")
+            racers[i]:addOutfit("Unicorp PT-100 Core System")
+            racers[i]:addOutfit("Unicorp D-2 Light Plating")
+            racers[i]:addOutfit("Unicorp Hawk 150 Engine")
         end
     end
     for i, j in ipairs(racers) do

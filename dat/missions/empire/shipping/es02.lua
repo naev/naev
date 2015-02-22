@@ -17,7 +17,7 @@
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -38,13 +38,13 @@ else -- default english
    title[4] = "Mission Failure"
    text = {}
    text[1] = [[You meet up once more with Commander Soldner at the bar.
-"Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]]
+    "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]]
    text[2] = [[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you."
-"You're going to have to fly to the %s system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]
+    "You're going to have to fly to the %s system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]
    text[3] = [["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %d credits when you return with the VIP. Good luck, pilot."]]
    text[4] = [[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]
    text[5] = [[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
-"It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. I'll be putting in a good word with the Dvaered for you. Hopefully they'll start offering you work too. We have nothing more for you now, but check in periodically in case something comes up for you."]]
+    "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. I'll be putting in a good word with the Dvaered for you. Hopefully they'll start offering you work too. We have nothing more for you now, but check in periodically in case something comes up for you."]]
    msg = {}
    msg[1] = "MISSION FAILED: VIP is dead."
    msg[2] = "MISSION FAILED: You abandoned the VIP."

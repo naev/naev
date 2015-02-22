@@ -40,6 +40,7 @@ static int planetL_getAll( lua_State *L );
 static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
+static int planetL_radius( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_colour( lua_State *L );
 static int planetL_class( lua_State *L );
@@ -47,11 +48,13 @@ static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
 static int planetL_canland( lua_State *L );
 static int planetL_landOverride( lua_State *L );
+static int planetL_getLandOverride( lua_State *L );
 static int planetL_gfxSpace( lua_State *L );
 static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
 static int planetL_outfitsSold( lua_State *L );
 static int planetL_commoditiesSold( lua_State *L );
+static int planetL_isBlackMarket( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
 static const luaL_reg planet_methods[] = {
@@ -63,6 +66,7 @@ static const luaL_reg planet_methods[] = {
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
+   { "radius", planetL_radius },
    { "faction", planetL_faction },
    { "colour", planetL_colour },
    { "class", planetL_class },
@@ -70,11 +74,13 @@ static const luaL_reg planet_methods[] = {
    { "services", planetL_services },
    { "canLand", planetL_canland },
    { "landOverride", planetL_landOverride },
+   { "getLandOverride", planetL_getLandOverride },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
+   { "blackmarket", planetL_isBlackMarket },
    { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    {0,0}
@@ -88,18 +94,20 @@ static const luaL_reg planet_cond_methods[] = {
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
+   { "radius", planetL_radius },
    { "faction", planetL_faction },
    { "colour", planetL_colour },
    { "class", planetL_class },
    { "pos", planetL_position },
    { "services", planetL_services },
    { "canLand", planetL_canland },
-   { "landOverride", planetL_landOverride },
+   { "getLandOverride", planetL_getLandOverride },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
+   { "blackmarket", planetL_isBlackMarket },
    { "known", planetL_isKnown },
    {0,0}
 }; /**< Read only planet metatable methods. */
@@ -287,7 +295,7 @@ static int planetL_getBackend( lua_State *L, int landable )
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
-      pnt            = planet_get( space_getRndPlanet(landable) );
+      pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
       planet.id      = planet_index( pnt );
       lua_pushplanet(L,planet);
       luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
@@ -514,6 +522,22 @@ static int planetL_name( lua_State *L )
 }
 
 /**
+ * @brief Gets the planet's radius.
+ *
+ * @usage radius = p:radius()
+ *    @luaparam p Planet to get the radius of.
+ *    @luareturn The planet's graphics radius.
+ * @luafunc name( p )
+ */
+static int planetL_radius( lua_State *L )
+{
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   lua_pushnumber(L,p->radius);
+   return 1;
+}
+
+/**
  * @brief Gets the planet's faction.
  *
  * @usage f = p:faction()
@@ -562,7 +586,7 @@ static int planetL_colour( lua_State *L )
 /**
  * @brief Gets the planet's class.
  *
- * Usually classes are characters for planets (see space.h) and numbers
+ * Usually classes are characters for planets and numbers
  * for stations.
  *
  * @usage c = p:class()
@@ -572,12 +596,9 @@ static int planetL_colour( lua_State *L )
  */
 static int planetL_class(lua_State *L )
 {
-   char buf[2];
    Planet *p;
    p = luaL_validplanet(L,1);
-   buf[0] = planet_getClass(p);
-   buf[1] = '\0';
-   lua_pushstring(L,buf);
+   lua_pushstring(L,p->class);
    return 1;
 }
 
@@ -656,9 +677,35 @@ static int planetL_canland( lua_State *L )
  */
 static int planetL_landOverride( lua_State *L )
 {
-   Planet *p = luaL_validplanet(L,1);
+   Planet *p;
+   int old;
+
+   p   = luaL_validplanet(L,1);
+   old = p->land_override;
+
    p->land_override = !!lua_toboolean(L,2);
+
+   /* If the value has changed, re-run the landing Lua next frame. */
+   if (p->land_override != old)
+      space_factionChange();
+
    return 0;
+}
+
+
+/**
+ * @brief Gets the land override status for a planet.
+ *
+ * @usage if p:getLandOverride() then -- Player can definitely land.
+ *    @luaparam p Planet to check.
+ *    @luaparam b Whether or not the player is always allowed to land.
+ * @luafunc getLandOverride( p, b )
+ */
+static int planetL_getLandOverride( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, p->land_override);
+   return 1;
 }
 
 
@@ -811,6 +858,22 @@ static int planetL_commoditiesSold( lua_State *L )
       lua_rawset(L,-3); /* store the value in the table */
    }
 
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a planet is a black market.
+ *
+ * @usage b = p:blackmarket()
+ *
+ *    @luaparam p Planet to check if it's a black market.
+ *    @luareturn true if the planet is a black market.
+ * @luafunc blackmarket( p )
+ */
+static int planetL_isBlackMarket( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, planet_isBlackMarket(p));
    return 1;
 }
 

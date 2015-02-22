@@ -17,18 +17,13 @@
  </movement>
  <health>
   <absorb>50</absorb>
-  <shield>750</shield>
-  <armour>700</armour>
-  <energy>960</energy>
-  <shield_regen>11</shield_regen>
+  <armour>150</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>40.8</energy_regen>
  </health>
  <characteristics>
-  <cpu>55</cpu>
   <crew>11</crew>
   <mass>220</mass>
-  <fuel>600</fuel>
+  <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
  <slots>
@@ -36,11 +31,18 @@
   <weapon size="medium" x="15" y="-1" h="2"/>
   <weapon size="small" x="-9" y="-3" h="2"/>
   <weapon size="small" x="-9" y="3" h="2"/>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
   <utility size="medium"/>
   <utility size="medium"/>
   <utility size="small"/>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
   <structure size="medium"/>
   <structure size="medium"/>
  </slots>
- <stats />
+ <stats>
+  <armour_mod>400</armour_mod>
+  <shield_mod>400</shield_mod>
+  <shield_regen_mod>100</shield_regen_mod>
+ </stats>
 </ship>

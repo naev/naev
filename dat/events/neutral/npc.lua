@@ -139,7 +139,7 @@ else --default english
                               }
 
    msg_lore["Trader"] =       {"Just another link in the Great Chain, right?",
-                               "You win some, you lose some but if you don't try you're never going to win",
+                               "You win some, you lose some, but if you don't try you're never going to win.",
                                "If you don't watch the markets then you'll be hopping between planets in a jury-rigged ship in no time.",
                                "Them blimming pirates, stopping honest folk from making an honest living - it's not like we're exploiting the needy!",
                               }
@@ -161,8 +161,9 @@ else --default english
                                "There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it.",
                                "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
                                "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board.",
-                               "If you're having trouble with overheating weapons or outfits, you can use " .. tutGetKey("cooldown") .. " to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
+                               "If you're having trouble with overheating weapons or outfits, you can press " .. tutGetKey("autobrake") .. " twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
                                "If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!",
+                               "You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you.",
                               }
 
    -- Jump point messages.
@@ -183,6 +184,7 @@ else --default english
    msg_mhint =                {{"Shadowrun", "Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"},
                                {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
                                {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"},
+							   {"Za'lek Shipping Delivery", "So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear its pretty good money."},
                               }
 
    -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.

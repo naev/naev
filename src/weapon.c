@@ -333,7 +333,7 @@ static void think_seeker( Weapon* w, const double dt )
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
          /* Smart seekers take into account ship velocity. */
-         if (w->outfit->u.amm.ai == 2) {
+         if (w->outfit->u.amm.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
             vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
@@ -601,7 +601,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_BEAM:
          case OUTFIT_TYPE_TURRET_BEAM:
             w->timer -= dt;
-            if (w->timer < 0.) {
+            if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
+                  w->mount->stimer < 0.)) {
+               pilot_stopBeam(p, (PilotOutfitSlot*) w->mount);
                weapon_destroy(w,layer);
                break;
             }
@@ -975,6 +977,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
  */
 static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
+   int i;
+   double d;
+
    /* Must be a valid shooter. */
    if (shooter == NULL)
       return;
@@ -994,6 +999,26 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
             (shooter->target==p->id)) {
          /* Inform attacked. */
          ai_attacked( p, shooter->id );
+
+         /* Trigger a pseudo-distress that incurs no faction loss. */
+         for (i=0; i<pilot_nstack; i++) {
+            /* Skip if unsuitable. */
+            if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
+                  (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
+                  (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
+               continue;
+
+            /*
+             * Pilots within a radius of 1500 (in a zero-interference system)
+             * will immediately notice hostile actions.
+             */
+            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            if (d > (pilot_sensorRange() * 0.04 )) /* 0.2^2 */
+               continue;
+
+            /* Send AI the distress signal. */
+            ai_getDistress( pilot_stack[i], p, shooter );
+         }
 
          /* Set as hostile. */
          pilot_setHostile(p);
@@ -1042,7 +1067,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1092,7 +1117,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.disable       = odmg->disable * dt;
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
@@ -1327,7 +1352,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    }
 
    /* Handle seekers. */
-   if (w->outfit->u.amm.ai > 0) {
+   if (w->outfit->u.amm.ai != AMMO_AI_DUMB) {
       w->think = think_seeker; /* AI is the same atm. */
 
       /* If they are seeking a pilot, increment lockon counter. */

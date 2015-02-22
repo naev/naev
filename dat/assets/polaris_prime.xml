@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>318000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>
@@ -41,6 +41,7 @@
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Laser 3</item>
+  <item>Beam 1</item>
   <item>Basic Civilian Ships</item>
   <item>High Tech Upgrades 2</item>
   <item>Heavy Weapons 2</item>

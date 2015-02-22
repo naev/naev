@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Bedimann Shipyards">
+ <pos>
+  <x>4304.105547</x>
+  <y>1996.749996</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard2.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2500</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>zlk_mil_restricted</land>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>These shipyards are one of the places where Za'lek vessels are built and sent out to the defense forces. It also maintains a small contingent of Za'lek vessels at home to serve as a in-system guard.</description>
+ </general>
+ <tech>
+  <item>Za'lek Military Ships</item>
+  <item>Systems Medium</item>
+  <item>Systems High</item>
+  <item>Engines Medium</item>
+  <item>Engines High</item>
+  <item>Hulls Medium</item>
+  <item>Hulls High</item>
+ </tech>
+</asset>

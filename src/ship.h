@@ -98,11 +98,12 @@ typedef struct Ship_ {
    double speed;     /**< Ship's max speed in "pixel/sec" */
 
    /* characteristics */
-   int crew;         /**< Crew members. */
-   double mass;      /**< Mass ship has. */
-   double cpu;       /**< Amount of CPU the ship has. */
-   int fuel;         /**< How many jumps by default. */
-   double cap_cargo; /**< Cargo capacity (in volume). */
+   int crew;                /**< Crew members. */
+   double mass;             /**< Mass ship has. */
+   double cpu;              /**< Amount of CPU the ship has. */
+   int fuel;                /**< How much fuel by default. */
+   double fuel_consumption; /**< Fuel consumption by engine. */
+   double cap_cargo;        /**< Cargo capacity (in volume). */
 
    /* health */
    double armour;    /**< Maximum base armour in MJ. */

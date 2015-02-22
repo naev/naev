@@ -48,6 +48,15 @@ typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 #define player_isTut()     player_isFlag(PLAYER_TUTORIAL)
 
 
+/* Control restoration reasons. */
+enum {
+   PINPUT_NULL,     /* No specific reason. */
+   PINPUT_MOVEMENT, /* Player pressed a movement key. */
+   PINPUT_AUTONAV,  /* Player engaged autonav. */
+   PINPUT_BRAKING   /* Player engaged auto-braking. */
+};
+
+
 #include "player_autonav.h"
 
 
@@ -69,10 +78,29 @@ typedef struct Player_s {
    Vector2d autonav_pos; /**< Target autonav position. */
    char *autonavmsg; /**< String to print on arrival. */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
-   double autonav_timer; /**< Timer that begins counting down when autonav aborts due to combat. */
+   double autonav_timer; /**< Timer that prevents time accel after a reset. */
    double mousex; /**< Mouse X position (for mouse flying). */
    double mousey; /**< Mouse Y position (for mouse flying). */
 } Player_t;
+
+
+/**
+ * @brief Wrapper for outfits.
+ */
+typedef struct PlayerOutfit_s {
+   const Outfit *o;  /**< Actual associated outfit. */
+   int q;            /**< Amount of outfit owned. */
+} PlayerOutfit_t;
+
+
+/**
+ * @brief Player ship.
+ */
+typedef struct PlayerShip_s {
+   Pilot* p;      /**< Pilot. */
+   char *loc;     /**< Location. */
+   int autoweap;  /**< Automatically update weapon sets. */
+} PlayerShip_t;
 
 
 /*
@@ -127,6 +155,8 @@ void player_messageRaw ( const char *str );
 /*
  * misc
  */
+void player_restoreControl( int reason, char *str );
+void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
@@ -147,6 +177,7 @@ void player_soundResume (void);
  * player ships
  */
 int player_ships( char** sships, glTexture** tships );
+const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );
@@ -161,9 +192,9 @@ void player_rmShip( char* shipname );
  * player outfits.
  */
 int player_outfitOwned( const Outfit *o );
-int player_getOutfits( char** soutfits, glTexture** toutfits );
-int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
-      int(*filter)( const Outfit *o ) );
+const PlayerOutfit_t* player_getOutfits( int *n );
+int player_getOutfitsFiltered( Outfit **outfits, glTexture **toutfits,
+      int(*filter)( const Outfit *o ), char *name );
 int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );
 int player_rmOutfit( const Outfit *o, int quantity );
@@ -242,7 +273,7 @@ void player_hail (void);
 void player_hailPlanet (void);
 void player_autohail (void);
 void player_toggleMouseFly(void);
-void player_toggleCooldown(void);
+void player_brake(void);
 
 
 #endif /* PLAYER_H */

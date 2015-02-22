@@ -901,7 +901,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
-      pilot_distress(cur_pilot, aiL_distressmsg, 0);
+      pilot_distress(cur_pilot, NULL, aiL_distressmsg, 0);
 
    /* Clean up if necessary. */
    ai_taskGC( cur_pilot );
@@ -985,10 +985,10 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  *    @param p Pilot receiving the distress signal.
  *    @param distressed Pilot sending the distress signal.
  */
-void ai_getDistress( Pilot* p, const Pilot* distressed )
+void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
    lua_State *L;
-   LuaPilot ldistressed, ltarget;
+   LuaPilot ldistressed, lattacker;
    int errf;
 
    /* Ignore distress signals when under manual control. */
@@ -1022,9 +1022,13 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 
    /* Run the function. */
    ldistressed.pilot = distressed->id;
-   ltarget.pilot = distressed->target;
+   if (attacker != NULL)
+      lattacker.pilot = attacker->id;
+   else /* Default to the victim's current target. */
+      lattacker.pilot = distressed->target;
+
    lua_pushpilot(L, ldistressed);
-   lua_pushpilot(L, ltarget);
+   lua_pushpilot(L, lattacker);
    if (lua_pcall(L, 2, 0, errf)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -3428,7 +3432,7 @@ static int aiL_cargo( lua_State *L )
    if (q<=0)
       return 0;
 
-   pilot_cargoAdd( cur_pilot, commodity_get(s), q);
+   pilot_cargoAdd( cur_pilot, commodity_get(s), q, 0 );
 
    return 0;
 }

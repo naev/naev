@@ -26,31 +26,31 @@ else
    -- The nerd's job proposal
    title[1] = "A group of excited nerds"
    text[1] = [[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
-   "Hi, I'm Mia. We need transportation, and you look as if you could need some dough. Interested?"
-   You reply that for a deal to be worked out, they better provide some detail.
-   "Listen," she says, "there's this Homebrew Processing Box Masters on %s. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20000."
-   You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]
+    "Hi, I'm Mia. We need transportation, and you look as if you could need some dough. Interested?"
+    You reply that for a deal to be worked out, they better provide some detail.
+    "Listen," she says, "there's this Homebrew Processing Box Masters on %s. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20000."
+    You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]
 
    -- you accept
    title[2] = "We have a deal!"
    text[2] = [[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
-   As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
+    As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
     "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. Ok, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]]
   
    -- right planet, in time
    title[3] = "Happy nerds"
    text[3] = [["Good job, %s," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 STP, so you can pick us up an' bring us back to %s."
-   That said, the nerds shoulder the box and rushes towards a banner which reads "Admissions".]]
+    That said, the nerds shoulder the box and rushes towards a banner which reads "Admissions".]]
 
    -- right planet, late
    title[4] = "Angry nerds"
    text[4] = [[Mia fumes. "Great. Just great! We're late, you jerk." She points to a crumpled banner reading "Admissions". The area below it is deserted. "No contest for us, no payment for you. Understand? Go and take your sorry excuse for a ship into the corona of a suitable star. We will find someone else to take us back to %s. Someone reliable."
-   As her emphasis on the last words is still ringing in your ears, the gang of nerds stroll toward an archway, behind which, judging from the bustling atmosphere, the contest is already going on.]]
+    As her emphasis on the last words is still ringing in your ears, the gang of nerds stroll toward an archway, behind which, judging from the bustling atmosphere, the contest is already going on.]]
 
    -- wrong planet, late
    title[5] = "Furious nerds"
    text[5] = [[The nerds quickly and quietly pack up their box and start to leave your ship. Finally, Mia turns to you. Her body language suggests that she's almost bursting with anger. Yet her voice is controlled when she starts talking:
-   "You're a sorry loser. The contest is almost over and we are stranded in some dump we never wanted to see. I'm sure you agree that this isn't worth any payment." She turns to leave, but then adds: "Are you sure that everything is in order with your ship's core? You don't want it to melt down just in the middle of a fight, do you?" With this, she joins the rest of her group, and they are gone.]]
+    "You're a sorry loser. The contest is almost over and we are stranded in some dump we never wanted to see. I'm sure you agree that this isn't worth any payment." She turns to leave, but then adds: "Are you sure that everything is in order with your ship's core? You don't want it to melt down just in the middle of a fight, do you?" With this, she joins the rest of her group, and they are gone.]]
 
    -- you are hailed to pick them up again
    title[6] = "In-system communication"
@@ -110,7 +110,7 @@ else
    text[19] = [[The nerds follow you to your ship and finally stow away their box. Now, you're all set to go.]]
 
    title[20] = "No room, no job"
-   text[20] = [[As you enter the bar, the nerds are immediately upon you. "What is it with you?" Mia asks. "Is it so hard to make some room for our box? I am fed up with you, consider our agreement nullified. I hope to never again have business with you." Some angry stares later, the nerds are gone, trying to find another pilot.]]
+   text[20] = [[As you enter the bar, the nerds are immediately upon you. "What is it with you?" Mia asks. "Is it so hard to make some room for our box? I am fed up with you. Consider our agreement nullified. I hope to never again have business with you." Some angry stares later, the nerds are gone, trying to find another pilot.]]
 
    -- OSD texts
    textosd = {}
@@ -138,7 +138,7 @@ else
    misn_cargoamount2 = "4"
 
    -- the outfit name as in outfit.xml
-   outfit = "Previous Generation Small Systems"
+   outfit = "Unicorp PT-100 Core System"
 
 end
 

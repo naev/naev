@@ -286,7 +286,7 @@ static void info_setGui( unsigned int wid, char* str )
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", "Cancel", setgui_close );
+         "btnBack", "Close", setgui_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
          "btnLoad", "Load", setgui_load );
 
@@ -319,7 +319,8 @@ static void setgui_load( unsigned int wdw, char *str )
       return;
 
    if (player.guiOverride == 0) {
-      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+      if (dialogue_YesNo( "GUI Override is not set.",
+               "Enable GUI Override and change GUI to '%s'?", gui )) {
          player.guiOverride = 1;
          window_checkboxSet( wid, "chkOverride", player.guiOverride );
       }
@@ -388,6 +389,7 @@ static void info_openShip( unsigned int wid )
          "Speed:\n"
          "Turn:\n"
          "\n"
+         "Absorption:\n"
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
@@ -425,13 +427,14 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f teraflops\n"
+         "%d teraflops\n"
          "%.0f tonnes\n"
          "%s average\n"
          "%.0f kN/tonne\n"
          "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
          "\n"
+         "%.0f%%\n" /* Absorbption */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
@@ -451,6 +454,7 @@ static void ship_update( unsigned int wid )
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
          /* Health. */
+         player.p->dmg_absorb * 100.,
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,
          player.p->energy, player.p->energy_max, player.p->energy_regen,

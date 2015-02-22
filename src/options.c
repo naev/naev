@@ -69,7 +69,7 @@ static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
 static void opt_gameplay( unsigned int wid );
-static void opt_setAutonavAbort( unsigned int wid, char *str );
+static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
 static void opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
@@ -257,7 +257,7 @@ static void opt_gameplay( unsigned int wid )
    /* Autonav abort. */
    x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
-         NULL, &cDConsole, "Abort Autonav At:" );
+         NULL, &cDConsole, "Stop Speedup At:" );
    y -= 20;
 
    /* Autonav abort fader. */
@@ -265,15 +265,11 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
-         conf.autonav_abort, opt_setAutonavAbort );
+         conf.autonav_reset_speed, opt_setAutonavResetSpeed );
    y -= 40;
 
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
          NULL, &cDConsole, "Settings" );
-   y -= 25;
-
-   window_addCheckbox( wid, x, y, cw, 20,
-         "chkAutonavPause", "Pause instead of aborting Autonav", NULL, conf.autonav_pause );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -325,10 +321,9 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
-   conf.autonav_pause = window_checkboxState( wid, "chkAutonavPause" );
    
    /* Faders. */
-   conf.autonav_abort = window_getFaderValue(wid, "fadAutonav");
+   conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -355,7 +350,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
    /* Faders. */
-   window_faderValue( wid, "fadAutonav", AUTONAV_ABORT_DEFAULT );
+   window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -379,7 +374,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Faders. */
-   window_faderValue( wid, "fadAutonav", conf.autonav_abort );
+   window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -395,19 +390,19 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setAutonavAbort( unsigned int wid, char *str )
+static void opt_setAutonavResetSpeed( unsigned int wid, char *str )
 {
    char buf[PATH_MAX];
-   double autonav_abort;
+   double autonav_reset_speed;
 
    /* Set fader. */
-   autonav_abort = window_getFaderValue(wid, str);
+   autonav_reset_speed = window_getFaderValue(wid, str);
 
    /* Generate message. */
-   if (autonav_abort >= 1.)
-      nsnprintf( buf, sizeof(buf), "Missile Lock" );
-   else if (autonav_abort > 0.)
-      nsnprintf( buf, sizeof(buf), "%.0f%% Shield", autonav_abort * 100 );
+   if (autonav_reset_speed >= 1.)
+      nsnprintf( buf, sizeof(buf), "Enemy Presence" );
+   else if (autonav_reset_speed > 0.)
+      nsnprintf( buf, sizeof(buf), "%.0f%% Shield", autonav_reset_speed * 100 );
    else
       nsnprintf( buf, sizeof(buf), "Armour Damage" );
 
@@ -471,6 +466,9 @@ static void opt_keybinds( unsigned int wid )
 
 /**
  * @brief Generates the keybindings list.
+ *
+ *    @param wid Window to update.
+ *    @param regen Whether to destroy and recreate the widget.
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
@@ -481,6 +479,7 @@ static void menuKeybinds_genList( unsigned int wid )
    SDLMod mod;
    int w, h;
    int lw, lh;
+   int regen, pos, off;
 
    /* Get dimensions. */
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
@@ -530,8 +529,21 @@ static void menuKeybinds_genList( unsigned int wid )
             break;
       }
    }
+
+   regen = widget_exists( wid, "lstKeybinds" );
+   if (regen) {
+      pos = toolkit_getListPos( wid, "lstKeybinds" );
+      off = toolkit_getListOffset( wid, "lstKeybinds" );
+      window_destroyWidget( wid, "lstKeybinds" );
+   }
+
    window_addList( wid, 20, -40, lw, lh, "lstKeybinds",
          str, i, 0, menuKeybinds_update );
+
+   if (regen) {
+      toolkit_setListPos( wid, "lstKeybinds", pos );
+      toolkit_setListOffset( wid, "lstKeybinds", off );
+   }
 }
 
 
@@ -606,16 +618,43 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 static void opt_keyDefaults( unsigned int wid, char *str )
 {
    (void) str;
+   char *title, *caption, *ret;
+   int i, ind;
 
-   /* Ask user if he wants to. */
-   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default keybindings?" ))
+   const int n = 3;
+   const char *opts[] = {
+      "WASD",
+      "Arrow Keys",
+      "Cancel"
+   };
+
+   title   = "Restore Defaults";
+   caption = "Which layout do you want to use?";
+
+   dialogue_makeChoice( title, caption, 3 );
+
+   for (i=0; i<n; i++)
+      dialogue_addChoice( title, caption, opts[i] );
+
+   ret = dialogue_runChoice();
+   if (ret == NULL)
+      return;
+
+   /* Find the index of the matched option. */
+   ind = 0;
+   for (i=0; i<n; i++)
+      if (strcmp(ret, opts[i]) == 0) {
+         ind = i;
+         break;
+      }
+
+   if (ind == 2)
       return;
 
    /* Restore defaults. */
-   input_setDefault();
+   input_setDefault( (ind == 0) ? 1 : 0 );
 
    /* Regenerate list widget. */
-   window_destroyWidget( wid, "lstKeybinds" );
    menuKeybinds_genList( wid );
 
    /* Alert user it worked. */
@@ -669,12 +708,10 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 
    if (vol == 0.)
       nsnprintf( buf, max, "%s Volume: Muted", str );
-   else if (strcmp(conf.sound_backend,"openal")==0) {
+   else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
       nsnprintf( buf, max, "%s Volume: %.2f (%.0f dB)", str, pos, log(vol) * magic );
    }
-   else if (strcmp(conf.sound_backend,"sdlmix")==0)
-      nsnprintf( buf, max, "%s Volume: %.2f", str, pos );
 }
 
 
@@ -877,7 +914,6 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    int key;
    SDLMod mod, ev_mod;
    const char *str;
-   int pos, off;
 
    /* See how to handle it. */
    switch (event->type) {
@@ -959,12 +995,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 
    /* Update parent window. */
    parent = window_getParent( wid );
-   pos = toolkit_getListPos( parent, "lstKeybinds" );
-   off = toolkit_getListOffset( parent, "lstKeybinds" );
-   window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
-   toolkit_setListPos( parent, "lstKeybinds", pos );
-   toolkit_setListOffset( parent, "lstKeybinds", off );
 
    return 0;
 }
@@ -1026,7 +1057,6 @@ static void opt_unsetKey( unsigned int wid, char *str )
 
    /* Update parent window. */
    parent = window_getParent( wid );
-   window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
 }
 

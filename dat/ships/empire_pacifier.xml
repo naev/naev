@@ -10,14 +10,15 @@
  <license>Medium Combat Vessel License</license>
  <description>An Empire Pacifier.</description>
  <health>
-  <absorb>23</absorb>
-  <armour>400</armour>
+  <absorb>22</absorb>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>17</crew>
   <mass>360</mass>
-  <cargo>15</cargo>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>40</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="-15" y="-10" h="-10"/>
@@ -25,28 +26,20 @@
   <weapon size="medium" x="20" y="0" h="-10"/>
   <weapon size="medium" x="4" y="-5" h="-10"/>
   <weapon size="medium" x="4" y="5" h="-10"/>
-  <utility size="medium" prop="systems" exclusive="1" required="1">Basic Medium Systems</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
   <utility size="medium"/>
-  <structure size="medium" prop="engines" exclusive="1" required="1">Manufacturer Medium Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unmodified Medium Hull</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="large"/>
   <structure size="medium"/>
   <structure size="medium"/>
  </slots>
  <stats>
-  <fuel_consumption>200</fuel_consumption>
-  <speed_mod>0</speed_mod>
-  <turn_mod>0</turn_mod>
-  <thrust_mod>0</thrust_mod>
-  <armour_mod>0</armour_mod>
-  <shield_mod>10</shield_mod>
-  <energy_mod>10</energy_mod>
-  <energy_regen_mod>0</energy_regen_mod>
-  <cargo_mod>-50</cargo_mod>
-  <ew_detect>10</ew_detect>
-  <ew_hide>0</ew_hide>
+  <shield_mod>15</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <heat_dissipation>15</heat_dissipation>
  </stats>
 </ship>

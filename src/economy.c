@@ -65,6 +65,7 @@ extern int systems_nstack; /**< Number of star systems. */
  * Nodal analysis simulation for dynamic economies.
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
+static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 static int econ_nprices       = 0; /**< Number of prices to calculate. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
@@ -109,6 +110,27 @@ void credits2str( char *str, credits_t credits, int decimals )
       nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
+/**
+ * @brief Given a price and on-hand credits, outputs a colourized string.
+ *
+ *    @param[out] str Output is stored here, must have at least a length of 32
+ *                     char.
+ *    @param price Price to display.
+ *    @param credits Credits available.
+ *    @param decimals Decimals to use.
+ */
+void price2str(char *str, credits_t price, credits_t credits, int decimals )
+{
+   char *buf;
+
+   credits2str(str, price, decimals);
+   if (price <= credits)
+      return;
+
+   buf = strdup(str);
+   nsnprintf(str, ECON_CRED_STRLEN, "\er%s\e0", buf);
+   free(buf);
+}
 
 /**
  * @brief Gets a commodity by name.
@@ -559,6 +581,29 @@ int economy_init (void)
 
 
 /**
+ * @brief Increments the queued update counter.
+ *
+ * @sa economy_execQueued
+ */
+void economy_addQueuedUpdate (void)
+{
+   econ_queued++;
+}
+
+
+/**
+ * @brief Calls economy_refresh if an economy update is queued.
+ */
+int economy_execQueued (void)
+{
+   if (econ_queued)
+      return economy_refresh();
+
+   return 0;
+}
+
+
+/**
  * @brief Regenerates the economy matrix.  Should be used if the universe
  *  changes in any permanent way.
  */
@@ -652,6 +697,7 @@ int economy_update( unsigned int dt )
    /* Clean up. */
    free(X);
 
+   econ_queued = 0;
    return 0;
 }
 

@@ -10,11 +10,13 @@
   <x>-532.550030</x>
   <y>-756.063426</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Trader Area</asset>
+ </assets>
  <jumps>
   <jump target="Regas">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Seelie">
    <autopos/>
@@ -22,11 +24,11 @@
   </jump>
   <jump target="Seiben">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Vost">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

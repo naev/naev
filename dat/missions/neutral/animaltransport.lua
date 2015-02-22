@@ -7,7 +7,7 @@
 --
 --]]
 
-include("jumpdist.lua")
+include("dat/scripts/jumpdist.lua")
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
@@ -18,11 +18,11 @@ text = {}
 title = {}
 
     title[1] = "Animal transport"
-    text[1] = [[    "Good day to you, captain," the man greets you. "I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid 20,000 credits. Are you interested in the job?]]
+    text[1] = [["Good day to you, captain," the man greets you. "I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid 20,000 credits. Are you interested in the job?]]
 
-    text[2] = [[    "Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]]
+    text[2] = [["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]]
 
-    text[3] = [[    As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth 20,000 credits, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak...?]]
+    text[3] = [[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth 20,000 credits, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak...?]]
 
     NPCname = "Civilian"
     NPCdesc = "There's a civilian here, from the Fyrra echelon by the looks of him. He's got some kind of crate with him."

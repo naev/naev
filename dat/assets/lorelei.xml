@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Lorelei">
  <pos>
-  <x>-38220.000000</x>
-  <y>4150.000000</y>
+  <x>-28481.636218</x>
+  <y>6269.915925</y>
  </pos>
  <GFX>
   <space>M09.png</space>
@@ -42,6 +42,7 @@
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
   <item>Missiles 2</item>
-  <item>Engines Elite</item>
+  <item>Engines High</item>
+  <item>Engines Cargo</item>
  </tech>
 </asset>

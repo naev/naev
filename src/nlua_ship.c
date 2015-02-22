@@ -17,6 +17,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_outfit.h"
 #include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
@@ -34,6 +35,7 @@ static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
+static int shipL_price( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -45,6 +47,7 @@ static const luaL_reg shipL_methods[] = {
    { "getSlots", shipL_getSlots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
+   { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
    {0,0}
@@ -337,10 +340,11 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_getSlots( lua_State *L )
 {
-   int i, k;
+   int i, j, k, outfit_type;
    Ship *s;
    OutfitSlot *slot;
-   int outfit_type = 0;
+   ShipOutfitSlot *sslot;
+   LuaOutfit lo;
    char *outfit_types[] = {"structure", "utility", "weapon"};
 
    s = luaL_validship(L,1);
@@ -351,15 +355,21 @@ static int shipL_getSlots( lua_State *L )
 
          /* get the slot */
       if (i < s->outfit_nstructure){
-         slot = &s->outfit_structure[i].slot;
+         j     = i;
+         slot  = &s->outfit_structure[j].slot;
+         sslot = &s->outfit_structure[j];
          outfit_type = 0;
       }
       else if (i < s->outfit_nstructure + s->outfit_nutility){
-         slot = &s->outfit_utility[i].slot;
+         j     = i - s->outfit_nstructure;
+         slot  = &s->outfit_utility[j].slot;
+         sslot = &s->outfit_utility[j];
          outfit_type = 1;
       }
-      else{
-         slot = &s->outfit_weapon[i].slot;
+      else {
+         j     = i - (s->outfit_nstructure + s->outfit_nutility);
+         slot  = &s->outfit_weapon[j].slot;
+         sslot = &s->outfit_weapon[j];
          outfit_type = 2;
       }
 
@@ -376,8 +386,15 @@ static int shipL_getSlots( lua_State *L )
       lua_rawset(L, -3); /* table[key] = value */
 
       lua_pushstring(L, "property"); /* key */
-      lua_pushstring( L, sp_display(slot->spid)); /* value */  /* some spids seem to be random values... */
+      lua_pushstring( L, sp_display(slot->spid)); /* value */
       lua_rawset(L, -3); /* table[key] = value */
+
+      if (sslot->data != NULL) {
+         lo.outfit = sslot->data;
+         lua_pushstring(L, "outfit"); /* key */
+         lua_pushoutfit(L, lo); /* value*/
+         lua_rawset(L, -3); /* table[key] = value */
+      }
 
       lua_rawset(L, -3);   /* put the slot table in */
    }
@@ -434,6 +451,26 @@ static int shipL_outfitCPU( lua_State *L )
    /* Return parameter. */
    lua_pushnumber(L, outfit_cpu(o));
    return 1;
+}
+
+
+/**
+ * @brief Gets the ship's price, with and without default outfits.
+ *
+ * @usage price, base = s:price()
+ *
+ *    @luaparam s Ship to get the price of.
+ *    @luareturn The ship's final purchase price and base price.
+ * @luafunc price( s )
+ */
+static int shipL_price( lua_State *L )
+{
+   Ship *s;
+
+   s = luaL_validship(L,1);
+   lua_pushnumber(L, ship_buyPrice(s));
+   lua_pushnumber(L, ship_basePrice(s));
+   return 2;
 }
 
 

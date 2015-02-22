@@ -90,3 +90,27 @@ void** arrayShuffle( void** array, int n)
 
    return array;
 }
+
+
+/**
+ * @brief Checks whether two rectangles overlap at any point.
+ *
+ *    @param x X coordinate of first rectangle
+ *    @param y Y coordinate of first rectangle
+ *    @param w Width of first rectangle
+ *    @param h Height of first rectangle
+ *    @param x2 X coordinate of second rectangle
+ *    @param y2 Y coordinate of second rectangle
+ *    @param w2 Width of second rectangle
+ *    @param h2 Height of second rectangle
+ *    @return 1 if the rectangles overlap, 0 otherwise.
+ */
+int rectOverlap( double x, double y, double w, double h,
+      double x2, double y2, double w2, double h2 )
+{
+   /* Too far left, down, right, or up, respectively. */
+   if ((x+w < x2) || (y+h < y2) || (x > x2+w2) || (y > y2+h2))
+      return 0;
+
+   return 1;
+}
