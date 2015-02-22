@@ -652,7 +652,9 @@ function render( dt, dt_mod )
    render_bar( bardata['energy'], energy, txt["energy"], col )
 
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100)
+   local hspeed
+   if stats.speed_max <= 0 then hspeed = 0
+   else hspeed = round(speed / stats.speed_max * 100) end
    txt = hspeed .. "% (" .. round(speed) .. ")"
    if hspeed <= 100. then
       render_bar( bardata['speed'], hspeed, txt, col_txt_bar )
