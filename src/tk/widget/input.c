@@ -67,7 +67,6 @@ void window_addInput( const unsigned int wid,
    wgt->textevent       = inp_text;
    wgt->focusGain       = inp_focusGain;
    wgt->focusLose       = inp_focusLose;
-   /*wgt->keyevent        = inp_key;*/
    wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
    wgt->dat.inp.max     = max+1;
    wgt->dat.inp.oneline = oneline;
@@ -423,6 +422,14 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       return 1;
    }
 
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Don't use, but don't eat, either. */
+   if ((key == SDLK_TAB) || (key == SDLK_ESCAPE))
+      return 0;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+   /* Eat everything else that isn't usable. Om nom. */
    /* Only catch some keys. */
    if ((key != SDLK_BACKSPACE) && 
          (key != SDLK_DELETE) &&
@@ -430,7 +437,11 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          (key != SDLK_KP_ENTER) &&
          (key != SDLK_HOME) &&
          (key != SDLK_END))
+#if SDL_VERSION_ATLEAST(2,0,0)
+      return 1; /* SDL2 uses TextInput and should eat most keys. Om nom. */
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
       return 0;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* backspace -> delete text */
    if (key == SDLK_BACKSPACE) {
