@@ -2161,7 +2161,9 @@ void toolkit_update (void)
    unsigned int t;
    Window *wdw;
    Widget *wgt;
+#if !SDL_VERSION_ATLEAST(2,0,0)
    char buf[2];
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
    SDL_Event event;
    int ret;
 
@@ -2223,11 +2225,13 @@ void toolkit_update (void)
    if ((wgt != NULL) && (wgt->keyevent != NULL))
       wgt->keyevent( wgt, input_key, input_mod );
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
       buf[0] = input_text;
       buf[1] = '\0';
       wgt->textevent( wgt, buf );
    }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
