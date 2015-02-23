@@ -86,6 +86,7 @@ static int load_load( nsave_t *save, const char *path )
    xmlDocPtr doc;
    xmlNodePtr root, parent, node, cur;
    int scu, stp, stu;
+   char *version = NULL;
 
    memset( save, 0, sizeof(nsave_t) );
 
@@ -114,7 +115,7 @@ static int load_load( nsave_t *save, const char *path )
       if (xml_isNode(parent,"version")) {
          node = parent->xmlChildrenNode;
          do {
-            xmlr_strd(node,"naev",save->version);
+            xmlr_strd(node,"naev",version);
             xmlr_strd(node,"data",save->data);
          } while (xml_nextNode(node));
          continue;
@@ -155,6 +156,12 @@ static int load_load( nsave_t *save, const char *path )
          continue;
       }
    } while (xml_nextNode(parent));
+
+   /* Handle version. */
+   if (version != NULL) {
+      naev_versionParse( save->version, version, strlen(version) );
+      free(version);
+   }
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -252,8 +259,6 @@ void load_free (void)
          if (ns->name != NULL)
             free(ns->name);
 
-         if (ns->version != NULL)
-            free(ns->version);
          if (ns->data != NULL)
             free(ns->data);
 
@@ -363,7 +368,7 @@ static void load_menu_update( unsigned int wid, char *str )
    nsave_t *ns;
    int n;
    char *save;
-   char buf[256], credits[ECON_CRED_STRLEN], date[64];
+   char buf[256], credits[ECON_CRED_STRLEN], date[64], version[256];
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
@@ -378,6 +383,7 @@ static void load_menu_update( unsigned int wid, char *str )
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
+   naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
    nsnprintf( buf, sizeof(buf),
          "\eDName:\n"
          "\e0   %s\n"
@@ -393,7 +399,7 @@ static void load_menu_update( unsigned int wid, char *str )
          "\e0   %s\n"
          "\eDShip Model:\n"
          "\e0   %s",
-         ns->name, ns->version, date, ns->planet,
+         ns->name, version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
 }
