@@ -1351,6 +1351,10 @@ int input_clickedJump( int jump, int autonav )
    if (!jp_isUsable(jp))
       return 0;
 
+   /* Update map path. */
+   if (player.p->nav_hyperspace != jump)
+      map_select( jp->target, 0 );
+
    if (autonav) {
       player_targetHyperspaceSet( jump );
       player_autonavStart();
