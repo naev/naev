@@ -276,6 +276,9 @@ void conf_setVideoDefaults (void)
    conf.fps_show     = SHOW_FPS_DEFAULT;
    conf.fps_max      = FPS_MAX_DEFAULT;
 
+   /* Pause. */
+   conf.pause_show   = SHOW_PAUSE_DEFAULT;
+
    /* Memory. */
    conf.engineglow   = ENGINE_GLOWS_DEFAULT;
 }
@@ -316,6 +319,7 @@ void conf_loadConfigPath( void )
       return;
 
    lua_State *L = nlua_newState();
+   nlua_loadBasic(L); /* For os library */
    if (luaL_dofile(L, file) == 0)
       conf_loadString("datapath",conf.datapath);
 
@@ -376,6 +380,9 @@ int conf_loadConfig ( const char* file )
       /* FPS */
       conf_loadBool("showfps",conf.fps_show);
       conf_loadInt("maxfps",conf.fps_max);
+
+      /*  Pause */
+      conf_loadBool("showpause",conf.pause_show);
 
       /* Sound. */
       conf_loadString("sound_backend",conf.sound_backend);
@@ -585,6 +592,7 @@ void conf_parseCLIPath( int argc, char** argv )
 void conf_parseCLI( int argc, char** argv )
 {
    static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
       { "vsync", no_argument, 0, 'V' },
@@ -617,6 +625,9 @@ void conf_parseCLI( int argc, char** argv )
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
+         case 'd':
+            /* Does nothing, datapath is parsed earlier. */
+            break;
          case 'f':
             conf.fullscreen = 1;
             break;
@@ -946,6 +957,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Limit the rendering framerate");
    conf_saveInt("maxfps",conf.fps_max);
+   conf_saveEmptyLine();
+
+   /* Pause */
+   conf_saveComment("Show 'PAUSED' on screen while paused");
+   conf_saveBool("showpause",conf.pause_show);
    conf_saveEmptyLine();
 
    /* Sound. */

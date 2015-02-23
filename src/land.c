@@ -1570,11 +1570,6 @@ static void land_stranded (void)
    int errf;
    lua_State *L;
 
-   /* Don't run the rescue script on planets that let the player re-equip. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
-         planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-      return;
-
    /* Nothing to do if there's no rescue script. */
    if (!ndata_exists(file))
       return;

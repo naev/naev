@@ -991,9 +991,6 @@ void pilot_calcStats( Pilot* pilot )
    if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
       pilot->solid->speed_max = pilot->speed;
 
-   /* Set final energy tau. */
-   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-
    /* Slot voodoo. */
    s = &pilot->stats;
 
@@ -1057,6 +1054,9 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
    pilot->fuel   = fc * pilot->fuel_max;
+
+   /* Set final energy tau. */
+   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Cargo has to be reset. */
    pilot_cargoCalc(pilot);

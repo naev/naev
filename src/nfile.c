@@ -449,43 +449,54 @@ int nfile_backupIfExists( const char* path, ... )
 
    if (path == NULL)
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
+
+   va_start(ap, path);
+   vsnprintf(file, PATH_MAX, path, ap);
+   va_end(ap);
+
+   if (!nfile_fileExists(file))
+      return 0;
+
+   nsnprintf(backup, PATH_MAX, "%s.backup", file);
+
+   /* Open files. */
+   f_in  = fopen( file, "rb" );
+   f_out = fopen( backup, "wb" );
+   if ((f_in==NULL) || (f_out==NULL)) {
+      WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
+      if (f_in!=NULL)
+         fclose(f_in);
+      return -1;
    }
 
-   if (nfile_fileExists(file)) {
-      nsnprintf(backup, PATH_MAX, "%s.backup", file);
-
-      /* Open files. */
-      f_in  = fopen( file, "r" );
-      f_out = fopen( backup, "w" );
-      if ((f_in==NULL) || (f_out==NULL)) {
-         WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
-         if (f_in!=NULL)
-            fclose(f_in);
-         return -1;
+   /* Copy data over. */
+   do {
+      lr = fread( buf, 1, sizeof(buf), f_in );
+      if (ferror(f_in))
+         goto err;
+      else if (!lr) {
+         if (feof(f_in))
+            break;
+         goto err;
       }
 
-      /* Copy data over. */
-      do {
-         lr = fread( buf, 1, sizeof(buf), f_in );
-         lw = fwrite( buf, 1, lr, f_out );
-         if (lr != lw) {
-            WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
-            fclose( f_in );
-            fclose( f_out );
-            return -1;
-         }
-      } while (lr > 0);
+      lw = fwrite( buf, 1, lr, f_out );
+      if (ferror(f_out) || (lr != lw))
+         goto err;
+   } while (lr > 0);
 
-      /* Close files. */
-      fclose( f_in );
-      fclose( f_out );
+   /* Close files. */
+   fclose( f_in );
+   fclose( f_out );
 
-   }
    return 0;
+
+err:
+   WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
+   fclose( f_in );
+   fclose( f_out );
+
+   return -1;
 }
 
 

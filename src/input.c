@@ -287,11 +287,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, NMOD_ALL );
-
-   if (wasd)
-      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
-   else
-      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
+   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
 
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ALL );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ALL );
@@ -352,10 +348,10 @@ void input_init (void)
    SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
 
    /* Mouse. */
-   SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
+   SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
@@ -869,7 +865,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("target_clear")) {
       if (value==KEY_PRESS) player_targetClear();
    /* face the target */
-   } else if (KEY("face") && !repeat) {
+   } else if (INGAME() && NODEAD() && KEY("face") && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_FACE);
@@ -1008,7 +1004,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             if (paused)
                unpause_game();
             else
-               pause_game();
+               pause_player();
          }
       }
    /* toggle speed mode */
@@ -1020,7 +1016,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_rmFlag(PLAYER_DOUBLESPEED);
          } else {
             if (!player_isFlag(PLAYER_AUTONAV))
-               pause_setSpeed(50.);
+               pause_setSpeed(2.);
             player_setFlag(PLAYER_DOUBLESPEED);
          }
       }
@@ -1184,6 +1180,7 @@ static void input_clickevent( SDL_Event* event )
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* Handle zoom. */
    if (event->button.button == SDL_BUTTON_WHEELUP) {
       input_clickZoom( 1.1 );
@@ -1193,6 +1190,7 @@ static void input_clickevent( SDL_Event* event )
       input_clickZoom( 0.9 );
       return;
    }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Player must not be NULL. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -1555,6 +1553,15 @@ void input_handle( SDL_Event* event )
       case SDL_MOUSEBUTTONDOWN:
          input_clickevent( event );
          break;
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         if (event->wheel.y > 0)
+            input_clickZoom( 1.1 );
+         else
+            input_clickZoom( 0.9 );
+         break;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEMOTION:
          input_mouseMove( event );

@@ -97,6 +97,9 @@ typedef struct Widget_ {
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, int x, int y, int rx, int ry); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Mouse click event handler function for the widget. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+   int (*mwheelevent) ( struct Widget_ *wgt, SDL_MouseWheelEvent event ); /**< Mouse click event handler function for the widget. */
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    void (*scrolldone) ( struct Widget_ *wgt ); /**< Scrolling is over. */
    int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */
 
@@ -104,6 +107,8 @@ typedef struct Widget_ {
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
    void (*renderOverlay) ( struct Widget_ *wgt, double x, double y ); /**< Overlay render fuction for the widget. */
    void (*cleanup) ( struct Widget_ *wgt ); /**< Clean up function for the widget. */
+   void (*focusGain) ( struct Widget_ *wgt ); /**< Get focus. */
+   void (*focusLose) ( struct Widget_ *wgt ); /**< Lose focus. */
 
    /* Status of the widget. */
    WidgetStatus status; /**< Widget status. */

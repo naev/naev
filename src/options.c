@@ -720,12 +720,10 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 
    if (vol == 0.)
       nsnprintf( buf, max, "%s Volume: Muted", str );
-   else if (strcmp(conf.sound_backend,"openal")==0) {
+   else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
       nsnprintf( buf, max, "%s Volume: %.2f (%.0f dB)", str, pos, log(vol) * magic );
    }
-   else if (strcmp(conf.sound_backend,"sdlmix")==0)
-      nsnprintf( buf, max, "%s Volume: %.2f", str, pos );
 }
 
 

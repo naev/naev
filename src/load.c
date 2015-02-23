@@ -236,6 +236,10 @@ int load_refresh (void)
       ok = load_load( ns, buf );
    }
 
+   /* If the save was invalid, array is 1 member too large. */
+   if (ok)
+      array_resize( &load_saves, array_size(load_saves)-1 );
+
    /* Clean up memory. */
    for (i=0; i<nfiles; i++)
       free(files[i]);
@@ -342,10 +346,10 @@ void load_loadGameMenu (void)
          "lstSaves", names, n, 0, load_menu_update );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBack", "Back", load_menu_close );
-   window_addButton( wid, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load", load_menu_load );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnBack", "Back", load_menu_close, SDLK_b );
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLoad", "Load", load_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", "Del", load_menu_delete );
 }

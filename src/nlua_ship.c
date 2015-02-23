@@ -30,6 +30,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_outfit.h"
 #include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
@@ -47,6 +48,7 @@ static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
+static int shipL_price( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -58,6 +60,7 @@ static const luaL_reg shipL_methods[] = {
    { "getSlots", shipL_getSlots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
+   { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
    {0,0}
@@ -350,11 +353,11 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_getSlots( lua_State *L )
 {
-   int i, j, k;
+   int i, j, k, outfit_type;
    Ship *s;
    OutfitSlot *slot;
    ShipOutfitSlot *sslot;
-   int outfit_type = 0;
+   LuaOutfit lo;
    char *outfit_types[] = {"structure", "utility", "weapon"};
 
    s = luaL_validship(L,1);
@@ -400,8 +403,9 @@ static int shipL_getSlots( lua_State *L )
       lua_rawset(L, -3); /* table[key] = value */
 
       if (sslot->data != NULL) {
-         lua_pushstring(L, "default"); /* key */
-         lua_pushstring(L, sslot->data->name); /* value */
+         lo.outfit = sslot->data;
+         lua_pushstring(L, "outfit"); /* key */
+         lua_pushoutfit(L, lo); /* value*/
          lua_rawset(L, -3); /* table[key] = value */
       }
 
@@ -460,6 +464,26 @@ static int shipL_outfitCPU( lua_State *L )
    /* Return parameter. */
    lua_pushnumber(L, outfit_cpu(o));
    return 1;
+}
+
+
+/**
+ * @brief Gets the ship's price, with and without default outfits.
+ *
+ * @usage price, base = s:price()
+ *
+ *    @luaparam s Ship to get the price of.
+ *    @luareturn The ship's final purchase price and base price.
+ * @luafunc price( s )
+ */
+static int shipL_price( lua_State *L )
+{
+   Ship *s;
+
+   s = luaL_validship(L,1);
+   lua_pushnumber(L, ship_buyPrice(s));
+   lua_pushnumber(L, ship_basePrice(s));
+   return 2;
 }
 
 

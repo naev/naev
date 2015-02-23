@@ -154,7 +154,7 @@ Function .onInit
    ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
    ${Unless} ${Errors}
       ;If we get here we're already installed
-     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
+     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?" IDNO skip
      ExecWait '"$INSTDIR\Uninstall.exe"' $0
      ${Unless} $0 = 0 ;note: = not ==
         MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"

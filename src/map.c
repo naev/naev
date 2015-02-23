@@ -1188,16 +1188,31 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
    switch (event->type) {
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         /* Must be in bounds. */
+         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+            return 0;
+
+         if (event->wheel.y > 0)
+            map_buttonZoom( 0, "btnZoomIn" );
+         else
+            map_buttonZoom( 0, "btnZoomOut" );
+         return 1;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
             map_buttonZoom( 0, "btnZoomIn" );
          else if (event->button.button == SDL_BUTTON_WHEELDOWN)
             map_buttonZoom( 0, "btnZoomOut" );
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {

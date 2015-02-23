@@ -96,6 +96,25 @@ typedef struct Player_s {
 } Player_t;
 
 
+/**
+ * @brief Wrapper for outfits.
+ */
+typedef struct PlayerOutfit_s {
+   const Outfit *o;  /**< Actual associated outfit. */
+   int q;            /**< Amount of outfit owned. */
+} PlayerOutfit_t;
+
+
+/**
+ * @brief Player ship.
+ */
+typedef struct PlayerShip_s {
+   Pilot* p;      /**< Pilot. */
+   char *loc;     /**< Location. */
+   int autoweap;  /**< Automatically update weapon sets. */
+} PlayerShip_t;
+
+
 /*
  * Local player.
  */
@@ -170,6 +189,7 @@ void player_soundResume (void);
  * player ships
  */
 int player_ships( char** sships, glTexture** tships );
+const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );
@@ -184,7 +204,7 @@ void player_rmShip( char* shipname );
  * player outfits.
  */
 int player_outfitOwned( const Outfit *o );
-int player_getOutfits( Outfit **outfits, glTexture **toutfits );
+const PlayerOutfit_t* player_getOutfits( int *n );
 int player_getOutfitsFiltered( Outfit **outfits, glTexture **toutfits,
       int(*filter)( const Outfit *o ), char *name );
 int player_numOutfits (void);

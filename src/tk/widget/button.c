@@ -230,20 +230,40 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
  */
 static void btn_updateHotkey( Widget *btn )
 {
-   char buf[PATH_MAX];
-   const char *match, *display;
+   char buf[PATH_MAX], *display, target;
+   const char *keyname;
+   size_t i;
+   int match;
 
-   display = btn->dat.btn.display;
-   match = nstrcasestr( display, SDL_GetKeyName(btn->dat.btn.key) );
-   if (match != NULL) {
-      strncpy( buf, display, match - display );
-      buf[match-display] = '\0';
-      nsnprintf( &buf[match-display], sizeof(buf), "\eb%c\e0%s", match[0], match+1 );
+   keyname = SDL_GetKeyName(btn->dat.btn.key);
+   if (strlen(keyname) != 1) /* Only interested in single chars. */
+      return;
 
-      if (btn->dat.btn.display != NULL)
-         free(btn->dat.btn.display);
-      btn->dat.btn.display = strdup(buf);
+   target = keyname[0];
+   if (!isalnum(target)) /* We filter to alpha numeric characters. */
+      return;
+   target = tolower(target);
+
+   /* Find first occurence in string. */
+   display  = btn->dat.btn.display;
+   match    = -1;
+   for (i=0; i<strlen(display); i++) {
+      if (tolower(display[i])==target) {
+         match = i;
+         break;
+      }
    }
+   if (match < 0)
+      return;
+   target         = display[match]; /* Store character, can be uppercase. */
+   display[match] = '\0'; /* Cuts the string into two. */
+
+   /* Copy both parts and insert the character in the middle. */
+   nsnprintf( buf, sizeof(buf), "%s\eb%c\e0%s", display, target, &display[match+1] );
+
+   /* Should never be NULL. */
+   free(btn->dat.btn.display);
+   btn->dat.btn.display = strdup(buf);
 }
 
 
