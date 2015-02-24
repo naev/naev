@@ -124,6 +124,9 @@ int ndata_setPath( const char* path )
 
    free(ndata_filename);
    free(ndata_dirname);
+   ndata_filename = NULL;
+   ndata_dirname  = NULL;
+
    if (path == NULL)
       return 0;
    else if (nfile_dirExists(path)) {
@@ -250,10 +253,10 @@ static int ndata_notfound (void)
          found = ndata_isndata( event.drop.file );
          if (found) {
             ndata_setPath( event.drop.file );
-            free( event.drop.file );
 
             /* Minor hack so ndata filename is saved in conf.lua */
-            conf.ndata = strdup(ndata_filename);
+            conf.ndata = strdup( event.drop.file );
+            free( event.drop.file );
             break;
          }
          else
@@ -399,7 +402,7 @@ static int ndata_openFile (void)
          ndata_filename = malloc(PATH_MAX);
          strncpy(ndata_filename, pathname, PATH_MAX);
       }
-      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX))) {
+      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX-1))) {
          ndata_filename = malloc(PATH_MAX);
          strncpy(ndata_filename, pathname, PATH_MAX);
       }
