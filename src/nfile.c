@@ -564,6 +564,8 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          free(filedata[i].name);
       }
    }
+   else
+      files = NULL;
 
    free(filedata);
    filedata = NULL;
