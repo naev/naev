@@ -654,91 +654,70 @@ int news_loadArticles( xmlNodePtr parent )
  */
 static int news_parseArticle( xmlNodePtr parent )
 {
-   char* title;
-   char* desc;
-   char* faction;
-   char* tag;
-   char* ntitle;
-   char* ndesc;
-   char* buff;
+   char *ntitle, *ndesc, *title, *desc, *faction, *tag;
+   char *buff;
    ntime_t date, date_to_rm;
    xmlNodePtr node;
 
    news_t* n_article;
 
    node = parent->xmlChildrenNode;
+
+#define NEWS_READ(elem, s) \
+xmlr_attr(node, s, elem); \
+if (elem == NULL) { WARN("Event is missing '"s"', skipping."); goto cleanup; }
+
    do {
 
       if (!xml_isNode(node,"article"))
          continue;
 
-      xmlr_attr(node,"title",title);
-      if (title==NULL) {
-         WARN("Event has missing 'name' attribute, skipping.");
-         continue;
-      }
-      xmlr_attr(node,"desc",desc);
-      if (desc==NULL) {
-         free(title);
-         WARN("Event is missing content, skipping");
-         continue;
-      }
-      xmlr_attr(node,"faction",faction);
-      if (faction==NULL) {
-         free(title); free(desc);
-         WARN("Event has missing faction attribute, skipping.");
-         continue;
-      }
+      /* Reset parameters. */
+      ntitle  = NULL;
+      ndesc   = NULL;
+      title   = NULL;
+      desc    = NULL;
+      faction = NULL;
+      tag     = NULL;
 
-      xmlr_attr(node,"tag",tag);
+      NEWS_READ(title, "title");
+      NEWS_READ(desc, "desc");
+      NEWS_READ(faction, "faction");
 
-      xmlr_attr(node,"date",buff);
-      if (faction==NULL) {
-         free(title); free(desc); free(faction);
-         WARN("Event has missing date attribute, skipping.");
-         continue;
-      }
+      NEWS_READ(buff, "date");
       date = atoll(buff);
       free(buff);
-      xmlr_attr(node,"date_to_rm",buff);
-      if (faction==NULL) {
-         free(title); free(desc); free(faction);
-         WARN("Event has missing date attribute, skipping.");
-         continue;
-      }
+
+      NEWS_READ(buff, "date_to_rm");
       date_to_rm = atoll(buff);
       free(buff);
-      xmlr_attr(node,"id",buff);
-      if (faction==NULL) {
-         free(title); free(desc); free(faction);
-         WARN("Event has missing date attribute, skipping.");
-         continue;
-      }
 
+      NEWS_READ(buff, "id");
       next_id = atoi(buff);
-      largestID=MAX(largestID,next_id+1);
       free(buff);
 
-      ntitle=get_fromclean(title);
-      ndesc=get_fromclean(desc);
+      largestID = MAX(largestID, next_id+1);
 
+      ntitle = get_fromclean(title);
+      ndesc  = get_fromclean(desc);
 
-         /* make the article*/
-      n_article=new_article(ntitle,ndesc,faction,date,date_to_rm);
-      if (tag!=NULL){
-         n_article->tag=strdup(tag);
-      }
+      /* Optional. */
+      xmlr_attr(node, "tag", tag);
 
+      /* make the article*/
+      n_article = new_article(ntitle, ndesc, faction, date, date_to_rm);
+      if (tag != NULL)
+         n_article->tag = strdup(tag);
+
+cleanup:
       free(ntitle);
       free(ndesc);
       free(title);
       free(desc);
       free(faction);
       free(tag);
-
-      tag=NULL;
-
    } while (xml_nextNode(node));
+#undef NEWS_READ
 
    return 0;
 }
