@@ -644,6 +644,9 @@ static void outfits_buy( unsigned int wid, char* str )
    int q;
 
    outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
+   if (strcmp(outfitname, "None") == 0)
+      return;
+
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -707,6 +710,9 @@ static void outfits_sell( unsigned int wid, char* str )
    int q;
 
    outfitname  = toolkit_getImageArray( wid, OUTFITS_IAR );
+   if (strcmp(outfitname, "None") == 0)
+      return;
+
    outfit      = outfit_get( outfitname );
 
    q = outfits_getMod();
