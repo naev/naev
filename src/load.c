@@ -415,7 +415,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    int wid, pos;
    nsave_t *ns;
    int n;
-   int version[3];
+   char version[64];
    int diff;
 
    wid = window_get( "Load Game" );
@@ -428,18 +428,17 @@ static void load_menu_load( unsigned int wdw, char *str )
    ns  = load_getList( &n );
 
    /* Check version. */
-   if (ns->version != NULL) {
-      naev_versionParse( version, ns[pos].version, strlen(ns[pos].version) );
-      diff = naev_versionCompare( version );
-      if (ABS(diff) >= 2) {
-         if (!dialogue_YesNo( "Save game version mismatch",
-                  "Save game '%s' version does not match Naev version:\n"
-                  "   Save version: \er%s\e0\n"
-                  "   Naev version: \eD%s\e0\n"
-                  "Are you sure you want to load this game? It may lose data.",
-                  save, ns[pos].version, naev_version(0) ))
-            return;
-      }
+   diff = naev_versionCompare( ns[pos].version );
+   if (ABS(diff) >= 2) {
+      naev_versionString( version, sizeof(version), ns[pos].version[0],
+            ns[pos].version[1], ns[pos].version[2] );
+      if (!dialogue_YesNo( "Save game version mismatch",
+            "Save game '%s' version does not match Naev version:\n"
+            "   Save version: \er%s\e0\n"
+            "   Naev version: \eD%s\e0\n"
+            "Are you sure you want to load this game? It may lose data.",
+            save, version, naev_version(0) ))
+         return;
    }
 
    /* Close menus before loading for proper rendering. */
