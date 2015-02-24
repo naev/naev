@@ -23,6 +23,7 @@
 #include "log.h"
 #include "rng.h"
 #include "land.h"
+#include "land_outfits.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "space.h"
@@ -847,6 +848,10 @@ static int systemL_setknown( lua_State *L )
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }
    }
+
+   /* Update outfits image array. */
+   outfits_updateEquipmentOutfits();
+
    return 0;
 }
 

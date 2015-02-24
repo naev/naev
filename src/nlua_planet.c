@@ -27,6 +27,7 @@
 #include "log.h"
 #include "rng.h"
 #include "land.h"
+#include "land_outfits.h"
 #include "map.h"
 #include "nmath.h"
 #include "nstring.h"
@@ -903,15 +904,22 @@ static int planetL_isKnown( lua_State *L )
  */
 static int planetL_setKnown( lua_State *L )
 {
-   int b;
+   int b, changed;
    Planet *p;
 
    p = luaL_validplanet(L,1);
    b = lua_toboolean(L, 2);
 
+   changed = (b != (int)planet_isKnown(p));
+
    if (b)
       planet_setKnown( p );
    else
       planet_rmFlag( p, PLANET_KNOWN );
+
+   /* Update outfits image array. */
+   if (changed)
+      outfits_updateEquipmentOutfits();
+
    return 0;
 }

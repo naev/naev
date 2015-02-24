@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "nlua_vec2.h"
 #include "nlua_system.h"
+#include "land_outfits.h"
 #include "log.h"
 
 
@@ -461,20 +462,27 @@ static int jumpL_isKnown( lua_State *L )
  */
 static int jumpL_setKnown( lua_State *L )
 {
-   int b, offset;
+   int b, offset, changed;
    JumpPoint *jp;
 
    jp = luaL_validjumpSystem(L, 1, &offset, NULL);
 
-   /* True is boolean isn't supplied. */
-   if (lua_gettop(L) > offset )
+   /* True if boolean isn't supplied. */
+   if (lua_gettop(L) > offset)
       b  = lua_toboolean(L, 1 + offset);
    else
       b = 1;
+
+   changed = (b != (int)jp_isKnown(jp));
 
    if (b)
       jp_setFlag( jp, JP_KNOWN );
    else
       jp_rmFlag( jp, JP_KNOWN );
+
+   /* Update outfits image array. */
+   if (changed)
+      outfits_updateEquipmentOutfits();
+
    return 0;
 }
