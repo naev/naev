@@ -1027,6 +1027,26 @@ static void window_caption (void)
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
+/**
+ * @Brief Gets a short human readable string of the version.
+ *
+ *    @param[out] str String to output.
+ *    @param slen Maximum length of the string.
+ *    @param major Major version.
+ *    @param minor Minor version.
+ *    @param rev Revision.
+ *    @return Number of characters written.
+ */
+int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
+{
+   int n;
+   if (rev<0)
+      n = nsnprintf( str, slen, "%d.%d.0-beta%d", major, minor, ABS(rev) );
+   else
+      n = nsnprintf( str, slen, "%d.%d.%d", major, minor, rev );
+   return n;
+}
+
 
 /**
  * @brief Returns the version in a human readable string.
@@ -1038,15 +1058,7 @@ char *naev_version( int long_version )
 {
    /* Set short version if needed. */
    if (short_version[0] == '\0')
-      nsnprintf( short_version, sizeof(short_version),
-#if VREV < 0
-            "%d.%d.0-beta%d",
-            VMAJOR, VMINOR, ABS(VREV)
-#else /* VREV < 0 */
-            "%d.%d.%d",
-            VMAJOR, VMINOR, VREV
-#endif /* VREV < 0 */
-            );
+      naev_versionString( short_version, sizeof(short_version), VMAJOR, VMINOR, VREV );
 
    /* Set up the long version. */
    if (long_version) {
@@ -1077,7 +1089,7 @@ char *naev_version( int long_version )
 int naev_versionParse( int version[3], char *buf, int nbuf )
 {
    int i, j, s;
-   char cbuf[8];
+   char cbuf[64];
 
    /* Check length. */
    if (nbuf > (int)sizeof(cbuf)) {
@@ -1087,7 +1099,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
 
    s = 0;
    j = 0;
-   for (i=0; i < nbuf; i++) {
+   for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
       cbuf[j++] = buf[i];
       if (buf[i] == '.') {
          cbuf[j] = '\0';
