@@ -590,7 +590,6 @@ int outfit_canBuy( char *name, Planet *planet )
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
          (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
       land_errDialogueBuild( "You already know of everything this map contains." );
-      failure = 1;
       return 0;
    }
    /* GUI already owned */

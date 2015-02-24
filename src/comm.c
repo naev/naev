@@ -166,7 +166,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Create the pilot window. */
-   wid = comm_openPilotWindow();
+   comm_openPilotWindow();
 
    return 0;
 }
