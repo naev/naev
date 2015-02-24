@@ -1270,6 +1270,12 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       return;
    }
 
+   /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
+   if (overlay) {
+      x += SCREEN_W / 2;
+      y += SCREEN_H / 2;
+   }
+
    if (shape==RADAR_RECT)
       rc = 0;
    else if (shape==RADAR_CIRCLE)
@@ -1359,8 +1365,8 @@ void gui_renderPlayer( double res, int overlay )
    double x, y, r;
 
    if (overlay) {
-      x = player.p->solid->pos.x / res;
-      y = player.p->solid->pos.y / res;
+      x = player.p->solid->pos.x / res + SCREEN_W / 2;
+      y = player.p->solid->pos.y / res + SCREEN_H / 2;
       r = 5.;
    }
    else {
@@ -1596,8 +1602,13 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
-   if (overlay)
+   if (overlay) {
       a = 1.;
+
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+   }
    else
       a   = 1.-interference_alpha;
    for (i=0; i<5; i++) {
@@ -1703,8 +1714,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       col = &cRed;
    else
       col = &cWhite;
-   if (overlay)
+
+   if (overlay) {
       a = 1.;
+
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+   }
    else
       a = 1.-interference_alpha;
 
