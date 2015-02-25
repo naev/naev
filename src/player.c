@@ -2192,6 +2192,9 @@ static int player_thinkMouseFly(void)
  */
 void player_dead (void)
 {
+   /* Explode at normal speed. */
+   pause_setSpeed(1.);
+
    gui_cleanup();
 
    /* Close the overlay. */

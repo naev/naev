@@ -514,7 +514,7 @@ void player_updateAutonav( double dt )
    const double dis_max  = 4.0;
    const double dis_ramp = 6.0;
 
-   if (paused || (player.p==NULL))
+   if (paused || (player.p==NULL) || pilot_isFlag(player.p, PILOT_DEAD))
       return;
 
    /* We handle disabling here. */
