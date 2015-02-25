@@ -1068,9 +1068,6 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("autonav_abort",conf.autonav_reset_speed);
    conf_saveEmptyLine();
 
-   conf_saveComment("If set, the game will pause when damage is received, instead of aborting the autonav.");
-   conf_saveEmptyLine();
-
    conf_saveComment("Enables developer mode (universe editor and the likes)");
    conf_saveBool("devmode",conf.devmode);
    conf_saveEmptyLine();
