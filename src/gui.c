@@ -1274,6 +1274,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    if (overlay) {
       x += SCREEN_W / 2;
       y += SCREEN_H / 2;
+      w *= 2.;
+      h *= 2.;
    }
 
    if (shape==RADAR_RECT)
@@ -1596,19 +1598,22 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       }
    }
 
+   if (overlay) {
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+      w  *= 2.;
+      h  *= 2.;
+   }
+
    /* Do the blink. */
    if (ind == player.p->nav_planet)
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
 
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
-   if (overlay) {
+   if (overlay)
       a = 1.;
-
-      /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
-   }
    else
       a   = 1.-interference_alpha;
    for (i=0; i<5; i++) {
@@ -1705,6 +1710,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       }
    }
 
+   if (overlay) {
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+      w  *= 2.;
+      h  *= 2.;
+   }
+
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
@@ -1715,13 +1728,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    else
       col = &cWhite;
 
-   if (overlay) {
+   if (overlay)
       a = 1.;
-
-      /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
-   }
    else
       a = 1.-interference_alpha;
 
