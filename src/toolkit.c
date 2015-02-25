@@ -2158,14 +2158,14 @@ static void toolkit_purgeDead (void)
  */
 void toolkit_update (void)
 {
+#if !SDL_VERSION_ATLEAST(2,0,0)
    unsigned int t;
    Window *wdw;
    Widget *wgt;
-#if !SDL_VERSION_ATLEAST(2,0,0)
    char buf[2];
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
    SDL_Event event;
    int ret;
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Clean up the dead if needed. */
    if (!dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
@@ -2184,6 +2184,7 @@ void toolkit_update (void)
       return; /*  No need to handle anything else. */
    }
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* Must have a key pressed. */
    if (input_key == 0 && input_mod == 0)
       return;
@@ -2210,9 +2211,7 @@ void toolkit_update (void)
             event.key.state      = SDL_PRESSED;
             event.key.keysym.sym = input_key;
             event.key.keysym.mod = input_mod;
-#if !SDL_VERSION_ATLEAST(2,0,0)
             event.key.keysym.unicode = (uint8_t)input_text;
-#endif
             ret = wgt->rawevent( wgt, &event );
             if (ret != 0)
                return;
@@ -2225,7 +2224,6 @@ void toolkit_update (void)
    if ((wgt != NULL) && (wgt->keyevent != NULL))
       wgt->keyevent( wgt, input_key, input_mod );
 
-#if !SDL_VERSION_ATLEAST(2,0,0)
    if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
       buf[0] = input_text;
       buf[1] = '\0';
