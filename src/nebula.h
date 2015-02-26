@@ -11,6 +11,7 @@
  * Init/Exit
  */
 int nebu_init (void);
+void nebu_vbo_init (void);
 void nebu_exit (void);
 
 /*
@@ -22,6 +23,7 @@ void nebu_renderOverlay( const double dt );
 /*
  * Misc
  */
+int nebu_isLoaded (void);
 void nebu_genOverlay (void);
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility );

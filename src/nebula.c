@@ -60,6 +60,9 @@ static double nebu_dt   = 0.; /**< How fast nebula changes. */
 /* puff textures */
 static glTexture *nebu_pufftexs[NEBULA_PUFFS]; /**< Nebula puffs. */
 
+/* Misc. */
+static int nebu_loaded = 0; /**< Whether the nebula has been loaded. */
+
 /* VBOs */
 static gl_vbo *nebu_vboOverlay   = NULL; /**< Overlay VBO. */
 static gl_vbo *nebu_vboBG        = NULL; /**< BG VBO. */
@@ -121,8 +124,6 @@ static int nebu_init_recursive( int iter )
    char nebu_file[PATH_MAX];
    SDL_Surface* nebu_sur;
    int ret;
-   GLfloat vertex[4*3*2];
-   GLfloat tw, th;
 
    /* Avoid too much recursivity. */
    if (iter > 3) {
@@ -175,7 +176,36 @@ static int nebu_init_recursive( int iter )
    /* Display loaded nebulas. */
    DEBUG("Loaded %d Nebula Layers", NEBULA_Z);
 
-   /* Create the VBO. */
+   nebu_vbo_init();
+   nebu_loaded = 1;
+
+   return 0;
+no_nebula:
+   LOG("No nebula found, generating (this may take a while).");
+
+   /* So we generate and reload */
+   ret = nebu_generate();
+   if (ret != 0) /* An error has happened - break recursivity*/
+      return ret;
+
+   return nebu_init_recursive( iter+1 );
+}
+
+
+/**
+ * @brief Initializes the nebula VBO.
+ */
+void nebu_vbo_init (void)
+{
+   GLfloat vertex[4*3*2];
+   GLfloat tw, th;
+
+   /* Free the VBO if it exists. */
+   if (nebu_vboBG != NULL) {
+      gl_vboDestroy( nebu_vboBG );
+      nebu_vboBG = NULL;
+   }
+
    /* Vertex. */
    vertex[0] = 0;
    vertex[1] = 0;
@@ -206,17 +236,12 @@ static int nebu_init_recursive( int iter )
    vertex[22] = tw;
    vertex[23] = th;
    nebu_vboBG = gl_vboCreateStatic( sizeof(GLfloat) * (4*2*3), vertex );
+}
 
-   return 0;
-no_nebula:
-   LOG("No nebula found, generating (this may take a while).");
 
-   /* So we generate and reload */
-   ret = nebu_generate();
-   if (ret != 0) /* An error has happened - break recursivity*/
-      return ret;
-
-   return nebu_init_recursive( iter+1 );
+int nebu_isLoaded (void)
+{
+   return nebu_loaded;
 }
 
 

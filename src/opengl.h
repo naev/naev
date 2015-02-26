@@ -101,6 +101,9 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
  */
 int gl_init (void);
 void gl_exit (void);
+#if SDL_VERSION_ATLEAST(2,0,0)
+void gl_resize( int w, int h );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /*

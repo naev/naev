@@ -51,12 +51,12 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
  */
 #define BUF_LINES          128 /**< Number of lines in the buffer. */
 #define LINE_LENGTH        256 /**< Length of lines in the buffer. */
+#define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
+#define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
 static int cli_history     = 0; /**< Position in history. */
-static int cli_width       = 0; /**< Console width. */
-static int cli_height      = 0; /**< Console height. */
 
 
 /*
@@ -223,7 +223,7 @@ void cli_addMessage( const char *msg )
    n = (cli_cursor - cli_viewport) % BUF_LINES;
    if (cli_cursor < cli_viewport)
       n += BUF_LINES;
-   if (n*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
+   if (n*(cli_font->h+5) > CLI_HEIGHT-80-BUTTON_HEIGHT)
       cli_viewport = (cli_viewport+1) % BUF_LINES;
 }
 
@@ -314,10 +314,6 @@ int cli_init (void)
    /* Already loaded. */
    if (cli_state != NULL)
       return 0;
-
-   /* Calculate size. */
-   cli_width   = SCREEN_W - 100;
-   cli_height  = SCREEN_H - 100;
 
    /* Create the state. */
    cli_state   = nlua_newState();
@@ -468,7 +464,7 @@ void cli_open (void)
       return;
 
    /* Create the window. */
-   wid = window_create( "Lua Console", -1, -1, cli_width, cli_height );
+   wid = window_create( "Lua Console", -1, -1, CLI_WIDTH, CLI_HEIGHT );
 
    /* Window settings. */
    window_setAccept( wid, cli_input );
@@ -477,7 +473,7 @@ void cli_open (void)
 
    /* Input box. */
    window_addInput( wid, 20, 20,
-         cli_width-60-BUTTON_WIDTH, BUTTON_HEIGHT,
+         CLI_WIDTH-60-BUTTON_WIDTH, BUTTON_HEIGHT,
          "inpInput", LINE_LENGTH, 1, cli_font );
 
    /* Buttons. */
@@ -486,7 +482,7 @@ void cli_open (void)
 
    /* Custom console widget. */
    window_addCust( wid, 20, -40,
-         cli_width-40, cli_height-80-BUTTON_HEIGHT,
+         CLI_WIDTH-40, CLI_HEIGHT-80-BUTTON_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL );
 }
 

@@ -25,6 +25,7 @@
 #define RESOLUTION_W_DEFAULT                 1024  /**< Default screen width. */
 #define RESOLUTION_H_DEFAULT                 768   /**< Default screen height. */
 #define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
+#define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
 #define VBO_DEFAULT                          0     /**< Whether to use Vertex Buffer Objects. */
@@ -85,6 +86,7 @@ typedef struct PlayerConf_s {
    int explicit_dim; /**< Dimension is explicit. */
    double scalefactor; /**< Amount to reduce resolution by. */
    int fullscreen; /**< Whether or not game is fullscreen. */
+   int modesetting; /**< Whether to use modesetting for fullscreen. */
 
    /* Sound. */
    char *sound_backend; /**< Sound backend to use. */

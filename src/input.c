@@ -333,7 +333,7 @@ void input_init (void)
 
 #if SDL_VERSION_ATLEAST(1,3,0)
    /* Window. */
-   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
+   SDL_EventState( SDL_WINDOWEVENT,     SDL_ENABLE );
 
    /* Keyboard. */
    SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );

@@ -1965,6 +1965,18 @@ static int gui_runFunc( const char* func, int nargs, int nret )
 
 
 /**
+ * @brief Reloads the GUI.
+ */
+void gui_reload (void)
+{
+   if (gui_L == NULL)
+      return;
+
+   gui_load( gui_pick() );
+}
+
+
+/**
  * @brief Player just changed their cargo.
  */
 void gui_setCargo (void)
