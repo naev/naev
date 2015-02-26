@@ -173,6 +173,19 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
 
+
+   if (!log_isTerminal())
+      log_copy(1);
+#if HAS_WIN32
+   else {
+      /* Windows has no line-buffering, so use unbuffered output
+       * when running from a terminal.
+       */
+      setvbuf( stdout, NULL, _IONBF, 0 );
+      setvbuf( stderr, NULL, _IONBF, 0 );
+   }
+#endif
+
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
 
@@ -254,6 +267,14 @@ int main( int argc, char** argv )
 
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
+
+   if (conf.redirect_file && log_copying()) {
+      log_redirect();
+      log_copy(0);
+   }
+   else
+      log_purge();
+
 
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
@@ -495,6 +516,9 @@ int main( int argc, char** argv )
 
    /* Last free. */
    free(binary_path);
+
+   /* Delete logs if empty. */
+   log_clean();
 
    /* all is well */
    exit(EXIT_SUCCESS);

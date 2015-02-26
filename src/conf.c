@@ -148,6 +148,7 @@ void conf_setDefaults (void)
    conf.font_size_small   = 10;
 
    /* Misc. */
+   conf.redirect_file = 1;
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
@@ -417,6 +418,7 @@ int conf_loadConfig ( const char* file )
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
       conf_loadFloat("compression_mult",conf.compression_mult);
+      conf_loadBool("redirect_file",conf.redirect_file);
       conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
@@ -1046,6 +1048,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Sets the multiplier to compress up to when time compression is enabled.");
    conf_saveFloat("compression_mult",conf.compression_mult);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Redirects log and error output to files");
+   conf_saveBool("redirect_file",conf.redirect_file);
    conf_saveEmptyLine();
 
    conf_saveComment("Enables compression on savegames");

@@ -14,6 +14,7 @@
 #define AFTERBURNER_SENSITIVITY_DEFAULT      250   /**< Default afterburner sensitivity. */
 #define TIME_COMPRESSION_DEFAULT_MAX         5000. /**< Maximum default level of time compression (target speed to match). */
 #define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
+#define REDIRECT_FILE_DEFAULT                1     /**< Whether output should be redirected to a file. */
 #define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
 #define MOUSE_DOUBLECLICK_TIME               0.5   /**< How long to consider double-clicks for. */
@@ -129,6 +130,7 @@ typedef struct PlayerConf_s {
    /* Misc. */
    double compression_velocity; /**< Velocity to compress to. */
    double compression_mult; /**< Maximum time multiplier. */
+   int redirect_file; /**< Redirect output to files. */
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
