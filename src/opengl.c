@@ -507,7 +507,7 @@ static int gl_createWindow( unsigned int flags )
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
+         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
       ERR("Unable to create window!");
 
