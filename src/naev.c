@@ -803,6 +803,9 @@ void naev_resize( int w, int h )
    else
       background_initStars( 1000 ); /* from loadscreen_load */
 
+   /* Must be before gui_reload */
+   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFont.h) );
+
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
 
