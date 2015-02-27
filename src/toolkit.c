@@ -331,6 +331,32 @@ void window_dimWindow( const unsigned int wid, int *w, int *h )
    *h = wdw->h;
 }
 
+
+/**
+ * @brief Gets the dimensions of a widget.
+ *
+ *    @param wid ID of the window that contains the widget.
+ *    @param name Name of the widget to get dimensions of.
+ *    @param[out] w Width of the widget or -1 on error.
+ *    @param[out] h Height of the widget or -1 on error.
+ */
+void window_dimWidget( const unsigned int wid, char *name,  int *w, int *h )
+{
+   Widget *wgt;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid, name);
+   if (wgt == NULL) {
+      *w = -1;
+      *h = -1;
+      return;
+   }
+
+   *w = wgt->w;
+   *h = wgt->h;
+}
+
+
 /**
  * @brief Gets a widget's position.
  *
