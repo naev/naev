@@ -2595,7 +2595,9 @@ void window_lower( unsigned int wid )
    wdw->next   = windows;   /* wdw links to first window */
    windows     = wdw;       /* wdw becomes new first window */
 
-   toolkit_focusSanitize( toolkit_getActiveWindow() );
+   wtmp = toolkit_getActiveWindow();
+   if (wtmp != NULL)
+      toolkit_focusSanitize( wtmp );
 }
 
 
