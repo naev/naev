@@ -138,6 +138,58 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 
 
 /**
+ * @brief Moves a window to the specified coordinates.
+ *
+ *    @param x X position.
+ *    @param y Y position.
+ */
+void toolkit_setWindowPos( Window *wdw, int x, int y )
+{
+   wdw->xrel = -1.;
+   wdw->yrel = -1.;
+
+   /* x pos */
+   if (x == -1) { /* Center */
+      wdw->x = (SCREEN_W - wdw->w)/2.;
+      wdw->xrel = .5;
+   }
+   else if (x < 0)
+      wdw->x = SCREEN_W - wdw->w + (double) x;
+   else
+      wdw->x = (double) x;
+
+   /* y pos */
+   if (y == -1) { /* Center */
+      wdw->y = (SCREEN_H - wdw->h)/2.;
+      wdw->yrel = .5;
+   }
+   else if (y < 0)
+      wdw->y = SCREEN_H - wdw->h + (double) y;
+   else
+      wdw->y = (double) y;
+}
+
+
+/**
+ * @brief Moves a window to the specified coordinates.
+ *
+ *    @param x X position.
+ *    @param y Y position.
+ */
+void window_move( unsigned int wid, int x, int y )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   toolkit_setWindowPos( wdw, x, y );
+}
+
+
+/**
  * @brief Allocates room for a new widget.
  *
  *    @param w Window to create widget in.
@@ -427,25 +479,8 @@ unsigned int window_create( const char* name,
       wdw->x = 0.;
       wdw->y = 0.;
    }
-   else {
-      /* x pos */
-      if (x==-1) { /* center */
-         wdw->x = (SCREEN_W - wdw->w)/2.;
-         wdw->xrel = .5;
-      }
-      else if (x < 0)
-         wdw->x = SCREEN_W - wdw->w + (double) x;
-      else wdw->x = (double) x;
-
-      /* y pos */
-      if (y==-1) { /* center */
-         wdw->y = (SCREEN_H - wdw->h)/2.;
-         wdw->yrel = .5;
-      }
-      else if (y < 0)
-         wdw->y = SCREEN_H - wdw->h + (double) y;
-      else wdw->y = (double) y;
-   }
+   else
+      toolkit_setWindowPos( wdw, x, y );
 
    if (toolkit_open==0) { /* toolkit is on */
       input_mouseShow();
