@@ -91,6 +91,9 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
+extern int land_wid; /**< From land.c */
+
+
 /**
  * GUI Lua stuff.
  */
@@ -2123,8 +2126,10 @@ int gui_load( const char* name )
    }
 
    /* Recreate land window if landed. */
-   if (landed)
+   if (landed) {
       land_genWindows( 0, 1 );
+      window_lower( land_wid );
+   }
 
    return 0;
 }
