@@ -811,6 +811,9 @@ void naev_resize( int w, int h )
 
    if (nebu_isLoaded())
       nebu_vbo_init();
+
+   /* Re-center windows. */
+   toolkit_reposition();
 }
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 

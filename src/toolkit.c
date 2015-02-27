@@ -416,6 +416,8 @@ unsigned int window_create( const char* name,
    /* Sane defaults. */
    wdw->idgen        = -1;
    wdw->focus        = -1;
+   wdw->xrel         = -1.;
+   wdw->yrel         = -1.;
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? SCREEN_W : (double) w;
@@ -427,14 +429,19 @@ unsigned int window_create( const char* name,
    }
    else {
       /* x pos */
-      if (x==-1) /* center */
+      if (x==-1) { /* center */
          wdw->x = (SCREEN_W - wdw->w)/2.;
+         wdw->xrel = .5;
+      }
       else if (x < 0)
          wdw->x = SCREEN_W - wdw->w + (double) x;
       else wdw->x = (double) x;
+
       /* y pos */
-      if (y==-1) /* center */
+      if (y==-1) { /* center */
          wdw->y = (SCREEN_H - wdw->h)/2.;
+         wdw->yrel = .5;
+      }
       else if (y < 0)
          wdw->y = SCREEN_H - wdw->h + (double) y;
       else wdw->y = (double) y;
@@ -2472,6 +2479,48 @@ char* window_getFocus( const unsigned int wid )
          return wgt->name;
 
    return NULL;
+}
+
+
+/**
+ * @brief Repositions windows and their children if resolution changes.
+ */
+void toolkit_reposition (void)
+{
+   Window *w, *wtmp;
+   Widget *wgt;
+   int i, xorig, yorig, xdiff, ydiff;
+
+   for (w = windows; w != NULL; w = w->next) {
+      /* Skip if position is fixed. */
+      if (w->xrel == -1. && w->yrel == -1.)
+         continue;
+
+      if (w->xrel != -1.) {
+         xorig = w->x;
+         w->x = (SCREEN_W - w->w) * w->xrel;
+      }
+
+      if (w->yrel != -1.) {
+         yorig = w->y;
+         w->y = (SCREEN_H - w->h) * w->yrel;
+      }
+
+      xdiff = w->x - xorig;
+      ydiff = w->y - yorig;
+
+      /* Tabwin children aren't in the stack and must be manually updated. */
+      for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+         if (wgt->type != WIDGET_TABBEDWINDOW)
+            continue;
+
+         for (i=0; i<wgt->dat.tab.ntabs; i++) {
+            wtmp = window_wget( wgt->dat.tab.windows[i] );
+            wtmp->x += xdiff;
+            wtmp->y += ydiff;
+         }
+      }
+   }
 }
 
 

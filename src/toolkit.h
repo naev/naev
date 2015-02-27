@@ -97,6 +97,7 @@ void toolkit_exit (void);
 /*
  * hacks
  */
+void toolkit_reposition (void);
 void toolkit_delay (void);
 
 

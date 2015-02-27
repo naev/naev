@@ -165,6 +165,8 @@ typedef struct Window_ {
    /* Position and dimensions. */
    int x; /**< X position of the window. */
    int y; /**< Y position of the window. */
+   double xrel; /**< X position relative to screen width. */
+   double yrel; /**< Y position relative to screen height. */
    int w; /**< Window width. */
    int h; /**< Window height. */
 
