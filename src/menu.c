@@ -184,12 +184,6 @@ void menu_main (void)
       offset_logo = SCREEN_W - tex->sh;
       offset_wdw  = 0;
    }
-   else if (freespace > 200.) {
-      /* We'll want a maximum separation of 30 between logo and text. */
-      /*freespace  -=  25;*/
-      offset_logo = -25;
-      offset_wdw  = -1.;
-   }
    /* Otherwise space evenly. */
    else {
       offset_logo = -freespace/4;
