@@ -2483,6 +2483,60 @@ char* window_getFocus( const unsigned int wid )
 
 
 /**
+ * @brief Raises a window (causes all other windows to appear below it).
+ *
+ *    @param wid Window to raise.
+ */
+void window_raise( unsigned int wid )
+{
+   Window *wdw, *wtmp, *wprev;
+
+   wdw = window_wget(wid);
+
+   /* Not found, or already top of the stack. */
+   if (wdw == NULL || wdw->next == NULL)
+      return;
+
+   for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
+      if (wtmp->next == wdw)
+         wprev = wtmp;
+
+   wprev->next = wdw->next;
+   wtmp->next  = wdw;
+   wdw->next   = NULL;
+
+   toolkit_focusSanitize(wdw);
+}
+
+
+/**
+ * @brief Lowers a window (causes all other windows to appear above it).
+ *
+ *    @param wid Window to lower.
+ */
+void window_lower( unsigned int wid )
+{
+   Window *wdw, *wtmp, *wprev;
+
+   wdw = window_wget(wid);
+
+   /* Not found, or already bottom of the stack. */
+   if (wdw == NULL || wdw == windows)
+      return;
+
+   for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
+      if (wtmp->next == wdw)
+         wprev = wtmp;
+
+   wprev->next = wdw->next;
+   wdw->next   = windows;
+   windows     = wdw;
+
+   toolkit_focusSanitize( toolkit_getActiveWindow() );
+}
+
+
+/**
  * @brief Repositions windows and their children if resolution changes.
  */
 void toolkit_reposition (void)

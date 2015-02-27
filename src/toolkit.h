@@ -38,6 +38,8 @@ void window_handleKeys( const unsigned int wid,
       int (*keyhandler)(unsigned int,SDLKey,SDLMod) );
 void window_handleEvents( const unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) );
+void window_raise( unsigned int wid );
+void window_lower( unsigned int wid );
 
 
 /*
