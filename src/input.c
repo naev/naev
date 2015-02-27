@@ -336,7 +336,7 @@ void input_init (void)
    SDL_EventState( SDL_WINDOWEVENT,     SDL_ENABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
