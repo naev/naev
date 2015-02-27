@@ -191,7 +191,7 @@ void menu_main (void)
    }
 
    /* create background image window */
-   bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
+   bwid = window_create( "BG", -1, -1, -1, -1 );
    window_onClose( bwid, menu_main_cleanBG );
    window_setBorder( bwid, 0 );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
@@ -235,6 +235,47 @@ void menu_main (void)
 
    unpause_game();
    menu_Open(MENU_MAIN);
+}
+
+
+/**
+ * @brief Resizes the main menu and its background.
+ *
+ * This is a one-off function that ensures the main menu's appearance
+ * is consistent regardless of window resizing.
+ */
+void menu_main_resize (void)
+{
+   int w, h, bgw, bgh, tw, th;
+   int offset_logo, offset_wdw, freespace;
+   int menu_id, bg_id;
+
+   if (!menu_isOpen(MENU_MAIN))
+      return;
+
+   menu_id = window_get("Main Menu");
+   bg_id   = window_get("BG");
+
+   window_dimWindow( menu_id, &w, &h );
+   window_dimWindow( bg_id, &bgw, &bgh );
+
+   freespace = SCREEN_H - main_naevLogo->sh - h;
+   if (freespace < 0) {
+      offset_logo = SCREEN_H - main_naevLogo->sh;
+      offset_wdw  = 0;
+   }
+   else {
+      offset_logo = -freespace/4;
+      offset_wdw  = freespace/2;
+   }
+
+   window_moveWidget( bg_id, "imgLogo",
+         (bgw - main_naevLogo->sw)/2., offset_logo );
+
+   window_dimWidget( bg_id, "txtBG", &tw, &th );
+   window_moveWidget( bg_id, "txtBG", (SCREEN_W - tw)/2, 10. );
+
+   window_move( menu_id, -1, offset_wdw );
 }
 
 

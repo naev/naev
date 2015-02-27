@@ -817,6 +817,9 @@ void naev_resize( int w, int h )
 
    /* Re-center windows. */
    toolkit_reposition();
+
+   /* Reposition main menu, if open. */
+   menu_main_resize();
 }
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
