@@ -2529,7 +2529,8 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
    if (wgt == NULL)
       return;
 
-   wdw->focus = wgt->id;
+   toolkit_focusClear( wdw );
+   toolkit_focusWidget( wdw, wgt );
 }
 
 
