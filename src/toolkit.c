@@ -2550,7 +2550,7 @@ char* window_getFocus( const unsigned int wid )
  */
 void window_raise( unsigned int wid )
 {
-   Window *wdw, *wtmp, *wprev;
+   Window *wdw, *wtmp, *wprev, *wlast;
 
    wdw = window_wget(wid);
 
@@ -2561,10 +2561,12 @@ void window_raise( unsigned int wid )
    for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
       if (wtmp->next == wdw)
          wprev = wtmp;
+      else if (wtmp->next == NULL)
+         wlast = wtmp;
 
-   wprev->next = wdw->next;
-   wtmp->next  = wdw;
-   wdw->next   = NULL;
+   wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+   wlast->next = wdw;       /* last links to wdw */
+   wdw->next   = NULL;      /* wdw becomes new last window */
 
    toolkit_focusSanitize(wdw);
 }
@@ -2589,9 +2591,9 @@ void window_lower( unsigned int wid )
       if (wtmp->next == wdw)
          wprev = wtmp;
 
-   wprev->next = wdw->next;
-   wdw->next   = windows;
-   windows     = wdw;
+   wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+   wdw->next   = windows;   /* wdw links to first window */
+   windows     = wdw;       /* wdw becomes new first window */
 
    toolkit_focusSanitize( toolkit_getActiveWindow() );
 }
