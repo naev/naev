@@ -2581,6 +2581,14 @@ void toolkit_reposition (void)
    int i, xorig, yorig, xdiff, ydiff;
 
    for (w = windows; w != NULL; w = w->next) {
+      /* Fullscreen windows must always be full size, though their widgets
+       * don't auto-scale. */
+      if (window_isFlag( w, WINDOW_FULLSCREEN )) {
+         w->w = SCREEN_W;
+         w->h = SCREEN_H;
+         continue;
+      }
+
       /* Skip if position is fixed. */
       if (w->xrel == -1. && w->yrel == -1.)
          continue;
