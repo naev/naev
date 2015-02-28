@@ -168,6 +168,10 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    ret = 0;
    if (event->type == SDL_MOUSEBUTTONDOWN)
       ret = tab_mouse( tab, event );
+#if SDL_VERSION_ATLEAST(2,0,0)
+   else if (event->type == SDL_MOUSEWHEEL)
+      ret = tab_mouse( tab, event );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    else if (event->type == SDL_KEYDOWN)
       ret = tab_key( tab, event );
 
