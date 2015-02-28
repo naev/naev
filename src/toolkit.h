@@ -25,6 +25,9 @@ int toolkit_isOpen (void);
 unsigned int window_create( const char* name,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
+unsigned int window_createFlags( const char* name,
+      const int x, const int y, /* position */
+      const int w, const int h, unsigned int flags ); /* dimensions */
 
 /*
  * modification

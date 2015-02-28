@@ -82,9 +82,9 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 static int toolkit_textEvent( Window *wdw, SDL_Event* event );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 /* Focus */
-static void toolkit_focusClear( Window *wdw );
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
+static void toolkit_expose( Window *wdw, int expose );
 /* render */
 static void window_renderBorder( Window* w );
 /* Death. */
@@ -479,6 +479,24 @@ unsigned int window_get( const char* wdwname )
 unsigned int window_create( const char* name,
       const int x, const int y, const int w, const int h )
 {
+   return window_createFlags( name, x, y, w, h, 0 );
+}
+
+
+/**
+ * @brief Creates a window.
+ *
+ *    @param name Name of the window to create.
+ *    @param x X position of the window (-1 centers).
+ *    @param y Y position of the window (-1 centers).
+ *    @param w Width of the window (-1 fullscreen).
+ *    @param h Height of the window (-1 fullscreen).
+ *    @param flags Initial flags to set.
+ *    @return Newly created window's ID.
+ */
+unsigned int window_createFlags( const char* name,
+      const int x, const int y, const int w, const int h, unsigned int flags )
+{
    Window *wcur, *wlast, *wdw;
 
    /* Allocate memory. */
@@ -496,6 +514,8 @@ unsigned int window_create( const char* name,
    wdw->focus        = -1;
    wdw->xrel         = -1.;
    wdw->yrel         = -1.;
+   wdw->flags        = flags;
+   wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? SCREEN_W : (double) w;
@@ -523,6 +543,13 @@ unsigned int window_create( const char* name,
    if (windows == NULL)
       windows = wdw;
    else {
+      /* Take focus from the old window. */
+      if (wdw->exposed) {
+         wcur = toolkit_getActiveWindow();
+         if (wcur != NULL)
+            toolkit_expose( wcur, 0 ); /* wcur is hidden */
+      }
+
       for (wcur = windows; wcur != NULL; wcur = wcur->next) {
          if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
                !window_isFlag(wcur, WINDOW_NOFOCUS))
@@ -819,6 +846,15 @@ void window_destroy( const unsigned int wid )
       if (wdw->close_fptr != NULL)
          wdw->close_fptr( wdw->id, wdw->name );
       wdw->close_fptr = NULL;
+
+      /* Disable text input, etc. */
+      toolkit_focusClear( wdw );
+
+      w = toolkit_getActiveWindow();
+      if (w == NULL)
+         break;
+
+      toolkit_expose( w, 1 );
       break;
    }
 }
@@ -2296,9 +2332,39 @@ void toolkit_update (void)
 
 
 /**
+ * @brief Exposes or hides a window and notifies its widgets.
+ *
+ *    @param wgt Widget to change exposure of.
+ *    @param expose Whether exposing or hiding.
+ */
+static void toolkit_expose( Window *wdw, int expose )
+{
+   Widget *wgt;
+
+   if (expose == wdw->exposed)
+      return;
+   else
+      wdw->exposed = expose;
+
+   if (expose)
+      toolkit_focusSanitize( wdw );
+   else
+      toolkit_focusClear( wdw );
+
+   if (wdw->focus != -1)
+      return;
+
+   /* Notify widgets (for tabbed children, etc.) */
+   for (wgt = wdw->widgets; wgt != NULL; wgt = wgt->next)
+      if (wgt->exposeevent != NULL)
+         wgt->exposeevent( wgt, expose );
+}
+
+
+/**
  * @brief Clears the window focus.
  */
-static void toolkit_focusClear( Window *wdw )
+void toolkit_focusClear( Window *wdw )
 {
    Widget *wgt;
 
@@ -2584,7 +2650,14 @@ void window_raise( unsigned int wid )
    wlast->next = wdw;       /* last links to wdw */
    wdw->next   = NULL;      /* wdw becomes new last window */
 
-   toolkit_focusSanitize(wdw);
+   wtmp = toolkit_getActiveWindow();
+
+   /* No active window, or window is the same. */
+   if (wtmp == NULL || wtmp == wdw)
+      return;
+
+   toolkit_expose( wtmp, 0 ); /* wtmp is hidden */
+   toolkit_expose( wdw, 1 );  /* wdw is visible */
 }
 
 
@@ -2612,8 +2685,13 @@ void window_lower( unsigned int wid )
    windows     = wdw;       /* wdw becomes new first window */
 
    wtmp = toolkit_getActiveWindow();
-   if (wtmp != NULL)
-      toolkit_focusSanitize( wtmp );
+
+   /* No active window, or window is the same. */
+   if (wtmp == NULL || wtmp == wdw)
+      return;
+
+   toolkit_expose( wtmp, 1 ); /* wtmp is visible */
+   toolkit_expose( wdw, 0 );  /* wdw is hidden */
 }
 
 

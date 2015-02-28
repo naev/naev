@@ -102,6 +102,7 @@ typedef struct Widget_ {
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    void (*scrolldone) ( struct Widget_ *wgt ); /**< Scrolling is over. */
    int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */
+   void (*exposeevent) ( struct Widget_ *wgt, int exposed ); /**< Widget show and hide handler. */
 
    /* Misc. routines. */
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
@@ -170,6 +171,7 @@ typedef struct Window_ {
    int w; /**< Window width. */
    int h; /**< Window height. */
 
+   int exposed; /**< Whether window is visible or hidden. */
    int focus; /**< Current focused widget. */
    Widget *widgets; /**< Widget storage. */
    void *udata; /**< Custom data of the window. */
@@ -191,6 +193,7 @@ void widget_cleanup( Widget *widget );
 Widget* window_getwgt( const unsigned int wid, const char* name );
 void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 void toolkit_focusSanitize( Window *wdw );
+void toolkit_focusClear( Window *wdw );
 void toolkit_nextFocus( Window *wdw );
 void toolkit_prevFocus( Window *wdw );
 void toolkit_focusWidget( Window *wdw, Widget *wgt );
