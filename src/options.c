@@ -1262,7 +1262,7 @@ static int opt_videoSave( unsigned int wid, char *str )
    (void) str;
    int i, j, s;
    char *inp, buf[16], width[16], height[16];
-   int w, h, f;
+   int w, h, f, fullscreen;
 
    /* Handle resolution. */
    inp = window_getInput( wid, "inpRes" );
@@ -1290,10 +1290,10 @@ static int opt_videoSave( unsigned int wid, char *str )
    }
 
    /* Fullscreen. */
-   f = window_checkboxState( wid, "chkFullscreen" );
+   fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-   int curw, curh, curf, mode, changed;
+   int origw, origh, origf, mode, changed;
    int rw, rh, nw, nh; /* Real width and height. */
    SDL_DisplayMode current;
 
@@ -1303,16 +1303,16 @@ static int opt_videoSave( unsigned int wid, char *str )
    mode = (conf.modesetting) ?
          SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-   curw = conf.width;
-   curh = conf.height;
-   curf = conf.fullscreen;
+   origw = conf.width;
+   origh = conf.height;
+   origf = conf.fullscreen;
 
    /* Enable or disable fullscreen. */
-   if (f != conf.fullscreen) {
-      conf.fullscreen = f;
+   if (fullscreen != conf.fullscreen) {
+      conf.fullscreen = fullscreen;
       changed = 1;
 
-      if (f) {
+      if (fullscreen) {
          if (conf.modesetting) {
             current.w = w;
             current.h = h;
@@ -1326,15 +1326,15 @@ static int opt_videoSave( unsigned int wid, char *str )
    }
 
    /* Set size. Done second, because it can't be set while fullscreen. */
-   if ((w != conf.width) || (h != conf.height)) {
+   if ((w != rw) || (h != rh)) {
       conf.explicit_dim = 1;
       conf.width  = w;
       conf.height = h;
 
       /* Can't change window size while fullscreen. */
-      if (f && curf)
+      if (fullscreen && origf)
          opt_needRestart();
-      else if (!f) {
+      else if (!fullscreen) {
          SDL_SetWindowSize( gl_screen.window, w, h );
          naev_resize( w, h );
          SDL_SetWindowPosition( gl_screen.window,
@@ -1345,7 +1345,7 @@ static int opt_videoSave( unsigned int wid, char *str )
    }
 
    /* Desktop fullscreen size must be determined dynamically. */
-   if (f && !conf.modesetting)
+   if (fullscreen && !conf.modesetting)
       SDL_GetWindowSize( gl_screen.window, &nw, &nh );
    else {
       nw = conf.width;
@@ -1355,12 +1355,14 @@ static int opt_videoSave( unsigned int wid, char *str )
    /* Settings have changed, switch and offer to reset. */
    if (changed && !dialogue_YesNo("Keep Video Settings",
          "Do you want to keep running at %dx%d %s?",
-         nw, nh, f ? "fullscreen" : "windowed")) {
-      conf.width      = curw;
-      conf.height     = curh;
-      conf.fullscreen = curf;
+         nw, nh, fullscreen ? "fullscreen" : "windowed")) {
+      conf.width      = origw;
+      conf.height     = origh;
+      conf.fullscreen = origf;
+      window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
 
-      if ((w != conf.width) || (h != conf.height)) {
+      /* Restore previous resolution. */
+      if ((w != rw) || (h != rw)) {
          SDL_SetWindowSize( gl_screen.window, rw, rh );
          naev_resize( rw, rh );
          SDL_SetWindowPosition( gl_screen.window,
@@ -1368,21 +1370,24 @@ static int opt_videoSave( unsigned int wid, char *str )
       }
 
       /* Restore windowed mode. */
-      if (f && (f != conf.fullscreen))
+      if (fullscreen && (fullscreen != conf.fullscreen))
          SDL_SetWindowFullscreen( gl_screen.window, 0 );
-      else if (!f && (f != conf.fullscreen)) {
+      else if (!fullscreen && (fullscreen != conf.fullscreen)) {
          if  (conf.modesetting) {
-            current.w = curw;
-            current.h = curw;
+            current.w = origw;
+            current.h = origh;
 
             SDL_SetWindowDisplayMode( gl_screen.window, &current );
          }
          SDL_SetWindowFullscreen( gl_screen.window, mode );
       }
-      window_checkboxSet( wid, "chkFullscreen", curf );
 
       nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
       window_setInput( wid, "inpRes", buf );
+
+      dialogue_msg( "Video Settings Restored",
+            "Resolution reset to %dx%d %s.",
+            rw, rh, conf.fullscreen ? "fullscreen" : "windowed" );
 
       return 1;
    }
@@ -1400,8 +1405,8 @@ static int opt_videoSave( unsigned int wid, char *str )
       window_setInput( wid, "inpRes", buf );
    }
 
-   if (conf.fullscreen != f) {
-      conf.fullscreen = f;
+   if (conf.fullscreen != fullscreen) {
+      conf.fullscreen = fullscreen;
       opt_needRestart();
    }
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
