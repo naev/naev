@@ -41,7 +41,7 @@ else -- Default to English
    pay_kill_text[1] = "After verifying that you killed %s, an officer hands you your pay."
    pay_kill_text[2] = "After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay."
    pay_kill_text[3] = "The officer seems pleased that %s is finally dead. He thanks you and promptly hands you your pay."
-   pay_kill_text[4] = "The paraoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. He then pays you and sends you off."
+   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. He then pays you and sends you off."
 
    pay_capture_text    = {}
    pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
@@ -52,7 +52,7 @@ else -- Default to English
    -- Mission details
    misn_title  = "%s Dead or Alive Bounty in %s"
    misn_reward = "%s credits"
-   misn_desc   = "The pirate known as %s was recently seen in the %s system. This pirate is wanted dead or alive."
+   misn_desc   = "The pirate known as %s was recently seen in the %s system. %s authorities want this pirate dead or alive."
 
    misn_level    = {}
    misn_level[1] = "Tiny"      -- Pirate Hyena
@@ -64,7 +64,7 @@ else -- Default to English
    -- Messages
    msg    = {}
    msg[1] = "MISSION FAILURE! %s got away."
-   msg[2] = "MISSION FAILURE! Somebody else eliminated %s."
+   msg[2] = "MISSION FAILURE! Another pilot eliminated %s."
    msg[3] = "MISSION FAILURE! You have left the %s system."
 
    osd_title = "Bounty Hunt"
@@ -116,7 +116,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
-   misn.setDesc( misn_desc:format( name, missys:name() ) )
+   misn.setDesc( misn_desc:format( name, missys:name(), paying_faction:name() ) )
    misn.setReward( misn_reward:format( numstring( credits ) ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -142,6 +142,11 @@ end
 
 
 function jumpin ()
+   -- Nothing to do.
+   if system.cur() ~= missys then
+      return
+   end
+
    local pos = jump.pos( system.cur(), last_sys )
    local offset_ranges = { { -2500, -1500 }, { 1500, 2500 } }
    local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
@@ -278,7 +283,13 @@ end
 -- Fail the mission, showing message to the player.
 function fail( message )
    if message ~= nil then
-      player.msg( message )
+      -- Pre-colourized, do nothing.
+      if message:find("\027") then
+         player.msg( message )
+      -- Colourize in red.
+      else
+         player.msg( "\027r" .. message .. "\0270" )
+      end
    end
    misn.finish( false )
 end
