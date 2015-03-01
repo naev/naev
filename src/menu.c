@@ -18,6 +18,7 @@
 #include "SDL.h"
 
 #include "toolkit.h"
+#include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "dialogue.h"
 #include "log.h"
 #include "pilot.h"
@@ -249,6 +250,7 @@ void menu_main_resize (void)
    int w, h, bgw, bgh, tw, th;
    int offset_logo, offset_wdw, freespace;
    int menu_id, bg_id;
+   Widget *wgt;
 
    if (!menu_isOpen(MENU_MAIN))
       return;
@@ -273,7 +275,16 @@ void menu_main_resize (void)
          (bgw - main_naevLogo->sw)/2., offset_logo );
 
    window_dimWidget( bg_id, "txtBG", &tw, &th );
-   window_moveWidget( bg_id, "txtBG", (SCREEN_W - tw)/2, 10. );
+
+   if (tw > SCREEN_W) {
+      /* RIP abstractions. X must be set manually because window_moveWidget
+       * transforms negative coordinates. */
+      wgt = window_getwgt( bg_id, "txtBG" );
+      if (wgt)
+         wgt->x = (SCREEN_W - tw) / 2;
+   }
+   else
+      window_moveWidget( bg_id, "txtBG", (SCREEN_W - tw)/2, 10. );
 
    window_move( menu_id, -1, offset_wdw );
 }
