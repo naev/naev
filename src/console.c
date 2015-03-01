@@ -57,6 +57,7 @@ static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
 static int cli_history     = 0; /**< Position in history. */
+static int cli_height      = 0; /**< Current console height. */
 
 
 /*
@@ -223,7 +224,7 @@ void cli_addMessage( const char *msg )
    n = (cli_cursor - cli_viewport) % BUF_LINES;
    if (cli_cursor < cli_viewport)
       n += BUF_LINES;
-   if (n*(cli_font->h+5) > CLI_HEIGHT-80-BUTTON_HEIGHT)
+   if (n*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
       cli_viewport = (cli_viewport+1) % BUF_LINES;
 }
 
@@ -484,6 +485,9 @@ void cli_open (void)
    window_addCust( wid, 20, -40,
          CLI_WIDTH-40, CLI_HEIGHT-80-BUTTON_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL );
+
+   /* Cache current height in case the window is resized. */
+   cli_height = CLI_HEIGHT;
 }
 
 
