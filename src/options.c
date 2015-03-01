@@ -1472,4 +1472,5 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
+   window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
 }
