@@ -362,7 +362,7 @@ void outfits_update( unsigned int wid, char* str )
    (void)str;
    char *outfitname;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf4[PATH_MAX];
    double th;
    int iw, ih;
    int w, h;
@@ -418,6 +418,14 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", outfit->description );
    price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
+
+   if (outfit->license == NULL)
+      strncpy( buf4, "None", sizeof(buf4) );
+   else if (player_hasLicense( outfit->license ))
+      strncpy( buf4, outfit->license, sizeof(buf4) );
+   else
+      nsnprintf( buf4, sizeof(buf4), "\er%s\e0", outfit->license );
+
    nsnprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
@@ -434,7 +442,7 @@ void outfits_update( unsigned int wid, char* str )
          outfit->mass,
          buf2,
          buf3,
-         (outfit->license != NULL) ? outfit->license : "None" );
+         buf4 );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
