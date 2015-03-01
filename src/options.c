@@ -1215,7 +1215,7 @@ static void opt_video( unsigned int wid )
          "chkEngineGlow", "Engine Glow (More RAM)", NULL, conf.engineglow );
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-   y -= 30;
+   y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", "Minimize on focus loss", NULL, conf.minimize );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -1344,8 +1344,15 @@ static int opt_videoSave( unsigned int wid, char *str )
       }
    }
 
+   /* Desktop fullscreen size must be determined dynamically. */
+   if (f && !conf.modesetting)
+      SDL_GetWindowSize( gl_screen.window, &nw, &nh );
+   else {
+      nw = conf.width;
+      nh = conf.height;
+   }
+
    /* Settings have changed, switch and offer to reset. */
-   SDL_GetWindowSize( gl_screen.window, &nw, &nh );
    if (changed && !dialogue_YesNo("Keep Video Settings",
          "Do you want to keep running at %dx%d %s?",
          nw, nh, f ? "fullscreen" : "windowed")) {
@@ -1372,6 +1379,7 @@ static int opt_videoSave( unsigned int wid, char *str )
          }
          SDL_SetWindowFullscreen( gl_screen.window, mode );
       }
+      window_checkboxSet( wid, "chkFullscreen", curf );
 
       nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
       window_setInput( wid, "inpRes", buf );
