@@ -21,13 +21,13 @@ else -- Default to English
     title[5] = "Choose difficulty"
     text[5] = [["You can choose two different kinds of races, an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  Of course the reward is bigger too. "]]
     title[6] = "Hard Mode"
-    text[6] = [["You want a challenge huh?  Remember no outfits are allowed on your Llama or you will not be allowed to race.  Lets go have some fun then."]]
+    text[6] = [["You want a challenge huh?  Remember no outfits are allowed on your Llama or you will not be allowed to race.  Let's go have some fun then."]]
     
     choice1 = "Easy"
     choice2 = "Hard"
 
     title[2] = "Easy Mode "
-    text[2] = [["Lets go have some fun then."]]
+    text[2] = [["Let's go have some fun then."]]
 
     title[3] = "Checkpoint %s reached"
     text[3] = "Proceed to Checkpoint %s"
@@ -66,7 +66,7 @@ else -- Default to English
     OSD[4] = "Land at %s"
 
     chatter = {}
-    chatter[1] = "Lets do this!"
+    chatter[1] = "Let's do this!"
     chatter[2] = "Wooo!"
     chatter[3] = "Time to Shake 'n Bake"
     chatter[4] = "Checkpoint %s baby!"

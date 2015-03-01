@@ -30,7 +30,7 @@ else -- Default to English
     
     wintitle = "You Won!"
     wintext = [[The laid back man comes up to you.  
-"Congratulations man.  And guess what!  We got a sponsor!  Melendez Corporation has agreed to put up prize money.  He hands you a chip with 10000 credits.  Lets race again sometime soon."]]
+"Congratulations man.  And guess what!  We got a sponsor!  Melendez Corporation has agreed to put up prize money.  He hands you a chip with 10000 credits.  Let's race again sometime soon."]]
 
     ftitle[1] = "Illegal ship!"
     ftext[1] = [["You have switched to a ship that's not allowed in this race.  Mission failed."]]
@@ -56,7 +56,7 @@ else -- Default to English
     OSD[4] = "Land at %s"
 
     chatter = {}
-    chatter[1] = "Lets do this!"
+    chatter[1] = "Let's do this!"
     chatter[2] = "Wooo!"
     chatter[3] = "Time to Shake 'n Bake"
     chatter[4] = "Checkpoint %s baby!"

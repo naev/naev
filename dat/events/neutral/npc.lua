@@ -184,7 +184,7 @@ else --default english
    msg_mhint =                {{"Shadowrun", "Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"},
                                {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
                                {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"},
-							   {"Za'lek Shipping Delivery", "So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear its pretty good money."},
+							   {"Za'lek Shipping Delivery", "So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money."},
                               }
 
    -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
