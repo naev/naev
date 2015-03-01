@@ -515,6 +515,10 @@ static int gl_createWindow( unsigned int flags )
    if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
       SDL_GetWindowSize( gl_screen.window, &w, &h );
 
+   /* Set focus loss behaviour. */
+   SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
+         conf.minimize ? "1" : "0" );
+
    /* Create the OpenGL context, note we don't need an actual renderer. */
    gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
    if (!gl_screen.context)

@@ -1214,6 +1214,12 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", "Engine Glow (More RAM)", NULL, conf.engineglow );
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkMinimize", "Minimize on focus loss", NULL, conf.minimize );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
          30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
@@ -1429,6 +1435,14 @@ static int opt_videoSave( unsigned int wid, char *str )
    if (conf.engineglow != f) {
       conf.engineglow = f;
       opt_needRestart();
+   }
+   f = window_checkboxState( wid, "chkMinimize" );
+   if (conf.minimize != f) {
+      conf.minimize = f;
+#if SDL_VERSION_ATLEAST(2,0,0)
+      SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
+            conf.minimize ? "1" : "0" );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
 
    return 0;
