@@ -40,7 +40,7 @@ else -- Default to English
 
     ftitle[3] = "You failed to win the race."
     ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
-    "That was a lot of fun, if you ever have time, lets race again."]]
+    "That was a lot of fun, if you ever have time, let's race again."]]
 
     NPCname = "A laid back man"
     NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."

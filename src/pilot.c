@@ -1984,7 +1984,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
                   p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
                   pilot_setFlag(p, PILOT_HYP_BEGIN);
                   /* Player plays sound. */
-                  if (p->id == PLAYER_ID)
+                  if ((p->id == PLAYER_ID) && !p->stats.misc_instant_jump)
                      player_soundPlay( snd_hypPowUp, 1 );
                }
             }

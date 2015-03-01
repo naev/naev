@@ -47,7 +47,7 @@ else -- Default to English
 
     ftitle[3] = "You failed to win the race."
     ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
-"That was a lot of fun, if you ever have time, lets race again."]]
+"That was a lot of fun, if you ever have time, let's race again."]]
 
     ftitle[4] = "Illegal ship!"
     ftext[4] = [["You have outfits on your ship which is not allowed in this race in hard mode.  Mission failed."]]
