@@ -105,6 +105,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Alive Bounty">
@@ -120,6 +121,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
