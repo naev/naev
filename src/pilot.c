@@ -1238,6 +1238,12 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
       pilot_rmFlag(p, PILOT_BRAKING);
 
+      /* Clear hyperspace flags. */
+      pilot_rmFlag(p, PILOT_HYP_PREP);
+      pilot_rmFlag(p, PILOT_HYP_BEGIN);
+      pilot_rmFlag(p, PILOT_HYP_BRAKE);
+      pilot_rmFlag(p, PILOT_HYPERSPACE);
+
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
