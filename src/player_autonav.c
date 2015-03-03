@@ -315,7 +315,16 @@ static void player_autonav (void)
 
       case AUTONAV_JUMP_BRAKE:
          /* Target jump. */
-         ret   = (player.p->stats.misc_instant_jump ? 1 : player_autonavBrake());
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         if (player.p->stats.misc_instant_jump) {
+            ret = pilot_interceptPos( player.p, jp->pos.x, jp->pos.y );
+            if (!ret && space_canHyperspace(player.p))
+               ret = 1;
+            player_acc = player.p->solid->thrust / player.p->thrust;
+         }
+         else
+            ret = player_autonavBrake();
+
          /* Try to jump or see if braked. */
          if (ret) {
             if (space_canHyperspace(player.p))
@@ -411,8 +420,21 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
 static int player_autonavBrake (void)
 {
    int ret;
+   JumpPoint *jp;
+   Vector2d pos;
 
-   ret = pilot_brake(player.p);
+   if ((player.autonav == AUTONAV_JUMP_BRAKE) && (player.p->nav_hyperspace != -1)) {
+      jp  = &cur_system->jumps[ player.p->nav_hyperspace ];
+
+      pilot_brakeDist( player.p, &pos );
+      if (vect_dist2( &pos, &jp->pos ) > pow2(jp->radius))
+         ret = pilot_interceptPos( player.p, jp->pos.x, jp->pos.y );
+      else
+         ret = pilot_brake( player.p );
+   }
+   else
+      ret = pilot_brake(player.p);
+
    player_acc = player.p->solid->thrust / player.p->thrust;
 
    return ret;
