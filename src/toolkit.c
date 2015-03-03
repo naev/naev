@@ -550,13 +550,16 @@ unsigned int window_createFlags( const char* name,
             toolkit_expose( wcur, 0 ); /* wcur is hidden */
       }
 
+      wlast = NULL;
       for (wcur = windows; wcur != NULL; wcur = wcur->next) {
          if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
                !window_isFlag(wcur, WINDOW_NOFOCUS))
             WARN("Window with name '%s' already exists!",wcur->name);
          wlast = wcur;
       }
-      wlast->next = wdw;
+
+      if (wlast != NULL)
+         wlast->next = wdw;
    }
 
    return wid;
@@ -2640,14 +2643,21 @@ void window_raise( unsigned int wid )
    if (wdw == NULL || wdw->next == NULL)
       return;
 
+   wprev = NULL;
+   wlast = NULL;
+
    for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
       if (wtmp->next == wdw)
          wprev = wtmp;
       else if (wtmp->next == NULL)
          wlast = wtmp;
 
-   wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
-   wlast->next = wdw;       /* last links to wdw */
+   if (wprev != NULL)
+      wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+
+   if (wlast != NULL)
+      wlast->next = wdw;       /* last links to wdw */
+
    wdw->next   = NULL;      /* wdw becomes new last window */
 
    wtmp = toolkit_getActiveWindow();
@@ -2676,11 +2686,14 @@ void window_lower( unsigned int wid )
    if (wdw == NULL || wdw == windows)
       return;
 
+   wprev = NULL;
    for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
       if (wtmp->next == wdw)
          wprev = wtmp;
 
-   wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+   if (wprev != NULL)
+      wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+
    wdw->next   = windows;   /* wdw links to first window */
    windows     = wdw;       /* wdw becomes new first window */
 
@@ -2717,18 +2730,20 @@ void toolkit_reposition (void)
       if (w->xrel == -1. && w->yrel == -1.)
          continue;
 
+      xdiff = 0.;
+      ydiff = 0.;
+
       if (w->xrel != -1.) {
          xorig = w->x;
          w->x = (SCREEN_W - w->w) * w->xrel;
+         xdiff = w->x - xorig;
       }
 
       if (w->yrel != -1.) {
          yorig = w->y;
          w->y = (SCREEN_H - w->h) * w->yrel;
+         ydiff = w->y - yorig;
       }
-
-      xdiff = w->x - xorig;
-      ydiff = w->y - yorig;
 
       /* Tabwin children aren't in the stack and must be manually updated. */
       for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
