@@ -25,7 +25,9 @@
 /* Time methods. */
 static int time_create( lua_State *L );
 static int time_add( lua_State *L );
+static int time_add__( lua_State *L );
 static int time_sub( lua_State *L );
+static int time_sub__( lua_State *L );
 static int time_eq( lua_State *L );
 static int time_lt( lua_State *L );
 static int time_le( lua_State *L );
@@ -36,9 +38,9 @@ static int time_tonumber( lua_State *L );
 static int time_fromnumber( lua_State *L );
 static const luaL_reg time_methods[] = {
    { "create", time_create },
-   { "add", time_add },
+   { "add", time_add__ },
    { "__add", time_add },
-   { "sub", time_sub },
+   { "sub", time_sub__ },
    { "__sub", time_sub },
    { "__eq", time_eq },
    { "__lt", time_lt },
@@ -53,9 +55,9 @@ static const luaL_reg time_methods[] = {
 }; /**< Time Lua methods. */
 static const luaL_reg time_cond_methods[] = {
    { "create", time_create },
-   { "add", time_add },
+   { "add", time_add__ },
    { "__add", time_add },
-   { "sub", time_sub },
+   { "sub", time_sub__ },
    { "__sub", time_sub },
    { "__eq", time_eq },
    { "__lt", time_lt },
@@ -245,6 +247,27 @@ static int time_add( lua_State *L )
    lua_pushtime( L, res );
    return 1;
 }
+
+
+/*
+ * Method version of time_add that modifies the first time.
+ */
+static int time_add__( lua_State *L )
+{
+   LuaTime *lt;
+   ntime_t t2;
+
+   /* Parameters. */
+   lt = luaL_checktime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+
+   /* Add them. */
+   lt->t += t2;
+   lua_pushtime( L, *lt );
+   return 1;
+}
+
+
 /**
  * @brief Subtracts two time metatables.
  *
@@ -270,6 +293,27 @@ static int time_sub( lua_State *L )
    lua_pushtime( L, res );
    return 1;
 }
+
+
+/*
+ * Method version of time_sub that modifies the first time.
+ */
+static int time_sub__( lua_State *L )
+{
+   LuaTime *lt;
+   ntime_t t2;
+
+   /* Parameters. */
+   lt = luaL_checktime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+
+   /* Sub them. */
+   lt->t -= t2;
+   lua_pushtime( L, *lt );
+   return 1;
+}
+
+
 /**
  * @brief Checks to see if two time are equal.
  *
