@@ -168,14 +168,14 @@ AS_IF([test "$enable_debug" != "no"], [
 AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
 AC_ARG_WITH([sdl2],
   AC_HELP_STRING([--with-sdl2],
-     [use SDL2 instead of SDL (default: no)]), [
+     [use SDL2 instead of SDL (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdl2=yes
     ], [
       with_sdl2=no
     ])
   ], [
-    with_sdl2=no # TODO should default to yes, but it's too broken atm
+    with_sdl2=yes
   ])
 AC_MSG_RESULT([$with_sdl2])
 
