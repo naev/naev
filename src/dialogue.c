@@ -776,6 +776,13 @@ static int toolkit_loop( int *loop_done )
                return -1;
             }
          }
+#if SDL_VERSION_ATLEAST(2,0,0)
+         else if (event.type == SDL_WINDOWEVENT &&
+               event.window.event == SDL_WINDOWEVENT_RESIZED) {
+            naev_resize( event.window.data1, event.window.data2 );
+            continue;
+         }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
          input_handle(&event); /* handles all the events and player keybinds */
       }

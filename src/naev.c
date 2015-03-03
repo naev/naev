@@ -314,6 +314,11 @@ int main( int argc, char** argv )
    gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
    gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Detect size changes that occurred after window creation. */
+   naev_resize( -1., -1. );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
    /* Display the load screen. */
    loadscreen_load();
    loadscreen_render( 0., "Initializing subsystems..." );
@@ -368,6 +373,11 @@ int main( int argc, char** argv )
 
    /* Data loading */
    load_all();
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Detect size changes that occurred during load. */
+   naev_resize( -1., -1. );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Generate the CSV. */
    if (conf.devcsv)
@@ -458,12 +468,19 @@ int main( int argc, char** argv )
    /* primary loop */
    while (!quit) {
       while (SDL_PollEvent(&event)) { /* event loop */
-         if (event.type == SDL_QUIT)
+         if (event.type == SDL_QUIT) {
             if (menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
             }
-
+         }
+#if SDL_VERSION_ATLEAST(2,0,0)
+         else if (event.type == SDL_WINDOWEVENT &&
+               event.window.event == SDL_WINDOWEVENT_RESIZED) {
+            naev_resize( event.window.data1, event.window.data2 );
+            continue;
+         }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
@@ -761,6 +778,50 @@ void main_loop( int update )
    SDL_GL_SwapBuffers();
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
+
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+/**
+ * @brief Wrapper for gl_resize that handles non-GL reinitialization.
+ */
+void naev_resize( int w, int h )
+{
+   /* Auto-detect window size. */
+   if ((w < 0.) && (h < 0.))
+      SDL_GetWindowSize( gl_screen.window, &w, &h );
+
+   /* Nothing to do. */
+   if ((w == gl_screen.rw) && (h == gl_screen.rh))
+      return;
+
+   /* Resize the GL context, etc. */
+   gl_resize( w, h );
+
+   /* Regenerate the background stars. */
+   if (cur_system != NULL)
+      background_initStars( cur_system->stars );
+   else
+      background_initStars( 1000 ); /* from loadscreen_load */
+
+   /* Must be before gui_reload */
+   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFont.h) );
+
+   /* Reload the GUI (may regenerate land window) */
+   gui_reload();
+
+   /* Resets the overlay dimensions. */
+   ovr_refresh();
+
+   if (nebu_isLoaded())
+      nebu_vbo_init();
+
+   /* Re-center windows. */
+   toolkit_reposition();
+
+   /* Reposition main menu, if open. */
+   menu_main_resize();
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)

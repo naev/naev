@@ -221,7 +221,9 @@ static int ndata_notfound (void)
 #if SDL_VERSION_ATLEAST(2,0,0)
    SDL_EventState( SDL_DROPFILE, SDL_ENABLE );
    SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
+#if SDL_VERSION_ATLEAST(2,0,2)
    SDL_DetachThread(thread);
+#endif /* SDL_VERSION_ATLEAST(2,0,2) */
 
    /* TODO substitute. */
    SDL_RenderPresent( renderer );

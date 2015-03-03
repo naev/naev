@@ -266,6 +266,14 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
    SDL_Event event;           /* user key-press, mouse-push, etc. */
 
    while (SDL_PollEvent(&event)) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+      if (event.type == SDL_WINDOWEVENT &&
+            event.window.event == SDL_WINDOWEVENT_RESIZED) {
+         naev_resize( event.window.data1, event.window.data2 );
+         continue;
+      }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       if (event.type != SDL_KEYDOWN)
          continue;
 

@@ -91,6 +91,9 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
+extern int land_wid; /**< From land.c */
+
+
 /**
  * GUI Lua stuff.
  */
@@ -1965,6 +1968,18 @@ static int gui_runFunc( const char* func, int nargs, int nret )
 
 
 /**
+ * @brief Reloads the GUI.
+ */
+void gui_reload (void)
+{
+   if (gui_L == NULL)
+      return;
+
+   gui_load( gui_pick() );
+}
+
+
+/**
  * @brief Player just changed their cargo.
  */
 void gui_setCargo (void)
@@ -2111,8 +2126,10 @@ int gui_load( const char* name )
    }
 
    /* Recreate land window if landed. */
-   if (landed)
+   if (landed) {
       land_genWindows( 0, 1 );
+      window_lower( land_wid );
+   }
 
    return 0;
 }

@@ -25,6 +25,7 @@
 #define RESOLUTION_W_DEFAULT                 1024  /**< Default screen width. */
 #define RESOLUTION_H_DEFAULT                 768   /**< Default screen height. */
 #define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
+#define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
 #define VBO_DEFAULT                          0     /**< Whether to use Vertex Buffer Objects. */
@@ -37,6 +38,7 @@
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
+#define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
 /* Audio options */
 #define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
 #define PILOT_RELATIVE_DEFAULT               1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
@@ -85,6 +87,8 @@ typedef struct PlayerConf_s {
    int explicit_dim; /**< Dimension is explicit. */
    double scalefactor; /**< Amount to reduce resolution by. */
    int fullscreen; /**< Whether or not game is fullscreen. */
+   int modesetting; /**< Whether to use modesetting for fullscreen. */
+   int minimize; /**< Whether to minimize on focus loss. */
 
    /* Sound. */
    char *sound_backend; /**< Sound backend to use. */
