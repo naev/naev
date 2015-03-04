@@ -33,7 +33,7 @@ else -- default english
    osd_msg1 = "Fly to %s in the %s system before %s."
    osd_msg2 = "You have %s remaining." -- Need to reuse.
 
-   misn_desc = "%d tons of %s needs to be shiped to %s in the %s system by %s (%s left)."
+   misn_desc = "%d tons of %s needs to be shipped to %s in the %s system by %s (%s left)."
    misn_reward = "%s credits"
    title = {}
    title_p1 = "Pirate: Cargo transport to %s in the %s system"
@@ -107,6 +107,11 @@ function create()
 	stupertakeoff = 15000
 	timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
+	-- Allow extra time for refuelling stops.
+	local jumpsperstop = 3 + math.min(tier, 1)
+	if numjumps > jumpsperstop then
+		timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
+	end
 	
 	-- Choose amount of cargo and mission reward. This depends on the mission tier.
 	finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
