@@ -301,7 +301,7 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
  */
 static void btn_render( Widget* btn, double bx, double by )
 {
-   const glColour *c, *dc, *lc;
+   const glColour *c, *dc, *lc, *fc;
    double x, y;
 
    x = bx + btn->x;
@@ -312,8 +312,10 @@ static void btn_render( Widget* btn, double bx, double by )
       lc = &cGrey60;
       c  = &cGrey20;
       dc = &cGrey40;
+      fc = &cRed;
    }
    else {
+      fc = &cDarkRed;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
             lc = &cGrey90;
@@ -353,7 +355,7 @@ static void btn_render( Widget* btn, double bx, double by )
    gl_printMidRaw( NULL, (int)btn->w,
          bx + btn->x,
          by + btn->y + (btn->h - gl_defFont.h)/2.,
-         &cDarkRed, btn->dat.btn.display );
+         fc, btn->dat.btn.display );
 }
 
 
