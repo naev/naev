@@ -95,6 +95,7 @@ extern const double fps_min;
 void fps_setPos( double x, double y );
 #if SDL_VERSION_ATLEAST(2,0,0)
 void naev_resize( int w, int h );
+void naev_toggleFullscreen (void);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 void update_routine( double dt, int enter_sys );
 int naev_versionString( char *str, size_t slen, int major, int minor, int rev );

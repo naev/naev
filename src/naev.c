@@ -821,6 +821,50 @@ void naev_resize( int w, int h )
    /* Reposition main menu, if open. */
    menu_main_resize();
 }
+
+/*
+ * @brief Toggles between windowed and fullscreen mode.
+ */
+void naev_toggleFullscreen (void)
+{
+   int w, h, mode;
+   SDL_DisplayMode current;
+
+   /* @todo Remove code duplication between this and opt_videoSave */
+   if (conf.fullscreen) {
+      conf.fullscreen = 0;
+      /* Restore windowed mode. */
+      SDL_SetWindowFullscreen( gl_screen.window, 0 );
+
+      SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
+      naev_resize( conf.width, conf.height );
+      SDL_SetWindowPosition( gl_screen.window,
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+
+      return;
+   }
+
+   conf.fullscreen = 1;
+
+   if (conf.modesetting) {
+      mode = SDL_WINDOW_FULLSCREEN;
+
+      SDL_GetWindowDisplayMode( gl_screen.window, &current );
+
+      current.w = conf.width;
+      current.h = conf.height;
+
+      SDL_SetWindowDisplayMode( gl_screen.window, &current );
+   }
+   else
+      mode = SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+   SDL_SetWindowFullscreen( gl_screen.window, mode );
+
+   SDL_GetWindowSize( gl_screen.window, &w, &h );
+   if ((w != conf.width) || (h != conf.height))
+      naev_resize( w, h );
+}
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 

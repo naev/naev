@@ -114,6 +114,7 @@ const char *keybind_info[][3] = {
    { "mapzoomin", "Radar Zoom In", "Zooms in on the radar." },
    { "mapzoomout", "Radar Zoom Out", "Zooms out on the radar." },
    { "screenshot", "Screenshot", "Takes a screenshot." },
+   { "fullscreen", "Toggle Fullscreen", "Toggles between windowed and fullscreen mode." },
    { "pause", "Pause", "Pauses the game." },
    { "speed", "Toggle 2x Speed", "Toggles 2x speed modifier." },
    { "menu", "Small Menu", "Opens the small in-game menu." },
@@ -275,6 +276,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, NMOD_ALL );
+   input_setKeybind( "fullscreen", KEYBIND_KEYBOARD, SDLK_F11, NMOD_ALL );
    input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
 
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ALL );
@@ -985,6 +987,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* take a screenshot */
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* toggle fullscreen */
+   } else if (KEY("fullscreen") && !repeat) {
+      if (value==KEY_PRESS) naev_toggleFullscreen();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    /* pause the games */
    } else if (KEY("pause") && !repeat) {
       if (value==KEY_PRESS) {
