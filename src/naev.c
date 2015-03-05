@@ -204,6 +204,11 @@ int main( int argc, char** argv )
    /* Set up debug signal handlers. */
    debug_sigInit();
 
+#if HAS_UNIX
+   /* Set window class and name. */
+   setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+#endif /* HAS_UNIX */
+
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
       WARN("Unable to initialize SDL Video: %s", SDL_GetError());
