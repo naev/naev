@@ -588,12 +588,6 @@ int outfit_canBuy( char *name, Planet *planet )
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
 
-   /* takes away cargo space but you don't have any */
-   if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
-         && (pilot_cargoFree(player.p) < -outfit->u.mod.cargo)) {
-      land_errDialogueBuild( "You need to empty your cargo first." );
-      failure = 1;
-   }
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
          (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
