@@ -462,7 +462,7 @@ void outfits_updateEquipmentOutfits( void )
    int ew, ow;
 
    if (landed && land_doneLoading()) {
-      if planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) {
+      if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
          ow = land_getWid( LAND_WINDOW_OUTFITS );
          outfits_regenList( ow, NULL );
       }
