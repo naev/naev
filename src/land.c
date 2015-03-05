@@ -1310,6 +1310,9 @@ void land_genWindows( int load, int changetab )
    if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
+   /* Add local system map button. */
+   land_checkAddMap();
+
    /* Refuel if necessary. */
    land_refuel();
 
