@@ -496,6 +496,11 @@ int conf_loadConfig ( const char* file )
             lua_pop(L,1);
 
             if (str != NULL) { /* keybind is valid */
+               if (key == SDLK_UNKNOWN) {
+                  WARN("Keybind for '%s' is invalid", keybind_info[i][0]);
+                  continue;
+               }
+
                /* get type */
                if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;

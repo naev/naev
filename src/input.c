@@ -474,7 +474,13 @@ static void input_keyConvDestroy (void)
 SDLKey input_keyConv( const char *name )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-      return SDL_GetKeyFromName( name );
+   SDLKey k;
+   k = SDL_GetKeyFromName( name );
+
+   if (k == SDLK_UNKNOWN)
+      WARN("Keyname '%s' doesn't match any key.", name);
+
+   return k;
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDLKey k, m;
    size_t l;
