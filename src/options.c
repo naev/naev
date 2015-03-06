@@ -162,6 +162,24 @@ static void opt_close( unsigned int wid, char *name )
 	music_volume(conf.music);
 
    window_destroy( opt_wid );
+   opt_wid = 0;
+}
+
+
+/**
+ * @brief Handles resize events for the options menu.
+ */
+void opt_resize (void)
+{
+   char buf[16];
+
+   /* Nothing to do if not open. */
+   if (!opt_wid)
+      return;
+
+   /* Update the resolution input widget. */
+   nsnprintf( buf, sizeof(buf), "%dx%d", gl_screen.rw, gl_screen.rh );
+   window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
 
@@ -1106,8 +1124,6 @@ static void opt_video( unsigned int wid )
          NULL, &cDConsole, "Resolution" );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-   window_setInput( wid, "inpRes", buf );
    window_setInputFilter( wid, "inpRes",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
@@ -1181,6 +1197,9 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
+
+   /* Sets inpRes to current resolution, must be after lstRes is added. */
+   opt_resize();
 
    /* OpenGL options. */
    x = 20+cw+20;
@@ -1307,6 +1326,12 @@ static int opt_videoSave( unsigned int wid, char *str )
    origh = conf.height;
    origf = conf.fullscreen;
 
+   if ((w != conf.width) || (h != conf.height)) {
+      conf.explicit_dim = 1;
+      conf.width  = w;
+      conf.height = h;
+   }
+
    /* Enable or disable fullscreen. */
    if (fullscreen != conf.fullscreen) {
       conf.fullscreen = fullscreen;
@@ -1325,12 +1350,11 @@ static int opt_videoSave( unsigned int wid, char *str )
          SDL_SetWindowFullscreen( gl_screen.window, 0 );
    }
 
+   /* Attempt to detect maximized state (doesn't work on X11) */
+   if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
+      dialogue_alert("Resolution can't be changed while maximized.");
    /* Set size. Done second, because it can't be set while fullscreen. */
-   if ((w != rw) || (h != rh)) {
-      conf.explicit_dim = 1;
-      conf.width  = w;
-      conf.height = h;
-
+   else if ((w != rw) || (h != rh)) {
       /* Can't change window size while fullscreen. */
       if (fullscreen && origf)
          opt_needRestart();

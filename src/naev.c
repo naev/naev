@@ -94,6 +94,7 @@
 #include "start.h"
 #include "threadpool.h"
 #include "load.h"
+#include "options.h"
 #include "dialogue.h"
 #include "slots.h"
 
@@ -825,6 +826,9 @@ void naev_resize( int w, int h )
 
    /* Reposition main menu, if open. */
    menu_main_resize();
+
+   /* Update options menu, if open. */
+   opt_resize();
 }
 
 /*
