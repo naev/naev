@@ -562,7 +562,6 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
             (temp->class == SHIP_CLASS_FREIGHTER) ||
             (temp->class == SHIP_CLASS_DESTROYER) ||
             (temp->class == SHIP_CLASS_CORVETTE) ||
-            (temp->class == SHIP_CLASS_HEAVY_DRONE) ||
             (temp->class == SHIP_CLASS_ARMOURED_TRANSPORT)) {
          typ       = "Medium";
          base_size = OUTFIT_SLOT_SIZE_MEDIUM;
