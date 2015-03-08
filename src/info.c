@@ -286,7 +286,7 @@ static void info_setGui( unsigned int wid, char* str )
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", "Cancel", setgui_close );
+         "btnBack", "Close", setgui_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
          "btnLoad", "Load", setgui_load );
 
@@ -319,7 +319,8 @@ static void setgui_load( unsigned int wdw, char *str )
       return;
 
    if (player.guiOverride == 0) {
-      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+      if (dialogue_YesNo( "GUI Override is not set.",
+               "Enable GUI Override and change GUI to '%s'?", gui )) {
          player.guiOverride = 1;
          window_checkboxSet( wid, "chkOverride", player.guiOverride );
       }

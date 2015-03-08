@@ -23,6 +23,7 @@
 
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
+static int vectorL_newP( lua_State *L );
 static int vectorL_add__( lua_State *L );
 static int vectorL_add( lua_State *L );
 static int vectorL_sub__( lua_State *L );
@@ -40,6 +41,7 @@ static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
 static const luaL_reg vector_methods[] = {
    { "new", vectorL_new },
+   { "newP", vectorL_newP },
    { "__add", vectorL_add },
    { "add", vectorL_add__ },
    { "__sub", vectorL_sub },
@@ -196,6 +198,36 @@ static int vectorL_new( lua_State *L )
    }
 
    vect_cset( &v.vec, x, y );
+   lua_pushvector(L, v);
+   return 1;
+}
+
+/**
+ * @brief Creates a new vector using polar coordinates.
+ *
+ * @usage vec2.newP( 1000, 90 ) -- creates a vector at (0,1000)
+ * @usage vec2.newP() -- creates a vector at (0,0)
+ *
+ *    @luaparam m If set, the modulus for the new vector.
+ *    @luaparam a If set, the angle for the new vector, in degrees.
+ *    @luareturn The new vector.
+ * @luafunc newP( m, a )
+ */
+static int vectorL_newP( lua_State *L )
+{
+   LuaVector v;
+   double m, a;
+
+   if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
+      m = lua_tonumber(L, 1);
+      a = lua_tonumber(L, 2) / 180. * M_PI;
+   }
+   else {
+      m = 0.;
+      a = 0.;
+   }
+
+   vect_pset( &v.vec, m, a );
    lua_pushvector(L, v);
    return 1;
 }

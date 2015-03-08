@@ -841,7 +841,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          /* If no named colour is present, RGB attributes are used. */
          else {
             /* Initialize in case a colour channel is absent. */
-            col = calloc( 1, sizeof(glColour*) );
+            col = calloc( 1, sizeof(glColour) );
 
             xmlr_attr(node,"r",ctmp);
             if (ctmp != NULL) {

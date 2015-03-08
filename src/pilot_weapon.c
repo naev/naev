@@ -743,13 +743,22 @@ PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n )
 int pilot_shoot( Pilot* p, int level )
 {
    PilotWeaponSet *ws;
+   int ret;
 
    /* Get active set. */
    ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   if (ws->type == WEAPSET_TYPE_CHANGE) /* Must be a change set or a weaponset. */
-      return pilot_weapSetFire( p, ws, level );
+   if (ws->type == WEAPSET_TYPE_CHANGE) { /* Must be a change set or a weaponset. */
+      ret = pilot_weapSetFire( p, ws, level );
+
+      /* Firing weapons aborts active cooldown. */
+      if (pilot_isFlag(p, PILOT_COOLDOWN) && ret)
+         pilot_cooldownEnd(p, NULL);
+
+      return ret;
+   }
+
    return 0;
 }
 
@@ -834,6 +843,12 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    /* There's nothing to do if the beam isn't active. */
    if (w->u.beamid == 0)
       return;
+
+  /* Safeguard against a nasty race condition. */
+  if (w->outfit == NULL) {
+      w->u.beamid = 0;
+     return;
+  }
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
@@ -1300,6 +1315,10 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 
    if (outfit_isAfterburner( o->outfit )) /* Afterburners */
       pilot_afterburnOver( p );
+   else if (outfit_isBeam( o->outfit )) {
+      /* Beams use stimer to represent minimum time until shutdown. */
+      o->stimer = -1;
+   }
    else {
       c = outfit_cooldown( o->outfit );
       if (o->stimer != INFINITY)

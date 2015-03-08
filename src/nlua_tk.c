@@ -27,11 +27,13 @@ static int tk_msg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
+static int tk_list( lua_State *L );
 static const luaL_reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
    { "input", tk_input },
    { "choice", tk_choice },
+   { "list", tk_list },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -144,6 +146,8 @@ static int tk_input( lua_State *L )
       lua_pushnil(L);
    return 1;
 }
+
+
 /**
  * @brief Creates a window with a number of selectable options
  *
@@ -166,6 +170,10 @@ static int tk_choice( lua_State *L )
    opts  = lua_gettop(L) - 2;
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
+
+   /* Do an initial scan for invalid arguments. */
+   for (i=0; i<opts; i++)
+      luaL_checkstring(L, i+3);
 
    /* Create dialogue. */
    dialogue_makeChoice( title, str, opts );
@@ -192,3 +200,48 @@ static int tk_choice( lua_State *L )
    return 2;
 }
 
+
+/**
+ * @brief Creates a window with an embedded list of choices.
+ *
+ * @usage num, chosen = tk.list( "Title", "Foo or bar?", "Foo", "Bar" ) -- If "Bar" is clicked, it would return 2, "Bar"
+ *
+ *    @luaparam title Title of the window.
+ *    @luaparam msg Message to display.
+ *    @luaparam choices Option choices.
+ *    @luareturn Returns the number of the choice and the name of the choice chosen.
+ * @luafunc choice( title, msg, ... )
+ */
+static int tk_list( lua_State *L )
+{
+   int ret, opts, i;
+   const char *title, *str;
+   char **choices;
+   NLUA_MIN_ARGS(3);
+
+   /* Handle parameters. */
+   opts  = lua_gettop(L) - 2;
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
+
+   /* Do an initial scan for invalid arguments. */
+   for (i=0; i<opts; i++)
+      luaL_checkstring(L, i+3);
+
+   /* Will be freed by the toolkit. */
+   choices = malloc( sizeof(char*) * opts );
+   for (i=0; i<opts; i++)
+      choices[i] = strdup( luaL_checkstring(L, i+3) );
+
+   ret = dialogue_listRaw( title, choices, opts, str );
+
+   /* Cancel returns -1, do nothing. */
+   if (ret == -1)
+      return 0;
+
+   /* Push index and choice string. */
+   lua_pushnumber(L, ret+1);
+   lua_pushstring(L, choices[ret]);
+
+   return 2;
+}

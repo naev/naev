@@ -161,7 +161,7 @@ else --default english
                                "There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it.",
                                "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
                                "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board.",
-                               "If you're having trouble with overheating weapons or outfits, you can use " .. tutGetKey("cooldown") .. " to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
+                               "If you're having trouble with overheating weapons or outfits, you can press " .. tutGetKey("autobrake") .. " twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
                                "If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!",
                                "You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you.",
                               }

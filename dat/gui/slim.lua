@@ -599,7 +599,7 @@ function render( dt, dt_mod )
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
-   speed = pp:vel():dist()
+   speed = pp:vel():mod()
    temperature = pp:temp()
    lockons = pp:lockon()
    autonav = player.autonav()
@@ -652,7 +652,9 @@ function render( dt, dt_mod )
    render_bar( bardata['energy'], energy, txt["energy"], col )
 
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100)
+   local hspeed
+   if stats.speed_max <= 0 then hspeed = 0
+   else hspeed = round(speed / stats.speed_max * 100) end
    txt = hspeed .. "% (" .. round(speed) .. ")"
    if hspeed <= 100. then
       render_bar( bardata['speed'], hspeed, txt, col_txt_bar )
@@ -805,7 +807,6 @@ function render( dt, dt_mod )
             ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
             ta_energy = ptarget:energy()
-            ta_speed = ptarget:vel():dist()
 
             --Render target graphic
             if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
@@ -822,7 +823,7 @@ function render( dt, dt_mod )
          ta_pos = ptarget:pos()
          ta_dist = pp:pos():dist( ta_pos )
          ta_dir = ptarget:dir()
-         ta_speed = ptarget:vel():dist()
+         ta_speed = ptarget:vel():mod()
 
          --Title
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 190, col_txt_top )

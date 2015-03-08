@@ -133,8 +133,7 @@ function sys_enter ()
       local x,y = pos:get()
       local d = rnd.rnd( 1500, 2500 )
       local a = math.atan2( y, x ) + math.pi
-      local offset = vec2.new()
-      offset:setP( d, a )
+      local offset = vec2.newP(d, a)
       pos = pos + offset
 
       -- Create the badass enemy

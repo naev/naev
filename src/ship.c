@@ -935,11 +935,10 @@ int ships_load (void)
       buf  = ndata_read( file, &bufsize );
       doc  = xmlParseMemory( buf, bufsize );
 
-      free(file);
-   
       if (doc == NULL) {
          free(buf);
-         WARN("%s file is invalid xml!",file);
+         WARN("%s file is invalid xml!", file);
+         free(file);
          continue;
       }
    
@@ -947,10 +946,13 @@ int ships_load (void)
       if (node == NULL) {
          xmlFreeDoc(doc);
          free(buf);
-         WARN("Malformed %s file: does not contain elements",file);
+         WARN("Malformed %s file: does not contain elements", file);
+         free(file);
          continue;
       }
    
+      free(file);
+
       if (xml_isNode(node, XML_SHIP))
          /* Load the ship. */
          ship_parse( &array_grow(&ship_stack), node );

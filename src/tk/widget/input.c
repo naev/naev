@@ -25,6 +25,8 @@ static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, SDLKey key );
 static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
+static void inp_focusGain( Widget* inp );
+static void inp_focusLose( Widget* inp );
 
 
 /**
@@ -63,7 +65,8 @@ void window_addInput( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent        = inp_key;
    wgt->textevent       = inp_text;
-   /*wgt->keyevent        = inp_key;*/
+   wgt->focusGain       = inp_focusGain;
+   wgt->focusLose       = inp_focusLose;
    wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
    wgt->dat.inp.max     = max+1;
    wgt->dat.inp.oneline = oneline;
@@ -419,6 +422,14 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       return 1;
    }
 
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Don't use, but don't eat, either. */
+   if ((key == SDLK_TAB) || (key == SDLK_ESCAPE))
+      return 0;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+   /* Eat everything else that isn't usable. Om nom. */
    /* Only catch some keys. */
    if ((key != SDLK_BACKSPACE) && 
          (key != SDLK_DELETE) &&
@@ -426,7 +437,11 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          (key != SDLK_KP_ENTER) &&
          (key != SDLK_HOME) &&
          (key != SDLK_END))
+#if SDL_VERSION_ATLEAST(2,0,0)
+      return 1; /* SDL2 uses TextInput and should eat most keys. Om nom. */
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
       return 0;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* backspace -> delete text */
    if (key == SDLK_BACKSPACE) {
@@ -712,3 +727,40 @@ void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(u
 
    wgt->dat.inp.fptr = fptr;
 }
+
+/**
+ * @brief Input widget gains focus.
+ *
+ *    @param inp Widget gaining the focus.
+ */
+static void inp_focusGain( Widget* inp )
+{
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_Rect input_pos;
+
+   input_pos.x = (int)inp->x;
+   input_pos.y = (int)inp->y;
+   input_pos.w = (int)inp->w;
+   input_pos.h = (int)inp->h;
+
+   SDL_StartTextInput();
+   SDL_SetTextInputRect( &input_pos );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   (void) inp;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+}
+
+/**
+ * @brief Input widget loses focus.
+ *
+ *    @param inp Widget losing the focus.
+ */
+static void inp_focusLose( Widget* inp )
+{
+   (void) inp;
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_StopTextInput();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+}
+
+

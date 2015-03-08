@@ -405,9 +405,13 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
 /**
  * @brief Gets the name of a random planet.
  *
+ *    @param landable Whether the planet must let the player land normally.
+ *    @param services Services the planet must have.
+ *    @param filter Filter function for including planets.
  *    @return The name of a random planet.
  */
-char* space_getRndPlanet( int landable )
+char* space_getRndPlanet( int landable, unsigned int services,
+      int (*filter)(Planet *p))
 {
    int i,j;
    Planet **tmp;
@@ -425,6 +429,12 @@ char* space_getRndPlanet( int landable )
          pnt = systems_stack[i].planets[j];
 
          if (pnt->real != ASSET_REAL)
+            continue;
+
+         if (services && planet_hasService(pnt, services) != services)
+            continue;
+
+         if (filter != NULL && !filter(pnt))
             continue;
 
          ntmp++;
@@ -1895,6 +1905,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    return 0;
 }
 
+
 /**
  * @brief Adds a planet to a star system.
  *
@@ -1942,8 +1953,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    planetname_stack[spacename_nstack-1] = planet->name;
    systemname_stack[spacename_nstack-1] = sys->name;
 
-   /* Regenerate the economy stuff. */
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    /* Add the presence. */
    if (!systems_loading) {
@@ -2014,14 +2024,15 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    system_setFaction(sys);
 
-   /* Regenerate the economy stuff. */
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    return 0;
 }
 
 /**
  * @brief Adds a jump point to a star system from a diff.
+ *
+ * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
  *    @param jumpname Name of the jump point to add.
@@ -2032,7 +2043,7 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPointDiff(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    return 1;
 }
@@ -2040,6 +2051,8 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
 
 /**
  * @brief Adds a jump point to a star system.
+ *
+ * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
  *    @param jumpname Name of the jump point to add.
@@ -2058,6 +2071,8 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
 
 /**
  * @brief Removes a jump point from a star system.
+ *
+ * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to remove jump point from.
  *    @param jumpname Name of the jump point to remove.
@@ -2091,8 +2106,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
    /* Refresh presence */
    system_setFaction(sys);
 
-   /* Regenerate the economy stuff. */
-   economy_refresh();
+   economy_addQueuedUpdate();
 
    return 0;
 }

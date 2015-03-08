@@ -14,6 +14,7 @@
 #define AFTERBURNER_SENSITIVITY_DEFAULT      250   /**< Default afterburner sensitivity. */
 #define TIME_COMPRESSION_DEFAULT_MAX         5000. /**< Maximum default level of time compression (target speed to match). */
 #define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
+#define REDIRECT_FILE_DEFAULT                1     /**< Whether output should be redirected to a file. */
 #define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
 #define MOUSE_DOUBLECLICK_TIME               0.5   /**< How long to consider double-clicks for. */
@@ -34,6 +35,7 @@
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
+#define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 /* Audio options */
 #define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
@@ -41,7 +43,7 @@
 #define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
 #define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
-#define SOUND_VOLUME_DEFAULT                 0.4   /**< Default sound volume. */
+#define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
 #if USE_OPENAL
 #define BACKEND_DEFAULT                      "openal"
@@ -95,8 +97,11 @@ typedef struct PlayerConf_s {
    double music; /**< Sound level for music. */
 
    /* FPS. */
-   int fps_show; /**< Whether or not should show FPS. */
+   int fps_show; /**< Whether or not FPS should be shown */
    int fps_max; /**< Maximum FPS to limit to. */
+
+   /* Pause. */
+   int pause_show; /**< Whether pause status should be shown. */
 
    /* Joystick. */
    int joystick_ind; /**< Index of joystick to use. */
@@ -125,6 +130,7 @@ typedef struct PlayerConf_s {
    /* Misc. */
    double compression_velocity; /**< Velocity to compress to. */
    double compression_mult; /**< Maximum time multiplier. */
+   int redirect_file; /**< Redirect output to files. */
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */

@@ -502,7 +502,9 @@ function render( dt, dt_mod )
    render_bar( false, "heat", heat/100, txt, col )
    
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100, 0)
+   local hspeed
+   if stats.speed_max <= 0 then hspeed = 0
+   else hspeed = round(speed / stats.speed_max * 100) end
    txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
    col = col_txt_std
    if hspeed >= 200. then

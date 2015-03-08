@@ -104,7 +104,7 @@ const char *keybind_info[][3] = {
    { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
    { "overlay", "Overlay Map", "Opens the in-system overlay map." },
    { "mousefly", "Mouse Flight", "Toggles mouse flying." },
-   { "cooldown", "Active Cooldown", "Engages active cooldown mode." },
+   { "autobrake", "Autobrake", "Begins automatic braking or active cooldown, if stopped." },
    /* Communication */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
@@ -265,7 +265,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
    input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ALL );
    input_setKeybind( "mousefly", KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
-   input_setKeybind( "cooldown", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
+   input_setKeybind( "autobrake", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
    /* Communication */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ALL );
@@ -275,11 +275,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, NMOD_ALL );
-
-   if (wasd)
-      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
-   else
-      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
+   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
 
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ALL );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ALL );
@@ -340,10 +336,10 @@ void input_init (void)
    SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
 
    /* Mouse. */
-   SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
+   SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
@@ -746,13 +742,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* accelerating */
    if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_accel(kabs);
          input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
-            if (!paused) player_autonavAbort(NULL);
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_ACCEL);
             player_accel(1.);
             input_accelButton = 1;
@@ -780,14 +776,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning left */
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_LEFT);
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_autonavAbort(NULL);
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_TURN_LEFT);
             player_left = 1.;
          }
@@ -800,14 +796,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning right */
    } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_RIGHT);
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_autonavAbort(NULL);
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_TURN_RIGHT);
             player_right = 1.;
          }
@@ -820,7 +816,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_REVERSE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
@@ -857,9 +853,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("target_clear")) {
       if (value==KEY_PRESS) player_targetClear();
    /* face the target */
-   } else if (KEY("face") && !repeat) {
+   } else if (INGAME() && NODEAD() && KEY("face") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+         player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_FACE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
@@ -868,7 +864,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         player_autonavAbort(NULL);
+         player_restoreControl( 0, NULL );
          player_board();
       }
 
@@ -942,7 +938,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         player_autonavAbort(NULL);
+         player_restoreControl( 0, NULL );
          player_jump();
       }
    } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
@@ -950,10 +946,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();
-   } else if (KEY("cooldown") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS)
-         player_toggleCooldown();
-
+   } else if (KEY("autobrake") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
+      if (value==KEY_PRESS) {
+         player_restoreControl( PINPUT_BRAKING, NULL );
+         player_brake();
+      }
 
    /*
     * Communication.
@@ -995,7 +992,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             if (paused)
                unpause_game();
             else
-               pause_game();
+               pause_player();
          }
       }
    /* toggle speed mode */
@@ -1171,6 +1168,7 @@ static void input_clickevent( SDL_Event* event )
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* Handle zoom. */
    if (event->button.button == SDL_BUTTON_WHEELUP) {
       input_clickZoom( 1.1 );
@@ -1180,6 +1178,7 @@ static void input_clickevent( SDL_Event* event )
       input_clickZoom( 0.9 );
       return;
    }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Player must not be NULL. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -1351,6 +1350,10 @@ int input_clickedJump( int jump, int autonav )
 
    if (!jp_isUsable(jp))
       return 0;
+
+   /* Update map path. */
+   if (player.p->nav_hyperspace != jump)
+      map_select( jp->target, 0 );
 
    if (autonav) {
       player_targetHyperspaceSet( jump );
@@ -1542,6 +1545,15 @@ void input_handle( SDL_Event* event )
       case SDL_MOUSEBUTTONDOWN:
          input_clickevent( event );
          break;
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         if (event->wheel.y > 0)
+            input_clickZoom( 1.1 );
+         else
+            input_clickZoom( 0.9 );
+         break;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEMOTION:
          input_mouseMove( event );

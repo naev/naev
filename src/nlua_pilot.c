@@ -37,6 +37,7 @@
 #include "gui.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "land_outfits.h"
 
 
 /*
@@ -80,6 +81,7 @@ static int pilotL_dir( lua_State *L );
 static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_faction( lua_State *L );
+static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_setDir( lua_State *L );
@@ -166,6 +168,7 @@ static const luaL_reg pilotL_methods[] = {
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
@@ -259,6 +262,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
@@ -453,6 +457,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    LuaSystem *ls;
    StarSystem *ss;
    Planet *planet;
+   JumpPoint *target;
    int jump;
    PilotFlags flags;
    int *jumpind, njumpind;
@@ -560,10 +565,17 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       njumpind = 0;
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
-         for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
-                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
+         for (i=0; i<cur_system->njumps; i++) {
+            /* The jump into the system must not be exit-only, and unless
+             * ignore_rules is set, must also be non-hidden and have faction
+             * presence matching the pilot's on the remote side.
+             */
+            target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+            if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
+                  (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
+                  (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))))
                jumpind[ njumpind++ ] = i;
+         }
       }
 
       /* Crazy case no landable nor presence, we'll just jump in randomly. */
@@ -1822,6 +1834,29 @@ static int pilotL_faction( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Checks the pilot's spaceworthiness
+ *
+ * @usage spaceworthy = p:spaceworthy()
+ *
+ *    @luaparam p Pilot to get the spaceworthy status of
+ *    @luareturn Whether the pilot's ship is spaceworthy
+ * @luafunc spaceworthy( p )
+ */
+static int pilotL_spaceworthy( lua_State *L )
+{
+   Pilot *p;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push position. */
+   lua_pushboolean( L, (pilot_checkSpaceworthy(p) == NULL) ? 1 : 0 );
+   return 1;
+}
+
+
 /**
  * @brief Sets the pilot's position.
  *
@@ -2364,9 +2399,10 @@ static int pilotL_disable( lua_State *L )
 /**
  * @brief Gets a pilot's cooldown state.
  *
- * @usage p:cooldown()
+ * @usage cooldown, braking = p:cooldown()
  *
  *    @luaparam p Pilot to check the cooldown status of.
+ *    @luareturn Cooldown and cooldown braking status.
  * @luafunc cooldown( p )
  */
 static int pilotL_cooldown( lua_State *L )
@@ -2378,8 +2414,9 @@ static int pilotL_cooldown( lua_State *L )
 
    /* Get the cooldown status. */
    lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN) );
+   lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN_BRAKE) );
 
-   return 1;
+   return 2;
 }
 
 
@@ -2566,6 +2603,10 @@ static int pilotL_addOutfit( lua_State *L )
    if ((added > 0) && p->autoweap)
       pilot_weaponAuto(p);
 
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && added > 0)
+      outfits_updateEquipmentOutfits();
+
    lua_pushnumber(L,added);
    return 1;
 }
@@ -2648,6 +2689,11 @@ static int pilotL_rmOutfit( lua_State *L )
          removed++;
       }
    }
+
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && removed > 0)
+      outfits_updateEquipmentOutfits();
+
    lua_pushnumber( L, removed );
    return 1;
 }
@@ -2939,7 +2985,7 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour, shield nd stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
+ *    @luareturn The armour, shield and stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
@@ -3157,7 +3203,7 @@ static int pilotL_cargoAdd( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_cargoAdd( p, cargo, quantity );
+   quantity = pilot_cargoAdd( p, cargo, quantity, 0 );
    lua_pushnumber( L, quantity );
    return 1;
 }

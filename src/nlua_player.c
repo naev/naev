@@ -32,6 +32,7 @@
 #include "event.h"
 #include "land.h"
 #include "nlua_system.h"
+#include "nlua_outfit.h"
 #include "nlua_planet.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -75,6 +76,9 @@ static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
+static int playerL_ships( lua_State *L );
+static int playerL_shipOutfits( lua_State *L );
+static int playerL_outfits( lua_State *L );
 static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_rmOutfit( lua_State *L );
@@ -110,6 +114,9 @@ static const luaL_reg playerL_methods[] = {
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
+   { "ships", playerL_ships },
+   { "shipOutfits", playerL_shipOutfits },
+   { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
    { "addOutfit", playerL_addOutfit },
    { "rmOutfit", playerL_rmOutfit },
@@ -133,6 +140,9 @@ static const luaL_reg playerL_cond_methods[] = {
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "ships", playerL_ships },
+   { "shipOutfits", playerL_shipOutfits },
+   { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
@@ -424,7 +434,7 @@ static int playerL_getPilot( lua_State *L )
  * @usage jumps = player.jumps()
  *
  *    @luareturn The player's maximum number of jumps.
- * @luafunc fuel()
+ * @luafunc jumps()
  */
 static int playerL_jumps( lua_State *L )
 {
@@ -737,6 +747,117 @@ static int playerL_commclose( lua_State *L )
 
 
 /**
+ * @brief Gets the names of the player's ships.
+ *
+ * @usage names = player.ships() -- The player's ship names.
+ *
+ * @luafunc ships()
+ */
+static int playerL_ships( lua_State *L )
+{
+   int i, nships;
+   const PlayerShip_t *ships;
+
+   ships = player_getShipStack( &nships );
+
+   lua_newtable(L);
+   for (i=0; i<nships; i++) {
+      lua_pushnumber(L, i+1);
+      lua_pushstring(L, ships[i].p->name);
+      lua_rawset(L, -3);
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets the outfits for one of the player's ships.
+ *
+ * @usage outfits = player.shipOutfits("Llama") -- Gets the Llama's outfits
+ *
+ * @luafunc shipOutfits( name )
+ */
+static int playerL_shipOutfits( lua_State *L )
+{
+   const char *str;
+   int i, j, nships;
+   const PlayerShip_t *ships;
+   Pilot *p;
+   LuaOutfit lo;
+
+   /* Get name. */
+   str = luaL_checkstring(L, 1);
+
+   ships = player_getShipStack( &nships );
+
+   /* Get outfit. */
+   lua_newtable(L);
+
+   p = NULL;
+   if (strcmp(str, player.p->name)==0)
+      p = player.p;
+   else {
+      for (i=0; i<nships; i++) {
+         if (strcmp(str, ships[i].p->name)==0) {
+            p = ships[i].p;
+            break;
+         }
+      }
+   }
+
+   if (p == NULL) {
+      NLUA_ERROR( L, "Player does not own a ship named '%s'", str );
+      return 0;
+   }
+
+   lua_newtable( L );
+   j = 1;
+   for (i=0; i<p->noutfits; i++) {
+      if (p->outfits[i]->outfit == NULL)
+         continue;
+
+      /* Set the outfit. */
+      lo.outfit = p->outfits[i]->outfit;
+      lua_pushnumber( L, j++ );
+      lua_pushoutfit( L, lo );
+      lua_rawset( L, -3 );
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets all the outfits the player owns.
+ *
+ * If you want the quantity, call player.numOutfit() on the individual outfit.
+ *
+ * @usage player.outfits() -- A table of all the player's outfits.
+ *
+ * @luafunc outfits()
+ */
+static int playerL_outfits( lua_State *L )
+{
+   int i, noutfits;
+   const PlayerOutfit_t *outfits;
+   LuaOutfit lo;
+
+   outfits = player_getOutfits( &noutfits );
+
+   lua_newtable(L);
+   for (i=0; i<noutfits; i++) {
+      lo.outfit = (Outfit*)outfits[i].o;
+      lua_pushnumber(L, i+1);
+      lua_pushoutfit(L, lo );
+      lua_rawset(L, -3);
+   }
+
+   return 1;
+}
+
+
+/**
  * @brief Gets the number of outfits the player owns in their list (excludes equipped on ships).
  *
  * @usage q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
@@ -821,6 +942,7 @@ static int playerL_rmOutfit( lua_State *L )
 {
    const char *str;
    Outfit *o, **outfits;
+   const PlayerOutfit_t *poutfits;
    int i, q, noutfits;
 
    /* Defaults. */
@@ -837,8 +959,11 @@ static int playerL_rmOutfit( lua_State *L )
       if (noutfits == 0)
          return 0;
 
+      poutfits = player_getOutfits( &noutfits );
       outfits = malloc( sizeof(Outfit*) * noutfits );
-      player_getOutfits(outfits, NULL);
+      for (i=0; i<noutfits; i++)
+         outfits[i] = (Outfit*)poutfits[i].o;
+
       for (i=0; i<noutfits; i++) {
          o = outfits[i];
          q = player_outfitOwned(o);

@@ -429,7 +429,7 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    map_renderSystems( bx, by, x, y, w, h, r, 1 );
 
    /* Render system names. */
-   map_renderNames( x, y, 1 );
+   map_renderNames( bx, by, x, y, w, h, 1 );
 
    /* Render the selected system selections. */
    for (i=0; i<uniedit_nsys; i++) {
@@ -479,11 +479,26 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
    switch (event->type) {
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         /* Must be in bounds. */
+         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+            return 0;
+
+         if (event->wheel.y > 0)
+            uniedit_buttonZoom( 0, "btnZoomIn" );
+         else
+            uniedit_buttonZoom( 0, "btnZoomOut" );
+
+         return 1;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP) {
             uniedit_buttonZoom( 0, "btnZoomIn" );
@@ -493,6 +508,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             uniedit_buttonZoom( 0, "btnZoomOut" );
             return 1;
          }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {
@@ -1455,6 +1471,9 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
       return;
    }
 
+   /* Update economy due to galaxy modification. */
+   economy_execQueued();
+
    uniedit_editGenList( wid );
 }
 
@@ -1526,6 +1545,9 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
       dialogue_alert( "Failed to add virtual asset '%s'!", selected );
       return;
    }
+
+   /* Update economy due to galaxy modification. */
+   economy_execQueued();
 
    /* Regenerate the list. */
    uniedit_editGenList( uniedit_widEdit );

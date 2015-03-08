@@ -19,6 +19,7 @@
 #include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
+#include "slots.h"
 
 
 /* Outfit metatable methods. */
@@ -30,6 +31,7 @@ static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
+static int outfitL_price( lua_State *L );
 static const luaL_reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -40,6 +42,7 @@ static const luaL_reg outfitL_methods[] = {
    { "cpu", outfitL_cpu },
    { "slot", outfitL_slot },
    { "icon", outfitL_icon },
+   { "price", outfitL_price },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -308,12 +311,12 @@ static int outfitL_cpu( lua_State *L )
 
 
 /**
- * @brief Gets the slot name and size of an outfit.
+ * @brief Gets the slot name, size and property of an outfit.
  *
- * @usage slot_name, slot_size = o:slot() -- Gets the slot information of an outfit
+ * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
  *
  *    @luaparam o Outfit to get information of.
- *    @luareturn The name and the size in human readable strings.
+ *    @luareturn The name, size and property in human readable strings.
  * @luafunc slot( o )
  */
 static int outfitL_slot( lua_State *L )
@@ -321,7 +324,9 @@ static int outfitL_slot( lua_State *L )
    Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, outfit_slotName(o));
    lua_pushstring(L, outfit_slotSize(o));
-   return 2;
+   lua_pushstring(L, sp_display( o->slot.spid ));
+
+   return 3;
 }
 
 
@@ -342,4 +347,22 @@ static int outfitL_icon( lua_State *L )
    lua_pushtex( L, lt );
    return 1;
 }
+
+
+/**
+ * @brief Gets the price of an outfit.
+ *
+ * @usage price = o:price()
+ *
+ *    @luaparam o Outfit to get the price of.
+ *    @luareturn The price, in credits.
+ * @luafunc price( o )
+ */
+static int outfitL_price( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit(L,1);
+   lua_pushnumber(L, o->price);
+   return 1;
+}
+
 

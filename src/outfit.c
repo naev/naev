@@ -1279,7 +1279,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%.0f Range\n"
          "%.1f second heat up",
          temp->u.bem.energy,
-         temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
+         temp->u.bem.duration, temp->u.bem.delay,
          temp->u.bem.range,
          temp->u.bem.heatup);
 

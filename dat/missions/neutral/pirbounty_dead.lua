@@ -143,7 +143,10 @@ end
 
 function jumpin ()
    local pos = jump.pos( system.cur(), last_sys )
-   pos = pos + vec2.new( rnd.rnd( 1500, 2500 ), rnd.rnd( 1500, 2500 ) )
+   local offset_ranges = { { -2500, -1500 }, { 1500, 2500 } }
+   local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
+   local yrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
+   pos = pos + vec2.new( rnd.rnd( xrange[1], xrange[2] ), rnd.rnd( yrange[1], yrange[2] ) )
    spawn_pirate( pos )
 end
 
@@ -187,6 +190,7 @@ function pilot_board ()
    target_killed = false
    target_ship:changeAI( "dummy" )
    target_ship:setHilight( false )
+   target_ship:disable() -- Stop it from coming back
    if death_hook ~= nil then hook.rm( death_hook ) end
 end
 
@@ -250,7 +254,7 @@ function spawn_pirate( param )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "board", "pilot_board" )
          death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-         hook.pilot( target_ship, "jump", "pilot_jump" )
+         pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
       else
          fail( msg[1]:format( name ) )
       end
@@ -264,6 +268,9 @@ function succeed ()
    misn.osdActive( 3 )
    if marker ~= nil then
       misn.markerRm( marker )
+   end
+   if pir_jump_hook ~= nil then
+      hook.rm( pir_jump_hook )
    end
 end
 

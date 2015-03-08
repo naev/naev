@@ -31,11 +31,13 @@
 #endif /* DEBUG */
 
 
-#ifdef NOLOGPRINTFCONSOLE
-#define logprintf fprintf
-#else /* NOLOGPRINTFCONSOLE */
 int logprintf( FILE *stream, const char *fmt, ... );
-#endif /* NOLOGPRINTFCONSOLE */
+void log_redirect (void);
+int log_isTerminal (void);
+void log_copy( int enable );
+int log_copying (void);
+void log_purge (void);
+void log_clean (void);
 
 
 #endif /* LOG_H */
