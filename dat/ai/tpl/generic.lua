@@ -208,6 +208,11 @@ function attacked ( attacker )
       end
    end
 
+   -- Ignore hits from dead pilots.
+   if not ai.exists(attacker) then
+      return
+   end
+
    if task ~= "attack" and task ~= "runaway" then
 
       if mem.defensive then
