@@ -1384,6 +1384,9 @@ void map_jump (void)
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
+               /* Restore selected system. */
+               map_selected = map_path[ map_npath ] - systems_stack;
+
                player_targetHyperspaceSet( j );
                break;
             }
