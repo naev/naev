@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>large</size>
   <priority>3</priority>
-  <mass>1350</mass>
+  <mass>1150</mass>
   <price>2200000</price>
   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
   <gfx_store>nanobond</gfx_store>
@@ -13,7 +13,7 @@
  <specific type="modification">
   <cargo>65</cargo>
   <absorb>34</absorb>
-  <armour>1600</armour>
+  <armour>1650</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

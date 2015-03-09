@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>3</priority>
-  <mass>120</mass>
+  <mass>110</mass>
   <price>270000</price>
   <description>Medium-sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area</description>
   <gfx_store>nanobond</gfx_store>

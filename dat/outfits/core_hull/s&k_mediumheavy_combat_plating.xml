@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
-  <mass>360</mass>
+  <mass>310</mass>
   <price>640000</price>
   <description>Designed for destroyers and similarly-sized vessels, Schafer &amp; Kane's medium-heavy combat plating provides excellent protection from everything save capital-class threats.</description>
   <gfx_store>nanobond</gfx_store>
@@ -13,7 +13,7 @@
  <specific type="modification">
   <cargo>32</cargo>
   <absorb>23</absorb>
-  <armour>650</armour>
+  <armour>660</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>
