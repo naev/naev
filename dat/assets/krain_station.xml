@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Krain Station">
+ <pos>
+  <x>-1906.145468</x>
+  <y>6090.771175</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>60.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This station is the headquarters for Krain Industries, manufacturer of the Kestrel.  It's location in Salvador provides raw materials and avoids Empire bureacracy.</description>
+  <bar>Krain Station has limited facilities and is focused on the manufacture of ships.  The bar has a utilitarian but not unplesent atmosphere.</bar>
+ </general>
+ <tech>
+  <item>Krain Industries</item>
+ </tech>
+</asset>
