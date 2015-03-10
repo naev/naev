@@ -18,6 +18,7 @@
   <item>Razor Turret MK1</item>
   <item>Razor Turret MK2</item>
   <item>Razor Turret MK3</item>
+  <item>Heavy Razor Turret</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
@@ -360,6 +361,7 @@
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
+  <item>Heavy Razor Turret</item>
  </tech>
  <tech name="Kinetic 1">
   <item>Gauss Gun</item>
