@@ -187,7 +187,12 @@
   <item>Milspec Prometheus 5403 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
   <item>Previous Generation Large Systems</item>
+  <item>Unicorp PT-900 Core System</item>
   <item>Unicorp PT-1000 Core System</item>
+  <item>Milspec Hermes 8502 Core System</item>
+  <item>Milspec Aegis 8501 Core System</item>
+  <item>Milspec Prometheus 8503 Core System</item>
+  <item>Milspec Orion 8601 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
   <item>Milspec Prometheus 9803 Core System</item>
@@ -789,6 +794,10 @@
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
+  <item>Milspec Orion 8601 Core System</item>
+  <item>Milspec Hermes 8502 Core System</item>
+  <item>Milspec Aegis 8501 Core System</item>
+  <item>Milspec Prometheus 8503 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
