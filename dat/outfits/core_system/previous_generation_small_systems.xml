@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <mass>14</mass>
+  <mass>65</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>reactor_i</gfx_store>

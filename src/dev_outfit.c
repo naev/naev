@@ -281,7 +281,7 @@ void dout_csvMod( const char *path )
    /* Write "header" */
    l = nsnprintf( buf, sizeof(buf),
          "name,type,slot,size,"
-         "license,mass,price,cpu,"
+         "license,mass,price,cpu,cpu_max,"
          "thrust,turn,speed,fuel,energy_usage,"
          "armour,armour_regen,"
          "shield,shield_regen,"
@@ -305,14 +305,14 @@ void dout_csvMod( const char *path )
 
       l = nsnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
-            "%s,%f,%"CREDITS_PRI",%f,"
+            "%s,%f,%"CREDITS_PRI",%f,%f,"
             "%f,%f,%f,%f,%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,%f\n",
             o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
-            o->license, o->mass, o->price, o->cpu,
+            o->license, o->mass, o->price, o->cpu, stats.cpu_max,
             o->u.mod.thrust, o->u.mod.turn * 180. / M_PI, o->u.mod.speed, o->u.mod.fuel, stats.energy_usage,
             o->u.mod.armour, o->u.mod.armour_regen,
             o->u.mod.shield, o->u.mod.shield_regen,

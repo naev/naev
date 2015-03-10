@@ -107,6 +107,7 @@
   <item>Hidden Jump Scanner</item>
   <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
+  <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
@@ -567,6 +568,7 @@
   <item>Improved Stabilizer</item>
   <item>Generic Afterburner</item>
   <item>Fuel Pod</item>
+  <item>Medium Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
@@ -602,6 +604,7 @@
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
+  <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
  </tech>
  <tech name="Missiles 1">

@@ -80,15 +80,18 @@ end
 
 
 function enter()
+    -- End any ongoing scans.
+    if scanning then
+        hook.rm(timerhook)
+        player.omsgRm(omsg)
+        scanning = false
+    end
+
     if (system.cur() == targsys1 and not sysdone1) or (system.cur() == targsys2 and not sysdone2) then
         scantime = 90 -- seconds
         omsg = player.omsgAdd(timermsg:format(scantime), 0)
         timerhook = hook.timer(1000, "scantimer")
         scanning = true
-    elseif scanning then
-        hook.rm(timerhook)
-        player.omsgRm(omsg)
-        scanning = false
     end
 end
 

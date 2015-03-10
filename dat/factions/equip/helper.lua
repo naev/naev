@@ -44,7 +44,7 @@ function equip_getShipBroad( class )
    elseif class == "Drone" then
       return "robotic", "small"
    elseif class == "Heavy Drone" then
-      return "robotic", "medium"
+      return "robotic", "small"
    elseif class == "Mothership" then
       return "robotic", "large"
 

@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
-  <mass>280</mass>
+  <mass>240</mass>
   <price>480000</price>
   <description>Though vessels weighing in at nearly a thousand tonnes can seldom be called stealthy, Schafer &amp; Kane's medium-heavy stealth plating does what it can to reduce sensor signatures, without sacrificing protection.</description>
   <gfx_store>nanobond</gfx_store>
@@ -13,7 +13,7 @@
  <specific type="modification">
   <cargo>25</cargo>
   <absorb>21</absorb>
-  <armour>600</armour>
+  <armour>580</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>30</ew_hide>
  </specific>

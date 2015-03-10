@@ -237,6 +237,7 @@ function jumpin()
         diplomat:setInvincPlayer()
         diplomat:setHilight(true)
         diplomat:setVisplayer()
+        diplomat:setVisible() -- Hack to make ambushes more reliable.
         dpjump = false
         misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     end
@@ -273,6 +274,7 @@ function jumpin()
             diplomat:setInvincPlayer()
             diplomat:setHilight(true)
             diplomat:setVisplayer()
+            diplomat:setVisible() -- Hack to make ambushes more reliable.
             proxy = hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
             for i, j in ipairs(escorts) do
                 if j:exists() then
@@ -322,6 +324,10 @@ function jumpin()
                     if j:exists() then
                         j:setHilight(true)
                         hook.pilot(j, "death", "attackerDeath")
+
+                        -- Just in case.
+                        hook.pilot(j, "jump", "attackerDeath")
+                        hook.pilot(j, "land", "attackerDeath")
                     end
                 end
                 for i, j in ipairs(escorts) do
