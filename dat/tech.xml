@@ -7,6 +7,9 @@
   <item>Laser Cannon MK3</item>
   <item>Ripper Cannon</item>
   <item>Heavy Ripper Cannon</item>
+  <item>Laser PD MK1</item>
+  <item>Laser PD MK2</item>
+  <item>Laser PD MK3</item>
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
@@ -333,12 +336,15 @@
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
+  <item>Laser PD MK1</item>
   <item>Laser Turret MK1</item>
   <item>Ripper Cannon</item>
  </tech>
  <tech name="Laser 2">
   <item>Laser Cannon MK2</item>
   <item>Laser Cannon MK3</item>
+  <item>Laser PD MK2</item>
+  <item>Laser PD MK3</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
   <item>Heavy Ripper Cannon</item>
@@ -512,6 +518,7 @@
   <item>Emergency Shield Booster</item>
   </tech>
  <tech name="Heavy Weapons 1">
+  <item>Laser PD MK1</item>
   <item>Laser Turret MK1</item>
   <item>Turreted Gauss Gun</item>
   <item>Plasma Turret MK1</item>
@@ -527,6 +534,7 @@
   <item>Mercenary License</item>
   </tech>
  <tech name="Heavy Weapons 2">
+  <item>Laser PD MK2</item>
   <item>Laser Turret MK2</item>
   <item>Mass Driver MK1</item>
   <item>Ion Cannon</item>
