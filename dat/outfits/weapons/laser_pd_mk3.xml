@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser PD MK3">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <mass>16</mass>
+  <price>27500</price>
+  <description>While somewhat hard to come by due to Imperial export restrictions, the Laser Point Defense MK3 represents the pinnacle of light laser weapons technology.</description>
+  <gfx_store>laserturret2</gfx_store>
+  <cpu>-12</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx>laser3S</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.55</delay>
+  <speed>550</speed>
+  <range>600</range>
+  <falloff>300</falloff>
+  <gfx_end>laser2S</gfx_end>
+  <energy>10</energy>
+  <heatup>35</heatup>
+  <track>3</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>2</penetrate>
+   <physical>12</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>
