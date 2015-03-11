@@ -33,7 +33,7 @@
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 4500 Engine</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Krain Remige Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-16 Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
@@ -41,8 +41,6 @@
   <structure size="medium"/>
  </slots>
  <stats>
-  <speed_mod>10</speed_mod>
-  <turn_mod>5</turn_mod>
-  <thrust_mod>10</thrust_mod>
+  <ew_hide>5</ew_hide>
  </stats>
 </ship>
