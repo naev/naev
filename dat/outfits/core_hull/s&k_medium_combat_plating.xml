@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>3</priority>
-  <mass>160</mass>
+  <mass>140</mass>
   <price>360000</price>
   <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
   <gfx_store>nanobond</gfx_store>
@@ -13,7 +13,7 @@
  <specific type="modification">
   <cargo>16</cargo>
   <absorb>16</absorb>
-  <armour>230</armour>
+  <armour>240</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

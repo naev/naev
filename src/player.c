@@ -1480,7 +1480,7 @@ void player_checkLandAck( void )
    Planet *p;
 
    /* No authorization to revoke. */
-   if (!player_isFlag(PLAYER_LANDACK))
+   if ((player.p == NULL) || !player_isFlag(PLAYER_LANDACK))
       return;
 
    /* Avoid a potential crash if PLAYER_LANDACK is set inappropriately. */
@@ -2204,6 +2204,9 @@ static int player_thinkMouseFly(void)
  */
 void player_dead (void)
 {
+   /* Explode at normal speed. */
+   pause_setSpeed(1.);
+
    gui_cleanup();
 
    /* Close the overlay. */

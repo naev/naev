@@ -107,6 +107,7 @@
 #include "start.h"
 #include "threadpool.h"
 #include "load.h"
+#include "options.h"
 #include "dialogue.h"
 #include "slots.h"
 
@@ -186,6 +187,19 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
 
+
+   if (!log_isTerminal())
+      log_copy(1);
+#if HAS_WIN32
+   else {
+      /* Windows has no line-buffering, so use unbuffered output
+       * when running from a terminal.
+       */
+      setvbuf( stdout, NULL, _IONBF, 0 );
+      setvbuf( stderr, NULL, _IONBF, 0 );
+   }
+#endif
+
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
 
@@ -203,6 +217,11 @@ int main( int argc, char** argv )
 
    /* Set up debug signal handlers. */
    debug_sigInit();
+
+#if HAS_UNIX
+   /* Set window class and name. */
+   setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+#endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -268,6 +287,14 @@ int main( int argc, char** argv )
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
+   if (conf.redirect_file && log_copying()) {
+      log_redirect();
+      log_copy(0);
+   }
+   else
+      log_purge();
+
+
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
@@ -305,6 +332,11 @@ int main( int argc, char** argv )
    gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
    gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Detect size changes that occurred after window creation. */
+   naev_resize( -1., -1. );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Display the load screen. */
    loadscreen_load();
@@ -360,6 +392,11 @@ int main( int argc, char** argv )
 
    /* Data loading */
    load_all();
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Detect size changes that occurred during load. */
+   naev_resize( -1., -1. );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Generate the CSV. */
    if (conf.devcsv)
@@ -450,12 +487,19 @@ int main( int argc, char** argv )
    /* primary loop */
    while (!quit) {
       while (SDL_PollEvent(&event)) { /* event loop */
-         if (event.type == SDL_QUIT)
+         if (event.type == SDL_QUIT) {
             if (menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
             }
-
+         }
+#if SDL_VERSION_ATLEAST(2,0,0)
+         else if (event.type == SDL_WINDOWEVENT &&
+               event.window.event == SDL_WINDOWEVENT_RESIZED) {
+            naev_resize( event.window.data1, event.window.data2 );
+            continue;
+         }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
@@ -508,6 +552,9 @@ int main( int argc, char** argv )
 
    /* Last free. */
    free(binary_path);
+
+   /* Delete logs if empty. */
+   log_clean();
 
    /* all is well */
    exit(EXIT_SUCCESS);
@@ -750,6 +797,97 @@ void main_loop( int update )
    SDL_GL_SwapBuffers();
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
+
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+/**
+ * @brief Wrapper for gl_resize that handles non-GL reinitialization.
+ */
+void naev_resize( int w, int h )
+{
+   /* Auto-detect window size. */
+   if ((w < 0.) && (h < 0.))
+      SDL_GetWindowSize( gl_screen.window, &w, &h );
+
+   /* Nothing to do. */
+   if ((w == gl_screen.rw) && (h == gl_screen.rh))
+      return;
+
+   /* Resize the GL context, etc. */
+   gl_resize( w, h );
+
+   /* Regenerate the background stars. */
+   if (cur_system != NULL)
+      background_initStars( cur_system->stars );
+   else
+      background_initStars( 1000 ); /* from loadscreen_load */
+
+   /* Must be before gui_reload */
+   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFont.h) );
+
+   /* Reload the GUI (may regenerate land window) */
+   gui_reload();
+
+   /* Resets the overlay dimensions. */
+   ovr_refresh();
+
+   if (nebu_isLoaded())
+      nebu_vbo_init();
+
+   /* Re-center windows. */
+   toolkit_reposition();
+
+   /* Reposition main menu, if open. */
+   menu_main_resize();
+
+   /* Update options menu, if open. */
+   opt_resize();
+}
+
+/*
+ * @brief Toggles between windowed and fullscreen mode.
+ */
+void naev_toggleFullscreen (void)
+{
+   int w, h, mode;
+   SDL_DisplayMode current;
+
+   /* @todo Remove code duplication between this and opt_videoSave */
+   if (conf.fullscreen) {
+      conf.fullscreen = 0;
+      /* Restore windowed mode. */
+      SDL_SetWindowFullscreen( gl_screen.window, 0 );
+
+      SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
+      naev_resize( conf.width, conf.height );
+      SDL_SetWindowPosition( gl_screen.window,
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+
+      return;
+   }
+
+   conf.fullscreen = 1;
+
+   if (conf.modesetting) {
+      mode = SDL_WINDOW_FULLSCREEN;
+
+      SDL_GetWindowDisplayMode( gl_screen.window, &current );
+
+      current.w = conf.width;
+      current.h = conf.height;
+
+      SDL_SetWindowDisplayMode( gl_screen.window, &current );
+   }
+   else
+      mode = SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+   SDL_SetWindowFullscreen( gl_screen.window, mode );
+
+   SDL_GetWindowSize( gl_screen.window, &w, &h );
+   if ((w != conf.width) || (h != conf.height))
+      naev_resize( w, h );
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
@@ -1040,6 +1178,26 @@ static void window_caption (void)
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
+/**
+ * @Brief Gets a short human readable string of the version.
+ *
+ *    @param[out] str String to output.
+ *    @param slen Maximum length of the string.
+ *    @param major Major version.
+ *    @param minor Minor version.
+ *    @param rev Revision.
+ *    @return Number of characters written.
+ */
+int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
+{
+   int n;
+   if (rev<0)
+      n = nsnprintf( str, slen, "%d.%d.0-beta%d", major, minor, ABS(rev) );
+   else
+      n = nsnprintf( str, slen, "%d.%d.%d", major, minor, rev );
+   return n;
+}
+
 
 /**
  * @brief Returns the version in a human readable string.
@@ -1051,15 +1209,7 @@ char *naev_version( int long_version )
 {
    /* Set short version if needed. */
    if (short_version[0] == '\0')
-      nsnprintf( short_version, sizeof(short_version),
-#if VREV < 0
-            "%d.%d.0-beta%d",
-            VMAJOR, VMINOR, ABS(VREV)
-#else /* VREV < 0 */
-            "%d.%d.%d",
-            VMAJOR, VMINOR, VREV
-#endif /* VREV < 0 */
-            );
+      naev_versionString( short_version, sizeof(short_version), VMAJOR, VMINOR, VREV );
 
    /* Set up the long version. */
    if (long_version) {
@@ -1090,7 +1240,7 @@ char *naev_version( int long_version )
 int naev_versionParse( int version[3], char *buf, int nbuf )
 {
    int i, j, s;
-   char cbuf[8];
+   char cbuf[64];
 
    /* Check length. */
    if (nbuf > (int)sizeof(cbuf)) {
@@ -1100,7 +1250,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
 
    s = 0;
    j = 0;
-   for (i=0; i < nbuf; i++) {
+   for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
       cbuf[j++] = buf[i];
       if (buf[i] == '.') {
          cbuf[j] = '\0';

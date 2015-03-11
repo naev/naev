@@ -99,7 +99,10 @@ static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
 static int ndata_openFile (void);
 static int ndata_isndata( const char *path, ... );
-static void ndata_notfound (void);
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int ndata_prompt( void *data );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+static int ndata_notfound (void);
 static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs );
 static char **stripPath( const char **list, int nlist, const char *path );
 static char** filterList( const char** list, int nlist,
@@ -134,6 +137,9 @@ int ndata_setPath( const char* path )
 
    free(ndata_filename);
    free(ndata_dirname);
+   ndata_filename = NULL;
+   ndata_dirname  = NULL;
+
    if (path == NULL)
       return 0;
    else if (nfile_dirExists(path)) {
@@ -160,12 +166,27 @@ const char* ndata_getPath (void)
 }
 
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int ndata_prompt( void *data )
+{
+   int ret;
+
+   ret = SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Missing Data",
+         "Ndata could not be found. If you have the ndata file, drag\n"
+         "and drop it onto the 'NAEV - INSERT NDATA' window.\n\n"
+         "If you don't have the ndata, download it from naev.org", (SDL_Window*)data );
+
+   return ret;
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+
 #define NONDATA
 #include "nondata.c"
 /**
  * @brief Displays an ndata not found message and dies.
  */
-static void ndata_notfound (void)
+static int ndata_notfound (void)
 {
    SDL_Surface *screen;
    SDL_Event event;
@@ -173,11 +194,12 @@ static void ndata_notfound (void)
    SDL_RWops *rw;
    npng_t *npng;
    const char *title = "NAEV - INSERT NDATA";
+   int found;
 
    /* Make sure it's initialized. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
       WARN("Unable to init SDL Video subsystem");
-      return;
+      return 0;
    }
 
    /* Create the window. */
@@ -193,7 +215,7 @@ static void ndata_notfound (void)
    screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
    if (screen == NULL) {
       WARN("Unable to set video mode");
-      return;
+      return 0;
    }
 
    /* Set caption. */
@@ -210,11 +232,19 @@ static void ndata_notfound (void)
    /* Render. */
    SDL_BlitSurface( sur, NULL, screen, NULL );
 #if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_EventState( SDL_DROPFILE, SDL_ENABLE );
+   SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
+#if SDL_VERSION_ATLEAST(2,0,2)
+   SDL_DetachThread(thread);
+#endif /* SDL_VERSION_ATLEAST(2,0,2) */
+
    /* TODO substitute. */
    SDL_RenderPresent( renderer );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_Flip(screen);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+   found = 0;
 
    /* Infinite loop. */
    while (1) {
@@ -233,6 +263,21 @@ static void ndata_notfound (void)
                break;
          }
       }
+#if SDL_VERSION_ATLEAST(2,0,0)
+      else if (event.type == SDL_DROPFILE) {
+         found = ndata_isndata( event.drop.file );
+         if (found) {
+            ndata_setPath( event.drop.file );
+
+            /* Minor hack so ndata filename is saved in conf.lua */
+            conf.ndata = strdup( event.drop.file );
+            free( event.drop.file );
+            break;
+         }
+         else
+            free( event.drop.file );
+      }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       /* Render. */
       SDL_BlitSurface( sur, NULL, screen, NULL );
@@ -243,6 +288,13 @@ static void ndata_notfound (void)
       SDL_Flip(screen);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_EventState( SDL_DROPFILE, SDL_DISABLE );
+   SDL_DestroyWindow(window);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+   return found;
 }
 
 
@@ -365,7 +417,7 @@ static int ndata_openFile (void)
          ndata_filename = malloc(PATH_MAX);
          strncpy(ndata_filename, pathname, PATH_MAX);
       }
-      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX))) {
+      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX-1))) {
          ndata_filename = malloc(PATH_MAX);
          strncpy(ndata_filename, pathname, PATH_MAX);
       }
@@ -403,9 +455,8 @@ static int ndata_openFile (void)
          WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
 
          /* Display the not found message. */
-         ndata_notfound();
-
-         exit(1);
+         if (!ndata_notfound())
+            exit(1);
       }
       else
          return -1;

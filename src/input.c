@@ -126,6 +126,7 @@ const char *keybind_info[][3] = {
    { "mapzoomin", "Radar Zoom In", "Zooms in on the radar." },
    { "mapzoomout", "Radar Zoom Out", "Zooms out on the radar." },
    { "screenshot", "Screenshot", "Takes a screenshot." },
+   { "togglefullscreen", "Toggle Fullscreen", "Toggles between windowed and fullscreen mode." },
    { "pause", "Pause", "Pauses the game." },
    { "speed", "Toggle 2x Speed", "Toggles 2x speed modifier." },
    { "menu", "Small Menu", "Opens the small in-game menu." },
@@ -287,6 +288,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, NMOD_ALL );
+   input_setKeybind( "togglefullscreen", KEYBIND_KEYBOARD, SDLK_F11, NMOD_ALL );
    input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
 
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ALL );
@@ -345,10 +347,10 @@ void input_init (void)
 
 #if SDL_VERSION_ATLEAST(1,3,0)
    /* Window. */
-   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
+   SDL_EventState( SDL_WINDOWEVENT,     SDL_ENABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
@@ -484,7 +486,13 @@ static void input_keyConvDestroy (void)
 SDLKey input_keyConv( const char *name )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-      return SDL_GetKeyFromName( name );
+   SDLKey k;
+   k = SDL_GetKeyFromName( name );
+
+   if (k == SDLK_UNKNOWN)
+      WARN("Keyname '%s' doesn't match any key.", name);
+
+   return k;
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDLKey k, m;
    size_t l;
@@ -997,6 +1005,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* take a screenshot */
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* toggle fullscreen */
+   } else if (KEY("togglefullscreen") && !repeat) {
+      if (value==KEY_PRESS) naev_toggleFullscreen();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    /* pause the games */
    } else if (KEY("pause") && !repeat) {
       if (value==KEY_PRESS) {
@@ -1362,6 +1375,10 @@ int input_clickedJump( int jump, int autonav )
 
    if (!jp_isUsable(jp))
       return 0;
+
+   /* Update map path. */
+   if (player.p->nav_hyperspace != jump)
+      map_select( jp->target, 0 );
 
    if (autonav) {
       player_targetHyperspaceSet( jump );

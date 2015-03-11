@@ -89,6 +89,11 @@ function create()
     stupertakeoff = 15000
     timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
+    -- Allow extra time for refuelling stops.
+    local jumpsperstop = 3 + math.min(tier, 2)
+    if numjumps > jumpsperstop then
+        timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
+    end
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game

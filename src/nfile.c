@@ -576,6 +576,8 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          free(filedata[i].name);
       }
    }
+   else
+      files = NULL;
 
    free(filedata);
    filedata = NULL;
@@ -715,6 +717,7 @@ char* nfile_readFile( int* filesize, const char* path, ... )
          WARN("Error occurred while reading '%s': %s", base, strerror(errno));
          fclose(file);
          *filesize = 0;
+         free(buf);
          return NULL;
       }
       n += pos;

@@ -467,18 +467,21 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    Select_t *sel;
-   char *file, *cleanName;
+   char *file, *filtered;
    int i;
 
    if (dialogue_YesNo( "Remove selected planets?", "This can not be undone." )) {
       for (i=0; i<sysedit_nselect; i++) {
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
-            cleanName = uniedit_nameFilter( sysedit_sys->planets[  sel->u.planet ]->name );
-            file = malloc(16+strlen(cleanName));
-            nsnprintf(file,16+strlen(cleanName),
-                           "dat/assets/%s.xml",cleanName);
+            filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
+            file = malloc(16 + strlen(filtered));
+            nsnprintf(file, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
             nfile_delete(file);
+
+            free(filtered);
+            free(file);
+
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
          }
       }

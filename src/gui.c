@@ -103,6 +103,9 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
+extern int land_wid; /**< From land.c */
+
+
 /**
  * GUI Lua stuff.
  */
@@ -1282,6 +1285,14 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       return;
    }
 
+   /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
+   if (overlay) {
+      x += SCREEN_W / 2;
+      y += SCREEN_H / 2;
+      w *= 2.;
+      h *= 2.;
+   }
+
    if (shape==RADAR_RECT)
       rc = 0;
    else if (shape==RADAR_CIRCLE)
@@ -1371,8 +1382,8 @@ void gui_renderPlayer( double res, int overlay )
    double x, y, r;
 
    if (overlay) {
-      x = player.p->solid->pos.x / res;
-      y = player.p->solid->pos.y / res;
+      x = player.p->solid->pos.x / res + SCREEN_W / 2;
+      y = player.p->solid->pos.y / res + SCREEN_H / 2;
       r = 5.;
    }
    else {
@@ -1602,6 +1613,14 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       }
    }
 
+   if (overlay) {
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+      w  *= 2.;
+      h  *= 2.;
+   }
+
    /* Do the blink. */
    if (ind == player.p->nav_planet)
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
@@ -1706,6 +1725,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       }
    }
 
+   if (overlay) {
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+      w  *= 2.;
+      h  *= 2.;
+   }
+
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
@@ -1715,6 +1742,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       col = &cRed;
    else
       col = &cWhite;
+
    if (overlay)
       a = 1.;
    else
@@ -1952,6 +1980,18 @@ static int gui_runFunc( const char* func, int nargs, int nret )
 
 
 /**
+ * @brief Reloads the GUI.
+ */
+void gui_reload (void)
+{
+   if (gui_L == NULL)
+      return;
+
+   gui_load( gui_pick() );
+}
+
+
+/**
  * @brief Player just changed their cargo.
  */
 void gui_setCargo (void)
@@ -2098,8 +2138,10 @@ int gui_load( const char* name )
    }
 
    /* Recreate land window if landed. */
-   if (landed)
+   if (landed) {
       land_genWindows( 0, 1 );
+      window_lower( land_wid );
+   }
 
    return 0;
 }

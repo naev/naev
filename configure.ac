@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.6.-1], [bobbens@gmail.com])
+AC_INIT([naev], [0.6.-2], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -168,14 +168,14 @@ AS_IF([test "$enable_debug" != "no"], [
 AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
 AC_ARG_WITH([sdl2],
   AC_HELP_STRING([--with-sdl2],
-     [use SDL2 instead of SDL (default: no)]), [
+     [use SDL2 instead of SDL (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdl2=yes
     ], [
       with_sdl2=no
     ])
   ], [
-    with_sdl2=no # TODO should default to yes, but it's too broken atm
+    with_sdl2=yes
   ])
 AC_MSG_RESULT([$with_sdl2])
 

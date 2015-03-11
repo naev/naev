@@ -47,4 +47,9 @@ int menu_askQuit (void);
 void menu_main_close (void);
 
 
+/*
+ * Misc.
+ */
+void menu_main_resize (void);
+
 #endif /* MENU_H */

@@ -313,6 +313,9 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
       *jumps = 0;
       if (pnt != NULL)
          *distance = vect_dist( &player.p->solid->pos, &pnt->pos );
+      else
+         *distance = 0.;
+
       return 0;
    }
 
@@ -429,7 +432,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    }
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * len );
+   found = NULL;
    n = 0;
    for (i=0; i<len; i++) {
 
@@ -437,6 +440,9 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
       sys = system_get( names[i] );
       if (!sys_isKnown(sys))
          continue;
+
+      if (found == NULL) /* Allocate results array on first match. */
+         found = malloc( sizeof(map_find_t) * len );
 
       /* Set more values. */
       ret = map_findDistance( sys, NULL, &found[n].jumps, &found[n].distance );
@@ -519,7 +525,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    }
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * len );
+   found = NULL;
    n = 0;
    for (i=0; i<len; i++) {
 
@@ -539,6 +545,9 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       sys = system_get( sysname );
       if (!sys_isKnown(sys))
          continue;
+
+      if (found == NULL) /* Allocate results array on first match. */
+         found = malloc( sizeof(map_find_t) * len );
 
       /* Set more values. */
       ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
@@ -790,7 +799,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       return -1;
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * map_nknown );
+   found = NULL;
    n = 0;
    for (i=0; i<map_nknown; i++) {
 
@@ -812,6 +821,9 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       sys = system_get( sysname );
       if (!sys_isKnown(sys))
          continue;
+
+      if (found == NULL) /* Allocate results array on first match. */
+         found = malloc( sizeof(map_find_t) * map_nknown );
 
       /* Set more values. */
       ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
@@ -941,7 +953,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       return -1;
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * map_nknown );
+   found = NULL;
    n = 0;
    for (i=0; i<map_nknown; i++) {
 
@@ -963,6 +975,9 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       sys = system_get( sysname );
       if (!sys_isKnown(sys))
          continue;
+
+      if (found == NULL) /* Allocate results array on first match. */
+         found = malloc( sizeof(map_find_t) * map_nknown );
 
       /* Set more values. */
       ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );

@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>large</size>
   <priority>3</priority>
-  <mass>850</mass>
+  <mass>720</mass>
   <price>0</price>
   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
   <gfx_store>nanobond</gfx_store>

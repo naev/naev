@@ -247,6 +247,7 @@ CODE_SOURCE = \
 	ntime.h \
 	nxml.h \
 	nxml_lua.h \
+	nzip.h \
 	opengl.h \
 	opengl_ext.h \
 	opengl_matrix.h \

@@ -374,7 +374,7 @@ void outfits_update( unsigned int wid, char* str )
    (void)str;
    char *outfitname;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf4[PATH_MAX];
    double th;
    int iw, ih;
    int w, h;
@@ -430,6 +430,14 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", outfit->description );
    price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
+
+   if (outfit->license == NULL)
+      strncpy( buf4, "None", sizeof(buf4) );
+   else if (player_hasLicense( outfit->license ))
+      strncpy( buf4, outfit->license, sizeof(buf4) );
+   else
+      nsnprintf( buf4, sizeof(buf4), "\er%s\e0", outfit->license );
+
    nsnprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
@@ -446,7 +454,7 @@ void outfits_update( unsigned int wid, char* str )
          outfit->mass,
          buf2,
          buf3,
-         (outfit->license != NULL) ? outfit->license : "None" );
+         buf4 );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
@@ -466,7 +474,7 @@ void outfits_updateEquipmentOutfits( void )
    int ew, ow;
 
    if (landed && land_doneLoading()) {
-      if planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) {
+      if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
          ow = land_getWid( LAND_WINDOW_OUTFITS );
          outfits_regenList( ow, NULL );
       }
@@ -592,17 +600,10 @@ int outfit_canBuy( char *name, Planet *planet )
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
 
-   /* takes away cargo space but you don't have any */
-   if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
-         && (pilot_cargoFree(player.p) < -outfit->u.mod.cargo)) {
-      land_errDialogueBuild( "You need to empty your cargo first." );
-      failure = 1;
-   }
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
          (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
       land_errDialogueBuild( "You already know of everything this map contains." );
-      failure = 1;
       return 0;
    }
    /* GUI already owned */
@@ -657,6 +658,9 @@ static void outfits_buy( unsigned int wid, char* str )
    int q;
 
    outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
+   if (strcmp(outfitname, "None") == 0)
+      return;
+
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -720,6 +724,9 @@ static void outfits_sell( unsigned int wid, char* str )
    int q;
 
    outfitname  = toolkit_getImageArray( wid, OUTFITS_IAR );
+   if (strcmp(outfitname, "None") == 0)
+      return;
+
    outfit      = outfit_get( outfitname );
 
    q = outfits_getMod();

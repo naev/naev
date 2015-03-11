@@ -94,9 +94,9 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 static int toolkit_textEvent( Window *wdw, SDL_Event* event );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 /* Focus */
-static void toolkit_focusClear( Window *wdw );
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
+static void toolkit_expose( Window *wdw, int expose );
 /* render */
 static void window_renderBorder( Window* w );
 /* Death. */
@@ -146,6 +146,58 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
       wgt->y = wdw->h - wgt->h + y;
    else
       wgt->y = (double) y;
+}
+
+
+/**
+ * @brief Moves a window to the specified coordinates.
+ *
+ *    @param x X position.
+ *    @param y Y position.
+ */
+void toolkit_setWindowPos( Window *wdw, int x, int y )
+{
+   wdw->xrel = -1.;
+   wdw->yrel = -1.;
+
+   /* x pos */
+   if (x == -1) { /* Center */
+      wdw->x = (SCREEN_W - wdw->w)/2.;
+      wdw->xrel = .5;
+   }
+   else if (x < 0)
+      wdw->x = SCREEN_W - wdw->w + (double) x;
+   else
+      wdw->x = (double) x;
+
+   /* y pos */
+   if (y == -1) { /* Center */
+      wdw->y = (SCREEN_H - wdw->h)/2.;
+      wdw->yrel = .5;
+   }
+   else if (y < 0)
+      wdw->y = SCREEN_H - wdw->h + (double) y;
+   else
+      wdw->y = (double) y;
+}
+
+
+/**
+ * @brief Moves a window to the specified coordinates.
+ *
+ *    @param x X position.
+ *    @param y Y position.
+ */
+void window_move( unsigned int wid, int x, int y )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   toolkit_setWindowPos( wdw, x, y );
 }
 
 
@@ -291,6 +343,32 @@ void window_dimWindow( const unsigned int wid, int *w, int *h )
    *h = wdw->h;
 }
 
+
+/**
+ * @brief Gets the dimensions of a widget.
+ *
+ *    @param wid ID of the window that contains the widget.
+ *    @param name Name of the widget to get dimensions of.
+ *    @param[out] w Width of the widget or -1 on error.
+ *    @param[out] h Height of the widget or -1 on error.
+ */
+void window_dimWidget( const unsigned int wid, char *name,  int *w, int *h )
+{
+   Widget *wgt;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid, name);
+   if (wgt == NULL) {
+      *w = -1;
+      *h = -1;
+      return;
+   }
+
+   *w = wgt->w;
+   *h = wgt->h;
+}
+
+
 /**
  * @brief Gets a widget's position.
  *
@@ -413,6 +491,24 @@ unsigned int window_get( const char* wdwname )
 unsigned int window_create( const char* name,
       const int x, const int y, const int w, const int h )
 {
+   return window_createFlags( name, x, y, w, h, 0 );
+}
+
+
+/**
+ * @brief Creates a window.
+ *
+ *    @param name Name of the window to create.
+ *    @param x X position of the window (-1 centers).
+ *    @param y Y position of the window (-1 centers).
+ *    @param w Width of the window (-1 fullscreen).
+ *    @param h Height of the window (-1 fullscreen).
+ *    @param flags Initial flags to set.
+ *    @return Newly created window's ID.
+ */
+unsigned int window_createFlags( const char* name,
+      const int x, const int y, const int w, const int h, unsigned int flags )
+{
    Window *wcur, *wlast, *wdw;
 
    /* Allocate memory. */
@@ -428,6 +524,10 @@ unsigned int window_create( const char* name,
    /* Sane defaults. */
    wdw->idgen        = -1;
    wdw->focus        = -1;
+   wdw->xrel         = -1.;
+   wdw->yrel         = -1.;
+   wdw->flags        = flags;
+   wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? SCREEN_W : (double) w;
@@ -437,20 +537,8 @@ unsigned int window_create( const char* name,
       wdw->x = 0.;
       wdw->y = 0.;
    }
-   else {
-      /* x pos */
-      if (x==-1) /* center */
-         wdw->x = (SCREEN_W - wdw->w)/2.;
-      else if (x < 0)
-         wdw->x = SCREEN_W - wdw->w + (double) x;
-      else wdw->x = (double) x;
-      /* y pos */
-      if (y==-1) /* center */
-         wdw->y = (SCREEN_H - wdw->h)/2.;
-      else if (y < 0)
-         wdw->y = SCREEN_H - wdw->h + (double) y;
-      else wdw->y = (double) y;
-   }
+   else
+      toolkit_setWindowPos( wdw, x, y );
 
    if (toolkit_open==0) { /* toolkit is on */
       input_mouseShow();
@@ -467,13 +555,23 @@ unsigned int window_create( const char* name,
    if (windows == NULL)
       windows = wdw;
    else {
+      /* Take focus from the old window. */
+      if (wdw->exposed) {
+         wcur = toolkit_getActiveWindow();
+         if (wcur != NULL)
+            toolkit_expose( wcur, 0 ); /* wcur is hidden */
+      }
+
+      wlast = NULL;
       for (wcur = windows; wcur != NULL; wcur = wcur->next) {
          if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
                !window_isFlag(wcur, WINDOW_NOFOCUS))
             WARN("Window with name '%s' already exists!",wcur->name);
          wlast = wcur;
       }
-      wlast->next = wdw;
+
+      if (wlast != NULL)
+         wlast->next = wdw;
    }
 
    return wid;
@@ -763,6 +861,15 @@ void window_destroy( const unsigned int wid )
       if (wdw->close_fptr != NULL)
          wdw->close_fptr( wdw->id, wdw->name );
       wdw->close_fptr = NULL;
+
+      /* Disable text input, etc. */
+      toolkit_focusClear( wdw );
+
+      w = toolkit_getActiveWindow();
+      if (w == NULL)
+         break;
+
+      toolkit_expose( w, 1 );
       break;
    }
 }
@@ -852,11 +959,8 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
    }
 
    /* Defocus. */
-   if (wdw->focus == wgt->id) {
-      if (wgt->focusLose != NULL)
-         wgt->focusLose( wgt );
-      wdw->focus = -1;
-   }
+   if (wdw->focus == wgt->id)
+      toolkit_defocusWidget( wdw, wgt );
 
    /* There's dead stuff now. */
    window_dead = 1;
@@ -1845,10 +1949,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          if (toolkit_isFocusable(wgt)) {
             toolkit_focusClear( w );
-            w->focus = wgt->id;
-            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
-            if (wgt->focusGain != NULL)
-               wgt->focusGain( wgt );
+            toolkit_focusWidget( w, wgt );
          }
 
          /* Try to give the event to the widget. */
@@ -2170,12 +2271,14 @@ static void toolkit_purgeDead (void)
  */
 void toolkit_update (void)
 {
+#if !SDL_VERSION_ATLEAST(2,0,0)
    unsigned int t;
    Window *wdw;
    Widget *wgt;
    char buf[2];
    SDL_Event event;
    int ret;
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Clean up the dead if needed. */
    if (!dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
@@ -2194,6 +2297,7 @@ void toolkit_update (void)
       return; /*  No need to handle anything else. */
    }
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* Must have a key pressed. */
    if (input_key == 0 && input_mod == 0)
       return;
@@ -2220,9 +2324,7 @@ void toolkit_update (void)
             event.key.state      = SDL_PRESSED;
             event.key.keysym.sym = input_key;
             event.key.keysym.mod = input_mod;
-#if !SDL_VERSION_ATLEAST(2,0,0)
             event.key.keysym.unicode = (uint8_t)input_text;
-#endif
             ret = wgt->rawevent( wgt, &event );
             if (ret != 0)
                return;
@@ -2240,20 +2342,54 @@ void toolkit_update (void)
       buf[1] = '\0';
       wgt->textevent( wgt, buf );
    }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
+}
+
+
+/**
+ * @brief Exposes or hides a window and notifies its widgets.
+ *
+ *    @param wgt Widget to change exposure of.
+ *    @param expose Whether exposing or hiding.
+ */
+static void toolkit_expose( Window *wdw, int expose )
+{
+   Widget *wgt;
+
+   if (expose == wdw->exposed)
+      return;
+   else
+      wdw->exposed = expose;
+
+   if (expose)
+      toolkit_focusSanitize( wdw );
+   else
+      toolkit_focusClear( wdw );
+
+   if (wdw->focus != -1)
+      return;
+
+   /* Notify widgets (for tabbed children, etc.) */
+   for (wgt = wdw->widgets; wgt != NULL; wgt = wgt->next)
+      if (wgt->exposeevent != NULL)
+         wgt->exposeevent( wgt, expose );
 }
 
 
 /**
  * @brief Clears the window focus.
  */
-static void toolkit_focusClear( Window *wdw )
+void toolkit_focusClear( Window *wdw )
 {
    Widget *wgt;
+
+   if (wdw->focus == -1)
+      return;
+
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wdw->focus == wgt->id) {
-         if (wgt->focusLose != NULL)
-            wgt->focusLose( wgt );
-      }
+      if (wdw->focus == wgt->id)
+         toolkit_defocusWidget( wdw, wgt );
+
       wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    }
 }
@@ -2283,11 +2419,9 @@ void toolkit_focusSanitize( Window *wdw )
             wdw->focus = -1;
             toolkit_nextFocus( wdw ); /* Get first focus. */
          }
-         else {
-            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
-            if (wgt->focusGain != NULL)
-               wgt->focusGain( wgt );
-         }
+         else
+            toolkit_focusWidget( wdw, wgt );
+
          return;
       }
    }
@@ -2312,10 +2446,7 @@ void toolkit_nextFocus( Window *wdw )
          continue;
 
       if (next) {
-         wdw->focus = wgt->id;
-         wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
-         if (wgt->focusGain != NULL)
-            wgt->focusGain( wgt );
+         toolkit_focusWidget( wdw, wgt );
          return;
       }
       else if (wdw->focus == wgt->id) {
@@ -2349,12 +2480,9 @@ void toolkit_prevFocus( Window *wdw )
       if (wdw->focus == wgt->id) {
          if (prev == NULL)
             wdw->focus = -1;
-         else {
-            wdw->focus = prev->id;
-            wgt_setFlag( prev, WGT_FLAG_FOCUSED );
-            if (prev->focusGain != NULL)
-               prev->focusGain( prev );
-         }
+         else
+            toolkit_focusWidget( wdw, prev );
+
          return;
       }
 
@@ -2365,13 +2493,39 @@ void toolkit_prevFocus( Window *wdw )
    /* Focus nothing. */
    if (prev == NULL)
       wdw->focus = -1;
-   else {
-      wdw->focus = prev->id;
-      wgt_setFlag( prev, WGT_FLAG_FOCUSED );
-      if (prev->focusGain != NULL)
-         prev->focusGain( prev );
-   }
+   else
+      toolkit_focusWidget( wdw, prev );
+
    return;
+}
+
+
+/**
+ * @brief Focuses a widget in a window.
+ */
+void toolkit_focusWidget( Window *wdw, Widget *wgt )
+{
+   if (!toolkit_isFocusable(wgt))
+      return;
+
+   wdw->focus = wgt->id;
+   wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+   if (wgt->focusGain != NULL)
+      wgt->focusGain( wgt );
+}
+
+
+/**
+ * @brief Defocuses the focused widget in a window.
+ */
+void toolkit_defocusWidget( Window *wdw, Widget *wgt )
+{
+   if (wdw->focus != wgt->id)
+      return;
+
+   wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
+   if (wgt->focusLose != NULL)
+      wgt->focusLose( wgt );
 }
 
 
@@ -2456,7 +2610,8 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
    if (wgt == NULL)
       return;
 
-   wdw->focus = wgt->id;
+   toolkit_focusClear( wdw );
+   toolkit_focusWidget( wdw, wgt );
 }
 
 
@@ -2482,6 +2637,138 @@ char* window_getFocus( const unsigned int wid )
          return wgt->name;
 
    return NULL;
+}
+
+
+/**
+ * @brief Raises a window (causes all other windows to appear below it).
+ *
+ *    @param wid Window to raise.
+ */
+void window_raise( unsigned int wid )
+{
+   Window *wdw, *wtmp, *wprev, *wlast;
+
+   wdw = window_wget(wid);
+
+   /* Not found, or already top of the stack. */
+   if (wdw == NULL || wdw->next == NULL)
+      return;
+
+   wprev = NULL;
+   wlast = NULL;
+
+   for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
+      if (wtmp->next == wdw)
+         wprev = wtmp;
+      else if (wtmp->next == NULL)
+         wlast = wtmp;
+
+   if (wprev != NULL)
+      wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+
+   if (wlast != NULL)
+      wlast->next = wdw;       /* last links to wdw */
+
+   wdw->next   = NULL;      /* wdw becomes new last window */
+
+   wtmp = toolkit_getActiveWindow();
+
+   /* No active window, or window is the same. */
+   if (wtmp == NULL || wtmp == wdw)
+      return;
+
+   toolkit_expose( wtmp, 0 ); /* wtmp is hidden */
+   toolkit_expose( wdw, 1 );  /* wdw is visible */
+}
+
+
+/**
+ * @brief Lowers a window (causes all other windows to appear above it).
+ *
+ *    @param wid Window to lower.
+ */
+void window_lower( unsigned int wid )
+{
+   Window *wdw, *wtmp, *wprev;
+
+   wdw = window_wget(wid);
+
+   /* Not found, or already bottom of the stack. */
+   if (wdw == NULL || wdw == windows)
+      return;
+
+   wprev = NULL;
+   for (wtmp = windows; wtmp != NULL; wtmp = wtmp->next)
+      if (wtmp->next == wdw)
+         wprev = wtmp;
+
+   if (wprev != NULL)
+      wprev->next = wdw->next; /* wdw-1 links to wdw+1 */
+
+   wdw->next   = windows;   /* wdw links to first window */
+   windows     = wdw;       /* wdw becomes new first window */
+
+   wtmp = toolkit_getActiveWindow();
+
+   /* No active window, or window is the same. */
+   if (wtmp == NULL || wtmp == wdw)
+      return;
+
+   toolkit_expose( wtmp, 1 ); /* wtmp is visible */
+   toolkit_expose( wdw, 0 );  /* wdw is hidden */
+}
+
+
+/**
+ * @brief Repositions windows and their children if resolution changes.
+ */
+void toolkit_reposition (void)
+{
+   Window *w, *wtmp;
+   Widget *wgt;
+   int i, xorig, yorig, xdiff, ydiff;
+
+   for (w = windows; w != NULL; w = w->next) {
+      /* Fullscreen windows must always be full size, though their widgets
+       * don't auto-scale. */
+      if (window_isFlag( w, WINDOW_FULLSCREEN )) {
+         w->w = SCREEN_W;
+         w->h = SCREEN_H;
+         continue;
+      }
+
+      /* Skip if position is fixed. */
+      if (w->xrel == -1. && w->yrel == -1.)
+         continue;
+
+      xdiff = 0.;
+      ydiff = 0.;
+
+      if (w->xrel != -1.) {
+         xorig = w->x;
+         w->x = (SCREEN_W - w->w) * w->xrel;
+         xdiff = w->x - xorig;
+      }
+
+      if (w->yrel != -1.) {
+         yorig = w->y;
+         w->y = (SCREEN_H - w->h) * w->yrel;
+         ydiff = w->y - yorig;
+      }
+
+      /* Tabwin children aren't in the stack and must be manually updated. */
+      for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+         if (wgt->type != WIDGET_TABBEDWINDOW)
+            continue;
+
+         for (i=0; i<wgt->dat.tab.ntabs; i++) {
+            wtmp = window_wget( wgt->dat.tab.windows[i] );
+            wtmp->x += xdiff;
+            wtmp->y += ydiff;
+         }
+      }
+   }
 }
 
 

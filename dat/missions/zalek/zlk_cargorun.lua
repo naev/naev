@@ -29,8 +29,8 @@ title = {}  --stage titles
 text = {}   --mission text
 
 title[1] = "Spaceport Bar"
-text[1] = [[    You walk in the bar and see a scientist wearing a Za'lek badge looking for someone. Unusual, as Za'lek intellectuals rarely leave their own space. 
-After a while of listening to him go around, you surmise that he is looking for someone to pick up and drop off some cargo for him. Eventually he sees you comes up politely. "Excuse me sir, but do you happen do know a ship captain who can help me with something?]]
+text[1] = [[    You walk into the bar and see a scientist wearing a Za'lek badge looking for someone. Unusual, as Za'lek intellectuals rarely leave their own space.
+After a while of listening to him go around, you surmise that he is looking for someone to pick up and drop off some cargo for him. Eventually he sees you comes up politely. "Excuse me sir, but do you happen to know a ship captain who can help me with something?"]]
 
 title[2] = "A long haul through tough territory"
 text[2] = [[    You say that he is looking at one right now. Rather suprisingly, the pompous-looking man laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan, by the way. I warn you, it'll be simple, but rather dangerous, but I will pay you handsomely for your services.

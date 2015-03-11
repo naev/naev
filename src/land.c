@@ -88,7 +88,7 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 int landed = 0; /**< Is player landed. */
 static int land_takeoff = 0; /**< Takeoff. */
 int land_loaded = 0; /**< Finished loading? */
-static unsigned int land_wid = 0; /**< Land window ID. */
+unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Landing Main",
@@ -1051,6 +1051,76 @@ void land_refuel (void)
 
 
 /**
+ * @brief Buys a local system map.
+ */
+static void spaceport_buyMap( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   Outfit *o;
+   unsigned int w;
+
+   /* Make sure the map isn't already known, etc. */
+   if (land_errDialogue( LOCAL_MAP_NAME, "buyOutfit" ))
+      return;
+
+   o = outfit_get( LOCAL_MAP_NAME );
+   if (o == NULL) {
+      WARN("Outfit '%s' does not exist!", LOCAL_MAP_NAME);
+      return;
+   }
+
+   player_modCredits( -o->price );
+   player_addOutfit(o, 1);
+
+   /* Disable the button. */
+   window_disableButtonSoft( land_windows[0], "btnMap" );
+
+   /* Update map quantity in outfitter. */
+   w = land_getWid( LAND_WINDOW_OUTFITS );
+   if (w > 0)
+      outfits_regenList( w, NULL );
+}
+
+
+/**
+ * @brief Adds the "Buy Local Map" button if needed.
+ */
+void land_checkAddMap (void)
+{
+   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
+   Outfit *o;
+
+   /* Maps are only offered if the planet provides fuel. */
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
+      return;
+
+   o = outfit_get( LOCAL_MAP_NAME );
+   if (o == NULL) {
+      WARN("Outfit '%s' does not exist!", LOCAL_MAP_NAME);
+      return;
+   }
+
+   /* Just enable button if it exists. */
+   if (widget_exists( land_windows[0], "btnMap" ))
+      window_enableButton( land_windows[0], "btnMap");
+   /* Else create it. */
+   else {
+      /* Refuel button. */
+      credits2str( cred, o->price, 2 );
+      nsnprintf( buf, sizeof(buf), "Buy Local Map (%s)", cred );
+      window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
+            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnMap",
+            buf, spaceport_buyMap, SDLK_b );
+   }
+
+   /* Make sure player can click it. */
+   if (!outfit_canBuy(LOCAL_MAP_NAME, land_planet))
+      window_disableButtonSoft( land_windows[0], "btnMap" );
+}
+
+
+/**
  * @brief Wrapper for takeoff mission button.
  *
  *    @param wid Window causing takeoff.
@@ -1252,6 +1322,9 @@ void land_genWindows( int load, int changetab )
    if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
+   /* Add local system map button. */
+   land_checkAddMap();
+
    /* Refuel if necessary. */
    land_refuel();
 
@@ -1403,6 +1476,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
          /* Must regenerate outfits. */
          switch (i) {
             case LAND_WINDOW_MAIN:
+               land_checkAddMap();
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );

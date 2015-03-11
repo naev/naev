@@ -220,10 +220,6 @@ void ovr_render( double dt )
    /* First render the background overlay. */
    gl_renderRect( 0., 0., w, h, &c );
 
-   /* We need to center in the image first. */
-   gl_matrixPush();
-      gl_matrixTranslate( w/2., h/2. );
-
    /* Render planets. */
    for (i=0; i<cur_system->nplanets; i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
@@ -255,8 +251,8 @@ void ovr_render( double dt )
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
-      x = player.autonav_pos.x / res;
-      y = player.autonav_pos.y / res;
+      x = player.autonav_pos.x / res + w / 2.;
+      y = player.autonav_pos.y / res + h / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
       gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, "GOTO" );
    }
@@ -266,9 +262,6 @@ void ovr_render( double dt )
 
    /* Render markers. */
    ovr_mrkRenderAll( res );
-
-   /* Pop the matrix. */
-   gl_matrixPop();
 }
 
 
@@ -289,8 +282,8 @@ static void ovr_mrkRenderAll( double res )
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
-      x = mrk->u.pt.x / res;
-      y = mrk->u.pt.y / res;
+      x = mrk->u.pt.x / res + SCREEN_W / 2.;
+      y = mrk->u.pt.y / res + SCREEN_H / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)

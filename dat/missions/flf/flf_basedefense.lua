@@ -43,7 +43,7 @@ else -- default english
     
     title[4] = "Congratulations"
     text[5] = [[    When you step out of your ship, you can see everyone already celebrating the great victory.  Corporal Benito comes up to you and presses a credit chip into your hand.
-    "Its not much, but we couldn't have won without your help."]]
+    "It's not much, but we couldn't have won without your help."]]
     
     refusetitle = "Refusal"
     refusetext = [[    "I can understand why you wouldn't want to face the Dvaered.  We have sent out some forces to launch diversionary attacks in Dvaered space which may force them to pull back their strike force."]]

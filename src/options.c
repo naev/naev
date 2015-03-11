@@ -83,17 +83,17 @@ static void opt_needRestart (void);
 static void opt_gameplay( unsigned int wid );
 static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
-static void opt_gameplaySave( unsigned int wid, char *str );
+static int opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
 static void opt_gameplayUpdate( unsigned int wid, char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, char *str );
-static void opt_videoSave( unsigned int wid, char *str );
+static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
-static void opt_audioSave( unsigned int wid, char *str );
+static int opt_audioSave( unsigned int wid, char *str );
 static void opt_audioDefaults( unsigned int wid, char *str );
 static void opt_audioUpdate( unsigned int wid );
 static void opt_audioLevelStr( char *buf, int max, int type, double pos );
@@ -148,10 +148,16 @@ void opt_menu (void)
  */
 static void opt_OK( unsigned int wid, char *str )
 {
-   opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
-   opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
-   opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
-   opt_close(wid, str);
+   int ret;
+
+   ret = 0;
+   ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
+   ret |= opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
+   ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
+
+   /* Close window if no errors occurred. */
+   if (!ret)
+      opt_close(wid, str);
 }
 
 /**
@@ -168,6 +174,24 @@ static void opt_close( unsigned int wid, char *name )
 	music_volume(conf.music);
 
    window_destroy( opt_wid );
+   opt_wid = 0;
+}
+
+
+/**
+ * @brief Handles resize events for the options menu.
+ */
+void opt_resize (void)
+{
+   char buf[16];
+
+   /* Nothing to do if not open. */
+   if (!opt_wid)
+      return;
+
+   /* Update the resolution input widget. */
+   nsnprintf( buf, sizeof(buf), "%dx%d", gl_screen.rw, gl_screen.rh );
+   window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
 
@@ -319,7 +343,7 @@ static void opt_gameplay( unsigned int wid )
 /**
  * @brief Saves the gameplay options.
  */
-static void opt_gameplaySave( unsigned int wid, char *str )
+static int opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
@@ -344,6 +368,8 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.compression_mult = atoi(tmax);
    if (conf.mesg_visible == 0)
       conf.mesg_visible = INPUT_MESSAGES_DEFAULT;
+
+   return 0;
 }
 
 /**
@@ -836,7 +862,7 @@ static void opt_beep( unsigned int wid, char *str )
 /**
  * @brief Saves the audio stuff.
  */
-static void opt_audioSave( unsigned int wid, char *str )
+static int opt_audioSave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
@@ -873,6 +899,8 @@ static void opt_audioSave( unsigned int wid, char *str )
    /* Faders. */
    conf.sound = window_getFaderValue(wid, "fadSound");
    conf.music = window_getFaderValue(wid, "fadMusic");
+
+   return 0;
 }
 
 
@@ -1108,8 +1136,6 @@ static void opt_video( unsigned int wid )
          NULL, &cDConsole, "Resolution" );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-   window_setInput( wid, "inpRes", buf );
    window_setInputFilter( wid, "inpRes",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
@@ -1184,6 +1210,9 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
 
+   /* Sets inpRes to current resolution, must be after lstRes is added. */
+   opt_resize();
+
    /* OpenGL options. */
    x = 20+cw+20;
    y = -60;
@@ -1215,6 +1244,12 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", "Engine Glow (More RAM)", NULL, conf.engineglow );
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkMinimize", "Minimize on focus loss", NULL, conf.minimize );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
@@ -1253,12 +1288,12 @@ static void opt_videoRes( unsigned int wid, char *str )
 /**
  * @brief Saves the video settings.
  */
-static void opt_videoSave( unsigned int wid, char *str )
+static int opt_videoSave( unsigned int wid, char *str )
 {
    (void) str;
    int i, j, s;
    char *inp, buf[16], width[16], height[16];
-   int w, h, f;
+   int w, h, f, fullscreen;
 
    /* Handle resolution. */
    inp = window_getInput( wid, "inpRes" );
@@ -1282,8 +1317,121 @@ static void opt_videoSave( unsigned int wid, char *str )
    h = atoi(height);
    if ((w==0) || (h==0)) {
       dialogue_alert( "Height/Width invalid. Should be formatted like 1024x768." );
-      return;
+      return 1;
    }
+
+   /* Fullscreen. */
+   fullscreen = window_checkboxState( wid, "chkFullscreen" );
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   int origw, origh, origf, mode, changed;
+   int rw, rh, nw, nh; /* Real width and height. */
+   SDL_DisplayMode current;
+
+   changed = 0;
+   SDL_GetWindowSize( gl_screen.window, &rw, &rh );
+   SDL_GetWindowDisplayMode( gl_screen.window, &current );
+   mode = (conf.modesetting) ?
+         SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+   origw = conf.width;
+   origh = conf.height;
+   origf = conf.fullscreen;
+
+   if ((w != conf.width) || (h != conf.height)) {
+      conf.explicit_dim = 1;
+      conf.width  = w;
+      conf.height = h;
+   }
+
+   /* Enable or disable fullscreen. */
+   if (fullscreen != conf.fullscreen) {
+      conf.fullscreen = fullscreen;
+      changed = 1;
+
+      if (fullscreen) {
+         if (conf.modesetting) {
+            current.w = w;
+            current.h = h;
+
+            SDL_SetWindowDisplayMode( gl_screen.window, &current );
+         }
+         SDL_SetWindowFullscreen( gl_screen.window, mode );
+      }
+      else /* Restore windowed mode. */
+         SDL_SetWindowFullscreen( gl_screen.window, 0 );
+   }
+
+   /* Attempt to detect maximized state (doesn't work on X11) */
+   if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
+      dialogue_alert("Resolution can't be changed while maximized.");
+   /* Set size. Done second, because it can't be set while fullscreen. */
+   else if ((w != rw) || (h != rh)) {
+      /* Can't change window size while fullscreen. */
+      if (fullscreen && origf)
+         opt_needRestart();
+      else if (!fullscreen) {
+         SDL_SetWindowSize( gl_screen.window, w, h );
+         naev_resize( w, h );
+         SDL_SetWindowPosition( gl_screen.window,
+               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+
+         changed = 1;
+      }
+   }
+
+   /* Desktop fullscreen size must be determined dynamically. */
+   if (fullscreen && !conf.modesetting)
+      SDL_GetWindowSize( gl_screen.window, &nw, &nh );
+   else {
+      nw = conf.width;
+      nh = conf.height;
+   }
+
+   /* Settings have changed, switch and offer to reset. */
+   if (changed && !dialogue_YesNo("Keep Video Settings",
+         "Do you want to keep running at %dx%d %s?",
+         nw, nh, fullscreen ? "fullscreen" : "windowed")) {
+      conf.width      = origw;
+      conf.height     = origh;
+      conf.fullscreen = origf;
+      window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
+
+      /* Restore previous resolution. */
+      if ((w != rw) || (h != rw)) {
+         SDL_SetWindowSize( gl_screen.window, rw, rh );
+         naev_resize( rw, rh );
+         SDL_SetWindowPosition( gl_screen.window,
+               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+      }
+
+      /* Restore windowed mode. */
+      if (fullscreen && (fullscreen != conf.fullscreen))
+         SDL_SetWindowFullscreen( gl_screen.window, 0 );
+      else if (!fullscreen && (fullscreen != conf.fullscreen)) {
+         if  (conf.modesetting) {
+            current.w = origw;
+            current.h = origh;
+
+            SDL_SetWindowDisplayMode( gl_screen.window, &current );
+         }
+         SDL_SetWindowFullscreen( gl_screen.window, mode );
+      }
+
+      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+      window_setInput( wid, "inpRes", buf );
+
+      dialogue_msg( "Video Settings Restored",
+            "Resolution reset to %dx%d %s.",
+            rw, rh, conf.fullscreen ? "fullscreen" : "windowed" );
+
+      return 1;
+   }
+   else if (changed) {
+      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+      window_setInput( wid, "inpRes", buf );
+   }
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    if ((w != conf.width) || (h != conf.height)) {
       conf.explicit_dim = 1;
       conf.width  = w;
@@ -1293,12 +1441,11 @@ static void opt_videoSave( unsigned int wid, char *str )
       window_setInput( wid, "inpRes", buf );
    }
 
-   /* Fullscreen. */
-   f = window_checkboxState( wid, "chkFullscreen" );
-   if (conf.fullscreen != f) {
-      conf.fullscreen = f;
+   if (conf.fullscreen != fullscreen) {
+      conf.fullscreen = fullscreen;
       opt_needRestart();
    }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );
@@ -1338,6 +1485,16 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.engineglow = f;
       opt_needRestart();
    }
+   f = window_checkboxState( wid, "chkMinimize" );
+   if (conf.minimize != f) {
+      conf.minimize = f;
+#if SDL_VERSION_ATLEAST(2,0,0)
+      SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
+            conf.minimize ? "1" : "0" );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+   }
+
+   return 0;
 }
 
 /**
@@ -1364,4 +1521,5 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
+   window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
 }

@@ -102,8 +102,16 @@ function create()
     stuperpx   = 0.2 - 0.025 * tier
     stuperjump = 10300 - 300 * tier
     stupertakeoff = 10300 - 75 * tier
-    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
-    timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps) * 1.2)
+    allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
+
+    -- Allow extra time for refuelling stops.
+    local jumpsperstop = 3 + math.min(tier, 3)
+    if numjumps > jumpsperstop then
+        allowance = allowance + math.floor((numjumps-1) / jumpsperstop) * stuperjump
+    end
+
+    timelimit  = time.get() + time.create(0, 0, allowance)
+    timelimit2 = time.get() + time.create(0, 0, allowance * 1.2)
 
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!

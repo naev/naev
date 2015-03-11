@@ -514,13 +514,22 @@ static int gl_createWindow( unsigned int flags )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
    int ret;
+   int w, h;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
+         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
       ERR("Unable to create window!");
+
+   /* Reinitialize resolution parameters. */
+   if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
+      SDL_GetWindowSize( gl_screen.window, &w, &h );
+
+   /* Set focus loss behaviour. */
+   SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
+         conf.minimize ? "1" : "0" );
 
    /* Create the OpenGL context, note we don't need an actual renderer. */
    gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
@@ -551,7 +560,7 @@ static int gl_createWindow( unsigned int flags )
    gl_screen.depth = depth;
 
    /* Actually creating the screen. */
-   if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
+   if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags )==NULL) {
       /* Try again possibly disabling FSAA. */
       if (conf.fsaa > 1) {
          LOG("Unable to create OpenGL window: Trying without FSAA.");
@@ -738,13 +747,17 @@ int gl_init (void)
    if (conf.vsync)
       gl_screen.flags |= OPENGL_VSYNC;
 #endif /* !SDL_VERSION_ATLEAST(2,0,0) */
+
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
    gl_setScale( conf.scalefactor );
    if (conf.fullscreen) {
       gl_screen.flags |= OPENGL_FULLSCREEN;
 #if SDL_VERSION_ATLEAST(2,0,0)
-      flags |= SDL_WINDOW_FULLSCREEN;
+      if (conf.modesetting)
+         flags |= SDL_WINDOW_FULLSCREEN;
+      else
+         flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
       flags |= SDL_FULLSCREEN;
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -803,6 +816,32 @@ int gl_init (void)
 
    return 0;
 }
+
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+/**
+ * @brief Handles a window resize and resets gl_screen parametes.
+ *
+ *    @param w New width.
+ *    @param h New height.
+ */
+void gl_resize( int w, int h )
+{
+   glViewport( 0, 0, w, h );
+
+   gl_screen.rw = w;
+   gl_screen.rh = h;
+
+   /* Reset scaling. */
+   gl_setScale( conf.scalefactor );
+
+   gl_setupScaling();
+   gl_setDefViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+   gl_defViewport();
+
+   gl_checkErr();
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**

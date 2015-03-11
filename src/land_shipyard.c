@@ -346,6 +346,9 @@ static void shipyard_buy( unsigned int wid, char* str )
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   if (strcmp(shipname, "None") == 0)
+      return;
+
    ship = ship_get( shipname );
 
    credits_t targetprice = ship_buyPrice(ship);
@@ -479,6 +482,9 @@ static void shipyard_trade( unsigned int wid, char* str )
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   if (strcmp(shipname, "None") == 0)
+      return;
+
    ship = ship_get( shipname );
 
    credits_t targetprice = ship_buyPrice(ship);
