@@ -122,6 +122,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  "Stress Dissipation" ),
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            "Crew" ),
    D__ELEM( SS_TYPE_D_MASS,               mass_mod,            "Mass" ),
+   D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    "Engine Mass Limit" ),
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         "Energy Capacity" ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        "Energy Usage" ),

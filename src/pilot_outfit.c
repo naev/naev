@@ -1030,6 +1030,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
    pilot->cap_cargo    *= s->cargo_mod;
+   s->engine_limit     *= s->engine_limit_rel;
 
    /*
     * Flat increases.
