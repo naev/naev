@@ -2004,6 +2004,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
    StarSystem *sys;
    double a, diff;
    int can_hyp;
+   HookParam hparam;
 
    /* pilot is actually in hyperspace */
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
@@ -2023,7 +2024,13 @@ static void pilot_hyperspace( Pilot* p, double dt )
          if (p->id == PLAYER_ID) /* player.p just broke hyperspace */
             player_setFlag( PLAYER_HOOK_HYPER );
          else {
-            pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
+            hparam.type        = HOOK_PARAM_JUMP;
+            hparam.u.lj.srcid  = cur_system->id;
+            hparam.u.lj.destid = cur_system->jumps[ p->nav_hyperspace ].targetid;
+
+            /* Should be run before messing with delete flag. */
+            pilot_runHookParam( p, PILOT_HOOK_JUMP, &hparam, 1 );
+
             pilot_delete(p);
          }
          return;
