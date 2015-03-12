@@ -358,8 +358,8 @@ int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int w
                pilot->name, outfit->name );
       return -1;
    }
-   else if ((outfit_cpu(outfit) > 0) &&
-         (pilot->cpu < outfit_cpu(outfit))) {
+   else if ((outfit_cpu(outfit) < 0) &&
+         (pilot->cpu < ABS( outfit_cpu(outfit) ))) {
       if (warn)
          WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
                pilot->name, outfit->name );
