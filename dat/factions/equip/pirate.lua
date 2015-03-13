@@ -151,7 +151,11 @@ function equip_pirateMilitary( p, shipsize )
 
 
    else
-      equip_cores(p, "Nexus Bolt 4500 Engine", "Milspec Prometheus 9803 Core System", "S&K Heavy Combat Plating")
+      if p:ship():baseType() == "Kestrel" then
+         equip_cores(p, "Krain Remige Engine", "Milspec Prometheus 8503 Core System", "S&K Heavy Combat Plating")
+      else
+         equip_cores(p, "Nexus Bolt 4500 Engine", "Milspec Prometheus 9803 Core System", "S&K Heavy Combat Plating")
+      end
       primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
       use_primary    = nhigh-2
       use_secondary  = 2

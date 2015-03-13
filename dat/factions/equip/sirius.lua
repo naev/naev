@@ -38,7 +38,7 @@ function equip_turretSrsMed ()
    return { "Razor Turret MK2", "Razor Turret MK3", "Heavy Ion Turret" }
 end
 function equip_turretSrsHig ()
-   return { "Heavy Ion Turret" }
+   return { "Heavy Ion Turret", "Heavy Razor Turret" }
 end
 -- RANGED
 function equip_rangedSrs ()

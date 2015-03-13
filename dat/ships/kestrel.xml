@@ -27,13 +27,13 @@
   <weapon size="large" x="-6" y="0" h="12"/>
   <weapon size="medium" x="-24" y="-8" h="8"/>
   <weapon size="medium" x="-24" y="8" h="8"/>
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
+  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-900 Core System</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 4500 Engine</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Krain Remige Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-16 Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
@@ -41,8 +41,6 @@
   <structure size="medium"/>
  </slots>
  <stats>
-  <speed_mod>10</speed_mod>
-  <turn_mod>5</turn_mod>
-  <thrust_mod>10</thrust_mod>
+  <ew_hide>5</ew_hide>
  </stats>
 </ship>

@@ -37,6 +37,9 @@ end
 function equip_turretEmpMed ()
    return { "Laser Turret MK2", "Laser Turret MK3" }
 end
+function equip_turretEmpMedHig ()
+   return { "Heavy Ripper Turret" }
+end
 function equip_turretEmpHig ()
    return { "Heavy Laser", "Turbolaser" }
 end
@@ -129,7 +132,7 @@ function equip_empireMilitary( p, shipsize )
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
          use_forward    = nhigh - use_secondary - use_turrets
          addWeapons( equip_secondaryEmp(), use_secondary )
-         addWeapons( equip_turretEmpMed(), use_turrets )
+         addWeapons( icmb( equip_turretEmpMed(), equip_turretEmpMedHig() ), use_turrets )
          addWeapons( equip_forwardEmpMed(), use_forward )
          medium         = equip_mediumMed()
          low            = equip_lowMed()

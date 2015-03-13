@@ -358,8 +358,8 @@ int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int w
                pilot->name, outfit->name );
       return -1;
    }
-   else if ((outfit_cpu(outfit) > 0) &&
-         (pilot->cpu < outfit_cpu(outfit))) {
+   else if ((outfit_cpu(outfit) < 0) &&
+         (pilot->cpu < ABS( outfit_cpu(outfit) ))) {
       if (warn)
          WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
                pilot->name, outfit->name );
@@ -1030,6 +1030,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
    pilot->cap_cargo    *= s->cargo_mod;
+   s->engine_limit     *= s->engine_limit_rel;
 
    /*
     * Flat increases.

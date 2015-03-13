@@ -7,9 +7,13 @@
   <item>Laser Cannon MK3</item>
   <item>Ripper Cannon</item>
   <item>Heavy Ripper Cannon</item>
+  <item>Laser PD MK1</item>
+  <item>Laser PD MK2</item>
+  <item>Laser PD MK3</item>
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
+  <item>Heavy Ripper Turret</item>
   <item>Heavy Laser</item>
   <item>Turbolaser</item>
   <item>Razor MK1</item>
@@ -18,6 +22,7 @@
   <item>Razor Turret MK1</item>
   <item>Razor Turret MK2</item>
   <item>Razor Turret MK3</item>
+  <item>Heavy Razor Turret</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
@@ -187,7 +192,12 @@
   <item>Milspec Prometheus 5403 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
   <item>Previous Generation Large Systems</item>
+  <item>Unicorp PT-900 Core System</item>
   <item>Unicorp PT-1000 Core System</item>
+  <item>Milspec Hermes 8502 Core System</item>
+  <item>Milspec Aegis 8501 Core System</item>
+  <item>Milspec Prometheus 8503 Core System</item>
+  <item>Milspec Orion 8601 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
   <item>Milspec Prometheus 9803 Core System</item>
@@ -217,6 +227,7 @@
   <item>Nexus Bolt 4500 Engine</item>
   <item>Nexus Bolt 6500 Engine</item>
   <item>Melendez Mammoth XL Engine</item>
+  <item>Krain Remige Engine</item>
   <item>Tricon Typhoon Engine</item>
   <item>Tricon Typhoon II Engine</item>
   <item>Patchwork Light Plating</item>
@@ -327,17 +338,21 @@
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
+  <item>Laser PD MK1</item>
   <item>Laser Turret MK1</item>
   <item>Ripper Cannon</item>
  </tech>
  <tech name="Laser 2">
   <item>Laser Cannon MK2</item>
   <item>Laser Cannon MK3</item>
+  <item>Laser PD MK2</item>
+  <item>Laser PD MK3</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
   <item>Heavy Ripper Cannon</item>
  </tech>
  <tech name="Laser 3">
+  <item>Heavy Ripper Turret</item>
   <item>Heavy Laser</item>
   <item>Turbolaser</item>
  </tech>
@@ -355,6 +370,7 @@
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
+  <item>Heavy Razor Turret</item>
  </tech>
  <tech name="Kinetic 1">
   <item>Gauss Gun</item>
@@ -505,6 +521,7 @@
   <item>Emergency Shield Booster</item>
   </tech>
  <tech name="Heavy Weapons 1">
+  <item>Laser PD MK1</item>
   <item>Laser Turret MK1</item>
   <item>Turreted Gauss Gun</item>
   <item>Plasma Turret MK1</item>
@@ -520,6 +537,7 @@
   <item>Mercenary License</item>
   </tech>
  <tech name="Heavy Weapons 2">
+  <item>Laser PD MK2</item>
   <item>Laser Turret MK2</item>
   <item>Mass Driver MK1</item>
   <item>Ion Cannon</item>
@@ -792,6 +810,10 @@
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
+  <item>Milspec Orion 8601 Core System</item>
+  <item>Milspec Hermes 8502 Core System</item>
+  <item>Milspec Aegis 8501 Core System</item>
+  <item>Milspec Prometheus 8503 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
@@ -829,6 +851,7 @@
   <item>Tricon Zephyr II Engine</item>
   <item>Tricon Cyclone Engine</item>
   <item>Tricon Cyclone II Engine</item>
+  <item>Krain Remige Engine</item>
   <item>Tricon Typhoon Engine</item>
   <item>Tricon Typhoon II Engine</item>
  </tech>
