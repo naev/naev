@@ -2643,6 +2643,7 @@ static int aiL_land( lua_State *L )
 {
    int ret;
    Planet *planet;
+   HookParam hparam;
 
    ret = 0;
 
@@ -2674,7 +2675,11 @@ static int aiL_land( lua_State *L )
    if (!ret) {
       cur_pilot->ptimer = PILOT_LANDING_DELAY;
       pilot_setFlag( cur_pilot, PILOT_LANDING );
-      pilot_runHook( cur_pilot, PILOT_HOOK_LAND );
+
+      hparam.type    = HOOK_PARAM_ASSET;
+      hparam.u.la.id = planet->id;
+
+      pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
    }
 
    lua_pushboolean(L,!ret);
