@@ -43,7 +43,8 @@ function create ()
             "\"If you're willing to negotiate I'll gladly take %d credits to not kill you.\"",
             "\"Ahh what the hell, it's been a good day. You give me %d credits and I'll act like I never saw you.\"",
             "\"So this is the part where you pay up or get shot up. Your choice. What'll be, %d or...\"",
-            "\"Pay up or don't. %d credits now just means I'll wait till later to collect the rest.\""
+            "\"Pay up or don't. %d credits now just means I'll wait till later to collect the rest.\"",
+            "\"This is a toll road, pay up d% credits or die.\"",
       }
       mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], mem.bribe)
       bribe_paid = {
@@ -62,7 +63,7 @@ function create ()
             "\"Know what? I wont kill you.\"",
             "\"Something feels strange. It's almost as if my urge to kill you has completely dissipated.\"",
             "\"Can I keep shooting you anyhow? No? You sure? Fiiiine.\"",
-	    "\"And it only cost you an arm and a leg.\""
+	    "\"And it only cost you an arm and a leg.\"",
       }
       mem.bribe_paid = bribe_paid[ rnd.rnd(1,#bribe_paid) ]
    end
@@ -105,7 +106,6 @@ function taunt ( target, offense )
             "Your ship's mine!",
             "Sup.",
             "Oh ho ho, what do I see here?",
-            "This is a toll road, pay up or die.",
             "You may want to send that distress signal now.",
             "It's time to die.",
             "Back so soon?",
@@ -113,11 +113,10 @@ function taunt ( target, offense )
             "What? Were you expecting prince charming?",
             "Oh hey buddy, long time no see!",
             "Okay, okay... so here's the punchline: Die.",
-            "And then she says \"This isn't working out.\" So that's why you're dead.",
-            "Nothing personal, just business",
+            "And then she says \"This isn't working out.\" So that's why I have to kill you.",
+            "Nothing personal, just business.",
             "Nothing personal.",
             "Just business.",
-            "Hahahah, sike!",
             "I can already taste the rum.",
             "I don't know about you, but I think this is an ambush.",
             "Yep, you're screwed.",
@@ -127,7 +126,7 @@ function taunt ( target, offense )
             "I think you're being shot at. Oh, that was me. My bad.",
             "I'm trying to kill you. Is it working?",
             "I'm trying to kill you.",
-            "THE DINGOS ARE EVERYWHERE!"
+            "THE DINGOS ARE EVERYWHERE!",
       }
    else
       taunts = {
@@ -141,7 +140,7 @@ function taunt ( target, offense )
             "I'm sorry things couldn't work out between us honey.",
             "AAAHHAHAHAHAHAHAHAHAHAHAHAHAH... Now die.",
             "Lets give this man a round of applause boys!",
-            "Shooting back isn't allowed",
+            "Shooting back isn't allowed!",
             "You owe me 20 credits!",
             "You owe me a new paint job!",
             "Fred here said to shoot the red blip.",
@@ -161,7 +160,7 @@ function taunt ( target, offense )
             "Uhhm, sorry. Can you please walk into my bullets next time?",
             "You dead yet?",
             "How are you not dead!",
-	    "OH GOD NOT THE RABBITS!"
+	    "OH GOD NOT THE RABBITS!",
       }
    end
 
