@@ -3,9 +3,9 @@
    This is a Naev mission template.
    In this document aims to provide a structure on which to build many Naev missions.
    The possibilities are endless, so this will not apply to every possible mission.
-   For more information on Naev, please visit: http://code.google.com/p/naev/ 
+   For more information on Naev, please visit: http://naev.org/
    Naev missions are written in the Lua programming language: http://www.lua.org/
-   There is documentation on Naev's Lua API at: http://bobbens.dyndns.org/naev-lua/index.html
+   There is documentation on Naev's Lua API at: http://api.naev.org/
    You can study the source code of missions in [path_to_Naev_folder]/naev/dat/missions/
 
    MISSION: <NAME GOES HERE>
