@@ -911,4 +911,15 @@
    <planet>Niflheim</planet>
   </avail>
  </mission>
+ <mission name = "Goddard Delivery Mission">
+  <lua>goddard/corporate_war/corporate_war1</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>25</chance>
+   <location>Bar</location>
+   <planet>Zhiru</planet>
+  </avail>
+ </mission>
 </Missions>
