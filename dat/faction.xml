@@ -359,7 +359,7 @@
  <faction name="Krain">
   <logo>goddard</logo>
   <colour>blue</colour>
-  <longname>Krain Corporation</longname>
+  <longname>Krain Industries</longname>
   <player>0</player>
   <spawn>krain</spawn>
   <standing>independent</standing>
