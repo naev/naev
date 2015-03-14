@@ -8,13 +8,9 @@ end planet = Zhiru in the Goddard system.
 
 --]]
 
--- This section stores the strings (text) for the mission.
-
--- Bar information, describes how the person appears in the bar
    bar_name = "An oddly dressed man."
    bar_desc = "A man sits at the counter, looking at the other patrons cooly."
 
--- Mission details. We store some text for the mission with specific variables.
    misn_title = "Goddard Delivery Mission" 
    misn_desc = "Pickup and deliver a shipment from Za'lek space bound for the Goddard corporation."
 
@@ -22,7 +18,7 @@ end planet = Zhiru in the Goddard system.
    pmsg = {} --pickup messages
    emsg = {} --ending messages
    fmsg = {} --failure messages
-   bmsg[1] = [[You approach the man, who grins as he sees you. "Ah, you there! Might you be interested in a job?" You sit down next to him as he continues, "I'm Eryk, I work for House Goddard, and we have a shipment we need picked up from a Za'lek station and delivered back here. Would you be interested?"]]     --Use double brackets [[]] for block quotes over several lines.
+   bmsg[1] = [[You approach the man, who grins as he sees you. "Ah, you there! Might you be interested in a job?" You sit down next to him as he continues, "I'm Eryk, I work for House Goddard, and we have a shipment we need picked up from a Za'lek station and delivered back here. Would you be interested?"]]
 
    bmsg[2] = [[Eryk grins again as he says, "Fantastic! We need you to fly to %s in the %s system, and then return to %s. The sooner the better, but we know it's a long trip. Will give you %d credits when you get back." He gets up and quickly mutters something about having to use the facilities before disappearing out of the bar.]] --pickupAsset:name(), pickupSys:name(), returnAsset:name(), misn_reward
 
@@ -58,7 +54,7 @@ function accept ()
       misn.finish(false)
    end
    
-   misn.accept()  -- For missions from the Bar only.
+   misn.accept()
    tk.msg( misn_title, bmsg[2] )
    misn.setTitle( misn_title)
    misn.setReward( misn_reward)
