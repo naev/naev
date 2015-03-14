@@ -98,6 +98,7 @@
    <enemy>Proteron</enemy>
    <enemy>Thurion</enemy>
    <enemy>Nasin</enemy>
+   <enemy>Krain</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
@@ -352,6 +353,19 @@
   <player>0</player>
   <enemies>
    <enemy>Sirius</enemy>
+   <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction name="Krain">
+  <logo>goddard</logo>
+  <colour>blue</colour>
+  <longname>Krain Corporation</longname>
+  <player>0</player>
+  <spawn>krain</spawn>
+  <standing>independent</standing>
+  <equip>empire</equip>
+  <allies />
+  <enemies>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>

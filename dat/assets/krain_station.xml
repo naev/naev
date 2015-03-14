@@ -9,7 +9,7 @@
   <exterior>station03.png</exterior>
  </GFX>
  <presence>
-  <faction>Independent</faction>
+  <faction>Krain</faction>
   <value>60.000000</value>
   <range>3</range>
  </presence>
