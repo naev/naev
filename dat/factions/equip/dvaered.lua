@@ -111,9 +111,12 @@ function equip_dvaeredMilitary( p, shipsize )
       use_secondary  = rnd.rnd(1,2)
       use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
       use_forward    = nhigh - use_secondary - use_turrets
-      addWeapons( equip_secondaryDva(), use_secondary )
       addWeapons( equip_turretDvaMed(), use_turrets )
       addWeapons( equip_forwardDvaMed(), use_forward )
+
+      -- Assumes that secondaries need the smallest slots.
+      addWeapons( equip_secondaryDva(), use_secondary )
+
       medium         = equip_mediumMed()
       low            = equip_lowMed()
 

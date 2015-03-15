@@ -154,7 +154,7 @@ function equip_ship( p, scramble, weapons, medium, low,
    --[[
    --    Set up weapons
    --]]
-   equip_parseWeapons(scramble)
+   equip_parseWeapons(p, scramble)
 
    -- Add high slots
    for k,v in ipairs(outfits) do
@@ -185,25 +185,137 @@ function equip_ship( p, scramble, weapons, medium, low,
 end
 
 
---[[
--- @brief Parses a table of weapon tables with reasonable flexibility.
---
---    @param Whether or not to randomly select outfits.
---]]
-function equip_parseWeapons(scramble)
-   for ak,av in ipairs(weapons) do
-      local o
-      if not scramble then
-         o = av[ rnd.rnd( 1, #av-1 )]
-      end
-      i = 0
-      while i < av[#av] do
-         outfits[ #outfits+1 ] = o or av[ rnd.rnd(1, #av-1 ) ]
-         i = i + 1
+-- Cache to avoid repeat lookups.
+scache = {}
+ocache = {}
+
+
+-- TODO: Expose slots via the Lua API
+_slotSizes = { Small = 1, Medium = 2, Large = 3 }
+
+
+-- Caches the sizes of a ship's weapon slots.
+function cache_ship( ship, name )
+   if scache[name] then
+      return
+   end
+
+   scache[name] = {}
+   for k,v in ipairs( ship:getSlots() ) do
+      if v['type'] == "weapon" then
+         table.insert(scache[name], _slotSizes[ v['size'] ])
       end
    end
 end
 
+
+-- Caches outfit sizes.
+function cache_outfit( name )
+   if ocache[name] then
+      return
+   end
+
+   local outfit = outfit.get(name)
+   local _, size = outfit:slot()
+   ocache[name] = _slotSizes[size]
+end
+
+
+function equip_findOutfit( shipname, slot, outfits )
+   local o
+   for j=1, #outfits-1, 1 do
+      o = outfits[j]
+      cache_outfit(o)
+
+      if ocache[o] <= scache[shipname][slot] then
+         return v
+      end
+   end
+
+   warn(string.format("Could not find an outfit fitting weapon slot %d for '%s'",
+         slot, shipname ))
+end
+
+
+--[[
+-- @brief Parses a table of weapon tables with reasonable flexibility.
+--
+--    @param Pilot to add weapons to
+--    @param Whether or not to randomly select outfits.
+--]]
+function equip_parseWeapons( p, scramble )
+   local ship, name, abort
+
+   ship = p:ship()
+   name = ship:name()
+
+   -- Cache ship's weapon slot sizes.
+   cache_ship(ship, name)
+
+   for ak,av in ipairs(weapons) do
+      local i, o, shuffled
+
+      i = 0
+      o = av[ rnd.rnd(1, #av-1) ]
+      cache_outfit(o)
+
+      if #outfits + av[#av] > #scache[name] then
+         av[#av] = #scache[name] - #outfits
+         abort = true
+      end
+
+      if not scramble then
+         while i < av[#av] do
+            if o and (ocache[o] > scache[name][#outfits + 1]) then
+               if not shuffled then
+                  shuffled = _shuffle( av, #av-1 )
+               end
+
+               o = equip_findOutfit( name, #outfits + 1, shuffled )
+            end
+
+            if o then
+               outfits[ #outfits+1 ] = o
+            end
+            i = i + 1
+         end
+      else
+         while i < av[#av] do
+            o = av[ rnd.rnd(1, #av-1) ]
+            cache_outfit(o)
+
+            if ocache[o] > scache[name][#outfits + 1] then
+               o = equip_findOutfit( name, #outfits + 1, _shuffle( av, #av-1 ) )
+            end
+
+            if o then
+               outfits[ #outfits+1 ] = o
+            end
+            i = i + 1
+         end
+      end
+
+      if abort then
+         warn( string.format("Attempting to equip more than %d weapons on '%s', aborting.",
+               #scache[name], p:name()) )
+         return
+      end
+   end
+end
+
+
+function _shuffle( t, max )
+   local n, k
+
+   n = max
+   while n > 1 do
+      k = math.random(n)
+      n = n - 1
+      t[n], t[k] = t[k], t[n]
+   end
+
+   return t
+end
 
 
 function icmb( t1, t2 )

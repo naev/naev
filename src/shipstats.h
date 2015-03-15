@@ -76,6 +76,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
+   SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -201,6 +202,7 @@ typedef struct ShipStats_ {
    double tur_energy;      /**< Consumption rate of turrets. */
 
    /* Engine limits. */
+   double engine_limit_rel; /**< Engine limit modifier. */
    double engine_limit;     /**< Engine limit. */
 
    /* Misc. */

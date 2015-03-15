@@ -215,9 +215,13 @@ function equip_genericMerchant( p, shipsize )
          use_medium = 1
       end
    elseif shipsize == "medium" then
-      use_secondary = 1
       addWeapons( equip_turretLow(), use_primary )
-      addWeapons( { "EMP Grenade Launcher" }, use_secondary )
+
+      use_secondary = math.min(1, nhigh - use_primary)
+      if use_secondary > 0 then
+         addWeapons( { "EMP Grenade Launcher" }, use_secondary )
+      end
+
       medium   = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.6 then
          use_medium = 1
@@ -227,9 +231,13 @@ function equip_genericMerchant( p, shipsize )
          use_low = 1
       end
    else
-      use_secondary = 2
       addWeapons( equip_turretLow(), use_primary )
-      addWeapons( { "EMP Grenade Launcher" }, use_secondary )
+
+      use_secondary = math.min(2, nhigh - use_primary)
+      if use_secondary > 0 then
+         addWeapons( { "EMP Grenade Launcher" }, use_secondary )
+      end
+
       medium = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.4 then
          use_medium = 1
