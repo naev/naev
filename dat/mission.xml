@@ -922,4 +922,16 @@
    <planet>Zhiru</planet>
   </avail>
  </mission>
+ <mission name = "Goddard Courier Mission">
+  <lua>goddard/corporate_war/corporate_war2</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <location>Bar</location>
+   <planet>Zhiru</planet>
+   <done>Goddard Delivery Mission</done>
+  </avail>
+ </mission>
 </Missions>
