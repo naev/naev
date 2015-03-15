@@ -73,7 +73,7 @@ function accept ()
    misn.setTitle( misn_title)
    misn.setReward( misn_reward)
    misn.setDesc( misn_desc)
-   misn.markerAdd(system.get("Damien"),"high")
+   misnMarker = misn.markerAdd(pickupSys,"high")
 
    missionStatus = 1
 
@@ -92,6 +92,7 @@ function lander()
          missionCargo = misn.cargoAdd("Equipment",10)
          missionStatus = 2
          misn.osdActive(missionStatus)
+         misn.markerMove(misnMarker, returnSys) 
          hook.jumpin("krainContact")
       end
    elseif missionStatus == 2 and planet.cur() == returnAsset then
@@ -106,6 +107,7 @@ function lander()
          var.push("corpWarEnemy","Goddard")
       end
       player.pay(misn_reward)
+      misn.markerRm(misnMarker)
       faction.modPlayer(faction.get(var.peek("corpWarFaction")),3)
       faction.modPlayer(faction.get(var.peek("corpWarEnemy")),-5)
       misn.osdDestroy()
@@ -132,6 +134,7 @@ function contactMade(krainPilot)
       tk.msg(misn_title,cmsg[2])
       misn_reward = misn_reward * 1.05
       returnAsset, returnSys = planet.get("Krain Station")
+      misn.markerMove(misnMarker, returnSys)
       osd[2] = osd2temp:format(returnAsset:name(), returnSys:name())
    else
       tk.msg(misn_title,cmsg[3])

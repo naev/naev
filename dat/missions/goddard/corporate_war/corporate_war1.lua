@@ -59,7 +59,7 @@ function accept ()
    misn.setTitle( misn_title)
    misn.setReward( misn_reward)
    misn.setDesc( misn_desc)
-   misn.markerAdd(system.get("Damien"),"high") --change as appropriate to point to a system object and marker style.
+   misnMarker = misn.markerAdd(pickupSys,"high") --change as appropriate to point to a system object and marker style.
 
    missionStatus = 1
 
@@ -77,6 +77,7 @@ function lander()
          tk.msg(misn_title,pmsg[1])
          missionCargo = misn.cargoAdd("Equipment",10)
          missionStatus = 2
+         misn.markerMove(misnMarker, returnSys)
          misn.osdActive(missionStatus)
       end
    elseif missionStatus == 2 and planet.cur() == returnAsset then
@@ -84,6 +85,7 @@ function lander()
       faction.modPlayer("Goddard",3)
       player.pay(misn_reward)
       tk.msg(misn_title,emsg[1])
+      misn.markerRm(misnMarker)
       misn.osdDestroy()
       misn.finish(true)
    end
