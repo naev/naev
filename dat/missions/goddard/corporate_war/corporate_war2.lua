@@ -1,10 +1,10 @@
 --[[
 
-Corporate War mission 1.
-The player needs to head to Za'lek space to pickup a shipment, and then deliver that shipment back to Goddard space.
+Corporate War mission 2.
+The player needs to head to Za'lek space to pickup a shipment again, and then deliver that shipment back to Goddard space. There is a chance that a rep from Krain Industries will hail the player, and they could side with Krain from here on out.
 start planet = Zhiru in the Goddard system.
-pickup planet = Topkapi Station in the Damien system.
-end planet = Zhiru in the Goddard system.
+pickup planet = Warnecke in the Octavian system.
+end planet = Zhiru in the Goddard system or Krain Station in the Salvador system.
 
 --]]
 
@@ -47,7 +47,7 @@ function create ()
    misn.setDesc( bar_desc )
    
    misn_reward = 75000 + faction.playerStanding("Goddard") * 3000 
-   pickupAsset, pickupSys = planet.get("Topkapi Station")
+   pickupAsset, pickupSys = planet.get("Warnecke")
    returnAsset, returnSys = planet.get("Zhiru")
    krainAsset, krainSys = planet.get("Krain Station")
    cargoSize = 10
