@@ -70,7 +70,6 @@ function create()
    msg_checker = 0
    --set the mission stuff
    if not misn.claim(homesys) then
-      tk.msg("debug","system not claimed! mission aborting.")
       misn.finish(false)
    end
    misn.setReward( reward )
