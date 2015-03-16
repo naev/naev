@@ -88,7 +88,7 @@ end
 
 After the texts follow the functions.
 There are bascially two types, those defined inside this file and the API functions.
-The API functions can be found here: http://bobbens.dyndns.org/naev-lua/index.html
+The API functions can be found here: http://api.naev.org/
 You can usually identify them by their appearance for example:
 misn.accept ()
 system.cur ()
@@ -219,7 +219,7 @@ function accept ()
    -- Set up hooks.
    -- These will be called when a certain situation occurs ingame.
    -- In this case whenever you land.
-   -- See http://bobbens.dyndns.org/naev-lua/modules/hook.html for further hooks.
+   -- See http://api.naev.org/modules/hook.html for further hooks.
    -- "land" is just the name of the function that will be called by this hook.
    hook.land("land")
 end

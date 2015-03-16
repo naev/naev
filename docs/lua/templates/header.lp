@@ -10,7 +10,6 @@
            <a href="http://forum.naev.org/">Forum</a> &middot;
            <a href="http://wiki.naev.org/">Wiki</a> &middot;
            <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
-           <a href="http://code.google.com/p/naev/">Google Code</a> &middot;
            <a href="http://api.naev.org/">Lua API</a> &middot;
            <a href="http://blog.naev.org/chat/">Chat</a>
        </li>
