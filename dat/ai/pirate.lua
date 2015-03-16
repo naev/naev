@@ -41,10 +41,10 @@ function create ()
             "\"Shut up and give me your money! %d credits now.\"",
             "\"You're either really stupid to be chatting or really rich. %d or shut up.\"",
             "\"If you're willing to negotiate I'll gladly take %d credits to not kill you.\"",
-            "\"Ahh what the hell, it's been a good day. You give me %d credits and I'll act like I never saw you.\"",
+            "\"You give me %d credits and I'll act like I never saw you.\"",
             "\"So this is the part where you pay up or get shot up. Your choice. What'll be, %d or...\"",
             "\"Pay up or don't. %d credits now just means I'll wait till later to collect the rest.\"",
-            "\"This is a toll road, pay up d% credits or die.\"",
+            "\"This is a toll road, pay up %d credits or die.\"",
       }
       mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], mem.bribe)
       bribe_paid = {
@@ -57,12 +57,10 @@ function create ()
             "\"And I didn't even have to kill anyone!\"",
             "\"See, this is how we become friends.\"",
             "\"Now if I kill you it'll be just for fun!\"",
-            "\"Well, I could let you go now. Or not. Ah, who cares, go fly, be free.\"",
-            "\"No take backsies!\"",
-            "\"Son, you just made a good financial decision today.\"",
-            "\"Know what? I wont kill you.\"",
+            "\"You just made a good financial decision today.\"",
+            "\"Know what? I won't kill you.\"",
             "\"Something feels strange. It's almost as if my urge to kill you has completely dissipated.\"",
-            "\"Can I keep shooting you anyhow? No? You sure? Fiiiine.\"",
+            "\"Can I keep shooting you anyhow? No? You sure? Fine.\"",
             "\"And it only cost you an arm and a leg.\"",
       }
       mem.bribe_paid = bribe_paid[ rnd.rnd(1,#bribe_paid) ]
