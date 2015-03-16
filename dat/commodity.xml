@@ -56,4 +56,5 @@
  <commodity name="Small Arms"/>
  <commodity name="Message"/>
  <commodity name="Equipment"/>
+ <commodity name="Personnel"/>
 </Commodities>
