@@ -63,7 +63,7 @@ function create ()
             "\"Know what? I wont kill you.\"",
             "\"Something feels strange. It's almost as if my urge to kill you has completely dissipated.\"",
             "\"Can I keep shooting you anyhow? No? You sure? Fiiiine.\"",
-	    "\"And it only cost you an arm and a leg.\"",
+            "\"And it only cost you an arm and a leg.\"",
       }
       mem.bribe_paid = bribe_paid[ rnd.rnd(1,#bribe_paid) ]
    end
@@ -160,7 +160,7 @@ function taunt ( target, offense )
             "Uhhm, sorry. Can you please walk into my bullets next time?",
             "You dead yet?",
             "How are you not dead!",
-	    "OH GOD NOT THE RABBITS!",
+            "OH GOD NOT THE RABBITS!",
       }
    end
 
