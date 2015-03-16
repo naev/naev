@@ -292,6 +292,7 @@ static int ndata_isndata( const char *path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
+   struct zip *arc;
 
    if (path == NULL)
       return 0;
@@ -309,6 +310,18 @@ static int ndata_isndata( const char *path, ... )
    if (!nzip_isZip(file))
       return 0;
 
+   /* Verify that the zip contains dat/start.xml
+    * This is arbitrary, but it's one of the many hard-coded files that must
+    * be present for Naev to run.
+    */
+   arc = nzip_open(file);
+
+   if (!nzip_hasFile(arc, START_DATA_PATH)) {
+      nzip_close(arc);
+      return 0;
+   }
+
+   nzip_close(arc);
    return 1;
 }
 
