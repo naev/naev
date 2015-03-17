@@ -28,7 +28,9 @@ bmsg[2] = [[%s appears relieved as you answer in the affirmative. "Great. Now li
 
 fmsg[1] = [[%s frowns at you. "It looks like your ship doesn't have enough cargo room. Can you get a ship with at least %d tons worth of space free? Come back when you have." With that, you get up and walk away.]] --player does not have enough cargo.
 fmsg[2] = [[%s looks disappointed. "Well, if you change your mind, come on back and let me know." And with that, %s pointedly turns to his drink.]] --player said no in the bar.
-fmsg[3] = [[Your comm blares to life, and you hear %s come on over it. "%s, after you jumped %s was able to get the prototype to safety. Looks like we are out of luck today. Come talk to me when you are ready to try again." Your comm then falls abruptly silent.]] --player left combatsys early.
+fmsg[3] = [[Your comm blares to life, and you hear %s come on over it. "%s, after you jumped %s was able to get the prototype to safety. Looks like we are out of luck today. Come talk to me when you are ready to try again." Your comm then falls abruptly silent.]] --player left combatsys before the ship was boarded.
+fmsg[4] = [[Your comm squaks to life, and you hear %s raging on the other end. "The prototype ship is dead! How could this have happened? Well, whatever. They probably have another one somewhere; we just need to wait for it to surface." The comm system abruptly cuts off.]] --protoShip is dead.
+fmsg[5] = [[Your comm snaps on and you hear the voice of %s begin speaking. "%s, while you were landing, %s had enough time to get their prototype ship to safety. It looks like we won't be able to complete the mission today. Meet me back on %s when you're ready to have another go." The comm dies, leaving the cabin eerily quiet.]] --if the player lands before the ship has been boarded.
 
 emsg[1] = [[You land on %s, grateful to have made it back safely with the equipment and the personnel. The engineers and the marines quickly took off with the cargo, with you exiting your ship shortly after them. You see %s walking across the hanger, flagging you down. "Great job! When you are ready for some more, it looks like we may have another job for you. Come meet me in the bar in a few." And with that, he turns and leaves the way he came.]] 
 
@@ -37,7 +39,7 @@ boardmsg[1] = [[You successfully latch on to the disabled prototype ship, and th
 osd = {}
 osd[1] = "Fly to the %s system."
 osd[2] = "Disable and board the prototype ship."
-osd[2] = "Return with the personnel and cargo to %s in the %s system."
+osd[3] = "Return with the personnel and cargo to %s in the %s system."
 
 function create ()
    
@@ -68,9 +70,10 @@ function create ()
    fmsg[1] = fmsg[1]:format(handlerName, cargoSize)
    fmsg[2] = fmsg[2]:format(handlerName, handlerName)
    fmsg[3] = fmsg[3]:format(handlerName, player.name(), enemyFaction:name())
+   fmsg[4] = fmsg[4]:format(handlerName)
    emsg[1] = emsg[1]:format(startAsset:name(), handlerName)
    osd[1] = osd[1]:format(combatSys:name())
-   osd[2] = osd[2]:format(startAsset:name(), startSys:name())
+   osd[3] = osd[3]:format(startAsset:name(), startSys:name())
 
    misn.setNPC( bar_name, "neutral/male1" )
    misn.setDesc( bar_desc )   
@@ -93,7 +96,7 @@ function accept ()
    misn.setTitle( misn_title)
    misn.setReward( misn_reward)
    misn.setDesc( misn_desc)
-   misn.markerAdd(combatSys)
+   missionMarker = misn.markerAdd(combatSys)
    personnelCargo = misn.cargoAdd("Personnel", 5)
 
    missionStatus = 1
@@ -106,14 +109,14 @@ function accept ()
 end
 
 function jumper()
-   if missionStatus = 1 and system.cur() = combatSys then
+   if missionStatus == 1 and system.cur() == combatSys then --time for combat action.
       
-      --TODO:
-      --make it so ships aren't explicitely hostile until attacked.
-      --hooks.
-
       --update the mission status
       missionStatus = 2
+      misn.osdActive(missionStatus)
+      
+      --set up the system
+      pilot.toggleSpawn("Pirates", false)
 
       --where the enemy ships are gonna be located at
       enemyShipLocX = rnd.rnd(-7500,7500)
@@ -121,14 +124,19 @@ function jumper()
       enemyShipLoc = vec2.new(enemyShipLocX,enemyShipLocY)
       
       --set up the prototype ship
-      if enemyFaction = faction.get("Goddard") then
+      if enemyFaction == faction.get("Goddard") then
          protoShip = pilot.add("Goddard Prototype",nil,enemyShipLoc)
       else
          protoShip = pilot.add("Kestrel Prototype",nil,enemyShipLoc)
       end
       protoShip[1]:setVisible()
-      protoShip[1]:setHilight()
-      protoShip[1]:setHostile()
+      protoShip[1]:control()
+      protoShip[1]:brake()
+      if not protoShip[1]:hostile() then
+         hook.pilot(protoShip[1], "attacked", "attacking")
+         hook.pilot(protoShip[1], "death", "protoShipDead")
+         hook.pilot(protoShip[1], "board", "protoShipBoard")
+      end
 
 
       --set up supporting ships.
@@ -141,21 +149,68 @@ function jumper()
       radius = 80 + #enemyShip * 25
       for i,p in ipairs(enemyShip) do
          p:setVisible()
-         p:setHostile()
+         p:control()
+         p:brake()
          x = radius * math.cos(angle * i)
          y = radius * math.sin(angle * i)
-         pilot.setPos(p, enemyShipLoc + vec2.new(x,y))
+         p:setPos(enemyShipLoc + vec2.new(x,y))
+         if not p:hostile() then
+            hook.pilot(p, "attacked", "attacking")
+         end
       end
+   elseif missionStatus == 2 then --if the player jumps out early.
+      tk.msg(misn_title,fmsg[3])
+      abort()
+   end
+end
 
-      
+function protoShipDead(pDead, pAttacker)
+   if missionStatus == 2 then
+      tk.msg(misn_title,fmsg[4])
+      abort()
+   end
+end
 
+function protoShipBoard(pBoarded, pBoarder)
+   if pBoarder == pilot.player() then
+      tk.msg(misn_title,boardmsg[1])
+      missionStatus = 3
+      equipmentCarg = misn.cargoAdd("Equipment", 10)
+      misn.osdActive(missionStatus)
+      misn.markerMove(missionMarker,startSys)
+   end
+end
+
+--once the player attacks the ships, this sets the whole fleet to hostile.
+function attacking(pAttacked, pAttacker)
+   --there shouldn't be any hostile ships other than the player, as pirates are disabled, so I'm assuming the attacker is the player. /lazy
+   if not protoShip[1]:hostile() then
+      protoShip[1]:control(false)
+      p:setHostile()
+   end
+   for _,p in ipairs(enemyShip) do
+      if not p:hostile() then --don't want to keep setting control to false if they're already hostile.
+         p:control(false)
+         p:setHostile()
+      end
+   end
 end
 
 function lander()
+   if missionStatus == 2 then
+      tk.msg(misn_title,fmsg[5])
+   elseif missionStatus == 3 and planet.cur() == startAsset then
+      tk.msg(misn_title,emsg[1])
+      misn.cargoRm(personnelCargo)
+      misn.cargoRm(equipmentCargo)
+      player.pay(misn_reward)
+      misn.markerRm(missionMarker)
+      misn.finish(true)
+   end
 end
 
 function abort ()
-   if not personellCargo == nil then
+   if not personnelCargo == nil then
       misn.cargoRm(personnelCargo)
    end
    if not equipmentCargo == nil then
