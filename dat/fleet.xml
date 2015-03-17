@@ -35,6 +35,13 @@
    <pilot name="Goddard Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Goddard Prototype">
+  <ai>goddard</ai>
+  <faction>Goddard</faction>
+  <pilots>
+   <pilot name="Goddard Prototype" ship="Goddard"></pilot>
+  </pilots>
+ </fleet>
  <fleet name = "Krain Kestrel">
   <ai>goddard</ai>
   <faction>Krain</faction>
@@ -47,6 +54,13 @@
   <faction>Krain</faction>
   <pilots>
    <pilot name="Krain Lancelot" ship="Lancelot"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name = "Kestrel Prototype">
+  <ai>goddard</ai>
+  <faction>Krain</faction>
+  <pilots>
+   <pilot name="Kestrel Prototype" ship="Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Schroedinger">
