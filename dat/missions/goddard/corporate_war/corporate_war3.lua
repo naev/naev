@@ -6,6 +6,8 @@ start planet = Zhiru in the Goddard system or Krain Station in the Salvador syst
 combat system = somewhere out of the way.
 end planet = same as start.
 
+This mission tries to claim the system "combatSys", currently set to the system Mason.
+
 --]]
 
 -- Bar information
@@ -33,10 +35,13 @@ emsg[1] = [[You land on %s, grateful to have made it back safely with the equipm
 boardmsg[1] = [[You successfully latch on to the disabled prototype ship, and the engineers and marines shuffle over. You hear small arms fire echoing, before the marines and engineers come running back to your ship with several crates in tow. One of the marines yells at you to punch it and get out; you are more than happy to oblige.]]
 
 osd = {}
-osd[1] = "Fly to %s and board the prototype ship."
+osd[1] = "Fly to the %s system."
+osd[2] = "Disable and board the prototype ship."
 osd[2] = "Return with the personnel and cargo to %s in the %s system."
 
 function create ()
+   
+   --This mission tries to claim "combatSys", i.e. Mason.
 
    friendlyFaction = faction.get(var.peek("corpWarFaction"))
    enemyFaction = faction.get(var.peek("corpWarEnemy"))
@@ -50,6 +55,10 @@ function create ()
       handlerName = "Eryk"
    else
       handlerName = "Thregyn"
+
+   if not misn.clam(combatSys) then
+      misn.finish(false)
+   end
 
    bar_name = bar_name:format(handlerName)
    bar_desc = bar_desc:format(handlerName)
@@ -97,6 +106,49 @@ function accept ()
 end
 
 function jumper()
+   if missionStatus = 1 and system.cur() = combatSys then
+      
+      --TODO:
+      --make it so ships aren't explicitely hostile until attacked.
+      --hooks.
+
+      --update the mission status
+      missionStatus = 2
+
+      --where the enemy ships are gonna be located at
+      enemyShipLocX = rnd.rnd(-7500,7500)
+      enemyShipLocY = rnd.rnd(-7500,7500)
+      enemyShipLoc = vec2.new(enemyShipLocX,enemyShipLocY)
+      
+      --set up the prototype ship
+      if enemyFaction = faction.get("Goddard") then
+         protoShip = pilot.add("Goddard Prototype",nil,enemyShipLoc)
+      else
+         protoShip = pilot.add("Kestrel Prototype",nil,enemyShipLoc)
+      end
+      protoShip[1]:setVisible()
+      protoShip[1]:setHilight()
+      protoShip[1]:setHostile()
+
+
+      --set up supporting ships.
+      --they will initially be in a circle around the protoship.
+      for i = 1, 8 do
+         enemyShip_new = pilot.add(enemyFaction:name() .. " Lancelot",nil,enemyShipLoc)
+         table.insert(enemyShip, enemyShip_new)
+      end
+      angle = math.pi * 2 / #enemyShip
+      radius = 80 + #enemyShip * 25
+      for i,p in ipairs(enemyShip) do
+         p:setVisible()
+         p:setHostile()
+         x = radius * math.cos(angle * i)
+         y = radius * math.sin(angle * i)
+         pilot.setPos(p, enemyShipLoc + vec2.new(x,y))
+      end
+
+      
+
 end
 
 function lander()
