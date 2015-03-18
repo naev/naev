@@ -1136,8 +1136,12 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
       /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
-      if (ret == 1)
-         pilot_addOutfit( eq_wgt.selected, o, slot );
+      if (ret == 1) {
+         pilot_addOutfitRaw( eq_wgt.selected, o, slot );
+
+         /* Recalculate stats. */
+         pilot_calcStats( eq_wgt.selected );
+      }
 
       equipment_addAmmo();
    }
