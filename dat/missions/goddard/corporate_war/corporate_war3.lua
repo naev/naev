@@ -178,6 +178,7 @@ function protoShipBoard(pBoarded, pBoarder)
       equipmentCarg = misn.cargoAdd("Equipment", 10)
       misn.osdActive(missionStatus)
       misn.markerMove(missionMarker,startSys)
+      player.unboard()
    end
 end
 
