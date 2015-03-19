@@ -191,10 +191,10 @@ void log_copy( int enable )
    }
 
    if (noutcopy)
-      fprintf( stdout, outcopy );
+      fprintf( stdout, "%s", outcopy );
 
    if (nerrcopy)
-      fprintf( stderr, errcopy );
+      fprintf( stderr, "%s", errcopy );
 
    log_purge();
 }
