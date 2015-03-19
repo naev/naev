@@ -39,7 +39,7 @@
   <ai>goddard</ai>
   <faction>Goddard</faction>
   <pilots>
-   <pilot name="Goddard Prototype" ship="Goddard"></pilot>
+   <pilot name="Goddard Prototype" ship="Goddard MkII"></pilot>
   </pilots>
  </fleet>
  <fleet name = "Krain Kestrel">
@@ -60,7 +60,7 @@
   <ai>goddard</ai>
   <faction>Krain</faction>
   <pilots>
-   <pilot name="Kestrel Prototype" ship="Kestrel"></pilot>
+   <pilot name="Kestrel Prototype" ship="Kestrel MkII"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Schroedinger">
