@@ -103,7 +103,7 @@ function lander()
          var.push("corpWarEnemy","Krain")
       elseif returnAsset == planet.get("Krain Station") then
          tk.msg(misn_title,emsg[2])
-         var.push("corpWarFriend","Krain")
+         var.push("corpWarFaction","Krain")
          var.push("corpWarEnemy","Goddard")
       end
       player.pay(misn_reward)
