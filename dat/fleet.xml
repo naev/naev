@@ -943,4 +943,11 @@
    <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Drone Lancelot">
+  <ai>dummy</ai>
+  <faction>Dummy</faction>
+  <pilots>
+   <pilot name="Drone Lancelot" ship="Lancelot"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>
