@@ -143,7 +143,7 @@ function jumper()
       --they will initially be in a circle around the protoship.
       for i = 1, 8 do
          enemyShip_new = pilot.add(enemyFaction:name() .. " Lancelot",nil,enemyShipLoc)
-         table.insert(enemyShip, enemyShip_new)
+         table.insert(enemyShip, enemyShip_new[1])
       end
       angle = math.pi * 2 / #enemyShip
       radius = 80 + #enemyShip * 25
