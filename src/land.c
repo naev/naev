@@ -900,7 +900,7 @@ static void misn_accept( unsigned int wid, char* str )
 
    /* Make sure player can accept the mission. */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL) break;
+      if (player_missions[i]->data == NULL) break;
    if (i >= MISSION_MAX) {
       dialogue_alert("You have too many active missions.");
       return;
