@@ -99,7 +99,7 @@ function lander()
       misn.cargoRm(missionCargo)
       if returnAsset == planet.get("Zhiru") then
          tk.msg(misn_title,emsg[1])
-         var.push("corpWarFriend","Goddard")
+         var.push("corpWarFaction","Goddard")
          var.push("corpWarEnemy","Krain")
       elseif returnAsset == planet.get("Krain Station") then
          tk.msg(misn_title,emsg[2])
