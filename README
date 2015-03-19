@@ -1,11 +1,10 @@
-
 NAEV README
 
    For an overview of the game, please visit http://wiki.naev.org/wiki/Main_Page
    or view the man page (If you're on a Unix-like system).
-   
+
    An exhaustive list of command line arguments is detailed in the man page.
-   
+
    Hardware requirements can also be found on the website.
 
 1) DEPENDENCIES
@@ -16,13 +15,14 @@ NAEV README
       * libxml2
       * freetype2
       * libpng
-      * openal
+      * OpenAL
       * libvorbis (>= 1.2.1 necessary for Replaygain)
       * binutils
-      
+      * libzip
+
    Note that several distributions ship outdated versions of libvorbis, and
    thus libvorbisfile is statically linked into the release binary.
-   
+
    Compiling your own binary on many distributions will result in Replaygain
    being disabled.
 
@@ -31,7 +31,6 @@ NAEV README
 
    Mac Dependencies are different, see extras/macosx/COMPILE for details.
 
-      
 2) COMPILING
 
    Run: 
@@ -62,21 +61,19 @@ NAEV README
    If Naev is crashing during gameplay, please file a bug report after
    reading http://wiki.naev.org/wiki/Bugs
 
-   If Naev crashes on launch with an error such as 'undefined symbol:
-   ov_read_filter', your version of libvorbis is outdated, please see
-   the appropriate FAQ entry: http://wiki.naev.org/wiki/FAQ
-
 5) KEYBINDINGS
 
-   You can now change keybindings in game which may be more comfortable for
-   you then editting the configuration file.
+   As of 0.5.0, it's possible to set keybindings in-game which is generally
+   more convenient than editing the configuration file.
+
+   A full list of keys can be found at http://wiki.naev.org/wiki/Keybinds
 
    5A) Introduction
       5A1) About
          Naev uses a dynamic keybinding system that allows you to set 
          the keybindings to joystick, keyboard or a mixture of both.
 
-         This can changed via ~/.naev/conf.lua, or with the in-game editor.
+         This can changed via conf.lua, or with the in-game editor.
 
    5B) Joystick
       If you have a joystick you'll have to tell Naev which joystick
@@ -100,10 +97,3 @@ NAEV README
             It isn't used with joystick bindings.
       5B2) Example
          accel = { type = "jbutton", key = 0 }
-         see conf.example for more examples
-
-   5C) Keys
-      For a non-exhaustive list of default keybindings, please see
-      http://wiki.naev.org/wiki/Keybinds
-
-

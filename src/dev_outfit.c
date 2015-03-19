@@ -317,7 +317,7 @@ void dout_csvMod( const char *path )
             o->u.mod.armour, o->u.mod.armour_regen,
             o->u.mod.shield, o->u.mod.shield_regen,
             o->u.mod.energy, o->u.mod.energy_regen,
-            o->u.mod.absorb,o->u.mod.cargo, stats.ew_hide - 1.
+            o->u.mod.absorb * 100, o->u.mod.cargo, (stats.ew_hide - 1.) * 100
             );
       SDL_RWwrite( rw, buf, l, 1 );
    }
