@@ -23,7 +23,7 @@ fmsg = {} --failure messages
 boardmsg = {}
 
 
-bmsg[1] = [[%s greets you as you approach. "Good to see you, %s. If you haven't yet figured it out, %s wanted that delivery because they are building a new ship. A bigger, better, faster ship. Good thing for us is so are we." % grimaces slightly as he furtively peers around. "All of this is top-secret, of course. Now that you know, we need your help. %s needs your help. What do you say? We can reward you well."]] --handlerName, player.name(), enemyfaction, handler name, friendly faction
+bmsg[1] = [[%s greets you as you approach. "Good to see you, %s. If you haven't yet figured it out, %s wanted that delivery because they are building a new ship. A bigger, better, faster ship. Good thing for us is so are we." %s grimaces slightly as he furtively peers around. "All of this is top-secret, of course. Now that you know, we need your help. %s needs your help. What do you say? We can reward you well."]] --handlerName, player.name(), enemyfaction, handler name, friendly faction
 bmsg[2] = [[%s appears relieved as you answer in the affirmative. "Great. Now listen carefully. We just received word that %s is going to be testing their new prototype. Their ship appears to be further along in development than ours, which isn't good. We need you to take some marines and some engineers, and board their prototype. They will steal some technology, and you need to bring it and the personnel back here. When you get back, we will pay you %d credits." He claps you on the back. "This is big, %s. Thanks for your help." You get up to get prepping.]] --handlername, enemyfaction, misn reward, player name.
 
 fmsg[1] = [[%s frowns at you. "It looks like your ship doesn't have enough cargo room. Can you get a ship with at least %d tons worth of space free? Come back when you have." With that, you get up and walk away.]] --player does not have enough cargo.
@@ -59,12 +59,13 @@ function create ()
       handlerName = "Thregyn"
    end
 
-   if not misn.clam(combatSys) then
+   if not misn.claim(combatSys) then
       misn.finish(false)
    end
 
    bar_name = bar_name:format(handlerName)
    bar_desc = bar_desc:format(handlerName)
+   misn_reward = 90000 + faction.playerStanding(friendlyFaction) * 3000 
 
    bmsg[1] = bmsg[1]:format(handlerName, player.name(), enemyFaction:name(), handlerName, friendlyFaction:name())
    bmsg[2] = bmsg[2]:format(handlerName, enemyFaction:name(), misn_reward, player.name())
@@ -78,7 +79,6 @@ function create ()
 
    misn.setNPC( bar_name, "neutral/male1" )
    misn.setDesc( bar_desc )   
-   misn_reward = 90000 + faction.playerStanding(friendlyFaction) * 3000 
 end
 
 
