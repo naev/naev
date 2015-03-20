@@ -129,7 +129,7 @@ typedef struct Mission_ {
  * current player missions
  */
 #define MISSION_MAX  12 /**< No sense in allowing the player have infinite missions. */
-extern Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
+extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
 
 
 /*
@@ -165,6 +165,7 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
  */
 int missions_load (void);
 void mission_cleanup( Mission* misn );
+void mission_shift( int pos );
 void missions_free (void);
 void missions_cleanup (void);
 

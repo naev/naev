@@ -247,7 +247,7 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
    for (i = 0; i < uniedit_nsys; i++) {
       s = uniedit_sys[i];
       xmlw_startElem( writer, "sys" );
-      xmlw_attr( writer, "name", s->name );
+      xmlw_attr( writer, "name", "%s", s->name );
 
       /* Iterate jumps and see if they lead to any other systems in our array. */
       for (j = 0; j < s->njumps; j++) {

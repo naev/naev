@@ -283,13 +283,13 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    if (misn_delete) {
       ret = 2;
       mission_cleanup( cur_mission );
-      for (i=0; i<MISSION_MAX; i++)
-         if (cur_mission == &player_missions[i]) {
-            memmove( &player_missions[i], &player_missions[i+1],
-                  sizeof(Mission) * (MISSION_MAX-i-1) );
-            memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
-            break;
-         }
+      for (i=0; i<MISSION_MAX; i++) {
+         if (cur_mission != player_missions[i])
+            continue;
+
+         mission_shift(i);
+         break;
+      }
    }
 
    return ret;
@@ -609,7 +609,7 @@ static int misn_accept( lua_State *L )
 
    /* find last mission */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL)
+      if (player_missions[i]->data == NULL)
          break;
 
    cur_mission = misn_getFromLua(L);
@@ -622,7 +622,7 @@ static int misn_accept( lua_State *L )
    else { /* copy it over */
       memcpy( &player_missions[i], cur_mission, sizeof(Mission) );
       memset( cur_mission, 0, sizeof(Mission) );
-      cur_mission = &player_missions[i];
+      cur_mission = player_missions[i];
       cur_mission->accepted = 1; /* Mark as accepted. */
 
       /* Need to change pointer. */
