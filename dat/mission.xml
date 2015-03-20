@@ -935,10 +935,10 @@
   </avail>
  </mission>
  <mission name = "Corporate Duties">
-  <lua>goddard/corporate_war/corporate_war3.lua</lua>
+  <lua>goddard/corporate_war/corporate_war3</lua>
   <flags>
    <unique />
-  <flags>
+  </flags>
   <avail>
    <chance>100</chance>
    <location>Bar</location>
