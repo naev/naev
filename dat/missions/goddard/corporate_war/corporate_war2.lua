@@ -106,6 +106,7 @@ function lander()
          var.push("corpWarFriend","Krain")
          var.push("corpWarEnemy","Goddard")
       end
+      var.push("corpWarHQ",returnAsset:name())
       player.pay(misn_reward)
       misn.markerRm(misnMarker)
       faction.modPlayer(faction.get(var.peek("corpWarFaction")),3)

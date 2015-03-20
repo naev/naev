@@ -934,4 +934,15 @@
    <done>Goddard Delivery Mission</done>
   </avail>
  </mission>
+ <mission name = "Corporate Duties">
+  <lua>goddard/corporate_war/corporate_war3.lua</lua>
+  <flags>
+   <unique />
+  <flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():name() == var.peek("corpWarHQ")</cond>
+  </avail>
+ </mission>
 </Missions>
