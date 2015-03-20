@@ -212,7 +212,13 @@ function startTest()
 
       --set up drones, etc, used in test.
       drone = pilot.add("Drone Lancelot","dummy",vec2.new(-4000,3000))
-      
+      drone[1]:control()
+      drone[1]:brake()
+
+      drone2 = pilot.add("Krain Kestrel","dummy",vec2.n32(-3700,2700))
+      drone2[1]:control()
+      drone2[1]:brake()
+
       droneGroup1Coords = vec2.new(1000,-14000)
       droneGroup1 = {}
       droneGroup2Coords = vec2.new(-1000,-16000)
@@ -226,19 +232,17 @@ function startTest()
          y = radius * math.sin(angle * i) 
 
          droneNew1 = pilot.add("Drone Lancelot","dummy",droneGroup1Coords)
-         table.insert(droneGroup1, droneNew1[1])
-         
          droneNew1[1]:control()
          droneNew1[1]:brake()
          droneNew1[1]:setPos(droneGroup1Coords + vec2.new(x,y))
+         table.insert(droneGroup1, droneNew1[1])
 
          droneNew2 = pilot.add("Drone Lancelot","dummy",droneGroup2Coords)
-         table.insert(droneGroup2,droneNew2[1])
-
          droneNew2[1]:control()
          droneNew2[1]:brake()
          droneNew2[1]:setPos(droneGroup2Coords + vec2.new(x,y))
-
+         hook.pilot(droneNew2[1],"attacked","startTheAttack")
+         table.insert(droneGroup2,droneNew2[1])
       end
 
       --start the hooks.
@@ -264,27 +268,68 @@ end
 
 function startTest() --fly to a point.
    testControl:broadcast(ifd[1])
+   sysMrk = system.mrkAdd(14500,14500)
    testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(14500,14500), radius=250,funcname="testTwo"})
 end
 
 function testTwo() --fly through another point on your way to a third.
    hook.rm(testHook)
+   system.mrkRm(sysMrk)
+   sysMrk = system.mrkAdd(-10000,-12000)
    testControl:broadcast(ifd[2])
    testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(-10000,-12000),radius=250,funcname="testThree"})
 end
 
 function testThree() --arrive at the third point.
    hook.rm(testHook)
+   system.mrkRm(sysMrk)
+   sysMrk = system.mrkAdd(-10000,-12000)
    testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(-8000,2000),radius=250,funcname="testFour"})
 end
 
 function testFour() --shoot a drone.
    --get the drone going
-   drone[1]:control()
+   hook.rm(testHook)
+   system.mrkRm(sysMrk)
    drone[1]:hilight()
    drone[1]:setSpeedLimit(50)
    drone[1]:goto(0,3000)
    --hook the next phase to the player killing the drone.
+   hook.pilot(drone[1],"exploded","testFive")
+end
+
+function testFive() --getting shot! woo.
+   drone2[1]:hilight()
+   drone2[1]:attack(pilot.player())
+   testHook = hook.timer(100,"testSix")
+end
+
+function testSix() --done getting shot.
+   _,shield = pilot.player:health()
+   if shield < 30 then
+      hook.rm(testHook)
+      drone[2]:control()
+      drone[2]:brake()
+      
+      sysMrk = system.mrkAdd(droneGroup1Coords)
+      sysMrk2 = system.mrkAdd(droneGroup2Coords)
+   end
+end
+
+function startTheAttack()
+   goddardGroup = {}
+   system.mrkRm(sysMrk)
+   system.mrkRm(sysMrk2)
+   for _,p in ipairs(droneGroup2) do
+      newPt = pilot.add("Goddard Lancelot",nil,p:pos())
+      newPt[1]:setHostile()
+      p:destroy()
+      hook.pilot(newPt[1],"exploded","countTheDead")
+      table.insert(goddardGroup, newPt[1])
+   end
+end
+
+function countTheDead()
 
 end
 
