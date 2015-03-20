@@ -57,6 +57,7 @@ function create ()
       handlerName = "Eryk"
    else
       handlerName = "Thregyn"
+   end
 
    if not misn.clam(combatSys) then
       misn.finish(false)
