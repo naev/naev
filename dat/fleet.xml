@@ -944,7 +944,7 @@
   </pilots>
  </fleet>
  <fleet name="Drone Lancelot">
-  <ai>dummy</ai>
+  <ai>empire</ai>
   <faction>Dummy</faction>
   <pilots>
    <pilot name="Drone Lancelot" ship="Lancelot"></pilot>
