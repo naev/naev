@@ -559,7 +559,7 @@ static int npc_approach_giver( NPC_t *npc )
 
    /* Make sure player can accept the mission. */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL)
+      if (player_missions[i]->data == NULL)
          break;
    if (i >= MISSION_MAX) {
       dialogue_alert("You have too many active missions.");

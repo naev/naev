@@ -837,8 +837,8 @@ static Mission *hook_getMission( Hook *hook )
 {
    int i;
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].id == hook->u.misn.parent)
-         return &player_missions[i];
+      if (player_missions[i]->id == hook->u.misn.parent)
+         return player_missions[i];
 
    return NULL;
 }

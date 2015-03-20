@@ -3011,11 +3011,11 @@ static int player_saveShip( xmlTextWriterPtr writer,
          found = 0;
          for (j=0; j<MISSION_MAX; j++) {
             /* Only check active missions. */
-            if (player_missions[j].id > 0) {
+            if (player_missions[j]->id > 0) {
                /* Now check if it's in the cargo list. */
-               for (k=0; k<player_missions[j].ncargo; k++) {
+               for (k=0; k<player_missions[j]->ncargo; k++) {
                   /* See if it matches a cargo. */
-                  if (player_missions[j].cargo[k] == ship->commodities[i].id) {
+                  if (player_missions[j]->cargo[k] == ship->commodities[i].id) {
                      found = 1;
                      break;
                   }
