@@ -229,6 +229,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Krain</enemy>
   </enemies>
  </faction>
  <faction name="Mercenary">
@@ -367,6 +368,7 @@
   <allies />
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Goddard</enemy>
   </enemies>
  </faction>
 </Factions>
