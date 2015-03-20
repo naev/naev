@@ -97,7 +97,7 @@ function accept ()
    misn.setTitle( misn_title)
    misn.setReward( misn_reward)
    misn.setDesc( misn_desc)
-   missionMarker = misn.markerAdd(combatSys)
+   missionMarker = misn.markerAdd(combatSys, "high")
    personnelCargo = misn.cargoAdd("Personnel", 5)
 
    missionStatus = 1
