@@ -953,7 +953,7 @@
   <avail>
    <chance>100</chance>
    <location>Bar</location>
-   <cond>planet.cur():name() == car.peek("corpWarHQ")</cond>
+   <cond>planet.cur():name() == var.peek("corpWarHQ")</cond>
   </avail>
  </mission>
 </Missions>
