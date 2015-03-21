@@ -76,7 +76,7 @@ function create ()
    startAsset,startSys = planet.cur()
    testAsset,testSys = planet.get("Ulios")
 
-   if not misn.clam(targetSys) then
+   if not misn.claim(testSys) then
       misn.finish(false)
    end
 
@@ -103,11 +103,11 @@ function create ()
    --format all the strings.
    bmsg[1] = bmsg[1]:format(handlerName,player.name(),handlerName)
    bmsg[2] = bmsg[2]:format(handlerName,testAsset:name(),testSys:name(),misn_reward,handlerName,player.name())
-   bmsg[3] = bmsg[3]:format(testAsset:name(),friendlyFaction,player.name())
+   bmsg[3] = bmsg[3]:format(testAsset:name(),friendlyFaction:name(),player.name())
    ifd[8] = ifd[8]:format(player.name())
    ifd[9] = ifd[9]:format(testAsset:name())
    fmsg[1] = fmsg[1]:format(handlerName,handlerName)
-   fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction)
+   fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction:name())
    fmsg[3] = fmsg[3]:format(testAsset:name(),handlerName)
    emsg[1] = emsg[1]:format(testAsset:name(),handlerName,startAsset:name())
    osd[1] = osd[1]:format(testAsset:name(),testSys:name())
@@ -156,7 +156,7 @@ function lander()
       playerShipName = player.ship()
       playerShipOutfits = pilot.player():outfits()
 
-      player.swapShip(friendlyFaction .. " MkII","Prototype",nil,true,false)  --swaps the players ship with the prototype.
+      player.swapShip(friendlyFaction:name() .. " MkII","Prototype",nil,true,false)  --swaps the players ship with the prototype.
       pilot.rmOutfit(pilot.player(),"all") --remove all the outfits
       pilot.rmOutfit(pilot.player(),"cores") --remove all the outfits
       --create some BIG outfit tables so we can add them all in using a for loop later.
@@ -244,7 +244,7 @@ end
 function setUpTest()
    --This is what is called after the player takes off from the planet. It'll only kick if the player takes off in the prototype ship.
    --Should that be osd'd? damn. probably.
-   if pilot.player:ship() == friendlyFaction .. " MkII" then
+   if pilot.player:ship() == friendlyFaction:name() .. " MkII" then
       --only start if the player is in the mkII ship.
       missionStatus = 3
 
@@ -261,7 +261,7 @@ function setUpTest()
       drone[1]:brake()
       
       --This drone is the one that does the shooting for the shield test.
-      if friendlyFaction == "Krain" then
+      if friendlyFaction:name() == "Krain" then
          drone2 = pilot.add("Krain Kestrel",nil,vec2.new(-3700,2700))
       else
          drone2 = pilot.add("Goddard Goddard",nil,vec2.new(-3700,2700))
@@ -423,7 +423,7 @@ function startTheAttack() --and droneGroup2 finally got attacked.
 
       --send in reinforcements. because the player will need them.
       for i = 1,12 do 
-         newPt = pilot.add(friendlyFaction .. " Lancelot",nil,testAsset())
+         newPt = pilot.add(friendlyFaction:name() .. " Lancelot",nil,testAsset())
          newPt[1]:setFriendly()
          newPt[1]:setVisible()
       end
