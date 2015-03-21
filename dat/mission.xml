@@ -945,4 +945,15 @@
    <cond>planet.cur():name() == var.peek("corpWarHQ")</cond>
   </avail>
  </mission>
+ <mission name = "Flying a New Bird">
+  <lua>goddard/corporate_war/corporate_war4</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():name() == car.peek("corpWarHQ")</cond>
+  </avail>
+ </mission>
 </Missions>
