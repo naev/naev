@@ -104,14 +104,7 @@ function create ()
    bmsg[1] = bmsg[1]:format(handlerName,player.name(),handlerName)
    bmsg[2] = bmsg[2]:format(handlerName,testAsset:name(),testSys:name(),misn_reward,handlerName,player.name())
    bmsg[3] = bmsg[3]:format(testAsset:name(),friendlyFaction:name(),player.name())
-   ifd[8] = ifd[8]:format(player.name())
-   ifd[9] = ifd[9]:format(testAsset:name())
    fmsg[1] = fmsg[1]:format(handlerName,handlerName)
-   fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction:name())
-   fmsg[3] = fmsg[3]:format(testAsset:name(),handlerName)
-   emsg[1] = emsg[1]:format(testAsset:name(),handlerName,startAsset:name())
-   osd[1] = osd[1]:format(testAsset:name(),testSys:name())
-   osd[3] = osd[3]:format(testAsset:name())
 end
 
 
@@ -219,6 +212,7 @@ function lander()
 
    --if the player lands early during the test, then we fail the player.
    if missionStatus > 2 and missionStatus < 11 then
+      fmsg[3] = fmsg[3]:format(testAsset:name(),handlerName)
       tk.msg(misn_title,fmsg[3])
       misn.finish(false)
       removeShip()
@@ -233,6 +227,7 @@ function lander()
 
    --yay we made it!
    if missionStatus == 11 then
+      emsg[1] = emsg[1]:format(testAsset:name(),handlerName,startAsset:name())
       removeShip()
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
@@ -400,6 +395,8 @@ function startTheAttack() --and droneGroup2 finally got attacked.
       osdUpdate(6)
       
       --get the frenzied testControl guy outta there after he calls for backup.
+      ifd[7] = ifd[7]:format(player.name())
+      ifd[8] = ifd[8]:format(testAsset:name())
       testControl:broadcast(ifd[7])
       hookTCB = hook.timer(800,"testControlBroadcast")
 
@@ -457,6 +454,8 @@ end
 
 --update osd[2] with the osdmini{} things.
 function osdUpdate(miniNum)
+   osd[1] = osd[1]:format(testAsset:name(),testSys:name())
+   osd[3] = osd[3]:format(testAsset:name())
    misn.osdDestroy()
    osd[2] = osdmini[miniNum]
    misn.osdCreate(misn_title,osd)
@@ -477,6 +476,7 @@ function jumper() --basically, if the player jumps out with the mkii, they get t
    --but campaign over, that faction is now an enemy, and they technically fail the mission.
    --not too sure if i'm sold on this idea. but not sure how to handle the player jumping otherwise.
    if missionStatus > 2 and missionStatus < 11 then
+      fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction:name())
       tk.msg(misn_title,fmsg[2])
       faction.modPlayer(friendlyFaction,-100)
       var.push("corpWarCampaign",0)

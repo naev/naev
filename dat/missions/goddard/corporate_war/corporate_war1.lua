@@ -42,7 +42,6 @@ function create ()
    returnAsset, returnSys = planet.get("Zhiru")
    
    bmsg[2] = bmsg[2]:format(pickupAsset:name(), pickupSys:name(), returnAsset:name(), misn_reward)
-   emsg[1] = emsg[1]:format(returnAsset:name())
    osd[1] = osd[1]:format(pickupAsset:name(), pickupSys:name())
    osd[2] = osd[2]:format(returnAsset:name(), returnSys:name())
 end
@@ -81,6 +80,7 @@ function lander()
          misn.osdActive(missionStatus)
       end
    elseif missionStatus == 2 and planet.cur() == returnAsset then
+      emsg[1] = emsg[1]:format(returnAsset:name())
       misn.cargoRm(missionCargo)
       faction.modPlayer("Goddard",3)
       player.pay(misn_reward)
