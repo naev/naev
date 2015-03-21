@@ -98,7 +98,7 @@ function accept ()
    misn.setReward( misn_reward)
    misn.setDesc( misn_desc)
    missionMarker = misn.markerAdd(combatSys, "high")
-   personnelCargo = misn.cargoAdd("Personnel", 5)
+   misn.cargoAdd("Personnel", 5)
 
    missionStatus = 1
 
@@ -174,14 +174,12 @@ function protoShipDead(pDead, pAttacker)
 end
 
 function protoShipBoard(pBoarded, pBoarder)
-   if pBoarder == pilot.player() then
-      tk.msg(misn_title,boardmsg[1])
-      missionStatus = 3
-      equipmentCarg = misn.cargoAdd("Equipment", 10)
-      misn.osdActive(missionStatus)
-      misn.markerMove(missionMarker,startSys)
-      player.unboard()
-   end
+   tk.msg(misn_title,boardmsg[1])
+   missionStatus = 3
+   misn.cargoAdd("Equipment", 10)
+   misn.osdActive(missionStatus)
+   misn.markerMove(missionMarker,startSys)
+   player.unboard()
 end
 
 --once the player attacks the ships, this sets the whole fleet to hostile.
@@ -204,8 +202,6 @@ function lander()
       tk.msg(misn_title,fmsg[5])
    elseif missionStatus == 3 and planet.cur() == startAsset then
       tk.msg(misn_title,emsg[1])
-      misn.cargoRm(personnelCargo)
-      misn.cargoRm(equipmentCargo)
       player.pay(misn_reward)
       misn.markerRm(missionMarker)
       misn.finish(true)
@@ -213,11 +209,5 @@ function lander()
 end
 
 function abort ()
-   if not personnelCargo == nil then
-      misn.cargoRm(personnelCargo)
-   end
-   if not equipmentCargo == nil then
-      misn.cargoRm(equipmentCargo)
-   end
    misn.finish(false)
 end
