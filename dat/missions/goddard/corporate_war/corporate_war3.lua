@@ -189,10 +189,10 @@ function attacking(pAttacked, pAttacker)
    --there shouldn't be any hostile ships other than the player, as pirates are disabled, so I'm assuming the attacker is the player. /lazy
    if not protoShip[1]:hostile() then
       protoShip[1]:control(false)
-      p:setHostile()
+      protoShip[1]:setHostile()
    end
    for _,p in ipairs(enemyShip) do
-      if not p:hostile() then --don't want to keep setting control to false if they're already hostile.
+      if p:exists() and not p:hostile() then --don't want to keep setting control to false if they're already hostile.
          p:control(false)
          p:setHostile()
       end
