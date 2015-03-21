@@ -117,7 +117,7 @@ function jumper()
       misn.osdActive(missionStatus)
       
       --set up the system
-      pilot.toggleSpawn("Pirates", false)
+      pilot.toggleSpawn("Pirate", false)
 
       --where the enemy ships are gonna be located at
       enemyShipLocX = rnd.rnd(-7500,7500)
@@ -142,6 +142,7 @@ function jumper()
 
       --set up supporting ships.
       --they will initially be in a circle around the protoship.
+      enemyShip = {}
       for i = 1, 8 do
          enemyShip_new = pilot.add(enemyFaction:name() .. " Lancelot",nil,enemyShipLoc)
          table.insert(enemyShip, enemyShip_new[1])
