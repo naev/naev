@@ -54,8 +54,8 @@ function create ()
 
    bmsg[1] = bmsg[1]:format(misn_reward)
    bmsg[2] = bmsg[2]:format(pickupAsset:name(), pickupSys:name())
-   fmsg[2] = fmsg[2]:format(cargoSize)
-   emsg[2] = emsg[2]:format(krainAsset:name(),player.name())
+
+
 end
 
 
@@ -81,6 +81,7 @@ end
 
 function lander()
    if missionStatus == 1 and planet.cur() == pickupAsset then
+      fmsg[2] = fmsg[2]:format(cargoSize)
       if pilot.player():cargoFree() < cargoSize then
          tk.msg(misn_title, fmsg[2])
       else
@@ -93,6 +94,8 @@ function lander()
       end
    elseif missionStatus == 2 and planet.cur() == returnAsset then
       misn.cargoRm(missionCargo)
+      emsg[1] = emsg[1]:format(returnAsset:name())
+      emsg[2] = emsg[2]:format(returnAsset:name(),player.name())
       if returnAsset == planet.get("Zhiru") then
          tk.msg(misn_title,emsg[1])
          var.push("corpWarFaction","Goddard")
