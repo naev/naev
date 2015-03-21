@@ -943,6 +943,7 @@
    <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():name() == var.peek("corpWarHQ")</cond>
+   <done>Goddard Courier Mission</done>
   </avail>
  </mission>
  <mission name = "Flying a New Bird">
@@ -954,6 +955,7 @@
    <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():name() == var.peek("corpWarHQ")</cond>
+   <done>Corporate Duties</done>
   </avail>
  </mission>
 </Missions>
