@@ -150,3 +150,6 @@ function kill()
    var.push( "collective_fail", true )
 end
 
+function abort()
+   misn.finish(false)
+end
