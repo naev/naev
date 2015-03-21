@@ -12,7 +12,7 @@ end planet = Zhiru in the Goddard system or Krain Station in the Salvador system
 bar_name = "A grinning Eryk"
 bar_desc = "Eryk sits at the counter, happily grinning at you."
 
-misn_title = "Goddard Courier Mission"
+misn_title = "Goddard Courier"
 misn_desc = "Pickup and deliver a shipment from Za'lek space bound for the Goddard corporation."
 
 bmsg = {} --beginning messages
@@ -52,12 +52,9 @@ function create ()
    krainAsset, krainSys = planet.get("Krain Station")
    cargoSize = 10
 
-   osd[1] = osd[1]:format(pickupAsset:name(), pickupSys:name())
-   osd[2] = osd2temp:format(returnAsset:name(), returnSys:name())
    bmsg[1] = bmsg[1]:format(misn_reward)
    bmsg[2] = bmsg[2]:format(pickupAsset:name(), pickupSys:name())
    fmsg[2] = fmsg[2]:format(cargoSize)
-   cmsg[1] = cmsg[1]:format(player.name(),krainAsset:name(),krainSys:name())
    emsg[2] = emsg[2]:format(krainAsset:name(),player.name())
 end
 
@@ -77,8 +74,7 @@ function accept ()
 
    missionStatus = 1
 
-   misn.osdCreate(misn_title,osd)
-   misn.osdActive(missionStatus)
+   osdUpdate(1)
 
    hook.land("lander")
 end
@@ -91,7 +87,7 @@ function lander()
          tk.msg(misn_title,pmsg[1])
          missionCargo = misn.cargoAdd("Equipment",10)
          missionStatus = 2
-         misn.osdActive(missionStatus)
+         osdUpdate(2)
          misn.markerMove(misnMarker, returnSys) 
          hook.jumpin("krainContact")
       end
@@ -124,6 +120,7 @@ function krainContact()
       krainPilot[1]:control(true)
       krainPilot[1]:hailPlayer()
       krainPilot[1]:follow(pilot.player())
+      krainPilot[1]:setVisplayer()
       hook.pilot(krainPilot[1], "hail", "contactMade")
    end
 end
@@ -131,15 +128,25 @@ end
 function contactMade(krainPilot)
    contactBool = true
    krainPilot:hyperspace(nil)
+   krainPilot:setVisplayer(false)
+   cmsg[1] = cmsg[1]:format(player.name(),krainAsset:name(),krainSys:name())
    if tk.yesno(misn_title,cmsg[1]) then
       tk.msg(misn_title,cmsg[2])
       misn_reward = misn_reward * 1.05
       returnAsset, returnSys = planet.get("Krain Station")
       misn.markerMove(misnMarker, returnSys)
-      osd[2] = osd2temp:format(returnAsset:name(), returnSys:name())
+      osdUpdate(2)
    else
       tk.msg(misn_title,cmsg[3])
    end
+end
+
+function osdUpdate(active)
+   misn.osdDestroy()
+   osd[1] = osd[1]:format(pickupAsset:name(),pickupSys:name())
+   osd[2] = osd2temp:format(returnAsset:name(),returnSys:name())
+   misn.osdCreate(misn_title,osd)
+   misn.osdActive(active)
 end
 
 function abort ()

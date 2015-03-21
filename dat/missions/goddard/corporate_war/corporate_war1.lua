@@ -11,7 +11,7 @@ end planet = Zhiru in the Goddard system.
    bar_name = "An oddly dressed man."
    bar_desc = "A man sits at the counter, looking at the other patrons cooly."
 
-   misn_title = "Goddard Delivery Mission" 
+   misn_title = "Goddard Delivery" 
    misn_desc = "Pickup and deliver a shipment from Za'lek space bound for the Goddard corporation."
 
    bmsg = {} --beginning messages
