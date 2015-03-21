@@ -69,11 +69,7 @@ function create ()
 
    bmsg[1] = bmsg[1]:format(handlerName, player.name(), enemyFaction:name(), handlerName, friendlyFaction:name())
    bmsg[2] = bmsg[2]:format(handlerName, enemyFaction:name(), misn_reward, player.name())
-   fmsg[1] = fmsg[1]:format(handlerName, cargoSize)
-   fmsg[2] = fmsg[2]:format(handlerName, handlerName)
-   fmsg[3] = fmsg[3]:format(handlerName, player.name(), enemyFaction:name())
-   fmsg[4] = fmsg[4]:format(handlerName)
-   emsg[1] = emsg[1]:format(startAsset:name(), handlerName)
+
    osd[1] = osd[1]:format(combatSys:name())
    osd[3] = osd[3]:format(startAsset:name(), startSys:name())
 
@@ -84,10 +80,12 @@ end
 
 function accept ()
    if not tk.yesno( misn_title, bmsg[1] ) then
+      fmsg[2] = fmsg[2]:format(handlerName, handlerName)
       tk.msg(misn_title,fmsg[2])
       misn.finish(false)
    end
    if pilot.player():cargoFree() < cargoSize then
+      fmsg[1] = fmsg[1]:format(handlerName, cargoSize)
       tk.msg(misn_title,fmsg[1])
       misn.finish(false)
    end
@@ -161,6 +159,7 @@ function jumper()
          end
       end
    elseif missionStatus == 2 then --if the player jumps out early.
+      fmsg[3] = fmsg[3]:format(handlerName, player.name(), enemyFaction:name())
       tk.msg(misn_title,fmsg[3])
       abort()
    end
@@ -168,6 +167,7 @@ end
 
 function protoShipDead(pDead, pAttacker)
    if missionStatus == 2 then
+      fmsg[4] = fmsg[4]:format(handlerName)
       tk.msg(misn_title,fmsg[4])
       abort()
    end
@@ -203,6 +203,7 @@ function lander()
    if missionStatus == 2 then
       tk.msg(misn_title,fmsg[5])
    elseif missionStatus == 3 and planet.cur() == startAsset then
+      emsg[1] = emsg[1]:format(startAsset:name(), handlerName)
       tk.msg(misn_title,emsg[1])
       misn.cargoRm(personnelCargo)
       misn.cargoRm(equipmentCargo)
