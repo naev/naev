@@ -356,10 +356,10 @@ function testFour() --shoot a drone.
       system.mrkRm(sysMrk)
 
       --get the drone we created earlier going.
-      drone[1]:hilight()
+      drone[1]:setHilight()
       drone[1]:setVisplayer()
       drone[1]:setSpeedLimit(50)
-      drone[1]:goto(0,3000)
+      drone[1]:goto(vec2.new(0,3000))
 
       --hook the next phase to the player killing the drone.
       hook.pilot(drone[1],"exploded","testFive")
