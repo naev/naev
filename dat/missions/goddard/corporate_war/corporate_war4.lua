@@ -179,7 +179,7 @@ function lander()
             outfit.get("Shield Capacitor IV"),
             outfit.get("Shield Capacitor IV"),
             outfit.get("Targeting Array"),
-            outfit.get("Improved Regrigeration Cycle"),
+            outfit.get("Improved Refrigeration Cycle"),
             outfit.get("Improved Power Regulator"),
          }
       else
