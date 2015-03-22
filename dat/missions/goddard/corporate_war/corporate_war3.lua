@@ -132,7 +132,6 @@ function jumper()
       protoShip[1]:control()
       protoShip[1]:brake()
       if not protoShip[1]:hostile() then
-         hook.pilot(protoShip[1], "attacked", "attacking")
          hook.pilot(protoShip[1], "death", "protoShipDead")
          hook.pilot(protoShip[1], "board", "protoShipBoard")
       end
@@ -158,6 +157,7 @@ function jumper()
             hook.pilot(p, "attacked", "attacking")
          end
       end
+      boardHook = hook.board("protoShipBoard")
    elseif missionStatus == 2 then --if the player jumps out early.
       fmsg[3] = fmsg[3]:format(handlerName, player.name(), enemyFaction:name())
       tk.msg(misn_title,fmsg[3])
@@ -173,13 +173,16 @@ function protoShipDead(pDead, pAttacker)
    end
 end
 
-function protoShipBoard(pBoarded, pBoarder)
-   tk.msg(misn_title,boardmsg[1])
-   missionStatus = 3
-   misn.cargoAdd("Equipment", 10)
-   misn.osdActive(missionStatus)
-   misn.markerMove(missionMarker,startSys)
-   player.unboard()
+function protoShipBoard(pBoarded)
+   if pBoarded = protoShip then
+      hook.rm(boardHook)
+      tk.msg(misn_title,boardmsg[1])
+      missionStatus = 3
+      misn.cargoAdd("Equipment", 10)
+      misn.osdActive(missionStatus)
+      misn.markerMove(missionMarker,startSys)
+      player.unboard()
+   end
 end
 
 --once the player attacks the ships, this sets the whole fleet to hostile.
