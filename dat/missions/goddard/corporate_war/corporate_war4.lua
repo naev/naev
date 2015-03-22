@@ -144,7 +144,7 @@ function lander()
       missionStatus = 2
 
       --time to swap ships. hopefully i don't eff this up.
-      playerShipModel = pilot.player():ship()
+      playerShipModel = pilot.player():ship():name()
       playerShipName = player.ship()
       playerShipOutfits = pilot.player():outfits()
 
@@ -153,20 +153,20 @@ function lander()
       else
          protoShip = "Kestrel MkII"
       end
-      player.swapShip(protoShip,"Prototype",nil,true,false)  --swaps the players ship with the prototype.
+      player.swapShip(protoShip,"Prototype",nil,true,true)  --swaps the players ship with the prototype.
       pilot.rmOutfit(pilot.player(),"all") --remove all the outfits
       pilot.rmOutfit(pilot.player(),"cores") --remove all the outfits
       --create some BIG outfit tables so we can add them all in using a for loop later.
-      if friendlyFaction == "Goddard" then
+      if friendlyFaction:name() == "Goddard" then
          outfits = { --goddard mkii outfit table of glory.
-            outfit.get("Turbolaser"),
-            outfit.get("Turbolaser"),
-            outfit.get("Railgun Turret"),
-            outfit.get("Railgun Turret"),
-            outfit.get("Heavy Laser"),
-            outfit.get("Heavy Laser"),
-            outfit.get("Heavy Laser"),
             outfit.get("Milspec Hermes 9802 Core System"),
+            outfit.get("Turbolaser"),
+            outfit.get("Turbolaser"),
+            outfit.get("Railgun Turret"),
+            outfit.get("Railgun Turret"),
+            outfit.get("Heavy Laser"),
+            outfit.get("Heavy Laser"),
+            outfit.get("Heavy Laser"),
             outfit.get("Milspec Scrambler"),
             outfit.get("Large Shield Booster"),
             outfit.get("Reactor Class III"),
@@ -179,20 +179,20 @@ function lander()
             outfit.get("Shield Capacitor IV"),
             outfit.get("Shield Capacitor IV"),
             outfit.get("Targeting Array"),
-            outfit.get("Improved Regrigeration Cycle"),
+            outfit.get("Improved Refrigeration Cycle"),
             outfit.get("Improved Power Regulator"),
          }
       else
          outfits = { --kestrel mkii outfit table of glory.
-            outfit.get("Turbolaser"),
-            outfit.get("Turbolaser"),
-            outfit.get("Turbolaser"),
-            outfit.get("Railgun Turret"),
-            outfit.get("Railgun Turret"),
-            outfit.get("Laser Turret MK3"),
-            outfit.get("Laser Turret MK3"),
             outfit.get("Milspec Hermes 9802 Core System"),
             outfit.get("Reactor Class III"),
+            outfit.get("Turbolaser"),
+            outfit.get("Turbolaser"),
+            outfit.get("Turbolaser"),
+            outfit.get("Railgun Turret"),
+            outfit.get("Railgun Turret"),
+            outfit.get("Laser Turret MK3"),
+            outfit.get("Laser Turret MK3"),
             outfit.get("Large Shield Booster"),
             outfit.get("Large Shield Booster"),
             outfit.get("Emergency Shield Booster"),
@@ -356,10 +356,10 @@ function testFour() --shoot a drone.
       system.mrkRm(sysMrk)
 
       --get the drone we created earlier going.
-      drone[1]:hilight()
+      drone[1]:setHilight()
       drone[1]:setVisplayer()
       drone[1]:setSpeedLimit(50)
-      drone[1]:goto(0,3000)
+      drone[1]:goto(vec2.new(0,3000))
 
       --hook the next phase to the player killing the drone.
       hook.pilot(drone[1],"exploded","testFive")
@@ -371,34 +371,36 @@ function testFive() --getting shot! woo. this is split into two functions.
    if missionStatus == 7 then
       missionStatus = 8
       osdUpdate(2,4)
-      testControl(ifd[4])
-      drone2[1]:hilight()
+      testControl:broadcast(ifd[4])
+      drone2[1]:setHilight()
       drone2[1]:setVisplayer()
       drone2[1]:attack(pilot.player())
-      testHook = hook.timer(100,"testSix") --see testSix for details.
+      testSix()
    end
 end
 
 function testSix() --done getting shot.
    --we poll the players health every 100 milliseconds.
-   _,shield = pilot.player:health()
+   _,shield = pilot.player():health()
    if shield < 30 and missionStatus == 8 then --if the shield gets below 30%, we want to stop the drone from attacking.
       missionStatus = 9
       osdUpdate(2,5)
       testControl:broadcast(ifd[5])
 
       hook.rm(testHook) --stop the timer.
-      drone[2]:control() --stop the drone from attacking...
-      drone[2]:land(testAsset) --and get it out of the way.
+      drone2[1]:control() --stop the drone from attacking...
+      drone2[1]:land(testAsset) --and get it out of the way.
       
       --set up the next phase. the hooks we did to droneGroup2 should handle getting to the next part of the mission.
       sysMrk = system.mrkAdd("Drone Group 1",droneGroup1Coords)
       sysMrk2 = system.mrkAdd("Drone Group 2",droneGroup2Coords)
+   else
+      hook.timer(100,"testSix")
    end
 end
 
 function startTheAttack() --and droneGroup2 finally got attacked.
-   if not missionStatus >= 10 and missionStatus ~= 1 then --don't really care when the player attacks. it'll jump to EOM.
+   if missionStatus < 10 and missionStatus ~= 1 then --don't really care when the player attacks. it'll jump to EOM.
       missionStatus = 10
       osdUpdate(2,6)
       
@@ -415,11 +417,13 @@ function startTheAttack() --and droneGroup2 finally got attacked.
       --swap out our dummy drones for enemy ships.
       for _,p in ipairs(droneGroup2) do
          if p:exists() then
-            newPt = pilot.add(enemyFaction .. " Lancelot",nil,p:pos())
+            newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,p:pos())
             newPt[1]:setHostile()
             newPt[1]:setVisible()
-            newPt[1]:face(vec2.new(0,0)) --does this need manual control? will it need a pilot.taskClear()?
-            p:destroy()
+	    newPt[1]:control()
+	    newPt[1]:face(vec2.new(0,0)) -- will it need a pilot.taskClear()?
+	    newPt[1]:control(false)
+            p:rm()
             --hook each enemy pilot to an exploded function to see when they're all dead.
             hook.pilot(newPt[1],"exploded","countTheDead")
             table.insert(enemyGroup, newPt[1])
@@ -428,7 +432,7 @@ function startTheAttack() --and droneGroup2 finally got attacked.
 
       --send in reinforcements. because the player will need them.
       for i = 1,12 do 
-         newPt = pilot.add(friendlyFaction:name() .. " Lancelot",nil,testAsset())
+         newPt = pilot.add(friendlyFaction:name() .. " Lancelot",nil,testAsset)
          newPt[1]:setFriendly()
          newPt[1]:setVisible()
       end
@@ -439,7 +443,7 @@ function countTheDead()
    --we wait until all the enemy ships are dead.
    numExploded = numExploded or 0
    numExploded = numExploded + 1
-   if numExploded >= #goddardGroup then --yay you lived.
+   if numExploded >= #enemyGroup then --yay you lived.
       missionStatus = 11
       misn.osdActive(3)
       osdUpdate(3)
