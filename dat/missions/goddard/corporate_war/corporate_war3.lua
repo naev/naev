@@ -99,6 +99,7 @@ function accept ()
    misn.cargoAdd("Personnel", 5)
 
    missionStatus = 1
+   empireStanding = faction.get("Empire"):playerStanding() --we don't want empire rep to suffer because of this campaign.
 
    misn.osdCreate(misn_title,osd)
    misn.osdActive(missionStatus)
@@ -205,6 +206,8 @@ function lander()
       tk.msg(misn_title,fmsg[5])
    elseif missionStatus == 3 and planet.cur() == startAsset then
       emsg[1] = emsg[1]:format(startAsset:name(), handlerName)
+      empireStanding = empireStanding - faction.get("Empire"):playerStanding() --we don't want empire rep to suffer because of this campaign
+      faction.get("Empire"):modPlayerRaw(empireStanding)
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
       misn.markerRm(missionMarker)
