@@ -432,7 +432,7 @@ function startTheAttack() --and droneGroup2 finally got attacked.
 
       --send in reinforcements. because the player will need them.
       for i = 1,12 do 
-         newPt = pilot.add(friendlyFaction:name() .. " Lancelot",nil,testAsset())
+         newPt = pilot.add(friendlyFaction:name() .. " Lancelot",nil,testAsset)
          newPt[1]:setFriendly()
          newPt[1]:setVisible()
       end
