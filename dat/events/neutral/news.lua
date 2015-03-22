@@ -21,6 +21,8 @@ else --default english
                                  }
    header_table["Goddard"] =     {"Welcome to Goddard News Centre. We bring you the news from around the Empire."
                                  }
+   header_table["Krain"] =       {"Welcome to Krain Industries News Centre. For all you need to know."
+                                 }
    header_table["Pirate"] =      {"Pirate News. News that matters."
                                  }
    header_table["Sirius"] =      {"Sirius News Reel. Words of the Sirichana for all."
@@ -50,7 +52,10 @@ else --default english
                                  }
    greet_table["Dvaered"] =      {""
                                  }
-   greet_table["Goddard"] =      {""}
+   greet_table["Goddard"] =      {""
+                                 }
+   greet_table["Krain"] =        {""
+                                 }
    greet_table["Pirate"] =       {"News that matters.",
                                  "Adopt a cat today!",
                                  "Laughing at the Emperor.",
@@ -278,6 +283,15 @@ else --default english
       --[[
          Human interest.
       --]]
+   }
+
+   articles["Krain"]={
+      {
+         title = "Kestrel sales exceed expections.",
+         desc = "The latest sales numbers show that the Kestrel, created and manufactured by Krain Industries, is exceeding all sales goals, according to a recent press release by Krain Industries."
+      },
+         title = "Krain Industries secures new contract.",
+         desc = "Krain industries has recently secured a new contract manufacturing and shipping bridge components to the Empire Navy. This lucrative deal is expected to raise stocks to record levels."
    }
 
    articles["Sirius"]={
