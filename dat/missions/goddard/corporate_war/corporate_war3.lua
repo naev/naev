@@ -128,7 +128,7 @@ function jumper()
       else
          protoShip = pilot.add("Kestrel Prototype",nil,enemyShipLoc)
       end
-      protoShip[1]:setVisible()
+      protoShip[1]:setHilight()
       if not protoShip[1]:hostile() then
          protoShip[1]:control()
          protoShip[1]:brake()
@@ -140,14 +140,13 @@ function jumper()
       --set up supporting ships.
       --they will initially be in a circle around the protoship.
       enemyShip = {}
-      for i = 1, 8 do
+      for i = 1, 6 do
          enemyShip_new = pilot.add(enemyFaction:name() .. " Lancelot",nil,enemyShipLoc)
          table.insert(enemyShip, enemyShip_new[1])
       end
       angle = math.pi * 2 / #enemyShip
       radius = 80 + #enemyShip * 25
       for i,p in ipairs(enemyShip) do
-         p:setVisible()
          x = radius * math.cos(angle * i)
          y = radius * math.sin(angle * i)
          p:setPos(enemyShipLoc + vec2.new(x,y))
@@ -174,7 +173,7 @@ function protoShipDead(pDead, pAttacker)
 end
 
 function protoShipBoard(pBoarded)
-   if pBoarded == protoShip then
+   if pBoarded == protoShip[1] then
       hook.rm(boardHook)
       tk.msg(misn_title,boardmsg[1])
       missionStatus = 3
