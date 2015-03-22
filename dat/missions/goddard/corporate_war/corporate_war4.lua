@@ -59,10 +59,11 @@ emsg[1] = [[You land on %s, after guiding the new prototype ship somewhat gracef
 --osd messages.
 osd = {}
 osd[1] = "Land on %s in the %s system."
-osd[2] = "Take off from %s in the prototytpe to test the new ship."
+osd[2] = "Take off in the prototype to test the new ship."
 osd[3] = "Land on %s and transfer back to your ship."
 --osd[2] will be updated during the mission. osdmini{} holds the updates.
 osdmini = {}
+osdmini[0] = "Take off in the prototype to test the new ship."
 osdmini[1] = "Fly to point AF-27, highlighted on the map."
 osdmini[2] = "Fly to point GE-83, then TB-54, highlighted on the map."
 osdmini[3] = "Destroy the drone highlighted on the map."
@@ -70,7 +71,7 @@ osdmini[4] = "Allow the enemy craft to attack you. Do not fire back."
 osdmini[5] = "Destroy groups of drones at MU-89, highlighted on the map."
 osdmini[6] = "Destroy attacking drones."
 
-function create ()
+function create()
    
    --This mission tries to claim "testSys", i.e. Ingot.
    startAsset,startSys = planet.cur()
@@ -120,14 +121,13 @@ function accept ()
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc(misn_desc)
-   missionMarker = misn.markerAdd(testSys)
+   missionMarker = misn.markerAdd(testSys, "high")
 
    missionStatus = 1
 
    --set up osd
-   misn.osdCreate(misn_title,osd)
-   misn.osdActive(missionStatus)
-   
+  osdUpdate(1)
+
    --create our standard hooks.
    hook.jumpin("jumper")
    hook.land("lander")
@@ -142,14 +142,19 @@ function lander()
       --standard mission stuff.
       tk.msg(misn_title,bmsg[3])
       missionStatus = 2
-
+      print("gettin ready to go.")
 
       --time to swap ships. hopefully i don't eff this up.
       playerShipModel = pilot.player():ship()
       playerShipName = player.ship()
       playerShipOutfits = pilot.player():outfits()
 
-      player.swapShip(friendlyFaction:name() .. " MkII","Prototype",nil,true,false)  --swaps the players ship with the prototype.
+      if friendlyFaction:name() == "Goddard" then
+         protoShip = "Goddard MkII"
+      else
+         protoShip = "Kestrel MkII"
+      end
+      player.swapShip(protoShip,"Prototype",nil,true,false)  --swaps the players ship with the prototype.
       pilot.rmOutfit(pilot.player(),"all") --remove all the outfits
       pilot.rmOutfit(pilot.player(),"cores") --remove all the outfits
       --create some BIG outfit tables so we can add them all in using a for loop later.
@@ -204,14 +209,17 @@ function lander()
 
       --now actually add the outfits.
       for _,o in ipairs(outfits) do
-         pilot.addOutfit(pilot.player(),o)
+         pilot.addOutfit(pilot.player(),o:name())
       end
    --hopefully that went well... moving on to setUpTest!
-   hook.takeoff("setUpTest")
+      warn("made it to hook setup")
+      hook.takeoff("setUpTest")
+      player.takeoff()
    end
 
    --if the player lands early during the test, then we fail the player.
    if missionStatus > 2 and missionStatus < 11 then
+      warn("well this wasn't supposed to happen.")
       fmsg[3] = fmsg[3]:format(testAsset:name(),handlerName)
       tk.msg(misn_title,fmsg[3])
       misn.finish(false)
@@ -220,6 +228,7 @@ function lander()
 
    --if the player shoots the drone ship used to test the shields, this fails them when they land after they attack.
    if missionStatus == -1 then
+      warn("or this.")
       tk.msg(misn_title,fmsg[4])
       misn.finish(false)
       removeShip()
@@ -227,6 +236,7 @@ function lander()
 
    --yay we made it!
    if missionStatus == 11 then
+      warn("especially this.")
       emsg[1] = emsg[1]:format(testAsset:name(),handlerName,startAsset:name())
       removeShip()
       tk.msg(misn_title,emsg[1])
@@ -239,79 +249,78 @@ end
 function setUpTest()
    --This is what is called after the player takes off from the planet. It'll only kick if the player takes off in the prototype ship.
    --Should that be osd'd? damn. probably.
-   if pilot.player:ship() == friendlyFaction:name() .. " MkII" then
-      --only start if the player is in the mkII ship.
-      missionStatus = 3
+   warn("takeoff hook initialized") --debug
+   --only start if the player is in the mkII ship.
+   missionStatus = 3
 
-      --testControl is Giryn. He will be guiding the player via broadcasts and generally swooping around.
-      testControl = pilot.add("Gawain")
-      testControl = testControl[1]
-      testControl:control()
-      testControl:follow(pilot.player())
+   --testControl is Giryn. He will be guiding the player via broadcasts and generally swooping around.
+   testControl = pilot.add("Gawain")
+   testControl = testControl[1]
+   testControl:control()
+   testControl:follow(pilot.player())
 
-      --set up drones, etc, used in test.
-      --This drone gets attacked by the player.
-      drone = pilot.add("Drone Lancelot",nil,vec2.new(-4000,3000))
-      drone[1]:control()
-      drone[1]:brake()
-      
-      --This drone is the one that does the shooting for the shield test.
-      if friendlyFaction:name() == "Krain" then
-         drone2 = pilot.add("Krain Kestrel",nil,vec2.new(-3700,2700))
-      else
-         drone2 = pilot.add("Goddard Goddard",nil,vec2.new(-3700,2700))
-      end
-      drone2[1]:control()
-      drone2[1]:brake()
-      --if the player attacks this ship, it fails the player, and the player has to restart the mission.
-      hook.pilot(drone2[1],"attacked","notTheEnemy")
-
-      --set up the two droneGroups for the "heat testing."
-      --droneGroup1 is just dummy ships.
-      droneGroup1Coords = vec2.new(1000,-14000)
-      droneGroup1 = {}
-      --droneGroup2 will be magically transformed into enemy ships after they get attacked. MWAHAHAHA.
-      droneGroup2Coords = vec2.new(-1000,-16000)
-      droneGroup2 = {}
-      --may need to adjust numShips for balance reasons.
-      numShips = 8
-      --the groups will be in two circles, which is what angle and radius are used for.
-      angle = math.pi * 2 / numShips
-      radius = 80 + numShips * 25
-      for i = 1, numShips do
-         
-         --calculate where in the circle the pilot should be.
-         x = radius * math.cos(angle * i)
-         y = radius * math.sin(angle * i) 
-
-         --set up both groups concurrently.
-         droneNew1 = pilot.add("Drone Lancelot",nil,droneGroup1Coords)
-         droneNew1[1]:control()
-         droneNew1[1]:brake()
-         droneNew1[1]:setPos(droneGroup1Coords + vec2.new(x,y))
-         droneNew1[1]:face(vec2.new(0,0))
-         table.insert(droneGroup1, droneNew1[1])
-
-         droneNew2 = pilot.add("Drone Lancelot",nil,droneGroup2Coords)
-         droneNew2[1]:control()
-         droneNew2[1]:brake()
-         droneNew2[1]:setPos(droneGroup2Coords + vec2.new(x,y))
-         droneNew2[1]:face(vec2.new(0,0))
-         --whenever the player attacks a ship in group2,
-         --all of group2 becomes hostile.
-         hook.pilot(droneNew2[1],"attacked","startTheAttack")
-         table.insert(droneGroup2,droneNew2[1])
-      end
-
-      --start the test for realz.
-      hook.date(time.create(0,0,100),"startTest")
+   --set up drones, etc, used in test.
+   --This drone gets attacked by the player.
+   drone = pilot.add("Drone Lancelot",nil,vec2.new(-4000,3000))
+   drone[1]:control()
+   drone[1]:brake()
+   
+   --This drone is the one that does the shooting for the shield test.
+   if friendlyFaction:name() == "Krain" then
+      drone2 = pilot.add("Krain Kestrel",nil,vec2.new(-3700,2700))
+   else
+      drone2 = pilot.add("Goddard Goddard",nil,vec2.new(-3700,2700))
    end
+   drone2[1]:control()
+   drone2[1]:brake()
+   --if the player attacks this ship, it fails the player, and the player has to restart the mission.
+   hook.pilot(drone2[1],"attacked","notTheEnemy")
+
+   --set up the two droneGroups for the "heat testing."
+   --droneGroup1 is just dummy ships.
+   droneGroup1Coords = vec2.new(1000,-14000)
+   droneGroup1 = {}
+   --droneGroup2 will be magically transformed into enemy ships after they get attacked. MWAHAHAHA.
+   droneGroup2Coords = vec2.new(-1000,-16000)
+   droneGroup2 = {}
+   --may need to adjust numShips for balance reasons.
+   numShips = 8
+   --the groups will be in two circles, which is what angle and radius are used for.
+   angle = math.pi * 2 / numShips
+   radius = 80 + numShips * 25
+   for i = 1, numShips do
+      
+      --calculate where in the circle the pilot should be.
+      x = radius * math.cos(angle * i)
+      y = radius * math.sin(angle * i) 
+
+      --set up both groups concurrently.
+      droneNew1 = pilot.add("Drone Lancelot",nil,droneGroup1Coords)
+      droneNew1[1]:control()
+      droneNew1[1]:brake()
+      droneNew1[1]:setPos(droneGroup1Coords + vec2.new(x,y))
+      droneNew1[1]:face(vec2.new(0,0))
+      table.insert(droneGroup1, droneNew1[1])
+
+      droneNew2 = pilot.add("Drone Lancelot",nil,droneGroup2Coords)
+      droneNew2[1]:control()
+      droneNew2[1]:brake()
+      droneNew2[1]:setPos(droneGroup2Coords + vec2.new(x,y))
+      droneNew2[1]:face(vec2.new(0,0))
+      --whenever the player attacks a ship in group2,
+      --all of group2 becomes hostile.
+      hook.pilot(droneNew2[1],"attacked","startTheAttack")
+      table.insert(droneGroup2,droneNew2[1])
+   end
+
+   --start the test for realz.
+   hook.date(time.create(0,0,100),"startTest")
 end
 
 function startTest() --test 1: fly to a point.
    if not missionStatus == -1 then
       missionStatus = 4
-      osdUpdate(1)
+      osdUpdate(2,1)
       testControl:broadcast(ifd[1])
       sysMrk = system.mrkAdd(14500,14500)
       testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(14500,14500), radius=250,funcname="testTwo"})
@@ -321,7 +330,7 @@ end
 function testTwo() --fly through another point on your way to a third.
    if not missionStatus == -1 then
       missionStatus = 5
-      osdUpdate(2)
+      osdUpdate(2,2)
       testControl:broadcast(ifd[2])
       hook.rm(testHook)
       system.mrkRm(sysMrk)
@@ -344,7 +353,7 @@ end
 function testFour() --shoot a drone.
    if not missionStatus == -1 then
       missionStatus = 7
-      osdUpdate(3)
+      osdUpdate(2,3)
       testControl:broadcast(ifd[3])
       hook.rm(testHook)
       system.mrkRm(sysMrk)
@@ -363,7 +372,7 @@ function testFive() --getting shot! woo. this is split into two functions.
    --this function only makes drone2 attack the player.
    if not missionStatus == -1 then
       missionStatus = 8
-      osdUpdate(4)
+      osdUpdate(2,4)
       testControl(ifd[4])
       drone2[1]:hilight()
       drone2[1]:attack(pilot.player())
@@ -376,7 +385,7 @@ function testSix() --done getting shot.
    _,shield = pilot.player:health()
    if shield < 30 and not missionStatus == -1 then --if the shield gets below 30%, we want to stop the drone from attacking.
       missionStatus = 9
-      osdUpdate(5)
+      osdUpdate(2,5)
       testControl:broadcast(ifd[5])
 
       hook.rm(testHook) --stop the timer.
@@ -392,7 +401,7 @@ end
 function startTheAttack() --and droneGroup2 finally got attacked.
    if not missionStatus >= 10 and not missionStatus == -1 then --don't really care when the player attacks. it'll jump to EOM.
       missionStatus = 10
-      osdUpdate(6)
+      osdUpdate(2,6)
       
       --get the frenzied testControl guy outta there after he calls for backup.
       ifd[7] = ifd[7]:format(player.name())
@@ -434,6 +443,7 @@ function countTheDead()
    if numExploded >= #goddardGroup then --yay you lived.
       missionStatus = 11
       misn.osdActive(3)
+      osdUpdate(3)
    end
 end
 
@@ -453,13 +463,14 @@ function notTheEnemy()
 end
 
 --update osd[2] with the osdmini{} things.
-function osdUpdate(miniNum)
+function osdUpdate(activenum,miniNum)
    osd[1] = osd[1]:format(testAsset:name(),testSys:name())
    osd[3] = osd[3]:format(testAsset:name())
    misn.osdDestroy()
+   miniNum = miniNum or 0
    osd[2] = osdmini[miniNum]
    misn.osdCreate(misn_title,osd)
-   misn.osdActive(2)
+   misn.osdActive(activenum)
 end
 
 --remove the mkii ship. veeeeeeeeeery important.
@@ -468,7 +479,7 @@ function removeShip()
    pilot.rmOutfit(pilot.player(),"all")
    pilot.rmOutfit(pilot.player(),"cores")
    for _,o in ipairs(playerShipOutfits) do
-      pilot.addOutfit(pilot.player(),o)
+      pilot.addOutfit(pilot.player(),o:name())
    end
 end
 
