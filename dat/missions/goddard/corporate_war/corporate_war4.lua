@@ -157,7 +157,7 @@ function lander()
       pilot.rmOutfit(pilot.player(),"all") --remove all the outfits
       pilot.rmOutfit(pilot.player(),"cores") --remove all the outfits
       --create some BIG outfit tables so we can add them all in using a for loop later.
-      if friendlyFaction == "Goddard" then
+      if friendlyFaction:name() == "Goddard" then
          outfits = { --goddard mkii outfit table of glory.
             outfit.get("Turbolaser"),
             outfit.get("Turbolaser"),
