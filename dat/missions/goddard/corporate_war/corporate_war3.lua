@@ -129,12 +129,12 @@ function jumper()
          protoShip = pilot.add("Kestrel Prototype",nil,enemyShipLoc)
       end
       protoShip[1]:setVisible()
-      protoShip[1]:control()
-      protoShip[1]:brake()
       if not protoShip[1]:hostile() then
-         hook.pilot(protoShip[1], "death", "protoShipDead")
-         hook.pilot(protoShip[1], "board", "protoShipBoard")
+         protoShip[1]:control()
+         protoShip[1]:brake()
+         hook.pilot(protoShip[1], "attacked","attacking")
       end
+      hook.pilot(protoShip[1], "death", "protoShipDead")
 
 
       --set up supporting ships.
@@ -148,12 +148,12 @@ function jumper()
       radius = 80 + #enemyShip * 25
       for i,p in ipairs(enemyShip) do
          p:setVisible()
-         p:control()
-         p:brake()
          x = radius * math.cos(angle * i)
          y = radius * math.sin(angle * i)
          p:setPos(enemyShipLoc + vec2.new(x,y))
          if not p:hostile() then
+            p:control()
+            p:brake()
             hook.pilot(p, "attacked", "attacking")
          end
       end
@@ -174,7 +174,7 @@ function protoShipDead(pDead, pAttacker)
 end
 
 function protoShipBoard(pBoarded)
-   if pBoarded = protoShip then
+   if pBoarded == protoShip then
       hook.rm(boardHook)
       tk.msg(misn_title,boardmsg[1])
       missionStatus = 3
@@ -188,16 +188,17 @@ end
 --once the player attacks the ships, this sets the whole fleet to hostile.
 function attacking(pAttacked, pAttacker)
    --there shouldn't be any hostile ships other than the player, as pirates are disabled, so I'm assuming the attacker is the player. /lazy
-   if not protoShip[1]:hostile() then
+   if not shipsAttacking then
       protoShip[1]:control(false)
       protoShip[1]:setHostile()
-   end
-   for _,p in ipairs(enemyShip) do
-      if p:exists() and not p:hostile() then --don't want to keep setting control to false if they're already hostile.
-         p:control(false)
-         p:setHostile()
+      for _,p in ipairs(enemyShip) do
+         if p:exists() then --don't want to keep setting control to false if they're already hostile.
+            p:control(false)
+            p:setHostile()
+         end
       end
    end
+   shipsAttacking = true
 end
 
 function lander()
