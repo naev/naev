@@ -143,7 +143,8 @@ void player_board (void)
    hparam[0].u.lp.pilot = p->id;
    hparam[1].type       = HOOK_PARAM_SENTINEL;
    hooks_runParam( "board", hparam );
-   pilot_runHook(p, PILOT_HOOK_BOARD);
+   hparam[0].u.lp.pilot = PLAYER_ID;
+   pilot_runHookParam(p, PILOT_HOOK_BOARD, hparam, 1);
 
    if (board_stopboard) {
       board_boarded = 0;
