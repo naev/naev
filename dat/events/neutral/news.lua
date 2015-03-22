@@ -287,10 +287,10 @@ else --default english
 
    articles["Krain"]={
       {
-         title = "Kestrel sales exceed expections.",
+         title = "Kestrel Sales Exceed Expections",
          desc = "The latest sales numbers show that the Kestrel, created and manufactured by Krain Industries, is exceeding all sales goals, according to a recent press release by Krain Industries."
       },
-         title = "Krain Industries secures new contract.",
+         title = "Krain Industries Secures New Contract",
          desc = "Krain industries has recently secured a new contract manufacturing and shipping bridge components to the Empire Navy. This lucrative deal is expected to raise stocks to record levels."
    }
 
