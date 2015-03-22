@@ -371,29 +371,31 @@ function testFive() --getting shot! woo. this is split into two functions.
    if missionStatus == 7 then
       missionStatus = 8
       osdUpdate(2,4)
-      testControl(ifd[4])
-      drone2[1]:hilight()
+      testControl:broadcast(ifd[4])
+      drone2[1]:setHilight()
       drone2[1]:setVisplayer()
       drone2[1]:attack(pilot.player())
-      testHook = hook.timer(100,"testSix") --see testSix for details.
+      testSix()
    end
 end
 
 function testSix() --done getting shot.
    --we poll the players health every 100 milliseconds.
-   _,shield = pilot.player:health()
+   _,shield = pilot.player():health()
    if shield < 30 and missionStatus == 8 then --if the shield gets below 30%, we want to stop the drone from attacking.
       missionStatus = 9
       osdUpdate(2,5)
       testControl:broadcast(ifd[5])
 
       hook.rm(testHook) --stop the timer.
-      drone[2]:control() --stop the drone from attacking...
-      drone[2]:land(testAsset) --and get it out of the way.
+      drone2[1]:control() --stop the drone from attacking...
+      drone2[1]:land(testAsset) --and get it out of the way.
       
       --set up the next phase. the hooks we did to droneGroup2 should handle getting to the next part of the mission.
       sysMrk = system.mrkAdd("Drone Group 1",droneGroup1Coords)
       sysMrk2 = system.mrkAdd("Drone Group 2",droneGroup2Coords)
+   else
+      hook.timer(100,"testSix")
    end
 end
 
