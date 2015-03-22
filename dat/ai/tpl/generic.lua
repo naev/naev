@@ -266,7 +266,7 @@ end
 -- Handle distress signals
 function distress ( pilot, attacker )
    -- Make sure target exists
-   if not attacker:exists() then
+   if not attacker:exists() or not pilot:exists() then
       return
    end
 
