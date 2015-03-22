@@ -142,7 +142,6 @@ function lander()
       --standard mission stuff.
       tk.msg(misn_title,bmsg[3])
       missionStatus = 2
-      print("gettin ready to go.")
 
       --time to swap ships. hopefully i don't eff this up.
       playerShipModel = pilot.player():ship()
@@ -212,33 +211,30 @@ function lander()
          pilot.addOutfit(pilot.player(),o:name())
       end
    --hopefully that went well... moving on to setUpTest!
-      warn("made it to hook setup")
-      hook.takeoff("setUpTest")
       player.takeoff()
-   end
+      testHook = hook.timer(1000,"setUpTest")
+   
 
    --if the player lands early during the test, then we fail the player.
-   if missionStatus > 2 and missionStatus < 11 then
-      warn("well this wasn't supposed to happen.")
+   elseif missionStatus > 2 and missionStatus < 11 then
       fmsg[3] = fmsg[3]:format(testAsset:name(),handlerName)
       tk.msg(misn_title,fmsg[3])
+      player.allowSave(true)
       misn.finish(false)
       removeShip()
-   end
 
    --if the player shoots the drone ship used to test the shields, this fails them when they land after they attack.
-   if missionStatus == -1 then
-      warn("or this.")
+   elseif missionStatus == -1 then
       tk.msg(misn_title,fmsg[4])
+      player.allowSave(true)
       misn.finish(false)
       removeShip()
-   end
 
    --yay we made it!
-   if missionStatus == 11 then
-      warn("especially this.")
+   elseif missionStatus == 11 then
       emsg[1] = emsg[1]:format(testAsset:name(),handlerName,startAsset:name())
       removeShip()
+      player.allowSave(true)
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
       misn.markerRm(missionMarker)
@@ -249,12 +245,12 @@ end
 function setUpTest()
    --This is what is called after the player takes off from the planet. It'll only kick if the player takes off in the prototype ship.
    --Should that be osd'd? damn. probably.
-   warn("takeoff hook initialized") --debug
    --only start if the player is in the mkII ship.
    missionStatus = 3
+   osdUpdate(2,0)
 
    --testControl is Giryn. He will be guiding the player via broadcasts and generally swooping around.
-   testControl = pilot.add("Gawain")
+   testControl = pilot.add(friendlyFaction:name() .. " Lancelot",nil,testAsset)
    testControl = testControl[1]
    testControl:control()
    testControl:follow(pilot.player())
@@ -265,7 +261,7 @@ function setUpTest()
    drone[1]:control()
    drone[1]:brake()
    
-   --This drone is the one that does the shooting for the shield test.
+   --This drone is the one that does the shooting for the shield test
    if friendlyFaction:name() == "Krain" then
       drone2 = pilot.add("Krain Kestrel",nil,vec2.new(-3700,2700))
    else
@@ -275,7 +271,6 @@ function setUpTest()
    drone2[1]:brake()
    --if the player attacks this ship, it fails the player, and the player has to restart the mission.
    hook.pilot(drone2[1],"attacked","notTheEnemy")
-
    --set up the two droneGroups for the "heat testing."
    --droneGroup1 is just dummy ships.
    droneGroup1Coords = vec2.new(1000,-14000)
@@ -289,7 +284,6 @@ function setUpTest()
    angle = math.pi * 2 / numShips
    radius = 80 + numShips * 25
    for i = 1, numShips do
-      
       --calculate where in the circle the pilot should be.
       x = radius * math.cos(angle * i)
       y = radius * math.sin(angle * i) 
@@ -314,44 +308,47 @@ function setUpTest()
    end
 
    --start the test for realz.
-   hook.date(time.create(0,0,100),"startTest")
+   testHook = hook.timer(250,"startTest")
 end
 
 function startTest() --test 1: fly to a point.
-   if not missionStatus == -1 then
+   if missionStatus == 3 then
+      hook.rm(testHook)
       missionStatus = 4
       osdUpdate(2,1)
       testControl:broadcast(ifd[1])
-      sysMrk = system.mrkAdd(14500,14500)
-      testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(14500,14500), radius=250,funcname="testTwo"})
+      sysMrk = system.mrkAdd("AF-27",vec2.new(14500,14500))
+      testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(14500,14500), radius=400,funcname="testTwo"})
    end
 end
 
 function testTwo() --fly through another point on your way to a third.
-   if not missionStatus == -1 then
+   if missionStatus == 4 then
+      hook.rm(testHook)
       missionStatus = 5
       osdUpdate(2,2)
       testControl:broadcast(ifd[2])
-      hook.rm(testHook)
       system.mrkRm(sysMrk)
-      sysMrk = system.mrkAdd(-10000,-12000)
+      sysMrk = system.mrkAdd("GE-83",vec2.new(-10000,-12000))
       testControl:broadcast(ifd[2])
-      testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(-10000,-12000),radius=250,funcname="testThree"})
+      warn("testTwo hook setting now...")
+      testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(-10000,-12000),radius=400,funcname="testThree"})
    end
 end
 
 function testThree() --arrive at the third point.
-   if not missionStatus == -1 then
+   if missionStatus == 5 then
+      warn("if entered")
       missionStatus = 6
       hook.rm(testHook)
       system.mrkRm(sysMrk)
-      sysMrk = system.mrkAdd(-10000,-12000)
+      sysMrk = system.mrkAdd("TB-54",vec2.new(-8000,2000))
       testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(-8000,2000),radius=250,funcname="testFour"})
    end
 end
 
 function testFour() --shoot a drone.
-   if not missionStatus == -1 then
+   if missionStatus == 6 then
       missionStatus = 7
       osdUpdate(2,3)
       testControl:broadcast(ifd[3])
@@ -360,6 +357,7 @@ function testFour() --shoot a drone.
 
       --get the drone we created earlier going.
       drone[1]:hilight()
+      drone[1]:setVisplayer()
       drone[1]:setSpeedLimit(50)
       drone[1]:goto(0,3000)
 
@@ -370,11 +368,12 @@ end
 
 function testFive() --getting shot! woo. this is split into two functions.
    --this function only makes drone2 attack the player.
-   if not missionStatus == -1 then
+   if missionStatus == 7 then
       missionStatus = 8
       osdUpdate(2,4)
       testControl(ifd[4])
       drone2[1]:hilight()
+      drone2[1]:setVisplayer()
       drone2[1]:attack(pilot.player())
       testHook = hook.timer(100,"testSix") --see testSix for details.
    end
@@ -383,7 +382,7 @@ end
 function testSix() --done getting shot.
    --we poll the players health every 100 milliseconds.
    _,shield = pilot.player:health()
-   if shield < 30 and not missionStatus == -1 then --if the shield gets below 30%, we want to stop the drone from attacking.
+   if shield < 30 and missionStatus == 8 then --if the shield gets below 30%, we want to stop the drone from attacking.
       missionStatus = 9
       osdUpdate(2,5)
       testControl:broadcast(ifd[5])
@@ -393,13 +392,13 @@ function testSix() --done getting shot.
       drone[2]:land(testAsset) --and get it out of the way.
       
       --set up the next phase. the hooks we did to droneGroup2 should handle getting to the next part of the mission.
-      sysMrk = system.mrkAdd(droneGroup1Coords)
-      sysMrk2 = system.mrkAdd(droneGroup2Coords)
+      sysMrk = system.mrkAdd("Drone Group 1",droneGroup1Coords)
+      sysMrk2 = system.mrkAdd("Drone Group 2",droneGroup2Coords)
    end
 end
 
 function startTheAttack() --and droneGroup2 finally got attacked.
-   if not missionStatus >= 10 and not missionStatus == -1 then --don't really care when the player attacks. it'll jump to EOM.
+   if not missionStatus >= 10 and missionStatus ~= 1 then --don't really care when the player attacks. it'll jump to EOM.
       missionStatus = 10
       osdUpdate(2,6)
       
@@ -486,15 +485,21 @@ end
 function jumper() --basically, if the player jumps out with the mkii, they get to keep it.
    --but campaign over, that faction is now an enemy, and they technically fail the mission.
    --not too sure if i'm sold on this idea. but not sure how to handle the player jumping otherwise.
+   if missionStatus == 1 and system.cur() == testSys then
+      player.allowSave(false)
+   end
+   
    if missionStatus > 2 and missionStatus < 11 then
       fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction:name())
       tk.msg(misn_title,fmsg[2])
       faction.modPlayer(friendlyFaction,-100)
       var.push("corpWarCampaign",0)
+      player.allowSave(true)
       misn.finish(true)
    end
 end
 
 function abort ()
+   player.allowSave(true)
    misn.finish(false)
 end
