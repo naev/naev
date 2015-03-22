@@ -153,7 +153,7 @@ function lander()
       else
          protoShip = "Kestrel MkII"
       end
-      player.swapShip(protoShip,"Prototype",nil,true,false)  --swaps the players ship with the prototype.
+      player.swapShip(protoShip,"Prototype",nil,true,true)  --swaps the players ship with the prototype.
       pilot.rmOutfit(pilot.player(),"all") --remove all the outfits
       pilot.rmOutfit(pilot.player(),"cores") --remove all the outfits
       --create some BIG outfit tables so we can add them all in using a for loop later.
