@@ -234,6 +234,9 @@ void equipment_open( unsigned int wid )
    GLfloat colour[4*4];
    const char *buf;
 
+   /* Mark as generated. */
+   land_tabGenerate(LAND_WINDOW_EQUIPMENT);
+
    /* Set global WID. */
    equipment_wid = wid;
 

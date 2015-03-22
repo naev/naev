@@ -61,6 +61,9 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
 
+   /* Mark as generated. */
+   land_tabGenerate(LAND_WINDOW_SHIPYARD);
+
    /* Init vars. */
    shipyard_selected = NULL;
 
