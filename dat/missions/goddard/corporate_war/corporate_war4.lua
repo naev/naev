@@ -42,7 +42,7 @@ ifd[1] = [[This is Gyrin. We need to check engines first. Fly to point AF-27. We
 ifd[2] = [[Ok, good. Now, fly to point GE-83, then point TB-54. We've highlighted these on your map.]]
 ifd[3] = [[We need to monitor offensive systems. We've highlighted a drone on your map. Please destroy it.]]
 ifd[4] = [[We need to check defensive systems. Please hold your position, and allow yourself to be attacked. Do not attack back!]]
-ifd[5] = [[Next, we need to check heat diffusion. There are 2 groups of inactive drones at point MU-89.]]
+ifd[5] = [[Next, we need to check heat diffusion. Destroy the 2 groups of inactive drones at point MU-89.]]
 ifd[6] = [[Please destroy both groups.]]
 ifd[7] = [[Those aren't drones! Fireteams Bravo and Gamma, move in now!]]
 ifd[8] = [[%s! Defensive maneouvers! Take out as many as you can, but don't risk the ship!]]
@@ -104,7 +104,6 @@ function create()
    --format all the strings.
    bmsg[1] = bmsg[1]:format(handlerName,player.name(),handlerName)
    bmsg[2] = bmsg[2]:format(handlerName,testAsset:name(),testSys:name(),misn_reward,handlerName,player.name())
-   bmsg[3] = bmsg[3]:format(testAsset:name(),friendlyFaction:name(),player.name())
    fmsg[1] = fmsg[1]:format(handlerName,handlerName)
 end
 
@@ -140,6 +139,7 @@ function lander()
    --then swapping it out for the prototype ship. /crossing fingers/
    if missionStatus == 1 and planet.cur() == testAsset then
       --standard mission stuff.
+      bmsg[3] = bmsg[3]:format(testAsset:name(),friendlyFaction:name(),player.name())
       tk.msg(misn_title,bmsg[3])
       missionStatus = 2
 
@@ -330,15 +330,12 @@ function testTwo() --fly through another point on your way to a third.
       testControl:broadcast(ifd[2])
       system.mrkRm(sysMrk)
       sysMrk = system.mrkAdd("GE-83",vec2.new(-10000,-12000))
-      testControl:broadcast(ifd[2])
-      warn("testTwo hook setting now...")
       testHook = hook.date(time.create(0,0,50),"proximity",{location=vec2.new(-10000,-12000),radius=400,funcname="testThree"})
    end
 end
 
 function testThree() --arrive at the third point.
    if missionStatus == 5 then
-      warn("if entered")
       missionStatus = 6
       hook.rm(testHook)
       system.mrkRm(sysMrk)
@@ -390,7 +387,8 @@ function testSix() --done getting shot.
       hook.rm(testHook) --stop the timer.
       drone2[1]:control() --stop the drone from attacking...
       drone2[1]:land(testAsset) --and get it out of the way.
-      
+      drone2[1]:setHilight(false)
+
       --set up the next phase. the hooks we did to droneGroup2 should handle getting to the next part of the mission.
       sysMrk = system.mrkAdd("Drone Group 1",droneGroup1Coords)
       sysMrk2 = system.mrkAdd("Drone Group 2",droneGroup2Coords)
@@ -420,9 +418,9 @@ function startTheAttack() --and droneGroup2 finally got attacked.
             newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,p:pos())
             newPt[1]:setHostile()
             newPt[1]:setVisible()
-	    newPt[1]:control()
-	    newPt[1]:face(vec2.new(0,0)) -- will it need a pilot.taskClear()?
-	    newPt[1]:control(false)
+            newPt[1]:control()
+            newPt[1]:face(vec2.new(0,0)) -- will it need a pilot.taskClear()?
+            newPt[1]:control(false)
             p:rm()
             --hook each enemy pilot to an exploded function to see when they're all dead.
             hook.pilot(newPt[1],"exploded","countTheDead")
