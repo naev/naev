@@ -144,7 +144,7 @@ function lander()
       missionStatus = 2
 
       --time to swap ships. hopefully i don't eff this up.
-      playerShipModel = pilot.player():ship()
+      playerShipModel = pilot.player():ship():name()
       playerShipName = player.ship()
       playerShipOutfits = pilot.player():outfits()
 
@@ -400,7 +400,7 @@ function testSix() --done getting shot.
 end
 
 function startTheAttack() --and droneGroup2 finally got attacked.
-   if not missionStatus >= 10 and missionStatus ~= 1 then --don't really care when the player attacks. it'll jump to EOM.
+   if missionStatus < 10 and missionStatus ~= 1 then --don't really care when the player attacks. it'll jump to EOM.
       missionStatus = 10
       osdUpdate(2,6)
       
@@ -417,11 +417,13 @@ function startTheAttack() --and droneGroup2 finally got attacked.
       --swap out our dummy drones for enemy ships.
       for _,p in ipairs(droneGroup2) do
          if p:exists() then
-            newPt = pilot.add(enemyFaction .. " Lancelot",nil,p:pos())
+            newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,p:pos())
             newPt[1]:setHostile()
             newPt[1]:setVisible()
-            newPt[1]:face(vec2.new(0,0)) --does this need manual control? will it need a pilot.taskClear()?
-            p:destroy()
+	    newPt[1]:control()
+	    newPt[1]:face(vec2.new(0,0)) -- will it need a pilot.taskClear()?
+	    newPt[1]:control(false)
+            p:rm()
             --hook each enemy pilot to an exploded function to see when they're all dead.
             hook.pilot(newPt[1],"exploded","countTheDead")
             table.insert(enemyGroup, newPt[1])
@@ -441,7 +443,7 @@ function countTheDead()
    --we wait until all the enemy ships are dead.
    numExploded = numExploded or 0
    numExploded = numExploded + 1
-   if numExploded >= #goddardGroup then --yay you lived.
+   if numExploded >= #enemyGroup then --yay you lived.
       missionStatus = 11
       misn.osdActive(3)
       osdUpdate(3)
