@@ -443,7 +443,9 @@ function countTheDead()
    numExploded = numExploded + 1
    if numExploded >= #enemyGroup then --yay you lived.
       missionStatus = 11
-      testControl:broadcast(ifd[10])
+      if testControl:exists() then
+         testControl:broadcast(ifd[10])
+      end
       misn.osdActive(3)
       osdUpdate(3)
    end
