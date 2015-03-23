@@ -47,6 +47,7 @@ ifd[6] = [[Please destroy both groups.]]
 ifd[7] = [[Those aren't drones! Fireteams Bravo and Gamma, move in now!]]
 ifd[8] = [[%s! Defensive maneouvers! Take out as many as you can, but don't risk the ship!]]
 ifd[9] = [[Do not attack that ship! Please meet me on %s. The tests need to be restarted. They don't pay me enough.]]
+ifd[10] = [[Alright, good job. Meet me back on the planet surface.]]
 
 fmsg[1] = [[%s doesn't look happy as you turn him down. "Well, if you change your mind, I'll be around here somewhere." %s gets up and wanders off through the bar.]]
 fmsg[2] = [[The comm on the bridge of the prototype ship suddenly displays a full hologram of %s. "I see our trust in you was misplaced. I'll assume you intend to keep that ship. You are now an enemy of %s, and we will not hesitate to shoot you on sight. Oh, and we are keeping your ship." The comm goes dark.]]
@@ -442,6 +443,7 @@ function countTheDead()
    numExploded = numExploded + 1
    if numExploded >= #enemyGroup then --yay you lived.
       missionStatus = 11
+      testControl:broadcast(ifd[10])
       misn.osdActive(3)
       osdUpdate(3)
    end
@@ -451,7 +453,6 @@ end
 function testControlBroadcast()
    hook.rm(hookTCB)
    testControl:broadcast(ifd[8])
-   testControl:land(testAsset)
 end
 
 --used if the player attacks drone2
