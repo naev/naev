@@ -95,6 +95,9 @@ void outfits_open( unsigned int wid )
 {
    int w, h, iw, ih, bw, bh, off;
 
+   /* Mark as generated. */
+   land_tabGenerate(LAND_WINDOW_OUTFITS);
+
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 

@@ -105,7 +105,7 @@ end
 function _equip_addOutfit( p, o, olist )
    if olist ~= nil then
       olist[ #olist+1 ] = o
-      return true
+      return 1
    else
       return p:addOutfit( o )
    end
@@ -154,7 +154,7 @@ function equip_ship( p, scramble, weapons, medium, low,
    --[[
    --    Set up weapons
    --]]
-   equip_parseWeapons(p, scramble)
+   equip_parseWeapons(p, scramble, s)
 
    -- Add high slots
    for k,v in ipairs(outfits) do
@@ -242,11 +242,21 @@ end
 --
 --    @param Pilot to add weapons to
 --    @param Whether or not to randomly select outfits.
+--    @param Ship type (optional)
 --]]
-function equip_parseWeapons( p, scramble )
-   local ship, name, abort
+function equip_parseWeapons( p, scramble, ship )
+   local pname, name, abort
 
-   ship = p:ship()
+   if not ship then
+      ship = p:ship()
+   end
+
+   if p and type(p) == "userdata" then
+      pname = p:name()
+   else
+      pname = ship:name()
+   end
+
    name = ship:name()
 
    -- Cache ship's weapon slot sizes.
@@ -297,7 +307,7 @@ function equip_parseWeapons( p, scramble )
 
       if abort then
          warn( string.format("Attempting to equip more than %d weapons on '%s', aborting.",
-               #scache[name], p:name()) )
+               #scache[name], pname) )
          return
       end
    end
