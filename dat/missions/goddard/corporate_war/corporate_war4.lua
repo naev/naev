@@ -403,8 +403,7 @@ function startTheAttack() --and droneGroup2 finally got attacked.
       osdUpdate(2,6)
       
       --get the frenzied testControl guy outta there after he calls for backup.
-      ifd[7] = ifd[7]:format(player.name())
-      ifd[8] = ifd[8]:format(testAsset:name())
+      ifd[8] = ifd[8]:format(player.name())
       testControl:broadcast(ifd[7])
       hookTCB = hook.timer(800,"testControlBroadcast")
 
