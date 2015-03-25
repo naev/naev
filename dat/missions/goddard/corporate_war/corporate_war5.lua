@@ -58,7 +58,7 @@ function create ()
    returnAsset = planet.cur()
 
    if not misn.claim(combatSys) then
-      mission.finish(false)
+      misn.finish(false)
    end
 
    bar_name = bar_name:format(handlerName)
@@ -125,7 +125,12 @@ function jumper()
       enemyFormX = rnd.rnd(-12500,12500)
       enemyFormY = rnd.rnd(-12500,12500)
       enemyGroup = {}
-      prototype = pilot.add(enemyFaction:name() .. " Prototype",nil,vec2.new(enemyFormX,enemyFormY))
+      if enemyFaction:name() == "Goddard" then
+         shipName = "Goddard Prototype"
+      else
+         shipName = "Kestrel Prototype"
+      end
+      prototype = pilot.add(shipName,nil,vec2.new(enemyFormX,enemyFormY))
       prototype[1]:setHilight()
       prototype[1]:setHostile()
       prototype[1]:setNoJump()
@@ -236,8 +241,7 @@ function lander()
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
       faction.modPlayerRaw("Empire",empireStanding - faction.get("Empire"):playerStanding())
-      misn.markerRm(missionMarker)
-      mission.finish(true)
+      misn.finish(true)
    end
 end
 
