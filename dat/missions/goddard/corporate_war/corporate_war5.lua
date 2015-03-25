@@ -9,7 +9,8 @@ framework is pretty much laid, just need to fill it in and do dialogue.
 and probably pick a better misn_title.
 
 TODO:
-fix up the player's empire rep.
+needs balancing.
+needs to feel more epic.
 
 --]]
 
@@ -33,7 +34,6 @@ fix up the player's empire rep.
 
    emsg[1] = [[You land on %s, only to be greeted by a smiling %s. "Great job out there! You really gave it to them. Listen, we have another job for you. Come talk to me in the bar when you are ready." %s turns and strides away, and you find yourself a little bit richer.]]
 
------neeeeeeed a laaaaaaaaaaaaaaanding message
    lmsg[1] = [[You guide your ship onto %s, despite warning messages blaring. You dock hard, and open the doors quickly to see the engineers sprinting out. After what seems like an eternity, you hear small arms fire followed by shouts, and see some nearby consoles on the docks explode. Some of the engineers come sprinting from a nearby corridor and throw themselves in your ship. You hear them yelling for you to punch it. You happily oblige.]]
 
    osd = {}
