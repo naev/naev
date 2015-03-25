@@ -264,11 +264,12 @@ function setUpTest()
    
    --This drone is the one that does the shooting for the shield test
    if friendlyFaction:name() == "Krain" then
-      drone2 = pilot.add("Krain Kestrel",nil,vec2.new(-3700,2700))
+      drone2 = pilot.add("Krain Kestrel",nil,testAsset)
    else
-      drone2 = pilot.add("Goddard Goddard",nil,vec2.new(-3700,2700))
+      drone2 = pilot.add("Goddard Goddard",nil,testAsset)
    end
    drone2[1]:control()
+   drone2[1]:goto(vec2.new(-3700,2700))
    drone2[1]:brake()
    --if the player attacks this ship, it fails the player, and the player has to restart the mission.
    hook.pilot(drone2[1],"attacked","notTheEnemy")
@@ -389,6 +390,7 @@ function testSix() --done getting shot.
       drone2[1]:control() --stop the drone from attacking...
       drone2[1]:land(testAsset) --and get it out of the way.
       drone2[1]:setHilight(false)
+      drone2[1]:setVisplayer(false)
 
       --set up the next phase. the hooks we did to droneGroup2 should handle getting to the next part of the mission.
       sysMrk = system.mrkAdd("Drone Group 1",droneGroup1Coords)
@@ -453,6 +455,8 @@ end
 function testControlBroadcast()
    hook.rm(hookTCB)
    testControl:broadcast(ifd[8])
+   testControl:control()
+   testControl:land(testAsset)
 end
 
 --used if the player attacks drone2
