@@ -8,6 +8,9 @@ This mission attempts to claim the "targetSys", which will either be Goddard or 
 framework is pretty much laid, just need to fill it in and do dialogue.
 and probably pick a better misn_title.
 
+TODO:
+fix up the player's empire rep.
+
 --]]
 
    bar_name = "%s"
@@ -54,6 +57,10 @@ function create ()
 
    returnAsset = planet.cur()
 
+   if not misn.claim(combatSys) then
+      mission.finish(false)
+   end
+
    bar_name = bar_name:format(handlerName)
    bar_desc = bar_desc:format(handlerName)
 
@@ -89,6 +96,7 @@ function accept ()
    misnMarker = misn.markerAdd(combatSys,"high") --change as appropriate to point to a system object and marker style.
 
    missionStatus = 1
+   empireStanding = faction.get("Empire"):playerStanding() --we don't want empire rep to suffer because of this campaign.
 
    misn.osdCreate(misn_title,osd)
    misn.osdActive(missionStatus)
@@ -102,10 +110,16 @@ function jumper()
    if missionStatus == 1 and system.cur() == combatSys then
       missionStatus = 2
       misn.osdActive(missionStatus)
-      --turn off pirates and other baddies. we want total control!
+      --turn off pirates and other baddies and remove ships already in the system. we want total control!
       pilot.toggleSpawn("Pirate")
       pilot.toggleSpawn("Krain")
+      pilot.toggleSpawn("Empire")
       pilot.toggleSpawn("Goddard")
+      for _,p in ipairs(pilot.get()) do
+         if p ~= pilot.player() then
+            p:rm()
+         end
+      end
       --really wish i could use fleet_form.lua here.
       --form the enemies in a random spot.
       enemyFormX = rnd.rnd(-12500,12500)
@@ -116,6 +130,7 @@ function jumper()
       prototype[1]:setHostile()
       prototype[1]:setNoJump()
       prototype[1]:setNoLand()
+      prototype[1]:setVisplayer()
       for i = 1, 8 do
          enemyFormOffsetX = rnd.rnd(-250,250)
          enemyFormOffsetY = rnd.rnd(-250,250)
@@ -145,6 +160,8 @@ function jumper()
       fmsg[2] = fmsg[2]:format(handlerName)
       tk.msg(misn_title,fmsg[2])
       misn.finish(false)
+   elseif missionStatus == 4 then
+      player.allowSave(true)
    end
 end
 
@@ -164,22 +181,34 @@ function takingoff()
       --turn off dem pirates.
       pilot.toggleSpawn("Pirate")
       pilot.toggleSpawn("Goddard")
-      pilot.toggleSpanw("Krain")
+      pilot.toggleSpawn("Krain")
+      for _,p in ipairs(pilot.get()) do
+         if p ~= pilot.player() then
+            p:rm()
+         end
+      end
 
       --add some baddies for some stress.
 
-      for i = 1, 8 do
+      for i = 1, rnd.rnd(2,4) do
          newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,combatAsset)
          newPt[1]:setHostile()
          newPt[1]:setNoJump()
          newPt[1]:setNoLand()
       end
       
+      for i = 1, rnd.rnd(4,8) do
+         newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,combatAsset:pos() + vec2.new(rnd.rnd(-5000,5000),rnd.rnd(-5000,5000)))
+         newPt[1]:setHostile()
+         newPt[1]:setNoJump()
+         newPt[1]:setNoLand()
+      end
+
       for i = 1, 2 do
          if enemyFaction:name() == "Goddard" then
-            newPt = pilot.add("Goddard Goddard",nil,combatAsset)
+            newPt = pilot.add("Goddard Goddard",nil,combatAsset:pos() + vec2.new(rnd.rnd(-5000,5000),rnd.rnd(-5000,5000)))
          else
-            newPt = pilot.add("Krain Kestrel",nil,combatAsset)
+            newPt = pilot.add("Krain Kestrel",nil,combatAsset:pos() + vec2.new(rnd.rnd(-5000,5000),rnd.rnd(-5000,5000)))
          end
          newPt[1]:setHostile()
          newPt[1]:setNoJump()
@@ -190,6 +219,7 @@ end
 
 function lander()
    if missionStatus == 3 and planet.cur() == combatAsset then
+      player.allowSave(false)
       missionStatus = 4
       misn.osdActive(missionStatus)
       lmsg[1] = lmsg[1]:format(combatAsset:name())
@@ -205,6 +235,7 @@ function lander()
       emsg[1] = emsg[1]:format(returnAsset:name(),handlerName,handlerName)
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
+      faction.modPlayerRaw("Empire",empireStanding - faction.get("Empire"):playerStanding())
       misn.markerRm(missionMarker)
       mission.finish(true)
    end
