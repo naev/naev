@@ -415,16 +415,14 @@ function startTheAttack() --and droneGroup2 finally got attacked.
       --swap out our dummy drones for enemy ships.
       for _,p in ipairs(droneGroup2) do
          if p:exists() then
-            newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,p:pos())
-            newPt[1]:setHostile()
-            newPt[1]:setVisible()
-            newPt[1]:control()
-            newPt[1]:face(vec2.new(0,0)) -- will it need a pilot.taskClear()?
-            newPt[1]:control(false)
-            p:rm()
+            p:setFaction(enemyFaction)
+            p:rename(enemyFaction:name() .. ' Lancelot')
+            p:setHostile()
+            p:setVisible()
+            p:control(false)
             --hook each enemy pilot to an exploded function to see when they're all dead.
-            hook.pilot(newPt[1],"exploded","countTheDead")
-            table.insert(enemyGroup, newPt[1])
+            hook.pilot(p,"exploded","countTheDead")
+            table.insert(enemyGroup, p)
          end
       end
 
