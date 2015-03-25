@@ -84,9 +84,43 @@ function jumper()
    if missionStatus == 1 and system.cur() == combatSys then
       missionStatus = 2
       misn.osdActive(missionStatus)
-      --start in-space combat stuff.
-      --turn off dem pirates.
-      --destroy the prototype, etc.
+      --turn off pirates and other baddies. we want total control!
+      pilot.toggleSpawn("Pirate")
+      pilot.toggleSpawn("Krain")
+      pilot.toggleSpawn("Goddard")
+      --really wish i could use fleet_form.lua here.
+      --form the enemies in a random spot.
+      enemyFormX = rnd.rnd(-12500,12500)
+      enemyFormY = rnd.rnd(-12500,12500)
+      enemyGroup = {}
+      prototype = pilot.add(enemyFaction():name() .. " Prototype",nil,vec2.new(enemyFormX,enemyFormY))
+      prototype[1]:setHilight()
+      prototype[1]:setHostile()
+      prototype[1]:setNoJump()
+      prototype[1]:setNoLand()
+      for i = 1, 8 do
+         enemyFormOffsetX = rnd.rnd(-250,250)
+         enemyFormOffsetY = rnd.rnd(-250,250)
+         newPt = pilot.add(enemyFaction():name() .. " Lancelot",nil,vec2.new(enemyFormX,enemyFormY) + vec2.new(enemyFormOffsetX, enemyFormOffsetY))
+         table.insert(enemyGroup, newPt[1])
+      end
+      enemyFormOffsetX = rnd.rnd(-250,250)
+      enemyFormOffsetY = rnd.rnd(-250,250)
+      if enemyFaction():name() == "Goddard" then
+         newPt = pilot.add("Goddard Goddard",nil,vec2.new(enemyFormX,enemyFormY) + vec2.new(enemyFormOffsetX,enemyFormOffsetY))
+      else
+         newPt = pilot.add("Krain Kestrel",nil,vec2.new(enemyformX,enemyFormY) + vec2.new(enemyFormOffsetX,enemyFormOffsetY))
+      end
+      table.insert(enemyGroup, newPt[1])
+
+      --enemies created. now to just make sure they're hostile.
+      for _,p in ipairs(enemyGroup) do
+         --should we set them visible? i'm opting for no.
+         p:setHostile()
+         p:setNoJump()
+         p:setNoLand()
+      end
+      --at this point, we only care about the prototype being dead.
       hook.pilot(prototype[1],"exploded","stationAssault")
    elseif missionStatus == 2 or missionStatus == 3 then
       --player failed. they can retry later.
@@ -99,22 +133,48 @@ function stationAssault()
    --prototype should be ded [sic].
    missionStatus = 3
    misn.osdActive(missionStatus)
+   --this might be wrong.
+   if not combatAsset:canLand() then
+      combatAsset:landOverride(true)
+   end
 end
 
 function takingoff()
    if missionStatus == 4 and system.cur() == combatSys then
       --create some bad guy ships for some flava.
       --turn off dem pirates.
-      --should be the only thing done in this hook
+      pilot.toggleSpawn("Pirate")
+      pilot.toggleSpawn("Goddard")
+      pilot.toggleSpanw("Krain")
+
+      --add some baddies for some stress.
+
+      for i = 1, 8 do
+         newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,combatAsset)
+         newPt[1]:setHostile()
+         newPt[1]:setNoJump()
+         newPt[1]:setNoLand()
+      end
+      
+      for i = 1, 2 do
+         if enemyFaction:name() == "Goddard" then
+            newPt = pilot.add("Goddard Goddard",nil,combatAsset)
+         else
+            newPt = pilot.add("Krain Kestrel",nil,combatAsset)
+         end
+         newPt[1]:setHostile()
+         newPt[1]:setNoJump()
+         newPt[1]:setNoLand()
+      end
    end
 end
-
+--------------------------------need to finish below.
 function lander()
    if missionStatus == 3 and planet.cur() == combatAsset then
       missionStatus = 4
       misn.osdActive(missionStatus)
-      --landed on the planet!
-      --do some flava text.
+      --flavatext.
+      player.takeoff()
    elseif missionStatus == 2 or missionStatus == 3 and planet.cur() ~= combatAsset then
       --player landed too early or wrong and fails the mission.
    elseif missionStatus == 4 and planet.cur() == returnAsset then
