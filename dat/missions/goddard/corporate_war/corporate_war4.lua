@@ -391,6 +391,7 @@ function testSix() --done getting shot.
       drone2[1]:land(testAsset) --and get it out of the way.
       drone2[1]:setHilight(false)
       drone2[1]:setVisplayer(false)
+      drone2[1]:setHostile(false)
 
       --set up the next phase. the hooks we did to droneGroup2 should handle getting to the next part of the mission.
       sysMrk = system.mrkAdd("Drone Group 1",droneGroup1Coords)
