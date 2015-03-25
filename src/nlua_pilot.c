@@ -2049,45 +2049,71 @@ static int pilotL_setFaction( lua_State *L )
 
 
 /**
- * @brief Sets the pilot as hostile to player.
+ * @brief Controls the pilot's hostility towards the player.
  *
- * @usage p:setHostile()
+ * @usage p:setHostile() -- Pilot is now hostile.
+ * @usage p:setHostile(false) -- Make pilot non-hostile.
  *
- *    @luaparam p Pilot to set as hostile.
- * @luafunc setHostile( p )
+ *    @luaparam p Pilot to set the hostility of.
+ *    @luaparam state Whether to set or unset hostile.
+ * @luafunc setHostile( p, state )
  */
 static int pilotL_setHostile( lua_State *L )
 {
    Pilot *p;
+   int state;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
    /* Set as hostile. */
-   pilot_rmFlag(p, PILOT_FRIENDLY);
-   pilot_setHostile(p);
+   if (state) {
+      pilot_rmFlag(p, PILOT_FRIENDLY);
+      pilot_setHostile(p);
+   }
+   else
+      pilot_rmHostile(p);
 
    return 0;
 }
 
 
 /**
- * @brief Sets the pilot as friendly to player.
+ * @brief Controls the pilot's friendliness towards the player.
  *
- * @usage p:setFriendly()
+ * @usage p:setFriendly() -- Pilot is now friendly.
+ * @usage p:setFriendly(false) -- Make pilot non-friendly.
  *
- *    @luaparam p Pilot to set as friendly.
- * @luafunc setFriendly( p )
+ *    @luaparam p Pilot to set the friendliness of.
+ *    @luaparam state Whether to set or unset friendly.
+ * @luafunc setFriendly( p, state )
  */
 static int pilotL_setFriendly( lua_State *L )
 {
    Pilot *p;
+   int state;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
    /* Remove hostile and mark as friendly. */
-   pilot_setFriendly(p);
+   if (state)
+      pilot_setFriendly(p);
+   /* Remove friendly flag. */
+   else
+      pilot_rmFriendly(p);
 
    return 0;
 }
