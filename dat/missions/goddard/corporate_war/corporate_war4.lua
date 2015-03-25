@@ -124,9 +124,10 @@ function accept ()
    missionMarker = misn.markerAdd(testSys, "high")
 
    missionStatus = 1
-
+   empireStanding = faction.get("Empire"):playerStanding() --we don't want empire rep to suffer because of this campaign.
+   
    --set up osd
-  osdUpdate(1)
+   osdUpdate(1)
 
    --create our standard hooks.
    hook.jumpin("jumper")
@@ -238,6 +239,7 @@ function lander()
       player.allowSave(true)
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
+      faction.modPlayerRaw("Empire",empireStanding - faction.get("Empire"):playerStanding())
       misn.markerRm(missionMarker)
       misn.finish(true)
    end
@@ -500,7 +502,7 @@ function jumper() --basically, if the player jumps out with the mkii, they get t
       fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction:name())
       tk.msg(misn_title,fmsg[2])
       faction.modPlayer(friendlyFaction,-100)
-      var.push("corpWarCampaign",0)
+      var.push("corpWarStolen",1)
       player.allowSave(true)
       misn.finish(true)
    end
