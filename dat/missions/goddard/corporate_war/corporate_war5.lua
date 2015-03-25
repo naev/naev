@@ -13,17 +13,25 @@ and probably pick a better misn_title.
    bar_name = "%s"
    bar_desc = "%s sits at a booth, waiting expectantly for you."
 
-   misn_title = "Right in the Kisser"
+   misn_title = "Corporate Revenge"
    misn_desc = "Destroy the prototype ship, and then board the enemy station to delete records."
 
    bmsg = {} --beginning messages
    emsg = {} --ending messages
    fmsg = {} --failure messages
-   bmsg[1] = [[]]
+   lmsg = {} --landed on combatAsset messages
 
-   fmsg[1] = [[]] --player said no in the bar
-   
-   emsg[1] = [[]]
+   bmsg[1] = [[You walk up to %s, and sit down in the booth across from him. He flashes a grin at you. "Good job testing the prototype. We never expected %s to take a shot like that." He pauses and settles into the seat a little more. "We've heard that %s is developing a prototype of their own. In fact, we hear that soon, they are going to be testing it. We need to retaliate. Would you be interested in a little payback?" He sits back in his chair and waits for you to respond.]]
+   bmsg[2] = [[%s grins again. "Good. I'm not going to lie to you, this isn't going to be easy. And you are going to be the only friendly ship out there. You need to take a team of engineers to %s, in the %s system. First, you have to destroy the prototype. Then, you need to land. The engineers are going to put a virus in their network to wipe out any data about their prototype." %s grins mischievously. "This should put them back behind us. And teach us a lesson. The engineers are already boarding. Good luck, %s." He sits back in his seat as you get up to get ready.]]
+
+   fmsg[1] = [[You politely decline the offer to a grimacing %s. "Well, if you change your mind, come back and talk to me. We have a small window of opportunity here." You get up and take your leave.]] --player said no in the bar
+   fmsg[2] = [[As soon as you finish your jump, your comm blares to life with the frenetic voice of %s. "Great, thanks for jumping out! That gave them time to get the prototype to safety and harden their defenses. Come talk to me in a bit, and we will give it another go." The comm falls silent.]] --player jumped early
+   fmsg[3] = [[You pilot yourself through the atmosphere, about to make your final approach when the comm blares to life with the voice of %s. "While you were busy landing, %s was able to get it's prototype ship to safety and harden it's defences! Come see me in a bit, and we can talk about giving it another go." Your comm becomes quiet once again.]] --player landed early/wrong
+
+   emsg[1] = [[You land on %s, only to be greeted by a smiling %s. "Great job out there! You really gave it to them. Listen, we have another job for you. Come talk to me in the bar when you are ready." %s turns and strides away, and you find yourself a little bit richer.]]
+
+-----neeeeeeed a laaaaaaaaaaaaaaanding message
+   lmsg[1] = [[You guide your ship onto %s, despite warning messages blaring. You dock hard, and open the doors quickly to see the engineers sprinting out. After what seems like an eternity, you hear small arms fire followed by shouts, and see some nearby consoles on the docks explode. Some of the engineers come sprinting from a nearby corridor and throw themselves in your ship. You hear them yelling for you to punch it. You happily oblige.]]
 
    osd = {}
    osd[1] = "Fly to the %s system."
@@ -54,10 +62,20 @@ function create ()
    
    misn_reward = 150000 + faction.playerStanding(friendlyFaction) * 3000 
    
+   osd[1] = osd[1]:format(combatSys:name())
+   osd[2] = osd[2]:format(enemyFaction:name())
+   osd[3] = osd[3]:format(combatAsset:name())
+   osd[4] = osd[4]:format(returnAsset:name())
+
 end
 
 
 function accept ()
+
+   bmsg[1] = bmsg[1]:format(handlerName,enemyFaction:name(),enemyFaction:name())
+   bmsg[2] = bmsg[2]:format(handlerName,combatAsset:name(),combatSys:name(),handlerName,player.name())
+   fmsg[1] = fmsg[1]:format(handlerName)
+
    if not tk.yesno( misn_title, bmsg[1] ) then
       tk.msg(misn_title,fmsg[1])
       misn.finish(false)
@@ -93,7 +111,7 @@ function jumper()
       enemyFormX = rnd.rnd(-12500,12500)
       enemyFormY = rnd.rnd(-12500,12500)
       enemyGroup = {}
-      prototype = pilot.add(enemyFaction():name() .. " Prototype",nil,vec2.new(enemyFormX,enemyFormY))
+      prototype = pilot.add(enemyFaction:name() .. " Prototype",nil,vec2.new(enemyFormX,enemyFormY))
       prototype[1]:setHilight()
       prototype[1]:setHostile()
       prototype[1]:setNoJump()
@@ -101,12 +119,12 @@ function jumper()
       for i = 1, 8 do
          enemyFormOffsetX = rnd.rnd(-250,250)
          enemyFormOffsetY = rnd.rnd(-250,250)
-         newPt = pilot.add(enemyFaction():name() .. " Lancelot",nil,vec2.new(enemyFormX,enemyFormY) + vec2.new(enemyFormOffsetX, enemyFormOffsetY))
+         newPt = pilot.add(enemyFaction:name() .. " Lancelot",nil,vec2.new(enemyFormX,enemyFormY) + vec2.new(enemyFormOffsetX, enemyFormOffsetY))
          table.insert(enemyGroup, newPt[1])
       end
       enemyFormOffsetX = rnd.rnd(-250,250)
       enemyFormOffsetY = rnd.rnd(-250,250)
-      if enemyFaction():name() == "Goddard" then
+      if enemyFaction:name() == "Goddard" then
          newPt = pilot.add("Goddard Goddard",nil,vec2.new(enemyFormX,enemyFormY) + vec2.new(enemyFormOffsetX,enemyFormOffsetY))
       else
          newPt = pilot.add("Krain Kestrel",nil,vec2.new(enemyformX,enemyFormY) + vec2.new(enemyFormOffsetX,enemyFormOffsetY))
@@ -124,6 +142,7 @@ function jumper()
       hook.pilot(prototype[1],"exploded","stationAssault")
    elseif missionStatus == 2 or missionStatus == 3 then
       --player failed. they can retry later.
+      fmsg[2] = fmsg[2]:format(handlerName)
       tk.msg(misn_title,fmsg[2])
       misn.finish(false)
    end
@@ -168,17 +187,26 @@ function takingoff()
       end
    end
 end
---------------------------------need to finish below.
+
 function lander()
    if missionStatus == 3 and planet.cur() == combatAsset then
       missionStatus = 4
       misn.osdActive(missionStatus)
-      --flavatext.
+      lmsg[1] = lmsg[1]:format(combatAsset:name())
+      tk.msg(misn_title,lmsg[1])
       player.takeoff()
    elseif missionStatus == 2 or missionStatus == 3 and planet.cur() ~= combatAsset then
       --player landed too early or wrong and fails the mission.
+      fmsg[3] = fmsg[3]:format(handlerName,enemyFaction:name())
+      tk.msg(misn_title,fmsg[3])
+      misn.finish(false)
    elseif missionStatus == 4 and planet.cur() == returnAsset then
       --mission is over.
+      emsg[1] = emsg[1]:format(returnAsset:name(),handlerName,handlerName)
+      tk.msg(misn_title,emsg[1])
+      player.pay(misn_reward)
+      misn.markerRm(missionMarker)
+      mission.finish(true)
    end
 end
 

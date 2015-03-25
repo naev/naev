@@ -958,4 +958,16 @@
    <done>Corporate Duties</done>
   </avail>
  </mission>
+ <mission name = "Corporate Revenge">
+  <lua>goddard/corporate_war/corporate_war5</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():name() == var.peek("corpWarHQ") and var.peek("corpWarStolen") ~= 1</cond>
+   <done>Flying a New Bird</done>
+  </avail>
+ </mission>
 </Missions>

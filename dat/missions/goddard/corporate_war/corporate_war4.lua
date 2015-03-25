@@ -495,7 +495,7 @@ function jumper() --basically, if the player jumps out with the mkii, they get t
       fmsg[2] = fmsg[2]:format(handlerName,friendlyFaction:name())
       tk.msg(misn_title,fmsg[2])
       faction.modPlayer(friendlyFaction,-100)
-      var.push("corpWarCampaign",0)
+      var.push("corpWarStolen",1)
       player.allowSave(true)
       misn.finish(true)
    end
