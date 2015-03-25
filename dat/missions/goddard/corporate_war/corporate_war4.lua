@@ -124,9 +124,10 @@ function accept ()
    missionMarker = misn.markerAdd(testSys, "high")
 
    missionStatus = 1
-
+   empireStanding = faction.get("Empire"):playerStanding() --we don't want empire rep to suffer because of this campaign.
+   
    --set up osd
-  osdUpdate(1)
+   osdUpdate(1)
 
    --create our standard hooks.
    hook.jumpin("jumper")
@@ -238,6 +239,7 @@ function lander()
       player.allowSave(true)
       tk.msg(misn_title,emsg[1])
       player.pay(misn_reward)
+      faction.modPlayerRaw("Empire",empireStanding - faction.get("Empire"):playerStanding())
       misn.markerRm(missionMarker)
       misn.finish(true)
    end
