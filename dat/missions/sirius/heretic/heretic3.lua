@@ -76,19 +76,18 @@ function create()
    misn.setTitle( misn_title )
    misn.setNPC(npc_name,"neutral/thief2")
    misn.setDesc(bar_desc)
-   --format your strings, yo!   
-   bmsg[1] = bmsg[1]:format(player.name())
-   bmsgc[3] = bmsgc[3]:format(player.name(),numstring(reward))
-   emsg[1] = emsg[1]:format(player.name())
-   return_to_base_msg = return_to_base_msg:format(player.name(),homeasset:name())
+
    osd[1] = osd[1]:format(homeasset:name())
    osd[2] = osd[2]:format(homeasset:name())
+
    misn_desc = misn_desc:format(homesys:name())
-   time_to_come_home = time_to_come_home:format(player.name())
 end
 
 function accept()
-   tk.msg(misn_title,bmsg[1])
+   -- Only referenced in this function.
+   bmsgc[3] = bmsgc[3]:format(player.name(),numstring(reward))
+
+   tk.msg(misn_title,bmsg[1]:format( player.name() ))
    tk.msg(misn_title,bmsg[2])
    while true do --another complicated convo!
       if checker == nil then
@@ -167,10 +166,11 @@ function death(p)
 end
 
 function flee()
-   tk.msg(misn_title,return_to_base_msg)
+   tk.msg(misn_title, return_to_base_msg:format( player.name(),homeasset:name() ))
+
    returnchecker = true --used to show that deathcounter has been reached, and that the player is landing 'just because'
    misn.osdActive(2)
-   tk.msg(misn_title,time_to_come_home)
+   tk.msg(misn_title, time_to_come_home:format( player.name() ))
    -- Send any surviving Nasin ships home.
    for _, j in ipairs(de_fence) do
       if j:exists() then
@@ -212,7 +212,7 @@ function return_to_base()
       misn.finish(false) --mwahahahahaha!
    else
       player.pay(reward)
-      tk.msg(misn_title,emsg[1])
+      tk.msg(misn_title,emsg[1]:format( player.name() ))
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",4)
       faction.modPlayer("Sirius",-5)

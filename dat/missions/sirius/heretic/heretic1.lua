@@ -47,25 +47,23 @@ function create()
    misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
    reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
    targetasset, targetsystem = planet.get("The Wringer")
-   playername = player.name()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(reward)
    misn.setNPC(npc_name,"neutral/male1")
    misn.setDesc(bar_desc)
-   --format your strings, yo!
-   bmsg[1] = bmsg[1]:format(planet.cur():name())
-   bmsg[2] = bmsg[2]:format(planet.cur():name())
-   bmsg[3] = bmsg[3]:format(targetasset:name(),targetsystem:name(),numstring(reward))
-   emsg[1] = emsg[1]:format(targetasset:name())
-   emsg[2] = emsg[2]:format(playername)
-   emsg[3] = emsg[3]:format(playername,numstring(reward))
+
+   -- TODO: bmsg[1] is currently unused
+   -- bmsg[1] = bmsg[1]:format(planet.cur():name())
+
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
-   spk_choice = tk.choice(misn_title,bmsg[2],option[1],option[2]) --using tk.choice felt more natural than just a yes or no.
+   spk_choice = tk.choice(misn_title, bmsg[2]:format( planet.cur():name() ),
+         option[1], option[2]) --using tk.choice felt more natural than just a yes or no.
+
    if spk_choice == 2 then
       faction.modPlayer("Nasin",3) --a little reward for actually wanting the storyline (read: nasin loyalty).
       tk.msg(misn_title,bmsg[4])
@@ -73,9 +71,12 @@ function accept()
       tk.msg(misn_title,bmsg[6])
       tk.msg(misn_title,bmsg[7])
    end
-   if not tk.yesno(misn_title,bmsg[3]) then
+
+   local msg = bmsg[3]:format( targetasset:name(),targetsystem:name(),numstring(reward) )
+   if not tk.yesno(misn_title, msg) then
       misn.finish(false)
    end
+
    misn.setDesc(misn_desc)
    misn.accept()
    misn.markerAdd(targetsystem,"plot")
@@ -87,9 +88,9 @@ end
 
 function landing()
    if planet.cur() == targetasset then
-      tk.msg(misn_title,emsg[1])
-      tk.msg(misn_title,emsg[2])
-      tk.msg(misn_title,emsg[3])
+      tk.msg(misn_title, emsg[1]:format( targetasset:name() ))
+      tk.msg(misn_title, emsg[2]:format( player.name() ))
+      tk.msg(misn_title, emsg[3]:format( player.name(), numstring(reward) ))
       player.pay(reward)
       misn.cargoRm(message)
       misn_tracker = misn_tracker + 1

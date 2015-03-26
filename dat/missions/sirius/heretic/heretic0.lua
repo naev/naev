@@ -55,23 +55,20 @@ function create()
    misn.setTitle(misn_title)
    misn.setNPC(npc_name,"neutral/thief1") --using a generic picture for now.
    misn.setDesc(bar_desc)
-   --format all the messages
-   bmsg[1] = bmsg[1]:format(targetasset:name(),targetasset:name(),targetsystem:name(),targetasset:name(),numstring(reward))
-   bmsg[2] = bmsg[2]:format(targetasset:name())
-   bmsg[3] = bmsg[3]:format(targetasset:name())
-   emsg[1] = emsg[1]:format(targetasset:name())
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
    --the obligatory opening messages
-   tk.msg(misn_title,bmsg[1])
-   if not tk.yesno(misn_title,bmsg[2]) then
+   local aname = targetasset:name()
+
+   tk.msg(misn_title, bmsg[1]:format( aname, aname, aname, aname, numstring(reward) ))
+   if not tk.yesno(misn_title,bmsg[2]:format(aname)) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end
-   tk.msg(misn_title,bmsg[3])
+   tk.msg(misn_title,bmsg[3]:format(aname))
    misn.setDesc(misn_desc)
    misn.accept()
    misn.markerAdd(targetsystem,"plot")
@@ -88,8 +85,8 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg(misn_title,emsg[1])
-      tk.msg(misn_title,emsg[2])
+      tk.msg(misn_title, emsg[1]:format( targetasset:name() ))
+      tk.msg(misn_title, emsg[2])
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against sirius, and we want sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --nasin rep is used in mission rewards, and I am trying to avoid having the pay skyrocket.

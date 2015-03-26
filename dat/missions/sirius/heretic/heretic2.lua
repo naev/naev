@@ -66,22 +66,30 @@ function create()
    misn.setReward(numstring(reward) .. "credits")
    misn.setNPC(npc_name,"neutral/thief2")
    misn.setDesc(bar_desc)
-   --format the messages
-   bmsg[1] = bmsg[1]:format(playername)
-   chooser[2] = chooser[2]:format(homeasset:name(),numstring(reward))
-   osd[2] = osd[2]:format(homeasset:name())
-   out_sys_failure_msg = out_sys_failure_msg:format(playername)
+
+   -- Format OSD
+   osd[2] = osd[2]:format( homeasset:name() )
+
    misn_desc = misn_desc:format(homesys:name())
 end
 
 function accept()
+   -- Only referenced in this function.
+   chooser[2] = chooser[2]:format(homeasset:name(), numstring(reward))
+
    while true do --this is a slightly more complex convo than a yes no. Used break statements as the easiest way to control convo.
+
+      msg = bms
       if first_talk == nil then --used the first talk one only the first time through. This way, the npc convo feels more natural.
-         draga_convo = tk.choice(misn_title,bmsg[1],choice[1],choice[2],choice[3],choice[4])
+         msg = bmsg[1]:format( player.name() )
          first_talk = 1
       else
-         draga_convo = tk.choice(misn_title,bmsg[2],choice[1],choice[2],choice[3],choice[4])
+         msg = bmsg[2]
       end
+      draga_convo = tk.choice(misn_title, msg,
+            choice[1], choice[2], choice[3], choice[4])
+         draga_convo = tk.choice(misn_title,bmsg[2],choice[1],choice[2],choice[3],choice[4])
+
       if draga_convo == 1 or draga_convo == 2 then
          tk.msg(misn_title,chooser[draga_convo])
       elseif draga_convo == 3 then
@@ -154,7 +162,7 @@ end
 
 function out_sys_failure() --jumping pre-emptively is a bad thing.
    if system.cur() ~= homesys then
-      tk.msg(misn_title,out_sys_failure_msg)
+      tk.msg(misn_title, out_sys_failure_msg:format( player.name() ))
       misn.osdDestroy()
       misn.finish(false)
    end
