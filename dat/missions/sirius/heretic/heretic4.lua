@@ -62,7 +62,7 @@ function accept()
       misn.finish ()
    end
    misn.accept()
-   misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name())
+   misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
    player.allowSave(false) -- so the player won't get stuck with a mission he can't complete.
