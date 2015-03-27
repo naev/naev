@@ -318,7 +318,9 @@ function render( dt, dt_mod )
    energy = pp:energy()
    speed = pp:vel():dist()
    heat = pp:temp()
-   fuel = player.fuel()
+   fuel, consumption = player.fuel()
+   fuel_max = pp:stats().fuel_max
+   jumps = player.jumps()
    lockons = pp:lockon()
    autonav = player.autonav()
    credits = player.credits()
@@ -453,14 +455,14 @@ function render( dt, dt_mod )
 
    --Bars
    --Fuel
-   txt = tostring(round( fuel )) .. " (" .. tostring(math.floor( fuel / 100 )) .. " jumps)"
+   txt = tostring(round( fuel )) .. " (" .. tostring(jumps) .. " jumps)"
    col = col_txt_std
-   if math.floor( fuel / 100 ) == 1 then
+   if jumps == 1 then
       col = col_txt_wrn
    elseif fuel == 0. then
       col = col_txt_enm
    end
-   render_bar( true, "fuel", fuel/100, txt, col )
+   render_bar( true, "fuel", fuel/fuel_max, txt, col )
    
    --Armour
    txt = string.format( "%s%% (%s)", round( armour ), round( stats.armour * armour / 100 ) )
