@@ -410,9 +410,14 @@ function render( dt, dt_mod )
       if i <= #aset then
          --There is something in this slot
          gfx.renderRect( slot_x, 0, slot_w, slot_h, col_slot_bg ) --Background
-         
+
+         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+         if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].temp, col_slot_heat ) -- Background (heat)
+         end
+
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
-         
+
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_img_offs_y )
          elseif aset[i].state == "cooldown" then
