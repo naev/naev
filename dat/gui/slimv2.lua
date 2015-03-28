@@ -377,8 +377,12 @@ function render( dt, dt_mod )
          end
          
          --Cooldown
-         if wset[i].cooldown ~= nil and wset[i].cooldown < 1. then
-            local texnum = round((1-wset[i].cooldown)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
+         local coolinglevel = wset[i].cooldown
+         if wset[i].charge then
+            coolinglevel = wset[i].charge
+         end
+         if coolinglevel ~= nil and coolinglevel < 1. then
+            local texnum = round((1-coolinglevel)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
             
             --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
