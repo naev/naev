@@ -1371,6 +1371,14 @@ static int pilotL_weapset( lua_State *L )
 /**
  * @brief Gets heat information for a weapon set.
  *
+ * Heat is a 0-2 value that corresponds to three separate ranges:
+ *
+ * <ul>
+ *  <li>0: Weapon set isn't overheating and has no penalties.</li>
+ *  <li>0-1: Weapon set has reduced accuracy.</li>
+ *  <li>1-2: Weapon set has full accuracy penalty plus reduced fire rate.</li>
+ * </ul>
+ *
  * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active weapons
  * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
  * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
