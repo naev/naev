@@ -53,7 +53,6 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
       return
    end
 
-
    if combat_dist == nil then
       combat_dist = 3000
    end
@@ -254,10 +253,6 @@ function lander(lander, forma)
    forma:lander(lander)
 end
 
-function destroyWrapper(forma)
-   Forma:destroy()
-end
-
 --Used in formation creation, this creates vec2s for each ship to follow.
 -- Defined on a formation table.
 -- This is where formations will ultimately be defined.
@@ -441,9 +436,6 @@ function Forma:control()
 
    -- A little unconventional, re-set the timer hook at the start of the function. This is because execution might not reach the end.
    self.thook = hook.timer(100, "toRepeat", self) -- Call the wrapper, not this function.
-  
-   if not self.fleader:exists() then
-   end
 
    --combat. mmmm.
    local enemies = pilot.get(self.fleader:faction():enemies()) -- Get all enemies of the fleader. NOTE: This assumes an enemy of the fleader is also an enemy of the fleet! For now that's okay, but keep that in mind.
