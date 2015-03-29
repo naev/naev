@@ -264,7 +264,7 @@ static int texL_sprites( lua_State *L )
  * @usage sx, sy = t:spriteFromdir( math.pi )
  *
  *    @luaparam t Texture to get sprite of.
- *    @luaparam a Direction to have sprite facing (in radians).
+ *    @luaparam a Direction to have sprite facing (in degrees).
  *    @luareturn x and y positions of the sprite.
  * @luafunc spriteFromDir( t, a )
  */
@@ -276,7 +276,7 @@ static int texL_spriteFromDir( lua_State *L )
 
    /* Params. */
    lt = luaL_checktex( L, 1 );
-   a  = luaL_checknumber( L, 2 );
+   a  = luaL_checknumber( L, 2 ) / 180. * M_PI;
 
    /* Calculate with parameter sanity.. */
    if ((a >= 2.*M_PI) || (a < 0.)) {

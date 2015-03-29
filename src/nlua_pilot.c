@@ -1783,7 +1783,7 @@ static int pilotL_ew( lua_State *L )
  * @usage d = p:dir()
  *
  *    @luaparam p Pilot to get the direction of.
- *    @luareturn The pilot's current direction as a number (in radians).
+ *    @luareturn The pilot's current direction as a number (in degrees).
  * @luafunc dir( p )
  */
 static int pilotL_dir( lua_State *L )
@@ -1794,7 +1794,7 @@ static int pilotL_dir( lua_State *L )
    p     = luaL_validpilot(L,1);
 
    /* Push direction. */
-   lua_pushnumber( L, p->solid->dir );
+   lua_pushnumber( L, p->solid->dir * 180./M_PI );
    return 1;
 }
 
