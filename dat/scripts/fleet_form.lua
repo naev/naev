@@ -404,7 +404,9 @@ function Forma:assignCoords()
    end
 
    for i, position in ipairs(posit) do
-      offset = self.fleader:dir() --We want a fleet formed in positions relative to the direction the captain is facing, not static offsets. Note: dir() is in radians!
+      -- We want a fleet formed in positions relative to the direction the
+      -- captain is facing, not static offests.
+      offset = self.fleader:dir() / 180 * math.pi -- convert to radians
       x = position.radius * math.cos(position.angle + offset) --x coordinate assignment.
       y = position.radius * math.sin(position.angle + offset) --y coordinate assignment.
       posit[i] = self.fleader:pos() + vec2.new(x, y) -- You can add and subtract vec2s as you would expect to, no need to bend over backwards.
