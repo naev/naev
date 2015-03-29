@@ -5,7 +5,10 @@ Created by Loki and BTAxis
 Usage:
 First create a fleet with pilot.add()
 Then pass that to the Forma:new() function.
--usage is: Forma:new(fleet,"formation",distance from which to break formation and engage enemies)
+-usage is: 
+      Forma:new(fleet,"formation",combat_dist, preferred_fleet_leader)
+--combat_dist is the distance from the fleet leader to an enemy before the formation breaks and ships attack.
+--preferred_fleet_leader is the ship you want to be leader. if that ship dies, the scripts hands leadership to another ship.
 -if formation or distance isn't provided, formation will be "circle" and distance will be 3000
 Control the fleet's movements by controlling the fleet leader, or "fleader".
 
@@ -34,6 +37,7 @@ Forma = {
          incombat = nil,
          class_count = nil,
          combat_dist = nil,
+         lead_ship = nil,
 }
 
 -- The functions below that start with Forma: are all elements of the Forma table above.
@@ -42,19 +46,20 @@ Forma = {
 
 -- Create a new object based on the Forma "class".
 -- Usage: forma = Forma:new(table_of_pilots, "formation_name")
-function Forma:new(fleet, formation, combat_dist)
+function Forma:new(fleet, formation, combat_dist, lead_ship)
    -- Sanity: we want to make sure a fleet was specified. The formation can be nil.
    if not fleet then
       error "Forma must have a fleet."
       return
    end
 
+
    if combat_dist == nil then
       combat_dist = 3000
    end
    
    -- Create the object.
-   local forma = {fleet = fleet, formation = formation, combat_dist = combat_dist}
+   local forma = {fleet = fleet, formation = formation, combat_dist = combat_dist, lead_ship = lead_ship}
    setmetatable(forma, self) -- Metatable fanciness.
    self.__index = self -- This means the object will look for its functions in "Forma" if it doesn't have them itself.
 
@@ -66,10 +71,11 @@ function Forma:new(fleet, formation, combat_dist)
       d3 = hook.pilot(p, "land", "lander", forma)
    end
    
+   hook.pilot(pilot.player(),"jump","jumper",forma)
+   hook.pilot(pilot.player(),"land","lander",forma)
 
    forma:reorganize()
    forma:control() -- This is sadly the only time we can do this.
-
    return forma, self.fleader --return the fleader so control of the fleet can be handled in a script.
 end
 
@@ -107,7 +113,7 @@ function Forma:reorganize()
       pspeed = p:stats().speed_max
       if not minspeed or minspeed > pspeed then
          minspeed = pspeed
-         fleader = p
+         fleader = self.lead_ship or p
       end
    end
 
@@ -135,11 +141,16 @@ function Forma:dead(victim)
       return
    end
 
+   -- if the scripter set a lead ship which dies, set the lead_ship to nil.
+   if victim == self.lead_ship then
+      self.lead_ship = nil
+   end
+
    -- We need to update the fleet's organization if the leader got killed.
    if victim == self.fleader then
       self:reorganize()
    end
-   
+
    -- Update the ship count if the formation is "buffer".
    if self.formation == "buffer" then
       self:shipCount()
@@ -186,6 +197,8 @@ function Forma:jumper(jumper)
       if self.thook then
          hook.rm(self.thook)
       end
+   elseif jumper == pilot.player() then
+      self:destroy()
    else
       self:dead(jumper) --we need to not run this before the if statement.
    end
@@ -220,6 +233,8 @@ function Forma:lander(lander)
       if self.thook then
          hook.rm(self.thook)
       end
+   elseif lander == pilot.player() then
+      self:destroy()
    else
       self:dead(lander)
    end
@@ -237,6 +252,10 @@ end
 
 function lander(lander, forma)
    forma:lander(lander)
+end
+
+function destroyWrapper(forma)
+   Forma:destroy()
 end
 
 --Used in formation creation, this creates vec2s for each ship to follow.
@@ -422,7 +441,10 @@ function Forma:control()
 
    -- A little unconventional, re-set the timer hook at the start of the function. This is because execution might not reach the end.
    self.thook = hook.timer(100, "toRepeat", self) -- Call the wrapper, not this function.
-   
+  
+   if not self.fleader:exists() then
+   end
+
    --combat. mmmm.
    local enemies = pilot.get(self.fleader:faction():enemies()) -- Get all enemies of the fleader. NOTE: This assumes an enemy of the fleader is also an enemy of the fleet! For now that's okay, but keep that in mind.
    if self.fleader:hostile() then
