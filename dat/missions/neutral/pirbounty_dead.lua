@@ -50,11 +50,13 @@ else -- Default to English
    pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. He takes the pirate off your hands and hands you your pay without speaking a word."
    pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
 
-   emp_share_title   = "A Smaller Reward"
-   emp_share_text    = {}
-   emp_share_text[1] = [["Greetings. I can see that you were trying to collect a bounty on %s. I apologize for getting in the way, but I hope you understand how important it was to eliminate this pirate. Anyway, since you contributed substantially to the effort, I have transferred some money into your account. I hope you will aid us again in the future."]]
-   emp_share_text[2] = [["Sorry about getting in the way of your bounty. %s was a very dangerous criminal, you see; I couldn't risk the pirate getting away. As a condolence, I have transferred a small sum of money into your account. I hope you will continue to assist us in keeping space travel safe, even if you occasionally fail to earn the full bounty."]]
-   emp_share_text[3] = [["Thank you for assisting the Empire in its efforts to keep space safe. Unfortunately, you did not earn the bounty you were after, but since you were so helpful, I have transferred a smaller sum of money into your account."]]
+   share_title   = "A Smaller Reward"
+   share_text    = {}
+   share_text[1] = [["Greetings. I can see that you were trying to collect a bounty on %s. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]]
+   share_text[2] = [["Sorry about getting in the way of your bounty. I don't really care too much about the money, but I just wanted to make sure the galaxy would be rid of that scum; I've seen the villainy of %s first-hand, you see. So as an apology, I would like to offer you the portion of the bounty you clearly earned. The money will be in your account shortly."]]
+   share_text[3] = [["Hey, thanks for the help back there. I don't know if I would have been able to handle %s alone! Anyway, since you were such a big help, I have transferred what I think is your fair share of the bounty to your bank account."]]
+   share_text[4] = [["Heh, thanks! I think I would have been able to take out %s by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]]
+   share_text[5] = [["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]]
    
 
    -- Mission details
@@ -255,8 +257,7 @@ function pilot_death( p, attacker )
       if top_hunter == nil or player_hits >= top_hits then
          succeed()
          target_killed = true
-      elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 and
-            ( top_hunter:faction() == faction.get("Empire") ) then
+      elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
          credits = credits * player_hits / total_hits
          hook.pilot( top_hunter, "jump", "hunter_leave" )
@@ -292,11 +293,8 @@ function hunter_hail( arg )
    if rehailer ~= nil then hook.rm( rehailer ) end
    player.commClose()
 
-   local text
-   if pilot.faction( arg ) == faction.get("Empire") then
-      text = emp_share_text[ rnd.rnd( 1, #emp_share_text ) ]
-      tk.msg( emp_share_title, text:format( name ) )
-   end
+   local text = share_text[ rnd.rnd( 1, #emp_share_text ) ]
+   tk.msg( share_title, text:format( name ) )
 
    player.pay( credits )
    misn.finish( true )
