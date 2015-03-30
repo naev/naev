@@ -2992,6 +2992,7 @@ void space_exit (void)
       free(pnt->land_func);
       free(pnt->land_msg);
       free(pnt->bribe_msg);
+      free(pnt->bribe_ack_msg);
 
       /* tech */
       if (pnt->tech != NULL)

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.6.-2], [bobbens@gmail.com])
+AC_INIT([naev], [0.6.0], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -142,7 +142,7 @@ AS_IF([test "$enable_debug" != "no"], [
   AS_IF([test "$have_custom_cflags" = "no"], [
     # Undo the default CFLAGS set by autoconf
     AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
-      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align"
+      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"
     ], [
       CFLAGS=
     ])

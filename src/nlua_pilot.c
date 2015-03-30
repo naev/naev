@@ -1384,6 +1384,14 @@ static int pilotL_weapset( lua_State *L )
 /**
  * @brief Gets heat information for a weapon set.
  *
+ * Heat is a 0-2 value that corresponds to three separate ranges:
+ *
+ * <ul>
+ *  <li>0: Weapon set isn't overheating and has no penalties.</li>
+ *  <li>0-1: Weapon set has reduced accuracy.</li>
+ *  <li>1-2: Weapon set has full accuracy penalty plus reduced fire rate.</li>
+ * </ul>
+ *
  * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active weapons
  * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
  * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
@@ -1788,7 +1796,7 @@ static int pilotL_ew( lua_State *L )
  * @usage d = p:dir()
  *
  *    @luaparam p Pilot to get the direction of.
- *    @luareturn The pilot's current direction as a number (in radians).
+ *    @luareturn The pilot's current direction as a number (in degrees).
  * @luafunc dir( p )
  */
 static int pilotL_dir( lua_State *L )
@@ -1799,7 +1807,7 @@ static int pilotL_dir( lua_State *L )
    p     = luaL_validpilot(L,1);
 
    /* Push direction. */
-   lua_pushnumber( L, p->solid->dir );
+   lua_pushnumber( L, p->solid->dir * 180./M_PI );
    return 1;
 }
 
@@ -2062,45 +2070,71 @@ static int pilotL_setFaction( lua_State *L )
 
 
 /**
- * @brief Sets the pilot as hostile to player.
+ * @brief Controls the pilot's hostility towards the player.
  *
- * @usage p:setHostile()
+ * @usage p:setHostile() -- Pilot is now hostile.
+ * @usage p:setHostile(false) -- Make pilot non-hostile.
  *
- *    @luaparam p Pilot to set as hostile.
- * @luafunc setHostile( p )
+ *    @luaparam p Pilot to set the hostility of.
+ *    @luaparam state Whether to set or unset hostile.
+ * @luafunc setHostile( p, state )
  */
 static int pilotL_setHostile( lua_State *L )
 {
    Pilot *p;
+   int state;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
    /* Set as hostile. */
-   pilot_rmFlag(p, PILOT_FRIENDLY);
-   pilot_setHostile(p);
+   if (state) {
+      pilot_rmFlag(p, PILOT_FRIENDLY);
+      pilot_setHostile(p);
+   }
+   else
+      pilot_rmHostile(p);
 
    return 0;
 }
 
 
 /**
- * @brief Sets the pilot as friendly to player.
+ * @brief Controls the pilot's friendliness towards the player.
  *
- * @usage p:setFriendly()
+ * @usage p:setFriendly() -- Pilot is now friendly.
+ * @usage p:setFriendly(false) -- Make pilot non-friendly.
  *
- *    @luaparam p Pilot to set as friendly.
- * @luafunc setFriendly( p )
+ *    @luaparam p Pilot to set the friendliness of.
+ *    @luaparam state Whether to set or unset friendly.
+ * @luafunc setFriendly( p, state )
  */
 static int pilotL_setFriendly( lua_State *L )
 {
    Pilot *p;
+   int state;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
    /* Remove hostile and mark as friendly. */
-   pilot_setFriendly(p);
+   if (state)
+      pilot_setFriendly(p);
+   /* Remove friendly flag. */
+   else
+      pilot_rmFriendly(p);
 
    return 0;
 }

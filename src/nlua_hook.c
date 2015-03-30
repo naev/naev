@@ -258,7 +258,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
    if (running_mission != NULL) {
       /* make sure mission is a player mission */
       for (i=0; i<MISSION_MAX; i++)
-         if (player_missions[i].id == running_mission->id)
+         if (player_missions[i]->id == running_mission->id)
             break;
       if (i>=MISSION_MAX) {
          WARN("Mission not in stack trying to hook, forgot to run misn.accept()?");
@@ -637,22 +637,32 @@ static int hook_safe( lua_State *L )
  * <br />
  * DO NOT DO UNSAFE THINGS IN PILOT HOOKS. THIS MEANS STUFF LIKE player.teleport(). IF YOU HAVE DOUBTS USE A "safe" HOOK.<br />
  * <br />
- * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:<br />
- * <br />
- * function my_hook( pilot, arg )<br />
- * end<br />
- * <br />
+ * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
+ * <p>
+ *    function my_hook( pilot, arg )<br />
+ *    end
+ * </p>
  * The combat hooks also pass the pilot acting on it, so for example the pilot
  *  that disabled, attacked or killed the selected pilot. They have the
- *  following format:<br />
- * <br />
- * function combat_hook( pilot, attacker, arg )<br />
- * end<br />
- * <br />
+ *  following format:
+ * <p>
+ *    function combat_hook( pilot, attacker, arg )<br />
+ *    end
+ * </p>
  * Please note that in the case of disable or death hook the attacker may be nil
  *  indicating that it was killed by other means like for example the shockwave
- *  of a dying ship or nebula volatility.
- *
+ *  of a dying ship or nebula volatility.<br />
+ * <br />
+ * The land and jump hooks also pass the asset or jump point the pilot is
+ * landing at or jumped from, respectively:
+ * <p>
+ *    function land_hook( pilot, planet, arg )<br />
+ *    end
+ * </p>
+ * <p style="margin-bottom: 0">
+ *    function jump_hook( pilot, jump_point, arg )<br />
+ *    end
+ * </p>
  *    @luaparam pilot Pilot identifier to hook (or nil for all).
  *    @luaparam type One of the supported hook types.
  *    @luaparam funcname Name of function to run when hook is triggered.

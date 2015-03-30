@@ -11,8 +11,8 @@
   <cpu>-2</cpu>
  </general>
  <specific type="modification">
-  <speed>3</speed>
   <speed_mod>10</speed_mod>
+  <engine_limit_rel>-5</engine_limit_rel>
   <turn_mod>3</turn_mod>
   <energy_usage>1.5</energy_usage>
  </specific>

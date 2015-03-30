@@ -677,7 +677,7 @@ credits_t player_shipPrice( char* shipname )
  */
 void player_rmShip( char* shipname )
 {
-   int i;
+   int i, w;
 
    for (i=0; i<player_nstack; i++) {
       /* Not the ship we are looking for. */
@@ -695,6 +695,12 @@ void player_rmShip( char* shipname )
       /* Realloc memory to smaller size. */
       player_stack = realloc( player_stack,
             sizeof(PlayerShip_t) * (player_nstack) );
+   }
+
+   /* Update ship list if landed. */
+   if (landed) {
+      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      equipment_regenLists( w, 0, 1 );
    }
 }
 
@@ -3023,11 +3029,11 @@ static int player_saveShip( xmlTextWriterPtr writer,
          found = 0;
          for (j=0; j<MISSION_MAX; j++) {
             /* Only check active missions. */
-            if (player_missions[j].id > 0) {
+            if (player_missions[j]->id > 0) {
                /* Now check if it's in the cargo list. */
-               for (k=0; k<player_missions[j].ncargo; k++) {
+               for (k=0; k<player_missions[j]->ncargo; k++) {
                   /* See if it matches a cargo. */
-                  if (player_missions[j].cargo[k] == ship->commodities[i].id) {
+                  if (player_missions[j]->cargo[k] == ship->commodities[i].id) {
                      found = 1;
                      break;
                   }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser PD MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>14</mass>
+  <price>12500</price>
+  <description>While little more than a mark 1 laser cannon mounted on a turret, the Laser Point Defense MK1 is nevertheless a decent defensive weapon for light vessels.</description>
+  <gfx_store>laserturret</gfx_store>
+  <cpu>-8</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx>laser1S</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.45</delay>
+  <speed>550</speed>
+  <range>550</range>
+  <falloff>275</falloff>
+  <energy>5.5</energy>
+  <heatup>30</heatup>
+  <track>3</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>4</penetrate>
+   <physical>7</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>
