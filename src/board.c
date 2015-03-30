@@ -527,6 +527,7 @@ static void board_update( unsigned int wdw )
 int pilot_board( Pilot *p )
 {
    Pilot *target;
+   HookParam hparam[2];
 
    /* Make sure target is sane. */
    target = pilot_get(p->target);
@@ -554,6 +555,12 @@ int pilot_board( Pilot *p )
 
    /* Set time it takes to board. */
    p->ptimer = 3.;
+
+   /* Run pilot board hook. */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINEL;
+   pilot_runHookParam(target, PILOT_HOOK_BOARD, hparam, 1);
 
    return 1;
 }
