@@ -201,6 +201,14 @@ function land ()
 end
 
 
+function update_last_health ()
+   if target_ship ~= nil and target_ship:exists() then
+      last_armour, last_shield = target_ship:health()
+      hook.safe( "update_last_health" )
+   end
+end
+
+
 function pilot_board ()
    player.unboard()
    local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
@@ -216,10 +224,22 @@ end
 
 function pilot_attacked( p, attacker )
    if attacker ~= nil then
+      local armour
+      local shield
+      local damage = 0
       local found = false
+      
+      armour, shield = target_ship:health()
+      if armour < last_armour then
+         damage = damage + (last_armour - armour)
+      end
+      if shield < last_shield then
+         damage = damage + (last_shield - shield)
+      end
+
       for i, j in ipairs( hunters ) do
          if j == attacker then
-            hunter_hits[i] = hunter_hits[i] + 1
+            hunter_hits[i] = hunter_hits[i] + damage
             found = true
          end
       end
@@ -227,7 +247,7 @@ function pilot_attacked( p, attacker )
       if not found then
          local i = #hunters + 1
          hunters[i] = attacker
-         hunter_hits[i] = 1
+         hunter_hits[i] = damage
       end
    end
 end
@@ -352,6 +372,7 @@ function spawn_pirate( param )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
          death_hook = hook.pilot( target_ship, "death", "pilot_death" )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+         hook.safe( "update_last_health" )
       else
          fail( msg[1]:format( name ) )
       end
