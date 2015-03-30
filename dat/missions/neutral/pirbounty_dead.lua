@@ -3,17 +3,18 @@
    Dead or Alive Pirate Bounty
    Copyright 2014 Julian Marchant
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-       http://www.apache.org/licenses/LICENSE-2.0
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --
 
@@ -49,6 +50,13 @@ else -- Default to English
    pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. He takes the pirate off your hands and hands you your pay without speaking a word."
    pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
 
+   emp_share_title   = "A Smaller Reward"
+   emp_share_text    = {}
+   emp_share_text[1] = [["Greetings. I can see that you were trying to collect a bounty on %s. I apologize for getting in the way, but I hope you understand how important it was to eliminate this pirate. Anyway, since you contributed substantially to the effort, I have transferred some money into your account. I hope you will aid us again in the future."]]
+   emp_share_text[2] = [["Sorry about getting in the way of your bounty. %s was a very dangerous criminal, you see; I couldn't risk the pirate getting away. As a condolence, I have transferred a small sum of money into your account. I hope you will continue to assist us in keeping space travel safe, even if you occasionally fail to earn the full bounty."]]
+   emp_share_text[3] = [["Thank you for assisting the Empire in its efforts to keep space safe. Unfortunately, you did not earn the bounty you were after, but since you were so helpful, I have transferred a smaller sum of money into your account."]]
+   
+
    -- Mission details
    misn_title  = "%s Dead or Alive Bounty in %s"
    misn_reward = "%s credits"
@@ -74,6 +82,10 @@ else -- Default to English
    osd_msg[3] = "Land on the nearest %s planet and collect your bounty"
    osd_msg["__save"] = true
 end
+
+
+hunters = {}
+hunter_hits = {}
 
 
 function create ()
@@ -200,18 +212,99 @@ function pilot_board ()
 end
 
 
+function pilot_attacked( p, attacker )
+   if attacker ~= nil then
+      local found = false
+      for i, j in ipairs( hunters ) do
+         if j == attacker then
+            hunter_hits[i] = hunter_hits[i] + 1
+            found = true
+         end
+      end
+
+      if not found then
+         local i = #hunters + 1
+         hunters[i] = attacker
+         hunter_hits[i] = 1
+      end
+   end
+end
+
+
 function pilot_death( p, attacker )
    if attacker == player.pilot() then
       succeed()
       target_killed = true
    else
-      fail( msg[2]:format( name ) )
+      local top_hunter = nil
+      local top_hits = 0
+      local player_hits = 0
+      local total_hits = 0
+      for i, j in ipairs( hunters ) do
+         total_hits = total_hits + hunter_hits[i]
+         if j ~= nil then
+            if j == player.pilot() then
+               player_hits = player_hits + hunter_hits[i]
+            elseif j:exists() and hunter_hits[i] > top_hits then
+               top_hunter = j
+               top_hits = hunter_hits[i]
+            end
+         end
+      end
+
+      if top_hunter == nil or player_hits >= top_hits then
+         succeed()
+         target_killed = true
+      elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 and
+            ( top_hunter:faction() == faction.get("Empire") ) then
+         hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
+         credits = credits * player_hits / total_hits
+         hook.pilot( top_hunter, "jump", "hunter_leave" )
+         hook.pilot( top_hunter, "land", "hunter_leave" )
+         hook.jumpout( "hunter_leave" )
+         hook.land( "hunter_leave" )
+         timer_rehail( top_hunter )
+         player.msg( "\027r" .. msg[2]:format( name ) .. "\0270" )
+         misn.osdDestroy()
+      else
+         fail( msg[2]:format( name ) )
+      end
    end
 end
 
 
 function pilot_jump ()
    fail( msg[1]:format( name ) )
+end
+
+
+function timer_rehail( arg )
+   if rehailer ~= nil then hook.rm( rehailer ) end
+   if arg ~= nil and arg:exists() then
+      arg:hailPlayer()
+      rehailer = hook.timer( 8000, "timer_rehail", arg )
+   end
+end
+
+
+function hunter_hail( arg )
+   if hailer ~= nil then hook.rm( hailer ) end
+   if rehailer ~= nil then hook.rm( rehailer ) end
+   player.commClose()
+
+   local text
+   if pilot.faction( arg ) == faction.get("Empire") then
+      text = emp_share_text[ rnd.rnd( 1, #emp_share_text ) ]
+      tk.msg( emp_share_title, text:format( name ) )
+   end
+
+   player.pay( credits )
+   misn.finish( true )
+end
+
+
+function hunter_leave ()
+   misn.finish( false )
 end
 
 
@@ -258,6 +351,7 @@ function spawn_pirate( param )
          target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "board", "pilot_board" )
+         hook.pilot( target_ship, "attacked", "pilot_attacked" )
          death_hook = hook.pilot( target_ship, "death", "pilot_death" )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
       else
