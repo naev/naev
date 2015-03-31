@@ -228,13 +228,14 @@ function pilot_attacked( p, attacker )
       local shield
       local damage = 0
       local found = false
+      local stats = target_ship:stats()
       
       armour, shield = target_ship:health()
       if armour < last_armour then
-         damage = damage + (last_armour - armour)
+         damage = damage + (stats.armour * (last_armour - armour) / 100)
       end
       if shield < last_shield then
-         damage = damage + (last_shield - shield)
+         damage = damage + (stats.shield * (last_shield - shield) / 100)
       end
 
       for i, j in ipairs( hunters ) do
