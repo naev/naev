@@ -1574,7 +1574,7 @@ static int aiL_speed( lua_State *L )
 {
    
    Pilot *p;
-   double d
+   double d;
    
    if (lua_isnumber(L,1)) {
       p = pilot_get((unsigned int)lua_tonumber(L,1));
