@@ -913,19 +913,22 @@ void ai_think( Pilot* pilot, const double dt )
  *
  *    @param attacked Pilot that is attacked.
  *    @param[in] attacker ID of the attacker.
+ *    @param[i] dmg Damage done by the attacker.
  */
-void ai_attacked( Pilot* attacked, const unsigned int attacker )
+void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 {
    int errf;
    lua_State *L;
-   HookParam hparam;
+   HookParam hparam[2];
 
    /* Custom hook parameters. */
-   hparam.type       = HOOK_PARAM_PILOT;
-   hparam.u.lp.pilot = attacker;
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = attacker;
+   hparam[1].type       = HOOK_PARAM_NUMBER;
+   hparam[1].u.num      = dmg;
 
    /* Behaves differently if manually overridden. */
-   pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, &hparam, 1 );
+   pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, hparam, 2 );
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
 

@@ -998,7 +998,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
       if ((p->player_damage > PILOT_HOSTILE_THRESHOLD) ||
             (shooter->target==p->id)) {
          /* Inform attacked. */
-         ai_attacked( p, shooter->id );
+         ai_attacked( p, shooter->id, dmg );
 
          /* Trigger a pseudo-distress that incurs no faction loss. */
          for (i=0; i<pilot_nstack; i++) {
@@ -1028,7 +1028,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
    }
    /* Otherwise just inform of being attacked. */
    else
-      ai_attacked( p, shooter->id );
+      ai_attacked( p, shooter->id, dmg );
 }
 
 
