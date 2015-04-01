@@ -1576,7 +1576,7 @@ static int aiL_speed( lua_State *L )
    Pilot *p;
    double d
    
-   ;if (lua_isnumber(L,1)) {
+   if (lua_isnumber(L,1)) {
       p = pilot_get((unsigned int)lua_tonumber(L,1));
       if (p==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
@@ -1584,7 +1584,8 @@ static int aiL_speed( lua_State *L )
       }
       d = VMOD(p->solid->vel);
    }
-   else d = VMOD(cur_pilot->solid->vel);
+   else
+      d = VMOD(cur_pilot->solid->vel);
 
    lua_pushnumber(L, d);
    return 1;
