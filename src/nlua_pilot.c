@@ -3112,6 +3112,7 @@ lua_rawset( L, -3 )
  * <ul>
  *  <li> cpu </li>
  *  <li> cpu_max </li>
+ *  <li> crew </li>
  *  <li> fuel </li>
  *  <li> fuel_max </li>
  *  <li> fuel_consumption </li>
@@ -3149,6 +3150,7 @@ static int pilotL_getStats( lua_State *L )
    /* Core. */
    PUSH_DOUBLE( L, "cpu", p->cpu );
    PUSH_INT( L, "cpu_max", p->cpu_max );
+   PUSH_INT( L, "crew", (int)floor( p->crew ) );
    PUSH_DOUBLE( L, "fuel", p->fuel );
    PUSH_DOUBLE( L, "fuel_max", p->fuel_max );
    PUSH_DOUBLE( L, "fuel_consumption", p->fuel_consumption );
