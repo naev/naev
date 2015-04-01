@@ -83,9 +83,6 @@
   <spawn>pirate</spawn>
   <standing>pirate</standing>
   <equip>pirate</equip>
-  <allies>
-   <ally>Wanted_Pirate</ally>
-  </allies>
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
@@ -345,15 +342,6 @@
   <colour>red</colour>
   <allies />
   <player>0</player>
-  <enemies />
- </faction>
- <faction name="Wanted_Pirate">
-  <display>Pirate</display>
-  <invisible />
-  <static />
-  <logo>pirate</logo>
-  <colour>red</colour>
-  <player>-20</player>
   <enemies />
  </faction>
  <faction name="Nasin">

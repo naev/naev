@@ -187,6 +187,15 @@ function land ()
 end
 
 
+function pilot_disable ()
+   if rnd.rnd() < 0.7 then
+      for i, j in ipairs( pilot.get() ) do
+         j:taskClear()
+      end
+   end
+end
+
+
 function pilot_board ()
    player.unboard()
    local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
@@ -257,6 +266,7 @@ function spawn_pirate( param )
          target_ship = pilot.add( ship, nil, param )[1]
          target_ship:rename( name )
          target_ship:setHilight( true )
+         hook.pilot( target_ship, "disable", "pilot_disable" )
          hook.pilot( target_ship, "board", "pilot_board" )
          death_hook = hook.pilot( target_ship, "death", "pilot_death" )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
