@@ -39,19 +39,18 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
 int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
 {
    int n, i, run, ret;
-   HookParam hparam[3], *hdynparam;
+   HookParam hstaparam[5], *hdynparam, *hparam;
 
    /* Set up hook parameters. */
-   if (nparam <= 1) {
-      hparam[0].type       = HOOK_PARAM_PILOT;
-      hparam[0].u.lp.pilot = p->id;
+   if (nparam <= 3) {
+      hstaparam[0].type       = HOOK_PARAM_PILOT;
+      hstaparam[0].u.lp.pilot = p->id;
       n  = 1;
-      if (nparam == 1) {
-         memcpy( &hparam[n], param, sizeof(HookParam) );
-         n++;
-      }
-      hparam[n].type    = HOOK_PARAM_SENTINEL;
+      memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
+      n += nparam;
+      hstaparam[n].type = HOOK_PARAM_SENTINEL;
       hdynparam         = NULL;
+      hparam            = hstaparam;
    }
    else {
       hdynparam   = malloc( sizeof(HookParam) * (nparam+2) );
@@ -59,6 +58,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
       hdynparam[0].u.lp.pilot = p->id;
       memcpy( &hdynparam[1], param, sizeof(HookParam)*nparam );
       hdynparam[nparam+1].type  = HOOK_PARAM_SENTINEL;
+      hparam                  = hdynparam;
    }
 
    /* Run pilot specific hooks. */
