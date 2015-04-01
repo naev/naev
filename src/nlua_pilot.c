@@ -3150,7 +3150,7 @@ static int pilotL_getStats( lua_State *L )
    /* Core. */
    PUSH_DOUBLE( L, "cpu", p->cpu );
    PUSH_INT( L, "cpu_max", p->cpu_max );
-   PUSH_INT( L, "crew", (int)floor( p->crew ) );
+   PUSH_INT( L, "crew", (int)round( p->crew ) );
    PUSH_DOUBLE( L, "fuel", p->fuel );
    PUSH_DOUBLE( L, "fuel_max", p->fuel_max );
    PUSH_DOUBLE( L, "fuel_consumption", p->fuel_consumption );
