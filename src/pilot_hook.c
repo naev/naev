@@ -69,7 +69,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
       hdynparam[0].type       = HOOK_PARAM_PILOT;
       hdynparam[0].u.lp.pilot = p->id;
       memcpy( &hdynparam[1], param, sizeof(HookParam)*nparam );
-      hdynparam[nparam].type  = HOOK_PARAM_SENTINEL;
+      hdynparam[nparam+1].type  = HOOK_PARAM_SENTINEL;
    }
 
    /* Run pilot specific hooks. */
