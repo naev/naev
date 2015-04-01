@@ -74,3 +74,24 @@ function bounty_setup ()
       reputation = 7
    end
 end
+
+
+-- Spawn the ship at the location param.
+function spawn_pirate( param )
+   if not job_done and system.cur() == missys then
+      if jumps_permitted >= 0 then
+         misn.osdActive( 2 )
+         target_ship = pilot.add( ship, nil, param )[1]
+         target_ship:rename( name )
+         target_ship:setFaction( "Wanted_Pirate" )
+         target_ship:setHilight( true )
+         hook.pilot( target_ship, "board", "pilot_board" )
+         hook.pilot( target_ship, "attacked", "pilot_attacked" )
+         death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+         pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+         hook.safe( "update_last_health" )
+      else
+         fail( msg[1]:format( name ) )
+      end
+   end
+end
