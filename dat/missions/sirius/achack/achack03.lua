@@ -128,7 +128,9 @@ end
 
 -- Enter hook.
 function enter()
-   misn.osdActive(1)
+   if not harjatalked then
+      misn.osdActive(1)
+   end
 end
 
 -- Date hook.
@@ -145,6 +147,7 @@ function date()
 
       harja = addRawShips("Shark", "trader", spawnpoint, "Achack_sirius", 1)[1]
       harja:rename("Harja's Shark")
+      harja:memory("aggressive", true)
       harja:control()
       harja:follow(player.pilot())
       hook.timer(500, "proximityScan", {focus = harja, funcname = "detectHarja"})
