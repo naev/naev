@@ -57,6 +57,11 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
       combat_dist = 3000
    end
    
+   if #fleet <= 1 then
+      error "Fleets need at least 2 ships"
+      return
+   end
+
    -- Create the object.
    local forma = {fleet = fleet, formation = formation, combat_dist = combat_dist, lead_ship = lead_ship}
    setmetatable(forma, self) -- Metatable fanciness.
