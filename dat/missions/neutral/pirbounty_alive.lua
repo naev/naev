@@ -1,19 +1,20 @@
 --[[
 
    Alive Pirate Bounty
-   Copyright 2014 Julian Marchant
+   Copyright 2014, 2015 Julian Marchant
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-       http://www.apache.org/licenses/LICENSE-2.0
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --
 
@@ -28,6 +29,15 @@ include "dat/missions/neutral/pirbounty_dead.lua"
 lang = naev.lang()
 if lang == "es" then
 else -- Default to English
+   pay_capture_text    = {}
+   pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
+   pay_capture_text[2] = "The officer seems to think your acceptance of the alive bounty for %s was insane. " .. { "He", "She" }[rnd.rnd( 1, 2 )] .. " carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay"
+   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. " .. { "He", "She" }[rnd.rnd( 1, 2 )] .. " takes the pirate off your hands and hands you your pay without speaking a word."
+   pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
+   pay_capture_text[5] = "The officer you deal with thanks you profusely for capturing %s alive, pays you, and sends you off."
+   pay_capture_text[6] = "Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. " .. { "He", "She" }[rnd.rnd( 1, 2 )] .. " takes the pirate into custody and hands you your pay."
+   pay_capture_text[7] = "When you ask the officer for your bounty on %s, " .. { "he", "she" }[rnd.rnd( 1, 2 )] .. " sighs, takes the pirate into custody, goes through some paperwork, and hands you your pay, mumbling something about how useless capturing pirates alive is."
+
    fail_kill_text = "MISSION FAILURE! %s has been killed."
 
    misn_title  = "%s Alive Bounty in %s"
