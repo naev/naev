@@ -36,6 +36,13 @@ else -- Default to English
    subdue_text[1] = [[You and your crew infiltrate the ship's pathetic security and subdue %s. You transport the pirate to your ship.]]
    subdue_text[2] = [[Your crew has a surprisingly difficult time getting past the ship's security, but eventually succeeds and subdues %s.]]
 
+   subdue_fail_title   = "Capture Failed"
+   subdue_fail_text    = {}
+   subdue_fail_text[1] = "Try as you might, you cannot get past the pirate's security system. Defeated, you and your crew return to the ship."
+   subdue_fail_text[2] = "The ship's security system locks you out."
+   subdue_fail_text[3] = "Your crew comes close to getting past the pirate's security system, but ultimately fails."
+   subdue_fail_text[4] = "It seems your crew is no match for this ship's security system. You return to your ship."
+
    pay_title   = "Mission Completed"
 
    pay_kill_text    = {}
@@ -203,14 +210,19 @@ end
 
 function pilot_board ()
    player.unboard()
-   local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
-   tk.msg( subdue_title, t )
-   succeed()
-   target_killed = false
-   target_ship:changeAI( "dummy" )
-   target_ship:setHilight( false )
-   target_ship:disable() -- Stop it from coming back
-   if death_hook ~= nil then hook.rm( death_hook ) end
+   if can_capture then
+      local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
+      tk.msg( subdue_title, t )
+      succeed()
+      target_killed = false
+      target_ship:changeAI( "dummy" )
+      target_ship:setHilight( false )
+      target_ship:disable() -- Stop it from coming back
+      if death_hook ~= nil then hook.rm( death_hook ) end
+   else
+      local t = subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ]:format( name )
+      tk.msg( subdue_fail_title, t )
+   end
 end
 
 
@@ -353,6 +365,14 @@ function spawn_pirate( param )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
          death_hook = hook.pilot( target_ship, "death", "pilot_death" )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+
+         local pir_crew = target_ship:stats().crew
+         local pl_crew = player.pilot():stats().crew
+         if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
+            can_capture = true
+         else
+            can_capture = false
+         end
       else
          fail( msg[1]:format( name ) )
       end
