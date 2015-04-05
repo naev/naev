@@ -94,7 +94,10 @@ function create ()
    paying_faction = planet.cur():faction()
 
    local systems = getsysatdistance( system.cur(), 1, 3,
-      function(s) return s:presences()["Pirate"] > 0 end )
+      function(s)
+         local p = s:presences()["Pirate"]
+         return p ~= nil and p > 0
+      end )
 
    if #systems == 0 then
       -- No pirates nearby
