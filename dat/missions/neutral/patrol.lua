@@ -85,10 +85,14 @@ function create ()
    paying_faction = planet.cur():faction()
 
    local systems = getsysatdistance( system.cur(), 1, 2,
-      function(s) return s:presences()[paying_faction:name()] and get_enemies(s) end)
-   systems[ #systems + 1 ] = system.cur()
+      function(s)
+         return s:presences()[paying_faction:name()] > 0 and get_enemies(s) > 0
+      end )
+   if get_enemies( system.cur() ) then
+      systems[ #systems + 1 ] = system.cur()
+   end
 
-   if #systems == 0 then
+   if #systems <= 0 then
       misn.finish( false )
    end
 
