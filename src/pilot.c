@@ -1874,21 +1874,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->shield = pilot->shield_max;
    }
 
-   /*
-    * Using RC circuit energy loading.
-    *
-    * Calculations (using y = [0:1])
-    *
-    *                                          \
-    *    y = 1 - exp( -x / tau )               |
-    *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
-    *                                          /
-    *
-    *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
-    *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
-    */
-   pilot->energy += (pilot->energy_max - pilot->energy) *
-         (1. - exp( -dt / pilot->energy_tau));
+   pilot->energy += pilot->energy_regen * dt;
    pilot->energy -= pilot->energy_loss * dt;
    if (pilot->energy > pilot->energy_max)
       pilot->energy = pilot->energy_max;
