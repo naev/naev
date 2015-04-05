@@ -77,6 +77,7 @@ extern int systems_nstack; /**< Number of star systems. */
  * Nodal analysis simulation for dynamic economies.
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
+static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 static int econ_nprices       = 0; /**< Number of prices to calculate. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
@@ -592,6 +593,29 @@ int economy_init (void)
 
 
 /**
+ * @brief Increments the queued update counter.
+ *
+ * @sa economy_execQueued
+ */
+void economy_addQueuedUpdate (void)
+{
+   econ_queued++;
+}
+
+
+/**
+ * @brief Calls economy_refresh if an economy update is queued.
+ */
+int economy_execQueued (void)
+{
+   if (econ_queued)
+      return economy_refresh();
+
+   return 0;
+}
+
+
+/**
  * @brief Regenerates the economy matrix.  Should be used if the universe
  *  changes in any permanent way.
  */
@@ -685,6 +709,7 @@ int economy_update( unsigned int dt )
    /* Clean up. */
    free(X);
 
+   econ_queued = 0;
    return 0;
 }
 

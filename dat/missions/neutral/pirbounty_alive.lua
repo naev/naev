@@ -31,7 +31,7 @@ else -- Default to English
    fail_kill_text = "MISSION FAILURE! %s has been killed."
 
    misn_title  = "%s Alive Bounty in %s"
-   misn_desc   = "The pirate known as %s was recently seen in the %s system. This pirate is wanted alive."
+   misn_desc   = "The pirate known as %s was recently seen in the %s system. %s authorities want this pirate alive."
 
    osd_msg[2] = "Capture %s"
 end

@@ -63,21 +63,19 @@ function create()
    misn.setDesc(bar_desc)
    misn.setTitle = misn_title
    misn.setReward = reward
-   --format your strings, yo!
-   bmsg[1] = bmsg[1]:format(targetasset:name(),targetsys:name())
-   emsg[1] = emsg[1]:format(targetasset:name())
+
    osd[1] = osd[1]:format(targetasset:name(),targetsys:name())
-   abort_msg = abort_msg:format(people_carried)
-   misn_desc = misn_desc:format(targetasset:name(),targetsys:name())
 end
 
 function accept()
    --inital convo. Kept it a yes no to help with the urgent feeling of the situation.
-   if not tk.yesno(misn_title,bmsg[1]) then
+
+   local msg = bmsg[1]:format( targetasset:name(), targetsys:name() )
+   if not tk.yesno(misn_title, msg) then
       misn.finish ()
    end
    misn.accept()
-   misn.setDesc(misn_desc)
+   misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
    player.allowSave(false) -- so the player won't get stuck with a mission he can't complete.
@@ -139,7 +137,8 @@ end
 
 function misn_over() --arent you glad thats over?
    if planet.cur() == planet.get("Ulios") then
-      tk.msg(misn_title,emsg[1]) --introing one of the characters in the next chapter.
+      --introing one of the characters in the next chapter.
+      tk.msg(misn_title,emsg[1]:format( targetasset:name() ))
       tk.msg(misn_title,emsg[2])
       player.pay(reward)
       misn.cargoRm(refugees)

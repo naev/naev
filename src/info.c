@@ -298,7 +298,7 @@ static void info_setGui( unsigned int wid, char* str )
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", "Cancel", setgui_close );
+         "btnBack", "Close", setgui_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
          "btnLoad", "Load", setgui_load );
 
@@ -331,7 +331,8 @@ static void setgui_load( unsigned int wdw, char *str )
       return;
 
    if (player.guiOverride == 0) {
-      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+      if (dialogue_YesNo( "GUI Override is not set.",
+               "Enable GUI Override and change GUI to '%s'?", gui )) {
          player.guiOverride = 1;
          window_checkboxSet( wid, "chkOverride", player.guiOverride );
       }
@@ -796,8 +797,8 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Get the mission. */
       f = 0;
       for (i=0; i<MISSION_MAX; i++) {
-         for (j=0; j<player_missions[i].ncargo; j++) {
-            if (player_missions[i].cargo[j] == player.p->commodities[pos].id) {
+         for (j=0; j<player_missions[i]->ncargo; j++) {
+            if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
                f = 1;
                break;
             }
@@ -810,7 +811,7 @@ static void cargo_jettison( unsigned int wid, char* str )
                player.p->commodities[pos].id);
          return;
       }
-      misn = &player_missions[i];
+      misn = player_missions[i];
 
       /* We run the "abort" function if it's found. */
       ret = misn_tryRun( misn, "abort" );
@@ -818,9 +819,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Now clean up mission. */
       if (ret != 2) {
          mission_cleanup( misn );
-         memmove( misn, &player_missions[i+1],
-               sizeof(Mission) * (MISSION_MAX-i-1) );
-         memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
+         mission_shift(pos);
       }
 
       /* Reset markers. */
@@ -1016,8 +1015,10 @@ static void mission_menu_genList( unsigned int wid, int first )
    misn_names = malloc(sizeof(char*) * MISSION_MAX);
    j = 0;
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].id != 0)
-         misn_names[j++] = (player_missions[i].title!=NULL) ? strdup(player_missions[i].title) : NULL;
+      if (player_missions[i]->id != 0)
+         misn_names[j++] = (player_missions[i]->title != NULL) ?
+               strdup(player_missions[i]->title) : NULL;
+
    if (j==0) { /* no missions */
       misn_names[0] = strdup("No Missions");
       j = 1;
@@ -1046,7 +1047,7 @@ static void mission_menu_update( unsigned int wid, char* str )
    }
 
    /* Modify the text. */
-   misn = &player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
+   misn = player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
    window_modifyText( wid, "txtReward", misn->reward );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAbortMission" );
@@ -1063,7 +1064,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
 {
    (void)str;
    int pos;
-   Mission* misn;
+   Mission *misn;
    int ret;
 
    if (dialogue_YesNo( "Abort Mission",
@@ -1071,7 +1072,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
 
       /* Get the mission. */
       pos = toolkit_getListPos(wid, "lstMission" );
-      misn = &player_missions[pos];
+      misn = player_missions[pos];
 
       /* We run the "abort" function if it's found. */
       ret = misn_tryRun( misn, "abort" );
@@ -1079,9 +1080,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
       /* Now clean up mission. */
       if (ret != 2) {
          mission_cleanup( misn );
-         memmove( misn, &player_missions[pos+1],
-               sizeof(Mission) * (MISSION_MAX-pos-1) );
-         memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
+         mission_shift(pos);
       }
 
       /* Reset markers. */

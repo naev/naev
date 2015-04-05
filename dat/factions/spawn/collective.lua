@@ -19,7 +19,7 @@ include("dat/factions/spawn/common.lua")
 function spawn_patrol ()
     local pilots = {}
 
-    scom.addPilot( pilots, "Collective Drone", 15 );
+    scom.addPilot( pilots, "Collective Drone", 20 );
 
     return pilots
 end
@@ -36,12 +36,12 @@ function spawn_squad ()
     elseif r < 0.8 then
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
     else
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
     end
 
     return pilots
@@ -57,20 +57,20 @@ function spawn_capship ()
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
     elseif r < 0.8 then
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
     else
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
         scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 40 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
+        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
     end
 
     return pilots

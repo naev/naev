@@ -25,9 +25,11 @@
 /*
  * Prototypes.
  */
+static void tab_expose( Widget *tab, int exposed );
 static int tab_mouse( Widget* tab, SDL_Event *event );
 static int tab_key( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
+static int tab_scroll( Widget *tab, int dir );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
@@ -58,7 +60,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 {
    int i;
    int wx,wy, ww,wh;
-   Window *wdw, *wtmp;
+   Window *wdw;
    Widget *wgt;
 
    /* Create the Widget. */
@@ -72,6 +74,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
    /* specific */
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
+   wgt->exposeevent        = tab_expose;
    wgt->rawevent           = tab_raw;
    wgt->render             = tab_render;
    wgt->renderOverlay      = tab_renderOverlay;
@@ -110,18 +113,62 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
       wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
             wgt->dat.tab.tabnames[i] );
-      /* Create windows. */
-      wgt->dat.tab.windows[i] = window_create( tabnames[i], wx, wy, ww, wh );
-      wtmp = window_wget( wgt->dat.tab.windows[i] ); /* Can not store this, in case something reallocs. */
-      /* Set flags - parent window handles event for the children. */
-      window_setFlag( wtmp, WINDOW_NOFOCUS );
-      window_setFlag( wtmp, WINDOW_NORENDER );
-      window_setFlag( wtmp, WINDOW_NOINPUT );
-      window_setFlag( wtmp, WINDOW_NOBORDER );
+      /* Create windows with flags.
+       * Parent window handles events for the children.
+       */
+      wgt->dat.tab.windows[i] = window_createFlags( tabnames[i], wx, wy, ww, wh,
+            WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
    }
 
    /* Return list of windows. */
    return wgt->dat.tab.windows;
+}
+
+
+/**
+ * @brief Handles scrolling on a tabbed window's tab bar.
+ *
+ *    @param tab Widget being scrolled on.
+ *    @param dir Direction to scroll in.
+ *    @return Index of the newly-selected tab.
+ */
+static int tab_scroll( Widget *tab, int dir )
+{
+   int new;
+
+   if (dir > 0)
+      new = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+   else {
+      /* Wrap manually to avoid undefined behaviour. */
+      if (tab->dat.tab.active == 0)
+         new = tab->dat.tab.ntabs - 1;
+      else
+         new = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+   }
+
+   return new;
+}
+
+
+/**
+ * @brief Handles focus restoring for a tabbed window's children.
+ *
+ *    @param tab Tabbed window widget.
+ */
+static void tab_expose( Widget *tab, int exposed )
+{
+   Window *wdw;
+
+   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   if (wdw == NULL)
+      return;
+
+   /* Re-focus widgets if visible. */
+   if (exposed)
+      toolkit_focusSanitize( wdw );
+   /* Clear focus (disables text input, etc.) */
+   else
+      toolkit_focusClear( wdw );
 }
 
 
@@ -142,6 +189,10 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    ret = 0;
    if (event->type == SDL_MOUSEBUTTONDOWN)
       ret = tab_mouse( tab, event );
+#if SDL_VERSION_ATLEAST(2,0,0)
+   else if (event->type == SDL_MOUSEWHEEL)
+      ret = tab_mouse( tab, event );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    else if (event->type == SDL_KEYDOWN)
       ret = tab_key( tab, event );
 
@@ -207,15 +258,19 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 
       /* Mark as active. */
       change = -1;
-      if (event->button.button == SDL_BUTTON_WHEELUP) {
-         /* Wrap manually to avoid undefined behaviour. */
-         if (tab->dat.tab.active == 0)
-            change = tab->dat.tab.ntabs - 1;
-         else
-            change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
-      }
+#if !SDL_VERSION_ATLEAST(2,0,0)
+      if (event->button.button == SDL_BUTTON_WHEELUP)
+         change = tab_scroll(tab, -1);
       else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-         change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+         change = tab_scroll(tab, 1);
+#else /* !SDL_VERSION_ATLEAST(2,0,0) */
+      if (event->type == SDL_MOUSEWHEEL) {
+         if (event->wheel.y > 0)
+            change = tab_scroll(tab, -1);
+         else
+            change = tab_scroll(tab, 1);
+      }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       else
          tab->dat.tab.active = i;
 

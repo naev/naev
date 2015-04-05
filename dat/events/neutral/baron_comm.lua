@@ -15,6 +15,10 @@
 
 
 function create ()
+    if not evt.claim(system.cur()) then
+      evt.finish()
+    end
+
     hyena = pilot.add("Civilian Hyena", nil, true)[1]
     
     hook.pilot(hyena, "jump", "finish")

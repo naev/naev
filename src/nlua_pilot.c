@@ -50,6 +50,7 @@
 #include "gui.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "land_outfits.h"
 
 
 /*
@@ -93,6 +94,7 @@ static int pilotL_dir( lua_State *L );
 static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_faction( lua_State *L );
+static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_setDir( lua_State *L );
@@ -179,6 +181,7 @@ static const luaL_reg pilotL_methods[] = {
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
@@ -272,6 +275,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "spaceworthy", pilotL_spaceworthy },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
@@ -466,6 +470,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    LuaSystem *ls;
    StarSystem *ss;
    Planet *planet;
+   JumpPoint *target;
    int jump;
    PilotFlags flags;
    int *jumpind, njumpind;
@@ -573,10 +578,17 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       njumpind = 0;
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
-         for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
-                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
+         for (i=0; i<cur_system->njumps; i++) {
+            /* The jump into the system must not be exit-only, and unless
+             * ignore_rules is set, must also be non-hidden and have faction
+             * presence matching the pilot's on the remote side.
+             */
+            target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+            if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
+                  (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
+                  (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))))
                jumpind[ njumpind++ ] = i;
+         }
       }
 
       /* Crazy case no landable nor presence, we'll just jump in randomly. */
@@ -1372,6 +1384,14 @@ static int pilotL_weapset( lua_State *L )
 /**
  * @brief Gets heat information for a weapon set.
  *
+ * Heat is a 0-2 value that corresponds to three separate ranges:
+ *
+ * <ul>
+ *  <li>0: Weapon set isn't overheating and has no penalties.</li>
+ *  <li>0-1: Weapon set has reduced accuracy.</li>
+ *  <li>1-2: Weapon set has full accuracy penalty plus reduced fire rate.</li>
+ * </ul>
+ *
  * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active weapons
  * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
  * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
@@ -1776,7 +1796,7 @@ static int pilotL_ew( lua_State *L )
  * @usage d = p:dir()
  *
  *    @luaparam p Pilot to get the direction of.
- *    @luareturn The pilot's current direction as a number (in radians).
+ *    @luareturn The pilot's current direction as a number (in degrees).
  * @luafunc dir( p )
  */
 static int pilotL_dir( lua_State *L )
@@ -1787,7 +1807,7 @@ static int pilotL_dir( lua_State *L )
    p     = luaL_validpilot(L,1);
 
    /* Push direction. */
-   lua_pushnumber( L, p->solid->dir );
+   lua_pushnumber( L, p->solid->dir * 180./M_PI );
    return 1;
 }
 
@@ -1834,6 +1854,29 @@ static int pilotL_faction( lua_State *L )
    lua_pushfaction(L,f);
    return 1;
 }
+
+
+/**
+ * @brief Checks the pilot's spaceworthiness
+ *
+ * @usage spaceworthy = p:spaceworthy()
+ *
+ *    @luaparam p Pilot to get the spaceworthy status of
+ *    @luareturn Whether the pilot's ship is spaceworthy
+ * @luafunc spaceworthy( p )
+ */
+static int pilotL_spaceworthy( lua_State *L )
+{
+   Pilot *p;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push position. */
+   lua_pushboolean( L, (pilot_checkSpaceworthy(p) == NULL) ? 1 : 0 );
+   return 1;
+}
+
 
 /**
  * @brief Sets the pilot's position.
@@ -2027,45 +2070,71 @@ static int pilotL_setFaction( lua_State *L )
 
 
 /**
- * @brief Sets the pilot as hostile to player.
+ * @brief Controls the pilot's hostility towards the player.
  *
- * @usage p:setHostile()
+ * @usage p:setHostile() -- Pilot is now hostile.
+ * @usage p:setHostile(false) -- Make pilot non-hostile.
  *
- *    @luaparam p Pilot to set as hostile.
- * @luafunc setHostile( p )
+ *    @luaparam p Pilot to set the hostility of.
+ *    @luaparam state Whether to set or unset hostile.
+ * @luafunc setHostile( p, state )
  */
 static int pilotL_setHostile( lua_State *L )
 {
    Pilot *p;
+   int state;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
    /* Set as hostile. */
-   pilot_rmFlag(p, PILOT_FRIENDLY);
-   pilot_setHostile(p);
+   if (state) {
+      pilot_rmFlag(p, PILOT_FRIENDLY);
+      pilot_setHostile(p);
+   }
+   else
+      pilot_rmHostile(p);
 
    return 0;
 }
 
 
 /**
- * @brief Sets the pilot as friendly to player.
+ * @brief Controls the pilot's friendliness towards the player.
  *
- * @usage p:setFriendly()
+ * @usage p:setFriendly() -- Pilot is now friendly.
+ * @usage p:setFriendly(false) -- Make pilot non-friendly.
  *
- *    @luaparam p Pilot to set as friendly.
- * @luafunc setFriendly( p )
+ *    @luaparam p Pilot to set the friendliness of.
+ *    @luaparam state Whether to set or unset friendly.
+ * @luafunc setFriendly( p, state )
  */
 static int pilotL_setFriendly( lua_State *L )
 {
    Pilot *p;
+   int state;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
    /* Remove hostile and mark as friendly. */
-   pilot_setFriendly(p);
+   if (state)
+      pilot_setFriendly(p);
+   /* Remove friendly flag. */
+   else
+      pilot_rmFriendly(p);
 
    return 0;
 }
@@ -2377,9 +2446,10 @@ static int pilotL_disable( lua_State *L )
 /**
  * @brief Gets a pilot's cooldown state.
  *
- * @usage p:cooldown()
+ * @usage cooldown, braking = p:cooldown()
  *
  *    @luaparam p Pilot to check the cooldown status of.
+ *    @luareturn Cooldown and cooldown braking status.
  * @luafunc cooldown( p )
  */
 static int pilotL_cooldown( lua_State *L )
@@ -2391,8 +2461,9 @@ static int pilotL_cooldown( lua_State *L )
 
    /* Get the cooldown status. */
    lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN) );
+   lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN_BRAKE) );
 
-   return 1;
+   return 2;
 }
 
 
@@ -2579,6 +2650,10 @@ static int pilotL_addOutfit( lua_State *L )
    if ((added > 0) && p->autoweap)
       pilot_weaponAuto(p);
 
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && added > 0)
+      outfits_updateEquipmentOutfits();
+
    lua_pushnumber(L,added);
    return 1;
 }
@@ -2661,6 +2736,11 @@ static int pilotL_rmOutfit( lua_State *L )
          removed++;
       }
    }
+
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && removed > 0)
+      outfits_updateEquipmentOutfits();
+
    lua_pushnumber( L, removed );
    return 1;
 }
@@ -2952,7 +3032,7 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour, shield nd stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
+ *    @luareturn The armour, shield and stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
@@ -3032,6 +3112,7 @@ lua_rawset( L, -3 )
  * <ul>
  *  <li> cpu </li>
  *  <li> cpu_max </li>
+ *  <li> crew </li>
  *  <li> fuel </li>
  *  <li> fuel_max </li>
  *  <li> fuel_consumption </li>
@@ -3069,6 +3150,7 @@ static int pilotL_getStats( lua_State *L )
    /* Core. */
    PUSH_DOUBLE( L, "cpu", p->cpu );
    PUSH_INT( L, "cpu_max", p->cpu_max );
+   PUSH_INT( L, "crew", (int)round( p->crew ) );
    PUSH_DOUBLE( L, "fuel", p->fuel );
    PUSH_DOUBLE( L, "fuel_max", p->fuel_max );
    PUSH_DOUBLE( L, "fuel_consumption", p->fuel_consumption );

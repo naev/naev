@@ -26,10 +26,10 @@ bmsg = {}
 bmsg[1] = [[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare cooly. Lackadaisically, he strikes up a converrsation.
     "Good weather on %s these days, I hear." 
     "I hear nothing but good things about %s." you reply, badly feigning interest. You order a drink, as he takes a gulp of his.
-    He looks at you, sizing you up. He probably has been waiting for someone to set next to him all day. "You look like a man in need of a couple spare credits. I have a, uhh, shipment that needs getting to %s. Are you interested? Thing is, its not exactly... legal. Pay is good though. All you need to know," he continues, "is that someone will be at the starport in %s waiting for this shipment. And they got credits. %s credits. Just for you, kiddo, if you want."
+    He looks at you, sizing you up. He probably has been waiting for someone to set next to him all day. "You look like a man in need of a couple spare credits. I have a, uhh, shipment that needs getting to %s. Are you interested? Thing is, it's not exactly... legal. Pay is good though. All you need to know," he continues, "is that someone will be at the starport in %s waiting for this shipment. And they got credits. %s credits. Just for you, kiddo, if you want."
     You get your drink, a greenish slimy-looking thing called a "tartar coobadu", and decide you just have to ask. "What exactly is this shipment?"]]
 bmsg[2] = [[He almost looks suprised at the question. He motions you to a corner table as if to tell you to go there, but forcifully leads you. People seem to be avoiding this table, probably because of a peculiar vomit-odor that is wafting from somewhere underneath. He sits you down rather roughly, and then sits down himself.
-    "Look, I really can't tell you the exact contents of the box. Lets just say its "small" weaponry. My... employer... isn't fond of the government of %s. As such, he needs... " he takes a drink "a shipment delivered there ASAP. Thats all I can tell you, I'm afraid"
+    "Look, I really can't tell you the exact contents of the box. Let's just say it's "small" weaponry. My... employer... isn't fond of the government of %s. As such, he needs... " he takes a drink "a shipment delivered there ASAP. Thats all I can tell you, I'm afraid"
     You sip your slime, and answer him...]]
 bmsg[3] = [[You feel a very large hand slap you on the back. "Thats a lad!" he cries exuberantly. "I'll have my boys load up the cargo, as quickly as you please. Remember, all you gotta do is fly to %s, and avoid the military, police, and civvies that like to stick their noses where they don't belong. I'll let my contacts know to expect you, and to pay you when you land."
     You shake his sticky hand, and walk off, content that you've made an easy buck.]]
@@ -68,23 +68,20 @@ function create()
    misn.setTitle(misn_title)
    misn.setNPC(npc_name,"neutral/thief1") --using a generic picture for now.
    misn.setDesc(bar_desc)
-   --format all the messages
-   bmsg[1] = bmsg[1]:format(targetasset:name(),targetasset:name(),targetsystem:name(),targetasset:name(),numstring(reward))
-   bmsg[2] = bmsg[2]:format(targetasset:name())
-   bmsg[3] = bmsg[3]:format(targetasset:name())
-   emsg[1] = emsg[1]:format(targetasset:name())
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
    --the obligatory opening messages
-   tk.msg(misn_title,bmsg[1])
-   if not tk.yesno(misn_title,bmsg[2]) then
+   local aname = targetasset:name()
+
+   tk.msg(misn_title, bmsg[1]:format( aname, aname, aname, aname, numstring(reward) ))
+   if not tk.yesno(misn_title,bmsg[2]:format(aname)) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end
-   tk.msg(misn_title,bmsg[3])
+   tk.msg(misn_title,bmsg[3]:format(aname))
    misn.setDesc(misn_desc)
    misn.accept()
    misn.markerAdd(targetsystem,"plot")
@@ -101,8 +98,8 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg(misn_title,emsg[1])
-      tk.msg(misn_title,emsg[2])
+      tk.msg(misn_title, emsg[1]:format( targetasset:name() ))
+      tk.msg(misn_title, emsg[2])
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against sirius, and we want sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --nasin rep is used in mission rewards, and I am trying to avoid having the pay skyrocket.

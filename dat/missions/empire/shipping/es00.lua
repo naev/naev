@@ -112,8 +112,15 @@ function land ()
          misn.markerMove( misn_marker, retsys )
          misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
          misn.osdCreate(title[2], {misn_desc[2]:format(ret:name(),retsys:name())})
+
+         -- Prevent players from saving on the destination planet
+         player.allowSave(false)
+
          -- We'll take off right away again
          player.takeoff()
+
+         -- Saving should be disabled for as short a time as possible
+         player.allowSave()
       end
    elseif landed == ret and misn_stage == 1 then
 
@@ -133,11 +140,9 @@ function enter ()
    sys = system.cur()
    if misn_stage == 1 and sys == destsys then
 
-      -- Get a position near the player
-      enter_vect = player.pos()
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 1500, 2000 )
-      enter_vect:add( math.cos(a)*d, math.sin(a)*d )
+      -- Get a random position near the player
+      ang = rnd.rnd(0, 360)
+      enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
 
       -- Create some pilots to go after the player
       p = pilot.add( "FLF Sml Force", nil, enter_vect )
@@ -147,15 +152,15 @@ function enter ()
       end
 
       -- Get a far away position for fighting to happen
+      local battle_pos = player.pos() +
+            vec2.newP( rnd.rnd(4000, 5000), ang + 180 )
+
       -- We'll put the FLF first
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 700, 1000 )
-      enter_vect:set( math.cos(a) * d, math.sin(a) * d )
+      enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
       pilot.add( "FLF Med Force", nil, enter_vect )
+
       -- Now the Dvaered
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 200, 300 )
-      enter_vect:add( math.cos(a) * d, math.sin(a) * d )
+      enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
       pilot.add( "Dvaered Med Force", nil, enter_vect )
 
       -- Player should not be able to reland

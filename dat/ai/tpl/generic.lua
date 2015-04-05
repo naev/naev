@@ -37,7 +37,9 @@ function control ()
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
-      if not ai.getPilot():cooldown() then
+
+      cooldown, braking = ai.getPilot():cooldown()
+      if not (cooldown or braking) then
          mem.cooldown = false
       end
    else
@@ -204,6 +206,11 @@ function attacked ( attacker )
       else
          return
       end
+   end
+
+   -- Ignore hits from dead pilots.
+   if not ai.exists(attacker) then
+      return
    end
 
    if task ~= "attack" and task ~= "runaway" then

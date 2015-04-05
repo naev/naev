@@ -119,8 +119,17 @@ function create()
    stu_jumps = 10300 * num_jumps
    stu_takeoff = 10300
    time_limit = time.get() + time.create(0, 0, stu_distance + stu_jumps + stu_takeoff)
+
+    -- Allow extra time for refuelling stops.
+    local jumpsperstop = 3 + math.min(tier, 3)
+    if num_jumps > jumpsperstop then
+        time_limit:add(time.create( 0, 0, math.floor((num_jumps-1) / jumpsperstop) * stu_jumps ))
+    end
+
    payment = stu_distance + (stu_jumps / 10)
-   cargo_size = tier^3
+
+   -- Range of 5-10 tons for tier 0, 21-58 for tier 4.
+   cargo_size = rnd.rnd( 5 + 4 * tier, 10 + 12 * tier )
 end
 
 function accept()

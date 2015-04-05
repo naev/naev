@@ -17,10 +17,17 @@ include "dat/scripts/nextjump.lua"
 -- Find an inhabited planet 0-3 jumps away.
 function cargo_selectMissionDistance ()
     local seed = rnd.rnd()
-    if     seed < 0.30 then missdist = 0
-    elseif seed < 0.60 then missdist = 1
-    elseif seed < 0.80 then missdist = 2
-    else                    missdist = 3
+
+    -- 70% chance of 0-3 jump distance
+    if seed < 0.7 then
+        seed = rnd.rnd()
+        if seed < 0.30 then missdist = 0
+        elseif seed < 0.60 then missdist = 1
+        elseif seed < 0.60 then missdist = 2
+        else missdist = 3
+        end
+    else
+        missdist = rnd.rnd(4, 6)
     end
 
     return missdist

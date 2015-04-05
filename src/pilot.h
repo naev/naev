@@ -61,6 +61,7 @@
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
+   PILOT_HOOK_BOARDING,  /**< Pilot is boarding. */
    PILOT_HOOK_BOARD,     /**< Pilot got boarded. */
    PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
    PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
@@ -134,6 +135,7 @@ enum {
    PILOT_INVINC_PLAYER, /**< Pilot can not be hurt by the player. */
    PILOT_COOLDOWN,     /**< Pilot is in active cooldown mode. */
    PILOT_COOLDOWN_BRAKE, /**< Pilot is braking to enter active cooldown mode. */
+   PILOT_BRAKING,      /**< Pilot is braking. */
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_FLAGS_MAX     /**< Maximum number of flags. */
 };
@@ -142,6 +144,7 @@ typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 /* makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
 #define pilot_isDisabled(p) pilot_isFlag(p,PILOT_DISABLED) /**< Checks if pilot is disabled. */
+#define pilot_isStopped(p)  (VMOD(p->solid->vel) <= MIN_VEL_ERR)
 
 
 /**
@@ -472,6 +475,8 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
+double pilot_brakeDist( Pilot *p, Vector2d *pos );
+int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 

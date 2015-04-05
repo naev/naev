@@ -2,7 +2,8 @@
 ;SetCompress Off
 
 ;Version, Arch, Icon and URL
-!define VERSION "0.5.3"
+!define VERSION "0.6.0"
+!define VERSION_SUFFIX "" ; This string can be used for betas and release candidates.
 !define ARCH "32"
 !define URL "http://naev.org"
 !define MUI_ICON "..\logos\logo.ico"
@@ -28,7 +29,7 @@
 
 ;Name and file
 Name "Naev"
-OutFile "naev-${VERSION}-win${ARCH}.exe"
+OutFile "naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
 
 ;--------------------------------
 ;Variables
@@ -109,7 +110,7 @@ Section "Naev Engine" BinarySection
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "URLInfoAbout" "${URL}"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}"
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}${VERSION_SUFFIX}"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "Publisher" "Naev Project"
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoModify" 1
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoRepair" 1
@@ -130,13 +131,13 @@ SectionEnd
 
 Section "Naev Data (Download)" DataSection
    dwn:
-    AddSize 202159 ;Size (kB) of Naev ndata
-    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
+    AddSize 302587 ;Size (kB) of Naev ndata
+    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip
-        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
       Goto dwn
-      skip:
+   skip:
 SectionEnd
 
 Section /o "Do a portable install" Portable
@@ -153,7 +154,7 @@ Function .onInit
    ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
    ${Unless} ${Errors}
       ;If we get here we're already installed
-     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
+     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?" IDNO skip
      ExecWait '"$INSTDIR\Uninstall.exe"' $0
      ${Unless} $0 = 0 ;note: = not ==
         MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
@@ -174,7 +175,7 @@ FunctionEnd
 
    ;Assign descriptions to sections
    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-      !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata to run."
+      !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata.zip to run."
       !insertmacro MUI_DESCRIPTION_TEXT ${DataSection} "Provides all content and media."
      !insertmacro MUI_DESCRIPTION_TEXT ${Portable} "Perform a portable install. No uninstaller or registry entries are created and you can run off a pen drive"
    !insertmacro MUI_FUNCTION_DESCRIPTION_END
@@ -187,7 +188,7 @@ Section "Uninstall"
    Delete "$INSTDIR\Uninstall.exe"
    Delete "$INSTDIR\naev.exe"
    Delete "$INSTDIR\logo.ico"
-   Delete "$INSTDIR\ndata"
+   Delete "$INSTDIR\ndata.zip"
    Delete "$INSTDIR\*.dll"
    Delete "$INSTDIR\stderr.txt"
    Delete "$INSTDIR\stdout.txt"

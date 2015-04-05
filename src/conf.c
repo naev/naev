@@ -159,6 +159,7 @@ void conf_setDefaults (void)
    conf.font_size_small   = 10;
 
    /* Misc. */
+   conf.redirect_file = 1;
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
@@ -271,10 +272,14 @@ void conf_setVideoDefaults (void)
    conf.height       = h;
    conf.explicit_dim = 0; /* No need for a define, this is only for first-run. */
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
+   conf.minimize     = MINIMIZE_DEFAULT;
 
    /* FPS. */
    conf.fps_show     = SHOW_FPS_DEFAULT;
    conf.fps_max      = FPS_MAX_DEFAULT;
+
+   /* Pause. */
+   conf.pause_show   = SHOW_PAUSE_DEFAULT;
 
    /* Memory. */
    conf.engineglow   = ENGINE_GLOWS_DEFAULT;
@@ -316,6 +321,7 @@ void conf_loadConfigPath( void )
       return;
 
    lua_State *L = nlua_newState();
+   nlua_loadBasic(L); /* For os library */
    if (luaL_dofile(L, file) == 0)
       conf_loadString("datapath",conf.datapath);
 
@@ -372,10 +378,15 @@ int conf_loadConfig ( const char* file )
       }
       conf_loadFloat("scalefactor",conf.scalefactor);
       conf_loadBool("fullscreen",conf.fullscreen);
+      conf_loadBool("modesetting",conf.modesetting);
+      conf_loadBool("minimize",conf.minimize);
 
       /* FPS */
       conf_loadBool("showfps",conf.fps_show);
       conf_loadInt("maxfps",conf.fps_max);
+
+      /*  Pause */
+      conf_loadBool("showpause",conf.pause_show);
 
       /* Sound. */
       conf_loadString("sound_backend",conf.sound_backend);
@@ -421,6 +432,7 @@ int conf_loadConfig ( const char* file )
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
       conf_loadFloat("compression_mult",conf.compression_mult);
+      conf_loadBool("redirect_file",conf.redirect_file);
       conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
@@ -495,6 +507,11 @@ int conf_loadConfig ( const char* file )
             lua_pop(L,1);
 
             if (str != NULL) { /* keybind is valid */
+               if (key == SDLK_UNKNOWN) {
+                  WARN("Keybind for '%s' is invalid", keybind_info[i][0]);
+                  continue;
+               }
+
                /* get type */
                if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
@@ -585,6 +602,7 @@ void conf_parseCLIPath( int argc, char** argv )
 void conf_parseCLI( int argc, char** argv )
 {
    static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
       { "vsync", no_argument, 0, 'V' },
@@ -617,6 +635,9 @@ void conf_parseCLI( int argc, char** argv )
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
+         case 'd':
+            /* Does nothing, datapath is parsed earlier. */
+            break;
          case 'f':
             conf.fullscreen = 1;
             break;
@@ -939,6 +960,14 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("fullscreen",conf.fullscreen);
    conf_saveEmptyLine();
 
+   conf_saveComment("Use video modesetting when fullscreen is enabled (SDL2-only)");
+   conf_saveBool("modesetting",conf.modesetting);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Minimize on focus loss (SDL2-only)");
+   conf_saveBool("minimize",conf.minimize);
+   conf_saveEmptyLine();
+
    /* FPS */
    conf_saveComment("Display a framerate counter");
    conf_saveBool("showfps",conf.fps_show);
@@ -946,6 +975,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Limit the rendering framerate");
    conf_saveInt("maxfps",conf.fps_max);
+   conf_saveEmptyLine();
+
+   /* Pause */
+   conf_saveComment("Show 'PAUSED' on screen while paused");
+   conf_saveBool("showpause",conf.pause_show);
    conf_saveEmptyLine();
 
    /* Sound. */
@@ -1043,6 +1077,10 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("compression_mult",conf.compression_mult);
    conf_saveEmptyLine();
 
+   conf_saveComment("Redirects log and error output to files");
+   conf_saveBool("redirect_file",conf.redirect_file);
+   conf_saveEmptyLine();
+
    conf_saveComment("Enables compression on savegames");
    conf_saveBool("save_compress",conf.save_compress);
    conf_saveEmptyLine();
@@ -1061,9 +1099,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Condition under which the autonav aborts.");
    conf_saveFloat("autonav_abort",conf.autonav_reset_speed);
-   conf_saveEmptyLine();
-
-   conf_saveComment("If set, the game will pause when damage is received, instead of aborting the autonav.");
    conf_saveEmptyLine();
 
    conf_saveComment("Enables developer mode (universe editor and the likes)");

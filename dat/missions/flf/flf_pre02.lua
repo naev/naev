@@ -94,8 +94,8 @@ else -- default english
    flfcomm[3] = "Let's get out of here, %s! We'll meet you back at the base."
 
    misn_title = "FLF: Small Dvaered Patrol in %s"
-   misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out one of their security patrols."
-   misn_rwrd = "A chance to make friends out of the FLF."
+   misn_desc = "To prove yourself to the FLF, you must take out one of the Dvaered security patrols."
+   misn_rwrd = "A chance to make friends with the FLF."
    osd_title   = "Dvaered Patrol"
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
@@ -106,8 +106,6 @@ else -- default english
     
    npc_name = "FLF petty officer"
    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar."
-
-   dv_ship_name = "Dvaered Patrol"
 end
 
 
@@ -130,7 +128,7 @@ function accept ()
       misn.accept()
       misn.osdCreate( osd_title, osd_desc )
       misn.setDesc( misn_desc )
-      misn.setTitle( misn_title )
+      misn.setTitle( misn_title:format( missys:name() ) )
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_rwrd )
 
@@ -166,6 +164,7 @@ end
 function leave ()
    if spawner ~= nil then hook.rm( spawner ) end
    if hailer ~= nil then hook.rm( hailer ) end
+   if rehailer ~= nil then hook.rm( rehailer ) end
    reinforcements_arrived = false
    dv_ships_left = 0
 end
@@ -191,7 +190,6 @@ function spawnDVReinforcements ()
    local reinforcements = pilot.add( "Dvaered Big Patrol", "dvaered_norun", pos )
    for i, j in ipairs( reinforcements ) do
       if j:ship():class() == "Destroyer" then boss = j end
-      hook.pilot( j, "attacked", "pilot_attacked_dv" )
       hook.pilot( j, "death", "pilot_death_dv" )
       j:setHostile()
       j:setVisible( true )
@@ -202,23 +200,34 @@ function spawnDVReinforcements ()
 
    -- Check for defection possibility
    if var.peek( "dv_patrol" ) ~= nil and var.peek( "dv_patrol" ) >= 3 then
-      hailer = hook.timer( 10000, "timer_hail" )
+      hailer = hook.timer( 30000, "timer_hail" )
    else
-      spawner = hook.timer( 10000, "timer_spawnFLF" )
+      spawner = hook.timer( 30000, "timer_spawnFLF" )
    end
 end
 
 
 function timer_hail ()
-   if boss:exists() then
-      boss:hailPlayer()
+   if hailer ~= nil then hook.rm( hailer ) end
+   if boss ~= nil and boss:exists() then
+      timer_rehail()
       hailer = hook.pilot( boss, "hail", "hail" )
    end
 end
 
 
+function timer_rehail ()
+   if rehailer ~= nil then hook.rm( rehailer ) end
+   if boss ~= nil and boss:exists() then
+      boss:hailPlayer()
+      rehailer = hook.timer( 8000, "timer_rehail" )
+   end
+end
+
+
 function hail ()
-   hook.rm( hailer )
+   if hailer ~= nil then hook.rm( hailer ) end
+   if rehailer ~= nil then hook.rm( rehailer ) end
    player.commClose()
    tk.msg( DVtitle[1], DVtext[1] )
    tk.msg( DVtitle[1], DVtext[2] )
@@ -229,7 +238,7 @@ function hail ()
       faction.get("FLF"):modPlayerSingle( -200 )
       local standing = faction.get("Dvaered"):playerStanding()
       if standing < 0 then
-         faction.get("Dvaered"):modPlayerSingle( -standing )
+         faction.get("Dvaered"):modPlayerRaw( -standing )
       end
 
       for i, j in ipairs( fleetDV ) do
@@ -277,13 +286,15 @@ end
 
 
 function timer_spawnFLF ()
-   spawnFLF()
-   for i, j in ipairs( fleetFLF ) do
-      j:setFriendly()
-      j:setVisplayer( true )
-   end
+   if boss ~= nil and boss:exists() then
+      spawnFLF()
+      for i, j in ipairs( fleetFLF ) do
+         j:setFriendly()
+         j:setVisplayer( true )
+      end
 
-   fleetFLF[1]:broadcast( flfcomm[1]:format( player.name() ) )
+      fleetFLF[1]:broadcast( flfcomm[1]:format( player.name() ) )
+   end
 end
 
 
@@ -307,23 +318,18 @@ function returnFLFControl()
 end
 
 
-function pilot_attacked_dv ()
-   if not job_done then
-      for i, j in ipairs( fleetDV ) do
-         if j:exists() then
-            j:setHostile()
-         end
-      end
-   end
-end
-
 function pilot_death_dv ()
    dv_ships_left = dv_ships_left - 1
    if dv_ships_left <= 0 then
       if spawner ~= nil then hook.rm( spawner ) end
       if hailer ~= nil then hook.rm( hailer ) end
+      if rehailer ~= nil then hook.rm( rehailer ) end
 
       job_done = true
+      local standing = faction.get("Dvaered"):playerStanding()
+      if standing >= 0 then
+         faction.get("Dvaered"):modPlayerRaw( -standing - 1 )
+      end
       misn.osdActive( 3 )
       misn.markerRm( marker )
       marker = misn.markerAdd( system.get( var.peek( "flfbase_sysname" ) ), "high" )
@@ -356,7 +362,7 @@ function land_flf ()
       tk.msg( title[4], text[6] )
       tk.msg( title[4], text[7] )
       player.pay( 100000 )
-      faction.get("FLF"):modPlayerSingle( 15 )
+      faction.get("FLF"):modPlayer( 15 )
       var.pop( "flfbase_sysname" )
       var.pop( "flfbase_intro" )
       misn.finish( true )

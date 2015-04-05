@@ -114,14 +114,6 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
 /*
  * player pilot stack - ships he has
  */
-/**
- * @brief Player ship.
- */
-typedef struct PlayerShip_s {
-   Pilot* p;      /**< Pilot. */
-   char *loc;     /**< Location. */
-   int autoweap;  /**< Automatically update weapon sets. */
-} PlayerShip_t;
 static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
 static int player_nstack            = 0;     /**< Number of ships player has. */
 
@@ -129,13 +121,6 @@ static int player_nstack            = 0;     /**< Number of ships player has. */
 /*
  * player outfit stack - outfits he has
  */
-/**
- * @brief Wrapper for outfits.
- */
-typedef struct PlayerOutfit_s {
-   const Outfit *o;  /**< Actual associated outfit. */
-   int q;            /**< Amount of outfit owned. */
-} PlayerOutfit_t;
 static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
 static int player_noutfits             = 0;     /**< Number of outfits player has. */
 static int player_moutfits             = 0;     /**< Current allocated memory. */
@@ -692,7 +677,7 @@ credits_t player_shipPrice( char* shipname )
  */
 void player_rmShip( char* shipname )
 {
-   int i;
+   int i, w;
 
    for (i=0; i<player_nstack; i++) {
       /* Not the ship we are looking for. */
@@ -710,6 +695,12 @@ void player_rmShip( char* shipname )
       /* Realloc memory to smaller size. */
       player_stack = realloc( player_stack,
             sizeof(PlayerShip_t) * (player_nstack) );
+   }
+
+   /* Update ship list if landed. */
+   if (landed) {
+      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      equipment_regenLists( w, 0, 1 );
    }
 }
 
@@ -1044,8 +1035,7 @@ void player_think( Pilot* pplayer, const double dt )
    (void) dt;
    Pilot *target;
    double turn;
-   int facing;
-   int ret;
+   int facing, fired;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -1060,10 +1050,6 @@ void player_think( Pilot* pplayer, const double dt )
       ai_think( pplayer, dt );
       return;
    }
-
-   /* Autonav voodoo. */
-   if (player.autonav_timer > 0.)
-      player.autonav_timer -= dt;
 
    /* Not facing anything yet. */
    facing = 0;
@@ -1151,12 +1137,12 @@ void player_think( Pilot* pplayer, const double dt )
    /*
     * Weapon shooting stuff
     */
+   fired = 0;
+
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      ret = pilot_shoot( pplayer, 0 );
+      fired |= pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
-      if (ret)
-         player_autonavResetSpeed();
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1164,15 +1150,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
    /* Secondary weapon - we use PLAYER_SECONDARY_L to track last frame. */
    if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
-      /* Double tap stops beams. */
-      if (!player_isFlag(PLAYER_SECONDARY_L))
-         pilot_shootStop( pplayer, 1 );
-      else {
-         ret = pilot_shoot( pplayer, 1 );
-         if (ret)
-            player_autonavResetSpeed();
-      }
-
+      fired |= pilot_shoot( pplayer, 1 );
       player_setFlag(PLAYER_SECONDARY_L);
    }
    else if (player_isFlag(PLAYER_SECONDARY_L)) {
@@ -1180,6 +1158,10 @@ void player_think( Pilot* pplayer, const double dt )
       player_rmFlag(PLAYER_SECONDARY_L);
    }
 
+   if (fired) {
+      player.autonav_timer = MAX( player.autonav_timer, 1. );
+      player_autonavResetSpeed();
+   }
 
    pilot_setThrust( pplayer, player_acc );
 }
@@ -1276,6 +1258,32 @@ void player_weapSetPress( int id, int type, int repeat )
       return;
 
    pilot_weapSetPress( player.p, id, type );
+}
+
+
+/**
+ * @brief Aborts autonav and other states that take control of the ship.
+ *
+ *    @param reason Reason for aborting (see player.h)
+ *    @param str String accompanying the reason.
+ */
+void player_restoreControl( int reason, char *str )
+{
+   if (player.p==NULL)
+      return;
+
+   if (reason != PINPUT_AUTONAV) {
+      /* Autonav should be harder to abort when paused. */
+      if (!paused || reason != PINPUT_MOVEMENT)
+         player_autonavAbort(str);
+   }
+
+   if (reason != PINPUT_BRAKING) {
+      pilot_rmFlag(player.p, PILOT_BRAKING);
+      pilot_rmFlag(player.p, PILOT_COOLDOWN_BRAKE);
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN))
+         pilot_cooldownEnd(player.p, str);
+   }
 }
 
 
@@ -1450,7 +1458,7 @@ void player_land (void)
    }
 
    /* Abort autonav. */
-   player_autonavAbort(NULL);
+   player_restoreControl(0, NULL);
 
    /* Stop afterburning. */
    pilot_afterburnOver( player.p );
@@ -1478,7 +1486,7 @@ void player_checkLandAck( void )
    Planet *p;
 
    /* No authorization to revoke. */
-   if (!player_isFlag(PLAYER_LANDACK))
+   if ((player.p == NULL) || !player_isFlag(PLAYER_LANDACK))
       return;
 
    /* Avoid a potential crash if PLAYER_LANDACK is set inappropriately. */
@@ -1619,7 +1627,8 @@ void player_hailStart (void)
 
    /* Abort autonav. */
    player_messageRaw("\erReceiving hail!");
-   player_autonavEnd();
+   player_autonavResetSpeed();
+   player.autonav_timer = MAX( player.autonav_timer, 10. );
 }
 
 
@@ -2141,10 +2150,12 @@ void player_toggleMouseFly(void)
 
 
 /**
- * @brief Toggles active cooldown mode.
+ * @brief Starts braking or active cooldown.
  */
-void player_toggleCooldown(void)
+void player_brake(void)
 {
+   int stopped;
+
    if (pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
@@ -2153,13 +2164,13 @@ void player_toggleCooldown(void)
          pilot_isDisabled(player.p))
       return;
 
-   if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
-            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))) {
-      player_autonavAbort(NULL);
-      pilot_cooldown( player.p );
-   }
-   else
-      pilot_cooldownEnd(player.p, NULL);
+   stopped = pilot_isStopped(player.p);
+   if (stopped && !pilot_isFlag(player.p, PILOT_COOLDOWN))
+      pilot_cooldown(player.p);
+   else if (pilot_isFlag(player.p, PILOT_BRAKING))
+      pilot_setFlag(player.p, PILOT_COOLDOWN_BRAKE);
+   else if (!stopped)
+      pilot_setFlag(player.p, PILOT_BRAKING);
 }
 
 
@@ -2199,6 +2210,9 @@ static int player_thinkMouseFly(void)
  */
 void player_dead (void)
 {
+   /* Explode at normal speed. */
+   pause_setSpeed(1.);
+
    gui_cleanup();
 
    /* Close the overlay. */
@@ -2283,6 +2297,19 @@ int player_ships( char** sships, glTexture** tships )
    }
 
    return player_nstack;
+}
+
+
+/**
+ * @brief Gets all of the player's ships.
+ *
+ *    @param[out] Number of star systems gotten.
+ *    @return The player's ships.
+ */
+const PlayerShip_t* player_getShipStack( int *n )
+{
+   *n = player_nstack;
+   return player_stack;
 }
 
 
@@ -2436,15 +2463,15 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 
 
 /**
- * @brief Prepares two arrays for displaying in an image array.
+ * @brief Returns the player's outfits.
  *
- *    @param[out] outfits Outfits the player owns.
- *    @param[out] toutfits Optional store textures for the image array.
- *    @return Number of outfits.
+ *    @param[out] n Number of distinct outfits (not total quantity).
+ *    @return Outfits the player owns.
  */
-int player_getOutfits( Outfit **outfits, glTexture** toutfits )
+const PlayerOutfit_t* player_getOutfits( int *n )
 {
-   return player_getOutfitsFiltered( outfits, toutfits, NULL, NULL );
+   *n = player_noutfits;
+   return (const PlayerOutfit_t*) player_outfits;
 }
 
 
@@ -3002,11 +3029,11 @@ static int player_saveShip( xmlTextWriterPtr writer,
          found = 0;
          for (j=0; j<MISSION_MAX; j++) {
             /* Only check active missions. */
-            if (player_missions[j].id > 0) {
+            if (player_missions[j]->id > 0) {
                /* Now check if it's in the cargo list. */
-               for (k=0; k<player_missions[j].ncargo; k++) {
+               for (k=0; k<player_missions[j]->ncargo; k++) {
                   /* See if it matches a cargo. */
-                  if (player_missions[j].cargo[k] == ship->commodities[i].id) {
+                  if (player_missions[j]->cargo[k] == ship->commodities[i].id) {
                      found = 1;
                      break;
                   }

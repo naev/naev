@@ -41,7 +41,7 @@ else -- Default to English
     
     wintitle = "You Won!"
     wintext = [[The laid back man comes up to you.  
-"Congratulations man.  And guess what!  We got a sponsor!  Melendez Corporation has agreed to put up prize money.  He hands you a chip with 10000 credits.  Lets race again sometime soon."]]
+"Congratulations man.  And guess what!  We got a sponsor!  Melendez Corporation has agreed to put up prize money.  He hands you a chip with 10000 credits.  Let's race again sometime soon."]]
 
     ftitle[1] = "Illegal ship!"
     ftext[1] = [["You have switched to a ship that's not allowed in this race.  Mission failed."]]
@@ -51,7 +51,7 @@ else -- Default to English
 
     ftitle[3] = "You failed to win the race."
     ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
-    "That was a lot of fun, if you ever have time, lets race again."]]
+    "That was a lot of fun, if you ever have time, let's race again."]]
 
     NPCname = "A laid back man"
     NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."
@@ -67,7 +67,7 @@ else -- Default to English
     OSD[4] = "Land at %s"
 
     chatter = {}
-    chatter[1] = "Lets do this!"
+    chatter[1] = "Let's do this!"
     chatter[2] = "Wooo!"
     chatter[3] = "Time to Shake 'n Bake"
     chatter[4] = "Checkpoint %s baby!"

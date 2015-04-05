@@ -220,8 +220,16 @@ function create()
     stuperpx   = 0.2 - 0.02 * speed
     stuperjump = 11000 - 200 * speed
     stupertakeoff = 12000 - 75 * speed
-    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
-    timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps) * 1.3)
+    allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
+
+    -- Allow extra time for refuelling stops.
+    local jumpsperstop = 3 + rank
+    if numjumps > jumpsperstop then
+        allowance = allowance + math.floor((numjumps-1) / jumpsperstop) * stuperjump
+    end
+
+    timelimit  = time.get() + time.create(0, 0, allowance)
+    timelimit2 = time.get() + time.create(0, 0, allowance * 1.3)
 
     -- Choose mission reward. This depends on the priority and the passenger rank.
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game

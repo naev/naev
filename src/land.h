@@ -45,10 +45,22 @@ enum {
 
 
 /*
+ * Minor hack, for 'buy map' button.
+ */
+#define LOCAL_MAP_NAME "Local System Map"
+
+
+/*
  * Landed at.
  */
 extern int landed;
 extern Planet* land_planet;
+
+
+/* Tracking for which tabs have been generated. */
+#define land_tabGenerate(w)       (land_generated |= (1 << w)) /**< Mark tab generated. */
+#define land_tabGenerated(w)     (land_generated & (1 << w)) /**< Check if tab has been generated. */
+extern unsigned int land_generated;
 
 
 /*
@@ -68,6 +80,7 @@ int land_setWindow( int window );
  * Internal usage.
  */
 void land_refuel (void);
+void land_checkAddMap (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);

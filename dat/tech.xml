@@ -7,9 +7,13 @@
   <item>Laser Cannon MK3</item>
   <item>Ripper Cannon</item>
   <item>Heavy Ripper Cannon</item>
+  <item>Laser PD MK1</item>
+  <item>Laser PD MK2</item>
+  <item>Laser PD MK3</item>
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
+  <item>Heavy Ripper Turret</item>
   <item>Heavy Laser</item>
   <item>Turbolaser</item>
   <item>Razor MK1</item>
@@ -18,6 +22,7 @@
   <item>Razor Turret MK1</item>
   <item>Razor Turret MK2</item>
   <item>Razor Turret MK3</item>
+  <item>Heavy Razor Turret</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
@@ -107,6 +112,7 @@
   <item>Hidden Jump Scanner</item>
   <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
+  <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
@@ -138,6 +144,7 @@
   <item>Milspec Jammer</item>
   <item>GUI - Brushed</item>
   <item>GUI - Legacy</item>
+  <item>GUI - Slimv2</item>
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
@@ -163,132 +170,94 @@
   <item>Tricon Experimental Engine License</item>
   <item>Pirate Landing Pass</item>
   <item>Previous Generation Small Systems</item>
-  <item>Basic Small Systems</item>
   <item>Unicorp PT-100 Core System</item>
   <item>Unicorp PT-200 Core System</item>
   <item>Milspec Hermes 2202 Core System</item>
   <item>Milspec Aegis 2201 Core System</item>
   <item>Milspec Prometheus 2203 Core System</item>
   <item>Milspec Orion 2301 Core System</item>
-  <item>Milspec Orion 2302 Core System</item>
   <item>Milspec Hermes 3602 Core System</item>
   <item>Milspec Aegis 3601 Core System</item>
   <item>Milspec Prometheus 3603 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
-  <item>Milspec Orion 3702 Core System</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Basic Medium Systems</item>
   <item>Unicorp PT-500 Core System</item>
   <item>Unicorp PT-600 Core System</item>
   <item>Milspec Hermes 4702 Core System</item>
   <item>Milspec Aegis 4701 Core System</item>
   <item>Milspec Prometheus 4703 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
-  <item>Milspec Orion 4802 Core System</item>
   <item>Milspec Hermes 5402 Core System</item>
   <item>Milspec Aegis 5401 Core System</item>
   <item>Milspec Prometheus 5403 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
-  <item>Milspec Orion 5502 Core System</item>
   <item>Previous Generation Large Systems</item>
-  <item>Basic Large Systems</item>
+  <item>Unicorp PT-900 Core System</item>
   <item>Unicorp PT-1000 Core System</item>
-  <item>Unicorp PT-1200 Core System</item>
-  <item>Unicorp RX-71 Core System</item>
-  <item>Unicorp JX-66 Core System</item>
-  <item>Unicorp EX-80 Core System</item>
-  <item>Milspec Orion 8801 Core System</item>
-  <item>Milspec Orion 8802 Core System</item>
+  <item>Milspec Hermes 8502 Core System</item>
+  <item>Milspec Aegis 8501 Core System</item>
+  <item>Milspec Prometheus 8503 Core System</item>
+  <item>Milspec Orion 8601 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
   <item>Milspec Prometheus 9803 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
-  <item>Milspec Orion 9902 Core System</item>
-  <item>Milspec Orion 9903 Core System</item>
   <item>Beat Up Small Engine</item>
-  <item>Manufacturer Small Engine</item>
   <item>Unicorp Hawk 150 Engine</item>
   <item>Unicorp Hawk 300 Engine</item>
-  <item>Unicorp EXA-49F Engine</item>
-  <item>Unicorp AUR-50A Engine</item>
   <item>Melendez Ox Engine</item>
   <item>Nexus Dart 300 Engine</item>
   <item>Nexus Dart 150 Engine</item>
-  <item>Tricon Crane Engine</item>
-  <item>Tricon Albatross Engine</item>
   <item>Melendez Ox XL Engine</item>
   <item>Tricon Zephyr Engine</item>
   <item>Tricon Zephyr II Engine</item>
   <item>Beat Up Medium Engine</item>
-  <item>Manufacturer Medium Engine</item>
   <item>Unicorp Falcon 550 Engine</item>
   <item>Unicorp Falcon 1200 Engine</item>
-  <item>Unicorp EXA-66F Engine</item>
-  <item>Unicorp AUR-70A Engine</item>
   <item>Melendez Buffalo Engine</item>
   <item>Nexus Arrow 550 Engine</item>
   <item>Nexus Arrow 1200 Engine</item>
-  <item>Tricon Kolibri Engine</item>
-  <item>Tricon Antelope Engine</item>
   <item>Melendez Buffalo XL Engine</item>
   <item>Tricon Cyclone Engine</item>
   <item>Tricon Cyclone II Engine</item>
-  <item>Tricon Centaur Mk7-Ra Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Manufacturer Large Engine</item>
   <item>Unicorp Eagle 4500 Engine</item>
   <item>Unicorp Eagle 6500 Engine</item>
-  <item>Unicorp EXA-71F Engine</item>
-  <item>Unicorp AUR-79A Engine</item>
   <item>Melendez Mammoth Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
   <item>Nexus Bolt 6500 Engine</item>
-  <item>Tricon Raven Engine</item>
-  <item>Tricon Kraken Engine</item>
   <item>Melendez Mammoth XL Engine</item>
+  <item>Krain Remige Engine</item>
   <item>Tricon Typhoon Engine</item>
   <item>Tricon Typhoon II Engine</item>
-  <item>Tricon Model X Large Engine</item>
   <item>Patchwork Light Plating</item>
-  <item>Unmodified Small Hull</item>
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp B-2 Light Plating</item>
   <item>Unicorp D-4 Light Plating</item>
   <item>Unicorp B-4 Light Plating</item>
-  <item>Unicorp Small Cargo Hull</item>
   <item>S&amp;K Ultralight Combat Plating</item>
   <item>S&amp;K Ultralight Stealth Plating</item>
   <item>S&amp;K Light Combat Plating</item>
   <item>S&amp;K Light Stealth Plating</item>
   <item>S&amp;K Small Cargo Hull</item>
   <item>Patchwork Medium Plating</item>
-  <item>Unmodified Medium Hull</item>
   <item>Unicorp D-8 Medium Plating</item>
   <item>Unicorp B-8 Medium Plating</item>
   <item>Unicorp D-12 Medium Plating</item>
   <item>Unicorp B-12 Medium Plating</item>
-  <item>Unicorp Medium Cargo Hull</item>
   <item>S&amp;K Medium Combat Plating</item>
   <item>S&amp;K Medium Stealth Plating</item>
   <item>S&amp;K Medium Cargo Hull</item>
   <item>S&amp;K Medium-Heavy Stealth Plating</item>
   <item>S&amp;K Medium-Heavy Combat Plating</item>
-  <item>Schafer &amp; Kane Medium Combat Plating Beta</item>
-  <item>Schafer &amp; Kane Medium Solar Plating</item>
   <item>Patchwork Heavy Plating</item>
-  <item>Unmodified Large Hull</item>
   <item>Unicorp D-16 Heavy Plating</item>
   <item>Unicorp B-16 Heavy Plating</item>
   <item>Unicorp D-20 Heavy Plating</item>
   <item>Unicorp B-20 Heavy Plating</item>
-  <item>Unicorp Large Cargo Hull</item>
   <item>S&amp;K Heavy Combat Plating</item>
-  <item>Schafer &amp; Kane Heavy Combat Plating Beta</item>
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Superheavy Combat Plating</item>
-  <item>Schafer &amp; Kane Heavy Solar Plating</item>
-  <item>Schafer &amp; Kane Heavy Dissipation Plating</item>
-  <item>Schafer &amp; Kane Superheavy Combat Plating</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
@@ -369,17 +338,21 @@
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
+  <item>Laser PD MK1</item>
   <item>Laser Turret MK1</item>
   <item>Ripper Cannon</item>
  </tech>
  <tech name="Laser 2">
   <item>Laser Cannon MK2</item>
   <item>Laser Cannon MK3</item>
+  <item>Laser PD MK2</item>
+  <item>Laser PD MK3</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
   <item>Heavy Ripper Cannon</item>
  </tech>
  <tech name="Laser 3">
+  <item>Heavy Ripper Turret</item>
   <item>Heavy Laser</item>
   <item>Turbolaser</item>
  </tech>
@@ -397,6 +370,7 @@
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
+  <item>Heavy Razor Turret</item>
  </tech>
  <tech name="Kinetic 1">
   <item>Gauss Gun</item>
@@ -513,6 +487,7 @@
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
   <item>GUI - Legacy</item>
+  <item>GUI - Slimv2</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Jump Scanner</item>
   <item>Medusa Missile</item>
@@ -546,6 +521,7 @@
   <item>Emergency Shield Booster</item>
   </tech>
  <tech name="Heavy Weapons 1">
+  <item>Laser PD MK1</item>
   <item>Laser Turret MK1</item>
   <item>Turreted Gauss Gun</item>
   <item>Plasma Turret MK1</item>
@@ -561,6 +537,7 @@
   <item>Mercenary License</item>
   </tech>
  <tech name="Heavy Weapons 2">
+  <item>Laser PD MK2</item>
   <item>Laser Turret MK2</item>
   <item>Mass Driver MK1</item>
   <item>Ion Cannon</item>
@@ -609,6 +586,7 @@
   <item>Improved Stabilizer</item>
   <item>Generic Afterburner</item>
   <item>Fuel Pod</item>
+  <item>Medium Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
@@ -644,6 +622,7 @@
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
+  <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
  </tech>
  <tech name="Missiles 1">
@@ -828,6 +807,10 @@
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
+  <item>Milspec Orion 8601 Core System</item>
+  <item>Milspec Hermes 8502 Core System</item>
+  <item>Milspec Aegis 8501 Core System</item>
+  <item>Milspec Prometheus 8503 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
@@ -865,6 +848,7 @@
   <item>Tricon Zephyr II Engine</item>
   <item>Tricon Cyclone Engine</item>
   <item>Tricon Cyclone II Engine</item>
+  <item>Krain Remige Engine</item>
   <item>Tricon Typhoon Engine</item>
   <item>Tricon Typhoon II Engine</item>
  </tech>

@@ -329,7 +329,9 @@ function render( dt, dt_mod )
    energy = pp:energy()
    speed = pp:vel():dist()
    heat = pp:temp()
-   fuel = player.fuel()
+   fuel, consumption = player.fuel()
+   fuel_max = pp:stats().fuel_max
+   jumps = player.jumps()
    lockons = pp:lockon()
    autonav = player.autonav()
    credits = player.credits()
@@ -419,9 +421,14 @@ function render( dt, dt_mod )
       if i <= #aset then
          --There is something in this slot
          gfx.renderRect( slot_x, 0, slot_w, slot_h, col_slot_bg ) --Background
-         
+
+         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+         if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].temp, col_slot_heat ) -- Background (heat)
+         end
+
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
-         
+
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_img_offs_y )
          elseif aset[i].state == "cooldown" then
@@ -464,14 +471,14 @@ function render( dt, dt_mod )
 
    --Bars
    --Fuel
-   txt = tostring(round( fuel )) .. " (" .. tostring(math.floor( fuel / 100 )) .. " jumps)"
+   txt = tostring(round( fuel )) .. " (" .. tostring(jumps) .. " jumps)"
    col = col_txt_std
-   if math.floor( fuel / 100 ) == 1 then
+   if jumps == 1 then
       col = col_txt_wrn
    elseif fuel == 0. then
       col = col_txt_enm
    end
-   render_bar( true, "fuel", fuel/100, txt, col )
+   render_bar( true, "fuel", fuel/fuel_max, txt, col )
    
    --Armour
    txt = string.format( "%s%% (%s)", round( armour ), round( stats.armour * armour / 100 ) )
@@ -513,7 +520,9 @@ function render( dt, dt_mod )
    render_bar( false, "heat", heat/100, txt, col )
    
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100, 0)
+   local hspeed
+   if stats.speed_max <= 0 then hspeed = 0
+   else hspeed = round(speed / stats.speed_max * 100) end
    txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
    col = col_txt_std
    if hspeed >= 200. then

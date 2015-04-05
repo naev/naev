@@ -29,6 +29,7 @@
  <mission name="Empire Rehabilitation">
   <lua>empire/emp_rehab</lua>
   <avail>
+   <cond>faction.playerStanding("Empire") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
@@ -36,6 +37,7 @@
  <mission name="Dvaered Rehabilitation">
   <lua>dvaered/dv_rehab</lua>
   <avail>
+   <cond>faction.playerStanding("Dvaered") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
@@ -43,6 +45,7 @@
  <mission name="Sirius Rehabilitation">
   <lua>sirius/srs_rehab</lua>
   <avail>
+   <cond>faction.playerStanding("Sirius") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
@@ -50,6 +53,7 @@
  <mission name="Soromid Rehabilitation">
   <lua>soromid/srm_rehab</lua>
   <avail>
+   <cond>faction.playerStanding("Soromid") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
@@ -57,6 +61,7 @@
  <mission name="Za'lek Rehabilitation">
   <lua>zalek/zlk_rehab</lua>
   <avail>
+   <cond>faction.playerStanding("Za'lek") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
@@ -64,6 +69,7 @@
  <mission name="Trader Rehabilitation">
   <lua>trader/trader_rehab</lua>
   <avail>
+   <cond>faction.playerStanding("Trader") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
@@ -99,6 +105,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Alive Bounty">
@@ -114,6 +121,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">

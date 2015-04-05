@@ -89,6 +89,10 @@ function create()
    player.pilot():addOutfit( "Laser Cannon MK1", 2 )
    jump.setKnown( "Hakoi", "Eneguoz" )
 
+   hook.timer(1000, "prompt")
+end
+
+function prompt()
    tk.msg( title[1], text[1]:format( player.name() ) )
    if tk.yesno( title[2], text[2] ) then
       tk.msg( title[4], text[4] )

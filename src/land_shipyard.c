@@ -73,6 +73,9 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
 
+   /* Mark as generated. */
+   land_tabGenerate(LAND_WINDOW_SHIPYARD);
+
    /* Init vars. */
    shipyard_selected = NULL;
 
@@ -346,6 +349,9 @@ static void shipyard_buy( unsigned int wid, char* str )
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   if (strcmp(shipname, "None") == 0)
+      return;
+
    ship = ship_get( shipname );
 
    credits_t targetprice = ship_buyPrice(ship);
@@ -479,6 +485,9 @@ static void shipyard_trade( unsigned int wid, char* str )
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   if (strcmp(shipname, "None") == 0)
+      return;
+
    ship = ship_get( shipname );
 
    credits_t targetprice = ship_buyPrice(ship);

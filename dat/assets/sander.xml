@@ -24,8 +24,11 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities/>
-  <description>Griffin III's sister world is Kramer. Much of the surface is water, so it has a significantly lower population than it's compatriot. However, those same oceans provide a lot of food and rare compounds for the Empire's consumption. Perhaps not as rich as Griffin III, but quite close.</description>
-  <bar>This underwater bar is quite the spectacle Large marine creatures swim by the windows, and the main lobby is designed to enhance the aesthetic. A little overdone, but it is nice overall.</bar>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Griffin III's sister world is Sander. Owing to its largely aquatic surface, its population is significantly lower than Griffin III's, but its oceans provide food to many nearby planets, and Imperial mining operations are able to harvest many valuable materials from the sea floor.</description>
+  <bar>This underwater bar is quite the spectacle. Large marine creatures swim by the windows, and the main lobby is designed to enhance the aesthetic. A little overdone, but pleasant overall.</bar>
  </general>
 </asset>

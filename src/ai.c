@@ -189,6 +189,7 @@ static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
+static int aiL_speed( lua_State *L ); /* speed() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
 static int aiL_pcurenergy( lua_State *L ); /* pcurenergy() */
@@ -306,6 +307,7 @@ static const luaL_reg aiL_methods[] = {
    { "nearestpilot", aiL_getnearestpilot },
    { "armour", aiL_armour },
    { "shield", aiL_shield },
+   { "speed", aiL_speed },
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
    { "pcurenergy", aiL_pcurenergy },
@@ -923,19 +925,22 @@ void ai_think( Pilot* pilot, const double dt )
  *
  *    @param attacked Pilot that is attacked.
  *    @param[in] attacker ID of the attacker.
+ *    @param[i] dmg Damage done by the attacker.
  */
-void ai_attacked( Pilot* attacked, const unsigned int attacker )
+void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 {
    int errf;
    lua_State *L;
-   HookParam hparam;
+   HookParam hparam[2];
 
    /* Custom hook parameters. */
-   hparam.type       = HOOK_PARAM_PILOT;
-   hparam.u.lp.pilot = attacker;
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = attacker;
+   hparam[1].type       = HOOK_PARAM_NUMBER;
+   hparam[1].u.num      = dmg;
 
    /* Behaves differently if manually overridden. */
-   pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, &hparam, 1 );
+   pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, hparam, 2 );
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
 
@@ -1572,6 +1577,30 @@ static int aiL_shield( lua_State *L )
       d = p->shield;
    }
    else d = cur_pilot->shield;
+
+   lua_pushnumber(L, d);
+   return 1;
+}
+
+ /*
+ * gets the pilot's current speed
+ */
+static int aiL_speed( lua_State *L )
+{
+   
+   Pilot *p;
+   double d;
+   
+   if (lua_isnumber(L,1)) {
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) {
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+      d = VMOD(p->solid->vel);
+   }
+   else
+      d = VMOD(cur_pilot->solid->vel);
 
    lua_pushnumber(L, d);
    return 1;
@@ -2655,6 +2684,7 @@ static int aiL_land( lua_State *L )
 {
    int ret;
    Planet *planet;
+   HookParam hparam;
 
    ret = 0;
 
@@ -2686,7 +2716,11 @@ static int aiL_land( lua_State *L )
    if (!ret) {
       cur_pilot->ptimer = PILOT_LANDING_DELAY;
       pilot_setFlag( cur_pilot, PILOT_LANDING );
-      pilot_runHook( cur_pilot, PILOT_HOOK_LAND );
+
+      hparam.type    = HOOK_PARAM_ASSET;
+      hparam.u.la.id = planet->id;
+
+      pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
    }
 
    lua_pushboolean(L,!ret);

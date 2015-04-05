@@ -395,6 +395,10 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
+
+   /* Update economy due to galaxy modification. */
+   economy_execQueued();
+
    if (conf.devautosave)
       dpl_savePlanet( p );
 
@@ -463,21 +467,27 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    Select_t *sel;
-   char *file, *cleanName;
+   char *file, *filtered;
    int i;
 
    if (dialogue_YesNo( "Remove selected planets?", "This can not be undone." )) {
       for (i=0; i<sysedit_nselect; i++) {
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
-            cleanName = uniedit_nameFilter( sysedit_sys->planets[  sel->u.planet ]->name );
-            file = malloc(16+strlen(cleanName));
-            nsnprintf(file,16+strlen(cleanName),
-                           "dat/assets/%s.xml",cleanName);
+            filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
+            file = malloc(16 + strlen(filtered));
+            nsnprintf(file, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
             nfile_delete(file);
+
+            free(filtered);
+            free(file);
+
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
          }
       }
+
+      /* Update economy due to galaxy modification. */
+      economy_execQueued();
    }
 }
 
@@ -693,6 +703,10 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    /* Horizontal. */
    for (   ; sy<w; sy += sz)
       gl_renderRect( bx, by+sy, w, 1., &cBlue );
+
+   glEnable(GL_LINE_SMOOTH);
+   gl_drawCircleLoop( x, y, sysedit_sys->radius * sysedit_zoom, &cLightBlue );
+   glDisable(GL_LINE_SMOOTH);
 }
 
 
@@ -773,16 +787,32 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
    switch (event->type) {
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         /* Must be in bounds. */
+         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+            return 0;
+
+         if (event->wheel.y > 0)
+            sysedit_buttonZoom( 0, "btnZoomIn" );
+         else
+            sysedit_buttonZoom( 0, "btnZoomOut" );
+
+         return 1;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
             sysedit_buttonZoom( 0, "btnZoomIn" );
          else if (event->button.button == SDL_BUTTON_WHEELDOWN)
             sysedit_buttonZoom( 0, "btnZoomOut" );
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {

@@ -232,6 +232,8 @@ int diff_apply( const char *name )
             xmlFreeDoc(doc);
             free(buf);
 
+            economy_execQueued();
+
             return 0;
          }
          free(diffname);
@@ -682,6 +684,8 @@ void diff_remove( const char *name )
       return;
 
    diff_removeDiff(diff);
+
+   economy_execQueued();
 }
 
 
@@ -692,6 +696,8 @@ void diff_clear (void)
 {
    while (diff_nstack > 0)
       diff_removeDiff(&diff_stack[diff_nstack-1]);
+
+   economy_execQueued();
 }
 
 

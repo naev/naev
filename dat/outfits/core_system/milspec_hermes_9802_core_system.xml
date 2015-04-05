@@ -4,17 +4,18 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
-  <mass>550</mass>
-  <price>2000000</price>
+  <priority>7</priority>
+  <mass>975</mass>
+  <price>2600000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Hermes 9802 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>reactor_iii</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>250</cpu_max>
-  <shield>800</shield>
-  <shield_regen>14</shield_regen>
-  <energy>3200</energy>
-  <energy_regen>145</energy_regen>
+  <cpu_max>325</cpu_max>
+  <shield>900</shield>
+  <shield_regen>16</shield_regen>
+  <energy>3800</energy>
+  <energy_regen>175</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>

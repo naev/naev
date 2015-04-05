@@ -101,7 +101,7 @@ function pirate_createKestrel( pirate_create )
 
    -- FInally add outfits
    equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low, olist )
+         use_medium, use_low, olist )
 
    return p,olist
 end
@@ -142,8 +142,8 @@ function pirate_createAdmonisher( pirate_create )
    low            = equip_lowMed()
 
    -- Finally add outfits
-      equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low,
+         use_medium, use_low, olist )
 
    return p,olist
 end
@@ -185,7 +185,7 @@ function pirate_createAncestor( pirate_create )
 
    -- Finally add outfits
    equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low, olist )
+         use_medium, use_low, olist )
 
    return p,olist
 end
@@ -227,7 +227,7 @@ function pirate_createVendetta( pirate_create )
 
    -- Finally add outfits
    equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low, olist )
+         use_medium, use_low, olist )
 
    return p,olist
 end

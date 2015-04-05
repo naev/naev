@@ -20,6 +20,7 @@
 
 
 void opt_menu (void);
+void opt_resize (void);
 
 
 #endif /* OPTIONS_H */
