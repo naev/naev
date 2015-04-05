@@ -86,7 +86,8 @@ function create ()
 
    local systems = getsysatdistance( system.cur(), 1, 2,
       function(s)
-         return s:presences()[paying_faction:name()] > 0 and get_enemies(s) > 0
+         local this_faction = s:presences()[paying_faction:name()]
+         return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0
       end )
    if get_enemies( system.cur() ) then
       systems[ #systems + 1 ] = system.cur()
