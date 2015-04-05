@@ -47,6 +47,7 @@ static int factionL_areallies( lua_State *L );
 static int factionL_modplayer( lua_State *L );
 static int factionL_modplayersingle( lua_State *L );
 static int factionL_modplayerraw( lua_State *L );
+static int factionL_setplayerstanding( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
@@ -66,6 +67,7 @@ static const luaL_reg faction_methods[] = {
    { "modPlayer", factionL_modplayer },
    { "modPlayerSingle", factionL_modplayersingle },
    { "modPlayerRaw", factionL_modplayerraw },
+   { "setPlayerStanding", factionL_setplayerstanding },
    { "playerStanding", factionL_playerstanding },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
@@ -398,6 +400,27 @@ static int factionL_modplayerraw( lua_State *L )
    f = luaL_validfaction(L,1);
    n = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, n );
+
+   return 0;
+}
+
+/**
+ * @brief Sets the player's standing with the faction.
+ *
+ * @usage f:setPlayerStanding(70) -- Make player an ally
+ *
+ *    @luaparam f Faction to set the player's standing for.
+ *    @luaparam value Value to set the player's standing to (from -100 to 100).
+ * @luafunc setPlayerStanding( f, value )
+ */
+static int factionL_setplayerstanding( lua_State *L )
+{
+   int f;
+   double n;
+
+   f = luaL_validfaction( L, 1 );
+   n = luaL_checknumber( L, 2 );
+   faction_setPlayer( f, n );
 
    return 0;
 }
