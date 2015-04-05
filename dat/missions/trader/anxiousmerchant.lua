@@ -112,7 +112,7 @@ function create()
     -- Allow extra time for refuelling stops.
     local jumpsperstop = 3 + math.min(tier, 3)
     if num_jumps > jumpsperstop then
-        time_limit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stu_jumps ))
+        time_limit:add(time.create( 0, 0, math.floor((num_jumps-1) / jumpsperstop) * stu_jumps ))
     end
 
    payment = stu_distance + (stu_jumps / 10)
