@@ -31,16 +31,12 @@ if lang == "es" then
 else -- Default to English
    pay_capture_text    = {}
    pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
-   pay_capture_text[2] = "The officer seems to think your acceptance of the alive bounty for %s was insane. He carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay."
-   pay_capture_text[3] = "The officer seems to think your acceptance of the alive bounty for %s was insane. She carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay."
-   pay_capture_text[4] = "The officer you deal with seems to especially dislike %s. He takes the pirate off your hands and hands you your pay without speaking a word."
-   pay_capture_text[5] = "The officer you deal with seems to especially dislike %s. She takes the pirate off your hands and hands you your pay without speaking a word."
-   pay_capture_text[6] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
-   pay_capture_text[7] = "The officer you deal with thanks you profusely for capturing %s alive, pays you, and sends you off."
-   pay_capture_text[8] = "Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. He takes the pirate into custody and hands you your pay."
-   pay_capture_text[9] = "Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. She takes the pirate into custody and hands you your pay."
-   pay_capture_text[10] = "When you ask the officer for your bounty on %s, he sighs, takes the pirate into custody, goes through some paperwork, and hands you your pay, mumbling something about how useless capturing pirates alive is."
-   pay_capture_text[11] = "When you ask the officer for your bounty on %s, she sighs, takes the pirate into custody, goes through some paperwork, and hands you your pay, mumbling something about how useless capturing pirates alive is."
+   pay_capture_text[2] = "The officer seems to think your acceptance of the alive bounty for %s was insane. " .. rnd.rnd() < 0.5 and "He" or "She" .. " carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay."
+   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. " .. rnd.rnd() < 0.5 and "He" or "She" .. " takes the pirate off your hands and hands you your pay without speaking a word."
+   pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
+   pay_capture_text[5] = "The officer you deal with thanks you profusely for capturing %s alive, pays you, and sends you off."
+   pay_capture_text[6] = "Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. " .. rnd.rnd() < 0.5 and "He" or "She" .. " takes the pirate into custody and hands you your pay."
+   pay_capture_text[7] = "When you ask the officer for your bounty on %s, " .. rnd.rnd() < 0.5 and "he" or "she" .. " sighs, takes the pirate into custody, goes through some paperwork, and hands you your pay, mumbling something about how useless capturing pirates alive is."
 
    fail_kill_text = "MISSION FAILURE! %s has been killed."
 
