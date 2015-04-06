@@ -125,7 +125,14 @@ function Forma:reorganize()
    if self.formation == "buffer" then
       self:shipCount()
    end
-   
+ 
+
+   for _,p in ipairs(self.fleet) do
+      if p ~= pilot.player() and p ~= fleader then
+         p:setFaction(fleader:faction())
+      end
+   end
+
    self.fleader = fleader
    self.fleetspeed = minspeed
    self.incombat = false --Combat flag, used in the controlling function.
