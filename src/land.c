@@ -1269,6 +1269,9 @@ void land_genWindows( int load, int changetab )
    /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
+   /* Add local system map button. */
+   land_checkAddMap();
+
    /* 2) Set as landed and run hooks. */
    if (!regen) {
       landed = 1;
@@ -1333,9 +1336,6 @@ void land_genWindows( int load, int changetab )
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
    if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
-
-   /* Add local system map button. */
-   land_checkAddMap();
 
    /* Refuel if necessary. */
    land_refuel();
