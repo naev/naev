@@ -41,7 +41,7 @@ function cargo_selectPlanets(missdist, routepos)
             for i, v in ipairs(s:planets()) do
                 if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 and
                         not (s==system.cur() and ( vec2.dist( v:pos(), routepos ) < 2500 ) ) and
-                        v:canLand() then
+                        v:canLand() and cargoValidDest( v ) then
                     planets[#planets + 1] = {v, s}
                 end
            end
@@ -132,4 +132,18 @@ function cargoGetTransit( timelimit, numjumps, traveldist )
     local arrivalt = time.get() + time.create(0, 0, traveldist * stuperpx +
             numjumps * pstats.jump_delay + 10180 + 240 * numjumps)
     return arrivalt
+end
+
+function cargoValidDest( targetplanet )
+   -- The blacklist are factions which cannot be delivered to by factions other than themselves, i.e. the Thurion and Proteron.
+   local blacklist = {
+                     faction.get("Proteron"),
+                     faction.get("Thurion"),
+                     }
+   for i,f in ipairs( blacklist ) do
+      if planet.cur():faction() == blacklist[i] and targetplanet:faction() ~= blacklist[i] then
+         return false
+      end
+   end
+   return true
 end
