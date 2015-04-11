@@ -48,20 +48,22 @@ else -- Default to English
 
    pay_title   = "Mission Completed"
 
+   pronoun = rnd.rnd() < 0.5 and "He" or "She"
+
    pay_kill_text    = {}
    pay_kill_text[1] = "After verifying that you killed %s, an officer hands you your pay."
    pay_kill_text[2] = "After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay."
-   pay_kill_text[3] = "The officer seems pleased that %s is finally dead. " .. rnd.rnd() < 0.5 and "He" or "She" .. " thanks you and promptly hands you your pay."
-   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. " .. rnd.rnd() < 0.5 and "He" or "She" .. " then pays you and sends you off."
-   pay_kill_text[5] = "When you ask the officer for your bounty on %s, " .. rnd.rnd() < 0.5 and "he" or "she" .. " sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless the bounty system is."
+   pay_kill_text[3] = "The officer seems pleased that %s is finally dead. " .. pronoun .. " thanks you and promptly hands you your pay."
+   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. " .. pronoun .. " then pays you and sends you off."
+   pay_kill_text[5] = "When you ask the officer for your bounty on %s, " .. pronoun .. " sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless the bounty system is."
    pay_kill_text[6] = "The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking bored the entire time."
 
    pay_capture_text    = {}
    pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
-   pay_capture_text[2] = "The officer seems to think your decision to capture %s alive was insane. " .. rnd.rnd() < 0.5 and "He" or "She" .. " carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay"
-   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. " .. rnd.rnd() < 0.5 and "He" or "She" .. " takes the pirate off your hands and hands you your pay without speaking a word."
+   pay_capture_text[2] = "The officer seems to think your decision to capture %s alive was insane. " .. pronoun .. " carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay"
+   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. " .. pronoun .. " takes the pirate off your hands and hands you your pay without speaking a word."
    pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
-   pay_capture_text[5] = "The officer you greet gives you a puzzled look when you tell him you captured %s alive. Nonetheless, " .. rnd.rnd() < 0.5 and "he" or "she" .. " politely takes the pirate off of your hands and hands you your pay."
+   pay_capture_text[5] = "The officer you greet gives you a puzzled look when you tell him you captured %s alive. Nonetheless, " .. pronoun .. " politely takes the pirate off of your hands and hands you your pay."
 
    share_title   = "A Smaller Reward"
    share_text    = {}
