@@ -571,6 +571,42 @@ void faction_modPlayerRaw( int f, double mod )
 
 
 /**
+ * @brief Sets the player's standing with a faction.
+ *
+ *    @param f Faction to set the player's standing for.
+ *    @param value Value to set the player's standing to.
+ */
+void faction_setPlayer( int f, double value )
+{
+   Faction *faction;
+   HookParam hparam[3];
+   double mod;
+
+   if (!faction_isFaction(f)) {
+      WARN("%d is an invalid faction", f);
+      return;
+   }
+
+   faction = &faction_stack[f];
+   mod = value - faction->player;
+   faction->player = value;
+   /* Run hook if necessary. */
+   hparam[0].type    = HOOK_PARAM_FACTION;
+   hparam[0].u.lf.f  = f;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = mod;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "standing", hparam );
+
+   /* Sanitize just in case. */
+   faction_sanitizePlayer( faction );
+
+   /* Tell space the faction changed. */
+   space_factionChange();
+}
+
+
+/**
  * @brief Gets the player's standing with a faction.
  *
  *    @param f Faction to get player's standing from.

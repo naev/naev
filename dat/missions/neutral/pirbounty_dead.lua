@@ -1,7 +1,7 @@
 --[[
 
    Dead or Alive Pirate Bounty
-   Copyright 2014 Julian Marchant
+   Copyright 2014, 2015 Julian Marchant
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,8 +33,11 @@ if lang == "es" then
 else -- Default to English
    subdue_title   = "Captured Alive"
    subdue_text    = {}
-   subdue_text[1] = [[You and your crew infiltrate the ship's pathetic security and subdue %s. You transport the pirate to your ship.]]
-   subdue_text[2] = [[Your crew has a surprisingly difficult time getting past the ship's security, but eventually succeeds and subdues %s.]]
+   subdue_text[1] = "You and your crew infiltrate the ship's pathetic security and subdue %s. You transport the pirate to your ship."
+   subdue_text[2] = "Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues %s."
+   subdue_text[3] = "The pirate's security system turns out to be no match for your crew. You infiltrate the ship and capture %s."
+   subdue_text[4] = "Your crew infiltrates the pirate's ship and captures %s."
+   subdue_text[5] = "Getting past this ship's security was surprisingly easy. Didn't they know that %s was wanted?"
 
    subdue_fail_title   = "Capture Failed"
    subdue_fail_text    = {}
@@ -45,17 +48,22 @@ else -- Default to English
 
    pay_title   = "Mission Completed"
 
+   pronoun = rnd.rnd() < 0.5 and "He" or "She"
+
    pay_kill_text    = {}
    pay_kill_text[1] = "After verifying that you killed %s, an officer hands you your pay."
    pay_kill_text[2] = "After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay."
-   pay_kill_text[3] = "The officer seems pleased that %s is finally dead. He thanks you and promptly hands you your pay."
-   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. He then pays you and sends you off."
+   pay_kill_text[3] = "The officer seems pleased that %s is finally dead. " .. pronoun .. " thanks you and promptly hands you your pay."
+   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. " .. pronoun .. " then pays you and sends you off."
+   pay_kill_text[5] = "When you ask the officer for your bounty on %s, " .. pronoun:lower() .. " sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless the bounty system is."
+   pay_kill_text[6] = "The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking bored the entire time."
 
    pay_capture_text    = {}
    pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
-   pay_capture_text[2] = "The officer seems to think your decision to capture %s alive was insane. He carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay"
-   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. He takes the pirate off your hands and hands you your pay without speaking a word."
+   pay_capture_text[2] = "The officer seems to think your decision to capture %s alive was insane. " .. pronoun .. " carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay"
+   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. " .. pronoun .. " takes the pirate off your hands and hands you your pay without speaking a word."
    pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
+   pay_capture_text[5] = "The officer you greet gives you a puzzled look when you tell him you captured %s alive. Nonetheless, " .. pronoun:lower() .. " politely takes the pirate off of your hands and hands you your pay."
 
    share_title   = "A Smaller Reward"
    share_text    = {}
@@ -101,7 +109,10 @@ function create ()
    paying_faction = planet.cur():faction()
 
    local systems = getsysatdistance( system.cur(), 1, 3,
-      function(s) return s:presences()["Pirate"] end )
+      function(s)
+         local p = s:presences()["Pirate"]
+         return p ~= nil and p > 0
+      end )
 
    if #systems == 0 then
       -- No pirates nearby
