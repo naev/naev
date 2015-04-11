@@ -111,12 +111,14 @@ end
 
 
 function board_fail ()
-   board_failed = true
-   credits = credits / 5
-   local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
-      name, numstring( credits ) )
-   tk.msg( kill_instead_title, t )
-   osd_msg[2] = osd_msg_kill:format( name )
-   misn.osdCreate( osd_title, osd_msg )
-   misn.osdActive( 2 )
+   if rnd.rnd() < 0.25
+      board_failed = true
+      credits = credits / 5
+      local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
+         name, numstring( credits ) )
+      tk.msg( kill_instead_title, t )
+      osd_msg[2] = osd_msg_kill:format( name )
+      misn.osdCreate( osd_title, osd_msg )
+      misn.osdActive( 2 )
+   end
 end
