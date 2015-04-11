@@ -144,6 +144,7 @@ function create ()
    ship = "Pirate Hyena"
    credits = 50000
    reputation = 0
+   board_failed = false
    bounty_setup()
 
    -- Set mission details
@@ -233,6 +234,7 @@ function pilot_board ()
    else
       local t = subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ]:format( name )
       tk.msg( subdue_fail_title, t )
+      board_fail()
    end
 end
 
@@ -388,6 +390,13 @@ function spawn_pirate( param )
          fail( msg[1]:format( name ) )
       end
    end
+end
+
+
+-- Fail to board the ship; must kill the target instead
+-- (Unused in this mission; used by pirbounty_alive)
+function board_fail ()
+   board_failed = true
 end
 
 
