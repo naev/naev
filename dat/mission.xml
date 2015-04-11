@@ -124,6 +124,23 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
+ <mission name="Patrol">
+  <lua>neutral/patrol</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>560</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
  <mission name="Empire Recruitment">
   <lua>empire/emp_cargo00</lua>
   <flags>
