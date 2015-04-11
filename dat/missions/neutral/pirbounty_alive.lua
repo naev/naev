@@ -38,7 +38,7 @@ else -- Default to English
    pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
    pay_capture_text[5] = "The officer you deal with thanks you profusely for capturing %s alive, pays you, and sends you off."
    pay_capture_text[6] = "Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. " .. pronoun .. " takes the pirate into custody and hands you your pay."
-   pay_capture_text[7] = "When you ask the officer for your bounty on %s, " .. pronoun .. " sighs, takes the pirate into custody, goes through some paperwork, and hands you your pay, mumbling something about how useless capturing pirates alive is."
+   pay_capture_text[7] = "When you ask the officer for your bounty on %s, " .. pronoun:lower() .. " sighs, takes the pirate into custody, goes through some paperwork, and hands you your pay, mumbling something about how useless capturing pirates alive is."
 
    fail_kill_text = "MISSION FAILURE! %s has been killed."
 
