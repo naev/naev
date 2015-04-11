@@ -1,25 +1,37 @@
 --[[
--- This mission involves ferrying Sirian pilgrims to Mutris ... with complications
--- Higher-class citizens will pay more, but be more picky about their accomodations
---   (they will want to arrive in style in a Sirian ship)
--- Lower-class citizens will be more flexible, even willing to be dropped off nearby
---   if the player doesn't have clearance to land on Mutris
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
 --
--- Est. reward, from Eiderdown (4 jumps):
---  Shaira:  50K - 100K (18 in 21)
---  Fyrra:  150K - 275K  (2 in 21)  (discounted for alternate dest or ship)
---  Serra:  450K - 800K  (1 in 21)  (discounted for alternate dest or ship)
---
--- Est. reward from Rhu (12 jumps):
---  Shaira: 150K - 300K
---  Fyrra:  400K - 775K
---  Serra:  1.1M - 2.2M
---
--- Standing bonus:  (numjumps-4)/2, + up to (1+rank) randomly
---   0-3 at Eiderdown,  2-5 at distance 8,  4-7 at Rhu
---
--- All missions can be made in a Fidelity with an afterburner
---
+
+   This mission involves ferrying Sirian pilgrims to Mutris ... with complications
+   Higher-class citizens will pay more, but be more picky about their accomodations
+     (they will want to arrive in style in a Sirian ship)
+   Lower-class citizens will be more flexible, even willing to be dropped off nearby
+     if the player doesn't have clearance to land on Mutris
+
+   Est. reward, from Eiderdown (4 jumps):
+    Shaira:  50K - 100K (18 in 21)
+    Fyrra:  150K - 275K  (2 in 21)  (discounted for alternate dest or ship)
+    Serra:  450K - 800K  (1 in 21)  (discounted for alternate dest or ship)
+
+   Est. reward from Rhu (12 jumps):
+    Shaira: 150K - 300K
+    Fyrra:  400K - 775K
+    Serra:  1.1M - 2.2M
+
+   Standing bonus:  (numjumps-4)/2, + up to (1+rank) randomly
+     0-3 at Eiderdown,  2-5 at distance 8,  4-7 at Rhu
+
+   All missions can be made in a Fidelity with an afterburner
+
 --]]
 
 include "dat/scripts/cargo_common.lua"
