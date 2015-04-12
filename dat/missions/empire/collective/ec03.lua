@@ -96,7 +96,7 @@ function jumpin()
 end
 
 function death(pilot)
-    if pilot:faction() == faction.get("Collective") and pilot:ship() == ship.get("Drone") and droneleft > 0 then
+    if pilot:faction() == faction.get("Collective") and (pilot:ship() == ship.get("Drone") or pilot:ship() == ship.get("Heavy Drone")) and droneleft > 0 then
         droneleft = droneleft - 1
         osd_msg[2] = osd_msg2:format(dronequota, droneleft)
         misn.osdCreate(misn_title, osd_msg)
