@@ -111,7 +111,7 @@ end
 
 
 function board_fail ()
-   if rnd.rnd() < 0.25
+   if rnd.rnd() < 0.25 then
       board_failed = true
       credits = credits / 5
       local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
