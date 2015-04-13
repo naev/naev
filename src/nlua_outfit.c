@@ -223,7 +223,7 @@ static int outfitL_eq( lua_State *L )
 /**
  * @brief Gets a outfit.
  *
- * @usage s = outfit.get( "Hyena" ) -- Gets the hyena
+ * @usage s = outfit.get( "Heavy Laser" ) -- Gets the heavy laser
  *
  *    @luaparam s Name of the outfit to get.
  *    @luareturn The outfit matching name or nil if error.
