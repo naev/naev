@@ -202,7 +202,7 @@ static int commodityL_eq( lua_State *L )
 /**
  * @brief Gets a commodity.
  *
- * @usage s = commodity.get( "Hyena" ) -- Gets the hyena
+ * @usage s = commodity.get( "Food" ) -- Gets the food commodity
  *
  *    @luaparam s Name of the commodity to get.
  *    @luareturn The commodity matching name or nil if error.
