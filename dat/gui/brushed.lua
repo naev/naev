@@ -330,7 +330,7 @@ function renderWeapBar( weapon, x, y )
          heatcol_top = col_top_heat2
       end
       
-      if weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
+      if weapon.dtype ~= nil and weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
          top_icon = _G[ "icon_" .. weapon.dtype ]
       else
          top_icon = icon_Kinetic
@@ -342,6 +342,8 @@ function renderWeapBar( weapon, x, y )
          bottom_icon = icon_beam
       elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
          bottom_icon = icon_missile
+      elseif weapon.type == "Fighter Bay" then
+         bottom_icon = icon_ship
       end
       top_icon_w, top_icon_h = top_icon:dim()
       bottom_icon_w, bottom_icon_h = bottom_icon:dim()
@@ -360,7 +362,9 @@ function renderWeapBar( weapon, x, y )
             col = col_lgray
          end
          
-         gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lockon indicator
+	 if weapon.lockon ~= nil then
+            gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lockon indicator
+         end
          gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
          --Icon
          gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )
