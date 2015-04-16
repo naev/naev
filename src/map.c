@@ -293,7 +293,6 @@ static void map_update( unsigned int wid )
    int i;
    StarSystem* sys;
    int f, h, x, y;
-   double standing, nstanding;
    unsigned int services;
    int l;
    int hasPresence, hasPlanets;
@@ -375,8 +374,6 @@ static void map_update( unsigned int wid )
    /* System is known */
    window_modifyText( wid, "txtSysname", sys->name );
 
-   standing  = 0.;
-   nstanding = 0.;
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
       if (sys->planets[i]->real != ASSET_REAL)
@@ -386,8 +383,6 @@ static void map_update( unsigned int wid )
 
       if ((f==-1) && (sys->planets[i]->faction>0)) {
          f = sys->planets[i]->faction;
-         standing += faction_getPlayer( f );
-         nstanding++;
       }
       else if (f != sys->planets[i]->faction && /** @todo more verbosity */
                (sys->planets[i]->faction>0)) {
@@ -415,7 +410,7 @@ static void map_update( unsigned int wid )
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
       window_modifyText( wid, "txtStanding",
-            faction_getStanding( standing / nstanding ) );
+            faction_getStandingText( f ) );
 
       h = gl_printHeightRaw( &gl_smallFont, w, buf );
    }

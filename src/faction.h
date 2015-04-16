@@ -43,7 +43,7 @@ void faction_modPlayerRaw( int f, double mod );
 void faction_setPlayer( int f, double value );
 double faction_getPlayer( int f );
 double faction_getPlayerDef( int f );
-char *faction_getStanding( double mod );
+const char *faction_getStandingText( int f );
 char *faction_getStandingBroad( double mod );
 const glColour* faction_getColour( int f );
 char faction_getColourChar( int f );
