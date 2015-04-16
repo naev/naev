@@ -696,15 +696,14 @@ char faction_getColourChar( int f )
  */
 char *faction_getStanding( double mod )
 {
-   STANDING( 100., "Legend" );
    STANDING(  90., "Hero" );
-   STANDING(  70., "Comrade" );
-   STANDING(  50., "Ally" );
-   STANDING(  30., "Partner" );
-   STANDING(  10., "Associate" );
-   STANDING(   0., "Neutral"  );
-   STANDING( -20., "Outlaw" );
-   STANDING( -40., "Criminal" );
+   STANDING(  70., "Admired" );
+   STANDING(  50., "Great" );
+   STANDING(  30., "Good" );
+   STANDING(   0., "Decent"  );
+   STANDING( -15., "Wanted" );
+   STANDING( -30., "Outlaw" );
+   STANDING( -50., "Criminal" );
    return "Enemy";
 }
 #undef STANDING
