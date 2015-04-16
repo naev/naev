@@ -2109,14 +2109,19 @@ static credits_t equipment_transportPrice( char* shipname )
 
    ship = player_getShip(shipname);
    loc = player_getLoc(shipname);
-   if (strcmp(loc,land_planet->name)==0) /* already here */
+   if ( strcmp( loc,land_planet->name ) == 0 ) /* already here */
       return 0;
 
    /* Here we also use hidden jump points, which may not be the best idea but ensures
     * that things can be reached. */
-   if (strcmp(planet_getSystem(loc),cur_system->name) != 0) {
-      s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, 1, NULL );
-      if (s==NULL)
+   if ( planet_getSystem( loc ) == NULL )
+      /* Planet doesn't exist; assume a huge number of jumps. */
+      jumps = 200;
+   else if ( strcmp( planet_getSystem( loc ), cur_system->name ) != 0 )
+   {
+      s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem( loc ), 1,
+         1, NULL );
+      if ( s == NULL )
          jumps = 50; /* Just consider a large number. */
       free(s);
    }
