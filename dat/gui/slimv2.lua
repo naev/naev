@@ -141,6 +141,22 @@ function create()
    
    bar_speed_x = pl_pane_x + 529
    bar_speed_y = bar_shield_y
+
+   -- Cooldown pane.
+   cooldown_sheen = tex.open( "dat/gfx/gui/slim/cooldown-sheen.png" )
+   cooldown_bg = tex.open( "dat/gfx/gui/slim/cooldown-bg.png" )
+   cooldown_frame = tex.open( "dat/gfx/gui/slim/cooldown-frame.png" )
+   cooldown_panel = tex.open( "dat/gfx/gui/slim/cooldown-panel.png" )
+   cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
+   cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
+   cooldown_frame_y = (screen_h - cooldown_frame_h)/2.
+   cooldown_panel_x = cooldown_frame_x + 8
+   cooldown_panel_y = cooldown_frame_y + 8
+   cooldown_bg_x = cooldown_panel_x + 30
+   cooldown_bg_y = cooldown_panel_y + 2
+   cooldown_bg_w, cooldown_bg_h = cooldown_bg:dim()
+   cooldown_sheen_x = cooldown_bg_x
+   cooldown_sheen_y = cooldown_bg_y + 12
    
    -- Missile lock warning
    missile_lock_text = "Warning - Missile Lockon Detected"
@@ -239,6 +255,18 @@ function update_wset()
       active_icons[k] = outfit.get( v.name ):icon()
     end
 end
+
+
+function render_cooldown( percent, seconds )
+   gfx.renderTex( cooldown_frame, cooldown_frame_x, cooldown_frame_y )
+   gfx.renderTex( cooldown_bg, cooldown_bg_x, cooldown_bg_y )
+   gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, bar_heat_col )
+   gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
+   gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
+   gfx.print(false, "Cooling down...", cooldown_frame_x,
+         cooldown_bg_y + cooldown_bg_h + 8, col_txt_std, cooldown_frame_w, true )
+end
+
 
 function render_bar( left, name, value, text, txtcol, stress )
    --stress is only used for armour
@@ -360,8 +388,12 @@ function render( dt, dt_mod )
          end
          
          --Cooldown
-         if wset[i].cooldown ~= nil and wset[i].cooldown < 1. then
-            local texnum = round((1-wset[i].cooldown)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
+         local coolinglevel = wset[i].cooldown
+         if wset[i].charge then
+            coolinglevel = wset[i].charge
+         end
+         if coolinglevel ~= nil and coolinglevel < 1. then
+            local texnum = round((1-coolinglevel)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
             
             --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
