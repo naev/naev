@@ -316,15 +316,6 @@
    <faction>Goddard</faction>
   </avail>
  </mission>
- <mission name="Dvaered Patrol">
-  <lua>dvaered/dv_patrol</lua>
-  <avail>
-   <chance>366</chance>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-  </avail>
- </mission>
  <mission name="Assault on Unicorn">
   <lua>dvaered/assault_on_unicorn</lua>
   <avail>

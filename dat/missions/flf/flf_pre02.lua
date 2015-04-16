@@ -64,10 +64,9 @@ else -- default english
    DVtitle[1] = "A tempting offer"
    DVtext[1] = [[Your viewscreen shows a Dvaered Colonel. He looks tense. Normally, a tense Dvaered would be bad news, but then this one bothered to hail you in the heat of battle, so perhaps there is more here than meets the eye.]]
 
-   DVtext[2] = [["I am Colonel Urnus of the Dvaered Fleet, anti-terrorism division. I would normally never contact an enemy of House Dvaered, but my intelligence officer has identified you as a former Dvaered employee based on your ship and our ship registration database. According to our records, you have previously worked in my division, taking freelance security patrol assignments, and completing them successfully."
-    You make a noncommital response. Just because you've flown missions for the Dvaered doesn't mean they're your friends. However, the ship Colonel is persistent.]]
+   DVtext[2] = [["I am Colonel Urnus of the Dvaered Fleet, anti-terrorism division. I would normally never contact an enemy of House Dvaered, but my intelligence officer has looked through our records and found that you were recently a law-abiding citizen, doing honest freelance missions."]]
 
-   DVtext[3] = [["I know your type, citizen. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]
+   DVtext[3] = [["I know your type, %s. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]
 
    DVchoice1 = "Accept the offer"
    DVchoice2 = "Remain loyal to the FLF"
@@ -199,7 +198,7 @@ function spawnDVReinforcements ()
    end
 
    -- Check for defection possibility
-   if var.peek( "dv_patrol" ) ~= nil and var.peek( "dv_patrol" ) >= 3 then
+   if faction.playerStanding( "Dvaered" ) >= -5 then
       hailer = hook.timer( 30000, "timer_hail" )
    else
       spawner = hook.timer( 30000, "timer_spawnFLF" )
@@ -231,7 +230,8 @@ function hail ()
    player.commClose()
    tk.msg( DVtitle[1], DVtext[1] )
    tk.msg( DVtitle[1], DVtext[2] )
-   choice = tk.choice( DVtitle[1], DVtext[3], DVchoice1, DVchoice2 )
+   choice = tk.choice( DVtitle[1], DVtext[3]:format( player.name() ),
+      DVchoice1, DVchoice2 )
    if choice == 1 then
       tk.msg( DVtitle[4], DVtext[4]:format( DVplanet, DVsys ) )
 
