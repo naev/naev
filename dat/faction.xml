@@ -147,6 +147,7 @@
   <player>-100</player>
   <colour>silver</colour>
   <spawn>collective</spawn>
+  <standing>collective</standing>
   <equip>collective</equip>
   <enemies>
    <enemy>Empire</enemy>
