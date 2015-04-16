@@ -953,7 +953,8 @@ static void standings_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
    m = round( faction_getPlayer( info_factions[p] ) );
-   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
+   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
+      faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
 }

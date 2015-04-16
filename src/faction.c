@@ -687,26 +687,69 @@ char faction_getColourChar( int f )
 }
 
 
-#define STANDING(m,s)  if (mod >= m) return s /**< Hack to get standings easily. */
 /**
  * @brief Gets the player's standing in human readable form.
  *
+ *    @param f Faction to get standing of.
  *    @param mod Player's standing.
  *    @return Human readable player's standing.
  */
-char *faction_getStanding( double mod )
+const char *faction_getStandingText( int f )
 {
-   STANDING(  90., "Hero" );
-   STANDING(  70., "Admired" );
-   STANDING(  50., "Great" );
-   STANDING(  30., "Good" );
-   STANDING(   0., "Decent"  );
-   STANDING( -15., "Wanted" );
-   STANDING( -30., "Outlaw" );
-   STANDING( -50., "Criminal" );
-   return "Enemy";
+   Faction *faction;
+   lua_State *L;
+   int errf;
+   const char *r;
+
+   faction = &faction_stack[f];
+
+   L = faction->state;
+   if ( L == NULL )
+      return "???";
+   else
+   {
+#if DEBUGGING
+      lua_pushcfunction( L, nlua_errTrace );
+      errf = -3;
+#else /* DEBUGGING */
+      errf = 0;
+#endif /* DEBUGGING */
+
+      /* Set up the function:
+       * faction_standing_text( standing ) */
+      lua_getglobal(  L, "faction_standing_text" );
+      lua_pushnumber( L, faction->player );
+
+      /* Call function. */
+      if ( lua_pcall( L, 1, 1, errf ) )
+      {
+         /* An error occurred. */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
+#if DEBUGGING
+         lua_pop( L, 2 );
+#else /* DEBUGGING */
+         lua_pop( L, 1 );
+#endif /* DEBUGGING */
+         return "???";
+      }
+
+      /* Parse return. */
+      if ( !lua_isstring( L, -1 ) )
+      {
+         WARN( "Lua script for faction '%s' did not return a string from 'faction_standing_text(...)'.", faction->name );
+         r = "???";
+      }
+      else
+         r = lua_tostring( L, -1 );
+#if DEBUGGING
+      lua_pop( L, 2 );
+#else /* DEBUGGING */
+      lua_pop( L, 1 );
+#endif /* DEBUGGING */
+
+      return r;
+   }
 }
-#undef STANDING
 
 
 /**

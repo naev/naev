@@ -26,6 +26,23 @@ _fcap_misn_var   = nil -- Mission variable to use for limits
 _fcap_mod_sec    = 0.3 -- Modulation from secondary
 
 
+lang = naev.lang()
+_fstanding_names = {}
+if lang == "es" then
+else -- Default English
+   _fstanding_names[100] = "Legend"
+   _fstanding_names[90] = "Hero"
+   _fstanding_names[70] = "Comrade"
+   _fstanding_names[50] = "Ally"
+   _fstanding_names[30] = "Partner"
+   _fstanding_names[10] = "Associate"
+   _fstanding_names[0] = "Neutral"
+   _fstanding_names[-1] = "Outlaw"
+   _fstanding_names[-30] = "Criminal"
+   _fstanding_names[-50] = "Enemy"
+end
+
+
 --[[
    @brief Clamps a value x between low and high.
 --]]
@@ -151,4 +168,20 @@ function default_hit( current, amount, source, secondary )
       f = math.max( -100, f + math.max(delta[1], amount) )
    end
    return f
+end
+
+
+--[[
+   @brief Returns a text representation of the player's standing.
+
+      @param standing Current standing of the player.
+      @return The text representation of the current standing.
+--]]
+function faction_standing_text( standing )
+   for i = math.floor( standing ), 0, ( standing < 0 and 1 or -1 ) do
+      if _fstanding_names[i] ~= nil then
+         return _fstanding_names[i]
+      end
+   end
+   return _fstanding_names[0]
 end
