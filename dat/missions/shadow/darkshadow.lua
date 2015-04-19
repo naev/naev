@@ -151,7 +151,7 @@ function accept2()
     misn.setDesc(misn_desc2)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(joreksys1, "low")
-    landhook = hook.land("land", "bar")
+    landhook = hook.land("land")
     jumpouthook = hook.jumpout("jumpout")
 end
 
