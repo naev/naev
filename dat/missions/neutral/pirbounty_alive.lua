@@ -34,10 +34,10 @@ else -- Default to English
 
    kill_instead_title   = "Better Dead than Free"
    kill_instead_text    = {}
-   kill_instead_text[1] = [[As you return to your ship, you are contacted by an officer. "I see you were unable to capture %s," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be payed %s credits if you finish him off right now."]]
-   kill_instead_text[2] = [[On your way back to your ship, you recieve a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill him now, you will be payed the lesser sum of %s credits."]]
+   kill_instead_text[1] = [[As you return to your ship, you are contacted by an officer. "I see you were unable to capture %s," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid %s credits if you finish him off right now."]]
+   kill_instead_text[2] = [[On your way back to your ship, you recieve a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill him now, you will be paid the lesser sum of %s credits."]]
    kill_instead_text[3] = [[When you return to your cockpit, you are contacted by an officer. "Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off a couple low-life pirates?!" He sighs. "But lucky for you, I'm not in charge, and my higher-ups would rather %s be dead than free. So if you finish him off, you'll get %s credits. Just be snappy about it!" And with that, the officer ceases communication.]]
-   kill_instead_text[4] = [[When you get back to the ship, you see a message giving you a new mission to kill %s; the reward is %s credits. Well, that's nothing compared to what you were planning on collecting, but it's better than nothing.]]
+   kill_instead_text[4] = [[When you get back to the ship, you see a message giving you a new mission to kill %s; the reward is %s credits. Well, that's pitiful compared to what you were planning on collecting, but it's better than nothing.]]
 
    pay_capture_text    = {}
    pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
