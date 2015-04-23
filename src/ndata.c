@@ -220,9 +220,13 @@ static int ndata_notfound (void)
    SDL_BlitSurface( sur, NULL, screen, NULL );
 #if SDL_VERSION_ATLEAST(2,0,0)
    SDL_EventState( SDL_DROPFILE, SDL_ENABLE );
-   SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
 #if SDL_VERSION_ATLEAST(2,0,2)
+   SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
    SDL_DetachThread(thread);
+#else
+   /* Ignore return value because SDL_DetachThread is only present in
+    * SDL >= 2.0.2 */
+   SDL_CreateThread( &ndata_prompt, "Prompt", window );
 #endif /* SDL_VERSION_ATLEAST(2,0,2) */
 
    /* TODO substitute. */
