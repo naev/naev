@@ -20,7 +20,7 @@ my_fleet.fleader:control()
 Current formations are:
 buffer            echelon left
 cross             echelon right
-wedge             row
+wedge             wall
 vee               column
 circle            fishbone
 chevron
@@ -57,6 +57,12 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
       combat_dist = 3000
    end
    
+   -- Fleets need at least two ships.
+   if #fleet <= 1 then
+      error "Fleets need at least 2 ships"
+      return
+   end
+
    -- Create the object.
    local forma = {fleet = fleet, formation = formation, combat_dist = combat_dist, lead_ship = lead_ship}
    setmetatable(forma, self) -- Metatable fanciness.
@@ -119,7 +125,14 @@ function Forma:reorganize()
    if self.formation == "buffer" then
       self:shipCount()
    end
-   
+ 
+
+   for _,p in ipairs(self.fleet) do
+      if p ~= pilot.player() and p ~= fleader then
+         p:setFaction(fleader:faction())
+      end
+   end
+
    self.fleader = fleader
    self.fleetspeed = minspeed
    self.incombat = false --Combat flag, used in the controlling function.
@@ -134,6 +147,12 @@ function Forma:dead(victim)
       end
    end
 
+   --can't have a fleet with one ship.
+   if #self.fleet == 1 then
+      self:disband()
+      return
+   end
+   
    -- Now, if our fleet has been completely wiped out, we need to clean up.
    if #self.fleet == 0 then
       self:destroy()
@@ -440,7 +459,18 @@ function Forma:control()
    self.thook = hook.timer(100, "toRepeat", self) -- Call the wrapper, not this function.
 
    --combat. mmmm.
-   local enemies = pilot.get(self.fleader:faction():enemies()) -- Get all enemies of the fleader. NOTE: This assumes an enemy of the fleader is also an enemy of the fleet! For now that's okay, but keep that in mind.
+   local enemies = {}
+   if self.fleader == pilot.player() then
+      local plist = pilot.get()
+      for _,p in ipairs(plist) do
+         if P:hostile() then
+            table.insert(enemies,p)
+         end
+      end
+   else
+      enemies = pilot.get(self.fleader:faction():enemies()) -- Get all enemies of the fleader. NOTE: This assumes an enemy of the fleader is also an enemy of the fleet! For now that's okay, but keep that in mind.
+   end
+
    if self.fleader:hostile() then
       enemies[#enemies+1] = player.pilot() -- Includes the player as an enemy to be iterated over.
    end
@@ -458,7 +488,10 @@ function Forma:control()
    if inrange then
       if not self.incombat then --If baddies are in range and the fleet isn't set to do combat yet, then...
          for _, p in ipairs(self.fleet) do
-            p:control(false) -- ...cut 'em loose.
+            if p ~= pilot.player() then
+               p:setSpeedLimit(0)
+               p:control(false) -- ...cut 'em loose.
+            end
          end
          self.incombat = true
          return -- No need to iterate further. No need to do the rest of this function either!
@@ -480,15 +513,17 @@ function Forma:control()
    lead_stats = self.fleader:stats()
    for i, p in ipairs(self.fleet) do
       if not (p == self.fleader) then
-         if p:pos():dist(posit[i]) > 200 then
+         if p:pos():dist(posit[i]) > 300 then
             p:setSpeedLimit(0)
          else
-            p:setSpeedLimit(lead_stats.speed + 7 * (math.log(p:pos():dist(posit[i]))))
+            p:setSpeedLimit(lead_stats.speed + 7 * ((math.log(p:pos():dist(posit[i]))/1.4)))
          end
          p:control() -- Clear orders.
          p:goto(posit[i], false, false)
       else
-         p:setSpeedLimit(self.fleetspeed) -- Make mon capitan travel at 5 below the slow speed, so other ships can catch up.
+         if p ~= pilot.player() then
+            p:setSpeedLimit(self.fleetspeed) -- Make mon capitan travel at 5 below the slow speed, so other ships can catch up.
+         end
          -- Logic for fleet leader goes here. For now, let's allow the fleader to act according to the regular AI.
       end
    end
