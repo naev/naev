@@ -1486,7 +1486,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.amm.duration==0,"duration");
    MELEMENT(temp->u.amm.dmg.damage==0,"damage");
    /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
-   MELEMENT(temp->u.amm.ai<0,"ai");
    MELEMENT(temp->cpu!=0.,"cpu");
 #undef MELEMENT
 }
