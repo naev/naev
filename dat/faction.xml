@@ -141,7 +141,6 @@
   </enemies>
  </faction>
  <faction name="Collective">
-  <static />
   <known/>
   <logo>collective</logo>
   <player>-100</player>
