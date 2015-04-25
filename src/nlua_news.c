@@ -11,13 +11,13 @@
 #include "nlua_news.h"
 
 #include "naev.h"
-#include "land.h"
 
 #include <lauxlib.h>
 
+#include "land.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include <string.h>
+#include "nstring.h"
 #include "ntime.h"
 #include "nlua_time.h"
 
