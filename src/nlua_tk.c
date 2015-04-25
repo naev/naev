@@ -210,7 +210,7 @@ static int tk_choice( lua_State *L )
  *    @luaparam msg Message to display.
  *    @luaparam choices Option choices.
  *    @luareturn Returns the number of the choice and the name of the choice chosen.
- * @luafunc choice( title, msg, ... )
+ * @luafunc list( title, msg, ... )
  */
 static int tk_list( lua_State *L )
 {

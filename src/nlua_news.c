@@ -236,6 +236,7 @@ int newsL_add( lua_State *L )
 /**
  * @brief Frees an article or a table of articles.
  *    @luaparam Lua_article article to free
+ * @luafunc rm( Lua_article )
  */
 int newsL_rm( lua_State *L )
 {
