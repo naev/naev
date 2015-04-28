@@ -115,10 +115,15 @@ int newsL_add( lua_State *L )
 {
    news_t *n_article;
    Lua_article Larticle;
-   char *title = NULL;
-   char *content = NULL;
-   char *faction = NULL;
-   ntime_t date = ntime_get(), date_to_rm = 50000000000000;
+   char *title, *content, *faction;
+   ntime_t date, date_to_rm;
+
+   title   = NULL;
+   content = NULL;
+   faction = NULL;
+
+   date = ntime_get();
+   date_to_rm = 50000000000000;
 
    /* If a table is passed in. ugly hack */
    if (lua_istable(L, 1)) {
@@ -279,11 +284,15 @@ int newsL_rm( lua_State *L )
 int newsL_get( lua_State *L )
 {
    Lua_article Larticle;
-   ntime_t date = -1;
-   news_t *article_ptr = news_list;
-   char *characteristic = NULL;
-   int k;
-   int print_all = 0;
+   ntime_t date;
+   news_t *article_ptr;
+   char *characteristic;
+   int k, print_all;
+
+   date = -1;
+   article_ptr = news_list;
+   characteristic = NULL;
+   print_all = 0;
 
    if (lua_isnil(L, 1) || lua_gettop(L) == 0) /* Case no argument */
       print_all = 1;
@@ -518,9 +527,12 @@ int newsL_date( lua_State *L )
  */
 int newsL_bind( lua_State *L )
 {
-   Lua_article *a = NULL;
+   Lua_article *a;
    news_t *article_ptr;
-   char *tag = NULL;
+   char *tag;
+
+   a = NULL;
+   tag = NULL;
 
    if (lua_istable(L, 1)) {
       if (!lua_isstring(L, 2)) {
