@@ -77,8 +77,6 @@ char* make_clean( char* unclean);
 char* get_fromclean( char *clean);
 void clear_newslines(void);
 
-extern ntime_t naev_time;
-
 /**
  * @brief makes a new article and puts it into the list
  *    @param title   the article title
