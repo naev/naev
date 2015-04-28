@@ -1002,9 +1002,9 @@ function render( dt, dt_mod )
    local jumps = player.jumps()
    local fuel = player.fuel()
    if jumps == 1 then
-      fuelstring = fuel .. " (" .. jumps .. " Jump)"
+      fuelstring = fuel .. " (" .. jumps .. " jump)"
    elseif fuel > 0 then
-      fuelstring = fuel .. " (" .. jumps .. " Jumps)"
+      fuelstring = fuel .. " (" .. jumps .. " jumps)"
    else
       fuelstring = "none"
    end
