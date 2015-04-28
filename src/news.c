@@ -10,7 +10,6 @@
 
 
 #include "news.h"
-#include "ntime.h"
 
 #include "naev.h"
 
@@ -28,6 +27,7 @@
 #include "ndata.h"
 #include "toolkit.h"
 #include "nstring.h"
+#include "ntime.h"
 #include "nxml.h"
 #include "nxml_lua.h"
 #include "space.h"
@@ -62,7 +62,7 @@ static double textlength      = 0.;
 /**
  * Save/load
  */
-static int largestID=1;
+static int largestID;
 
 /*
  * Prototypes
@@ -626,7 +626,7 @@ int news_loadArticles( xmlNodePtr parent )
 
    xmlNodePtr node;
 
-   largestID=1;
+   largestID = 1;
 
    news_exit();
    news_init();
@@ -638,7 +638,7 @@ int news_loadArticles( xmlNodePtr parent )
          if (news_parseArticle( node ) < 0) return -1;
    } while (xml_nextNode(node));
 
-   next_id=largestID;
+   next_id = largestID;
 
    return 0;
 }
