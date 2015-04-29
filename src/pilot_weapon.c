@@ -1386,8 +1386,6 @@ void pilot_weaponSane( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
-   double c;
-
    /* Must not be disabled or cooling down. */
    if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
       return 0;
@@ -1399,11 +1397,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       o->stimer = -1;
    }
    else {
-      c = outfit_cooldown( o->outfit );
-      if (o->stimer != INFINITY)
-         o->stimer = c - (c * o->stimer / outfit_duration( o->outfit ));
-      else
-         o->stimer = c;
+      o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
    }
 
