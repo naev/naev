@@ -280,7 +280,7 @@ function Forma:assignCoords()
 
    local posit = {} --position array. I'm using this twice, once for polar coordinates and once for absolute vec2s.
    local numships = #self.fleet -- Readability.
-   local offset, x, y, angle, radius, count, flip
+   local offset, x, y, angle, radius, flip
 
    if numships <= 1 then
       return {} -- A fleet of 1 ship or less has no business flying in formation.

@@ -939,7 +939,6 @@ function render( dt, dt_mod )
 
    -- Planet pane
    if nav_pnt then
-      local col = col_txt_std
       ta_pnt_dist = pp:pos():dist( planet.pos )
 
       -- Extend the pane depending on the services available.
