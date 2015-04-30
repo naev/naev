@@ -43,6 +43,11 @@ else --default english
                             "neutral/thief1",
                             "neutral/thief3",
                            }
+   civ_port["Pirate"] =    {"pirate/pirate1",
+                            "pirate/pirate2",
+                            "pirate/pirate3",
+                            "pirate/pirate4",
+                           }
    civ_name = "Civilian"
 
    -- Civilian descriptions for the spaceport bar.
