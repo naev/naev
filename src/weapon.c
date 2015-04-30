@@ -518,7 +518,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          if (o==NULL)
             continue;
          /* Must be on. */
-         if (p->outfits[j]->state != PILOT_OUTFIT_ON)
+         if (!(p->outfits[j]->on))
             continue;
          /* Must be a jammer. */
          if (!outfit_isJammer(o))
