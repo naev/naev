@@ -209,7 +209,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          on = 1;
          l  = array_size(ws->slots);
          for (i=0; i<l; i++) {
-            if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+            if (!(ws->slots[i].slot->on)) {
                on = 0;
                break;
             }
@@ -219,8 +219,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          n = 0;
          if (on) {
             for (i=0; i<l; i++) {
-               if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
+               if (!(ws->slots[i].slot->on) || ws->slots[i].slot->cooling)
+               {
+                  ws->slots[i].slot->on = 0;
                   continue;
+               }
 
                n += pilot_outfitOff( p, ws->slots[i].slot );
             }
@@ -228,12 +231,15 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them on. */
          else {
             for (i=0; i<l; i++) {
-               if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
+               if (ws->slots[i].slot->on || ws->slots[i].slot->cooling)
+               {
+                  ws->slots[i].slot->on = 1;
                   continue;
+               }
                if (outfit_isAfterburner(ws->slots[i].slot->outfit))
                   pilot_afterburn( p );
                else {
-                  ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+                  ws->slots[i].slot->on     = 1;
                   ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
                }
                n++;
@@ -801,7 +807,7 @@ void pilot_shootStop( Pilot* p, int level )
       if (!outfit_isBeam(slot->outfit)) {
          /* Turn off the state. */
          if (outfit_isMod( slot->outfit )) {
-            slot->state = PILOT_OUTFIT_OFF;
+            slot->on = 0;
             recalc = 1;
          }
          continue;
@@ -1011,7 +1017,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          return 0;
 
       /** @todo Handle warmup stage. */
-      w->state = PILOT_OUTFIT_ON;
+      w->on = 1;
       w->u.beamid = beam_start( w->outfit, p->solid->dir,
             &vp, &p->solid->vel, p, p->target, w );
 
@@ -1315,8 +1321,9 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       o->stimer = -1;
    }
    else {
-      o->stimer = outfit_cooldown( o->outfit );
-      o->state  = PILOT_OUTFIT_COOLDOWN;
+      o->stimer  = outfit_cooldown( o->outfit );
+      o->on      = 0;
+      o->cooling = 1;
    }
 
    return 1;
@@ -1342,7 +1349,7 @@ int pilot_outfitOffAll( Pilot *p )
          continue;
       if (!o->active)
          continue;
-      if (o->state == PILOT_OUTFIT_ON)
+      if (o->on)
          nchg += pilot_outfitOff( p, o );
    }
    return (nchg > 0);
@@ -1377,8 +1384,8 @@ void pilot_afterburn (Pilot *p)
          p->afterburner->outfit->u.afb.heat_cap ) < 0.3)
       return;
 
-   if (p->afterburner->state == PILOT_OUTFIT_OFF) {
-      p->afterburner->state  = PILOT_OUTFIT_ON;
+   if (!(p->afterburner->on)) {
+      p->afterburner->on     = 1;
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
@@ -1404,8 +1411,8 @@ void pilot_afterburnOver (Pilot *p)
    if (p->afterburner == NULL)
       return;
 
-   if (p->afterburner->state == PILOT_OUTFIT_ON) {
-      p->afterburner->state  = PILOT_OUTFIT_OFF;
+   if (p->afterburner->on) {
+      p->afterburner->on = 0;
       pilot_rmFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
 

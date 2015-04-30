@@ -136,19 +136,6 @@ typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 
 /**
- * @brief Contains the state of the outfit.
- *
- * Currently only applicable to beam weapons.
- */
-typedef enum PilotOutfitState_ {
-   PILOT_OUTFIT_OFF,    /**< Normal state. */
-   PILOT_OUTFIT_WARMUP, /**< Outfit is starting to warm up. */
-   PILOT_OUTFIT_ON,     /**< Outfit is activated and running. */
-   PILOT_OUTFIT_COOLDOWN /**< Outfit is cooling down. */
-} PilotOutfitState;
-
-
-/**
  * @brief Stores outfit ammo.
  */
 typedef struct PilotOutfitAmmo_ {
@@ -178,7 +165,8 @@ typedef struct PilotOutfitSlot_ {
    double heat_start; /**< Slot heat at the beginning of a cooldown period. */
 
    /* Current state. */
-   PilotOutfitState state; /**< State of the outfit. */
+   int on;           /**< Whether or not the outfit is on. */
+   int cooling;      /**< Whether or not the outfit is cooling down. */
    double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
    int level;        /**< Level in current weapon set (-1 is none). */
