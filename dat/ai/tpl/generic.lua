@@ -24,6 +24,7 @@ mem.distressmsg    = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
+mem.norun = false -- Do not run away.
 
 
 -- Required control rate
@@ -140,6 +141,10 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
+      if mem.norun then
+         ai.poptask()
+         return
+      end
       target = ai.target()
 
       -- Needs to have a target

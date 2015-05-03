@@ -2427,6 +2427,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
          pilot_setFlag(pilot,PILOT_CARRIED);
    }
 
+   if (pilot_isFlagRaw( flags, PILOT_NOJUMP ))
+      pilot_setFlag(pilot,PILOT_NOJUMP);
+
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
