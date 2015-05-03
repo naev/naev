@@ -279,7 +279,7 @@ function create ()
 	ship.system = ship.planet:system()
 
 	-- FIXME: Portrait
-	misn.setNPC( "A Pirate informer", "none" )
+	misn.setNPC( "A Pirate informer", "pirate/pirate4" )
 	misn.setDesc( informer.description )
 end
 

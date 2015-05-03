@@ -180,7 +180,7 @@ function pir_clanworld( pnt )
    end
 
    -- Calculate bribe price. Custom for pirates.
-   local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
+   local bribe_price, bribe_msg, bribe_ack_msg
    if not can_land and standing >= -50 then
       bribe_price = (20 - standing) * 500 + 1000 -- 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
       local str   = numstring( bribe_price )
