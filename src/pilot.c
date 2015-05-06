@@ -2405,7 +2405,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
-      pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
       if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) /* Sort of a hack. */
          player.p = pilot;
    }
@@ -2416,19 +2415,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->render_overlay   = pilot_renderOverlay;
    }
 
-   /* Set enter hyperspace flag if needed. */
-   if (pilot_isFlagRaw( flags, PILOT_HYP_END ))
-      pilot_setFlag(pilot, PILOT_HYP_END);
-
-   /* Escort stuff. */
-   if (pilot_isFlagRaw( flags, PILOT_ESCORT )) {
-      pilot_setFlag(pilot,PILOT_ESCORT);
-      if (pilot_isFlagRaw( flags, PILOT_CARRIED ))
-         pilot_setFlag(pilot,PILOT_CARRIED);
-   }
-
-   if (pilot_isFlagRaw( flags, PILOT_NOJUMP ))
-      pilot_setFlag(pilot,PILOT_NOJUMP);
+   /* Copy pilot flags. */
+   pilot_copyFlagsRaw(pilot->flags, flags);
 
    /* Clear timers. */
    pilot_clearTimers(pilot);
@@ -2444,7 +2432,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
-      pilot_setFlag( pilot, PILOT_TAKEOFF );
       pilot->ptimer = PILOT_TAKEOFF_DELAY;
    }
 
