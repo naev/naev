@@ -2538,7 +2538,6 @@ static int aiL_drift_facing( lua_State *L )
  */
 static int aiL_brake( lua_State *L )
 {
-   (void)L; /* hack to avoid -W -Wall warnings */
    int ret;
 
    ret = pilot_brake( cur_pilot );
@@ -2546,7 +2545,8 @@ static int aiL_brake( lua_State *L )
    pilot_acc = cur_pilot->solid->thrust / cur_pilot->thrust;
    pilot_turn = cur_pilot->solid->dir_vel / cur_pilot->turn;
 
-   return ret;
+   lua_pushnumber(L, ret);
+   return 1;
 }
 
 
