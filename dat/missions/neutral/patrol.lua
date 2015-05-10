@@ -127,6 +127,9 @@ function create ()
    hostiles_encountered = false
 
    local n_enemies = get_enemies( missys )
+   if n_enemies == 0 then
+      misn.finish( false )
+   end
    credits = n_enemies * 2000
    credits = credits + rnd.sigma() * (credits / 3)
    reputation = math.floor( n_enemies / 75 )
