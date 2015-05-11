@@ -338,7 +338,7 @@ int* faction_getEnemies( int f, int *n )
       int *enemies = malloc(sizeof(int)*faction_nstack);
 
       for (int i=0; i<faction_nstack; i++) {
-         if (faction_stack[i].player<0)
+         if (faction_stack[i].player<PLAYER_ENEMY)
             enemies[nenemies++] = i;
       }
       enemies = realloc(enemies, sizeof(int)*nenemies);
