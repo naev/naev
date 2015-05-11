@@ -367,6 +367,22 @@ int* faction_getAllies( int f, int *n )
       return NULL;
    }
 
+      /* Player's faction ratings can change, so regenerate each call. */
+   if (f == FACTION_PLAYER) {
+      int nallies = 0;
+      int *allies = malloc(sizeof(int)*faction_nstack);
+
+      for (int i=0; i<faction_nstack; i++) {
+         if (faction_stack[i].player>PLAYER_ALLY)
+            allies[nallies++] = i;
+      }
+      allies = realloc(allies, sizeof(int)*nallies);
+
+      free(faction_stack[f].allies);
+      faction_stack[f].allies = allies;
+      faction_stack[f].nallies = nallies;
+   }
+
    *n = faction_stack[f].nallies;
    return faction_stack[f].allies;
 }
