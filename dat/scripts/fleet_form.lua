@@ -128,7 +128,7 @@ function Forma:reorganize()
  
 
    for _,p in ipairs(self.fleet) do
-      if p ~= pilot.player() and p ~= fleader then
+      if p ~= fleader then
          p:setFaction(fleader:faction())
       end
    end
@@ -459,17 +459,7 @@ function Forma:control()
    self.thook = hook.timer(100, "toRepeat", self) -- Call the wrapper, not this function.
 
    --combat. mmmm.
-   local enemies = {}
-   if self.fleader == pilot.player() then
-      local plist = pilot.get()
-      for _,p in ipairs(plist) do
-         if P:hostile() then
-            table.insert(enemies,p)
-         end
-      end
-   else
-      enemies = pilot.get(self.fleader:faction():enemies()) -- Get all enemies of the fleader. NOTE: This assumes an enemy of the fleader is also an enemy of the fleet! For now that's okay, but keep that in mind.
-   end
+   local enemies = pilot.get(self.fleader:faction():enemies())
 
    if self.fleader:hostile() then
       enemies[#enemies+1] = player.pilot() -- Includes the player as an enemy to be iterated over.
