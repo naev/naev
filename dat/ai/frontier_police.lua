@@ -53,7 +53,7 @@ function taunt ( target, offense )
 
    -- Offense is not actually used
    taunts = {
-       "Alea jacta est!",
+       "Alea iacta est!",
        "Morituri te salutant!",
        "Your head will make a great trophy!",
        "Cave canem!",
