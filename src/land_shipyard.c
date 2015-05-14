@@ -177,9 +177,10 @@ void shipyard_open( unsigned int wid )
 void shipyard_update( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname;
+   char *shipname, *license_text;
    Ship* ship;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   size_t len;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
@@ -231,15 +232,15 @@ void shipyard_update( unsigned int wid, char* str )
 
    /* Remove the word " License".  It's redundant and makes the text overflow
       into another text box */
-   char *license_text = ship->license;
+   license_text = ship->license;
    if (license_text) {
-	   size_t len = strlen(ship->license);
-	   if (strcmp(" License", ship->license + len - 8) == 0) {
-		  license_text = malloc(len - 7);
-		  assert(license_text);
-		  memcpy(license_text, ship->license, len - 8);
-		  license_text[len - 8] = '\0';
-	   }
+      len = strlen(ship->license);
+      if (strcmp(" License", ship->license + len - 8) == 0) {
+         license_text = malloc(len - 7);
+         assert(license_text);
+         memcpy(license_text, ship->license, len - 8);
+         license_text[len - 8] = '\0';
+      }
    }
    nsnprintf( buf, PATH_MAX,
          "%s\n"
