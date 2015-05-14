@@ -134,7 +134,7 @@
   </pilots>
  </fleet>
  <fleet name="Frontier Lancelot">
-  <ai>trader</ai>
+  <ai>frontier_police</ai>
   <faction>Frontier</faction>
   <pilots>
    <pilot name="Frontier Lancelot" ship="Lancelot"></pilot>
