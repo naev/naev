@@ -234,7 +234,7 @@ void shipyard_update( unsigned int wid, char* str )
    char *license_text = ship->license;
    if (license_text) {
 	   size_t len = strlen(ship->license);
-	   if (0 == strcmp(" License", ship->license + len - 8)) {
+	   if (strcmp(" License", ship->license + len - 8) == 0) {
 		  license_text = malloc(len - 7);
 		  assert(license_text);
 		  memcpy(license_text, ship->license, len - 8);
