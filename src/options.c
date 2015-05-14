@@ -159,7 +159,7 @@ static void opt_close( unsigned int wid, char *name )
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
    sound_volume(conf.sound);
-	music_volume(conf.music);
+   music_volume(conf.music);
 
    window_destroy( opt_wid );
    opt_wid = 0;
