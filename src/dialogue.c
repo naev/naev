@@ -35,6 +35,7 @@
 #include "input.h"
 #include "menu.h"
 #include "nstring.h"
+#include "ndata.h"
 
 
 static int dialogue_open; /**< Number of dialogues open. */
@@ -227,6 +228,29 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
 
 
 /**
+ * @brief Opens a dialogue window with an ok button, a message and an image.
+ *
+ *    @param caption Window title.
+ *    @param img Path of the image file (*.png) to display.
+ *    @param fmt Printf style message to display.
+ */
+void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ... )
+{
+   char msg[4096];
+   va_list ap;
+
+   if (fmt == NULL) return;
+   else { /* get the message */
+      va_start(ap, fmt);
+      vsnprintf(msg, 4096, fmt, ap);
+      va_end(ap);
+   }
+
+   dialogue_msgImgRaw( caption, msg, img, 256, 256 );
+}
+
+
+/**
  * @brief Opens a dialogue window with an ok button and a fixed message.
  *
  *    @param caption Window title.
@@ -247,6 +271,59 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
          font, &cBlack, msg );
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", "OK",
+         dialogue_close );
+
+   dialogue_open++;
+   toolkit_loop( &done );
+}
+
+
+/**
+ * @brief Opens a dialogue window with an ok button, a fixed message and an image.
+ *
+ *    @param caption Window title.
+ *    @param msg Message to display.
+ */
+void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, int width, int height )
+{
+   int w,h,img_width,img_height;
+   glFont* font;
+   unsigned int msg_wid;
+   int done;
+   glTexture *gfx;
+   char buf[PATH_MAX];
+
+   /* Get the desired texture */
+   /* IMPORTANT : texture must not be freed here, it will be freed when the widget closes */
+   nsnprintf( buf, sizeof(buf), "%s%s", GFX_PATH, img );
+   gfx = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+
+   /* Find the popup's dimensions from text and image */
+   img_width  = 256;
+   img_height = 256;
+   font = dialogue_getSize( caption, msg, &w, &h );
+   if (h<img_width) {
+	h=img_width;
+   }
+
+   /* Create the window */
+   msg_wid = window_create( caption, -1, -1, img_width + w, 110 + h );
+   window_setData( msg_wid, &done );
+
+   /* Add the text box */
+   window_addText( msg_wid, img_width+40, -40, w-40, h,  0, "txtMsg",
+         font, &cBlack, msg );
+
+   /* Add a placeholder rectangle for the image */
+   window_addRect( msg_wid, 20, -40, img_width, img_height,
+         "rctGFX", &cGrey10, 1 );
+
+   /* Actually add the texture in the rectangle */
+   window_addImage( msg_wid, 20, -40, img_width, img_height,
+         "ImgGFX", gfx, 0 );
+
+   /* Add the OK button */
+   window_addButton( msg_wid, (img_width+w -50)/2, 20, 50, 30, "btnOK", "OK",
          dialogue_close );
 
    dialogue_open++;
