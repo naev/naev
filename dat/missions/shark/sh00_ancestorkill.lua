@@ -21,7 +21,7 @@ else -- default english
     text = {}
     osd_msg = {}
     npc_desc = {}
-	bar_desc = {}
+    bar_desc = {}
     
     title[1] = "Nexus Shipyards needs you"
     text[1] = [[You approach the man and he introduces himself : "Hello, my name is Arnold Smith, I work for the Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
@@ -84,11 +84,11 @@ function create ()
 
     --Change here to change the planet and the system
     sysname = "Ingot"
-	planame = "Ulios"
-	bsyname = "Toaxis"
+    planame = "Ulios"
+    bsyname = "Toaxis"
     missys = system.get(sysname)
-	mispla = planet.get(planame)
-	battlesys = system.get(bsyname)
+    mispla = planet.get(planame)
+    battlesys = system.get(bsyname)
 	
     if not misn.claim(battlesys) then
         misn.finish(false)
@@ -105,7 +105,7 @@ function accept()
 	
     if tk.yesno(title[1], text[1]) then
         misn.accept()
-		piratename = pirate_name()    --for now, we only need his name
+	piratename = pirate_name()    --for now, we only need his name
         tk.msg(title[2], text[2])
 
         misn.setTitle(misn_title)
@@ -115,8 +115,8 @@ function accept()
         markeri = misn.markerAdd(missys, "low")
         
         jumpouthook = hook.jumpout("jumpout")
-		landhook = hook.land("land")
-		enterhook = hook.enter("enter")
+	landhook = hook.land("land")
+	enterhook = hook.enter("enter")
     else
         tk.msg(refusetitle, refusetext)
         misn.finish(false)
@@ -128,60 +128,60 @@ function land()
 
     -- Did the player reach Ulios ?
     if planet.cur() == mispla and stage == 0 then
-		smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/male1", bar_desc[2])
+	smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/male1", bar_desc[2])
     end
 	
     -- Did the player land again on Ulios after having killed the pirate
     if planet.cur() == mispla and stage == 4 then
-		tk.msg(title[5], text[6])
+	tk.msg(title[5], text[6])
         player.pay(reward)
         misn.finish(true)
     end
     if stage == 2 then   --You where supposed to kill him, not to go away !
-	    tk.msg(title[6], text[7])
+	tk.msg(title[6], text[7])
         misn.finish(false)
-	end
+    end
     if stage == 3 and planet.cur() == mispla then   --You where supposed to kill him, not to let him go !
 	    tk.msg(title[4], text[5])
         misn.finish(false)
-	end
+    end
 end
 
 --jumping out the system
 function jumpout()
     if stage == 2 then   --You where supposed to kill him, not to go away !
-	    tk.msg(title[6], text[7])
+	tk.msg(title[6], text[7])
         misn.finish(false)
-	end
+    end
 end
 
 function enter()
     --Jumping in Toaxis for the battle
     if system.cur() == battlesys and stage == 1 then
 	
-	    --Check if the player uses a Shark
-	    playership = player.pilot():ship()
-		playershipname = playership:name()	
+	--Check if the player uses a Shark
+	playership = player.pilot():ship()
+        playershipname = playership:name()	
 		
-		if playershipname ~= "Shark" then
-		    tk.msg(title[8], text[9])
-			misn.finish(false)
-		end
+        if playershipname ~= "Shark" then
+            tk.msg(title[8], text[9])
+	    misn.finish(false)
+	end
 		
-		--Be sure that nobody unexpected will take part in our epic battle
-	    pilot.clear()
-	    pilot.toggleSpawn(false)
+	--Be sure that nobody unexpected will take part in our epic battle
+	pilot.clear()
+	pilot.toggleSpawn(false)
 	
-	    -- spawns the bad guy  
+	-- spawns the bad guy  
         badboy = pilot.add( "Pirate Ancestor", nil, 0 )[1]
-	    badboy:rename(piratename)
+	badboy:rename(piratename)
         badboy:setHostile()
         badboy:setVisplayer()
         badboy:setHilight()
 
         hook.pilot( badboy, "death", "pirate_dead" )
         hook.pilot( badboy, "jump", "pirate_jump" )
-	end
+    end
 	
 end
 
@@ -192,27 +192,27 @@ function beginbattle()
 	
     --Checking if the player and the Baron already met
     if player.misnDone("Baron") == true then
-	    tk.msg(title[3], text[3])
-	else
-	    tk.msg(title[3], text[4])
-	end
+	tk.msg(title[3], text[3])
+    else
+	tk.msg(title[3], text[4])
+    end
     misn.osdActive(2)
-	stage = 1
+    stage = 1
 	
-	marker1 = misn.markerAdd(battlesys, "low")
-	player.takeoff()
+    marker1 = misn.markerAdd(battlesys, "low")
+    player.takeoff()
 end
 
 function pirate_jump()  --he went away
     stage = 3
     misn.markerRm(marker1)
-	marker2 = misn.markerAdd(missys, "low")
-	misn.osdCreate(misn_title, piratejump_msg)
+    marker2 = misn.markerAdd(missys, "low")
+    misn.osdCreate(misn_title, piratejump_msg)
 end
 
 function pirate_dead()  --wou win
     stage = 4
     misn.markerRm(marker1)
-	marker2 = misn.markerAdd(missys, "low")
-	misn.osdActive(3)
+    marker2 = misn.markerAdd(missys, "low")
+    misn.osdActive(3)
 end

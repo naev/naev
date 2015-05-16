@@ -15,7 +15,7 @@ else -- default english
     text = {}
     osd_msg = {}
     npc_desc = {}
-	bar_desc = {}
+    bar_desc = {}
     
     title[1] = "Let's go"
     text[1] = [["Is your ship ready for the dangers of the Nebula?"]]
@@ -46,9 +46,9 @@ else -- default english
     bar_desc[1] = [[It's fun to see how this guy's dishonesty has led him to help the most idelaistic group in the galaxy.]]
 	
     -- OSD
-	osd_title = "A Journey To Arandon"
+    osd_title = "A Journey To Arandon"
     osd_msg[1] = "Go to Arandon and whait for the FLF ship, then hail and board it."
-	osd_msg[2] = "Go back to Darkshed in Alteris"
+    osd_msg[2] = "Go back to Darkshed in Alteris"
 
 end
 
@@ -84,10 +84,10 @@ function accept()
         misn.osdCreate(misn_title, osd_msg)
         marker = misn.markerAdd(missys, "low")
 		
-		smith = misn.cargoAdd("Person", 0)  --Adding the cargo
+	smith = misn.cargoAdd("Person", 0)  --Adding the cargo
         
-		landhook = hook.land("land")
-		enterhook = hook.enter("enter")
+	landhook = hook.land("land")
+	enterhook = hook.enter("enter")
     else
         tk.msg(refusetitle, refusetext)
         misn.finish(false)
@@ -97,33 +97,33 @@ end
 function land()
 
 	--Job is done
-	if stage == 1 and planet.cur() == paypla then
-	    if misn.cargoRm(smith) then
-          tk.msg(title[3], text[3])
-          player.pay(reward)
-          misn.finish(true)
-		end
+    if stage == 1 and planet.cur() == paypla then
+        if misn.cargoRm(smith) then
+            tk.msg(title[3], text[3])
+            player.pay(reward)
+            misn.finish(true)
 	end
+    end
 end
 
 function enter()
     --Entering in Arandon in order to find the FLF Pacifier
-	if system.cur() == missys then
-	    --Lets unspawn everybody (if any)
-	    pilot.clear()
-	    pilot.toggleSpawn(false)
+    if system.cur() == missys then
+        --Lets unspawn everybody (if any)
+	pilot.clear()
+	pilot.toggleSpawn(false)
 		
-		--Waiting to spawn the FLF in order to let the player's shield decrease
-		hook.timer(10000,"flf_people")
+	--Waiting to spawn the FLF in order to let the player's shield decrease
+	hook.timer(10000,"flf_people")
 		
-	end
+    end
 end
 
 function flf_people()
-	pacifier = pilot.add( "FLF Pacifier", nil, 0 )[1]
-	pacifier:setFriendly()
-	pacifier:setInvincible(true)
-	hook.pilot(pacifier, "hail", "hail_pacifier")
+    pacifier = pilot.add( "FLF Pacifier", nil, "Doeston" )[1]
+    pacifier:setFriendly()
+    pacifier:setInvincible(true)
+    hook.pilot(pacifier, "hail", "hail_pacifier")
     hook.pilot( pacifier, "death", "dead" )
     hook.pilot( pacifier, "jump", "jump" )
 end
@@ -143,10 +143,10 @@ function board()
     player.unboard()
     pacifier:control(false)
     pacifier:setActiveBoard(false)
-	stage = 1
+    stage = 1
     misn.osdActive(2)
     misn.markerRm(marker)
-	marker2 = misn.markerAdd(paysys, "low")
+    marker2 = misn.markerAdd(paysys, "low")
 end
 
 function dead()  --Actually, I don't know how it could happend...

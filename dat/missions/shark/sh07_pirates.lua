@@ -18,7 +18,7 @@ else -- default english
     text = {}
     osd_msg = {}
     npc_desc = {}
-	bar_desc = {}
+    bar_desc = {}
     
     title[1] = "The mission"
     text[1] = [["Hello again, "says Smith. "As you knows it, I agreed with the FLF on a contract that will make it possible for Nexus to sell them hundreds of "Shark" light fighters. This income will easily make up for the losses due to the partial replacement of the "Shark" by drones in the Imperial fleet.
@@ -36,8 +36,8 @@ else -- default english
     title[3] = "Well done!"
     text[3] = [[This one will never be on our way again.]]
 	
-	title[4] = "Mission accomplished"
-	text[4] = "You have killed the four pirates : Adam Smith is probably waiting for you in Alteris with lots of money."
+    title[4] = "Mission accomplished"
+    text[4] = "You have killed the four pirates : Adam Smith is probably waiting for you in Alteris with lots of money."
 	
     title[5] = "That was impressive"
     text[5] = [[ As you land, Smith was already there."Thank your actions, I managed to build the sales subsidiary and I think nobody will prevent us anymore from selling Sharks. It was very nice to work with you. Here is your bounty. Good luck for the future."]]
@@ -52,9 +52,9 @@ else -- default english
     bar_desc[1] = [[Smith has probably a mission for you that implies "fixing a detail" as he says.]]
 	
     -- OSD
-	osd_title = "The Last Detail"
+    osd_title = "The Last Detail"
     osd_msg[1] = "Kill the four pirates"
-	osd_msg[2] = "Report back on Darkshed in Alteris"
+    osd_msg[2] = "Report back on Darkshed in Alteris"
 
 end
 
@@ -63,15 +63,15 @@ function create ()
     --Change here to change the planets and the systems
 	--sadly, I didn't manage to figure out how to pick random systems :(
 
-	gawsys = system.get("Tau Prime")
-	kersys1 = system.get("Gamel")
-	kersys2 = system.get("Khaas")
-	godsys = system.get("Treacle")
+    gawsys = system.get("Tau Prime")
+    kersys1 = system.get("Gamel")
+    kersys2 = system.get("Khaas")
+    godsys = system.get("Treacle")
 	
-	pplname = "Darkshed"
-	psyname = "Alteris"
-	paysys = system.get(psyname)
-	paypla = planet.get(pplname)
+    pplname = "Darkshed"
+    psyname = "Alteris"
+    paysys = system.get(psyname)
+    paypla = planet.get(pplname)
 	
     if not misn.claim(gawsys) and misn.claim(kersys1) and misn.claim(kersys2) and misn.claim(godsys) then
         misn.finish(false)
@@ -84,31 +84,31 @@ end
 function accept()
 
     reward = 4000000
-	stage = 0
+    stage = 0
 	
-	--Initialization of dead pirate memory
-	gawdead = false
-	kerdead1 = false
-	kerdead2 = false
-	goddead = false
+    --Initialization of dead pirate memory
+    gawdead = false
+    kerdead1 = false
+    kerdead2 = false
+    goddead = false
 	
-	--set the names of the pirates
-	gawname = pirate_name()
+    --set the names of the pirates
+    gawname = pirate_name()
 	
-	kername1 = pirate_name()
+    kername1 = pirate_name()
     while kername1 == gawname do  --That's not beautyfull, but it works...
-		--I don't want 2 pirates to have the same name
-		kername1 = pirate_name()
+	--I don't want 2 pirates to have the same name
+	kername1 = pirate_name()
     end
 	
-	kername2 = pirate_name()
+    kername2 = pirate_name()
     while kername2 == gawname or kername2 == kername1 do
-		kername2 = pirate_name()
+	kername2 = pirate_name()
     end
 	
-	godname = pirate_name()
+    godname = pirate_name()
     while godname == gawname or godname == kername1 or godname == kername2 do
-		godname = pirate_name()
+	godname = pirate_name()
     end
 
 	
@@ -121,13 +121,13 @@ function accept()
         misn.setDesc(misn_desc)
         misn.osdCreate(misn_title, osd_msg)
 		
-		gawmarker = misn.markerAdd(gawsys, "low")
-		kermarker1 = misn.markerAdd(kersys1, "high")
-		kermarker2 = misn.markerAdd(kersys2, "high")
-		godmarker = misn.markerAdd(godsys, "high")
+	gawmarker = misn.markerAdd(gawsys, "low")
+	kermarker1 = misn.markerAdd(kersys1, "high")
+	kermarker2 = misn.markerAdd(kersys2, "high")
+	godmarker = misn.markerAdd(godsys, "high")
         
-		enterhook = hook.enter("enter")
-		landhook = hook.land("land")
+	enterhook = hook.enter("enter")
+	landhook = hook.land("land")
 		
     else
         tk.msg(refusetitle, refusetext)
@@ -136,90 +136,90 @@ function accept()
 end
 
 function land()	
-	--Job is done
-	if stage == 1 and planet.cur() == planet.get("Darkshed") then
-	   tk.msg(title[5], text[5])
-       player.pay(reward)
-       misn.finish(true)
-	end
+    --Job is done
+    if stage == 1 and planet.cur() == planet.get("Darkshed") then
+        tk.msg(title[5], text[5])
+        player.pay(reward)
+        misn.finish(true)
+    end
 end
 
 function enter()
  
     if system.cur() == gawsys and gawdead == false then  --The Gawain
-	    baddie = pilot.addRaw( "Gawain","trader", nil, "Dummy" )[1]
-		baddie:rename(gawname)
-		baddie:setHostile()
-	    baddie:setHilight()
-		baddie:control()
+	baddie = pilot.addRaw( "Gawain","dummy", nil, "Dummy" )[1]
+        baddie:rename(gawname)
+	baddie:setHostile()
+	baddie:setHilight()
+	baddie:control()
 		
-		--The pirate becomes nice defensive outfits
+	--The pirate becomes nice defensive outfits
         baddie:rmOutfit("all")
-		baddie:rmOutfit("cores")
+	baddie:rmOutfit("cores")
 		
-		baddie:addOutfit("S&K Ultralight Stealth Plating")
-		baddie:addOutfit("Milspec Aegis 2201 Core System")
-		baddie:addOutfit("Tricon Zephyr Engine")
+	baddie:addOutfit("S&K Ultralight Stealth Plating")
+	baddie:addOutfit("Milspec Aegis 2201 Core System")
+	baddie:addOutfit("Tricon Zephyr Engine")
 		
-		baddie:addOutfit("Shield Capacitor",2)
-		baddie:addOutfit("Small Shield Booster")
-		baddie:addOutfit("Milspec Scrambler")
+	baddie:addOutfit("Shield Capacitor",2)
+	baddie:addOutfit("Small Shield Booster")
+	baddie:addOutfit("Milspec Scrambler")
 		
-		baddie:addOutfit("Laser Cannon MK3",2)
+	baddie:addOutfit("Laser Cannon MK3",2)
 		
-		hook.pilot(baddie, "idle", "idle")
+	hook.pilot(baddie, "idle", "idle")
         hook.pilot(baddie, "attacked", "attacked")
         hook.pilot( baddie, "death", "gawain_dead" )
 		
-		idle()
+	idle()
 		
-	elseif system.cur() == kersys1 and kerdead1 == false then  --The Kestrel
-	    pilot.clear()
-	    pilot.toggleSpawn(false)
+    elseif system.cur() == kersys1 and kerdead1 == false then  --The Kestrel
+	pilot.clear()
+	pilot.toggleSpawn(false)
 		
-		baddie = pilot.add( "Pirate Kestrel", nil, vec2.new(0,0))[1]
-		ancestor = pilot.add( "Pirate Ancestor", nil, vec2.new(100,0))[1]
-		hyena = pilot.add( "Pirate Hyena", nil, vec2.new(0,100))[1]
+        baddie = pilot.add( "Pirate Kestrel", nil, vec2.new(0,0))[1]
+	ancestor = pilot.add( "Pirate Ancestor", nil, vec2.new(100,0))[1]
+	hyena = pilot.add( "Pirate Hyena", nil, vec2.new(0,100))[1]
 		
-		baddie:rename(kername1)
-		baddie:setHilight()
-		baddie:setHostile()
+	baddie:rename(kername1)
+	baddie:setHilight()
+	baddie:setHostile()
 		
         hook.pilot( baddie, "death", "kestrel_dead1")
 		
-	elseif system.cur() == kersys2 and kerdead2 == false then  --The Kestrel
-	    pilot.clear()
-	    pilot.toggleSpawn(false)
+    elseif system.cur() == kersys2 and kerdead2 == false then  --The Kestrel
+	pilot.clear()
+	pilot.toggleSpawn(false)
 		
-		baddie = pilot.add( "Pirate Kestrel", nil, vec2.new(0,0))[1]
-		ancestor = pilot.add( "Pirate Ancestor", nil, vec2.new(100,0))[1]
-		shark = pilot.add( "Pirate Shark", nil, vec2.new(0,100))[1]
-		hyena = pilot.add( "Pirate Hyena", nil, vec2.new(100,100))[1]
+        baddie = pilot.add( "Pirate Kestrel", nil, vec2.new(0,0))[1]
+	ancestor = pilot.add( "Pirate Ancestor", nil, vec2.new(100,0))[1]
+	shark = pilot.add( "Pirate Shark", nil, vec2.new(0,100))[1]
+	hyena = pilot.add( "Pirate Hyena", nil, vec2.new(100,100))[1]
 		
-		baddie:rename(kername2)
-	    baddie:setHilight()
-		baddie:setHostile()
+	baddie:rename(kername2)
+	baddie:setHilight()
+	baddie:setHostile()
 		
         hook.pilot( baddie, "death", "kestrel_dead2")
 		
-	elseif system.cur() == godsys and goddead == false then  --The Goddard
-	    pilot.clear()
-	    pilot.toggleSpawn(false)
+    elseif system.cur() == godsys and goddead == false then  --The Goddard
+	pilot.clear()
+	pilot.toggleSpawn(false)
 		
-		baddie = pilot.add( "Goddard Goddard", nil, vec2.new(0,0))[1] --Faction's ships come up with upgraded weaponry
-	    baddie:setFaction("Pirate")
-		baddie:changeAI( "pirate" )
+        baddie = pilot.add( "Goddard Goddard", nil, vec2.new(0,0))[1] --Faction's ships come up with upgraded weaponry
+	baddie:setFaction("Pirate")
+	baddie:changeAI( "pirate" )
 		
-		ancestor = pilot.add( "Pirate Ancestor", nil, vec2.new(100,0))[1]
-		hyena = pilot.add( "Pirate Hyena", nil, vec2.new(0,100))[1]
+	ancestor = pilot.add( "Pirate Ancestor", nil, vec2.new(100,0))[1]
+	hyena = pilot.add( "Pirate Hyena", nil, vec2.new(0,100))[1]
 		
-		baddie:rename(godname)
-	    baddie:setHilight()
-		baddie:setHostile()
+	baddie:rename(godname)
+	baddie:setHilight()
+	baddie:setHostile()
 		
         hook.pilot( baddie, "death", "goddard_dead")
 		
-	end
+    end
  
 end
 
@@ -243,32 +243,32 @@ function gawain_dead()
 end
 
 function kestrel_dead1()
-	misn.markerRm(kermarker1)
-	kerdead1 = true
-	hook.timer(3000,"generic_dead")
+    misn.markerRm(kermarker1)
+    kerdead1 = true
+    hook.timer(3000,"generic_dead")
 end
 
 function kestrel_dead2()
-	misn.markerRm(kermarker2)
-	kerdead2 = true
-	hook.timer(3000,"generic_dead")
+    misn.markerRm(kermarker2)
+    kerdead2 = true
+    hook.timer(3000,"generic_dead")
 end
 
 function goddard_dead()
-	misn.markerRm(godmarker)
-	goddead = true
-	hook.timer(3000,"generic_dead")
+    misn.markerRm(godmarker)
+    goddead = true
+    hook.timer(3000,"generic_dead")
 end
 
 function generic_dead()
 
     player.msg(text[3])
 	
-	--Are there still other pirates to kill ?
-	if gawdead == true and kerdead1 == true and kerdead2 == true and goddead == true then
-	    tk.msg(title[4], text[4])
+    --Are there still other pirates to kill ?
+    if gawdead == true and kerdead1 == true and kerdead2 == true and goddead == true then
+	tk.msg(title[4], text[4])
         stage = 1
-	    misn.osdActive(2)
-	    marker2 = misn.markerAdd(paysys, "low")
-	end
+	misn.osdActive(2)
+	marker2 = misn.markerAdd(paysys, "low")
+    end
 end

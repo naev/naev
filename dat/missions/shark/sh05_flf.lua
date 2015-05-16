@@ -15,7 +15,7 @@ else -- default english
     text = {}
     osd_msg = {}
     npc_desc = {}
-	bar_desc = {}
+    bar_desc = {}
     
     title[1] = "Nice to see you again!"
     text[1] = [[As you sit at his table, Arnold Smith welcomes you smiling : "Hello, old boy, are you ready to take part to another sales project?" He then becomes serious : "This time, it's serious game : I really need your help to get in touch with somebody who could be very interested in the Shark.
@@ -47,32 +47,32 @@ else -- default english
     -- NPC
     npc_desc[1] = "Arnold Smith"
     bar_desc[1] = [[It seems, Nexus Shipyards is still looking for Shark customers.]]
-    npc_desc[2] = "An FLF executive"
+    npc_desc[2] = "FLF executive"
     bar_desc[2] = [[This guy looks important]]
 	
     -- OSD
-	osd_title = "The FLF Contact"
+    osd_title = "The FLF Contact"
     osd_msg[1] = "Placeholder"
-	osd_sindbad = "Go to Surano, disable and board a FLF ship or go to Sindbad and speak to a FLF officer."
-	osd_nosindbad = "Go to Surano, disable and board an FLF ship"
-	osd_msg[2] = "Go back to Darkshed in Alteris"
+    osd_sindbad = "Go to Surano, disable and board a FLF ship or go to Sindbad and speak to a FLF officer."
+    osd_nosindbad = "Go to Surano, disable and board a FLF ship"
+    osd_msg[2] = "Go back to Darkshed in Alteris"
 
 end
 
 function create ()
 
     --Change here to change the planets and the systems
-	missys = system.get("Surano")
-	pplname = "Darkshed"
-	psyname = "Alteris"
+    missys = system.get("Surano")
+    pplname = "Darkshed"
+    psyname = "Alteris"
 	
-	--Does the player have access to Sindbad
-	if diff.isApplied( "FLF_base") then
-	    sindbad = planet.get("Sindbad")
-		osd_msg[1] = osd_sindbad
-	else
-	    osd_msg[1] = osd_nosindbad
-	end
+    --Does the player have access to Sindbad
+    if diff.isApplied( "FLF_base") then
+	sindbad = planet.get("Sindbad")
+	osd_msg[1] = osd_sindbad
+    else
+	osd_msg[1] = osd_nosindbad
+    end
 	paysys = system.get(psyname)
 	paypla = planet.get(pplname)
 	
@@ -99,8 +99,8 @@ function accept()
         misn.osdCreate(misn_title, osd_msg)
         marker = misn.markerAdd(missys, "low")
         
-		landhook = hook.land("land")
-		enterhook = hook.enter("enter")
+	landhook = hook.land("land")
+	enterhook = hook.enter("enter")
     else
         tk.msg(refusetitle, refusetext)
         misn.finish(false)
@@ -109,42 +109,42 @@ end
 
 function land()
     --The player is landing on Sindbad
-	if stage == 0 and planet.cur() == sindbad then
-	    flfguy = misn.npcAdd("talktoguy", npc_desc[2], "neutral/thief1", bar_desc[2])
-	end
+    if stage == 0 and planet.cur() == sindbad then
+	flfguy = misn.npcAdd("talktoguy", npc_desc[2], "neutral/thief1", bar_desc[2])
+    end
 	
-	--Job is done
-	if stage == 1 and planet.cur() == paypla then
-	    tk.msg(title[3], text[3])
+    --Job is done
+    if stage == 1 and planet.cur() == paypla then
+	tk.msg(title[3], text[3])
         player.pay(reward)
         misn.finish(true)
-	end
+    end
 end
 
 function talktoguy()
-	tk.msg(title[5], text[5])
-	stage = 1
+    tk.msg(title[5], text[5])
+    stage = 1
     misn.osdActive(2)
     misn.markerRm(marker)
-	marker2 = misn.markerAdd(paysys, "low")
+    marker2 = misn.markerAdd(paysys, "low")
 end
 
 function enter()
     --Entering in Surano in order to find and disable a FLF Lancelot
-	if system.cur() == missys then
-	    --Lets unspawn everybody
-	    pilot.clear()
-	    pilot.toggleSpawn(false)
+    if system.cur() == missys then
+	--Lets unspawn everybody
+	pilot.clear()
+	pilot.toggleSpawn(false)
 		
-		lancelot = pilot.add( "FLF Lancelot", nil, 0 )[1]
-		hook.pilot(lancelot, "board", "discuss")
-	end
+	lancelot = pilot.add( "FLF Lancelot", nil, 0 )[1]
+	hook.pilot(lancelot, "board", "discuss")
+    end
 end
 
 function discuss()
-	tk.msg(title[4], text[4])
-	stage = 1
+    tk.msg(title[4], text[4])
+    stage = 1
     misn.osdActive(2)
     misn.markerRm(marker)
-	marker2 = misn.markerAdd(paysys, "low")
+    marker2 = misn.markerAdd(paysys, "low")
 end

@@ -16,7 +16,7 @@ else -- default english
     text = {}
     osd_msg = {}
     npc_desc = {}
-	bar_desc = {}
+    bar_desc = {}
     
     title[1] = "A new job"
     text[1] = [["Hello there, nice to meet you again! " Smith says. "According to the informations that you has carried for us, the negotiations between the Frontier officials and the House Sirius are going very fast. We have to act now : I have noticed a member of the Frontier Council who, for political reasons could help us.
@@ -47,20 +47,20 @@ else -- default english
     bar_desc[1] = [[Arnold Smith (aka James Neptune) : this guy seems more and more shifty]]
 	
     -- OSD
-	osd_title = "Invitation"
+    osd_title = "Invitation"
     osd_msg[1] = "Go to %s, find and hail the Hawking"
-	osd_msg[2] = "Report back to Darkshed in Alteris"
+    osd_msg[2] = "Report back to Darkshed in Alteris"
 
 end
 
 function create ()
 
     --Change here to change the planets and the systems
-	mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be usefull to locate the Hawking
-	pplname = "Darkshed"
-	psyname = "Alteris"
-	paysys = system.get(psyname)
-	paypla = planet.get(pplname)
+    mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be usefull to locate the Hawking
+    pplname = "Darkshed"
+    psyname = "Alteris"
+    paysys = system.get(psyname)
+    paypla = planet.get(pplname)
 	
     if not misn.claim(missys) then
         misn.finish(false)
@@ -82,12 +82,12 @@ function accept()
         misn.setTitle(misn_title)
         misn.setReward(misn_reward)
         misn.setDesc(misn_desc)
-		osd_msg[1] = osd_msg[1]:format(missys:name())
+	osd_msg[1] = osd_msg[1]:format(missys:name())
         misn.osdCreate(misn_title, osd_msg)
         marker = misn.markerAdd(missys, "low")
         
-		landhook = hook.land("land")
-		enterhook = hook.enter("enter")
+	landhook = hook.land("land")
+	enterhook = hook.enter("enter")
     else
         tk.msg(refusetitle, refusetext)
         misn.finish(false)
@@ -96,12 +96,12 @@ end
 
 function land()
 	
-	--Job is done
-	if stage == 1 and planet.cur() == paypla then
+    --Job is done
+    if stage == 1 and planet.cur() == paypla then
         tk.msg(title[3], text[3])
         player.pay(reward)
         misn.finish(true)
-	end
+    end
 end
 
 function enter()
@@ -111,16 +111,16 @@ function enter()
         hawking:rename("Air Force One")
         hawking:setHilight(true)
         hailhook = hook.pilot(hawking, "hail", "hail")
-	end
+    end
 end
 
 function hail()
     --The player takes contact with the Hawking
     if stage == 0 then
         tk.msg(title[4], text[4])
-	    stage = 1
-		misn.osdActive(2)
+	stage = 1
+	misn.osdActive(2)
         misn.markerRm(marker)
-	    marker2 = misn.markerAdd(paysys, "low")
-	end
+	marker2 = misn.markerAdd(paysys, "low")
+    end
 end
