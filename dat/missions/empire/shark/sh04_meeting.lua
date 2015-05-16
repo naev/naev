@@ -37,12 +37,12 @@ else -- default english
 
     title[4] = "The meeting"
     text[4] = [[As you land, you see a group of people that were waiting for your ship. Smith hails them and says you to wait in the ship while he goes to a private part of the bar.
-	A few STP later, he comes back and explains you that he didn't manage to get the support of the councillor, what means that the Frontier will not buy the Sharks.
+	A few STP later, he comes back and explains to you that he was unable to gain the support of the councillor, which means that the Frontier will not buy the Sharks.
 	"Anyway," he says, "bring me back to Alteris in one piece and I will pay you."]]
 
     title[5] = "What is going on?"
-    text[5] = [[That drone was behaving strangely and now, it is attacking you. As you wonder what to do, you hear a comm from a remote Za'lek ship : "Attention please, it seems some of our drones have been hacked. If a drone is attacking you and you aren't wanted by the authorities, you have exceptionnaly the autorization to destroy it."
-	"Incredible, "Smith says, "they have managed to hire a Za'lek military engineer who has hacked some drones in order to make them attack our ship! That's strong." He says, admiring.]]
+    text[5] = [[That drone was behaving strangely and now, it is attacking you. As you wonder what to do, you hear a comm from a remote Za'lek ship: "Attention please, it seems some of our drones have been hacked. If a drone is attacking you and you aren't wanted by the authorities, you have exceptional authorization to destroy it."
+	"Incredible, "Smith says, "they managed to hire a Za'lek military engineer who has hacked some drones in order to make them attack our ship! That's strong," he says with admiration.]]
 	
     -- Mission details
     misn_title = "The Meeting"
