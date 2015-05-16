@@ -21,26 +21,26 @@ else -- default english
     bar_desc = {}
     
     title[1] = "The mission"
-    text[1] = [["Hello again, "says Smith. "As you knows it, I agreed with the FLF on a contract that will make it possible for Nexus to sell them hundreds of "Shark" light fighters. This income will easily make up for the losses due to the partial replacement of the "Shark" by drones in the Imperial fleet.
-	Of course, this transaction must keep secret. Even the head of the FLF think that we are working for an outlaw organization instead of a multistellar company. We are going to create a sales subsidiary on a pirate world and everything will be made to prevent people to know who really is over this company.
-	But, as you know it, the pirate worlds is the territory of "Skulls and Bones", the outlaw shipyard that makes copies of legal ships and sells it to pirates. If they discover our project, they will do everything to destroy us. That's why we need to do the first move : Skulls and Bones uses four major hitmen, who are also pirates. I propose you to kill these four pirates in order to show to S&B that they won't win against us. I think it's the safest way to do what we have to do. Of course, there is a bounty on each of their heads.
+    text[1] = [["Hello again, "says Smith. "As you know, I agreed with the FLF on a contract that will make it possible for Nexus to sell them hundreds of "Shark" light fighters. This income will easily make up for the losses caused by the partial replacement of the "Shark" by drones in the Imperial fleet.
+	Of course, this transaction must be kept secret. Even the head of the FLF think that we are working for an outlaw organization instead of a multistellar company. We are going to create a sales subsidiary on a pirate world and everything will be set up to prevent people from knowing who really is over the shell company.
+	But, as you know it, the pirate world is the territory of "Skulls and Bones", the outlaw shipyard that makes copies of legal ships and sells it to pirates. If they discover our project, they will do everything to destroy us. That's why we need to make the first move. Skulls and Bones uses four major hitmen, who are also pirates. I propose that you to kill these four pirates in order to show to S&B that they can't beat us. I think it's the safest way to do what we have to do. Of course, there is also a bounty on each of their heads.
 	Are you in?"]]
 	
     refusetitle = "Sorry, not interested"
     refusetext = [["Ok, too bad, you are the only one I can trust for this job. Don't hesitate to come back if you change your mind."]]
 
     title[2] = "Very good"
-    text[2] = [["So, here are the details : %s is around %s, flyinig his Gawain : he is taking undercover hoolydays spending all the money he has stolen to traders. %s is in %s and %s is around %s with his Kestrel. Be carefull, they have escorts. %s is in %s with his fearsome stolen Goddard and his escort.
-	Come back when you have finished : I will give you your bounties."]]
+    text[2] = [["So, here are the details : %s is around %s, flying his Gawain; he is taking an undercover vacation spending all the money he has stolen from traders. %s is in %s and %s is around %s with his Kestrel. Be carefull, they have escorts. %s is in %s with his fearsome stolen Goddard and his escort.
+	Come back when you have finished and I will give you the bounties."]]
 	
     title[3] = "Well done!"
-    text[3] = [[This one will never be on our way again.]]
+    text[3] = [[This one will never be in our way again.]]
 	
     title[4] = "Mission accomplished"
     text[4] = "You have killed the four pirates : Adam Smith is probably waiting for you in Alteris with lots of money."
 	
     title[5] = "That was impressive"
-    text[5] = [[ As you land, Smith was already there."Thank your actions, I managed to build the sales subsidiary and I think nobody will prevent us anymore from selling Sharks. It was very nice to work with you. Here is your bounty. Good luck for the future."]]
+    text[5] = [[ As you land, Smith is already waiting."Thank your actions, I have managed to create the sales subsidiary and I don't think anyone will prevent us from selling Sharks from now on. It was very nice to work with you. Here is your bounty. Good luck for the future."]]
 	
     -- Mission details
     misn_title = "The Last Detail"
@@ -49,7 +49,7 @@ else -- default english
    
     -- NPC
     npc_desc[1] = "Arnold Smith"
-    bar_desc[1] = [[Smith has probably a mission for you that implies "fixing a detail" as he says.]]
+    bar_desc[1] = [[Smith probably has a mission for you that implies fixing the detail he mentioned.]]
 	
     -- OSD
     osd_title = "The Last Detail"
@@ -96,7 +96,7 @@ function accept()
     gawname = pirate_name()
 	
     kername1 = pirate_name()
-    while kername1 == gawname do  --That's not beautyfull, but it works...
+    while kername1 == gawname do  --That's not beautiful, but it works...
 	--I don't want 2 pirates to have the same name
 	kername1 = pirate_name()
     end
