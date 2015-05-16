@@ -24,31 +24,32 @@ else -- default english
     bar_desc = {}
     
     title[1] = "Nexus Shipyards needs you"
-    text[1] = [[You approach the man and he introduces himself : "Hello, my name is Arnold Smith, I work for the Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
-	Actually, this is more than a demonstration : if you accept, you will have to destroy a pirate Ancestor with only a Shark." The man shortly stops talking to look at your reaction. He then goes ahead : 
-	"Of course, the pilot of the Ancestor has a bounty on his head, so it won't be a murder. The totality of the bounty will be payed to you and Nexus will add a little amount. Are you in?"]]
+    text[1] = [[You approach the man and he introduces himself : "Hello, my name is Arnold Smith. I work for the Nexus Shipyards, and I'm looking for a talented pilot to perform a demonstration for one of our potential customers.
+	Actually, this is more than a demonstration: if you accept, you will have to destroy a pirate Ancestor with only a Shark." The man pauses briefly to look at your reaction before continuing. 
+	"Of course, the pilot of the Ancestor has a bounty on his head, so it won't be a murder. The entirety of the bounty will be paid to you and Nexus will add a small amount. Are you in?"]]
 	
     refusetitle = "Sorry, not interested"
-    refusetext = [["That's your choice," the man says. "Of course, there are other talented pilots in this galaxy, but I was quite sure, you were the perfect one for this job. Don't hesitate if you change your mind."]]
+    refusetext = [["That's your choice," the man says. "Of course, there are other talented pilots in this galaxy, but I was quite sure you were the perfect one for this job. Don't hesitate to talk to me again if you change your mind."]]
 
-    title[2] = "Wonderfull"
-    text[2] = [[As you says that you accept the task, the man seems to relax. "Great! I knew I could trust you. I meet you on Ulios in the Ingot system. I'll be with my boss and our customer, the Baron Sauterfeldt."]]
+    title[2] = "Wonderful"
+    text[2] = [[As you voice your acceptance of the task, the man seems to relax. "Great! I knew I could trust you. I'll meet you on Ulios in the Ingot system. I'll be with my boss as well our customer, the Baron Sauterfeldt."]]
 
     title[3] = "Ready for action"
-    text[3] = [["Nice to see you again," the man says smiling. "I hope, you are ready to kick some pirate's ass! Please follow me, I will introduce you to my boss, who is the sales manager of Nexus Shipyards and to the Baron."
-	The man guides you out of the bar and to some kind of control room where you see some important-looking people. After being introduced to some of them, Aronld Smith takes you apart for a final breefing:
-	"Remember that the Ancestor has much more firepower and sustainability than the Shark. You'll have to outmanoeuver the foe and whait until he has launched his last rocket to become offensive."
-	He then follows you to the spaceport. After a short waiting, he recives an holocall saying that the pirate just jumped in Toaxis. Looks like it's time to take off.]]
-    text[4] = [["Nice to see you again," the man says smiling. "I hope, you are ready to kick some pirate's ass! Please follow me, I will introduce you to my boss, who is the sales manager of Nexus Shipyards and to the Baron."
-	The man guides you out of the bar and to some kind of control room where you see some important-looking people. After being introduced to some of them, Aronld Smith takes you apart for a final breefing:
-	"Remember that the Ancestor has much more firepower and sustainability than the Shark. You'll have to outmanoeuver the foe and whait until he has launched his last rocket to become offensive."
-	He then follows you to the spaceport. After a short waiting, he recives an holocall saying that the pirate just jumped in Toaxis. Looks like it's time to take off.]]
+    text[3] = [["Nice to see you again," the man says with a smile. "I hope you are ready to kick some pirate ass! Please follow me; I will introduce you to my boss, who is the sales manager of Nexus Shipyards, and to the Baron."
+	The man guides you out of the bar and to some kind of a control room where you see some important-looking people. After being introduced to a few of them, Arnold Smith takes you apart for a final briefing:
+	"Remember that the Ancestor has much more firepower and sustainability than the Shark. You'll have to outmanoeuver the foe and wait until he has launched his last rocket to go on the offensive."
+	He then follows you to the spaceport. After a short wait, he receives an holocall informing him that the pirate has just jumped in Toaxis. Looks like it's time to take off.]]
+    -- TODO: Why isn't the text different if the player has already met the Baron?
+    text[4] = [["Nice to see you again," the man says with a smile. "I hope you are ready to kick some pirate ass! Please follow me; I will introduce you to my boss, who is the sales manager of Nexus Shipyards, and to the Baron."
+	The man guides you out of the bar and to some kind of a control room where you see some important-looking people. After being introduced to a few of them, Arnold Smith takes you apart for a final briefing:
+	"Remember that the Ancestor has much more firepower and sustainability than the Shark. You'll have to outmanoeuver the foe and wait until he has launched his last rocket to go on the offensive."
+	He then follows you to the spaceport. After a short wait, he receives an holocall informing him that the pirate has just jumped in Toaxis. Looks like it's time to take off.]]
 
     title[4] = "He ran away"
-    text[5] = [[As you get out of your ship, Arnold Smith says you that as the pirate ran away, you didn't kill him. "Once we will have found another Pirate to kill, I will be back with my mission," he says.]]
+    text[5] = [[As you get out of your ship, Arnold Smith tells you that since the pirate ran away, you didn't kill him. "Once we will have found another Pirate to kill, I will be back with my mission," he says.]]
 
     title[5] = "Congratulations!"
-    text[6] = [[As you step on the ground, Arnold Smith comes to you: "Now that the Baron has seen how helpfull a Shark can be in the hands of a good pilot, I have no doubts he will buy some to protect the Toaxis-Ingot trade route".
+    text[6] = [[As you step on the ground, Arnold Smith greets you jubilantly: "Now that the Baron has seen how helpful a Shark can be in the hands of a good pilot, I have no doubt but that he will buy some to protect the Toaxis-Ingot trade route".
 	He then hands you your pay. "If we are again in need of a pilot, we will try to contact you again." ]]
 	
     title[6] = "You ran away!"
@@ -58,7 +59,7 @@ else -- default english
     text[8] = [[The pirate just jumped in from Toaxis!]]
 
     title[8] = "You need a Shark"
-    text[9] = [[You recive a comm from Ulios: "You where supposed to use a Shark in this battle. You can't do this battle with an other ship." Your mission failed.]]
+    text[9] = [[You recive a comm from Ulios: "You were supposed to use a Shark in this battle. You can't do this battle with any other ship." Your mission failed.]]
 	
     -- Mission details
     misn_title = "A Shark Bites"
@@ -77,7 +78,7 @@ else -- default english
     osd_msg[1] = "Buy an Shark, fly to the Ingot system and land on Ulios"
     osd_msg[2] = "Go to Taoxis and kill the pirate with your Shark (and not an Empire Shark)"
     osd_msg[3] = "Land on Ulios and collect your fee"
-	piratejump_msg = "The pirate ran away : land on Ulios"
+	piratejump_msg = "The pirate ran away: land on Ulios"
 end
 
 function create ()
@@ -149,7 +150,7 @@ end
 
 --jumping out the system
 function jumpout()
-    if stage == 2 then   --You where supposed to kill him, not to go away !
+    if stage == 2 then   --You were supposed to kill him, not to go away !
 	tk.msg(title[6], text[7])
         misn.finish(false)
     end
