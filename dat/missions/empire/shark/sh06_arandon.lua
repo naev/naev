@@ -27,11 +27,11 @@ else -- default english
     text[2] = [[Smith once again steps in your ship in order to go to a meeting.]]
 	
     title[3] = "Well done!"
-    text[3] = [["Here is your pay," says Smith. I will be in the bar if I have an other task for you.]]
+    text[3] = [["Here is your pay," says Smith. I will be in the bar if I have another task for you.]]
 
     title[4] = "The Meeting"
-    text[4] = [[As you board it, Arnold Smith insists to step alone in the FLF's ship. A few hours later, he comes back, satisfied. It seems, this time luck is on your side. "They will buy us tons of this damn "Shark", all we have to do now is to fix a few details, so let's go back to Alteris," he says happily.
-	You unboards, wondering what kind of details he could be thinking about...]]
+    text[4] = [[As you board it, Arnold Smith insists on stepping into the FLF ship alone. A few hours later, he comes back, satisfied. It seems that this time luck is on your side. "They will buy tons of Sharks. All we have to do now is to fix a few details, so let's go back to Alteris," he says happily.
+	You undock, wondering what kind of details he could be thinking about...]]
 	
     title[5] = "Hail"
     text[5] = [[As you hail him, the Pacifier commander answers you and stops his ship, waiting to be boarded]]
@@ -43,7 +43,7 @@ else -- default english
    
     -- NPC
     npc_desc[1] = "Arnold Smith"
-    bar_desc[1] = [[It's fun to see how this guy's dishonesty has led him to help the most idelaistic group in the galaxy.]]
+    bar_desc[1] = [[It's fun to see how this guy's dishonesty has led him to help the most idealistic group in the galaxy.]]
 	
     -- OSD
     osd_title = "A Journey To Arandon"
@@ -149,11 +149,12 @@ function board()
     marker2 = misn.markerAdd(paysys, "low")
 end
 
-function dead()  --Actually, I don't know how it could happend...
+function dead()  --Actually, I don't know how it could happened...
     misn.finish(false)
 end
 
 function jump()
+    -- Remove smith?
     misn.finish(false)
 end
 
