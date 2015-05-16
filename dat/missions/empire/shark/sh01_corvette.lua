@@ -19,15 +19,15 @@ else -- default english
     bar_desc = {}
     
     title[1] = "Nexus Shipyards needs you"
-    text[1] = [[As you approch Smith, he recognizes you. "I have an other job for you. Let me explain it : the baron isn't convinced yet that the Shark is the fighter he needs. He saw your fight against the Ancestor, but he would like to see a Shark beating a destroyer class ship. Of course, Nexus Shipyards don't want to take the risk to make you face a destroyer with a Shark.
-	So, we have an other plan : we need somebody to pretend to be an outlaw destroyer pilot and to let one of our men disable his ship. If you are ready for it, all you have to do is to jump in Toaxis with a destroyer class ship and to let the Shark disable you. As there isn't any Empire bounty this time, you will only be payed 50 000 credits.
+    text[1] = [[As you approach Smith, he recognizes you. "I have another job for you. Let me explain it: the baron isn't convinced yet that the Shark is the fighter he needs. He saw your fight against the Ancestor, but he would like to see a Shark beating a destroyer class ship. Of course, Nexus Shipyards don't want to take the risk of making you face a destroyer with a Shark.
+	So, we have an other plan: we need somebody to pretend to be an outlaw destroyer pilot and let one of our men disable his ship. If you are ready for it, all you have to do is to jump in Toaxis with a destroyer class ship and to let the Shark disable you. As there isn't any Empire bounty this time, you will only be paid 50 000 credits.
 	Yhat do you say, are you in?" ]]
 	
     refusetitle = "Sorry, not interested"
     refusetext = [["Ok, so never mind." Smith says.]]
 
     title[2] = "Wonderfull"
-    text[2] = [["I had no doubts you would accept," Smith says. "Go and meet our pilot in Toaxis. After the job is done, meet me on Darkshed in Alteris"]]
+    text[2] = [["I had no doubt you would accept," Smith says. "Go and meet our pilot in Toaxis. After the job is done, meet me on Darkshed in Alteris."]]
 	
     title[3] = "Reward"
     text[3] = [[As you land, you see Arnold Smith who was waiting for you. He explains you that the baron was so impressed by the battle that he signed the contract. You made it possible for Nexus Shipyard to sell 20 Shark fighters. Of course, that's not a very big thing for a mulitstellar compagny like Nexus, but as a reward, they give you twice the sum of credits they promised to you.]]
@@ -39,7 +39,7 @@ else -- default english
    
     -- NPC
     npc_desc[1] = "Arnold Smith"
-    bar_desc[1] = [[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]]
+    bar_desc[1] = [[The Nexus employee seems to be looking for pilots. Maybe he has an new task for you.]]
 	
     -- OSD
     osd_title = "Sharkman Is Back"

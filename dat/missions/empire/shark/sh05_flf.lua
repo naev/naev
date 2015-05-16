@@ -18,26 +18,27 @@ else -- default english
     bar_desc = {}
     
     title[1] = "Nice to see you again!"
-    text[1] = [[As you sit at his table, Arnold Smith welcomes you smiling : "Hello, old boy, are you ready to take part to another sales project?" He then becomes serious : "This time, it's serious game : I really need your help to get in touch with somebody who could be very interested in the Shark.
-	The problem is that this person is very difficult to spot." You ask him if he wants you to sell imperial fighters to a pirate, but he answers : "No, it isn't precisely that. In fact, we are looking to a contact with the FLF. Do you think, you can do it?"]]
+    text[1] = [[As you sit down at his table, Arnold Smith welcomes you with his trademark smile: "Hello, old boy, are you ready to take part to another sales project?" He sobers. "This time, it's serious game. I really need your help to get in touch with somebody who could be very interested in the Shark.
+	The problem is that this person is very difficult to spot." You ask him if he wants you to sell imperial fighters to a pirate, but he answers: "No, it isn't precisely that. In fact, we are looking for a contact with the FLF. Do you think that you can do it?"]]
 	
     refusetitle = "Sorry, not interested"
     refusetext = [["Oh, I see, so, I guess, I'll have to find somebody else..." Smith says.]]
 
     title[2] = "Good luck"
-    text[2] = [["Ok, that's good news for me. I don't know if you know people in there, and I don't want to know it. If you don't, I suggest you to try to hail a lone FLF ship. I think you could encounter some in Surano.
-	Maybe try to disable a FLF ship, board it and explain to it's crew what we want. If you success, set up a meeting in Arandon. I think, nobody is going to disturb us there.
-	Ah, and don't mention the company for witch we are working."]]
+    text[2] = [["Ok, that's good news for me. I don't know if you know people in there, and I don't want to know. If you don't, I suggest you to try to hail a lone FLF ship. I think you could encounter some in Surano.
+	Maybe try to disable a FLF ship, board it and explain to its crew what we want. If you succeed, set up a meeting in Arandon. I don't think anyone will disturb us there.
+	Ah, and don't mention the company for which we are working."]]
 	
     title[3] = "Good news"
-    text[3] = [[As you land, you see Smith coming at you. When you have finished to explain to him that you managed to take contact with the FLF, he seems happy and pays you your fee.
+    text[3] = [[As you land, you see Smith coming towards you. When you finish explaining to him that you managed to make contact with the FLF, he seems happy and pays you your fee.
 	"Now, meet me in the bar when you are ready to bring me to Arandon."]]
 
     title[4] = "The FLF crew"
-    text[4] = [[As you board the ship, the FLF crew seems to be ready to die at their post. Inetead using blasters ton cook them all, you start to explain them that you are send by a freind of them who wants to sell ships to the FLF. You write on a papersheet any information they need to give to their officers, and let them alone."]]
+    text[4] = [[As you board the ship, the FLF crew seems to be ready to die at their posts. Instead of using blasters to cook them all, you start to explain them that you have been sent by a friend of the FLF who wants to sell ships to them. You write on a papersheet all the information they need to give to their officers, and leave the ship."]]
 
     title[5] = "The FLF executive"
-    text[5] = [[After a short hesitation, you approch the man, who seems at first not wanting to talk to you. As you explain that you are send by a company that wants to sell fighters to the FLF, he looks at you, surprised. You explain everything about the meeting in Arandon and he answers you : "Well, I will see with my superiors. If we don't come, that means that we are not interested."]]
+    text[4] = [[As you board the ship, the FLF crew seems to be ready to die at their posts. Instead of using blasters to cook them all, you start to explain them that you have been sent by a friend of the FLF who wants to sell ships to them
+    text[5] = [[After a short hesitation, you approach the man, who seems at first to not want to talk to you. After you explain that you were sent by a company that wants to sell fighters to the FLF, he looks at you, surprised. You explain everything about the meeting in Arandon and he answers you: "Well, I will consult my superiors. If we don't come, you will know that we are not interested."]]
 	
     -- Mission details
     misn_title = "The FLF Contact"
@@ -46,7 +47,7 @@ else -- default english
    
     -- NPC
     npc_desc[1] = "Arnold Smith"
-    bar_desc[1] = [[It seems, Nexus Shipyards is still looking for Shark customers.]]
+    bar_desc[1] = [[It seems Nexus Shipyards is still looking for Shark customers.]]
     npc_desc[2] = "FLF executive"
     bar_desc[2] = [[This guy looks important]]
 	

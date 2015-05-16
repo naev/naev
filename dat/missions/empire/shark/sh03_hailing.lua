@@ -19,22 +19,22 @@ else -- default english
     bar_desc = {}
     
     title[1] = "A new job"
-    text[1] = [["Hello there, nice to meet you again! " Smith says. "According to the informations that you has carried for us, the negotiations between the Frontier officials and the House Sirius are going very fast. We have to act now : I have noticed a member of the Frontier Council who, for political reasons could help us.
-	I can't send him a message without being spotted by the Sirii, so I need you to take contact with him : he must be flying in his Hawking in %s now. Go there, hail him, say him that I have to see him on Curie in Kohler and he will understand. Oh, by the way, my new name is Donald Ulnish.
-	And there is something else : I heared that the Sirii hired some henchmen to go after you, you maybe already meet them. The good point is that they don't know that Nexus is involved, but still, be carefull.
+    text[1] = [["Hello there, nice to meet you again! " Smith says. "According to the informations that you has carried for us, the negotiations between the Frontier officials and the House Sirius are going very fast. We have to act now. I have noticed a member of the Frontier Council who, for political reasons could help us.
+	I can't send him a message without being spotted by the Sirii, so I need you to make contact with him : he should be flying in his Hawking in %s now. Go there, hail him, and just tell him that I have to see him on Curie in Kohler. He will understand. Oh, by the way, my new name is Donald Ulnish.
+	And there is something else: I heared that the Sirii hired some henchmen to go after you, you have perhaps already met them. The good point is that they don't know that Nexus is involved, but still, be careful.
 	Are you in?"]]
 	
     refusetitle = "Sorry, not interested"
     refusetext = [["Ok, so come back when you are interested," Smith says.]]
 
     title[2] = "Time to go"
-    text[2] = [["Good luck"]]
+    text[2] = [["Good luck!"]]
 	
     title[3] = "Good job"
     text[3] = [[Smith seems to relax as you says him that everything went well to the plan. "Ok, so now, meet me in the bar when you are ready to bring me to Curie in Kohler.]]
 
     title[4] = "Time to go back to Alteris"
-    text[4] = [[The capitain of the Hawking answers you. As you say that you have a message from Donald Ulnish, he lets an other officer answer the call. After having delivered your message, you quit, hoping that the travel back will be as quiet as the travel from Alteris.]]
+    text[4] = [[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he lets another officer answer the call. After having delivered your message, you leave, hoping that the travel back will be as quiet as the travel from Alteris.]]
 
 	
     -- Mission details
@@ -44,7 +44,7 @@ else -- default english
    
     -- NPC
     npc_desc[1] = "Arnold Smith"
-    bar_desc[1] = [[Arnold Smith (aka James Neptune) : this guy seems more and more shifty]]
+    bar_desc[1] = [[Arnold Smith (aka James Neptune): this guy seems more and more shifty]]
 	
     -- OSD
     osd_title = "Invitation"
