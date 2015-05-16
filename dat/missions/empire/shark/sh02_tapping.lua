@@ -20,23 +20,23 @@ else -- default english
     bar_desc = {}
     
     title[1] = "Nexus Shipyards needs you (again)"
-    text[1] = [[You sit at Smith's table and ask him if he has a job for you. "Of course I have," he answers. "But this time, it's a quite special job." As you start to wonder what could be more special than the last mission, he goes further : "It implies to take part in an... quite not so legal action...
-	Listen, I'll explain you the situation : the Empire, who was the first customer for the Shark, tend to use more and more drones from Robosys in it's fleet, and less and less Sharks. That means for us that we will loose billions of credits if we can't find a big customer. Ingot bought 20 Sharks, but now, we need some major fraction to use our fighter.
-	As you surely knows it, the Frontier ships are mostly obsolete and old. We have clues that let us think that the Frontier is looking for a modern light fighter to equip it's pilots. The problem is that we suspect that a major imperial house already took contact with frontier officials in order to sell them their light fighter.
-	We need you to transport some... parcel on your ship, and to bring it to me on Darkshed in Alteris. Are you in?"]]
+    text[1] = [[You sit at Smith's table and ask him if he has a job for you. "Of course I do," he answers. "But this time, it's a quite special job." As you start to wonder what could be more special than the last mission, he goes further: "It requires taking part in a... not quite legal action...
+	Listen, I'll explain you the situation: the Empire, who was the first customer for the Shark, is starting to use more and more drones from Robosys in its fleet, and fewer and fewer Sharks. That means for us that we will loose billions of credits if we can't find a big customer. Ingot bought 20 Sharks, but now, we need some major faction to use our fighter.
+	As you surely knows it, the Frontier ships are mostly obsolete and old. We have some clues that lead us think that the Frontier is looking for a modern light fighter to equip its pilots. The problem is that we suspect that a major imperial house already took contact with frontier officials in order to sell them their light fighter.
+	We need you to transport a... parcel on your ship, and to bring it to me on Darkshed in Alteris. Are you in?"]]
 	
     refusetitle = "Sorry, not interested"
     refusetext = [["Ok, so never mind." Smith says. "See you again."]]
 
     title[2] = "The job"
     text[2] = [["Very good, so, go to %s in %s. There, our agent will be waiting for you and will load the special parcel in your ship. Listen, I trust you enough to tell you that it is a recording of a holophone conversation between a member of the Frontier council and a sales manager of house Sirius.
-	Oh, yes, and, if you has to say my name to our contact, he knows me as James Neptune. So, good luck out there."]]
+	Oh, yes, and, if you have to give my name to our contact, he knows me as James Neptune. So, good luck out there."]]
 	
     title[3] = "Good job"
-    text[3] = [[The Nexus employee greets you as you reach the ground and ask you if everything went well. He takes the parcel and gives you your pay. "We will analyze this, meet me in the bar, I will be there if I have an other job for you."]]
+    text[3] = [[The Nexus employee greets you as you reach the ground and ask you if everything went well. He takes the parcel and gives you your pay. "We will analyze this. Meet me in the bar, I will be there if I have an other job for you."]]
 
     title[4] = "Time to go back to Alteris"
-    text[4] = [[You approach the agent, wondering why Nexus's henchmen always manage to look honest. It seems he knew who was supposed to pick his parcel. After asking the name of your contact, he gives you a little battery-looking tool. "Everithing is in there," he just says. "By the way, stay vigilant, someone may be on our spours."]]
+    text[4] = [[You approach the agent, wondering why Nexus's henchmen always manage to look honest. It seems he knew who was supposed to pick up his parcel. After asking the name of your contact, he gives you a little battery-looking tool. "Everything is in there," he says. "By the way, stay vigilant, someone may be on our spoor."]]
 
 	
     -- Mission details
@@ -46,11 +46,11 @@ else -- default english
    
     -- NPC
     npc_desc[1] = "Arnold Smith"
-    bar_desc[1] = [[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]]
+    bar_desc[1] = [[Arnold Smith is in the bar. That means he has a mission that implies tricking a customer of Nexus.]]
     npc_desc[2] = "Nexus's spy"
     bar_desc[2] = [[This guy matches exactly the description that was made to you.]]
     npc_desc[3] = "Arnold Smith"
-    bar_desc[3] = [[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]]
+    bar_desc[3] = [[Arnold Smith is in the bar. That means he has a mission that implies tricking a customer of Nexus.]]
 	
     -- OSD
     osd_title = "Unfair Competition"
