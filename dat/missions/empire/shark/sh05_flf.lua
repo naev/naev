@@ -71,7 +71,7 @@ function create ()
    --Does the player have access to Sindbad
    if diff.isApplied( "FLF_base") then
       sindbad = planet.get("Sindbad")
-      osd_msg[1] = osd_sindbad:format(missys:name(), nextsys:name()), mispla:name())
+      osd_msg[1] = osd_sindbad:format(missys:name(), nextsys:name(), mispla:name())
       else
       osd_msg[1] = osd_nosindbad:format(missys:name())
    end

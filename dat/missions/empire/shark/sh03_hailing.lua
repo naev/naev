@@ -87,7 +87,7 @@ function accept()
       misn.setDesc(misn_desc)
 
       osd_msg[1] = osd_msg[1]:format(missys:name())
-      osd_msg[2] = osd_msg[2]:format(paypla.name(), paysys.name()))
+      osd_msg[2] = osd_msg[2]:format(paypla.name(), paysys.name())
 
       misn.osdCreate(misn_title, osd_msg)
       marker = misn.markerAdd(missys, "low")
@@ -104,7 +104,7 @@ function land()
 	
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-   tk.msg(title[3], text[3]format(nextpla:name(), nextsys:name()))
+   tk.msg(title[3], text[3]:format(nextpla:name(), nextsys:name()))
       player.pay(reward)
       misn.finish(true)
    end

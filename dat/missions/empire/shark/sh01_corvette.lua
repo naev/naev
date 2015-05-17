@@ -73,7 +73,7 @@ function accept()
    stage = 0 
    reward = 100000
 	
-   if tk.yesno(title[1], text[1]:format(battlesys:name(), numstring(reward/2)) then
+   if tk.yesno(title[1], text[1]:format(battlesys:name(), numstring(reward/2))) then
       misn.accept()
       tk.msg(title[2], text[2]:format(battlesys:name(), paypla:name(), paysys:name()))
       
@@ -81,7 +81,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
       
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward/2))
+      misn.setReward(misn_reward:format(numstring(reward/2)))
       misn.setDesc(misn_desc)
       misn.osdCreate(misn_title, osd_msg)
       marker = misn.markerAdd(battlesys, "low")

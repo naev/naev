@@ -119,7 +119,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name())
       
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward))
+      misn.setReward(misn_reward:format(numstring(reward)))
       misn.setDesc(misn_desc)
       misn.osdCreate(misn_title, osd_msg)
 		
