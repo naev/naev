@@ -2419,7 +2419,9 @@ void system_setFaction( StarSystem *sys )
    qsort( sys->presence, sys->npresence, sizeof(SystemPresence), sys_cmpSysFaction );
 
    sys->faction = -1;
-   for (i=0; i<sys->npresence; i++) {
+
+   i = sys->npresence - 1; /* Iterate from largest presence to smallest. */
+   for (; i>0; i--) {
       for (j=0; j<sys->nplanets; j++) { /** @todo Handle multiple different factions. */
          pnt = sys->planets[j];
          if (pnt->real != ASSET_REAL)
@@ -2429,6 +2431,7 @@ void system_setFaction( StarSystem *sys )
             continue;
 
          sys->faction = pnt->faction;
+         return;
       }
    }
 }
