@@ -2421,7 +2421,7 @@ void system_setFaction( StarSystem *sys )
    sys->faction = -1;
 
    i = sys->npresence - 1; /* Iterate from largest presence to smallest. */
-   for (; i>0; i--) {
+   for (; i>=0; i--) {
       for (j=0; j<sys->nplanets; j++) { /** @todo Handle multiple different factions. */
          pnt = sys->planets[j];
          if (pnt->real != ASSET_REAL)
