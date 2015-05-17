@@ -7,10 +7,13 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Frontier Lancelot", 20 );
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+    elseif r < 0.8 then
+       scom.addPilot( pilots, "Frontier Hyena", 20 );
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
     else
-       scom.addPilot( pilots, "Frontier Lancelot", 20 );
-       scom.addPilot( pilots, "Frontier Lancelot", 20 );
+       scom.addPilot( pilots, "Frontier Hyena", 20 );
+       scom.addPilot( pilots, "Frontier Ancestor", 25 );
     end
 
     return pilots
@@ -23,14 +26,12 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+       scom.addPilot( pilots, "Frontier Phalanx", 55 );
+    else
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+       scom.addPilot( pilots, "Frontier Ancestor", 25 );
     end
 
     return pilots
