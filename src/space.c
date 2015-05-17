@@ -2389,9 +2389,9 @@ static int sys_cmpSysFaction( const void *a, const void *b )
    spb = (SystemPresence*) b;
 
    /* Compare value. */
-   if (spa->value > spb->value)
+   if (spa->value < spb->value)
       return +1;
-   else if (spa->value < spb->value)
+   else if (spa->value > spb->value)
       return -1;
 
    /* Compare faction id. */
@@ -2415,13 +2415,11 @@ void system_setFaction( StarSystem *sys )
    int i, j;
    Planet *pnt;
 
-   /* Sort. */
+   /* Sort presences in descending order. */
    qsort( sys->presence, sys->npresence, sizeof(SystemPresence), sys_cmpSysFaction );
 
    sys->faction = -1;
-
-   i = sys->npresence - 1; /* Iterate from largest presence to smallest. */
-   for (; i>=0; i--) {
+   for (i=0; i<sys->npresence; i++) {
       for (j=0; j<sys->nplanets; j++) { /** @todo Handle multiple different factions. */
          pnt = sys->planets[j];
          if (pnt->real != ASSET_REAL)
