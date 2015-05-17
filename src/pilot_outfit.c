@@ -101,7 +101,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
          o->u.ammo.lockon_timer = max;
-  
+
       /* Trigger lockon hook. */
       if (!locked && (o->u.ammo.lockon_timer < 0.))
          pilot_runHook( p, PILOT_HOOK_LOCKON );
@@ -125,7 +125,7 @@ void pilot_lockClear( Pilot *p )
          continue;
       if (!outfit_isSeeker(o->outfit))
          continue;
- 
+
       /* Clear timer. */
       o->u.ammo.lockon_timer = o->outfit->u.lau.lockon;
 
@@ -550,7 +550,7 @@ const char* pilot_checkSpaceworthy( Pilot *p )
       return "Insufficient Fuel Consumption";
    if (p->cargo_free < 0)
       return "Insufficient Free Cargo Space";
-   
+
    /* Core Slots */
    if (!pilot_slotsCheckRequired(p))
       return "Not All Core Slots are equipped";
@@ -596,7 +596,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    SPACEWORTHY_CHECK( p->fuel_max < 0.,         "Insufficient Fuel Maximum\n" );
    SPACEWORTHY_CHECK( p->fuel_consumption < 0., "Insufficient Fuel Consumption\n" );
    SPACEWORTHY_CHECK( p->cargo_free < 0,        "Insufficient Free Cargo Space\n" );
-   
+
    /*buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
       buf[bufSize-4]='.';
@@ -901,7 +901,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
-   /* Stats. */ 
+   /* Stats. */
    s = &pilot->stats;
    memcpy( s, &pilot->ship->stats_array, sizeof(ShipStats) );
    memset( &amount, 0, sizeof(ShipStats) );
@@ -965,7 +965,7 @@ void pilot_calcStats( Pilot* pilot )
           * Stats.
           */
          ss_statsModFromList( s, o->u.mod.stats, &amount );
-     
+
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */

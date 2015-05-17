@@ -459,7 +459,7 @@ char* space_getRndPlanet( int landable, unsigned int services,
       }
       if (!space_sysReallyReachable( planet_getSystem(pnt->name) ))
          continue;
-   
+
       /* We want the name, not the actual planet. */
       res = tmp[i]->name;
       break;
@@ -1876,10 +1876,10 @@ int planet_setRadiusFromGFX(Planet* planet)
    png_uint_32 w, h;
    int nbuf;
    char *buf, path[PATH_MAX], str[PATH_MAX];
-   
+
    /* New path. */
    nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
-   
+
    rw = ndata_rwops( path );
    if (rw == NULL) {
       WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spacePath );
@@ -2498,7 +2498,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
       jp_setFlag(j,JP_HIDDEN);
    else if (!strcmp(buf, "exitonly"))
       jp_setFlag(j,JP_EXITONLY);
-   
+
    /* Handle jump point hide. */
    xmlr_attr( node, "hide", buf );
    if (buf == NULL)

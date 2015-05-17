@@ -2029,7 +2029,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 /**
  * @brief Parses and returns Outfit from parent node.
- 
+
  *    @param temp Outfit to load into.
  *    @param parent Parent node to parse outfit from.
  *    @return 0 on success.

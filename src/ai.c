@@ -1575,10 +1575,10 @@ static int aiL_shield( lua_State *L )
  */
 static int aiL_speed( lua_State *L )
 {
-   
+
    Pilot *p;
    double d;
-   
+
    if (lua_isnumber(L,1)) {
       p = pilot_get((unsigned int)lua_tonumber(L,1));
       if (p==NULL) {
