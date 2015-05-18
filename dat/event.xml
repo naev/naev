@@ -191,4 +191,9 @@
   <chance>15</chance>
   <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
  </event>
+ <event name="Bountyhunters">
+  <lua>neutral/bounty_raid</lua>
+  <trigger>enter</trigger>
+  <chance>5</chance>
+ </event>
 </Events>
