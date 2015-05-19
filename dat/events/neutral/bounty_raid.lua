@@ -24,7 +24,7 @@ function create()
 
       if atwar == true then     --There won't be mercenaries in a peacefull system
          hook.timer(2000,"fleet")
-         evt.finish()
+         hook.jumpout("leave")
          else
          evt.finish(false)
       end
@@ -47,4 +47,8 @@ function fleet ()
          proba = proba + 0.1
       end
    end
+end
+
+function leave ()
+   evt.finish()
 end
