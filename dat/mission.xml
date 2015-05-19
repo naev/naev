@@ -920,7 +920,7 @@
   </avail>
  </mission>
  <mission name="A Shark Bites">
-  <lua>empire/shark/sh00_ancestorkill</lua>
+  <lua>shark/sh00_ancestorkill</lua>
   <flags>
   <unique />
   </flags>
@@ -940,7 +940,7 @@
   </avail>
  </mission>
  <mission name="Sharkman Is Back">
-  <lua>empire/shark/sh01_corvette</lua>
+  <lua>shark/sh01_corvette</lua>
   <flags>
   <unique />
   </flags>
@@ -960,7 +960,7 @@
   </avail>
  </mission>
  <mission name="Unfair Competition">
-  <lua>empire/shark/sh02_tapping</lua>
+  <lua>shark/sh02_tapping</lua>
   <flags>
   <unique />
   </flags>
@@ -979,7 +979,7 @@
   </avail>
  </mission>
  <mission name="Invitation">
-  <lua>empire/shark/sh03_hailing</lua>
+  <lua>shark/sh03_hailing</lua>
   <flags>
   <unique />
   </flags>
@@ -991,7 +991,7 @@
   </avail>
  </mission>
  <mission name="The Meeting">
-  <lua>empire/shark/sh04_meeting</lua>
+  <lua>shark/sh04_meeting</lua>
   <flags>
   <unique />
   </flags>
@@ -1003,7 +1003,7 @@
   </avail>
  </mission>
  <mission name="The FLF Contact">
-  <lua>empire/shark/sh05_flf</lua>
+  <lua>shark/sh05_flf</lua>
   <flags>
   <unique />
   </flags>
@@ -1023,7 +1023,7 @@
   </avail>
  </mission>
  <mission name="A Journey To Arandon">
-  <lua>empire/shark/sh06_arandon</lua>
+  <lua>shark/sh06_arandon</lua>
   <flags>
   <unique />
   </flags>
@@ -1035,7 +1035,7 @@
   </avail>
  </mission>
   <mission name="The Last Detail">
-  <lua>empire/shark/sh07_pirates</lua>
+  <lua>shark/sh07_pirates</lua>
   <flags>
   <unique />
   </flags>
