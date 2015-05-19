@@ -24,6 +24,7 @@ function create()
 
       if atwar == true then     --There won't be mercenaries in a peacefull system
          hook.timer(2000,"fleet")
+         evt.finish()
          else
          evt.finish(false)
       end
