@@ -267,7 +267,7 @@ static void opt_gameplay( unsigned int wid )
          "With SDL_mixer\n"
 #endif
 #ifdef HAVE_LUAJIT
-         "Using Lua JIT\n"
+         "Using LuaJIT\n"
 #endif
 #ifdef NDATA_DEF
          "ndata: "NDATA_DEF"\n"

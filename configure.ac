@@ -286,7 +286,7 @@ case "$used_lua" in
       have_lua=yes
       LUA_CFLAGS+="-DHAVE_LUAJIT"
     ], [
-      AC_WARN([Lua is set to Lua-JIT but can not find library; using internal Lua])
+      AC_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
       have_lua=no
     ])
     ;;
