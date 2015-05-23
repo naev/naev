@@ -214,7 +214,7 @@ int load_refresh (void)
       /* Don't match. */
       if (strncmp( files[i], files[i+1], (len-10) ))
          continue;
-  
+
       /* Swap around. */
       tmp         = files[i];
       files[i]    = files[i+1];

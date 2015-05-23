@@ -611,7 +611,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
       free( buf );
    }
    //TODO: consider inserting those two parse blocks below inside the parse block above
-   
+
    /* Parse exclusive flag. */
    xmlr_attr( node, "exclusive", buf );
    if (buf != NULL) {
@@ -621,7 +621,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    //TODO: decide if exclusive should even belong in ShipOutfitSlot, remove this hack, and fix slot->exclusive to slot->slot.exclusive in it's two previous occurrences, meaning three lines above and 12 lines above
    /* hack */
    slot->slot.exclusive=slot->exclusive;
-   
+
    /* Parse required flag. */
    xmlr_attr( node, "required", buf );
    if (buf != NULL) {
@@ -675,7 +675,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN("Ship in "SHIP_DATA_PATH" has invalid or no name");
-   
+
    /* Datat that must be loaded first. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -940,7 +940,7 @@ int ships_load (void)
          free(file);
          continue;
       }
-   
+
       node = doc->xmlChildrenNode; /* First ship node */
       if (node == NULL) {
          xmlFreeDoc(doc);
@@ -949,7 +949,7 @@ int ships_load (void)
          free(file);
          continue;
       }
-   
+
       free(file);
 
       if (xml_isNode(node, XML_SHIP))

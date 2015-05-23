@@ -82,7 +82,7 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
 
    /* Compare priority. */
    if (osd1->priority > osd2->priority)
-      return +1;                                                                                                                           
+      return +1;
    else if (osd1->priority < osd2->priority)
       return -1;
 

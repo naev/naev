@@ -354,7 +354,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       aspect = comm_graphic->w / comm_graphic->h;
       gw = MIN( GRAPHIC_WIDTH,  comm_graphic->w );
       gh = MIN( GRAPHIC_HEIGHT, comm_graphic->h );
-   
+
       if (comm_graphic->w > GRAPHIC_WIDTH || comm_graphic->h > GRAPHIC_HEIGHT) {
          gh = MIN( GRAPHIC_HEIGHT, GRAPHIC_HEIGHT / aspect );
          gw = MIN( GRAPHIC_WIDTH, GRAPHIC_WIDTH * aspect );

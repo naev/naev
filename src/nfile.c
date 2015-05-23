@@ -70,7 +70,7 @@ static char* xdgGetEnv(const char *name)
     return NULL;
 }
 
-/** 
+/**
  * Duplicate an environment variable.
  * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
  * Sets @c errno to @c EINVAL if variable is not set or empty.
@@ -85,7 +85,7 @@ static char* xdgEnvDup(const char *name)
      return NULL;
 }
 
-/** 
+/**
  * Get a home directory from the environment or a fallback relative to @c \$HOME.
  * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
  * Sets @c errno to @c EINVAL if variable is not set or empty.

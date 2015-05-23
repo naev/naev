@@ -1298,7 +1298,7 @@ static void uniedit_editSys (void)
    /* New row. */
    x = 20;
    y -= gl_defFont.h + 15;
-   
+
    s = "Stars";
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtStars",
@@ -1421,7 +1421,7 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
 {
    StarSystem *sys;
    double scale;
-   
+
    /* We already know the system exists because we checked when opening the dialog. */
    sys   = uniedit_sys[0];
 

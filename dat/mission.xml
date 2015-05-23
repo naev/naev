@@ -919,4 +919,131 @@
    <planet>Niflheim</planet>
   </avail>
  </mission>
+ <mission name="A Shark Bites">
+  <lua>shark/sh00_ancestorkill</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.getRating() &gt; 100 and player.misnDone("Operation Cold Metal") and planet.cur() ~= planet.get("Ulios")</cond>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="Sharkman Is Back">
+  <lua>shark/sh01_corvette</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("A Shark Bites")</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="Unfair Competition">
+  <lua>shark/sh02_tapping</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Sharkman Is Back")</cond>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="Invitation">
+  <lua>shark/sh03_hailing</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Unfair Competition")</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+  </avail>
+ </mission>
+ <mission name="The Meeting">
+  <lua>shark/sh04_meeting</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Invitation")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+  </avail>
+ </mission>
+ <mission name="The FLF Contact">
+  <lua>shark/sh05_flf</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Meeting")</cond>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="A Journey To Arandon">
+  <lua>shark/sh06_arandon</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The FLF Contact")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+  </avail>
+ </mission>
+  <mission name="The Last Detail">
+  <lua>shark/sh07_pirates</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("A Journey To Arandon")</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+  </avail>
+ </mission>
 </Missions>

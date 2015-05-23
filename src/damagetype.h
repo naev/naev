@@ -12,8 +12,8 @@
 /*
  * stack manipulation
  */
-int dtype_get( char* name ); 
-char* dtype_damageTypeToStr( int type ); 
+int dtype_get( char* name );
+char* dtype_damageTypeToStr( int type );
 
 /*
  * dtype effect loading and freeing

@@ -286,7 +286,7 @@ void conf_cleanup (void)
       free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
       free(conf.joystick_nam);
-   
+
    if (conf.dev_save_sys != NULL)
       free(conf.dev_save_sys);
    if (conf.dev_save_map != NULL)

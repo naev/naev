@@ -253,12 +253,12 @@ static int inp_isBreaker(char c)
 {
    char* breakers = ";:.-_ \n";
    int i;
-   
+
    for (i = 0; i < (int)strlen(breakers); i++) {
       if (breakers[i] == c)
          return 1;
    }
-   
+
    return 0;
 }
 
@@ -377,11 +377,11 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          prevpos  = 0;
          curchars = 0;
          lines    = 0;
-        
+
          /* We can't move beyond the current line, as it is the last one. */
          if (inp->dat.inp.pos == (int)strlen(inp->dat.inp.input))
             return 1;
-         
+
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
           * At this point, we've arrived at the line the cursor is on. */
          while (inp->dat.inp.pos >= curpos) {
@@ -431,7 +431,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
    /* Eat everything else that isn't usable. Om nom. */
    /* Only catch some keys. */
-   if ((key != SDLK_BACKSPACE) && 
+   if ((key != SDLK_BACKSPACE) &&
          (key != SDLK_DELETE) &&
          (key != SDLK_RETURN) &&
          (key != SDLK_KP_ENTER) &&

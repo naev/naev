@@ -139,10 +139,10 @@ static int cli_printCore( lua_State *L, int cli_only )
 int cli_warn( lua_State *L )
 {
    const char *msg;
-   
+
    msg = luaL_checkstring(L,1);
    logprintf( stderr, "Warning: %s\n", msg );
-   
+
    return 0;
 }
 

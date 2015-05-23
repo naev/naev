@@ -2982,8 +2982,8 @@ static int pilotL_setNodisable( lua_State *L )
 
 
 /**
- * @brief Limits the speed of a pilot. 
- * 
+ * @brief Limits the speed of a pilot.
+ *
  * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luaparam p Pilot to set speed of.
@@ -2996,18 +2996,18 @@ static int pilotL_setSpeedLimit(lua_State* L)
 
    Pilot *p;
    double s;
-  
+
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    s  = luaL_checknumber(L, 2);
-   
+
    /* Limit the speed */
    p->speed_limit = s;
    if (s > 0.)
      pilot_setFlag( p, PILOT_HASSPEEDLIMIT );
    else
      pilot_rmFlag( p, PILOT_HASSPEEDLIMIT );
-      
+
    pilot_updateMass(p);
    return 0;
 }
@@ -3384,7 +3384,7 @@ static int pilotL_getHostile( lua_State *L )
  * @brief Small struct to handle flags.
  */
 struct pL_flag {
-   char *name; /**< Name of the flag. */  
+   char *name; /**< Name of the flag. */
    int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {

@@ -330,7 +330,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
      /* Target has no ammo */
      if (pilot_countAmmo(p) <= 0) {
         player_message("\erThe ship has no ammo.");
-        return; 
+        return;
      }
      /* Player is already at max ammo */
      if (pilot_countAmmo(player.p) >= pilot_maxAmmo(player.p)) {
@@ -503,7 +503,7 @@ static void board_update( unsigned int wdw )
       if (j < PATH_MAX)
          j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
    }
-   
+
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
    if (nmissiles <= 0) {
