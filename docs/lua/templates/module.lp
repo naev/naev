@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>Naev Lua API: <%=module_doc.name%></title>
     <link rel="stylesheet" href="<%=luadoc.doclet.html.link('luadoc.css', 'modules/'..module_doc.name)%>" type="text/css" />
+    <link rel="shortcut icon" href="<%=luadoc.doclet.html.link('favicon.ico', 'modules/'..module_doc.name)%>" />
 </head>
 
 <body>

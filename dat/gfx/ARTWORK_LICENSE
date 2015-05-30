@@ -701,3 +701,11 @@
      * planet
        * exterior
          * asteroid.png
+
+* Author: Ian D. Scott <ids1024>, License: PD
+   * outfit
+     * store
+       * plating_cargo.png
+       * plating_combat.png
+       * plating_patchwork.png
+       * plating_stealth.png

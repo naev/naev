@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>Reference</title>
     <link rel="stylesheet" href="<%=luadoc.doclet.html.link('luadoc.css', 'files/'..file_doc.name)%>" type="text/css" />
+    <link rel="shortcut icon" href="<%=luadoc.doclet.html.link('favicon.ico', 'files/'..file_doc.name)%>" />
 </head>
 
 <body>
