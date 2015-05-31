@@ -332,6 +332,22 @@ int* faction_getEnemies( int f, int *n )
       return NULL;
    }
 
+   /* Player's faction ratings can change, so regenerate each call. */
+   if (f == FACTION_PLAYER) {
+      int nenemies = 0;
+      int *enemies = malloc(sizeof(int)*faction_nstack);
+
+      for (int i=0; i<faction_nstack; i++) {
+         if (faction_stack[i].player<PLAYER_ENEMY)
+            enemies[nenemies++] = i;
+      }
+      enemies = realloc(enemies, sizeof(int)*nenemies);
+
+      free(faction_stack[f].enemies);
+      faction_stack[f].enemies = enemies;
+      faction_stack[f].nenemies = nenemies;
+   }
+
    *n = faction_stack[f].nenemies;
    return faction_stack[f].enemies;
 }
@@ -349,6 +365,22 @@ int* faction_getAllies( int f, int *n )
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
+   }
+
+      /* Player's faction ratings can change, so regenerate each call. */
+   if (f == FACTION_PLAYER) {
+      int nallies = 0;
+      int *allies = malloc(sizeof(int)*faction_nstack);
+
+      for (int i=0; i<faction_nstack; i++) {
+         if (faction_stack[i].player>PLAYER_ALLY)
+            allies[nallies++] = i;
+      }
+      allies = realloc(allies, sizeof(int)*nallies);
+
+      free(faction_stack[f].allies);
+      faction_stack[f].allies = allies;
+      faction_stack[f].nallies = nallies;
    }
 
    *n = faction_stack[f].nallies;
