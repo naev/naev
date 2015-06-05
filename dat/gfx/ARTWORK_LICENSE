@@ -51,6 +51,7 @@
        * capacitor4-g.png
        * missile.png
        * neutron.png
+       * neutronheavy.png
        * reactor_i.png
        * reactor_ii.png
        * reactor_iii.png
@@ -58,6 +59,7 @@
        * shield.png
        * stabilizer.png
        * lancelot_fighter.png
+       * lancelot_empire_fighter.png
        * drone_fighter.png
    * planet
      * exterior
@@ -173,9 +175,9 @@
      * space
        * headhunter.png
        * mace.png
-       * macelauncher.png
      * store
        * mace.png
+       * macelauncher.png
    * spfx
      * exps.png
      * expm.png
@@ -231,9 +233,10 @@
        * empgrenade.png
        * empgrenadelauncher.png
        * banshee.png
-       * basheelauncher.png
+       * bansheelauncher.png
      * space
        * empgrenade.png
+       * beam_ion.png
        * beam_orion.png
        * beam_orion_inv.png
        * beam_ragnarok.png
@@ -271,6 +274,7 @@
        * railgun.png
        * orion.png
        * ripper.png
+       * ripperturret.png
        * railgunturret.png
    * ship
      * kestrel
@@ -347,6 +351,8 @@
 
  * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv3
    * portraits
+     * dvaered
+       * dv_military_m1.png 
      * empire
        * unique
          * czesc.png
@@ -357,6 +363,9 @@
        * empire2.png
        * empire3.png
        * empire4.png
+     * flf
+       * unique
+         * benito.png
      * neutral
        * unique
          * aristocrat.png
@@ -367,6 +376,7 @@
          * oldwoman.png
          * rebina.png
          * reynir.png
+         * shifty_merchant.png
          * youngbusinessman.png
        * barman.png
        * male1.png
@@ -382,13 +392,16 @@
        * pirate3.png
        * pirate4.png
      * sirius
+       * unique
+         * joanne.png
+         * harja.png
+         * patrek.png
        * sirius_fyrra_f1.png
        * sirius_fyrra_f2.png
        * sirius_fyrra_m1.png
      * none.png
-     * dv_liason.png
-     * flf_officer1.png
      * unknown.png
+     * zalek_scientist_placeholder.png
    * logo
      * dvaered_*.png
      * empire_*.png
@@ -421,6 +434,9 @@
      * fidelity.png
      * preacher.png
      * shaman.png
+   * outfit
+     * store
+       * fidelity_fighter.png
    * ship
      * divinity
        * *
@@ -506,6 +522,9 @@
        * white02.png
        * yellow01.png
        * yellow02.png
+   * spfx
+     * expm2.png
+     * expl2.png
 
  * Author: Scaatis, CC-by 3.0
    * Naev.png
@@ -518,6 +537,9 @@
        * *
    * portraits
      * news.png
+   * outfit
+     * store
+       * brushedGUI.png
 
  * Author: Nikola Whallon <6.saturn.6@gmail.com>, License: GPLv3 / CC-by 3
    * planet
@@ -607,6 +629,9 @@
        * redgiant02.png
 
  * Author: M. R. Bokhari "Viruk" <withextremeprejudice@gmail.com>, License: CC-by-sa 3.0
+   * outfit
+     * store
+       * zalek_drone_*_fighter.png
    * planet
      * space
        * zalek_hq.png
