@@ -8,12 +8,15 @@ use Cwd q(abs_path);
 use File::Find;
 use List::Util qw(first);
 use Text::Glob;
+use Getopt::Long;
 
 sub indentlevel
 {
    my ($spaces) = /^( *)/;
    return int (((length $spaces) - 3) / 2);
 }
+
+my %opts;
 
 my %exts = (
    'gfx' => qr/[.]png$/,
@@ -24,6 +27,8 @@ my %paths = (
    'gfx' => 'ARTWORK_LICENSE',
    'snd' => 'SOUND_LICENSE'
 );
+
+GetOptions( 'reverse' => \$opts{reverse} );
 
 my $scriptdir = (fileparse( abs_path($0) ))[1];
 chdir $scriptdir or die "Couldn't chdir to $scriptdir";
@@ -47,6 +52,9 @@ for my $path (sort keys %paths) {
       if ($indent <= $last) {
          pop @tree foreach 0 .. ($last - $indent);
       }
+      elsif ($indent > $last) {
+         pop @licensed;
+      }
 
       push @licensed, glob join('/', $path, @tree, $file);
 
@@ -54,6 +62,13 @@ for my $path (sort keys %paths) {
       $last = $indent;
    }
    close $fh;
+
+   if ($opts{reverse}) {
+      for my $file (@licensed) {
+         print $file, "\n" if not -f $file;
+      }
+      exit 0;
+   }
 
    for my $file (@files) {
       print $file, "\n" if not first { $_ eq $file } @licensed;
