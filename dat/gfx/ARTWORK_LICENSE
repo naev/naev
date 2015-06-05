@@ -32,7 +32,6 @@
        * laser{1,2,3,4}{S,M,L}.png
        * mass{M,L}.png
        * mass{M,L}-end.png
-       * missile.png
        * neutron.png
        * neutron-end.png
        * particle.png
@@ -322,8 +321,6 @@
      * space
        * gatling.png
        * autocannon.png
-       * laser2.png
-       * laser2-end.png
        * plasma2.png
        * plasma2-end.png
        * headhunter.png
