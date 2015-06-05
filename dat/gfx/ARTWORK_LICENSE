@@ -27,17 +27,20 @@
  * Author: Vega Strike, License: GPLv2+
    * outfit
      * space
-       * ion.png
-       * ion-end.png
-       * laserred.png
-       * mass.png
-       * mass-end.png
+       * ion{M,L}.png
+       * ion{M,L}-end.png
+       * laser{1,2,3,4}{S,M,L}.png
+       * mass{M,L}.png
+       * mass{M,L}-end.png
        * missile.png
        * neutron.png
        * neutron-end.png
        * particle.png
-       * ripper.png
-       * ripper-end.png
+       * plasma.png
+       * razor{S,M,L}.png
+       * razor{S,M,L}-end.png
+       * ripper{S,M}.png
+       * ripper{S,M}-end.png
      * store
        * capacitor.png
        * capacitor2.png
@@ -93,56 +96,71 @@
    * spfx
      * cargo.png
    * ship
+     * admonisher
+       * *
+     * ancestor
+       * *
+     * archimedes
+       * *
+     * base
+       * *
+     * derivative
+       * *
+     * drone
+       * *
+     * gawain
+       * *
+     * goddard
+       * *
+     * hawking
+       * *
+     * hyena
+       * *
+     * kahan
+       * *
+     * koala
+       * *
+     * lancelot
+       * *
+     * llama
+       * *
+     * mule
+       * *
+     * pacifier
+       * *
+     * quicksilver
+       * *
+     * schroedinger
+       * *
+     * vendetta
+       * *
+     * vigilance
+       * *
+     * watson
+       * *
+   * loading
      * admonisher.png
-     * admonisher_empire.png
+     * ancestor_pirate.png
      * admonisher_pirate.png
      * ancestor.png
-     * ancestor_dvaered.png
      * ancestor_pirate.png
      * archimedes.png
      * derivative.png
      * drone.png
      * gawain.png
      * goddard.png
-     * goddard_dvaered.png
      * hawking.png
-     * hawking_empire.png
-     * hyena.png
      * kahan.png
-     * lancelot.png
-     * lancelot_empire.png
-     * llama.png
-     * mule.png
-     * pacifier.png
-     * pacifier_empire.png
-     * quicksilver.png
-     * schroedinger.png
-     * vendetta.png
-     * vendetta_dvaered.png
-     * vendetta_pirate.png
-     * vigilance.png
-     * vigilance_dvaered.png
-     * watson.png
-   * loading
-     * admonisher.png
-     * ancestor-pirate.png
-     * admonisher-pirate.png
-     * ancestor.png
-     * ancestor-pirate.png
-     * archimedes.png
-     * derivative.png
-     * drone.png
-     * gawain.png
-     * goddard.png
-     * hawking.png
      * koala.png
      * lancelot.png
      * llama.png
      * mule.png
      * pacifier.png
      * quicksilver.png
+     * schroedinger.png
      * vendetta.png
-     * vendetta-pirate.png
+     * vendetta_pirate.png
+     * vigilance.png
  
  * Author: Joel Hans, License: PD
    * planet
@@ -201,9 +219,10 @@
 
  * Author: Camilo Polymeris <cpolymeris@gmx.net>, License: GPLv3
    * gui
-     * minimal.png
-     * minimal_fuel.png
-     * minimal_energy.png
+     * default
+       * minimal.png
+       * minimal_fuel.png
+       * minimal_energy.png
  
  * Author: Brian J. Cameron, License: PD
    * outfit
@@ -216,21 +235,24 @@
      * space
        * empgrenade.png
        * beam_orion.png
+       * beam_orion_inv.png
        * beam_ragnarok.png
+       * beam_ragnarok_inv.png
        * banshee.png
-   * gfx
-     * spfx
-       * emps.png
-       * empm.png
-       * shis.png
-       * shim.png
-       * plas.png
-       * plam.png
- 
+   * spfx
+     * emps.png
+     * empm.png
+     * shis.png
+     * shim.png
+     * plas.png
+     * plam.png
+
  * Author: Josiah Schwartfeger, License: CC-by 3.0
+   * icon.png
    * outfit
      * store
        * fuel_pod.png
+       * large_fuel_pod.png
        * cargo_pod.png
        * afterburner.png
        * afterburner2.png
@@ -251,458 +273,499 @@
        * ripper.png
        * railgunturret.png
    * ship
-     * kestrel.png
-     * kestrel_comm.png
-     * kestrel_pirate.png
-     * kestrel_pirate_comm.png
-     * peacemaker.png
+     * kestrel
+       * *
+     * peacemaker
+       * *
    * loading
      * kestrel_pirate.png
      * peacemaker.png
 
  * Author: Renderwahn, License: CC-by 3.0
-   * gfx
-     * spfx
-       * debris0.png
-       * debris1.png
-       * debris2.png
-       * debris3.png
-       * debris4.png
-       * debris5.png
-     * logo
-       * pirate_small.png
+   * spfx
+     * debris0.png
+     * debris1.png
+     * debris2.png
+     * debris3.png
+     * debris4.png
+     * debris5.png
+   * logo
+     * pirate_*.png
+   * planet
+     * space
+       * K02.png
+       * K03.png
+       * K04.png
+       * O02.png
+       * S00.png
+       * S01.png
+       * X00.png
+       * X01.png
+       * Y00.png
 
  * Author: Sean Hildebrand, License: CC-by 3.0
    * gui
-     * minimal_planet.png
-     * minimal_pilot.png
-   * gfx
-     * planet
-       * space
-        * jumpbuoy.png
-     * outfit
-       * space
-         * gatling.png
-         * autocannon.png
-         * laser2.png
-         * laser2-end.png
-         * plasma2.png
-         * plasma2-end.png
-         * headhunter.png
-         * seeker.png
-         * caesar.png
-       * store
-         * cpu_i.png
-         * cpu_ii.png
-         * cpu_iii.png
-         * biometal.png
-         * seekerlauncher.png
-         * seeker.png
-         * headhunterlauncher.png
-         * headhunter.png
-         * caesarlauncher.png
-         * caesar.png
-     * spfx
-       * plas2.png
-       * plam2.png
+     * default
+       * minimal_planet.png
+       * minimal_pilot.png
+     * no.png
+     * yes.png
+   * planet
+     * space
+       * jumpbuoy.png
+       * jumppoint.png
+   * outfit
+     * space
+       * gatling.png
+       * autocannon.png
+       * laser2.png
+       * laser2-end.png
+       * plasma2.png
+       * plasma2-end.png
+       * headhunter.png
+       * seeker.png
+       * caesar.png
+     * store
+       * cpu_i.png
+       * cpu_ii.png
+       * cpu_iii.png
+       * biometal.png
+       * seekerlauncher.png
+       * seeker.png
+       * headhunterlauncher.png
+       * headhunter.png
+       * caesarlauncher.png
+       * caesar.png
+   * spfx
+     * plas2.png
+     * plam2.png
 
  * Author: Thomas Fedor, License: PD
-   * gfx
-     * outfit
-       * store
-         * gatling.png
+   * outfit
+     * store
+       * gatling.png
 
  * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv3
-   * gfx
-     * portraits
-       * czesc.png
-       * keer.png
-       * dimitri.png
-       * none.png
-       * scientist.png
-       * soldner.png
+   * portraits
+     * empire
+       * unique
+         * czesc.png
+         * dimitri.png
+         * keer.png
+         * soldner.png
        * empire1.png
        * empire2.png
        * empire3.png
        * empire4.png
-       * rebina.png
-       * jorek.png
-       * dv_liason.png
-       * flf_officer1.png
+     * neutral
+       * unique
+         * aristocrat.png
+         * drunkard.png
+         * flintley.png
+         * jorek.png
+         * mia.png
+         * oldwoman.png
+         * rebina.png
+         * reynir.png
+         * youngbusinessman.png
+       * barman.png
+       * male1.png
+       * miner1.png
+       * miner2.png
+       * scientist.png
        * thief1.png
        * thief2.png
        * thief3.png
-       * barman.png
-       * reynir.png
-       * male1.png
-       * flintley.png
-       * miner1.png
-       * miner2.png
-       * oldwoman.png
-       * sirius_fyrra_f1.png
-       * unknown.png
-       * youngbusinessman.png
-       * mia.png
-       * aristocrat.png
-       * drunkard.png
+     * pirate
        * pirate1.png
        * pirate2.png
        * pirate3.png
        * pirate4.png
+     * sirius
+       * sirius_fyrra_f1.png
+       * sirius_fyrra_f2.png
+       * sirius_fyrra_m1.png
+     * none.png
+     * dv_liason.png
+     * flf_officer1.png
+     * unknown.png
    * logo
-     * dvaered_small.png
-     * empire_small.png
-     * goddard_small.png
-     * sirius_small.png
-     * zalek_small.png
+     * dvaered_*.png
+     * empire_*.png
+     * goddard_*.png
+     * sirius_*.png
+     * zalek_*.png
 
  * Author: AstroMenace (Viewizard), License: GPLv3
-   * gfx
-     * outfit
-       * store
-         * thruster.png
-         * accuracy_forward.png
-         * accuracy_forward_2.png
-         * accuracy_forward_3.png
-         * accuracy_turret.png
-         * damage_forward.png
-         * efficiency_turret.png
-         * firerate_turret.png
+   * outfit
+     * store
+       * thruster.png
+       * accuracy_forward.png
+       * accuracy_forward_2.png
+       * accuracy_forward_3.png
+       * accuracy_turret.png
+       * damage_forward.png
+       * efficiency_turret.png
+       * firerate_turret.png
 
  * Author: Enigmatic, License: CC-by 3.0
-   * gfx
-     * logo
-       * collective_small.png
-       * flf_small.png
-       * frontier_small.png
-       * proteron_small.png
-       * prototype_tiny.png
-       * soromid_small.png
-       * trader_small.png
-     * ship
-       * divinity.png
-       * dogma.png
-       * fidelity.png
-       * preacher.png
-       * shaman.png
-     * planet
-       * space
-         * station-agriculture.png
-         * station-battlestation.png
-         * station-commerce.png
-         * station-commerce2.png
-         * station-commerce3.png
-         * station-cylinder.png
-         * station-fleetbase.png
-         * station-fleetbase2.png
-         * station-fleetbase3.png
-         * station-powerplant.png
-         * station-shipyard.png
-         * station-shipyard2.png
-         * station-sphere.png
+   * logo
+     * collective_*.png
+     * flf_*.png
+     * frontier_*.png
+     * proteron_*.png
+     * prototype_tiny.png
+     * soromid_*.png
+     * trader_*.png
+   * loading
+     * fidelity.png
+     * preacher.png
+     * shaman.png
+   * ship
+     * divinity
+       * *
+     * dogma
+       * *
+     * fidelity
+       * *
+     * preacher
+       * *
+     * shaman
+       * *
+   * planet
+     * space
+       * station-agriculture.png
+       * station-battlestation.png
+       * station-commerce.png
+       * station-commerce2.png
+       * station-commerce3.png
+       * station-cylinder.png
+       * station-fleetbase.png
+       * station-fleetbase2.png
+       * station-fleetbase3.png
+       * station-powerplant.png
+       * station-shipyard.png
+       * station-shipyard2.png
+       * station-sphere.png
 
  * Author: BTAxis, License: PD
-   * gfx
-     * gui
-       * hail.png
-     * planet
-       * space
-         * A00.png
-         * A01.png
-         * A02.png
-         * A03.png
-         * C00.png
-         * D00.png
-         * D01.png
-         * D02.png
-         * G00.png
-         * G01.png
-         * H00.png
-         * H01.png
-         * H02.png
-         * I00.png
-         * I01.png
-         * J00.png
-         * J01.png
-         * J02.png
-         * J03.png
-         * J04.png
-         * K00.png
-         * L00.png
-         * M00.png
-         * M01.png
-         * M02.png
-         * O00.png
-         * P00.png
-         * P01.png
-         * P02.png
-     * bkg
-       * nebula34.png
-       * star
-         * blue01.png
-         * blue02.png
-         * blue04.png
-         * green01.png
-         * green02.png
-         * orange01.png
-         * orange02.png
-         * orange05.png
-         * redgiant01.png
-         * white01.png
-         * white02.png
-         * yellow01.png
-         * yellow02.png
+   * gui
+     * hail.png
+   * planet
+     * space
+       * A00.png
+       * A01.png
+       * A02.png
+       * A03.png
+       * C00.png
+       * D00.png
+       * D01.png
+       * D02.png
+       * G00.png
+       * G01.png
+       * G02.png
+       * H00.png
+       * H01.png
+       * H02.png
+       * I00.png
+       * I01.png
+       * J00.png
+       * J01.png
+       * J02.png
+       * J03.png
+       * J04.png
+       * K00.png
+       * L00.png
+       * M00.png
+       * M01.png
+       * M02.png
+       * M03.png
+       * M04.png
+       * M05.png
+       * M06.png
+       * M07.png
+       * M08.png
+       * O00.png
+       * O01.png
+       * P00.png
+       * P01.png
+       * P02.png
+   * bkg
+     * nebula34.png
+     * star
+       * blue01.png
+       * blue02.png
+       * blue04.png
+       * green01.png
+       * green02.png
+       * orange01.png
+       * orange02.png
+       * orange05.png
+       * redgiant01.png
+       * white01.png
+       * white02.png
+       * yellow01.png
+       * yellow02.png
 
  * Author: Scaatis, CC-by 3.0
-   * gfx
-     * Naev.png
-     * gui
-       * slim
-         * *
-       * brushed
-         * *
-     * portraits
-       * news.png
+   * Naev.png
+   * gui
+     * slim
+       * *
+     * slimv2
+       * *
+     * brushed
+       * *
+   * portraits
+     * news.png
 
  * Author: Nikola Whallon <6.saturn.6@gmail.com>, License: GPLv3 / CC-by 3
-   * gfx
-     * planet
-       * space
-         * P03.png
-         * moon-C01.png
+   * planet
+     * space
+       * P03.png
+       * moon-C01.png
 
  * Author: Vicki Li <LacrymosAmaya@gmail.com>, License: GPLv3 / CC-by 3
-   * gfx
-     * planet
-       * space
-         * P04.png
-         * C01.png
+   * planet
+     * space
+       * P04.png
+       * C01.png
 
  * Author: Alexander Huitric <ahuitric@gmail.com>, License: CC-by-sa 3
-   * gfx
-     * ship
-       * ingenuity.png
-       * ingenuity_comm.png
-       * ingenuity_engine.png
+   * logo
+     * thurion_*.png
+   * ship
+     * ingenuity
+       * *
 
  * Author: Josh Combs <http://freeorion.org>, License: CC-by-sa 3.0
-   * gfx
-     * bkg
-       * nebula20.png
-       * nebula21.png
-       * nebula22.png
-       * nebula23.png
-       * nebula24.png
-       * nebula25.png
-       * nebula26.png
-       * nebula27.png
-       * nebula28.png
-       * nebula29.png
-       * nebula30.png
-       * nebula31.png
-       * nebula32.png
-       * nebula33.png
+   * bkg
+     * nebula20.png
+     * nebula21.png
+     * nebula22.png
+     * nebula23.png
+     * nebula24.png
+     * nebula25.png
+     * nebula26.png
+     * nebula27.png
+     * nebula28.png
+     * nebula29.png
+     * nebula30.png
+     * nebula31.png
+     * nebula32.png
+     * nebula33.png
 
  * Author: Galileus, License: CC-by-sa 3.0
-   * gfx
-     * ship
-       * shark
-         * shark.png
-         * shark_empire.png
-         * shark_pirate.png
-       * rhino
-         * rhino.png
-         * rhino_pirate.png
-     * planet
-       * space
-         * wrath.png
+   * loading
+     * rhino_pirate.png
+     * shark_empire.png
+     * shark_pirate.png
+     * shark.png
+     * rhino.png
+   * ship
+     * shark
+       * *
+     * rhino
+       * *
+   * planet
+     * space
+       * wrath.png
 
  * Author: bornloser, License: CC-by-sa 3.0
-   * gfx
-     * ship
-       * phalanx
-         * phalanx.png
-         * phalanx_dvaered.png
-         * phalanx_pirate.png
+   * ship
+     * phalanx
+       * *
 
  * Author: Andmiw, License: CC-by-sa 3.0
-   * gfx
-     * planet
-       * space
-         * A04.png
-         * G03.png
-         * H03.png
-         * I02.png
-         * I03.png
-         * I04.png
-         * I05.png
-         * I06.png
-         * I07.png
-         * J05.png
-         * J06.png
-         * J07.png
-         * J08.png
-         * K05.png
-         * M09.png
-         * M11.png
-         * M12.png
-         * M13.png
-         * O03.png
-         * O05.png
-         * P05.png
-         * Moon-D02.png
-         * moon-P03.png
-     * bkg
-       * star
-         * redgiant02.png
+   * planet
+     * space
+       * A04.png
+       * G03.png
+       * H03.png
+       * I02.png
+       * I03.png
+       * I04.png
+       * I05.png
+       * I06.png
+       * I07.png
+       * J05.png
+       * J06.png
+       * J07.png
+       * J08.png
+       * K05.png
+       * M09.png
+       * M11.png
+       * M12.png
+       * M13.png
+       * O03.png
+       * O05.png
+       * P05.png
+       * moon-D02.png
+       * moon-P03.png
+   * bkg
+     * star
+       * redgiant02.png
 
  * Author: M. R. Bokhari "Viruk" <withextremeprejudice@gmail.com>, License: CC-by-sa 3.0
-   * gfx
-     * ship
-       * arx
-         * arx.png
-       * brigand
-         * brigand.png
-       * ira
-         * ira.png
-       * marauder
-         * marauder.png
-       * nyx
-         * nyx.png
-       * odium
-         * odium.png
-       * reaver
-         * reaver.png
+   * planet
+     * space
+       * zalek_hq.png
+   * ship
+     * arx
+       * *
+     * brigand
+       * *
+     * demon
+       * *
+     * diablo
+       * *
+     * hephaestus
+       * *
+     * imp
+       * *
+     * ira
+       * *
+     * marauder
+       * *
+     * mephisto
+       * *
+     * nyx
+       * *
+     * odium
+       * *
+     * prototype
+       * *
+     * reaver
+       * *
+     * sting
+       * *
+     * vox
+       * *
+     * zalek
+       * *
 
  * Author: SolCommand <http://solcommand.com>, License: CC-by 3.0
-   * gfx
-     * outfit
-       * store
-         * gaussgun.png
-         * gaussturret.png
-         * shredder.png
-         * vulcangun.png
-         * vulcanturret.png
+   * outfit
+     * store
+       * gaussgun.png
+       * gaussturret.png
+       * shredder.png
+       * vulcangun.png
+       * vulcanturret.png
 
  * Author: admiral_cheater, License: CC-by 3.0
-   * gfx
-     * outfit
-       * space
-         * fury.png
-       * store
-         * fury.png
-         * unicorp_fury_launcher.png
-         * teracom_fury_launcher.png
-         * turreted_fury_launcher.png
+   * outfit
+     * space
+       * fury.png
+     * store
+       * fury.png
+       * unicorp_fury_launcher.png
+       * teracom_fury_launcher.png
+       * turreted_fury_launcher.png
 
  * Author: antilope, License: CC-by-sa 3.0
-   * gfx
-     * planet
-       * space
-         * H04.png
-         * J09.png
-         * M10.png
-         * moon-X00.png
-         * O04.png
+   * planet
+     * space
+       * H04.png
+       * J09.png
+       * M10.png
+       * moon-X00.png
+       * O04.png
 
  * Author: PhoenixRiver, License: GPLv3
-   * gfx
-     * portraits
-       * neutral
-         * female1.png
+   * portraits
+     * neutral
+       * female1.png
 
  * Author: NASA, License: PD
-   * gfx
-     * bkg
-       * nebula02.png
-       * nebula04.png
-       * nebula10.png
-       * nebula12.png
-       * nebula16.png
-       * nebula17.png
-       * nebula19.png
+   * bkg
+     * nebula02.png
+     * nebula04.png
+     * nebula10.png
+     * nebula12.png
+     * nebula16.png
+     * nebula17.png
+     * nebula19.png
 
  * Author: NASA, License: PD (with modifications by PhoenixRiver (License: PD))
-   * gfx
-     * planet
-       * space
-         * D03.png
-         * D04.png
-         * D05.png
-         * D06.png
-         * D07.png
-         * asteroid-D00.png
-         * asteroid-D01.png
-         * asteroid-D02.png
-         * asteroid-D03.png
-         * asteroid-D04.png
-         * asteroid-D05.png
-         * asteroid-D06.png
-         * asteroid-D07.png
-         * asteroid-D08.png
-         * asteroid-D09.png
-         * asteroid-D10.png
-         * asteroid-D11.png
-         * asteroid-D12.png
-         * asteroid-D13.png
-         * asteroid-D14.png
-         * asteroid-D15.png
-         * asteroid-D16.png
-         * asteroid-D17.png
-         * asteroid-D18.png
-         * asteroid-D19.png
-         * asteroid-D20.png
-         * asteroid-D21.png
-         * asteroid-D22.png
-         * asteroid-D23.png
-         * asteroid-D24.png
-         * asteroid-D25.png
-         * asteroid-D26.png
-         * asteroid-D27.png
-         * asteroid-D28.png
-         * asteroid-D29.png
-         * asteroid-D30.png
-         * asteroid-D31.png
-         * asteroid-D32.png
-         * asteroid-D33.png
-         * asteroid-D34.png
-         * asteroid-D35.png
-         * asteroid-D36.png
-         * asteroid-D37.png
-         * asteroid-D38.png
-         * asteroid-D39.png
-         * asteroid-D40.png
-         * asteroid-D41.png
-         * asteroid-D42.png
-         * asteroid-D43.png
-         * asteroid-D44.png
-         * asteroid-D45.png
-         * asteroid-D46.png
-         * asteroid-D47.png
-         * asteroid-D48.png
-         * asteroid-D49.png
-         * asteroid-D50.png
-         * asteroid-D51.png
-         * asteroid-D52.png
-         * asteroid-D53.png
-         * asteroid-D54.png
-         * asteroid-D55.png
-         * asteroid-D56.png
-         * asteroid-D57.png
-         * asteroid-D58.png
-         * asteroid-D59.png
-         * asteroid-D60.png
-         * asteroid-D61.png
-         * asteroid-D62.png
-         * asteroid-D63.png
+   * planet
+     * space
+       * D03.png
+       * D04.png
+       * D05.png
+       * D06.png
+       * D07.png
+       * asteroid-D00.png
+       * asteroid-D01.png
+       * asteroid-D02.png
+       * asteroid-D03.png
+       * asteroid-D04.png
+       * asteroid-D05.png
+       * asteroid-D06.png
+       * asteroid-D07.png
+       * asteroid-D08.png
+       * asteroid-D09.png
+       * asteroid-D10.png
+       * asteroid-D11.png
+       * asteroid-D12.png
+       * asteroid-D13.png
+       * asteroid-D14.png
+       * asteroid-D15.png
+       * asteroid-D16.png
+       * asteroid-D17.png
+       * asteroid-D18.png
+       * asteroid-D19.png
+       * asteroid-D20.png
+       * asteroid-D21.png
+       * asteroid-D22.png
+       * asteroid-D23.png
+       * asteroid-D24.png
+       * asteroid-D25.png
+       * asteroid-D26.png
+       * asteroid-D27.png
+       * asteroid-D28.png
+       * asteroid-D29.png
+       * asteroid-D30.png
+       * asteroid-D31.png
+       * asteroid-D32.png
+       * asteroid-D33.png
+       * asteroid-D34.png
+       * asteroid-D35.png
+       * asteroid-D36.png
+       * asteroid-D37.png
+       * asteroid-D38.png
+       * asteroid-D39.png
+       * asteroid-D40.png
+       * asteroid-D41.png
+       * asteroid-D42.png
+       * asteroid-D43.png
+       * asteroid-D44.png
+       * asteroid-D45.png
+       * asteroid-D46.png
+       * asteroid-D47.png
+       * asteroid-D48.png
+       * asteroid-D49.png
+       * asteroid-D50.png
+       * asteroid-D51.png
+       * asteroid-D52.png
+       * asteroid-D53.png
+       * asteroid-D54.png
+       * asteroid-D55.png
+       * asteroid-D56.png
+       * asteroid-D57.png
+       * asteroid-D58.png
+       * asteroid-D59.png
+       * asteroid-D60.png
+       * asteroid-D61.png
+       * asteroid-D62.png
+       * asteroid-D63.png
 
  * Author: Bobbens, License: PD (with modifications by PhoenixRiver (License: PD))
-   * gfx
-     * planet
-       * exterior
-         * asteroid.png
+   * planet
+     * exterior
+       * asteroid.png
 
-* Author: Ian D. Scott <ids1024>, License: PD
+ * Author: Ian D. Scott <ids1024>, License: PD
    * outfit
      * store
        * plating_cargo.png
