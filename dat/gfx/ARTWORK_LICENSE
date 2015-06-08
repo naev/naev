@@ -352,7 +352,18 @@
  * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv3
    * portraits
      * dvaered
+       * unique
+         * ka'def.png
+         * vicious.png
+         * zolo.png
+       * dv_civilian1.png 
+       * dv_civilian2.png 
+       * dv_general1.png 
        * dv_military_m1.png 
+       * dv_military_m2.png 
+       * dv_military_m3.png 
+       * dv_military_f1.png 
+       * dv_military_f1.png 
      * empire
        * unique
          * czesc.png
@@ -379,6 +390,10 @@
          * shifty_merchant.png
          * youngbusinessman.png
        * barman.png
+       * cyborg1.png
+       * cyborg2.png
+       * cyborg3.png
+       * female1.png
        * male1.png
        * miner1.png
        * miner2.png
@@ -387,6 +402,8 @@
        * thief2.png
        * thief3.png
      * pirate
+       * pirate_militia1.png
+       * pirate_militia2.png
        * pirate1.png
        * pirate2.png
        * pirate3.png
