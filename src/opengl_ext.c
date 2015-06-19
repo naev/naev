@@ -3,9 +3,9 @@
  */
 
 /**
- * @file opengl.c
+ * @file opengl_ext.c
  *
- * @brief This file handles most of the more generic opengl functions.
+ * @brief Handles opengl extensions.
  */
 
 

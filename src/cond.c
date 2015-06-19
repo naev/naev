@@ -3,9 +3,9 @@
  */
 
 /**
- * @file mission.c
+ * @file cond.c
  *
- * @brief Handles missions.
+ * @brief Handles lua conditionals.
  */
 
 

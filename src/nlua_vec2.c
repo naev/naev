@@ -3,9 +3,9 @@
  */
 
 /**
- * @file nlua_space.c
+ * @file nlua_vec2.c
  *
- * @brief Handles the Lua space bindings.
+ * @brief Handles the Lua vector handling bindings.
  *
  * These bindings control the planets and systems.
  */

@@ -3,9 +3,9 @@
  */
 
 /**
- * @file nmath.c
+ * @file nstring.c
  *
- * @brief Some math routines for naev.
+ * @brief Some string routines for naev.
  */
 
 #include "nstring.h"
