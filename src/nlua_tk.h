@@ -7,7 +7,7 @@
 #  define NLUA_TK_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 int nlua_loadTk( lua_State *L ); /* always read only */

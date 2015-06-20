@@ -45,7 +45,7 @@ void window_addImage( const unsigned int wid,
    wgt->render          = img_render;
    wgt->dat.img.image   = image;
    wgt->dat.img.border  = border;
-   wgt->dat.img.colour  = NULL; /* normal colour */
+   wgt->dat.img.colour  = cWhite; /* normal colour */
 
    /* position/size */
    wgt->w = (w > 0) ? w : ((image==NULL) ? 0 : wgt->dat.img.image->sw);
@@ -79,17 +79,14 @@ static void img_render( Widget* img, double bx, double by )
    /*
     * image
     */
-   gl_blitScale( img->dat.img.image,
-         x + (double)SCREEN_W/2.,
-         y + (double)SCREEN_H/2.,
-         w, h,
-         img->dat.img.colour );
+   gl_blitScale( img->dat.img.image, x, y,
+         w, h, &img->dat.img.colour );
 
    if (img->dat.img.border) {
       /* inner outline (outwards) */
       toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
          img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
-      /* outter outline */
+      /* outer outline */
       toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
             img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
    }
@@ -103,20 +100,20 @@ static void img_render( Widget* img, double bx, double by )
  *    @param name Name of the widget.
  */
 glTexture* window_getImage( const unsigned int wid, char* name )
-{  
+{
    Widget *wgt;
-   
+
    /* Get the widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return NULL;
-   
+
    /* Check the type. */
    if (wgt->type != WIDGET_IMAGE) {
       WARN("Trying to get image from non-image widget '%s'.", name);
       return NULL;
    }
-   
+
    /* Get the value. */
    return (wgt) ? wgt->dat.img.image : NULL;
 }
@@ -133,20 +130,20 @@ glTexture* window_getImage( const unsigned int wid, char* name )
  */
 void window_modifyImage( const unsigned int wid,
       char* name, glTexture* image, int w, int h )
-{  
+{
    Widget *wgt;
-   
+
    /* Get the widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
-   
+
    /* Check the type. */
    if (wgt->type != WIDGET_IMAGE) {
       WARN("Not modifying image on non-image widget '%s'.", name);
       return;
    }
-   
+
    /* Set the image. */
    wgt->dat.img.image = image;
 
@@ -166,22 +163,22 @@ void window_modifyImage( const unsigned int wid,
  *    @param colour New colour to use.
  */
 void window_imgColour( const unsigned int wid,
-      char* name, glColour* colour )
-{  
+      char* name, const glColour* colour )
+{
    Widget *wgt;
-   
+
    /* Get the widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
-   
+
    /* Check the type. */
    if (wgt->type != WIDGET_IMAGE) {
       WARN("Not modifying image on non-image widget '%s'.", name);
       return;
    }
-   
+
    /* Set the colour. */
-   wgt->dat.img.colour = colour;
+   wgt->dat.img.colour = *colour;
 }
 

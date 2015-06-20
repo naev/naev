@@ -88,11 +88,11 @@ end
 
 After the texts follow the functions.
 There are bascially two types, those defined inside this file and the API functions.
-The API functions can be found here: http://bobbens.dyndns.org/naev-lua/index.html
+The API functions can be found here: http://api.naev.org/
 You can usually identify them by their appearance for example:
-misn.accept ()
-system.cur ()
-misn.factions ()
+misn.accept ()
+system.cur ()
+misn.factions ()
 
 Notice the leading name followed by a dot and the functions name.
 API functions can be called from your mission without prior import or anything like that,
@@ -100,7 +100,6 @@ just call them using the correct syntax. You'll see a few examples later on.
 
 All other functions obviously have to be defined prior to use.
 
-The cli API is useless at this time.
 misn and evt provide very similar things, you should use misn for missions and evt for events respectively.
 
 
@@ -113,8 +112,11 @@ function create()
 end
 
  Create the mission - OBLIGATORY for every mission
+   This is the script entry point.
    You have to define this function and set a few basic parameters which
-   will be used by the bar, the mission computer and your board computer
+   will be used by the bar, the mission computer and your board computer.
+   For missions that are started in other ways, this function is simply
+   the entry point, and you can use it however you wish.
 
 
 
@@ -139,7 +141,7 @@ end
 
 
 function create ()
-   -- This will get called when the conditions in mission.xml are met.
+   -- This will get called when the conditions in mission.xml are met (or when the mission is initiated from another script).
    -- It is used to set up mission variables.
 
    -- Get the planet and system at which we currently are.
@@ -149,6 +151,15 @@ function create ()
    targetworld_sys = system.get("Gamma Polaris")
    targetworld = planet.get("Polaris Prime")
 
+   -- IMPORTANT: system claiming
+   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
+   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
+   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
+   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
+   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
+   if not misn.claim ( {targetworld_sys} ) then
+      abort() -- Note: this assumes you have an abort() function in your script. You may also just use misn.finish() here.
+   end
 
    -- Set a reward. This is just a useful variable, nothing special.
    reward = 10000
@@ -157,7 +168,7 @@ function create ()
    -- Set stuff up for the bar.
    -- Give our NPC a name and a portrait.
    misn.setNPC( npc_name, "scientist" )
-   -- Describe what the user should see when he clicks on the NPC in the bar.
+   -- Describe what the user should see when they click on the NPC in the bar.
    misn.setDesc( bar_desc )
 end
 
@@ -172,7 +183,7 @@ function accept ()
    end
 
    -- Check for cargo space and in case there isn't enough free space end the mission. It will keep showing up in the bar.
-   if player.freeCargo() <  3 then
+   if player.pilot():cargoFree() <  3 then
       tk.msg( title, not_enough_cargospace )
       misn.finish()
    end
@@ -180,7 +191,7 @@ function accept ()
    -- Add special mission cargo, name and quantity.
    -- The cargoID is a plain normal variable that holds this information.
    -- It can later be used to remove the cargo again.
-   cargoID = misn.addCargo( cargoname, 3 )
+   cargoID = misn.cargoAdd( cargoname, 3 )
 
    -- Set up mission information for the onboard computer and OSD.
    -- The OSD Title takes up to 11 signs.
@@ -192,7 +203,7 @@ function accept ()
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.setMarker( targetworld_sys )
+   misn.markerAdd( targetworld, "high")
 
 
    -- Add mission
@@ -208,7 +219,7 @@ function accept ()
    -- Set up hooks.
    -- These will be called when a certain situation occurs ingame.
    -- In this case whenever you land.
-   -- See http://bobbens.dyndns.org/naev-lua/modules/hook.html for further hooks.
+   -- See http://api.naev.org/modules/hook.html for further hooks.
    -- "land" is just the name of the function that will be called by this hook.
    hook.land("land")
 end
@@ -218,11 +229,11 @@ function land ()
    -- Are we at our destination?
    if planet.cur() == targetworld then
       -- If so, remove the mission cargo.
-      misn.rmCargo( cargoID )
-      -- Give the player his reward.
+      misn.cargoRm( cargoID )
+      -- Give the player their reward.
       player.pay( reward )
 
-      -- Pop up a window that tells the player that he finished the mission and got his reward.
+      -- Pop up a window that tells the player they finished the mission and got their reward.
       tk.msg( title, string.format(misn_accomplished, reward) )
 
       -- Mark the mission as successfully finished.
@@ -233,7 +244,7 @@ end
 -- This will be called when the player aborts the mission in the onboard computer.
 function abort ()
    -- Remove cargo.
-   misn.rmCargo( cargoID )
+   misn.cargoRm( cargoID )
    -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
    misn.finish( false )
 end

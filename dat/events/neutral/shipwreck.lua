@@ -1,8 +1,10 @@
 --[[
 -- Shipwreck Event
---
+-- 
 -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
 -- See dat/missions/neutral/spacefamily.lua
+-- 
+-- 12/02/2010 - Added visibility/highlight options for use in bigsystems (Anatolis)
 --]]
 
 lang = naev.lang()
@@ -38,6 +40,9 @@ function create ()
         v:setFaction("Derelict")
         v:disable()
         v:rename("Shipwrecked " .. shipname)
+        -- Added extra visibility for big systems (A.)
+        v:setVisplayer( true )
+        v:setHilight( true )
     end
 
     hook.timer(3000, "broadcast")
@@ -61,7 +66,7 @@ end
 function rescue()
     -- Player boards the shipwreck and rescues the crew, this spawns a new mission.
     hook.rm(bctimer)
-    evt.misnStart("The Space Family")
+    naev.missionStart("The Space Family")
     evt.finish(true)
 end
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fidelis IV">
+ <pos>
+  <x>15115.790698</x>
+  <y>-12230.952288</y>
+ </pos>
+ <GFX>
+  <space>moon-D00.png</space>
+  <exterior>station02.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

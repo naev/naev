@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Qorel Expanse">
+ <general>
+  <mass>0</mass>
+  <price>500000</price>
+  <description>This map contains the location of the jump points in and out of the Qorel expanse, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Acheron">
+   <jump>Terminus</jump>
+  </sys>
+  <sys name="Terminus">
+   <jump>Acheron</jump>
+  </sys>
+  <sys name="Pas">
+   <jump>Effetey</jump>
+  </sys>
+  <sys name="Provectus Nova">
+   <jump>Effetey</jump>
+  </sys>
+  <sys name="Effetey">
+   <jump>Pas</jump>
+   <jump>Provectus Nova</jump>
+  </sys>
+  <sys name="Gremlin">
+   <jump>Blacin</jump>
+  </sys>
+  <sys name="Blacin">
+   <jump>Gremlin</jump>
+  </sys>
+  <sys name="Blunderbuss">
+   <jump>Ekkodu</jump>
+  </sys>
+  <sys name="Ekkodu">
+   <jump>Blunderbuss</jump>
+  </sys>
+  <sys name="Torg">
+   <jump>Firk</jump>
+  </sys>
+  <sys name="Firk">
+   <jump>Torg</jump>
+  </sys>
+  <sys name="Vlexon">
+   <jump>Doowa</jump>
+  </sys>
+  <sys name="Salvador">
+   <jump>Doowa</jump>
+   <jump>Hakoi</jump>
+  </sys>
+  <sys name="Doowa">
+   <jump>Vlexon</jump>
+   <jump>Salvador</jump>
+  </sys>
+  <sys name="Hakoi">
+   <jump>Trask</jump>
+   <jump>Salvador</jump>
+  </sys>
+  <sys name="Trask">
+   <jump>Hakoi</jump>
+  </sys>
+ </specific>
+</outfit>

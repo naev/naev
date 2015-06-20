@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Perhelion Beta">
+ <pos>
+  <x>5109.740961</x>
+  <y>585.176343</y>
+ </pos>
+ <GFX>
+  <space>moon-M05.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

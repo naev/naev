@@ -1,5 +1,5 @@
 /*
- * See Licensing and Copmt_yright notice in naev.h
+ * See Licensing and Copyright notice in naev.h
  */
 
 /**
@@ -106,7 +106,7 @@ static uint32_t rng_timeEntropy (void)
    _ftime( &tb );
    i = tb.time * 1000 + tb.millitm;
 #else
-#error "Feature needs implementation on this Operating System for NAEV to work."
+#error "Feature needs implementation on this Operating System for Naev to work."
 #endif
    return i;
 }
@@ -208,7 +208,7 @@ double randfp (void)
  *
  *  N(x) =  1 - n(x)*(b1*t + b2*t^2 + b3*t^3 + b4*t^4 + b5*t^5) + Err
  *  where t = 1 / (1 + 0.2316419*x)
- *  
+ *
  * Maximum absolute error is 7.5e^-8.
  *
  *    @param x Value to calculate the normal of.
@@ -262,18 +262,18 @@ double Normal( double x )
 static const double a[] =
 {
    -3.969683028665376e+01,
-   2.209460984245205e+02,
+    2.209460984245205e+02,
    -2.759285104469687e+02,
-   1.383577518672690e+02,
+    1.383577518672690e+02,
    -3.066479806614716e+01,
-   2.506628277459239e+00
+    2.506628277459239e+00
 }; /**< Inverse normal coefficients. */
 static const double b[] =
 {
    -5.447609879822406e+01,
-   1.615858368580409e+02,
+    1.615858368580409e+02,
    -1.556989798598866e+02,
-   6.680131188771972e+01,
+    6.680131188771972e+01,
    -1.328068155288572e+01
 }; /**< Inverse normal coefficients. */
 static const double c[] =
@@ -282,15 +282,15 @@ static const double c[] =
    -3.223964580411365e-01,
    -2.400758277161838e+00,
    -2.549732539343734e+00,
-   4.374664141464968e+00,
-   2.938163982698783e+00
+    4.374664141464968e+00,
+    2.938163982698783e+00
 }; /**< Inverse normal coefficients. */
 static const double d[] =
 {
-   7.784695709041462e-03,
-   3.224671290700398e-01,
-   2.445134137142996e+00,
-   3.754408661907416e+00
+    7.784695709041462e-03,
+    3.224671290700398e-01,
+    2.445134137142996e+00,
+    3.754408661907416e+00
 }; /**< Inverse normal coefficients. */
 #define LOW 0.02425 /**< Low area threshold. */
 #define HIGH 0.97575 /**< High area threshold. */
@@ -312,31 +312,31 @@ double NormalInverse( double p )
       errno = ERANGE;
       return HUGE_VAL /* "infinity" */;
    }
-   /* Use different aproximations for different parts */
+   /* Use different approximations for different parts */
    else if (p < LOW) {
       /* Rational approximation for lower region */
       q = sqrt(-2*log(p));
       x = (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) /
-         ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+           ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
    }
    else if (p > HIGH) {
       /* Rational approximation for upper region */
       q  = sqrt(-2*log(1-p));
       x = -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) /
-         ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+            ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
    }
    else {
       /* Rational approximation for central region */
       q = p - 0.5;
       r = q*q;
       x = (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q /
-         (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+          (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
    }
 
    /* Full machine precision */
    e = 0.5 * erfc(-x / M_SQRT2) - p;
    u = e * 2.5066282746310002 /* sqrt(2*pi) */ * exp((x*x)/2);
-   x =  x - u/(1 + x*u/2);
+   x = x - u/(1 + x*u/2);
 
    return x;
 }

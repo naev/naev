@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="PSO">
+ <general>
+  <radius>14500.000000</radius>
+  <stars>400</stars>
+  <interference>50.000000</interference>
+  <nebula volatility="0.000000">300.000000</nebula>
+ </general>
+ <pos>
+  <x>92.652554</x>
+  <y>-901.081222</y>
+ </pos>
+ <assets>
+  <asset>PSO 1251</asset>
+  <asset>PSO 1324</asset>
+  <asset>PSO 2356</asset>
+  <asset>PSO 2434</asset>
+ </assets>
+ <jumps>
+  <jump target="Amaroq">
+   <pos x="-21607.690780" y="-15135.895743"/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Faust">
+   <pos x="22307.480886" y="2324.437919"/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Sultan">
+   <pos x="13426.403116" y="16833.176987"/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

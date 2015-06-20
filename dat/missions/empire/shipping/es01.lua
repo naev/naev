@@ -7,6 +7,8 @@
 
 ]]--
 
+include "dat/scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
@@ -14,7 +16,7 @@ else -- default english
    -- Mission details
    bar_desc = "You see Commander Soldner who is expecting you."
    misn_title = "Empire Shipping Delivery"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Pick up a package at %s in the %s system."
    misn_desc[2] = "Deliver the package to %s in the %s system." 
@@ -29,12 +31,12 @@ else -- default english
    text[1] = [[You approach Commander Soldner, who seems to be waiting for you.
 "Hello, ready for your next mission?"]]
    text[2] = [[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces."
-"The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %d credits."]]
+    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %d credits."]]
    text[3] = [["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]
-   text[4] = [[The packages labelled "Food" are loaded discretely onto your ship. Now to deliver them to %s in the %s system.]]
+   text[4] = [[The packages labelled "Food" are loaded discreetly onto your ship. Now to deliver them to %s in the %s system.]]
    text[5] = [[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to %s in the %s system to report to Commander Soldner.]]
    text[6] = [[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
-"If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]
+    "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]
    -- Errors
    errtitle = {}
    errtitle[1] = "Need More Space"
@@ -44,7 +46,18 @@ end
 
 
 function create ()
-   misn.setNPC( "Soldner", "soldner" )
+   -- Note: this mission does not make any system claims.
+
+   -- Planet targets
+   pickup,pickupsys  = planet.getLandable( "Selphod" )
+   dest,destsys      = planet.getLandable( "Cerberus" )
+   ret,retsys        = planet.getLandable( "Halir" )
+   if pickup==nil or dest==nil or ret==nil then
+      misn.finish(false)
+   end
+
+   -- Bar NPC
+   misn.setNPC( "Soldner", "empire/unique/soldner" )
    misn.setDesc( bar_desc )
 end
 
@@ -58,21 +71,19 @@ function accept ()
    misn.accept()
 
    -- target destination
-   pickup,pickupsys = planet.get( "Selphod" )
-   dest,destsys = planet.get( "Cerberus" )
-   ret,retsys = planet.get( "Polaris Prime" )
-   misn.setMarker(pickupsys)
+   misn_marker       = misn.markerAdd( pickupsys, "low" )
 
    -- Mission details
    misn_stage = 0
    reward = 50000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing
    tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
          dest:name(), destsys:name(), reward ))
+   misn.osdCreate(misn_title, {misn_desc[1]:format(pickup:name(),pickupsys:name())})
 
    -- Set up the goal
    tk.msg( title[1], text[3] )
@@ -84,33 +95,35 @@ end
 
 
 function land ()
-   landed = planet.get()
+   landed = planet.cur()
 
    if landed == pickup and misn_stage == 0 then
 
       -- Make sure player has room.
-      if player.freeCargo() < 3 then
-         tk.msg( errtitle[1], string.format( err[1], 3 - player.freeCargo() ) )
+      if pilot.cargoFree(player.pilot()) < 3 then
+         tk.msg( errtitle[1], string.format( err[1], 3 - pilot.cargoFree(player.pilot()) ) )
          return
       end
 
       -- Update mission
-      package = misn.addCargo("Packages", 3)
+      package = misn.cargoAdd("Packages", 3)
       misn_stage = 1
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
-      misn.setMarker(destsys)
+      misn.markerMove( misn_marker, destsys )
+      misn.osdCreate(misn_title, {misn_desc[2]:format(dest:name(),destsys:name())})
 
       -- Load message
       tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
-      if misn.rmCargo(package) then
+      if misn.cargoRm(package) then
 
          -- Update mission
          misn_stage = 2
          misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
-         misn.setMarker(retsys)
+         misn.markerMove( misn_marker, retsys )
+         misn.osdCreate(misn_title, {misn_desc[3]:format(ret:name(),retsys:name())})
 
          -- Some text
          tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )
@@ -120,7 +133,7 @@ function land ()
 
       -- Rewards
       player.pay(reward)
-      player.modFaction("Empire",5);
+      faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
       tk.msg(title[4], string.format(text[6], ret:name()) )
@@ -134,7 +147,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 1 then
 
@@ -157,7 +170,7 @@ function enter ()
          enemies()
       -- Enter after player
       else
-         t = misn.timerStart( "enemies", rnd.int( 2000, 5000 ) )
+         t = hook.timer(rnd.int( 2000, 5000 ) , "enemies")
       end
    end
 end

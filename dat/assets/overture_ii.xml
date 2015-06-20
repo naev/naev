@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Overture II">
+ <pos>
+  <x>2247.706032</x>
+  <y>9840.356839</y>
+ </pos>
+ <GFX>
+  <space>L00.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

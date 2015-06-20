@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nasano">
+ <pos>
+  <x>2139.919296</x>
+  <y>-2416.975071</y>
+ </pos>
+ <GFX>
+  <space>P03.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

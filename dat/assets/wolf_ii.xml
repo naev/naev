@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wolf II">
+ <pos>
+  <x>3714.113093</x>
+  <y>1291.286631</y>
+ </pos>
+ <GFX>
+  <space>moon-P02.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

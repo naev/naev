@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Tricon Zephyr Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>8</mass>
+  <price>135000</price>
+  <description>For light vessel pilots who demand unparalleled performance, Tricon's Zephyr is the engine of choice. Its best-in-class handling does come with the caveat of markedly increased power consumption, but those flying with Tricon engines can usually afford the requisite reactor upgrades.</description>
+  <gfx_store>afterburner</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>195</thrust>
+  <turn>160</turn>
+  <speed>345</speed>
+  <fuel>400</fuel>
+  <energy_usage>12</energy_usage>
+  <engine_limit>150</engine_limit>
+ </specific>
+</outfit>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vert">
+ <pos>
+  <x>5666.745964</x>
+  <y>7218.725573</y>
+ </pos>
+ <GFX>
+  <space>moon-M06.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

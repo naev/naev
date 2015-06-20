@@ -11,6 +11,14 @@
 #include <stdint.h>
 
 
+#define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
+
+
+typedef int64_t credits_t;
+#define CREDITS_MAX        INT64_MAX
+#define CREDITS_MIN        INT64_MIN
+#define CREDITS_PRI        PRIu64
+
 /**
  * @struct Commodity
  *
@@ -39,16 +47,20 @@ void commodity_free (void);
  * Economy stuff.
  */
 int economy_init (void);
+void economy_addQueuedUpdate (void);
+int economy_execQueued (void);
 int economy_update( unsigned int dt );
 int economy_refresh (void);
 void economy_destroy (void);
 
 
-/* 
+/*
  * Misc stuff.
  */
-void credits2str( char *str, uint64_t credits, int decimals );
+void credits2str( char *str, credits_t credits, int decimals );
+void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
+int commodity_compareTech( const void *commodity1, const void *commodity2 );
 
 
 #endif /* ECONOMY_H */

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Local System Map">
+ <general>
+  <mass>0</mass>
+  <price>5000</price>
+  <description>This map contains information about the local system.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="localmap">
+  <jump_detect>1.25</jump_detect>
+  <asset_detect>0.75</asset_detect>
+ </specific>
+</outfit>

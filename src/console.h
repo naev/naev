@@ -17,6 +17,7 @@ void cli_exit (void);
  * Misc.
  */
 void cli_open (void);
+void cli_addMessage( const char *msg );
 
 
 #endif /* CONSOLE_H */

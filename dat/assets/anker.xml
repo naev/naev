@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Anker">
+ <pos>
+  <x>15899.369441</x>
+  <y>15634.379950</y>
+ </pos>
+ <GFX>
+  <space>H02.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

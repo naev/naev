@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Skater">
+ <pos>
+  <x>-11245.776216</x>
+  <y>-13331.796276</y>
+ </pos>
+ <GFX>
+  <space>K04.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Originally, Skater was settled as a supply base for traffic between Feye and the systems beyond. This was in a time when the Soromid were still expanding into what is current day Soromid territory. Of course, the infrastructure has developed considerably since then, and Skater is no longer needed as a resupply base. But the colony is still there. The people who live here consider this their home now.</description>
+  <bar>Skater was never of much interest to visitors, but it can be a surprisingly good place to live. If you're a Soromid. The spaceport bar acts as a sort of low-profile tourist center, providing visitors with information about the colony and its environment. The local authorities hope to attract more people to the planet in order to grow the local economy.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+  <item>Laser 1</item>
+  <item>Engines High</item>
+ </tech>
+</asset>

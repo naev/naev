@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Naga">
+ <pos>
+  <x>9407.126919</x>
+  <y>-2318.658043</y>
+ </pos>
+ <GFX>
+  <space>O03.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>7500000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Naga is a purely aquatic planet. The land closest to the surface is under more than a mile of water. The planet is teeming with life of mind-bogling variety and type. The planets scientific and aesthetic value makes it one of the most favored Za'lek worlds.</description>
+  <bar>This bar is built on one of the upper decks of the underwater cities, with the entire ceiling being a window out into Naga's oceans. The sight is nothing short of breathtaking.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

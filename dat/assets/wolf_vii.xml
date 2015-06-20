@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wolf VII">
+ <pos>
+  <x>-4406.557961</x>
+  <y>-11646.599861</y>
+ </pos>
+ <GFX>
+  <space>K02.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

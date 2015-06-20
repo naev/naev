@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Vean">
+ <general>
+  <radius>10000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>817.000000</x>
+  <y>473.000000</y>
+ </pos>
+ <assets>
+  <asset>HS-24</asset>
+  <asset>NS-63</asset>
+  <asset>SY-19</asset>
+  <asset>Vean I</asset>
+  <asset>Vean II</asset>
+ </assets>
+ <jumps>
+  <jump target="Aesria">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Flow">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Nava">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

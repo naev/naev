@@ -86,8 +86,7 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    gl_vbo *vbo;
 
    /* Allocate. */
-   vbo = malloc( sizeof(gl_vbo) );
-   memset( vbo, 0, sizeof(gl_vbo) );
+   vbo = calloc( 1, sizeof(gl_vbo) );
 
    /* General stuff. */
    vbo->size = size;
@@ -171,9 +170,8 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
       nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
       nglBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
    }
-   else {
+   else
       memcpy( &vbo->data[offset], data, size );
-   }
 
    /* Check for errors. */
    gl_checkErr();
@@ -189,7 +187,7 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
 gl_vbo* gl_vboCreateStream( GLsizei size, void* data )
 {
    gl_vbo *vbo;
-   
+
    vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW );
    vbo->type = NGL_VBO_STREAM;
 
@@ -209,7 +207,7 @@ gl_vbo* gl_vboCreateStream( GLsizei size, void* data )
 gl_vbo* gl_vboCreateStatic( GLsizei size, void* data )
 {
    gl_vbo *vbo;
-   
+
    vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW );
    vbo->type = NGL_VBO_STATIC;
 
@@ -311,13 +309,13 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
 
       case GL_TEXTURE0:
          nglClientActiveTexture( GL_TEXTURE0 );
-         glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
          glTexCoordPointer( size, type, stride, pointer );
          break;
 
       case GL_TEXTURE1:
          nglClientActiveTexture( GL_TEXTURE1 );
-         glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
          glTexCoordPointer( size, type, stride, pointer );
          break;
 

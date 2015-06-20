@@ -19,6 +19,7 @@ docs/lua/*.luadoc
 *.in
 *Makefile
 *.deps/
+src/.dirstamp
 src/stamp-h1
 src/config.h
 src/config.h.in~
@@ -29,4 +30,18 @@ config.log
 config.status
 configure
 m4/pkg.m4
-m4/sdl.m4
+naev_csv
+/*.dll
+/*.exe
+asset.xml
+ssys.xml
+stderr.txt
+stdout.txt
+.DS_Store
+*.pbxuser
+*.mode1v3
+extras/macosx/build/
+extras/.dirstamp
+datapath.lua
+core
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tartarus">
+ <pos>
+  <x>-5198.420582</x>
+  <y>-5218.858043</y>
+ </pos>
+ <GFX>
+  <space>moon-H00.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>125.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>100100</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Tartarus is a hard place to live, and for that reason the Imperial Hostile Enviroment Training Center is located here. Casualties are distressingly high, but those that do come out whole are so much the better for it. After all, it's hard to find a world worse than Tartarus.</description>
+  <bar>Trainers and students alike unwind here after a hard day's "work", doing things that no sane human being would consider. That they seem so relaxed about this is enough to chill anyone.</bar>
+ </general>
+</asset>

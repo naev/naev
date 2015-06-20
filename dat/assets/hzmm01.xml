@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="HZMM-01">
+ <pos>
+  <x>7054.425087</x>
+  <y>2844.189863</y>
+ </pos>
+ <GFX>
+  <space>moon-J01.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>12.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>750</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>This small moon is a mining world run by House Za'lek; it is regarded as so insignificant that it does not even have a formal name yet, and likely never will.</description>
+ </general>
+</asset>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jemard">
+ <pos>
+  <x>-5923.799568</x>
+  <y>-7950.928562</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>50000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Jernard is the moon orbiting the first planet of the Kansas system. It's a hot place, but despite that it's remarkably stable. That, combined with the low gravity, has prompted a commercial producer of starships to set up a manufacturing plant here.</description>
+  <bar>Though the spaceport bar is constantly air conditioned, the temperature is still uncomfortably high. Some visitors have voiced concerns about the reliability of the cooling system. Should it ever fail, pilots may not make it back to their ships before being cooked alive.</bar>
+ </general>
+ <tech>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

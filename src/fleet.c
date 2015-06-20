@@ -14,7 +14,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -27,7 +27,6 @@
 #include "rng.h"
 
 
-#define FLEET_DATA      "dat/fleet.xml" /**< Where to find fleet data. */
 
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
@@ -50,54 +49,19 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent );
  *    @return The fleet matching name or NULL if not found.
  */
 Fleet* fleet_get( const char* name )
-{  
+{
    int i;
-   
+
    for (i=0; i<nfleets; i++)
       if (strcmp(fleet_stack[i].name, name)==0)
          return &fleet_stack[i];
-   
+
    return NULL;
 }
 
 
 /**
- * @brief Grabs a (for now) random fleet out of the stack for the faction.
- *
- *    @param faction Which faction to get a fleet for.
- *    @return a pointer to a fleet, or NULL if not found.
- */
-Fleet* fleet_grab( const int faction )
-{
-   Fleet* fleet;
-   int inf = 0;
-   int rnd;
-
-   /* Check for a legal faction. */
-   if(!faction_isFaction(faction)) {
-      WARN("%i is not a faction.", faction);
-      return NULL;
-   }
-
-   /* Try to find a fleet of the faction. */
-   while(1) {
-      /* Check for infinite loop. */
-      if(inf > 100 * nfleets) {
-         WARN("Could not find a fleet for faction %s.", faction_name(faction));
-         return NULL;
-      }
-      inf++;
-
-      /* Get a fleet and check its faction. */
-      rnd = RNGF() * (nfleets - 0.01);
-      fleet = &fleet_stack[rnd];
-   }
-
-   return fleet;
-}
-
-/**
- * @brief Creates a pilot belonging to afleet.
+ * @brief Creates a pilot belonging to a fleet.
  *
  *    @param flt Fleet to which pilot belongs to.
  *    @param plt Pilot to create.
@@ -106,7 +70,7 @@ Fleet* fleet_grab( const int faction )
  *    @param vel Initial velocity.
  *    @param ai AI to use (NULL is default).
  *    @param flags Flags to create with.
- *    @param systemFLeeet System fleet the pilot belongs to.
+ *    @param systemFleet System fleet the pilot belongs to.
  *    @return The ID of the pilot created.
  *
  * @sa pilot_create
@@ -153,7 +117,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
    if (temp->name == NULL)
-      WARN("Fleet in "FLEET_DATA" has invalid or no name");
+      WARN("Fleet in "FLEET_DATA_PATH" has invalid or no name");
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -166,22 +130,26 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
+      if (ai_getProfile ( temp->ai ) == NULL)
+         WARN("Fleet '%s' has invalid AI '%s'.", temp->name, temp->ai );
 
       /* Set flags. */
-      if (xml_isNode(node,"flags")){
-         cur = node->children;     
+      if (xml_isNode(node,"flags")) {
+         cur = node->children;
          do {
-            if (xml_isNode(cur,"guard"))
-               fleet_setFlag(temp, FLEET_FLAG_GUARD);
+            xml_onlyNodes(cur);
+            WARN("Fleet '%s' has unknown flag node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
 
       /* Load pilots. */
       else if (xml_isNode(node,"pilots")) {
-         cur = node->children;     
+         cur = node->children;
          mem = 0;
          do {
+            xml_onlyNodes(cur);
+
             if (xml_isNode(cur,"pilot")) {
 
                /* See if must grow. */
@@ -199,7 +167,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                xmlr_attr(cur,"name",c);
                pilot->name = c; /* No need to free since it will have to later */
 
-               /* Check for ai override */
+               /* Check for AI override */
                xmlr_attr(cur,"ai",pilot->ai);
 
                /* Load pilot's ship */
@@ -211,7 +179,10 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                   WARN("Pilot %s in Fleet %s has invalid ship", pilot->name, temp->name);
                if (c!=NULL)
                   free(c);
+               continue;
             }
+
+            WARN("Fleet '%s' has unknown pilot node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
 
          /* Resize to minimum. */
@@ -246,25 +217,25 @@ static int fleet_loadFleets (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
- 
+
    /* Load the data. */
-   buf = ndata_read( FLEET_DATA, &bufsize);
+   buf = ndata_read( FLEET_DATA_PATH, &bufsize);
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode; /* fleets node */
    if (strcmp((char*)node->name,"Fleets")) {
-      ERR("Malformed "FLEET_DATA" file: missing root element 'Fleets'.");
+      ERR("Malformed "FLEET_DATA_PATH" file: missing root element 'Fleets'.");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first fleet node */
    if (node == NULL) {
-      ERR("Malformed "FLEET_DATA" file: does not contain elements.");
+      ERR("Malformed "FLEET_DATA_PATH" file: does not contain elements.");
       return -1;
    }
 
    mem = 0;
-   do { 
+   do {
       if (xml_isNode(node,"fleet")) {
          /* See if memory must grow. */
          nfleets++;

@@ -5,13 +5,49 @@
 
 ]]--
 
+lang = naev.lang()
+if lang == 'es' then
+else --default english
+
+    articles={}
+
+    articles=
+    {
+
+    {
+        "Empire",
+        "Dvaered forces engaged in combat with small terrorist group",
+        "In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked and damaged by a small group of underequipped and unorganized FLF, in the Tuoladis system. The Dvaered managed to lose many tens of millions of credits worth in ships and crew to the small gang worth of ships and equipment, and the relative victory of the FLF will only embolden them, leading to more internal strife and violence.",
+        time.get()+time.create(0,30,0)
+    },
+
+    {
+        "Dvaered",
+        "FLF terrorists blasted by joint Dvaered military forces",
+        "A Dvaered patrol in Tuoladis was ambushed by a large gang of FLF terrorists. The Dvaered patrol held  under the assault, until the mighty hammer that is the Dvaered forces came down and crushed the FLF terrorists in a mighty victory. This incident shows the willigness of the terrorists to attack us and kill whomever they please. The Dvaered military is always ready to protect its citizens and kill and conqeur those who would harm them.",
+        time.get()+time.create(0,30,0)
+    },
+
+    {
+        "Frontier",
+        "Dvaered forces engage FLF freedom fighters in open combat",
+        "A small group of FLF freedom fighters was beset by a Dvaered patrol in Tuoladis, who immediately called backup. The situation escalated, and a large scale battle occured, where the Dvaered forces lost tens of millions of credits worth in ships. This marks the first time FLF freedom fighters have had the ships and weapons to stand toe to toe against the Dvaered, and shall server as an example for all who dare to stand for freedom, in life or death.",
+        time.get()+time.create(0,30,0)
+    },
+
+    {
+        "Independent",
+        "Dvaered, FLF clash in Tuoladis",
+        "In a chance encounter, a Dvaered patrol encountered a group of FLF. The small skirmish quickly escalated to a large scale battle many dozens large, in which the Dvaered proclaimed to have won. The Dvaered High Command used the event as an excuse to call for military action against the frontier worlds.",
+        time.get()+time.create(0,30,0)
+    }
+
+    }
+
+end
+
+
 function create ()
-    dakron = system.get("Dakron")
-    tarsus = system.get("Tarsus")
-    torg = system.get("Torg")
-    tuoladis = system.get("Tuoladis")
-    ogat = system.get("Ogat")
-    
     pilot.clear()
     pilot.toggleSpawn(false)
     
@@ -23,24 +59,16 @@ function create ()
     hook.timer(3000, "FLFSpawn")
     
     hook.timer(12000, "DvaeredSpawn")
+
+    news.add(articles)
     
     hook.jumpout("leave")
     hook.land("leave")
 end
 
 function FLFSpawn ()
-    if flfwave == 1 then
-        source_system = tuoladis
-    elseif flfwave == 2 then
-        source_system = tuoladis
-    elseif flfwave == 3 then
-        source_system = dakron
-    elseif flfwave == 4 then
-        source_system = dakron
-    else
-        source_system = dakron
-    end
-    
+    source_system = system.get("Zacron")
+
     flfguys[flfwave] = {}
     flfguys[flfwave][1] = pilot.add("FLF Vendetta", nil, source_system)[1]
     flfguys[flfwave][2] = pilot.add("FLF Vendetta", nil, source_system)[1]
@@ -57,17 +85,8 @@ function FLFSpawn ()
 end
 
 function DvaeredSpawn ()
-    if dvaeredwave == 1 then
-        source_system = tarsus
-    elseif dvaeredwave == 2 then
-        source_system = tarsus
-    elseif dvaeredwave == 3 then
-        source_system = torg
-    elseif dvaeredwave == 4 then
-        source_system = torg
-    else
-        source_system = ogat
-    end
+    source_system = system.get("Doranthex")
+
     dvaeredguys[dvaeredwave] = {}
     dvaeredguys[dvaeredwave][1] = pilot.add("Dvaered Vendetta", nil, source_system)[1]
     dvaeredguys[dvaeredwave][2] = pilot.add("Dvaered Vendetta", nil, source_system)[1]

@@ -8,11 +8,12 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "opengl.h"
 #include "font.h"
+#include "array.h"
 
 
 /**
@@ -28,9 +29,8 @@ typedef struct OSDmsg_s {
  * @brief On Screen Display element.
  */
 typedef struct OSD_s {
-   struct OSD_s *next; /**< Next OSD in the linked list. */
-
    unsigned int id; /**< OSD id. */
+   int priority; /**< Priority level. */
    char *title; /**< Title of the OSD. */
 
    char **msg; /**< Stored messages. */
@@ -55,6 +55,8 @@ static int osd_x = 0;
 static int osd_y = 0;
 static int osd_w = 0;
 static int osd_h = 0;
+static int osd_lines = 0;
+static int osd_rh = 0;
 static int osd_tabLen = 0;
 static int osd_hyphenLen = 0;
 
@@ -64,6 +66,61 @@ static int osd_hyphenLen = 0;
  */
 static OSD_t *osd_get( unsigned int osd );
 static int osd_free( OSD_t *osd );
+static void osd_calcDimensions (void);
+/* Sort. */
+static int osd_sortCompare( const void * arg1, const void * arg2 );
+static void osd_sort (void);
+
+
+static int osd_sortCompare( const void *arg1, const void *arg2 )
+{
+   const OSD_t *osd1, *osd2;
+   int ret, i, m;
+
+   osd1 = (OSD_t*)arg1;
+   osd2 = (OSD_t*)arg2;
+
+   /* Compare priority. */
+   if (osd1->priority > osd2->priority)
+      return +1;
+   else if (osd1->priority < osd2->priority)
+      return -1;
+
+   /* Compare name. */
+   ret = strcmp( osd1->title, osd2->title );
+   if (ret != 0)
+      return ret;
+
+   /* Compare items. */
+   m = MIN(osd1->nitems, osd2->nitems);
+   for(i=0; i<m; i++) {
+      ret = strcmp( osd1->msg[i], osd2->msg[i] );
+      if (ret != 0)
+         return ret;
+   }
+
+   /* Compare on length. */
+   if (osd1->nitems > osd2->nitems)
+      return +1;
+   if (osd1->nitems < osd2->nitems)
+      return -1;
+
+   /* Compare ID. */
+   if (osd1->id > osd2->id)
+      return +1;
+   else if (osd1->id < osd2->id)
+      return -1;
+   return 0;
+}
+
+
+/**
+ * @brief Sorts the OSD list.
+ */
+static void osd_sort (void)
+{
+   qsort( osd_list, array_size(osd_list), sizeof(OSD_t), osd_sortCompare );
+}
 
 
 /**
@@ -74,19 +131,22 @@ static int osd_free( OSD_t *osd );
  *    @param items Items in the display.
  *    @return ID of newly created OSD.
  */
-unsigned int osd_create( const char *title, int nitems, const char **items )
+unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, j, n, m, l, s, w, t;
-   OSD_t *osd, *ll;
+   int i, j, n, m, l, s, w, t, id;
+   OSD_t *osd;
 
    /* Create. */
-   osd         = calloc( 1, sizeof(OSD_t) );
-   osd->next   = NULL;
+   if (osd_list == NULL)
+      osd_list = array_create( OSD_t );
+   osd         = &array_grow( &osd_list );
+   memset( osd, 0, sizeof(OSD_t) );
    osd->id     = ++osd_idgen;
    osd->active = 0;
 
    /* Copy text. */
    osd->title  = strdup(title);
+   osd->priority = priority;
    osd->msg    = malloc( sizeof(char*) * nitems );
    osd->items  = malloc( sizeof(OSDmsg_s) * nitems );
    osd->nitems = nitems;
@@ -121,7 +181,10 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
             w -= osd_hyphenLen;
 
          if (j+1 > m) {
-            m += 32;
+            if (m==0)
+               m = 32;
+            else
+               m *= 2;
             osd->items[i].chunks = realloc( osd->items[i].chunks, m * sizeof(char*));
          }
 
@@ -129,20 +192,20 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
          if (j==0) {
             if (t==1) {
                osd->items[i].chunks[j] = malloc(s+4);
-               snprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
+               nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
             }
             else {
                osd->items[i].chunks[j] = malloc(s+3);
-               snprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
+               nsnprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
             }
          }
          else if (t==1) {
             osd->items[i].chunks[j] = malloc(s+4);
-            snprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
+            nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
          }
          else {
             osd->items[i].chunks[j] = malloc(s+1);
-            snprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
+            nsnprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
          }
 
          /* Go to next line. */
@@ -152,15 +215,14 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
       osd->items[i].nchunks = j;
    }
 
-   /* Append to linked list. */
-   if (osd_list == NULL)
-      osd_list = osd;
-   else {
-      for (ll = osd_list; ll->next != NULL; ll = ll->next);
-      ll->next = osd;
-   }
+   /* Sort them buggers. */
+   id = osd->id; /* WE MUST SAVE THE ID BEFORE WE SORT. Or we get stuck with an invalid osd pointer. */
+   osd_sort();
 
-   return osd->id;
+   /* Recalculate dimensions. */
+   osd_calcDimensions();
+
+   return id;
 }
 
 
@@ -171,16 +233,17 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
  */
 static OSD_t *osd_get( unsigned int osd )
 {
+   int i;
    OSD_t *ll;
 
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   for (i=0; i<array_size(osd_list); i++) {
+      ll = &osd_list[i];
       if (ll->id == osd)
-         break;
+         return ll;
    }
 
-   if (ll == NULL)
-      WARN("OSD '%d' not found.", osd);
-   return ll;
+   WARN("OSD '%d' not found.", osd);
+   return NULL;
 }
 
 
@@ -203,8 +266,6 @@ static int osd_free( OSD_t *osd )
    free(osd->msg);
    free(osd->items);
 
-   free(osd);
-
    return 0;
 }
 
@@ -216,31 +277,33 @@ static int osd_free( OSD_t *osd )
  */
 int osd_destroy( unsigned int osd )
 {
-   OSD_t *ll, *lp;
+   int i;
+   OSD_t *ll;
 
-   lp = NULL;
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   for (i=0; i<array_size( osd_list ); i++) {
+      ll = &osd_list[i];
+      if (ll->id != osd)
+         continue;
 
-      /* Matches. */
-      if (ll->id == osd) {
+      /* Clean up. */
+      osd_free( &osd_list[i] );
 
-         /* Remove from list. */
-         if (lp == NULL)
-            osd_list = ll->next;
-         else
-            lp->next = ll->next;
+      /* Remove. */
+      array_erase( &osd_list, &osd_list[i], &osd_list[i+1] );
 
-         /* Free. */
-         osd_free( ll );
+      /* Recalculate dimensions. */
+      osd_calcDimensions();
 
-         return 0;
-      }
+      /* Remove the OSD, if empty. */
+      if (array_size(osd_list) == 0)
+         osd_exit();
 
-      /* Save last iteration. */
-      lp = ll;
+      /* Done here. */
+      return 0;
    }
 
-   return -1;
+   WARN("OSD '%u' not found to destroy.", osd );
+   return 0;
 }
 
 
@@ -249,7 +312,7 @@ int osd_destroy( unsigned int osd )
  *
  *    @param osd OSD to change active message.
  *    @param msg Message to make active in OSD.
- *    @return 0 on succcess.
+ *    @return 0 on success.
  */
 int osd_active( unsigned int osd, int msg )
 {
@@ -301,7 +364,8 @@ int osd_setup( int x, int y, int w, int h )
    osd_x = x;
    osd_y = y;
    osd_w = w;
-   osd_h = h;
+   osd_lines = h / (gl_smallFont.h+5);
+   osd_h = h - h % (gl_smallFont.h+5);
 
    /* Calculate some font things. */
    osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
@@ -316,8 +380,19 @@ int osd_setup( int x, int y, int w, int h )
  */
 void osd_exit (void)
 {
-   while (osd_list != NULL)
-      osd_destroy(osd_list->id);
+   int i;
+   OSD_t *ll;
+
+   if (osd_list == NULL)
+      return;
+
+   for (i=0; i<array_size(osd_list); i++) {
+      ll = &osd_list[i];
+      osd_free( ll );
+   }
+
+   array_free( osd_list );
+   osd_list = NULL;
 }
 
 
@@ -328,24 +403,30 @@ void osd_render (void)
 {
    OSD_t *ll;
    double p;
-   int i, j;
+   int i, j, k, l;
    int w, x;
-   glColour *c;
+   const glColour *c;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
+   /* Background. */
+   gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
+
    /* Render each thingy. */
-   p = osd_y;
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   p = osd_y-gl_smallFont.h;
+   l = 0;
+   for (k=0; k<array_size(osd_list); k++) {
+      ll = &osd_list[k];
       x = osd_x;
       w = osd_w;
 
       /* Print title. */
       gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
       p -= gl_smallFont.h + 5.;
-      if (p < osd_y-osd_h)
+      l++;
+      if (l >= osd_lines)
          return;
 
       /* Print items. */
@@ -361,7 +442,8 @@ void osd_render (void)
                x = osd_x + osd_hyphenLen;
             }
             p -= gl_smallFont.h + 5.;
-            if (p < osd_y-osd_h)
+            l++;
+            if (l >= osd_lines)
                return;
          }
       }
@@ -370,10 +452,40 @@ void osd_render (void)
 
 
 /**
+ * @brief Calculates and sets the length of the OSD.
+ */
+static void osd_calcDimensions (void)
+{
+   OSD_t *ll;
+   int i, j, k;
+   double len;
+
+   /* Nothing to render. */
+   if (osd_list == NULL)
+      return;
+
+   /* Render each thingy. */
+   len = 0;
+   for (k=0; k<array_size(osd_list); k++) {
+      ll = &osd_list[k];
+
+      /* Print title. */
+      len += gl_smallFont.h + 5.;
+
+      /* Print items. */
+      for (i=0; i<ll->nitems; i++)
+         for (j=0; j<ll->items[i].nchunks; j++)
+            len += gl_smallFont.h + 5.;
+   }
+   osd_rh = MIN( len, osd_h );
+}
+
+
+/**
  * @brief Gets the title of an OSD.
  *
  *    @param osd OSD to get title of.
- *    @return Title of the OSd.
+ *    @return Title of the OSD.
  */
 char *osd_getTitle( unsigned int osd )
 {
@@ -391,7 +503,7 @@ char *osd_getTitle( unsigned int osd )
  * @brief Gets the items of an OSD.
  *
  *    @param osd OSD to get items of.
- *    @param[out] nitems Numeb of OSD items.
+ *    @param[out] nitems Number of OSD items.
  */
 char **osd_getItems( unsigned int osd, int *nitems )
 {

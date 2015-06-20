@@ -12,7 +12,7 @@
  * print it all, print to a max width, print centered or print a
  * block of text.
  *
- * There are hardcoded size limits.  256 characters for all routines
+ * There are hard-coded size limits.  256 characters for all routines
  * except gl_printText which has a 1024 limit.
  *
  * @todo check if length is too long
@@ -31,30 +31,33 @@
 #include "ndata.h"
 
 
-#define FONT_DEF  "dat/font.ttf" /**< Default font path. */
-
-
 /**
  * @brief Stores a font character.
  */
 typedef struct font_char_s {
-   GLubyte *data;
-   int w;
-   int h;
-   int off_x;
-   int off_y;
-   int adv_x;
-   int adv_y;
-   int tx;
-   int ty;
-   int tw;
-   int th;
+   GLubyte *data; /**< Data of the character. */
+   int w; /**< Width. */
+   int h; /**< Height. */
+   int off_x; /**< X offset when rendering. */
+   int off_y; /**< Y offset when rendering. */
+   int adv_x; /**< X advancement. */
+   int adv_y; /**< Y advancement. */
+   int tx; /**< Texture x position. */
+   int ty; /**< Texture y position. */
+   int tw; /**< Texture width. */
+   int th; /**< Texture height. */
 } font_char_t;
 
 
 /* default font */
 glFont gl_defFont; /**< Default font. */
 glFont gl_smallFont; /**< Small font. */
+glFont gl_defFontMono; /**< Default mono font. */
+
+
+/* Last used colour. */
+static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\e'). */
+static int font_restoreLast      = 0; /**< Restore last colour. */
 
 
 /*
@@ -62,10 +65,92 @@ glFont gl_smallFont; /**< Small font. */
  */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
+static const glColour* gl_fontGetColour( int ch );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
+
+
+/**
+ * @brief Clears the restoration.
+ */
+void gl_printRestoreClear (void)
+{
+   font_lastCol = NULL;
+}
+
+
+/**
+ * @brief Restores last colour.
+ */
+void gl_printRestoreLast (void)
+{
+   if (font_lastCol != NULL)
+      font_restoreLast = 1;
+}
+
+
+/**
+ * @brief Initializes a restore structure.
+ *    @param restore Structure to initialize.
+ */
+void gl_printRestoreInit( glFontRestore *restore )
+{
+   memset( restore, 0, sizeof(glFontRestore) );
+}
+
+
+/**
+ * @brief Restores last colour from a restore structure.
+ *    @param restore Structure to restore.
+ */
+void gl_printRestore( const glFontRestore *restore )
+{
+   if (restore->col != NULL) {
+      font_lastCol = restore->col;
+      font_restoreLast = 1;
+   }
+}
+
+
+/**
+ * @brief Stores the colour information from a piece of text limited to max characters.
+ *    @param restore Structure to save colour information to.
+ *    @param text Text to extract colour information from.
+ *    @param max Maximum number of characters to process.
+ */
+void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
+{
+   int i;
+   const glColour *col;
+
+   col = restore->col; /* Use whatever is there. */
+   for (i=0; (text[i]!='\0') && (i<=max); i++) {
+      /* Only want escape sequences. */
+      if (text[i] != '\e')
+         continue;
+
+      /* Get colour. */
+      if ((i+1<=max) && (text[i+1]!='\0')) {
+         col = gl_fontGetColour( text[i+1] );
+         i += 1;
+      }
+   }
+
+   restore->col = col;
+}
+
+
+/**
+ * @brief Stores the colour information from a piece of text.
+ *    @param restore Structure to save colour information to.
+ *    @param text Text to extract colour information from.
+ */
+void gl_printStore( glFontRestore *restore, const char *text )
+{
+   gl_printStoreMax( restore, text, INT_MAX );
+}
 
 
 /**
@@ -92,8 +177,6 @@ static int font_limitSize( const glFont *ft_font, int *width,
       /* Ignore escape sequence. */
       if (text[i] == '\e') {
          if (text[i+1] != '\0')
-            i += 2;
-         else
             i += 1;
          continue;
       }
@@ -232,7 +315,7 @@ void gl_print( const glFont *ft_font,
 
 
 /**
- * @brief Behavise like gl_printRaw but stops displaying text after a certain distance.
+ * @brief Behaves like gl_printRaw but stops displaying text after a certain distance.
  *
  *    @param ft_font Font to use.
  *    @param max Maximum length to reach.
@@ -248,8 +331,6 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
 {
    int ret, i, s;
 
-   ret = 0; /* default return value */
-
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
@@ -263,10 +344,10 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 
-   return 0;
+   return ret;
 }
 /**
- * @brief Behavise like gl_print but stops displaying text after reaching a certain length.
+ * @brief Behaves like gl_print but stops displaying text after reaching a certain length.
  *
  *    @param ft_font Font to use (NULL means use gl_defFont).
  *    @param max Maximum length to reach.
@@ -283,9 +364,6 @@ int gl_printMax( const glFont *ft_font, const int max,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
-   int ret;
-
-   ret = 0; /* default return value */
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -321,8 +399,6 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   ret = 0; /* default return value */
-
    /* limit size */
    ret = font_limitSize( ft_font, &n, text, width );
    x += (double)(width - n)/2.;
@@ -334,7 +410,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 
-   return 0;
+   return ret;
 }
 /**
  * @brief Displays text centered in position and width.
@@ -386,7 +462,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *text )
+      const glColour* c, const char *text )
 {
    int ret, i, p, s;
    double x,y;
@@ -397,10 +473,16 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
+   /* Clears restoration. */
+   gl_printRestoreClear();
+
    s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       ret = gl_printWidthForText( ft_font, &text[p], width );
+
+      /* Must restore stuff. */
+      gl_printRestoreLast();
 
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
@@ -439,7 +521,7 @@ int gl_printTextRaw( const glFont *ft_font,
 int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *fmt, ... )
+      const glColour* c, const char *fmt, ... )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[4096]; /* holds the string */
@@ -476,9 +558,8 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       /* Ignore escape sequence. */
       if (text[i] == '\e') {
          if (text[i+1] != '\0')
-            i += 2;
-         else
-            i += 1;
+            i++;
+
          continue;
       }
 
@@ -629,10 +710,10 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    int offset;
    GLubyte *data;
    GLfloat *vbo_tex;
-   GLint *vbo_vert;
+   GLshort *vbo_vert;
    GLfloat tx, ty, txw, tyh;
    GLfloat fw, fh;
-   GLint vx, vy, vw, vh;
+   GLshort vx, vy, vw, vh;
 
    /* Render characters into software. */
    total_w  = 0;
@@ -672,9 +753,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
             h += max_h;
 
             /* POT needs even more. */
-            if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
+            if (1) /*gl_needPOT()) */ /** @TODO fix this stuff. */
                h = gl_pot(h);
-            }
          }
       }
 
@@ -745,7 +825,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    /* Create the VBOs. */
    n           = 8 * 128;
    vbo_tex     = malloc(sizeof(GLfloat) * n);
-   vbo_vert    = malloc(sizeof(GLint) * n);
+   vbo_vert    = malloc(sizeof(GLshort) * n);
    for (i=0; i<128; i++) {
       /* We do something like the following for vertex coordinates.
        *
@@ -801,7 +881,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       vbo_vert[ 8*i + 7 ] = vy;
    }
    font->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*n, vbo_tex );
-   font->vbo_vert = gl_vboCreateStatic( sizeof(GLint)*n, vbo_vert );
+   font->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*n, vbo_vert );
 
    /* Free the data. */
    free(data);
@@ -817,6 +897,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
  */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c )
 {
+   double a;
+
    /* Enable textures. */
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, font->texture);
@@ -824,18 +906,63 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
    /* Set up matrix. */
    gl_matrixMode(GL_MODELVIEW);
    gl_matrixPush();
-      gl_matrixTranslate( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.) );
+      gl_matrixTranslate( round(x), round(y) );
 
    /* Handle colour. */
-   if (c==NULL)
-      glColor4d( 1., 1., 1., 1. );
-   else
-      COLOUR(*c);
+   if (font_restoreLast) {
+      a   = (c==NULL) ? 1. : c->a;
+      ACOLOUR(*font_lastCol,a);
+   }
+   else {
+      if (c==NULL)
+         glColor4d( 1., 1., 1., 1. );
+      else
+         COLOUR(*c);
+   }
+   font_restoreLast = 0;
 
    /* Activate the appropriate VBOs. */
    gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
+}
+
+
+/**
+ * @brief Gets the colour from a character.
+ */
+static const glColour* gl_fontGetColour( int ch )
+{
+   const glColour *col;
+   switch (ch) {
+      /* TOP SECRET COLOUR CONVENTION
+       * FOR YOUR EYES ONLY
+       *
+       * Lowercase characters represent base colours.
+       * Uppercase characters reperesent fancy game related colours.
+       * Digits represent states.
+       */
+      /* Colours. */
+      case 'r': col = &cFontRed; break;
+      case 'g': col = &cFontGreen; break;
+      case 'b': col = &cFontBlue; break;
+      case 'y': col = &cFontYellow; break;
+      case 'w': col = &cFontWhite; break;
+      case 'p': col = &cFontPurple; break;
+      case 'n': col = &cBlack; break;
+      /* Fancy states. */
+      case 'F': col = &cFriend; break;
+      case 'H': col = &cHostile; break;
+      case 'N': col = &cNeutral; break;
+      case 'I': col = &cInert; break;
+      case 'R': col = &cRestricted; break;
+      case 'S': col = &cDRestricted; break;
+      case 'M': col = &cMapNeutral; break;
+      case 'C': col = &cConsole; break;
+      case 'D': col = &cDConsole; break;
+      case '0': col = NULL; break;
+      default: col = NULL; break;
+   }
+   return col;
 }
 
 
@@ -846,63 +973,44 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
 {
    GLushort ind[6];
    double a;
+   const glColour *col;
 
    /* Handle escape sequences. */
    if (ch == '\e') /* Start sequence. */
       return 1;
    if (state == 1) {
-      a = (c==NULL) ? 1. : c->a;
-      switch (ch) {
-         /* TOP SECRET COLOUR CONVENTION
-          * FOR YOUR EYES ONLY
-          *
-          * Lowercase characters represent base colours.
-          * Uppercase characters reperesent fancy game related colours.
-          * Digits represent states.
-          */
-         /* Colours. */
-         case 'r': ACOLOUR(cFontRed,a); break;
-         case 'g': ACOLOUR(cFontGreen,a); break;
-         case 'b': ACOLOUR(cFontBlue,a); break;
-         case 'y': ACOLOUR(cFontYellow,a); break;
-         case 'w': ACOLOUR(cFontWhite,a); break;
-         case 'p': ACOLOUR(cFontPurple,a); break;
-         case 'n': ACOLOUR(cBlack,a); break;
-         /* Fancy states. */
-         case 'F': ACOLOUR(cFriend,a); break;
-         case 'H': ACOLOUR(cHostile,a); break;
-         case 'N': ACOLOUR(cNeutral,a); break;
-         case 'I': ACOLOUR(cInert,a); break;
-         case 'M': ACOLOUR(cMapNeutral,a); break;
-         case 'C': ACOLOUR(cConsole,a); break;
-         case 'D': ACOLOUR(cDConsole,a); break;
-         /* Reset state. */
-         case '0':
-             if (c==NULL)
-                glColor4d( 1., 1., 1., 1. );
-             else
-                COLOUR(*c);
-             break;
+      col = gl_fontGetColour( ch );
+      a   = (c==NULL) ? 1. : c->a;
+      if (col == NULL) {
+         if (c==NULL)
+            glColor4d( 1., 1., 1., 1. );
+         else
+            COLOUR(*c);
       }
+      else
+         ACOLOUR(*col,a);
+      font_lastCol = col;
       return 0;
    }
 
-   /*
-    * Global  Local
-    * 0--1      0--1 4
-    * | /|  =>  | / /|
-    * |/ |      |/ / |
-    * 3--2      2 3--5
-    */
-   ind[0] = 4*ch + 0;
-   ind[1] = 4*ch + 1;
-   ind[2] = 4*ch + 3;
-   ind[3] = 4*ch + 1;
-   ind[4] = 4*ch + 3;
-   ind[5] = 4*ch + 2;
+   if (!isspace(ch)) {
+      /*
+       * Global  Local
+       * 0--1      0--1 4
+       * | /|  =>  | / /|
+       * |/ |      |/ / |
+       * 3--2      2 3--5
+       */
+      ind[0] = 4*ch + 0;
+      ind[1] = 4*ch + 1;
+      ind[2] = 4*ch + 3;
+      ind[3] = 4*ch + 1;
+      ind[4] = 4*ch + 3;
+      ind[5] = 4*ch + 2;
 
-   /* Draw the element. */
-   glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+      /* Draw the element. */
+      glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+   }
 
    /* Translate matrix. */
    gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );
@@ -918,6 +1026,7 @@ static void gl_fontRenderEnd (void)
 {
    gl_vboDeactivate();
    gl_matrixPop();
+   gl_matrixMode( GL_PROJECTION );
    glDisable(GL_TEXTURE_2D);
 
    /* Check for errors. */
@@ -944,9 +1053,9 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       font = &gl_defFont;
 
    /* Read the font. */
-   buf = ndata_read( (fname!=NULL) ? fname : FONT_DEF, &bufsize );
+   buf = ndata_read( (fname!=NULL) ? fname : FONT_DEFAULT_PATH, &bufsize );
    if (buf == NULL) {
-      WARN("Unable to read font: %s", (fname!=NULL) ? fname : FONT_DEF);
+      WARN("Unable to read font: %s", (fname!=NULL) ? fname : FONT_DEFAULT_PATH);
       return;
    }
 
@@ -961,14 +1070,14 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* create a FreeType font library */
    if (FT_Init_FreeType(&library)) {
       WARN("FT_Init_FreeType failed with font %s.",
-            (fname!=NULL) ? fname : FONT_DEF );
+            (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
       return;
    }
 
    /* object which freetype uses to store font info */
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
       WARN("FT_New_Face failed loading library from %s",
-            (fname!=NULL) ? fname : FONT_DEF );
+            (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
       return;
    }
 
@@ -982,7 +1091,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          WARN("FT_Set_Char_Size failed.");
    }
    else
-      WARN("Font isn't resizeable!");
+      WARN("Font isn't resizable!");
 
    /* Select the character map. */
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))

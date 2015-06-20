@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "land.h"
@@ -21,7 +21,7 @@
 #include "array.h"
 #include "dialogue.h"
 #include "event.h"
-#include "lua.h"
+#include <lua.h>
 
 
 /**
@@ -75,7 +75,6 @@ static NPC_t *npc_array  = NULL; /**< Missions at the spaceport bar. */
 static unsigned int npc_add( NPC_t *npc );
 static unsigned int npc_add_giver( Mission *misn );
 static int npc_rm( NPC_t *npc );
-static void npc_sort (void);
 static NPC_t *npc_arrayGet( unsigned int id );
 static void npc_free( NPC_t *npc );
 
@@ -88,8 +87,10 @@ static unsigned int npc_add( NPC_t *npc )
    NPC_t *new_npc;
 
    /* Must be landed. */
-   if (!landed)
+   if (!landed) {
+      npc_free( npc );
       return 0;
+   }
 
    /* Create if needed. */
    if (npc_array == NULL)
@@ -308,6 +309,7 @@ int npc_rm_parentMission( Mission *misn )
 static int npc_compare( const void *arg1, const void *arg2 )
 {
    const NPC_t *npc1, *npc2;
+   int ret;
 
    npc1 = (NPC_t*)arg1;
    npc2 = (NPC_t*)arg2;
@@ -317,7 +319,17 @@ static int npc_compare( const void *arg1, const void *arg2 )
       return +1;
    else if (npc1->priority < npc2->priority)
       return -1;
-   
+
+   /* Compare name. */
+   ret = strcmp( npc1->name, npc2->name );
+   if (ret != 0)
+      return ret;
+
+   /* Compare ID. */
+   if (npc1->id > npc2->id)
+      return +1;
+   else if (npc1->id < npc2->id)
+      return -1;
    return 0;
 }
 
@@ -325,7 +337,7 @@ static int npc_compare( const void *arg1, const void *arg2 )
 /**
  * @brief Sorts the NPCs.
  */
-static void npc_sort (void)
+void npc_sort (void)
 {
    if (npc_array != NULL)
       qsort( npc_array, array_size(npc_array), sizeof(NPC_t), npc_compare );
@@ -349,6 +361,27 @@ void npc_generate (void)
    /* Add to the bar NPC stack - may be not empty. */
    for (i=0; i<nmissions; i++)
       npc_add_giver( &missions[i] );
+
+   /* Clean up. */
+   if (missions != NULL)
+      free( missions );
+
+   /* Sort NPC. */
+   npc_sort();
+}
+
+
+/**
+ * @brief Patches a new mission bar npc into the bar system.
+ *
+ * @note Do not reuse the pointer once it's fed.
+ *
+ *    @param misn Mission to patch in.
+ */
+void npc_patchMission( Mission *misn )
+{
+   /* Add mission giver. */
+   npc_add_giver( misn );
 
    /* Sort NPC. */
    npc_sort();
@@ -397,9 +430,8 @@ void npc_clear (void)
       return;
 
    /* First pass to clear the data. */
-   for (i=0; i<array_size( npc_array ); i++) {
+   for (i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
-   }
 
    /* Resize down. */
    array_resize( &npc_array, 0 );
@@ -527,7 +559,7 @@ static int npc_approach_giver( NPC_t *npc )
 
    /* Make sure player can accept the mission. */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL)
+      if (player_missions[i]->data == NULL)
          break;
    if (i >= MISSION_MAX) {
       dialogue_alert("You have too many active missions.");
@@ -537,7 +569,7 @@ static int npc_approach_giver( NPC_t *npc )
    /* Get mission. */
    misn = &npc->u.g;
    ret  = mission_accept( misn );
-   if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
+   if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
       npc_free( npc );

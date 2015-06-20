@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gilligan's Light III">
+ <pos>
+  <x>-7036.538612</x>
+  <y>-6116.121552</y>
+ </pos>
+ <GFX>
+  <space>I05.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

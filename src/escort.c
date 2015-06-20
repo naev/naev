@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "nlua_space.h"
 #include "hook.h"
+#include "nstring.h"
 
 
 #define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */
@@ -94,11 +95,12 @@ unsigned int escort_create( Pilot *p, char *ship,
    /* Get important stuff. */
    parent = p->id;
    s = ship_get(ship);
-   snprintf(buf, 16, "escort*%u", parent);
+   nsnprintf(buf, 16, "escort*%u", parent);
 
    /* Set flags. */
    pilot_clearFlagsRaw( f );
    pilot_setFlagRaw( f, PILOT_ESCORT );
+   pilot_setFlagRaw( f, PILOT_NOJUMP );
    if (type == ESCORT_TYPE_BAY)
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
@@ -197,7 +199,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
 
       n++; /* Amount of escorts left. */
 
-      /* Prepare ai. */
+      /* Prepare AI. */
       ai_setPilot( e );
 
       /* Set up stack. */
@@ -215,6 +217,10 @@ static int escort_command( Pilot *parent, int cmd, int param )
          case ESCORT_CLEAR:
             buf = "e_clear";
             break;
+
+         default:
+            WARN("Invalid escort command '%d'.", cmd);
+            return -1;
       }
       lua_getglobal(L, buf);
       if (param >= 0)
@@ -231,7 +237,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
 
 
 /**
- * @brief Have a pilot order it's escorts to attack it's target.
+ * @brief Have a pilot order its escorts to attack its target.
  *
  *    @param parent Pilot giving the order.
  */
@@ -256,7 +262,7 @@ int escorts_attack( Pilot *parent )
    return ret;
 }
 /**
- * @brief Have a pilot order it's escorts to hold position.
+ * @brief Have a pilot order its escorts to hold position.
  *
  *    @param parent Pilot giving the order.
  */
@@ -269,7 +275,7 @@ int escorts_hold( Pilot *parent )
    return ret;
 }
 /**
- * @brief Have a pilot order it's escorts to dock.
+ * @brief Have a pilot order its escorts to dock.
  *
  *    @param parent Pilot giving the order.
  */
@@ -282,7 +288,7 @@ int escorts_return( Pilot *parent )
    return ret;
 }
 /**
- * @brief Have a pilot order it's escorts to clear orders.
+ * @brief Have a pilot order its escorts to clear orders.
  *
  *    @param parent Pilot giving the order.
  */

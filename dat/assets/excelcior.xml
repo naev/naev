@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Excelcior">
+ <pos>
+  <x>-3067.007994</x>
+  <y>-1955.217596</y>
+ </pos>
+ <GFX>
+  <space>M13.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>2500000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>The seat of the infamously rancorous Procyon Enclave of House Za'lek, this world also happens to be one of House Za'lek's richest and most productive worlds, which is what allows Procyon its hold on much of House Za'lek. Many scientific organizations and universities operate out of here, and the planet's Earth-like  environment, helped along by Za'lek terraforming, makes it a popular site for retirements and vacation.</description>
+  <bar>This bar is full of shouting and arguments, with the occasional fistfight, all based on matters that most laymen find difficult to understand, let alone pick a side on. There is a large degree of food and drinks spilled on the floors as a result of this, and the harried staff seem relieved when you make sure to avoid provoking anyone or making eye contact.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Beam 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Lazuli III">
+ <pos>
+  <x>-16920.000000</x>
+  <y>-4560.000000</y>
+ </pos>
+ <GFX>
+  <space>H02.png</space>
+  <exterior>desertic4.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

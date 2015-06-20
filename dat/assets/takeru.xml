@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Takeru">
+ <pos>
+  <x>-5332.000000</x>
+  <y>11438.000000</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>The colony on Takeru was founded as part of an Imperial colonization program. However, the government at the time deemed the colony to be a failure, and refused to grant it Imperial status. Since then, the colonists have governed themselves.</description>
+  <bar>What is a spaceport bar? A miserable pile of drink, noise, data terminals, and of course the occasional fight. Takeru's bar has all of these components, which makes it a comfortable place to be for anyone with more than a few light years under his belt.</bar>
+ </general>
+</asset>

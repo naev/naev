@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Soromid Marauder">
+ <base_type>Marauder</base_type>
+ <GFX>marauder</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Bomber</class>
+ <price>600000</price>
+ <fabricator>Soromid</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
+ <health>
+  <absorb>4</absorb>
+  <armour>80</armour>
+  <armour_regen>3</armour_regen>
+ </health>
+ <characteristics>
+  <crew>6</crew>
+  <mass>70</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="8" y="0" h="0"/>
+  <weapon size="medium" x="8" y="0" h="0"/>
+  <weapon size="small" x="-2" y="9" h="-1"/>
+  <weapon size="small" x="-2" y="-9" h="-1"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <speed_mod>-10</speed_mod>
+  <turn_mod>-10</turn_mod>
+  <thrust_mod>-10</thrust_mod>
+  <armour_mod>5</armour_mod>
+  <launch_rate>10</launch_rate>
+  <launch_range>15</launch_range>
+  <ammo_capacity>50</ammo_capacity>
+ </stats>
+</ship>

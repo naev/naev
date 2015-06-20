@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Blackwell IIX">
+ <pos>
+  <x>-17009.351818</x>
+  <y>-13903.296269</y>
+ </pos>
+ <GFX>
+  <space>I03.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

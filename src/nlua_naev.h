@@ -7,7 +7,7 @@
 #  define NLUA_NAEV_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 int nlua_loadNaev( lua_State *L ); /* always read only */

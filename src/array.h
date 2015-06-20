@@ -2,11 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-/** 
+/**
  * @file array.h
  *
  * @brief Provides macros to work with dynamic arrays.
- * 
+ *
  * @note Except were noted, macros do not have side effects from
  * expations.
  *
@@ -20,7 +20,7 @@
  *
  * // Fill array
  * while (need_fill)
- *    need_fill = fill_array_member( &array_grow( my_array ) );
+ *    need_fill = fill_array_member( &array_grow( &my_array ) );
  *
  * // Shrink to minimum (if static it's a good idea).
  * array_shrink( my_array );
@@ -43,16 +43,19 @@
 #include <stdint.h>
 
 #ifdef DEBUGGING
-#define SENTINEL ((int)0xbabecafe)
+#define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
 #endif
 
+/**
+ * @brief Private container type for the arrays.
+ */
 typedef struct {
 #ifdef DEBUGGING
-   int _sentinel;
+   int _sentinel;         /**< Sentinel for when debugging. */
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
-   char _array[1];        /**< Begin of the array */
+   char _array[0];        /**< Begin of the array */
 } _private_container;
 
 
@@ -63,12 +66,17 @@ void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
 
+/**
+ * @brief Gets the container of an array.
+ *
+ *    @param a Array to get container of.
+ *    @return The container of the array a.
+ */
 __inline__ static _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
-   const intptr_t delta = (intptr_t)(&((_private_container *)NULL)->_array);
-   _private_container *c = (_private_container *)((char *)a - delta);
+   _private_container *c = (_private_container *)a - 1;
 
 #ifdef DEBUGGING
    assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));
@@ -77,13 +85,20 @@ __inline__ static _private_container *_array_private_container(void *a)
    return c;
 }
 
+/**
+ * @brief Gets the end of the array.
+ *
+ *    @param a Array to get end of.
+ *    @param e_size Size of array members.
+ *    @return The end of the array a.
+ */
 __inline__ static void *_array_end_helper(void *a, size_t e_size)
 {
    _private_container *c = _array_private_container(a);
    return c->_array + c->_size * e_size;
 }
 
-/** 
+/**
  * @brief Creates a new dynamic array of `basic_type'
  *
  *    @param basic_type Type of the array to create.
@@ -119,12 +134,12 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
    do array_grow(ptr_array) = element; while (0)
 /**
  * @brief Erases elements in interval [first, last).
- * 
+ *
  * @note Invalidates all iterators.
  *
  *    @param ptr_array Array being manipulated.
  *    @param first First iterator to erase.
- *    @param last Last iteratior in erase section but is not erased.
+ *    @param last Last iterator in erase section but is not erased.
  */
 #define array_erase(ptr_array, first, last) \
       (_array_erase_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]), (void *)(first), (void *)(last)))
@@ -137,9 +152,9 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  */
 #define array_shrink(ptr_array) \
       (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
-/** 
+/**
  * @brief Frees memory allocated and sets array to NULL.
- * 
+ *
  * @note Invalidates all iterators.
  *
  *    @param ptr_array Array being manipulated.
@@ -147,7 +162,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 #define array_free(ptr_array) \
       _array_free_helper((void *)(ptr_array))
 
-/** 
+/**
  * @brief Returns number of elements in the array.
  *
  *    @param ptr_array Array being manipulated.
@@ -162,7 +177,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  */
 #define array_reserved(array) (_array_private_container(array)->_reserved)
 /**
- * @brief Returns a pointer to the begining of the reserved memory space.
+ * @brief Returns a pointer to the beginning of the reserved memory space.
  *
  *    @param ptr_array Array being manipulated.
  *    @return Beginning of memory space.
@@ -182,7 +197,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @return The first element in the array.
  */
 #define array_front(ptr_array) (*array_begin(ptr_array))
-/** 
+/**
  * @brief Returns the last element in the array.
  *
  *    @param ptr_array Array being manipulated.

@@ -6,7 +6,7 @@
 #ifndef NLUA_DIFF
 #  define NLUA_DIFF
 
-#include "lua.h"
+#include <lua.h>
 
 /* individual library stuff */
 int nlua_loadDiff( lua_State *L, int readonly );

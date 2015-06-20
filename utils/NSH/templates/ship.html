@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% import '_macro.html' as macros %}
+    {% block head %}
+        <title>Naev Ship Database - {{ shipName }}</title>
+        <link href="./naev-single.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    {% endblock head %}
+    {% block body %}
+        <div class="class">
+        <h2>{{ shipData.fabricator }} {{ shipName }}</h2>
+        <div class="row">
+        <div class="full">
+        <h3>{{ shipData.class }}</h3>
+        <div class="top">
+        <div class="shipimage">
+        {{macros.shipImageLarge(shipData.GFX, shipName)}}
+        </div>
+        <div class="info">
+            <ul>
+                <li>Price:</li>
+                <li>Speed:</li>
+                <li>Thrust:</li>
+                <li>Turn:</li>
+                <li>Mass:</li>
+                <li>Shield:</li>
+                <li>Armour:</li>
+                <li>Energy:</li>
+            </ul>
+            <ul class="infor">
+                <li>{{ shipData.price }}</li>
+                <li>{{ shipData.movement.speed }} m/s</li>
+                <li>{{ shipData.movement.thrust }} kN/t</li>
+                <li>{{ shipData.movement.turn }}<sup style="font-size: 0.6em">o</sup>/s</li>
+                <li>{{shipData.characteristics.mass}} t</li>
+                <li>{{ shipData.health.shield }} MJ</li>
+                <li>{{ shipData.health.armour }} MJ</li>
+                <li>{{ shipData.health.energy }} MJ</li>
+            </ul>
+        </div>
+        <div class="info2">
+            <ul>
+                <li>CPU:</li>
+                <li>Crew:</li>
+                <li>Fuel:</li>
+                <li>Cargo:</li>
+                <li>Damage Absorption:</li>
+                <li>Shield Regen:</li>
+                <li>Armour Regen:</li>
+                <li>Energy Regen:</li>
+            </ul>
+            <ul class="info2r">
+                <li>{{ shipData.characteristics.cpu }} Teraflops</li>
+                <li>{{ shipData.characteristics.crew }}</li>
+                <li>{{ shipData.characteristics.fuel }}</li>
+                <li>{{ shipData.characteristics.cap_cargo }} t</li>
+                <li>{{ shipData.health.absorb }}%</li>
+                <li>{{ shipData.health.shield_regen }} MW</li>
+                <li>{{ shipData.health.armour_regen }} MW</li>
+                <li>{{ shipData.health.energy_regen }} MW</li>
+            </ul>
+        </div>
+        <div class="slots">
+            <strong>Slots</strong>
+            <ul>
+                {%- for slottype in shipData.slots|dictsort|reverse -%}
+                <li>{{ slottype[0]|title }} ({{slottype[1]|count}})</li>
+                {%- for slot in slottype[1] -%}
+                <li class="{{slot|title}}" />
+                {%- endfor -%}
+                {%- endfor -%}
+            </ul>
+        </div><!-- /Slots -->
+        {%- if shipData.license -%}
+        <div class="license"><strong>License:</strong>
+        {{ shipData.license }}
+        </div>
+        {%- endif -%}
+        </div><!-- /Top -->
+        <div class="bottom">
+        {%- if shipData.stats -%}
+        <div class="stats">
+        <strong>Stats</strong>
+        <ul>
+        {%- for stat in shipData.stats|dictsort -%}
+            <li><abbr title="{{stat[0]|getStatsLabelsLabel}}">{{stat[0]|getStatsLabel}}</abbr>: {{stat[1]}}%</li>
+        {%- endfor -%}
+        </ul>
+        </div><!-- /Stats -->
+        {%- endif -%}
+        <div class="desc"><strong>Description</strong>
+        <p>{{ shipData.description }}</p></div>
+        </div>
+        </div><!-- /Cell -->
+        </div><a href="./index.html">Back to Index</a></div><!-- /Row and class -->
+    {% endblock body %}

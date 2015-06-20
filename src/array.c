@@ -1,12 +1,13 @@
 #include "array.h"
 
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+
+#include "nstring.h"
 
 void *_array_create_helper(size_t e_size)
 {
-   _private_container *c = malloc(sizeof(_private_container) - 1 + e_size);
+   _private_container *c = malloc(sizeof(_private_container) + e_size);
 #ifdef DEBUGGING
    c->_sentinel = SENTINEL;
 #endif
@@ -26,7 +27,7 @@ static void _array_resize_container(_private_container **c_, size_t e_size, int 
          c->_reserved *= 2;
       while (new_size < c->_reserved);
 
-      c = realloc(c, sizeof(_private_container) - 1 + e_size * c->_reserved);
+      c = realloc(c, sizeof(_private_container) + e_size * c->_reserved);
    }
 
    c->_size = new_size;
@@ -46,7 +47,7 @@ void *_array_grow_helper(void **a, size_t e_size)
    if (c->_size == c->_reserved) {
       /* Array full, doubles the reserved memory */
       c->_reserved *= 2;
-      c = realloc(c, sizeof(_private_container) - 1 + e_size * c->_reserved);
+      c = realloc(c, sizeof(_private_container) + e_size * c->_reserved);
       *a = c->_array;
    }
 
@@ -71,10 +72,10 @@ void _array_shrink_helper(void **a, size_t e_size)
 {
    _private_container *c = _array_private_container(*a);
    if (c->_size != 0) {
-      c = realloc(c, sizeof(_private_container) - 1 + e_size * c->_size);
+      c = realloc(c, sizeof(_private_container) + e_size * c->_size);
       c->_reserved = c->_size;
    } else {
-      c = realloc(c, sizeof(_private_container) - 1 + e_size);
+      c = realloc(c, sizeof(_private_container) + e_size);
       c->_reserved = 1;
    }
    *a = c->_array;

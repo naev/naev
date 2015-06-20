@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="UMW-1231d">
+ <pos>
+  <x>1789.528426</x>
+  <y>-1085.509351</y>
+ </pos>
+ <GFX>
+  <space>O02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

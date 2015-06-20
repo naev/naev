@@ -46,7 +46,7 @@
  */
 #define nstd_tolower(k)    (nstd_checkascii(k) ? (SDLKey)tolower(k) : k)
 /**
- * @brief Cnoverts a key to uppercase if applicable.
+ * @brief Converts a key to uppercase if applicable.
  */
 #define nstd_toupper(k)    (nstd_checkascii(k) ? (SDLKey)toupper(k) : k)
 

@@ -1,0 +1,71 @@
+.full {
+   width: 920px;
+}
+
+.shipimage {
+   width: 30%;
+}
+
+div.info {
+   width: 20%;
+}
+
+div.info2 {
+   float: left;
+   width: 30%;
+}
+
+.info2 ul {
+   width: 60%;
+   text-align: right;
+   float: left;
+   padding-right: 5%;
+}
+
+.info2 li {
+   font-weight: bold;
+   font-size: 90%;
+}
+
+ul.info2r {
+   width: 35%;
+   text-align: left;
+   padding: 0;
+}
+
+.info2r li {
+   font-weight: normal;
+}
+
+.slots {
+   width: 20%;
+}
+
+.Light, .Medium, .Heavy {
+   font-size: 15px;
+   line-height: 1.8em;
+   padding-right: 17px;
+}
+
+.info, .info2, .slots {
+   margin-top: 50px;
+}
+
+.stats {
+   width: 40%;
+   float: left;
+}
+
+.desc {
+   width: 50%;
+   float: right;
+}
+
+.bottom {
+   height: 100%;
+}
+
+.license {
+   float: left;
+   margin-top: 50px;
+}

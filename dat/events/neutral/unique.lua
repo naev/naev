@@ -5,14 +5,14 @@
 
 
 function create ()
-   sys = system.get()
+   sys = system.cur()
 
    -- Find possible uniques
    unique_list = {}
-   if sys:hasPresence("Pirate") then
+   if sys:presences()["Pirate"] then
       unique_list[ #unique_list+1 ] = "Pirate"
    end
-   if sys:hasPresence("Empire") then
+   if sys:presences()["Empire"] then
       unique_list[ #unique_list+1 ] = "Empire"
    end
 
@@ -21,10 +21,10 @@ function create ()
 
    -- Create unique
    if unique_class == "Pirate" then
-      include("scripts/pilot/pirate.lua")
+      include("pilot/pirate.lua")
       pirate_create()
    elseif unique_class == "Empire" then
-      include("scripts/pilot/empire.lua")
+      include("pilot/empire.lua")
       empire_create()
    end
 

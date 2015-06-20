@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Inca">
+ <pos>
+  <x>-6756.276409</x>
+  <y>7401.062317</y>
+ </pos>
+ <GFX>
+  <space>moon-I01.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

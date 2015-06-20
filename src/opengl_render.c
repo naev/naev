@@ -12,7 +12,7 @@
  * Relative:
  *  * Everything is drawn relative to the player, if it doesn't fit on screen
  *    it is clipped.
- *  * Origin (0., 0.) wouldbe ontop of the player.
+ *  * Origin (0., 0.) would be ontop of the player.
  *
  * Absolute:
  *  * Everything is drawn in "screen coordinates".
@@ -34,15 +34,13 @@
 #include "ndata.h"
 #include "gui.h"
 #include "conf.h"
+#include "camera.h"
+#include "nstring.h"
 
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
 
 
-static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
-static double gl_cameraZ    = 1.; /**< Current in-game zoom. */
-static double gl_cameraX    = 0.; /**< X position of camera. */
-static double gl_cameraY    = 0.; /**< Y position of camera. */
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
@@ -59,37 +57,12 @@ static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
  */
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
-static glTexture *gl_genCircle( int radius );
 static void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c );
-
-
-/**
- * @brief Sets the camera zoom.
- *
- * This is the zoom used in game coordinates.
- *
- *    @param zoom Zoom to set to.
- */
-void gl_cameraZoom( double zoom )
-{
-   gl_cameraZ = zoom;
-}
-
-
-/**
- * @brief Gets the camera zoom.
- *
- *    @param zoom Stores the camera zoom.
- */
-void gl_cameraZoomGet( double * zoom )
-{
-   *zoom = gl_cameraZ;
-}
 
 
 /**
@@ -224,15 +197,64 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 
 
 /**
+ * @brief Renders a cross at a given position.
+ *
+ *    @param x X position to center at.
+ *    @param y Y position to center at.
+ *    @param r Radius of cross.
+ *    @param c Colour to use.
+ */
+void gl_renderCross( double x, double y, double r, const glColour *c )
+{
+   int i;
+   GLfloat vertex[2*4], colours[4*4];
+   GLfloat vx,vy, vr;
+
+   /* Set up stuff. */
+   vx = x;
+   vy = y;
+   vr = r;
+
+   /* the + sign in the middle of the radar representing the player */
+   for (i=0; i<4; i++) {
+      colours[4*i + 0] = c->r;
+      colours[4*i + 1] = c->g;
+      colours[4*i + 2] = c->b;
+      colours[4*i + 3] = c->a;
+   }
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset,
+         sizeof(GLfloat) * 4*4, colours );
+   /* Set up vertex. */
+   vertex[0] = vx+0.;
+   vertex[1] = vy-vr;
+   vertex[2] = vx+0.;
+   vertex[3] = vy+vr;
+   vertex[4] = vx-vr;
+   vertex[5] = vy+0.;
+   vertex[6] = vx+vr;
+   vertex[7] = vy+0.;
+   gl_vboSubData( gl_renderVBO, 0, sizeof(GLfloat) * 4*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 4 );
+   gl_vboDeactivate();
+}
+
+
+/**
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
- *    @param x X position of the texture on the screen.
- *    @param y Y position of the texture on the screen.
- *    @param tx X position within the texture.
- *    @param ty Y position within the texture.
- *    @param tw Texture width.
- *    @param th Texture height.
+ *    @param x X position of the texture on the screen. (units pixels)
+ *    @param y Y position of the texture on the screen. (units pixels)
+ *    @param w Width on the screen. (units pixels)
+ *    @param h Height on the screen. (units pixels)
+ *    @param tx X position within the texture. [0:1]
+ *    @param ty Y position within the texture. [0:1]
+ *    @param tw Texture width. [0:1]
+ *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitTexture(  const glTexture* texture,
@@ -316,7 +338,7 @@ void gl_blitTexture(  const glTexture* texture,
  *
  *    @param ta Texture A to blit.
  *    @param tb Texture B to blit.
- *    @param intere Amount of interpolation to do.
+ *    @param inter Amount of interpolation to do.
  *    @param x X position of the texture on the screen.
  *    @param y Y position of the texture on the screen.
  *    @param tx X position within the texture.
@@ -484,7 +506,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 
 
 /**
- * @brief Convertes ingame coordinates to screen coordinates.
+ * @brief Converts ingame coordinates to screen coordinates.
  *
  *    @param[out] nx New screen X coord.
  *    @param[out] ny New screen Y coord.
@@ -493,15 +515,39 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 {
-   double cx,cy, gx,gy;
+   double cx,cy, gx,gy, z;
 
    /* Get parameters. */
-   gl_cameraGet( &cx, &cy );
+   cam_getPos( &cx, &cy );
+   z = cam_getZoom();
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - cx + gx) * gl_cameraZ;
-   *ny = (by - cy + gy) * gl_cameraZ;
+   *nx = (bx - cx) * z + gx + SCREEN_W/2.;
+   *ny = (by - cy) * z + gy + SCREEN_H/2.;
+}
+
+
+/**
+ * @brief Converts screen coordinates to ingame coordinates.
+ *
+ *    @param[out] nx New ingame X coord.
+ *    @param[out] ny New ingame Y coord.
+ *    @param bx Screen X coord to translate.
+ *    @param by Screen Y coord to translate.
+ */
+void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
+{
+   double cx,cy, gx,gy, z;
+
+   /* Get parameters. */
+   cam_getPos( &cx, &cy );
+   z = cam_getZoom();
+   gui_getOffset( &gx, &gy );
+
+   /* calculate position - we'll use relative coords to player */
+   *nx = (bx - SCREEN_W/2. - gx) / z + cx;
+   *ny = (by - SCREEN_H/2. - gy) / z + cy;
 }
 
 
@@ -521,18 +567,19 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, w,h, tx,ty;
+   double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
+   z = cam_getZoom();
    gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
 
    /* Scaled sprite dimensions. */
-   w = sprite->sw*gl_cameraZ;
-   h = sprite->sh*gl_cameraZ;
+   w = sprite->sw*z;
+   h = sprite->sh*z;
 
    /* check if inbounds */
-   if ((fabs(x) > SCREEN_W/2 + w) ||
-         (fabs(y) > SCREEN_H/2 + h) )
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* texture coords */
@@ -591,18 +638,19 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
       double scalew, double scaleh,
       const int sx, const int sy, const glColour *c )
 {
-   double x,y, w,h, tx,ty;
+   double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
    gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw/2., by - scaleh * sa->sh/2. );
 
    /* Scaled sprite dimensions. */
-   w = sa->sw*gl_cameraZ*scalew;
-   h = sa->sh*gl_cameraZ*scaleh;
+   z = cam_getZoom();
+   w = sa->sw*z*scalew;
+   h = sa->sh*z*scaleh;
 
    /* check if inbounds */
-   if ((fabs(x) > SCREEN_W/2 + w) ||
-         (fabs(y) > SCREEN_H/2 + h) )
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* texture coords */
@@ -629,8 +677,8 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 {
    double x,y, tx,ty;
 
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
@@ -661,8 +709,8 @@ void gl_blitScaleSprite( const glTexture* sprite,
 {
    double x,y, tx,ty;
 
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
@@ -685,15 +733,15 @@ void gl_blitScaleSprite( const glTexture* sprite,
  *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitScale( const glTexture* texture,
-      const double bx, const double by,     
+      const double bx, const double by,
       const double bw, const double bh, const glColour* c )
 {
    double x,y;
    double tx,ty;
 
    /* here we use absolute coords */
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* texture dimensions */
    tx = ty = 0.;
@@ -711,14 +759,14 @@ void gl_blitScale( const glTexture* texture,
  *    @param by Y position of the texture in screen coordinates.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitStatic( const glTexture* texture, 
+void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour* c )
 {
    double x,y;
 
    /* here we use absolute coords */
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* actual blitting */
    gl_blitTexture( texture, x, y, texture->sw, texture->sh,
@@ -726,50 +774,57 @@ void gl_blitStatic( const glTexture* texture,
 }
 
 
-/**
- * @brief Binds the camera to a vector.
- *
- * All stuff displayed with relative functions will be affected by the camera's
- *  position.  Does not affect stuff in screen coordinates.
- *
- *    @param pos Vector to use as camera.
- */
-void gl_cameraBind( Vector2d* pos )
+void gl_drawCircleLoop( const double cx, const double cy,
+      const double r, const glColour *c )
 {
-   gl_camera = pos;
-}
+   int i, points;
+   double angi, cosi, sini;
+   double nxc, xc, yc;
+   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
+   /* Aim for 10 px between each vertex. */
+   points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
 
-/**
- * @brief Makes the camera static and set on a position.
- *
- *    @param x X position to set camera to.
- *    @param y Y position to set camera to.
- */
-void gl_cameraStatic( double x, double y )
-{
-   gl_cameraX = x;
-   gl_cameraY = y;
-   gl_camera  = NULL;
-}
+   angi = 2. * M_PI / (double)points;
+   cosi = cos(angi);
+   sini = sin(angi);
 
+   vertex[0] = cx + r;
+   vertex[1] = cy;
 
-/**
- * @brief Gets the camera position.
- *
- *    @param[out] x X position to get.
- *    @param[out] y Y position to get.
- */
-void gl_cameraGet( double *x, double *y )
-{
-   if (gl_camera != NULL) {
-      *x = gl_camera->x;
-      *y = gl_camera->y;
+   xc = 1.;
+   yc = 0.;
+
+   /* Calculate the vertices by iterating counter-clockwise. */
+   for (i=1; i<points; i++) {
+      nxc = cosi * xc - sini * yc;
+      yc  = sini * xc + cosi * yc;
+      xc  = nxc;
+
+      vertex[i*2+0] = cx + xc * r;
+      vertex[i*2+1] = cy + yc * r;
    }
-   else {
-      *x = gl_cameraX;
-      *y = gl_cameraY;
+
+   gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set up the colour. */
+   for (i=0; i<points; i++) {
+      col[4*i+0] = c->r;
+      col[4*i+1] = c->g;
+      col[4*i+2] = c->b;
+      col[4*i+3] = c->a;
    }
+
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, points*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_LINE_LOOP, 0, points );
+
+   /* Clear state. */
+   gl_vboDeactivate();
 }
 
 
@@ -797,7 +852,7 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
    /* Starting parameters. */
    i = 0;
    x = 0;
-   y = r;    
+   y = r;
    p = (5. - (r*4.)) / 4.;
 
    PIXEL( cx,   cy+y );
@@ -815,15 +870,15 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
          PIXEL( cx,   cy-y );
          PIXEL( cx+y, cy   );
          PIXEL( cx-y, cy   );
-      }         
-      else      
+      }
+      else
          if (x==y) {
             PIXEL( cx+x, cy+y );
             PIXEL( cx-x, cy+y );
             PIXEL( cx+x, cy-y );
             PIXEL( cx-x, cy-y );
-         }        
-         else     
+         }
+         else
             if (x<y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
@@ -865,7 +920,7 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
- *    @param filled yWhether or not it should be filled.
+ *    @param filled Whether or not it should be filled.
  */
 void gl_drawCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
@@ -873,8 +928,40 @@ void gl_drawCircle( const double cx, const double cy,
    if (filled)
       gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
          0., 0., gl_circle->srw, gl_circle->srh, c );
-   else
+   else if (gl_vendorIsIntel())
       gl_drawCircleEmpty( cx, cy, r, c );
+   else
+      gl_drawCircleLoop( cx, cy, r, c );
+}
+
+
+/**
+ * @brief Sets up 2d clipping planes around a rectangle.
+ *
+ *    @param x X position of the rectangle.
+ *    @param y Y position of the rectangle.
+ *    @param w Width of the rectangle.
+ *    @param h Height of the rectangle.
+ */
+void gl_clipRect( int x, int y, int w, int h )
+{
+   double rx, ry, rw, rh;
+   rx = (x + gl_screen.x) / gl_screen.mxscale;
+   ry = (y + gl_screen.y) / gl_screen.myscale;
+   rw = w / gl_screen.mxscale;
+   rh = h / gl_screen.myscale;
+   glScissor( rx, ry, rw, rh );
+   glEnable( GL_SCISSOR_TEST );
+}
+
+
+/**
+ * @brief Clears the 2d clipping planes.
+ */
+void gl_unclipRect (void)
+{
+   glDisable( GL_SCISSOR_TEST );
+   glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
 }
 
 
@@ -904,7 +991,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
       const glColour *c, int filled )
 {
    int i, j;
-   double rxw,ryh, x,y,p, w,h;
+   double rxw,ryh, x,y,p, w,h, tx,ty, tw,th, r2;
    GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
    rxw = rx+rw;
@@ -921,22 +1008,30 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
 
    /* Case if filled. */
    if (filled) {
-      x = CLAMP( rx, rxw, cx-r );
-      y = CLAMP( ry, ryh, cy-r );
-      w = CLAMP( 0., rxw-x,  2.*r );
-      h = CLAMP( 0., ryh-y,  2.*r );
-      gl_blitTexture( gl_circle, x, y, w, h,
-            (x-(cx-r))/(2.*r) * gl_circle->srw,
-            (y-(cy-r))/(2.*r) * gl_circle->srh,
-            (w/(2.*r)) * gl_circle->srw,
-            (h/(2.*r)) * gl_circle->srh, c );
+      r2 = 2.*r;
+      /* Clamp bottom left. */
+      x  = CLAMP( rx, rxw, cx-r );
+      y  = CLAMP( ry, ryh, cy-r );
+      /* Clamp width. */
+      w  = CLAMP( rx, rxw, cx+r ) - x;
+      h  = CLAMP( ry, ryh, cy+r ) - y;
+      /* Calculate texture bottom left. */
+      tx  = x - (cx-r);
+      tx *= gl_circle->srw / r2; /* Transform to unitary coordinates. */
+      ty  = y - (cy-r);
+      ty *= gl_circle->srh / r2;
+      /* Calculate dimensions of texture. */
+      tw  = w/r2 * gl_circle->srw;
+      th  = h/r2 * gl_circle->srh;
+      /* Render. */
+      gl_blitTexture( gl_circle, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
 
    /* Starting parameters. */
    i = 0;
    x = 0;
-   y = r;    
+   y = r;
    p = (5. - (r*4.)) / 4.;
 
    PIXEL( cx,   cy+y );
@@ -954,15 +1049,15 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
          PIXEL( cx,   cy-y );
          PIXEL( cx+y, cy   );
          PIXEL( cx-y, cy   );
-      }         
-      else      
+      }
+      else
          if (x==y) {
             PIXEL( cx+x, cy+y );
             PIXEL( cx-x, cy+y );
             PIXEL( cx+x, cy-y );
             PIXEL( cx-x, cy-y );
-         }        
-         else     
+         }
+         else
             if (x<y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
@@ -996,7 +1091,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
 }
 #undef PIXEL
 
- 
+
 
 /**
  * @brief Generates an filled circle texture.
@@ -1004,13 +1099,14 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *    @param radius Radius of the circle to generate.
  *    @return The tetxure containing the generated circle.
  */
-static glTexture *gl_genCircle( int radius )
+glTexture *gl_genCircle( int radius )
 {
-   int i,j,k, n,m;
+   int i, j, edge, blur;
    SDL_Surface *sur;
-   uint8_t *pix, *buf;
+   uint8_t *pix;
    int h, w;
-   double a;
+   double dist;
+   char name[PATH_MAX];
 
    /* Calculate parameters. */
    w = 2*radius+1;
@@ -1023,43 +1119,30 @@ static glTexture *gl_genCircle( int radius )
    /* Generate the circle. */
    SDL_LockSurface( sur );
 
-   /* Create temporary buffer to draw circle in. */
-   k = 3;
-   buf = malloc( (h*k) * (w*k) );
-   for (i=0; i<k*h; i++) {
-      for (j=0; j<k*w; j++) {
-         if (pow2(i-k*radius)+pow2(j-k*radius) < pow2(k*radius))
-            buf[ i*k*w + j] = 0xFF;
-      }
-   }
+   edge = pow2(radius);
+   blur = pow2(radius - 1);
 
-   /* Draw the circle with filter. */
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* Calculate blur. */
-         a = 0.;
-         for (n=0; n<k; n++) {
-            for (m=0; m<k; m++) {
-               a += buf[ (i*k+n)*k*w + (j*k+m) ];
-            }
-         }
-         a /= k*k;
+   for (i=0; i<w; i++) {
+      for (j=0; j<h; j++) {
+         dist = pow2(i - radius) + pow2(j - radius);
+         if (dist > edge)
+            pix[i*sur->pitch + j*4 + 3] = 0;
+         else if (dist <= blur)
+            pix[i*sur->pitch + j*4 + 3] = 0xFF;
+         else
+            pix[i*sur->pitch + j*4 + 3] = CLAMP(0, 0xFF, (edge - dist) / (edge - blur) * 0xFF);
 
-         /* Set pixel. */
          pix[i*sur->pitch + j*4 + 0] = 0xFF;
          pix[i*sur->pitch + j*4 + 1] = 0xFF;
          pix[i*sur->pitch + j*4 + 2] = 0xFF;
-         pix[i*sur->pitch + j*4 + 3] = (uint8_t)a;
       }
    }
-
-   /* CLean up. */
-   free(buf);
 
    SDL_UnlockSurface( sur );
 
    /* Return texture. */
-   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
+   nsnprintf( name, sizeof(name), "gencircle%d", radius );
+   return gl_loadImagePad( name, sur, OPENGL_TEX_MIPMAPS, sur->w, sur->h, 1, 1, 1 );
 }
 
 

@@ -10,12 +10,79 @@
 
 
 #include "tk/toolkit_priv.h"
+#include "nstring.h"
+
+#include <stdlib.h>
+#include "nstring.h"
 
 
+static int btn_mclick( Widget* btn, int button, int x, int y );
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
 static Widget* btn_get( const unsigned int wid, const char* name );
+static void btn_updateHotkey( Widget *btn );
+
+
+/**
+ * @brief Adds a button widget to a window, with a hotkey that enables the button to be activated with that key.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
+ *    @param display Text displayed on the button (centered).
+ *    @param call Function to call when button is pressed. Parameter passed
+ *                is the name of the button.
+ *    @param key Hotkey for using the button without it being focused.
+ */
+void window_addButtonKey( const unsigned int wid,
+                       const int x, const int y,
+                       const int w, const int h,
+                       char* name, char* display,
+                       void (*call) (unsigned int wgt, char* wdwname),
+                       SDLKey key )
+{
+   Window *wdw = window_wget(wid);
+   Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
+
+   /* generic */
+   wgt->type = WIDGET_BUTTON;
+
+   /* specific */
+   wgt->keyevent           = btn_key;
+   wgt->render             = btn_render;
+   wgt->cleanup            = btn_cleanup;
+   wgt->mclickevent        = btn_mclick;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->dat.btn.display    = strdup(display);
+   wgt->dat.btn.disabled   = 0; /* initially enabled */
+   wgt->dat.btn.fptr       = call;
+   if (key != 0) {
+      wgt->dat.btn.key = key;
+      btn_updateHotkey(wgt);
+   }
+
+   /* position/size */
+   wgt->w = (double) w;
+   wgt->h = (double) h;
+   toolkit_setPos( wdw, wgt, x, y );
+
+   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
+      wgt->dat.btn.disabled = 1;
+      wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
+   }
+
+   if (wdw->focus == -1) /* initialize the focus */
+      toolkit_nextFocus( wdw );
+}
 
 
 /**
@@ -40,36 +107,9 @@ void window_addButton( const unsigned int wid,
                        char* name, char* display,
                        void (*call) (unsigned int wgt, char* wdwname) )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
-      return;
-
-   /* generic */
-   wgt->type = WIDGET_BUTTON;
-   
-   /* specific */
-   wgt->keyevent           = btn_key;
-   wgt->render             = btn_render;
-   wgt->cleanup            = btn_cleanup;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.btn.display    = strdup(display);
-   wgt->dat.btn.disabled   = 0; /* initially enabled */
-   wgt->dat.btn.fptr       = call;
-
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
-
-   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
-      wgt->dat.btn.disabled = 1;
-      wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
-   }
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus( wdw );
+   window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
 }
+
 
 /**
  * @brief Gets a button widget.
@@ -111,11 +151,30 @@ void window_disableButton( const unsigned int wid, char* name )
 
    /* Disable button. */
    wgt->dat.btn.disabled = 1;
-   wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
 
    /* Sanitize focus. */
    wdw = window_wget(wid);
    toolkit_focusSanitize(wdw);
+}
+
+
+/**
+ * @brief Disables a button, while still running the button's function.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the button to disable.
+ */
+void window_disableButtonSoft( const unsigned int wid, char *name )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+      wgt = btn_get( wid, name );
+      if (wgt == NULL)
+         return;
+
+   wgt->dat.btn.softdisable = 1;
+   window_disableButton( wid, name );
 }
 
 
@@ -128,7 +187,7 @@ void window_disableButton( const unsigned int wid, char* name )
 void window_enableButton( const unsigned int wid, char *name )
 {
    Widget *wgt;
-  
+
    /* Get the widget. */
    wgt = btn_get( wid, name );
    if (wgt == NULL)
@@ -151,7 +210,7 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
 {
 
    Widget *wgt;
-  
+
    /* Get the widget. */
    wgt = btn_get( wid, name );
    if (wgt == NULL)
@@ -160,6 +219,51 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
    if (wgt->dat.btn.display != NULL)
       free(wgt->dat.btn.display);
    wgt->dat.btn.display = strdup(display);
+
+   if (wgt->dat.btn.key != 0)
+      btn_updateHotkey(wgt);
+}
+
+
+/**
+ * @brief Checks a button's hotkey against its label and highlights the hotkey, if present.
+ */
+static void btn_updateHotkey( Widget *btn )
+{
+   char buf[PATH_MAX], *display, target;
+   const char *keyname;
+   size_t i;
+   int match;
+
+   keyname = SDL_GetKeyName(btn->dat.btn.key);
+   if (strlen(keyname) != 1) /* Only interested in single chars. */
+      return;
+
+   target = keyname[0];
+   if (!isalnum(target)) /* We filter to alpha numeric characters. */
+      return;
+   target = tolower(target);
+
+   /* Find first occurence in string. */
+   display  = btn->dat.btn.display;
+   match    = -1;
+   for (i=0; i<strlen(display); i++) {
+      if (tolower(display[i])==target) {
+         match = i;
+         break;
+      }
+   }
+   if (match < 0)
+      return;
+   target         = display[match]; /* Store character, can be uppercase. */
+   display[match] = '\0'; /* Cuts the string into two. */
+
+   /* Copy both parts and insert the character in the middle. */
+   nsnprintf( buf, sizeof(buf), "%s\eb%c\e0%s", display, target, &display[match+1] );
+
+   /* Should never be NULL. */
+   free(btn->dat.btn.display);
+   btn->dat.btn.display = strdup(buf);
 }
 
 
@@ -175,11 +279,11 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
 {
    (void) mod;
 
-   /* Don't grab disabled events. */
-   if (btn->dat.btn.disabled)
+   /* Don't grab disabled events. Soft-disabling falls through. */
+   if ((btn->dat.btn.disabled) && (!btn->dat.btn.softdisable))
       return 0;
 
-   if (key == SDLK_RETURN)
+   if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
       if (btn->dat.btn.fptr != NULL) {
          (*btn->dat.btn.fptr)(btn->wdw, btn->name);
          return 1;
@@ -197,7 +301,7 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
  */
 static void btn_render( Widget* btn, double bx, double by )
 {
-   glColour *c, *dc, *lc;
+   const glColour *c, *dc, *lc, *fc;
    double x, y;
 
    x = bx + btn->x;
@@ -206,25 +310,27 @@ static void btn_render( Widget* btn, double bx, double by )
    /* set the colours */
    if (btn->dat.btn.disabled==1) {
       lc = &cGrey60;
-      c = &cGrey20;
+      c  = &cGrey20;
       dc = &cGrey40;
+      fc = &cRed;
    }
    else {
+      fc = &cDarkRed;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
             lc = &cGrey90;
-            c = &cGrey70;
+            c  = &cGrey70;
             dc = &cGrey50;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
             lc = &cGrey90;
-            c = &cGrey50;
+            c  = &cGrey50;
             dc = &cGrey70;
             break;
          case WIDGET_STATUS_NORMAL:
          default:
             lc = &cGrey80;
-            c = &cGrey60;
+            c  = &cGrey60;
             dc = &cGrey40;
             break;
       }
@@ -240,16 +346,16 @@ static void btn_render( Widget* btn, double bx, double by )
       toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
       toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
    }
-   
+
    /* inner outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
-   /* outter outline */
+   /* outer outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
    gl_printMidRaw( NULL, (int)btn->w,
-         bx + (double)SCREEN_W/2. + btn->x,
-         by + (double)SCREEN_H/2. + btn->y + (btn->h - gl_defFont.h)/2.,
-         &cDarkRed, btn->dat.btn.display );
+         bx + btn->x,
+         by + btn->y + (btn->h - gl_defFont.h)/2.,
+         fc, btn->dat.btn.display );
 }
 
 
@@ -263,3 +369,18 @@ static void btn_cleanup( Widget *btn )
    if (btn->dat.btn.display != NULL)
       free(btn->dat.btn.display);
 }
+
+
+/**
+ * @brief Basically traps click events.
+ */
+static int btn_mclick( Widget* btn, int button, int x, int y )
+{
+   (void) btn;
+   (void) button;
+   (void) x;
+   (void) y;
+   return 1;
+}
+
+

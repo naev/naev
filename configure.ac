@@ -2,13 +2,13 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.4.2], [bobbens@gmail.com])
+AC_INIT([naev], [0.6.0], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
 
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
@@ -100,13 +100,13 @@ AC_MSG_RESULT([$have_docs])
 AC_CANONICAL_HOST
 
 AC_MSG_CHECKING([[if we need a __unix__ define]])
-AC_COMPILE_IFELSE([
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
   #ifndef __unix__
   # if defined __APPLE__ /* add other known platforms here */
   #   error should have __unix__ but don't
   # endif
   #endif
-], [AC_MSG_RESULT([no])],
+])], [AC_MSG_RESULT([no])],
 [
   AC_MSG_RESULT([yes])
   AC_DEFINE([__unix__], 1,
@@ -121,17 +121,17 @@ AC_COMPILE_IFELSE([
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
-		 [enable debug mode (default: yes)]), [
+     [enable debug mode (default: yes)]), [
     case "$enableval" in
       no)
-	enable_debug=no
-	;;
+        enable_debug=no
+        ;;
       paranoid)
         enable_debug=paranoid
         ;;
       *)
-	enable_debug=yes
-	;;
+        enable_debug=yes
+        ;;
     esac
   ], [
     enable_debug=yes
@@ -142,7 +142,7 @@ AS_IF([test "$enable_debug" != "no"], [
   AS_IF([test "$have_custom_cflags" = "no"], [
     # Undo the default CFLAGS set by autoconf
     AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
-      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations"
+      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"
     ], [
       CFLAGS=
     ])
@@ -150,23 +150,40 @@ AS_IF([test "$enable_debug" != "no"], [
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
-	AC_CHECK_HEADERS([bfd.h], [], [
-	  AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
-	  enable_debug=no
-	])
+      AC_CHECK_HEADERS([bfd.h], [
+      have_bfd=yes
       ], [
-	AC_WARN([debug mode is enabled but libbfd is missing; disabling])
-	enable_debug=no
+      AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
+      have_bfd=no
+      ])
+      ], [
+      AC_WARN([debug mode is enabled but libbfd is missing; disabling])
+      have_bfd=no
       ])
       ;;
   esac
 ])
 
+# --with-sdl2
+AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
+AC_ARG_WITH([sdl2],
+  AC_HELP_STRING([--with-sdl2],
+     [use SDL2 instead of SDL (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_sdl2=yes
+    ], [
+      with_sdl2=no
+    ])
+  ], [
+    with_sdl2=yes
+  ])
+AC_MSG_RESULT([$with_sdl2])
+
 # --with-openal
 AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
   AC_HELP_STRING([--with-openal],
-		 [use the OpenAL sound backend (default: yes)]), [
+     [use the OpenAL sound backend (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_openal=yes
     ], [
@@ -181,7 +198,7 @@ AC_MSG_RESULT([$with_openal])
 AC_MSG_CHECKING([whether to use SDL_mixer])
 AC_ARG_WITH([sdlmixer],
   AC_HELP_STRING([--with-sdlmixer],
-		 [use the SDL_mixer sound backend (default: yes)]), [
+     [use the SDL_mixer sound backend (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdlmixer=yes
     ], [
@@ -191,6 +208,27 @@ AC_ARG_WITH([sdlmixer],
     with_sdlmixer=yes
   ])
 AC_MSG_RESULT([$with_sdlmixer])
+
+# --enable-lua
+AC_MSG_CHECKING([which lua to use])
+AC_ARG_ENABLE([lua],
+  AC_HELP_STRING([--enable-lua=@<:@internal|shared|luajit@:>@],
+     [lua to use (default: luajit)]), [
+    case "$enableval" in
+      luajit)
+        used_lua=luajit
+        ;;
+      shared)
+        used_lua=shared
+        ;;
+      *)
+        used_lua=internal
+        ;;
+    esac
+  ], [
+    used_lua=luajit
+  ])
+AC_MSG_RESULT([$used_lua])
 
 # --with-ndata
 ndata_path="$datadir/$PACKAGE_NAME/ndata"
@@ -211,29 +249,91 @@ AC_SUBST([ndata_path])
 #
 
 # SDL
-AM_PATH_SDL
-AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
-  AC_ERROR([SDL not found])
+AS_IF([test "$with_sdl2" = "yes"], [
+      SDL2_VERSION=2.0.0
+      AM_PATH_SDL2($SDL2_VERSION, [have_sdl2=yes], [have_sdl2=no])
+   ], [have_sdl2=no]
+)
+AS_IF([test "$have_sdl2" = "no"], [
+   AM_PATH_SDL
+   AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
+     AC_ERROR([SDL not found])
+   ])
 ])
 
 # libxml2
-PKG_CHECK_MODULES([XML], [libxml-2.0], [], [
-  AC_ERROR([libxml-2.0 not found])
-])
+PKG_CHECK_MODULES([XML], [libxml-2.0])
 
 # FreeType
-PKG_CHECK_MODULES([FREETYPE], [freetype2], [], [
-  AC_ERROR([freetype2 not found])
-])
+PKG_CHECK_MODULES([FREETYPE], [freetype2])
+
+# vorbis
+PKG_CHECK_MODULES([VORBIS], [vorbis])
 
 # vorbisfile
-PKG_CHECK_MODULES([VORBISFILE], [vorbisfile], [], [
-  AC_ERROR([vorbisfile not found])
-])
+PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 
 # libpng
-PKG_CHECK_MODULES([PNG], [libpng], [], [
-  AC_ERROR([libpng not found])
+PKG_CHECK_MODULES([PNG], [libpng])
+
+# libzip
+PKG_CHECK_MODULES([ZIP], [libzip])
+
+# lua
+case "$used_lua" in
+  luajit)
+    PKG_CHECK_MODULES([LUA], [luajit], [
+      have_lua=yes
+      LUA_CFLAGS+="-DHAVE_LUAJIT"
+    ], [
+      AC_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
+      have_lua=no
+    ])
+    ;;
+  shared)
+    have_lua=no
+    m4_foreach([pkgname], [lua-5.1, lua5.1, lua51, lua], [
+        AS_IF([test "$have_lua" = "no"], [
+            PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
+        ])
+    ])
+    AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
+    ;;
+  *)
+    have_lua=no
+    ;;
+esac
+AS_IF([test "$have_lua" = "no"], [
+  LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
+  LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
+  have_lua=yes
+  used_lua=internal
+])
+
+# sqrt is required for system csparse to work
+AC_SEARCH_LIBS([sqrt], [m])
+
+# csparse
+AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
+AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
+
+AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
+    AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
+    AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
+
+    AS_IF([test $have_cs_h = yes -o $have_suitesparse_cs_h = yes], [
+        used_csparse=shared
+        CSPARSE_LIBS="-lcsparse -lcxsparse"
+    ], [
+        used_csparse=internal
+    ])
+], [
+   used_csparse=internal
+])
+
+AS_IF([test "$used_csparse" = "internal"], [
+    CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
+    CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
 
 # OpenAL
@@ -242,32 +342,24 @@ AS_IF([test "$with_openal" = "yes"], [
 ])
 
 # SDL_mixer
+AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
 AS_IF([test "$with_sdlmixer" = "yes"], [
-  VAR_SAVE([LIBS])
-  AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
-		 [have_sdlmixer=yes], [have_sdlmixer=no])
-  AS_IF([test "$have_sdlmixer" = "yes"], [
-    SDLMIXER_CFLAGS=
-    SDLMIXER_LIBS="$LIBS"
-  ], [
-    SDLMIXER_CFLAGS=
-    SDLMIXER_LIBS=
-  ])
-  VAR_RESTORE([LIBS])
-], [
-  have_sdlmixer=no
+  PKG_CHECK_MODULES([SDLMIXER], [$SDLMIXER_NAME], [have_sdlmixer=yes], [have_sdlmixer=no])
 ])
 
 # SDL_image
 VAR_SAVE([LIBS])
-AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
-  AC_ERROR([SDL_image not found])
-])
-SDLIMAGE_CFLAGS=
-SDLIMAGE_LIBS="$LIBS"
+AS_IF([test "$have_sdl2" = "yes"], [SDLIMAGE_NAME=SDL2_image], [SDLIMAGE_NAME=SDL_image])
+AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
+  SDLIMAGE_CFLAGS=
+  SDLIMAGE_LIBS="$LIBS"
+  have_mkspr=yes
+], [
+  SDLIMAGE_CFLAGS=
+  SDLIMAGE_LIBS=
+  have_mkspr=no
+], [])
 VAR_RESTORE([LIBS])
-AC_SUBST([SDLIMAGE_CFLAGS])
-AC_SUBST([SDLIMAGE_LIBS])
 
 # OpenGL
 AM_PATH_OPENGL([], [
@@ -277,6 +369,18 @@ AM_PATH_OPENGL([], [
 #
 # Compiler flags
 #
+AS_IF([test "$have_sdl2" = "yes"], [
+   SDL_CFLAGS="$SDL_CFLAGS -DSDLKey=SDL_Keycode -DSDLMod=SDL_Keymod -DSDL_BUTTON_WHEELUP=SDL_BUTTON_X1 -DSDL_BUTTON_WHEELDOWN=SDL_BUTTON_X2 -DKMOD_LMETA=KMOD_LGUI -DKMOD_RMETA=KMOD_RGUI -DSDLK_NUMLOCK=SDLK_NUMLOCKCLEAR -DSDLK_SCROLLOCK=SDLK_SCROLLLOCK -DSDLK_RMETA=SDLK_RGUI -DSDLK_LMETA=SDLK_LGUI"
+   case "$host" in
+     *-linux*)
+       SDL_CFLAGS="$SDL_CFLAGS -D_GNU_SOURCE=1"
+       ;;
+   esac
+# Disable mkspr
+   SDL_IMAGE_CFLAGS=
+   SDL_IMAGE_LIBS=
+   have_mkspr=no
+])
 
 # global
 GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
@@ -288,6 +392,9 @@ AS_IF([test "$enable_debug" != "no"], [
 ])
 
 case "$host" in
+  *-linux*)
+    GLOBAL_LIBS="$NAEV_LIBS -lm" # feels so wrong
+    ;;
   *-mingw*)
     GLOBAL_LIBS="$NAEV_LIBS -lwsock32"
     ;;
@@ -299,37 +406,32 @@ AC_SUBST([GLOBAL_LIBS])
 # naev
 WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 
-CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
-CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
-
-LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
-LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
-
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
 NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
 
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
-  case "$host" in
-    *-linux-gnu)
-      NAEV_LIBS="$NAEV_LIBS -lbfd -rdynamic"
-      ;;
-  esac
+  AS_IF([test "$have_bfd" != "no"], [
+     case "$host" in
+       *-linux-gnu)
+         AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
+         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic -ldl"
+         ;;
+     esac
+  ])
 ])
 AS_IF([test "$enable_debug" = "paranoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
 
-NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $XML_CFLAGS $FREETYPE_CFLAGS $LUA_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $VORBISFILE_CFLAGS $OPENGL_CFLAGS $PNG_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $SDLIMAGE_CFLAGS"
+NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
+    $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
+    $PNG_CFLAGS $ZIP_CFLAGS $OPENGL_CFLAGS"
 
-NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS"
-NAEV_LIBS="$NAEV_LIBS $FREETYPE_LIBS $LUA_LIBS"
-NAEV_LIBS="$NAEV_LIBS $VORBISFILE_LIBS $OPENGL_LIBS $PNG_LIBS"
-NAEV_LIBS="$NAEV_LIBS $SDLIMAGE_LIBS"
+NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
+    $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
+    $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
@@ -350,7 +452,13 @@ esac
 # This is a list of in-tree static libs that naev depends on.  It is used by
 # automake to detect when the binary needs recompiling after a library has been
 # changed.
-NAEV_DEPENDENCIES="$WIDGET_LIBS $LUA_LIBS $CSPARSE_LIBS"
+NAEV_DEPENDENCIES="$WIDGET_LIBS"
+AS_IF([test "$used_lua" == "internal"], [
+   NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $LUA_LIBS"
+])
+AS_IF([test "$used_csparse" == "internal"], [
+   NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $CSPARSE_LIBS"
+])
 
 AC_SUBST([NAEV_CFLAGS])
 AC_SUBST([NAEV_LIBS])
@@ -370,12 +478,11 @@ esac
 
 AC_SUBST([LIBLUA_CFLAGS])
 
-# utils/pack
-PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS"
-PACK_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS"
 
-AC_SUBST([PACK_CFLAGS])
-AC_SUBST([PACK_LIBS])
+MKSPR_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS $PNG_CFLAGS -DNOLOGPRINTFCONSOLE"
+MKSPR_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS $PNG_LIBS"
+AC_SUBST([MKSPR_CFLAGS])
+AC_SUBST([MKSPR_LIBS])
 
 #
 # Checks for headers
@@ -399,6 +506,13 @@ AC_TYPE_UINT8_T
 VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])
 VAR_RESTORE([LIBS])
+
+AC_CHECK_FUNCS([clock_gettime])
+# if it is not available directly, check it in librt (glibc does this).
+AS_IF([test $ac_cv_func_clock_gettime = no], [
+   AC_CHECK_LIB(rt, clock_gettime,
+         [LIBS="-lrt $LIBS"])
+], [])
 
 VAR_SAVE([CFLAGS], ["$VORBISFILE_CFLAGS"])
 VAR_SAVE([LIBS],   ["$VORBISFILE_LIBS"])
@@ -432,12 +546,12 @@ AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
 AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
 
 # USE_OPENAL
-AS_IF([test "$have_openal" = "yes"], [
+AS_IF([test "x$have_openal" = "xyes"], [
   AC_DEFINE([USE_OPENAL], 1, [Define to 1 if using OpenAL])
 ])
 
 # USE_SDLMIX
-AS_IF([test "$have_sdlmixer" = "yes"], [
+AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
@@ -450,6 +564,7 @@ case "$host" in
     AC_DEFINE([FREEBSD], 1, [Define to 1 if running on FreeBSD])
     ;;
   *-mingw*)
+    AC_CHECK_TOOL(WINDRES, windres)
     AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
     ;;
   *-darwin*)
@@ -459,41 +574,49 @@ esac
 
 # NDATA_DEF
 AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
-		   [Define to the path to the data file])
+      [Define to the path to the data file])
 
 # GIT_COMMIT
 AS_IF([test -n "$GIT_COMMIT"], [
   AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
-		     [Define to the current Git commit identifier])
+     [Define to the current Git commit identifier])
 ])
 
 #
 # Automake conditionals
 #
 
+AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
-AM_CONDITIONAL([HAVE_UTILS], [test "$have_utils" = "yes"])
-AM_CONDITIONAL([HAVE_DOCS], [test "$have_docs" = "yes"])
+AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
+AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
+AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
+AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
+AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 
 #
 # Output
 #
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
-		 lib/Makefile
-		 lib/csparse/Makefile
-		 lib/lua/Makefile
-		 src/Makefile
-		 src/tk/Makefile
-		 src/tk/widget/Makefile
-		 build/shave])
-AS_IF([test "$have_utils" = "yes"], [
+      lib/Makefile
+      src/Makefile
+      src/tk/Makefile
+      src/tk/widget/Makefile
+      build/shave])
+AS_IF([test "x$have_utils" = "xyes"], [
   AC_CONFIG_FILES([utils/Makefile
-		   utils/pack/Makefile])
+     utils/mkspr/Makefile])
 ])
-AS_IF([test "$have_docs" = "yes"], [
+AS_IF([test "x$have_docs" = "xyes"], [
   AC_CONFIG_FILES([docs/Makefile])
+])
+AS_IF([test "x$used_lua" = "xinternal"], [
+  AC_CONFIG_FILES([lib/lua/Makefile])
+])
+AS_IF([test "x$used_csparse" = "xinternal"], [
+  AC_CONFIG_FILES([lib/csparse/Makefile])
 ])
 
 AC_OUTPUT
@@ -502,8 +625,25 @@ echo
 AC_MSG_NOTICE([prefix:      $prefix])
 AC_MSG_NOTICE([ndata:       $ndata_path])
 echo
+AC_MSG_NOTICE([SDL2:        $have_sdl2])
+echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
 echo
+AC_MSG_NOTICE([lib:])
+AC_MSG_NOTICE([  csparse:   $used_csparse])
+AC_MSG_NOTICE([  lua:       $used_lua])
+echo
+AC_MSG_NOTICE([utils:       $have_utils])
+AC_MSG_NOTICE([  mkspr:     $have_mkspr])
+echo
 AC_MSG_NOTICE([debug mode:  $enable_debug])
+AS_IF([test "x$enable_debug" != "xno"], [
+   case "$host" in
+     *-linux*)
+       AC_MSG_NOTICE([  bfd:       $have_bfd])
+       ;;
+   esac
+])
+

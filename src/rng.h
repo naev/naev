@@ -29,19 +29,19 @@
  *
  * 63% Confidence interval.
  */
-#define RNG_1SIGMA()       NormalInverse(0.158 + RNGF()*(1.-0.341*2.))
+#define RNG_1SIGMA()       NormalInverse(0.158655255 + RNGF()*(1.-0.158655255*2.))
 /**
  * @brief Gets a random mu within two-sigma (-2 to 2).
  *
  * 95% Confidence interval.
  */
-#define RNG_2SIGMA()       NormalInverse(0.021 + RNGF()*(1.-0.021*2.))
+#define RNG_2SIGMA()       NormalInverse(0.022750132 + RNGF()*(1.-0.022750132*2.))
 /**
  * @brief Gets a random mu within three-sigma (-3 to 3).
  *
  * 99.8% Confidence interval.
  */
-#define RNG_3SIGMA()       NormalInverse(0.001 + RNGF()*(1.-0.001*2.))
+#define RNG_3SIGMA()       NormalInverse(0.0013498985 + RNGF()*(1.-0.0013498985*2.))
 
 
 /* Init */

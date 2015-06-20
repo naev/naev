@@ -11,6 +11,7 @@
  * Init/Exit
  */
 int nebu_init (void);
+void nebu_vbo_init (void);
 void nebu_exit (void);
 
 /*
@@ -18,14 +19,16 @@ void nebu_exit (void);
  */
 void nebu_render( const double dt );
 void nebu_renderOverlay( const double dt );
-void nebu_renderPuffs( const double dt, int below_player );
 
 /*
  * Misc
  */
+int nebu_isLoaded (void);
+void nebu_genOverlay (void);
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility );
 void nebu_forceGenerate (void);
+void nebu_movePuffs( double x, double y );
 
 
 #endif /* NEBULA_H */

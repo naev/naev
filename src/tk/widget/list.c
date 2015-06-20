@@ -11,14 +11,20 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include "nstring.h"
+
 
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
-static Widget *lst_getWgt( const unsigned int wid, char* name );
+static Widget *lst_getWgt( const unsigned int wid, const char* name );
 static int lst_focus( Widget* lst, double bx, double by );
 static void lst_scroll( Widget* lst, int direction );
 
@@ -61,6 +67,9 @@ void window_addList( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
    wgt->mclickevent        = lst_mclick;
+#if SDL_VERSION_ATLEAST(2,0,0)
+   wgt->mwheelevent        = lst_mwheel;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    wgt->mmoveevent         = lst_mmove;
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
@@ -81,6 +90,9 @@ void window_addList( const unsigned int wid,
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
+
+   if (defitem >= 0 && call)
+      call(wid, name);
 }
 
 
@@ -107,18 +119,18 @@ static void lst_render( Widget* lst, double bx, double by )
    /* inner outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
          toolkit_colLight, toolkit_col );
-   /* outter outline */
+   /* outer outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
 
    /* Draw scrollbar. */
    if (lst->dat.lst.height > 0) {
       /* We need to make room for list. */
-      w -= 10.;
+      w -= 11.;
 
       scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
       /* XXX lst->h is off by one */
-      toolkit_drawScrollbar( x + lst->w - 10. + 1, y, 10., lst->h + 1, scroll_pos );
+      toolkit_drawScrollbar( x + lst->w - 12. + 1, y -1, 12., lst->h + 2, scroll_pos );
    }
 
    /* draw selected */
@@ -127,10 +139,9 @@ static void lst_render( Widget* lst, double bx, double by )
          w-1, gl_defFont.h + 2., &cHilight, NULL );
 
    /* draw content */
-   tx = (double)SCREEN_W/2. + x + 2.;
-   ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
+   tx = x + 2.;
+   ty = y + lst->h - 2. - gl_defFont.h;
    miny = ty - lst->h + 2 + gl_defFont.h;
-   y = ty - 2.;
    w -= 4;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
       gl_printMaxRaw( &gl_defFont, (int)w,
@@ -185,18 +196,41 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
       case SDL_BUTTON_LEFT:
          lst_focus( lst, x, y );
          return 1;
+
+#if !SDL_VERSION_ATLEAST(2,0,0)
       case SDL_BUTTON_WHEELUP:
          lst_scroll( lst, +5 );
          return 1;
       case SDL_BUTTON_WHEELDOWN:
          lst_scroll( lst, -5 );
          return 1;
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
       default:
          break;
    }
    return 0;
 }
+
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+/**
+ * @brief Handler for mouse wheel events for the list widget.
+ *
+ *    @param lst The widget handling the mouse wheel event.
+ *    @param event The event the widget should handle.
+ *    @return 1 if the widget uses the event.
+ */
+static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
+{
+   if (event.y > 0)
+      lst_scroll( lst, +5 );
+   else
+      lst_scroll( lst, -5 );
+
+   return 1;
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**
@@ -220,9 +254,9 @@ static int lst_focus( Widget* lst, double bx, double by )
 
    if (bx < w) {
       i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 2.);
-      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
+      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
-         lst_scroll( lst, 0 ); /* checks boundries and triggers callback */
+         lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
       }
    }
    else {
@@ -277,7 +311,7 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
       p /= (2 + gl_defFont.h);
       lst->dat.lst.pos = CLAMP( 0, lst->dat.lst.noptions, (int)ceil(p) );
 
-      /* Does boundry checks. */
+      /* Does boundary checks. */
       lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
             lst->dat.lst.pos+h, lst->dat.lst.selected );
 
@@ -327,7 +361,7 @@ static void lst_scroll( Widget* lst, int direction )
 
    lst->dat.lst.selected -= direction;
 
-   /* boundry check. */
+   /* boundary check. */
    lst->dat.lst.selected = CLAMP( 0, lst->dat.lst.noptions-1, lst->dat.lst.selected);
 
    /* see if we have to scroll. */
@@ -337,9 +371,8 @@ static void lst_scroll( Widget* lst, int direction )
       if (lst->dat.lst.pos < 0)
          lst->dat.lst.pos = 0;
    }
-   else if (2 + (pos+1) * (gl_defFont.h + 2) > lst->h) {
+   else if (2 + (pos+1) * (gl_defFont.h + 2) > lst->h)
       lst->dat.lst.pos += (2 + (pos+1) * (gl_defFont.h + 2) - lst->h) / (gl_defFont.h + 2);
-   }
 
    if (lst->dat.lst.fptr)
       lst->dat.lst.fptr( lst->wdw, lst->name );
@@ -349,7 +382,7 @@ static void lst_scroll( Widget* lst, int direction )
 /**
  * @brief Gets the list widget.
  */
-static Widget *lst_getWgt( const unsigned int wid, char* name )
+static Widget *lst_getWgt( const unsigned int wid, const char* name )
 {
    Widget *wgt = window_getwgt(wid,name);
 
@@ -374,12 +407,12 @@ static Widget *lst_getWgt( const unsigned int wid, char* name )
  *
  * List includes Image Arrays.
  */
-char* toolkit_getList( const unsigned int wid, char* name )
-{  
+char* toolkit_getList( const unsigned int wid, const char* name )
+{
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
       return NULL;
-  
+
    /* Nothing selected. */
    if (wgt->dat.lst.selected == -1)
       return NULL;
@@ -391,22 +424,38 @@ char* toolkit_getList( const unsigned int wid, char* name )
 /**
  * @brief Sets the list value by name.
  */
-char* toolkit_setList( const unsigned int wid, char* name, char* value )
+char* toolkit_setList( const unsigned int wid, const char* name, char* value )
 {
    int i;
    Widget *wgt = lst_getWgt( wid, name );
-   if (wgt == NULL)
+   if ((wgt == NULL) || (value==NULL))
       return NULL;
 
    for (i=0; i<wgt->dat.lst.noptions; i++) {
       if (strcmp(wgt->dat.lst.options[i],value)==0) {
          wgt->dat.lst.selected = i;
-         lst_scroll( wgt, 0 ); /* checks boundries and triggers callback */
+         lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
          return value;
       }
    }
 
    return NULL;
+}
+
+
+/**
+ * @brief Sets the list value by position.
+ */
+char* toolkit_setListPos( const unsigned int wid, const char* name, int pos )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return NULL;
+
+   /* Set by pos. */
+   wgt->dat.lst.selected = CLAMP( 0, wgt->dat.lst.noptions-1, pos );
+   lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
+   return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 }
 
 
@@ -417,7 +466,7 @@ char* toolkit_setList( const unsigned int wid, char* name, char* value )
  *    @param name Name of the list.
  *    @return The position in the list or -1 on error.
  */
-int toolkit_getListPos( const unsigned int wid, char* name )
+int toolkit_getListPos( const unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -425,5 +474,33 @@ int toolkit_getListPos( const unsigned int wid, char* name )
 
    return wgt->dat.lst.selected;
 }
+
+
+/**
+ * @brief Gets the offset of a list.
+ */
+int toolkit_getListOffset( const unsigned int wid, const char* name )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   return wgt->dat.lst.pos;
+}
+
+
+/**
+ * @brief Sets the offset of a list.
+ */
+int toolkit_setListOffset( const unsigned int wid, const char* name, int off )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.lst.pos = off;
+   return 0;
+}
+
 
 

@@ -5,31 +5,36 @@
 /**
  * @file dev_system.c
  *
- * @brief Handles developement of star system stuff.
+ * @brief Handles development of star system stuff.
  */
 
 #include "dev_system.h"
+#include "dev_uniedit.h"
 
 #include "naev.h"
 
 #include <stdlib.h> /* qsort */
 
+#include "conf.h"
 #include "nxml.h"
 #include "space.h"
 #include "physics.h"
+#include "nstring.h"
 
 
 /*
  * Prototypes.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
-static int dsys_compSys( const void *sys1, const void *sys2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
-static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 
 
 /**
  * @brief Compare function for planet qsort.
+ *
+ *    @param planet1 Planet 1 to sort.
+ *    @param planet2 Planet 2 to sort.
+ *    @return Order to sort.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 )
 {
@@ -43,21 +48,11 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
 
 
 /**
- * @brief Function for qsorting sysetms.
- */
-static int dsys_compSys( const void *sys1, const void *sys2 )
-{
-   const StarSystem *s1, *s2;
-
-   s1 = * (const StarSystem**) sys1;
-   s2 = * (const StarSystem**) sys2;
-
-   return strcmp( s1->name, s2->name );
-}
-
-
-/**
  * @brief Function for qsorting jumppoints.
+ *
+ *    @param jmp1 Jump Point 1 to sort.
+ *    @param jmp2 Jump Point 2 to sort.
+ *    @return Order to sort.
  */
 static int dsys_compJump( const void *jmp1, const void *jmp2 )
 {
@@ -74,16 +69,34 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
 /**
  * @brief Saves a star system.
  *
- *    @param write Write to use for saving the star system.
+ *    @param writer Write to use for saving the star system.
  *    @param sys Star system to save.
  *    @return 0 on success.
  */
-static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
+int dsys_saveSystem( StarSystem *sys )
 {
    int i;
+   xmlDocPtr doc;
+   xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
+   char file[PATH_MAX], *cleanName;
 
+   /* Reconstruct jumps so jump pos are updated. */
+   system_reconstructJumps(sys);
+
+   /* Create the writer. */
+   writer = xmlNewTextWriterDoc(&doc, 0);
+   if (writer == NULL) {
+      WARN("testXmlwriterDoc: Error creating the xml writer");
+      return -1;
+   }
+
+   /* Set the writer parameters. */
+   xmlw_setParams( writer );
+
+   /* Start writer. */
+   xmlw_start(writer);
    xmlw_startElem( writer, "ssys" );
 
    /* Attributes. */
@@ -91,9 +104,10 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 
    /* General. */
    xmlw_startElem( writer, "general" );
+   if (sys->background != NULL)
+      xmlw_elem( writer, "background", "%s", sys->background );
    xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "stars", "%d", sys->stars );
-   xmlw_elem( writer, "asteroids", "%d", sys->asteroids );
    xmlw_elem( writer, "interference", "%f", sys->interference );
    xmlw_startElem( writer, "nebula" );
    xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
@@ -127,43 +141,79 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
-      xmlw_startElem( writer, "pos" );
-      xmlw_attr( writer, "x", "%f", jp->pos.x );
-      xmlw_attr( writer, "y", "%f", jp->pos.y );
-      xmlw_endElem( writer ); /* "pos" */
-      xmlw_elem( writer, "radius", "%f", jp->radius );
-      xmlw_startElem( writer, "flags" );
-      if (jp->flags & JP_AUTOPOS)
+      /* Position. */
+      if (!jp_isFlag( jp, JP_AUTOPOS )) {
+         xmlw_startElem( writer, "pos" );
+         xmlw_attr( writer, "x", "%f", jp->pos.x );
+         xmlw_attr( writer, "y", "%f", jp->pos.y );
+         xmlw_endElem( writer ); /* "pos" */
+      }
+      else
          xmlw_elemEmpty( writer, "autopos" );
-      xmlw_endElem( writer ); /* "flags" */
+      /* Radius and misc properties. */
+      if (jp->radius != 200.)
+         xmlw_elem( writer, "radius", "%f", jp->radius );
+      /* More flags. */
+      if (jp_isFlag( jp, JP_HIDDEN ))
+         xmlw_elemEmpty( writer, "hidden" );
+      if (jp_isFlag( jp, JP_EXITONLY ))
+         xmlw_elemEmpty( writer, "exitonly" );
+      xmlw_elem( writer, "hide", "%f", sqrt(jp->hide) );
       xmlw_endElem( writer ); /* "jump" */
    }
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
 
    xmlw_endElem( writer ); /** "ssys" */
+   xmlw_done(writer);
+
+   /* No need for writer anymore. */
+   xmlFreeTextWriter(writer);
+
+   /* Write data. */
+   cleanName = uniedit_nameFilter( sys->name );
+   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_sys, cleanName );
+   xmlSaveFileEnc( file, doc, "UTF-8" );
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(cleanName);
 
    return 0;
 }
 
 
 /**
- * @saves All the star systems.
+ * @brief Saves all the star systems.
  *
  *    @return 0 on success.
  */
 int dsys_saveAll (void)
 {
    int i;
-   /*char file[PATH_MAX];*/
+   int nsys;
+   StarSystem *sys;
+
+   sys = system_getAll( &nsys );
+
+   /* Write systems. */
+   for (i=0; i<nsys; i++)
+      dsys_saveSystem( &sys[i] );
+
+   return 0;
+}
+/**
+ * @brief Saves selected systems as a map outfit file.
+ *
+ *    @return 0 on success.
+ */
+int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
+{
+   int i, j, k;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   int nsys;
-   const StarSystem *sys;
-   const StarSystem **sorted_sys;
-
-   /* Reconstruct jumps so jump pos are updated. */
-   systems_reconstructJumps();
+   StarSystem *s;
+   char file[PATH_MAX], *cleanName;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -177,34 +227,68 @@ int dsys_saveAll (void)
 
    /* Start writer. */
    xmlw_start(writer);
-   xmlw_startElem( writer, "Systems" );
+   xmlw_startElem( writer, "outfit" );
 
-   /* Sort systems. */
-   sys = system_getAll( &nsys );
-   sorted_sys = malloc( sizeof(StarSystem*) * nsys );
-   for (i=0; i<nsys; i++)
-      sorted_sys[i] = &sys[i];
-   qsort( sorted_sys, nsys, sizeof(StarSystem*), dsys_compSys );
+   /* Attributes. */
+   xmlw_attr( writer, "name", "Editor-generated Map" );
 
-   /* Write systems. */
-   for (i=0; i<nsys; i++)
-      dsys_saveSystem( writer, sorted_sys[i] );
+   /* General. */
+   xmlw_startElem( writer, "general" );
+   xmlw_elem( writer, "mass", "%d", 0 );
+   xmlw_elem( writer, "price", "%d", 1000 );
+   xmlw_elem( writer, "description", "%s", "This map has been created by the universe editor." );
+   xmlw_elem( writer, "gfx_store", "%s", "map" );
+   xmlw_endElem( writer ); /* "general" */
 
-   /* Clean up sorted system.s */
-   free(sorted_sys);
+   xmlw_startElem( writer, "specific" );
+   xmlw_attr( writer, "type", "map" );
 
-   /* End writer. */
-   xmlw_endElem( writer ); /* "Systems" */
+   /* Iterate over all selected systems. Save said systems and any NORMAL jumps they might share. */
+   for (i = 0; i < uniedit_nsys; i++) {
+      s = uniedit_sys[i];
+      xmlw_startElem( writer, "sys" );
+      xmlw_attr( writer, "name", "%s", s->name );
+
+      /* Iterate jumps and see if they lead to any other systems in our array. */
+      for (j = 0; j < s->njumps; j++) {
+         /* Ignore hidden and exit-only jumps. */
+         if (jp_isFlag(&s->jumps[j], JP_EXITONLY ))
+            continue;
+         if (jp_isFlag(&s->jumps[j], JP_HIDDEN))
+            continue;
+         /* This is a normal jump. */
+         for (k = 0; k < uniedit_nsys; k++) {
+            if (s->jumps[j].target == uniedit_sys[k]) {
+               xmlw_elem( writer, "jump", "%s", uniedit_sys[k]->name );
+               break;
+            }
+         }
+      }
+
+      /* Iterate assets and add them */
+      for (j = 0; j < s->nplanets; j++) {
+         if (s->planets[j]->real)
+            xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
+      }
+
+      xmlw_endElem( writer ); /* "sys" */
+   }
+
+   xmlw_endElem( writer ); /* "specific" */
+   xmlw_endElem( writer ); /* "outfit" */
    xmlw_done(writer);
 
    /* No need for writer anymore. */
    xmlFreeTextWriter(writer);
 
    /* Write data. */
-   xmlSaveFileEnc( "ssys.xml", doc, "UTF-8" );
+   cleanName = uniedit_nameFilter( "saved map" );
+   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_map, cleanName );
+   xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */
    xmlFreeDoc(doc);
+   free(cleanName);
 
    return 0;
 }

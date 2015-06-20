@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Corinth Foods">
+ <pos>
+  <x>-25770.227968</x>
+  <y>17754.295875</y>
+ </pos>
+ <GFX>
+  <space>station-commerce.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>4200</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>This new type of agristation serves as the primary food producer for the Procyon enclave and beyond. The station is designed in a multi-tiered way to produce more food in a better-controlled environment using less materials and maintenance. So far it seems to be working, as Corinth Foodsproduces enough food to be exported from Za'lek space entirely.</description>
+ </general>
+</asset>

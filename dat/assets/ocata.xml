@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ocata">
+ <pos>
+  <x>-2418.286106</x>
+  <y>3527.591660</y>
+ </pos>
+ <GFX>
+  <space>moon-I00.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

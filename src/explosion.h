@@ -5,7 +5,7 @@
 
 
 #ifndef EXPLOSION_H
-#  define EXPLOSION__H
+#  define EXPLOSION_H
 
 
 #include "outfit.h"
@@ -18,11 +18,10 @@
 
 
 void expl_explode( double x, double y, double vx, double vy,
-      double radius, DamageType dtype, double damage,
+      double radius, const Damage *dmg,
       const Pilot *parent, int mode );
 void expl_explodeDamage( double x, double y, double radius,
-      DamageType dtype, double damage,
-      const Pilot *parent, int mode );
+      const Damage *dmg, const Pilot *parent, int mode );
 
 
 #endif /* EXPLOSION_H */

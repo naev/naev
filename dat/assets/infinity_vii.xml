@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Infinity VII">
+ <pos>
+  <x>6640.426299</x>
+  <y>5346.236486</y>
+ </pos>
+ <GFX>
+  <space>J01.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

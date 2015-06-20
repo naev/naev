@@ -76,6 +76,7 @@ void sound_al_free( alSound *snd );
  */
 int sound_al_volume( const double vol );
 double sound_al_getVolume (void);
+double sound_al_getVolumeLog(void);
 
 
 /*
@@ -96,6 +97,7 @@ void sound_al_stop( alVoice *v );
 void sound_al_pause (void);
 void sound_al_resume (void);
 void sound_al_setSpeed( double s );
+void sound_al_setSpeedVolume( double vol );
 
 
 /*
@@ -112,6 +114,8 @@ int sound_al_playGroup( int group, alSound *s, int once );
 void sound_al_stopGroup( int group );
 void sound_al_pauseGroup( int group );
 void sound_al_resumeGroup( int group );
+void sound_al_speedGroup( int group, int enable );
+void sound_al_volumeGroup( int group, double volume );
 
 
 /*

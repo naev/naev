@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Za'lek Heavy Drone Fighter Bay">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel License</license>
+  <mass>320</mass>
+  <price>1200000</price>
+  <gfx_store>zalek_drone_heavy_fighter</gfx_store>
+  <description>The Za'lek Heavy Drone Fighter Bay launches Za'lek Heavy Drones, shockingly enough. Three heavy drones can be operated from this bay, giving the mothership a good deal of punch.</description>
+  <cpu>-35</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Za'lek Heavy Drone Fighter</ammo>
+  <delay>5</delay>
+  <amount>3</amount>
+ </specific>
+</outfit>

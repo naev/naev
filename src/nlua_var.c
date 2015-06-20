@@ -15,11 +15,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
-#include "lua.h"
-#include "lauxlib.h"
+#include <lua.h>
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nluadef.h"
@@ -28,7 +28,7 @@
 
 
 
-/* similar to lua vars, but with less variety */
+/* similar to Lua vars, but with less variety */
 #define MISN_VAR_NIL    0 /**< Nil type. */
 #define MISN_VAR_NUM    1 /**< Number type. */
 #define MISN_VAR_BOOL   2 /**< Boolean type. */
@@ -77,15 +77,15 @@ static const luaL_reg var_methods[] = {
    { "pop", var_pop },
    { "push", var_push },
    {0,0}
-}; /**< Mission variable lua methods. */
+}; /**< Mission variable Lua methods. */
 static const luaL_reg var_cond_methods[] = {
    { "peek", var_peek },
    {0,0}
-}; /**< Conditional mission variable lua methods. */
+}; /**< Conditional mission variable Lua methods. */
 
 
 /**
- * @brief Loads the mission variable lua library.
+ * @brief Loads the mission variable Lua library.
  *    @param L Lua state.
  *    @param readonly Whether to open in read-only form.
  *    @return 0 on success.
@@ -97,7 +97,7 @@ int nlua_loadVar( lua_State *L, int readonly )
    else
       luaL_register(L, "var", var_cond_methods);
    return 0;
-}  
+}
 
 
 /**
@@ -163,7 +163,7 @@ int var_load( xmlNodePtr parent )
    do {
       if (xml_isNode(node,"vars")) {
          cur = node->xmlChildrenNode;
-         
+
          do {
             if (xml_isNode(cur,"var")) {
                xmlr_attr(cur,"name",var.name);
@@ -220,7 +220,7 @@ static int var_add( misn_var *new_var )
          memcpy( &var_stack[i], new_var, sizeof(misn_var) );
          return 0;
       }
-   
+
    memcpy( &var_stack[var_nstack], new_var, sizeof(misn_var) );
    var_nstack++;
 
@@ -272,7 +272,6 @@ int var_checkflag( char* str )
  */
 static int var_peek( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    int i;
    const char *str;
 
@@ -303,12 +302,13 @@ static int var_peek( lua_State *L )
 /**
  * @brief Pops a mission variable off the stack, destroying it.
  *
+ * This does not give you any value and destroys it permanently (or until recreated).
+ *
  *    @luaparam name Name of the mission variable to pop.
  * @luafunc pop( name )
  */
 static int var_pop( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    int i;
    const char* str;
 
@@ -320,13 +320,16 @@ static int var_pop( lua_State *L )
          memmove( &var_stack[i], &var_stack[i+1], sizeof(misn_var)*(var_nstack-i-1) );
          var_nstack--;
          return 0;
-      } 
+      }
 
    /*NLUA_DEBUG("Var '%s' not found in stack", str);*/
    return 0;
 }
 /**
  * @brief Creates a new mission variable.
+ *
+ * This will overwrite existing vars, so it's a good way to update the values
+ *  of different mission variables.
  *
  *    @luaparam name Name to use for the new mission variable.
  *    @luaparam value Value of the new mission variable.  Accepted types are:
@@ -335,15 +338,13 @@ static int var_pop( lua_State *L )
  */
 static int var_push( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    const char *str;
    misn_var var;
 
    str = luaL_checkstring(L,1);
-   var.name = strdup(str);
-   
+
    /* store appropriate data */
-   if (lua_isnil(L,2)) 
+   if (lua_isnil(L,2))
       var.type = MISN_VAR_NIL;
    else if (lua_isnumber(L,2)) {
       var.type = MISN_VAR_NUM;
@@ -358,9 +359,11 @@ static int var_push( lua_State *L )
       var.d.str = strdup( lua_tostring(L,2) );
    }
    else {
-      NLUA_DEBUG("Trying to push a var of invalid data type to stack");
+      NLUA_INVALID_PARAMETER(L);
       return 0;
    }
+   /* Set name. */
+   var.name = strdup(str);
    var_add( &var );
 
    return 0;

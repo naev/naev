@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Haven">
+ <pos>
+  <x>8514.404296</x>
+  <y>8209.228516</y>
+ </pos>
+ <GFX>
+  <space>A02.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

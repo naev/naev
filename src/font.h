@@ -21,19 +21,26 @@ typedef struct glFontChar_s {
 
 
 /**
- * @struct glFont
- *
  * @brief Represents a font in memory.
  */
 typedef struct glFont_s {
    int h; /**< Font height. */
    GLuint texture; /**< Font atlas. */
-   gl_vbo *vbo_tex; /**< VBO assosciated to texture coordinates. */
-   gl_vbo *vbo_vert; /**< VBO assosciated to vertex coordinates. */
+   gl_vbo *vbo_tex; /**< VBO associated to texture coordinates. */
+   gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
    glFontChar *chars; /**< Characters in the font. */
 } glFont;
-extern glFont gl_defFont; /**< default font */
-extern glFont gl_smallFont; /**< small font */
+extern glFont gl_defFont; /**< Default font. */
+extern glFont gl_smallFont; /**< Small font. */
+extern glFont gl_defFontMono; /**< Default mono font. */
+
+
+/**
+ * @brief Evil hack to allow restoring, yes it makes me cry myself to sleep.
+ */
+typedef struct glFontRestore_s {
+   const glColour *col; /**< Colour to restore. */
+} glFontRestore;
 
 
 /*
@@ -60,7 +67,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *text );
+      const glColour* c, const char *text );
 
 
 /*
@@ -81,7 +88,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *fmt, ... );
+      const glColour* c, const char *fmt, ... );
 
 
 /* Dimension stuff. */
@@ -92,6 +99,14 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
+
+/* Restore hacks. */
+void gl_printRestoreClear (void);
+void gl_printRestoreInit( glFontRestore *restore );
+void gl_printRestoreLast (void);
+void gl_printRestore( const glFontRestore *restore );
+void gl_printStoreMax( glFontRestore *restore, const char *text, int max );
+void gl_printStore( glFontRestore *restore, const char *text );
 
 
 #endif /* FONT_H */

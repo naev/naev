@@ -54,6 +54,8 @@
 typedef struct glInfo_ {
    int desktop_w; /**< Desktop width. */
    int desktop_h; /**< Desktop height. */
+   int x; /**< X offset of window viewport. */
+   int y; /**< Y offset of window viewport. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
    int nw; /**< Scaled window width. */
@@ -70,13 +72,19 @@ typedef struct glInfo_ {
    int g; /**< How many green bits we have. */
    int b; /**< How many blue bits we have. */
    int a; /**< How many alpha bits we have. */
-   unsigned int flags; /**< Stores different propertiers */
+   unsigned int flags; /**< Stores different properties */
    int tex_max; /**< Maximum texture size */
    int multitex_max; /**< Maximum multitexture levels */
    int fsaa; /**< Full Scene Anti Aliasing level. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_Window *window; /**< Window for SDL2. */
+   SDL_GLContext context; /**< Context for OpenGL. */
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
+#define  SCREEN_X gl_screen.x /**< Screen X offset. */
+#define  SCREEN_Y gl_screen.y /**< Screen Y offset. */
 #define  SCREEN_W gl_screen.w /**< Screen width. */
 #define  SCREEN_H gl_screen.h /**< Screen height. */
 
@@ -93,6 +101,9 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
  */
 int gl_init (void);
 void gl_exit (void);
+#if SDL_VERSION_ATLEAST(2,0,0)
+void gl_resize( int w, int h );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /*
@@ -100,13 +111,22 @@ void gl_exit (void);
  */
 GLboolean gl_hasExt( char *name );
 GLboolean gl_hasVersion( int major, int minor );
+int gl_vendorIsIntel (void);
+
+
+/*
+ * Viewport.
+ */
+void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy );
+void gl_viewport( int x, int y, int w, int h );
+void gl_defViewport (void);
+void gl_setDefViewport( int x, int y, int w, int h );
 
 
 /*
  * misc
  */
 double gl_setScale( double scalefactor );
-void gl_defViewport (void);
 void gl_screenshot( const char *filename );
 int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #ifdef DEBUGGING
@@ -118,4 +138,4 @@ void gl_checkHandleError( const char *func, int line );
 
 
 #endif /* OPENGL_H */
-   
+

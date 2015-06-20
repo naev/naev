@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kanel">
+ <pos>
+  <x>7260.754073</x>
+  <y>4575.536182</y>
+ </pos>
+ <GFX>
+  <space>moon-H01.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

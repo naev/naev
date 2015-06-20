@@ -19,7 +19,6 @@
 #include "sound_openal.h"
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
 #include "conf.h"
 
 
@@ -99,7 +98,7 @@ typedef struct alMusic_ {
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info* info; /**< Information of the stream. */
    ALenum format; /**< Stream format. */
-   /* Replygain information. */
+   /* Replaygain information. */
    ALfloat rg_scale_factor; /**< Scale factor. */
    ALfloat rg_max_scale; /**< Maximum scale factor before clipping. */
 } alMusic;
@@ -110,13 +109,14 @@ typedef struct alMusic_ {
  */
 static alMusic music_vorbis; /**< Current music. */
 static ALuint music_buffer[2]; /**< Front and back buffer. */
-ALuint music_source                    = 0; /**< Source assosciated to music. */
+ALuint music_source                    = 0; /**< Source associated to music. */
 
 
 /*
  * volume
  */
-static ALfloat music_vol = 1.; /**< Current volume level. */
+static ALfloat music_vol     = 1.; /**< Current volume level (logarithmic). */
+static ALfloat music_vol_lin = 1.; /**< Current volume level (linear). */
 
 
 /*
@@ -150,7 +150,6 @@ static int music_thread( void* unused )
    uint32_t fade, fade_timer = 0;
 
    while (1) {
-
       /* Handle states. */
       musicLock();
 
@@ -159,9 +158,9 @@ static int music_thread( void* unused )
          case MUSIC_CMD_KILL:
             if (music_state != MUSIC_STATE_IDLE)
                music_state = MUSIC_STATE_STOPPING;
-            else {
+            else
                music_state = MUSIC_STATE_DEAD;
-            }
+
             /* Does not clear command. */
             break;
 
@@ -229,13 +228,9 @@ static int music_thread( void* unused )
       cur_state = music_state;
       musicUnlock();
 
-      /*
-       * Main processing loop.
-       */
+      /* Main processing loop. */
       switch (cur_state) {
-         /*
-          * Basically send a message that thread is up and running.
-          */
+         /* Basically send a message that thread is up and running. */
          case MUSIC_STATE_STARTUP:
             musicLock();
             music_state = MUSIC_STATE_IDLE;
@@ -243,9 +238,7 @@ static int music_thread( void* unused )
             musicUnlock();
             break;
 
-         /*
-          * We died.
-          */
+         /* We died. */
          case MUSIC_STATE_DEAD:
             musicLock();
             music_state = MUSIC_STATE_DEAD;
@@ -254,16 +247,12 @@ static int music_thread( void* unused )
             return 0;
             break;
 
-         /*
-          * Delays at the end.
-          */
+         /* Delays at the end. */
          case MUSIC_STATE_PAUSED:
          case MUSIC_STATE_IDLE:
             break;
 
-         /*
-          * Resumes the paused song.
-          */
+         /* Resumes the paused song. */
          case MUSIC_STATE_RESUMING:
             soundLock();
             alSourcePlay( music_source );
@@ -278,9 +267,7 @@ static int music_thread( void* unused )
             musicUnlock();
             break;
 
-         /*
-          * Pause the song.
-          */
+         /* Pause the song. */
          case MUSIC_STATE_PAUSING:
             soundLock();
             alSourcePause( music_source );
@@ -294,9 +281,7 @@ static int music_thread( void* unused )
             musicUnlock();
             break;
 
-         /*
-          * Stop song setting to IDLE.
-          */
+         /* Stop song setting to IDLE. */
          case MUSIC_STATE_STOPPING:
             soundLock();
 
@@ -321,16 +306,14 @@ static int music_thread( void* unused )
             musicUnlock();
             break;
 
-         /*
-          * Load the song.
-          */
+         /* Load the song. */
          case MUSIC_STATE_LOADING:
-
             /* Load buffer and start playing. */
             active = 0; /* load first buffer */
             ret = stream_loadBuffer( music_buffer[active] );
             soundLock();
             alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
+
             /* Special case NULL file or error. */
             if (ret < 0) {
                soundUnlock();
@@ -370,9 +353,8 @@ static int music_thread( void* unused )
             /* Load second buffer. */
             active = 1;
             ret = stream_loadBuffer( music_buffer[active] );
-            if (ret < 0) {
+            if (ret < 0)
                active = -1;
-            }
             else {
                soundLock();
                alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
@@ -391,15 +373,12 @@ static int music_thread( void* unused )
             musicUnlock();
             break;
 
-         /*
-          * Fades in the music.
-          */
+         /* Fades in the music. */
          case MUSIC_STATE_FADEOUT:
          case MUSIC_STATE_FADEIN:
             /* See if must still fade. */
             fade = SDL_GetTicks() - fade_timer;
             if (cur_state == MUSIC_STATE_FADEIN) {
-
                if (fade < MUSIC_FADEIN_DELAY) {
                   gain = (ALfloat)fade / (ALfloat)MUSIC_FADEIN_DELAY;
                   soundLock();
@@ -424,7 +403,6 @@ static int music_thread( void* unused )
                }
             }
             else if (cur_state == MUSIC_STATE_FADEOUT) {
-
                if (fade < MUSIC_FADEOUT_DELAY) {
                   gain = 1. - (ALfloat)fade / (ALfloat)MUSIC_FADEOUT_DELAY;
                   soundLock();
@@ -444,11 +422,8 @@ static int music_thread( void* unused )
 
             /* Purpose fallthrough. */
 
-         /*
-          * Play the song if needed.
-          */
+         /* Play the song if needed. */
          case MUSIC_STATE_PLAYING:
-
             /* Special case where file has ended. */
             if (active < 0) {
                soundLock();
@@ -478,13 +453,11 @@ static int music_thread( void* unused )
             /* See if needs another buffer set. */
             alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &state );
             if (state > 0) {
-
                /* refill active buffer */
                alSourceUnqueueBuffers( music_source, 1, removed );
                ret = stream_loadBuffer( music_buffer[active] );
-               if (ret < 0) {
+               if (ret < 0)
                   active = -1;
-               }
                else {
                   alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
                   active = 1 - active;
@@ -497,9 +470,7 @@ static int music_thread( void* unused )
             soundUnlock();
       }
 
-      /*
-       * Global thread delay.
-       */
+      /* Global thread delay. */
       SDL_Delay(0);
 
    }
@@ -530,20 +501,22 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
       for(i = 0; i < channels; i++)
          for(j = 0; j < samples; j++) {
             cur_sample = pcm[i][j] * scale_factor;
-            /* This is essentially the scaled hard-limiting algorithm */
-            /* It looks like the soft-knee to me */
-            /* I haven't found a better limiting algorithm yet... */
+            /*
+             * This is essentially the scaled hard-limiting algorithm
+             * It looks like the soft-knee to me
+             * I haven't found a better limiting algorithm yet...
+             */
             if (cur_sample < -0.5)
                cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
             else if (cur_sample > 0.5)
                cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
             pcm[i][j] = cur_sample;
          }
-   } else if (scale_factor > 0.0) {
+   }
+   else if (scale_factor > 0.0)
       for(i = 0; i < channels; i++)
          for(j = 0; j < samples; j++)
             pcm[i][j] *= scale_factor;
-   }
 }
 #endif /* HAVE_OV_READ_FILTER */
 
@@ -567,7 +540,7 @@ static int stream_loadBuffer( ALuint buffer )
 
    ret  = 0;
    size = 0;
-   while (size < music_bufSize) { /* fille up the entire data buffer */
+   while (size < music_bufSize) { /* file up the entire data buffer */
 
 #ifdef HAVE_OV_READ_FILTER
       result = ov_read_filter(
@@ -671,7 +644,11 @@ int music_al_init (void)
     */
    musicLock();
    music_state  = MUSIC_STATE_STARTUP;
-   music_player = SDL_CreateThread( music_thread, NULL );
+   music_player = SDL_CreateThread( music_thread,
+#if SDL_VERSION_ATLEAST(1,3,0)
+         "music_thread",
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+         NULL );
    SDL_CondWait( music_state_cond, music_state_lock );
    musicUnlock();
 
@@ -723,7 +700,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
 
    /* set the new name */
    strncpy( music_vorbis.name, name, 64 );
-   
+
    /* Load new ogg. */
    music_vorbis.rw = rw;
    if (ov_open_callbacks( music_vorbis.rw, &music_vorbis.stream,
@@ -734,7 +711,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    }
    music_vorbis.info = ov_info( &music_vorbis.stream, -1 );
 
-   /* Get replaygain information. */
+   /* Get Replaygain information. */
    vc             = ov_comment( &music_vorbis.stream, -1 );
    track_gain_db  = 0.;
    track_peak     = 1.;
@@ -802,17 +779,21 @@ int music_al_volume( double vol )
 {
    soundLock();
 
-   music_vol = vol;
+   music_vol_lin = vol;
+   if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
+      music_vol = 1 / pow(2, (1 - vol) * 8 );
+   else
+      music_vol = 0.;
 
    /* only needed if playing */
    if (music_al_isPlaying()) {
 
-      alSourcef( music_source, AL_GAIN, vol );
+      alSourcef( music_source, AL_GAIN, music_vol );
 
       /* Check for errors. */
       al_checkErr();
    }
- 
+
    soundUnlock();
 
    return 0;
@@ -820,9 +801,18 @@ int music_al_volume( double vol )
 
 
 /**
- * @brief Gets the volume.
+ * @brief Gets the volume (linear).
  */
 double music_al_getVolume (void)
+{
+   return music_vol_lin;
+}
+
+
+/**
+ * @brief Gets the volume (logarithmic).
+ */
+double music_al_getVolumeLog(void)
 {
    return music_vol;
 }
@@ -917,9 +907,8 @@ void music_al_setPos( double sec )
 
    musicVorbisUnlock();
 
-   if (ret != 0) {
+   if (ret != 0)
       WARN("Unable to seek vorbis file.");
-   }
 }
 
 
@@ -963,8 +952,12 @@ static void music_kill (void)
 
       /* Timed out, just slaughter the thread. */
       if (ret == SDL_MUTEX_TIMEDOUT) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+         WARN("Music thread did not exit when asked, ignoring...");
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
          WARN("Music thread did not exit when asked, slaughtering...");
          SDL_KillThread( music_player );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          break;
       }
 

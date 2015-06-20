@@ -5,7 +5,7 @@
 /**
  * @file nlua_evt.c
  *
- * @brief Handles the event lua bindings.
+ * @brief Handles the event Lua bindings.
  */
 
 
@@ -15,20 +15,22 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
-#include "lua.h"
-#include "lauxlib.h"
+#include <lua.h>
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_system.h"
 #include "nlua_hook.h"
 #include "log.h"
 #include "event.h"
 #include "mission.h"
 #include "player.h"
 #include "npc.h"
+#include "ndata.h"
 
 
 /**
@@ -43,37 +45,30 @@
  */
 
 
-
-
-/*
- * current mission
- */
-static Event_t *cur_event = NULL; /**< Contains the current event for a running script. */
-static int evt_delete = 0; /**< if 1 delete current event */
-
-
 /*
  * libraries
  */
 /* evt */
-static int evt_misnStart( lua_State *L );
 static int evt_npcAdd( lua_State *L );
 static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
+static int evt_save( lua_State *L );
+static int evt_claim( lua_State *L );
 static const luaL_reg evt_methods[] = {
-   { "misnStart", evt_misnStart },
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
+   { "save", evt_save },
    { "finish", evt_finish },
+   { "claim", evt_claim },
    {0,0}
-}; /**< Mission lua methods. */
+}; /**< Mission Lua methods. */
 
 
 /*
  * individual library loading
  */
 /**
- * @brief Loads the event lua library.
+ * @brief Loads the event Lua library.
  *    @param L Lua state.
  */
 int nlua_loadEvt( lua_State *L )
@@ -92,9 +87,14 @@ lua_State *event_setupLua( Event_t *ev, const char *func )
 
    /* Load event. */
    L = ev->L;
-   cur_event = ev;
-   evt_delete = 0;
-   nlua_hookTarget( NULL, cur_event );
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+#endif /* DEBUGGING */
+
+   /* Set up event pointer. */
+   lua_pushlightuserdata( L, ev );
+   lua_setglobal( L, "__evt" );
 
    /* Get function. */
    lua_getglobal(L, func );
@@ -114,24 +114,45 @@ int event_runLua( Event_t *ev, const char *func )
 
 
 /**
+ * @brief Gets the current running event from user data.
+ */
+Event_t *event_getFromLua( lua_State *L )
+{
+   Event_t *ev;
+
+   lua_getglobal( L, "__evt" );
+   ev = (Event_t*) lua_touserdata( L, -1 );
+   lua_pop( L, 1 );
+   return ev;
+}
+
+
+/**
  * @brief Runs a Lua func with nargs.
  *
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *    @return -1 on error, 1 on misn.finish() call, 2 if event got deleted
  *            and 0 normally.
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 {
-   int ret;
+   int ret, errf;
    const char* err;
    lua_State *L;
+   int evt_delete;
 
    /* Comfortability. */
    L = ev->L;
 
-   ret = lua_pcall(L, nargs, 0, 0);
-   if (ret != 0) { /* error has occured */
+#if DEBUGGING
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   ret = lua_pcall(L, nargs, 0, errf);
+   if (ret != 0) { /* error has occurred */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if ((err==NULL) || (strcmp(err,"Event Done")!=0)) {
+      if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Event '%s' -> '%s': %s",
                event_getData(ev->id), func, (err) ? err : "unknown error");
          ret = -1;
@@ -140,44 +161,20 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
          ret = 1;
       lua_pop(L, 1);
    }
+#if DEBUGGING
+   lua_pop(L, 1);
+#endif /* DEBUGGING */
 
    /* Time to remove the event. */
+   lua_getglobal( L, "__evt_delete" );
+   evt_delete = lua_toboolean(L,-1);
+   lua_pop(L,1);
    if (evt_delete) {
       ret = 2;
-      event_remove( cur_event->id );
+      event_remove( ev->id );
    }
-
-   /* Unload event. */
-   cur_event = NULL;
-   nlua_hookTarget( NULL, NULL );
 
    return ret;
-}
-
-
-/**
- * @brief Starts a mission.
- *
- * @usage evt.misnStart( "Tutorial" ) -- Starts the tutorial
- *
- *    @luaparam misn Name of the mission to start, should match mission in dat/mission.xml.
- * @luafunc misnStart( misn )
- */
-static int evt_misnStart( lua_State *L )
-{
-   const char *str;
-
-   str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
-      /* Reset the hook. */
-      nlua_hookTarget( NULL, cur_event );
-      NLUA_ERROR(L,"Failed to start mission.");
-   }
-
-   /* Has to reset the hook target since mission overrides. */
-   nlua_hookTarget( NULL, cur_event );
-
-   return 0;
 }
 
 
@@ -186,10 +183,10 @@ static int evt_misnStart( lua_State *L )
  *
  * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching.
+ *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
- *    @luaparam desc Description assosciated to the NPC.
+ *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
+ *    @luaparam desc Description associated to the NPC.
  *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
  *    @luareturn The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd( func, name, portrait, desc, priority )
@@ -200,6 +197,7 @@ static int evt_npcAdd( lua_State *L )
    int priority;
    const char *func, *name, *gfx, *desc;
    char portrait[PATH_MAX];
+   Event_t *cur_event;
 
    /* Handle parameters. */
    func = luaL_checkstring(L, 1);
@@ -212,9 +210,11 @@ static int evt_npcAdd( lua_State *L )
       priority = luaL_checkint( L, 5 );
    else
       priority = 5;
- 
+
    /* Set path. */
-   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
+
+   cur_event = event_getFromLua(L);
 
    /* Add npc. */
    id = npc_add_event( cur_event->id, func, name, priority, portrait, desc );
@@ -240,8 +240,11 @@ static int evt_npcRm( lua_State *L )
 {
    unsigned int id;
    int ret;
+   Event_t *cur_event;
 
    id = luaL_checklong(L, 1);
+
+   cur_event = event_getFromLua(L);
    ret = npc_rm_event( id, cur_event->id );
 
    if (ret != 0)
@@ -261,16 +264,108 @@ static int evt_npcRm( lua_State *L )
 static int evt_finish( lua_State *L )
 {
    int b;
+   Event_t *cur_event;
 
    b = lua_toboolean(L,1);
-   evt_delete = 1;
+   lua_pushboolean( L, 1 );
+   lua_setglobal( L, "__evt_delete" );
 
+   cur_event = event_getFromLua(L);
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );
 
-   lua_pushstring(L, "Event Done");
+   lua_pushstring(L, NLUA_DONE);
    lua_error(L); /* shouldn't return */
 
    return 0;
+}
+
+
+/**
+ * @brief Saves an event.
+ *
+ * @usage evt.save() -- Saves an event, which is by default disabled.
+ *
+ *    @luaparam enable If true or nil sets the event to save, otherwise tells the event to not save.
+ * @luafunc save( enable )
+ */
+static int evt_save( lua_State *L )
+{
+   int b;
+   Event_t *cur_event;
+   if (lua_gettop(L)==0)
+      b = 1;
+   else
+      b = lua_toboolean(L,1);
+   cur_event = event_getFromLua(L);
+   cur_event->save = b;
+   return 0;
+}
+
+
+/**
+ * @brief Tries to claim systems.
+ *
+ * Claiming systems is a way to avoid mission/event collisions preemptively.
+ *
+ * Note it does not actually claim the systems if it fails to claim. It also
+ *  does not work more then once.
+ *
+ * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
+ * @usage if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
+ *
+ *    @luaparam systems Table of systems to claim or a single system.
+ *    @luareturn true if was able to claim, false otherwise.
+ * @luafunc claim( systems )
+ */
+static int evt_claim( lua_State *L )
+{
+   LuaSystem *ls;
+   SysClaim_t *claim;
+   Event_t *cur_event;
+
+   /* Get current event. */
+   cur_event = event_getFromLua(L);
+
+   /* Check to see if already claimed. */
+   if (cur_event->claims != NULL) {
+      NLUA_ERROR(L, "Event trying to claim but already has.");
+      return 0;
+   }
+
+   /* Create the claim. */
+   claim = claim_create();
+
+   /* Handle parameters. */
+   if (lua_istable(L,1)) {
+      /* Iterate over table. */
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
+         if (lua_issystem(L,-1)) {
+            ls = lua_tosystem( L, -1 );
+            claim_add( claim, ls->id );
+         }
+         lua_pop(L,1);
+      }
+   }
+   else if (lua_issystem(L, 1)) {
+      ls = lua_tosystem( L, 1 );
+      claim_add( claim, ls->id );
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Test claim. */
+   if (claim_test( claim )) {
+      claim_destroy( claim );
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Set the claim. */
+   cur_event->claims = claim;
+   claim_activate( claim );
+   lua_pushboolean(L,1);
+   return 1;
 }
 

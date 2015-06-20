@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Proteron Derivative">
+ <base_type>Derivative</base_type>
+ <GFX>derivative</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>290000</price>
+ <fabricator>Proteron</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>While smaller and less intimidating than it's bigger brothers in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <health>
+  <absorb>5</absorb>
+  <armour>35</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>2</crew>
+  <mass>40</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="10" y="0" h="0"/>
+  <weapon size="small" x="0" y="-4" h="-3"/>
+  <weapon size="small" x="0" y="4" h="-3"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <shield_mod>15</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <heat_dissipation>15</heat_dissipation>
+ </stats>
+</ship>

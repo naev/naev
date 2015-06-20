@@ -23,13 +23,15 @@
 #include "sound_openal.h"
 #include "sound_sdlmix.h"
 #include "log.h"
+#include "nstring.h"
 #include "ndata.h"
 #include "music.h"
 #include "physics.h"
 #include "conf.h"
+#include "player.h"
+#include "camera.h"
 
 
-#define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
 
@@ -42,6 +44,7 @@
  * Global sound properties.
  */
 int sound_disabled            = 0; /**< Whether sound is disabled. */
+static int sound_initialized  = 0; /**< Whether or not sound is initialized. */
 
 
 /*
@@ -60,6 +63,14 @@ static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
 static SDL_mutex *voice_mutex = NULL; /**< Lock for voices. */
 
 
+/*
+ * Internally used sounds.
+ */
+static int snd_compression    = -1; /**< Compression sound. */
+static int snd_compressionG   = -1; /**< Compression sound group. */
+static double snd_compression_gain = 0.; /**< Current compression gain. */
+
+
 
 /*
  * Function pointers for backends.
@@ -73,6 +84,7 @@ void (*sound_sys_free) ( alSound *snd ) = NULL;
  /* Sound settings. */
 int  (*sound_sys_volume) ( const double vol ) = NULL;
 double (*sound_sys_getVolume) (void)   = NULL;
+double (*sound_sys_getVolumeLog) (void)   = NULL;
  /* Sound playing. */
 int  (*sound_sys_play) ( alVoice *v, alSound *s )   = NULL;
 int  (*sound_sys_playPos) ( alVoice *v, alSound *s,
@@ -85,7 +97,8 @@ void (*sound_sys_update) (void)        = NULL;
 void (*sound_sys_stop) ( alVoice *v )  = NULL;
 void (*sound_sys_pause) (void)         = NULL;
 void (*sound_sys_resume) (void)        = NULL;
-void (*sound_sys_setSpeed) (double s ) = NULL;
+void (*sound_sys_setSpeed) ( double s ) = NULL;
+void (*sound_sys_setSpeedVolume) ( double vol ) = NULL;
 /* Listener. */
 int (*sound_sys_updateListener) ( double dir, double px, double py,
       double vx, double vy )           = NULL;
@@ -93,8 +106,10 @@ int (*sound_sys_updateListener) ( double dir, double px, double py,
 int  (*sound_sys_createGroup) ( int size ) = NULL;
 int  (*sound_sys_playGroup) ( int group, alSound *s, int once ) = NULL;
 void (*sound_sys_stopGroup) ( int group ) = NULL;
-void (*sound_sys_pauseGroup) (int group ) = NULL;
-void (*sound_sys_resumeGroup) (int group ) = NULL;
+void (*sound_sys_pauseGroup) ( int group ) = NULL;
+void (*sound_sys_resumeGroup) ( int group ) = NULL;
+void (*sound_sys_speedGroup) ( int group, int enable ) = NULL;
+void (*sound_sys_volumeGroup) ( int group, double volume ) = NULL;
 /* Env. */
 int  (*sound_sys_env) ( SoundEnv_t env, double param ) = NULL;
 
@@ -144,6 +159,7 @@ int sound_init (void)
       /* Sound settings. */
       sound_sys_volume     = sound_al_volume;
       sound_sys_getVolume  = sound_al_getVolume;
+      sound_sys_getVolumeLog = sound_al_getVolumeLog;
       /* Sound playing. */
       sound_sys_play       = sound_al_play;
       sound_sys_playPos    = sound_al_playPos;
@@ -155,6 +171,7 @@ int sound_init (void)
       sound_sys_pause      = sound_al_pause;
       sound_sys_resume     = sound_al_resume;
       sound_sys_setSpeed   = sound_al_setSpeed;
+      sound_sys_setSpeedVolume = sound_al_setSpeedVolume;
       /* Listener. */
       sound_sys_updateListener = sound_al_updateListener;
       /* Groups. */
@@ -163,6 +180,8 @@ int sound_init (void)
       sound_sys_stopGroup  = sound_al_stopGroup;
       sound_sys_pauseGroup = sound_al_pauseGroup;
       sound_sys_resumeGroup = sound_al_resumeGroup;
+      sound_sys_speedGroup = sound_al_speedGroup;
+      sound_sys_volumeGroup = sound_al_volumeGroup;
       /* Env. */
       sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
@@ -184,6 +203,7 @@ int sound_init (void)
       /* Sound settings. */
       sound_sys_volume     = sound_mix_volume;
       sound_sys_getVolume  = sound_mix_getVolume;
+      sound_sys_getVolumeLog = sound_mix_getVolumeLog;
       /* Sound playing. */
       sound_sys_play       = sound_mix_play;
       sound_sys_playPos    = sound_mix_playPos;
@@ -195,6 +215,7 @@ int sound_init (void)
       sound_sys_pause      = sound_mix_pause;
       sound_sys_resume     = sound_mix_resume;
       sound_sys_setSpeed   = sound_mix_setSpeed;
+      sound_sys_setSpeedVolume = sound_mix_setSpeedVolume;
       /* Listener. */
       sound_sys_updateListener = sound_mix_updateListener;
       /* Groups. */
@@ -203,6 +224,8 @@ int sound_init (void)
       sound_sys_stopGroup  = sound_mix_stopGroup;
       sound_sys_pauseGroup = sound_mix_pauseGroup;
       sound_sys_resumeGroup = sound_mix_resumeGroup;
+      sound_sys_speedGroup = sound_mix_speedGroup;
+      sound_sys_volumeGroup = sound_mix_volumeGroup;
       /* Env. */
       sound_sys_env        = sound_mix_env;
 #else /* USE_SDLMIX */
@@ -228,9 +251,8 @@ int sound_init (void)
 
    /* Create voice lock. */
    voice_mutex = SDL_CreateMutex();
-   if (voice_mutex == NULL) {
+   if (voice_mutex == NULL)
       WARN("Unable to create voice mutex.");
-   }
 
    /* Load available sounds. */
    ret = sound_makeList();
@@ -249,6 +271,17 @@ int sound_init (void)
       WARN("Sound has invalid value, clamping to [0:1].");
    sound_volume(conf.sound);
 
+   /* Initialized. */
+   sound_initialized = 1;
+
+   /* Load compression noise. */
+   snd_compression = sound_get( "compression" );
+   if (snd_compression >= 0) {
+      snd_compressionG = sound_createGroup( 1 );
+      sound_speedGroup( snd_compressionG, 0 );
+   }
+
+
    return 0;
 }
 
@@ -262,7 +295,7 @@ void sound_exit (void)
    alVoice *v;
 
    /* Nothing to disable. */
-   if (sound_disabled)
+   if (sound_disabled || !sound_initialized)
       return;
 
    /* Exit music subsystem. */
@@ -297,16 +330,19 @@ void sound_exit (void)
 
    /* Exit sound subsystem. */
    sound_sys_exit();
+
+   /* Sound is done. */
+   sound_initialized = 0;
 }
 
 
 /**
  * @brief Gets the buffer to sound of name.
  *
- *    @param name Name of the sound to get it's id.
+ *    @param name Name of the sound to get the id of.
  *    @return ID of the sound matching name.
  */
-int sound_get( char* name ) 
+int sound_get( char* name )
 {
    int i;
 
@@ -314,9 +350,9 @@ int sound_get( char* name )
       return 0;
 
    for (i=0; i<sound_nlist; i++)
-      if (strcmp(name, sound_list[i].name)==0) {
+      if (strcmp(name, sound_list[i].name)==0)
          return i;
-      }
+
    WARN("Sound '%s' not found in sound list", name);
    return -1;
 }
@@ -325,7 +361,7 @@ int sound_get( char* name )
 /**
  * @brief Gets the length of the sound buffer.
  *
- *    @param id ID of the buffer to get it's length.
+ *    @param id ID of the buffer to get the length of..
  *    @return The length of the buffer.
  */
 double sound_length( int sound )
@@ -351,7 +387,7 @@ int sound_play( int sound )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    /* Gets a new voice. */
@@ -381,18 +417,37 @@ int sound_play( int sound )
  *    @param py Y position of the sound.
  *    @param vx X velocity of the sound.
  *    @param vy Y velocity of the sound.
- *    @return 0 on success.
+ *    @return Voice identifier on success.
  */
 int sound_playPos( int sound, double px, double py, double vx, double vy )
 {
    alVoice *v;
    alSound *s;
+   Pilot *p;
+   double cx, cy, dist;
+   int target;
 
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
+
+   target = cam_getTarget();
+
+   /* Following a pilot. */
+   p = pilot_get(target);
+   if (target && (p != NULL)) {
+      if (!pilot_inRange( p, px, py ))
+         return 0;
+   }
+   /* Set to a position. */
+   else {
+      cam_getPos(&cx, &cy);
+      dist = pow2(px - cx) + pow2(py - cy);
+      if (dist > pilot_sensorRange())
+         return 0;
+   }
 
    /* Gets a new voice. */
    v = voice_new();
@@ -440,7 +495,7 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
 
 
 /**
- * @brief Updates the sonuds removing obsolete ones and such.
+ * @brief Updates the sounds removing obsolete ones and such.
  *
  *    @return 0 on success.
  */
@@ -513,6 +568,9 @@ void sound_pause (void)
       return;
 
    sound_sys_pause();
+
+   if (snd_compression >= 0)
+      sound_sys_pauseGroup( snd_compressionG );
 }
 
 
@@ -525,6 +583,9 @@ void sound_resume (void)
       return;
 
    sound_sys_resume();
+
+   if (snd_compression >= 0)
+      sound_sys_resumeGroup( snd_compressionG );
 }
 
 
@@ -601,8 +662,33 @@ int sound_updateListener( double dir, double px, double py,
  */
 void sound_setSpeed( double s )
 {
+   double v;
+   int playing;
+
    if (sound_disabled)
       return;
+
+   /* We implement the brown noise here. */
+   playing = (snd_compression_gain > 0.);
+   if (player.tc_max > 2.)
+      v = CLAMP( 0, 1., MAX( (s-2)/10., (s-2) / (player.tc_max-2) ) );
+   else
+      v = CLAMP( 0, 1., (s-2)/10. );
+
+   if (v > 0.) {
+      if (snd_compression >= 0) {
+         if (!playing)
+            sound_playGroup( snd_compressionG, snd_compression, 0 ); /* Start playing only if it's not playing. */
+         sound_volumeGroup( snd_compressionG, v );
+      }
+      sound_sys_setSpeedVolume( 1.-v );
+   }
+   else if (playing) {
+      if (snd_compression >= 0)
+         sound_stopGroup( snd_compressionG ); /* Stop compression sound. */
+      sound_sys_setSpeedVolume( 1. ); /* Restore volume. */
+   }
+   snd_compression_gain = v;
 
    return sound_sys_setSpeed( s );
 }
@@ -624,7 +710,7 @@ static int sound_makeList (void)
       return 0;
 
    /* get the file list */
-   files = ndata_list( SOUND_PREFIX, &nfiles );
+   files = ndata_list( SOUND_PATH, &nfiles );
 
    /* load the profiles */
    mem = 0;
@@ -659,10 +745,9 @@ static int sound_makeList (void)
 
       /* Load the sound. */
       sound_list[sound_nlist-1].name = strdup(tmp);
-      snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
-      if (sound_load( &sound_list[sound_nlist-1], path )) {
+      nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
+      if (sound_load( &sound_list[sound_nlist-1], path ))
          sound_nlist--; /* Song not actually added. */
-      }
 
       /* Clean up. */
       free(files[i]);
@@ -695,7 +780,7 @@ int sound_volume( const double vol )
 
 
 /**
- * @brief Gets the current sound volume.
+ * @brief Gets the current sound volume (linear).
  *
  *    @return The current sound volume level.
  */
@@ -705,6 +790,20 @@ double sound_getVolume (void)
       return 0.;
 
    return sound_sys_getVolume();
+}
+
+
+/**
+ * @brief Gets the current sound volume (logarithmic).
+ *
+ *    @return The current sound volume level.
+ */
+double sound_getVolumeLog(void)
+{
+   if (sound_disabled)
+      return 0.;
+
+   return sound_sys_getVolumeLog();
 }
 
 
@@ -738,7 +837,7 @@ static void sound_free( alSound *snd )
       free(snd->name);
       snd->name = NULL;
    }
-   
+
    /* Free internals. */
    sound_sys_free(snd);
 }
@@ -773,7 +872,7 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    return sound_sys_playGroup( group, &sound_list[sound], once );
@@ -783,7 +882,7 @@ int sound_playGroup( int group, int sound, int once )
 /**
  * @brief Stops all the sounds in a group.
  *
- *    @param group Group to stop all it's sounds.
+ *    @param group Group to stop all its sounds.
  */
 void sound_stopGroup( int group )
 {
@@ -819,6 +918,36 @@ void sound_resumeGroup( int group )
       return;
 
    sound_sys_resumeGroup( group );
+}
+
+
+/**
+ * @brief Sets whether or not the speed affects a group.
+ *
+ *    @param group Group to set if speed affects it.
+ *    @param enable Whether or not speed affects the group.
+ */
+void sound_speedGroup( int group, int enable )
+{
+   if (sound_disabled)
+      return;
+
+   sound_sys_speedGroup( group, enable );
+}
+
+
+/**
+ * @brief Sets the volume of a group.
+ *
+ *    @param group Group to set the volume of.
+ *    @param volume Volume to set to in the [0-1] range.
+ */
+void sound_volumeGroup( int group, double volume )
+{
+   if (sound_disabled)
+      return;
+
+   sound_sys_volumeGroup( group, volume );
 }
 
 
@@ -867,8 +996,7 @@ alVoice* voice_new (void)
 
    /* No free voices, allocate a new one. */
    if (voice_pool == NULL) {
-      v = malloc(sizeof(alVoice));
-      memset(v, 0, sizeof(alVoice));
+      v = calloc( 1, sizeof(alVoice) );
       voice_pool = v;
       return v;
    }

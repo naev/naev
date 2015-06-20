@@ -6,19 +6,25 @@ AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
-naev_SOURCES = \
+CODE_SOURCE = \
 	ai.c \
 	array.c \
-	base64.c \
+	background.c \
 	board.c \
+	camera.c \
+	claim.c \
 	collision.c \
 	colour.c \
 	comm.c \
 	cond.c \
 	conf.c \
 	console.c \
+	damagetype.c \
 	debris.c \
+	dev.c \
+	dev_outfit.c \
 	dev_planet.c \
+	dev_ship.c \
 	dev_system.c \
 	dev_sysedit.c \
 	dev_uniedit.c \
@@ -32,6 +38,7 @@ naev_SOURCES = \
 	fleet.c \
 	font.c \
 	gui.c \
+	gui_omsg.c \
 	gui_osd.c \
 	hook.c \
 	info.c \
@@ -39,7 +46,13 @@ naev_SOURCES = \
 	intro.c \
 	joystick.c \
 	land.c \
+	land_outfits.c \
+	land_shipyard.c \
+	load.c \
+	log.c \
 	map.c \
+	map_find.c \
+	map_overlay.c \
 	md5.c \
 	menu.c \
 	mission.c \
@@ -52,14 +65,23 @@ naev_SOURCES = \
 	news.c \
 	nfile.c \
 	nlua.c \
+	nlua_bkg.c \
+	nlua_camera.c \
 	nlua_cli.c \
+	nlua_col.c \
+	nlua_commodity.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
+	nlua_gfx.c \
+	nlua_gui.c \
 	nlua_hook.c \
+	nlua_jump.c \
 	nlua_misn.c \
 	nlua_music.c \
 	nlua_naev.c \
+	nlua_news.c \
+	nlua_outfit.c \
 	nlua_pilot.c \
 	nlua_planet.c \
 	nlua_player.c \
@@ -67,16 +89,21 @@ naev_SOURCES = \
 	nlua_ship.c \
 	nlua_space.c \
 	nlua_system.c \
+	nlua_tex.c \
 	nlua_time.c \
 	nlua_tk.c \
+	nlua_tut.c \
 	nlua_var.c \
 	nlua_vec2.c \
 	nmath.c \
 	nondata.c \
 	npng.c \
 	npc.c \
+	nstring.c \
 	ntime.c \
 	nxml.c \
+	nxml_lua.c \
+	nzip.c \
 	opengl.c \
 	opengl_ext.c \
 	opengl_matrix.c \
@@ -85,31 +112,44 @@ naev_SOURCES = \
 	opengl_vbo.c \
 	options.c \
 	outfit.c \
-	pack.c \
 	pause.c \
 	perlin.c \
 	physics.c \
 	pilot.c \
+	pilot_cargo.c \
+	pilot_ew.c \
+	pilot_heat.c \
+	pilot_hook.c \
+	pilot_outfit.c \
+	pilot_weapon.c \
 	plasmaf.c \
 	player.c \
+	player_autonav.c \
+	player_gui.c \
 	queue.c \
 	rng.c \
 	save.c \
 	ship.c \
+	shipstats.c \
+	slots.c \
 	sound.c \
 	sound_openal.c \
 	sound_sdlmix.c \
 	space.c \
 	spfx.c \
+	start.c \
 	tech.c \
+	threadpool.c \
 	toolkit.c \
 	unidiff.c \
 	weapon.c \
 	ai.h \
 	ai_extra.h \
 	array.h \
-	base64.h \
+	background.h \
 	board.h \
+	camera.h \
+	claim.h \
 	collision.h \
 	colour.h \
 	comm.h \
@@ -117,8 +157,12 @@ naev_SOURCES = \
 	conf.h \
 	config.h \
 	console.h \
+	damagetype.h \
 	debris.h \
+	dev.h \
+	dev_outfit.h \
 	dev_planet.h \
+	dev_ship.h \
 	dev_system.h \
 	dev_sysedit.h \
 	dev_uniedit.h \
@@ -132,6 +176,7 @@ naev_SOURCES = \
 	fleet.h \
 	font.h \
 	gui.h \
+	gui_omsg.h \
 	gui_osd.h \
 	hook.h \
 	info.h \
@@ -139,8 +184,14 @@ naev_SOURCES = \
 	intro.h \
 	joystick.h \
 	land.h \
+	land_outfits.h \
+	land_shipyard.h \
+	load.h \
 	log.h \
 	map.h \
+	mapData.h \
+	map_find.h \
+	map_overlay.h \
 	md5.h \
 	menu.h \
 	mission.h \
@@ -154,14 +205,23 @@ naev_SOURCES = \
 	news.h \
 	nfile.h \
 	nlua.h \
+	nlua_bkg.h \
+	nlua_camera.h \
 	nlua_cli.h \
+	nlua_col.h \
+	nlua_commodity.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
+	nlua_gfx.h \
+	nlua_gui.h \
 	nlua_hook.h \
+	nlua_jump.h \
 	nlua_misn.h \
 	nlua_music.h \
 	nlua_naev.h \
+	nlua_news.h \
+	nlua_outfit.h \
 	nlua_pilot.h \
 	nlua_planet.h \
 	nlua_player.h \
@@ -169,8 +229,10 @@ naev_SOURCES = \
 	nlua_ship.h \
 	nlua_space.h \
 	nlua_system.h \
+	nlua_tex.h \
 	nlua_time.h \
 	nlua_tk.h \
+	nlua_tut.h \
 	nlua_var.h \
 	nlua_vec2.h \
 	nluadef.h \
@@ -179,8 +241,11 @@ naev_SOURCES = \
 	npng.h \
 	npc.h \
 	nstd.h \
+	nstring.h \
 	ntime.h \
 	nxml.h \
+	nxml_lua.h \
+	nzip.h \
 	opengl.h \
 	opengl_ext.h \
 	opengl_matrix.h \
@@ -189,24 +254,46 @@ naev_SOURCES = \
 	opengl_vbo.h \
 	options.h \
 	outfit.h \
-	pack.h \
 	pause.h \
 	perlin.h \
 	physics.h \
 	pilot.h \
+	pilot_cargo.h \
+	pilot_ew.h \
+	pilot_heat.h \
+	pilot_hook.h \
+	pilot_outfit.h \
+	pilot_weapon.h \
 	plasmaf.h \
 	player.h \
+	player_autonav.h \
+	player_gui.h \
 	queue.h \
 	rng.h \
 	save.h \
 	ship.h \
+	shipstats.h \
+	slots.h \
 	sound.h \
 	sound_openal.h \
 	sound_priv.h \
 	sound_sdlmix.h \
 	space.h \
 	spfx.h \
+	start.h \
 	tech.h \
+	threadpool.h \
 	toolkit.h \
 	unidiff.h \
 	weapon.h
+
+if HAVE_WINDRES
+WINDOWS_RESOURCE = ../extras/resource.rc
+naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE)
+
+.rc.o:
+	@WINDRES@ $< -O coff $@
+else
+naev_SOURCES = $(CODE_SOURCE)
+endif
+

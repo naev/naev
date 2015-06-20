@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="PSO 2356">
+ <pos>
+  <x>3798.617193</x>
+  <y>15379.767170</y>
+ </pos>
+ <GFX>
+  <space>I01.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

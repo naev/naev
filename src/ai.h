@@ -8,10 +8,12 @@
 #  define AI_H
 
 
-/* yay lua */
-#include "lua.h"
+/* yay Lua */
+#include <lua.h>
 
 #include "physics.h"
+
+#define AI_MEM          "__mem" /**< Internal pilot memory. */
 
 
 #define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
@@ -42,9 +44,10 @@ typedef enum TaskData_ {
 typedef struct Task_ {
    struct Task_* next; /**< Next task */
    char *name; /**< Task name. */
+   int done; /**< Task is done and ready for deletion. */
 
    struct Task_* subtask; /**< Subtasks of the current task. */
-   
+
    TaskData dtype; /**< Data type. */
    union {
       unsigned int num; /**< Pilot ID, etc... */
@@ -60,7 +63,7 @@ typedef struct Task_ {
  */
 typedef struct AI_Profile_ {
    char* name; /**< Name of the profile. */
-   lua_State *L; /**< Assosciated lua State. */
+   lua_State *L; /**< Assosciated Lua State. */
 } AI_Profile;
 
 

@@ -13,7 +13,6 @@
 /*
  * Flags.
  */
-#define FLEET_FLAG_GUARD         (1<<0) /**< Fleet is considered to be guarding. */
 #define fleet_setFlag(x,f)       ((x)->flags |= (f)) /**< Sets a fleet flag. */
 #define fleet_isFlag(x,f)        ((x)->flags & (f)) /**< Checks to see if fleet has flag. */
 
@@ -23,7 +22,7 @@
  *
  * @sa Fleet
  * @sa Pilot
- */   
+ */
 typedef struct FleetPilot_ {
    Ship *ship; /**< Ship the pilot is flying. */
    char *name; /**< Used if they have a special name like uniques. */
@@ -53,7 +52,6 @@ typedef struct Fleet_ {
  * getting fleet stuff
  */
 Fleet* fleet_get( const char* name );
-Fleet* fleet_grab( const int faction );
 
 
 /*

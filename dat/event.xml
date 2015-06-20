@@ -1,20 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Events>
+ <event name="reputation">
+  <lua>reputation</lua>
+  <trigger>load</trigger>
+  <chance>100</chance>
+ </event>
+ <event name="Pirate Fame">
+  <lua>pirate_fame</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+ </event>
+ <event name="start_event">
+  <lua>start</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial">
+  <lua>tutorial/tutorial</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Basic Operation">
+  <lua>tutorial/tutorial-basic</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Exploration and Discovery">
+  <lua>tutorial/tutorial-discovery</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Interstellar Flight">
+  <lua>tutorial/tutorial-interstellar</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Communications">
+  <lua>tutorial/tutorial-comms</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Basic Combat">
+  <lua>tutorial/tutorial-combat1</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Missile Combat">
+  <lua>tutorial/tutorial-combat2</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Heat">
+  <lua>tutorial/tutorial-heat</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Activated Outfits">
+  <lua>tutorial/tutorial-aoutfits</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Disabling">
+  <lua>tutorial/tutorial-disabling</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: The Planetary Screen">
+  <lua>tutorial/tutorial-planet</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Missions and Events">
+  <lua>tutorial/tutorial-missions</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>next(system.cur():faction()) ~= nil</cond>
+  <cond>system.cur():faction() ~= nil</cond>
  </event>
  <event name="Unique">
   <lua>neutral/unique</lua>
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
+ <event name="Flintley">
+  <lua>neutral/baron_flintley</lua>
+  <trigger>land</trigger>
+  <chance>100</chance>
+  <cond>player.misnActive("Baron") == false and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
+ </event>
+ <event name="Prowling baron">
+  <lua>neutral/baron_prowl</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
+  <flags>
+  </flags>
+ </event>
  <event name="Baroncomm_baron">
-  <lua>neutral/baroncomm</lua>
+  <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>var.peek("baron_stage") == nil and system.cur():presence("friendly") &gt; 3.*system.cur():presence("hostile")</cond>
+  <cond>player.misnDone("Baron") == false and
+        player.misnActive("Baron") == false and
+        (
+           system.cur():faction() == faction.get("Empire") or
+           system.cur():faction() == faction.get("Dvaered") or
+           system.cur():faction() == faction.get("Sirius")
+        )
+  </cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Preacher">
+  <lua>sirius/preach</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Shadowcomm">
+  <lua>neutral/shadow_comm</lua>
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or var.peek("shadowvigil_active") == true)</cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Shadowcomm2">
+  <lua>neutral/shadow_comm2</lua>
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadow Vigil") and not (player.misnDone("Dark Shadow") or var.peek("darkshadow_active") == true)</cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Achack04 Helper">
+  <lua>sirius/achack04</lua>
+  <trigger>enter</trigger>
+  <chance>5</chance>
+  <cond>not player.misnActive("Sirian Truce") and not player.misnDone("Sirian Truce") and player.misnDone("Joanne's Doubt") and system.cur():presences()["Sirius"] ~= nil and (var.peek("achack04repeat") == nil or time.get() - time.fromnumber(var.peek("achack04repeat")) &gt; time.create(0, 30, 0))</cond>
   <flags>
   </flags>
  </event>
@@ -22,6 +138,7 @@
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>
   <chance>3</chance>
+  <cond>system.cur():presence("Pirate") &gt; 0</cond>
   <flags>
    <unique />
   </flags>
@@ -30,7 +147,13 @@
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
   <chance>40</chance>
-  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano")</cond>
+  <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+ </event>
+ <event name="Animal trouble">
+  <lua>neutral/animaltrouble</lua>
+  <trigger>enter</trigger>
+  <chance>20</chance>
+  <cond>var.peek("shipinfested") == true</cond>
   <flags>
    <unique />
   </flags>
@@ -47,31 +170,32 @@
   <chance>100</chance>
   <cond>system.cur() == system.get("Therdin")</cond>
  </event>
- <event name="Tutorial Navigation">
-  <lua>neutral/tutorial</lua>
-  <trigger>enter</trigger>
+ <event name="Generic News">
+  <lua>neutral/news</lua>
+  <trigger>land</trigger>
   <chance>100</chance>
-  <cond>var.peek("tutorial_done") == 2</cond>
-  <flags>
-   <unique />
-  </flags>
  </event>
- <event name="Tutorial Features">
-  <lua>neutral/tutorial-features</lua>
-  <trigger>load</trigger>
-  <chance>100</chance>
-  <cond>var.peek("version") == nil</cond>
-  <flags>
-   <unique />
-  </flags>
- </event>
- <event name="Cinematic Doranthex battle">
+ <event name="Cinematic Dvaered/FLF battle">
   <lua>cinematic/DvdFLFbattle</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>system.cur():name() == "Doranthex"</cond>
+  <cond>system.cur():name() == "Tuoladis"</cond>
   <flags>
    <unique />
   </flags>
+ </event>
+ <event name="Naev Needs You!">
+  <lua>naev_needs_YOU</lua>
+  <trigger>land</trigger>
+  <chance>8</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ <event name="Kidnapped">
+  <lua>neutral/kidnapped</lua>
+  <trigger>enter</trigger>
+  <chance>15</chance>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
  </event>
 </Events>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Jervis">
+ <general>
+  <radius>14950.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>80.000000</x>
+  <y>676.000000</y>
+ </pos>
+ <assets>
+  <asset>Jervis V</asset>
+  <asset>Jervis VII</asset>
+  <asset>Little Rock</asset>
+  <asset>Long Rock</asset>
+  <asset>Virtual Civilian Standard</asset>
+ </assets>
+ <jumps>
+  <jump target="Cerberus">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Symm">
+   <pos x="-16144.619611" y="-6736.085874"/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

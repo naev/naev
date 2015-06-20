@@ -3,9 +3,9 @@
  */
 
 /**
- * @file mission.c
+ * @file cond.c
  *
- * @brief Handles missions.
+ * @brief Handles lua conditionals.
  */
 
 
@@ -63,7 +63,7 @@ int cond_check( const char* cond )
    int b;
    int ret;
 
-   /* Load the string. */ 
+   /* Load the string. */
    lua_pushstring(cond_L, "return ");
    lua_pushstring(cond_L, cond);
    lua_concat(cond_L, 2);

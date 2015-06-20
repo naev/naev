@@ -151,7 +151,7 @@ getrndplanet()
 
 combat( [number b] )
    @desc makes the pilot be set as either in combat or out of combat (for comm and such)
-   @param b if 0 sets the pilot to be in combat, if 1 or ommitted sets it to be in combat
+   @param b if 0 sets the pilot to be in combat, if 1 or omitted sets it to be in combat
    @return nil
 
 settarget( number target )

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Valerie IV">
+ <pos>
+  <x>-19183.128492</x>
+  <y>11210.919249</y>
+ </pos>
+ <GFX>
+  <space>D01.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

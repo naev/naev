@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser PD MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <mass>15</mass>
+  <price>18500</price>
+  <description>Featuring the improved firepower of the mark 2 laser cannon, the Laser Point Defense MK2 is a favourite among light merchant pilots.</description>
+  <gfx_store>laserturret2</gfx_store>
+  <cpu>-10</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx>laser2S</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.5</delay>
+  <speed>550</speed>
+  <range>575</range>
+  <falloff>300</falloff>
+  <gfx_end>laser1S</gfx_end>
+  <energy>7.5</energy>
+  <heatup>30</heatup>
+  <track>3</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>8</penetrate>
+   <physical>9</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruadan Bastion">
+ <pos>
+  <x>9827.204781</x>
+  <y>6050.951188</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>50000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>zlk_mil_restricted</land>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Za'lek Military Ships</item>
+ </tech>
+</asset>

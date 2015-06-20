@@ -29,41 +29,44 @@
 #include "ndata.h"
 #include "nxml.h"
 #include "debris.h"
+#include "perlin.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
 
-#define SPFX_DATA       "dat/spfx.xml" /**< Location of the spfx datafile. */
-#define SPFX_GFX_PRE    "gfx/spfx/" /**< location of the graphic */
 #define SPFX_GFX_SUF    ".png" /**< Suffix of graphics. */
-
-#define CHUNK_SIZE      128 /**< Chunk size to allocate spfx bases. */
 
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
 #define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
-#define SHAKE_VEL_MOD   0.0008 /**< Shake modifier. */
+#define SHAKE_MASS      (1./400.) /** Shake mass. */
+#define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
+#define SHAKE_B         (3.*sqrt(SHAKE_K*SHAKE_MASS)) /**< Constant for virtual dampener. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
 
 /*
- * special hardcoded special effects
+ * special hard-coded special effects
  */
 /* shake aka rumble */
-static double shake_rad = 0.; /**< Current shake radius (0 = no shake). */
+static int shake_set = 0; /**< Is shake set? */
 static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
+static double shake_force_mod = 0.; /**< Shake force modifier. */
+static float shake_force_ang = 0.; /**< Shake force angle. */
 static int shake_off = 1; /**< 1 if shake is not active. */
+static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
+static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
 
 
 #if SDL_VERSION_ATLEAST(1,3,0)
 extern SDL_Haptic *haptic; /**< From joystick.c */
 extern unsigned int haptic_query; /**< From joystick.c */
-static int haptic_rumble = -1; /**< Haptic rumble effect ID. */
+static int haptic_rumble         = -1; /**< Haptic rumble effect ID. */
 static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
-static double haptic_lastUpdate = 0.; /**< Timer to update haptic effect again. */
+static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again. */
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 
@@ -143,11 +146,15 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    /* Extract the data. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes(node);
       xmlr_float(node, "anim", temp->anim);
       xmlr_float(node, "ttl", temp->ttl);
-      if (xml_isNode(node,"gfx"))
+      if (xml_isNode(node,"gfx")) {
          temp->gfx = xml_parseTexture( node,
-               SPFX_GFX_PRE"%s"SPFX_GFX_SUF, 6, 5, 0 );
+               SPFX_GFX_PATH"%s"SPFX_GFX_SUF, 6, 5, 0 );
+         continue;
+      }
+      WARN("SPFX '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Convert from ms to s. */
@@ -206,7 +213,7 @@ int spfx_get( char* name )
  *
  *    @return 0 on success.
  *
- * @todo Make spfx not hardcoded.
+ * @todo Make spfx not hard-coded.
  */
 int spfx_load (void)
 {
@@ -217,35 +224,41 @@ int spfx_load (void)
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( SPFX_DATA, &bufsize );
+   buf = ndata_read( SPFX_DATA_PATH, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,SPFX_XML_ID)) {
-      ERR("Malformed '"SPFX_DATA"' file: missing root element '"SPFX_XML_ID"'");
+      ERR("Malformed '"SPFX_DATA_PATH"' file: missing root element '"SPFX_XML_ID"'");
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"SPFX_DATA"' file: does not contain elements");
+      ERR("Malformed '"SPFX_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 
    /* First pass, loads up ammunition. */
    mem = 0;
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node,SPFX_XML_TAG)) {
 
          spfx_neffects++;
          if (spfx_neffects > mem) {
-            mem += CHUNK_SIZE;
+            if (mem == 0)
+               mem = SPFX_CHUNK_MIN;
+            else
+               mem *= 2;
             spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base)*mem);
          }
          spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
       }
+      else
+         WARN("'"SPFX_DATA_PATH"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
@@ -259,6 +272,7 @@ int spfx_load (void)
     * Now initialize force feedback.
     */
    spfx_hapticInit();
+   shake_noise = noise_new( 1, NOISE_DEFAULT_HURST, NOISE_DEFAULT_LACUNARITY );
 
    return 0;
 }
@@ -289,6 +303,9 @@ void spfx_free (void)
    free(spfx_effects);
    spfx_effects = NULL;
    spfx_neffects = 0;
+
+   /* Free the noise. */
+   noise_delete( shake_noise );
 }
 
 
@@ -375,9 +392,11 @@ void spfx_clear (void)
       spfx_destroy( spfx_stack_back, &spfx_nstack_back, i );
 
    /* Clear rumble */
-   shake_rad = 0.;
-   shake_pos.x = shake_pos.y = 0.;
-   shake_vel.x = shake_vel.y = 0.;
+   shake_set = 0;
+   shake_off = 1;
+   shake_force_mod = 0.;
+   vectnull( &shake_pos );
+   vectnull( &shake_vel );
 }
 
 /**
@@ -410,7 +429,7 @@ void spfx_update( const double dt )
  * @brief Updates an individual spfx.
  *
  *    @param layer Layer the spfx is on.
- *    @param nlayer Pointer to the assosciated nlayer.
+ *    @param nlayer Pointer to the associated nlayer.
  *    @param dt Current delta tick.
  */
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
@@ -434,68 +453,99 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
 
 
 /**
+ * @brief Updates the shake position.
+ */
+static void spfx_updateShake( double dt )
+{
+   double mod, vmod, angle;
+   double force_x, force_y;
+   int forced;
+
+   /* Must still be on. */
+   if (shake_off)
+      return;
+
+   /* The shake decays over time */
+   forced = 0;
+   if (shake_force_mod > 0.) {
+      shake_force_mod -= SHAKE_DECAY*dt;
+      if (shake_force_mod < 0.)
+         shake_force_mod   = 0.;
+      else
+         forced            = 1;
+   }
+
+   /* See if it's settled down. */
+   mod      = VMOD( shake_pos );
+   vmod     = VMOD( shake_vel );
+   if (!forced && (mod < 0.01) && (vmod < 0.01)) {
+      shake_off      = 1;
+      if (shake_force_ang > 1e3)
+         shake_force_ang = RNGF();
+      return;
+   }
+
+   /* Calculate force. */
+   force_x  = -SHAKE_K*shake_pos.x + -SHAKE_B*shake_vel.x;
+   force_y  = -SHAKE_K*shake_pos.y + -SHAKE_B*shake_vel.y;
+
+   /* Apply force if necessary. */
+   if (forced) {
+      shake_force_ang  += dt;
+      angle             = noise_simplex1( shake_noise, &shake_force_ang ) * 5.*M_PI;
+      force_x          += shake_force_mod * cos(angle);
+      force_y          += shake_force_mod * sin(angle);
+   }
+
+
+   /* Update velocity. */
+   vect_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
+
+   /* Update position. */
+   vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+}
+
+
+/**
  * @brief Prepares the rendering for the special effects.
  *
  * Should be called at the beginning of the rendering loop.
  *
  *    @param dt Current delta tick.
+ *    @param real_dt Real delta tick.
  */
-void spfx_begin( const double dt )
+void spfx_begin( const double dt, const double real_dt )
 {
-   GLdouble bx, by, x, y;
-   double inc;
+   double ddt;
 
-   /* Save cycles. */
-   if (shake_off == 1)
+   /* Defaults. */
+   shake_set = 0;
+   if (shake_off)
       return;
 
 #if SDL_VERSION_ATLEAST(1,3,0)
    /* Decrement the haptic timer. */
    if (haptic_lastUpdate > 0.)
-      haptic_lastUpdate -= dt;
+      haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   (void) real_dt; /* Avoid warning. */
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   /* set defaults */
-   bx = SCREEN_W/2;
-   by = SCREEN_H/2;
-
-   if (!paused) {
-      inc = dt*100000.;
-
-      /* calculate new position */
-      if (shake_rad > 0.01) {
-         vect_cadd( &shake_pos, shake_vel.x * inc, shake_vel.y * inc );
-
-         if (VMOD(shake_pos) > shake_rad) { /* change direction */
-            vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
-            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, 
-                  -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
-         }
-
-         /* the shake decays over time */
-         shake_rad -= SHAKE_DECAY*dt;
-         if (shake_rad < 0.)
-            shake_rad = 0.;
-
-         x = shake_pos.x;
-         y = shake_pos.y;  
+   /* Micro basic simple control loop. */
+   if (dt > shake_fps_min) {
+      ddt = dt;
+      while (ddt > shake_fps_min) {
+         spfx_updateShake( shake_fps_min );
+         ddt -= shake_fps_min;
       }
-      else {
-         shake_rad = 0.;
-         shake_off = 1;
-         x = 0.;
-         y = 0.;
-      }
+      spfx_updateShake( ddt ); /* Leftover. */
    }
-   else {
-      x = 0.;
-      y = 0.;
-   }
+   else
+      spfx_updateShake( dt );
 
    /* set the new viewport */
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
+   gl_matrixTranslate( shake_pos.x, shake_pos.y );
+   shake_set = 1;
 }
 
 
@@ -507,7 +557,7 @@ void spfx_begin( const double dt )
 void spfx_end (void)
 {
    /* Save cycles. */
-   if (shake_off == 1)
+   if (shake_set == 0)
       return;
 
    /* set the new viewport */
@@ -519,16 +569,15 @@ void spfx_end (void)
  * @brief Increases the current rumble level.
  *
  * Rumble will decay over time.
- * 
+ *
  *    @param mod Modifier to increase level by.
  */
 void spfx_shake( double mod )
 {
    /* Add the modifier. */
-   shake_rad += mod;
-   if (shake_rad > SHAKE_MAX)
-      shake_rad = SHAKE_MAX;
-   vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, RNGF() * 2. * M_PI );
+   shake_force_mod += mod;
+   if (shake_force_mod  > SHAKE_MAX)
+      shake_force_mod = SHAKE_MAX;
 
    /* Rumble if it wasn't rumbling before. */
    spfx_hapticRumble(mod);
@@ -546,7 +595,7 @@ void spfx_shake( double mod )
  */
 void spfx_getShake( double *x, double *y )
 {
-   if (shake_off || paused) {
+   if (shake_off) {
       *x = 0.;
       *y = 0.;
    }
@@ -613,12 +662,12 @@ static void spfx_hapticRumble( double mod )
       SDL_HapticStopEffect( haptic, haptic_rumble );
 
       /* Get length and magnitude. */
-      len = 1000. * shake_rad / SHAKE_DECAY;
-      mag = 32767. * (shake_rad / SHAKE_MAX);
+      len = 1000. * shake_force_mod / SHAKE_DECAY;
+      mag = 32767. * (shake_force_mod / SHAKE_MAX);
 
       /* Update the effect. */
       efx = &haptic_rumbleEffect;
-      efx->periodic.magnitude    = (uint32_t)mag;;
+      efx->periodic.magnitude    = (int16_t)mag;
       efx->periodic.length       = (uint32_t)len;
       efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
       if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
@@ -630,7 +679,7 @@ static void spfx_hapticRumble( double mod )
       SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
 
       /* Set timer again. */
-      haptic_lastUpdate = HAPTIC_UPDATE_INTERVAL;
+      haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
    }
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    (void) mod;
@@ -645,13 +694,8 @@ static void spfx_hapticRumble( double mod )
  */
 void spfx_cinematic (void)
 {
-   double hw, hh;
-
-   hw = SCREEN_W/2.;
-   hh = SCREEN_H/2.;
-
-   gl_renderRect( -hw, -hh,     SCREEN_W, SCREEN_H*0.2, &cBlack );
-   gl_renderRect( -hw,  0.6*hh, SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( 0., 0.,           SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &cBlack );
 }
 
 
@@ -668,7 +712,7 @@ void spfx_render( const int layer )
    int sx, sy;
    double time;
 
-   
+
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
@@ -698,9 +742,9 @@ void spfx_render( const int layer )
          time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
          spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
       }
-      
+
       /* Renders */
-      gl_blitSprite( effect->gfx, 
+      gl_blitSprite( effect->gfx,
             VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
             spfx_stack[i].lastframe % sx,
             spfx_stack[i].lastframe / sx,

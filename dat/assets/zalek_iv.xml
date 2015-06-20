@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Za'lek IV">
+ <pos>
+  <x>1428.710400</x>
+  <y>358.732800</y>
+ </pos>
+ <GFX>
+  <space>moon-C00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

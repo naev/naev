@@ -3,12 +3,12 @@
 csn *cs_qr (const cs *A, const css *S)
 {
     double *Rx, *Vx, *Ax, *x,  *Beta ;
-    int i, k, p, m, n, vnz, p1, top, m2, len, col, rnz, *s, *leftmost, *Ap, *Ai,
+    int i, k, p, /*m,*/ n, vnz, p1, top, m2, len, col, rnz, *s, *leftmost, *Ap, *Ai,
 	*parent, *Rp, *Ri, *Vp, *Vi, *w, *pinv, *q ;
     cs *R, *V ;
     csn *N ;
     if (!CS_CSC (A) || !S) return (NULL) ;
-    m = A->m ; n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
+    /*m = A->m ;*/ n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
     q = S->q ; parent = S->parent ; pinv = S->pinv ; m2 = S->m2 ;
     vnz = S->lnz ; rnz = S->unz ; leftmost = S->leftmost ;
     w = cs_malloc (m2+n, sizeof (int)) ;	    /* get int workspace */
