@@ -45,3 +45,5 @@ extras/.dirstamp
 datapath.lua
 core
 
+/.cproject
+/.project

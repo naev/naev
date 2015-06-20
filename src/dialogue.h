@@ -14,6 +14,8 @@
 void dialogue_alert( const char *fmt, ... ); /* does not pause execution */
 void dialogue_msg( const char *caption, const char *fmt, ... );
 void dialogue_msgRaw( const char *caption, const char *msg );
+void dialogue_msgImg( const char *caption, const char *img, const char *fmt, ... );
+void dialogue_msgImgRaw( const char *caption, const char *msg, const char *img, int width, int height );
 int dialogue_YesNo( const char *caption, const char *fmt, ... ); /* Yes = 1, No = 0 */
 int dialogue_YesNoRaw( const char *caption, const char *msg );
 void dialogue_makeChoice( const char *caption, const char *msg, int opts );
