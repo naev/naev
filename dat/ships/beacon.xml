@@ -26,7 +26,8 @@
   <crew>1</crew>
   <mass>1000000</mass>
   <fuel>1</fuel>
-  <cap_cargo>100</cap_cargo>
+  <fuel_consumption>1</fuel_consumption>
+  <cargo>100</cargo>
  </characteristics>
  <slots />
 </ship>
