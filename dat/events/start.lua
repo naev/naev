@@ -81,10 +81,6 @@ end
 
 function prompt()
    tk.msg( title[1], text[1]:format( player.name() ) )
-
-	-- Ask the player with which species they want to play
-	tk.msgImg ( "Test tk.msgImg", "Image+Text widget", "loading/ancestor.png" )
-
    if tk.yesno( title[2], text[2] ) then
       tk.msg( title[4], text[4] )
       tk.msg( title[4], text[5]:format( tutGetKey("accel"), tutGetKey("reverse"), tutGetKey("left"), tutGetKey("right"), tutGetKey("mousefly") ) )
