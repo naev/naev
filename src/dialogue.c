@@ -246,7 +246,7 @@ void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ...
       va_end(ap);
    }
 
-   dialogue_msgImgRaw( caption, msg, img, 256, 256 );
+   dialogue_msgImgRaw( caption, msg, img, -1, -1 );
 }
 
 
@@ -283,10 +283,12 @@ void dialogue_msgRaw( const char* caption, const char *msg )
  *
  *    @param caption Window title.
  *    @param msg Message to display.
+ *    @param width Width of the image. Negative uses image width.
+ *    @param height Height of the image. Negative uses image height.
  */
 void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, int width, int height )
 {
-   int w,h,img_width,img_height;
+   int w, h, img_width, img_height;
    glFont* font;
    unsigned int msg_wid;
    int done;
@@ -296,14 +298,14 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
    /* Get the desired texture */
    /* IMPORTANT : texture must not be freed here, it will be freed when the widget closes */
    nsnprintf( buf, sizeof(buf), "%s%s", GFX_PATH, img );
-   gfx = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+   gfx = gl_newImage( buf, 0 );
 
    /* Find the popup's dimensions from text and image */
-   img_width  = 256;
-   img_height = 256;
+   img_width  = (width < 0)  ? gfx->w : width;
+   img_height = (height < 0) ? gfx->h : height;
    font = dialogue_getSize( caption, msg, &w, &h );
-   if (h<img_width) {
-	h=img_width;
+   if (h < img_width) {
+      h = img_width;
    }
 
    /* Create the window */

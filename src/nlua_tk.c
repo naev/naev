@@ -100,8 +100,8 @@ static int tk_msg( lua_State *L )
  *    @luaparam title Title of the window.
  *    @luaparam message Message to display in the window.
  *    @luaparam image Image file (*.png) to display in the window.
- *    @luaparam width (opt) width of the image to display; defaults to 256.
- *    @luaparam height (opt) height of the image to display; defaults to 256.
+ *    @luaparam width (opt) width of the image to display. Negative values use image width. defaults to -1.
+ *    @luaparam height (opt) height of the image to display. Negative values use image height. defaults to -1.
  * @luafunc msg( title, message, image )
  */
 static int tk_msgImg( lua_State *L )
@@ -116,8 +116,8 @@ static int tk_msgImg( lua_State *L )
    img   = luaL_checkstring(L,3);
 
    // Get optional arguments : width and height
-   width  = 256;
-   height = 256;
+   width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
+   height = (lua_gettop(L) < 5) ? -1 : luaL_checkinteger(L,5);
 
    dialogue_msgImgRaw( title, str, img, width, height );
    return 0;
