@@ -20,6 +20,11 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Druid">
+   <pos x="-13734.045985" y="-22773.521987"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Druss">
    <autopos/>
    <hide>0.000000</hide>

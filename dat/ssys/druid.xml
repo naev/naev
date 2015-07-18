@@ -12,6 +12,11 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Eye of Night">
+   <pos x="8573.344953" y="-6735.197102"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Peter">
    <pos x="13245.811921" y="9515.248641"/>
    <hidden/>

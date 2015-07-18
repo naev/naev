@@ -22,6 +22,7 @@
   <sys name="Effetey">
    <jump>Pas</jump>
    <jump>Provectus Nova</jump>
+   <jump>Fried</jump>
   </sys>
   <sys name="Gremlin">
    <jump>Blacin</jump>
@@ -58,6 +59,9 @@
   </sys>
   <sys name="Trask">
    <jump>Hakoi</jump>
+  </sys>
+  <sys name="Fried">
+   <jump>Effetey</jump>
   </sys>
  </specific>
 </outfit>
