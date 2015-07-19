@@ -254,7 +254,7 @@
    * outfit
      * store
        * fuel_pod.png
-       * large_fuel_pod.png
+       * medium_fuel_pod.png
        * cargo_pod.png
        * afterburner.png
        * afterburner2.png
@@ -726,7 +726,7 @@
      * nebula17.png
      * nebula19.png
 
- * Author: NASA, License: PD (with modifications by PhoenixRiver (License: PD))
+ * Author: NASA, License: PD (with modifications by PhoenixRiver, License: PD)
    * planet
      * space
        * D03.png
@@ -799,7 +799,7 @@
        * asteroid-D62.png
        * asteroid-D63.png
 
- * Author: Bobbens, License: PD (with modifications by PhoenixRiver (License: PD))
+ * Author: Bobbens, License: PD (with modifications by PhoenixRiver, License: PD)
    * planet
      * exterior
        * asteroid.png
@@ -818,7 +818,7 @@
        * lancelot_fighter_bay.png
        * lancelot_empire_fighter_bay.png
 
- * Author: Ian D. Scott <ids1024>, License: CC-by 3.0
+ * Author: Josiah Schwartfeger, License: CC-by 3.0 (with modifications by Ian D. Scott <ids1024>, License: CC-by 3.0)
    * outfit
      * store
        * large_fuel_pod.png
