@@ -5,7 +5,7 @@
 /**
  * @file nlua_misn.c
  *
- * @brief Handles the mission lua bindings.
+ * @brief Handles the mission Lua bindings.
  */
 
 
@@ -15,11 +15,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
-#include "lua.h"
-#include "lauxlib.h"
+#include <lua.h>
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nlua_hook.h"
@@ -27,6 +27,11 @@
 #include "nlua_tk.h"
 #include "nlua_faction.h"
 #include "nlua_space.h"
+#include "nlua_tex.h"
+#include "nlua_camera.h"
+#include "nlua_music.h"
+#include "nlua_bkg.h"
+#include "nlua_tut.h"
 #include "player.h"
 #include "mission.h"
 #include "log.h"
@@ -37,6 +42,9 @@
 #include "nluadef.h"
 #include "music.h"
 #include "gui_osd.h"
+#include "npc.h"
+#include "array.h"
+#include "ndata.h"
 
 
 /**
@@ -44,7 +52,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "keer" )
+ * misn.setNPC( "Keer", "empire/unique/keer" )
  * misn.setDesc( "You see here Commodore Keer." )
  * @endcode
  *
@@ -53,65 +61,57 @@
 
 
 /*
- * current mission
- */
-static Mission *cur_mission = NULL; /**< Contains the current mission for a running script. */
-static int misn_delete = 0; /**< if 1 delete current mission */
-
-
-/*
  * prototypes
  */
 /* static */
-static void misn_setEnv( Mission *misn );
-static int misn_runTopStack( Mission *misn, const char *func);
-/* externed */
-int misn_run( Mission *misn, const char *func );
-/* external */
-extern void mission_sysMark (void);
+static void misn_setEnv( lua_State *L, Mission *misn );
 
 
 /*
  * libraries
  */
-/* misn */
+/* Mission methods */
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
-static int misn_setMarker( lua_State *L );
 static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
-static int misn_timerStart( lua_State *L );
-static int misn_timerStop( lua_State *L );
-static int misn_takeoff( lua_State *L );
-static int misn_addCargo( lua_State *L );
-static int misn_rmCargo( lua_State *L );
-static int misn_jetCargo( lua_State *L );
+static int misn_markerAdd( lua_State *L );
+static int misn_markerMove( lua_State *L );
+static int misn_markerRm( lua_State *L );
+static int misn_cargoAdd( lua_State *L );
+static int misn_cargoRm( lua_State *L );
+static int misn_cargoJet( lua_State *L );
 static int misn_osdCreate( lua_State *L );
 static int misn_osdDestroy( lua_State *L );
 static int misn_osdActive( lua_State *L );
+static int misn_npcAdd( lua_State *L );
+static int misn_npcRm( lua_State *L );
+static int misn_claim( lua_State *L );
 static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
    { "setReward", misn_setReward },
-   { "setMarker", misn_setMarker },
    { "setNPC", misn_setNPC },
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
-   { "timerStart", misn_timerStart },
-   { "timerStop", misn_timerStop },
-   { "takeoff", misn_takeoff },
-   { "addCargo", misn_addCargo },
-   { "rmCargo", misn_rmCargo },
-   { "jetCargo", misn_jetCargo },
+   { "markerAdd", misn_markerAdd },
+   { "markerMove", misn_markerMove },
+   { "markerRm", misn_markerRm },
+   { "cargoAdd", misn_cargoAdd },
+   { "cargoRm", misn_cargoRm },
+   { "cargoJet", misn_cargoJet },
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
+   { "npcAdd", misn_npcAdd },
+   { "npcRm", misn_npcRm },
+   { "claim", misn_claim },
    {0,0}
-}; /**< Mission lua methods. */
+}; /**< Mission Lua methods. */
 
 
 /**
@@ -127,20 +127,25 @@ int misn_loadLibs( lua_State *L )
    nlua_loadTk(L);
    nlua_loadHook(L);
    nlua_loadMusic(L,0);
+   nlua_loadTex(L,0);
+   nlua_loadBackground(L,1);
+   nlua_loadCamera(L,0);
+   if (player_isTut())
+      nlua_loadTut(L);
    return 0;
 }
 /*
  * individual library loading
  */
 /**
- * @brief Loads the mission lua library.
+ * @brief Loads the mission Lua library.
  *    @param L Lua state.
  */
 int nlua_loadMisn( lua_State *L )
-{  
+{
    luaL_register(L, "misn", misn_methods);
    return 0;
-}  
+}
 
 
 /**
@@ -154,12 +159,12 @@ int nlua_loadMisn( lua_State *L )
 int misn_tryRun( Mission *misn, const char *func )
 {
    /* Get the function to run. */
-   lua_getglobal( misn->L, func );
+   misn_runStart( misn, func );
    if (lua_isnil( misn->L, -1 )) {
       lua_pop(misn->L,1);
       return 0;
    }
-   return misn_runTopStack( misn, func );
+   return misn_runFunc( misn, func, 0 );
 }
 
 
@@ -174,101 +179,120 @@ int misn_tryRun( Mission *misn, const char *func )
 int misn_run( Mission *misn, const char *func )
 {
    /* Run the function. */
-   lua_getglobal( misn->L, func );
-   return misn_runTopStack( misn, func );
+   misn_runStart( misn, func );
+   return misn_runFunc( misn, func, 0 );
 }
 
 
 /**
  * @brief Sets the mission environment.
  */
-static void misn_setEnv( Mission *misn )
+static void misn_setEnv( lua_State *L, Mission *misn )
 {
-   cur_mission = misn;
-   misn_delete = 0;
-
-   /* Needed to make sure hooks work. */
-   nlua_hookTarget( cur_mission, NULL );
+   lua_pushlightuserdata( L, misn );
+   lua_setglobal( L, "__misn" );
 }
 
 
 /**
- * @brief Runs the function at the top of the stack.
+ * @brief Gets the mission that's being currently run in Lua.
+ */
+Mission* misn_getFromLua( lua_State *L )
+{
+   Mission *misn;
+
+   lua_getglobal( L, "__misn" );
+   misn = (Mission*) lua_touserdata( L, -1 );
+   lua_pop( L, 1 );
+
+   return misn;
+}
+
+
+/**
+ * @brief Sets up the mission to run misn_runFunc.
+ */
+lua_State *misn_runStart( Mission *misn, const char *func )
+{
+   lua_State *L;
+
+   L = misn->L;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+#endif /* DEBUGGING */
+
+   /* Set environment. */
+   misn_setEnv( L, misn );
+
+   /* Set the Lua state. */
+   lua_getglobal( L, func );
+
+   return L;
+}
+
+
+/**
+ * @brief Runs a mission set up with misn_runStart.
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
  *            and 0 normally.
  */
-static int misn_runTopStack( Mission *misn, const char *func)
+int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
-   int i, ret;
+   int i, ret, errf;
    const char* err;
    lua_State *L;
+   int misn_delete;
+   Mission *cur_mission;
 
-   /* Set environment. */
-   misn_setEnv( misn );
+   /* For comfort. */
+   L = misn->L;
 
-   /* Set the Lua state. */
-   L = cur_mission->L;
+#if DEBUGGING
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
 
-   ret = lua_pcall(L, 0, 0, 0);
-   if (ret != 0) { /* error has occured */
+   ret = lua_pcall(L, nargs, 0, errf);
+   cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
+   if (ret != 0) { /* error has occurred */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if (strcmp(err,"Mission Done")!=0)
+      if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
+         ret = -1;
+      }
       else
          ret = 1;
+      lua_pop(L,1);
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
+
+   /* Get delete. */
+   lua_getglobal(L,"__misn_delete");
+   misn_delete = lua_toboolean(L,-1);
+   lua_pop(L,1);
 
    /* mission is finished */
    if (misn_delete) {
       ret = 2;
       mission_cleanup( cur_mission );
-      for (i=0; i<MISSION_MAX; i++)
-         if (cur_mission == &player_missions[i]) {
-            memmove( &player_missions[i], &player_missions[i+1],
-                  sizeof(Mission) * (MISSION_MAX-i-1) );
-            memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
-            break;
-         }
+      for (i=0; i<MISSION_MAX; i++) {
+         if (cur_mission != player_missions[i])
+            continue;
+
+         mission_shift(i);
+         break;
+      }
    }
 
-   /* Clear stuf. */
-   cur_mission = NULL;
-   nlua_hookTarget( NULL, NULL );
-
    return ret;
-}
-
-
-/**
- * @brief Sets the mission OSD if applicable.
- */
-static void setOSD (void)
-{
-   const char *buf[1];
-
-   /* OSD set explicitly. */
-   if (cur_mission->osd_set)
-      return;
-
-   /* Needs title and description. */
-   if ((cur_mission->title==NULL) || (cur_mission->desc==NULL))
-      return;
-
-   /* Mission must be accepted. */
-   if (!cur_mission->accepted)
-      return;
-
-   /* Destroy existing OSD. */
-   if (cur_mission->osd > 0)
-      osd_destroy(cur_mission->osd);
-
-   /* Set the OSD. */
-   buf[0] = cur_mission->desc;
-   cur_mission->osd = osd_create( cur_mission->title, 1, buf );
 }
 
 
@@ -281,15 +305,14 @@ static void setOSD (void)
 static int misn_setTitle( lua_State *L )
 {
    const char *str;
+   Mission *cur_mission;
 
    str = luaL_checkstring(L,1);
 
+   cur_mission = misn_getFromLua(L);
    if (cur_mission->title) /* cleanup old title */
       free(cur_mission->title);
    cur_mission->title = strdup(str);
-
-   /* Set the OSD if needed. */
-   setOSD();
 
    return 0;
 }
@@ -305,15 +328,14 @@ static int misn_setTitle( lua_State *L )
 static int misn_setDesc( lua_State *L )
 {
    const char *str;
+   Mission *cur_mission;
 
    str = luaL_checkstring(L,1);
 
+   cur_mission = misn_getFromLua(L);
    if (cur_mission->desc) /* cleanup old description */
       free(cur_mission->desc);
    cur_mission->desc = strdup(str);
-
-   /* Set the OSD if needed. */
-   setOSD();
 
    return 0;
 }
@@ -326,67 +348,168 @@ static int misn_setDesc( lua_State *L )
 static int misn_setReward( lua_State *L )
 {
    const char *str;
+   Mission *cur_mission;
 
    str = luaL_checkstring(L,1);
 
+   cur_mission = misn_getFromLua(L);
    if (cur_mission->reward) /* cleanup old reward */
       free(cur_mission->reward);
    cur_mission->reward = strdup(str);
    return 0;
 }
+
 /**
- * @brief Sets the mission marker on the system.  If no parameters are passed it
- * unsets the current marker.
+ * @brief Adds a new marker.
  *
- * There are basically three different types of markers:
+ * @usage my_marker = misn.markerAdd( system.get("Gamma Polaris"), "low" )
  *
- *  - "misc" : These markers are for unique or non-standard missions.
- *  - "cargo" : These markers are for regular cargo hauling missions.
- *  - "rush" : These markers are for timed missions.
+ * Valid marker types are:<br/>
+ *  - "plot": Important plot marker.<br/>
+ *  - "high": High importance mission marker (lower than plot).<br/>
+ *  - "low": Low importance mission marker (lower than high).<br/>
+ *  - "computer": Mission computer marker.<br/>
  *
- * @usage misn.setMarker() -- Clears the marker
- * @usage misn.setMarker( sys, "misc" ) -- Misc mission marker.
- * @usage misn.setMarker( sys, "cargo" ) -- Cargo mission marker.
- * @usage misn.setMarker( sys, "rush" ) -- Rush mission marker.
- *
- *    @luaparam sys System to mark.  Unmarks if no parameter or nil is passed.
- *    @luaparam type Optional parameter that specifies mission type.  Can be one of
- *          "misc", "rush" or "cargo".
- * @luafunc setMarker( sys, type )
+ *    @luaparam sys System to mark.
+ *    @luaparam type Colouring scheme to use.
+ *    @luareturn A marker ID to be used with markerMove and markerRm.
+ * @luafunc markerAdd( sys, type )
  */
-static int misn_setMarker( lua_State *L )
+static int misn_markerAdd( lua_State *L )
 {
-   const char *str;
+   int id;
    LuaSystem *sys;
+   const char *stype;
+   SysMarker type;
+   Mission *cur_mission;
 
-   /* No parameter clears the marker */
-   if (lua_gettop(L)==0) {
-      if (cur_mission->sys_marker != NULL)
-         free(cur_mission->sys_marker);
-      mission_sysMark(); /* Clear the marker */
+   /* Check parameters. */
+   sys   = luaL_checksystem( L, 1 );
+   stype = luaL_checkstring( L, 2 );
+
+   /* Handle types. */
+   if (strcmp(stype, "computer")==0)
+      type = SYSMARKER_COMPUTER;
+   else if (strcmp(stype, "low")==0)
+      type = SYSMARKER_LOW;
+   else if (strcmp(stype, "high")==0)
+      type = SYSMARKER_HIGH;
+   else if (strcmp(stype, "plot")==0)
+      type = SYSMARKER_PLOT;
+   else {
+      NLUA_ERROR(L, "Unknown marker type: %s", stype);
+      return 0;
    }
 
-   /* Passing in a Star System */
-   sys = luaL_checksystem(L,1);
-   if (cur_mission->sys_marker != NULL)
-      free(cur_mission->sys_marker);
-   cur_mission->sys_marker = strdup(sys->s->name);
+   cur_mission = misn_getFromLua(L);
 
-   /* Get the type. */
-   if (lua_gettop(L) > 1) {
-      str = luaL_checkstring(L,2);
-      if (strcmp(str, "misc")==0)
-         cur_mission->sys_markerType = SYSMARKER_MISC;
-      else if (strcmp(str, "rush")==0)
-         cur_mission->sys_markerType = SYSMARKER_RUSH;
-      else if (strcmp(str, "cargo")==0)
-         cur_mission->sys_markerType = SYSMARKER_CARGO;
-      else
-         NLUA_DEBUG("Unknown marker type: %s", str);
+   /* Add the marker. */
+   id = mission_addMarker( cur_mission, -1, sys->id, type );
+
+   /* Update system markers. */
+   mission_sysMark();
+
+   /* Return the ID. */
+   lua_pushnumber( L, id );
+   return 1;
+}
+
+/**
+ * @brief Moves a marker to a new system.
+ *
+ * @usage misn.markerMove( my_marker, system.get("Delta Pavonis") )
+ *
+ *    @luaparam id ID of the mission marker to move.
+ *    @luaparam sys System to move the marker to.
+ * @luafunc markerMove( id, sys )
+ */
+static int misn_markerMove( lua_State *L )
+{
+   int id;
+   LuaSystem *sys;
+   MissionMarker *marker;
+   int i, n;
+   Mission *cur_mission;
+
+   /* Handle parameters. */
+   id    = luaL_checkinteger( L, 1 );
+   sys   = luaL_checksystem( L, 2 );
+
+   cur_mission = misn_getFromLua(L);
+
+   /* Mission must have markers. */
+   if (cur_mission->markers == NULL) {
+      NLUA_ERROR( L, "Mission has no markers set!" );
+      return 0;
    }
 
-   mission_sysMark(); /* mark the system */
+   /* Check id. */
+   marker = NULL;
+   n = array_size( cur_mission->markers );
+   for (i=0; i<n; i++) {
+      if (id == cur_mission->markers[i].id) {
+         marker = &cur_mission->markers[i];
+         break;
+      }
+   }
+   if (marker == NULL) {
+      NLUA_ERROR( L, "Mission does not have a marker with id '%d'", id );
+      return 0;
+   }
 
+   /* Update system. */
+   marker->sys = sys->id;
+
+   /* Update system markers. */
+   mission_sysMark();
+   return 0;
+}
+
+/**
+ * @brief Removes a mission system marker.
+ *
+ * @usage misn.markerRm( my_marker )
+ *
+ *    @luaparam id ID of the marker to remove.
+ * @luafunc markerRm( id )
+ */
+static int misn_markerRm( lua_State *L )
+{
+   int id;
+   int i, n;
+   MissionMarker *marker;
+   Mission *cur_mission;
+
+   /* Handle parameters. */
+   id    = luaL_checkinteger( L, 1 );
+
+   cur_mission = misn_getFromLua(L);
+
+   /* Mission must have markers. */
+   if (cur_mission->markers == NULL) {
+      /* Already removed. */
+      return 0;
+   }
+
+   /* Check id. */
+   marker = NULL;
+   n = array_size( cur_mission->markers );
+   for (i=0; i<n; i++) {
+      if (id == cur_mission->markers[i].id) {
+         marker = &cur_mission->markers[i];
+         break;
+      }
+   }
+   if (marker == NULL) {
+      /* Already removed. */
+      return 0;
+   }
+
+   /* Remove the marker. */
+   array_erase( &cur_mission->markers, marker, &marker[1] );
+
+   /* Update system markers. */
+   mission_sysMark();
    return 0;
 }
 
@@ -395,8 +518,8 @@ static int misn_setMarker( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in gfx/portraits without the png extension. So for
- *  gfx/portraits/none.png you would just use "none".
+ *  the ones found in GFX_PATH/portraits without the png extension. So for
+ *  GFX_PATH/portraits/none.png you would just use "none".
  *
  * @usage misn.setNPC( "Invisible Man", "none" )
  *
@@ -408,6 +531,9 @@ static int misn_setNPC( lua_State *L )
 {
    char buf[PATH_MAX];
    const char *name, *str;
+   Mission *cur_mission;
+
+   cur_mission = misn_getFromLua(L);
 
    /* Free if portrait is already set. */
    if (cur_mission->portrait != NULL) {
@@ -433,7 +559,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   snprintf( buf, PATH_MAX, "gfx/portraits/%s.png", str );
+   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s.png", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -452,7 +578,9 @@ static int misn_factions( lua_State *L )
    int i;
    MissionData *dat;
    LuaFaction f;
+   Mission *cur_mission;
 
+   cur_mission = misn_getFromLua(L);
    dat = cur_mission->data;
 
    /* we'll push all the factions in table form */
@@ -475,28 +603,34 @@ static int misn_factions( lua_State *L )
 static int misn_accept( lua_State *L )
 {
    int i, ret;
+   Mission *cur_mission;
 
    ret = 0;
 
    /* find last mission */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL)
+      if (player_missions[i]->data == NULL)
          break;
 
+   cur_mission = misn_getFromLua(L);
+
    /* no missions left */
-   if (i>=MISSION_MAX)
+   if (cur_mission->accepted)
+      NLUA_ERROR(L, "Mission already accepted!");
+   else if (i>=MISSION_MAX)
       ret = 1;
    else { /* copy it over */
-      memcpy( &player_missions[i], cur_mission, sizeof(Mission) );
+      memcpy( player_missions[i], cur_mission, sizeof(Mission) );
       memset( cur_mission, 0, sizeof(Mission) );
-      cur_mission = &player_missions[i];
+      cur_mission = player_missions[i];
       cur_mission->accepted = 1; /* Mark as accepted. */
-      setOSD(); /* Set OSD if applicable. */
-      /* Needed to make sure hooks work. */
-      nlua_hookTarget( cur_mission, NULL );
+
+      /* Need to change pointer. */
+      lua_pushlightuserdata(L,cur_mission);
+      lua_setglobal(L,"__misn");
    }
 
-   lua_pushboolean(L,!ret); /* we'll convert C style return to lua */
+   lua_pushboolean(L,!ret); /* we'll convert C style return to Lua */
    return 1;
 }
 /**
@@ -505,106 +639,32 @@ static int misn_accept( lua_State *L )
  *    @luaparam properly If true and the mission is unique it marks the mission
  *                     as completed.  If false it deletes the mission but
  *                     doesn't mark it as completed.  If the parameter isn't
- *                     passed it just ends the mission.
+ *                     passed it just ends the mission (without removing it
+ *                     from the player's list of active missions).
  * @luafunc finish( properly )
  */
 static int misn_finish( lua_State *L )
 {
    int b;
+   Mission *cur_mission;
 
    if (lua_isboolean(L,1))
       b = lua_toboolean(L,1);
    else {
-      lua_pushstring(L, "Mission Done");
+      lua_pushstring(L, NLUA_DONE);
       lua_error(L); /* THERE IS NO RETURN */
       return 0;
    }
 
-   misn_delete = 1;
+   lua_pushboolean( L, 1 );
+   lua_setglobal( L, "__misn_delete" );
+   cur_mission = misn_getFromLua(L);
 
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
       player_missionFinished( mission_getID( cur_mission->data->name ) );
 
-   lua_pushstring(L, "Mission Done");
+   lua_pushstring(L, NLUA_DONE);
    lua_error(L); /* shouldn't return */
-
-   return 0;
-}
-
-/**
- * @brief Starts a timer.
- *
- *    @luaparam funcname Name of the function to run when timer is up.
- *    @luaparam delay Milliseconds to wait for timer.
- *    @luareturn The timer being used.
- * @luafunc timerStart( funcname, delay )
- */
-static int misn_timerStart( lua_State *L )
-{
-   int i;
-   const char *func;
-   double delay;
-
-   /* Parse arguments. */
-   func  = luaL_checkstring(L,1);
-   delay = luaL_checknumber(L,2);
-
-   /* Add timer */
-   for (i=0; i<MISSION_TIMER_MAX; i++) {
-      if (cur_mission->timer[i] == 0.) {
-         cur_mission->timer[i] = delay / 1000.;
-         cur_mission->tfunc[i] = strdup(func);
-         break;
-      }
-   }
-
-   /* No timer found. */
-   if (i >= MISSION_TIMER_MAX) {
-      return 0;
-   }
-
-   /* Returns the timer id. */
-   lua_pushnumber(L,i);
-   return 1;
-}
-
-/**
- * @brief Stops a timer previously started with timerStart().
- *
- *    @luaparam t Timer to stop.
- * @luafunc timerStop( t )
- */
-static int misn_timerStop( lua_State *L )
-{
-   int t;
-
-   /* Parse parameters. */
-   t = luaL_checkint(L,1);
-
-   /* Stop the timer. */
-   if (cur_mission->timer[t] != 0.) {
-      cur_mission->timer[t] = 0.;
-      if (cur_mission->tfunc[t] != NULL) {
-         free(cur_mission->tfunc[t]);
-         cur_mission->tfunc[t] = NULL;
-      }
-   }
-
-   return 0;
-}
-
-
-/**
- * @brief Forces the player to take off if he is landed.
- *
- * @luafunc takeoff()
- */
-static int misn_takeoff( lua_State *L )
-{
-   (void) L;
-
-   if (landed)
-      landed = 0;
 
    return 0;
 }
@@ -616,22 +676,31 @@ static int misn_takeoff( lua_State *L )
  *
  *    @luaparam cargo Name of the cargo to add.
  *    @luaparam quantity Quantity of cargo to add.
- *    @luareturn The id of the cargo which can be used in rmCargo.
- * @luafunc addCargo( cargo, quantity )
+ *    @luareturn The id of the cargo which can be used in cargoRm.
+ * @luafunc cargoAdd( cargo, quantity )
  */
-static int misn_addCargo( lua_State *L )
+static int misn_cargoAdd( lua_State *L )
 {
    const char *cname;
    Commodity *cargo;
    int quantity, ret;
+   Mission *cur_mission;
 
    /* Parameters. */
    cname    = luaL_checkstring(L,1);
    quantity = luaL_checkint(L,2);
    cargo = commodity_get( cname );
 
+   /* Check if the cargo exists. */
+   if(cargo == NULL) {
+      NLUA_ERROR(L, "Cargo '%s' not found.", cname);
+      return 0;
+   }
+
+   cur_mission = misn_getFromLua(L);
+
    /* First try to add the cargo. */
-   ret = pilot_addMissionCargo( player, cargo, quantity );
+   ret = pilot_addMissionCargo( player.p, cargo, quantity );
    mission_linkCargo( cur_mission, ret );
 
    lua_pushnumber(L, ret);
@@ -642,20 +711,23 @@ static int misn_addCargo( lua_State *L )
  *
  *    @luaparam cargoid Identifier of the mission cargo.
  *    @luareturn true on success.
- * @luafunc rmCargo( cargoid )
+ * @luafunc cargoRm( cargoid )
  */
-static int misn_rmCargo( lua_State *L )
+static int misn_cargoRm( lua_State *L )
 {
    int ret;
    unsigned int id;
+   Mission *cur_mission;
 
    id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id, 0 ) != 0) {
+   if (pilot_rmMissionCargo( player.p, id, 0 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }
+
+   cur_mission = misn_getFromLua(L);
 
    /* Now unlink the mission cargo if it was successful. */
    ret = mission_unlinkCargo( cur_mission, id );
@@ -668,20 +740,23 @@ static int misn_rmCargo( lua_State *L )
  *
  *    @luaparam cargoid ID of the cargo to jettison.
  *    @luareturn true on success.
- * @luafunc jetCargo( cargoid )
+ * @luafunc cargoJet( cargoid )
  */
-static int misn_jetCargo( lua_State *L )
+static int misn_cargoJet( lua_State *L )
 {
    int ret;
    unsigned int id;
+   Mission *cur_mission;
 
    id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id, 1 ) != 0) {
+   if (pilot_rmMissionCargo( player.p, id, 1 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }
+
+   cur_mission = misn_getFromLua(L);
 
    /* Now unlink the mission cargo if it was successful. */
    ret = mission_unlinkCargo( cur_mission, id );
@@ -706,8 +781,17 @@ static int misn_osdCreate( lua_State *L )
 {
    const char *title;
    int nitems;
-   const char **items;
+   char **items;
    int i;
+   Mission *cur_mission;
+
+   cur_mission = misn_getFromLua(L);
+
+   /* Must be accepted. */
+   if (!cur_mission->accepted) {
+      WARN("Can't create an OSD on an unaccepted mission!");
+      return 0;
+   }
 
    /* Check parameters. */
    title  = luaL_checkstring(L,1);
@@ -724,26 +808,26 @@ static int misn_osdCreate( lua_State *L )
    items = calloc( nitems, sizeof(char *) );
 
    /* Get items. */
-   i = 0;
-   lua_pushnil(L); /* table, nil */
-   while (lua_next(L,-2) != 0) { /* table, key, val */
+   for (i=0; i<nitems; i++) {
+      lua_pushnumber(L,i+1);
+      lua_gettable(L,2);
       if (!lua_isstring(L,-1)) {
          free(items);
          luaL_typerror(L, -1, "string");
          return 0;
       }
-      items[i] = lua_tostring(L, -1);
+      items[i] = strdup( lua_tostring(L, -1) );
       lua_pop(L,1);
-      i++;
-      if (i >= nitems)
-         break;
    }
 
    /* Create OSD. */
-   cur_mission->osd = osd_create( title, nitems, items );
+   cur_mission->osd = osd_create( title, nitems, (const char**) items,
+         cur_mission->data->avail.priority );
    cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */
+   for (i=0; i<nitems; i++)
+      free(items[i]);
    free(items);
 
    return 0;
@@ -757,7 +841,8 @@ static int misn_osdCreate( lua_State *L )
  */
 static int misn_osdDestroy( lua_State *L )
 {
-   (void) L;
+   Mission *cur_mission;
+   cur_mission = misn_getFromLua(L);
 
    if (cur_mission->osd != 0) {
       osd_destroy( cur_mission->osd );
@@ -771,18 +856,171 @@ static int misn_osdDestroy( lua_State *L )
 /**
  * @brief Sets active in mission OSD.
  *
- *    @luaparam n Element of the OSD to make active. 
+ * @note Uses Lua indexes, so 1 is first member, 2 is second and so on.
+ *
+ *    @luaparam n Element of the OSD to make active.
  * @luafunc osdActive( n )
  */
 static int misn_osdActive( lua_State *L )
 {
    int n;
+   Mission *cur_mission;
 
    n = luaL_checkint(L,1);
+   n = n-1; /* Convert to C index. */
+
+   cur_mission = misn_getFromLua(L);
 
    if (cur_mission->osd != 0)
       osd_active( cur_mission->osd, n );
 
    return 0;
 }
+
+
+/**
+ * @brief Adds an NPC.
+ *
+ * @note Do not use this at all in the "create" function. Use setNPC, setDesc and the "accept" function instead.
+ *
+ * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
+ *
+ *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
+ *    @luaparam name Name of the NPC
+ *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits*.png).
+ *    @luaparam desc Description associated to the NPC.
+ *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
+ *    @luareturn The ID of the NPC to pass to npcRm.
+ * @luafunc npcAdd( func, name, portrait, desc, priority )
+ */
+static int misn_npcAdd( lua_State *L )
+{
+   unsigned int id;
+   int priority;
+   const char *func, *name, *gfx, *desc;
+   char portrait[PATH_MAX];
+   Mission *cur_mission;
+
+   /* Handle parameters. */
+   func = luaL_checkstring(L, 1);
+   name = luaL_checkstring(L, 2);
+   gfx  = luaL_checkstring(L, 3);
+   desc = luaL_checkstring(L, 4);
+
+   /* Optional priority. */
+   if (lua_gettop(L) > 4)
+      priority = luaL_checkint( L, 5 );
+   else
+      priority = 5;
+
+   /* Set path. */
+   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
+
+   cur_mission = misn_getFromLua(L);
+
+   /* Add npc. */
+   id = npc_add_mission( cur_mission, func, name, priority, portrait, desc );
+
+   /* Return ID. */
+   if (id > 0) {
+      lua_pushnumber( L, id );
+      return 1;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Removes an NPC.
+ *
+ * @usage misn.npcRm( npc_id )
+ *
+ *    @luaparam id ID of the NPC to remove.
+ * @luafunc npcRm( id )
+ */
+static int misn_npcRm( lua_State *L )
+{
+   unsigned int id;
+   int ret;
+   Mission *cur_mission;
+
+   id = luaL_checklong(L, 1);
+   cur_mission = misn_getFromLua(L);
+   ret = npc_rm_mission( id, cur_mission );
+
+   if (ret != 0)
+      NLUA_ERROR(L, "Invalid NPC ID!");
+   return 0;
+}
+
+
+/**
+ * @brief Tries to claim systems.
+ *
+ * Claiming systems is a way to avoid mission collisions preemptively.
+ *
+ * Note it does not actually claim the systems if it fails to claim. It also
+ *  does not work more than once.
+ *
+ * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
+ * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
+ *
+ *    @luaparam systems Table of systems to claim or a single system.
+ *    @luareturn true if was able to claim, false otherwise.
+ * @luafunc claim( systems )
+ */
+static int misn_claim( lua_State *L )
+{
+   int i, l;
+   LuaSystem *ls;
+   SysClaim_t *claim;
+   Mission *cur_mission;
+
+   /* Get mission. */
+   cur_mission = misn_getFromLua(L);
+
+   /* Check to see if already claimed. */
+   if (cur_mission->claims != NULL) {
+      NLUA_ERROR(L, "Mission trying to claim but already has.");
+      return 0;
+   }
+
+   /* Create the claim. */
+   claim = claim_create();
+
+   if (lua_istable(L,1)) {
+      /* Iterate over table. */
+      l = lua_objlen(L,1);
+      for (i=0; i<l; i++) {
+         lua_pushnumber(L,i+1);
+         lua_gettable(L,1);
+         if (lua_issystem(L,-1)) {
+            ls = lua_tosystem( L, -1 );
+            claim_add( claim, ls->id );
+         }
+         lua_pop(L,1);
+      }
+   }
+   else if (lua_issystem(L, 1)) {
+      ls = lua_tosystem( L, 1 );
+      claim_add( claim, ls->id );
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Test claim. */
+   if (claim_test( claim )) {
+      claim_destroy( claim );
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Set the claim. */
+   cur_mission->claims = claim;
+   claim_activate( claim );
+   lua_pushboolean(L,1);
+   return 1;
+}
+
+
 

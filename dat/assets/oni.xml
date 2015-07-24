@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Oni">
+ <pos>
+  <x>5369.038878</x>
+  <y>-8497.280539</y>
+ </pos>
+ <GFX>
+  <space>J04.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>55000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Oni is a harsh place to live, with a thick, toxic atmosphere, violent weather and frequent seismic activity. All of this makes it a favored dumping ground for criminals and other undesirables of Dvaered society. Soldiers assigned here consider it to be a punishment almost as severe as being a prisoner. It's one of the few planets controlled by the central Dvaered government, as no sane warlord wants the place.</description>
+ </general>
+</asset>

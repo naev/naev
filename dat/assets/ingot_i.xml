@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ingot I">
+ <pos>
+  <x>-9900.000000</x>
+  <y>-3660.000000</y>
+ </pos>
+ <GFX>
+  <space>C00.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

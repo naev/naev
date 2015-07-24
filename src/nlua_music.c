@@ -22,7 +22,7 @@
 #include "ndata.h"
 
 
-/* functions */
+/* Music methods. */
 static int musicL_delay( lua_State* L );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
@@ -164,7 +164,7 @@ static int musicL_isPlaying( lua_State* L )
 static int musicL_current( lua_State* L )
 {
    const char *music_name;
-   
+
    music_name = music_playingName();
 
    lua_pushstring(L, (music_name != NULL) ? music_name : "none" );

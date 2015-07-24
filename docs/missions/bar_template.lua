@@ -1,12 +1,12 @@
 --[[
 
-   This is a NAEV mission template.
-   In this document aims to provide a structure on which to build many NAEV missions.
+   This is a Naev mission template.
+   In this document aims to provide a structure on which to build many Naev missions.
    The possibilities are endless, so this will not apply to every possible mission.
-   For more information on NAEV, please visit: http://code.google.com/p/naev/ 
-   NAEV missions are written in the Lua programming language: http://www.lua.org/
-   There is documentation on NAEV's Lua API at: http://bobbens.dyndns.org/naev-lua/index.html
-   You can study the source code of missions in [path_to_NAEV_folder]/naev/dat/missions/
+   For more information on Naev, please visit: http://naev.org/
+   Naev missions are written in the Lua programming language: http://www.lua.org/
+   There is documentation on Naev's Lua API at: http://api.naev.org/
+   You can study the source code of missions in [path_to_Naev_folder]/naev/dat/missions/
 
    MISSION: <NAME GOES HERE>
    DESCRIPTION: <DESCRIPTION GOES HERE>
@@ -20,12 +20,12 @@ else -- Default to English
 
 -- This section stores the strings (text) for the mission.
 
--- Bar information, describes how he appears in the bar
+-- Bar information, describes how the person appears in the bar
    bar_desc = ""
 
 -- Mission details. We store some text for the mission with specific variables.
    misn_title = "" 
-   misn_reward = ""
+   misn_reward = 0
    misn_desc = ""
 
 -- Stage one
@@ -51,8 +51,8 @@ end
 --[[ 
 First you need to *create* the mission.  This is *obligatory*.
 
-You have to set the NPC and the description, these will show up at the bar with
-the character that gives the mission and his description.
+You have to set the NPC and the description. These will show up at the bar with
+the character that gives the mission and the character's description.
 --]]
 function create ()
    misn.setNPC( "A Guy", "none" )
@@ -69,7 +69,7 @@ If the mission doesn't get accepted, it gets trashed.
 Also set the mission details.
 --]]
 function accept ()
-   -- Most missions will need the following to avoid crashing NAEV
+   -- Most missions will need the following to avoid crashing Naev
 
    -- This will create the typical "Yesn/No" dialogue when mission is created
    -- at bar.  It returns true if yes was selected.
@@ -86,7 +86,7 @@ function accept ()
       misn.setDesc( misn_desc)
       -- Markers indicate a target system on the map, it may not be needed
       -- depending on the type of mission you're writing.
-      misn.setMarker( systemX, "" ) --change as appropriate to point to a system object and marker style.
+      misn.markerAdd( systemX, "" ) --change as appropriate to point to a system object and marker style.
    end
 
 end

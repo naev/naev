@@ -8,8 +8,8 @@
 
 
 int save_all (void);
-void reload (void);
-void load_game_menu (void);
+void save_reload (void);
+int save_hasSave (void);
 
 
 #endif /* SAVE_H */

@@ -19,11 +19,19 @@
 #include "mission.h"
 #include "colour.h"
 #include "player.h"
+#include "faction.h"
+#include "dialogue.h"
+#include "gui.h"
+#include "map_find.h"
+#include "array.h"
+#include "mapData.h"
+#include "nstring.h"
+#include "nmath.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
-#define BUTTON_WIDTH    60 /**< Map button width. */
+#define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
@@ -33,12 +41,13 @@
 
 static double map_zoom        = 1.; /**< Zoom of the map. */
 static double map_xpos        = 0.; /**< Map X position. */
-static double map_ypos        = 0.; /**< Map Y .osition. */
+static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
+glTexture *gl_map_circle      = NULL; /**< Texture of the circle used for systems. */
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -50,21 +59,28 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 /* space.c */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
+extern int faction_nstack;
 
 
 /*
  * prototypes
  */
+/* Update. */
 static void map_update( unsigned int wid );
-static int map_inPath( StarSystem *sys );
+/* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static void map_renderPath( double x, double y, double a );
+static void map_renderMarkers( double x, double y, double r, double a );
+static void map_drawMarker( double x, double y, double r, double a,
+      int num, int cur, int type );
+/* Mouse. */
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
-static void map_setZoom( double zoom );
+/* Misc. */
+static glTexture *gl_genFactionDisk( int radius );
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
-static void map_drawMarker( double x, double y, double r,
-      int num, int cur, int type );
 
 
 /**
@@ -76,6 +92,8 @@ int map_init (void)
 {
    /* Create the VBO. */
    map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+
+   gl_faction_disk = gl_genFactionDisk( 150. );
    return 0;
 }
 
@@ -90,6 +108,28 @@ void map_exit (void)
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
    }
+
+   if (gl_faction_disk != NULL)
+      gl_freeTexture( gl_faction_disk );
+
+   if (gl_map_circle != NULL)
+      gl_freeTexture( gl_map_circle );
+}
+
+
+/**
+ * @brief Handles key input to the map window.
+ */
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+
+   if ((key == SDLK_SLASH) || (key == SDLK_f)) {
+      map_inputFind( wid, NULL );
+      return 1;
+   }
+
+   return 0;
 }
 
 
@@ -100,7 +140,11 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
-   int w,h;
+   int w, h, x, y, rw;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
 
    /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
@@ -129,8 +173,10 @@ void map_open (void)
 
    /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
+   window_setCancel( wid, window_close );
+   window_handleKeys( wid, map_keyHandler );
 
-   /* 
+   /*
     * SIDE TEXT
     *
     * $System
@@ -146,48 +192,74 @@ void map_open (void)
     *
     * Services:
     *   $Services
-    * 
-    * ...
     *
-    * [Close]
+    * ...
+    * [Autonav]
+    * [ Find ]
+    * [ Close ]
     */
 
+   x  = -70; /* Right column X offset. */
+   y  = -20;
+   rw = ABS(x) + 60; /* Right column indented width maximum. */
+
    /* System Name */
-   window_addText( wid, -20, -20, 100, 20, 1, "txtSysname",
+   window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
          &gl_defFont, &cDConsole, cur->name );
+   y -= 10;
+
+   /* Faction image */
+   window_addImage( wid, -90 + 32, y - 32, 0, 0, "imgFaction", NULL, 0 );
+   y -= 64 + 10;
+
    /* Faction */
-   window_addText( wid, -20, -60, 90, 20, 0, "txtSFaction",
+   window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
-   window_addText( wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Standing */
-   window_addText( wid, -20, -100, 90, 20, 0, "txtSStanding",
+   window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
          &gl_smallFont, &cDConsole, "Standing:" );
-   window_addText( wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
-   /* Security. */
-   window_addText( wid, -20, -140, 90, 20, 0, "txtSSecurity",
-         &gl_smallFont, &cDConsole, "Security:" );
-   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtSecurity",
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Presence. */
+   window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
+         &gl_smallFont, &cDConsole, "Presence:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Planets */
-   window_addText( wid, -20, -180, 90, 20, 0, "txtSPlanets",
+   window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Services */
-   window_addText( wid, -20, -220, 90, 20, 0, "txtSServices",
+   window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
-   window_addText( wid, -20, -220-gl_smallFont.h-5, 80, 100, 0, "txtServices",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
+
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
+   /* Find button */
+   window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnFind", "Find", map_inputFind );
+   /* Autonav button */
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnAutonav", "Autonav", player_autonavStartWindow );
 
    /*
     * Bottom stuff
     *
-    * [+] [-]  Nebula, Asteroids, Interference
+    * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
@@ -199,10 +271,18 @@ void map_open (void)
    /*
     * The map itself.
     */
-   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
+   map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
+
+   /*
+    * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
+    */
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
+         || map_selected == cur_system - systems_stack || map_npath == 0)
+      window_disableButton( wid, "btnAutonav" );
 }
+
 /**
  * @brief Updates the map window.
  *
@@ -212,16 +292,22 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, y, h;
-   double standing, nstanding;
+   int f, h, x, y;
    unsigned int services;
+   int l;
+   int hasPresence, hasPlanets;
+   char t;
    char buf[PATH_MAX];
    int p;
+   glTexture *logo;
+   double w;
+   double unknownPresence;
 
    /* Needs map to update. */
    if (!map_isOpen())
       return;
 
+   /* Get selected system. */
    sys = system_getIndex( map_selected );
 
    /* Not known and no markers. */
@@ -234,6 +320,11 @@ static void map_update( unsigned int wid )
    /*
     * Right Text
     */
+
+   x = -70; /* Side bar X offset. */
+   w = ABS(x) + 60; /* Width of the side bar. */
+   y = -20 - 20 - 64 - gl_defFont.h; /* Initialized to position for txtSFaction. */
+
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
       /*
        * Right Text
@@ -241,25 +332,38 @@ static void map_update( unsigned int wid )
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
          window_modifyText( wid, "txtSysname", sys->name );
       else
-         window_modifyText( wid, "txtSysname", "Unknown" );
+         window_modifyText( wid, "txtSysname", "Unknown" );;
+
+      /* Faction */
+      window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
+      window_moveWidget( wid, "txtSFaction", x, y);
+      window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtFaction", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Standing */
-      window_moveWidget( wid, "txtSStanding", -20, -100 );
-      window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSStanding", x, y );
+      window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtStanding", "Unknown" );
-      /* Security. */
-      window_moveWidget( wid, "txtSSecurity", -20, -140 );
-      window_moveWidget( wid, "txtSecurity",  -20, -140-gl_smallFont.h-5 );
-      window_modifyText( wid, "txtSecurity", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
+      /* Presence. */
+      window_moveWidget( wid, "txtSPresence", x, y );
+      window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtPresence", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Planets */
-      window_moveWidget( wid, "txtSPlanets", -20, -180 );
-      window_moveWidget( wid, "txtPlanets", -20, -180-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSPlanets", x, y );
+      window_moveWidget( wid, "txtPlanets", x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPlanets", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Services */
-      window_moveWidget( wid, "txtSServices", -20, -220 );
-      window_moveWidget( wid, "txtServices", -20, -220-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSServices", x, y );
+      window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", "Unknown" );
-      
+
       /*
        * Bottom Text
        */
@@ -270,94 +374,143 @@ static void map_update( unsigned int wid )
    /* System is known */
    window_modifyText( wid, "txtSysname", sys->name );
 
-   standing  = 0.;
-   nstanding = 0.;
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
+      if (sys->planets[i]->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(sys->planets[i]))
+         continue;
+
       if ((f==-1) && (sys->planets[i]->faction>0)) {
          f = sys->planets[i]->faction;
-         standing += faction_getPlayer( f );
-         nstanding++;
       }
       else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-            (sys->planets[i]->faction>0)) {
-         snprintf( buf, PATH_MAX, "Multiple" );
+               (sys->planets[i]->faction>0)) {
+         nsnprintf( buf, PATH_MAX, "Multiple" );
          break;
       }
    }
    if (f == -1) {
-      window_modifyText( wid, "txtFaction", "NA" );
-      window_moveWidget( wid, "txtSStanding", -20, -100 );
-      window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
-      window_modifyText( wid, "txtStanding", "NA" );
-      y = -100;
-
+      window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
+      window_modifyText( wid, "txtFaction", "N/A" );
+      window_modifyText( wid, "txtStanding", "N/A" );
+      h = gl_smallFont.h;
    }
    else {
       if (i==sys->nplanets) /* saw them all and all the same */
-         snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
+         nsnprintf( buf, PATH_MAX, "%s", faction_longname(f) );
+
+      /* Modify the image. */
+      logo = faction_logoSmall(f);
+      window_modifyImage( wid, "imgFaction", logo, 0, 0 );
+      if (logo != NULL)
+         window_moveWidget( wid, "imgFaction",
+               -90 + logo->w/2, -20 - 32 - 10 - gl_defFont.h + logo->h/2);
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
       window_modifyText( wid, "txtStanding",
-            faction_getStanding( standing / nstanding ) );
+            faction_getStandingText( f ) );
 
-      /* Lower text if needed */
-      h = gl_printHeightRaw( &gl_smallFont, 80, buf );
-      y = -100 - (h - gl_smallFont.h);
-      window_moveWidget( wid, "txtSStanding", -20, y );
-      window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
+      h = gl_printHeightRaw( &gl_smallFont, w, buf );
    }
 
-   /* Get security. */
-   y -= 40;
-   if (sys->nfleets == 0)
-      snprintf(buf, PATH_MAX, "NA" );
-   else
-      snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
-   window_moveWidget( wid, "txtSSecurity", -20, y );
-   window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
-   window_modifyText( wid, "txtSecurity", buf );
+   /* Faction */
+   window_moveWidget( wid, "txtSFaction", x, y);
+   window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+   y -= gl_smallFont.h + h + 5 + 15;
+
+   /* Standing */
+   window_moveWidget( wid, "txtSStanding", x, y );
+   window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Get presence. */
+   hasPresence = 0;
+   buf[0]      = '\0';
+   l           = 0;
+   unknownPresence = 0;
+   for (i=0; i < sys->npresence; i++) {
+      if (sys->presence[i].value <= 0)
+         continue;
+      hasPresence = 1;
+      if (faction_isKnown( sys->presence[i].faction )) {
+         t           = faction_getColourChar(sys->presence[i].faction);
+         /* Use map grey instead of default neutral colour */
+         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
+                        (t=='N')?'M':t, sys->presence[i].value);
+      }
+      else
+         unknownPresence += sys->presence[i].value;
+      if (l > PATH_MAX)
+         break;
+   }
+   if (unknownPresence != 0)
+      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
+   if (hasPresence == 0)
+      nsnprintf(buf, PATH_MAX, "N/A");
+   window_moveWidget( wid, "txtSPresence", x, y );
+   window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtPresence", buf );
+   /* Scroll down. */
+   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   y -= 40 + (h - gl_smallFont.h);
 
    /* Get planets */
-   if (sys->nplanets == 0) {
-      strncpy( buf, "None", PATH_MAX );
-      window_modifyText( wid, "txtPlanets", buf );
-   }
-   else {
-      p = 0;
-      buf[0] = '\0';
-      if (sys->nplanets > 0)
-         p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
-      for (i=1; i<sys->nplanets; i++) {
-         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
-      }
+   hasPlanets = 0;
+   p = 0;
+   buf[0] = '\0';
+   for (i=0; i<sys->nplanets; i++) {
+      if (sys->planets[i]->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(sys->planets[i]))
+         continue;
 
-      window_modifyText( wid, "txtPlanets", buf );
+      /* Colourize output. */
+      planet_updateLand(sys->planets[i]);
+      t = planet_getColourChar(sys->planets[i]);
+      if (t == 'N')
+         t = 'M';
+      else if (t == 'R')
+         t = 'S';
+
+      if (!hasPlanets)
+         p += nsnprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
+               t, sys->planets[i]->name );
+      else
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
+               t, sys->planets[i]->name );
+      hasPlanets = 1;
+      if (p > PATH_MAX)
+         break;
    }
-   y -= 40;
-   window_moveWidget( wid, "txtSPlanets", -20, y );
-   window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
+   if(hasPlanets == 0)
+      strncpy( buf, "None", PATH_MAX );
+   /* Update text. */
+   window_modifyText( wid, "txtPlanets", buf );
+   window_moveWidget( wid, "txtSPlanets", x, y );
+   window_moveWidget( wid, "txtPlanets", x + 50, y-gl_smallFont.h-5 );
+   /* Scroll down. */
+   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   y -= 40 + (h - gl_smallFont.h);
 
    /* Get the services */
-   h = gl_printHeightRaw( &gl_smallFont, 80, buf );
-   y -= 40 + (h - gl_smallFont.h);
-   window_moveWidget( wid, "txtSServices", -20, y );
-   window_moveWidget( wid, "txtServices", -20, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSServices", x, y );
+   window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
-      services |= sys->planets[i]->services;
+      if (planet_isKnown(sys->planets[i]))
+         services |= sys->planets[i]->services;
    buf[0] = '\0';
    p = 0;
-   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   if (services & PLANET_SERVICE_COMMODITY)
-      p += snprintf( &buf[p], PATH_MAX-p, "Commodity\n");
-   if (services & PLANET_SERVICE_OUTFITS)
-      p += snprintf( &buf[p], PATH_MAX-p, "Outfits\n");
-   if (services & PLANET_SERVICE_SHIPYARD)
-      p += snprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
+   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
+   for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
+      if (services & i)
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
    if (buf[0] == '\0')
-      p += snprintf( &buf[p], PATH_MAX-p, "None");
+      p += nsnprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
 
 
@@ -371,32 +524,32 @@ static void map_update( unsigned int wid )
 
       /* Volatility */
       if (sys->nebu_volatility > 700.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Volatile");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Volatile");
       else if (sys->nebu_volatility > 300.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Dangerous");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Dangerous");
       else if (sys->nebu_volatility > 0.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Unstable");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Unstable");
 
       /* Density */
       if (sys->nebu_density > 700.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Dense");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Dense");
       else if (sys->nebu_density < 300.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Light");
-      p += snprintf(&buf[p], PATH_MAX-p, " Nebula");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Light");
+      p += nsnprintf(&buf[p], PATH_MAX-p, " Nebula");
    }
    /* Interference. */
    if (sys->interference > 0.) {
 
       if (buf[0] != '\0')
-         p += snprintf(&buf[p], PATH_MAX-p, ",");
+         p += nsnprintf(&buf[p], PATH_MAX-p, ",");
 
       /* Density. */
       if (sys->interference > 700.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Dense");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Dense");
       else if (sys->interference < 300.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Light");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Light");
 
-      p += snprintf(&buf[p], PATH_MAX-p, " Interference");
+      p += nsnprintf(&buf[p], PATH_MAX-p, " Interference");
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
@@ -414,46 +567,22 @@ int map_isOpen (void)
 
 
 /**
- * @brief Checks to see if a system is part of the path.
- *
- *    @param sys System to check.
- *    @return 1 if system is part of the path, 2 if system is part of the path
- *          but pilot won't have enough fuel and 0 if system is not part of the
- *          path.
- */
-static int map_inPath( StarSystem *sys )
-{
-   int i, f;
-
-   f = pilot_getJumps(player) - 1;
-   for (i=0; i<map_npath; i++)
-      if (map_path[i] == sys) {
-         if (i > f) {
-            return 2;
-         }
-         else
-            return 1;
-      }
-   return 0;
-}
-
-
-/**
  * @brief Draws a mission marker on the map.
  *
  * @param x X position to draw at.
  * @param y Y position to draw at.
  * @param r Radius of system.
+ * @param a Colour alpha to use.
  * @param num Total number of markers.
  * @param cur Current marker to draw.
  * @param type Type to draw.
  */
-static void map_drawMarker( double x, double y, double r,
+static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type )
 {
    const double beta = M_PI / 9;
    static const glColour* colours[] = {
-      &cGreen, &cBlue, &cRed, &cOrange
+      &cGreen, &cBlue, &cRed, &cOrange, &cYellow
    };
 
    int i;
@@ -488,7 +617,7 @@ static void map_drawMarker( double x, double y, double r,
       vertex[6 + 4*i + 0] = colours[type]->r;
       vertex[6 + 4*i + 1] = colours[type]->g;
       vertex[6 + 4*i + 2] = colours[type]->b;
-      vertex[6 + 4*i + 3] = colours[type]->a;
+      vertex[6 + 4*i + 3] = colours[type]->a * a;
    }
 
    glEnable(GL_POLYGON_SMOOTH);
@@ -520,7 +649,11 @@ static glTexture *gl_genFactionDisk( int radius )
    const int h = 2 * radius + 1;
 
    /* Create the surface. */
-   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_HWSURFACE, w, h, 32, RGBAMASK );
+#if SDL_VERSION_ATLEAST(1,3,0)
+   sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_SWSURFACE, w, h, 32, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    pixels = sur->pixels;
    memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
@@ -566,107 +699,174 @@ static glTexture *gl_genFactionDisk( int radius )
 static void map_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i,j, n,m;
-   double x,y,r, tx,ty;
-   StarSystem *sys, *jsys, *hsys;
-   glColour *col, c;
-   GLfloat vertex[8*(2+4)];
-   int sw, sh;
+   double x,y,r;
+   glColour col;
+   StarSystem *sys;
 
    /* Parameters. */
-   r = round(CLAMP(5., 15., 6.*map_zoom));
-   x = round((bx - map_xpos + w/2) * 1.);
-   y = round((by - map_ypos + h/2) * 1.);
+   map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
+
+   if (gl_map_circle == NULL)
+      gl_map_circle = gl_genCircle( r );
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   /*
-    * First pass renders everything almost (except names and markers).
-    */
+   /* Render faction disks. */
+   map_renderFactionDisks( x, y, 0 );
+
+   /* Render jump routes. */
+   map_renderJumps( x, y, 0 );
+
+   /* Cause alpha to move smoothly between 0-1 every second. */
+   col.a = ABS( 500 - (int)SDL_GetTicks() % 1000 ) / 500.;
+
+   /* Render the player's jump route. */
+   map_renderPath( x, y, col.a );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 0 );
+
+   /* Render system names. */
+   map_renderNames( bx, by, x, y, w, h, 0 );
+
+   /* Render system markers. */
+   map_renderMarkers( x, y, r, col.a );
+
+   /* Initialize with values from cRed */
+   col.r = cRed.r;
+   col.g = cRed.g;
+   col.b = cRed.b;
+
+   if (!gl_vendorIsIntel())
+      glEnable(GL_LINE_SMOOTH);
+   glEnable(GL_POINT_SMOOTH);
+
+   /* Selected system. */
+   if (map_selected != -1) {
+      sys = system_getIndex( map_selected );
+      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            1.5*r, bx, by, w, h, &col, 0 );
+   }
+
+   /* Values from cRadar_tPlanet */
+   col.r = cRadar_tPlanet.r;
+   col.g = cRadar_tPlanet.g;
+   col.b = cRadar_tPlanet.b;
+
+   /* Current planet. */
+   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+         y + cur_system->pos.y * map_zoom,
+         1.5*r, bx, by, w, h, &col, 0 );
+
+   if (!gl_vendorIsIntel())
+      glDisable(GL_LINE_SMOOTH);
+   glDisable(GL_POINT_SMOOTH);
+}
+
+
+/**
+ * @brief Gets the render parameters.
+ */
+void map_renderParams( double bx, double by, double xpos, double ypos,
+      double w, double h, double zoom, double *x, double *y, double *r )
+{
+   *r = round(CLAMP(6., 20., 8.*zoom));
+   *x = round((bx - xpos + w/2) * 1.);
+   *y = round((by - ypos + h/2) * 1.);
+}
+
+
+/**
+ * @brief Renders the faction disks.
+ */
+void map_renderFactionDisks( double x, double y, int editor)
+{
+   int i;
+   const glColour *col;
+   glColour c;
+   StarSystem *sys;
+   int sw, sh;
+   double tx, ty, presence;
+
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
-      /* check to make sure system is known or adjacent to known (or marked) */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-            && !space_sysReachable(sys))
+      /* System has no faction, or isn't known and we aren't in the editor. */
+      if (sys->faction == -1 || (!sys_isKnown(sys) && !editor))
          continue;
 
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
+      /* Cache to avoid repeated sqrt() */
+      presence = sqrt(sys->ownerpresence);
+
       /* draws the disk representing the faction */
-      if (sys_isKnown(sys) && (sys->faction != -1)) {
-         sw = gl_faction_disk->sw;
-         sh = gl_faction_disk->sw;
+      sw = (60 + presence * 3) * map_zoom;
+      sh = (60 + presence * 3) * map_zoom;
 
-         col = faction_colour(sys->faction);
-         c.r = col->r;
-         c.g = col->g;
-         c.b = col->b;
-         c.a = 0.7;
+      col = faction_colour(sys->faction);
+      c.r = col->r;
+      c.g = col->g;
+      c.b = col->b;
+      c.a = CLAMP( .6, .75, 20 / presence );
 
-         gl_blitTexture(
-               gl_faction_disk,
-               tx - sw/2, ty - sh/2, sw, sh,
-               0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
-      }
+      gl_blitTexture(
+            gl_faction_disk,
+            tx - sw/2, ty - sh/2, sw, sh,
+            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
+   }
+}
 
-      /* Draw the system. */
-      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
-      else if (sys->security >= 1.) col = &cGreen;
-      else if (sys->security >= 0.6) col = &cOrange;
-      else if (sys->security >= 0.3) col = &cRed;
-      else col = &cDarkRed;
 
-      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
+/**
+ * @brief Renders the jump routes between systems.
+ */
+void map_renderJumps( double x, double y, int editor)
+{
+   int i, j, k;
+   const glColour *col, *cole;
+   GLfloat vertex[8*(2+4)];
+   StarSystem *sys, *jsys;
 
-      /* If system is known fill it. */
-      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
-         /* Planet colours */
-         if (!sys_isKnown(sys)) col = &cInert;
-         else if (sys->nplanets==0) col = &cInert;
-         else col = faction_getColour( sys->faction);
+   /* Generate smooth lines. */
+   glShadeModel( GL_SMOOTH );
+   glEnable( GL_LINE_SMOOTH );
+   glLineWidth( CLAMP(1., 4., 2. * map_zoom) );
 
-         /* Radius slightly shorter. */
-         gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
-      }
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
 
-      if (!sys_isKnown(sys))
+      if (!sys_isKnown(sys) && !editor)
          continue; /* we don't draw hyperspace lines */
 
-      /* draw the hyperspace paths */
-      glShadeModel(GL_SMOOTH);
-      /* cheaply use transparency instead of actually calculating
-       * from where to where the line must go :) */  
-      for (j=0; j<sys->njumps; j++) {
+      /* first we draw all of the paths. */
+      gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+            sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+      for (j = 0; j < sys->njumps; j++) {
+         jsys = sys->jumps[j].target;
+         if (!space_sysReachableFromSys(jsys,sys) && !editor)
+            continue;
 
-         jsys = system_getIndex( sys->jumps[j] );
-         if (hyperspace_target != -1)
-            hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
-
-         n = map_inPath(jsys);
-         m = map_inPath(sys);
-         /* set the colours */
-         /* is the route the current one? */
-         if ((hyperspace_target != -1) && 
-               ( ((cur_system==sys) && (j==hyperspace_target)) ||
-                  ((cur_system==jsys) &&
-                     (sys==hsys )))) {
-            if (player->fuel < HYPERSPACE_FUEL)
-               col = &cRed;
-            else
-               col = &cGreen;
+         /* Choose colours. */
+         cole = &cBlue;
+         for (k = 0; k < jsys->njumps; k++) {
+            if (jsys->jumps[k].target == sys) {
+               if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
+                  cole = &cWhite;
+               else if (jp_isFlag(&jsys->jumps[k], JP_HIDDEN))
+                  cole = &cRed;
+               break;
+            }
          }
-         /* is the route part of the path? */
-         else if ((n > 0) && (m > 0)) {
-            if ((n == 2) || (m == 2)) /* out of fuel */
-               col = &cRed;
-            else
-               col = &cYellow;
-         }
+         if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
+            col = &cWhite;
+         else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
+            col = &cRed;
          else
-            col = &cDarkBlue;
+            col = &cBlue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -678,47 +878,232 @@ static void map_render( double bx, double by, double w, double h, void *data )
          vertex[6]  = col->r;
          vertex[7]  = col->g;
          vertex[8]  = col->b;
-         vertex[9]  = 0.;
+         vertex[9]  = 0.2;
+         vertex[10] = (col->r + cole->r)/2.;
+         vertex[11] = (col->g + cole->g)/2.;
+         vertex[12] = (col->b + cole->b)/2.;
+         vertex[13] = 0.8;
+         vertex[14] = cole->r;
+         vertex[15] = cole->g;
+         vertex[16] = cole->b;
+         vertex[17] = 0.2;
+         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+         glDrawArrays( GL_LINE_STRIP, 0, 3 );
+      }
+      gl_vboDeactivate();
+   }
+
+   /* Reset render parameters. */
+   glShadeModel( GL_FLAT );
+   glDisable( GL_LINE_SMOOTH );
+   glLineWidth( 1. );
+}
+
+
+/**
+ * @brief Renders the systems.
+ */
+void map_renderSystems( double bx, double by, double x, double y,
+      double w, double h, double r, int editor)
+{
+   int i;
+   const glColour *col;
+   StarSystem *sys;
+   double tx, ty;
+
+
+   /* Smoother circles. */
+   if (!gl_vendorIsIntel())
+      glEnable(GL_LINE_SMOOTH);
+   glEnable(GL_POINT_SMOOTH);
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+
+      /* if system is not known, reachable, or marked. and we are not in the editor */
+      if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+           && !space_sysReachable(sys)) && !editor)
+         continue;
+
+      tx = x + sys->pos.x*map_zoom;
+      ty = y + sys->pos.y*map_zoom;
+
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
+         continue;
+
+      /* Draw an outer ring. */
+      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
+
+      /* If system is known fill it. */
+      if ((editor || sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         /* Planet colours */
+         if (!editor && !sys_isKnown(sys)) col = &cInert;
+         else if (sys->faction < 0) col = &cInert;
+         else if (editor) col = &cNeutral;
+         else col = faction_getColour( sys->faction );
+
+         if (editor) {
+            /* Radius slightly shorter. */
+            gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
+         }
+         else
+            gl_blitTexture(
+                  gl_map_circle,
+                  tx - r * .65, ty - r * .65, r * 1.3, r * 1.3,
+                  0., 0., gl_map_circle->srw, gl_map_circle->srh, col );
+      }
+
+   }
+
+   if (!gl_vendorIsIntel())
+      glDisable( GL_LINE_SMOOTH );
+   glDisable(GL_POINT_SMOOTH);
+}
+
+
+/**
+ * @brief Render the map path.
+ */
+static void map_renderPath( double x, double y, double a )
+{
+   int j;
+   const glColour *col;
+   GLfloat vertex[8*(2+4)];
+   StarSystem *jsys, *lsys;
+   int jmax, jcur;
+
+   if (map_path != NULL) {
+      lsys = cur_system;
+      jmax = pilot_getJumps(player.p); /* Maximum jumps. */
+      jcur = jmax; /* Jump range remaining. */
+
+
+      /* Generate smooth lines. */
+      glShadeModel( GL_SMOOTH );
+      glEnable( GL_LINE_SMOOTH );
+      glLineWidth( CLAMP(1., 4., 2. * map_zoom) );
+
+      for (j=0; j<map_npath; j++) {
+         jsys = map_path[j];
+         if (jcur == jmax && jmax > 0)
+            col = &cGreen;
+         else if (jcur < 1)
+            col = &cRed;
+         else
+            col = &cYellow;
+         jcur--;
+
+         /* Draw the lines. */
+         vertex[0]  = x + lsys->pos.x * map_zoom;
+         vertex[1]  = y + lsys->pos.y * map_zoom;
+         vertex[2]  = vertex[0] + (jsys->pos.x - lsys->pos.x)/2. * map_zoom;
+         vertex[3]  = vertex[1] + (jsys->pos.y - lsys->pos.y)/2. * map_zoom;
+         vertex[4]  = x + jsys->pos.x * map_zoom;
+         vertex[5]  = y + jsys->pos.y * map_zoom;
+         vertex[6]  = col->r;
+         vertex[7]  = col->g;
+         vertex[8]  = col->b;
+         vertex[9]  = a / 4. + .25;
          vertex[10] = col->r;
          vertex[11] = col->g;
          vertex[12] = col->b;
-         vertex[13] = col->a;
+         vertex[13] = a / 2. + .5;
          vertex[14] = col->r;
          vertex[15] = col->g;
          vertex[16] = col->b;
-         vertex[17] = 0.;
+         vertex[17] = a / 4. + .25;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
          gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
          gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
                sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
          gl_vboDeactivate();
+
+         lsys = jsys;
       }
+
+      /* Reset render parameters. */
       glShadeModel( GL_FLAT );
+      glDisable( GL_LINE_SMOOTH );
+      glLineWidth( 1. );
    }
+}
 
 
-   /*
-    * Second pass - System names
-    */
+/**
+ * @brief Renders the system names on the map.
+ */
+void map_renderNames( double bx, double by, double x, double y,
+      double w, double h, int editor )
+{
+   double tx,ty, vx,vy, d,n;
+   int textw;
+   StarSystem *sys, *jsys;
+   int i, j;
+   char buf[32];
+
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
       /* Skip system. */
-      if (!sys_isKnown(sys) || (map_zoom <= 0.5 ))
+      if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
+      textw = gl_printWidthRaw( &gl_smallFont, sys->name );
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
+
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
+         continue;
+
       gl_print( &gl_smallFont,
-            tx + SCREEN_W/2., ty + SCREEN_H/2.,
+            tx, ty,
             &cWhite, sys->name );
+
    }
 
+   /* Raw hidden values if we're in the editor. */
+   if (!editor || (map_zoom <= 1.0))
+      return;
 
-   /*
-    * Third pass - system markers
-    */
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+      for (j=0; j<sys->njumps; j++) {
+         jsys = sys->jumps[j].target;
+         /* Calculate offset. */
+         vx  = jsys->pos.x - sys->pos.x;
+         vy  = jsys->pos.y - sys->pos.y;
+         n   = sqrt( pow2(vx) + pow2(vy) );
+         vx /= n;
+         vy /= n;
+         d   = MAX(n*0.3*map_zoom, 15);
+         tx  = x + map_zoom*sys->pos.x + d*vx;
+         ty  = y + map_zoom*sys->pos.y + d*vy;
+         /* Display. */
+         n = sqrt(sys->jumps[j].hide);
+         if (n == 0.)
+            nsnprintf( buf, sizeof(buf), "\egH: %.2f", n );
+         else
+            nsnprintf( buf, sizeof(buf), "H: %.2f", n );
+         gl_print( &gl_smallFont,
+               tx, ty,
+               &cGrey70, buf );
+      }
+   }
+}
+
+
+/**
+ * @brief Renders the map markers.
+ */
+static void map_renderMarkers( double x, double y, double r, double a )
+{
+   double tx, ty;
+   int i, j, n, m;
+   StarSystem *sys;
+
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
@@ -732,42 +1117,37 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
       /* Count markers. */
       n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
-      n += sys->markers_misc;
-      n += sys->markers_cargo;
-      n += sys->markers_rush;
+      n += sys->markers_plot;
+      n += sys->markers_high;
+      n += sys->markers_low;
+      n += sys->markers_computer;
 
       /* Draw the markers. */
       j = 0;
       if (sys_isFlag(sys, SYSTEM_CMARKED)) {
-         map_drawMarker( tx, ty, r, n, j, 0 );
+         map_drawMarker( tx, ty, r, a, n, j, 0 );
          j++;
       }
-      for (m=0; m<sys->markers_misc; m++) {
-         map_drawMarker( tx, ty, r, n, j, 1 );
+      for (m=0; m<sys->markers_plot; m++) {
+         map_drawMarker( tx, ty, r, a, n, j, 1 );
          j++;
       }
-      for (m=0; m<sys->markers_rush; m++) {
-         map_drawMarker( tx, ty, r, n, j, 2 );
+      for (m=0; m<sys->markers_high; m++) {
+         map_drawMarker( tx, ty, r, a, n, j, 2 );
          j++;
       }
-      for (m=0; m<sys->markers_cargo; m++) {
-         map_drawMarker( tx, ty, r, n, j, 3 );
+      for (m=0; m<sys->markers_low; m++) {
+         map_drawMarker( tx, ty, r, a, n, j, 3 );
+         j++;
+      }
+      for (m=0; m<sys->markers_computer; m++) {
+         map_drawMarker( tx, ty, r, a, n, j, 4 );
          j++;
       }
    }
-
-   /* Selected planet. */
-   if (map_selected != -1) {
-      sys = system_getIndex( map_selected );
-      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.5*r, bx, by, w, h, &cRed, 0 );
-   }
-
-   /* Current planet. */
-   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
-         y + cur_system->pos.y * map_zoom,
-         1.5*r, bx, by, w, h, &cRadar_tPlanet, 0 );
 }
+
+
 /**
  * @brief Map custom widget mouse handling.
  *
@@ -778,7 +1158,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -790,17 +1170,32 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    t = 15.*15.; /* threshold */
 
    switch (event->type) {
-      
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+      case SDL_MOUSEWHEEL:
+         /* Must be in bounds. */
+         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+            return 0;
+
+         if (event->wheel.y > 0)
+            map_buttonZoom( 0, "btnZoomIn" );
+         else
+            map_buttonZoom( 0, "btnZoomOut" );
+         return 1;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
             map_buttonZoom( 0, "btnZoomIn" );
          else if (event->button.button == SDL_BUTTON_WHEELDOWN)
             map_buttonZoom( 0, "btnZoomOut" );
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {
@@ -821,13 +1216,13 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
 
-                  map_select( sys );
+                  map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                   break;
                }
             }
             map_drag = 1;
          }
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (map_drag)
@@ -842,6 +1237,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          }
          break;
    }
+
+   return 0;
 }
 /**
  * @brief Handles the button zoom clicks.
@@ -859,11 +1256,11 @@ static void map_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      map_zoom += (map_zoom >= 1.) ? 0.5 : 0.25;
+      map_zoom *= 1.2;
       map_zoom = MIN(2.5, map_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
+      map_zoom *= 0.8;
       map_zoom = MAX(0.5, map_zoom);
    }
 
@@ -936,6 +1333,25 @@ static void map_selectCur (void)
       map_selected = -1;
 }
 
+
+/**
+ * @brief Gets the destination system.
+ *
+ *    @param[out] jumps Number of jumps until the destination.
+ *    @return The destination system or NULL if there is no path set.
+ */
+StarSystem* map_getDestination( int *jumps )
+{
+   if (map_path == NULL)
+      return NULL;
+
+   if (jumps != NULL)
+      *jumps = map_npath;
+
+   return map_path[ map_npath-1 ];
+}
+
+
 /**
  * @brief Updates the map after a jump.
  */
@@ -953,26 +1369,32 @@ void map_jump (void)
    if (map_path != NULL) {
       map_npath--;
       if (map_npath == 0) { /* path is empty */
-         free (map_path);
+         free( map_path );
          map_path = NULL;
-         planet_target = -1;
-         hyperspace_target = -1;
+         player_targetHyperspaceSet( -1 );
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
-         map_path = realloc( map_path, sizeof(StarSystem*) * map_npath );
 
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
-            if (map_path[0]==system_getIndex(cur_system->jumps[j])) {
-               planet_target = -1; /* override planet_target */
-               hyperspace_target = j;
+            if (map_path[0] == cur_system->jumps[j].target) {
+               /* Restore selected system. */
+               map_selected = map_path[ map_npath ] - systems_stack;
+
+               player_targetHyperspaceSet( j );
                break;
             }
          }
-
+         /* Overrode jump route manually, must clear target. */
+         if (j>=cur_system->njumps)
+            player_targetHyperspaceSet( -1 );
       }
    }
+   else
+      player_targetHyperspaceSet( -1 );
+
+   gui_setNav();
 }
 
 
@@ -981,7 +1403,7 @@ void map_jump (void)
  *
  *    @param sys System to select.
  */
-void map_select( StarSystem *sys )
+void map_select( StarSystem *sys, char shifted )
 {
    unsigned int wid;
    int i;
@@ -990,41 +1412,64 @@ void map_select( StarSystem *sys )
 
    if (sys == NULL) {
       map_selectCur();
+      window_disableButton( wid, "btnAutonav" );
    }
    else {
       map_selected = sys - systems_stack;
 
       /* select the current system and make a path to it */
-      if (map_path)
-         free(map_path);
-      map_path  = NULL;
-      map_npath = 0;
+      if (!shifted) {
+          if (map_path)
+             free(map_path);
+          map_path  = NULL;
+          map_npath = 0;
+      }
 
       /* Try to make path if is reachable. */
       if (space_sysReachable(sys)) {
-         map_path = map_getJumpPath( &map_npath,
-               cur_system->name, sys->name, 0 );
+         if (!shifted)
+            map_path = map_getJumpPath( &map_npath,
+                  cur_system->name, sys->name, 0, 1, NULL );
+         else
+            map_path = map_getJumpPath( &map_npath,
+                  cur_system->name, sys->name, 0, 1, map_path );
 
-         if (map_npath==0)
-            hyperspace_target = -1;
+         if (map_npath==0) {
+            player_hyperspacePreempt(0);
+            player_targetHyperspaceSet( -1 );
+            player_autonavAbortJump(NULL);
+            window_disableButton( wid, "btnAutonav" );
+         }
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
-               if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
-                  planet_target = -1; /* override planet_target */
-                  hyperspace_target = i;
+               if (map_path[0] == cur_system->jumps[i].target) {
+                  player_hyperspacePreempt(1);
+                  player_targetHyperspaceSet( i );
                   break;
                }
             }
+            window_enableButton( wid, "btnAutonav" );
          }
+      }
+      else { /* unreachable. */
+         player_targetHyperspaceSet( -1 );
+         player_autonavAbortJump(NULL);
+         window_disableButton( wid, "btnAutonav" );
       }
    }
 
    map_update(wid);
+   gui_setNav();
 }
 
 /*
  * A* algorithm for shortest path finding
+ *
+ * Note since that we can't actually get an admissible heurestic for A* this is
+ * in reality just Djikstras. I've removed the heurestic bit to make sure I
+ * don't try to implement an admissible heuristic when I'm pretty sure there is
+ * none.
  */
 /**
  * @brief Node structure for A* pathfinding.
@@ -1035,48 +1480,34 @@ typedef struct SysNode_ {
 
    struct SysNode_ *parent; /**< Parent node. */
    StarSystem* sys; /**< System in node. */
-   double r; /**< ranking */
    int g; /**< step */
 } SysNode; /**< System Node for use in A* pathfinding. */
 static SysNode *A_gc;
 /* prototypes */
-static SysNode* A_newNode( StarSystem* sys, SysNode* parent );
-static double A_h( StarSystem *n, StarSystem *g );
-static double A_g( SysNode* n );
+static SysNode* A_newNode( StarSystem* sys );
+static int A_g( SysNode* n );
 static SysNode* A_add( SysNode *first, SysNode *cur );
 static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
-/** @brief Creates a new node linke to star system. */
-static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
+/** @brief Creates a new node link to star system. */
+static SysNode* A_newNode( StarSystem* sys )
 {
    SysNode* n;
 
-   n = malloc(sizeof(SysNode));
+   n        = malloc(sizeof(SysNode));
 
-   n->next = NULL;
-   n->parent = parent;
-   n->sys = sys;
-   n->r = DBL_MAX;
-   n->g = 0.;
+   n->next  = NULL;
+   n->sys   = sys;
 
    n->gnext = A_gc;
-   A_gc = n;
+   A_gc     = n;
 
    return n;
 }
-/** @brief Heurestic model to use. */
-static double A_h( StarSystem *n, StarSystem *g )
-{
-   (void)n;
-   (void)g;
-   /* Euclidean distance */
-   /*return sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y))/100.;*/
-   return 0.;
-}
 /** @brief Gets the g from a node. */
-static double A_g( SysNode* n )
+static int A_g( SysNode* n )
 {
    return n->g;
 }
@@ -1145,7 +1576,7 @@ static SysNode* A_lowest( SysNode *first )
    n = first;
    lowest = n;
    do {
-      if (n->r < lowest->r)
+      if (n->g < lowest->g)
          lowest = n;
    } while ((n=n->next) != NULL);
    return lowest;
@@ -1168,13 +1599,15 @@ static void A_freeList( SysNode *first )
    free(p);
 }
 
-/** @brief Sets map_zoom to zoom and recreats the faction disk texture. */
+/** @brief Sets map_zoom to zoom and recreates the faction disk texture. */
 void map_setZoom(double zoom)
 {
    map_zoom = zoom;
-   if (gl_faction_disk != NULL)
-      gl_freeTexture( gl_faction_disk );
-   gl_faction_disk = gl_genFactionDisk( 50 * zoom );
+
+   if (gl_map_circle != NULL) {
+      gl_freeTexture(gl_map_circle);
+      gl_map_circle = NULL;
+   }
 }
 
 /**
@@ -1184,17 +1617,20 @@ void map_setZoom(double zoom)
  *    @param sysstart Name of the system to start from.
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems are known.
+ *    @param the old star system (if we're merely extending the list)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
-StarSystem** map_getJumpPath( int* njumps,
-      const char* sysstart, const char* sysend, int ignore_known )
+StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
+    const char* sysend, int ignore_known, int show_hidden,
+    StarSystem** old_data )
 {
-   int i, j, cost;
+   int i, j, cost, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
+   JumpPoint *jp;
 
-   SysNode *cur, *neighbour;
-   SysNode *open, *closed;
+   SysNode *cur,   *neighbour;
+   SysNode *open,  *closed;
    SysNode *ocost, *ccost;
 
    A_gc = NULL;
@@ -1203,73 +1639,118 @@ StarSystem** map_getJumpPath( int* njumps,
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
 
+   /* Set up. */
+   ojumps = 0;
+   if ((old_data != NULL) && (*njumps>0)) {
+      ssys   = system_get( old_data[ (*njumps)-1 ]->name );
+      ojumps = *njumps;
+   }
+
+   /* Check self. */
+   if ((ssys == esys) || (ssys->njumps==0)) {
+      (*njumps) = 0;
+      if (old_data != NULL)
+         free( old_data );
+      return NULL;
+   }
+
    /* system target must be known and reachable */
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
       (*njumps) = 0;
+      if (old_data != NULL)
+         free( old_data );
       return NULL;
    }
 
    /* start the linked lists */
-   open = closed =  NULL;
-   cur = A_newNode( ssys, NULL );
-   open = A_add( open, cur ); /* inital open node is the start system */
+   open     = closed = NULL;
+   cur      = A_newNode( ssys );
+   cur->parent = NULL;
+   cur->g   = 0;
+   open     = A_add( open, cur ); /* Initial open node is the start system */
 
    j = 0;
-   while ((cur = A_lowest(open))->sys != esys) {
+   while ((cur = A_lowest(open))) {
+      /* End condition. */
+      if (cur->sys == esys)
+         break;
 
       /* Break if infinite loop. */
       j++;
       if (j > MAP_LOOP_PROT)
          break;
 
-      /* get best from open and toss to closed */
-      open = A_rm( open, cur->sys );
+      /* Get best from open and toss to closed */
+      open   = A_rm( open, cur->sys );
       closed = A_add( closed, cur );
-      cost = A_g(cur) + 1;
+      cost   = A_g(cur) + 1; /* Base unit is jump and always increases by 1. */
 
       for (i=0; i<cur->sys->njumps; i++) {
-         sys = system_getIndex( cur->sys->jumps[i] );
+         jp  = &cur->sys->jumps[i];
+         sys = jp->target;
 
          /* Make sure it's reachable */
-         if (!ignore_known &&
-               ((!sys_isKnown(sys) && 
-                  (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))
+         if (!ignore_known) {
+            if (!jp_isKnown(jp))
+               continue;
+            if (!sys_isKnown(sys) && !space_sysReachable(sys))
+               continue;
+         }
+         if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
-         neighbour = A_newNode( sys, NULL );
+         /* Skip hidden jumps if they're unknown and not specifically requested */
+         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ) && !jp_isKnown(jp))
+            continue;
 
-         ocost = A_in(open, sys);
-         if ((ocost != NULL) && (cost < ocost->g)) {
-            open = A_rm( open, sys ); /* new path is better */
-         }
-
+         /* Check to see if it's already in the closed set. */
          ccost = A_in(closed, sys);
-         if (ccost != NULL) {
-            closed = A_rm( closed, sys ); /* shouldn't happen */
+         if ((ccost != NULL) && (cost >= A_g(ccost)))
+            continue;
+            //closed = A_rm( closed, sys );
+
+         /* Remove if it exists and current is better. */
+         ocost = A_in(open, sys);
+         if (ocost != NULL) {
+            if (cost < A_g(ocost))
+               open = A_rm( open, sys ); /* New path is better */
+            else
+               continue; /* This node is worse, so ignore it. */
          }
-         
-         if ((ocost == NULL) && (ccost == NULL)) {
-            neighbour->g = cost;
-            neighbour->r = A_g(neighbour) + A_h(cur->sys,sys);
-            neighbour->parent = cur;
-            open = A_add( open, neighbour );
-         }
+
+         /* Create the node. */
+         neighbour         = A_newNode( sys );
+         neighbour->parent = cur;
+         neighbour->g      = cost;
+         open              = A_add( open, neighbour );
       }
+
+      /* Sanity check in case not linked. */
+      if (open == NULL)
+         break;
    }
 
-   /* build path backwards if not broken from loop. */
-   if (j <= MAP_LOOP_PROT) {
+   /* Build path backwards if not broken from loop. */
+   if (esys == cur->sys) {
       (*njumps) = A_g(cur);
-      res = malloc( sizeof(StarSystem*) * (*njumps) );
-      for (i=0; i<(*njumps); i++) {
+      if (old_data == NULL)
+         res      = malloc( sizeof(StarSystem*) * (*njumps) );
+      else {
+         *njumps  = *njumps + ojumps;
+         res      = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
+      }
+      /* Build path. */
+      for (i=0; i<((*njumps)-ojumps); i++) {
          res[(*njumps)-i-1] = cur->sys;
-         cur = cur->parent;
+         cur                = cur->parent;
       }
    }
    else {
       (*njumps) = 0;
       res = NULL;
+      if (old_data != NULL)
+         free( old_data );
    }
 
    /* free the linked lists */
@@ -1279,115 +1760,123 @@ StarSystem** map_getJumpPath( int* njumps,
 
 
 /**
- * @brief Marks maps around a radius of currenty system as known.
+ * @brief Marks maps around a radius of currently system as known.
  *
  *    @param targ_sys System at center of the "known" circle.
  *    @param r Radius (in jumps) to mark as known.
  *    @return 0 on success.
  */
-int map_map( const char* targ_sys, int r )
+int map_map( const Outfit *map )
 {
-   int i, dep;
-   StarSystem *sys, *jsys;
-   SysNode *closed, *open, *cur, *neighbour;
+   int i;
 
-   A_gc = NULL;
-   open = closed = NULL;
+   for (i=0; i<array_size(map->u.map->systems);i++)
+      sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   if (targ_sys == NULL) sys = cur_system;
-   else sys = system_get( targ_sys );
-   sys_setFlag(sys,SYSTEM_KNOWN);
-   open = A_newNode( sys, NULL );
-   open->r = 0;
+   for (i=0; i<array_size(map->u.map->assets);i++)
+      planet_setKnown(map->u.map->assets[i]);
 
-   while ((cur = A_lowest(open)) != NULL) {
+   for (i=0; i<array_size(map->u.map->jumps);i++)
+      jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
 
-      /* mark system as known and go to next */
-      sys = cur->sys;
-      dep = cur->r;
-      sys_setFlag(sys,SYSTEM_KNOWN);
-      open = A_rm( open, sys );
-      closed = A_add( closed, cur );
-
-      /* check it's jumps */
-      for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( cur->sys->jumps[i] );
-
-         /* System has already been parsed or is too deep */
-         if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
-             continue;
-
-         /* create new node and such */
-         neighbour = A_newNode( jsys, NULL );
-         neighbour->r = dep+1;
-         open = A_add( open, neighbour );
-      }
-   }
-
-   A_freeList(A_gc);
-   return 0;
+   return 1;
 }
 
 
 /**
- * @brief Check to see if radius is mapped (known).
+ * @brief Check to see if map data is already mapped (known).
  *
- *    @param targ_sys Name of the system in the center of the "known" circle.
- *    @param r Radius to check (in jumps) if is mapped.
- *    @return 1 if circle was already mapped, 0 if it wasn't.
+ *    @param map Map outfit to check.
+ *    @return 1 if already mapped, 0 if it wasn't.
  */
-int map_isMapped( const char* targ_sys, int r )
+int map_isMapped( const Outfit* map )
 {
-   int i, dep, ret;
-   StarSystem *sys, *jsys;
-   SysNode *closed, *open, *cur, *neighbour;
+   int i;
 
-   A_gc = NULL;
-   open = closed = NULL;
+   for (i=0; i<array_size(map->u.map->systems);i++)
+      if (!sys_isKnown(map->u.map->systems[i]))
+         return 0;
 
-   if (targ_sys == NULL)
-      sys = cur_system;
-   else
-      sys = system_get( targ_sys );
-   open     = A_newNode( sys, NULL );
-   open->r  = 0;
-   ret      = 1;
+   for (i=0; i<array_size(map->u.map->assets);i++)
+      if (!planet_isKnown(map->u.map->assets[i]))
+         return 0;
 
-   while ((cur = A_lowest(open)) != NULL) {
+   for (i=0; i<array_size(map->u.map->jumps);i++)
+      if (!jp_isKnown(map->u.map->jumps[i]))
+         return 0;
 
-      /* Check if system is known. */
-      sys      = cur->sys;
-      dep      = cur->r;
-      if (!sys_isFlag(sys,SYSTEM_KNOWN)) {
-         ret = 0;
-         break;
-      }
+   return 1;
+}
 
-      /* We close the current system. */
-      open     = A_rm( open, sys );
-      closed   = A_add( closed, cur );
 
-      /* System is past the limit. */
-      if (dep+1 > r)
+/**
+ * @brief Maps a local map.
+ */
+int localmap_map( const Outfit *lmap )
+{
+   int i;
+   JumpPoint *jp;
+   Planet *p;
+   double detect, mod;
+
+   if (cur_system==NULL)
+      return 0;
+
+   mod = pow2( 200. / (cur_system->interference + 200.) );
+
+   detect = lmap->u.lmap.jump_detect;
+   for (i=0; i<cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;
-
-      /* check it's jumps */
-      for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( sys->jumps[i] );
-        
-         /* SYstem has already been parsed. */
-         if (A_in(closed,jsys) != NULL)
-             continue;
-
-         /* create new node and such */
-         neighbour      = A_newNode( jsys, NULL );
-         neighbour->r   = dep+1;
-         open           = A_add( open, neighbour );
-      }
+      if (mod*jp->hide <= detect)
+         jp_setFlag( jp, JP_KNOWN );
    }
 
-   A_freeList(A_gc);
-   return ret;
+   detect = lmap->u.lmap.asset_detect;
+   for (i=0; i<cur_system->nplanets; i++) {
+      p = cur_system->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      if (mod*p->hide <= detect)
+         planet_setKnown( p );
+   }
+   return 0;
+}
+
+/**
+ * @brief Checks to see if the local map is mapped.
+ */
+int localmap_isMapped( const Outfit *lmap )
+{
+   int i;
+   JumpPoint *jp;
+   Planet *p;
+   double detect, mod;
+
+   if (cur_system==NULL)
+      return 1;
+
+   mod = pow2( 200. / (cur_system->interference + 200.) );
+
+   detect = lmap->u.lmap.jump_detect;
+   for (i=0; i<cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
+         continue;
+      if ((mod*jp->hide <= detect) && !jp_isKnown( jp ))
+         return 0;
+   }
+
+   detect = lmap->u.lmap.asset_detect;
+   for (i=0; i<cur_system->nplanets; i++) {
+      p = cur_system->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      if ((mod*p->hide <= detect) && !planet_isKnown( p ))
+         return 0;
+   }
+   return 1;
 }
 
 
@@ -1438,7 +1927,7 @@ int map_center( const char *sys )
 
    /* Get the system. */
    ssys = system_get( sys );
-   if (sys == NULL)
+   if (ssys == NULL)
       return -1;
 
    /* Center on the system. */

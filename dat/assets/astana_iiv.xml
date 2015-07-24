@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Astana IIV">
+ <pos>
+  <x>-4476.553751</x>
+  <y>-2346.261115</y>
+ </pos>
+ <GFX>
+  <space>H04.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>H</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

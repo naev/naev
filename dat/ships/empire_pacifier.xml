@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Empire Pacifier">
+ <base_type>Pacifier</base_type>
+ <GFX sx="10" sy="10" _3d="true">pacifier_empire</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1100000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>An Empire Pacifier.</description>
+ <health>
+  <absorb>22</absorb>
+  <armour>550</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>17</crew>
+  <mass>360</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>40</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="-15" y="-10" h="-10"/>
+  <weapon size="large" x="-15" y="10" h="-10"/>
+  <weapon size="medium" x="20" y="0" h="-10"/>
+  <weapon size="medium" x="4" y="-5" h="-10"/>
+  <weapon size="medium" x="4" y="5" h="-10"/>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <shield_mod>15</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <heat_dissipation>15</heat_dissipation>
+ </stats>
+</ship>

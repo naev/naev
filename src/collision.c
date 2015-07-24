@@ -24,7 +24,7 @@
  *
  *    @param[in] at Texture a.
  *    @param[in] asx Position of x of sprite a.
- *    @param[in] asy Position of y of sprita a.
+ *    @param[in] asy Position of y of sprite a.
  *    @param[in] ap Position in space of sprite a.
  *    @param[in] bt Texture b.
  *    @param[in] bsx Position of x of sprite b.
@@ -44,6 +44,7 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    int rasy, rbsy;
    int abx,aby, bbx, bby;
 
+#if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
    if (at->trans == NULL) {
       WARN("Texture '%s' has no transparency map.", at->name);
@@ -53,24 +54,25 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
       WARN("Texture '%s' has no transparency map.", bt->name);
       return 0;
    }
+#endif /* DEBUGGING */
 
-   /* a - cube coordinates */ 
+   /* a - cube coordinates */
    ax1 = (int)VX(*ap) - (int)(at->sw)/2;
    ay1 = (int)VY(*ap) - (int)(at->sh)/2;
    ax2 = ax1 + (int)(at->sw) - 1;
    ay2 = ay1 + (int)(at->sh) - 1;
 
-   /* b - cube coordinates */ 
+   /* b - cube coordinates */
    bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
    by1 = (int)VY(*bp) - (int)(bt->sh)/2;
    bx2 = bx1 + bt->sw - 1;
    by2 = by1 + bt->sh - 1;
 
-   /* check if bounding boxes intersect */ 
+   /* check if bounding boxes intersect */
    if((bx2 < ax1) || (ax2 < bx1)) return 0;
    if((by2 < ay1) || (ay2 < by1)) return 0;
 
-   /* define the remaining binding box */ 
+   /* define the remaining binding box */
    inter_x0 = MAX( ax1, bx1 );
    inter_x1 = MIN( ax2, bx2 );
    inter_y0 = MAX( ay1, by1 );
@@ -88,7 +90,7 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 
    for (y=inter_y0; y<=inter_y1; y++)
       for (x=inter_x0; x<=inter_x1; x++)
-         /* compute offsets for surface before pass to TransparentPixel test */ 
+         /* compute offsets for surface before pass to TransparentPixel test */
          if ((!gl_isTrans(at, abx + x, aby + y)) &&
                (!gl_isTrans(bt, bbx + x, bby + y))) {
 
@@ -122,7 +124,7 @@ int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
 {
    double ua_t, ub_t, u_b;
    double ua, ub;
-   
+
    ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
    ub_t = (e1x - s1x) * (s1y - s2y) - (e1y - s1y) * (s1x - s2x);
    u_b  = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
@@ -197,7 +199,7 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    bl[0] = bp->x - bt->sw/2.;
    bl[1] = bp->y - bt->sh/2.;
 
-   /* 
+   /*
     * Start check for rectangular collisions.
     */
    hits = 0;
@@ -241,11 +243,11 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
       border[1].y = ep[1];
    }
 
-   /* 
+   /*
     * Now we do a pixel perfect approach.
     */
    real_hits = 0;
-   /* Directonaly vector (normalized). */
+   /* Directionality vector (normalized). */
    v[0] = border[1].x - border[0].x;
    v[1] = border[1].y - border[0].y;
    /* Normalize. */

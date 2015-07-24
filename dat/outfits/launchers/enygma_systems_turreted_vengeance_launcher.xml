@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Enygma Systems Turreted Vengeance Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>60</mass>
+  <price>200000</price>
+  <description>Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
+  <gfx_store>headhunterlauncher</gfx_store>
+  <cpu>-14</cpu>
+ </general>
+ <specific type="turret launcher" secondary="1">
+  <ammo>Vengeance Missile</ammo>
+  <delay>5.5</delay>
+  <amount>15</amount>
+  <lockon>10</lockon>
+  <ew_target>1</ew_target>
+ </specific>
+</outfit>

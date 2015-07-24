@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Imperator Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon License</license>
+  <mass>80</mass>
+  <price>220000</price>
+  <description>The Imperator launcher is a very heavy torpedo launcher that is both bulky and demanding, but whose raw firepower is a must for any captain looking to blow up some capital ships.</description>
+  <gfx_store>caesarlauncher</gfx_store>
+  <cpu>-20</cpu>
+ </general>
+ <specific type="launcher" secondary="1">
+  <ammo>Imperator Torpedo</ammo>
+  <delay>11</delay>
+  <lockon>18</lockon>
+  <arc>6</arc>
+  <ew_target>0.3</ew_target>
+  <amount>5</amount>
+ </specific>
+</outfit>

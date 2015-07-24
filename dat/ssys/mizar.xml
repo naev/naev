@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Mizar">
+ <general>
+  <radius>22575.000000</radius>
+  <stars>500</stars>
+  <interference>50.000000</interference>
+  <nebula volatility="0.000000">100.000000</nebula>
+ </general>
+ <pos>
+  <x>254.000000</x>
+  <y>609.000000</y>
+ </pos>
+ <assets>
+  <asset>Ahmed</asset>
+  <asset>Mizar III</asset>
+  <asset>Mizar IV</asset>
+  <asset>Mizar VI</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Westeros Station</asset>
+ </assets>
+ <jumps>
+  <jump target="Hatter">
+   <pos x="-7960.892232" y="-26332.526438"/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Possum">
+   <pos x="36258.855420" y="13921.750314"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Lirith">
+ <pos>
+  <x>-1154.420302</x>
+  <y>1517.721625</y>
+ </pos>
+ <GFX>
+  <space>moon-O00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

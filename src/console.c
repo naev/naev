@@ -12,21 +12,28 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include <stdlib.h>
+#include "nstring.h"
 
 #define lua_c
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 
 #include "log.h"
 #include "nlua.h"
 #include "nlua_cli.h"
+#include "nlua_tk.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
+#include "nlua_music.h"
 #include "font.h"
 #include "toolkit.h"
-
-
-#define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
+#include "nfile.h"
+#include "menu.h"
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -42,14 +49,15 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /*
  * Buffers.
  */
-#define BUF_LINES          256 /**< Number of lines in the buffer. */
-#define LINE_LENGTH        80 /**< Length of lines in the buffer. */
+#define BUF_LINES          128 /**< Number of lines in the buffer. */
+#define LINE_LENGTH        256 /**< Length of lines in the buffer. */
+#define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
+#define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
 static int cli_history     = 0; /**< Position in history. */
-static int cli_width       = 0; /**< Console width. */
-static int cli_height      = 0; /**< Console height. */
+static int cli_height      = 0; /**< Current console height. */
 
 
 /*
@@ -61,11 +69,12 @@ static int cli_firstline   = 1; /**< Is this the first line? */
 /*
  * CLI stuff.
  */
-static int cli_print( lua_State *L );
 static int cli_script( lua_State *L );
+static int cli_printOnly( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "print", cli_print },
+   { "print", cli_printOnly },
    { "script", cli_script },
+   { "warn", cli_warn },
    {NULL, NULL}
 }; /**< Console only functions. */
 
@@ -75,32 +84,38 @@ static const luaL_Reg cli_methods[] = {
  * Prototypes.
  */
 static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
-static void cli_addMessage( const char *msg );
 static void cli_render( double bx, double by, double w, double h, void *data );
+static int cli_printCore( lua_State *L, int cli_only );
 
 
 /**
- * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ * @brief Back end for the Lua print functionality.
  */
-static int cli_print( lua_State *L ) {
-   int n = lua_gettop(L);  /* number of arguments */
+static int cli_printCore( lua_State *L, int cli_only )
+{
+   int n; /* number of arguments */
    int i;
    char buf[LINE_LENGTH];
    int p;
    const char *s;
+
+   n = lua_gettop(L);
    p = 0;
+
    lua_getglobal(L, "tostring");
    for (i=1; i<=n; i++) {
       lua_pushvalue(L, -1);  /* function to be called */
       lua_pushvalue(L, i);   /* value to print */
       lua_call(L, 1, 1);
       s = lua_tostring(L, -1);  /* get result */
-      if (s == NULL)                                                         
+      if (s == NULL)
          return luaL_error(L, LUA_QL("tostring") " must return a string to "
                LUA_QL("print"));
+      if (!cli_only)
+         LOG( "%s", s );
 
       /* Add to console. */
-      p += snprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
+      p += nsnprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
       if (p >= LINE_LENGTH) {
          cli_addMessage(buf);
          p = 0;
@@ -109,9 +124,44 @@ static int cli_print( lua_State *L ) {
    }
 
    /* Add last line if needed. */
-   cli_addMessage(buf);
+   if (n > 0)
+      cli_addMessage(buf);
 
    return 0;
+}
+
+
+/**
+ * @brief Barebones warn implementation for Lua, allowing scripts to print warnings to stderr.
+ *
+ * @luafunc warn()
+ */
+int cli_warn( lua_State *L )
+{
+   const char *msg;
+
+   msg = luaL_checkstring(L,1);
+   logprintf( stderr, "Warning: %s\n", msg );
+
+   return 0;
+}
+
+
+/**
+ * @brief Replacement for the internal Lua print to print to both the console and the terminal.
+ */
+int cli_print( lua_State *L )
+{
+   return cli_printCore( L, 0 );
+}
+
+
+/**
+ * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ */
+static int cli_printOnly( lua_State *L )
+{
+   return cli_printCore( L, 1 );
 }
 
 
@@ -120,9 +170,28 @@ static int cli_print( lua_State *L ) {
  */
 static int cli_script( lua_State *L )
 {
-   const char *fname = luaL_optstring(L, 1, NULL);
-   int n = lua_gettop(L);
-   if (luaL_loadfile(L, fname) != 0) lua_error(L);
+   const char *fname;
+   char buf[PATH_MAX], *bbuf;
+   int n;
+
+   /* Handle parameters. */
+   fname = luaL_optstring(L, 1, NULL);
+   n     = lua_gettop(L);
+
+   /* Try to find the file if it exists. */
+   if (nfile_fileExists(fname))
+      nsnprintf( buf, sizeof(buf), "%s", fname );
+   else {
+      bbuf = strdup( naev_binary() );
+      nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
+      free(bbuf);
+   }
+
+   /* Do the file. */
+   if (luaL_loadfile(L, buf) != 0)
+      lua_error(L);
+
+   /* Return the stuff. */
    lua_call(L, 0, LUA_MULTRET);
    return lua_gettop(L) - n;
 }
@@ -133,12 +202,18 @@ static int cli_script( lua_State *L )
  *
  *    @param msg Message to add.
  */
-static void cli_addMessage( const char *msg )
+void cli_addMessage( const char *msg )
 {
    int n;
 
-   if (msg != NULL)
+   /* Not initialized. */
+   if (cli_state == NULL)
+      return;
+
+   if (msg != NULL) {
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+      cli_buffer[cli_cursor][LINE_LENGTH-1] = '\0';
+   }
    else
       cli_buffer[cli_cursor][0] = '\0';
 
@@ -147,7 +222,9 @@ static void cli_addMessage( const char *msg )
 
    /* Move viewport if needed. */
    n = (cli_cursor - cli_viewport) % BUF_LINES;
-   if ((n+1)*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
+   if (cli_cursor < cli_viewport)
+      n += BUF_LINES;
+   if (n*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
       cli_viewport = (cli_viewport+1) % BUF_LINES;
 }
 
@@ -159,7 +236,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    int i, y;
-   glColour *c;
+   const glColour *c;
 
    /* Draw the text. */
    i = cli_viewport;
@@ -171,8 +248,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
       else
          c = &cBlack;
       gl_printMaxRaw( cli_font, w,
-            bx + SCREEN_W/2., by + y + SCREEN_H/2., 
-            c, cli_buffer[i] );
+            bx, by + y, c, cli_buffer[i] );
       i = (i + 1) % BUF_LINES;
    }
 }
@@ -219,6 +295,7 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
             }
             i++;
          }
+         cli_history = i-1;
          window_setInput( wid, "inpInput", NULL );
          return 1;
 
@@ -239,20 +316,26 @@ int cli_init (void)
    if (cli_state != NULL)
       return 0;
 
-   /* Calculate size. */
-   cli_width   = SCREEN_W - 100;
-   cli_height  = SCREEN_H - 100;
-
    /* Create the state. */
    cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
+   nlua_loadCol( cli_state, 0 );
+   nlua_loadTex( cli_state, 0 );
+   nlua_loadBackground( cli_state, 0 );
+   nlua_loadCamera( cli_state, 0 );
+   nlua_loadTk( cli_state );
    nlua_loadCLI( cli_state );
+   nlua_loadMusic( cli_state, 0 );
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 
+   /* Mark as console. */
+   lua_pushboolean( cli_state, 1 );
+   lua_setglobal( cli_state, "__cli" );
+
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
+   gl_fontInit( cli_font, "dat/mono.ttf", conf.font_size_console );
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );
@@ -275,20 +358,13 @@ void cli_exit (void)
       lua_close( cli_state );
       cli_state = NULL;
    }
-
-   /* Free the font. */
-   if (cli_font != NULL) {
-      gl_freeFont( cli_font );
-      free( cli_font );
-      cli_font = NULL;
-   }
 }
 
 
 /**
  * @brief Handles the CLI input.
  *
- *    @param wid Window recieving the input.
+ *    @param wid Window receiving the input.
  *    @param unused Unused.
  */
 static void cli_input( unsigned int wid, char *unused )
@@ -303,27 +379,30 @@ static void cli_input( unsigned int wid, char *unused )
    str = window_getInput( wid, "inpInput" );
 
    /* Ignore useless stuff. */
-   if ((str == NULL) || (str[0] == '\0'))
+   if (str == NULL)
       return;
 
    /* Put the message in the console. */
-   snprintf( buf, LINE_LENGTH, "%s %s",
+   nsnprintf( buf, LINE_LENGTH, "%s %s",
          cli_firstline ? "> " : ">>", str );
    cli_addMessage( buf );
 
    /* Set up state. */
    L = cli_state;
+
    /* Set up for concat. */
-   if (!cli_firstline) {         /* o */
+   if (!cli_firstline)           /* o */
       lua_pushliteral(L, "\n");  /* o \n */
-   }
+
    /* Load the string. */
    lua_pushstring( L, str );     /* s */
+
    /* Concat. */
-   if (!cli_firstline) {         /* o \n s */
+   if (!cli_firstline)           /* o \n s */
       lua_concat(L, 3);          /* s */
-   }
+
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
+
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;
@@ -377,12 +456,16 @@ void cli_open (void)
       if (cli_init())
          return;
 
+   /* Make sure main menu isn't open. */
+   if (menu_isOpen(MENU_MAIN))
+      return;
+
    /* Must not be already open. */
    if (window_exists( "Lua Console" ))
       return;
 
    /* Create the window. */
-   wid = window_create( "Lua Console", -1, -1, cli_width, cli_height );
+   wid = window_create( "Lua Console", -1, -1, CLI_WIDTH, CLI_HEIGHT );
 
    /* Window settings. */
    window_setAccept( wid, cli_input );
@@ -391,8 +474,8 @@ void cli_open (void)
 
    /* Input box. */
    window_addInput( wid, 20, 20,
-         cli_width-60-BUTTON_WIDTH, BUTTON_HEIGHT,
-         "inpInput", LINE_LENGTH, 1 );
+         CLI_WIDTH-60-BUTTON_WIDTH, BUTTON_HEIGHT,
+         "inpInput", LINE_LENGTH, 1, cli_font );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -400,8 +483,11 @@ void cli_open (void)
 
    /* Custom console widget. */
    window_addCust( wid, 20, -40,
-         cli_width-40, cli_height-80-BUTTON_HEIGHT,
+         CLI_WIDTH-40, CLI_HEIGHT-80-BUTTON_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL );
+
+   /* Cache current height in case the window is resized. */
+   cli_height = CLI_HEIGHT;
 }
 
 

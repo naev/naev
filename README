@@ -1,91 +1,99 @@
+NAEV README
 
-   NAEV README
+   For an overview of the game, please visit http://wiki.naev.org/wiki/Main_Page
+   or view the man page (If you're on a Unix-like system).
 
+   An exhaustive list of command line arguments is detailed in the man page.
 
-   X.) DEPENDENCIES
+   Hardware requirements can also be found on the website.
 
-      X.1) Debian
-         X.1.1) Binary
-            * libsdl1.2debian
-            * libsdl-image1.2
-            * libsdl-mixer1.2
-            * libgl1-mesa-dri
-            * libxml2
-            * libfreetype6
-            * libpng12-0
+1) DEPENDENCIES
 
-         X.1.2) Source
-            * libsdl1.2-dev
-            * libsdl-image1.2-dev
-            * libsdl-mixer1.2-dev
-            * libgl1-mesa-dev
-            * libxml2-dev
-            * libfreetype6-dev
-            * libpng12-dev
+   Naev's dependencies are intended to be relatively common. In addition to
+   an OpenGL-capable graphics card and driver, Naev requires the following:
+      * SDL
+      * libxml2
+      * freetype2
+      * libpng
+      * OpenAL
+      * libvorbis (>= 1.2.1 necessary for Replaygain)
+      * binutils
+      * libzip
 
+   Note that several distributions ship outdated versions of libvorbis, and
+   thus libvorbisfile is statically linked into the release binary.
 
-    X.) KEYBINDINGS
+   Compiling your own binary on many distributions will result in Replaygain
+   being disabled.
 
-      X.0) Introduction
-         X.0.0) About
-            NAEV uses a dynamic keybinding system that allows you to configure 
-            the keybinds to joystick, keyboard or a mixture of both.
-         X.0.1) Joystick
-            If you are using a joystick you'll have to tell NAEV which joystick
-            to use.  You can either use the -j or -J parameter from the
-            commandline or put it in the conf file.
-            Examples:
-               naev -j 0
-               naev -J "Precision"
-               joystick = "Precision" # in conf file
-         X.0.2) Syntax
-            KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
-                  [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
-            KEY_IDENTIFIER is the identifier given below
-            KEY_TYPE can be one of keyboard, jaxis or jbutton
-            KEY_NUMBER is the number of the key (found with xev usually, just
-               convert the keysym from hex to base 10)
-            KEY_REVERSE is whether it is reversed or not, which is only useful
-               in the case of jaxis
-            MOD_IDENTIFIER is the modifier to take into account, can be one of:
-               lctrl, rctrl, lshift, rshift, lmeta, rmeta, ralt, lalt
-               It isn't used with joystick bindings.
-         X.0.3) Example
-            accel = { type = "jbutton", key = 0 }
-            see conf.example for more examples
+   See http://wiki.naev.org/wiki/Compiling_Nix for package lists for several
+   distributions.
 
-        X.1) Movement
-         X.1.1) accel : accelerates the ship. default: up arrow.
-         X.1.2) left : turns the ship left. default: left arrow.
-         X.1.3) right : turns the ship right. default: right arrow.
-         X.1.4) reverse : makes the ship face the direction it's coming from.
-            default: down arrow
-         X.1.5) afterburner : uses the ship's afetrburner. default: double tap
-            and hold up arrow
+   Mac Dependencies are different, see extras/macosx/COMPILE for details.
 
-      X.2) Combat
-         X.2.1) primary : fires primary weapons. default: spacebar.
-         X.2.2) target : targets next ship. default: tab
-         X.2.3) target_nearest : targets closest hostile ship. default: r
-         X.2.4) face : faces the target. default: a
-         X.2.5) board : board the target. default: b
-         X.2.6) secondary : fires secondary weapon. default: left shift
-         X.2.7) secondary_next : switches to the next secondary weapon.
-            default: w
+2) COMPILING
 
-      X.3) Space
-         X.3.1) target_planet : cycles through planets. default: p
-         X.3.2) land : attempts to land or targets nearest planet. default: l
-         X.3.3) thyperspace : cycle through hyperspace routes. default: h
-         X.3.4) jump : attempt to enter hyperspace. default: j
-         X.3.5) starmap : opens the stellar map. default: m
+   Run: 
 
-      X.4) Gui
-         X.4.1) mapzoomin : zooms in the minimap. default: 9.
-         X.4.2) mapzoomout : zooms out in the minimap. default: 0.
-         X.4.3) screenshot : takes a screenshot. default: keypad -
-         X.4.4) pause : pauses the game. default: z
-         X.4.5) menu : opens the menu. default: escape
-         X.4.6) info : opens the character information window. default: i
+   ./autogen.sh && ./configure
+   make
+
+   If you need special settings you should pass flags to configure, using -h
+   will tell you what it supports.
+
+   On Mac OS X, see extras/macosx/COMPILE for details. Uses Xcode, not gcc.
 
 
+3) INSTALLATION
+
+   Naev currently supports make install which will install everything that
+   is needed.
+
+   If you wish to create a .desktop for your desktop environment, logos
+   from 16x16 to 256x256 can be found in extras/logos
+
+4) CRASHES & PROBLEMS
+
+   Please take a look at the FAQ (linked below) before submitting a new
+   bug report, as it covers a number of common gameplay questions and
+   common issues.
+
+   If Naev is crashing during gameplay, please file a bug report after
+   reading http://wiki.naev.org/wiki/Bugs
+
+5) KEYBINDINGS
+
+   As of 0.5.0, it's possible to set keybindings in-game which is generally
+   more convenient than editing the configuration file.
+
+   A full list of keys can be found at http://wiki.naev.org/wiki/Keybinds
+
+   5A) Introduction
+      5A1) About
+         Naev uses a dynamic keybinding system that allows you to set 
+         the keybindings to joystick, keyboard or a mixture of both.
+
+         This can changed via conf.lua, or with the in-game editor.
+
+   5B) Joystick
+      If you have a joystick you'll have to tell Naev which joystick
+      to use.  You can either use the -j or -J parameter from the
+      command-line or put it in the conf.lua file.
+      Examples:
+         naev -j 0
+         naev -J "Precision"
+         joystick = "Precision" # in conf.lua
+      5B1) Syntax
+         KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
+            [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
+         KEY_IDENTIFIER is the identifier given below
+         KEY_TYPE can be one of keyboard, jaxis or jbutton
+         KEY_NUMBER is the number of the key (found with xev usually, just
+            convert the keysym from hex to base 10)
+         KEY_REVERSE is whether it is reversed or not, which is only useful
+            in the case of jaxis
+         MOD_IDENTIFIER is the modifier to take into account, can be one of:
+            lctrl, rctrl, lshift, rshift, lmeta, rmeta, ralt, lalt
+            It isn't used with joystick bindings.
+      5B2) Example
+         accel = { type = "jbutton", key = 0 }

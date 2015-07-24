@@ -1,6 +1,9 @@
 #include "cs.h"
 static int cs_nonzero (int i, int j, double aij, void *other)
 {
+    (void) i;
+    (void) j;
+    (void) other;
     return (aij != 0) ;
 }
 int cs_dropzeros (cs *A)

@@ -18,19 +18,17 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "nxml.h"
 #include "space.h"
 #include "ndata.h"
 #include "fleet.h"
+#include "map_overlay.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
-
-
-#define DIFF_DATA       "dat/unidiff.xml" /**< Unidiff XML file. */
 
 
 /**
@@ -41,8 +39,8 @@
 typedef enum UniHunkTargetType_ {
    HUNK_TARGET_NONE,
    HUNK_TARGET_SYSTEM,
-   HUNK_TARGET_OUTFIT,
-   HUNK_TARGET_SHIP
+   HUNK_TARGET_ASSET,
+   HUNK_TARGET_TECH,
 } UniHunkTargetType_t;
 
 
@@ -67,14 +65,18 @@ typedef struct UniHunkTarget_ {
 typedef enum UniHunkType_ {
    HUNK_TYPE_NONE,
    /* Target should be system. */
-   HUNK_TYPE_PLANET_ADD,
-   HUNK_TYPE_PLANET_REMOVE,
-   HUNK_TYPE_FLEET_ADD,
-   HUNK_TYPE_FLEET_REMOVE,
-   HUNK_TYPE_FLEETGROUP_ADD,
-   HUNK_TYPE_FLEETGROUP_REMOVE,
-   HUNK_TYPE_SHIP_TECH,
-   HUNK_TYPE_OUTFIT_TECH
+   HUNK_TYPE_ASSET_ADD,
+   HUNK_TYPE_ASSET_REMOVE,
+   HUNK_TYPE_ASSET_BLACKMARKET,
+   HUNK_TYPE_ASSET_LEGALMARKET,
+   HUNK_TYPE_JUMP_ADD,
+   HUNK_TYPE_JUMP_REMOVE,
+   /* Target should be tech. */
+   HUNK_TYPE_TECH_ADD,
+   HUNK_TYPE_TECH_REMOVE,
+   /* Target should be asset. */
+   HUNK_TYPE_ASSET_FACTION,
+   HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
 } UniHunkType_t;
 
 
@@ -87,15 +89,13 @@ typedef struct UniHunk_ {
    UniHunkTarget_t target; /**< Hunk's target. */
 
    UniHunkType_t type; /**< Type of hunk it is. */
+   xmlNodePtr node; /**< Parent node. */
    union {
       char *name;
-      SystemFleet fleet;
-      FleetGroup *fleetgroup;
-      struct {
-         int old; /**< Old value. */
-         int new; /**< New value. */
-      } i; /**< Contains old and new int values. */
    } u; /**< Actual data to patch. */
+   union {
+      char *name;
+   } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
 
@@ -132,8 +132,7 @@ static UniDiff_t* diff_get( const char *name );
 static UniDiff_t *diff_newDiff (void);
 static int diff_removeDiff( UniDiff_t *diff );
 static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
-static int diff_patchShip( UniDiff_t *diff, xmlNodePtr node );
-static int diff_patchOutfit( UniDiff_t *diff, xmlNodePtr node );
+static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patch( xmlNodePtr parent );
 static int diff_patchHunk( UniHunk_t *hunk );
 static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk );
@@ -193,7 +192,7 @@ int diff_apply( const char *name )
    if (diff_isApplied(name))
       return 0;
 
-   buf = ndata_read( DIFF_DATA, &bufsize );
+   buf = ndata_read( DIFF_DATA_PATH, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
@@ -221,6 +220,8 @@ int diff_apply( const char *name )
             xmlFreeDoc(doc);
             free(buf);
 
+            economy_execQueued();
+
             return 0;
          }
          free(diffname);
@@ -231,7 +232,7 @@ int diff_apply( const char *name )
    xmlFreeDoc(doc);
    free(buf);
 
-   WARN("UniDiff '%s' not found in "DIFF_DATA".", name);
+   WARN("UniDiff '%s' not found in "DIFF_DATA_PATH".", name);
    return -1;
 }
 
@@ -253,79 +254,77 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_SYSTEM;
    xmlr_attr(node,"name",base.target.u.name);
-   if (base.target.u.name==NULL)
-      WARN("Unidiff '%s' has a system node without a 'name' tag", diff->name);
+   if (base.target.u.name==NULL) {
+      WARN("Unidiff '%s' has a system node without a 'name' tag, not applying.", diff->name);
+      return -1;
+   }
 
    /* Now parse the possible changes. */
    cur = node->xmlChildrenNode;
    do {
-      if (xml_isNode(cur,"planet")) {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"asset")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
-         /* Get the planet to modify. */
+         /* Get the asset to modify. */
          xmlr_attr(cur,"name",hunk.u.name);
 
          /* Get the type. */
          buf = xml_get(cur);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
          if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_PLANET_ADD;
+            hunk.type = HUNK_TYPE_ASSET_ADD;
          else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_PLANET_REMOVE;
+            hunk.type = HUNK_TYPE_ASSET_REMOVE;
+         else if (strcmp(buf,"blackmarket")==0)
+            hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
+         else if (strcmp(buf,"legalmarket")==0)
+            hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for asset '%s'.", diff->name, buf, hunk.u.name);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
-      else if (xml_isNode(cur, "fleet")) {
+      else if (xml_isNode(cur,"jump")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
-         /* Get the fleet properties. */
-         xmlr_attr(cur,"name",buf);
-         hunk.u.fleet.fleet = fleet_get(buf);
-         free(buf);
-         xmlr_attr(cur,"chance",buf);
-         hunk.u.fleet.chance = atoi(buf);
-         free(buf);
+         /* Get the jump point to modify. */
+         xmlr_attr(cur,"target",hunk.u.name);
 
          /* Get the type. */
          buf = xml_get(cur);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
+
          if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_FLEET_ADD;
+            hunk.type = HUNK_TYPE_JUMP_ADD;
          else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_FLEET_REMOVE;
+            hunk.type = HUNK_TYPE_JUMP_REMOVE;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for jump '%s'.", diff->name, buf, hunk.u.name);
+
+         hunk.node = cur;
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
-      else if (xml_isNode(cur, "fleetgroup")) {
-         hunk.target.type = base.target.type;
-         hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Get the fleet properties. */
-         xmlr_attr(cur,"name",buf);
-         hunk.u.fleetgroup = fleet_getGroup(buf);
-         free(buf);
-
-         /* Get the type. */
-         buf = xml_get(cur);
-         if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
-         else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-
-         /* Apply diff. */
-         if (diff_patchHunk( &hunk ) < 0)
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-      }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -337,55 +336,65 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
 
 /**
- * @brief Patches a ship.
+ * @brief Patches a tech.
  *
  *    @param diff Diff that is doing the patching.
- *    @param node Node containing the ship.
+ *    @param node Node containing the tech.
  *    @return 0 on success.
  */
-static int diff_patchShip( UniDiff_t *diff, xmlNodePtr node )
+static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
 {
    UniHunk_t base, hunk;
    xmlNodePtr cur;
-   Ship *s;
 
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
-   base.target.type = HUNK_TARGET_SHIP;
+   base.target.type = HUNK_TARGET_TECH;
    xmlr_attr(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
-      WARN("Unidiff '%s' has an ship node without a 'name' tag", diff->name);
-      return -1;
-   }
-
-   /* Make sure ship exists. */
-   s = ship_get(base.target.u.name);
-   if (s == NULL) {
-      WARN("Unidiff '%s' ship '%s' to patch does not exist",
-            diff->name, base.target.u.name );
+      WARN("Unidiff '%s' has an target node without a 'name' tag", diff->name);
       return -1;
    }
 
    /* Now parse the possible changes. */
    cur = node->xmlChildrenNode;
    do {
-      if (xml_isNode(cur,"tech")) {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Outfit type is constant. */
-         hunk.type = HUNK_TYPE_SHIP_TECH;
+         hunk.type = HUNK_TYPE_TECH_ADD;
 
          /* Get the data. */
-         hunk.u.i.old = s->tech;
-         hunk.u.i.new = xml_getInt(cur);
+         hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
+      else if (xml_isNode(cur,"remove")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Outfit type is constant. */
+         hunk.type = HUNK_TYPE_TECH_REMOVE;
+
+         /* Get the data. */
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -397,55 +406,48 @@ static int diff_patchShip( UniDiff_t *diff, xmlNodePtr node )
 
 
 /**
- * @brief Patches an outfit.
+ * @brief Patches a asset.
  *
  *    @param diff Diff that is doing the patching.
- *    @param node Node containing the outfit.
+ *    @param node Node containing the asset.
  *    @return 0 on success.
  */
-static int diff_patchOutfit( UniDiff_t *diff, xmlNodePtr node )
+static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
 {
    UniHunk_t base, hunk;
    xmlNodePtr cur;
-   Outfit *o;
 
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
-   base.target.type = HUNK_TARGET_OUTFIT;
+   base.target.type = HUNK_TARGET_ASSET;
    xmlr_attr(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
-      WARN("Unidiff '%s' has an outfit node without a 'name' tag", diff->name);
-      return -1;
-   }
-
-   /* Make sure outfit exists. */
-   o = outfit_get(base.target.u.name);
-   if (o == NULL) {
-      WARN("Unidiff '%s' outfit '%s' to patch does not exist",
-            diff->name, base.target.u.name );
+      WARN("Unidiff '%s' has an target node without a 'name' tag", diff->name);
       return -1;
    }
 
    /* Now parse the possible changes. */
    cur = node->xmlChildrenNode;
    do {
-      if (xml_isNode(cur,"tech")) {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"faction")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Outfit type is constant. */
-         hunk.type = HUNK_TYPE_OUTFIT_TECH;
+         hunk.type = HUNK_TYPE_ASSET_FACTION;
 
          /* Get the data. */
-         hunk.u.i.old = o->tech;
-         hunk.u.i.new = xml_getInt(cur);
+         hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -464,7 +466,7 @@ static int diff_patchOutfit( UniDiff_t *diff, xmlNodePtr node )
  */
 static int diff_patch( xmlNodePtr parent )
 {
-   int i;
+   int i, univ_update;
    UniDiff_t *diff;
    UniHunk_t *fail;
    xmlNodePtr node;
@@ -475,52 +477,80 @@ static int diff_patch( xmlNodePtr parent )
    memset(diff, 0, sizeof(UniDiff_t));
    xmlr_attr(parent,"name",diff->name);
 
+   /* Whether or not we need to update the universe. */
+   univ_update = 0;
+
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"system"))
+      xml_onlyNodes(node);
+      if (xml_isNode(node,"system")) {
+         univ_update = 1;
          diff_patchSystem( diff, node );
-      else if (xml_isNode(node, "outfit"))
-         diff_patchOutfit( diff, node );
-      else if (xml_isNode(node, "ship"))
-         diff_patchShip( diff, node );
+      }
+      else if (xml_isNode(node, "tech"))
+         diff_patchTech( diff, node );
+      else if (xml_isNode(node, "asset")) {
+         univ_update = 1;
+         diff_patchAsset( diff, node );
+      }
+      else
+         WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
-      DEBUG("Unidiff '%s' failed to apply %d hunks.", diff->name, diff->nfailed);
+      WARN("Unidiff '%s' failed to apply %d hunks.", diff->name, diff->nfailed);
       for (i=0; i<diff->nfailed; i++) {
-         fail = &diff->failed[i];
+         fail   = &diff->failed[i];
          target = fail->target.u.name;
          switch (fail->type) {
-            case HUNK_TYPE_PLANET_ADD:
-               DEBUG("   [%s] planet add: '%s'", target, fail->u.name);
+            case HUNK_TYPE_ASSET_ADD:
+               WARN("   [%s] asset add: '%s'", target, fail->u.name);
                break;
-            case HUNK_TYPE_PLANET_REMOVE:
-               DEBUG("   [%s] planet remove: '%s'", target, fail->u.name);
+            case HUNK_TYPE_ASSET_REMOVE:
+               WARN("   [%s] asset remove: '%s'", target, fail->u.name);
                break;
-            case HUNK_TYPE_FLEET_ADD:
-               DEBUG("   [%s] fleet add: '%s' (%d%% chance)", target, 
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
+            case HUNK_TYPE_ASSET_BLACKMARKET:
+               WARN("   [%s] asset blackmarket: '%s'", target, fail->u.name);
                break;
-            case HUNK_TYPE_FLEET_REMOVE:
-               DEBUG("   [%s] fleet remove: '%s' (%d%% chance)", target,
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
+            case HUNK_TYPE_ASSET_LEGALMARKET:
+               WARN("   [%s] asset legalmarket: '%s'", target, fail->u.name);
                break;
-            case HUNK_TYPE_FLEETGROUP_ADD:
-               DEBUG("   [%s] fleetgroup add: '%s'", target, 
-                     fail->u.fleetgroup->name );
+            case HUNK_TYPE_JUMP_ADD:
+               WARN("   [%s] jump add: '%s'", target, fail->u.name);
                break;
-            case HUNK_TYPE_FLEETGROUP_REMOVE:
-               DEBUG("   [%s] fleetgroup remove: '%s'", target,
-                     fail->u.fleetgroup->name );
+            case HUNK_TYPE_JUMP_REMOVE:
+               WARN("   [%s] jump remove: '%s'", target, fail->u.name);
+               break;
+            case HUNK_TYPE_TECH_ADD:
+               WARN("   [%s] tech add: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_TECH_REMOVE:
+               WARN("   [%s] tech remove: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_FACTION:
+               WARN("   [%s] asset faction: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_FACTION_REMOVE:
+               WARN("   [%s] asset faction removal: '%s'", target,
+                     fail->u.name );
                break;
 
             default:
-               DEBUG("   unknown hunk '%d'", fail->type);
+               WARN("   unknown hunk '%d'", fail->type);
                break;
          }
       }
    }
 
+   /* Prune presences if necessary. */
+   if (univ_update)
+      space_reconstructPresences();
+
+   /* Update overlay map just in case. */
+   ovr_refresh();
    return 0;
 }
 
@@ -534,58 +564,49 @@ static int diff_patch( xmlNodePtr parent )
  */
 static int diff_patchHunk( UniHunk_t *hunk )
 {
-   Ship *s;
-   Outfit *o;
-   int i;
+   Planet *p;
 
    switch (hunk->type) {
 
-      /* Adding a planet. */
-      case HUNK_TYPE_PLANET_ADD:
+      /* Adding an asset. */
+      case HUNK_TYPE_ASSET_ADD:
+         planet_updateLand( planet_get(hunk->u.name) );
          return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
-      /* Removing a planet. */
-      case HUNK_TYPE_PLANET_REMOVE:
+      /* Removing an asset. */
+      case HUNK_TYPE_ASSET_REMOVE:
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
-
-      /* Adding a fleet. */
-      case HUNK_TYPE_FLEET_ADD:
-         return system_addFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
-      /* Removing a fleet. */
-      case HUNK_TYPE_FLEET_REMOVE:
-         return system_rmFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
-
-      /* Adding a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_ADD:
-         return system_addFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
-      /* Removing a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_REMOVE:
-         return system_rmFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
-
-      /* Changing a ship's technology. */
-      case HUNK_TYPE_SHIP_TECH:
-         s = ship_get(hunk->target.u.name);
-         if (s==NULL)
-            return -1;
-         s->tech = hunk->u.i.new;
-         /* Invert it so when it gets removed it works. */
-         i = hunk->u.i.old;
-         hunk->u.i.old = hunk->u.i.new;
-         hunk->u.i.new = i;
+      /* Making an asset a black market. */
+      case HUNK_TYPE_ASSET_BLACKMARKET:
+         planet_setBlackMarket( planet_get(hunk->u.name) );
+         return 0;
+      /* Making an asset a legal market. */
+      case HUNK_TYPE_ASSET_LEGALMARKET:
+         planet_rmFlag( planet_get(hunk->u.name), PLANET_BLACKMARKET );
          return 0;
 
-      /* Changing an outfit's technology. */
-      case HUNK_TYPE_OUTFIT_TECH:
-         o = outfit_get(hunk->target.u.name);
-         if (o==NULL)
+      /* Adding a Jump. */
+      case HUNK_TYPE_JUMP_ADD:
+         return system_addJumpDiff( system_get(hunk->target.u.name), hunk->node );
+      /* Removing a jump. */
+      case HUNK_TYPE_JUMP_REMOVE:
+         return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );
+
+      /* Adding a tech. */
+      case HUNK_TYPE_TECH_ADD:
+         return tech_addItem( hunk->target.u.name, hunk->u.name );
+      /* Removing a tech. */
+      case HUNK_TYPE_TECH_REMOVE:
+         return tech_rmItem( hunk->target.u.name, hunk->u.name );
+
+      /* Changing asset faction. */
+      case HUNK_TYPE_ASSET_FACTION:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
             return -1;
-         o->tech = hunk->u.i.new;
-         /* Invert it so when it gets removed it works. */
-         i = hunk->u.i.old;
-         hunk->u.i.old = hunk->u.i.new;
-         hunk->u.i.new = i;
-         return 0;
+         hunk->o.name = faction_name( p->faction );
+         return planet_setFaction( p, faction_get(hunk->u.name) );
+      case HUNK_TYPE_ASSET_FACTION_REMOVE:
+         return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
 
       default:
          WARN("Unknown hunk type '%d'.", hunk->type);
@@ -651,6 +672,8 @@ void diff_remove( const char *name )
       return;
 
    diff_removeDiff(diff);
+
+   economy_execQueued();
 }
 
 
@@ -659,9 +682,10 @@ void diff_remove( const char *name )
  */
 void diff_clear (void)
 {
-   while (diff_nstack > 0) {
+   while (diff_nstack > 0)
       diff_removeDiff(&diff_stack[diff_nstack-1]);
-   }
+
+   economy_execQueued();
 }
 
 
@@ -706,33 +730,36 @@ static int diff_removeDiff( UniDiff_t *diff )
       memcpy( &hunk, &diff->applied[i], sizeof(UniHunk_t) );
       /* Invert the type for reverting. */
       switch (hunk.type) {
-         case HUNK_TYPE_PLANET_ADD:
-            hunk.type = HUNK_TYPE_PLANET_REMOVE;
+         case HUNK_TYPE_ASSET_ADD:
+            hunk.type = HUNK_TYPE_ASSET_REMOVE;
+            break;
+         case HUNK_TYPE_ASSET_REMOVE:
+            hunk.type = HUNK_TYPE_ASSET_ADD;
             break;
 
-         case HUNK_TYPE_PLANET_REMOVE:
-            hunk.type = HUNK_TYPE_PLANET_ADD;
+         case HUNK_TYPE_ASSET_BLACKMARKET:
+            hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
+            break;
+         case HUNK_TYPE_ASSET_LEGALMARKET:
+            hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
             break;
 
-         case HUNK_TYPE_FLEET_ADD:
-            hunk.type = HUNK_TYPE_FLEET_REMOVE;
+         case HUNK_TYPE_JUMP_ADD:
+            hunk.type = HUNK_TYPE_JUMP_REMOVE;
+            break;
+         case HUNK_TYPE_JUMP_REMOVE:
+            hunk.type = HUNK_TYPE_JUMP_ADD;
             break;
 
-         case HUNK_TYPE_FLEET_REMOVE:
-            hunk.type = HUNK_TYPE_FLEET_ADD;
+         case HUNK_TYPE_TECH_ADD:
+            hunk.type = HUNK_TYPE_TECH_REMOVE;
+            break;
+         case HUNK_TYPE_TECH_REMOVE:
+            hunk.type = HUNK_TYPE_TECH_ADD;
             break;
 
-         case HUNK_TYPE_FLEETGROUP_ADD:
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-            break;
-
-         case HUNK_TYPE_FLEETGROUP_REMOVE:
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
-            break;
-
-         /* Doesn't need invert. */
-         case HUNK_TYPE_SHIP_TECH:
-         case HUNK_TYPE_OUTFIT_TECH:
+         case HUNK_TYPE_ASSET_FACTION:
+            hunk.type = HUNK_TYPE_ASSET_FACTION_REMOVE;
             break;
 
          default:
@@ -741,7 +768,7 @@ static int diff_removeDiff( UniDiff_t *diff )
       }
 
       if (diff_patchHunk(&hunk))
-         DEBUG("Failed to remove hunk type '%d'.", hunk.type);
+         WARN("Failed to remove hunk type '%d'.", hunk.type);
    }
 
    diff_cleanup(diff);
@@ -786,12 +813,21 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       free(hunk->target.u.name);
 
    switch (hunk->type) {
-      case HUNK_TYPE_PLANET_ADD:
-      case HUNK_TYPE_PLANET_REMOVE:
+      case HUNK_TYPE_ASSET_ADD:
+      case HUNK_TYPE_ASSET_REMOVE:
+      case HUNK_TYPE_ASSET_BLACKMARKET:
+      case HUNK_TYPE_ASSET_LEGALMARKET:
+      case HUNK_TYPE_JUMP_ADD:
+      case HUNK_TYPE_JUMP_REMOVE:
+      case HUNK_TYPE_TECH_ADD:
+      case HUNK_TYPE_TECH_REMOVE:
+      case HUNK_TYPE_ASSET_FACTION:
+      case HUNK_TYPE_ASSET_FACTION_REMOVE:
          if (hunk->u.name != NULL)
             free(hunk->u.name);
+         hunk->u.name = NULL;
          break;
-      
+
       default:
          break;
    }
@@ -814,7 +850,7 @@ int diff_save( xmlTextWriterPtr writer )
    for (i=0; i<diff_nstack; i++) {
       diff = &diff_stack[i];
 
-      xmlw_elem(writer, "diff", diff->name);
+      xmlw_elem(writer, "diff", "%s", diff->name);
    }
    xmlw_endElem(writer); /* "diffs" */
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Demon">
+ <base_type>Demon</base_type>
+ <GFX sx="12" sy="12">demon</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>2400000</price>
+ <fabricator>Za'lek Fabricators</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionatly powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
+ <health>
+  <absorb>20</absorb>
+  <armour>400</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>17</crew>
+  <mass>440</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>50</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="28" y="0" h="5"/>
+  <weapon size="medium" x="18" y="0" h="5"/>
+  <weapon size="medium" x="-30" y="-8" h="3"/>
+  <weapon size="medium" x="-30" y="8" h="3"/>
+  <utility size="medium" prop="systems">Unicorp PT-600 Core System</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines">Unicorp Falcon 1200 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <armour_mod>-30</armour_mod>
+  <shield_mod>40</shield_mod>
+  <shield_regen_mod>30</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
+ </stats>
+</ship>

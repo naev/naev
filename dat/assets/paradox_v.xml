@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Paradox V">
+ <pos>
+  <x>6257.342055</x>
+  <y>17264.489022</y>
+ </pos>
+ <GFX>
+  <space>I01.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.150000</hide>
+  <services/>
+ </general>
+</asset>

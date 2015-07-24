@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vanir Ia">
+ <pos>
+  <x>-12145.429869</x>
+  <y>4442.980964</y>
+ </pos>
+ <GFX>
+  <space>moon-K00.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

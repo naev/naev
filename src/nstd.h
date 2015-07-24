@@ -46,9 +46,19 @@
  */
 #define nstd_tolower(k)    (nstd_checkascii(k) ? (SDLKey)tolower(k) : k)
 /**
- * @brief Cnoverts a key to uppercase if applicable.
+ * @brief Converts a key to uppercase if applicable.
  */
 #define nstd_toupper(k)    (nstd_checkascii(k) ? (SDLKey)toupper(k) : k)
+
+
+/* Adds STRCASECMP. */
+#if HAS_WIN32
+#include <shlwapi.h>
+#define STRCASECMP      lstrcmpiA
+#else /* HAS_WIN32 */
+#include <strings.h>
+#define STRCASECMP      strcasecmp
+#endif /* HAS_WIN32 */
 
 
 #endif /* NSTD_H */

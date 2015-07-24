@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fae">
+ <pos>
+  <x>1012.894689</x>
+  <y>-4531.610193</y>
+ </pos>
+ <GFX>
+  <space>I01.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.150000</hide>
+  <services/>
+ </general>
+</asset>

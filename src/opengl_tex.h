@@ -40,7 +40,7 @@
 #define OPENGL_TEX_MIPMAPS    (1<<1) /**< Creates mipmaps. */
 
 /**
- * @brief Abstraction for rendering spriteshets.
+ * @brief Abstraction for rendering sprite sheets.
  *
  * The basic unit all the graphic rendering works with.
  */
@@ -49,7 +49,7 @@ typedef struct glTexture_ {
 
    /* dimensions */
    double w; /**< Real width of the image. */
-   double h; /**< Real heiht of the image. */
+   double h; /**< Real height of the image. */
    double rw; /**< Padded POT width of the image. */
    double rh; /**< Padded POT height of the image. */
 
@@ -86,6 +86,10 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
 /*
  * Creating.
  */
+glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
+      unsigned int flags, int w, int h, int sx, int sy, int freesur );
+glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
+      unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
 glTexture* gl_newImage( const char* path, const unsigned int flags );
 glTexture* gl_newSprite( const char* path, const int sx, const int sy,
@@ -98,11 +102,18 @@ glTexture* gl_dupTexture( glTexture *texture );
 void gl_freeTexture( glTexture* texture );
 
 /*
+ * Info.
+ */
+int gl_texHasMipmaps (void);
+int gl_texHasCompress (void);
+
+/*
  * Misc.
  */
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
+int gl_needPOT (void);
 
 
 #endif /* OPENGL_TEX_H */
-   
+

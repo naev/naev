@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Merisi IV">
+ <pos>
+  <x>19320.000000</x>
+  <y>490.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-P02.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

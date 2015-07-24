@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zemur III">
+ <pos>
+  <x>12471.893149</x>
+  <y>2447.867982</y>
+ </pos>
+ <GFX>
+  <space>moon-H02.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

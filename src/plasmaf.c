@@ -87,7 +87,7 @@ static double* pf_genFractalMap( const int w, const int h, double rug )
 
 
 static void pf_divFractal( double *map, const double x, const double y,
-      const double w, const double h, const double rw, const double rh, 
+      const double w, const double h, const double rw, const double rh,
       double c1, double c2, double c3, double c4, double rug )
 {
    double nw, nh; /* new dimensions */

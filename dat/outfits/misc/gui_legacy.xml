@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="GUI - Legacy">
+ <general>
+  <mass>0</mass>
+  <price>75000</price>
+  <description>This is a new GUI which will become available to you by purchase. It has a legacy look.</description>
+  <gfx_store>brushedGUI</gfx_store>
+ </general>
+ <specific type="gui">
+  <gui>legacy</gui>
+ </specific>
+</outfit>

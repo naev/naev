@@ -1,5 +1,5 @@
 /*
- * Copyright 2006, 2007, 2008, 2009 Edgar Simo Serra
+ * Copyright 2006-2012 Edgar Simo Serra
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -27,8 +27,12 @@
 
 #include "ncompat.h"
 
+#include <limits.h>
+#include <inttypes.h>
+#include <math.h>
 
-#define APPNAME            "NAEV" /**< Application name. */
+
+#define APPNAME            "Naev" /**< Application name. */
 
 #define ABS(x)             (((x)<0)?-(x):(x)) /**< Returns absolute value. */
 #define FABS(x)            (((x)<0.)?-(x):(x)) /**< Returns float absolute value. */
@@ -48,7 +52,7 @@
 
 /* For inferior OS. */
 #ifndef M_PI
-# define M_PI           3.14159265358979323846
+#  define M_PI          3.14159265358979323846
 #endif /* M_PI */
 #ifndef M_SQRT1_2
 #  define M_SQRT1_2     0.70710678118654752440
@@ -58,9 +62,48 @@
 #endif
 
 
+/* I've heard talk of PRIuN being evil, so there's this sad panda here.
+ *
+ *             :OOkxddkkdc
+ *           cl;.......',d0kl'
+ *          l;...........'c0NWO;
+ *        ,xo'............',lkKdx:
+ *        0x,''...........',;;::oO0,
+ *       :0:,'''.......;dl,',',;xXNNx.
+ *       00c;,,,,.....'KXXKOd:,;oXWWNNd
+ *     ,KXx:;,;:xd'....ck0XNXo;:l0NNNNN0.
+ *    oXNNOc;,,lNNk',,,...,cl::cd0NNNXXXK,
+ *    XXXNNKo;;kNNd',;;,..',;cloONNNNNNXXk
+ *  .dNNNNNNXdckNK:'',::::c;:ldkXNWWNNNNNX.
+ * cXNNWWWWNNKoloc:,,:cldOoodkKxcKWWWWWWNN;
+ * 0NWWWWWWNXl''';ooodkxOxk00o.  xNWWWWWWNd
+ * ;odkOOkxo:       .',,,,'      ;K0NKNKNNk
+ *                                 .cxxkk,.
+ */
+#ifndef PRIu64
+#   define PRIu64    "%ju" /**< Illegal, evil and probably eats babies too. */
+#endif
+#ifndef PRIi64
+#   define PRIi64    "%jd" /**< Illegal, evil and probably eats babies too. */
+#endif
+
+
+/*
+ * Misc stuff.
+ */
+extern const double fps_min;
+void fps_setPos( double x, double y );
+#if SDL_VERSION_ATLEAST(2,0,0)
+void naev_resize( int w, int h );
+void naev_toggleFullscreen (void);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+void update_routine( double dt, int enter_sys );
+int naev_versionString( char *str, size_t slen, int major, int minor, int rev );
 char *naev_version( int long_version );
+int naev_versionParse( int version[3], char *buf, int nbuf );
+int naev_versionCompare( int version[3] );
 char *naev_binary (void);
+void naev_quit (void);
 
 
 #endif /* NAEV_H */
-

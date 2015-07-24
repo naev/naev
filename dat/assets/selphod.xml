@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Selphod">
+ <pos>
+  <x>1916.666665</x>
+  <y>-6583.333335</y>
+ </pos>
+ <GFX>
+  <space>P00.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>75.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>27000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Selphod is a harsh and barren ice planet. Most of the locals have never ventured outside the established bases. Outdoor travels require heavy thermal protection with a personal generator to keep the wearer from succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed thermal suits.</description>
+  <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices. They are meant to bring warmth and energy in the cold corridors of the base.</bar>
+ </general>
+</asset>

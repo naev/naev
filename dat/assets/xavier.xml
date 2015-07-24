@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Xavier">
+ <pos>
+  <x>-1725.191997</x>
+  <y>2044.671996</y>
+ </pos>
+ <GFX>
+  <space>X00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

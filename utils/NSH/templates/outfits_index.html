@@ -1,0 +1,28 @@
+{% import '_macro.html' as macros %}
+{% extends "base.html" %}
+    {% block head %}
+        <title>Naev Outfits Database</title>
+    {% endblock head %}
+    {% block body %}
+    {%- for slot, outfitsList in outfits|dictsort -%}
+        <h1>{{slot}}</h1>
+            <div class="class">
+                {% for outfit in outfitsList %}
+                <h2>{{ outfit.name }}</h2>
+                <p>General:</p>
+                <ul>
+                    {% for genTag, genData in outfit.general|dictsort %}
+                    <li>{{genTag}}: {{genData}}</li>
+                    {% endfor %}
+                </ul>
+                <p>Specific:</p>
+                <ul>
+                    {% for specTag, specData in outfit.specific|dictsort %}
+                    <li>{{specTag}} : {{specData}}</li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endblock body %}
+

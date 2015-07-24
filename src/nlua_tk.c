@@ -5,7 +5,7 @@
 /**
  * @file nlua_tk.c
  *
- * @brief NAEV toolkit Lua module.
+ * @brief Naev toolkit Lua module.
  */
 
 #include "nlua_tk.h"
@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 
-#include "lauxlib.h"
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nluadef.h"
@@ -22,14 +22,20 @@
 #include "dialogue.h"
 
 
-/* toolkit */
+/* Toolkit methods. */
 static int tk_msg( lua_State *L );
+static int tk_msgImg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
+static int tk_choice( lua_State *L );
+static int tk_list( lua_State *L );
 static const luaL_reg tk_methods[] = {
    { "msg", tk_msg },
+   { "msgImg", tk_msgImg },
    { "yesno", tk_yesno },
    { "input", tk_input },
+   { "choice", tk_choice },
+   { "list", tk_list },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -76,14 +82,44 @@ int nlua_loadTk( lua_State *L )
  * @luafunc msg( title, message )
  */
 static int tk_msg( lua_State *L )
-{  
+{
    const char *title, *str;
    NLUA_MIN_ARGS(2);
-  
+
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
-   
+
    dialogue_msgRaw( title, str );
+   return 0;
+}
+/**
+ * @brief Creates a window with an ok button, text and an image.
+ *
+ * @usage tk.msg( "Title", "This is a message.", "character.png" )
+ *
+ *    @luaparam title Title of the window.
+ *    @luaparam message Message to display in the window.
+ *    @luaparam image Image file (*.png) to display in the window.
+ *    @luaparam width (opt) width of the image to display. Negative values use image width. defaults to -1.
+ *    @luaparam height (opt) height of the image to display. Negative values use image height. defaults to -1.
+ * @luafunc msg( title, message, image )
+ */
+static int tk_msgImg( lua_State *L )
+{
+   const char *title, *str, *img;
+   int width, height;
+   NLUA_MIN_ARGS(3);
+
+   // Get fixed arguments : title, string to display and image filename
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
+   img   = luaL_checkstring(L,3);
+
+   // Get optional arguments : width and height
+   width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
+   height = (lua_gettop(L) < 5) ? -1 : luaL_checkinteger(L,5);
+
+   dialogue_msgImgRaw( title, str, img, width, height );
    return 0;
 }
 /**
@@ -97,14 +133,14 @@ static int tk_msg( lua_State *L )
  * @luafunc yesno( title, message )
  */
 static int tk_yesno( lua_State *L )
-{  
+{
    int ret;
    const char *title, *str;
    NLUA_MIN_ARGS(2);
-  
+
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
-   
+
    ret = dialogue_YesNoRaw( title, str );
    lua_pushboolean(L,ret);
    return 1;
@@ -122,7 +158,7 @@ static int tk_yesno( lua_State *L )
  * @luafunc input( title, min, max, str )
  */
 static int tk_input( lua_State *L )
-{  
+{
    const char *title, *str;
    char *ret;
    int min, max;
@@ -132,7 +168,7 @@ static int tk_input( lua_State *L )
    min   = luaL_checkint(L,2);
    max   = luaL_checkint(L,3);
    str   = luaL_checkstring(L,4);
-   
+
    ret = dialogue_inputRaw( title, min, max, str );
    if (ret != NULL) {
       lua_pushstring(L, ret);
@@ -143,3 +179,101 @@ static int tk_input( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Creates a window with a number of selectable options
+ *
+ * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return 2, "No"
+ *
+ *    @luaparam title Title of the window.
+ *    @luaparam msg Message to display.
+ *    @luaparam choices Option choices.
+ *    @luareturn Returns the number of the choice and the name of the choice chosen.
+ * @luafunc choice( title, msg, ... )
+ */
+static int tk_choice( lua_State *L )
+{
+   int ret, opts, i;
+   const char *title, *str;
+   char *result;
+   NLUA_MIN_ARGS(3);
+
+   /* Handle parameters. */
+   opts  = lua_gettop(L) - 2;
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
+
+   /* Do an initial scan for invalid arguments. */
+   for (i=0; i<opts; i++)
+      luaL_checkstring(L, i+3);
+
+   /* Create dialogue. */
+   dialogue_makeChoice( title, str, opts );
+   for (i=0; i<opts; i++)
+      dialogue_addChoice( title, str, luaL_checkstring(L,i+3) );
+   result = dialogue_runChoice();
+   if (result == NULL) /* Something went wrong, return nil. */
+      return 0;
+
+   /* Handle results. */
+   ret = -1;
+   for (i=0; i<opts && ret==-1; i++) {
+      if (strcmp(result, luaL_checkstring(L,i+3)) == 0)
+         ret = i+1; /* Lua uses 1 as first index. */
+   }
+
+   /* Push parameters. */
+   lua_pushnumber(L,ret);
+   lua_pushstring(L,result);
+
+   /* Clean up. */
+   free(result);
+
+   return 2;
+}
+
+
+/**
+ * @brief Creates a window with an embedded list of choices.
+ *
+ * @usage num, chosen = tk.list( "Title", "Foo or bar?", "Foo", "Bar" ) -- If "Bar" is clicked, it would return 2, "Bar"
+ *
+ *    @luaparam title Title of the window.
+ *    @luaparam msg Message to display.
+ *    @luaparam choices Option choices.
+ *    @luareturn Returns the number of the choice and the name of the choice chosen.
+ * @luafunc list( title, msg, ... )
+ */
+static int tk_list( lua_State *L )
+{
+   int ret, opts, i;
+   const char *title, *str;
+   char **choices;
+   NLUA_MIN_ARGS(3);
+
+   /* Handle parameters. */
+   opts  = lua_gettop(L) - 2;
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
+
+   /* Do an initial scan for invalid arguments. */
+   for (i=0; i<opts; i++)
+      luaL_checkstring(L, i+3);
+
+   /* Will be freed by the toolkit. */
+   choices = malloc( sizeof(char*) * opts );
+   for (i=0; i<opts; i++)
+      choices[i] = strdup( luaL_checkstring(L, i+3) );
+
+   ret = dialogue_listRaw( title, choices, opts, str );
+
+   /* Cancel returns -1, do nothing. */
+   if (ret == -1)
+      return 0;
+
+   /* Push index and choice string. */
+   lua_pushnumber(L, ret+1);
+   lua_pushstring(L, choices[ret]);
+
+   return 2;
+}

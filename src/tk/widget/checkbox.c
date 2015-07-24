@@ -11,6 +11,8 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include "nstring.h"
 
 
 static Widget *chk_getWgt( const unsigned int wid, const char *name );
@@ -51,7 +53,7 @@ void window_addCheckbox( const unsigned int wid,
 
    /* generic */
    wgt->type = WIDGET_CHECKBOX;
-   
+
    /* specific */
    wgt->keyevent           = chk_key;
    wgt->mclickevent        = chk_mclick;
@@ -74,11 +76,11 @@ void window_addCheckbox( const unsigned int wid,
 static Widget *chk_getWgt( const unsigned int wid, const char *name )
 {
    Widget *wgt;
-  
+
    /* Get widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
-      return NULL; 
+      return NULL;
 
    /* Check type. */
    if (wgt->type != WIDGET_CHECKBOX) {
@@ -167,9 +169,9 @@ static int chk_key( Widget* chk, SDLKey key, SDLMod mod )
 {
    (void) mod;
 
-   if (key == SDLK_SPACE) {
+   if (key == SDLK_SPACE)
       chk_toggleState( chk );
-   }
+
    return 0;
 }
 
@@ -196,32 +198,37 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
  */
 static void chk_render( Widget* chk, double bx, double by )
 {
-   glColour *c, *dc, *lc;
+   /*
+   glColour *c;
+   glColour *dc, *lc;
+   */
    double x, y;
 
    x = bx + chk->x;
    y = by + chk->y;
 
    /* set the colours */
+#if 0
    switch (chk->status) {
       case WIDGET_STATUS_NORMAL:
          lc = &cGrey80;
-         c = &cGrey60;
+         /*c = &cGrey60;*/
          dc = &cGrey40;
          break;
       case WIDGET_STATUS_MOUSEOVER:
          lc = &cWhite;
-         c = &cGrey80;
+         /*c = &cGrey80;*/
          dc = &cGrey60;
          break;
       case WIDGET_STATUS_MOUSEDOWN:
          lc = &cGreen;
-         c = &cGreen;
+         /*c = &cGreen;*/
          dc = &cGrey40;
          break;
       default:
          break;
    }
+#endif
 
    /* Draw rect. */
    toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., &cGrey40, NULL );
@@ -229,15 +236,17 @@ static void chk_render( Widget* chk, double bx, double by )
    if (chk->dat.chk.state)
       toolkit_drawRect( x+1., y+1. + (chk->h-10.)/2., 8., 8., &cGrey20, NULL );
 
+#if 0
    /* Inner outline */
-   /*  toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c ); */
-   /* Outter outline */
-   /*toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );*/
+   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
+   /* Outer outline */
+   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );
+#endif
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,
-         bx + (double)SCREEN_W/2. + chk->x + 15,
-         by + (double)SCREEN_H/2. + chk->y + (chk->h - gl_defFont.h)/2.,
+         bx + chk->x + 15,
+         by + chk->y + (chk->h - gl_defFont.h)/2.,
          &cBlack, chk->dat.chk.display );
 }
 

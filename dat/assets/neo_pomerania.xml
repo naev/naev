@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Neo Pomerania">
+ <pos>
+  <x>4324.481271</x>
+  <y>1380.153597</y>
+ </pos>
+ <GFX>
+  <space>M13.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>4</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>3000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Although the Bedimann Enclave is not as powerful as the Procyon Enclave, it is still powerful enough, and Neo Pomerania is very much the reason for this. This Earth-like Class-M has a large population, thriving industry, and the Za'lek's intellectual elite have a strong presence here. Over and all, it is a fully self-sufficient world that serves as the metropolis planet for the local sector of systems.</description>
+  <bar>This bar has a brace of scientists of all types loudly arguing over this or that subject. Most of what they are sayin escapes you, and many of the laymen in the bar do not seem fazed by them a bit. A Za'lek bar to the core.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Beam 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

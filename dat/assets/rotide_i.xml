@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rotide I">
+ <pos>
+  <x>-1100.000000</x>
+  <y>-900.000000</y>
+ </pos>
+ <GFX>
+  <space>A02.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Leszec">
+ <pos>
+  <x>4978.196048</x>
+  <y>5624.517261</y>
+ </pos>
+ <GFX>
+  <space>J03.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>75.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>15641</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>The Dvaered are keeping a "rehabilitation facility" here. As you might expect it's a prison, but unlike most Dvaered prisons - which just leave inmates to fend for themselves - this facility is a labor camp, staffed by wardens, guards and overseers for the various subsections. Prisoners never make for very eager workers though, so the actual yield of this facility isn't spectacular.</description>
+  <bar>The spaceport bar here has booths where people can have interviews with inmates. They're not used very often. Friends and family of the kind of people who are sent to Leszec tend not to have the resources to make the trip.</bar>
+ </general>
+</asset>

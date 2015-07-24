@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nixon IV">
+ <pos>
+  <x>14765.036534</x>
+  <y>-9623.001685</y>
+ </pos>
+ <GFX>
+  <space>moon-C00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

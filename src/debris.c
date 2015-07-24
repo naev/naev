@@ -17,6 +17,7 @@
 #include "pilot.h"
 #include "spfx.h"
 #include "rng.h"
+#include "nstring.h"
 
 
 static int *debris_spfx = NULL; /**< Debris special effects. */
@@ -35,6 +36,8 @@ void debris_cleanup (void)
 
 /**
  * @brief Loads the debris spfx into an array.
+ *
+ *    @return 0 on success.
  */
 static int debris_load (void)
 {
@@ -44,7 +47,7 @@ static int debris_load (void)
    /* Calculate amount. */
    i = 0;
    do {
-      snprintf( buf, 32, "Dbr%d", i );
+      nsnprintf( buf, sizeof(buf), "Dbr%d", i );
       i++;
    } while (spfx_get(buf) != -1);
    debris_nspfx = i-1;
@@ -60,7 +63,7 @@ static int debris_load (void)
 
    /* Second pass to fill. */
    for (i=0; i<debris_nspfx; i++) {
-      snprintf( buf, 32, "Dbr%d", i );
+      nsnprintf( buf, sizeof(buf), "Dbr%d", i );
       debris_spfx[i] = spfx_get(buf);
    }
 
@@ -72,8 +75,11 @@ static int debris_load (void)
  * @brief Creates a cloud of debris.
  *
  *    @param mass Mass of the debris cloud.
- *    @param x X position to center cloud.
- *    @param y Y position to center cloud.
+ *    @param r Radius of the cloud.
+ *    @param px X position to center cloud.
+ *    @param py Y position to center cloud.
+ *    @param vx X velocity of the cloud center.
+ *    @param vy Y velocity of the cloud center.
  */
 void debris_add( double mass, double r, double px, double py,
       double vx, double vy )

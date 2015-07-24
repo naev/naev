@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nava I">
+ <pos>
+  <x>5090.176109</x>
+  <y>4401.505223</y>
+ </pos>
+ <GFX>
+  <space>C00.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

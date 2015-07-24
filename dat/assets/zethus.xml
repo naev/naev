@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zethus">
+ <pos>
+  <x>-1698.378416</x>
+  <y>6991.868884</y>
+ </pos>
+ <GFX>
+  <space>I05.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

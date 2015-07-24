@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Westeros Station">
+ <pos>
+  <x>-21014.528804</x>
+  <y>1360.437185</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>12500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Serving as an auxilary trading platform for the nearby mining colony of Ahmed, Westeros Station allows for merchants to not have to brave the atmosphere of the nearby planetoid, making bulk transfers far easier.</description>
+  <bar>Being a station primarily for merchants, the bar is posh, with comforting seats looking out over big views of the solar system.</bar>
+ </general>
+</asset>

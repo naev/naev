@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Orion Beam">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>30</mass>
+  <price>30000</price>
+  <description>The turret-mounted edition of the Orion design offers mid-sized ships exceptional short-duration firepower, a potent deterrent against lighter vessels.</description>
+  <gfx_store>orion</gfx_store>
+  <cpu>-16</cpu>
+ </general>
+ <specific type="turret beam">
+  <delay>4</delay>
+  <duration>4</duration>
+  <range>450</range>
+  <turn>90</turn>
+  <energy>65</energy>
+  <heatup>50</heatup>
+  <damage>
+   <type>normal</type>
+   <penetrate>40</penetrate>
+   <physical>60</physical>
+   <disable>6</disable>
+  </damage>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <gfx>beam_orion</gfx>
+  <sound>beam0</sound>
+  <sound_off>beam_off0</sound_off>
+ </specific>
+</outfit>

@@ -1,8 +1,10 @@
 --[[
 -- Shipwreck Event
---
+-- 
 -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
 -- See dat/missions/neutral/spacefamily.lua
+-- 
+-- 12/02/2010 - Added visibility/highlight options for use in bigsystems (Anatolis)
 --]]
 
 lang = naev.lang()
@@ -33,32 +35,38 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(2000, 3000) -- place it a ways out
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add(ship, "dummy", pos, false)
+    p     = pilot.add(ship, "dummy", pos)
     for k,v in ipairs(p) do
         v:setFaction("Derelict")
         v:disable()
         v:rename("Shipwrecked " .. shipname)
+        -- Added extra visibility for big systems (A.)
+        v:setVisplayer( true )
+        v:setHilight( true )
     end
 
-    
-    evt.timerStart("broadcast", 3000)
+    hook.timer(3000, "broadcast")
    
     -- Set hooks
-    hook.pilot(p[1], "board", "rescue")
-    hook.time("endevent")
-    hook.pilot(p[1], "death", "destroyevent")
+    hook.pilot( p[1], "board", "rescue" )
+    hook.pilot( p[1], "death", "destroyevent" )
+    hook.enter("endevent")
+    hook.land("endevent")
 end
 
 function broadcast()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-    p[1]:broadcast(string.format(broadcastmsg, shipname), true)
-    bctimer = evt.timerStart("broadcast", 10000)
+    if not p[1]:exists() then
+       return
+    end
+    p[1]:broadcast( string.format(broadcastmsg, shipname), true )
+    bctimer = hook.timer(15000, "broadcast")
 end
 
 function rescue()
     -- Player boards the shipwreck and rescues the crew, this spawns a new mission.
-    evt.timerStop(bctimer)
-    evt.misnStart("The Space Family")
+    hook.rm(bctimer)
+    naev.missionStart("The Space Family")
     evt.finish(true)
 end
 

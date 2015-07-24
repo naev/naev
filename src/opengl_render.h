@@ -18,13 +18,10 @@ void gl_exitRender (void);
 
 
 /*
- * Camera.
+ * Coordinate translation.
  */
-void gl_cameraBind( Vector2d* pos );
-void gl_cameraStatic( double x, double y );
-void gl_cameraGet( double *x, double *y );
-void gl_cameraZoom( double zoom );
-void gl_cameraZoomGet( double * zoom );
+void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
+void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
 
 
 /*
@@ -40,9 +37,19 @@ void gl_blitTexture(  const glTexture* texture,
 void gl_blitSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour *c );
+/* blits a sprite, relative pos */
+void gl_blitSpriteScale( const glTexture* sprite,
+      const double bx, const double by,
+      double scalew, double scaleh,
+      const int sx, const int sy, const glColour *c );
 /* Blits a sprite interpolating between textures, relative pos. */
 void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
+      const int sx, const int sy, const glColour *c );
+/* Blits a sprite interpolating between textures and scaling, relative pos. */
+void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
+      double inter, const double bx, const double by,
+      double scalew, double scaleh,
       const int sx, const int sy, const glColour *c );
 /* blits a sprite, absolute pos */
 void gl_blitStaticSprite( const glTexture* sprite,
@@ -60,15 +67,32 @@ void gl_blitScale( const glTexture* texture,
 /* blits the entire image, absolute pos */
 void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
-/* circle drawing */
+
+
+/* Circles. */
 void gl_drawCircle( const double x, const double y,
       const double r, const glColour *c, int filled );
+void gl_drawCircleLoop( const double x, const double y,
+      const double r, const glColour *c );
 void gl_drawCircleInRect( const double x, const double y, const double r,
       const double rx, const double ry, const double rw, const double rh,
       const glColour *c, int filled );
+glTexture *gl_genCircle( int radius );
 
+
+/* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
+void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
+
+
+/* Cross. */
+void gl_renderCross( double x, double y, double r, const glColour *c );
+
+
+/* Clipping. */
+void gl_clipRect( int x, int y, int w, int h );
+void gl_unclipRect (void);
 
 
 #endif /* OPENGL_RENDER_H */
-   
+

@@ -12,7 +12,12 @@ static int cs_wclear (int mark, int lemax, int *w, int n)
 }
 
 /* keep off-diagonal entries; drop diagonal entries */
-static int cs_diag (int i, int j, double aij, void *other) { return (i != j) ; }
+static int cs_diag (int i, int j, double aij, void *other)
+{
+    (void) aij;
+    (void) other;
+    return (i != j) ;
+}
 
 /* p = amd(A+A') if symmetric is true, or amd(A'A) otherwise */
 int *cs_amd (int order, const cs *A)  /* order 0:natural, 1:Chol, 2:LU, 3:QR */

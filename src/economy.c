@@ -8,7 +8,7 @@
  * @brief Handles economy stuff.
  *
  * Economy is handled with Nodal Analysis.  Systems are modelled as nodes,
- *  jump routes are resistances and production is modeled as node intensity.
+ *  jump routes are resistances and production is modelled as node intensity.
  *  This is then solved with linear algebra after each time increment.
  */
 
@@ -18,10 +18,14 @@
 #include "naev.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdint.h>
 
-#include "cs.h"
+#ifdef HAVE_SUITESPARSE_CS_H
+#include <suitesparse/cs.h>
+#else
+#include <cs.h>
+#endif
 
 #include "nxml.h"
 #include "ndata.h"
@@ -35,7 +39,6 @@
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
-#define COMMODITY_DATA        "dat/commodity.xml" /**< Comodity XML file. */
 
 
 /*
@@ -62,6 +65,7 @@ extern int systems_nstack; /**< Number of star systems. */
  * Nodal analysis simulation for dynamic economies.
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
+static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 static int econ_nprices       = 0; /**< Number of prices to calculate. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
@@ -76,34 +80,60 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 /* Economy. */
 static double econ_calcJumpR( StarSystem *A, StarSystem *B );
 static int econ_createGMatrix (void);
-unsigned int economy_getPrice( const Commodity *com,
+credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /* externed in land.c */
 
 
 /**
  * @brief Converts credits to a usable string for displaying.
  *
- *    @param[out] str Output is stored here, must have at least a length of 10
+ *    @param[out] str Output is stored here, must have at least a length of 32
  *                     char.
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
  */
-void credits2str( char *str, unsigned int credits, int decimals )
+void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, 32, "%d", credits );
-   else if (credits >= 1000000000)
-      snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
-   else if (credits >= 1000000)                
-      snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
-   else if (credits >= 1000)              
-      snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
-   else snprintf (str, 16, "%d", credits );
+      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+   else if (credits >= 1000000000000000LL)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+   else if (credits >= 1000000000000LL)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
+   else if (credits >= 1000000000L)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
+   else if (credits >= 1000000)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
+   else if (credits >= 1000)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
+   else
+      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
+/**
+ * @brief Given a price and on-hand credits, outputs a colourized string.
+ *
+ *    @param[out] str Output is stored here, must have at least a length of 32
+ *                     char.
+ *    @param price Price to display.
+ *    @param credits Credits available.
+ *    @param decimals Decimals to use.
+ */
+void price2str(char *str, credits_t price, credits_t credits, int decimals )
+{
+   char *buf;
+
+   credits2str(str, price, decimals);
+   if (price <= credits)
+      return;
+
+   buf = strdup(str);
+   nsnprintf(str, ECON_CRED_STRLEN, "\er%s\e0", buf);
+   free(buf);
+}
 
 /**
- * @brief Gets a commoditiy by name.
+ * @brief Gets a commodity by name.
  *
  *    @param name Name to match.
  *    @return Commodity matching name.
@@ -114,8 +144,24 @@ Commodity* commodity_get( const char* name )
    for (i=0; i<commodity_nstack; i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
-   
+
    WARN("Commodity '%s' not found in stack", name);
+   return NULL;
+}
+
+
+/**
+ * @brief Gets a commodity by name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Commodity matching name.
+ */
+Commodity* commodity_getW( const char* name )
+{
+   int i;
+   for (i=0; i<commodity_nstack; i++)
+      if (strcmp(commodity_stack[i].name,name)==0)
+         return &commodity_stack[i];
    return NULL;
 }
 
@@ -138,6 +184,32 @@ static void commodity_freeOne( Commodity* com )
 
 
 /**
+ * @brief Function meant for use with C89, C99 algorithm qsort().
+ *
+ *    @param commodity1 First argument to compare.
+ *    @param commodity2 Second argument to compare.
+ *    @return -1 if first argument is inferior, +1 if it's superior, 0 if ties.
+ */
+int commodity_compareTech( const void *commodity1, const void *commodity2 )
+{
+   const Commodity *c1, *c2;
+
+   /* Get commodities. */
+   c1 = * (const Commodity**) commodity1;
+   c2 = * (const Commodity**) commodity2;
+
+   /* Compare price. */
+   if (c1->price < c2->price)
+      return +1;
+   else if (c1->price > c2->price)
+      return -1;
+
+   /* It turns out they're the same. */
+   return strcmp( c1->name, c2->name );
+}
+
+
+/**
  * @brief Loads a commodity.
  *
  *    @param temp Commodity to load data into.
@@ -151,14 +223,18 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
 
-   temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
-   if (temp->name == NULL) WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
+   /* Get name. */
+   xmlr_attr( parent, "name", temp->name );
+   if (temp->name == NULL)
+      WARN("Commodity from "COMMODITY_DATA_PATH" has invalid or no name");
 
+   /* Parse body. */
    node = parent->xmlChildrenNode;
-
    do {
+      xml_onlyNodes(node);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      WARN("Commodity '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
 #if 0 /* shouldn't be needed atm */
@@ -177,7 +253,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 /**
  * @brief Throws cargo out in space graphically.
  *
- *    @param pilot ID of the pilot throwing the stuff out 
+ *    @param pilot ID of the pilot throwing the stuff out
  *    @param com Commodity to throw out.
  *    @param quantity Quantity thrown out.
  */
@@ -189,11 +265,11 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
    int n, effect;
    double px,py, bvx, bvy, r,a, vx,vy;
 
-   p = pilot_get( pilot );
+   p   = pilot_get( pilot );
 
-   n = MAX( 1, RNG(quantity/10, quantity/5) );
-   px = p->solid->pos.x;
-   py = p->solid->pos.y;
+   n   = MAX( 1, RNG(quantity/10, quantity/5) );
+   px  = p->solid->pos.x;
+   py  = p->solid->pos.y;
    bvx = p->solid->vel.x;
    bvy = p->solid->vel.y;
    for (i=0; i<n; i++) {
@@ -204,7 +280,7 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
       a  = 2. * M_PI * RNGF();
       vx = bvx + r*cos(a);
       vy = bvy + r*sin(a);
-      
+
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
    }
@@ -222,32 +298,33 @@ int commodity_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
-  
+
    /* Load the file. */
-   buf = ndata_read( COMMODITY_DATA, &bufsize);
+   buf = ndata_read( COMMODITY_DATA_PATH, &bufsize);
    if (buf == NULL)
       return -1;
 
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", COMMODITY_DATA);
+      WARN("'%s' is not valid XML.", COMMODITY_DATA_PATH);
       return -1;
    }
 
-   node = doc->xmlChildrenNode; /* Commoditys node */
+   node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-      ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
+      ERR("Malformed "COMMODITY_DATA_PATH" file: missing root element '"XML_COMMODITY_ID"'");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first faction node */
    if (node == NULL) {
-      ERR("Malformed "COMMODITY_DATA" file: does not contain elements");
+      ERR("Malformed "COMMODITY_DATA_PATH" file: does not contain elements");
       return -1;
    }
 
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node, XML_COMMODITY_TAG)) {
 
          /* Make room for commodity. */
@@ -264,6 +341,8 @@ int commodity_load (void)
             econ_comm[econ_nprices-1] = commodity_nstack-1;
          }
       }
+      else
+         WARN("'"COMMODITY_DATA_PATH"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -288,6 +367,9 @@ void commodity_free (void)
    free( commodity_stack );
    commodity_stack = NULL;
    commodity_nstack = 0;
+
+   /* More clean up. */
+   free( econ_comm );
 }
 
 
@@ -299,7 +381,7 @@ void commodity_free (void)
  *    @param p Planet to get price of commodity.
  *    @return The price of the commodity.
  */
-unsigned int economy_getPrice( const Commodity *com,
+credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
    (void) p;
@@ -308,7 +390,7 @@ unsigned int economy_getPrice( const Commodity *com,
 
    /* Get position in stack. */
    k = com - commodity_stack;
-  
+
    /* Find what commodity that is. */
    for (i=0; i<econ_nprices; i++)
       if (econ_comm[i] == k)
@@ -323,7 +405,7 @@ unsigned int economy_getPrice( const Commodity *com,
    /* Calculate price. */
    price  = (double) com->price;
    price *= sys->prices[i];
-   return (unsigned int) price;
+   return (credits_t) price;
 }
 
 
@@ -366,7 +448,11 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  */
 static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 {
+   (void) dt;
+   (void) sys;
    (void) price;
+   return 0.;
+#if 0
    int i;
    double I;
    double prodfactor, p;
@@ -379,13 +465,13 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    p = 0.;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      if (planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+      if (planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
          /*
           * Calculate production.
           */
          /* We base off the current production. */
          prodfactor  = planet->cur_prodfactor;
-         /* Add a variability factor based on the gaussian distribution. */
+         /* Add a variability factor based on the Gaussian distribution. */
          prodfactor += ECON_PROD_VAR * RNG_2SIGMA() * ddt;
          /* Add a tendency to return to the planet's base production. */
          prodfactor -= ECON_PROD_VAR *
@@ -401,6 +487,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    I = p / ECON_PROD_MODIFIER;
 
    return I;
+#endif
 }
 
 
@@ -431,21 +518,21 @@ static int econ_createGMatrix (void)
       for (j=0; j < sys->njumps; j++) {
 
          /* Get the resistances. */
-         R     = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
+         R     = econ_calcJumpR( sys, sys->jumps[j].target );
          R     = 1./R; /* Must be inverted. */
          Rsum += R;
-         
-         /* Matrix is symetrical and non-diagonal is negative. */
-         ret = cs_entry( M, i, sys->jumps[j], -R );
+
+         /* Matrix is symmetrical and non-diagonal is negative. */
+         ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
-         ret = cs_entry( M, sys->jumps[j], i, -R );
+         ret = cs_entry( M, sys->jumps[j].target->id, i, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
       }
 
       /* Set the diagonal. */
-      Rsum += 1./ECON_SELF_RES; /* We add a resistence for dampening. */
+      Rsum += 1./ECON_SELF_RES; /* We add a resistance for dampening. */
       cs_entry( M, i, i, Rsum );
    }
 
@@ -494,6 +581,29 @@ int economy_init (void)
 
 
 /**
+ * @brief Increments the queued update counter.
+ *
+ * @sa economy_execQueued
+ */
+void economy_addQueuedUpdate (void)
+{
+   econ_queued++;
+}
+
+
+/**
+ * @brief Calls economy_refresh if an economy update is queued.
+ */
+int economy_execQueued (void)
+{
+   if (econ_queued)
+      return economy_refresh();
+
+   return 0;
+}
+
+
+/**
  * @brief Regenerates the economy matrix.  Should be used if the universe
  *  changes in any permanent way.
  */
@@ -503,7 +613,7 @@ int economy_refresh (void)
    if (econ_initialized == 0)
       return 0;
 
-   /* Create the resistence matrix. */
+   /* Create the resistance matrix. */
    if (econ_createGMatrix())
       return -1;
 
@@ -546,7 +656,14 @@ int economy_update( unsigned int dt )
          X[i] = econ_calcSysI( dt, &systems_stack[i], j );
 
       /* Solve the system. */
-      ret = cs_lsolve( econ_G, X );
+      /** @TODO This should be improved to try to use better factorizations (LU/Cholesky)
+       * if possible or just outright try to use some other library that does fancy stuff
+       * like UMFPACK. Would be also interesting to see if it could be optimized so we
+       * store the factorization or update that instead of handling it individually. Another
+       * point of interest would be to split loops out to make the solving faster, however,
+       * this may be trickier to do (although it would surely let us use cholesky always if we
+       * enforce that condition). */
+      ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
          WARN("Failed to solve the Economy System.");
 
@@ -566,21 +683,21 @@ int economy_update( unsigned int dt )
       offset = 0.5 - min * scale;
       */
 
-      /* 
+      /*
        * I'm not sure I like the filtering of the results, but it would take
        * much more work to get a sane system working without the need of post
        * filtering.
        */
       scale    = 1.;
       offset   = 1.;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<systems_nstack; i++)
          systems_stack[i].prices[j] = X[i] * scale + offset;
-      }
    }
 
    /* Clean up. */
    free(X);
 
+   econ_queued = 0;
    return 0;
 }
 

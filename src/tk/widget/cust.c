@@ -11,6 +11,8 @@
 
 #include "tk/toolkit_priv.h"
 
+#include "opengl.h"
+
 
 static void cst_render( Widget* cst, double bx, double by );
 static void cst_renderOverlay( Widget* cst, double bx, double by );
@@ -43,7 +45,7 @@ void window_addCust( const unsigned int wid,
                      const int w, const int h, /* size */
                      char* name, const int border,
                      void (*render) (double x, double y, double w, double h, void *data),
-                     void (*mouse) (unsigned int wid, SDL_Event* event,
+                     int (*mouse) (unsigned int wid, SDL_Event* event,
                                     double x, double y, double w, double h, void *data),
                      void *data )
 {
@@ -79,26 +81,26 @@ void window_addCust( const unsigned int wid,
  *    @param by Base Y position.
  */
 static void cst_render( Widget* cst, double bx, double by )
-{  
+{
    double x,y;
-   
+
    x = bx + cst->x;
    y = by + cst->y;
-   
+
    if (cst->dat.cst.border) {
       /* inner outline */
-      toolkit_drawOutline( x-1, y+1, cst->w+1, cst->h+1, 0.,
+      toolkit_drawOutline( x, y+1, cst->w+1, cst->h+1, 0.,
             toolkit_colLight, toolkit_col );
-      /* outter outline */                                          
-      toolkit_drawOutline( x-1, y, cst->w+1, cst->h+1, 1.,          
+      /* outer outline */
+      toolkit_drawOutline( x, y, cst->w+1, cst->h+1, 1.,
             toolkit_colDark, NULL );
    }
 
    if (cst->dat.cst.clip != 0)
-      toolkit_clip( x, y, cst->w, cst->h );
+      gl_clipRect( x, y, cst->w, cst->h );
    cst->dat.cst.render ( x, y, cst->w, cst->h, cst->dat.cst.userdata );
    if (cst->dat.cst.clip != 0)
-      toolkit_unclip();
+      gl_unclipRect();
 }
 
 
@@ -108,16 +110,16 @@ static void cst_render( Widget* cst, double bx, double by )
 static void cst_renderOverlay( Widget* cst, double bx, double by )
 {
    double x,y;
-   
+
    x = bx + cst->x;
    y = by + cst->y;
-   
+
    if (cst->dat.cst.clip != 0)
-      toolkit_clip( x, y, cst->w, cst->h );
+      gl_clipRect( x, y, cst->w, cst->h );
    if (cst->dat.cst.renderOverlay != NULL)
       cst->dat.cst.renderOverlay ( x, y, cst->w, cst->h, cst->dat.cst.userdata );
    if (cst->dat.cst.clip != 0)
-      toolkit_unclip();
+      gl_unclipRect();
 }
 
 

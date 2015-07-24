@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jasmine">
+ <pos>
+  <x>-704.884533</x>
+  <y>2778.790933</y>
+ </pos>
+ <GFX>
+  <space>K04.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>75.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>50000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Once, Jasmine was a dead-end world in a dusty corner of Soromid space. But with the fairly recent discovery of the Gewirn-Point Zero jump traffic through the Gewirn system has increased, giving Jasmine an economic breath of fresh air. That said, Jasmine is little more than a stopover point to most spacers.</description>
+  <bar>This bar is a short walk from the spaceport, which itself is little more than a collection of crude pits in the ground that contain the bare essentials needed to service landed ships. Jasmine was never rich enough to afford a serious space port, and this does not seem likely to change.</bar>
+ </general>
+</asset>

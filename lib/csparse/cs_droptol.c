@@ -1,6 +1,8 @@
 #include "cs.h"
 static int cs_tol (int i, int j, double aij, void *tol)
 {
+    (void) i;
+    (void) j;
     return (fabs (aij) > *((double *) tol)) ;
 }
 int cs_droptol (cs *A, double tol)

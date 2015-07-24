@@ -15,7 +15,9 @@
 static void fad_render( Widget* fad, double bx, double by );
 static int fad_mclick( Widget* fad, int button, int x, int y );
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
+static int fad_key( Widget* fad, SDLKey key, SDLMod mod );
 static void fad_setValue( Widget *fad, double value );
+static void fad_scrolldone( Widget *wgt );
 
 
 /**
@@ -57,6 +59,9 @@ void window_addFader( const unsigned int wid,
    /*wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);*/ /**< @todo Let faders focus. */
    wgt->mclickevent     = fad_mclick;
    wgt->mmoveevent      = fad_mmove;
+   wgt->keyevent        = fad_key;
+   wgt->scrolldone      = fad_scrolldone;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.fad.value   = min;
    wgt->dat.fad.min     = min;
    wgt->dat.fad.max     = max;
@@ -69,7 +74,7 @@ void window_addFader( const unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 
@@ -120,16 +125,16 @@ static void fad_render( Widget* fad, double bx, double by )
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
 {
    double d;
-   (void) x;
-   (void) y;
+   (void) rx;
+   (void) ry;
 
    /* Must be scrolling. */
    if (fad->status != WIDGET_STATUS_SCROLLING)
       return 0;
 
    /* Set the fader value. */
-   d = (fad->w > fad->h) ? rx / fad->w : ry / fad->h;
-   fad_setValue(fad, fad->dat.fad.value + d);
+   d = (fad->w > fad->h) ? (double)x / fad->w : (double)y / fad->h;
+   fad_setValue(fad, d);
 
    return 1;
 }
@@ -155,20 +160,60 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
       kx = fad->w * pos - 5;
       kw = 15;
 
-      /* See if is scrolling. */
-      if ((x >= kx) && (x < kx + kw))
-         fad->status = WIDGET_STATUS_SCROLLING;
+      /* Out of bounds, jump the knob. */
+      if ((x < kx) || (x >= kx + kw))
+         fad_setValue(fad, (double)x / fad->w );
    }
    else {
       ky = fad->h * pos - 5;
       kh = 15;
 
-      /* See if is scrolling. */
-      if ((y >= ky) && (y < ky + kh))
-         fad->status = WIDGET_STATUS_SCROLLING;
+      /* Out of bounds, jump the knob. */
+      if ((y < ky) || (y >= ky + kh))
+         fad_setValue(fad, (double)y / fad->h );
    }
+   /* Always scroll. */
+   fad->status = WIDGET_STATUS_SCROLLING;
 
    return 0;
+}
+
+
+/**
+ * @brief Handles input for a fader widget.
+ *
+ *    @param fad Fader widget to handle event.
+ *    @param key Key being handled.
+ *    @param mod Mods when key is being pressed.
+ *    @return 1 if the event was used, 0 if it wasn't.
+ */
+static int fad_key( Widget* fad, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+   int ret;
+   double cur;
+
+   /* Current value. */
+   cur = (fad->dat.fad.value - fad->dat.fad.min) / (fad->dat.fad.max - fad->dat.fad.min);
+
+   /* Handle keypresses. */
+   ret = 0;
+   switch (key) {
+      case SDLK_RIGHT:
+      case SDLK_UP:
+         fad_setValue( fad, cur+0.05 );
+         break;
+
+      case SDLK_LEFT:
+      case SDLK_DOWN:
+         fad_setValue( fad, cur-0.05 );
+         break;
+
+      default:
+         break;
+   }
+
+   return ret;
 }
 
 
@@ -199,15 +244,20 @@ double window_getFaderValue( const unsigned int wid, char* name )
 
 
 /**
- * @brief Changes fader value
+ * @brief Changes fader value.
  *
- *    @param fad Fader to set value of.
+ *    @param fad Fader to set value of in per one [0:1].
  *    @param value Value to set fader to.
  */
 static void fad_setValue( Widget *fad, double value )
 {
-   /* Sanity check and value set. */
-   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max, value );
+   /* Set value. */
+   fad->dat.fad.value  = value * (fad->dat.fad.max - fad->dat.fad.min);
+   fad->dat.fad.value += fad->dat.fad.min;
+
+   /* Sanity check. */
+   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max,
+         fad->dat.fad.value );
 
    /* Run function if needed. */
    if (fad->dat.fad.fptr != NULL)
@@ -244,7 +294,7 @@ void window_faderValue( const unsigned int wid,
 
 
 /**
- * @brief Sets a fader widget's boundries.
+ * @brief Sets a fader widget's boundaries.
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
@@ -267,10 +317,47 @@ void window_faderBounds( const unsigned int wid,
       return;
    }
 
-   /* Set the fader boundries. */
+   /* Set the fader boundaries. */
    wgt->dat.fad.min = min;
    wgt->dat.fad.max = max;
 
    /* Set the value. */
    fad_setValue(wgt, wgt->dat.fad.value );
 }
+
+/**
+ * @brief Internal callback.
+ */
+static void fad_scrolldone( Widget *wgt )
+{
+   if (wgt->dat.fad.scrolldone != NULL)
+      wgt->dat.fad.scrolldone( wgt->wdw, wgt->name );
+}
+
+
+/**
+ * @brief Sets the scroll done callback for a fader.
+ *
+ *    @param wid Window to which the fader belongs.
+ *    @param name Name of the fader.
+ *    @param func Function to call when scrolling is done.
+ */
+void window_faderScrollDone( const unsigned int wid,
+      char *name, void (*func)(unsigned int,char*) )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting scroll done function callback for non-fader widget '%s'.", name);
+      return;
+   }
+
+   wgt->dat.fad.scrolldone = func;
+}
+

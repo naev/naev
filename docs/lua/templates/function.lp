@@ -33,7 +33,7 @@ end
 <h3>Usage</h3>
 <ul>
 	<%for _, usage in ipairs(func.usage) do%>
-	<li><code><%= usage %></code>
+	<li><code><%= usage %></code></li>
 	<%end%>
 </ul>
 <%end%>
@@ -46,7 +46,7 @@ end
 <h3>Return values:</h3>
 <ol>
 	<%for _, ret in ipairs(func.ret) do%>
-	<li><%= ret %>
+	<li><%= ret %></li>
 	<%end%>
 </ol>
 <%end%>
@@ -59,9 +59,9 @@ end
 <h3>See also:</h3>
 <ul>
 	<%for i = 1, #func.see do%>
-	<li><a href="<%=luadoc.doclet.html.symbol_link(func.see[i], doc, module_doc, file_doc, from)%>">
-		<%=func.see[i]%>
-	</a>
+	<li><a href="#<%=module_doc.name.."."..func.see[i]%>">
+		<%=module_doc.name.."."..func.see[i]%></a>
+   </li>
 	<%end%>
 </ul>
 <%end%>

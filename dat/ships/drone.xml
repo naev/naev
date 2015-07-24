@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Drone">
+ <base_type>Drone</base_type>
+ <GFX>drone</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Drone</class>
+ <price>300000</price>
+ <fabricator>Robosys</fabricator>
+ <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
+ <health>
+  <absorb>5</absorb>
+  <armour>40</armour>
+  <armour_regen>7</armour_regen>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>20</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>0</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="5" y="0" h="-5"/>
+  <weapon size="small" x="5" y="0" h="-5"/>
+  <weapon size="small" x="5" y="0" h="-5"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <turn_mod>20</turn_mod>
+  <thrust_mod>20</thrust_mod>
+  <cargo_mod>-100</cargo_mod>
+  <armour_mod>-20</armour_mod>
+ </stats>
+</ship>

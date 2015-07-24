@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Norpin IV">
+ <pos>
+  <x>12080.000000</x>
+  <y>-20640.000000</y>
+ </pos>
+ <GFX>
+  <space>L00.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

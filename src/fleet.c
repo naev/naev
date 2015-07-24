@@ -14,7 +14,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -24,10 +24,9 @@
 #include "log.h"
 #include "pilot.h"
 #include "ndata.h"
+#include "rng.h"
 
 
-#define FLEET_DATA      "dat/fleet.xml" /**< Where to find fleet data. */
-#define FLEETGROUP_DATA "dat/fleetgroup.xml" /**< Where to find fleetgroup data. */
 
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
@@ -37,16 +36,10 @@ static Fleet* fleet_stack = NULL; /**< Fleet stack. */
 static int nfleets = 0; /**< Number of fleets. */
 
 
-/* stack of fleetgroups */
-static FleetGroup* fleetgroup_stack = NULL; /**< FleetGroup stack. */
-static int nfleetgroups = 0; /**< Number of fleetgroups. */
-
-
 /*
  * Prototypes.
  */
 static int fleet_parse( Fleet *temp, const xmlNodePtr parent );
-static int fleet_parseGroup( FleetGroup *fltgrp, xmlNodePtr parent );
 
 
 /**
@@ -56,37 +49,19 @@ static int fleet_parseGroup( FleetGroup *fltgrp, xmlNodePtr parent );
  *    @return The fleet matching name or NULL if not found.
  */
 Fleet* fleet_get( const char* name )
-{  
+{
    int i;
-   
+
    for (i=0; i<nfleets; i++)
       if (strcmp(fleet_stack[i].name, name)==0)
          return &fleet_stack[i];
-   
+
    return NULL;
 }
 
 
 /**
- * @brief Grabs a fleetgroup out of the stack.
- *
- *    @param name Name of the fleetgroup to match.
- *    @return The fleetgroup matching name or NULL if not found.
- */
-FleetGroup* fleet_getGroup( const char* name )
-{  
-   int i;
-   
-   for (i=0; i<nfleetgroups; i++)
-      if (strcmp(fleetgroup_stack[i].name, name)==0)
-         return &fleetgroup_stack[i];
-   
-   return NULL;
-}
-
-
-/**
- * @brief Creates a pilot belonging to afleet.
+ * @brief Creates a pilot belonging to a fleet.
  *
  *    @param flt Fleet to which pilot belongs to.
  *    @param plt Pilot to create.
@@ -95,12 +70,14 @@ FleetGroup* fleet_getGroup( const char* name )
  *    @param vel Initial velocity.
  *    @param ai AI to use (NULL is default).
  *    @param flags Flags to create with.
+ *    @param systemFleet System fleet the pilot belongs to.
  *    @return The ID of the pilot created.
  *
  * @sa pilot_create
  */
-int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags )
+unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
+      Vector2d *pos, Vector2d *vel, const char* ai, PilotFlags flags,
+      const int systemFleet )
 {
    unsigned int p;
    p = pilot_create( plt->ship,
@@ -112,7 +89,8 @@ int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
          dir,
          pos,
          vel,
-         flags );
+         flags,
+         systemFleet );
    return p;
 }
 
@@ -127,7 +105,6 @@ int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
  */
 static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 {
-   int i;
    xmlNodePtr cur, node;
    FleetPilot* pilot;
    char* c;
@@ -139,32 +116,40 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    temp->faction = -1;
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
-   if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Fleet in "FLEET_DATA_PATH" has invalid or no name");
 
    do { /* load all the data */
+      xml_onlyNodes(node);
 
       /* Set faction. */
-      if (xml_isNode(node,"faction"))
+      if (xml_isNode(node,"faction")) {
          temp->faction = faction_get(xml_get(node));
+         continue;
+      }
 
       /* Set AI. */
-      else if (xml_isNode(node,"ai"))
-         temp->ai = xml_getStrd(node);
+      xmlr_strd(node,"ai",temp->ai);
+      if (ai_getProfile ( temp->ai ) == NULL)
+         WARN("Fleet '%s' has invalid AI '%s'.", temp->name, temp->ai );
 
       /* Set flags. */
-      else if (xml_isNode(node,"flags")){
-         cur = node->children;     
+      if (xml_isNode(node,"flags")) {
+         cur = node->children;
          do {
-            if (xml_isNode(cur,"guard"))
-               fleet_setFlag(temp, FLEET_FLAG_GUARD);
+            xml_onlyNodes(cur);
+            WARN("Fleet '%s' has unknown flag node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
+         continue;
       }
 
       /* Load pilots. */
       else if (xml_isNode(node,"pilots")) {
-         cur = node->children;     
+         cur = node->children;
          mem = 0;
          do {
+            xml_onlyNodes(cur);
+
             if (xml_isNode(cur,"pilot")) {
 
                /* See if must grow. */
@@ -182,7 +167,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                xmlr_attr(cur,"name",c);
                pilot->name = c; /* No need to free since it will have to later */
 
-               /* Check for ai override */
+               /* Check for AI override */
                xmlr_attr(cur,"ai",pilot->ai);
 
                /* Load pilot's ship */
@@ -194,31 +179,19 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                   WARN("Pilot %s in Fleet %s has invalid ship", pilot->name, temp->name);
                if (c!=NULL)
                   free(c);
-
-               /* Load chance */
-               xmlr_attr(cur,"chance",c);
-               pilot->chance = atoi(c);
-               if (pilot->chance == 0)
-                  WARN("Pilot %s in Fleet %s has 0%% chance of appearing",
-                     pilot->name, temp->name );
-               if (c!=NULL)
-                  free(c); /* free the external malloc */
+               continue;
             }
+
+            WARN("Fleet '%s' has unknown pilot node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
 
          /* Resize to minimum. */
          temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
+         continue;
       }
-   } while (xml_nextNode(node));
 
-   /* Calculate average amount of pilots. */
-   temp->pilot_avg = 0.;
-   temp->mass_avg  = 0.;
-   for (i=0; i<temp->npilots; i++) {
-      temp->pilot_avg += ((double)temp->pilots[i].chance / 100.);
-      temp->mass_avg  += temp->pilots[i].ship->mass;
-   }
-   temp->mass_avg /= temp->npilots;
+      DEBUG("Unknown node '%s' in fleet '%s'",node->name,temp->name);
+   } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
@@ -244,25 +217,25 @@ static int fleet_loadFleets (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
- 
+
    /* Load the data. */
-   buf = ndata_read( FLEET_DATA, &bufsize);
+   buf = ndata_read( FLEET_DATA_PATH, &bufsize);
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode; /* fleets node */
    if (strcmp((char*)node->name,"Fleets")) {
-      ERR("Malformed "FLEET_DATA" file: missing root element 'Fleets'.");
+      ERR("Malformed "FLEET_DATA_PATH" file: missing root element 'Fleets'.");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first fleet node */
    if (node == NULL) {
-      ERR("Malformed "FLEET_DATA" file: does not contain elements.");
+      ERR("Malformed "FLEET_DATA_PATH" file: does not contain elements.");
       return -1;
    }
 
    mem = 0;
-   do { 
+   do {
       if (xml_isNode(node,"fleet")) {
          /* See if memory must grow. */
          nfleets++;
@@ -286,130 +259,13 @@ static int fleet_loadFleets (void)
 
 
 /**
- * @brief Parses a fleetgroup from an xml node.
- *
- *    @param fltgrp FleetGroup to fill with data from the xml node.
- *    @param parent Node containing fleetgroup data.
- *    @return 0 on success.
- */
-static int fleet_parseGroup( FleetGroup *fltgrp, xmlNodePtr parent )
-{
-   int mem;
-   xmlNodePtr node;
-   Fleet *f;
-   char *buf;
-
-   /* Clear memory. */
-   memset( fltgrp, 0, sizeof(FleetGroup) );
-
-   /* Get the name. */
-   xmlr_attr( parent, "name", fltgrp->name );
-
-   /* Load the fleetgroup data. */
-   node = parent->children;
-   mem = 0;
-   do {
-      if (xml_isNode(node,"fleet")) {
-
-         /* See if memory must grow. */
-         fltgrp->nfleets++;
-         if (fltgrp->nfleets > mem) {
-            mem += CHUNK_SIZE;
-            fltgrp->fleets = realloc(fltgrp->fleets, sizeof(Fleet*) * mem);
-            fltgrp->chance = realloc(fltgrp->chance, sizeof(int) * mem);
-         }
-
-         /* Add the fleet. */
-         f = fleet_get( xml_get(node) );
-         if (f == NULL) {
-            WARN("Fleet '%s' in FleetGroup '%s' not found in stack.",
-                  xml_get(node), fltgrp->name);
-            fltgrp->nfleets--;
-            continue;
-         }
-         fltgrp->fleets[fltgrp->nfleets-1] = f;
-
-         /* Get the chance. */
-         xmlr_attr( node, "chance", buf );
-         if (buf == NULL) {
-            WARN("Fleet '%s' in FleetGroup '%s' missing 'chance' attribute.",
-                  xml_get(node), fltgrp->name);
-            fltgrp->chance[fltgrp->nfleets-1] = 0;
-            continue;
-         }
-         fltgrp->chance[fltgrp->nfleets-1] = CLAMP( 0, 100, atoi(buf));
-         free(buf);
-
-      }
-   } while (xml_nextNode(node));
-
-   return 0;
-}
-
-
-/**
- * @brief Loads all the fleetgroups.
- *
- *    @return 0 on success.
- */
-static int fleet_loadFleetGroups (void)
-{
-   int mem;
-   uint32_t bufsize;
-   char *buf;
-   xmlNodePtr node;
-   xmlDocPtr doc;
-  
-   /* Create the document. */
-   buf = ndata_read( FLEETGROUP_DATA, &bufsize);
-   doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode; /* fleetgroups node. */
-   if (strcmp((char*)node->name,"FleetGroups")) {
-      ERR("Malformed "FLEETGROUP_DATA" file: missing root element 'FleetGroups'");
-      return -1;
-   }
-
-   node = node->xmlChildrenNode; /* first fleetgroup node */
-   if (node == NULL) {
-      ERR("Malformed "FLEETGROUP_DATA" file: does not contain elements");
-      return -1;
-   }
-
-   mem = 0;
-   do { 
-      if (xml_isNode(node,"fleetgroup")) {
-         /* See if memory must grow. */
-         nfleetgroups++;
-         if (nfleets > mem) {
-            mem += CHUNK_SIZE;
-            fleetgroup_stack = realloc(fleetgroup_stack, sizeof(FleetGroup) * mem);
-         }
-
-         /* Load the fleetgroup. */
-         fleet_parseGroup( &fleetgroup_stack[nfleetgroups-1], node );
-      }
-   } while (xml_nextNode(node));
-   /* Shrink to minimum. */
-   fleetgroup_stack = realloc(fleetgroup_stack, sizeof(FleetGroup) * nfleetgroups);
-
-   xmlFreeDoc(doc);
-   free(buf);
-
-   return 0;
-}
-
-
-/**
- * @brief Loads all the fleets and fleetgroups.
+ * @brief Loads all the fleets
  *
  *    @return 0 on success.
  */
 int fleet_load (void)
 {
    if (fleet_loadFleets())
-      return -1;
-   if (fleet_loadFleetGroups())
       return -1;
 
    DEBUG("Loaded %d Fleet%s", nfleets, (nfleets==1) ? "" : "s" );
@@ -442,18 +298,5 @@ void fleet_free (void)
    }
    fleet_stack = NULL;
    nfleets = 0;
-
-
-   /* Free the fleetgroup stack. */
-   if (fleetgroup_stack != NULL) {
-      for (i=0; i<nfleetgroups; i++) {
-         free( fleetgroup_stack[i].name );
-         free( fleetgroup_stack[i].fleets );
-         free( fleetgroup_stack[i].chance );
-      }
-      free(fleetgroup_stack);
-   }
-   fleetgroup_stack = NULL;
-   nfleetgroups = 0;
 }
 

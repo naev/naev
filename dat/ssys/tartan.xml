@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Tartan">
+ <general>
+  <radius>10500.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>935.098841</x>
+  <y>-652.339318</y>
+ </pos>
+ <assets/>
+ <jumps>
+  <jump target="Gutter">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Kyo">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Modus Manis">
+   <pos x="11786.389436" y="-19629.519729"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Palovi">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

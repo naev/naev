@@ -11,20 +11,14 @@
 
 #include "ncompat.h"
 
-#if HAS_MACOSX
-#include <alc.h>
-#include <al.h>
-#else /* HAS_MACOSX */
-#include <AL/alc.h>
-#include <AL/al.h>
-#endif /* HAS_MACOSX */
-
+#include OPENAL_ALC_H
+#include OPENAL_AL_H
 
 /*
  * EFX stuff.
  */
 #ifndef ALC_EXT_EFX
-/* Auxliary Effect Slot. */
+/* Auxiliary Effect Slot. */
 #define AL_EFFECTSLOT_NULL                                 0x0000
 #define AL_EFFECTSLOT_EFFECT                               0x0001
 #define AL_EFFECTSLOT_GAIN                                 0x0002

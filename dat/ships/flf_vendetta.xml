@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="FLF Vendetta">
+ <base_type>Vendetta</base_type>
+ <GFX>vendetta</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>400000</price>
+ <fabricator>House Dvaered</fabricator>
+ <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
+ <health>
+  <absorb>6</absorb>
+  <armour>100</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>4</crew>
+  <mass>80</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="16" y="-9" h="0"/>
+  <weapon size="small" x="16" y="9" h="0"/>
+  <weapon size="small" x="13" y="-13" h="0"/>
+  <weapon size="small" x="13" y="13" h="0"/>
+  <weapon size="small" x="19" y="0" h="-2"/>
+  <weapon size="small" x="3" y="0" h="2"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Previous Generation Small Systems</utility>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Beat Up Small Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Patchwork Light Plating</structure>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <speed_mod>-10</speed_mod>
+  <armour_mod>10</armour_mod>
+  <energy_mod>20</energy_mod>
+  <energy_regen_mod>-10</energy_regen_mod>
+  <fwd_heat>-10</fwd_heat>
+ </stats>
+</ship>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Worscha">
+ <pos>
+  <x>-3271.270726</x>
+  <y>-7117.605452</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>2000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Worscha is a relatively wealthy Sirian world with a mild climate and pleasant planetary conditions. Its rotation is a bit on the long side, about 25% longer than that of old Earth, which has led to the daily rhythm being a little slower than elsewhere.</description>
+  <bar>Many Sirian bars have some sort of layout separation for the various echelons, but Worscha's bar doesn't have anything of the sort. This sometimes leads to Sirian traders getting confused, as they are used to placing themselves in the correct section of the bar.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Medium</item>
+  <item>Laser 1</item>
+  <item>Ion 2</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Hulls Elite</item>
+ </tech>
+</asset>

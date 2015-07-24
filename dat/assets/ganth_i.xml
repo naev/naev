@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ganth I">
+ <pos>
+  <x>-7430.205851</x>
+  <y>-5372.576113</y>
+ </pos>
+ <GFX>
+  <space>O02.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

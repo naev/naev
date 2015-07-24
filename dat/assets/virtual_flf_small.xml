@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Virtual FLF Small">
+ <virtual/>
+ <presence>
+  <faction>FLF</faction>
+  <value>80.000000</value>
+  <range>1</range>
+ </presence>
+</asset>

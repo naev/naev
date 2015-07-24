@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Lugun">
+ <pos>
+  <x>-1930.617815</x>
+  <y>958.859182</y>
+ </pos>
+ <GFX>
+  <space>station-commerce2.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>12000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>zlk_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Lugun is a research hub where a large amount of the data from surrounding laboratories and universities is kept for storage and use for other researchers. As such, it is regarded as an important asset to House Zalek in the area and is guarded.</description>
+  <bar>This bar is full of chatting scientists and a few military personnel; though with Za'lek's society, the two are not always readily apparent. It is very clean and orderly however, with server droids handing out drinks and food.</bar>
+ </general>
+</asset>

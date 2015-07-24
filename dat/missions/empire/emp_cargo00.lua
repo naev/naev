@@ -2,7 +2,13 @@
 
    Simple cargo mission that opens up the Empire cargo missions.
 
+   Author: bobbens
+      minor edits by Infiltrator
+
 ]]--
+
+include "dat/scripts/numstring.lua"
+include "dat/scripts/jumpdist.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -10,7 +16,7 @@ if lang == "es" then
 else -- default english
    bar_desc = "You see an Empire Lieutenant who seems to be looking at you."
    misn_title = "Empire Recruitment"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = "Deliver some parcels for the Empire to %s in %s."
    title = {}
    title[1] = "Spaceport Bar"
@@ -18,36 +24,41 @@ else -- default english
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[You approach the Empire Lieutenant.
-"Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would be interesting in working for the Empire?"]]
-   text[2] = [["Welcome aboard.", says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we get data on your flying skills. Later you could get called for more important mission. Who knows?  You could be the next Yao Pternov, greatest pilot we ever had on the armada."
-He hits a couple buttons on his wrist computer that springs into action.
-"It looks like we already have a simple task for you. Deliver these parcels to %s. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]
-   text[3] = [[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards they make you do some paperwork to formalize your participation with the Empire. They tell you to keep an eye out for missions labeled ES in the mission computer which stand for Empire Shipping which you now have access to.
-You aren't too sure of what to make of your encounter with the Empire, only time will tell...]]
+"Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]]
+   text[2] = [["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, greatest pilot we ever had in the armada."
+    He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to %s. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]
+   text[3] = [[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
+    You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]]
 end
 
 
 function create ()
-   local landed, landed_sys = planet.get()
+   -- Note: this mission does not make any system claims.
+   local landed, landed_sys = planet.cur()
 
    -- target destination
-   local i = 0
-   repeat
-      dest,sys = planet.get( misn.factions() )
-      i = i + 1
-   until sys ~= landed_sys or i > 10
-   -- infinite loop protection
-   if i > 10 then
-      misn.finish(false)
-   end
+   local planets = {} 
+   getsysatdistance( system.cur(), 1, 6,
+       function(s)
+           for i, v in ipairs(s:planets()) do
+               if v:faction() == faction.get("Empire") and v:canLand() then
+                   planets[#planets + 1] = {v, s}
+               end
+           end 
+           return false
+       end ) 
+   if #planets == 0 then abort() end -- Sanity in case no suitable planets are in range. 
+   local index = rnd.rnd(1, #planets)
+   dest = planets[index][1]
+   sys = planets[index][2]
 
-   misn.setNPC( "Lieutenant", "czesc" )
+   misn.setNPC( "Lieutenant", "empire/unique/czesc" )
    misn.setDesc( bar_desc )
 end
 
 
 function accept ()
-   misn.setMarker(sys)
+   misn.markerAdd( sys, "low" )
 
    -- Intro text
    if not tk.yesno( title[1], text[1] ) then
@@ -60,30 +71,34 @@ function accept ()
    -- Mission details
    reward = 3000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc,dest:name(),sys:name()))
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], dest:name() ))
+   misn.osdCreate(title[2], {misn_desc:format(dest:name(),sys:name())})
 
    -- Set up the goal
-   parcels = misn.addCargo("Parcels", 0)
+   parcels = misn.cargoAdd("Parcels", 0)
    hook.land("land")
 end
 
 
 function land()
 
-   local landed = planet.get()
+   local landed = planet.cur()
    if landed == dest then
-      if misn.rmCargo(parcels) then
+      if misn.cargoRm(parcels) then
          player.pay(reward)
          -- More flavour text
          tk.msg(title[3], string.format( text[3], dest:name() ))
          var.push("es_cargo", true)
-         player.modFaction("Empire",3);
+         faction.modPlayerSingle("Empire",3);
          misn.finish(true)
       end
    end
 end
 
+function abort()
+   misn.finish(false)
+end

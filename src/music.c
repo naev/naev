@@ -24,12 +24,10 @@
 #include "log.h"
 #include "ndata.h"
 #include "conf.h"
+#include "nstring.h"
 
 
-#define MUSIC_PREFIX       "snd/music/" /**< Prefix of where tho find musics. */
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
-
-#define MUSIC_LUA_PATH     "snd/music.lua" /**<  Lua music control file. */
 
 
 #define CHUNK_SIZE         32 /**< Size of a chunk to allocate. */
@@ -60,13 +58,6 @@ static int music_runLua( const char *situation );
 
 
 /*
- * what is available
- */
-static char** music_selection = NULL; /**< Available music selection. */
-static int nmusic_selection   = 0; /**< Size of available music selection. */
-
-
-/*
  * The current music.
  */
 static char *music_name       = NULL; /**< Current music name. */
@@ -86,6 +77,7 @@ void (*music_sys_free) (void)    = NULL;
  /* Music control. */
 int  (*music_sys_volume)( const double vol ) = NULL;
 double (*music_sys_getVolume) (void) = NULL;
+double (*music_sys_getVolumeLog) (void) = NULL;
 void (*music_sys_play) (void)    = NULL;
 void (*music_sys_stop) (void)    = NULL;
 void (*music_sys_pause) (void)   = NULL;
@@ -100,7 +92,7 @@ int  (*music_sys_isPlaying) (void) = NULL;
 /* music stuff */
 static int music_find (void);
 static void music_free (void);
-/* lua stuff */
+/* Lua stuff */
 static int music_luaInit (void);
 static void music_luaQuit (void);
 
@@ -130,6 +122,7 @@ void music_update( double dt )
    }
    music_runchoose = 0;
    strncpy(buf, music_situation, PATH_MAX);
+   buf[ PATH_MAX-1 ] = '\0';
    SDL_mutexV(music_lock);
    music_runLua( buf );
 
@@ -147,17 +140,34 @@ void music_update( double dt )
  */
 static int music_runLua( const char *situation )
 {
+   int errf;
+   lua_State *L;
+
    if (music_disabled)
       return 0;
 
+   L = music_lua;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -3;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    /* Run the choose function in Lua. */
-   lua_getglobal( music_lua, "choose" );
+   lua_getglobal( L, "choose" );
    if (situation != NULL)
-      lua_pushstring( music_lua, situation );
+      lua_pushstring( L, situation );
    else
-      lua_pushnil( music_lua );
-   if (lua_pcall(music_lua, 1, 0, 0)) /* error has occured */
-      WARN("Error while choosing music: %s", lua_tostring(music_lua,-1));
+      lua_pushnil( L );
+   if (lua_pcall(L, 1, 0, errf)) { /* error has occurred */
+      WARN("Error while choosing music: %s", lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -188,6 +198,7 @@ int music_init (void)
       /* Music control. */
       music_sys_volume = music_mix_volume;
       music_sys_getVolume = music_mix_getVolume;
+      music_sys_getVolumeLog = music_mix_getVolume;
       music_sys_load = music_mix_load;
       music_sys_play = music_mix_play;
       music_sys_stop = music_mix_stop;
@@ -215,6 +226,7 @@ int music_init (void)
       /* Music control. */
       music_sys_volume = music_al_volume;
       music_sys_getVolume = music_al_getVolume;
+      music_sys_getVolumeLog = music_al_getVolumeLog;
       music_sys_load = music_al_load;
       music_sys_play = music_al_play;
       music_sys_stop = music_al_stop;
@@ -275,6 +287,9 @@ void music_exit (void)
       SDL_DestroyMutex(music_lock);
       music_lock = NULL;
    }
+
+   /* Clean up Lua. */
+   music_luaQuit();
 }
 
 
@@ -305,18 +320,17 @@ static int music_find (void)
 {
    char** files;
    uint32_t nfiles,i;
-   char tmp[64];
-   int len, suflen, flen;
-   int mem;
+   int suflen, flen;
+   int nmusic;
 
    if (music_disabled)
       return 0;
 
    /* get the file list */
-   files = ndata_list( MUSIC_PREFIX, &nfiles );
+   files = ndata_list( MUSIC_PATH, &nfiles );
 
    /* load the profiles */
-   mem = 0;
+   nmusic = 0;
    suflen = strlen(MUSIC_SUFFIX);
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
@@ -324,27 +338,14 @@ static int music_find (void)
             strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
 
          /* grow the selection size */
-         nmusic_selection++;
-         if (nmusic_selection > mem) {
-            mem += CHUNK_SIZE;
-            music_selection = realloc( music_selection, sizeof(char*)*mem);
-         }
-
-         /* remove the prefix and suffix */
-         len = flen - suflen;
-         strncpy( tmp, files[i], len );
-         tmp[MIN(len,64-1)] = '\0';
-         
-         /* give it the new name */
-         music_selection[nmusic_selection-1] = strdup(tmp);
+         nmusic++;
       }
 
       /* Clean up. */
       free(files[i]);
    }
-   music_selection = realloc( music_selection, sizeof(char*)*nmusic_selection);
 
-   DEBUG("Loaded %d song%c", nmusic_selection, (nmusic_selection==1)?' ':'s');
+   DEBUG("Loaded %d song%c", nmusic, (nmusic==1)?' ':'s');
 
    /* More clean up. */
    free(files);
@@ -369,7 +370,7 @@ int music_volume( const double vol )
 
 
 /**
- * @brief Gets the current music volume.
+ * @brief Gets the current music volume (linear).
  *
  *    @return The current music volume.
  */
@@ -379,6 +380,19 @@ double music_getVolume (void)
       return 0.;
 
    return music_sys_getVolume();
+}
+
+
+/**
+ * @brief Gets the current music volume (logarithmic).
+ *
+ *    @return The current music volume.
+ */
+double music_getVolumeLog(void)
+{
+   if (music_disabled)
+      return 0.;
+   return music_sys_getVolumeLog();
 }
 
 
@@ -401,7 +415,7 @@ int music_load( const char* name )
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
+   nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = ndata_rwops( filename );
    if (rw == NULL) {
       WARN("Music '%s' not found.", filename);
@@ -514,7 +528,7 @@ void music_setPos( double sec )
 
 
 /*
- * music lua stuff
+ * music Lua stuff
  */
 /**
  * @brief Initialize the music Lua control system.
@@ -537,7 +551,7 @@ static int music_luaInit (void)
    nlua_loadStandard(music_lua,1);
    nlua_loadMusic(music_lua,0); /* write it */
 
-   /* load the actual lua music code */
+   /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
    if (luaL_dobuffer(music_lua, buf, bufsize, MUSIC_LUA_PATH) != 0) {
       ERR("Error loading music file: %s\n"
@@ -553,7 +567,7 @@ static int music_luaInit (void)
 
 
 /**
- * @brief Quits the music Lua contrtol system.
+ * @brief Quits the music Lua control system.
  */
 static void music_luaQuit (void)
 {
@@ -604,6 +618,7 @@ int music_chooseDelay( const char* situation, double delay )
    music_timer       = delay;
    music_runchoose   = 0;
    strncpy(music_situation, situation, PATH_MAX);
+   music_situation[ PATH_MAX-1 ] = '\0';
    SDL_mutexV(music_lock);
 
    return 0;
@@ -625,6 +640,7 @@ void music_rechoose (void)
    music_timer       = 0.;
    music_runchoose   = 1;
    strncpy(music_situation, "idle", PATH_MAX);
+   music_situation[ PATH_MAX-1 ] = '\0';
    SDL_mutexV(music_lock);
 }
 

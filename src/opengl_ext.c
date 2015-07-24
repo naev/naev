@@ -3,9 +3,9 @@
  */
 
 /**
- * @file opengl.c
+ * @file opengl_ext.c
  *
- * @brief This file handles most of the more generic opengl functions.
+ * @brief Handles opengl extensions.
  */
 
 
@@ -14,7 +14,6 @@
 #include "naev.h"
 
 #include "SDL.h"
-#include "SDL_image.h"
 #include "SDL_version.h"
 
 #include "log.h"
@@ -24,7 +23,7 @@
 /*
  * Prototypes
  */
-GLAPI void APIENTRY glGenerateMipmapNAEV( GLenum target );
+GLAPI void APIENTRY glGenerateMipmapNaev( GLenum target );
 static void* gl_extGetProc( const char *proc );
 static int gl_extVBO (void);
 static int gl_extMultitexture (void);
@@ -113,9 +112,7 @@ static int gl_extVBO (void)
       nglMapBuffer      = NULL;
       nglUnmapBuffer    = NULL;
       nglDeleteBuffers  = NULL;
-      if (!conf.vbo)
-         DEBUG("VBOs disabled.");
-      else {
+      if (conf.vbo) {
          WARN("GL_ARB_vertex_buffer_object not found!");
          return -1;
       }
@@ -127,7 +124,7 @@ static int gl_extVBO (void)
 /**
  * @brief Wrapper for glGenerateMipmap around GL_SGIS_generate_mipmap
  */
-GLAPI void APIENTRY glGenerateMipmapNAEV( GLenum target )
+GLAPI void APIENTRY glGenerateMipmapNaev( GLenum target )
 {
    glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
    glTexParameteri(target, GL_GENERATE_MIPMAP, GL_TRUE);
@@ -140,20 +137,16 @@ GLAPI void APIENTRY glGenerateMipmapNAEV( GLenum target )
 static int gl_extMipmaps (void)
 {
    if (!conf.mipmaps) {
-      DEBUG("MipMaps disabled.");
       nglGenerateMipmap = NULL;
       return 0;
    }
 
-   if (gl_hasVersion( 3, 0 )) {
+   if (gl_hasVersion( 3, 0 ))
       nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmap");
-   }
-   else if (gl_hasExt("GL_EXT_framebuffer_object")) {
+   else if (gl_hasExt("GL_EXT_framebuffer_object"))
       nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
-   }
-   else if (gl_hasExt("GL_SGIS_generate_mipmap")) {
-      nglGenerateMipmap = glGenerateMipmapNAEV;
-   }
+   else if (gl_hasExt("GL_SGIS_generate_mipmap"))
+      nglGenerateMipmap = glGenerateMipmapNaev;
    else {
       nglGenerateMipmap = NULL;
       WARN("glGenerateMipmap not found.");
@@ -178,12 +171,10 @@ static int gl_extCompression (void)
    }
 
    /* Find the extension. */
-   if (gl_hasVersion( 1, 3 )) {
+   if (gl_hasVersion( 1, 3 ))
       nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2D");
-   }
-   else if (gl_hasExt("GL_ARB_texture_compression")) {
+   else if (gl_hasExt("GL_ARB_texture_compression"))
       nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2DARB");
-   }
    else {
       nglCompressedTexImage2D = NULL;
       WARN("GL_ARB_texture_compression not found.");
@@ -196,12 +187,12 @@ static int gl_extCompression (void)
    if (num > 0) {
       ext = malloc( sizeof(GLint) * num );
       glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, ext);
-      for (i=0; i<num; i++) {
+      for (i=0; i<num; i++)
          if (ext[i] == GL_COMPRESSED_RGBA) {
             found = 1;
             break;
          }
-      }
+
       free(ext);
    }
 
@@ -239,4 +230,3 @@ int gl_initExtensions (void)
 void gl_exitExtensions (void)
 {
 }
-

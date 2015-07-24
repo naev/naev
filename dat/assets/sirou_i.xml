@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sirou I">
+ <pos>
+  <x>-10104.777773</x>
+  <y>2842.457479</y>
+ </pos>
+ <GFX>
+  <space>J06.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

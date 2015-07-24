@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Grave Beam">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon License</license>
+  <mass>65</mass>
+  <price>120000</price>
+  <description>The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does not deal as much damage, but its lighter size and more forgiving CPU requirements makes it a competitive contender.</description>
+  <gfx_store>ragnarok</gfx_store>
+  <cpu>-32</cpu>
+ </general>
+ <specific type="turret beam" >
+  <delay>6</delay>
+  <duration min="1.5">5</duration>
+  <range>550</range>
+  <turn>45</turn>
+  <energy>120</energy>
+  <heatup>55</heatup>
+  <damage>
+   <type>normal</type>
+   <penetrate>75</penetrate>
+   <physical>100</physical>
+   <disable>15</disable>
+  </damage>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <gfx>beam_ragnarok_inv</gfx>
+  <sound>beam0</sound>
+  <sound_off>beam_off0</sound_off>
+ </specific>
+</outfit>

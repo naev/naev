@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wonclock">
+ <pos>
+  <x>-1241.524836</x>
+  <y>-16494.675692</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>The Soromid have more or less stabilized as a genetically modified offshoot from humanity, but that doesn't mean research into genetic alteration isn't still ongoing. Woncloak hosts one of the largest bioresearch centers in Soromid space. Many of the commercially sold gene treatments were developed here, and being a researcher on Woncloak carries a lot of prestige with the Soromid.</description>
+  <bar>Being such an important location for Soromid society, security on Woncloak is pretty tight. In particular, visitors have their background checked, to make sure they're not here with a Za'lek agenda. The spaceport bar can only be accessed after pilots have passed all the security protocols.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

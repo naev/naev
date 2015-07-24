@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Mace Rocket">
+ <general>
+  <license>Medium Weapon License</license>
+  <mass>0.1</mass>
+  <price>200</price>
+  <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
+  <gfx_store>mace</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>mace</gfx>
+  <sound>mace</sound>
+  <sound_hit>lrgexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <duration blowup="armour">1.5</duration>
+  <thrust>1200</thrust>
+  <speed>1800</speed>
+  <damage>
+   <type>impact</type>
+   <penetrate>0</penetrate>
+   <physical>15</physical>
+   <disable>0</disable>
+  </damage>
+  <ai>dumb</ai>
+ </specific>
+</outfit>

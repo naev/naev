@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruid">
+ <pos>
+  <x>-23737.052713</x>
+  <y>1453.882562</y>
+ </pos>
+ <GFX>
+  <space>moon-D02.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

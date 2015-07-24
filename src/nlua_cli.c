@@ -12,7 +12,7 @@
 
 #include "naev.h"
 
-#include "lauxlib.h"
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nluadef.h"
@@ -21,11 +21,7 @@
 
 
 /* CLI */
-static int cli_missionStart( lua_State *L );
-static int cli_missionTest( lua_State *L );
 static const luaL_reg cli_methods[] = {
-   { "missionStart", cli_missionStart },
-   { "missionTest", cli_missionTest },
    {0,0}
 }; /**< CLI Lua methods. */
 
@@ -37,60 +33,8 @@ static const luaL_reg cli_methods[] = {
  *    @return 0 on success.
  */
 int nlua_loadCLI( lua_State *L )
-{  
+{
    luaL_register(L, "cli", cli_methods);
-   return 0;
-}
-
-/**
- * @brief CLI generic Lua bindings.
- *
- * An example would be:
- * @code
- * cli.mission("Pirate Bounty") -- Triggers the Pirate Bounty mission.
- * @endcode
- *
- * @luamod cli
- */
-/**
- * @brief Starts a mission without testing conditionals.
- *
- * @usage cli.missionStart( "Pirate Bounty" )
- *
- *    @luaparam misn Name of the mission to start.
- * @luafunc missionStart( misn )
- */
-static int cli_missionStart( lua_State *L )
-{
-   const char *str;
-
-   str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
-      NLUA_ERROR(L,"Failed to start mission.");
-      return 0;
-   }
-
-   return 0;
-}
-
-/**
- * @brief Starts a mission by testing all the conditionals.
- *
- * @usage cli.missionTest( "Pirate Bounty" )
- *
- *    @luaparam misn Name of the mission to start.
- * @luafunc missionTest( misn )
- */
-static int cli_missionTest( lua_State *L )
-{
-   const char *str;
-
-   str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
-      NLUA_ERROR(L,"Failed to start mission.");
-      return 0;
-   }
-
    return 0;
 }
 
