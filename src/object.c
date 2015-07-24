@@ -9,6 +9,7 @@
 #include "gui.h"
 #include "log.h"
 #include "ndata.h"
+#include "camera.h"
 
 #define DELIM " \t\n"
 
@@ -65,7 +66,11 @@ static int texture_loadFromFile( const char *filename, GLuint *texture )
    if (rw != NULL)
       brute = IMG_Load_RW(rw, 1);
    if (brute != NULL)
-      image = SDL_DisplayFormatAlpha(brute);
+      #if SDL_VERSION_ATLEAST(2,0,0)
+         image = SDL_ConvertSurfaceFormat(brute, SDL_PIXELFORMAT_ABGR8888, 0);
+      #else
+         image = SDL_DisplayFormatAlpha(brute);
+      #endif /* SDL_VERSION_ATLEAST(2,0,2) */
    if (rw == NULL || brute == NULL || image == NULL) {
       WARN("Failed to load texture '%s' from ndata", filename);
       return 0;
@@ -342,7 +347,7 @@ static void object_fix3d( void )
    glLoadIdentity();
 
    /* rotates and scales the object to match projection */
-   gl_cameraZoomGet(&zoom);
+   zoom = cam_getZoom();
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix();
    glScalef(scale * zoom, scale * zoom, scale * zoom);
@@ -426,9 +431,9 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    int i;
 
    /* get parameters. */
-   gl_cameraGet(&cx, &cy);
+   cam_getPos(&cx, &cy);
    gui_getOffset(&gx, &gy);
-   gl_cameraZoomGet(&zoom);
+   zoom = cam_getZoom();
 
    /* calculate position - we'll use relative coords to player */
    x = (solid->pos.x - cx + gx) * zoom / gl_screen.nw * 2;

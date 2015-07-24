@@ -104,6 +104,7 @@ CODE_SOURCE = \
 	nxml.c \
 	nxml_lua.c \
 	nzip.c \
+	object.c \
 	opengl.c \
 	opengl_ext.c \
 	opengl_matrix.c \

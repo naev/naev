@@ -353,6 +353,7 @@ AS_IF([test "$have_sdl2" = "yes"], [SDLIMAGE_NAME=SDL2_image], [SDLIMAGE_NAME=SD
 AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
   SDLIMAGE_CFLAGS=
   SDLIMAGE_LIBS="$LIBS"
+  NAEV_LIBS="$NAEV_LIBS $LIBS"
   have_mkspr=yes
 ], [
   SDLIMAGE_CFLAGS=

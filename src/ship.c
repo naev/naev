@@ -53,7 +53,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine );
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine, int has_3d_model );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -470,7 +470,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
  *    @param temp Ship to load into.
  *    @param buf Name of the texture to work with.
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine, int has_3d_model )
 {
    char base[PATH_MAX], str[PATH_MAX];
    int i;
@@ -490,7 +490,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
    }
    if (i>=PATH_MAX) {
       WARN("Failed to get base path of '%s'.", buf);
-      continue;
+      return 1;
    }
 
    /* Load the 3d model */
@@ -735,6 +735,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          else
             sy = 8;
 
+         xmlr_attr(node, "noengine", stmp );
          if (stmp != NULL) {
             engine = 0;
             free(stmp);
@@ -743,7 +744,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             engine = 1;
 
          /* Load the graphics. */
-         ship_loadGFX( temp, buf, sx, sy, engine );
+         ship_loadGFX( temp, buf, sx, sy, engine, has_3d_model );
 
          continue;
       }

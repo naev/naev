@@ -1542,16 +1542,11 @@ void pilot_render( Pilot* p, const double dt )
       object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", p->engine_glow);
    } else {
       /* Sprites */
-      if (p->ship->gfx_engine != NULL)
-         gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
-               1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-               scalew, scaleh,
-               p->tsx, p->tsy, NULL );
-      else
-         gl_blitSpriteScale( p->ship->gfx_space,
-               p->solid->pos.x, p->solid->pos.y,
-               scalew, scaleh,
-               p->tsx, p->tsy, NULL );
+      gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
+            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+            scalew, scaleh,
+            p->tsx, p->tsy, NULL );
+   }
 
 }
 
@@ -3017,7 +3012,3 @@ credits_t pilot_worth( const Pilot *p )
 
    return price;
 }
-
-
-
-

@@ -567,27 +567,6 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   gl_blitSpriteScale(sprite, bx, by, 1., 1., sx, sy, c )
-}
-
-
-/**
- * @brief Blits a sprite, position is relative to the player.
- *
- * Since position is in "game coordinates" it is subject to all
- * sorts of position transformations.
- *
- *    @param sprite Sprite to blit.
- *    @param bx X position of the texture relative to the player.
- *    @param by Y position of the texture relative to the player.
- *    @param sx X position of the sprite to use.
- *    @param sy Y position of the sprite to use.
- *    @param c Colour to use (modifies texture colour).
- */
-void gl_blitSpriteScale( const glTexture* sprite, const double bx, const double by,
-      double scalew, double scaleh,
-      const int sx, const int sy, const glColour* c )
-{
    double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
@@ -595,8 +574,8 @@ void gl_blitSpriteScale( const glTexture* sprite, const double bx, const double 
    gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
 
    /* Scaled sprite dimensions. */
-   w = sprite->sw*z*scalew;
-   h = sprite->sh*z*scaleh;
+   w = sprite->sw*z;
+   h = sprite->sh*z;
 
    /* check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
