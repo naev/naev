@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ship name="Ancestor">
  <base_type>Ancestor</base_type>
- <GFX _3d="true">ancestor</GFX>
+ <GFX>ancestor</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>

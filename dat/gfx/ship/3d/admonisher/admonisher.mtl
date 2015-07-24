@@ -1,0 +1,21 @@
+# Blender MTL File: 'admonisher.blend'
+# Material Count: 2
+
+newmtl Material.039
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.160000 0.800000
+Ks 0.285000 0.285000 0.285000
+Ni 1.000000
+d 0.950000
+illum 2
+
+newmtl admonisher.mat
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.010000 0.010000 0.010000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd admonisher.png

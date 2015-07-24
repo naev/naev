@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ship name="Lancelot">
  <base_type>Lancelot</base_type>
- <GFX _3d="true">lancelot</GFX>
+ <GFX>lancelot</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
