@@ -425,7 +425,7 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
 }
 
 
-void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha )
+void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
    double x, y, cx, cy, gx, gy, zoom;
    int i;
@@ -444,6 +444,7 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    glTranslatef(x, y, 0.);
    glRotatef(solid->dir / M_PI * 180. + 90., 0., 0., 1.);
    glRotatef(90., 1., 0., 0.);
+   glScalef(scale, scale, scale);
 
    object_fix3d();
    for (i = 0; i < array_size(object->meshes); ++i)

@@ -36,7 +36,7 @@ typedef struct Object_ {
 
 
 Object *object_loadFromFile( const char *filename);
-void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha );
+void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha, GLdouble scale );
 void object_free( Object *object );
 
 

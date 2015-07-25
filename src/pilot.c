@@ -1520,31 +1520,28 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
-   double scalew, scaleh;
+   double scale;
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
-      scalew = CLAMP( 0., 1., p->ptimer / PILOT_LANDING_DELAY );
-      scaleh = scalew;
+      scale = CLAMP( 0., 1., p->ptimer / PILOT_LANDING_DELAY );
    }
    else if (pilot_isFlag( p, PILOT_TAKEOFF )) {
-      scalew = CLAMP( 0., 1., 1. - p->ptimer / PILOT_TAKEOFF_DELAY );
-      scaleh = scalew;
+      scale = CLAMP( 0., 1., 1. - p->ptimer / PILOT_TAKEOFF_DELAY );
    }
    else {
-      scalew = 1.;
-      scaleh = 1.;
+      scale = 1.;
    }
 
    if (p->ship->gfx_3d != NULL) {
       /* 3d */
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", 1);
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", p->engine_glow);
+      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", 1, scale);
+      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", p->engine_glow, scale);
    } else {
       /* Sprites */
       gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
             1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            scalew, scaleh,
+            scale, scale,
             p->tsx, p->tsy, NULL );
    }
 
