@@ -3,13 +3,13 @@
 #include <assert.h>
 #include <string.h>
 #include <libgen.h>
-#include "SDL_image.h"
 
 #include "array.h"
 #include "gui.h"
 #include "log.h"
 #include "ndata.h"
 #include "camera.h"
+#include "npng.h"
 
 #define DELIM " \t\n"
 
@@ -58,20 +58,17 @@ static int readGLfloat( GLfloat *dest, int how_many )
 static int texture_loadFromFile( const char *filename, GLuint *texture )
 {
    SDL_RWops *rw;
-   SDL_Surface *brute, *image;
+   npng_t *npng;
+   SDL_Surface *image;
    DEBUG("Loading texture from %s", filename);
 
    /* Reads image and converts it to RGBA */
    rw = ndata_rwops(filename);
    if (rw != NULL)
-      brute = IMG_Load_RW(rw, 1);
-   if (brute != NULL)
-      #if SDL_VERSION_ATLEAST(2,0,0)
-         image = SDL_ConvertSurfaceFormat(brute, SDL_PIXELFORMAT_ABGR8888, 0);
-      #else
-         image = SDL_DisplayFormatAlpha(brute);
-      #endif /* SDL_VERSION_ATLEAST(2,0,2) */
-   if (rw == NULL || brute == NULL || image == NULL) {
+      npng = npng_open(rw);
+   if (npng != NULL)
+      image = npng_readSurface(npng, 0, 0);
+   if (rw == NULL || npng == NULL || image == NULL) {
       WARN("Failed to load texture '%s' from ndata", filename);
       return 0;
    }
@@ -84,8 +81,9 @@ static int texture_loadFromFile( const char *filename, GLuint *texture )
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-   SDL_FreeSurface(brute);
    SDL_FreeSurface(image);
+   npng_close(npng);
+   SDL_RWclose(rw);
    return 1;
 }
 
