@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include <libgen.h>
+#include <stddef.h>
 
 #include "array.h"
 #include "gui.h"
@@ -374,8 +375,8 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    Mesh *mesh = &object->meshes[part];
 
    /* computes relative addresses of the vertice and texture coords */
-   const int ver_offset = (int)(&((Vertex *)NULL)->ver);
-   const int tex_offset = (int)(&((Vertex *)NULL)->tex);
+   const int ver_offset = offsetof(Vertex, ver);
+   const int tex_offset = offsetof(Vertex, tex);
 
    /* activates vertices and texture coords */
    gl_vboActivateOffset(mesh->vbo,
