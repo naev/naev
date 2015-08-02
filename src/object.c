@@ -440,7 +440,9 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix();
    glTranslatef(x, y, 0.);
-   glRotatef(solid->dir / M_PI * 180. + 90., 0., 0., 1.);
+   glRotatef(90., 0., 0., 1.);
+   glRotatef(-45., 0., 1., 0.);
+   glRotatef(solid->dir / M_PI * 180., 0., 0., 1.);
    glRotatef(90., 1., 0., 0.);
    glScalef(scale, scale, scale);
 
