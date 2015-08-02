@@ -719,6 +719,15 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             free(stmp);
          }
 
+         /* Checks for a 3d scale */
+         xmlr_attr(node, "_3d_scale", stmp);
+         if (stmp != NULL) {
+            temp->gfx_3d_scale = atof(stmp);
+            free(stmp);
+         }
+	 else
+             temp->gfx_3d_scale = .01;
+
          /* Get sprite size. */
          xmlr_attr(node, "sx", stmp );
          if (stmp != NULL) {

@@ -1535,8 +1535,8 @@ void pilot_render( Pilot* p, const double dt )
 
    if (p->ship->gfx_3d != NULL) {
       /* 3d */
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", 1, scale);
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", p->engine_glow, scale);
+      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", 1, p->ship->gfx_3d_scale * scale);
+      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", p->engine_glow, p->ship->gfx_3d_scale * scale);
    } else {
       /* Sprites */
       gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 

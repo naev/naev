@@ -337,8 +337,6 @@ void object_free( Object *object )
 
 static void object_fix3d( void )
 {
-   /* FIXME how much to scale the object? */
-   const double scale = 1. / 20.;
    double zoom;
 
    /* XXX changes the projection */
@@ -350,7 +348,7 @@ static void object_fix3d( void )
    zoom = cam_getZoom();
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix();
-   glScalef(scale * zoom, scale * zoom, scale * zoom);
+   glScalef(zoom, zoom, zoom);
    glRotatef(180., 0., 1., 0.);
    glRotatef(90., 1., 0., 0.);
 
