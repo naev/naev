@@ -263,10 +263,11 @@ Object *object_loadFromFile( const char *filename )
          int num = 0;
          while ((token = strtok(NULL, DELIM)) != NULL) {
             int i_v, i_t;
-            sscanf(token, "%d/%d", &i_v, &i_t);
+            if (sscanf(token, "%d/%d", &i_v, &i_t) == 1)
+               i_t = 0;
 
             assert("Vertex index out of range." && (0 < i_v && i_v <= array_size(vertex) / 3));
-            assert("Texture index out of range." && (0 < i_t && i_t <= array_size(texture) / 2));
+            assert("Texture index out of range." && (0 <= i_t && i_t <= array_size(texture) / 2));
 
             Vertex *face = &array_grow(&corners);
             --i_v, --i_t;
