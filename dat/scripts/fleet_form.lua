@@ -503,13 +503,18 @@ function Forma:control()
    lead_stats = self.fleader:stats()
    for i, p in ipairs(self.fleet) do
       if not (p == self.fleader) then
-         if p:pos():dist(posit[i]) > 300 then
-            p:setSpeedLimit(0)
-         else
-            p:setSpeedLimit(lead_stats.speed + 7 * ((math.log(p:pos():dist(posit[i]))/1.4)))
-         end
+
          p:control() -- Clear orders.
-         p:goto(posit[i], false, false)
+
+         local cons = (posit[i]-p:pos())*10 + (self.fleader:vel()-p:vel())*20  --Computing the direction using a pd controller
+         local goal = cons + p:pos()
+
+         if cons:mod() >= 300 then
+            p:goto(goal, false, false)
+            else
+            p:face(goal)
+         end
+
       else
          if p ~= pilot.player() then
             p:setSpeedLimit(self.fleetspeed) -- Make mon capitan travel at 5 below the slow speed, so other ships can catch up.
