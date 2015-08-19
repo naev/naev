@@ -667,7 +667,7 @@
   <lua>pirate/pir_cargo</lua>
   <avail>
    <priority>3</priority>
-   <cond>faction.playerStanding("Pirate") &gt;= 0 and var.peek("pir_cargo") == true</cond>
+   <cond>faction.playerStanding("Pirate") &gt;= 0 and player.numOutfit("Pirate Landing Pass") &gt; 0</cond>
    <chance>960</chance>
    <location>Computer</location>
    <faction>Pirate</faction>
