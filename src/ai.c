@@ -1115,11 +1115,16 @@ static void ai_create( Pilot* pilot, char *param )
    /* Parse parameter. */
    if (param != NULL) {
       /* Number */
-      if (isdigit(param[0]))
-         lua_pushnumber(L, atoi(param));
+      if (isdigit(param[0])) {
+         lp.pilot = atoi(param);
+         lua_pushpilot(L,lp);
+      }
       /* Special case player. */
-      else if (strcmp(param,"player")==0)
-         lua_pushnumber(L, PLAYER_ID);
+      else if (strcmp(param,"player")==0) {
+      /* Special case player. */
+         lp.pilot = PLAYER_ID;
+         lua_pushpilot(L,lp);
+      }
       /* Default. */
       else
          lua_pushstring(L, param);
@@ -1220,6 +1225,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
    const char *func;
    Task *t;
    LuaVector *lv;
+   LuaPilot *p;
 
    /* Parse basic parameters. */
    func  = luaL_checkstring(L,1);
@@ -1232,6 +1238,11 @@ static Task* ai_createTask( lua_State *L, int subtask )
       if (lua_isnumber(L,2)) {
          t->dtype    = TASKDATA_INT;
          t->dat.num  = (unsigned int)lua_tonumber(L,2);
+      }
+      else if (lua_ispilot(L,2)) {
+         p = luaL_checkpilot(L,2);
+         t->dtype = TASKDATA_PILOT;
+	 t->dat.num = p->pilot;
       }
       else if (lua_isvector(L,2)) {
          t->dtype    = TASKDATA_VEC2;
@@ -1251,12 +1262,18 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
+   LuaPilot p;
    LuaVector lv;
 
    /* Pass task type. */
    switch (t->dtype) {
       case TASKDATA_INT:
          lua_pushnumber(L, t->dat.num);
+         return 1;
+
+      case TASKDATA_PILOT:
+         p.pilot = t->dat.num;
+         lua_pushpilot(L, p);
          return 1;
 
       case TASKDATA_VEC2:
@@ -1457,7 +1474,10 @@ static int aiL_getPilot( lua_State *L )
  */
 static int aiL_getplayer( lua_State *L )
 {
-   lua_pushnumber(L, PLAYER_ID);
+   LuaPilot p;
+   p.pilot = PLAYER_ID;
+
+   lua_pushpilot(L, p);
    return 1;
 }
 
@@ -1472,6 +1492,8 @@ static int aiL_getplayer( lua_State *L )
 static int aiL_getrndpilot( lua_State *L )
 {
    int p;
+   LuaPilot lp;
+
    p = RNG(0, pilot_nstack-1);
    /* Make sure it can't be the same pilot. */
    if (pilot_stack[p]->id == cur_pilot->id) {
@@ -1483,7 +1505,8 @@ static int aiL_getrndpilot( lua_State *L )
    if (pilot_stack[p]->id == cur_pilot->id)
       return 0;
    /* Actually found a pilot. */
-   lua_pushnumber(L, pilot_stack[p]->id );
+   lp.pilot = pilot_stack[p]->id;
+   lua_pushpilot(L, lp);
    return 1;
 }
 
@@ -1501,6 +1524,7 @@ static int aiL_getnearestpilot( lua_State *L )
    int dist=1000;
    int i;
    int candidate_id = -1;
+   LuaPilot p;
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
 
@@ -1513,15 +1537,13 @@ static int aiL_getnearestpilot( lua_State *L )
        }
    }
 
-
    /* Last check. */
    if (candidate_id == -1)
       return 0;
 
-
-
    /* Actually found a pilot. */
-   lua_pushnumber(L, pilot_stack[candidate_id]->id );
+   p.pilot = pilot_stack[candidate_id]->id;
+   lua_pushpilot(L, p);
    return 1;
 }
 
@@ -1532,19 +1554,13 @@ static int aiL_getnearestpilot( lua_State *L )
 static int aiL_armour( lua_State *L )
 {
    Pilot *p;
-   double d;
 
-   if (lua_isnumber(L,1)) {
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      d = p->armour;
-   }
-   else d = cur_pilot->armour;
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
+   else
+      p = cur_pilot;
 
-   lua_pushnumber(L, d);
+   lua_pushnumber(L, p->armour);
    return 1;
 }
 
@@ -1554,19 +1570,13 @@ static int aiL_armour( lua_State *L )
 static int aiL_shield( lua_State *L )
 {
    Pilot *p;
-   double d;
 
-   if (lua_isnumber(L,1)) {
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      d = p->shield;
-   }
-   else d = cur_pilot->shield;
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
+   else
+      p = cur_pilot;
 
-   lua_pushnumber(L, d);
+   lua_pushnumber(L, p->shield);
    return 1;
 }
 
@@ -1579,16 +1589,12 @@ static int aiL_speed( lua_State *L )
    Pilot *p;
    double d;
 
-   if (lua_isnumber(L,1)) {
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      d = VMOD(p->solid->vel);
-   }
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
    else
-      d = VMOD(cur_pilot->solid->vel);
+      p = cur_pilot;
+
+   d = VMOD(p->solid->vel);
 
    lua_pushnumber(L, d);
    return 1;
@@ -1602,15 +1608,12 @@ static int aiL_parmour( lua_State *L )
    double d;
    Pilot* p;
 
-   if (lua_isnumber(L,1)) {
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      d = p->armour / p->armour_max * 100.;
-   }
-   else d = cur_pilot->armour / cur_pilot->armour_max * 100.;
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
+   else
+      p = cur_pilot;
+
+   d = p->armour / p->armour_max * 100.;
 
    lua_pushnumber(L, d);
    return 1;
@@ -1624,15 +1627,12 @@ static int aiL_pshield( lua_State *L )
    double d;
    Pilot* p;
 
-   if (lua_isnumber(L,1)) {
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      d = p->shield / p->shield_max * 100.;
-   }
-   else d = cur_pilot->shield / cur_pilot->shield_max * 100.;
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
+   else
+      p = cur_pilot;
+
+   d = p->shield / p->shield_max * 100.;
 
    lua_pushnumber(L, d);
    return 1;
@@ -1659,7 +1659,7 @@ static int aiL_getdistance( lua_State *L )
 {
    Vector2d *v;
    LuaVector *lv;
-   Pilot *pilot;
+   Pilot *p;
 
    /* vector as a parameter */
    if (lua_isvector(L,1)) {
@@ -1670,14 +1670,10 @@ static int aiL_getdistance( lua_State *L )
    else if (lua_islightuserdata(L,1))
       v = lua_touserdata(L,1);
 
-   /* pilot id as parameter */
-   else if (lua_isnumber(L,1)) {
-      pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
-      if (pilot==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      v = &pilot->solid->pos;
+   /* pilot as parameter */
+   else if (lua_ispilot(L,1)) {
+      p = luaL_validpilot(L,1);
+      v = &p->solid->pos;
    }
 
    /* wrong parameter */
@@ -1700,7 +1696,7 @@ static int aiL_getflybydistance( lua_State *L )
    Vector2d *v;
    Vector2d perp_motion_unit, offset_vect;
    LuaVector *lv;
-   Pilot *pilot;
+   Pilot *p;
    int offset_distance;
 
    v = NULL;
@@ -1713,13 +1709,9 @@ static int aiL_getflybydistance( lua_State *L )
    else if (lua_islightuserdata(L,1))
       v = lua_touserdata(L,1);
    /* pilot id as parameter */
-   else if (lua_isnumber(L,1)) {
-      pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
-      if (pilot==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-      v = &pilot->solid->pos;
+   else if (lua_ispilot(L,1)) {
+      p = luaL_validpilot(L,1);
+      v = &p->solid->pos;
 
       /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
    }
@@ -1743,14 +1735,10 @@ static int aiL_getpos( lua_State *L )
 {
    Pilot *p;
 
-   if (lua_isnumber(L,1)) {
-      p = pilot_get((unsigned int)lua_tonumber(L,1)); /* Pilot ID */
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-   }
-   else p = cur_pilot; /* default to self */
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
+   else
+      p = cur_pilot;
 
    lua_pushlightuserdata(L, &p->solid->pos );
 
@@ -1771,18 +1759,11 @@ static int aiL_minbrakedist( lua_State *L )
 {
    double time, dist, vel;
    Vector2d vv;
-   unsigned int id;
    Pilot *p;
 
    /* More complicated calculation based on relative velocity. */
    if (lua_gettop(L) > 0) {
-      /* Get target. */
-      id = luaL_checklong(L,1);
-      p = pilot_get(id);
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
+      p = luaL_validpilot(L,1);
 
       /* Set up the vectors. */
       vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
@@ -1830,17 +1811,10 @@ static int aiL_cargofree( lua_State *L )
  */
 static int aiL_shipclass( lua_State *L )
 {
-   unsigned int l;
    Pilot *p;
 
-   if (lua_gettop(L) > 0) {
-      l = luaL_checklong(L,1);
-      p = pilot_get(l);
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-   }
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
    else
       p = cur_pilot;
 
@@ -1854,17 +1828,10 @@ static int aiL_shipclass( lua_State *L )
  */
 static int aiL_shipmass( lua_State *L )
 {
-   unsigned int l;
    Pilot *p;
 
-   if (lua_gettop(L) > 0) {
-      l = luaL_checklong(L,1);
-      p = pilot_get(l);
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-   }
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
    else
       p = cur_pilot;
 
@@ -1878,9 +1845,9 @@ static int aiL_shipmass( lua_State *L )
  */
 static int aiL_isbribed( lua_State *L )
 {
-   unsigned int target;
-   target = luaL_checklong(L,1);
-   lua_pushboolean(L, (target == PLAYER_ID) && pilot_isFlag(cur_pilot,PILOT_BRIBED));
+   Pilot *p;
+   p = luaL_validpilot(L,1);
+   lua_pushboolean(L, (p->id == PLAYER_ID) && pilot_isFlag(cur_pilot,PILOT_BRIBED));
    return 1;
 }
 
@@ -1894,15 +1861,10 @@ static int aiL_isbribed( lua_State *L )
  */
 static int aiL_getstanding( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
+
    /* Get parameters. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Get faction standing. */
    if (p->faction == FACTION_PLAYER)
@@ -1925,15 +1887,25 @@ static int aiL_getstanding( lua_State *L )
  */
 static int aiL_exists( lua_State *L )
 {
+   LuaPilot *lp;
    Pilot *p;
-   int i;
+   int exists;
 
-   if (lua_isnumber(L,1)) {
-      i = 1;
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
-      if (p==NULL) i = 0;
-      else if (pilot_isFlag(p,PILOT_DEAD)) i = 0;
-      lua_pushboolean(L, i );
+   if (lua_ispilot(L,1)) {
+      /* Parse parameters. */
+      lp = luaL_checkpilot(L,1);
+      p = pilot_get( lp->pilot );
+
+      /* Must still be kicking and alive. */
+      if (p==NULL)
+         exists = 0;
+      else if (pilot_isFlag( p, PILOT_DEAD ))
+         exists = 0;
+      else
+         exists = 1;
+
+      /* Check if the pilot exists. */
+      lua_pushboolean(L, exists);
       return 1;
    }
 
@@ -1968,16 +1940,10 @@ static int aiL_isstopped( lua_State *L )
  */
 static int aiL_isenemy( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of hostility. */
    if (p->faction == FACTION_PLAYER) {
@@ -1996,16 +1962,10 @@ static int aiL_isenemy( lua_State *L )
  */
 static int aiL_isally( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of friendliness. */
    if (p->faction == FACTION_PLAYER) {
@@ -2023,18 +1983,11 @@ static int aiL_isally( lua_State *L )
  */
 static int aiL_incombat( lua_State *L )
 {
-   unsigned int id;
    Pilot* p;
 
    /* Get the pilot. */
-   if (lua_gettop(L) > 0) {
-      id = luaL_checklong(L,1);
-      p = pilot_get(id);
-      if (p==NULL) {
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
-      }
-   }
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
    else
       p = cur_pilot;
 
@@ -2053,14 +2006,8 @@ static int aiL_incombat( lua_State *L )
 static int aiL_isdisabled( lua_State *L )
 {
    Pilot *p;
-   unsigned int id;
 
-   id = luaL_checklong(L, 1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    lua_pushboolean(L, pilot_isDisabled(p));
    return 1;
@@ -2128,25 +2075,20 @@ static int aiL_face( lua_State *L )
    Vector2d *tv; /* get the position to face */
    Pilot* p;
    double k_diff, k_vel, d, diff, vx, vy, dx, dy;
-   unsigned int id;
    int vel;
 
    /* Get first parameter, aka what to face. */
-   if (lua_isnumber(L,1)) {
+   if (lua_ispilot(L,1)) {
+      p = luaL_validpilot(L,1);
+      /* Target vector. */
+      tv = &p->solid->pos;
+   }
+   else if (lua_isnumber(L,1)) {
       d = (double)lua_tonumber(L,1);
-      if (d < 0.) {
+      if (d < 0.)
          tv = &cur_pilot->solid->pos;
-      }
-      else {
-         id = (unsigned int)d;
-         p = pilot_get(id);
-         if (p==NULL) {
-            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-            return 0;
-         }
-         /* Target vector. */
-         tv = &p->solid->pos;
-      }
+      else
+         NLUA_INVALID_PARAMETER(L);
    }
    else if (lua_isvector(L,1)) {
       lv = lua_tovector(L,1);
@@ -2210,13 +2152,12 @@ static int aiL_face( lua_State *L )
  *
  * This method uses a polar UV decomposition to get a more accurate time-of-flight
  *
- *    @luaparam id The id of the pilot to aim at
+ *    @luaparam pilot The pilot to aim at
  *    @luareturn The offset from the target aiming position (in degrees).
  * @luafunc aim( id )
  */
 static int aiL_aim( lua_State *L )
 {
-   unsigned int id;
    double x,y;
    double t;
    Pilot *p;
@@ -2226,13 +2167,8 @@ static int aiL_aim( lua_State *L )
    double speed;
    double radial_speed;
 
-   /* Only acceptable parameter is pilot id */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   /* Only acceptable parameter is pilot */
+   p = luaL_validpilot(L,1);
 
    /* Get the distance */
    dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
@@ -2287,7 +2223,7 @@ static int aiL_aim( lua_State *L )
 /**
  * @brief Maintains an intercept pursuit course.
  *
- *    @luaparam p Position or id of pilot to intercept.
+ *    @luaparam p Position or pilot to intercept.
  *    @luareturn The offset from the proper intercept course (in degrees).
  * @luafunc iface( p )
  */
@@ -2297,25 +2233,15 @@ static int aiL_iface( lua_State *L )
    LuaVector *lv;
    Vector2d drift, reference_vector; /* get the position to face */
    Pilot* p;
-   double d, diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
-   unsigned int id;
+   double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    int azimuthal_sign;
    double speedmap;
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
    lv = NULL;
-   if (lua_isnumber(L,1)) {
-      d = (double)lua_tonumber(L,1);
-      if (d >= 0.) {
-         id = (unsigned int)d;
-         p = pilot_get(id);
-         if (p==NULL) {
-            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-            return 0;
-         }
-      }
-   }
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
@@ -2397,26 +2323,15 @@ static int aiL_dir( lua_State *L )
    LuaVector *lv;
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
-   double d, diff;
-   unsigned int id;
+   double diff;
    int n;
 
    /* Get first parameter, aka what to face. */
    n  = -2;
    lv = NULL;
-   if (lua_isnumber(L,1)) {
-      d = lua_tonumber(L,1);
-      if (d < 0.)
-         n = -1;
-      else {
-         id = (unsigned int)d;
-         p = pilot_get(id);
-         if (p==NULL) {
-            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-            return 0;
-         }
-         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
-      }
+   if (lua_ispilot(L,1)) {
+      p = luaL_validpilot(L,1);
+      vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
@@ -2452,25 +2367,15 @@ static int aiL_idir( lua_State *L )
    LuaVector *lv;
    Vector2d drift, reference_vector; /* get the position to face */
    Pilot* p;
-   double d, diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
-   unsigned int id;
+   double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    double speedmap;
    /*char announcebuffer[255] = " ", announcebuffer2[128];*/
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
    lv = NULL;
-   if (lua_isnumber(L,1)) {
-      d = lua_tonumber(L,1);
-      if (d >= 0.) {
-         id = (unsigned int)d;
-         p = pilot_get(id);
-         if (p==NULL) {
-            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-            return 0;
-         }
-      }
-   }
+   if (lua_ispilot(L,1))
+      p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
@@ -2858,17 +2763,11 @@ static int aiL_rndhyptarget( lua_State *L )
  */
 static int aiL_relvel( lua_State *L )
 {
-   unsigned int id;
    double dot, mod;
    Pilot *p;
    Vector2d vv, pv;
 
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Get the projection of target on current velocity. */
    vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
@@ -2944,16 +2843,10 @@ static int aiL_e_return( lua_State *L )
  */
 static int aiL_dock( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
    /* Target is another ship. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
    pilot_dock(cur_pilot, p, 1);
 
    return 0;
@@ -2983,7 +2876,9 @@ static int aiL_combat( lua_State *L )
  */
 static int aiL_settarget( lua_State *L )
 {
-   pilot_setTarget( cur_pilot, luaL_checklong(L,1) );
+   Pilot *p;
+   p = luaL_validpilot(L,1);
+   pilot_setTarget( cur_pilot, p->id );
    return 0;
 }
 
@@ -3054,14 +2949,17 @@ static int aiL_shoot( lua_State *L )
  */
 static int aiL_getenemy( lua_State *L )
 {
-   unsigned int p;
+   unsigned int id;
+   LuaPilot p;
 
-   p = pilot_getNearestEnemy(cur_pilot);
+   id = pilot_getNearestEnemy(cur_pilot);
 
-   if (p==0) /* No enemy found */
+   if (id==0) /* No enemy found */
       return 0;
 
-   lua_pushnumber(L,p);
+   p.pilot = id;
+   lua_pushpilot(L, p);
+
    return 1;
 }
 
@@ -3074,7 +2972,8 @@ static int aiL_getenemy( lua_State *L )
  */
 static int aiL_getenemy_size( lua_State *L )
 {
-   unsigned int p;
+   unsigned int id;
+   LuaPilot p;
    unsigned int LB, UB;
 
    NLUA_MIN_ARGS(2);
@@ -3087,12 +2986,13 @@ static int aiL_getenemy_size( lua_State *L )
       return 0;
    }
 
-   p = pilot_getNearestEnemy_size( cur_pilot, LB, UB );
+   id = pilot_getNearestEnemy_size( cur_pilot, LB, UB );
 
-   if (p==0) /* No enemy found */
+   if (id==0) /* No enemy found */
       return 0;
 
-   lua_pushnumber(L,p);
+   p.pilot = id;
+   lua_pushpilot(L, p);
    return 1;
 }
 
@@ -3110,7 +3010,8 @@ static int aiL_getenemy_size( lua_State *L )
 static int aiL_getenemy_heuristic( lua_State *L )
 {
 
-   unsigned int p;
+   unsigned int id;
+   LuaPilot p;
    double mass_factor, health_factor, damage_factor, range_factor;
 
    mass_factor    = luaL_checklong(L,1);
@@ -3118,13 +3019,14 @@ static int aiL_getenemy_heuristic( lua_State *L )
    damage_factor  = luaL_checklong(L,3);
    range_factor   = luaL_checklong(L,4);
 
-   p = pilot_getNearestEnemy_heuristic( cur_pilot,
+   id = pilot_getNearestEnemy_heuristic( cur_pilot,
          mass_factor, health_factor, damage_factor, 1./range_factor );
 
-   if (p==0) /* No enemy found */
+   if (id==0) /* No enemy found */
       return 0;
 
-   lua_pushnumber(L,p);
+   p.pilot = id;
+   lua_pushpilot(L, p);
    return 1;
 }
 
@@ -3134,15 +3036,9 @@ static int aiL_getenemy_heuristic( lua_State *L )
  */
 static int aiL_hostile( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
-   id = luaL_checklong(L,1);
-   p  = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    if (p->faction == FACTION_PLAYER)
       pilot_setHostile(cur_pilot);
@@ -3185,16 +3081,10 @@ static int aiL_getweaprange( lua_State *L )
  */
 static int aiL_canboard( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
    /* Get parameters. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Must be disabled. */
    if (!pilot_isDisabled(p)) {
@@ -3216,20 +3106,14 @@ static int aiL_canboard( lua_State *L )
  */
 static int aiL_relsize( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
-    lua_pushnumber(L, pilot_relsize(cur_pilot, p));
+   lua_pushnumber(L, pilot_relsize(cur_pilot, p));
 
-    return 1;
+   return 1;
 }
 
 
@@ -3242,20 +3126,14 @@ static int aiL_relsize( lua_State *L )
  */
 static int aiL_reldps( lua_State *L )
 {
-   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
-    lua_pushnumber(L, pilot_reldps(cur_pilot, p));
+   lua_pushnumber(L, pilot_reldps(cur_pilot, p));
 
-    return 1;
+   return 1;
 }
 
 
@@ -3267,20 +3145,15 @@ static int aiL_reldps( lua_State *L )
  * relhp()
  */
 static int aiL_relhp( lua_State *L )
-{   unsigned int id;
+{
    Pilot *p;
 
    /* Get the pilot. */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
-    lua_pushnumber(L, pilot_relhp(cur_pilot, p));
+   lua_pushnumber(L, pilot_relhp(cur_pilot, p));
 
-    return 1;
+   return 1;
 }
 
 
@@ -3358,15 +3231,15 @@ static int aiL_timeup( lua_State *L )
  */
 static int aiL_comm( lua_State *L )
 {
-   unsigned int p;
+   Pilot *p;
    const char *s;
 
    /* Get parameters. */
-   p = luaL_checklong(L,1);
+   p = luaL_validpilot(L,1);
    s = luaL_checkstring(L,2);
 
    /* Send the message. */
-   pilot_message( cur_pilot, p, s, 0 );
+   pilot_message( cur_pilot, p->id, s, 0 );
 
    return 0;
 }

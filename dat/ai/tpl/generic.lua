@@ -280,8 +280,6 @@ function distress ( pilot, attacker )
       return
    end
 
-   pid    = pilot:id()
-   aid    = attacker:id()
    pfact  = pilot:faction()
    afact  = attacker:faction()
    aifact = ai.getPilot():faction()
@@ -296,12 +294,12 @@ function distress ( pilot, attacker )
       if afact == aifact then
          return
       else
-         t = aid
+         t = attacker
       end
    elseif mem.aggressive then
       -- Aggressive ships follow their brethren into battle!
       if afact == aifact then
-         t = pid
+         t = pilot
       elseif p_ally then
          -- When your allies are fighting, stay out of it.
          if a_ally then
@@ -309,29 +307,29 @@ function distress ( pilot, attacker )
          end
 
          -- Victim is an ally, but the attacker isn't.
-         t = aid
+         t = attacker
       -- Victim isn't an ally. Attack the victim if the attacker is our ally.
       elseif a_ally then
-         t = pid
+         t = pilot
       elseif p_enemy then
          -- If they're both enemies, may as well let them destroy each other.
          if a_enemy then
             return
          end
 
-         t = pid
+         t = pilot
       elseif a_enemy then
-         t = aid
+         t = attacker
       -- We'll be nice and go after the aggressor if the victim is peaceful.
       elseif not pilot:memoryCheck("aggressive") then
-         t = aid
+         t = attacker
       -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
       else
          return
       end
    -- Non-aggressive ships will flee if their enemies attack neutral or allied vessels.
    elseif a_enemy and not p_enemy then
-      t = aid
+      t = attacker
    else
       return
    end

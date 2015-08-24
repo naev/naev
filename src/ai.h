@@ -33,7 +33,8 @@
 typedef enum TaskData_ {
    TASKDATA_NULL,
    TASKDATA_INT,
-   TASKDATA_VEC2
+   TASKDATA_VEC2,
+   TASKDATA_PILOT
 } TaskData;
 
 /**
