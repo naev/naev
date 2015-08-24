@@ -534,7 +534,7 @@ function __refuelstop ()
       ai.poptask()
 
       -- Untarget
-      ai.settarget( ai.getPilot():id() )
+      ai.settarget( ai.getPilot() )
       return
    end
 
