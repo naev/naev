@@ -13,7 +13,7 @@ function idle ()
           ai.pushtask("land")
        end
    else -- Stay. Have a beer.
-      sysrad = rnd.rnd() * ai.sysradius()
+      sysrad = rnd.rnd() * system.cur():radius()
       angle = rnd.rnd() * 2 * math.pi
       ai.pushtask("__goto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
    end

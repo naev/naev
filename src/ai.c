@@ -264,7 +264,6 @@ static int aiL_shipprice( lua_State *L ); /* shipprice() */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_donerefuel( lua_State *L ); /* boolean donerefuel() */
-static int aiL_sysradius( lua_State *L ); /* number sysradius() */
 
 
 static const luaL_reg aiL_methods[] = {
@@ -362,7 +361,6 @@ static const luaL_reg aiL_methods[] = {
    { "board", aiL_board },
    { "refuel", aiL_refuel },
    { "donerefuel", aiL_donerefuel },
-   { "sysradius", aiL_sysradius },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -3287,21 +3285,6 @@ static int aiL_shipprice( lua_State *L )
    lua_pushnumber(L, cur_pilot->ship->price);
    return 1;
 }
-
-
-/**
- * @brief Gets the radius of the current system the pilot is in.
- *
- *    @luareturn The radius of the current system the pilot is in.
- * @luafunc sysradius()
- */
-static int aiL_sysradius( lua_State *L )
-{
-   lua_pushnumber( L, cur_system->radius );
-   return 1;
-}
-
-
 
 
 /**
