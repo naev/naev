@@ -177,13 +177,11 @@ static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
-static int aiL_speed( lua_State *L ); /* speed() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
 static int aiL_pcurenergy( lua_State *L ); /* pcurenergy() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
-static int aiL_getpos( lua_State *L ); /* getpos(number) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_cargofree( lua_State *L ); /* number cargofree() */
 static int aiL_shipclass( lua_State *L ); /* string shipclass( [number] ) */
@@ -295,13 +293,11 @@ static const luaL_reg aiL_methods[] = {
    { "nearestpilot", aiL_getnearestpilot },
    { "armour", aiL_armour },
    { "shield", aiL_shield },
-   { "speed", aiL_speed },
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
    { "pcurenergy", aiL_pcurenergy },
    { "dist", aiL_getdistance },
    { "flyby_dist", aiL_getflybydistance },
-   { "pos", aiL_getpos },
    { "minbrakedist", aiL_minbrakedist },
    { "cargofree", aiL_cargofree },
    { "shipclass", aiL_shipclass },
@@ -1580,26 +1576,6 @@ static int aiL_shield( lua_State *L )
    return 1;
 }
 
- /*
- * gets the pilot's current speed
- */
-static int aiL_speed( lua_State *L )
-{
-
-   Pilot *p;
-   double d;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   d = VMOD(p->solid->vel);
-
-   lua_pushnumber(L, d);
-   return 1;
-}
-
 /*
  * gets the pilot's armour in percent
  */
@@ -1725,23 +1701,6 @@ static int aiL_getflybydistance( lua_State *L )
    offset_distance = vect_dot(&perp_motion_unit, &offset_vect);
 
    lua_pushnumber(L, offset_distance);
-   return 1;
-}
-
-/*
- * gets the pilot's position
- */
-static int aiL_getpos( lua_State *L )
-{
-   Pilot *p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   lua_pushlightuserdata(L, &p->solid->pos );
-
    return 1;
 }
 
