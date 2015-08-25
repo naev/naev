@@ -187,7 +187,6 @@ static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
 
 /* boolean expressions */
-static int aiL_exists( lua_State *L ); /* boolean exists() */
 static int aiL_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
 static int aiL_isstopped( lua_State *L ); /* boolean isstopped() */
 static int aiL_isenemy( lua_State *L ); /* boolean isenemy( number ) */
@@ -254,7 +253,6 @@ static int aiL_distress( lua_State *L ); /* distress( string [, bool] ) */
 
 /* loot */
 static int aiL_credits( lua_State *L ); /* credits( number ) */
-static int aiL_cargo( lua_State *L ); /* cargo( name, quantity ) */
 
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
@@ -273,7 +271,6 @@ static const luaL_reg aiL_methods[] = {
    { "subtaskname", aiL_subtaskname },
    { "subtarget", aiL_getsubtarget },
    /* is */
-   { "exists", aiL_exists },
    { "ismaxvel", aiL_ismaxvel },
    { "isstopped", aiL_isstopped },
    { "isenemy", aiL_isenemy },
@@ -348,7 +345,6 @@ static const luaL_reg aiL_methods[] = {
    { "distress", aiL_distress },
    /* loot */
    { "setcredits", aiL_credits },
-   { "setcargo", aiL_cargo },
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
@@ -906,6 +902,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
    int errf;
    lua_State *L;
    HookParam hparam[2];
+   LuaPilot lp;
 
    /* Custom hook parameters. */
    hparam[0].type       = HOOK_PARAM_PILOT;
@@ -933,7 +930,9 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 #endif /* DEBUGGING */
 
    lua_getglobal(L, "attacked");
-   lua_pushnumber(L, attacker);
+
+   lp.pilot = attacker;
+   lua_pushpilot(L, lp);
    if (lua_pcall(L, 1, 0, errf)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -1785,39 +1784,6 @@ static int aiL_getstanding( lua_State *L )
    }
 
    return 1;
-}
-
-
-/*
- * pilot exists?
- */
-static int aiL_exists( lua_State *L )
-{
-   LuaPilot *lp;
-   Pilot *p;
-   int exists;
-
-   if (lua_ispilot(L,1)) {
-      /* Parse parameters. */
-      lp = luaL_checkpilot(L,1);
-      p = pilot_get( lp->pilot );
-
-      /* Must still be kicking and alive. */
-      if (p==NULL)
-         exists = 0;
-      else if (pilot_isFlag( p, PILOT_DEAD ))
-         exists = 0;
-      else
-         exists = 1;
-
-      /* Check if the pilot exists. */
-      lua_pushboolean(L, exists);
-      return 1;
-   }
-
-   /* Default to false for everything that isn't a pilot */
-   lua_pushboolean(L, 0);
-   return 0;
 }
 
 
@@ -3194,33 +3160,6 @@ static int aiL_credits( lua_State *L )
    }
 
    cur_pilot->credits = luaL_checklong(L,1);
-
-   return 0;
-}
-
-
-/*
- * sets the pilot_nstack cargo
- */
-static int aiL_cargo( lua_State *L )
-{
-   int q;
-   const char *s;
-
-   if (aiL_status != AI_STATUS_CREATE) {
-      /*NLUA_ERROR(L, "This function must be called in \"create\" only.");*/
-      return 0;
-   }
-
-   /* Get parameters. */
-   s = luaL_checkstring(L,1);
-   q = luaL_checkint(L,2);
-
-   /* Quantity must be valid. */
-   if (q<=0)
-      return 0;
-
-   pilot_cargoAdd( cur_pilot, commodity_get(s), q, 0 );
 
    return 0;
 }

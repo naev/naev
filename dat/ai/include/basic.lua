@@ -151,7 +151,7 @@ function follow ()
    local target = ai.target()
  
    -- Will just float without a target to escort.
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -299,7 +299,7 @@ function __run_target ()
    local target = ai.target()
 
    -- Target must exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return true
    end
@@ -321,7 +321,7 @@ end
 function __run_turret ()
    -- Shoot the target
    local target   = ai.target()
-   if ai.exists(target) then
+   if target:exists() then
       ai.hostile(target)
       ai.settarget( target )
       local dist    = ai.dist(target)
@@ -412,7 +412,7 @@ function board ()
    local target = ai.target()
 
    -- Make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -445,7 +445,7 @@ function __boardstop ()
    target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -488,7 +488,7 @@ function refuel ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -520,7 +520,7 @@ function __refuelstop ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end

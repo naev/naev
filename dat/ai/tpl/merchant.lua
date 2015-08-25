@@ -24,7 +24,7 @@ function control ()
       target = ai.target()
 
       -- Check if should still run.
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end

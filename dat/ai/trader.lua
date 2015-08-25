@@ -35,7 +35,7 @@ function create ()
    mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
    mem.refuel = rnd.rnd( 3000, 5000 )
    p = ai.getPlayer()
-   if ai.exists(p) then
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       if standing > 50 then mem.refuel = mem.refuel * 0.75
       elseif standing > 80 then mem.refuel = mem.refuel * 0.5
@@ -57,7 +57,7 @@ function create ()
    else
       cargo = "Medicine"
    end
-   ai.setcargo( cargo, rnd.int(0, ai.getPilot():cargoFree() ) )
+   ai.getPilot():cargoAdd( cargo, rnd.int(0, ai.getPilot():cargoFree() ) )
 
    -- Finish up creation
    create_post()

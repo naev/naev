@@ -17,7 +17,7 @@ function atk_fighter_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end

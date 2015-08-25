@@ -14,7 +14,7 @@ function create ()
 
    -- Get refuel chance
    p = ai.getPlayer()
-   if ai.exists(p) then
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 20 then

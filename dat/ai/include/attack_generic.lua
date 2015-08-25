@@ -10,7 +10,7 @@ function atk_g_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
+        if not target:exists() then
                 ai.poptask()
                 return
         end
@@ -39,7 +39,7 @@ function atk_g_attacked( attacker )
    end
 
    -- If no target automatically choose it
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.pushtask("attack", attacker)
       return
    end
@@ -62,7 +62,7 @@ function atk_g ()
         local target = ai.target()
 
         -- make sure pilot exists
-        if not ai.exists(target) then
+        if not target:exists() then
                 ai.poptask()
                 return
         end
@@ -215,7 +215,7 @@ function keep_distance()
 
    --find nearest thing
    local neighbor = ai.nearestpilot()
-   if not ai.exists(neighbor) then
+   if not neighbor then
       return
    end
 
@@ -252,7 +252,7 @@ function atk_fighter_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -318,7 +318,7 @@ function atk_topdown_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
+        if not target:exists() then
                 ai.poptask()
                 return
         end
@@ -378,7 +378,7 @@ function atk_fighter ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
            ai.poptask()
            return
    end
@@ -431,7 +431,7 @@ function atk_corvette ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
            ai.poptask()
            return
    end
@@ -491,7 +491,7 @@ function atk_capital ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
            ai.poptask()
            return
    end

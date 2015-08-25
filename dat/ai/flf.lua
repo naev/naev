@@ -16,7 +16,7 @@ function create ()
 
    -- Get standing.
    p = ai.getPlayer()
-   if ai.exists(p) then
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
    else
       standing = -1

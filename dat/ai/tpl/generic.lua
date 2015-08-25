@@ -111,7 +111,7 @@ function control ()
       target = ai.target()
 
       -- Needs to have a target
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
@@ -148,7 +148,7 @@ function control ()
       target = ai.target()
 
       -- Needs to have a target
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
@@ -214,7 +214,7 @@ function attacked ( attacker )
    end
 
    -- Ignore hits from dead pilots.
-   if not ai.exists(attacker) then
+   if not attacker:exists() then
       return
    end
 
@@ -339,7 +339,7 @@ function distress ( pilot, attacker )
    if task == "attack" then
       local target = ai.target()
 
-      if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
+      if not target:exists() or ai.dist(target) > ai.dist(t) then
          ai.pushtask( "attack", t )
       end
    -- If not fleeing or refueling, begin attacking
