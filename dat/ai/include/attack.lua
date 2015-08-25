@@ -78,7 +78,7 @@ end
 -- Generic function to choose what attack functions match the ship best.
 -- ]]
 function attack_choose ()
-   local class = ai.getPilot():ship():class()
+   local class = ai.pilot():ship():class()
 
    -- Lighter ships
    if class == "Bomber" then

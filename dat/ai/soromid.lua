@@ -10,7 +10,7 @@ mem.aggressive = true
 function create ()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.getPilot():ship():price()/300, ai.getPilot():ship():price()/70) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Get refuel chance
    p = ai.getPlayer()
@@ -78,7 +78,7 @@ function taunt ( target, offense )
       }
    end
 
-   ai.getPilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

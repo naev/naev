@@ -12,7 +12,7 @@ function sos ()
       "Taking hostile fire! Need assistance!",
       "We are under attack, require support!",
       "Mayday! Ship taking damage!",
-      string.format("Mayday! Merchant %s being assaulted!", string.lower( ai.getPilot():ship():class() ))
+      string.format("Mayday! Merchant %s being assaulted!", string.lower( ai.pilot():ship():class() ))
    }
    ai.settarget( ai.target() )
    ai.distress( msg[ rnd.int(1,#msg) ])
@@ -29,7 +29,7 @@ mem.distressmsgfunc = sos
 function create ()
 
    -- Probably the ones with the most money
-   ai.setcredits( rnd.int(ai.getPilot():ship():price()/100, ai.getPilot():ship():price()/25) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/100, ai.pilot():ship():price()/25) )
 
    -- Communication stuff
    mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
@@ -57,7 +57,7 @@ function create ()
    else
       cargo = "Medicine"
    end
-   ai.getPilot():cargoAdd( cargo, rnd.int(0, ai.getPilot():cargoFree() ) )
+   ai.pilot():cargoAdd( cargo, rnd.int(0, ai.pilot():cargoFree() ) )
 
    -- Finish up creation
    create_post()

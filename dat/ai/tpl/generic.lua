@@ -39,7 +39,7 @@ function control ()
    if mem.cooldown then
       mem.tickssincecooldown = 0
 
-      cooldown, braking = ai.getPilot():cooldown()
+      cooldown, braking = ai.pilot():cooldown()
       if not (cooldown or braking) then
          mem.cooldown = false
       end
@@ -50,7 +50,7 @@ function control ()
    -- Reset distress if not fighting/running
    if task ~= "attack" and task ~= "runaway" then
       mem.attacked = nil
-      local p = ai.getPilot()
+      local p = ai.pilot()
 
       -- Cooldown shouldn't preempt boarding, either.
       if task ~= "board" then
@@ -207,7 +207,7 @@ function attacked ( attacker )
    if mem.cooldown then
       if ai.pshield() < 90 then
          mem.cooldown = false
-         ai.getPilot():setCooldown( false )
+         ai.pilot():setCooldown( false )
       else
          return
       end
@@ -282,7 +282,7 @@ function distress ( pilot, attacker )
 
    pfact  = pilot:faction()
    afact  = attacker:faction()
-   aifact = ai.getPilot():faction()
+   aifact = ai.pilot():faction()
    p_ally  = aifact:areAllies(pfact)
    a_ally  = aifact:areAllies(afact)
    p_enemy = aifact:areEnemies(pfact)
@@ -389,7 +389,7 @@ end
 -- Picks an appropriate weapon set for ships with mixed weaponry.
 function choose_weapset()
    if ai.hascannons() and ai.hasturrets() then
-      local p = ai.getPilot()
+      local p = ai.pilot()
       local meant, peakt = p:weapsetHeat( 3 )
       local meanc, peakc = p:weapsetHeat( 2 )
 
@@ -430,7 +430,7 @@ end
 -- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
-   local mean = ai.getPilot():weapsetHeat()
+   local mean = ai.pilot():weapsetHeat()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
@@ -439,6 +439,6 @@ function should_cooldown()
    -- The weapons are extremely hot and cooldown should be triggered.
    elseif mean > mem.heatthreshold and ai.pshield() > 50 then
       mem.cooldown = true
-      ai.getPilot():setCooldown(true)
+      ai.pilot():setCooldown(true)
    end
 end

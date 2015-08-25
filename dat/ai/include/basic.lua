@@ -240,7 +240,7 @@ function land ()
       -- Bail out if no valid planet could be found.
       if mem.land == nil then
          warn(string.format("Pilot '%s' tried to land with no landable assets!",
-               ai.getPilot():name()))
+               ai.pilot():name()))
          ai.poptask()
          return
       end
@@ -530,11 +530,11 @@ function __refuelstop ()
 
    -- See if finished refueling
    if ai.donerefuel(target) then
-      ai.getPilot():comm(target, "Finished fuel transfer.")
+      ai.pilot():comm(target, "Finished fuel transfer.")
       ai.poptask()
 
       -- Untarget
-      ai.settarget( ai.getPilot() )
+      ai.settarget( ai.pilot() )
       return
    end
 

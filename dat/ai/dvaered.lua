@@ -9,7 +9,7 @@ mem.aggressive = true
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.getPilot():ship():price()/300, ai.getPilot():ship():price()/100) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
    -- Handle bribing
    if rnd.int() > 0.4 then
@@ -59,6 +59,6 @@ function taunt ( target, offense )
        "You're no match for the Dvaered!",
        "Death awaits you!"
    }
-   ai.getPilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

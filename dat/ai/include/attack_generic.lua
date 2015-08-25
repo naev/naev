@@ -548,7 +548,7 @@ end --end capship attack
 --]]
 function atk_g_flyby_aggressive( target, dist )
 
-   --ai.getPilot():comm(1, "flyby attack!")
+   --ai.pilot():comm(1, "flyby attack!")
    local range = ai.getweaprange(3)
 
    -- Set weapon set
@@ -630,7 +630,7 @@ end
 --]]
 function atk_g_flyby( target, dist )
 
-   --ai.getPilot():comm(1, "flyby attack")
+   --ai.pilot():comm(1, "flyby attack")
    
    local range = ai.getweaprange(3)
    local dir = 0
@@ -716,7 +716,7 @@ function atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    
-   --ai.getPilot():comm(1, "capship attack")
+   --ai.pilot():comm(1, "capship attack")
    
    ai.weapset( 3 )
    
@@ -806,7 +806,7 @@ end
 --]]
 function atk_g_space_sup( target, dist )
 
-  -- ai.getPilot():comm(1, "space superiority")
+  -- ai.pilot():comm(1, "space superiority")
 
    local range = ai.getweaprange(3)
    local dir = 0

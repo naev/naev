@@ -11,7 +11,7 @@ mem.aggressive = true
 
 function create()
 	-- Not too many credits.
-	ai.setcredits( rnd.rnd(ai.getPilot():ship():price()/200, ai.getPilot():ship():price()/50) )
+	ai.setcredits( rnd.rnd(ai.pilot():ship():price()/200, ai.pilot():ship():price()/50) )
 
 	-- Get refuel chance
 	p = ai.getPlayer()
@@ -29,7 +29,7 @@ function create()
 
 	-- See if can be bribed
 	if rnd.rnd() > 0.7 then
-		mem.bribe = math.sqrt( ai.getPilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
+		mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
 		mem.bribe_prompt = string.format("\"We will agree to end the battle for %d credits.\"", mem.bribe )
 		mem.bribe_paid = "\"Temporarily stopping fire.\""
 	else
@@ -76,7 +76,7 @@ function taunt ( target, offense )
 		}
 	end
 
-	ai.getPilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
+	ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

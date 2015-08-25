@@ -171,7 +171,7 @@ static int aiL_subtaskname( lua_State *L ); /* string subtaskname() */
 static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 
 /* consult values */
-static int aiL_getPilot( lua_State *L ); /* number getPilot() */
+static int aiL_pilot( lua_State *L ); /* number pilot() */
 static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
@@ -277,7 +277,7 @@ static const luaL_reg aiL_methods[] = {
    { "isdisabled", aiL_isdisabled },
    { "haslockon", aiL_haslockon },
    /* get */
-   { "getPilot", aiL_getPilot },
+   { "pilot", aiL_pilot },
    { "getPlayer", aiL_getplayer },
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
@@ -1436,7 +1436,7 @@ static int aiL_getsubtarget( lua_State *L )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int aiL_getPilot( lua_State *L )
+static int aiL_pilot( lua_State *L )
 {
    LuaPilot p;
    p.pilot = cur_pilot->id;
