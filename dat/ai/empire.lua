@@ -10,7 +10,7 @@ mem.aggressive = true
 function create ()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.shipprice()/300, ai.shipprice()/70) )
+   ai.setcredits( rnd.rnd(ai.getPilot():ship():price()/300, ai.getPilot():ship():price()/70) )
 
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    r = rnd.rnd(0,20)
@@ -40,7 +40,7 @@ function create ()
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.rnd() + 1750.)
+      mem.bribe = math.sqrt( ai.getPilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
       mem.bribe_paid = "\"Now scram before I change my mind.\""
    else

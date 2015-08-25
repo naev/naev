@@ -415,7 +415,7 @@ function atk_fighter ()
 
    -- engage melee
    else
-      if ai.shipmass(target) < 200 then
+      if target:stats().mass < 200 then
         atk_g_space_sup(target, dist)
       else
         atk_g_flyby_aggressive( target, dist )
@@ -474,7 +474,7 @@ function atk_corvette ()
 
    -- Close enough to melee
    else
-      if ai.shipmass(target) < 500 then
+      if target:stats().mass < 500 then
         atk_g_space_sup(target, dist)
       else
         atk_g_flyby_aggressive( target, dist )

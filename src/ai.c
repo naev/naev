@@ -183,9 +183,6 @@ static int aiL_pcurenergy( lua_State *L ); /* pcurenergy() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
-static int aiL_cargofree( lua_State *L ); /* number cargofree() */
-static int aiL_shipclass( lua_State *L ); /* string shipclass( [number] ) */
-static int aiL_shipmass( lua_State *L ); /* string shipmass( [number] ) */
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
 
@@ -258,7 +255,6 @@ static int aiL_distress( lua_State *L ); /* distress( string [, bool] ) */
 /* loot */
 static int aiL_credits( lua_State *L ); /* credits( number ) */
 static int aiL_cargo( lua_State *L ); /* cargo( name, quantity ) */
-static int aiL_shipprice( lua_State *L ); /* shipprice() */
 
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
@@ -298,9 +294,6 @@ static const luaL_reg aiL_methods[] = {
    { "dist", aiL_getdistance },
    { "flyby_dist", aiL_getflybydistance },
    { "minbrakedist", aiL_minbrakedist },
-   { "cargofree", aiL_cargofree },
-   { "shipclass", aiL_shipclass },
-   { "shipmass", aiL_shipmass },
    { "isbribed", aiL_isbribed },
    { "getstanding", aiL_getstanding },
    /* movement */
@@ -356,7 +349,6 @@ static const luaL_reg aiL_methods[] = {
    /* loot */
    { "setcredits", aiL_credits },
    { "setcargo", aiL_cargo },
-   { "shipprice", aiL_shipprice },
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
@@ -1751,49 +1743,6 @@ static int aiL_minbrakedist( lua_State *L )
 
    lua_pushnumber(L, dist); /* return */
    return 1; /* returns one thing */
-}
-
-/*
- * gets the pilot's free cargo space
- */
-static int aiL_cargofree( lua_State *L )
-{
-   lua_pushnumber(L, pilot_cargoFree(cur_pilot));
-   return 1;
-}
-
-
-/*
- * gets the pilot's ship class.
- */
-static int aiL_shipclass( lua_State *L )
-{
-   Pilot *p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   lua_pushstring(L, ship_class(p->ship));
-   return 1;
-}
-
-
-/*
- * Gets the ship's mass.
- */
-static int aiL_shipmass( lua_State *L )
-{
-   Pilot *p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   lua_pushnumber(L, p->solid->mass);
-   return 1;
 }
 
 
@@ -3274,16 +3223,6 @@ static int aiL_cargo( lua_State *L )
    pilot_cargoAdd( cur_pilot, commodity_get(s), q, 0 );
 
    return 0;
-}
-
-
-/*
- * gets the pilot's ship value
- */
-static int aiL_shipprice( lua_State *L )
-{
-   lua_pushnumber(L, cur_pilot->ship->price);
-   return 1;
 }
 
 

@@ -28,7 +28,7 @@ end
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
+   ai.setcredits( rnd.int(ai.getPilot():ship():price()/500, ai.getPilot():ship():price()/200) )
 
    -- No bribe
    local bribe_msg = {

@@ -12,7 +12,7 @@ function sos ()
       "Taking hostile fire! Need assistance!",
       "We are under attack, require support!",
       "Mayday! Ship taking damage!",
-      string.format("Mayday! Civilian %s being assaulted!", string.lower( ai.shipclass() ))
+      string.format("Mayday! Civilian %s being assaulted!", string.lower( ai.getPilot():ship():class() ))
    }
    ai.settarget( ai.target() )
    ai.distress( msg[ rnd.int(1,#msg) ])
@@ -29,7 +29,7 @@ mem.distressmsgfunc = sos
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
+   ai.setcredits( rnd.int(ai.getPilot():ship():price()/500, ai.getPilot():ship():price()/200) )
 
    -- No bribe
    local bribe_msg = {

@@ -24,13 +24,13 @@ function create ()
    end
 
    -- Not too much money
-   ai.setcredits( rnd.int(ai.shipprice()/80 , ai.shipprice()/30) )
+   ai.setcredits( rnd.int(ai.getPilot():ship():price()/80 , ai.getPilot():ship():price()/30) )
 
    -- Deal with bribeability
    if rnd.rnd() < 0.05 then
       mem.bribe_no = "\"You won't be able to slide out of this one!\""
    else
-      mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.rnd() + 850.)
+      mem.bribe = math.sqrt( ai.getPilot():stats().mass ) * (300. * rnd.rnd() + 850.)
       bribe_prompt = {
             "\"It'll cost you %d credits for me to ignore your pile of rubbish.\"",
             "\"I'm in a good mood so I'll let you go for %d credits.\"",

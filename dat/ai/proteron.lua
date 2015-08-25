@@ -10,7 +10,7 @@ mem.aggressive = true
 function create ()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.shipprice()/300, ai.shipprice()/70) )
+   ai.setcredits( rnd.rnd(ai.getPilot():ship():price()/300, ai.getPilot():ship():price()/70) )
 
    -- Get refuel chance
    p = ai.getPlayer()
@@ -32,7 +32,7 @@ function create ()
 
    -- See if can be bribed
    if rnd.rnd() > 0.6 then
-      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.rnd() + 1750.)
+      mem.bribe = math.sqrt( ai.getPilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format("\"House Proteron can always use some income. %d credits and you were never here.\"", mem.bribe )
       mem.bribe_paid = "\"Get lost before I have to dispose of you.\""
    else

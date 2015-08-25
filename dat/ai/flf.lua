@@ -12,7 +12,7 @@ mem.land_planet    = false
 function create ()
 
    -- Give monies.
-   ai.setcredits( rnd.int(ai.shipprice()/600 , ai.shipprice()/100) )
+   ai.setcredits( rnd.int(ai.getPilot():ship():price()/600 , ai.getPilot():ship():price()/100) )
 
    -- Get standing.
    p = ai.getPlayer()
@@ -26,7 +26,7 @@ function create ()
    if standing < -30 then
       mem.bribe_no = "\"The only way to deal with scum like you is with cannons!\""
    else
-      mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.int() + 850.)
+      mem.bribe = math.sqrt( ai.getPilot():stats().mass ) * (300. * rnd.int() + 850.)
       mem.bribe_prompt = string.format("\"It'll cost you %d credits for me to ignore your dirty presence.\"", mem.bribe)
       mem.bribe_paid = "\"Begone before I change my mind.\""
    end

@@ -9,7 +9,7 @@ mem.aggressive = true
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/100) )
+   ai.setcredits( rnd.int(ai.getPilot():ship():price()/300, ai.getPilot():ship():price()/100) )
 
    -- Handle bribing
    if rnd.int() > 0.4 then
