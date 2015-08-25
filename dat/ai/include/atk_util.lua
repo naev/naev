@@ -13,7 +13,7 @@ function _atk_keep_distance()
 
    --find nearest thing
    local neighbor = ai.nearestpilot()
-   if not neighbor then
+   if not neighbor or not neighbor:exists() then
       return
    end
 
