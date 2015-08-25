@@ -47,6 +47,6 @@ function taunt ( target, offense )
          "These moments will be your last!",
          "You are a parasite!"
    }
-   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.getPilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

@@ -15,9 +15,9 @@ function create ()
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    r = rnd.rnd(0,20)
    if r == 0 then
-     ai.broadcast("The Empire is watching you.")
+     ai.getPilot():broadcast("The Empire is watching you.")
     elseif r == 1 then
-      ai.broadcast("The Emperor sees all.")
+      ai.getPilot():broadcast("The Emperor sees all.")
    end
 
    -- Get refuel chance
@@ -89,7 +89,7 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.rnd(1,#taunts) ])
+   ai.getPilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

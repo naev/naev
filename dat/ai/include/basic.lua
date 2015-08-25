@@ -530,7 +530,7 @@ function __refuelstop ()
 
    -- See if finished refueling
    if ai.donerefuel(target) then
-      ai.comm(target, "Finished fuel transfer.")
+      ai.getPilot():comm(target, "Finished fuel transfer.")
       ai.poptask()
 
       -- Untarget

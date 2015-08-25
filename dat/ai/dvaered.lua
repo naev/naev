@@ -59,6 +59,6 @@ function taunt ( target, offense )
        "You're no match for the Dvaered!",
        "Death awaits you!"
    }
-   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.getPilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

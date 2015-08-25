@@ -247,8 +247,6 @@ static int aiL_settimer( lua_State *L ); /* settimer( number, number ) */
 static int aiL_timeup( lua_State *L ); /* boolean timeup( number ) */
 
 /* messages */
-static int aiL_comm( lua_State *L ); /* say( number, string ) */
-static int aiL_broadcast( lua_State *L ); /* broadcast( string ) */
 static int aiL_distress( lua_State *L ); /* distress( string [, bool] ) */
 
 /* loot */
@@ -340,8 +338,6 @@ static const luaL_reg aiL_methods[] = {
    { "settimer", aiL_settimer },
    { "timeup", aiL_timeup },
    /* messages */
-   { "comm", aiL_comm },
-   { "broadcast", aiL_broadcast },
    { "distress", aiL_distress },
    /* loot */
    { "setcredits", aiL_credits },
@@ -3095,38 +3091,6 @@ static int aiL_timeup( lua_State *L )
 
    lua_pushboolean(L, cur_pilot->timer[n] < 0.);
    return 1;
-}
-
-
-/*
- * makes the pilot say something to the player
- */
-static int aiL_comm( lua_State *L )
-{
-   Pilot *p;
-   const char *s;
-
-   /* Get parameters. */
-   p = luaL_validpilot(L,1);
-   s = luaL_checkstring(L,2);
-
-   /* Send the message. */
-   pilot_message( cur_pilot, p->id, s, 0 );
-
-   return 0;
-}
-
-/*
- * broadcasts to the entire area
- */
-static int aiL_broadcast( lua_State *L )
-{
-   const char *str;
-
-   str = luaL_checkstring(L,1);
-   pilot_broadcast( cur_pilot, str, 0 );
-
-   return 0;
 }
 
 

@@ -69,6 +69,6 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.getPilot():comm(target, taunts[ rnd.int(1,#taunts) ])
 end
 
