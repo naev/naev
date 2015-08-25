@@ -722,10 +722,6 @@ static int ai_loadProfile( const char* filename )
 
    /* Register C functions in Lua */
    luaL_register(L, "ai", aiL_methods);
-   nlua_loadRnd(L);
-
-   /* Metatables to register. */
-   nlua_loadVector(L);
 
    /* Add the player memory table. */
    lua_newtable(L);              /* pm */
