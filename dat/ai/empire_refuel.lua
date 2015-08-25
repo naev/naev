@@ -12,7 +12,7 @@ function create ()
    ai.setcredits( 0 )
 
    -- Get refuel chance
-   p = ai.getPlayer()
+   p = player.pilot()
    if p:exists() then
       mem.refuel = 0
       -- Most likely no chance to refuel

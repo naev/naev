@@ -172,7 +172,6 @@ static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 
 /* consult values */
 static int aiL_pilot( lua_State *L ); /* number pilot() */
-static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
@@ -278,7 +277,6 @@ static const luaL_reg aiL_methods[] = {
    { "haslockon", aiL_haslockon },
    /* get */
    { "pilot", aiL_pilot },
-   { "getPlayer", aiL_getplayer },
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
    { "armour", aiL_armour },
@@ -721,9 +719,6 @@ static int ai_loadProfile( const char* filename )
 
    /* Prepare API. */
    nlua_loadStandard(L,0);
-
-   /* constants */
-   lua_regnumber(L, "player", PLAYER_ID); /* player ID */
 
    /* Register C functions in Lua */
    luaL_register(L, "ai", aiL_methods);
@@ -1440,23 +1435,6 @@ static int aiL_pilot( lua_State *L )
 {
    LuaPilot p;
    p.pilot = cur_pilot->id;
-
-   lua_pushpilot(L, p);
-   return 1;
-}
-
-
-/**
- * @brief Gets the player.
- *    @return The player's ship identifier.
- * @luafunc getPlayer()
- *    @param L Lua state.
- *    @return Number of Lua parameters.
- */
-static int aiL_getplayer( lua_State *L )
-{
-   LuaPilot p;
-   p.pilot = PLAYER_ID;
 
    lua_pushpilot(L, p);
    return 1;

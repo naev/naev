@@ -14,7 +14,7 @@ function create()
 	ai.setcredits( rnd.rnd(ai.pilot():ship():price()/200, ai.pilot():ship():price()/50) )
 
 	-- Get refuel chance
-	p = ai.getPlayer()
+	p = player.pilot()
 	if p:exists() then
 		standing = ai.getstanding( p ) or -1
 		mem.refuel = rnd.rnd( 1000, 2000 )
