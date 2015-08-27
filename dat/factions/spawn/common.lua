@@ -70,7 +70,9 @@ scom.spawn = function( pilots )
    local spawned = {}
    for k,v in ipairs(pilots) do
       local p
-      if not v["pilot"][1] then
+      if type(v["pilot"])=='function' then
+         p = v["pilot"]() -- Call function
+      elseif not v["pilot"][1] then
          p = pilot.add( v["pilot"] )
       else
          p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5])

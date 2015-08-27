@@ -1,5 +1,10 @@
 include("dat/factions/spawn/common.lua")
 
+include("pilot/pirate.lua") -- Uniques
+function pirate_unique()
+   local p = pirate_create( true )
+   return {p}
+end
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
@@ -71,12 +76,14 @@ function spawn_capship ()
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
        scom.addPilot( pilots, "Pirate Phalanx", 45 );
-    else
+    elseif r < 0.99 then
        scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
        scom.addPilot( pilots, "Pirate Rhino", 35 );
        scom.addPilot( pilots, "Pirate Admonisher", 45 );
+    else
+      scom.addPilot( pilots, pirate_unique, 100 )
     end
 
     return pilots
