@@ -76,7 +76,7 @@ function spawn_capship ()
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
        scom.addPilot( pilots, "Pirate Phalanx", 45 );
-    elseif r < 0.99 then
+    elseif r < 0.97 then
        scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );

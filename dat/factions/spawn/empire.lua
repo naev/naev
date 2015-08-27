@@ -54,7 +54,7 @@ function spawn_capship ()
    -- Generate the capship
    if r < 0.7 then
       scom.addPilot( pilots, "Empire Hawking", 140 )
-   elseif r < 0.99 then
+   elseif r < 0.97 then
       scom.addPilot( pilots, "Empire Peacemaker", 165 )
    else
       scom.addPilot( pilots, empire_unique, 200 )
