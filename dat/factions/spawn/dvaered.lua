@@ -6,7 +6,7 @@ function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.05 then
+    if r < pbm then
         pilots = spawnLtMerc("Dvaered")
     elseif r < 0.5 then
         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
@@ -30,7 +30,7 @@ function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.05 then
+    if r < pbm then
         pilots = spawnMdMerc("Dvaered")
     elseif r < 0.5 then
         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
@@ -55,7 +55,7 @@ end
 function spawn_capship ()
     local pilots = {}
 
-    if rnd.rnd() < 0.1 then
+    if rnd.rnd() < pbm then
         pilots = spawnBgMerc("Dvaered")
     else
         -- Generate the capship
