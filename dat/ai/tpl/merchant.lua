@@ -59,7 +59,7 @@ function control ()
 
    -- Find something to do
    elseif task == "none" then
-      planet = ai.landplanet()
+      planet = ai.landplanet():pos()
       -- planet must exist
       if planet == nil then
          ai.settimer(0, rnd.int(1000, 3000))

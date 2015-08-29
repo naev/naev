@@ -235,7 +235,7 @@ function land ()
 
    -- Make sure mem.land is valid target
    if mem.land == nil then
-      mem.land = ai.landplanet()
+      mem.land = ai.landplanet():pos()
 
       -- Bail out if no valid planet could be found.
       if mem.land == nil then

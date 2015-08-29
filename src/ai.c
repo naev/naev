@@ -90,6 +90,7 @@
 #include "nlua_vec2.h"
 #include "nlua_rnd.h"
 #include "nlua_pilot.h"
+#include "nlua_planet.h"
 #include "nlua_faction.h"
 #include "board.h"
 #include "hook.h"
@@ -2281,7 +2282,7 @@ static int aiL_getnearestplanet( lua_State *L )
 {
    double dist, d;
    int i, j;
-   LuaVector lv;
+   LuaPlanet planet;
 
    if (cur_system->nplanets == 0) return 0; /* no planets */
 
@@ -2298,8 +2299,8 @@ static int aiL_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   vectcpy( &lv.vec, &cur_system->planets[j]->pos );
-   lua_pushvector(L, lv);
+   planet.id = cur_system->planets[j]->id;
+   lua_pushplanet(L, planet);
 
    return 1;
 }
@@ -2310,7 +2311,7 @@ static int aiL_getnearestplanet( lua_State *L )
  */
 static int aiL_getrndplanet( lua_State *L )
 {
-   LuaVector lv;
+   LuaPlanet planet;
    int p;
 
    if (cur_system->nplanets == 0) return 0; /* no planets */
@@ -2319,8 +2320,8 @@ static int aiL_getrndplanet( lua_State *L )
    p = RNG(0, cur_system->nplanets-1);
 
    /* Copy the data into a vector */
-   vectcpy( &lv.vec, &cur_system->planets[p]->pos );
-   lua_pushvector(L, lv);
+   planet.id = cur_system->planets[p]->id;
+   lua_pushplanet(L, planet);
 
    return 1;
 }
@@ -2335,9 +2336,8 @@ static int aiL_getlandplanet( lua_State *L )
 {
    int *ind;
    int nplanets, i;
-   LuaVector lv;
+   LuaPlanet planet;
    Planet *p;
-   double a, r;
    int only_friend;
 
    /* Must have planets. */
@@ -2374,11 +2374,8 @@ static int aiL_getlandplanet( lua_State *L )
    /* we can actually get a random planet now */
    i = RNG(0,nplanets-1);
    p = cur_system->planets[ ind[i] ];
-   vectcpy( &lv.vec, &p->pos );
-   a = RNGF() * 2. * M_PI;
-   r = RNGF() * p->radius * 0.8;
-   vect_cadd( &lv.vec, r * cos(a), r * sin(a) );
-   lua_pushvector( L, lv );
+   planet.id = p->id;
+   lua_pushplanet( L, planet );
    cur_pilot->nav_planet   = ind[ i ];
    free(ind);
 
