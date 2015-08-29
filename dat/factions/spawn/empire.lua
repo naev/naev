@@ -1,4 +1,5 @@
 include("dat/factions/spawn/common.lua")
+include("dat/factions/spawn/mercenary_helper.lua")
 
 include("pilot/empire.lua") -- Uniques
 function empire_unique()
@@ -11,7 +12,9 @@ function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
+   if r < pbm then
+      pilots = spawnLtMerc("Empire")
+   elseif r < 0.5 then
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
       scom.addPilot( pilots, "Empire Shark", 20 );
@@ -29,7 +32,9 @@ function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
+   if r < pbm then
+      pilots = spawnMdMerc("Empire")
+   elseif r < 0.5 then
       scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Admonisher", 45 );
@@ -49,29 +54,34 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
-   local r = rnd.rnd()
 
-   -- Generate the capship
-   if r < 0.7 then
-      scom.addPilot( pilots, "Empire Hawking", 140 )
-   elseif r < 0.97 then
-      scom.addPilot( pilots, "Empire Peacemaker", 165 )
+   if rnd.rnd() < pbm then
+      pilots = spawnBgMerc("Empire")
    else
-      scom.addPilot( pilots, empire_unique, 200 )
-   end
+      local r = rnd.rnd()
 
-   -- Generate the escorts
-   r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-   elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
-   else
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      -- Generate the capship
+      if r < 0.7 then
+         scom.addPilot( pilots, "Empire Hawking", 140 )
+      elseif r < 0.97 then
+         scom.addPilot( pilots, "Empire Peacemaker", 165 )
+      else
+         scom.addPilot( pilots, empire_unique, 200 )
+      end
+
+      -- Generate the escorts
+      r = rnd.rnd()
+      if r < 0.5 then
+         scom.addPilot( pilots, "Empire Shark", 20 );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+      elseif r < 0.8 then
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Admonisher", 45 );
+      else
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Pacifier", 75 );
+      end
    end
 
    return pilots

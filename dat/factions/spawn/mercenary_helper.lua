@@ -1,6 +1,8 @@
 --This script chooses the mercenaries that spawn
 include("dat/factions/spawn/common.lua")
 
+pbm = 0.05   --5% mercenaries
+
 function spawnLtMerc(faction)
     local pilots = {}
     local r = rnd.rnd()
