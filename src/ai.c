@@ -175,8 +175,6 @@ static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 static int aiL_pilot( lua_State *L ); /* number pilot() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
-static int aiL_armour( lua_State *L ); /* armour() */
-static int aiL_shield( lua_State *L ); /* shield() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
@@ -275,8 +273,6 @@ static const luaL_reg aiL_methods[] = {
    { "pilot", aiL_pilot },
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
-   { "armour", aiL_armour },
-   { "shield", aiL_shield },
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
    { "dist", aiL_getdistance },
@@ -1492,39 +1488,6 @@ static int aiL_getnearestpilot( lua_State *L )
    /* Actually found a pilot. */
    p.pilot = pilot_stack[candidate_id]->id;
    lua_pushpilot(L, p);
-   return 1;
-}
-
-
-/*
- * gets the pilot's armour
- */
-static int aiL_armour( lua_State *L )
-{
-   Pilot *p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   lua_pushnumber(L, p->armour);
-   return 1;
-}
-
-/*
- * gets the pilot's shield
- */
-static int aiL_shield( lua_State *L )
-{
-   Pilot *p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   lua_pushnumber(L, p->shield);
    return 1;
 }
 
