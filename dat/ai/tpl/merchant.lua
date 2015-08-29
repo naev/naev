@@ -59,13 +59,13 @@ function control ()
 
    -- Find something to do
    elseif task == "none" then
-      planet = ai.landplanet():pos()
+      planet = ai.landplanet()
       -- planet must exist
       if planet == nil then
          ai.settimer(0, rnd.int(1000, 3000))
          ai.pushtask("enterdelay")
       else
-         mem.land = planet
+         mem.land = planet:pos()
          ai.pushtask("hyperspace")
          ai.pushtask("land")
       end

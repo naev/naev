@@ -235,10 +235,12 @@ function land ()
 
    -- Make sure mem.land is valid target
    if mem.land == nil then
-      mem.land = ai.landplanet():pos()
+      local landplanet = ai.landplanet()
+      if landplanet ~= nil then
+         mem.land = landplanet
 
       -- Bail out if no valid planet could be found.
-      if mem.land == nil then
+      else
          warn(string.format("Pilot '%s' tried to land with no landable assets!",
                ai.pilot():name()))
          ai.poptask()
