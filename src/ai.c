@@ -1597,9 +1597,6 @@ static int aiL_getdistance( lua_State *L )
       v = &lv->vec;
    }
 
-   else if (lua_islightuserdata(L,1))
-      v = lua_touserdata(L,1);
-
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
@@ -1636,8 +1633,6 @@ static int aiL_getflybydistance( lua_State *L )
       lv = lua_tovector(L,1);
       v = &lv->vec;
    }
-   else if (lua_islightuserdata(L,1))
-      v = lua_touserdata(L,1);
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
