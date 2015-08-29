@@ -175,8 +175,6 @@ static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 static int aiL_pilot( lua_State *L ); /* number pilot() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
-static int aiL_parmour( lua_State *L ); /* parmour() */
-static int aiL_pshield( lua_State *L ); /* pshield() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
@@ -273,8 +271,6 @@ static const luaL_reg aiL_methods[] = {
    { "pilot", aiL_pilot },
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
-   { "parmour", aiL_parmour },
-   { "pshield", aiL_pshield },
    { "dist", aiL_getdistance },
    { "flyby_dist", aiL_getflybydistance },
    { "minbrakedist", aiL_minbrakedist },
@@ -1488,44 +1484,6 @@ static int aiL_getnearestpilot( lua_State *L )
    /* Actually found a pilot. */
    p.pilot = pilot_stack[candidate_id]->id;
    lua_pushpilot(L, p);
-   return 1;
-}
-
-/*
- * gets the pilot's armour in percent
- */
-static int aiL_parmour( lua_State *L )
-{
-   double d;
-   Pilot* p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   d = p->armour / p->armour_max * 100.;
-
-   lua_pushnumber(L, d);
-   return 1;
-}
-
-/*
- * gets the pilot's shield in percent
- */
-static int aiL_pshield( lua_State *L )
-{
-   double d;
-   Pilot* p;
-
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   d = p->shield / p->shield_max * 100.;
-
-   lua_pushnumber(L, d);
    return 1;
 }
 

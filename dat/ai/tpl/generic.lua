@@ -35,6 +35,8 @@ function control ()
    local task = ai.taskname()
    local enemy = ai.getenemy()
 
+   local parmour, pshield = ai.pilot():health()
+
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
@@ -58,7 +60,7 @@ function control ()
          if mem.cooldown then
             return
          -- If the ship is hot and shields are high, consider cooling down.
-         elseif ai.pshield() > 50 and p:temp() > 300 then
+         elseif pshield > 50 and p:temp() > 300 then
             -- Ship is quite hot, better cool down.
             if p:temp() > 400 then
                mem.cooldown = true
@@ -110,6 +112,8 @@ function control ()
    elseif task == "attack" then
       target = ai.target()
 
+      local target_parmour, target_pshield = target:health()
+
       -- Needs to have a target
       if not target:exists() then
          ai.poptask()
@@ -120,10 +124,10 @@ function control ()
       choose_weapset()
 
       -- Runaway if needed
-      if (mem.shield_run > 0 and ai.pshield() < mem.shield_run
-               and ai.pshield() < ai.pshield(target) ) or
-            (mem.armour_run > 0 and ai.parmour() < mem.armour_run
-               and ai.parmour() < ai.parmour(target) ) then
+      if (mem.shield_run > 0 and pshield < mem.shield_run
+               and pshield < target_pshield ) or
+            (mem.armour_run > 0 and parmour < mem.armour_run
+               and parmour < target_parmour ) then
          ai.pushtask("runaway", target)
 
       -- Think like normal
@@ -156,8 +160,8 @@ function control ()
       local dist = ai.dist( target )
 
       -- Should return to combat?
-      if mem.aggressive and ((mem.shield_return > 0 and ai.pshield() >= mem.shield_return) or
-            (mem.armour_return > 0 and ai.parmour() >= mem.armour_return)) then
+      if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
+            (mem.armour_return > 0 and parmour >= mem.armour_return)) then
          ai.poptask() -- "attack" should be above "runaway"
 
       -- Try to jump
@@ -205,7 +209,8 @@ function attacked ( attacker )
 
    -- Cooldown should be left running if not taking heavy damage.
    if mem.cooldown then
-      if ai.pshield() < 90 then
+      local _, pshield = ai.pilot():health()
+      if pshield < 90 then
          mem.cooldown = false
          ai.pilot():setCooldown( false )
       else
@@ -431,13 +436,14 @@ end
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
    local mean = ai.pilot():weapsetHeat()
+   local _, pshield = ai.pilot()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
    if mem.tickssincecooldown < 15 then
       return
    -- The weapons are extremely hot and cooldown should be triggered.
-   elseif mean > mem.heatthreshold and ai.pshield() > 50 then
+   elseif mean > mem.heatthreshold and pshield > 50 then
       mem.cooldown = true
       ai.pilot():setCooldown(true)
    end
