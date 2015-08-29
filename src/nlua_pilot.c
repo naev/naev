@@ -3403,6 +3403,9 @@ static const struct pL_flag pL_flags[] = {
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
    { .name = "friendly", .id = PILOT_FRIENDLY },
    { .name = "hostile", .id = PILOT_HOSTILE },
+   { .name = "refueling", .id = PILOT_REFUELING },
+   { .name = "disabled", .id = PILOT_DISABLED },
+   { .name = "takingoff", .id = PILOT_TAKEOFF },
    {NULL, -1}
 }; /**< Flags to get. */
 /**
@@ -3425,6 +3428,9 @@ static const struct pL_flag pL_flags[] = {
  *  <li> invinc_player: pilot cannot be hit by the player.</li>
  *  <li> friendly: pilot is friendly toward the player.</li>
  *  <li> hostile: pilot is hostile toward the player.</li>
+ *  <li> refueling: pilot is refueling another pilot.</li>
+ *  <li> disabled: pilot is disabled.</li>
+ *  <li> takingoff: pilot is currently taking off.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.

@@ -494,7 +494,7 @@ function refuel ()
    end
 
    -- See if finished refueling
-   if ai.donerefuel(target) then
+   if not ai.pilot():flags().refueling then
       ai.poptask()
       return
    end
@@ -529,7 +529,7 @@ function __refuelstop ()
    ai.settarget(target)
 
    -- See if finished refueling
-   if ai.donerefuel(target) then
+   if not ai.pilot():flags().refueling then
       ai.pilot():comm(target, "Finished fuel transfer.")
       ai.poptask()
 

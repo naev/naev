@@ -80,7 +80,7 @@ function atk_g ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -396,7 +396,7 @@ function atk_fighter ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -449,7 +449,7 @@ function atk_corvette ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -509,7 +509,7 @@ function atk_capital ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end

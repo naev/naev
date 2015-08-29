@@ -191,7 +191,6 @@ static int aiL_isstopped( lua_State *L ); /* boolean isstopped() */
 static int aiL_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int aiL_isally( lua_State *L ); /* boolean isally( number ) */
 static int aiL_incombat( lua_State *L ); /* boolean incombat( [number] ) */
-static int aiL_isdisabled( lua_State *L ); /* boolean isdisabled( number ) */
 static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
 
 /* movement */
@@ -208,7 +207,6 @@ static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int aiL_land( lua_State *L ); /* bool land() */
-static int aiL_takingoff( lua_State *L ); /* bool takingoff() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 
@@ -254,7 +252,6 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
-static int aiL_donerefuel( lua_State *L ); /* boolean donerefuel() */
 
 
 static const luaL_reg aiL_methods[] = {
@@ -273,7 +270,6 @@ static const luaL_reg aiL_methods[] = {
    { "isenemy", aiL_isenemy },
    { "isally", aiL_isally },
    { "incombat", aiL_incombat },
-   { "isdisabled", aiL_isdisabled },
    { "haslockon", aiL_haslockon },
    /* get */
    { "pilot", aiL_pilot },
@@ -294,7 +290,6 @@ static const luaL_reg aiL_methods[] = {
    { "rndplanet", aiL_getrndplanet },
    { "landplanet", aiL_getlandplanet },
    { "land", aiL_land },
-   { "takingoff", aiL_takingoff },
    { "accel", aiL_accel },
    { "turn", aiL_turn },
    { "face", aiL_face },
@@ -342,7 +337,6 @@ static const luaL_reg aiL_methods[] = {
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
-   { "donerefuel", aiL_donerefuel },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -1838,24 +1832,6 @@ static int aiL_incombat( lua_State *L )
 }
 
 
-/**
- * @brief Checks to see if the target is disabled.
- *
- *    @luaparam p Pilot to see if is disabled.
- *    @luareturn true if pilot is disabled.
- * @luafunc isdisabled( p )
- */
-static int aiL_isdisabled( lua_State *L )
-{
-   Pilot *p;
-
-   p = luaL_validpilot(L,1);
-
-   lua_pushboolean(L, pilot_isDisabled(p));
-   return 1;
-}
-
-
 /*
  * pilot has is locked by some missile
  */
@@ -2463,20 +2439,6 @@ static int aiL_land( lua_State *L )
 }
 
 
-/**
- * @brief Checks to see if the pilot is currently taking off.
- *
- * @usage if ai.takingoff() then -- Pilot is taking off
- *    @luareturn true if pilot is taking off, false if he isn't.
- * @luafunc takingoff()
- */
-static int aiL_takingoff( lua_State *L )
-{
-   lua_pushboolean( L, pilot_isFlag( cur_pilot, PILOT_TAKEOFF ) );
-   return 1;
-}
-
-
 /*
  * tries to enter the pilot in hyperspace, returns the distance if too far away
  */
@@ -3009,18 +2971,6 @@ static int aiL_relhp( lua_State *L )
 static int aiL_board( lua_State *L )
 {
    lua_pushboolean(L, pilot_board( cur_pilot ));
-   return 1;
-}
-
-
-/**
- * @brief Sees if pilot has finished refueling the target.
- *
- *    @luareturn true if target has finished refueling or false if it hasn't.
- */
-static int aiL_donerefuel( lua_State *L )
-{
-   lua_pushboolean(L, !pilot_isFlag(cur_pilot, PILOT_REFUELING));
    return 1;
 }
 
