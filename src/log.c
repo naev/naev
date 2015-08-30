@@ -111,11 +111,11 @@ void log_redirect (void)
    outfile = malloc(PATH_MAX);
    errfile = malloc(PATH_MAX);
 
-   nsnprintf( outfile, PATH_MAX, "%slogs/stdout_%s.txt", nfile_dataPath(),
+   nsnprintf( outfile, PATH_MAX, "%slogs/%s_stdout.txt", nfile_dataPath(),
          timestr );
    freopen( outfile, "w", stdout );
 
-   nsnprintf( errfile, PATH_MAX, "%slogs/stderr_%s.txt", nfile_dataPath(),
+   nsnprintf( errfile, PATH_MAX, "%slogs/%s_stderr.txt", nfile_dataPath(),
          timestr );
    freopen( errfile, "w", stderr );
 
