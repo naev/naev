@@ -38,6 +38,9 @@ Forma = {
          class_count = nil,
          combat_dist = nil,
          lead_ship = nil,
+         d1 = {},
+         d2 = {},
+         d3 = {},
 }
 
 -- The functions below that start with Forma: are all elements of the Forma table above.
@@ -71,9 +74,9 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
    -- Set up stuff and start control loop.
    for _, p in ipairs(forma.fleet) do
       -- We pass the Forma object itself to the hooks.
-      d1 = hook.pilot(p, "death", "dead", forma)
-      d2 = hook.pilot(p, "jump", "jumper", forma)
-      d3 = hook.pilot(p, "land", "lander", forma)
+      self.d1[p] = hook.pilot(p, "death", "dead", forma)
+      self.d2[p] = hook.pilot(p, "jump", "jumper", forma)
+      self.d3[p] = hook.pilot(p, "land", "lander", forma)
    end
    
    hook.pilot(pilot.player(),"jump","jumper",forma)
@@ -102,6 +105,13 @@ end
 function Forma:disband()
    if self.thook then
       hook.rm(self.thook)
+   end
+
+   --Remove the land/jump/death hooks over the pilots
+   for i, p in ipairs(self.fleet) do
+      hook.rm(self.d1[p])
+      hook.rm(self.d2[p])
+      hook.rm(self.d3[p])
    end
    
    self = nil
@@ -192,7 +202,8 @@ end
 function Forma:jumper(jumper)
    if jumper == self.fleader then
       self:dead(jumper) -- Jumping out is the same as dying, for our purpose; we need to not run this before the if statement.
-     closeJumpBool = false 
+      closeJumpBool = false
+      self.fleader:setSpeedLimit(0)
       for _, p in ipairs(self.fleet) do
          
          --find the closest jump point, and make the whole fleet use that jump.
@@ -206,7 +217,6 @@ function Forma:jumper(jumper)
             end
             closeJumpBool = true
          end
-         p:setSpeedLimit(0)
          p:control() -- control pilots or clear their orders.
          p:hyperspace(closeJump:dest())
       end
@@ -228,6 +238,7 @@ function Forma:lander(lander)
    if lander == self.fleader then
       self:dead(lander) -- Landing is the same as dying, for our purpose.
       closeAssetBool = false
+      self.fleader:setSpeedLimit(0)
       for _, p in ipairs(self.fleet) do
          
          --find the closest asset and have the fleet land on it.
@@ -244,7 +255,6 @@ function Forma:lander(lander)
       
          p:control() -- control pilots or clear their orders.
          p:land(closeAsset)
-         p:setSpeedLimit(0)
       end
 
       -- Stop the control loop, or it will override our land() order.
@@ -264,11 +274,11 @@ function dead(victim, killer, forma)
    forma:dead(victim)
 end
 
-function jumper(jumper, forma)
+function jumper(jumper, system, forma)
    forma:jumper(jumper)
 end
 
-function lander(lander, forma)
+function lander(lander, planet, forma)
    forma:lander(lander)
 end
 
@@ -477,9 +487,9 @@ function Forma:control()
    
    if inrange then
       if not self.incombat then --If baddies are in range and the fleet isn't set to do combat yet, then...
+         self.fleader:setSpeedLimit(0)
          for _, p in ipairs(self.fleet) do
             if p ~= pilot.player() then
-               p:setSpeedLimit(0)
                p:control(false) -- ...cut 'em loose.
             end
          end
@@ -500,7 +510,6 @@ function Forma:control()
    local posit = self:assignCoords()
 
    -- Remember, there is no need to check if a pilot exists, because we've already made sure all pilots exist.
-   lead_stats = self.fleader:stats()
    for i, p in ipairs(self.fleet) do
       if not (p == self.fleader) then
 
