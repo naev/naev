@@ -199,26 +199,14 @@ end
 
 -- Jump hook. Ensures the entire fleet jumps if the fleader jumps.
 -- Takes an ID that tells this function which formation the pilot belonged to.
-function Forma:jumper(jumper)
+function Forma:jumper(jumper, jumpoint)
    if jumper == self.fleader then
       self:dead(jumper) -- Jumping out is the same as dying, for our purpose; we need to not run this before the if statement.
-      closeJumpBool = false
       self.fleader:setSpeedLimit(0)
       for _, p in ipairs(self.fleet) do
-         
-         --find the closest jump point, and make the whole fleet use that jump.
-         if closeJumpBool == false then
-            for _, j in ipairs(system.cur():jumps()) do
-               if closeJump == nil then
-                  closeJump = j
-               elseif p:pos():dist(closeJump:pos()) > p:pos():dist(j:pos()) then
-                  closeJump = j
-               end
-            end
-            closeJumpBool = true
-         end
+         --Make the whole fleet use the jump.
          p:control() -- control pilots or clear their orders.
-         p:hyperspace(closeJump:dest())
+         p:hyperspace(jumpoint:dest())
       end
 
       -- Stop the control loop, or it will override our hyperspace() order.
@@ -234,27 +222,14 @@ end
 
 -- Land hook. Ensures the entire fleet lands if the fleader lands.
 -- Takes an ID that tells this function which formation the pilot belonged to.
-function Forma:lander(lander)
+function Forma:lander(lander, planet)
    if lander == self.fleader then
       self:dead(lander) -- Landing is the same as dying, for our purpose.
-      closeAssetBool = false
       self.fleader:setSpeedLimit(0)
       for _, p in ipairs(self.fleet) do
-         
-         --find the closest asset and have the fleet land on it.
-         if closeAssetBool == false then
-            for _, a in ipairs(system.cur():planets()) do
-               if closeAsset == nil then
-                  closeAsset = a
-               elseif p:pos():dist(closeAsset:pos()) > p:pos():dist(a:pos()) then
-                  closeAsset = a
-               end
-            end
-         closeAssetBool = true
-         end
-      
+         --Have the fleet land on the asset.
          p:control() -- control pilots or clear their orders.
-         p:land(closeAsset)
+         p:land(planet)
       end
 
       -- Stop the control loop, or it will override our land() order.
@@ -274,12 +249,12 @@ function dead(victim, killer, forma)
    forma:dead(victim)
 end
 
-function jumper(jumper, system, forma)
-   forma:jumper(jumper)
+function jumper(jumper, jumpoint, forma)
+   forma:jumper(jumper, jumpoint)
 end
 
 function lander(lander, planet, forma)
-   forma:lander(lander)
+   forma:lander(lander, planet)
 end
 
 --Used in formation creation, this creates vec2s for each ship to follow.
