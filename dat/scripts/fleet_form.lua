@@ -5,6 +5,7 @@ Created by Loki and BTAxis
 Usage:
 First create a fleet with pilot.add()
 Then pass that to the Forma:new() function.
+Then use Forma:setTask() to control the fleader
 -usage is: 
       Forma:new(fleet,"formation",combat_dist, preferred_fleet_leader)
 --combat_dist is the distance from the fleet leader to an enemy before the formation breaks and ships attack.
@@ -15,7 +16,7 @@ Control the fleet's movements by controlling the fleet leader, or "fleader".
 example:
 my_fleet = pilot.add("Pirate Hyena Pack")
 my_fleet = Forma:new(my_fleet,"echelon left",1500)
-my_fleet.fleader:control()
+my_fleet:setTask("goto",vec2.new(0,0))
 
 Current formations are:
 buffer            echelon left
@@ -41,6 +42,7 @@ Forma = {
          d1 = {},
          d2 = {},
          d3 = {},
+         task = nil,
 }
 
 -- The functions below that start with Forma: are all elements of the Forma table above.
@@ -476,6 +478,7 @@ function Forma:control()
    else --If no badguys are in range...
       if self.incombat then --...and the fleet is no longer in combat, then...
          self.incombat = false --...flip the combat flag, and continue the function.
+         self:manageTask()     --give the fleader his orders back
       end
    end
       
@@ -505,5 +508,37 @@ function Forma:control()
          end
          -- Logic for fleet leader goes here. For now, let's allow the fleader to act according to the regular AI.
       end
+   end
+end
+
+--Task management
+function Forma:manageTask()
+   if self.task[1] then 
+      self.fleader:control()
+      if self.task[1] == "goto" then
+         self.fleader:goto(self.task[2])
+      elseif self.task[1] == "land" then
+         self.fleader:land(self.task[2])
+      elseif self.task[1] == "hyperspace" then
+         self.fleader:hyperspace(self.task[2])
+      elseif self.task[1] == "follow" and self.task[2]:exists() then
+         self.fleader:follow(self.task[2])
+      elseif self.task[1] == "attack" and self.task[2]:exists() then
+         self.fleader:attack(self.task[2])
+      elseif self.task[1] == "runaway" and self.task[2]:exists() then
+         self.fleader:runaway(self.task[2])
+      elseif self.task[1] == "brake" then
+         self.fleader:brake()
+      else
+         error "task unknown"
+      end
+   end
+end
+
+function Forma:setTask(title, arg)
+   self.task = {title, arg}
+
+   if not self.incombat then
+      self:manageTask()
    end
 end
