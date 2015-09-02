@@ -213,7 +213,7 @@ AC_MSG_RESULT([$with_sdlmixer])
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
   AC_HELP_STRING([--enable-lua=@<:@internal|shared|luajit@:>@],
-     [lua to use (default: internal)]), [
+     [lua to use (default: luajit)]), [
     case "$enableval" in
       luajit)
         used_lua=luajit
@@ -226,7 +226,7 @@ AC_ARG_ENABLE([lua],
         ;;
     esac
   ], [
-    used_lua=internal
+    used_lua=luajit
   ])
 AC_MSG_RESULT([$used_lua])
 
@@ -286,7 +286,7 @@ case "$used_lua" in
       have_lua=yes
       LUA_CFLAGS+="-DHAVE_LUAJIT"
     ], [
-      AC_WARN([Lua is set to Lua-JIT but can not find library; using internal Lua])
+      AC_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
       have_lua=no
     ])
     ;;

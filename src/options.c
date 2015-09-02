@@ -171,7 +171,7 @@ static void opt_close( unsigned int wid, char *name )
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
    sound_volume(conf.sound);
-	music_volume(conf.music);
+   music_volume(conf.music);
 
    window_destroy( opt_wid );
    opt_wid = 0;
@@ -279,7 +279,7 @@ static void opt_gameplay( unsigned int wid )
          "With SDL_mixer\n"
 #endif
 #ifdef HAVE_LUAJIT
-         "Using Lua JIT\n"
+         "Using LuaJIT\n"
 #endif
 #ifdef NDATA_DEF
          "ndata: "NDATA_DEF"\n"
@@ -357,7 +357,7 @@ static int opt_gameplaySave( unsigned int wid, char *str )
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
-   
+
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
 
@@ -846,7 +846,7 @@ static void opt_audio( unsigned int wid )
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
          30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
-   
+
    opt_audioUpdate(wid);
 }
 
@@ -938,7 +938,7 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
-   
+
    /* Backend box */
    /* TODO */
 }

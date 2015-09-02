@@ -2029,7 +2029,7 @@ static SDLMod toolkit_mapMod( SDLKey key )
 static void toolkit_regKey( SDLKey key, SDLKey c )
 {
    SDLMod mod;
-   
+
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
     */
@@ -2053,7 +2053,7 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
 static void toolkit_unregKey( SDLKey key )
 {
    SDLMod mod;
-   
+
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
     */

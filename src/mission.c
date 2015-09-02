@@ -43,7 +43,6 @@
 #include "nxml_lua.h"
 #include "faction.h"
 #include "player.h"
-#include "base64.h"
 #include "space.h"
 #include "cond.h"
 #include "gui_osd.h"

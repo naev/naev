@@ -26,7 +26,10 @@
 --]]
 function pir_getLordRandomPortrait ()
    local portraits = {
-      "none"
+      "pirate/pirate1",
+      "pirate/pirate2",
+      "pirate/pirate3",
+      "pirate/pirate4",
    }
 
    return portraits[ rnd.rnd( 1, #portraits ) ]

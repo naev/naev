@@ -49,7 +49,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_ENERGY_MOD,       /**< Energy multiplier. */
    SS_TYPE_D_ENERGY_REGEN_MOD, /**< Energy regeneration multiplier. */
    SS_TYPE_D_CPU_MOD,          /**< CPU multiplier. */
-   
+
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
@@ -138,7 +138,7 @@ typedef struct ShipStatList_ {
 /**
  * @brief Represents ship statistics, properties ship can use.
  *
- * Doubles: 
+ * Doubles:
  *  These are normalized and centered around 1 so they are in the [0:2]
  *  range, with 1. being default. This value then modulates the stat's base
  *  value.

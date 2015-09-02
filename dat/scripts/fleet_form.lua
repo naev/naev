@@ -128,7 +128,7 @@ function Forma:reorganize()
  
 
    for _,p in ipairs(self.fleet) do
-      if p ~= pilot.player() and p ~= fleader then
+      if p ~= fleader then
          p:setFaction(fleader:faction())
       end
    end
@@ -459,17 +459,7 @@ function Forma:control()
    self.thook = hook.timer(100, "toRepeat", self) -- Call the wrapper, not this function.
 
    --combat. mmmm.
-   local enemies = {}
-   if self.fleader == pilot.player() then
-      local plist = pilot.get()
-      for _,p in ipairs(plist) do
-         if P:hostile() then
-            table.insert(enemies,p)
-         end
-      end
-   else
-      enemies = pilot.get(self.fleader:faction():enemies()) -- Get all enemies of the fleader. NOTE: This assumes an enemy of the fleader is also an enemy of the fleet! For now that's okay, but keep that in mind.
-   end
+   local enemies = pilot.get(self.fleader:faction():enemies())
 
    if self.fleader:hostile() then
       enemies[#enemies+1] = player.pilot() -- Includes the player as an enemy to be iterated over.
@@ -513,13 +503,18 @@ function Forma:control()
    lead_stats = self.fleader:stats()
    for i, p in ipairs(self.fleet) do
       if not (p == self.fleader) then
-         if p:pos():dist(posit[i]) > 300 then
-            p:setSpeedLimit(0)
-         else
-            p:setSpeedLimit(lead_stats.speed + 7 * ((math.log(p:pos():dist(posit[i]))/1.4)))
-         end
+
          p:control() -- Clear orders.
-         p:goto(posit[i], false, false)
+
+         local cons = (posit[i]-p:pos())*10 + (self.fleader:vel()-p:vel())*20  --Computing the direction using a pd controller
+         local goal = cons + p:pos()
+
+         if cons:mod() >= 300 then
+            p:goto(goal, false, false)
+            else
+            p:face(goal)
+         end
+
       else
          if p ~= pilot.player() then
             p:setSpeedLimit(self.fleetspeed) -- Make mon capitan travel at 5 below the slow speed, so other ships can catch up.

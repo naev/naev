@@ -82,6 +82,7 @@ enum {
 
 /* flags */
 #define pilot_clearFlagsRaw(a) memset((a), 0, PILOT_FLAGS_MAX) /**< Clears the pilot flags. */
+#define pilot_copyFlagsRaw(d,s) memcpy((d), (s), PILOT_FLAGS_MAX) /**< Copies the pilot flags from s to d. */
 #define pilot_isFlagRaw(a,f)  ((a)[f]) /**< Checks to see if a pilot flag is set. */
 #define pilot_setFlagRaw(a,f) ((a)[f] = 1) /**< Sets flags rawly. */
 #define pilot_isFlag(p,f)     ((p)->flags[f]) /**< Checks if flag f is set on pilot p. */

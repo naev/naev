@@ -13,6 +13,7 @@
 
 
 include("dat/factions/spawn/common.lua")
+include("dat/factions/spawn/mercenary_helper.lua")
 
 
 -- @brief Spawns a small patrol fleet.
@@ -20,11 +21,16 @@ function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.5 then
-       scom.addPilot( pilots, "Frontier Lancelot", 20 );
+    if r < pbm then
+       pilots = spawnLtMerc("Frontier")
+    elseif r < 0.5 then
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+    elseif r < 0.8 then
+       scom.addPilot( pilots, "Frontier Hyena", 20 );
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
     else
-       scom.addPilot( pilots, "Frontier Lancelot", 20 );
-       scom.addPilot( pilots, "Frontier Lancelot", 20 );
+       scom.addPilot( pilots, "Frontier Hyena", 20 );
+       scom.addPilot( pilots, "Frontier Ancestor", 25 );
     end
 
     return pilots
@@ -36,15 +42,15 @@ function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.5 then
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
-       scom.addPilot( pilots, "Frontier Lancelot", 15 );
+    if r < pbm then
+        pilots = spawnMdMerc("Frontier")
+    elseif r < 0.5 then
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+       scom.addPilot( pilots, "Frontier Phalanx", 55 );
+    else
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+       scom.addPilot( pilots, "Frontier Lancelot", 30 );
+       scom.addPilot( pilots, "Frontier Ancestor", 25 );
     end
 
     return pilots

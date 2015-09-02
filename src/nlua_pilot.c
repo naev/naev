@@ -2994,8 +2994,8 @@ static int pilotL_setNodisable( lua_State *L )
 
 
 /**
- * @brief Limits the speed of a pilot. 
- * 
+ * @brief Limits the speed of a pilot.
+ *
  * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luaparam p Pilot to set speed of.
@@ -3008,18 +3008,18 @@ static int pilotL_setSpeedLimit(lua_State* L)
 
    Pilot *p;
    double s;
-  
+
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    s  = luaL_checknumber(L, 2);
-   
+
    /* Limit the speed */
    p->speed_limit = s;
    if (s > 0.)
      pilot_setFlag( p, PILOT_HASSPEEDLIMIT );
    else
      pilot_rmFlag( p, PILOT_HASSPEEDLIMIT );
-      
+
    pilot_updateMass(p);
    return 0;
 }
@@ -3396,12 +3396,25 @@ static int pilotL_getHostile( lua_State *L )
  * @brief Small struct to handle flags.
  */
 struct pL_flag {
-   char *name; /**< Name of the flag. */  
+   char *name; /**< Name of the flag. */
    int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {
    { .name = "hailing", .id = PILOT_HAILING },
    { .name = "boardable", .id = PILOT_BOARDABLE },
+   { .name = "nojump", .id = PILOT_NOJUMP },
+   { .name = "noland", .id = PILOT_NOLAND },
+   { .name = "nodeath", .id = PILOT_NODEATH },
+   { .name = "nodisable", .id = PILOT_NODISABLE },
+   { .name = "escort", .id = PILOT_ESCORT },
+   { .name = "visible", .id = PILOT_VISIBLE },
+   { .name = "visplayer", .id = PILOT_VISPLAYER },
+   { .name = "hilight", .id = PILOT_HILIGHT },
+   { .name = "invisible", .id = PILOT_INVISIBLE },
+   { .name = "invincible", .id = PILOT_INVINCIBLE },
+   { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
+   { .name = "friendly", .id = PILOT_FRIENDLY },
+   { .name = "hostile", .id = PILOT_HOSTILE },
    {NULL, -1}
 }; /**< Flags to get. */
 /**
@@ -3411,6 +3424,19 @@ static const struct pL_flag pL_flags[] = {
  * <ul>
  *  <li> hailing: pilot is hailing the player.</li>
  *  <li> boardable: pilot is boardable while active.</li>
+ *  <li> nojump: pilot cannot jump.</li>
+ *  <li> noland: pilot cannot land.</li>
+ *  <li> nodeath: pilot cannot die.</li>
+ *  <li> nodisable: pilot cannot be disabled.</li>
+ *  <li> escort: pilot is an escort.</li>
+ *  <li> visible: pilot is always visible.</li>
+ *  <li> visplayer: pilot is always visible to the player.</li>
+ *  <li> hilight: pilot is hilighted on the map.</li>
+ *  <li> invisible: pilot is not displayed.</li>
+ *  <li> invincible: pilot cannot be hit.</li>
+ *  <li> invinc_player: pilot cannot be hit by the player.</li>
+ *  <li> friendly: pilot is friendly toward the player.</li>
+ *  <li> hostile: pilot is hostile toward the player.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.

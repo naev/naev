@@ -464,7 +464,7 @@ int outfit_isTurret( const Outfit* o )
  */
 int outfit_isMod( const Outfit* o )
 {
-   return (o->type==OUTFIT_TYPE_MODIFCATION);
+   return (o->type==OUTFIT_TYPE_MODIFICATION);
 }
 /**
  * @brief Checks if outfit is an afterburner.
@@ -941,7 +941,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("launcher",       OUTFIT_TYPE_LAUNCHER);
    O_CMP("ammo",           OUTFIT_TYPE_AMMO);
    O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
-   O_CMP("modification",   OUTFIT_TYPE_MODIFCATION);
+   O_CMP("modification",   OUTFIT_TYPE_MODIFICATION);
    O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
    O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
    O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
@@ -2041,7 +2041,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 /**
  * @brief Parses and returns Outfit from parent node.
- 
+
  *    @param temp Outfit to load into.
  *    @param parent Parent node to parse outfit from.
  *    @return 0 on success.
@@ -2451,7 +2451,7 @@ void outfit_free (void)
          free(o->u.fig.ship);
       if (outfit_isGUI(o) && o->u.gui.gui)
          free(o->u.gui.gui);
-      if (o->type == OUTFIT_TYPE_MODIFCATION)
+      if (o->type == OUTFIT_TYPE_MODIFICATION)
          ss_free( o->u.mod.stats );
       if (outfit_isMap(o)) {
          array_free( o->u.map->systems );

@@ -68,11 +68,6 @@
   <chance>10</chance>
   <cond>system.cur():faction() ~= nil</cond>
  </event>
- <event name="Unique">
-  <lua>neutral/unique</lua>
-  <trigger>enter</trigger>
-  <chance>3</chance>
- </event>
  <event name="Flintley">
   <lua>neutral/baron_flintley</lua>
   <trigger>land</trigger>

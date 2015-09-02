@@ -200,7 +200,7 @@ int newsL_add( lua_State *L )
             bar_regen();
       }
 
-      return 1;
+      return 0;
    }
 
    if (!(lua_isstring(L, 1) && lua_isstring(L, 2) && lua_isstring(L, 3))) {

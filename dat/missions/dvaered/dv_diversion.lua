@@ -144,6 +144,7 @@ function enter()
         hawk:control()
         hawk:hyperspace(system.get(destjumpname))
         hawk:broadcast(string.format(chatter[0], destjumpname))
+        fleethooks = {}
         fleetdv = pilot.add("Dvaered Home Guard", "dvaered_norun", hawk:pos()-vec2.new(1000,1500))
         for i, j in ipairs(fleetdv) do
             j:changeAI("dvaered_norun")
@@ -151,8 +152,9 @@ function enter()
             j:setVisible(true)
             j:control()
             j:goto(v)
-            hook.pilot(j, "attacked", "fleetdv_attacked")
+            table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
         end
+
         hook.pilot( hawk, "jump", "hawk_jump" )
         hook.pilot( hawk, "land", "hawk_land" )
         hook.pilot( hawk, "attacked", "hawk_attacked")
@@ -186,30 +188,75 @@ function hawk_land () -- Got away
 end
 
 function hawk_attacked () -- chased
-    if jump_fleet_entered then
-    else
+    if not jump_fleet_entered then
         hawk:broadcast(chatter[1])
         hawk:control()
         hawk:hyperspace(system.get(destjumpname))
-        fleetdv[1]:broadcast(chatter[2])
+        broadcast_first(fleetdv, chatter[2])
     end
-    for i, j in ipairs(fleetdv) do
-        j:control()
-        if jump_fleet_entered then 
-           j:changeAI("dvaered_norun")
-           j:control(false)
-        else 
-           j:attack(player.pilot())
+
+    update_fleet()
+end
+
+function fleetdv_attacked () -- chased
+    if not jump_fleet_entered then
+        hawk:control()
+        hawk:hyperspace(system.get(destjumpname))
+        broadcast_first(fleetdv, chatter[3])
+    end
+
+    update_fleet()
+end
+
+function broadcast_first(fleet, msg) -- Find the first alive ship and broadcast a message
+    for k, v in ipairs(fleet) do
+        if v:exists() then
+            _, _, disabled = v:health()
+            if not disabled then
+                v:broadcast(msg)
+                break
+            end
         end
     end
 end
-function fleetdv_attacked () -- chased
-    if jump_fleet_entered then
-    else
-        hawk:control()
-        hawk:hyperspace(system.get(destjumpname))
-        fleetdv[1]:broadcast(chatter[3])
+
+function hawk_dead () -- mission accomplished
+    hawk:broadcast(chatter[4])
+
+    messages = {5, 6, 7}
+    for k, v in ipairs(fleetdv) do
+        if v:exists() then
+            _, _, disabled = v:health()
+            if not disabled then
+                msg = table.remove(messages, 1)
+                if msg then
+                    v:broadcast(chatter[msg])
+                end
+
+                v:control(false)
+                v:setFaction("FLF")
+                v:setVisible(false)
+                v:setHilight(false)
+            end
+        end
     end
+
+    jump_fleet[6]:setNoDeath()
+
+    hook.timer(10000, "complete")
+    for i, j in ipairs(jump_fleet) do
+        if j:exists() then
+            j:land(planet.get(destplanetname))
+        end
+    end
+end
+
+function update_fleet() -- Wrangles the fleet defending the Hawk
+    -- Nothing to do if we're already in the final phase of the mission
+    if not fleethooks then
+        return
+    end
+
     for i, j in ipairs(fleetdv) do
     	if j:exists() then
            j:control()
@@ -221,33 +268,13 @@ function fleetdv_attacked () -- chased
            end
        end
     end
-end
 
-function hawk_dead () -- mission accomplished
-    hawk:broadcast(chatter[4])
-    fleetdv[1]:broadcast(chatter[5])
-    fleetdv[2]:broadcast(chatter[6])
-    fleetdv[3]:broadcast(chatter[7])
-    fleetdv[1]:setFaction("FLF")
-    fleetdv[2]:setFaction("FLF")
-    fleetdv[4]:setFaction("FLF")
-    fleetdv[5]:setFaction("FLF")
-    fleetdv[7]:setFaction("FLF")
-    fleetdv[8]:setFaction("FLF")
-    fleetdv[10]:setFaction("FLF")
-    fleetdv[11]:setFaction("FLF")
-    fleetdv[13]:setFaction("FLF")
-    fleetdv[14]:setFaction("FLF")
-    for i, j in ipairs(fleetdv) do
-        j:control(false)
-        j:setVisible(false)
-        j:setHilight(false)
-    end
-    hook.timer(10000, "complete")
-    for i, j in ipairs(jump_fleet) do
-        if j:exists() then
-            j:land(planet.get(destplanetname))
-	end    
+    if jump_fleet_entered then
+        for k, v in ipairs(fleethooks) do
+            hook.rm(v)
+        end
+
+        fleethooks = nil
     end
 end
 
@@ -257,7 +284,7 @@ function spawn_fleet() -- spawn warlord killing fleet
     player.cinematics(false)
     jump_fleet_entered = true
     jump_fleet = pilot.add("Dvaered Med Force", "dvaered_norun", system.get(destjumpname))
-    jump_fleet[6]:broadcast(string.format(chatter[8], destplanetname))
+    broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
     for i, j in ipairs(jump_fleet) do
         j:changeAI("dvaered_norun")
         j:setFaction("FLF")
@@ -269,44 +296,94 @@ function spawn_fleet() -- spawn warlord killing fleet
     hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
     camera.set(hawk)
     hawk:broadcast(chatter[9])
-    fleetdv[1]:broadcast(chatter[10])
+    broadcast_first(fleetdv, chatter[10])
     hawk:control()
     hawk:land(planet.get(destplanetname))
+
     for i, j in ipairs(fleetdv) do
-        j:changeAI("dvaered_norun")
-        j:control(false)
-        j:setFriendly()
+        if j:exists() then
+            j:changeAI("dvaered_norun")
+            j:control(false)
+            j:setFriendly()
+            j:setInvincible(true)
+        end
+    end
+
+    -- Give the escorts a few seconds to get away from the player.
+    hook.timer(3000, "undo_invuln")
+end
+
+function undo_invuln()
+    for k, v in ipairs(fleetdv) do
+        if v:exists() then
+            v:setInvincible(false)
+        end
     end
 end
+
 function jump_fleet_cap_dead () -- mission failed
     jump_fleet[6]:broadcast(chatter[4])
+
     hawk:broadcast(chatter[12])
     hawk:setNoDeath()
     tk.msg(failtitle[4], failtext[4])
     faction.get("Dvaered"):modPlayerSingle(-5)
     hawk:land(planet.get(destplanetname))
     for i, j in ipairs(fleetdv) do
-        j:control()
-        j:follow(hawk)
-        j:setHilight(false)
+        if j:exists() then
+            j:control()
+            j:follow(hawk)
+            j:setHilight(false)
+        end
     end
     for i, j in ipairs(jump_fleet) do
-        j:control()
-        j:follow(hawk)
-        j:setHilight(false)
+        if j:exists() then
+            j:control()
+            j:follow(hawk)
+            j:setHilight(false)
+        end
     end
     hook.timer(10000, "abort")
-end      
+end
+
+function cleanup()
+    if jump_fleet then
+        for k, v in ipairs(jump_fleet) do
+            if v:exists() then
+                v:setHilight(false)
+                v:setVisible(false)
+
+                if hawk and not hawk:exists() then
+                    v:setFriendly()
+                end
+            end
+        end
+    end
+
+    if not fleetdv then
+        return
+    end
+
+    for k, v in ipairs(fleetdv) do
+        if v:exists() then
+            v:setHilight(false)
+            v:setVisible(false)
+        end
+    end
+end
 
 function complete()
+    cleanup()
     tk.msg(passtitle[1], passtext[1])
     camera.set(player.pilot())
     player.pay(80000)
     jump_fleet[6]:broadcast(string.format(chatter[13], destplanetname))
+    jump_fleet[6]:setNoDeath(false)
     misn.finish(true)
 end
 
 function abort()
+    cleanup()
     camera.set(player.pilot(), true)
     misn.finish(false)
 end

@@ -299,7 +299,7 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Update the universe editor's sidebar text. */
    uniedit_selectText();
-   
+
    /* Propagate autosave checkbox state */
    uniedit_updateAutosave();
 }

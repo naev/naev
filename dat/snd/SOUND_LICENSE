@@ -15,7 +15,7 @@
      * peace4.ogg
      * peace6.ogg
      * snow.ogg
-   * sound
+   * sounds
      * afterburner.wav
      * beam0.wav
      * beam_off0.wav
@@ -36,7 +36,7 @@
    * music
      * ambient1.ogg
      * ambient2.ogg
-	 * ambient2_5.ogg
+     * ambient2_5.ogg
      * ambient3.ogg
      * collective1.ogg
      * collective2.ogg
@@ -53,18 +53,18 @@
      * battlesomething1.ogg
      * battlesomething2.ogg
      * zalek1.ogg
-	 * zalek2.ogg
+     * zalek2.ogg
      * intrigue.ogg
      * automat.ogg
-   * sound
+   * sounds
      * grenade.wav
 
  * Author: junggle, License: GPLv3
-   * sound
+   * sounds
      * plasma.wav
 
  * Author: Tenshihan (http://tenshihan.nexuizninjaz.com/), License: GPLv3
-   * sound
+   * sounds
      * ripper.ogg
      * autocannon.ogg
      * medexp0.ogg
@@ -75,12 +75,12 @@
      * bansheeexp.ogg
 
  * Author: inferno, License: GPLv3
-   * sound
+   * sounds
      * mace.wav
      * seeker.wav
 
  * Author: MrTLikesRobots?, License: GPLv3
-   * sound
+   * sounds
      * hyperspace_engine.ogg
      * hyperspace_jump.ogg
      * hyperspace_powerdown.ogg
@@ -93,7 +93,7 @@
      * ambiphonic.ogg
 
  * Author: Destructavator, License: CC-by 3
-   * sound
+   * sounds
      * hail.ogg
 
  * Author: Askyel, License: CC-by-sa 3.0
@@ -109,9 +109,9 @@
      * terminal.ogg
 
  * Author: Sean Hildebrand, License: PD
-   * sound
+   * sounds
      * compression.ogg
 
  * Author: pengo_au, License: PD
-   * sound
+   * sounds
      * afb_disengage.wav

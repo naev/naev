@@ -1229,7 +1229,7 @@ static void input_clickevent( SDL_Event* event )
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) { 
+   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) {
       /* Border targeting is handled as a special case, as it uses angles,
        * not coordinates.
        */

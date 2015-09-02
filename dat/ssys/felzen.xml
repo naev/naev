@@ -14,6 +14,11 @@
   <asset>Virtual Pirate Small</asset>
  </assets>
  <jumps>
+  <jump target="Peter">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Sagittarius Prime">
    <autopos/>
    <hidden/>

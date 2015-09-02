@@ -1694,10 +1694,10 @@ void equipment_updateShips( unsigned int wid, char* str )
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
-   
+
    /* Get ship error report. */
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
-  
+
    /* Fill the buffer. */
    nsnprintf( buf, sizeof(buf),
          "%s\n"

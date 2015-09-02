@@ -592,7 +592,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 static char map_getPlanetColourChar( Planet *p )
 {
    char colcode;
-   
+
    planet_updateLand(p);
    colcode = planet_getColourChar(p);
 

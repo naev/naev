@@ -55,8 +55,8 @@ void news_widget( unsigned int wid, int x, int y, int w, int h );
 /*
  * News interactions
  */
-news_t* new_article(char* title, char* content, char* faction, ntime_t date, 
-	ntime_t date_to_rm);
+news_t* new_article( char* title, char* content, char* faction, ntime_t date,
+      ntime_t date_to_rm );
 int free_article(int id);
 news_t* news_get(int id);
 

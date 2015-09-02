@@ -15,9 +15,9 @@
  */
 
 /**
- * @file menu.h
+ * @file info.h
  *
- * @brief Handles the important game menus.
+ * @brief Handles the info menu.
  */
 
 

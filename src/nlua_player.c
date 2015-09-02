@@ -386,7 +386,7 @@ static int playerL_allowSave( lua_State *L )
    if (lua_gettop(L)==0)
       b = 1;
    else
-      b = lua_toboolean(L, 1); 
+      b = lua_toboolean(L, 1);
 
    if (b)
       player_rmFlag(PLAYER_NOSAVE);
