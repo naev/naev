@@ -31,7 +31,6 @@
 #include "gui.h"
 #include "camera.h"
 #include "ai.h"
-#include "ai_extra.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */

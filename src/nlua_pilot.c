@@ -31,7 +31,6 @@
 #include "player.h"
 #include "space.h"
 #include "ai.h"
-#include "ai_extra.h"
 #include "nlua_col.h"
 #include "weapon.h"
 #include "gui.h"

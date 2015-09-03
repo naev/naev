@@ -61,7 +61,6 @@
 
 
 #include "ai.h"
-#include "ai_extra.h"
 
 #include "naev.h"
 
