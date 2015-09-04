@@ -938,7 +938,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
 
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && !(slot->on))
+      if (slot->active && (!(slot->on) || slot->cooling))
          continue;
 
       if (outfit_isMod(o)) { /* Modification */
