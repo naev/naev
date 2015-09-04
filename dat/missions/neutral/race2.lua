@@ -16,6 +16,8 @@
 
 --]]
 
+include "numstring.lua"
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
 if lang == "es" then
@@ -26,13 +28,13 @@ else -- Default to English
     ftitle = {}
     ftext = {}
 
-    title[1] = "Looking for a 4th"
+    title[1] = "Another race"
     text[1] = [["Hey man, great to see you back. You want to have another race?"]]   
 
     title[5] = "Choose difficulty"
-    text[5] = [["You can choose two different kinds of races, an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  Of course the reward is bigger too. "]]
+    text[5] = [["There are two races you can participate in: an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  The prize easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]]
     title[6] = "Hard Mode"
-    text[6] = [["You want a challenge huh?  Remember no outfits are allowed on your Llama or you will not be allowed to race.  Let's go have some fun then."]]
+    text[6] = [["You want a challenge huh? Remember, no outfits are allowed on your Llama or you will not be allowed to race. Let's go have some fun then."]]
     
     choice1 = "Easy"
     choice2 = "Hard"
@@ -48,26 +50,26 @@ else -- Default to English
     refusetext = [["I guess we'll need to find another pilot."]]
     
     wintitle = "You Won!"
-    wintext = [[A man in a suit and tie takes you up onto a stage.  A large nametag on his jacket says 'Melendez Corporation'.  "Congratulations on your win," he says, shaking your hand, "that was a great race.  On behalf of Melendez Corporation, I am here to present to you your prize money."  He hands you one of those fake Oversized Checks with %s credits written on it.]]
+    wintext = [[A man in a suit and tie takes you up onto a stage. A large nametag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]]
 
     ftitle[1] = "Illegal ship!"
-    ftext[1] = [["You have switched to a ship that's not allowed in this race.  Mission failed."]]
+    ftext[1] = [["You have switched to a ship that's not allowed in this race. Mission failed."]]
 
     ftitle[2] = "You left the race!"
-    ftext[2] = [["You left the race.  The race continued without you."]]
+    ftext[2] = [["Because you left the race, you have been disqualified."]]
 
     ftitle[3] = "You failed to win the race."
     ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
-"That was a lot of fun, if you ever have time, let's race again."]]
+    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]]
 
     ftitle[4] = "Illegal ship!"
-    ftext[4] = [["You have outfits on your ship which is not allowed in this race in hard mode.  Mission failed."]]
+    ftext[4] = [["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]]
 
     NPCname = "A laid back man"
     NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."
 
     misndesc = "You're participating in another race!"
-    misnreward = "10000/50000 credits"
+    misnreward = "%s credits"
 
     OSDtitle = "Racing Skills 2"
     OSD = {}
@@ -102,8 +104,8 @@ function create ()
     curplanet = planet.cur()
     misn.setNPC(NPCname, "neutral/male1")
     misn.setDesc(NPCdesc)
-
-
+    credits_easy = rnd.rnd(10000, 50000)
+    credits_hard = rnd.rnd(50000, 100000)
 end
 
 
@@ -112,18 +114,20 @@ function accept ()
         misn.accept()
 	OSD[4] = string.format(OSD[4], curplanet:name())
         misn.setDesc(misndesc)
-        misn.setReward(misnreward)
         misn.osdCreate(OSDtitle, OSD)
-        choice, choicetext = tk.choice(title[5], text[5], choice1, choice2)
+        local s = text[5]:format(numstring(credits_easy), numstring(credits_hard))
+        choice, choicetext = tk.choice(title[5], s, choice1, choice2)
         if choice == 1 then
+            credits = credits_easy
             tk.msg(title[2], text[2])
         else
+            credits = credits_hard
             tk.msg(title[6], text[6])
         end
+        misn.setReward(misnreward:format(numstring(credits)))
         hook.takeoff("takeoff")
     else
         tk.msg(refusetitle, refusetext)
-        misn.finish()
     end
 end
 
@@ -307,13 +311,8 @@ end
 function land()
     if target[4] == 4 then
         if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-            if choice == 1 then
-                payment = 10000
-            else
-                payment = 50000
-            end
-            tk.msg(wintitle, string.format(wintext,payment))
-            player.pay(payment)
+            tk.msg(wintitle, wintext:format(numstring(credits)))
+            player.pay(credits)
             misn.finish(true)
         else
             tk.msg(ftitle[3], ftext[3])
