@@ -96,10 +96,10 @@ else --default english
                                "Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas of conquering us!",
                               }
 
-   msg_lore["Empire"] =       {"Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!",
+   msg_lore["Empire"] =       {"Things are getting worse by the year. What happened to the Empire? We used to be the lords and masters over the whole galaxy!",
                                "Did you know that House Za'lek was originally a Great Project initiated by the Empire? Well, now you do! There was also a Project Proteron, but that didn't go so well.",
                                "The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! I totally want one.",
-                               "I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient.",
+                               "I'm still waiting for my pilot license application to get through. Oh well, it's only been half a year, I just have to be patient.",
                                "Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them...",
                                "Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one.",
                               }
@@ -117,7 +117,7 @@ else --default english
    msg_lore["Sirius"] =       {"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.",
                                "I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met... But that instant alone was awe-inspiring.",
                                "They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?",
-                               "My cousin was called to Mutris a cycle ago... He must be in Crater City by now. And one day, he will become one of the Touched!",
+                               "My cousin was called to Mutris a year ago... He must be in Crater City by now. And one day, he will become one of the Touched!",
                                "Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal.",
                                "House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else.",
                                "You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon.",
@@ -125,7 +125,7 @@ else --default english
                               }
 
    msg_lore["Soromid"] =      {"Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them...",
-                               "Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it.",
+                               "Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, years later, I still can't believe it.",
                                "Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else.",
                                "Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival.",
                                "Our cosmetic gene treatments are even safer now for non-Soromids, with a rate of survival of 99.4%!",
@@ -142,7 +142,7 @@ else --default english
 
    msg_lore["Frontier"] =     {"We value our autonomy. We don't want to be ruled by those megalomanic Dvaered Warlords! Can't they just shoot at each other instead of threatening us? If it wasn't for the Liberation Front...",
                                "Have you studied your galactic history? The Frontier worlds were the first to be colonized by humans. That makes our worlds the oldest human settlements in the galaxy, now that Earth is gone.",
-                               "We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decacycles, the Frontier will no longer exist.",
+                               "We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decades, the Frontier will no longer exist.",
                                "Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been.",
                                "There are twelve true Frontier worlds, because twelve colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Eight of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
                                "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else.",

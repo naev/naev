@@ -124,7 +124,7 @@ else --default english
       --]]
       {
          title = "Fullerton Reports Quarterly Loss",
-         desc = "Engine maker Fullerton Industries has posted a c47B loss over the past 250 STPs. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales."
+         desc = "Engine maker Fullerton Industries has posted a c47B loss over the last 25 galactic days. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales."
       },
       {
          title = "Genetric Board Meets",
@@ -191,11 +191,11 @@ else --default english
       },
       {
          title = "FLF Terrorist Trial Ends",
-         desc = "FLF Terrorist Trial ended this SCU with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 STP."
+         desc = "FLF Terrorist Trial ended this galactic year with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 hours."
       },
       {
          title = "New Challenges for New Times",
-         desc = "The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next SCU."
+         desc = "The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next galactic year."
       },
       --[[
          Human interest.
@@ -257,7 +257,7 @@ else --default english
       --]]
       {
          title = "Sirius Weaker Than Ever",
-         desc = "This SCU breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space." 
+         desc = "This galactic year breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space." 
       }
    }
 
