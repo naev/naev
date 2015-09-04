@@ -328,7 +328,7 @@ function hunter_hail( arg )
    if rehailer ~= nil then hook.rm( rehailer ) end
    player.commClose()
 
-   local text = share_text[ rnd.rnd( 1, #emp_share_text ) ]
+   local text = share_text[ rnd.rnd( 1, #share_text ) ]
    tk.msg( share_title, text:format( name ) )
 
    player.pay( credits )
