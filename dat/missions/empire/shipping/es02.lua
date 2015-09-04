@@ -44,7 +44,7 @@ else -- default english
    text[3] = [["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %d credits when you return with the VIP. Good luck, pilot."]]
    text[4] = [[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]
    text[5] = [[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
-    "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. I'll be putting in a good word with the Dvaered for you. Hopefully they'll start offering you work too. We have nothing more for you now, but check in periodically in case something comes up for you."]]
+    "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. We have nothing more for you now, but check in periodically in case something comes up for you."]]
    msg = {}
    msg[1] = "MISSION FAILED: VIP is dead."
    msg[2] = "MISSION FAILED: You abandoned the VIP."
