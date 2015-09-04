@@ -558,7 +558,7 @@ void faction_modPlayer( int f, double mod, const char *source )
    /* Now mod enemies */
    for (i=0; i<faction->nenemies; i++)
       /* Modify faction standing. */
-      faction_modPlayerLua( faction->enemies[i], -mod, source, 1 );
+      faction_modPlayerLua( faction->enemies[i], -mod, source, 0 );
 }
 
 /**
