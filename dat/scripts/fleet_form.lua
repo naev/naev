@@ -5,6 +5,7 @@ Created by Loki and BTAxis
 Usage:
 First create a fleet with pilot.add()
 Then pass that to the Forma:new() function.
+Then use Forma:setTask() to control the fleader
 -usage is: 
       Forma:new(fleet,"formation",combat_dist, preferred_fleet_leader)
 --combat_dist is the distance from the fleet leader to an enemy before the formation breaks and ships attack.
@@ -15,7 +16,7 @@ Control the fleet's movements by controlling the fleet leader, or "fleader".
 example:
 my_fleet = pilot.add("Pirate Hyena Pack")
 my_fleet = Forma:new(my_fleet,"echelon left",1500)
-my_fleet.fleader:control()
+my_fleet:setTask("goto",vec2.new(0,0))
 
 Current formations are:
 buffer            echelon left
@@ -38,6 +39,10 @@ Forma = {
          class_count = nil,
          combat_dist = nil,
          lead_ship = nil,
+         d1 = {},
+         d2 = {},
+         d3 = {},
+         task = nil,
 }
 
 -- The functions below that start with Forma: are all elements of the Forma table above.
@@ -71,9 +76,9 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
    -- Set up stuff and start control loop.
    for _, p in ipairs(forma.fleet) do
       -- We pass the Forma object itself to the hooks.
-      d1 = hook.pilot(p, "death", "dead", forma)
-      d2 = hook.pilot(p, "jump", "jumper", forma)
-      d3 = hook.pilot(p, "land", "lander", forma)
+      self.d1[p] = hook.pilot(p, "death", "dead", forma)
+      self.d2[p] = hook.pilot(p, "jump", "jumper", forma)
+      self.d3[p] = hook.pilot(p, "land", "lander", forma)
    end
    
    hook.pilot(pilot.player(),"jump","jumper",forma)
@@ -102,6 +107,13 @@ end
 function Forma:disband()
    if self.thook then
       hook.rm(self.thook)
+   end
+
+   --Remove the land/jump/death hooks over the pilots
+   for i, p in ipairs(self.fleet) do
+      hook.rm(self.d1[p])
+      hook.rm(self.d2[p])
+      hook.rm(self.d3[p])
    end
    
    self = nil
@@ -189,26 +201,14 @@ end
 
 -- Jump hook. Ensures the entire fleet jumps if the fleader jumps.
 -- Takes an ID that tells this function which formation the pilot belonged to.
-function Forma:jumper(jumper)
+function Forma:jumper(jumper, jumpoint)
    if jumper == self.fleader then
       self:dead(jumper) -- Jumping out is the same as dying, for our purpose; we need to not run this before the if statement.
-     closeJumpBool = false 
+      self.fleader:setSpeedLimit(0)
       for _, p in ipairs(self.fleet) do
-         
-         --find the closest jump point, and make the whole fleet use that jump.
-         if closeJumpBool == false then
-            for _, j in ipairs(system.cur():jumps()) do
-               if closeJump == nil then
-                  closeJump = j
-               elseif p:pos():dist(closeJump:pos()) > p:pos():dist(j:pos()) then
-                  closeJump = j
-               end
-            end
-            closeJumpBool = true
-         end
-         p:setSpeedLimit(0)
+         --Make the whole fleet use the jump.
          p:control() -- control pilots or clear their orders.
-         p:hyperspace(closeJump:dest())
+         p:hyperspace(jumpoint:dest())
       end
 
       -- Stop the control loop, or it will override our hyperspace() order.
@@ -224,27 +224,14 @@ end
 
 -- Land hook. Ensures the entire fleet lands if the fleader lands.
 -- Takes an ID that tells this function which formation the pilot belonged to.
-function Forma:lander(lander)
+function Forma:lander(lander, planet)
    if lander == self.fleader then
       self:dead(lander) -- Landing is the same as dying, for our purpose.
-      closeAssetBool = false
+      self.fleader:setSpeedLimit(0)
       for _, p in ipairs(self.fleet) do
-         
-         --find the closest asset and have the fleet land on it.
-         if closeAssetBool == false then
-            for _, a in ipairs(system.cur():planets()) do
-               if closeAsset == nil then
-                  closeAsset = a
-               elseif p:pos():dist(closeAsset:pos()) > p:pos():dist(a:pos()) then
-                  closeAsset = a
-               end
-            end
-         closeAssetBool = true
-         end
-      
+         --Have the fleet land on the asset.
          p:control() -- control pilots or clear their orders.
-         p:land(closeAsset)
-         p:setSpeedLimit(0)
+         p:land(planet)
       end
 
       -- Stop the control loop, or it will override our land() order.
@@ -264,12 +251,12 @@ function dead(victim, killer, forma)
    forma:dead(victim)
 end
 
-function jumper(jumper, forma)
-   forma:jumper(jumper)
+function jumper(jumper, jumpoint, forma)
+   forma:jumper(jumper, jumpoint)
 end
 
-function lander(lander, forma)
-   forma:lander(lander)
+function lander(lander, planet, forma)
+   forma:lander(lander, planet)
 end
 
 --Used in formation creation, this creates vec2s for each ship to follow.
@@ -477,9 +464,9 @@ function Forma:control()
    
    if inrange then
       if not self.incombat then --If baddies are in range and the fleet isn't set to do combat yet, then...
+         self.fleader:setSpeedLimit(0)
          for _, p in ipairs(self.fleet) do
             if p ~= pilot.player() then
-               p:setSpeedLimit(0)
                p:control(false) -- ...cut 'em loose.
             end
          end
@@ -491,6 +478,7 @@ function Forma:control()
    else --If no badguys are in range...
       if self.incombat then --...and the fleet is no longer in combat, then...
          self.incombat = false --...flip the combat flag, and continue the function.
+         self:manageTask()     --give the fleader his orders back
       end
    end
       
@@ -500,7 +488,6 @@ function Forma:control()
    local posit = self:assignCoords()
 
    -- Remember, there is no need to check if a pilot exists, because we've already made sure all pilots exist.
-   lead_stats = self.fleader:stats()
    for i, p in ipairs(self.fleet) do
       if not (p == self.fleader) then
 
@@ -521,5 +508,37 @@ function Forma:control()
          end
          -- Logic for fleet leader goes here. For now, let's allow the fleader to act according to the regular AI.
       end
+   end
+end
+
+--Task management
+function Forma:manageTask()
+   if self.task[1] then 
+      self.fleader:control()
+      if self.task[1] == "goto" then
+         self.fleader:goto(self.task[2])
+      elseif self.task[1] == "land" then
+         self.fleader:land(self.task[2])
+      elseif self.task[1] == "hyperspace" then
+         self.fleader:hyperspace(self.task[2])
+      elseif self.task[1] == "follow" and self.task[2]:exists() then
+         self.fleader:follow(self.task[2])
+      elseif self.task[1] == "attack" and self.task[2]:exists() then
+         self.fleader:attack(self.task[2])
+      elseif self.task[1] == "runaway" and self.task[2]:exists() then
+         self.fleader:runaway(self.task[2])
+      elseif self.task[1] == "brake" then
+         self.fleader:brake()
+      else
+         error "task unknown"
+      end
+   end
+end
+
+function Forma:setTask(title, arg)
+   self.task = {title, arg}
+
+   if not self.incombat then
+      self:manageTask()
    end
 end
