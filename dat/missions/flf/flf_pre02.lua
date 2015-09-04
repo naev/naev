@@ -235,10 +235,10 @@ function hail ()
    if choice == 1 then
       tk.msg( DVtitle[4], DVtext[4]:format( DVplanet, DVsys ) )
 
-      faction.get("FLF"):modPlayerSingle( -200 )
+      faction.get("FLF"):setPlayerStanding( -100 )
       local standing = faction.get("Dvaered"):playerStanding()
       if standing < 0 then
-         faction.get("Dvaered"):modPlayerRaw( -standing )
+         faction.get("Dvaered"):setPlayerStanding( 0 )
       end
 
       for i, j in ipairs( fleetDV ) do
@@ -328,7 +328,7 @@ function pilot_death_dv ()
       job_done = true
       local standing = faction.get("Dvaered"):playerStanding()
       if standing >= 0 then
-         faction.get("Dvaered"):modPlayerRaw( -standing - 1 )
+         faction.get("Dvaered"):setPlayerStanding( -1 )
       end
       misn.osdActive( 3 )
       misn.markerRm( marker )
