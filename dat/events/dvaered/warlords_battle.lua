@@ -12,11 +12,11 @@ if lang == "es" then
    title = {}
    text = {}
 
-   title[1] = "A battle is going to begin"
-   text[1] = [["Hey, you" the capitain of the ship says, "You seem not to know what is going to happend here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he looses the battle, the other warlord will reward you. But if he wins, you will be hunt down."]]
+   title[1] = "A battle is about to begin"
+   text[1] = [["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]]
 
    title[2] = "Here comes your reward"
-   text[2] = [["Hello, captain" a dvaered officer says, "You helped us in this battle, I give you %s credits as reward."]]
+   text[2] = [["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s credits as a reward."]]
 
 end
 
