@@ -172,6 +172,14 @@
    <unique />
   </flags>
  </event>
+ <event name="Warlords battle">
+  <lua>dvaered/warlords_battle</lua>
+  <trigger>enter</trigger>
+  <chance>2</chance>
+  <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
+  <flags>
+  </flags>
+ </event>
  <event name="Naev Needs You!">
   <lua>naev_needs_YOU</lua>
   <trigger>land</trigger>
