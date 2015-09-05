@@ -8,6 +8,7 @@
   <enemies />
  </faction>
  <faction name="Independent">
+  <invisible />
   <known/>
   <player>3</player>
   <colour>blue</colour>
