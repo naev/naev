@@ -1344,10 +1344,10 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    }
    /* Right click only controls autonav. */
    else if (event->button.button == SDL_BUTTON_RIGHT) {
-      if (pntid >= 0)
-         return input_clickedPlanet(pntid, 1);
-      else if (jpid >= 0)
-         return input_clickedJump(jpid, 1);
+      if ((pntid >= 0) && input_clickedPlanet(pntid, 1))
+         return 1;
+      else if ((jpid >= 0) && input_clickedJump(jpid, 1))
+         return 1;
 
       /* Go to position, if the position is >= 1500 px away. */
       if ((pow2(x - player.p->solid->pos.x) + pow2(y - player.p->solid->pos.y))
