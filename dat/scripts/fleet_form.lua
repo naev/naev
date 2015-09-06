@@ -521,12 +521,18 @@ function Forma:manageTask()
          self.fleader:land(self.task[2])
       elseif self.task[1] == "hyperspace" then
          self.fleader:hyperspace(self.task[2])
-      elseif self.task[1] == "follow" and self.task[2]:exists() then
-         self.fleader:follow(self.task[2])
-      elseif self.task[1] == "attack" and self.task[2]:exists() then
-         self.fleader:attack(self.task[2])
-      elseif self.task[1] == "runaway" and self.task[2]:exists() then
-         self.fleader:runaway(self.task[2])
+      elseif self.task[1] == "follow" then
+         if self.task[2]:exists() then
+            self.fleader:follow(self.task[2])
+         end
+      elseif self.task[1] == "attack" then
+         if self.task[2]:exists() then
+            self.fleader:attack(self.task[2])
+         end
+      elseif self.task[1] == "runaway" then
+         if self.task[2]:exists() then
+            self.fleader:runaway(self.task[2])
+         end
       elseif self.task[1] == "brake" then
          self.fleader:brake()
       else
