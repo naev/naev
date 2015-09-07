@@ -379,7 +379,7 @@ int* faction_getAllies( int f, int *n )
       allies = malloc(sizeof(int)*faction_nstack);
 
       for (i=0; i<faction_nstack; i++)
-         if (faction_stack[i].player>PLAYER_ALLY)
+         if (faction_stack[i].player >= PLAYER_ALLY)
             allies[nallies++] = i;
 
       allies = realloc(allies, sizeof(int)*nallies);
@@ -878,12 +878,12 @@ int areAllies( int a, int b )
 
    /* we assume player becomes allies with high rating */
    if (a==FACTION_PLAYER) {
-      if (fb->player > PLAYER_ALLY)
+      if (fb->player >= PLAYER_ALLY)
          return 1;
       return 0;
    }
    else if (b==FACTION_PLAYER) {
-      if (fa->player > PLAYER_ALLY)
+      if (fa->player >= PLAYER_ALLY)
          return 1;
       return 0;
    }
