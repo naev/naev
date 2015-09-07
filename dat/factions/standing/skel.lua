@@ -10,7 +10,14 @@ _fdelta_distress = {-1, 0} -- Maximum change constraints
 _fdelta_kill     = {-5, 1} -- Maximum change constraints
 _fcap_misn       = 30 -- Starting mission cap, gets overwritten
 _fcap_misn_var   = nil -- Mission variable to use for limits
-_fcap_mod_sec    = 0.3 -- Modulation from secondary
+
+-- Secondary hit modifiers.
+_fmod_distress_enemy  = 0 -- Distress of the faction's enemies
+_fmod_distress_friend = 0.3 -- Distress of the faction's allies
+_fmod_kill_enemy      = 0.3 -- Kills of the faction's enemies
+_fmod_kill_friend     = 0.3 -- Kills of the faction's allies
+_fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
+_fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
 _fstanding_friendly = 70
 _fstanding_neutral = 0
@@ -100,13 +107,27 @@ function default_hit( current, amount, source, secondary )
    local mod = 1
    if source == "distress" then
       delta = clone(_fdelta_distress)
-      -- Ignore positive distresses
-      if amount > 0 then
-         return f
+
+      -- Adjust for secondary hit
+      if secondary then
+         if amount > 0 then
+            mod = mod * _fmod_distress_enemy
+         else
+            mod = mod * _fmod_distress_friend
+         end
       end
    elseif source == "kill" then
       cap   = _fcap_kill
       delta = clone(_fdelta_kill)
+
+      -- Adjust for secondary hit
+      if secondary then
+         if amount > 0 then
+            mod = mod * _fmod_kill_enemy
+         else
+            mod = mod * _fmod_kill_friend
+         end
+      end
    else
       if _fcap_misn_var == nil then
          cap   = _fcap_misn
@@ -117,10 +138,17 @@ function default_hit( current, amount, source, secondary )
             var.push( _fcap_misn_var, cap )
          end
       end
+
+      -- Adjust for secondary hit
+      if secondary then
+         if amount > 0 then
+            mod = mod * _fmod_misn_friend
+         else
+            mod = mod * _fmod_misn_enemy
+         end
+      end
    end
 
-   -- Adjust for secondary hit
-   if secondary then mod = mod * _fcap_mod_sec end
    amount = mod * amount
    delta[1] = mod * delta[1]
    delta[2] = mod * delta[2]
