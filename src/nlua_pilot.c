@@ -1577,35 +1577,36 @@ static int pilotL_actives( lua_State *L )
       }
 
       /* State and timer. */
-      if (o->cooling)
-      {
-         str = "cooldown";
-         d = outfit_cooldown(o->outfit);
-         if (d==0.)
-            d = 0.;
-         else if (!isinf(o->stimer))
-            d = o->stimer / d;
-         lua_pushstring(L,"cooldown");
-         lua_pushnumber(L, d );
-         lua_rawset(L,-3);
+      switch (o->state) {
+         case PILOT_OUTFIT_OFF:
+            str = "off";
+            break;
+         case PILOT_OUTFIT_WARMUP:
+            str = "warmup";
+            break;
+         case PILOT_OUTFIT_ON:
+            str = "on";
+            d = outfit_duration(o->outfit);
+            if (d==0.)
+               d = 1.;
+            else if (!isinf(o->stimer))
+               d = o->stimer / d;
+            lua_pushstring(L,"duration");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+         case PILOT_OUTFIT_COOLDOWN:
+            str = "cooldown";
+            d = outfit_cooldown(o->outfit);
+            if (d==0.)
+               d = 0.;
+            else if (!isinf(o->stimer))
+               d = o->stimer / d;
+            lua_pushstring(L,"cooldown");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
       }
-      else if (o->on)
-      {
-         str = "on";
-         d = outfit_duration(o->outfit);
-         if (d==0.)
-            d = 1.;
-         else if (!isinf(o->stimer))
-            d = o->stimer / d;
-         lua_pushstring(L,"duration");
-         lua_pushnumber(L, d );
-         lua_rawset(L,-3);
-      }
-      else
-      {
-         str = "off";
-      }
-
       lua_pushstring(L,"state");
       lua_pushstring(L,str);
       lua_rawset(L,-3);

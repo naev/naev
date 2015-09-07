@@ -1681,21 +1681,15 @@ void pilot_update( Pilot* pilot, const double dt )
          o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
 
       /* Handle state timer. */
-      if (o->stimer >= 0.)
-      {
+      if (o->stimer >= 0.) {
          o->stimer -= dt;
-         if (o->stimer < 0.)
-         {
-            if ( o->cooling )
-            {
-               o->stimer  = outfit_duration( o->outfit );
-               o->cooling = 0;
+         if (o->stimer < 0.) {
+            if (o->state == PILOT_OUTFIT_ON) {
+               pilot_outfitOff( pilot, o );
                nchg++;
             }
-            else if ( o->on )
-            {
-               o->stimer  = outfit_cooldown( o->outfit );
-               o->cooling = 1;
+            else if (o->state == PILOT_OUTFIT_COOLDOWN) {
+               o->state  = PILOT_OUTFIT_OFF;
                nchg++;
             }
          }
@@ -2898,9 +2892,8 @@ void pilot_clearTimers( Pilot *pilot )
       o = pilot->outfits[i];
       o->timer    = 0.; /* Last used timer. */
       o->stimer   = 0.; /* State timer. */
-      o->cooling  = 0;  /* Set not cooling. */
-      if (o->on) {
-         o->on = 0; /* Set off. */
+      if (o->state != PILOT_OUTFIT_OFF) {
+         o->state    = PILOT_OUTFIT_OFF; /* Set off. */
          n++;
       }
    }
