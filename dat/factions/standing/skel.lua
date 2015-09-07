@@ -32,21 +32,29 @@ _fmod_kill_friend     = 0.3 -- Kills of the faction's allies
 _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
 _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
+_fstanding_friendly = 70
+_fstanding_neutral = 0
+
 
 lang = naev.lang()
-_fstanding_names = {}
+_ftext_standing = {}
 if lang == "es" then
 else -- Default English
-   _fstanding_names[100] = "Legend"
-   _fstanding_names[90] = "Hero"
-   _fstanding_names[70] = "Comrade"
-   _fstanding_names[50] = "Ally"
-   _fstanding_names[30] = "Partner"
-   _fstanding_names[10] = "Associate"
-   _fstanding_names[0] = "Neutral"
-   _fstanding_names[-1] = "Outlaw"
-   _fstanding_names[-30] = "Criminal"
-   _fstanding_names[-50] = "Enemy"
+   _ftext_standing[100] = "Legend"
+   _ftext_standing[90]  = "Hero"
+   _ftext_standing[70]  = "Comrade"
+   _ftext_standing[50]  = "Ally"
+   _ftext_standing[30]  = "Partner"
+   _ftext_standing[10]  = "Associate"
+   _ftext_standing[0]   = "Neutral"
+   _ftext_standing[-1]  = "Outlaw"
+   _ftext_standing[-30] = "Criminal"
+   _ftext_standing[-50] = "Enemy"
+
+   _ftext_friendly = "Friendly"
+   _ftext_neutral  = "Neutral"
+   _ftext_hostile  = "Hostile"
+   _ftext_bribed   = "Neutral"
 end
 
 
@@ -207,9 +215,54 @@ end
 --]]
 function faction_standing_text( standing )
    for i = math.floor( standing ), 0, ( standing < 0 and 1 or -1 ) do
-      if _fstanding_names[i] ~= nil then
-         return _fstanding_names[i]
+      if _ftext_standing[i] ~= nil then
+         return _ftext_standing[i]
       end
    end
-   return _fstanding_names[0]
+   return _ftext_standing[0]
+end
+
+
+--[[
+   @brief Returns whether or not the player is a friend of the faction.
+
+      @param standing Current standing of the player.
+      @return true if the player is a friend, false otherwise.
+--]]
+function faction_player_friend( standing )
+   return standing >= _fstanding_friendly
+end
+
+
+--[[
+   @brief Returns whether or not the player is an enemy of the faction.
+
+      @param standing Current standing of the player.
+      @return true if the player is an enemy, false otherwise.
+--]]
+function faction_player_enemy( standing )
+   return standing < _fstanding_neutral
+end
+
+
+--[[
+   @brief Returns a text representation of the player's broad standing.
+
+      @param standing Current standing of the player.
+      @param bribed Whether or not the respective pilot is bribed.
+      @param override If positive it should be set to ally, if negative it should be set to hostile.
+      @return The text representation of the current broad standing.
+--]]
+function faction_standing_broad( standing, bribed, override )
+   if override == nil then override = 0 end
+
+   if bribed then
+      return _ftext_bribed
+   elseif override > 0 or faction_player_friend( standing ) then
+      return _ftext_friendly
+   elseif override < 0 or faction_player_enemy( standing ) then
+      return _ftext_hostile
+   else
+      return _ftext_neutral
+   end
 end

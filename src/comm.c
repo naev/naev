@@ -288,7 +288,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    int namex, standx, logox, y;
    int namew, standw, logow, width;
    glTexture *logo;
-   char *stand;
+   const char *stand;
    unsigned int wid;
    const glColour *c;
    glFont *font;
@@ -307,22 +307,15 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    logo           = faction_logoSmall(faction);
 
    /* Get standing colour / text. */
-   if (bribed) {
-      stand = "Neutral";
-      c     = &cNeutral;
-   }
-   else if (override < 0) {
-      stand = "Hostile";
-      c     = &cHostile;
-   }
-   else if (override > 0) {
-      stand = "Friendly";
-      c     = &cFriend;
-   }
-   else {
-      stand = faction_getStandingBroad(faction_getPlayer(faction));
-      c     = faction_getColour( faction );
-   }
+   stand = faction_getStandingBroad( faction, bribed, override );
+   if (bribed)
+      c = &cNeutral;
+   else if (override < 0)
+      c = &cHostile;
+   else if (override > 0)
+      c = &cFriend;
+   else
+      c = faction_getColour( faction );
 
    namew  = gl_printWidthRaw( NULL, name );
    standw = gl_printWidthRaw( NULL, stand );
