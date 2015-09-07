@@ -33,10 +33,6 @@
 #define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
 
 
-#define PLAYER_ALLY        70. /**< Above this player is considered ally. */
-#define PLAYER_ENEMY       0. /**< Below this the player is considered an enemy. */
-
-
 #define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
 
 #define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
@@ -341,7 +337,7 @@ int* faction_getEnemies( int f, int *n )
       enemies = malloc(sizeof(int)*faction_nstack);
 
       for (i=0; i<faction_nstack; i++)
-         if (faction_stack[i].player<PLAYER_ENEMY)
+         if (faction_isPlayerEnemy(i))
             enemies[nenemies++] = i;
 
       enemies = realloc(enemies, sizeof(int)*nenemies);
@@ -379,7 +375,7 @@ int* faction_getAllies( int f, int *n )
       allies = malloc(sizeof(int)*faction_nstack);
 
       for (i=0; i<faction_nstack; i++)
-         if (faction_stack[i].player>PLAYER_ALLY)
+         if (faction_isPlayerFriend(i))
             allies[nallies++] = i;
 
       allies = realloc(allies, sizeof(int)*nallies);
@@ -679,6 +675,134 @@ double faction_getPlayerDef( int f )
 
 
 /**
+ * @brief Gets whether or not the player is a friend of the faction.
+ * 
+ *    @param f Faction to check friendliness of.
+ *    @return 1 if the player is a friend, 0 otherwise.
+ */
+int faction_isPlayerFriend( int f )
+{
+   Faction *faction;
+   lua_State *L;
+   int errf;
+   double r;
+
+   faction = &faction_stack[f];
+
+   L = faction->state;
+   if ( L == NULL )
+      return 0;
+   else
+   {
+#if DEBUGGING
+      lua_pushcfunction( L, nlua_errTrace );
+      errf = -3;
+#else /* DEBUGGING */
+      errf = 0;
+#endif /* DEBUGGING */
+
+      /* Set up the function:
+       * faction_player_friend( standing ) */
+      lua_getglobal(  L, "faction_player_friend" );
+      lua_pushnumber( L, faction->player );
+
+      /* Call function. */
+      if ( lua_pcall( L, 1, 1, errf ) )
+      {
+         /* An error occurred. */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
+#if DEBUGGING
+         lua_pop( L, 2 );
+#else /* DEBUGGING */
+         lua_pop( L, 1 );
+#endif /* DEBUGGING */
+         return 0;
+      }
+
+      /* Parse return. */
+      if ( !lua_isboolean( L, -1 ) )
+      {
+         WARN( "Lua script for faction '%s' did not return a boolean from 'faction_player_friend(...)'.", faction->name );
+         r = 0;
+      }
+      else
+         r = lua_toboolean( L, -1 );
+#if DEBUGGING
+      lua_pop( L, 2 );
+#else /* DEBUGGING */
+      lua_pop( L, 1 );
+#endif /* DEBUGGING */
+
+      return r;
+   }
+}
+
+
+/**
+ * @brief Gets whether or not the player is an enemy of the faction.
+ * 
+ *    @param f Faction to check hostility of.
+ *    @return 1 if the player is an enemy, 0 otherwise.
+ */
+int faction_isPlayerEnemy( int f )
+{
+   Faction *faction;
+   lua_State *L;
+   int errf;
+   double r;
+
+   faction = &faction_stack[f];
+
+   L = faction->state;
+   if ( L == NULL )
+      return 0;
+   else
+   {
+#if DEBUGGING
+      lua_pushcfunction( L, nlua_errTrace );
+      errf = -3;
+#else /* DEBUGGING */
+      errf = 0;
+#endif /* DEBUGGING */
+
+      /* Set up the function:
+       * faction_player_enemy( standing ) */
+      lua_getglobal(  L, "faction_player_enemy" );
+      lua_pushnumber( L, faction->player );
+
+      /* Call function. */
+      if ( lua_pcall( L, 1, 1, errf ) )
+      {
+         /* An error occurred. */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
+#if DEBUGGING
+         lua_pop( L, 2 );
+#else /* DEBUGGING */
+         lua_pop( L, 1 );
+#endif /* DEBUGGING */
+         return 0;
+      }
+
+      /* Parse return. */
+      if ( !lua_isboolean( L, -1 ) )
+      {
+         WARN( "Lua script for faction '%s' did not return a boolean from 'faction_player_enemy(...)'.", faction->name );
+         r = 0;
+      }
+      else
+         r = lua_toboolean( L, -1 );
+#if DEBUGGING
+      lua_pop( L, 2 );
+#else /* DEBUGGING */
+      lua_pop( L, 1 );
+#endif /* DEBUGGING */
+
+      return r;
+   }
+}
+
+
+/**
  * @brief Gets the colour of the faction based on it's standing with the player.
  *
  * Used to unify the colour checks all over.
@@ -717,7 +841,6 @@ char faction_getColourChar( int f )
  * @brief Gets the player's standing in human readable form.
  *
  *    @param f Faction to get standing of.
- *    @param mod Player's standing.
  *    @return Human readable player's standing.
  */
 const char *faction_getStandingText( int f )
@@ -781,14 +904,68 @@ const char *faction_getStandingText( int f )
 /**
  * @brief Gets the broad faction standing.
  *
- *    @param mod Player's standing.
+ *    @param f Faction to get broad standing of.
+ *    @param bribed Whether or not the respective pilot is bribed.
+ *    @param override If positive sets to ally, if negative sets to hostile.
  *    @return Human readable broad player's standing.
  */
-char *faction_getStandingBroad( double mod )
+const char *faction_getStandingBroad( int f, int bribed, int override )
 {
-   if (mod >= PLAYER_ALLY) return "Friendly";
-   else if (mod >= PLAYER_ENEMY) return "Neutral";
-   return "Hostile";
+   Faction *faction;
+   lua_State *L;
+   int errf;
+   const char *r;
+
+   faction = &faction_stack[f];
+
+   L = faction->state;
+   if ( L == NULL )
+      return "???";
+   else
+   {
+#if DEBUGGING
+      lua_pushcfunction( L, nlua_errTrace );
+      errf = -3;
+#else /* DEBUGGING */
+      errf = 0;
+#endif /* DEBUGGING */
+
+      /* Set up the function:
+       * faction_standing_broad( standing, bribed, override ) */
+      lua_getglobal(  L, "faction_standing_broad" );
+      lua_pushnumber( L, faction->player );
+      lua_pushboolean( L, bribed );
+      lua_pushnumber( L, override );
+
+      /* Call function. */
+      if ( lua_pcall( L, 3, 1, errf ) )
+      {
+         /* An error occurred. */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
+#if DEBUGGING
+         lua_pop( L, 2 );
+#else /* DEBUGGING */
+         lua_pop( L, 1 );
+#endif /* DEBUGGING */
+         return "???";
+      }
+
+      /* Parse return. */
+      if ( !lua_isstring( L, -1 ) )
+      {
+         WARN( "Lua script for faction '%s' did not return a string from 'faction_standing_broad(...)'.", faction->name );
+         r = "???";
+      }
+      else
+         r = lua_tostring( L, -1 );
+#if DEBUGGING
+      lua_pop( L, 2 );
+#else /* DEBUGGING */
+      lua_pop( L, 1 );
+#endif /* DEBUGGING */
+
+      return r;
+   }
 }
 
 
@@ -824,14 +1001,10 @@ int areEnemies( int a, int b)
 
    /* player handled separately */
    if (a==FACTION_PLAYER) {
-      if (fb->player < PLAYER_ENEMY)
-         return 1;
-      return 0;
+      return faction_isPlayerEnemy(b);
    }
    else if (b==FACTION_PLAYER) {
-      if (fa->player < PLAYER_ENEMY)
-         return 1;
-      return 0;
+      return faction_isPlayerEnemy(a);
    }
 
    for (i=0;i<fa->nenemies;i++)
@@ -878,14 +1051,10 @@ int areAllies( int a, int b )
 
    /* we assume player becomes allies with high rating */
    if (a==FACTION_PLAYER) {
-      if (fb->player > PLAYER_ALLY)
-         return 1;
-      return 0;
+      return faction_isPlayerFriend(b);
    }
    else if (b==FACTION_PLAYER) {
-      if (fa->player > PLAYER_ALLY)
-         return 1;
-      return 0;
+      return faction_isPlayerFriend(a);
    }
 
    for (i=0;i<fa->nallies;i++)
