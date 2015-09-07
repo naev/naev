@@ -499,18 +499,6 @@
    <faction>FLF</faction>
   </avail>
  </mission>
- <mission name="Defend the FLF base">
-  <lua>flf/flf_basedefense</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>10</chance>
-   <location>Bar</location>
-   <done>Disrupt the Dvaered Patrols</done>
-   <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
-  </avail>
- </mission>
  <mission name="Take the Dvaered crew home">
   <lua>dvaered/dv_antiflf01</lua>
   <flags>
