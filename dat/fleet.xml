@@ -21,6 +21,27 @@
    <pilot name="Independent Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Ulios Schroedinger">
+  <ai>independent</ai>
+  <faction>Ulios</faction>
+  <pilots>
+   <pilot name="Ulios Schroedinger" ship="Schroedinger"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Ulios Hyena">
+  <ai>independent</ai>
+  <faction>Ulios</faction>
+  <pilots>
+   <pilot name="Ulios Hyena" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Ulios Gawain">
+  <ai>independent</ai>
+  <faction>Ulios</faction>
+  <pilots>
+   <pilot name="Ulios Gawain" ship="Gawain"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
