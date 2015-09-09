@@ -1170,9 +1170,9 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
       double swivel )
 {
-   Vector2d approach_vector, relative_location;
+   Vector2d approach_vector, relative_location, orthoradial_vector;
    double rdir, lead_angle;
-   double speed, radial_speed;
+   double speed, radial_speed, orthoradial_speed;
    double x, y, t, dist;
    double off;
 
@@ -1194,16 +1194,22 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
          /* determine the radial, or approach speed */
          vect_cset( &approach_vector, VX(parent->solid->vel) - VX(pilot_target->solid->vel),
                VY(parent->solid->vel) - VY(pilot_target->solid->vel) );
+         vect_cset(&orthoradial_vector, VY(parent->solid->pos) - VY(pilot_target->solid->pos),
+               VX(pilot_target->solid->pos) -  VX(parent->solid->pos) );
 
          radial_speed = vect_dot( &approach_vector, &relative_location );
          radial_speed = radial_speed / VMOD(relative_location);
+
+         orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
+         orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
          speed = w->outfit->u.blt.speed;
 
          /* Time for shots to reach that distance */
          /* if the target is not hittable (ie, fleeing faster than our shots can fly), just face the target */
          if((speed+radial_speed) > 0)
-            t = dist / (speed + radial_speed);
+            t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
+                  (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
          else
             t = 0;
 
