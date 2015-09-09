@@ -2220,11 +2220,12 @@ static int aiL_aim( lua_State *L )
    double x,y;
    double t;
    Pilot *p;
-   Vector2d tv, approach_vector, relative_location;
+   Vector2d tv, approach_vector, relative_location, orthoradial_vector;
    double dist, diff;
    double mod;
    double speed;
    double radial_speed;
+   double orthoradial_speed;
 
    /* Only acceptable parameter is pilot id */
    id = luaL_checklong(L,1);
@@ -2254,15 +2255,19 @@ static int aiL_aim( lua_State *L )
     */
    vect_cset(&approach_vector, VX(cur_pilot->solid->vel) - VX(p->solid->vel), VY(cur_pilot->solid->vel) - VY(p->solid->vel) );
    vect_cset(&relative_location, VX(p->solid->pos) -  VX(cur_pilot->solid->pos),  VY(p->solid->pos) - VY(cur_pilot->solid->pos) );
+   vect_cset(&orthoradial_vector, VY(cur_pilot->solid->pos) - VY(p->solid->pos), VX(p->solid->pos) -  VX(cur_pilot->solid->pos) );
 
    radial_speed = vect_dot(&approach_vector, &relative_location);
    radial_speed = radial_speed / VMOD(relative_location);
 
+   orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
+   orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
    /* Time for shots to reach that distance */
    /* if the target is not hittable (i.e., fleeing faster than our shots can fly), just face the target */
    if((speed+radial_speed) > 0)
-      t = dist / (speed + radial_speed);
+      t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
+            (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
    else
       t = 0;
 
