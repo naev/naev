@@ -22,7 +22,6 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
    <faction>Trader</faction>
   </avail>
@@ -88,7 +87,6 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
    <faction>Trader</faction>
   </avail>
@@ -107,7 +105,6 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -124,7 +121,6 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -142,7 +138,6 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -910,7 +905,6 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Trader</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -942,7 +936,6 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Trader</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -963,7 +956,6 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Trader</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -983,7 +975,6 @@
    <faction>Independent</faction>
    <faction>Soromid</faction>
    <faction>Trader</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -1028,7 +1019,6 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Trader</faction>
-   <faction>Ulios</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>

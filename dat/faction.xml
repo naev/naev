@@ -20,19 +20,6 @@
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Ulios">
-  <invisible />
-  <known/>
-  <player>3</player>
-  <colour>blue</colour>
-  <spawn>ulios</spawn>
-  <standing>ulios</standing>
-  <allies>
-  </allies>
-  <enemies>
-   <enemy>Pirate</enemy>
-  </enemies>
- </faction>
  <faction name="Civilian">
   <invisible />
   <static />
@@ -112,7 +99,6 @@
    <enemy>Proteron</enemy>
    <enemy>Thurion</enemy>
    <enemy>Nasin</enemy>
-   <enemy>Ulios</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
