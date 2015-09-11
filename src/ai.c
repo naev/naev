@@ -2276,12 +2276,18 @@ static int aiL_aim( lua_State *L )
    orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
    /* Time for shots to reach that distance */
-   /* if the target is not hittable (i.e., fleeing faster than our shots can fly), just face the target */
-   if((speed+radial_speed) > 0)
+   /* t is the real positive solution of a 2nd order equation*/
+   /* if the target is not hittable (i.e., fleeing faster than our shots can fly, determinant <= 0), just face the target */
+   if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
       t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
    else
       t = 0;
+
+   /* if t < 0, try the other solution*/
+   if (t < 0)
+      t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
+            (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
 
    /* Position is calculated on where it should be */
    x = p->solid->pos.x + p->solid->vel.x*t
