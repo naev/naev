@@ -124,6 +124,7 @@
   <player>0</player>
   <spawn>soromid</spawn>
   <standing>soromid</standing>
+  <equip>soromid</equip>
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
