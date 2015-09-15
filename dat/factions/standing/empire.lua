@@ -17,9 +17,11 @@ sec_hit_min = 10
 function faction_hit( current, amount, source, secondary )
    local start_standing = _fthis:playerStanding()
    local hit = default_hit( current, amount, source, secondary )
-   if ( source == "distress" or source == "kill" ) and secondary then
-      if start_standing >= sec_hit_min and start_standing + hit < sec_hit_min then
-         hit = sec_hit_min - start_standing
+   if ( source == "distress" or source == "kill" ) and secondary and amount < 0 then
+      if start_standing >= sec_hit_min then
+         hit = math.max( amount, sec_hit_min - start_standing )
+      else
+         hit = 0
       end
    end
    return hit
