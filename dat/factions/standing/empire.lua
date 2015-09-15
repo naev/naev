@@ -9,12 +9,18 @@ _fdelta_kill     = {-5, 1} -- Maximum change constraints
 _fcap_misn     = 30 -- Starting mission cap, gets overwritten
 _fcap_misn_var = "_fcap_empire"
 
-_fmod_distress_friend = 0
-_fmod_kill_friend     = 0
-
 _fthis         = faction.get("Empire")
+
+sec_hit_min = 10
 
 
 function faction_hit( current, amount, source, secondary )
-    return default_hit(current, amount, source, secondary)
+   local start_standing = _fthis:playerStanding()
+   local hit = default_hit(current, amount, source, secondary)
+   if (source == "distress" or source == "kill") and secondary and amount < 0 then
+      if start_standing >= sec_hit_min and start_standing + hit < sec_hit_min:
+         hit = sec_hit_min - start_standing
+      end
+   end
+   return hit
 end
