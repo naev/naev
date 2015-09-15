@@ -2277,6 +2277,10 @@ static int aiL_aim( lua_State *L )
       t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
 
+   /* if t still < 0, no solution*/
+   if (t < 0)
+      t = 0;
+
    /* Position is calculated on where it should be */
    x = p->solid->pos.x + p->solid->vel.x*t
       - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
