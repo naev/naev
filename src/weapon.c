@@ -43,7 +43,6 @@
 #include "gui.h"
 #include "camera.h"
 #include "ai.h"
-#include "ai_extra.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -124,16 +123,16 @@ static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
  * Prototypes
  */
 /* Creation. */
-static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
+static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
-      double swivel );
+      double swivel, double time );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
 static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const Pilot *parent, const unsigned int target );
+      const Pilot *parent, const unsigned int target, double time );
 /* Updating. */
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
@@ -1158,73 +1157,36 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 /**
  * @brief Gets the aim position of a turret weapon.
  *
- *    @param w Weapon aiming.
  *    @param outfit Weapon outfit.
  *    @param parent Parent of the weapon.
  *    @param pilot_target Target of the weapon.
  *    @param pos Position of the turret.
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
+ *    @param time Expected flight time.
  */
-static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
+static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
-      double swivel )
+      double swivel, double time )
 {
-   Vector2d approach_vector, relative_location, orthoradial_vector;
+   Vector2d relative_location;
    double rdir, lead_angle;
-   double speed, radial_speed, orthoradial_speed;
-   double x, y, t, dist;
+   double x, y, t;
    double off;
 
    if (pilot_target == NULL)
       rdir        = dir;
    else {
-      /* Get the distance */
-      dist = vect_dist( pos, &pilot_target->solid->pos );
-      vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
-            VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
-
-      /* Aim. */
-      if (dist > outfit->u.blt.range*1.2) {
-         x = pilot_target->solid->pos.x - pos->x;
-         y = pilot_target->solid->pos.y - pos->y;
-      }
-      else {
          /* Try to predict where the enemy will be. */
-         /* determine the radial, or approach speed */
-         vect_cset( &approach_vector, VX(parent->solid->vel) - VX(pilot_target->solid->vel),
-               VY(parent->solid->vel) - VY(pilot_target->solid->vel) );
-         vect_cset(&orthoradial_vector, VY(parent->solid->pos) - VY(pilot_target->solid->pos),
-               VX(pilot_target->solid->pos) -  VX(parent->solid->pos) );
+      t = time;
+      if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
+         t = 0.;
 
-         radial_speed = vect_dot( &approach_vector, &relative_location );
-         radial_speed = radial_speed / VMOD(relative_location);
-
-         orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
-         orthoradial_speed = orthoradial_speed / VMOD(relative_location);
-
-         speed = w->outfit->u.blt.speed;
-
-         /* Time for shots to reach that distance */
-         /* t is the real positive solution of a 2nd order equation*/
-         /* if the target is not hittable (i.e., fleeing faster than our shots can fly, determinant <= 0), just face the target */
-         if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
-            t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
-                  (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
-         else
-            t = 0;
-
-         /* if t < 0, try the other solution*/
-         if (t < 0)
-            t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
-                  (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
-
-         /* Position is calculated on where it should be */
-         x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-            - (pos->x + vel->x*t);
-         y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-            - (pos->y + vel->y*t);
-      }
+      /* Position is calculated on where it should be */
+      x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+         - (pos->x + vel->x*t);
+      y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+         - (pos->y + vel->y*t);
 
       /* Set angle to face. */
       rdir = ANGLE(x, y);
@@ -1266,9 +1228,10 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
+ *    @param time Expected flight time.
  */
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    Vector2d v;
    double mass, rdir;
@@ -1279,7 +1242,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) { /* Must have valid target */
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel );
+      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
    }
    else /* fire straight */
       rdir = dir;
@@ -1328,9 +1291,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
+ *    @param time Expected flight time.
  */
 static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    (void) T;
    Vector2d v;
@@ -1344,7 +1308,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    if (w->outfit->type == OUTFIT_TYPE_AMMO &&
             launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, ammo, parent, pilot_target, pos, vel, dir, M_PI );
+      rdir = weapon_aimTurret( ammo, parent, pilot_target, pos, vel, dir, M_PI, time );
    }
    else
       rdir = dir;
@@ -1409,11 +1373,12 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
  *    @param target Target ID of the shooter.
+ *    @param time Expected flight time.
  *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const Pilot* parent, const unsigned int target )
+      const Pilot* parent, const unsigned int target, double time )
 {
    double mass, rdir;
    Pilot *pilot_target;
@@ -1438,7 +1403,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Bolts treated together */
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
-         weapon_createBolt( w, outfit, T, dir, pos, vel, parent );
+         weapon_createBolt( w, outfit, T, dir, pos, vel, parent, time );
          break;
 
       /* Beam weapons are treated together. */
@@ -1469,7 +1434,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Treat seekers together. */
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
-         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent );
+         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent, time );
          break;
 
       /* just dump it where the player is */
@@ -1497,10 +1462,11 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
+ *    @param time Expected flight time.
  */
 void weapon_add( const Outfit* outfit, const double T, const double dir,
       const Vector2d* pos, const Vector2d* vel,
-      const Pilot *parent, unsigned int target )
+      const Pilot *parent, unsigned int target, double time )
 {
    WeaponLayer layer;
    Weapon *w;
@@ -1515,7 +1481,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w     = weapon_create( outfit, T, dir, pos, vel, parent, target );
+   w     = weapon_create( outfit, T, dir, pos, vel, parent, target, time );
 
    /* set the proper layer */
    switch (layer) {
@@ -1594,7 +1560,7 @@ unsigned int beam_start( const Outfit* outfit,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, 0., dir, pos, vel, parent, target );
+   w = weapon_create( outfit, 0., dir, pos, vel, parent, target, 0. );
    w->ID = ++beam_idgen;
    w->mount = mount;
    w->exp_timer = 0.;

@@ -46,7 +46,7 @@
 #include "board.h"
 #include "debris.h"
 #include "ntime.h"
-#include "ai_extra.h"
+#include "ai.h"
 #include "faction.h"
 #include "font.h"
 #include "land.h"

@@ -22,7 +22,7 @@ mem.aggressive = true
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/100) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
    -- Handle bribing
    if rnd.int() > 0.4 then
@@ -39,8 +39,8 @@ function create ()
    end
 
    -- Handle refueling
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 3000 )
       if standing < 50 then
@@ -72,6 +72,6 @@ function taunt ( target, offense )
        "You're no match for the Dvaered!",
        "Death awaits you!"
    }
-   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

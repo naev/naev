@@ -24,6 +24,11 @@
 
 #include "physics.h"
 
+/* Forward declaration to avoid cyclical import. */
+struct Pilot_;
+typedef struct Pilot_ Pilot;
+
+
 #define AI_MEM          "__mem" /**< Internal pilot memory. */
 
 
@@ -44,7 +49,8 @@
 typedef enum TaskData_ {
    TASKDATA_NULL,
    TASKDATA_INT,
-   TASKDATA_VEC2
+   TASKDATA_VEC2,
+   TASKDATA_PILOT
 } TaskData;
 
 /**
@@ -89,6 +95,29 @@ AI_Profile* ai_getProfile( char* name );
  */
 int ai_load (void);
 void ai_exit (void);
+
+
+/*
+ * Init, destruction.
+ */
+int ai_pinit( Pilot *p, const char *ai );
+void ai_destroy( Pilot* p );
+
+/*
+ * Task related.
+ */
+Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos );
+void ai_freetask( Task* t );
+void ai_cleartasks( Pilot* p );
+
+/*
+ * Misc functions.
+ */
+void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg );
+void ai_refuel( Pilot* refueler, unsigned int target );
+void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker );
+void ai_think( Pilot* pilot, const double dt );
+void ai_setPilot( Pilot *p );
 
 
 #endif /* AI_H */

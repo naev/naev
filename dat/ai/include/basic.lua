@@ -151,7 +151,7 @@ function follow ()
    local target = ai.target()
  
    -- Will just float without a target to escort.
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -235,12 +235,14 @@ function land ()
 
    -- Make sure mem.land is valid target
    if mem.land == nil then
-      mem.land = ai.landplanet()
+      local landplanet = ai.landplanet()
+      if landplanet ~= nil then
+         mem.land = landplanet
 
       -- Bail out if no valid planet could be found.
-      if mem.land == nil then
+      else
          warn(string.format("Pilot '%s' tried to land with no landable assets!",
-               ai.getPilot():name()))
+               ai.pilot():name()))
          ai.poptask()
          return
       end
@@ -299,7 +301,7 @@ function __run_target ()
    local target = ai.target()
 
    -- Target must exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return true
    end
@@ -321,7 +323,7 @@ end
 function __run_turret ()
    -- Shoot the target
    local target   = ai.target()
-   if ai.exists(target) then
+   if target:exists() then
       ai.hostile(target)
       ai.settarget( target )
       local dist    = ai.dist(target)
@@ -412,7 +414,7 @@ function board ()
    local target = ai.target()
 
    -- Make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -445,7 +447,7 @@ function __boardstop ()
    target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -488,13 +490,13 @@ function refuel ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
 
    -- See if finished refueling
-   if ai.donerefuel(target) then
+   if not ai.pilot():flags().refueling then
       ai.poptask()
       return
    end
@@ -520,7 +522,7 @@ function __refuelstop ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -529,12 +531,12 @@ function __refuelstop ()
    ai.settarget(target)
 
    -- See if finished refueling
-   if ai.donerefuel(target) then
-      ai.comm(target, "Finished fuel transfer.")
+   if not ai.pilot():flags().refueling then
+      ai.pilot():comm(target, "Finished fuel transfer.")
       ai.poptask()
 
       -- Untarget
-      ai.settarget( ai.getPilot():id() )
+      ai.settarget( ai.pilot() )
       return
    end
 

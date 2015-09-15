@@ -697,8 +697,25 @@ double outfit_range( const Outfit* o )
  */
 double outfit_speed( const Outfit* o )
 {
+   Outfit *amm;
+   double t;
    if (outfit_isBolt(o)) return o->u.blt.speed;
-   else if (outfit_isAmmo(o)) return o->u.amm.speed;
+   else if (outfit_isAmmo(o)) {
+      if (o->u.amm.thrust == 0)
+         return o->u.amm.speed;
+      else {     /*Gets the average speed*/
+         t = o->u.amm.speed / o->u.amm.thrust; /*time to reach max speed*/
+         if (t < o->u.amm.duration)
+            return (o->u.amm.thrust * t*t/2 + 
+                  o->u.amm.speed*(o->u.amm.duration-t))/o->u.amm.duration;
+         else return o->u.amm.thrust * o->u.amm.duration/2;
+      }
+   }
+   else if (outfit_isLauncher(o)) {
+      amm = outfit_ammo(o);
+      if (amm != NULL)
+         return outfit_speed(amm);
+   }
    return -1.;
 }
 /**
@@ -741,9 +758,19 @@ int outfit_soundHit( const Outfit* o )
  */
 double outfit_duration( const Outfit* o )
 {
+   Outfit *amm;
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
    else if (outfit_isJammer(o)) return INFINITY;
    else if (outfit_isAfterburner(o)) return INFINITY;
+   else if (outfit_isBolt(o)) return (o->u.blt.range / o->u.blt.speed);
+   else if (outfit_isBeam(o)) return o->u.bem.duration;
+   else if (outfit_isAmmo(o)) return o->u.amm.duration;
+   else if (outfit_isLauncher(o)) {
+      amm = outfit_ammo(o);
+      if (amm != NULL)
+         return outfit_duration(amm);
+   }
+   else if (outfit_isFighterBay(o)) return INFINITY;
    return -1.;
 }
 /**

@@ -53,8 +53,6 @@
 /* Static */
 static int escort_disabled( void *data );
 static int escort_command( Pilot *parent, int cmd, int param );
-/* Extern */
-extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**
