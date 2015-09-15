@@ -23,5 +23,5 @@ include "dat/factions/standing/skel.lua"
 
 
 function faction_hit( current, amount, source, secondary )
-   return 0
+   return current
 end
