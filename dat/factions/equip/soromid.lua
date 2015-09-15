@@ -2,6 +2,13 @@
 include("dat/factions/equip/generic.lua")
 
 --[[
+
+   TODO PROPERLY FILL OUT!!!
+   Right now just using empire stuff as a temporary placeholder.
+
+--]]
+
+--[[
 -- @brief Does soromid pilot equipping
 --
 --    @param p Pilot to equip
