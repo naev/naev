@@ -20,7 +20,7 @@ function atk_generic_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -49,7 +49,7 @@ function atk_generic_attacked( attacker )
    end
 
    -- If no target automatically choose it
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.pushtask("attack", attacker)
       return
    end

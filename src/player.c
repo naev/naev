@@ -44,7 +44,6 @@
 #include "intro.h"
 #include "perlin.h"
 #include "ai.h"
-#include "ai_extra.h"
 #include "music.h"
 #include "gui.h"
 #include "gui_omsg.h"

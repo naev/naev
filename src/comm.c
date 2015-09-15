@@ -23,7 +23,6 @@
 #include "player.h"
 #include "opengl.h"
 #include "ai.h"
-#include "ai_extra.h"
 #include "hook.h"
 
 #define COMM_WDWNAME    "Communication Channel" /**< Map window name. */

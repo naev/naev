@@ -37,7 +37,7 @@ end
 
 function attack ()
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end

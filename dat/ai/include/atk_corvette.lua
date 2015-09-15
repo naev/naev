@@ -31,7 +31,7 @@ function atk_corvette ()
    -- Close enough to melee
    -- TODO: Corvette-specific attack functions.
    else
-      if ai.shipmass(target) < 500 then
+      if target:stats().mass < 500 then
         _atk_f_space_sup( target, dist )
       else
         mem.aggressive = true

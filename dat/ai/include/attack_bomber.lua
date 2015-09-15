@@ -23,7 +23,7 @@ function atk_b ()
    ai.hostile(target) -- Mark as hostile
 
 	-- make sure pilot exists
-	if not ai.exists(target) then
+	if not target:exists() then
 		ai.poptask()
 		return
 	end

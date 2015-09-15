@@ -10,7 +10,7 @@ function atk_g_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
+        if not target:exists() then
                 ai.poptask()
                 return
         end
@@ -39,7 +39,7 @@ function atk_g_attacked( attacker )
    end
 
    -- If no target automatically choose it
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.pushtask("attack", attacker)
       return
    end
@@ -62,7 +62,7 @@ function atk_g ()
         local target = ai.target()
 
         -- make sure pilot exists
-        if not ai.exists(target) then
+        if not target:exists() then
                 ai.poptask()
                 return
         end
@@ -80,7 +80,7 @@ function atk_g ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -215,7 +215,7 @@ function keep_distance()
 
    --find nearest thing
    local neighbor = ai.nearestpilot()
-   if not ai.exists(neighbor) then
+   if not neighbor or not neighbor:exists() then
       return
    end
 
@@ -252,7 +252,7 @@ function atk_fighter_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -318,7 +318,7 @@ function atk_topdown_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
+        if not target:exists() then
                 ai.poptask()
                 return
         end
@@ -378,7 +378,7 @@ function atk_fighter ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
            ai.poptask()
            return
    end
@@ -396,7 +396,7 @@ function atk_fighter ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -415,7 +415,7 @@ function atk_fighter ()
 
    -- engage melee
    else
-      if ai.shipmass(target) < 200 then
+      if target:stats().mass < 200 then
         atk_g_space_sup(target, dist)
       else
         atk_g_flyby_aggressive( target, dist )
@@ -431,7 +431,7 @@ function atk_corvette ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
            ai.poptask()
            return
    end
@@ -449,7 +449,7 @@ function atk_corvette ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -474,7 +474,7 @@ function atk_corvette ()
 
    -- Close enough to melee
    else
-      if ai.shipmass(target) < 500 then
+      if target:stats().mass < 500 then
         atk_g_space_sup(target, dist)
       else
         atk_g_flyby_aggressive( target, dist )
@@ -491,7 +491,7 @@ function atk_capital ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
            ai.poptask()
            return
    end
@@ -509,7 +509,7 @@ function atk_capital ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
@@ -548,7 +548,7 @@ end --end capship attack
 --]]
 function atk_g_flyby_aggressive( target, dist )
 
-   --ai.comm(1, "flyby attack!")
+   --ai.pilot():comm(1, "flyby attack!")
    local range = ai.getweaprange(3)
 
    -- Set weapon set
@@ -630,7 +630,7 @@ end
 --]]
 function atk_g_flyby( target, dist )
 
-   --ai.comm(1, "flyby attack")
+   --ai.pilot():comm(1, "flyby attack")
    
    local range = ai.getweaprange(3)
    local dir = 0
@@ -716,7 +716,7 @@ function atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    
-   --ai.comm(1, "capship attack")
+   --ai.pilot():comm(1, "capship attack")
    
    ai.weapset( 3 )
    
@@ -806,7 +806,7 @@ end
 --]]
 function atk_g_space_sup( target, dist )
 
-  -- ai.comm(1, "space superiority")
+  -- ai.pilot():comm(1, "space superiority")
 
    local range = ai.getweaprange(3)
    local dir = 0

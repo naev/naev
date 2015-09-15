@@ -24,13 +24,13 @@ function create ()
    end
 
    -- Not too much money
-   ai.setcredits( rnd.int(ai.shipprice()/80 , ai.shipprice()/30) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/80 , ai.pilot():ship():price()/30) )
 
    -- Deal with bribeability
    if rnd.rnd() < 0.05 then
       mem.bribe_no = "\"You won't be able to slide out of this one!\""
    else
-      mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.rnd() + 850.)
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
       bribe_prompt = {
             "\"It'll cost you %d credits for me to ignore your pile of rubbish.\"",
             "\"I'm in a good mood so I'll let you go for %d credits.\"",
@@ -67,8 +67,8 @@ function create ()
    end
 
    -- Deal with refueling
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then
@@ -145,6 +145,6 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.rnd(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 

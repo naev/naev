@@ -31,7 +31,7 @@ function control ()
    elseif task == "runaway" then
       target = ai.target()
 
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
