@@ -3,7 +3,7 @@
    This is the sixth mission of the Shark's teeth campaign. The player has to take contact with the FLF.
    
    Stages :
-   0) Way to Sindbad/Surano
+   0) Way to Eiger/Surano
    1) Way back to Darkshed
 	
 --]]
@@ -64,20 +64,20 @@ end
 function create ()
    
    --Change here to change the planets and the systems
-   mispla, missys = planet.get("Sindbad")
+   mispla, missys = planet.get("Eiger")
    paypla, paysys = planet.get("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
 	
-   --Does the player have access to Sindbad
+   --Does the player have access to Eiger
    if diff.isApplied( "FLF_base") then
-      sindbad = planet.get("Sindbad")
+      sindbad = planet.get("Eiger")
       osd_msg[1] = osd_sindbad:format(missys:name(), nextsys:name(), mispla:name())
       else
       osd_msg[1] = osd_nosindbad:format(missys:name())
    end
    osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-	paysys = system.get(psyname)
-	paypla = planet.get(pplname)
+	paysys = system.get(paysys:name())
+	paypla = planet.get(paypla:name())
 	
    if not misn.claim(missys) then
       misn.finish(false)
@@ -111,7 +111,7 @@ function accept()
 end
 
 function land()
-   --The player is landing on Sindbad
+   --The player is landing on Eiger
    if stage == 0 and planet.cur() == sindbad then
       flfguy = misn.npcAdd("talktoguy", npc_desc[2], "neutral/thief1", bar_desc[2])
    end

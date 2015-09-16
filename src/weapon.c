@@ -1177,6 +1177,10 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    if (pilot_target == NULL)
       rdir        = dir;
    else {
+      /* Get the vector : shooter -> target*/
+      vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
+            VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
+
          /* Try to predict where the enemy will be. */
       t = time;
       if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/

@@ -12,8 +12,8 @@
 --]]
 
 --Needed scripts
-include("pilot/pirate.lua")
-include "numstring.lua"
+include("dat/scripts/pilot/pirate.lua")
+include("dat/scripts/numstring.lua")
 
 lang = naev.lang()
 if lang == "es" then
@@ -76,7 +76,7 @@ if lang == "es" then
    -- OSD
 	osd_title = "A Shark Bites"
    osd_msg[1] = "Buy a Shark, fly to the %s system and land on %s"
-   osd_msg[2] = "Go to % and kill the pirate with your Shark (and not an Empire Shark)"
+   osd_msg[2] = "Go to %s and kill the pirate with your Shark (and not an Empire Shark)"
    osd_msg[3] = "Land on %s and collect your fee"
 	piratejump_msg = "The pirate ran away: land on %s"
 end
@@ -107,7 +107,7 @@ function accept()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       piratename = pirate_name()    --for now, we only need his name
-      tk.msg(title[2]:format(mispla:name()), text[2]:format(missys:name()))
+      tk.msg(title[2], text[2]:format(missys:name(),mispla:name()))
       
       osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
       osd_msg[2] = osd_msg[2]:format(battlesys:name())
