@@ -89,7 +89,7 @@ function accept()
    reward = 50000
    proba = 0.3  --the chances you have to get an ambush
 	
-   if tk.yesno(title[1], text[1]:format(papla:name(), paysys:name())) then
+   if tk.yesno(title[1], text[1]:format(pplname, psyname)) then
       misn.accept()
       tk.msg(title[2], text[2]:format(mispla:name(),missys:name()))
       
@@ -98,7 +98,7 @@ function accept()
       misn.setDesc(misn_desc)
 
       osd_msg[1] = osd_msg[1]:format(mispla:name(),missys:name())
-      osd_msg[2] = osd_msg[2]:format(papla:name(), paysys:name())
+      osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.osdCreate(misn_title, osd_msg)
       marker = misn.markerAdd(missys, "low")
