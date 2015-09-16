@@ -165,6 +165,32 @@ function follow ()
  
    end
 end
+function follow_accurate ()
+   local target = ai.target()
+   local p = ai.pilot()
+ 
+   -- Will just float without a target to escort.
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   -- Use the velocity instead of direction
+   local _, velangle = target:vel():polar()
+   local angle = (mem.angle + velangle)
+   local goto = target:pos() + vec2.newP(mem.radius, angle)
+
+   --  Compute the direction using a pd controller
+   local cons = (goto - p:pos())*mem.Kp + (target:vel() - p:vel())*mem.Kd  
+   local goal = cons + p:pos()
+
+   --  Always face the goal
+   local dir   = ai.face(goal)
+   if dir < 10 and cons:mod() > 300 then
+      ai.accel()
+   end
+
+end
 
 --[[
 -- Tries to runaway and jump asap.

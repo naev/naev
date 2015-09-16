@@ -25,6 +25,11 @@ mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
+--Control parameters
+mem.radius         = 100 --  Distance between follower and target
+mem.angle          = 180 --  Angle between follower and target
+mem.Kp             = 10 --  First control coefficient
+mem.Kd             = 20 -- Second control coefficient
 
 
 -- Required control rate
