@@ -3819,7 +3819,7 @@ static int pilotL_face( lua_State *L )
    else
       t     = pilotL_newtask( L, p, "__face" );
    if (pt != NULL) {
-      t->dtype = TASKDATA_INT;
+      t->dtype = TASKDATA_PILOT;
       t->dat.num = pt->id;
    }
    else {
@@ -3875,7 +3875,7 @@ static int pilotL_follow( lua_State *L )
 
    /* Set the task. */
    t        = pilotL_newtask( L, p, "follow" );
-   t->dtype = TASKDATA_INT;
+   t->dtype = TASKDATA_PILOT;
    t->dat.num = pt->id;
 
    return 0;
@@ -3915,7 +3915,7 @@ static int pilotL_attack( lua_State *L )
 
    /* Set the task. */
    t        = pilotL_newtask( L, p, "attack" );
-   t->dtype = TASKDATA_INT;
+   t->dtype = TASKDATA_PILOT;
    t->dat.num = pid;
 
    return 0;
@@ -3948,7 +3948,7 @@ static int pilotL_runaway( lua_State *L )
 
    /* Set the task. */
    t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
-   t->dtype = TASKDATA_INT;
+   t->dtype = TASKDATA_PILOT;
    t->dat.num = pt->id;
 
    return 0;
