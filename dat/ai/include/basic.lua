@@ -175,18 +175,15 @@ function follow_accurate ()
       return
    end
 
-   -- Use the velocity instead of direction
-   local _, velangle = target:vel():polar()
-   local angle = (mem.angle + velangle)
-   local goto = target:pos() + vec2.newP(mem.radius, angle)
+   local goal = ai.follow_accurate(target, mem.radius, 
+         mem.angle, mem.Kp, mem.Kd)
 
-   --  Compute the direction using a pd controller
-   local cons = (goto - p:pos())*mem.Kp + (target:vel() - p:vel())*mem.Kd  
-   local goal = cons + p:pos()
+   local mod = vec2.mod(goal - p:pos())
 
    --  Always face the goal
    local dir   = ai.face(goal)
-   if dir < 10 and cons:mod() > 300 then
+
+   if dir < 10 and mod > 300 then
       ai.accel()
    end
 
