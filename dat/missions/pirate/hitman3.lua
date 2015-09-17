@@ -135,21 +135,23 @@ end
 
 -- Player won, gives rewards.
 function landed ()
-   tk.msg(title[2], text[3])
+   if planet.cur() == misn_base then
+   	tk.msg(title[2], text[3])
 
-   -- Give factions
-   local f = faction.playerStanding("Pirate")
-   if f < 0 then
-      f = 0 - f
-      faction.modPlayerSingle( "Pirate", f )
-   end
+   	-- Give factions
+   	local f = faction.playerStanding("Pirate")
+   	if f < 0 then
+      		f = 0 - f
+      		faction.modPlayerSingle( "Pirate", f )
+   	end
    
-   -- Give landing pass   
-   player.addOutfit("Pirate Landing Pass")
-   player.pay( 100000 ) -- 100k
+   	-- Give landing pass   
+   	player.addOutfit("Pirate Landing Pass")
+   	player.pay( 100000 ) -- 100k
 
-   -- Finish mission
-   misn.finish(true)
+   	-- Finish mission
+   	misn.finish(true)
+   end
 end
 
 
