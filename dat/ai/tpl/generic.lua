@@ -436,7 +436,7 @@ end
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
    local mean = ai.pilot():weapsetHeat()
-   local _, pshield = ai.pilot()
+   local _, pshield = ai.pilot():health()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
