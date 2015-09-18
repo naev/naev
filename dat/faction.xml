@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Factions>
  <faction name="Dummy">
+  <static />
   <invisible />
   <player>0</player>
   <standing>static</standing>
@@ -20,6 +21,7 @@
   </enemies>
  </faction>
  <faction name="Civilian">
+  <static />
   <invisible />
   <known/>
   <player>0</player>
@@ -232,6 +234,7 @@
   </enemies>
  </faction>
  <faction name="Mercenary">
+  <static />
   <invisible />
   <player>0</player>
   <standing>static</standing>
@@ -239,6 +242,7 @@
   <enemies />
  </faction>
  <faction name="Raider">
+  <static />
   <invisible />
   <longname>Galactic Pirates</longname>
   <player>-100</player>
@@ -249,6 +253,7 @@
   </enemies>
  </faction>
  <faction name="Derelict">
+  <static />
   <invisible />
   <player>0</player>
   <standing>static</standing>
@@ -256,6 +261,7 @@
   <enemies />
  </faction>
  <faction name="Four Winds">
+  <static />
   <invisible />
   <player>0</player>
   <standing>static</standing>
@@ -267,6 +273,7 @@
  </faction>
  <faction name="Rogue Four Winds">
   <display>Four Winds</display>
+  <static />
   <invisible />
   <player>0</player>
   <standing>static</standing>
@@ -277,6 +284,7 @@
  </faction>
  <faction name="Shadow_pirates">
   <display>Pirate</display>
+  <static />
   <invisible />
   <allies />
   <player>-100</player>
@@ -287,6 +295,7 @@
   </enemies>
  </faction>
  <faction name="Diplomatic">
+  <static />
   <invisible />
   <player>0</player>
   <colour>blue</colour>
@@ -298,6 +307,7 @@
   </enemies>
  </faction>
  <faction name="Associates">
+  <static />
   <invisible />
   <allies />
   <player>0</player>
@@ -307,6 +317,7 @@
   </enemies>
  </faction>
  <faction name="Thugs">
+  <static />
   <invisible />
   <allies />
   <player>0</player>
@@ -317,6 +328,7 @@
  </faction>
  <faction name="Achack_sirius">
   <display>Sirius</display>
+  <static />
   <invisible />
   <allies />
   <player>0</player>
@@ -327,6 +339,7 @@
  </faction>
  <faction name="Achack_thugs">
   <display>Thugs</display>
+  <static />
   <invisible />
   <allies />
   <player>0</player>
@@ -337,6 +350,7 @@
  </faction>
  <faction name="Kidnappers">
   <display>Pirate</display>
+  <static />
   <invisible />
   <logo>pirate</logo>
   <colour>red</colour>
