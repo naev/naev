@@ -2499,11 +2499,12 @@ static int aiL_relvel( lua_State *L )
 }
 
 /*
- * @brief Follow an other pilot using a PD controller
+ * @brief Computes the point to face in order to
+ *        follow an other pilot using a PD controller.
  *
  *    @luaparam target The pilot to follow
- *    @luaparam radius The distance between p and target
- *    @luaparam angle The angle between p and target
+ *    @luaparam radius The requested distance between p and target
+ *    @luaparam angle The requested angle between p and target
  *    @luaparam Kp The first controller parameter
  *    @luaparam Kd The second controller parameter
  *    @luareturn The point to go to as a vector2.

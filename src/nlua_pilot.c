@@ -3848,8 +3848,10 @@ static int pilotL_brake( lua_State *L )
  *
  *    @luaparam p Pilot to tell to follow another pilot.
  *    @luaparam pt Target pilot to follow.
- *    @luaparam accurate If true, use a PD controller.
+ *    @luaparam accurate If true, use a PD controller which
+                parameters can be defined using the pilot's memory.
  * @luasee control
+ * @luasee memory
  * @luafunc follow( p, pt, accurate )
  */
 static int pilotL_follow( lua_State *L )
