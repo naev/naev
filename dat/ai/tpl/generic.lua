@@ -112,13 +112,13 @@ function control ()
    elseif task == "attack" then
       target = ai.target()
 
-      local target_parmour, target_pshield = target:health()
-
       -- Needs to have a target
       if not target:exists() then
          ai.poptask()
          return
       end
+
+      local target_parmour, target_pshield = target:health()
 
       -- Pick an appropriate weapon set.
       choose_weapset()
