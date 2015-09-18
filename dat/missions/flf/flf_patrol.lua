@@ -217,7 +217,13 @@ end
 -- Get a system for the Dvaered patrol.
 -- These are systems which have both FLF and Dvaered presence.
 function patrol_getTargetSystem ()
-   local choices = { "Surano", "Zylex", "Arcanis", "Sonas", "Raelid", "Toaxis", "Tau Prime", "Zacron", "Tuoladis", "Doranthex", "Torg", "Tarsus", "Klantar", "Verex", "Dakron", "Theras", "Gilligan's Light", "Haleb", "Slaccid", "Norpin", "Triap", "Brimstone" }
+   local choices = {}
+   for i, j in ipairs( system.getAll() ) do
+      local p = j:presences()
+      if p[ "FLF" ] and p[ "Dvaered" ]  then
+         choices[ #choices + 1 ] = j:name()
+      end
+   end
    return system.get( choices[ rnd.rnd( 1, #choices ) ] )
 end
 
