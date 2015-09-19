@@ -81,8 +81,8 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
       self.d3[p] = hook.pilot(p, "land", "lander", forma)
    end
    
-   hook.pilot(pilot.player(),"jump","jumper",forma)
-   hook.pilot(pilot.player(),"land","lander",forma)
+   hook.pilot(player.pilot(),"jump","jumper",forma)
+   hook.pilot(player.pilot(),"land","lander",forma)
 
    forma:reorganize()
    forma:control() -- This is sadly the only time we can do this.
@@ -215,7 +215,7 @@ function Forma:jumper(jumper, jumpoint)
       if self.thook then
          hook.rm(self.thook)
       end
-   elseif jumper == pilot.player() then
+   elseif jumper == player.pilot() then
       self:destroy()
    else
       self:dead(jumper) --we need to not run this before the if statement.
@@ -238,7 +238,7 @@ function Forma:lander(lander, planet)
       if self.thook then
          hook.rm(self.thook)
       end
-   elseif lander == pilot.player() then
+   elseif lander == player.pilot() then
       self:destroy()
    else
       self:dead(lander)
@@ -466,7 +466,7 @@ function Forma:control()
       if not self.incombat then --If baddies are in range and the fleet isn't set to do combat yet, then...
          self.fleader:setSpeedLimit(0)
          for _, p in ipairs(self.fleet) do
-            if p ~= pilot.player() then
+            if p ~= player.pilot() then
                p:control(false) -- ...cut 'em loose.
             end
          end
@@ -503,7 +503,7 @@ function Forma:control()
          end
 
       else
-         if p ~= pilot.player() then
+         if p ~= player.pilot() then
             p:setSpeedLimit(self.fleetspeed) -- Make mon capitan travel at 5 below the slow speed, so other ships can catch up.
          end
          -- Logic for fleet leader goes here. For now, let's allow the fleader to act according to the regular AI.

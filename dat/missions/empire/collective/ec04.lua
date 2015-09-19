@@ -137,7 +137,7 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
 
-        local pv = pilot.player():pos()
+        local pv = player.pilot():pos()
 
         fleet1 = pilot.add("Empire Flanking Fleet", nil, pv + vec2.new(-150, 500))
         fleet2 = pilot.add("Empire Flanking Fleet", nil, pv + vec2.new(-150, -500))
