@@ -88,7 +88,7 @@ function enter()
 end
 
 function targetIdle()
-    if not pilot.exists(target) then -- Tear down now-useless hooks.
+    if not target:exists() then -- Tear down now-useless hooks.
         hook.rm(hidle)
         return
     end

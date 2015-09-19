@@ -75,7 +75,7 @@ function accept ()
    end
 
    -- Check for cargo space
-   if pilot.cargoFree(player.pilot()) <  3 then
+   if player.pilot():cargoFree() <  3 then
       tk.msg( title[1], text[9] )
       misn.finish()
    end

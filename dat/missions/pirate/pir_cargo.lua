@@ -135,8 +135,8 @@ function accept()
 		 misn.finish()
 	  end
    end
-   if pilot.cargoFree(player.pilot()) < amount then
-	  tk.msg( full[1], string.format( full[2], amount-pilot.cargoFree(player.pilot()) ))
+   if player.pilot():cargoFree() < amount then
+	  tk.msg( full[1], string.format( full[2], amount-player.pilot():cargoFree() ))
 	  misn.finish()
    end
 

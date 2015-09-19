@@ -114,7 +114,7 @@ end
 
 function enter()
    
-   playerclass = ship.class(pilot.ship(player.pilot()))
+   playerclass = player.pilot():ship():class()
    --Jumping in Toaxis for the battle with a destroyer class ship
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
       
