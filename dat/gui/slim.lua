@@ -402,7 +402,7 @@ function update_faction()
 end
 
 function update_cargo()
-   cargol = pilot.cargoList(pp)
+   cargol = pp:cargoList()
    cargofree = " (" .. pp:cargoFree() .. "t free)"
    cargofreel = gfx.printDim( true, cargofree )
    cargoterml = gfx.printDim( true, ", [...]" )

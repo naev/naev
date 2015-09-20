@@ -26,6 +26,18 @@ mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
 
+--[[Control parameters: mem.radius and mem.angle are the polar coordinates 
+of the point the pilot has to follow when using follow_accurate.
+The reference direction is the target's velocity direction.
+For example, radius = 100 and angle = 180 means that the pilot will stay
+behing his target at a distance of 100 units.
+angle = 90 will make the pilot try to be on the left of his target,
+angle = 0 means that the pilot tries to be in front of the target.]]
+mem.radius         = 100 --  Requested distance between follower and target
+mem.angle          = 180 --  Requested angle between follower and target's velocity
+mem.Kp             = 10 --  First control coefficient
+mem.Kd             = 20 -- Second control coefficient
+
 
 -- Required control rate
 control_rate   = 2
