@@ -249,7 +249,6 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
-static int aiL_activate( lua_State *L ); /* activates/de-activates an outfit */
 
 
 static const luaL_reg aiL_methods[] = {
@@ -332,7 +331,6 @@ static const luaL_reg aiL_methods[] = {
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
-   { "activate", aiL_activate },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -2605,16 +2603,49 @@ static int aiL_settarget( lua_State *L )
 
 
 /**
- * @brief Sets the active weapon set (or fires another weapon set).
+ * @brief Sets the active weapon set, fires another weapon set or activate an outfit.
  *
  *    @luaparam id ID of the weapon set to switch to or fire.
+ *    @luaparam type If type = true or nil, activate, else, deactivate
  * @luafunc weapset( id )
  */
 static int aiL_weapSet( lua_State *L )
 {
-   int id;
-   id = luaL_checkint(L,1);
-   pilot_weapSetPress( cur_pilot, id, 1 );
+   Pilot* p;
+   int id, type, on, l, i;
+   PilotWeaponSet *ws;
+
+   p = cur_pilot;
+   id = lua_tonumber(L,1);
+
+   if (lua_gettop(L) > 1)
+      type = lua_toboolean(L,2);
+   else
+      type = 1;
+
+   ws = &p->weapon_sets[id];
+
+   if (ws->type == WEAPSET_TYPE_ACTIVE)
+   {
+      /* Check if outfit is on */
+      on = 1;
+      l  = array_size(ws->slots);
+      for (i=0; i<l; i++) {
+         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+            on = 0;
+            break;
+         }
+      }
+
+      /* activate */
+      if (type && !on)
+         pilot_weapSetPress(p, id, 1 );
+      /* deactivate */
+      if (!type && on)
+         pilot_weapSetPress(p, id, 1 );
+   }
+   else /* weapset type is weapon or change */
+      pilot_weapSetPress( cur_pilot, id, 1 );
    return 0;
 }
 
@@ -2991,45 +3022,6 @@ static int aiL_credits( lua_State *L )
    }
 
    cur_pilot->credits = luaL_checklong(L,1);
-
-   return 0;
-}
-
-
-/*
- * activates/de-activates an outfit
- *
- *    @luaparam id Id of the weaponset to activate
- *    @luaparam type If type = true, activate, else, de-activate
- */
-static int aiL_activate( lua_State *L )
-{
-   Pilot* p;
-   int id, type, on, l, i;
-   PilotWeaponSet *ws;
-
-   p = cur_pilot;
-   id = lua_tonumber(L,1);
-   type = lua_toboolean(L,2);
-   ws = &p->weapon_sets[id];
-
-   /* Check if outfit is on */
-   on = 1;
-   l  = array_size(ws->slots);
-   for (i=0; i<l; i++) {
-      if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
-         on = 0;
-         break;
-      }
-   }
-
-   /* activate */
-   if (type && !on)
-      pilot_weapSetPress(p, id, 1 );
-
-  /* de-activate */
-   if (!type && on)
-      pilot_weapSetPress(p, id, 1 );
 
    return 0;
 }

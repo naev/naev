@@ -314,7 +314,7 @@ function __run_target ()
 
    -- Afterburner handling.         
    if ai.hasafterburner() and ai.pilot():energy() > 10 then
-      ai.activate( 8, true )
+      ai.weapset( 8, true )
    end
 
    return false
@@ -348,9 +348,9 @@ function __run_hyp ()
    --Afterburner: activate while far away from jump
    if ai.hasafterburner() and ai.pilot():energy() > 10 then
       if jdist > 3 * bdist then
-         ai.activate( 8, true )
+         ai.weapset( 8, true )
       else
-         ai.activate( 8, false )
+         ai.weapset( 8, false )
       end
    end
    if jdist > bdist and jdir < 10 then       
