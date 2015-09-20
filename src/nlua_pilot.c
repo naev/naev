@@ -3823,20 +3823,33 @@ static int pilotL_brake( lua_State *L )
  *
  *    @luaparam p Pilot to tell to follow another pilot.
  *    @luaparam pt Target pilot to follow.
+ *    @luaparam accurate If true, use a PD controller which
+                parameters can be defined using the pilot's memory.
  * @luasee control
- * @luafunc follow( p, pt )
+ * @luasee memory
+ * @luafunc follow( p, pt, accurate )
  */
 static int pilotL_follow( lua_State *L )
 {
    Pilot *p, *pt;
    Task *t;
+   int accurate;
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
    pt = luaL_validpilot(L,2);
 
+   if (lua_gettop(L) > 2)
+      accurate = lua_toboolean(L,3);
+   else
+      accurate = 0;
+
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "follow" );
+   if (accurate == 0)
+      t = pilotL_newtask( L, p, "follow" );
+   else
+      t = pilotL_newtask( L, p, "follow_accurate" );
+
    t->dtype = TASKDATA_PILOT;
    t->dat.num = pt->id;
 

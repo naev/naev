@@ -165,6 +165,29 @@ function follow ()
  
    end
 end
+function follow_accurate ()
+   local target = ai.target()
+   local p = ai.pilot()
+ 
+   -- Will just float without a target to escort.
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = ai.follow_accurate(target, mem.radius, 
+         mem.angle, mem.Kp, mem.Kd)
+
+   local mod = vec2.mod(goal - p:pos())
+
+   --  Always face the goal
+   local dir   = ai.face(goal)
+
+   if dir < 10 and mod > 300 then
+      ai.accel()
+   end
+
+end
 
 --[[
 -- Tries to runaway and jump asap.

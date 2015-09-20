@@ -204,6 +204,7 @@ static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
+static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
 
 /* Hyperspace. */
 static int aiL_nearhyptarget( lua_State *L ); /* pointer rndhyptarget() */
@@ -290,6 +291,7 @@ static const luaL_reg aiL_methods[] = {
    { "brake", aiL_brake },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
+   { "follow_accurate", aiL_follow_accurate },
    /* Hyperspace. */
    { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
@@ -2494,6 +2496,54 @@ static int aiL_relvel( lua_State *L )
 
    lua_pushnumber(L, dot / mod );
    return 1;
+}
+
+/*
+ * @brief Computes the point to face in order to
+ *        follow an other pilot using a PD controller.
+ *
+ *    @luaparam target The pilot to follow
+ *    @luaparam radius The requested distance between p and target
+ *    @luaparam angle The requested angle between p and target
+ *    @luaparam Kp The first controller parameter
+ *    @luaparam Kd The second controller parameter
+ *    @luareturn The point to go to as a vector2.
+ * @luafunc follow_accurate( target, radius, angle, Kp, Kd )
+ */
+static int aiL_follow_accurate( lua_State *L )
+{
+   Vector2d point, cons, goal;
+   LuaVector lv;
+   double radius, angle, Kp, Kd, angle2;
+   Pilot *p, *target;
+
+   p = cur_pilot;
+   target = luaL_validpilot(L,1);
+   radius = luaL_checklong(L,2);
+   angle = luaL_checklong(L,3);
+   Kp = luaL_checklong(L,4);
+   Kd = luaL_checklong(L,5);
+
+   /* Use the velocity instead of direction */
+   angle2 = angle * M_PI/180 + VANGLE( target->solid->vel );
+   vect_cset( &point, VX(target->solid->pos) + radius * cos(angle2),
+         VY(target->solid->pos) + radius * sin(angle2) );
+
+   /*  Compute the direction using a pd controller */
+   vect_cset( &cons, (point.x - p->solid->pos.x) * Kp + 
+         (target->solid->vel.x - p->solid->vel.x) *Kd,
+         (point.y - p->solid->pos.y) * Kp +
+         (target->solid->vel.y - p->solid->vel.y) *Kd );
+
+   vect_cset( &goal, cons.x + p->solid->pos.x, cons.y + p->solid->pos.y);
+
+   vectcpy( &lv.vec, &goal );
+
+   /* Push info */
+   lua_pushvector( L, lv );
+
+   return 1;
+
 }
 
 /*
