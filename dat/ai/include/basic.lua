@@ -312,12 +312,11 @@ function __run_target ()
    local dir   = ai.face(target, true)
    ai.accel()
 
-   --[[
-   -- Todo afterburner handling.
-   if ai.hasafterburner() then
-      ai.afterburn(true)
+   -- Afterburner handling.         
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      ai.activate( 8, true )
    end
-   ]]--
+
    return false
 end
 function __run_turret ()
@@ -345,7 +344,16 @@ function __run_hyp ()
    local jdir     = ai.face(jump)
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
-   if jdir < 10 and jdist > bdist then
+   
+   --Afterburner: activate while far away from jump
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      if jdist > 3 * bdist then
+         ai.activate( 8, true )
+      else
+         ai.activate( 8, false )
+      end
+   end
+   if jdist > bdist and jdir < 10 then       
       ai.accel()
    elseif jdist < bdist then
       ai.pushsubtask( "__run_hypbrake" )

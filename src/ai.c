@@ -224,6 +224,8 @@ static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
+static int aiL_hasjammers( lua_State *L ); /* bool hasjammers() */
+static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
 static int aiL_getenemy_heuristic( lua_State *L ); /* number getenemy_heuristic() */
@@ -247,6 +249,7 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
+static int aiL_activate( lua_State *L ); /* activates/de-activates an outfit */
 
 
 static const luaL_reg aiL_methods[] = {
@@ -307,6 +310,8 @@ static const luaL_reg aiL_methods[] = {
    { "weapset", aiL_weapSet },
    { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
+   { "hasjammers", aiL_hasjammers },
+   { "hasafterburner", aiL_hasafterburner },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
    { "getenemy_size", aiL_getenemy_size },
@@ -327,6 +332,7 @@ static const luaL_reg aiL_methods[] = {
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
+   { "activate", aiL_activate },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -2640,6 +2646,32 @@ static int aiL_hasturrets( lua_State *L )
 
 
 /**
+ * @brief Does the pilot have jammers?
+ *
+ *    @luareturn True if the pilot has turrets.
+ * @luafunc hasjammers()
+ */
+static int aiL_hasjammers( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->njammers > 0 );
+   return 1;
+}
+
+
+/**
+ * @brief Does the pilot have afterburners?
+ *
+ *    @luareturn True if the pilot has turrets.
+ * @luafunc hasafterburners()
+ */
+static int aiL_hasafterburner( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->nafterburners > 0 );
+   return 1;
+}
+
+
+/**
  * @brief Makes the pilot shoot
  *
  * @luafunc shoot( secondary )
@@ -2963,6 +2995,44 @@ static int aiL_credits( lua_State *L )
    return 0;
 }
 
+
+/*
+ * activates/de-activates an outfit
+ *
+ *    @luaparam id Id of the weaponset to activate
+ *    @luaparam type If type = true, activate, else, de-activate
+ */
+static int aiL_activate( lua_State *L )
+{
+   Pilot* p;
+   int id, type, on, l, i;
+   PilotWeaponSet *ws;
+
+   p = cur_pilot;
+   id = lua_tonumber(L,1);
+   type = lua_toboolean(L,2);
+   ws = &p->weapon_sets[id];
+
+   /* Check if outfit is on */
+   on = 1;
+   l  = array_size(ws->slots);
+   for (i=0; i<l; i++) {
+      if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+         on = 0;
+         break;
+      }
+   }
+
+   /* activate */
+   if (type && !on)
+      pilot_weapSetPress(p, id, 1 );
+
+  /* de-activate */
+   if (!type && on)
+      pilot_weapSetPress(p, id, 1 );
+
+   return 0;
+}
 
 /**
  * @}
