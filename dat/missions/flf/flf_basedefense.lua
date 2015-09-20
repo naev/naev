@@ -577,7 +577,7 @@ end
 
 function attackedObstinate()
     if wavefirst then
-        pilot.broadcast(obstinate, flagattack, true)
+        obstinate:broadcast(flagattack, true)
         wavefirst = false
     end
     attacked()

@@ -55,7 +55,6 @@ static int outfit_compareActive( const void *slot1, const void *slot2 );
 
 
 /* Pilot metatable methods. */
-static int pilotL_getPlayer( lua_State *L );
 static int pilotL_addFleetRaw( lua_State *L );
 static int pilotL_addFleet( lua_State *L );
 static int pilotL_remove( lua_State *L );
@@ -142,7 +141,6 @@ static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
-   { "player", pilotL_getPlayer },
    { "addRaw", pilotL_addFleetRaw },
    { "add", pilotL_addFleet },
    { "rm", pilotL_remove },
@@ -240,7 +238,6 @@ static const luaL_reg pilotL_methods[] = {
 }; /**< Pilot metatable methods. */
 static const luaL_reg pilotL_cond_methods[] = {
    /* General. */
-   { "player", pilotL_getPlayer },
    { "get", pilotL_getPilots },
    { "__eq", pilotL_eq },
    /* Info. */
@@ -412,28 +409,6 @@ int lua_ispilot( lua_State *L, int ind )
 
    lua_pop(L, 2);  /* remove both metatables */
    return ret;
-}
-
-/**
- * @brief Gets the player's pilot.
- *
- * @usage player = pilot.player()
- *
- *    @luareturn Pilot pointing to the player.
- * @luafunc player()
- */
-static int pilotL_getPlayer( lua_State *L )
-{
-   LuaPilot lp;
-
-   if (player.p == NULL) {
-      lua_pushnil(L);
-      return 1;
-   }
-
-   lp.pilot = player.p->id;
-   lua_pushpilot(L,lp);
-   return 1;
 }
 
 

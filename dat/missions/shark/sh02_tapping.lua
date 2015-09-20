@@ -152,7 +152,7 @@ end
 
 function ambush()
    --Looking at the player ship's class in order to spawn the most dangerous ennemy to him
-   playerclass = ship.class(pilot.ship(player.pilot()))
+   playerclass = player.pilot():ship():class()
    badguys = {}
 	
    if playerclass == "Scout" or playerclass == "Fighter" or playerclass == "Drone" or playerclass == "Heavy Drone" or playerclass == "Luxury Yacht" or playerclass == "Yacht" or palyerclass == "Courier" then
