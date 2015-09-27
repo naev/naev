@@ -57,7 +57,7 @@
   <player>3</player>
   <colour>yellow</colour>
   <spawn>frontier</spawn>
-  <standing>independent</standing>
+  <standing>frontier</standing>
   <allies>
   </allies>
   <enemies>
@@ -226,7 +226,7 @@
   <longname>House Goddard</longname>
   <player>2</player>
   <spawn>goddard</spawn>
-  <standing>independent</standing>
+  <standing>goddard</standing>
   <equip>empire</equip>
   <allies>
    <ally>Empire</ally>
