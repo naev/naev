@@ -327,6 +327,10 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->nturrets++;
    else if (outfit_isBolt(outfit))
       pilot->ncannons++;
+   else if (outfit_isJammer(outfit))
+      pilot->njammers++;
+   else if (outfit_isAfterburner(outfit))
+      pilot->nafterburners++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
       s->u.beamid = 0;

@@ -598,6 +598,10 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
       if (lev >= PILOT_WEAPSET_MAX_LEVELS)
          continue;
 
+      /* Empty Launchers aren't valid */
+      if (outfit_isLauncher(ws->slots[i].slot->outfit) && ws->slots[i].slot->u.ammo.quantity <= 0)
+         continue;
+
       /* Get range. */
       range = outfit_range(ws->slots[i].slot->outfit);
       if (range >= 0.) {
@@ -1033,6 +1037,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
    Vector2d vp, vv;
    double rate_mod, energy_mod;
    double energy;
+   int j;
 
    /* Make sure weapon has outfit. */
    if (w->outfit == NULL)
@@ -1126,6 +1131,12 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       p->solid->mass     -= w->u.ammo.outfit->mass;
 
       pilot_updateMass( p );
+
+      /* If last ammo was shot, update the range */
+      if (w->u.ammo.quantity <= 0) {
+         for (j=0; j<PILOT_WEAPON_SETS; j++)
+            pilot_weapSetUpdateRange( &p->weapon_sets[j] );
+      }
    }
 
    /*
@@ -1239,8 +1250,11 @@ void pilot_weaponAuto( Pilot *p )
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
-      for (i=0; i<PILOT_WEAPON_SETS; i++)
+      for (i=0; i<PILOT_WEAPON_SETS; i++){
          pilot_weapSetInrange( p, i, 1 );
+         /* Update range and speed (at 0)*/
+         pilot_weapSetUpdateRange( &p->weapon_sets[i] );
+      }
 
    /* Iterate through all the outfits. */
    for (i=0; i<p->noutfits; i++) {
@@ -1439,8 +1453,8 @@ void pilot_afterburn (Pilot *p)
          pilot_isDisabled(p) || pilot_isFlag(p, PILOT_COOLDOWN))
       return;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control if is player. */
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ) && pilot_isFlag( p, PILOT_PLAYER ))
       return;
 
    /** @todo fancy effect? */
@@ -1460,7 +1474,8 @@ void pilot_afterburn (Pilot *p)
       pilot_calcStats( p );
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
-      sound_play(p->afterburner->outfit->u.afb.sound_on);
+      sound_playPos(p->afterburner->outfit->u.afb.sound_on,
+            p->solid->pos.x, p->solid->pos.y, p->solid->vel.x, p->solid->vel.y);
    }
 
    if (pilot_isPlayer(p)) {
@@ -1486,6 +1501,7 @@ void pilot_afterburnOver (Pilot *p)
       pilot_calcStats( p );
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
-      sound_play(p->afterburner->outfit->u.afb.sound_off);
+      sound_playPos(p->afterburner->outfit->u.afb.sound_off,
+            p->solid->pos.x, p->solid->pos.y, p->solid->vel.x, p->solid->vel.y);
    }
 }

@@ -372,9 +372,11 @@ typedef struct Pilot_ {
    PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
 
    /* Primarily for AI usage. */
-   int ncannons; /**< Number of cannons equipped. */
-   int nturrets; /**< Number of turrets equipped. */
-   int nbeams;   /**< Number of beams equipped. */
+   int ncannons;      /**< Number of cannons equipped. */
+   int nturrets;      /**< Number of turrets equipped. */
+   int nbeams;        /**< Number of beams equipped. */
+   int njammers;      /**< Number of jammers equipped. */
+   int nafterburners; /**< Number of afterburners equipped. */
 
    /* For easier usage. */
    PilotOutfitSlot *afterburner; /**< the afterburner */

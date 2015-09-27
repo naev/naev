@@ -375,6 +375,9 @@ end
 --everything is done
 function cleanup()
    player.pilot():setInvincible(false)
+   player.pilot():control(false)
+   camera.set()
+   player.cinematics(false)
    evt.finish()
 end
 

@@ -237,11 +237,14 @@ static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
+static int aiL_hasjammers( lua_State *L ); /* bool hasjammers() */
+static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
 static int aiL_getenemy_heuristic( lua_State *L ); /* number getenemy_heuristic() */
 static int aiL_hostile( lua_State *L ); /* hostile( number ) */
 static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
+static int aiL_getweapspeed( lua_State *L ); /* number getweapspeed() */
 static int aiL_canboard( lua_State *L ); /* boolean canboard( number ) */
 static int aiL_relsize( lua_State *L ); /* boolean relsize( number ) */
 static int aiL_reldps( lua_State *L ); /* boolean reldps( number ) */
@@ -321,12 +324,15 @@ static const luaL_reg aiL_methods[] = {
    { "weapset", aiL_weapSet },
    { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
+   { "hasjammers", aiL_hasjammers },
+   { "hasafterburner", aiL_hasafterburner },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
    { "getenemy_size", aiL_getenemy_size },
    { "getenemy_heuristic", aiL_getenemy_heuristic },
    { "hostile", aiL_hostile },
    { "getweaprange", aiL_getweaprange },
+   { "getweapspeed", aiL_getweapspeed },
    { "canboard", aiL_canboard },
    { "relsize", aiL_relsize },
    { "reldps", aiL_reldps },
@@ -2489,18 +2495,34 @@ static int aiL_rndhyptarget( lua_State *L )
 
 /*
  * Gets the relative velocity of a pilot.
+ *
+ *    @luaparam p Target pilot
+ *    @luaparam absolute Do we use absolute velocity
+ *                       (useful for rocket targeting)
+ *    @luareturn velocity dot relative position
+ * @luafunc follow_accurate( target, radius, angle, Kp, Kd )
  */
 static int aiL_relvel( lua_State *L )
 {
    double dot, mod;
    Pilot *p;
    Vector2d vv, pv;
+   int absolute;
 
    p = luaL_validpilot(L,1);
 
+   if (lua_gettop(L) > 1)
+      absolute = lua_toboolean(L,2);
+   else
+      absolute = 0;
+
    /* Get the projection of target on current velocity. */
-   vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
-         p->solid->vel.y - cur_pilot->solid->vel.y );
+   if (absolute == 0)
+      vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
+            p->solid->vel.y - cur_pilot->solid->vel.y );
+   else
+      vect_cset( &vv, p->solid->vel.x, p->solid->vel.y);
+
    vect_cset( &pv, p->solid->pos.x - cur_pilot->solid->pos.x,
          p->solid->pos.y - cur_pilot->solid->pos.y );
    dot = vect_dot( &pv, &vv );
@@ -2519,15 +2541,17 @@ static int aiL_relvel( lua_State *L )
  *    @luaparam angle The requested angle between p and target
  *    @luaparam Kp The first controller parameter
  *    @luaparam Kd The second controller parameter
+ *    @luaparam method (optional) Method to compute goal angle
  *    @luareturn The point to go to as a vector2.
  * @luafunc follow_accurate( target, radius, angle, Kp, Kd )
  */
 static int aiL_follow_accurate( lua_State *L )
 {
-   Vector2d point, cons, goal;
+   Vector2d point, cons, goal, pv;
    LuaVector lv;
    double radius, angle, Kp, Kd, angle2;
    Pilot *p, *target;
+   const char *method;
 
    p = cur_pilot;
    target = luaL_validpilot(L,1);
@@ -2536,8 +2560,21 @@ static int aiL_follow_accurate( lua_State *L )
    Kp = luaL_checklong(L,4);
    Kd = luaL_checklong(L,5);
 
-   /* Use the velocity instead of direction */
-   angle2 = angle * M_PI/180 + VANGLE( target->solid->vel );
+   if (lua_gettop(L) > 5)
+      method = luaL_checkstring(L,6);
+   else
+      method = "velocity";
+
+   if (strcmp( method, "absolute" ) == 0)
+      angle2 = angle * M_PI/180;
+   else if (strcmp( method, "keepangle" ) == 0){
+      vect_cset( &pv, p->solid->pos.x - target->solid->pos.x,
+            p->solid->pos.y - target->solid->pos.y );
+      angle2 = VANGLE(pv);
+      }
+   else /* method == "velocity" */
+      angle2 = angle * M_PI/180 + VANGLE( target->solid->vel );
+
    vect_cset( &point, VX(target->solid->pos) + radius * cos(angle2),
          VY(target->solid->pos) + radius * sin(angle2) );
 
@@ -2661,16 +2698,49 @@ static int aiL_settarget( lua_State *L )
 
 
 /**
- * @brief Sets the active weapon set (or fires another weapon set).
+ * @brief Sets the active weapon set, fires another weapon set or activate an outfit.
  *
  *    @luaparam id ID of the weapon set to switch to or fire.
+ *    @luaparam type If type = true or nil, activate, else, deactivate
  * @luafunc weapset( id )
  */
 static int aiL_weapSet( lua_State *L )
 {
-   int id;
-   id = luaL_checkint(L,1);
-   pilot_weapSetPress( cur_pilot, id, 1 );
+   Pilot* p;
+   int id, type, on, l, i;
+   PilotWeaponSet *ws;
+
+   p = cur_pilot;
+   id = lua_tonumber(L,1);
+
+   if (lua_gettop(L) > 1)
+      type = lua_toboolean(L,2);
+   else
+      type = 1;
+
+   ws = &p->weapon_sets[id];
+
+   if (ws->type == WEAPSET_TYPE_ACTIVE)
+   {
+      /* Check if outfit is on */
+      on = 1;
+      l  = array_size(ws->slots);
+      for (i=0; i<l; i++) {
+         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+            on = 0;
+            break;
+         }
+      }
+
+      /* activate */
+      if (type && !on)
+         pilot_weapSetPress(p, id, 1 );
+      /* deactivate */
+      if (!type && on)
+         pilot_weapSetPress(p, id, 1 );
+   }
+   else /* weapset type is weapon or change */
+      pilot_weapSetPress( cur_pilot, id, 1 );
    return 0;
 }
 
@@ -2697,6 +2767,32 @@ static int aiL_hascannons( lua_State *L )
 static int aiL_hasturrets( lua_State *L )
 {
    lua_pushboolean( L, cur_pilot->nturrets > 0 );
+   return 1;
+}
+
+
+/**
+ * @brief Does the pilot have jammers?
+ *
+ *    @luareturn True if the pilot has turrets.
+ * @luafunc hasjammers()
+ */
+static int aiL_hasjammers( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->njammers > 0 );
+   return 1;
+}
+
+
+/**
+ * @brief Does the pilot have afterburners?
+ *
+ *    @luareturn True if the pilot has turrets.
+ * @luafunc hasafterburners()
+ */
+static int aiL_hasafterburner( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->nafterburners > 0 );
    return 1;
 }
 
@@ -2845,6 +2941,31 @@ static int aiL_getweaprange( lua_State *L )
       level = luaL_checkint(L,2);
 
    lua_pushnumber(L, pilot_weapSetRange( cur_pilot, id, level ) );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the speed of a weapon.
+ *
+ *    @luaparam id Optional parameter indicating id of weapon set to get speed of, defaults to selected one.
+ *    @luaparam level Level of weapon set to get range of.
+ *    @luareturn The range of the weapon set.
+ * @luafunc getweapspeed( id, level )
+ */
+static int aiL_getweapspeed( lua_State *L )
+{
+   int id;
+   int level;
+
+   id    = cur_pilot->active_set;
+   level = -1;
+   if (lua_isnumber(L,1))
+      id = luaL_checkint(L,1);
+   if (lua_isnumber(L,2))
+      level = luaL_checkint(L,2);
+
+   lua_pushnumber(L, pilot_weapSetSpeed( cur_pilot, id, level ) );
    return 1;
 }
 
@@ -3024,7 +3145,6 @@ static int aiL_credits( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @}
