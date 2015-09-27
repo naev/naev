@@ -685,7 +685,7 @@ int faction_isPlayerFriend( int f )
    Faction *faction;
    lua_State *L;
    int errf;
-   double r;
+   int r;
 
    faction = &faction_stack[f];
 
@@ -749,7 +749,7 @@ int faction_isPlayerEnemy( int f )
    Faction *faction;
    lua_State *L;
    int errf;
-   double r;
+   int r;
 
    faction = &faction_stack[f];
 
