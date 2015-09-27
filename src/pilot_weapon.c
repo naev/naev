@@ -1451,8 +1451,8 @@ void pilot_afterburn (Pilot *p)
          pilot_isDisabled(p) || pilot_isFlag(p, PILOT_COOLDOWN))
       return;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control if is player. */
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ) && pilot_isFlag( p, PILOT_PLAYER ))
       return;
 
    /** @todo fancy effect? */
@@ -1472,7 +1472,8 @@ void pilot_afterburn (Pilot *p)
       pilot_calcStats( p );
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
-      sound_play(p->afterburner->outfit->u.afb.sound_on);
+      sound_playPos(p->afterburner->outfit->u.afb.sound_on,
+            p->solid->pos.x, p->solid->pos.y, p->solid->vel.x, p->solid->vel.y);
    }
 
    if (pilot_isPlayer(p)) {
@@ -1498,6 +1499,7 @@ void pilot_afterburnOver (Pilot *p)
       pilot_calcStats( p );
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
-      sound_play(p->afterburner->outfit->u.afb.sound_off);
+      sound_playPos(p->afterburner->outfit->u.afb.sound_off,
+            p->solid->pos.x, p->solid->pos.y, p->solid->vel.x, p->solid->vel.y);
    }
 }

@@ -1932,7 +1932,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
 
       /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER)) {
          /* Heat up the afterburner. */
          pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
 
@@ -1942,7 +1942,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
-            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            if (pilot->id == PLAYER_ID) spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
