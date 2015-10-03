@@ -239,7 +239,7 @@ function equip_findOutfit( shipname, slot, outfits )
       cache_outfit(o)
 
       if ocache[o] <= scache[shipname][slot] then
-         return v
+         return o
       end
    end
 
