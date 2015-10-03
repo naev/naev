@@ -20,6 +20,7 @@
 
 include "numstring.lua"
 include "fleethelper.lua"
+include "dat/missions/flf/flf_common.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -64,7 +65,7 @@ end
 function create ()
    flfbase = system.cur()
    flfplanet = planet.cur()
-   missys = patrol_getTargetSystem()
+   missys = flf_getTargetSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    level = rnd.rnd( 1, #misn_level )
@@ -212,20 +213,6 @@ function land_flf ()
       faction.get("FLF"):modPlayer( reputation )
       misn.finish( true )
    end
-end
-
-
--- Get a system for the Dvaered patrol.
--- These are systems which have both FLF and Dvaered presence.
-function patrol_getTargetSystem ()
-   local choices = {}
-   for i, j in ipairs( system.getAll() ) do
-      local p = j:presences()
-      if p[ "FLF" ] and p[ "Dvaered" ]  then
-         choices[ #choices + 1 ] = j:name()
-      end
-   end
-   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
 end
 
 
