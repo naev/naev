@@ -144,7 +144,6 @@ CODE_SOURCE = \
 	unidiff.c \
 	weapon.c \
 	ai.h \
-	ai_extra.h \
 	array.h \
 	background.h \
 	board.h \

@@ -1034,4 +1034,26 @@
    <planet>Darkshed</planet>
   </avail>
  </mission>
+ <mission name="The Dvaered Championship">
+  <lua>dvaered/championship</lua>
+  <flags>
+  <unique/>
+  </flags>
+  <avail>
+   <cond></cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <planet>Dvaer Prime</planet>
+  </avail>
+ </mission>
+ <mission name="Za'lek Test">
+  <lua>zalek/zlk_test</lua>
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
+   <chance>450</chance>
+   <location>Computer</location>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
 </Missions>

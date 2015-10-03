@@ -17,7 +17,7 @@ function atk_fighter_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -73,7 +73,7 @@ function atk_fighter ()
 
    -- Otherwise melee
    else
-      if ai.shipmass(target) < 200 then
+      if target:stats().mass < 200 then
          _atk_f_space_sup( target, dist )
       else
          _atk_f_flyby( target, dist )

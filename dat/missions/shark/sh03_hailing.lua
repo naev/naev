@@ -50,7 +50,7 @@ if lang == "es" then
 	
    -- OSD
    osd_title = "Invitation"
-   osd_msg[1] = "Go to %s, find and hail the Hawking"
+   osd_msg[1] = "Go to %s, find and hail the Air Force One"
    osd_msg[2] = "Report back to %s in %s"
    
 end
@@ -87,7 +87,7 @@ function accept()
       misn.setDesc(misn_desc)
 
       osd_msg[1] = osd_msg[1]:format(missys:name())
-      osd_msg[2] = osd_msg[2]:format(paypla.name(), paysys.name())
+      osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.osdCreate(misn_title, osd_msg)
       marker = misn.markerAdd(missys, "low")

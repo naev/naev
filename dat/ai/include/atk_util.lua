@@ -13,7 +13,7 @@ function _atk_keep_distance()
 
    --find nearest thing
    local neighbor = ai.nearestpilot()
-   if not ai.exists(neighbor) then
+   if not neighbor or not neighbor:exists() then
       return
    end
 
@@ -36,7 +36,7 @@ function _atk_com_think ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -54,7 +54,7 @@ function _atk_com_think ()
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and target:flags().disabled then
       ai.poptask()
       return
    end
