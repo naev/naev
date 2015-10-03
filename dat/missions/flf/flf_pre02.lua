@@ -20,6 +20,7 @@
 --]]
 
 include "fleethelper.lua"
+include "dat/missions/flf/flf_common.lua"
 include "dat/missions/flf/flf_patrol.lua"
 
 -- localization stuff, translators would work here
@@ -109,7 +110,7 @@ end
 
 
 function create ()
-   missys = patrol_getTargetSystem()
+   missys = flf_getTargetSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    misn.setNPC( npc_name, "flf/unique/benito" )
