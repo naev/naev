@@ -7,6 +7,7 @@ mem.safe_distance  = 300
 mem.armour_run     = 100
 mem.shield_return  = 20
 mem.land_planet    = false
+mem.careful       = true
 
 
 function create ()

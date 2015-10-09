@@ -24,6 +24,7 @@ mem.armour_run = 100
 mem.defensive  = false
 mem.enemyclose = 500
 mem.distressmsgfunc = sos
+mem.careful   = true
 
 
 function create ()

@@ -25,6 +25,7 @@ mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
+mem.careful       = false -- Should the pilot try to avoid enemies?
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
@@ -111,6 +112,7 @@ function control ()
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
+         ai.combat()  -- Set combat flag
       else
          idle()
       end
@@ -127,6 +129,7 @@ function control ()
       -- Needs to have a target
       if not target:exists() then
          ai.poptask()
+         ai.combat(false)  -- Set combat flag
          return
       end
 
@@ -207,6 +210,7 @@ function control ()
       if attack then
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
+         ai.combat()  -- Set combat flag
       end
    end
 end
@@ -244,6 +248,7 @@ function attacked ( attacker )
 
          -- Now pilot fights back
          ai.pushtask("attack", attacker)
+         ai.combat()  -- Set combat flag
       else
 
          -- Runaway
@@ -358,11 +363,13 @@ function distress ( pilot, attacker )
 
       if not target:exists() or ai.dist(target) > ai.dist(t) then
          ai.pushtask( "attack", t )
+         ai.combat()  -- Set combat flag
       end
    -- If not fleeing or refueling, begin attacking
    elseif task ~= "runaway" and task ~= "refuel" then
       if mem.aggressive then
          ai.pushtask( "attack", t )
+         ai.combat()  -- Set combat flag
       else
          ai.pushtask( "runaway", t )
       end

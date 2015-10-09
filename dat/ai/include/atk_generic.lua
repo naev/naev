@@ -106,7 +106,12 @@ function _atk_g_ranged( target, dist )
          or ai.getweapspeed(4) < target:stats().speed_max*1.2 
          or ai.getweaprange(4) < ai.getweaprange(1)*1.5 then
 
-      local dir = ai.face(target) -- Normal face the target
+      local dir
+      if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
+         dir = ai.face(target) -- Normal face the target
+      else
+         dir = ai.careful_face(target) -- Careful method
+      end
 
       -- Check if in range to shoot missiles
       if dist < ai.getweaprange( 4 ) and dir < 30 then

@@ -876,6 +876,8 @@ void pilot_setHostile( Pilot* p )
       /* Time to play combat music. */
       if (player.enemies == 0)
          music_choose("combat");
+         /* Set the player's pilot as in combat */
+         pilot_setFlag(pilot_stack[PLAYER_ID], PILOT_COMBAT);
 
       player.enemies++;
       pilot_setFlag(p, PILOT_HOSTILE);
@@ -1079,6 +1081,8 @@ void pilot_rmHostile( Pilot* p )
       if (player.enemies <= 0) {
          music_choose("ambient");
          player.enemies = 0;
+         /* Set the player's pilot as not in combat */
+         pilot_rmFlag(pilot_stack[PLAYER_ID], PILOT_COMBAT);
       }
    }
 }

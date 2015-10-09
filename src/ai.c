@@ -192,6 +192,7 @@ static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
 static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
+static int aiL_careful_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
 static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
@@ -287,6 +288,7 @@ static const luaL_reg aiL_methods[] = {
    { "accel", aiL_accel },
    { "turn", aiL_turn },
    { "face", aiL_face },
+   { "careful_face", aiL_careful_face },
    { "iface", aiL_iface },
    { "dir", aiL_dir },
    { "idir", aiL_idir },
@@ -1863,6 +1865,134 @@ static int aiL_face( lua_State *L )
 
    /* Compensate error and rotate. */
    diff = angle_diff( cur_pilot->solid->dir, atan2( dy, dx ) );
+
+   /* Make pilot turn. */
+   pilot_turn = k_diff * diff;
+
+   /* Return angle in degrees away from target. */
+   lua_pushnumber(L, ABS(diff*180./M_PI));
+   return 1;
+}
+
+
+/**
+ * @brief Gives the direction to follow in order to reach the target while
+ *  minimizating risk.
+ *
+ * This method is based on a simplified version of trajectory generation in
+ * mobile robotics using the potential method.
+ *
+ * The principle is to consider the mobile object (ship) as a mechanical object.
+ * Obstacles (enemies) and the target exert 
+ * attractive or repulsive force on this object.
+ *
+ * Only visible ships are taken into account.
+ *
+ * @usage ai.careful_face( a_pilot ) -- Face a pilot
+ * @usage ai.careful_face( a_vector ) -- Face a vector
+ *
+ *    @luaparam target Target to go to.
+ * @luafunc careful_face( target )
+ */
+static int aiL_careful_face( lua_State *L )
+{
+   LuaVector *lv;
+   Vector2d *tv, F, F1, pilot_relpos, target_relpos;
+   Pilot* p;
+   Pilot *p_i;
+   double k_diff, k_goal, k_enemy, k_mult,
+          k_dot, d, diff, dist, factor, cur_k;
+   int enemy, i;
+
+   /* Init some variables */
+   p = cur_pilot;
+   cur_k = 0.;
+
+   /* Get first parameter, aka what to face. */
+   if (lua_ispilot(L,1)) {
+      p = luaL_validpilot(L,1);
+      /* Target vector. */
+      tv = &p->solid->pos;
+   }
+   else if (lua_isnumber(L,1)) {
+      d = (double)lua_tonumber(L,1);
+      if (d < 0.)
+         tv = &cur_pilot->solid->pos;
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else if (lua_isvector(L,1)) {
+      lv = lua_tovector(L,1);
+      tv = &lv->vec;
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Default gains. */
+   k_diff = 10.;
+   k_goal = 1.;
+   k_enemy = 4000000.;
+
+   /* Init the force */
+   vect_cset( &F, 0., 0.) ;
+   vect_cset( &F1, tv->x - cur_pilot->solid->pos.x, tv->y - cur_pilot->solid->pos.y) ;
+   dist = VMOD(F1);
+   vect_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
+
+   /*cycle through all the pilots in order to compute the force */
+   for(i = 0; i<pilot_nstack; i++)
+   {
+
+      p_i = pilot_stack[i];
+
+      /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
+      if(p_i->id != cur_pilot->id && pilot_inRangePilot( cur_pilot, p_i) == 1  
+            && p_i->id != p->id && !pilot_isDisabled(p_i) )
+
+      {
+           dist = vect_dist(&p_i->solid->pos, &cur_pilot->solid->pos);
+           k_mult = pilot_relhp( p_i, cur_pilot );
+
+           /* Check if friendly or not */
+           if (p_i->faction == FACTION_PLAYER)
+              enemy = pilot_isHostile(cur_pilot);
+           else
+              enemy = areEnemies(cur_pilot->faction, p_i->faction);
+
+           if (enemy){
+              factor = k_enemy * k_mult / dist/dist/dist;
+              vect_cset( &F, F.x + factor * (cur_pilot->solid->pos.x - p_i->solid->pos.x),
+                     F.y + factor * (cur_pilot->solid->pos.y - p_i->solid->pos.y) );
+           }
+
+           /* Loop over friendly pilots in order to pick one to follow */
+           else if (!pilot_isFlag(p_i, PILOT_COMBAT) && cur_pilot->speed > p_i->speed
+                 && k_mult > cur_k)
+           {
+
+              /* They are only usefull if they head to the right direction */
+              vect_cset( &pilot_relpos, cur_pilot->solid->pos.x - p_i->solid->pos.x,
+                    cur_pilot->solid->pos.y - p_i->solid->pos.y);
+
+              vect_cset( &target_relpos, cur_pilot->solid->pos.x - tv->x,
+                    cur_pilot->solid->pos.y - tv->y);
+
+              k_dot = VANGLE(pilot_relpos) - VANGLE(target_relpos);
+
+              if (ABS(k_dot) < M_PI/6. ){
+                 cur_k = k_mult;
+
+                 dist = VMOD(pilot_relpos);
+                 vect_cset( &F1, -pilot_relpos.x * k_goal / dist, -pilot_relpos.y * k_goal / dist) ;
+              }
+           }
+       }
+   }
+
+   vect_cset( &F, F.x + F1.x, F.y + F1.y );
+
+   /* Rotate. */
+   diff = angle_diff( cur_pilot->solid->dir, VANGLE(F) );
 
    /* Make pilot turn. */
    pilot_turn = k_diff * diff;
