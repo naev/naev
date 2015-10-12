@@ -376,9 +376,9 @@ function __run_hyp ()
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
 
-   if jdist > 3*bdist then
+   if jdist > 3*bdist and ai.pilot():stats().mass < 600 then
       jdir = ai.careful_face(jump)
-   else
+   else --Heavy ships should rush to jump point
       jdir = ai.face(jump)
    end
    

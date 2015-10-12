@@ -1897,16 +1897,15 @@ static int aiL_face( lua_State *L )
 static int aiL_careful_face( lua_State *L )
 {
    LuaVector *lv;
-   Vector2d *tv, F, F1, pilot_relpos, target_relpos;
+   Vector2d *tv, F, F1;
    Pilot* p;
    Pilot *p_i;
    double k_diff, k_goal, k_enemy, k_mult,
-          k_dot, d, diff, dist, factor, cur_k;
+          d, diff, dist, factor;
    int enemy, i;
 
    /* Init some variables */
    p = cur_pilot;
-   cur_k = 0.;
 
    /* Get first parameter, aka what to face. */
    if (lua_ispilot(L,1)) {
@@ -1936,7 +1935,7 @@ static int aiL_careful_face( lua_State *L )
    /* Init the force */
    vect_cset( &F, 0., 0.) ;
    vect_cset( &F1, tv->x - cur_pilot->solid->pos.x, tv->y - cur_pilot->solid->pos.y) ;
-   dist = VMOD(F1);
+   dist = VMOD(F1) + 0.1; /* Avoid / 0*/
    vect_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /*cycle through all the pilots in order to compute the force */
@@ -1950,7 +1949,7 @@ static int aiL_careful_face( lua_State *L )
             && p_i->id != p->id && !pilot_isDisabled(p_i) )
 
       {
-           dist = vect_dist(&p_i->solid->pos, &cur_pilot->solid->pos);
+           dist = vect_dist(&p_i->solid->pos, &cur_pilot->solid->pos) + 0.1; /* Avoid / 0*/
            k_mult = pilot_relhp( p_i, cur_pilot );
 
            /* Check if friendly or not */
@@ -1963,28 +1962,6 @@ static int aiL_careful_face( lua_State *L )
               factor = k_enemy * k_mult / dist/dist/dist;
               vect_cset( &F, F.x + factor * (cur_pilot->solid->pos.x - p_i->solid->pos.x),
                      F.y + factor * (cur_pilot->solid->pos.y - p_i->solid->pos.y) );
-           }
-
-           /* Loop over friendly pilots in order to pick one to follow */
-           else if (!pilot_isFlag(p_i, PILOT_COMBAT) && cur_pilot->speed > p_i->speed
-                 && k_mult > cur_k)
-           {
-
-              /* They are only usefull if they head to the right direction */
-              vect_cset( &pilot_relpos, cur_pilot->solid->pos.x - p_i->solid->pos.x,
-                    cur_pilot->solid->pos.y - p_i->solid->pos.y);
-
-              vect_cset( &target_relpos, cur_pilot->solid->pos.x - tv->x,
-                    cur_pilot->solid->pos.y - tv->y);
-
-              k_dot = VANGLE(pilot_relpos) - VANGLE(target_relpos);
-
-              if (ABS(k_dot) < M_PI/6. ){
-                 cur_k = k_mult;
-
-                 dist = VMOD(pilot_relpos);
-                 vect_cset( &F1, -pilot_relpos.x * k_goal / dist, -pilot_relpos.y * k_goal / dist) ;
-              }
            }
        }
    }
