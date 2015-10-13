@@ -1902,7 +1902,7 @@ static int aiL_careful_face( lua_State *L )
    Pilot *p_i;
    double k_diff, k_goal, k_enemy, k_mult,
           d, diff, dist, factor;
-   int enemy, i;
+   int i;
 
    /* Init some variables */
    p = cur_pilot;
@@ -1953,12 +1953,7 @@ static int aiL_careful_face( lua_State *L )
            k_mult = pilot_relhp( p_i, cur_pilot );
 
            /* Check if friendly or not */
-           if (p_i->faction == FACTION_PLAYER)
-              enemy = pilot_isHostile(cur_pilot);
-           else
-              enemy = areEnemies(cur_pilot->faction, p_i->faction);
-
-           if (enemy){
+           if ( areEnemies(cur_pilot->faction, p_i->faction) ){
               factor = k_enemy * k_mult / dist/dist/dist;
               vect_cset( &F, F.x + factor * (cur_pilot->solid->pos.x - p_i->solid->pos.x),
                      F.y + factor * (cur_pilot->solid->pos.y - p_i->solid->pos.y) );
