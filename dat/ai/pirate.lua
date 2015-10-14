@@ -14,6 +14,7 @@ mem.armour_run     = 80
 mem.armour_return  = 100
 mem.atk_board      = true
 mem.atk_kill       = false
+mem.careful       = true
 
 
 function create ()

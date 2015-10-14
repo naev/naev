@@ -275,9 +275,17 @@ function land ()
 end
 function __landgo ()
    local target   = mem.land
-   local dir      = ai.face( target )
+   
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+
+   -- 2 methods depending on mem.careful
+   local dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -364,9 +372,15 @@ function __run_hyp ()
 
    -- Go towards jump
    local jump     = ai.subtarget()
-   local jdir     = ai.face(jump)
+   local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
+
+   if jdist > 3*bdist and ai.pilot():stats().mass < 600 then
+      jdir = ai.careful_face(jump)
+   else --Heavy ships should rush to jump point
+      jdir = ai.face(jump)
+   end
    
    --Afterburner: activate while far away from jump
    if ai.hasafterburner() and ai.pilot():energy() > 10 then
@@ -409,9 +423,16 @@ function hyperspace ()
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
-   local dir      = ai.face( target )
+   local dir
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+
+   -- 2 methods for dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then

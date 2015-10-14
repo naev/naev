@@ -25,6 +25,7 @@ mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
+mem.careful       = false -- Should the pilot try to avoid enemies?
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
