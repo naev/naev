@@ -513,7 +513,7 @@ end
 
 --Task management
 function Forma:manageTask()
-   if self.task[1] then 
+   if self.task and self.task[1] then 
       self.fleader:control()
       if self.task[1] == "goto" then
          self.fleader:goto(self.task[2])
