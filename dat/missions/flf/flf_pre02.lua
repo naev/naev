@@ -20,7 +20,6 @@
 --]]
 
 include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
 include "dat/missions/flf/flf_patrol.lua"
 
 -- localization stuff, translators would work here
@@ -110,7 +109,7 @@ end
 
 
 function create ()
-   missys = flf_getTargetSystem()
+   missys = system.get( "Arcanis" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
    misn.setNPC( npc_name, "flf/unique/benito" )
@@ -357,7 +356,7 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur():name() == "Sindbad" then
+   if planet.cur():faction():name() == "FLF" then
       tk.msg( title[4], text[4] )
       tk.msg( title[4], text[5]:format( player.name() ) )
       tk.msg( title[4], text[6] )
