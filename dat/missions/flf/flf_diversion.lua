@@ -41,14 +41,12 @@ else -- default English
    osd_esc     = {}
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Destroy Dvaered ships to get them to get the others' attention"
-   osd_desc[3] = "Return to the FLF base"
+   osd_desc[3] = "Return to FLF base"
    osd_desc["__save"] = true
 end
 
 
 function create ()
-   flfbase = system.cur()
-   flfplanet = planet.cur()
    missys = flf_getTargetSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
@@ -136,7 +134,6 @@ function timer_mission_success ()
    job_done = true
    misn.osdActive( 3 )
    misn.markerRm( marker )
-   marker = misn.markerAdd( flfbase, "computer" )
    hook.rm( update_dv_hook )
    hook.land( "land" )
    tk.msg( "", success_text[ rnd.rnd( 1, #success_text ) ] )
@@ -144,7 +141,7 @@ end
 
 
 function land ()
-   if planet.cur() == flfplanet then
+   if planet.cur():faction():name() == "FLF" then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
       faction.get("FLF"):modPlayer( reputation )

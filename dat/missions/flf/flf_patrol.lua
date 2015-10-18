@@ -57,14 +57,12 @@ else -- default english
    osd_desc    = {}
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
-   osd_desc[3] = "Return to the FLF base"
+   osd_desc[3] = "Return to FLF base"
    osd_desc["__save"] = true
 end
 
 
 function create ()
-   flfbase = system.cur()
-   flfplanet = planet.cur()
    missys = flf_getTargetSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
@@ -191,7 +189,6 @@ function pilot_death_dv ()
       job_done = true
       misn.osdActive( 3 )
       misn.markerRm( marker )
-      marker = misn.markerAdd( flfbase, "computer" )
       hook.land( "land_flf" )
       pilot.toggleSpawn( true )
       if fleetFLF ~= nil then
@@ -207,7 +204,7 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur() == flfplanet then
+   if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
       faction.get("FLF"):modPlayer( reputation )
