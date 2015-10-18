@@ -27,7 +27,7 @@ if lang == "es" then
    bar_desc = {}
    
    title[1] = "Do you want to take part to a challenge?"
-   text[1] = [["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill him or the security staff won't forgive it. It is forbitten to use missiles, so you won't be allowed to have some while taking off. It's also forbitten to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on an other planet or to jump away during the championship.
+   text[1] = [["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill him or the security staff won't forgive it. It is forbidden to use missiles, so you won't be allowed to have some while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on an other planet or to jump away during the championship.
    We are looking for pilots, are you in?"]]
 	
    refusetitle = "Sorry, not interested"
@@ -228,7 +228,7 @@ function enter()
 
    playerclass = ship.class(pilot.ship(player.pilot()))
 
-   --Launchers are forbitten
+   --Launchers are forbidden
    listofoutfits = player.pilot():outfits()
    haslauncher = false
    for i, j in ipairs(listofoutfits) do
@@ -451,7 +451,7 @@ function oppo_disabled()  --Regular way to win
    boardhook = hook.pilot( opponent, "board", "oppo_boarded" )
 end
 
-function oppo_boarded()  --It is forbitten to board a competitor
+function oppo_boarded()  --It is forbidden to board a competitor
    player_wanted()
    misn.finish(false)
 end

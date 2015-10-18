@@ -3393,6 +3393,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "refueling", .id = PILOT_REFUELING },
    { .name = "disabled", .id = PILOT_DISABLED },
    { .name = "takingoff", .id = PILOT_TAKEOFF },
+   { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
    {NULL, -1}
 }; /**< Flags to get. */
 /**
@@ -3418,6 +3419,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> refueling: pilot is refueling another pilot.</li>
  *  <li> disabled: pilot is disabled.</li>
  *  <li> takingoff: pilot is currently taking off.</li>
+ *  <li> manualcontrol: pilot is under manual control.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.
