@@ -51,6 +51,11 @@ function create ()
    missys = system.get( "Doranthex" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
+   local num_dvaereds = missys:presences()["Dvaered"]
+   dv_attention_target = num_dvaereds / 20
+   credits = 200000
+   reputation = 20
+
    misn.setNPC( npc_name, "neutral/thief1" )
    misn.setDesc( npc_desc )
 end
@@ -73,5 +78,16 @@ function accept ()
       hook.land( "leave" )
    else
       tk.msg( title[3], text[3] )
+   end
+end
+
+
+function land ()
+   if planet.cur():faction():name() == "FLF" then
+      tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
+      player.pay( credits )
+      var.push( "_fcap_flf", 40 )
+      faction.get("FLF"):modPlayer( reputation )
+      misn.finish( true )
    end
 end
