@@ -48,11 +48,10 @@ end
 
 
 function create ()
-   missys = system.get( "Doranthex" )
+   missys = system.get( "Tuoladis" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   local num_dvaereds = missys:presences()["Dvaered"]
-   dv_attention_target = num_dvaereds / 20
+   dv_attention_target = 20
    credits = 200000
    reputation = 20
 
@@ -62,12 +61,12 @@ end
 
 
 function accept ()
-   if tk.yesno( title[1], text[2]:format( player.name(), missys:name() ) ) then
+   if tk.yesno( title[1], text[1]:format( player.name(), missys:name() ) ) then
       tk.msg( title[1], text[2] )
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:formt( missys:name() )
+      osd_desc[1] = osd_desc[1]:format( missys:name() )
       misn.osdCreate( osd_title, osd_desc )
 
       dv_attention = 0
