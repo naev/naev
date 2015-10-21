@@ -38,9 +38,9 @@ else -- default English
    misn_desc = "A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system."
 
    osd_title   = "FLF Diversion"
-   osd_esc     = {}
+   osd_desc     = {}
    osd_desc[1] = "Fly to the %s system"
-   osd_desc[2] = "Destroy Dvaered ships to get them to get the others' attention"
+   osd_desc[2] = "Engage and destroy Dvaered ships to get their attention"
    osd_desc[3] = "Return to FLF base"
    osd_desc["__save"] = true
 end
@@ -51,7 +51,7 @@ function create ()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    local num_dvaereds = missys:presences()["Dvaered"]
-   dv_attention_target = num_dvaereds / 20
+   dv_attention_target = num_dvaereds / 50
    credits = 75 * num_dvaereds * system.cur():jumpDist( missys ) / 3
    credits = credits + rnd.sigma() * 10000
    reputation = math.max( num_dvaereds / 100, 1 )
@@ -83,7 +83,7 @@ function enter ()
    if not job_done then
       if system.cur() == missys then
          misn.osdActive( 2 )
-         update_dv_hook = hook.safe( update_dv )
+         update_dv_hook = hook.safe( "update_dv" )
          player.pilot():setVisible( true )
       else
          misn.osdActive( 1 )
@@ -95,36 +95,54 @@ end
 
 
 function leave ()
-   hook.rm( update_dv_hook )
+   if update_dv_hook ~= nil then hook.rm( update_dv_hook ) end
 end
 
 
 function update_dv ()
    for i, j in ipairs( pilot.get( { faction.get("Dvaered") } ) ) do
-      hook.pilot( j, "death", "pilot_death_dv", j )
+      hook.pilot( j, "attacked", "pilot_attacked_dv" )
+      hook.pilot( j, "death", "pilot_death_dv" )
    end
 end
 
 
-function pilot_death_dv( arg )
-   if not job_done and dv_attention < dv_attention_target then
-      if not arg:memoryCheck( "flf_diversion_diverted" ) then
-         dv_attention = dv_attention + 1
-      end
-      for i, j in ipairs( pilot.get( { faction.get("Dvaered") } ) ) do
-         if not j:memoryCheck( "flf_diversion_diverted" ) then
-            j:changeAI( "dvaered_norun" )
-            j:setHostile()
-            j:memory( "aggressive", true )
-            j:setVisplayer( true )
-            j:setHilight( true )
-            j:memory( "flf_diversion_diverted", true )
-            dv_attention = dv_attention + 1
-         end
-      end
+function add_attention( p )
+   if ( not job_done and dv_attention < dv_attention_target and
+         not p:memoryCheck( "flf_diversion_diverted" ) ) then
+      p:changeAI( "dvaered_norun" )
+      p:setHostile()
+      p:memory( "aggressive", true )
+      p:setVisplayer( true )
+      p:setHilight( true )
+      p:memory( "flf_diversion_diverted", true )
+      dv_attention = dv_attention + 1
 
       if dv_attention >= dv_attention_target then
          hook.timer( 10000, "timer_mission_success" )
+      end
+   end
+end
+
+
+function pilot_attacked_dv( p, attacker )
+   if ( attacker ~= nil and
+         ( attacker == player.pilot() or
+            attacker:faction():name() == "FLF" ) ) then
+      add_attention( p )
+   end
+end
+
+
+function pilot_death_dv( p, attacker )
+   if ( attacker ~= nil and
+         ( attacker == player.pilot() or
+            attacker:faction():name() == "FLF" ) ) then
+      add_attention( p )
+      if not job_done and dv_attention < dv_attention_target then
+         for i, j in ipairs( pilot.get( { faction.get("Dvaered") } ) ) do
+            add_attention( j )
+         end
       end
    end
 end
@@ -134,7 +152,7 @@ function timer_mission_success ()
    job_done = true
    misn.osdActive( 3 )
    misn.markerRm( marker )
-   hook.rm( update_dv_hook )
+   if update_dv_hook ~= nil then hook.rm( update_dv_hook ) end
    hook.land( "land" )
    tk.msg( "", success_text[ rnd.rnd( 1, #success_text ) ] )
 end

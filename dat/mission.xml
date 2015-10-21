@@ -500,7 +500,7 @@
   </avail>
  </mission>
  <mission name="Diversion from Raelid">
-  <lua>flf/dvk/flf_dvk01.lua</lua>
+  <lua>flf/dvk/flf_dvk01</lua>
   <flags>
    <unique />
   </flags>
