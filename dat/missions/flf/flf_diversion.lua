@@ -83,12 +83,10 @@ function enter ()
    if not job_done then
       if system.cur() == missys then
          misn.osdActive( 2 )
-         update_dv_hook = hook.safe( "update_dv" )
-         player.pilot():setVisible( true )
+         update_dv()
       else
          misn.osdActive( 1 )
          dv_attention = 0
-         player.pilot():setVisible( false )
       end
    end
 end
@@ -104,6 +102,7 @@ function update_dv ()
       hook.pilot( j, "attacked", "pilot_attacked_dv" )
       hook.pilot( j, "death", "pilot_death_dv" )
    end
+   update_dv_hook = hook.timer( 3000, "update_dv" )
 end
 
 
@@ -113,8 +112,6 @@ function add_attention( p )
       p:changeAI( "dvaered_norun" )
       p:setHostile()
       p:memory( "aggressive", true )
-      p:setVisplayer( true )
-      p:setHilight( true )
       p:memory( "flf_diversion_diverted", true )
       dv_attention = dv_attention + 1
 
@@ -144,7 +141,15 @@ function pilot_death_dv( p, attacker )
             add_attention( j )
          end
       end
+      hook.timer( 10000, "timer_spawn_dv" )
    end
+end
+
+
+function timer_spawn_dv ()
+   local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Small Patrol", "Dvaered Big Patrol" }
+   local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
+   pilot.add( shipname )
 end
 
 
