@@ -107,45 +107,50 @@ end
 
 
 function add_attention( p )
-   p:setHostile()
-   p:memory( "aggressive", true )
+   p:setHilight( true )
 
-   if not job_done and dv_attention < dv_attention_target then
+   if not job_done then
       dv_attention = dv_attention + 1
-
-      if dv_attention >= dv_attention_target then
-         hook.timer( 10000, "timer_mission_success" )
+      if dv_attention >= dv_attention_target and dv_attention - 1 < dv_attention_target then
+         if success_hook ~= nil then hook.rm( success_hook ) end
+         success_hook = hook.timer( 30000, "timer_mission_success" )
       end
+
+      hook.pilot( p, "jump", "rm_attention" )
+      hook.pilot( p, "land", "rm_attention" )
    end
 end
 
 
 function rm_attention ()
    dv_attention = math.max( dv_attention - 1, 0 )
+   if dv_attention < dv_attention_target then
+      if success_hook ~= nil then hook.rm( success_hook ) end
+   end
 end
 
 
 function pilot_attacked_dv( p, attacker )
-   if ( attacker ~= nil and
-         ( attacker == player.pilot() or
-            attacker:faction():name() == "FLF" ) ) then
-      add_attention( p )
+   if attacker == player.pilot() and rnd.rnd() < 0.01 then
+      hook.timer( 10000, "timer_spawn_dv" )
    end
 end
 
 
 function pilot_death_dv( p, attacker )
-   if attacker == player.pilot() then
+   if attacker == player.pilot() and rnd.rnd() < 0.25 then
       hook.timer( 10000, "timer_spawn_dv" )
    end
 end
 
 
 function timer_spawn_dv ()
-   local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Small Patrol", "Dvaered Big Patrol" }
-   local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
-   for i, j in ipairs( pilot.add( shipname ) ) do
-      add_attention( j )
+   if not job_done then
+      local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Goddard", "Dvaered Small Patrol", "Dvaered Big Patrol" }
+      local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
+      for i, j in ipairs( pilot.add( shipname ) ) do
+         add_attention( j )
+      end
    end
 end
 
