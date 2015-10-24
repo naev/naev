@@ -107,18 +107,21 @@ end
 
 
 function add_attention( p )
-   if ( not job_done and dv_attention < dv_attention_target and
-         not p:memoryCheck( "flf_diversion_diverted" ) ) then
-      p:changeAI( "dvaered_norun" )
-      p:setHostile()
-      p:memory( "aggressive", true )
-      p:memory( "flf_diversion_diverted", true )
+   p:setHostile()
+   p:memory( "aggressive", true )
+
+   if not job_done and dv_attention < dv_attention_target then
       dv_attention = dv_attention + 1
 
       if dv_attention >= dv_attention_target then
          hook.timer( 10000, "timer_mission_success" )
       end
    end
+end
+
+
+function rm_attention ()
+   dv_attention = math.max( dv_attention - 1, 0 )
 end
 
 
@@ -132,15 +135,7 @@ end
 
 
 function pilot_death_dv( p, attacker )
-   if ( attacker ~= nil and
-         ( attacker == player.pilot() or
-            attacker:faction():name() == "FLF" ) ) then
-      add_attention( p )
-      if not job_done and dv_attention < dv_attention_target then
-         for i, j in ipairs( pilot.get( { faction.get("Dvaered") } ) ) do
-            add_attention( j )
-         end
-      end
+   if attacker == player.pilot() then
       hook.timer( 10000, "timer_spawn_dv" )
    end
 end
@@ -149,17 +144,21 @@ end
 function timer_spawn_dv ()
    local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Small Patrol", "Dvaered Big Patrol" }
    local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
-   pilot.add( shipname )
+   for i, j in ipairs( pilot.add( shipname ) ) do
+      add_attention( j )
+   end
 end
 
 
 function timer_mission_success ()
-   job_done = true
-   misn.osdActive( 3 )
-   misn.markerRm( marker )
-   if update_dv_hook ~= nil then hook.rm( update_dv_hook ) end
-   hook.land( "land" )
-   tk.msg( "", success_text[ rnd.rnd( 1, #success_text ) ] )
+   if dv_attention >= dv_attention_target then
+      job_done = true
+      misn.osdActive( 3 )
+      if marker ~= nil then misn.markerRm( marker ) end
+      if update_dv_hook ~= nil then hook.rm( update_dv_hook ) end
+      hook.land( "land" )
+      tk.msg( "", success_text[ rnd.rnd( 1, #success_text ) ] )
+   end
 end
 
 
