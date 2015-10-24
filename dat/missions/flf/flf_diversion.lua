@@ -51,15 +51,21 @@ function create ()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    local num_dvaereds = missys:presences()["Dvaered"]
+   local num_empire = missys:presences()["Empire"]
+   local num_flf = missys:presences()["FLF"]
+   if num_dvaereds == nil then num_dvaereds = 0 end
+   if num_empire == nil then num_empire = 0 end
+   if num_flf == nil then num_flf = 0 end
    dv_attention_target = num_dvaereds / 50
-   credits = 75 * num_dvaereds * system.cur():jumpDist( missys ) / 3
+   credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( missys ) / 3
    credits = credits + rnd.sigma() * 10000
-   reputation = math.max( num_dvaereds / 100, 1 )
+   reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
+   if credits < 10000 then misn.finish( false ) end
 
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn_setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( misn_reward:format( numstring( credits ) ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
@@ -71,6 +77,7 @@ function accept ()
    misn.osdCreate( osd_title, osd_desc )
 
    dv_attention = 0
+   dv_coming = false
    job_done = false
 
    hook.enter( "enter" )
@@ -131,20 +138,23 @@ end
 
 
 function pilot_attacked_dv( p, attacker )
-   if attacker == player.pilot() and rnd.rnd() < 0.01 then
+   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.01 then
+      dv_coming = true
       hook.timer( 10000, "timer_spawn_dv" )
    end
 end
 
 
 function pilot_death_dv( p, attacker )
-   if attacker == player.pilot() and rnd.rnd() < 0.25 then
+   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.25 then
+      dv_coming = true
       hook.timer( 10000, "timer_spawn_dv" )
    end
 end
 
 
 function timer_spawn_dv ()
+   dv_coming = false
    if not job_done then
       local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Goddard", "Dvaered Small Patrol", "Dvaered Big Patrol" }
       local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
