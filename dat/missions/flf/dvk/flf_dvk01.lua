@@ -68,6 +68,7 @@ function accept ()
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
       misn.osdCreate( osd_title, osd_desc )
+      marker = misn.markerAdd( missys, "plot" )
 
       dv_attention = 0
       job_done = false
