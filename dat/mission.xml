@@ -478,7 +478,7 @@
    <location>None</location>
   </avail>
  </mission>
- <mission name="Disrupt the Dvaered Patrols">
+ <mission name="Disrupt a Dvaered Patrol">
   <lua>flf/flf_pre02</lua>
   <flags>
    <unique />
@@ -494,21 +494,32 @@
   <avail>
    <priority>3</priority>
    <chance>550</chance>
-   <done>Disrupt the Dvaered Patrols</done>
+   <done>Disrupt a Dvaered Patrol</done>
    <location>Computer</location>
    <faction>FLF</faction>
   </avail>
  </mission>
- <mission name="Defend the FLF base">
-  <lua>flf/flf_basedefense</lua>
+ <mission name="Diversion from Raelid">
+  <lua>flf/dvk/flf_dvk01</lua>
   <flags>
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
+   <done>Disrupt a Dvaered Patrol</done>
    <location>Bar</location>
-   <done>Disrupt the Dvaered Patrols</done>
-   <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 10</cond>
+  </avail>
+ </mission>
+ <mission name="Divert the Dvaered Forces">
+  <lua>flf/flf_diversion</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>550</chance>
+   <done>Diversion from Raelid</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">

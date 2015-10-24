@@ -1,24 +1,26 @@
 --[[
 
    FLF patrol elimination mission.
-   Copyright (C) 2014  Julian Marchant <onpon4@riseup.net>
+   Copyright (C) 2014, 2015 Julian Marchant <onpon4@riseup.net>
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-       http://www.apache.org/licenses/LICENSE-2.0
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
 
 include "numstring.lua"
 include "fleethelper.lua"
+include "dat/missions/flf/flf_common.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -55,15 +57,13 @@ else -- default english
    osd_desc    = {}
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
-   osd_desc[3] = "Return to the FLF base"
+   osd_desc[3] = "Return to FLF base"
    osd_desc["__save"] = true
 end
 
 
 function create ()
-   flfbase = system.cur()
-   flfplanet = planet.cur()
-   missys = patrol_getTargetSystem()
+   missys = flf_getTargetSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    level = rnd.rnd( 1, #misn_level )
@@ -189,7 +189,6 @@ function pilot_death_dv ()
       job_done = true
       misn.osdActive( 3 )
       misn.markerRm( marker )
-      marker = misn.markerAdd( flfbase, "computer" )
       hook.land( "land_flf" )
       pilot.toggleSpawn( true )
       if fleetFLF ~= nil then
@@ -205,26 +204,12 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur() == flfplanet then
+   if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
       faction.get("FLF"):modPlayer( reputation )
       misn.finish( true )
    end
-end
-
-
--- Get a system for the Dvaered patrol.
--- These are systems which have both FLF and Dvaered presence.
-function patrol_getTargetSystem ()
-   local choices = {}
-   for i, j in ipairs( system.getAll() ) do
-      local p = j:presences()
-      if p[ "FLF" ] and p[ "Dvaered" ]  then
-         choices[ #choices + 1 ] = j:name()
-      end
-   end
-   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
 end
 
 
