@@ -43,6 +43,9 @@ else -- default English
    pay_text = {}
    pay_text[1] = [[As you dock the station, the leading officer approaches you with a smile. "Thank you for your help," he says. "The mission was a rousing success! What we've accomplished will greatly help our efforts against the Dvaereds in the future." He hands you a credit chip. "That's your payment. I hope to work with you again, soldier!" And with that, you shake hands and part ways. It occurs to you that you never learned what the mission actually was. Perhaps you will find out some other time.]]
 
+   misn_title = "Diversion from Raelid"
+   misn_desc = "A covert operation is being conducted in Raelid. You are to create a diversion from this operation by wreaking havoc in the nearby %s system."
+
    npc_name = "FLF officer"
    npc_desc = "An FLF officer leading an operation seems to be in search of another pilot."
 end
@@ -69,6 +72,8 @@ function accept ()
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
       misn.osdCreate( osd_title, osd_desc )
+      misn.setTitle( misn_title )
+      misn.setDesc( misn_desc:format( missys:name() ) )
       marker = misn.markerAdd( missys, "high" )
 
       dv_attention = 0
