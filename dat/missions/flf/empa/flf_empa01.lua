@@ -58,3 +58,7 @@ function accept ()
    else
    end
 end
+
+
+function land ()
+end
