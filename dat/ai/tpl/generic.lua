@@ -276,7 +276,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   mem.tookoff    = ai.pilot():flags().takeingoff
+   mem.tookoff    = ai.pilot():flags().takingoff
    attack_choose()
 end
 
