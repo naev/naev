@@ -133,7 +133,7 @@ void commodity_update( unsigned int wid, char* str )
          "\n"
          "NA Tons\n" );
       window_modifyText( wid, "txtDInfo", buf );
-      window_modifyText( wid, "txtDesc", "No outfits available." );
+      window_modifyText( wid, "txtDesc", "No commodities available." );
       window_disableButton( wid, "btnCommodityBuy" );
       window_disableButton( wid, "btnCommoditySell" );
       return;
@@ -150,7 +150,13 @@ void commodity_update( unsigned int wid, char* str )
          planet_commodityPrice( land_planet, com ),
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
-   window_modifyText( wid, "txtDesc", com->description );
+   nsnprintf( buf, PATH_MAX,
+         "%s\n"
+         "\n"
+         "%s",
+         comname,
+         com->description);
+   window_modifyText( wid, "txtDesc", buf );
 
    /* Button enabling/disabling */
    if (commodity_canBuy( comname ))
