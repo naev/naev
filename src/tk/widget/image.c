@@ -84,11 +84,11 @@ static void img_render( Widget* img, double bx, double by )
 
    if (img->dat.img.border) {
       /* inner outline (outwards) */
-      toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-         img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
+      toolkit_drawOutline( x, y+1, w-1,
+         h-1, 1., toolkit_colLight, toolkit_col );
       /* outer outline */
-      toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-            img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
+      toolkit_drawOutline( x, y+1, w-1,
+            h-1, 2., toolkit_colDark, NULL );
    }
 }
 
