@@ -54,7 +54,7 @@ void commodity_exchange_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Calculate image array dimensions. */
-   iw = 310 + (w-800);
+   iw = 510 + (w-800);
    ih = h - 60;
 
    /* buttons */
