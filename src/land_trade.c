@@ -93,7 +93,7 @@ void commodity_exchange_open( unsigned int wid )
       for (i=0; i<ngoods; i++) {
          goods[i] = strdup(land_planet->commodities[i]->name);
          /* Same fixed image for everything */
-         tgoods[i] = gl_newImage( GFX_PATH"cargo/_default.png", 0 );
+         tgoods[i] = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
       }
    }
    else {
