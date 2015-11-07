@@ -73,17 +73,23 @@ void commodity_exchange_open( unsigned int wid )
    window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
+   /* store gfx */
+   /*window_addRect( wid, -41, -40,
+         128, 128, "rctStore", &cBlack, 0 );*/
+   window_addImage( wid, -40, -40,
+         128, 128, "imgStore", NULL, 1 );
+
    /* text */
-   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 80, 0,
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH, 80, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market Price:\n"
          "\n"
          "Free Space:\n"
          "Money:\n" );
-   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 80, 0,
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2, 80, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, -40, -140, LAND_BUTTON_WIDTH-20,
+   window_addText( wid, -40, -290, LAND_BUTTON_WIDTH-20,
          h-140-LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
@@ -144,6 +150,9 @@ void commodity_update( unsigned int wid, char* str )
       return;
    }
    com = commodity_get( comname );
+
+   /* modify image */
+   window_modifyImage( wid, "imgStore", com->gfx_store, 128, 128 );
 
    /* modify text */
    nsnprintf( buf, PATH_MAX,
