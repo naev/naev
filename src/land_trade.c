@@ -131,9 +131,11 @@ void commodity_update( unsigned int wid, char* str )
    if ((comname==NULL) || (strcmp( comname, "None" )==0)) {
       nsnprintf( buf, PATH_MAX,
          "NA Tons\n"
-         "NA Credits/Ton\n"
-         "\n"
-         "NA Tons\n" );
+         "NA Cr./Ton\n"
+         "%d Tons\n"
+         "%"CREDITS_PRI" Cr.\n",
+         pilot_cargoFree(player.p),
+         pilot_modCredits(player.p, 0) );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", "No commodities available." );
       window_disableButton( wid, "btnCommodityBuy" );
@@ -145,10 +147,10 @@ void commodity_update( unsigned int wid, char* str )
    /* modify text */
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
-         "%"CREDITS_PRI" Credits/Ton\n"
+         "%"CREDITS_PRI" Cr./Ton\n"
          "\n"
          "%d Tons\n"
-         "%"CREDITS_PRI" Credits\n",
+         "%"CREDITS_PRI" Cr.\n",
          pilot_cargoOwned( player.p, comname ),
          planet_commodityPrice( land_planet, com ),
          pilot_cargoFree(player.p),
