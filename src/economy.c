@@ -177,6 +177,8 @@ static void commodity_freeOne( Commodity* com )
       free(com->name);
    if (com->description)
       free(com->description);
+   if (com->gfx_store)
+      gl_freeTexture(com->gfx_store);
 
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
