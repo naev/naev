@@ -74,15 +74,16 @@ void commodity_exchange_open( unsigned int wid )
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
-   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 60, 0,
+   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 80, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market Price:\n"
          "\n"
-         "Free Space:\n" );
-   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 60, 0,
+         "Free Space:\n"
+         "Money:\n" );
+   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 80, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, -40, -120, LAND_BUTTON_WIDTH-20,
+   window_addText( wid, -40, -140, LAND_BUTTON_WIDTH-20,
          h-140-LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
@@ -146,10 +147,12 @@ void commodity_update( unsigned int wid, char* str )
          "%d Tons\n"
          "%"CREDITS_PRI" Credits/Ton\n"
          "\n"
-         "%d Tons\n",
+         "%d Tons\n"
+         "%"CREDITS_PRI" Credits\n",
          pilot_cargoOwned( player.p, comname ),
          planet_commodityPrice( land_planet, com ),
-         pilot_cargoFree(player.p));
+         pilot_cargoFree(player.p),
+         pilot_modCredits(player.p, 0) );
    window_modifyText( wid, "txtDInfo", buf );
    nsnprintf( buf, PATH_MAX,
          "%s\n"
