@@ -132,6 +132,7 @@ void commodity_update( unsigned int wid, char* str )
       nsnprintf( buf, PATH_MAX,
          "NA Tons\n"
          "NA Cr./Ton\n"
+         "\n"
          "%d Tons\n"
          "%"CREDITS_PRI" Cr.\n",
          pilot_cargoFree(player.p),
