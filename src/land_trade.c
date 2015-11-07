@@ -92,8 +92,7 @@ void commodity_exchange_open( unsigned int wid )
       tgoods    = malloc(sizeof(glTexture*) * ngoods);
       for (i=0; i<ngoods; i++) {
          goods[i] = strdup(land_planet->commodities[i]->name);
-         /* Same fixed image for everything */
-         tgoods[i] = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+         tgoods[i] = land_planet->commodities[i]->gfx_store;
       }
    }
    else {

@@ -234,8 +234,27 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      if (xml_isNode(node,"gfx_store")) {
+         WARN("Parsing graphics for %s : BEGIN", temp->name);
+         temp->gfx_store = xml_parseTexture( node,
+               COMMODITY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+         if (temp->gfx_store != NULL) {
+            WARN("Parsing graphics for %s : \ttexture loaded", temp->name);
+         } else {
+            WARN("Parsing graphics for %s : \tfile not found, using default texture", temp->name);
+            temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+         }
+         WARN("Parsing graphics for %s : END", temp->name);
+         continue;
+      }
       WARN("Commodity '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
+   if (temp->gfx_store == NULL) {
+      WARN("Parsing graphics for %s : BEGIN", temp->name);
+      WARN("Parsing graphics for %s : No <gfx_store> node found, using default texture", temp->name);
+      temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+      WARN("Parsing graphics for %s : END", temp->name);
+   }
 
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
