@@ -66,21 +66,22 @@ static void img_render( Widget* img, double bx, double by )
    double x,y;
    double w,h;
 
-   /* Compute values. */
+   /* Fanciness. */
+   if (img->dat.img.image == NULL)
+      return;
+
+   /* Values. */
    x = bx + img->x;
    y = by + img->y;
    w = img->w;
    h = img->h;
 
-   /* Draw image */
-   if (img->dat.img.image == NULL) {
-      toolkit_drawRect(x, y, w, h, &img->dat.img.colour, NULL);
-   } else {
-      gl_blitScale( img->dat.img.image, x, y,
-            w, h, &img->dat.img.colour );
-   }
+   /*
+    * image
+    */
+   gl_blitScale( img->dat.img.image, x, y,
+         w, h, &img->dat.img.colour );
 
-   /* Draw border */
    if (img->dat.img.border) {
       /* inner outline (outwards) */
       toolkit_drawOutline( x, y+1, w-1,
