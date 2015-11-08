@@ -66,10 +66,6 @@ static void img_render( Widget* img, double bx, double by )
    double x,y;
    double w,h;
 
-   /* Fanciness. */
-   if (img->dat.img.image == NULL)
-      return;
-
    /* Values. */
    x = bx + img->x;
    y = by + img->y;
@@ -79,8 +75,10 @@ static void img_render( Widget* img, double bx, double by )
    /*
     * image
     */
-   gl_blitScale( img->dat.img.image, x, y,
-         w, h, &img->dat.img.colour );
+   if (img->dat.img.image != NULL) {
+      gl_blitScale( img->dat.img.image, x, y,
+            w, h, &img->dat.img.colour );
+   }
 
    if (img->dat.img.border) {
       /* inner outline (outwards) */
