@@ -74,8 +74,8 @@ void commodity_exchange_open( unsigned int wid )
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* store gfx */
-   /*window_addRect( wid, -41, -40,
-         128, 128, "rctStore", &cBlack, 0 );*/
+   window_addRect( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2, -40,
+         128, 128, "rctStore", &cBlack, 0 );
    window_addImage( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2, -40,
          128, 128, "imgStore", NULL, 1 );
 
