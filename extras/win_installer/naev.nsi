@@ -131,7 +131,7 @@ SectionEnd
 
 Section "Naev Data (Download)" DataSection
    dwn:
-    AddSize 302587 ;Size (kB) of Naev ndata
+    AddSize 296859 ;Size (kB) of Naev ndata
     NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip
