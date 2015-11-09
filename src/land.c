@@ -628,6 +628,10 @@ static int bar_genList( unsigned int wid )
    int w, h, iw, ih, bw, bh;
    int n, pos;
 
+   /* Sanity check. */
+   if (wid == 0)
+      return 0;
+
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
