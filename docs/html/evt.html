@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: evt</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li><strong>evt</strong></li>
+	
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>evt</code></h1>
+
+<div>Event system Lua bindings.
+ 
+ An example would be:
+ <pre>
+ evt.finish() -- finishes the event
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#evt.claim">evt.claim</a>&nbsp;(systems)</td>
+	<td class="summary">Tries to claim systems.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#evt.finish">evt.finish</a>&nbsp;(properly)</td>
+	<td class="summary">Finishes the event.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#evt.npcAdd">evt.npcAdd</a>&nbsp;(func, name, portrait, desc, priority)</td>
+	<td class="summary">Adds an NPC.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#evt.npcRm">evt.npcRm</a>&nbsp;(id)</td>
+	<td class="summary">Removes an NPC.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#evt.save">evt.save</a>&nbsp;(enable)</td>
+	<td class="summary">Saves an event.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="evt.claim"></a><strong>evt.claim</strong>&nbsp;(systems)</dt>
+<dd>
+Tries to claim systems.
+ 
+ Claiming systems is a way to avoid mission/event collisions preemptively.
+ 
+ Note it does not actually claim the systems if it fails to claim. It also
+ does not work more then once.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  systems: Table of systems to claim or a single system.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end</code></li>
+	
+	<li><code>if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if was able to claim, false otherwise.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="evt.finish"></a><strong>evt.finish</strong>&nbsp;(properly)</dt>
+<dd>
+Finishes the event.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  properly: If true and the event is unique it marks the event
+ as completed.  If false or nil it deletes the event but
+ doesn't mark it as completed.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="evt.npcAdd"></a><strong>evt.npcAdd</strong>&nbsp;(func, name, portrait, desc, priority)</dt>
+<dd>
+Adds an NPC.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  func: Name of the function to run when approaching, gets passed the npc_id when called.
+	</li>
+	
+	<li>
+	  name: Name of the NPC
+	</li>
+	
+	<li>
+	  portrait: Portrait to use for the NPC (from GFX_PATH/portraits/).
+	</li>
+	
+	<li>
+	  desc: Description associated to the NPC.
+	</li>
+	
+	<li>
+	  priority: Optional priority argument (defaults to 5, highest is 0, lowest is 10).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>npc_id = evt.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The ID of the NPC to pass to npcRm.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="evt.npcRm"></a><strong>evt.npcRm</strong>&nbsp;(id)</dt>
+<dd>
+Removes an NPC.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the NPC to remove.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>evt.npcRm( npc_id )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="evt.save"></a><strong>evt.save</strong>&nbsp;(enable)</dt>
+<dd>
+Saves an event.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  enable: If true or nil sets the event to save, otherwise tells the event to not save.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>evt.save() -- Saves an event, which is by default disabled.
+ </code>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

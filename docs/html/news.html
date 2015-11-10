@@ -1,0 +1,589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: news</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li><strong>news</strong></li>
+	
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>news</code></h1>
+
+<div>Lua bindings to interact with the news.
+ 
+ This will allow you to interact and manipulate the in-game news.
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#news.__eq">news.__eq</a>&nbsp;(s, comp, a1, a2)</td>
+	<td class="summary">Check articles for equality.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.add">news.add</a>&nbsp;(s, faction, title, content, date_to_rm, date)</td>
+	<td class="summary">Adds an article.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.bind">news.bind</a>&nbsp;(a)</td>
+	<td class="summary">Tags an article or a table of articles with a string.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.date">news.date</a>&nbsp;(a)</td>
+	<td class="summary">Gets the article date.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.desc">news.desc</a>&nbsp;(a)</td>
+	<td class="summary">Gets the article description.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.faction">news.faction</a>&nbsp;(a)</td>
+	<td class="summary">Gets the article faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.get">news.get</a>&nbsp;(characteristic)</td>
+	<td class="summary">Gets all matching articles in a table.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.rm">news.rm</a>&nbsp;(Lua_article)</td>
+	<td class="summary">Frees an article or a table of articles.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#news.title">news.title</a>&nbsp;(a)</td>
+	<td class="summary">Gets the article title.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="news.__eq"></a><strong>news.__eq</strong>&nbsp;(s, comp, a1, a2)</dt>
+<dd>
+Check articles for equality.
+ 
+ Allows you to use the '=' operator in Lua with articles.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: 
+	</li>
+	
+	<li>
+	  comp: 
+	</li>
+	
+	<li>
+	  a1: article 1
+	</li>
+	
+	<li>
+	  a2: article 2
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true if both systems are the same.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.add"></a><strong>news.add</strong>&nbsp;(s, faction, title, content, date_to_rm, date)</dt>
+<dd>
+Adds an article.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: 
+	</li>
+	
+	<li>
+	  faction: faction of the article, "Generic" for non-factional
+	</li>
+	
+	<li>
+	  title: Title of the article
+	</li>
+	
+	<li>
+	  content: What's in the article
+	</li>
+	
+	<li>
+	  date_to_rm: date to remove the article
+	</li>
+	
+	<li>
+	  date: What time to put, defaults to current date, use 0 to not use a date
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>news.add(faction,title,body,[date_to_rm, [date]])
+ </code></li>
+	
+	<li><code>s = news.add( "Empire", "Hello world!", "The Empire wishes to say hello!", 0 ) -- Adds an Empire specific article, with date 0.
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The article matching name or nil if error.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.bind"></a><strong>news.bind</strong>&nbsp;(a)</dt>
+<dd>
+Tags an article or a table of articles with a string.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  a: article to get the faction of
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.date"></a><strong>news.date</strong>&nbsp;(a)</dt>
+<dd>
+Gets the article date.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  a: article to get the date of
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+date
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.desc"></a><strong>news.desc</strong>&nbsp;(a)</dt>
+<dd>
+Gets the article description.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  a: article to get the desc of
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+desc
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.faction"></a><strong>news.faction</strong>&nbsp;(a)</dt>
+<dd>
+Gets the article faction.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  a: article to get the faction of
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+faction
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.get"></a><strong>news.get</strong>&nbsp;(characteristic)</dt>
+<dd>
+Gets all matching articles in a table.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  characteristic: characteristic to match, or no parameter for all articles
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+a table with matching articles
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.rm"></a><strong>news.rm</strong>&nbsp;(Lua_article)</dt>
+<dd>
+Frees an article or a table of articles.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  Lua_article: article to free
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="news.title"></a><strong>news.title</strong>&nbsp;(a)</dt>
+<dd>
+Gets the article title.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  a: article to get the title of
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+title
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>
