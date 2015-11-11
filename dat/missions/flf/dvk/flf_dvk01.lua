@@ -45,6 +45,7 @@ else -- default English
 
    misn_title = "Diversion from Raelid"
    misn_desc = "A covert operation is being conducted in Raelid. You are to create a diversion from this operation by wreaking havoc in the nearby %s system."
+   misn_reward = "Substantial pay and a great amount of respect"
 
    npc_name = "FLF officer"
    npc_desc = "An FLF officer leading an operation seems to be in search of another pilot."
@@ -75,6 +76,7 @@ function accept ()
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
       marker = misn.markerAdd( missys, "high" )
+      misn.setReward( misn_reward )
 
       dv_attention = 0
       job_done = false

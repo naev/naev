@@ -44,6 +44,7 @@ else -- default English
 
    misn_title = "Empire Negotiations"
    misn_desc = "You are to meet with Empire Commander Petridis and deliver a message that the FLF wishes to establish friendly relations with the Empire."
+   misn_reward = "A chance for a new beginning"
 
    npc_name = "A young woman"
    npc_desc = "This woman appears to be by herself, which is somewhat unusual for an FLF member. She regularly glances in your direction."
@@ -84,6 +85,7 @@ function accept ()
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc )
       marker = misn.markerAdd( missys, "plot" )
+      misn.setReward( misn_reward )
 
       job_done = false
 
