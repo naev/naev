@@ -468,6 +468,23 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="The lost Brother">
+  <lua>neutral/kidnapped/traffic_01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 15 and player.misnDone("Kidnapped")</cond>
+   <chance>12</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Deal with the FLF agent">
   <lua>flf/flf_pre01</lua>
   <flags>
@@ -478,7 +495,7 @@
    <location>None</location>
   </avail>
  </mission>
- <mission name="Disrupt the Dvaered Patrols">
+ <mission name="Disrupt a Dvaered Patrol">
   <lua>flf/flf_pre02</lua>
   <flags>
    <unique />
@@ -494,21 +511,32 @@
   <avail>
    <priority>3</priority>
    <chance>550</chance>
-   <done>Disrupt the Dvaered Patrols</done>
+   <done>Disrupt a Dvaered Patrol</done>
    <location>Computer</location>
    <faction>FLF</faction>
   </avail>
  </mission>
- <mission name="Defend the FLF base">
-  <lua>flf/flf_basedefense</lua>
+ <mission name="Diversion from Raelid">
+  <lua>flf/dvk/flf_dvk01</lua>
   <flags>
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
+   <done>Disrupt a Dvaered Patrol</done>
    <location>Bar</location>
-   <done>Disrupt the Dvaered Patrols</done>
-   <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 10</cond>
+  </avail>
+ </mission>
+ <mission name="Divert the Dvaered Forces">
+  <lua>flf/flf_diversion</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>550</chance>
+   <done>Diversion from Raelid</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
@@ -919,6 +947,42 @@
    <planet>Niflheim</planet>
   </avail>
  </mission>
+ <mission name="The one with the Shopping">
+  <lua>zalek/sciencegonewrong/00_sciwrong</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.getRating() &gt; 100</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ <mission name="The one with the Visit">
+  <lua>zalek/sciencegonewrong/01_sciwrong</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The one with the Shopping")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ <mission name="The one with the Runaway">
+  <lua>zalek/sciencegonewrong/02_sciwrong</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The one with the Visit")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
  <mission name="A Shark Bites">
   <lua>shark/sh00_ancestorkill</lua>
   <flags>
@@ -1044,6 +1108,18 @@
    <chance>50</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
+  </avail>
+ </mission>
+ <mission name="The Dvaered Championship">
+  <lua>dvaered/championship</lua>
+  <flags>
+  <unique/>
+  </flags>
+  <avail>
+   <cond></cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <planet>Dvaer Prime</planet>
   </avail>
  </mission>
  <mission name="Za'lek Test">
