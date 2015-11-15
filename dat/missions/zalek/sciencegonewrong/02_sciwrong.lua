@@ -23,7 +23,10 @@ else -- default english
    t_sys = {}
    t_pla = {}
    -- Mission details
-   reward = 70000
+   reward = 100000
+   -- amount of jumps the drone did to escape. Each jump reduces it's speed
+   fled = false
+   jumps = 0 
    t_sys[1] = "Xavier"
    t_pla[1] = system.get(t_sys[1]):planets()[1]
    t_sys[2] = "Seiben"
@@ -49,8 +52,16 @@ The scientist follows you around to your ship. Going on about how important this
    text[8] = [["Interessting, the other drones are running away..."
 "All the better."]]
    -- is that the way to go? get person to jump and try again? that sounds a bit annoying maybe to play through
-   text[9] = [["The drone has appeared from my radar! It must have jumped to the %s system. Let's find it!"]]
-   text[10] = [["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" Another payslip and another flight that convinces you that Dr. Geller might be in need of a doctor.]]
+   text[9] = [["The drone has disappeared from my radar! It must have jumped to the %s system. Let's find it!"]]
+   text[10] = [["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should be now much easier to catch it!"]]
+
+   text[11] = [["It seems the drone has found a way to shield itself from the EM pulses, I think I can adjust to that, give me a second."]]
+   text[12] = [["There you go! I am a genious after all! Get it!"]]
+   text[13] = [["There is something strange, the engines are starting to heat up... if they continue like this the drone will explode in about 20 seconds... You better hurry!"]]
+   text[14] = [["NOOOOOOOOO! My drone! You incompetent rice cracker! You failed me!"]]
+   -- final msg when returning to gastan
+   text[15] = [["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" Another payslip and another flight that convinces you that Dr. Geller might be in need of a doctor.]]
+
    -- text if the mission is failed
    fail_text = [["NOOOOOO! What have you done! My prototype! It's going to take me weeks to rebuild it! You incompetent... rice cracker!!!"]]
    -- osd_msg
@@ -91,6 +102,13 @@ function sys_enter ()
       --pilot.toggleSpawn(false)
       hook.timer( 2000,"game_of_drones")
    end
+   if jumps ~= 0 then 
+      if system.cur() == system.get(t_sys[3]) then
+         -- do something else
+         hook.timer(2000,"chase_of_drones")
+      end
+   end
+   
 end
 
 function game_of_drones ()
@@ -99,13 +117,14 @@ function game_of_drones ()
 
    t_drone = pilot.add("Za'lek Scout Drone", "trader",t_pla[1] )[1] -- prototype is a scout drone
    t_drone:addOutfit("Tricon Zephyr II Engine")
-   -- add sth so it is not insta disable with one shot
+   -- add sth so it is not insta disable with one shot?
    --t_drone:addOutfit("Tricon Zephyr II Engine")
    t_drone:setFaction("Civilian")
    t_drone:rename("Za'lek Prototype")
    t_drone:setInvincible(true)
    t_drone:control()
    t_drone:setHilight(true)
+   t_drone:setVisplayer(true)
    t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
    -- just some moving around, stolen from baron missions ;D
    idlehook = hook.pilot(t_drone, "idle", "targetIdle")
@@ -116,15 +135,6 @@ function game_of_drones ()
    -- + vec2.new(dist*math.cos(math.pi*2*rnd.rnd()),dist*math.sin(2*math.pi*rnd.rnd()))
    --pilot.toggleSpawn(true)
    hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
-end
-
-function targetIdle()
-   t_drone:goto(t_drone:pos() + vec2.new( 400,  400), false)
-   t_drone:goto(t_drone:pos() + vec2.new(-400,  400), false)
-   t_drone:goto(t_drone:pos() + vec2.new(-400, -400), false)
-   t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
-   hook.rm(idlehook)
-   idlehook = hook.timer(5000, "targetIdle")
 end
 
 function got_hailed()
@@ -139,6 +149,7 @@ function got_hailed()
    t_drone:setInvincible(false)
    t_drone:setHostile(true)
    t_drone:setHilight(true)
+   t_drone:setVisplayer(true)
    spawnhook = hook.timer(3000, "sp_baddies")
    hook.pilot(t_drone, "death", "failed")
    hook.pilot(t_drone, "board", "targetBoard")
@@ -153,11 +164,13 @@ function sp_baddies()
    for i=1,#badguys do
      badguys[i]:setHostile(true)
    end
+   bghook = {}
    for i=1,#badguys do
-      hook.pilot(badguys[i], "death", "dead_drone")
+      bghook[i] = hook.pilot(badguys[i], "exploded", "dead_drone",i)
    end
    jps = system.cur():jumps()
    t_drone:taskClear()
+   t_sys[3] = jps[1]:dest():name()
    t_drone:hyperspace(jps[1]:dest())
 end
 
@@ -167,45 +180,145 @@ function failed ()
 end
 
 function targetBoard()
-    player.unboard()
-    tk.msg(title[3], text[7])
-    t_drone:setHilight(false)
-    t_drone:setVisplayer(false)
-    hook.rm(idlehook)
-    t_drone:rm()
-    cargoID = misn.cargoAdd("Prototype",10)
-    misn.osdActive(2)
-    misn.markerRm(mmarker)
-    mmarker = misn.markerAdd(system.get(t_sys[2]),"high")
-    leavehook = hook.timer(2000, "drones_flee")
-    hook.land("land_home")
+   player.unboard()
+   tk.msg(title[3], text[7])
+   t_drone:setHilight(false)
+   t_drone:setVisplayer(false)
+   hook.rm(idlehook)
+   t_drone:rm()
+   cargoID = misn.cargoAdd("Prototype",10)
+   misn.osdActive(3)
+   misn.markerRm(mmarker)
+   mmarker = misn.markerAdd(system.get(t_sys[2]),"high")
+   if jumps == 0 then
+      leavehook = hook.timer(2000, "drones_flee")
+   end
+   hook.land("land_home")
 end
 
+function drone_jumped ()
+   --begin the chase: 
+   tk.msg(title[3],text[9]:format(t_sys[3]))
+   misn.markerRm(mmarker)
+   if (jumps==0) then
+      mmarker = misn.markerAdd(system.get(t_sys[3]),"high")
+      for i=1,#badguys do
+         badguys[i]:control()
+         badguys[i]:hyperspace()
+         hook.rm(bghook[i])
+      end
+      if not fled then
+         tk.msg(title[3],text[8])
+      end
+      fled = false
+   elseif jumps==2 then
+      t_drone:setHealth(0,0)
+      tk.msg(title[3],text[14])
+      misn.finish(false)
+   else
+      mmarker = misn.markerAdd(system.get(t_sys[3]),"high")
+   end
+   jumps = jumps +1
+end
+
+-- the drone behaves differnetly depending on through how many systems it has been chased so far
+function chase_of_drones ()
+   tk.msg(title[3],text[10])
+   t_drone = pilot.add("Za'lek Scout Drone", "dummy",vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)))[1] -- prototype is a scout drone
+   t_drone:addOutfit("Tricon Zephyr II Engine")
+   -- add sth so it is not insta disable with one shot?
+   t_drone:setFaction("Civilian")
+   t_drone:rename("Za'lek Prototype")
+   t_drone:control()
+   t_drone:setHilight(true)
+   t_drone:setVisplayer(true)
+   t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
+   t_stats = t_drone:stats()
+   t_drone:setHealth(50,100)
+   t_drone:setNodisable()
+   dr_a_hook = hook.pilot(t_drone, "attacked", "drone_attacked")
+   dr_d_hook = hook.pilot(t_drone, "death", "failed")
+   hook.pilot(t_drone, "board", "targetBoard")
+   hook.pilot(t_drone, "jump", "drone_jumped")
+   if jumps == 1 then
+      t_drone:setSpeedLimit(t_stats.speed_max*2/3)
+   elseif jumps == 2 then
+      t_drone:setSpeedLimit(t_stats.speed_max*1/3)
+   elseif jumps >2 then
+      player.msg("Something went terribly wrong here! If you see this message please reload and report a bug in this mission. Thank you!")
+   end
+   -- just some moving around, stolen from baron missions ;D
+   idlehook = hook.pilot(t_drone, "idle", "targetIdle")
+   
+end
+
+function drone_attacked()
+   hook.rm(dr_a_hook)
+   tk.msg(title[3],text[11])
+   t_drone:setHostile(true)
+   t_drone:setHilight(true)
+   t_drone:setVisplayer(true)
+   jps = system.cur():jumps()
+   t_drone:taskClear()
+   t_sys[3] = jps[1]:dest():name()
+   t_drone:hyperspace(jps[1]:dest())
+   hook.timer(4000,"drone_disableable")
+end
+
+function drone_selfdestruct()
+   hook.rm(dr_d_hook)
+   t_drone:setHealth(0,0)
+   tk.msg(title[3],text[14])
+   misn.finish(false)
+end
+
+function drone_disableable()
+   tk.msg(title[3],text[12])
+   t_drone:setNodisable(false)
+   if jumps == 2 then
+      tk.msg(title[3],text[13])
+      hook.timer(18000+rnd.rnd(1,4000),"drone_selfdestruct")
+   end
+end
+-- last hook
 function land_home()
    if planet.cur() == planet.get(t_pla[2]) then
-     tk.msg(title[4]:format(t_pla[2]),text[10])
-     player.pay(reward)
+      tk.msg(title[4]:format(t_pla[2]),text[15])
+      player.pay(reward)
       -- pay player and do shit here
    end
 end
+
+-- tell drones to spread and flee
 function drones_flee ()
    tk.msg(title[3],text[8])
+   fled = true
    for i=1,#badguys do
       pilot.taskClear(badguys[i])
       badguys[i]:control(true)
       --badguys[i]:changeAI("flee")
       badguys[i]:hyperspace()
    end
+   for i=1,#bghook do
+      hook.rm(bghook[i])
+   end
 end
 
-function drone_jumped (pname,jpthing)
-   tk.msg(title[3],text[9]:format(jps[1]:dest():name())
-   player.msg(jpthing)
-end
-
+-- check how man drones are left, tell them to leave if <=2 
 function dead_drone ()
-   if(#badguys==1) then
+   -- remove dead drones
+   for i=1,#badguys do
+      if not badguys[i]:exists() then
+--         player.msg("If close worked")
+         table.remove(badguys,i)
+         break
+      end
+   end
+   if(#badguys<=2) then
       -- if it is the last attacking drone, make it run away from the player
+      badguys[1]:control()
+      t_drone:control()
+      badguys[2]:control()
       jpt = get_nearest_jump(badguys[1])
       jpt2 = jpt
       jpts = system.cur():jumps()
@@ -217,18 +330,36 @@ function dead_drone ()
       end
       badguys[1]:hyperspace(jpt2:dest())
       t_drone:hyperspace(jpt:dest())
-   else
-      -- remove badguy that was destroyed
+      badguys[2]:hyperspace()
+      tk.msg(title[3],text[8])
+      fled = true
+      for i=1,#bghook do
+         hook.rm(bghook[i])
+      end
    end
 end
+
+-- general functions
+
+-- keep drone moving
+function targetIdle()
+   t_drone:goto(t_drone:pos() + vec2.new( 400,  400), false)
+   t_drone:goto(t_drone:pos() + vec2.new(-400,  400), false)
+   t_drone:goto(t_drone:pos() + vec2.new(-400, -400), false)
+   t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
+   hook.rm(idlehook)
+   idlehook = hook.timer(5000, "targetIdle")
+end
+
 -- get nearest jumppoint
-function get_nearest_jump(pilot)
+
+function get_nearest_jump(pil)
    jpts = system.cur():jumps()
    -- basically the distance that the map can have at 
    dist = 2*system.cur():radius()
    index = 0
    for i,jpt in ipairs(jpts) do
-      dist1 = vec2.dist(jpt:pos(),pilot:pos())
+      dist1 = vec2.dist(jpt:pos(),pil:pos())
       if dist1 < dist then
          dist = dist1
          index = i
@@ -241,7 +372,7 @@ function spawn_baddies(sp)
    -- light drones
    local scom = {}
    -- has eventually to be trimmed
-   -- so weird: ai does not work properly apparently? WTF is going on.. switching to dummy and switched form pilot.add to pilot.addRaw
+   -- so weird: ai does not work properly apparently? WTF is going on.. switching to dummy and switched from pilot.add to pilot.addRaw
    -- disabling some ships since this way it is really hard to win the mission
    scom[1] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )[1]
    scom[2] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )[1]
