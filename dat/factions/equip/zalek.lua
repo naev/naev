@@ -103,7 +103,7 @@ function equip_empireMilitary( p, shipsize )
       -- Scout
       if class == "Scout" then
          equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Stealth Plating")
-         use_primary    = rnd.rnd(1,#nhigh)
+         use_primary    = rnd.rnd(1,nhigh)
          addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2

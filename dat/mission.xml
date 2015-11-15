@@ -468,6 +468,23 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="The lost Brother">
+  <lua>neutral/kidnapped/traffic_01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 15 and player.misnDone("Kidnapped")</cond>
+   <chance>12</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Deal with the FLF agent">
   <lua>flf/flf_pre01</lua>
   <flags>
@@ -928,6 +945,42 @@
    <chance>25</chance>
    <location>Bar</location>
    <planet>Niflheim</planet>
+  </avail>
+ </mission>
+ <mission name="The one with the Shopping">
+  <lua>zalek/sciencegonewrong/00_sciwrong</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.getRating() &gt; 100</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ <mission name="The one with the Visit">
+  <lua>zalek/sciencegonewrong/01_sciwrong</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The one with the Shopping")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ <mission name="The one with the Runaway">
+  <lua>zalek/sciencegonewrong/02_sciwrong</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The one with the Visit")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
   </avail>
  </mission>
  <mission name="A Shark Bites">

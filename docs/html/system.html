@@ -1,0 +1,1117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: system</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li><strong>system</strong></li>
+	
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>system</code></h1>
+
+<div>Lua system module.
+ 
+ This module allows you to use the Star Systems from Lua.
+ 
+ Typical example would be something like:
+ <pre>
+ cur = system.get() -- Gets current system
+ sys = system.get( "Gamma Polaris" )
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#system.__eq">system.__eq</a>&nbsp;(s, comp)</td>
+	<td class="summary">Check systems for equality.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.adjacentSystems">system.adjacentSystems</a>&nbsp;(s, hidden)</td>
+	<td class="summary">Gets all the adjacent systems to a system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.cur">system.cur</a>&nbsp;()</td>
+	<td class="summary">Gets the current system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.faction">system.faction</a>&nbsp;(s)</td>
+	<td class="summary">Gets system faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.get">system.get</a>&nbsp;(param)</td>
+	<td class="summary">Gets a system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.getAll">system.getAll</a>&nbsp;()</td>
+	<td class="summary">Gets all the systems.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.jumpDist">system.jumpDist</a>&nbsp;(s, param, hidden)</td>
+	<td class="summary">Gets jump distance from current system, or to another.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.jumpPath">system.jumpPath</a>&nbsp;(s, param, hidden)</td>
+	<td class="summary">Gets jump path from current system, or to another.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.jumps">system.jumps</a>&nbsp;(s, exitonly)</td>
+	<td class="summary">Gets all the jumps in a system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.known">system.known</a>&nbsp;(s)</td>
+	<td class="summary">Checks to see if a system is known by the player.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.mrkAdd">system.mrkAdd</a>&nbsp;(str, v)</td>
+	<td class="summary">Adds a system marker.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.mrkClear">system.mrkClear</a>&nbsp;()</td>
+	<td class="summary">Clears the system markers.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.mrkRm">system.mrkRm</a>&nbsp;(id)</td>
+	<td class="summary">Removes a system marker.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.name">system.name</a>&nbsp;(s)</td>
+	<td class="summary">Returns the system's name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.nebula">system.nebula</a>&nbsp;(s)</td>
+	<td class="summary">Gets the system's nebula parameters.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.planets">system.planets</a>&nbsp;(s)</td>
+	<td class="summary">Gets the planets in a system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.presence">system.presence</a>&nbsp;(s)</td>
+	<td class="summary">Gets the presence in the system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.presences">system.presences</a>&nbsp;(s)</td>
+	<td class="summary">Returns the factions that have presence in a system and their respective presence values.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.radius">system.radius</a>&nbsp;(s)</td>
+	<td class="summary">Gets the radius of the system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#system.setKnown">system.setKnown</a>&nbsp;(s, b, r)</td>
+	<td class="summary">Sets a system's known state.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="system.__eq"></a><strong>system.__eq</strong>&nbsp;(s, comp)</dt>
+<dd>
+Check systems for equality.
+ 
+ Allows you to use the '=' operator in Lua with systems.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System comparing.
+	</li>
+	
+	<li>
+	  comp: System to compare against.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if sys == system.get( "Draygar" ) then -- Do something
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if both systems are the same.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.adjacentSystems"></a><strong>system.adjacentSystems</strong>&nbsp;(s, hidden)</dt>
+<dd>
+Gets all the adjacent systems to a system.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get adjacent systems of.
+	</li>
+	
+	<li>
+	  hidden: Whether or not to show hidden jumps also.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+An ordered table with all the adjacent systems.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.cur"></a><strong>system.cur</strong>&nbsp;()</dt>
+<dd>
+Gets the current system.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>sys = system.cur() -- Gets the current system
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+Current system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.faction"></a><strong>system.faction</strong>&nbsp;(s)</dt>
+<dd>
+Gets system faction.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get the faction of.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The dominant faction in the system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.get"></a><strong>system.get</strong>&nbsp;(param)</dt>
+<dd>
+Gets a system.
+ 
+ Behaves differently depending on what you pass as param: <br/>
+ - string : Gets the system by name. <br/>
+ - planet : Gets the system by planet. <br/>
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  param: Read description for details.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>sys = system.get( p ) -- Gets system where planet 'p' is located.</code></li>
+	
+	<li><code>sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+System metatable matching param.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.getAll"></a><strong>system.getAll</strong>&nbsp;()</dt>
+<dd>
+Gets all the systems.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+A list of all the systems.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.jumpDist"></a><strong>system.jumpDist</strong>&nbsp;(s, param, hidden)</dt>
+<dd>
+Gets jump distance from current system, or to another.
+ 
+ Does different things depending on the parameter type:
+ - nil : Gets distance from current system.
+ - string : Gets distance from system matching name.
+ - system : Gets distance from system
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get distance from.
+	</li>
+	
+	<li>
+	  param: See description.
+	</li>
+	
+	<li>
+	  hidden: Whether or not to consider hidden jumps.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>d = sys:jumpDist() -- Distance from current system.</code></li>
+	
+	<li><code>d = sys:jumpDist( "Draygar" ) -- Distance from system Draygar.</code></li>
+	
+	<li><code>d = sys:jumpDist( another_sys ) -- Distance from system another_sys.
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+Number of jumps to system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.jumpPath"></a><strong>system.jumpPath</strong>&nbsp;(s, param, hidden)</dt>
+<dd>
+Gets jump path from current system, or to another.
+ 
+ Does different things depending on the parameter type:
+ - nil : Gets path from current system.
+ - string : Gets path from system matching name.
+ - system : Gets path from system
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get path from.
+	</li>
+	
+	<li>
+	  param: See description.
+	</li>
+	
+	<li>
+	  hidden: Whether or not to consider hidden jumps.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>jumps = sys:jumpPath() -- Path to current system.</code></li>
+	
+	<li><code>jumps = sys:jumpPath( "Draygar" ) -- Path from current sys to Draygar.</code></li>
+	
+	<li><code>jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar to another_sys.
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+Table of jumps.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.jumps"></a><strong>system.jumps</strong>&nbsp;(s, exitonly)</dt>
+<dd>
+Gets all the jumps in a system.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get the jumps of.
+	</li>
+	
+	<li>
+	  exitonly: Whether to exclude exit-only jumps (default false).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+An ordered table with all the jumps.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.known"></a><strong>system.known</strong>&nbsp;(s)</dt>
+<dd>
+Checks to see if a system is known by the player.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to check if the player knows.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>b = s:known()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if the player knows the system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.mrkAdd"></a><strong>system.mrkAdd</strong>&nbsp;(str, v)</dt>
+<dd>
+Adds a system marker.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  str: String to display next to marker.
+	</li>
+	
+	<li>
+	  v: Position to display marker at.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>mrk_id = system.mrkAdd( "Hello", vec2.new( 50, 30 ) ) -- Creates a marker at (50,30)
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The id of the marker.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.mrkClear"></a><strong>system.mrkClear</strong>&nbsp;()</dt>
+<dd>
+Clears the system markers.
+ 
+ This can be dangerous and clash with other missions, do not try this at home kids.
+ 
+ 
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.mrkRm"></a><strong>system.mrkRm</strong>&nbsp;(id)</dt>
+<dd>
+Removes a system marker.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the marker to remove.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>system.mrkRm( mrk_id ) -- Removes a marker by mrk_id
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.name"></a><strong>system.name</strong>&nbsp;(s)</dt>
+<dd>
+Returns the system's name.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get name of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>name = sys:name()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The name of the system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.nebula"></a><strong>system.nebula</strong>&nbsp;(s)</dt>
+<dd>
+Gets the system's nebula parameters.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get nebula parameters from.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>density, volatility = sys:nebula()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The density and volatility of the system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.planets"></a><strong>system.planets</strong>&nbsp;(s)</dt>
+<dd>
+Gets the planets in a system.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get planets of
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system</code></li>
+	
+	<li><code>if #sys:planets() > 0 then -- System has planets
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+A table with all the planets
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.presence"></a><strong>system.presence</strong>&nbsp;(s)</dt>
+<dd>
+Gets the presence in the system.
+ 
+ Possible parameters are besides a faction:<br/>
+ - "all": Gets the sum of all the presences.<br />
+ - "friendly": Gets the sum of all the friendly presences.<br />
+ - "hostile": Gets the sum of all the hostile presences.<br />
+ - "neutral": Gets the sum of all the neutral presences.<br />
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get presence level of.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>p = sys:presence( f ) -- Gets the presence of a faction f</code></li>
+	
+	<li><code>p = sys:presence( "all" ) -- Gets the sum of all the presences</code></li>
+	
+	<li><code>if sys:presence("friendly") > sys:presence("hostile") then -- Checks to see if the system is dominantly friendly
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The presence level in sys (absolute value).
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.presences"></a><strong>system.presences</strong>&nbsp;(s)</dt>
+<dd>
+Returns the factions that have presence in a system and their respective presence values.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get the factional presences of.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system</code></li>
+	
+	<li><code>if sys:presences()[faction.get("Pirate")] then -- Checks to see if the Pirates have ships in the system
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+A table with the factions that have presence in the system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.radius"></a><strong>system.radius</strong>&nbsp;(s)</dt>
+<dd>
+Gets the radius of the system.
+ 
+ This is the radius of the circle which all the default jumps will be on.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to get the radius of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>r = s:radius()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The radius of the system.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="system.setKnown"></a><strong>system.setKnown</strong>&nbsp;(s, b, r)</dt>
+<dd>
+Sets a system's known state.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  s: System to set known.
+	</li>
+	
+	<li>
+	  b: Whether or not to set as known (defaults to false).
+	</li>
+	
+	<li>
+	  r: Whether or not to iterate over the system's assets and jump points (defaults to false).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>s:setKnown( false ) -- Makes system unknown.</code>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>
