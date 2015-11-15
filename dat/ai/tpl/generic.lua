@@ -25,6 +25,19 @@ mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
+mem.careful       = false -- Should the pilot try to avoid enemies?
+
+--[[Control parameters: mem.radius and mem.angle are the polar coordinates 
+of the point the pilot has to follow when using follow_accurate.
+The reference direction is the target's velocity direction.
+For example, radius = 100 and angle = 180 means that the pilot will stay
+behing his target at a distance of 100 units.
+angle = 90 will make the pilot try to be on the left of his target,
+angle = 0 means that the pilot tries to be in front of the target.]]
+mem.radius         = 100 --  Requested distance between follower and target
+mem.angle          = 180 --  Requested angle between follower and target's velocity
+mem.Kp             = 10 --  First control coefficient
+mem.Kd             = 20 -- Second control coefficient
 
 
 -- Required control rate
@@ -112,13 +125,13 @@ function control ()
    elseif task == "attack" then
       target = ai.target()
 
-      local target_parmour, target_pshield = target:health()
-
       -- Needs to have a target
       if not target:exists() then
          ai.poptask()
          return
       end
+
+      local target_parmour, target_pshield = target:health()
 
       -- Pick an appropriate weapon set.
       choose_weapset()
@@ -263,7 +276,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   mem.tookoff    = ai.pilot():flags().takeingoff
+   mem.tookoff    = ai.pilot():flags().takingoff
    attack_choose()
 end
 
@@ -436,7 +449,11 @@ end
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
    local mean = ai.pilot():weapsetHeat()
+<<<<<<< HEAD
    local _, pshield, _ = ai.pilot():health()
+=======
+   local _, pshield = ai.pilot():health()
+>>>>>>> 2a49074e02483a37debb8d06cadefca1b87d82ee
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.

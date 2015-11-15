@@ -165,6 +165,29 @@ function follow ()
  
    end
 end
+function follow_accurate ()
+   local target = ai.target()
+   local p = ai.pilot()
+ 
+   -- Will just float without a target to escort.
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = ai.follow_accurate(target, mem.radius, 
+         mem.angle, mem.Kp, mem.Kd)
+
+   local mod = vec2.mod(goal - p:pos())
+
+   --  Always face the goal
+   local dir   = ai.face(goal)
+
+   if dir < 10 and mod > 300 then
+      ai.accel()
+   end
+
+end
 
 --[[
 -- Tries to runaway and jump asap.
@@ -252,9 +275,17 @@ function land ()
 end
 function __landgo ()
    local target   = mem.land
-   local dir      = ai.face( target )
+   
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+
+   -- 2 methods depending on mem.careful
+   local dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -312,12 +343,11 @@ function __run_target ()
    local dir   = ai.face(target, true)
    ai.accel()
 
-   --[[
-   -- Todo afterburner handling.
-   if ai.hasafterburner() then
-      ai.afterburn(true)
+   -- Afterburner handling.         
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      ai.weapset( 8, true )
    end
-   ]]--
+
    return false
 end
 function __run_turret ()
@@ -342,10 +372,25 @@ function __run_hyp ()
 
    -- Go towards jump
    local jump     = ai.subtarget()
-   local jdir     = ai.face(jump)
+   local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
-   if jdir < 10 and jdist > bdist then
+
+   if jdist > 3*bdist and ai.pilot():stats().mass < 600 then
+      jdir = ai.careful_face(jump)
+   else --Heavy ships should rush to jump point
+      jdir = ai.face(jump)
+   end
+   
+   --Afterburner: activate while far away from jump
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      if jdist > 3 * bdist then
+         ai.weapset( 8, true )
+      else
+         ai.weapset( 8, false )
+      end
+   end
+   if jdist > bdist and jdir < 10 then       
       ai.accel()
    elseif jdist < bdist then
       ai.pushsubtask( "__run_hypbrake" )
@@ -378,9 +423,16 @@ function hyperspace ()
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
-   local dir      = ai.face( target )
+   local dir
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+
+   -- 2 methods for dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then

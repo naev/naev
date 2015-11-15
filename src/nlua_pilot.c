@@ -55,7 +55,6 @@ static int outfit_compareActive( const void *slot1, const void *slot2 );
 
 
 /* Pilot metatable methods. */
-static int pilotL_getPlayer( lua_State *L );
 static int pilotL_addFleetRaw( lua_State *L );
 static int pilotL_addFleet( lua_State *L );
 static int pilotL_remove( lua_State *L );
@@ -142,7 +141,6 @@ static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
-   { "player", pilotL_getPlayer },
    { "addRaw", pilotL_addFleetRaw },
    { "add", pilotL_addFleet },
    { "rm", pilotL_remove },
@@ -240,7 +238,6 @@ static const luaL_reg pilotL_methods[] = {
 }; /**< Pilot metatable methods. */
 static const luaL_reg pilotL_cond_methods[] = {
    /* General. */
-   { "player", pilotL_getPlayer },
    { "get", pilotL_getPilots },
    { "__eq", pilotL_eq },
    /* Info. */
@@ -412,28 +409,6 @@ int lua_ispilot( lua_State *L, int ind )
 
    lua_pop(L, 2);  /* remove both metatables */
    return ret;
-}
-
-/**
- * @brief Gets the player's pilot.
- *
- * @usage player = pilot.player()
- *
- *    @luareturn Pilot pointing to the player.
- * @luafunc player()
- */
-static int pilotL_getPlayer( lua_State *L )
-{
-   LuaPilot lp;
-
-   if (player.p == NULL) {
-      lua_pushnil(L);
-      return 1;
-   }
-
-   lp.pilot = player.p->id;
-   lua_pushpilot(L,lp);
-   return 1;
 }
 
 
@@ -3405,6 +3380,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "refueling", .id = PILOT_REFUELING },
    { .name = "disabled", .id = PILOT_DISABLED },
    { .name = "takingoff", .id = PILOT_TAKEOFF },
+   { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
    {NULL, -1}
 }; /**< Flags to get. */
 /**
@@ -3430,6 +3406,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> refueling: pilot is refueling another pilot.</li>
  *  <li> disabled: pilot is disabled.</li>
  *  <li> takingoff: pilot is currently taking off.</li>
+ *  <li> manualcontrol: pilot is under manual control.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.
@@ -3848,20 +3825,33 @@ static int pilotL_brake( lua_State *L )
  *
  *    @luaparam p Pilot to tell to follow another pilot.
  *    @luaparam pt Target pilot to follow.
+ *    @luaparam accurate If true, use a PD controller which
+                parameters can be defined using the pilot's memory.
  * @luasee control
- * @luafunc follow( p, pt )
+ * @luasee memory
+ * @luafunc follow( p, pt, accurate )
  */
 static int pilotL_follow( lua_State *L )
 {
    Pilot *p, *pt;
    Task *t;
+   int accurate;
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
    pt = luaL_validpilot(L,2);
 
+   if (lua_gettop(L) > 2)
+      accurate = lua_toboolean(L,3);
+   else
+      accurate = 0;
+
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "follow" );
+   if (accurate == 0)
+      t = pilotL_newtask( L, p, "follow" );
+   else
+      t = pilotL_newtask( L, p, "follow_accurate" );
+
    t->dtype = TASKDATA_PILOT;
    t->dat.num = pt->id;
 

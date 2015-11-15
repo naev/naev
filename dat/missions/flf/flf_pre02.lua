@@ -109,7 +109,7 @@ end
 
 
 function create ()
-   missys = patrol_getTargetSystem()
+   missys = system.get( "Arcanis" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
    misn.setNPC( npc_name, "flf/unique/benito" )
@@ -356,14 +356,14 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur():name() == "Sindbad" then
+   if planet.cur():faction():name() == "FLF" then
       tk.msg( title[4], text[4] )
       tk.msg( title[4], text[5]:format( player.name() ) )
       tk.msg( title[4], text[6] )
       tk.msg( title[4], text[7] )
       player.pay( 100000 )
       var.push( "_fcap_flf", 20 )
-      faction.get("FLF"):modPlayer( 15 )
+      faction.get("FLF"):modPlayer( 10 )
       var.pop( "flfbase_sysname" )
       var.pop( "flfbase_intro" )
       misn.finish( true )

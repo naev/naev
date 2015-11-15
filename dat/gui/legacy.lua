@@ -144,7 +144,7 @@ end
 -- @brief This function is run whenever the player changes their cargo.
 --]]
 function update_cargo ()
-   cargol = pilot.cargoList(pp)
+   cargol = pp:cargoList()
    misc_cargo = ""
    for _,v in ipairs(cargol) do
       if v.q == 0 then
@@ -365,7 +365,7 @@ function render_misc ()
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
    gfx.print( true, "Cargo Free:", misc_x, y, col_console, misc_w, false )
-   local free = string.format("%d" .. "t", pilot.cargoFree(pp))
+   local free = string.format("%d" .. "t", pp:cargoFree())
    w = gfx.printDim( true, free )
    gfx.print( true, free, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - 5

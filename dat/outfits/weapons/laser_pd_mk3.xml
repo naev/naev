@@ -25,7 +25,7 @@
   <track>3</track>
   <damage>
    <type>normal</type>
-   <penetrate>2</penetrate>
+   <penetrate>12</penetrate>
    <physical>12</physical>
    <disable>1</disable>
   </damage>

@@ -129,9 +129,9 @@ function accept()
       tk.msg(full_title, full_text)  -- Not enough space
       misn.finish()
    end
-   pilot.cargoAdd(player.pilot(), cargo, cargo_size)
+   player.pilot():cargoAdd(cargo, cargo_size)
    local player_best = cargoGetTransit(time_limit, num_jumps, travel_dist)
-   pilot.cargoRm(player.pilot(), cargo, cargo_size)
+   player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
       if not tk.yesno(slow_title, slow_text:format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then
          misn.finish()
