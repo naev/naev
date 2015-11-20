@@ -40,23 +40,23 @@ else -- default english
    title[2] = [[On the intercom]]
    title[3] = [[On your ship]]
    title[4] = [[Back on %s]]
-   text[1]  = [["Hey you! Yeah you! I need your help. Ha! I even remember you! I've got another job for you, and I hope you do it as well as the ones before. You see I was finishing up my protoype. It's ingenious I tell you. It is going to be perfect. Yes, indeed." After you give him a confused look he stops for a second. "Your prototype..." you try to get him going again. "Ah, right, I told you about it! Well you see, there was a minor hickup." You realize you don't really like the sound of that.
+   text[1]  = [["Hey you! Yeah you! I need your help. Ha! I even remember you! I've got another job for you, and I hope you do it as well as the ones before. You see I was finishing up my prototype. It's ingenious I tell you. It is going to be perfect. Yes, indeed." After you give him a confused look he stops for a second. "Your prototype..." you try to get him going again. "Ah, right, I told you about it! Well you see, there was a minor hiccup." You realize you don't really like the sound of that.
 "It's nothing major, it is just, well, that I lost it." You chuckle. You were suspecting that for a long time. "But I would not be Dr. Geller if I had not put a tracking mechanism into it! Ingenious! I told you, didn't I? Well so I want you to catch it, bring it back, ok? You can do that, right?"]]
    text[2] = [["Excellent, let's go. You were not really thinking I would let you engage my prototype without my supervision? I will show you in which system the drone currently is. But you better be fast, this is the newest generation and I bet it can outrun most of the ships out there. And of course: This is top secret research! Nobody outside of this institution has to know about this!"
 The scientist follows you around to your ship. Going on about how important this research is and pestering you to get going better sooner than later...]]
    text[3] = [["There! The tracker shows it must be here! It is right next to %s! Amazing, right? If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]
    text[4] = [["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]]
-   text[5] = [["Uhm, there seems to be a glitch. Well, sort of. Uhm, if I deciver this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tempered with that weird chip the pirates sold me!"]]
+   text[5] = [["Uhm, there seems to be a glitch. Well, sort of. Uhm, if I decipher this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tempered with that weird chip the pirates sold me!"]]
    text[6] = [["If you can disable the prototype, do it, but I'd rather prefer not to die!"]]
    text[7] = [["Excellent work, now load it up and let's get out of here!"]]
-   text[8] = [["Interessting, the other drones are running away..."
+   text[8] = [["Interesting, the other drones are running away..."
 "All the better."]]
    -- is that the way to go? get person to jump and try again? that sounds a bit annoying maybe to play through
    text[9] = [["The drone has disappeared from my radar! It must have jumped to the %s system. Let's find it!"]]
    text[10] = [["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should be now much easier to catch it!"]]
 
    text[11] = [["It seems the drone has found a way to shield itself from the EM pulses, I think I can adjust to that, give me a second."]]
-   text[12] = [["There you go! I am a genious after all! Get it!"]]
+   text[12] = [["There you go! I am a genius after all! Get it!"]]
    text[13] = [["There is something strange, the engines are starting to heat up... if they continue like this the drone will explode in about 20 seconds... You better hurry!"]]
    text[14] = [["NOOOOOOOOO! My drone! You incompetent rice cracker! You failed me!"]]
    -- final msg when returning to gastan
@@ -221,7 +221,7 @@ function drone_jumped ()
    jumps = jumps +1
 end
 
--- the drone behaves differnetly depending on through how many systems it has been chased so far
+-- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
    tk.msg(title[3],text[10])
    t_drone = pilot.add("Za'lek Scout Drone", "dummy",vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)))[1] -- prototype is a scout drone

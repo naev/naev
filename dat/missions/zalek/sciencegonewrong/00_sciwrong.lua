@@ -1,7 +1,7 @@
 --[[
    Mission: The one with the Shopping
 
-   Description: A Za'lek scientist askes the player to fetch some raw material that he needs to build his prototype.
+   Description: A Za'lek scientist asks the player to fetch some raw material that he needs to build his prototype.
    Multiple systems have to be visited and materials acquired from contact persons in the bar. 
 
    Difficulty: Easy to Medium? Depending on whether the player lingers around too much and gets caught.
@@ -48,7 +48,7 @@ else -- default english
    -- dialogue with first trader
    text[4] = [["Of course I have what you need, but do you have what I need?"]]
    text[5] = [["No? Well then come back if you can offer me 3t Phosphine you can find it on %s" Phosphine? You ponder... you once knew the reason why that was hard to come by.]]
-   text[6] = [["Ah yes, indeed" he says inspecting a sample infront of him. That will do. And here you get, what was promised: A piece of a ghost ship from the nebula. 100% authentic my supplier claims!" he says, handing you one single chip.]]
+   text[6] = [["Ah yes, indeed" he says inspecting a sample in front of him. That will do. And here you get, what was promised: A piece of a ghost ship from the nebula. 100% authentic my supplier claims!" he says, handing you one single chip.]]
    text[7] = [["What are you still doing here? No Phosphine, no trade...."]]
    -- dialogue with 2nd trader
    -- %s for pho_mny
@@ -60,20 +60,20 @@ well, let me see what you need and I will tell you how much it costs you." he sa
    text[10] = [["Then we have nothing to talk about. Come back if you made up your mind and have enough credits with you"]]
    -- call of the police
    title[2] = [[On the intercom]]
-   text[11] = [["You are suspected to be transporting highly toxic materials without a licsense, please stop your ship and prepare to be boarded."]]
+   text[11] = [["You are suspected to be transporting highly toxic materials without a license, please stop your ship and prepare to be boarded."]]
    text[12] = [["Stand down for inspection."]]
    title[3] = [[On your ship]]
    text[13] = [["Freeze! You are in accused of violating the toxic materials regulation. Your ship will be searched and any suspicious elements confiscated!"]]
    text[14] = [[The inspectors search through your ship and cargo department. Once they find the containers they confiscate the Phosphine and charge you with a fine of 100 000 credits for violating the transportation regulation on toxic materials.]]
    text[15] = [[Dr Geller looks at you. "Have you got it?" You present the chip and he begins to glow. "Yes that is it!! Now I can continue my research." You ask him about the ghost ship remark by the trader. "Some people believe this nonsense. There is no scientific explanation of the ghost ships. I think it is some technology related to sol that got blasted off during the incident. They must have done some advanced research on neuronal computing."]]
-   text[16] = [[He turns away and after you clear your throat with a pretty audible "Uh uhm" tunrs back to you. "Oh, yes, of course you want some payment for your service, right? Well, here you go. I might need you again in the future." He hands you a payment slip and walks away.]]
+   text[16] = [[He turns away and after you clear your throat with a pretty audible "Uh uhm" turns back to you. "Oh, yes, of course you want some payment for your service, right? Well, here you go. I might need you again in the future." He hands you a payment slip and walks away.]]
    trd_disc = [[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]]
    -- osd_msg
    osd_msg[1] = "Go to the %s system and talk to the trader on %s."
    osd_msg[2] = "Go to the %s system and talk to the contact person on %s."
    osd_msg[3] = "Return to the %s system to the trader on %s."
    osd_msg[4] = "Return to the %s system and deliver to Dr.Geller on %s."
-  -- refuestext 
+  -- refusetext 
    refusetitle = "No Science Today"
    refusetext = "I guess you don't care that much about science..."
 end

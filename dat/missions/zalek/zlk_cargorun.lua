@@ -16,7 +16,7 @@ misn_desc = "You agreed to help a Za'lek scientist pick up some cargo way out in
 -- OSD
 OSDtitle = "Za'lek Cargo Monkey"
 OSDdesc = {}
-OSDdesc[1] = "Go pickup some equipment at %s in the %s system."
+OSDdesc[1] = "Go pick up some equipment at %s in the %s system."
 OSDdesc[2] = "Drop off the equipment at %s in the %s system."
 
 payment = 250000
@@ -33,18 +33,18 @@ text[1] = [[    You walk into the bar and see a scientist wearing a Za'lek badge
 After a while of listening to him go around, you surmise that he is looking for someone to pick up and drop off some cargo for him. Eventually he sees you comes up politely. "Excuse me sir, but do you happen to know a ship captain who can help me with something?"]]
 
 title[2] = "A long haul through tough territory"
-text[2] = [[    You say that he is looking at one right now. Rather suprisingly, the pompous-looking man laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan, by the way. I warn you, it'll be simple, but rather dangerous, but I will pay you handsomely for your services.
-    I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that is going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responisbility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there.]]
+text[2] = [[    You say that he is looking at one right now. Rather surprisingly, the pompous-looking man laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan, by the way. I warn you, it'll be simple, but rather dangerous, but I will pay you handsomely for your services.
+    I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that is going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there.]]
 
 title[3] = "Deliver the Equipment"
 text[3] = [[    Once planetside, you find the acceptance area and type in the code Dr. Logan gave you to pick up the equipment. Swiftly, a group of droids backed by a human overseer loads the heavy reinforced crates on your ship and you are ready to go.]]
 
 title[4] = "Success"
 text[4] = [[    You land on the Za'lek planet and find your ship swarmed by dockhands in red and advanced-looking droids rapidly. They unload the equipment and direct you to a rambling edifice for payment.
-    When you enter, your head spins at a comination of the highly advanced and esoteric-looking tech on display so casually as well as the utter bedlam of the facility. It takes you a solid ten minutes before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound]]
+    When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech on display so casually as well as the utter bedlam of the facility. It takes you a solid ten minutes before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound]]
 
 title[5] = "Takeoff"
-text[5] = [[    You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late. Especially given the lack of organization you've seen on the planet. Suddenly, a ping sounds on your console, signifiying that someone's hailing you!]]
+text[5] = [[    You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late. Especially given the lack of organization you've seen on the planet. Suddenly, a ping sounds on your console, signifying that someone's hailing you!]]
 
 title[6] = "A Small Delay"
 text[6] = [[    "Hello again. It's Dr. Logan. I am terribly sorry for the delay, but I got held up. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]]
