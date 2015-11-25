@@ -286,6 +286,7 @@ function land_home()
       tk.msg(title[4]:format(t_pla[2]),text[15])
       player.pay(reward)
       -- pay player and do shit here
+      misn.finish(true)
    end
 end
 
