@@ -302,6 +302,10 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
             (event.key.keysym.sym == SDLK_RETURN))
          *offset += 100;
 
+      /* Jump up. */
+      else if (event.key.keysym.sym == SDLK_BACKSPACE)
+         *offset -= 100;
+
       /* User is clearly flailing on keyboard. */
       else
          *vel = 16.;
