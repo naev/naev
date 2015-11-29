@@ -489,6 +489,72 @@ err:
 
 
 /**
+ * @brief Copy a file, if it exists.
+ *
+ *    @param path1 printf formatted string pointing to the file to copy from.
+ *    @param path2 printf formatted string pointing to the file to copy to.
+ *    @return 0 on success, or if file does not exist, -1 on error.
+ */
+int nfile_copyIfExists( const char* path1, const char* path2 )
+{
+   char file1[PATH_MAX];
+   char file2[PATH_MAX];
+   FILE *f_in, *f_out;
+   char buf[ 8*1024 ];
+   size_t lr, lw;
+
+   if (path1 == NULL)
+      return -1;
+
+   nsnprintf(file1, PATH_MAX, "%s", path1);
+   nsnprintf(file2, PATH_MAX, "%s", path2);
+
+   /* Check if input file exists */
+   if (!nfile_fileExists(file1))
+      return 0;
+
+   /* Open files. */
+   f_in  = fopen( file1, "rb" );
+   f_out = fopen( file2, "wb" );
+   if ((f_in==NULL) || (f_out==NULL)) {
+      WARN( "Failure to copy '%s' to '%s': %s", file1, file2, strerror(errno) );
+      if (f_in!=NULL)
+         fclose(f_in);
+      return -1;
+   }
+
+   /* Copy data over. */
+   do {
+      lr = fread( buf, 1, sizeof(buf), f_in );
+      if (ferror(f_in))
+         goto err;
+      else if (!lr) {
+         if (feof(f_in))
+            break;
+         goto err;
+      }
+
+      lw = fwrite( buf, 1, lr, f_out );
+      if (ferror(f_out) || (lr != lw))
+         goto err;
+   } while (lr > 0);
+
+   /* Close files. */
+   fclose( f_in );
+   fclose( f_out );
+
+   return 0;
+
+err:
+   WARN( "Failure to copy '%s' to '%s': %s", file1, file2, strerror(errno) );
+   fclose( f_in );
+   fclose( f_out );
+
+   return -1;
+}
+
+
+/**
  * @brief Lists all the visible files in a directory.
  *
  * Should also sort by last modified but that's up to the OS in question.

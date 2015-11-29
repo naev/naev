@@ -40,6 +40,8 @@ static int nerrcopy = 0; /* Number of bytes written to errcopy. */
 /**< Output filenames for stdout and stderr. */
 static char *outfile = NULL;
 static char *errfile = NULL;
+static char *outfiledouble = NULL;
+static char *errfiledouble = NULL;
 
 /* Whether to copy stdout and stderr to temporary buffers. */
 int copying = 0;
@@ -110,14 +112,17 @@ void log_redirect (void)
 
    outfile = malloc(PATH_MAX);
    errfile = malloc(PATH_MAX);
+   outfiledouble = malloc(PATH_MAX);
+   errfiledouble = malloc(PATH_MAX);
 
-   nsnprintf( outfile, PATH_MAX, "%slogs/%s_stdout.txt", nfile_dataPath(),
-         timestr );
+   nsnprintf( outfile, PATH_MAX, "%slogs/stdout.txt", nfile_dataPath() );
    freopen( outfile, "w", stdout );
 
-   nsnprintf( errfile, PATH_MAX, "%slogs/%s_stderr.txt", nfile_dataPath(),
-         timestr );
+   nsnprintf( errfile, PATH_MAX, "%slogs/stderr.txt", nfile_dataPath() );
    freopen( errfile, "w", stderr );
+
+   nsnprintf( outfiledouble, PATH_MAX, "%slogs/%s_stdout.txt", nfile_dataPath(), timestr );
+   nsnprintf( errfiledouble, PATH_MAX, "%slogs/%s_stderr.txt", nfile_dataPath(), timestr );
 
    /* stderr should be unbuffered */
    setvbuf( stderr, NULL, _IONBF, 0 );
@@ -249,6 +254,9 @@ void log_clean (void)
    if (err.st_size == 0) {
       unlink(outfile);
       unlink(errfile);
+   } else {
+      nfile_copyIfExists(outfile, outfiledouble);
+      nfile_copyIfExists(errfile, errfiledouble);
    }
 }
 
