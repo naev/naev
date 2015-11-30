@@ -505,7 +505,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>60</chance>
    <done>Disrupt a Dvaered Patrol</done>
    <location>Bar</location>
    <faction>FLF</faction>
@@ -528,7 +528,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>40</chance>
    <done>Diversion from Raelid</done>
    <location>Bar</location>
    <faction>FLF</faction>
