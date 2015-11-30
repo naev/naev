@@ -75,7 +75,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   myssys = system.get( "Raelid" )
+   missys = system.get( "Raelid" )
    misplanet = planet.get( "Marius Station" )
 
    credits = 100000
@@ -90,9 +90,8 @@ end
 function accept ()
    tk.msg( title[1], text[1]:format( player.name() ) )
    tk.msg( title[1], text[2] )
-   tk.msg( title[1], text[3] )
    if tk.yesno( title[1], text[3] ) then
-      tk.msg( title[1], text[4] )
+      tk.msg( title[1], text[4]:format( misplanet:name(), missys:name() ) )
 
       misn.accept()
 
@@ -133,4 +132,5 @@ function approach ()
 
    misn.npcRm( npc )
    job_done = true
+   misn.osdActive( 2 )
 end
