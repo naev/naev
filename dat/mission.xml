@@ -530,10 +530,9 @@
   <avail>
    <chance>100</chance>
    <done>Diversion from Raelid</done>
-   <done>Operation Cold Metal</done>
    <location>Bar</location>
    <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+   <cond>diff.isApplied("collective_dead") and faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
