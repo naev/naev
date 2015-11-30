@@ -116,7 +116,7 @@ function accept()
       misn.accept()
       tk.msg(title[2], text[2]:format(gawname,gawsys:name(),kername1,kersys1:name(),kername2,kersys2:name(),godname,godsys:name()))
       
-      osd_msg[2] = osd_msg[2]:format(paypla:name())
+      osd_msg[2] = osd_msg[2]:format(pplname,psyname)
       
       misn.setTitle(misn_title)
       misn.setReward(misn_reward:format(numstring(reward)))

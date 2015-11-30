@@ -83,7 +83,7 @@ docs:
 help:
 	@echo "Possible targets are:"
 	@echo "        all - builds everything"
-	@echo "      ndata - creates the ndata file"
+	@echo "  ndata.zip - creates the ndata file"
 	@echo "       docs - creates the doxygen documentation"
 	@echo "      clean - removes binaries and object files"
 	@echo "    install - installs naev"

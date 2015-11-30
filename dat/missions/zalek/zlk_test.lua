@@ -28,7 +28,7 @@ Travel distance: %d]]
    msg_title[4] = "Didn't you forget something?"
 
    engines = {"with phase-change material cooling", 
-              "controlled with the Zermatt-Henry theory",   --Some random scinetists names
+              "controlled with the Zermatt-Henry theory",   --Some random scientists names
               "using a new electron propelling system",
               "using the fifth law of thermodynamics",      --In these times, there will maybe exist more thermo laws...
               "for a system identification using the fe-method",
@@ -39,9 +39,9 @@ Travel distance: %d]]
               }
 
    znpcs = {}
-   znpcs[1] = [[A group of university students greet you. "If your flight goes well, we will validate our aerospace course! The last engine exploded durnig the flight, but this one is much more reliable... Hopefully."]]
+   znpcs[1] = [[A group of university students greet you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]]
    znpcs[2] = [[A very old Za'lek researcher needs you to fly with his instrumented device in order to take measurements.]]
-   znpcs[3] = [[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developped."]]
+   znpcs[3] = [[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]]
    znpcs[4] = [[A Za'lek researcher needs you to test the new propelling system he has implemented in this engine.]]
 
    msg_msg = {}
@@ -53,14 +53,14 @@ Travel distance: %d]]
    miss = "You traveled without the engine."
 
    teleport_title = "What the hell happens there?"
-   teleport_text = "You suddently feel a huge acceleration, as if your ship was going to hyperspace. Then a shock makes you pass out. As you wake up, your ship is damaged and your compass indicates that you are in the %s system!"
+   teleport_text = "You suddenly feel a huge acceleration, as if your ship was going to hyperspace. Then a shock makes you pass out. As you wake up, your ship is damaged and your compass indicates that you are in the %s system!"
 
    slow_title = "Where is the power gone?"
    slow_text = "The engine doesn't seem to want to propel your ship anymore..."
    speed_title = "Power is back."
    speed_text = "It seems, the engine decided to work properly again."
 
-   outOf_title = "This wasn't supposed to happend"
+   outOf_title = "This wasn't supposed to happened"
    outOf_text = "Your ship is totally out of control. Apparently, the experimental engine seems to have some defects."
    noAn_title = "Engine is dead"
    noAn_text = "It seems, the engine doesn't work anymore..."
@@ -301,7 +301,7 @@ function rmTheOutfit()
    if isMounted("Za'lek Test Engine") then
       player.pilot():rmOutfit("Za'lek Test Engine")
    end
-   while isOwned("Za'lek Test Engine") do  --to avoid remaining test engines if some error occures
+   while isOwned("Za'lek Test Engine") do  --to avoid remaining test engines if some error occurs
       player.rmOutfit("Za'lek Test Engine")
    end
 end
@@ -316,7 +316,7 @@ function isMounted(itemName)
    return false
 end
 
---Check if the player ownes an outfit
+--Check if the player owns an outfit
 function isOwned(itemName)
    for i, j in ipairs(player.outfits()) do
       if j:name() == itemName then

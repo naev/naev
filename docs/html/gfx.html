@@ -1,0 +1,700 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: gfx</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li><strong>gfx</strong></li>
+	
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>gfx</code></h1>
+
+<div>Lua bindings to interact with rendering and the Naev graphical environment.
+ 
+ An example would be:
+ <pre>
+ t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#gfx.dim">gfx.dim</a>&nbsp;()</td>
+	<td class="summary">Gets the dimensions of the Naev window.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.fontSize">gfx.fontSize</a>&nbsp;(small)</td>
+	<td class="summary">Gets the size of the font.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.print">gfx.print</a>&nbsp;(small, str, x, y, col, max, center)</td>
+	<td class="summary">Prints text on the screen.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.printDim">gfx.printDim</a>&nbsp;(small, str, width)</td>
+	<td class="summary">Gets the size of the text to print.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.printText">gfx.printText</a>&nbsp;(small, str, x, y, w, h, col)</td>
+	<td class="summary">Prints a block of text on the screen.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.renderRect">gfx.renderRect</a>&nbsp;(x, y, w, h, col, empty)</td>
+	<td class="summary">Renders a rectangle.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.renderTex">gfx.renderTex</a>&nbsp;(tex, pos_x, pos_y, sprite_x, sprite_y, colour)</td>
+	<td class="summary">Renders a texture.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#gfx.renderTexRaw">gfx.renderTexRaw</a>&nbsp;(tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour)</td>
+	<td class="summary">Renders a texture using the core render function.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="gfx.dim"></a><strong>gfx.dim</strong>&nbsp;()</dt>
+<dd>
+Gets the dimensions of the Naev window.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>screen_w, screen_h = gfx.dim()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The width and height of the Naev window.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.fontSize"></a><strong>gfx.fontSize</strong>&nbsp;(small)</dt>
+<dd>
+Gets the size of the font.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  small: Whether or not to get the size of the small font.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The size in pixels of the font.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.print"></a><strong>gfx.print</strong>&nbsp;(small, str, x, y, col, max, center)</dt>
+<dd>
+Prints text on the screen.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  small: Whether or not to use a small font.
+	</li>
+	
+	<li>
+	  str: String to print.
+	</li>
+	
+	<li>
+	  x: X position to print at.
+	</li>
+	
+	<li>
+	  y: Y position to print at.
+	</li>
+	
+	<li>
+	  col: Colour to print text.
+	</li>
+	
+	<li>
+	  max: Optional parameter to indicate maximum width to render up to.
+	</li>
+	
+	<li>
+	  center: Optional boolean parameter indicating whether or not to center it.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>gfx.print( nil, "Hello World!", 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.</code></li>
+	
+	<li><code>gfx.print( true, "Hello World!", 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.</code></li>
+	
+	<li><code>gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.printDim"></a><strong>gfx.printDim</strong>&nbsp;(small, str, width)</dt>
+<dd>
+Gets the size of the text to print.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  small: Whether or not to use the small font.
+	</li>
+	
+	<li>
+	  str: Text to calculate length of.
+	</li>
+	
+	<li>
+	  width: Optional parameter to indicate it is a block of text and to use this width.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>len = gfx.printDim( nil, "Hello World!" ) -- Length of string with normal font</code></li>
+	
+	<li><code>height = gfx.printDim( true, "Longer text", 20 ) -- Dimensions of text block
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.printText"></a><strong>gfx.printText</strong>&nbsp;(small, str, x, y, w, h, col)</dt>
+<dd>
+Prints a block of text on the screen.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  small: Whether or not to use a small font.
+	</li>
+	
+	<li>
+	  str: String to print.
+	</li>
+	
+	<li>
+	  x: X position to print at.
+	</li>
+	
+	<li>
+	  y: Y position to print at.
+	</li>
+	
+	<li>
+	  w: Width of the block of text.
+	</li>
+	
+	<li>
+	  h: Height of the block of text.
+	</li>
+	
+	<li>
+	  col: Colour to print text.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>gfx.printText( true, 100, 50, 50, 100, 100, col ) -- Displays a 100x100 block of text
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.renderRect"></a><strong>gfx.renderRect</strong>&nbsp;(x, y, w, h, col, empty)</dt>
+<dd>
+Renders a rectangle.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  x: X position to render at.
+	</li>
+	
+	<li>
+	  y: Y position to render at.
+	</li>
+	
+	<li>
+	  w: Width of the rectangle.
+	</li>
+	
+	<li>
+	  h: Height of the rectangle.
+	</li>
+	
+	<li>
+	  col: Colour to use.
+	</li>
+	
+	<li>
+	  empty: Optional parameter on whether or not it should be empty, defaults to true.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>gfx.renderRect( 10., 30,. 40., 40., col ) -- Renders a 40 side square at position 10,30 of colour col</code></li>
+	
+	<li><code>gfx.renderRect( 10., 30,. 40., 40., col, True ) -- Renders a 40 side empty square at position 10,30 of colour col
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.renderTex"></a><strong>gfx.renderTex</strong>&nbsp;(tex, pos_x, pos_y, sprite_x, sprite_y, colour)</dt>
+<dd>
+Renders a texture.
+ 
+ This function has variable parameters depending on how you want to render.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  tex: Texture to render.
+	</li>
+	
+	<li>
+	  pos_x: X position to render texture at.
+	</li>
+	
+	<li>
+	  pos_y: Y position to render texture at.
+	</li>
+	
+	<li>
+	  sprite_x: X sprite to render.
+	</li>
+	
+	<li>
+	  sprite_y: Y sprite to render.
+	</li>
+	
+	<li>
+	  colour: Colour to use when rendering.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>gfx.renderTex( tex, 0., 0. ) -- Render tex at origin</code></li>
+	
+	<li><code>gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour col</code></li>
+	
+	<li><code>gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3 (top-left is 1,1)</code></li>
+	
+	<li><code>gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position 4,3 (top-left is 1,1) with colour col
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="gfx.renderTexRaw"></a><strong>gfx.renderTexRaw</strong>&nbsp;(tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour)</dt>
+<dd>
+Renders a texture using the core render function.
+ 
+ This function is far more complex than renderTex, however it allows much
+ more fine grained control over the entire render process and puts you
+ closer to the actual OpenGL calls.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  tex: Texture to render.
+	</li>
+	
+	<li>
+	  pos_x: X position to render texture at.
+	</li>
+	
+	<li>
+	  pos_y: Y position to render texture at.
+	</li>
+	
+	<li>
+	  pos_w: Width of the image on screen.
+	</li>
+	
+	<li>
+	  pos_h: Height of the image on screen.
+	</li>
+	
+	<li>
+	  sprite_x: X sprite to render.
+	</li>
+	
+	<li>
+	  sprite_y: Y sprite to render.
+	</li>
+	
+	<li>
+	  tex_x: X sprite texture offset as [0.:1.].
+	</li>
+	
+	<li>
+	  tex_y: Y sprite texture offset as [0.:1.].
+	</li>
+	
+	<li>
+	  tex_w: Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
+	</li>
+	
+	<li>
+	  tex_h: Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
+	</li>
+	
+	<li>
+	  colour: [OPTIONAL] Colour to use when rendering.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>gfx.renderTexRaw( tex, 0., 0., 100., 100., 1, 1, 0., 0., 0.5, 0.5 ) -- Renders the bottom quarter of the sprite 1,1 of the image.
+ </code>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

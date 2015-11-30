@@ -115,3 +115,14 @@
  * Author: pengo_au, License: PD
    * sounds
      * afb_disengage.wav
+
+ * Author: Jonathon Trumbo, GPLv2+
+   * sounds
+     * 1-second-attachment.ogg
+     * 1-second-detachment.ogg
+     * computer_jam.ogg
+     * computer_lock.ogg
+     * mouse_click.ogg
+     * outfit-activation.ogg
+     * outfit-deactivation.ogg
+
