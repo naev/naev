@@ -171,7 +171,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
    <chance>35</chance>
    <location>Bar</location>
    <faction>Empire</faction>
@@ -184,7 +184,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
    <chance>50</chance>
    <done>Empire Shipping 1</done>
    <location>Bar</location>
@@ -198,7 +198,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
    <chance>50</chance>
    <done>Empire Shipping 2</done>
    <location>Bar</location>
