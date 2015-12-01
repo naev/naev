@@ -849,7 +849,7 @@ void ai_think( Pilot* pilot, const double dt )
    }
 
    /* make sure pilot_acc and pilot_turn are legal */
-   pilot_acc   = CLAMP( 0., 1., pilot_acc );
+   pilot_acc   = CLAMP( -1., 1., pilot_acc );
    pilot_turn  = CLAMP( -1., 1., pilot_turn );
 
    /* Set turn and thrust. */
