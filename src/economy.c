@@ -246,7 +246,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
    } while (xml_nextNode(node));
-   if (temp->gfx_store == NULL) {
+   if ((temp->gfx_store == NULL) && (temp->price>0)) {
       WARN("No <gfx_store> node found, using default texture for commodity \"%s\"", temp->name);
       temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
    }
