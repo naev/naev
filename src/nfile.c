@@ -429,11 +429,8 @@ int nfile_fileExists( const char* path, ... )
 int nfile_backupIfExists( const char* path, ... )
 {
    char file[PATH_MAX];
-   va_list ap;
    char backup[PATH_MAX];
-   FILE *f_in, *f_out;
-   char buf[ 8*1024 ];
-   size_t lr, lw;
+   va_list ap;
 
    if (path == NULL)
       return -1;
@@ -447,11 +444,40 @@ int nfile_backupIfExists( const char* path, ... )
 
    nsnprintf(backup, PATH_MAX, "%s.backup", file);
 
+   return nfile_copyIfExists( path, backup );
+}
+
+
+/**
+ * @brief Copy a file, if it exists.
+ *
+ *    @param path1 printf formatted string pointing to the file to copy from.
+ *    @param path2 printf formatted string pointing to the file to copy to.
+ *    @return 0 on success, or if file1 does not exist, -1 on error.
+ */
+int nfile_copyIfExists( const char* path1, const char* path2 )
+{
+   char file1[PATH_MAX];
+   char file2[PATH_MAX];
+   FILE *f_in, *f_out;
+   char buf[ 8*1024 ];
+   size_t lr, lw;
+
+   if (path1 == NULL)
+      return -1;
+
+   nsnprintf(file1, PATH_MAX, "%s", path1);
+   nsnprintf(file2, PATH_MAX, "%s", path2);
+
+   /* Check if input file exists */
+   if (!nfile_fileExists(file1))
+      return 0;
+
    /* Open files. */
-   f_in  = fopen( file, "rb" );
-   f_out = fopen( backup, "wb" );
+   f_in  = fopen( file1, "rb" );
+   f_out = fopen( file2, "wb" );
    if ((f_in==NULL) || (f_out==NULL)) {
-      WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
+      WARN( "Failure to copy '%s' to '%s': %s", file1, file2, strerror(errno) );
       if (f_in!=NULL)
          fclose(f_in);
       return -1;
@@ -480,7 +506,7 @@ int nfile_backupIfExists( const char* path, ... )
    return 0;
 
 err:
-   WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
+   WARN( "Failure to copy '%s' to '%s': %s", file1, file2, strerror(errno) );
    fclose( f_in );
    fclose( f_out );
 
