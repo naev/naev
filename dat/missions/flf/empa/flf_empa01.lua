@@ -18,6 +18,8 @@
 
 --]]
 
+include "dat/missions/flf/flf_common.lua"
+
 -- localization stuff
 lang = naev.lang()
 if lang == "notreal" then
@@ -114,7 +116,7 @@ function land ()
    if job_done and planet.cur():faction():name() == "FLF" then
       tk.msg( title[9], text[9]:format( player.name() ) )
       player.pay( credits )
-      var.push( "_fcap_flf", math.max( 60, var.peek( "_fcap_flf" ) ) )
+      flf_setReputation( 60 )
       faction.get("FLF"):modPlayer( reputation )
       faction.get("Empire"):modPlayer( emp_reputation )
       misn.finish( true )
