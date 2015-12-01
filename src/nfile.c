@@ -451,23 +451,18 @@ int nfile_backupIfExists( const char* path, ... )
 /**
  * @brief Copy a file, if it exists.
  *
- *    @param path1 printf formatted string pointing to the file to copy from.
- *    @param path2 printf formatted string pointing to the file to copy to.
+ *    @param file1 Filename to copy from.
+ *    @param file2 Filename to copy to.
  *    @return 0 on success, or if file1 does not exist, -1 on error.
  */
-int nfile_copyIfExists( const char* path1, const char* path2 )
+int nfile_copyIfExists( const char* file1, const char* file2 )
 {
-   char file1[PATH_MAX];
-   char file2[PATH_MAX];
    FILE *f_in, *f_out;
    char buf[ 8*1024 ];
    size_t lr, lw;
 
-   if (path1 == NULL)
+   if (file1 == NULL)
       return -1;
-
-   nsnprintf(file1, PATH_MAX, "%s", path1);
-   nsnprintf(file2, PATH_MAX, "%s", path2);
 
    /* Check if input file exists */
    if (!nfile_fileExists(file1))
