@@ -31,3 +31,9 @@ function flf_getTargetSystem ()
    end
    return system.get( choices[ rnd.rnd( 1, #choices ) ] )
 end
+
+
+-- Change the reputation cap for the FLF.
+function flf_setReputation( newcap )
+   var.push( "_fcap_flf", math.max( newcap, var.peek( "_fcap_flf" ) or 5 ) )
+end

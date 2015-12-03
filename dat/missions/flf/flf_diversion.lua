@@ -38,7 +38,7 @@ else -- default English
    misn_desc = "A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system."
 
    osd_title   = "FLF Diversion"
-   osd_desc     = {}
+   osd_desc    = {}
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Engage and destroy Dvaered ships to get their attention"
    osd_desc[3] = "Return to FLF base"

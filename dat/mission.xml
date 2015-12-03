@@ -171,7 +171,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
    <chance>35</chance>
    <location>Bar</location>
    <faction>Empire</faction>
@@ -184,7 +184,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
    <chance>50</chance>
    <done>Empire Shipping 1</done>
    <location>Bar</location>
@@ -198,7 +198,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
    <chance>50</chance>
    <done>Empire Shipping 2</done>
    <location>Bar</location>
@@ -522,7 +522,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>60</chance>
    <done>Disrupt a Dvaered Patrol</done>
    <location>Bar</location>
    <faction>FLF</faction>
@@ -537,6 +537,19 @@
    <done>Diversion from Raelid</done>
    <location>Computer</location>
    <faction>FLF</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Negotiations">
+  <lua>flf/empa/flf_empa01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>40</chance>
+   <done>Diversion from Raelid</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>diff.isApplied("collective_dead") and faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
