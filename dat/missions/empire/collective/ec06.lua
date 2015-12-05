@@ -17,7 +17,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   bar_desc = "You see Comodore Keer at a table with a couple of other pilots. She motions you to sit down with them."
+   bar_desc = "You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them."
    misn_title = "Operation Cold Metal"
    misn_reward = "Fame and Glory"
    misn_desc = {}
