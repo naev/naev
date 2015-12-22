@@ -949,20 +949,20 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          key  = event->key.keysym.sym;
          /* If control key make player hit twice. */
          test_key_event = (key == SDLK_NUMLOCK) ||
-                           (key == SDLK_CAPSLOCK) ||
-                           (key == SDLK_SCROLLOCK) ||
-                           (key == SDLK_RSHIFT) ||
-                           (key == SDLK_LSHIFT) ||
-                           (key == SDLK_RCTRL) ||
-                           (key == SDLK_LCTRL) ||
-                           (key == SDLK_RALT) ||
-                           (key == SDLK_LALT) ||
-                           (key == SDLK_RMETA) ||
-                           (key == SDLK_LMETA);
+                          (key == SDLK_CAPSLOCK) ||
+                          (key == SDLK_SCROLLOCK) ||
+                          (key == SDLK_RSHIFT) ||
+                          (key == SDLK_LSHIFT) ||
+                          (key == SDLK_RCTRL) ||
+                          (key == SDLK_LCTRL) ||
+                          (key == SDLK_RALT) ||
+                          (key == SDLK_LALT) ||
+                          (key == SDLK_RMETA) ||
+                          (key == SDLK_LMETA);
 #if !SDL_VERSION_ATLEAST(2,0,0) /* SUPER don't exist in 2.0.0 */
          test_key_event = test_key_event ||
-          (key == SDLK_LSUPER) ||
-          (key == SDLK_RSUPER);
+                          (key == SDLK_LSUPER) ||
+                          (key == SDLK_RSUPER);
 #endif /* !SDL_VERSION_ATLEAST(2,0,0) */                 
          if (test_key_event  && (opt_lastKeyPress != key)) {
             opt_lastKeyPress = key;
