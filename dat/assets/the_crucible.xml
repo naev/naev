@@ -14,7 +14,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>2</class>
   <population>5000</population>
   <hide>0.500000</hide>
   <services>
@@ -22,6 +22,6 @@
    <refuel/>
   </services>
   <commodities/>
-  <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here, including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online, so they make sure the local Imperial forces have more important things to worry about than shutting down the Crucible.</description>
+  <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online so they make sure the local Imperial forces have more important things to worry about than shutting down it down.</description>
  </general>
 </asset>
