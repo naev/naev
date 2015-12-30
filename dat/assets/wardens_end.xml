@@ -14,7 +14,7 @@
   <range>5</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>2</class>
   <population>4500</population>
   <hide>0.250000</hide>
   <services>
@@ -28,7 +28,7 @@
   </services>
   <commodities/>
   <description>Warden's End exists as a place for less-than-legal wares to be bought and sold. Known as one of the few truly "free" markets, many of the less reputable merchants in the galaxy come here to peddle their wares. Many a merchant has gained - and lost - a fortune here. The station itself is made out of the welded-together ships of merchants who became destitute.</description>
-  <bar>Many of the denizens of Warden's End are richer, and the bar caters to this with a bit more of a posh appearance. The usually rowdy pirates are kept in check by the small armies that seem to surround every seedy merchant, keeping the place quiet and stable.</bar>
+  <bar>Many of the denizens of Warden's End are richer and the bar caters to this with a bit more of a posh appearance. The usually rowdy pirates are kept in check by the small armies that seem to surround every seedy merchant, keeping the place quiet and, tensely, stable.</bar>
  </general>
  <tech>
   <item>Pirate Maps</item>

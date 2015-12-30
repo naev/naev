@@ -6,10 +6,10 @@
  </pos>
  <GFX>
   <space>H02.png</space>
-  <exterior>forest2.png</exterior>
+  <exterior>desertic.png</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>H</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>

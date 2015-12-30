@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>moon-A01.png</space>
-  <exterior>snow.png</exterior>
+  <exterior>lava.png</exterior>
  </GFX>
  <general>
   <class>A</class>

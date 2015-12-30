@@ -14,7 +14,7 @@
   <range>3</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>6000</population>
   <hide>0.500000</hide>
   <services>
@@ -25,7 +25,7 @@
   </services>
   <commodities/>
   <description>Forbes Station is the biggest and best equipped military station in this area of Sirius space. It provides security to systems up to three jumps away and serves as the local headquarters of the Sirian fleets. Though the Kiwi is otherwise empty, meaning the station relies on surrounding systems for support, the Sirian authorities chose to build it here for strategic reasons.</description>
-  <bar>This is more a waiting area than a bar. It is barely used at all, as visitors to Forbes Station are usually on pressing business and tend to have the clearance to proceed deeper into the complex.</bar>
+  <bar>This is more a waiting room than a bar. It is barely used at all as visitors to Forbes Station are usually on pressing business and tend to have the clearance to proceed deeper into the complex.</bar>
  </general>
  <tech>
   <item>Sirius Military Ships</item>

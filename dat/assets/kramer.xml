@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>C01.png</space>
-  <exterior>station02.png</exterior>
+  <exterior>mining.png</exterior>
  </GFX>
  <presence>
   <faction>Pirate</faction>
@@ -14,7 +14,7 @@
   <range>3</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>C</class>
   <population>5000</population>
   <hide>0.250000</hide>
   <services>
@@ -25,8 +25,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Kramer is a backwater, almost devoid of an atmosphere. However, the primary point it has in its favor, the hidden jump point, makes it an attractive stop-over point for pirates on deeper raids into the civilized parts of the galaxy.</description>
-  <bar>The bar is alive with the fighting and carousing of drunk patrons. A few patrons busy themselves with card games in a corner, and the shadier merchants talk business over debatably drinkable alcohol. Truly a pirate bar.</bar>
+  <description>Kramer is a backwater, almost devoid of an atmosphere. However, the primary point it has in its favor, the hidden jump point makes it an attractive stop-over point for pirates on deeper raids into the civilized parts of the galaxy.</description>
+  <bar>The bar is alive with the fighting and carousing of drunk patrons. A few patrons busy themselves with card games in a corner and the shadier merchants talk business over debatably drinkable alcohol. Truly a pirate bar.</bar>
  </general>
  <tech>
   <item>Hulls Low</item>
