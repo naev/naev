@@ -111,7 +111,7 @@ function accept()
    --set the names of the pirates (and make sure they aren't duplicates)
    gawname = pirate_name()
    kername1 = pirate_name() .. " III"
-   kername2 = pirate_name() .. " V"
+   kername2 = pirate_name() .. " Jr."
    godname = pirate_name() .. " II"
 	
    if tk.yesno(title[1], text[1]) then
