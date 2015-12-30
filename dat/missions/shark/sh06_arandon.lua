@@ -48,6 +48,7 @@ if lang == "es" then
    bar_desc[1] = [[It's fun to see how this guy's dishonesty has led him to help the most idealistic group in the galaxy.]]
 	
    -- OSD
+   osd_title = "A Journey To %s"
    osd_msg[1] = "Go to %s and wait for the FLF ship, then hail and board it."
    osd_msg[2] = "Go back to %s in %s"
    
@@ -85,7 +86,9 @@ function accept()
       misn.setTitle(misn_title:format(missys:name()))
       misn.setReward(misn_reward)
       misn.setDesc(misn_desc)
-      misn.osdCreate(misn_title:format(missys:name()), osd_msg)
+      osd = misn.osdCreate(osd_title:format(missys:name()), osd_msg)
+      misn.osdActive(1)
+
       marker = misn.markerAdd(missys, "low")
 		
       smith = misn.cargoAdd("Person", 0)  --Adding the cargo
@@ -99,12 +102,14 @@ function accept()
 end
 
 function land()
-   
 	--Job is done
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(smith) then
          tk.msg(title[3], text[3])
          player.pay(reward)
+         misn.osdDestroy(osd)
+         hook.rm(enterhook)
+         hook.rm(landhook)
          misn.finish(true)
       end
    end

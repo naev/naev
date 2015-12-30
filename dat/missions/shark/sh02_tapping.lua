@@ -93,14 +93,15 @@ function accept()
       misn.accept()
       tk.msg(title[2], text[2]:format(mispla:name(),missys:name()))
       
-      misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
-      misn.setDesc(misn_desc)
-
       osd_msg[1] = osd_msg[1]:format(mispla:name(),missys:name())
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
-      misn.osdCreate(misn_title, osd_msg)
+      misn.setTitle(misn_title)
+      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setDesc(misn_desc)
+      osd = misn.osdCreate(osd_title, osd_msg)
+      misn.osdActive(1)
+
       marker = misn.markerAdd(missys, "low")
       
       landhook = hook.land("land")
@@ -122,6 +123,9 @@ function land()
       if misn.cargoRm(records) then
          tk.msg(title[3], text[3])
          player.pay(reward)
+         misn.osdDestroy(osd)
+         hook.rm(enterhook)
+         hook.rm(landhook)
          misn.finish(true)
       end
    end
