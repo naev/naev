@@ -175,9 +175,9 @@ function enter()
 		
       baddie:addOutfit("Laser Cannon MK3",2)
 		
-      hook.pilot(baddie, "idle", "idle")
+      --hook.pilot(baddie, "idle", "idle")
       hook.pilot(baddie, "attacked", "attacked")
-      hook.pilot( baddie, "death", "gawain_dead")
+      hook.pilot(baddie, "death", "gawain_dead")
 		
       elseif system.cur() == kersys1 and kerdead1 == false then  --The Kestrel
       pilot.clear()
