@@ -43,6 +43,7 @@
  <commodity name="Jorek"/>
  <commodity name="Goods"/>
  <commodity name="Group of Nerds"/>
+ <commodity name="Love Letters"/>
  <commodity name="Message"/>
  <commodity name="Packages"/>
  <commodity name="Parcels"/>
@@ -52,6 +53,7 @@
  <commodity name="Prisoners"/>
  <commodity name="Prototype"/>
  <commodity name="Radioactive Materials"/>
+ <commodity name="Recipes"/>
  <commodity name="Refugees"/>
  <commodity name="Satellite"/>
  <commodity name="Secret Technology"/>
@@ -64,6 +66,4 @@
  <commodity name="VIP"/>
  <commodity name="Waste Containers"/>
  <commodity name="Weapons"/>
- <commodity name="Love Letters"/>
- <commodity name="Recipes"/>
 </Commodities>
