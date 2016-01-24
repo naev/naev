@@ -734,6 +734,29 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Deliver Love">
+   <lua>neutral/foodbiz/deliverlove</lua>
+   <flags>
+    <unique />
+   </flags>
+   <avail>
+    <chance>50</chance>
+    <location>Bar</location>
+    <planet>Zeo</planet>
+   </avail>
+  </mission>
+  <mission name="Deliver Cake">
+    <lua>neutral/foodbiz/delivercake</lua>
+    <flags>
+     <unique />
+    </flags>
+    <avail>
+     <chance>50</chance>
+     <cond>player.misnDone("Deliver Love")</cond>
+     <location>Bar</location>
+     <planet>Zhiru</planet>
+    </avail>
+   </mission>
  <mission name="Drinking Aristocrat">
   <lua>neutral/aristodrink</lua>
   <flags>
