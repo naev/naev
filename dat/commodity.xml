@@ -64,4 +64,6 @@
  <commodity name="VIP"/>
  <commodity name="Waste Containers"/>
  <commodity name="Weapons"/>
+ <commodity name="Love Letters"/>
+ <commodity name="Recipes"/>
 </Commodities>
