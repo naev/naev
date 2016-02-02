@@ -24,7 +24,7 @@ function control ()
       target = ai.target()
 
       -- Check if should still run.
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
@@ -65,7 +65,7 @@ function control ()
          ai.settimer(0, rnd.int(1000, 3000))
          ai.pushtask("enterdelay")
       else
-         mem.land = planet
+         mem.land = planet:pos()
          ai.pushtask("hyperspace")
          ai.pushtask("land")
       end

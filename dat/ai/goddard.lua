@@ -9,7 +9,7 @@ mem.aggressive = true
 function create ()
 
    -- Credits
-   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Bribing
    bribe_no = {
@@ -22,8 +22,8 @@ function create ()
    mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 
    -- Refueling
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then mem.refuel = mem.refuel * 0.7 end
@@ -47,6 +47,6 @@ function taunt ( target, offense )
          "These moments will be your last!",
          "You are a parasite!"
    }
-   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

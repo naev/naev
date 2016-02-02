@@ -120,9 +120,9 @@ function accept()
         tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
         misn.finish()
     end
-    pilot.cargoAdd( player.pilot(), cargo, amount ) 
+    player.pilot():cargoAdd( cargo, amount ) 
     local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
-    pilot.cargoRm( player.pilot(), cargo, amount ) 
+    player.pilot():cargoRm( cargo, amount ) 
     if timelimit < playerbest then
         if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
             misn.finish()

@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>moon-D02.png</space>
-  <exterior>station05.png</exterior>
+  <exterior>asteroid.png</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -14,7 +14,7 @@
   <range>0</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>D</class>
   <population>17500</population>
   <hide>0.500000</hide>
   <services>
@@ -24,7 +24,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Falas is a sparsely-populated garrison planet, with little to no resources of use. However, it was cheaper to build an outpost here instead of building a whole new space station.</description>
-  <bar>The bar is host to several off-duty personnel. There isn't many of them here, and the bar is mostly empty.</bar>
+  <description>Falas is a sparsely populated garrison planet with little to no resources of any use. However, it was cheaper to build an outpost here than to build a whole new space station.</description>
+  <bar>The bar is host to several off-duty personnel. There aren't many of them here and the bar is mostly empty.</bar>
  </general>
 </asset>

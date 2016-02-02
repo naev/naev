@@ -69,7 +69,14 @@ end
 scom.spawn = function( pilots )
    local spawned = {}
    for k,v in ipairs(pilots) do
-      local p = pilot.add( v["pilot"] )
+      local p
+      if type(v["pilot"])=='function' then
+         p = v["pilot"]() -- Call function
+      elseif not v["pilot"][1] then
+         p = pilot.add( v["pilot"] )
+      else
+         p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5])
+      end
       if #p == 0 then
          error("No pilots added")
       end
@@ -79,6 +86,15 @@ scom.spawn = function( pilots )
       end
    end
    return spawned
+end
+
+
+-- @brief spawn a pilot with addRaw
+scom.spawnRaw = function( ship, name, ai, equip, faction)
+   local p = pilot.addRaw( ship, ai, nil, equip )
+   p[1]:rename(name)
+   p[1]:setFaction(faction)
+   return p
 end
 
 

@@ -25,8 +25,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Eclipse Station is the major military outpost in this area of Dvaered space. It serves as a customs checkpoint for Imperial and Consortium traders looking to travel to Dvaer and beyond. Simultaneously, it is charged with minimizing the Pirate threat in this region of space. It therefore comes as no surprise that Eclipse Station stations a sizeable fleet.</description>
-  <bar>This bar is clearly not a place for relaxation. It is frequented mostly by traders who are waiting for their shipments to clear. The appointments are drab and functional, and the smell of cleaning chemicals is prevalent.</bar>
+  <description>Eclipse Station is the major military outpost in this area of Dvaered space. It serves as a customs checkpoint for Imperial and Consortium traders looking to travel to Dvaer and beyond. Simultaneously, it is charged with minimizing the Pirate threat in this region of space. It therefore should come as no surprise that Eclipse Station supports a sizeable fleet.</description>
+  <bar>This bar is clearly not a place for relaxation. It is frequented mostly by traders who are waiting for their shipments to clear. The appointments are drab and functional and the smell of cleaning chemicals is prevalent.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

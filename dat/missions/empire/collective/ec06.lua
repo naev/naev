@@ -17,7 +17,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   bar_desc = "You see Comodore Keer at a table with a couple of other pilots. She motions you to sit down with them."
+   bar_desc = "You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them."
    misn_title = "Operation Cold Metal"
    misn_reward = "Fame and Glory"
    misn_desc = {}
@@ -32,7 +32,7 @@ else -- default english
    text = {}
    text[1] = [[You join Commodore Keer at her table.
     She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]]
-   text[2] = [["The Operation has been dubbed 'Cold Metal'. We're going to mount a full out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. You are to report to the Imperial fleet standing by near the jump point before engaging the enemy. See you in combat, pilot."]]
+   text[2] = [["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. You are to report to the Imperial fleet standing by near the jump point before engaging the enemy. See you in combat, pilot."]]
    text[3] = [[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
     You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]
    text[4] = [[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."

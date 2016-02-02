@@ -74,7 +74,7 @@ function accept()
    misn.markerAdd(targetsystem,"plot")
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
-   freecargo = pilot.cargoFree(pilot.player()) --checks to make sure the player has 5 tons available
+   freecargo = player.pilot():cargoFree() --checks to make sure the player has 5 tons available
    if freecargo < 5 then
       tk.msg(misn_title,notenoughcargo) --and if he doesnt, the mission finishes.
       misn.finish(false)

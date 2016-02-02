@@ -14,7 +14,7 @@
   <range>0</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>5000</population>
   <hide>0.370000</hide>
   <services>
@@ -22,6 +22,6 @@
    <refuel/>
   </services>
   <commodities/>
-  <description>The Emperor's Wrath is where the Emperor and his Council reside. It is a massive space ship, offering enough space for a permanent military installation, the Emperor's personal city, and the administration of the entire Empire. In addition, the Wrath serves as a symbol of the Emperor's power. The ship is essentially functional, capable of flight under its own power and even hyperspace jumps, but it has not moved from its current orbit around Emperor's Fist since it was first commissioned. The Wrath is closed to the public, conducting its official business via the nearby station of Polaris Prime. Very few people have the privilege to step aboard the ship at all.</description>
+  <description>The Emperor's Wrath is where the Emperor and his Council reside. It is a massive space ship offering enough space for a permanent military installation, the Emperor's personal city and the administration of the entire Empire. In addition the Wrath serves as a symbol of the Emperor's power. The ship is essentially functional, capable of flight under its own power and even hyperspace jumps but it has not moved from its current orbit around Emperor's Fist since it was first commissioned. The Wrath is closed to the public, conducting its official business via the nearby station of Polaris Prime. Very few people have the privilege to step aboard the ship at all.</description>
  </general>
 </asset>

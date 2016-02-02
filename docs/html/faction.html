@@ -1,0 +1,993 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: faction</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li><strong>faction</strong></li>
+	
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>faction</code></h1>
+
+<div>Lua bindings to deal with factions.
+ 
+ Use like:
+ <pre>
+ f = faction.get( "Empire" )
+ if f:playerStanding() < 0 then
+ -- player is hostile to "Empire"
+ end
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#faction.__eq">faction.__eq</a>&nbsp;(f, comp)</td>
+	<td class="summary">__eq (equality) metamethod for factions.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.allies">faction.allies</a>&nbsp;(f)</td>
+	<td class="summary">Gets the allies of the faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.areAllies">faction.areAllies</a>&nbsp;(f, a)</td>
+	<td class="summary">Checks to see if f is an ally of a.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.areEnemies">faction.areEnemies</a>&nbsp;(f, e)</td>
+	<td class="summary">Checks to see if f is an enemy of e.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.colour">faction.colour</a>&nbsp;(f)</td>
+	<td class="summary">Gets the faction colour.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.enemies">faction.enemies</a>&nbsp;(f)</td>
+	<td class="summary">Gets the enemies of the faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.get">faction.get</a>&nbsp;(name)</td>
+	<td class="summary">Gets the faction based on its name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.known">faction.known</a>&nbsp;(f)</td>
+	<td class="summary">Checks to see if a faction is known by the player.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.logoSmall">faction.logoSmall</a>&nbsp;(f)</td>
+	<td class="summary">Gets the small faction logo which is 64x64 or smaller.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.logoTiny">faction.logoTiny</a>&nbsp;(f)</td>
+	<td class="summary">Gets the tiny faction logo which is 24x24 or smaller.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.longname">faction.longname</a>&nbsp;(f)</td>
+	<td class="summary">Gets the faction's long name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.modPlayer">faction.modPlayer</a>&nbsp;(f, mod)</td>
+	<td class="summary">Modifies the player's standing with the faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.modPlayerRaw">faction.modPlayerRaw</a>&nbsp;(f, mod)</td>
+	<td class="summary">Modifies the player's standing with the faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.modPlayerSingle">faction.modPlayerSingle</a>&nbsp;(f, mod)</td>
+	<td class="summary">Modifies the player's standing with the faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.name">faction.name</a>&nbsp;(f)</td>
+	<td class="summary">Gets the faction's name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.playerStanding">faction.playerStanding</a>&nbsp;(f)</td>
+	<td class="summary">Gets the player's standing with the faction.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.setKnown">faction.setKnown</a>&nbsp;(f, b)</td>
+	<td class="summary">Sets a faction's known state.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#faction.setPlayerStanding">faction.setPlayerStanding</a>&nbsp;(f, value)</td>
+	<td class="summary">Sets the player's standing with the faction.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="faction.__eq"></a><strong>faction.__eq</strong>&nbsp;(f, comp)</dt>
+<dd>
+__eq (equality) metamethod for factions.
+ 
+ You can use the '=' operator within Lua to compare factions with this.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction comparing.
+	</li>
+	
+	<li>
+	  comp: faction to compare against.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if f == faction.get( "Dvaered" ) then
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if both factions are the same.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.allies"></a><strong>faction.allies</strong>&nbsp;(f)</dt>
+<dd>
+Gets the allies of the faction.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get allies of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>for k,v in pairs(f:allies()) do -- Iterate over faction allies
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+A table containing the allies of the faction.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.areAllies"></a><strong>faction.areAllies</strong>&nbsp;(f, a)</dt>
+<dd>
+Checks to see if f is an ally of a.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to check against.
+	</li>
+	
+	<li>
+	  a: Faction to check if is an enemy.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if f:areAllies( faction.get( "Pirate" ) ) then
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if they are enemies, false if they aren't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.areEnemies"></a><strong>faction.areEnemies</strong>&nbsp;(f, e)</dt>
+<dd>
+Checks to see if f is an enemy of e.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to check against.
+	</li>
+	
+	<li>
+	  e: Faction to check if is an enemy.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if f:areEnemies( faction.get( "Dvaered" ) ) then
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if they are enemies, false if they aren't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.colour"></a><strong>faction.colour</strong>&nbsp;(f)</dt>
+<dd>
+Gets the faction colour.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get colour from.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The faction colour or nil if not applicable.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.enemies"></a><strong>faction.enemies</strong>&nbsp;(f)</dt>
+<dd>
+Gets the enemies of the faction.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get enemies of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>for k,v in pairs(f:enemies()) do -- Iterates over enemies
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+A table containing the enemies of the faction.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.get"></a><strong>faction.get</strong>&nbsp;(name)</dt>
+<dd>
+Gets the faction based on its name.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the faction to get.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f = faction.get( "Empire" )
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The faction matching name.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.known"></a><strong>faction.known</strong>&nbsp;(f)</dt>
+<dd>
+Checks to see if a faction is known by the player.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to check if the player knows.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>b = f:known()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if the player knows the faction.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.logoSmall"></a><strong>faction.logoSmall</strong>&nbsp;(f)</dt>
+<dd>
+Gets the small faction logo which is 64x64 or smaller.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get logo from.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The small faction logo or nil if not applicable.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.logoTiny"></a><strong>faction.logoTiny</strong>&nbsp;(f)</dt>
+<dd>
+Gets the tiny faction logo which is 24x24 or smaller.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get logo from.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The tiny faction logo or nil if not applicable.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.longname"></a><strong>faction.longname</strong>&nbsp;(f)</dt>
+<dd>
+Gets the faction's long name.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get long name of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>longname = f:longname()</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The long name of the faction.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.modPlayer"></a><strong>faction.modPlayer</strong>&nbsp;(f, mod)</dt>
+<dd>
+Modifies the player's standing with the faction.
+ 
+ Also modifies standing with allies and enemies of the faction.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to modify player's standing with.
+	</li>
+	
+	<li>
+	  mod: The modifier to modify faction by.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f:modPlayer( -5 ) -- Lowers faction by 5
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.modPlayerRaw"></a><strong>faction.modPlayerRaw</strong>&nbsp;(f, mod)</dt>
+<dd>
+Modifies the player's standing with the faction.
+ 
+ Does not affect other faction standings and is not processed by the faction
+ Lua script, so it indicates exactly the amount to be changed.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to modify player's standing with.
+	</li>
+	
+	<li>
+	  mod: The modifier to modify faction by.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f:modPlayerRaw( 10 )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.modPlayerSingle"></a><strong>faction.modPlayerSingle</strong>&nbsp;(f, mod)</dt>
+<dd>
+Modifies the player's standing with the faction.
+ 
+ Does not affect other faction standings.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to modify player's standing with.
+	</li>
+	
+	<li>
+	  mod: The modifier to modify faction by.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f:modPlayerSingle( 10 )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.name"></a><strong>faction.name</strong>&nbsp;(f)</dt>
+<dd>
+Gets the faction's name.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: The faction to get the name of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>name = f:name()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The name of the faction.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.playerStanding"></a><strong>faction.playerStanding</strong>&nbsp;(f)</dt>
+<dd>
+Gets the player's standing with the faction.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to get player's standing with.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if f:playerStanding() > 70 then -- Player is an ally
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The value of the standing and the human readable string.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.setKnown"></a><strong>faction.setKnown</strong>&nbsp;(f, b)</dt>
+<dd>
+Sets a faction's known state.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to set known.
+	</li>
+	
+	<li>
+	  b: Whether or not to set as known (defaults to false).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f:setKnown( false ) -- Makes faction unknown.</code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="faction.setPlayerStanding"></a><strong>faction.setPlayerStanding</strong>&nbsp;(f, value)</dt>
+<dd>
+Sets the player's standing with the faction.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  f: Faction to set the player's standing for.
+	</li>
+	
+	<li>
+	  value: Value to set the player's standing to (from -100 to 100).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f:setPlayerStanding(70) -- Make player an ally
+ </code>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

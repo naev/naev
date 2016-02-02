@@ -1,0 +1,1632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: player</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li><strong>player</strong></li>
+	
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>player</code></h1>
+
+<div>Lua bindings to interact with the player.
+ 
+ These bindings let you modify stuff about the player and find out special
+ information. General usage would be calls like:
+ <pre>
+ pname = player.name()
+ shipname = player.ship()
+ rating = player.getRating()
+ </pre></div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#player.addOutfit">player.addOutfit</a>&nbsp;(name, q)</td>
+	<td class="summary">Adds an outfit to the player's outfit list.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.addShip">player.addShip</a>&nbsp;(ship, name, loc, noname)</td>
+	<td class="summary">Gives the player a new ship.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.allowLand">player.allowLand</a>&nbsp;(b, msg)</td>
+	<td class="summary">Allows or disallows the player to land.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.allowSave">player.allowSave</a>&nbsp;(b)</td>
+	<td class="summary">Sets player save ability.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.autonav">player.autonav</a>&nbsp;()</td>
+	<td class="summary">Checks to see if the player has autonav enabled.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.autonavDest">player.autonavDest</a>&nbsp;()</td>
+	<td class="summary">Gets the player's long term autonav destination.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.cinematics">player.cinematics</a>&nbsp;(enable, options)</td>
+	<td class="summary">Puts the game in cinematics mode or back to regular mode.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.commClose">player.commClose</a>&nbsp;()</td>
+	<td class="summary">Forces the player to close comm if they are chatting.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.credits">player.credits</a>&nbsp;(decimal)</td>
+	<td class="summary">Gets how many credits the player has on him.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.evtActive">player.evtActive</a>&nbsp;(name)</td>
+	<td class="summary">Checks to see if the player has an event active.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.evtDone">player.evtDone</a>&nbsp;(name)</td>
+	<td class="summary">Checks to see if player has done an event.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.fuel">player.fuel</a>&nbsp;()</td>
+	<td class="summary">Gets the amount of fuel a player has.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.getRating">player.getRating</a>&nbsp;()</td>
+	<td class="summary">Gets the player's combat rating.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.jumps">player.jumps</a>&nbsp;()</td>
+	<td class="summary">Gets a player's jump range based on their remaining fuel.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.landWindow">player.landWindow</a>&nbsp;(winname)</td>
+	<td class="summary">Sets the active land window.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.misnActive">player.misnActive</a>&nbsp;(name)</td>
+	<td class="summary">Checks to see if the player has a mission active.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.misnDone">player.misnDone</a>&nbsp;(name)</td>
+	<td class="summary">Checks to see if player has done a mission.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.msg">player.msg</a>&nbsp;(message)</td>
+	<td class="summary">Sends the player an ingame message.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.msgClear">player.msgClear</a>&nbsp;()</td>
+	<td class="summary">Clears the player's message buffer.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.name">player.name</a>&nbsp;()</td>
+	<td class="summary">Gets the player's name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.numOutfit">player.numOutfit</a>&nbsp;(name)</td>
+	<td class="summary">Gets the number of outfits the player owns in their list (excludes equipped on ships).</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.omsgAdd">player.omsgAdd</a>&nbsp;(msg, duration, fontsize)</td>
+	<td class="summary">Adds an overlay message.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.omsgChange">player.omsgChange</a>&nbsp;(id, msg, duration)</td>
+	<td class="summary">Changes an overlay message.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.omsgRm">player.omsgRm</a>&nbsp;(id)</td>
+	<td class="summary">Removes an overlay message.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.outfits">player.outfits</a>&nbsp;()</td>
+	<td class="summary">Gets all the outfits the player owns.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.pay">player.pay</a>&nbsp;(amount)</td>
+	<td class="summary">Pays the player an amount of money.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.pilot">player.pilot</a>&nbsp;()</td>
+	<td class="summary">Gets the player's associated pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.pos">player.pos</a>&nbsp;()</td>
+	<td class="summary">Gets the player's position.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.refuel">player.refuel</a>&nbsp;(fuel)</td>
+	<td class="summary">Refuels the player.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.rmOutfit">player.rmOutfit</a>&nbsp;(name, q)</td>
+	<td class="summary">Removes an outfit from the player's outfit list.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.ship">player.ship</a>&nbsp;()</td>
+	<td class="summary">Gets the player's ship's name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.shipOutfits">player.shipOutfits</a>&nbsp;(name)</td>
+	<td class="summary">Gets the outfits for one of the player's ships.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.ships">player.ships</a>&nbsp;()</td>
+	<td class="summary">Gets the names of the player's ships.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.swapShip">player.swapShip</a>&nbsp;(ship, name, loc, noname, remove)</td>
+	<td class="summary">Swaps the player's current ship with a new ship given to him.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.takeoff">player.takeoff</a>&nbsp;()</td>
+	<td class="summary">Forces the player to take off if they are landed.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.teleport">player.teleport</a>&nbsp;(dest)</td>
+	<td class="summary">Teleports the player to a new planet or system (only if not landed).</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#player.unboard">player.unboard</a>&nbsp;()</td>
+	<td class="summary">Unboards the player from its boarded target.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="player.addOutfit"></a><strong>player.addOutfit</strong>&nbsp;(name, q)</dt>
+<dd>
+Adds an outfit to the player's outfit list.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the outfit to give.
+	</li>
+	
+	<li>
+	  q: Optional parameter that sets the quantity to give (default 1).
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>player.addOutfit( "Laser Cannon" ) -- Gives the player a laser cannon</code></li>
+	
+	<li><code>player.addOutfit( "Plasma Blaster", 2 ) -- Gives the player two plasma blasters
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.addShip"></a><strong>player.addShip</strong>&nbsp;(ship, name, loc, noname)</dt>
+<dd>
+Gives the player a new ship.
+ 
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  ship: Name of the ship to add.
+	</li>
+	
+	<li>
+	  name: Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+	</li>
+	
+	<li>
+	  loc: Location to add to, if nil or omitted it adds it to local planet (must be landed).
+	</li>
+	
+	<li>
+	  noname: If true does not let the player name the ship (defaults to false).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.allowLand"></a><strong>player.allowLand</strong>&nbsp;(b, msg)</dt>
+<dd>
+Allows or disallows the player to land.
+ 
+ This will allow or disallow landing on a system level and is reset when the
+ player enters another system.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  b: Whether or not to allow the player to land (defaults to true if omitted).
+	</li>
+	
+	<li>
+	  msg: Message displayed when player tries to land (only if disallowed to land). Can be omitted to use default.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>player.allowLand() -- Allows the player to land</code></li>
+	
+	<li><code>player.allowLand( false ) -- Doesn't allow the player to land.</code></li>
+	
+	<li><code>player.allowLand( false, "No landing." ) -- Doesn't allow the player to land with the message "No landing."
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.allowSave"></a><strong>player.allowSave</strong>&nbsp;(b)</dt>
+<dd>
+Sets player save ability.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  b: true if the player is allowed to save, false otherwise. Defaults to true.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.allowSave( b )</code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.autonav"></a><strong>player.autonav</strong>&nbsp;()</dt>
+<dd>
+Checks to see if the player has autonav enabled.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>autonav = player.autonav()</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if the player has autonav enabled.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.autonavDest"></a><strong>player.autonavDest</strong>&nbsp;()</dt>
+<dd>
+Gets the player's long term autonav destination.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>sys, jumps = player.autonavDest()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The destination system (or nil if none selected) and the number of jumps left.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.cinematics"></a><strong>player.cinematics</strong>&nbsp;(enable, options)</dt>
+<dd>
+Puts the game in cinematics mode or back to regular mode.
+ 
+ Possible options are:<br/>
+ <ul>
+ <li>abort : (string) autonav abort message</li>
+ <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false</li>
+ <li>gui : (boolean) enables the player's gui, default disabled</li>
+ </ul>
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  enable: If true sets cinematics mode, if false disables. Defaults to disable.
+	</li>
+	
+	<li>
+	  options: Table of options.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.cinematics( true, { gui = true } ) -- Enables cinematics without hiding gui.
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.commClose"></a><strong>player.commClose</strong>&nbsp;()</dt>
+<dd>
+Forces the player to close comm if they are chatting.
+ 
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.credits"></a><strong>player.credits</strong>&nbsp;(decimal)</dt>
+<dd>
+Gets how many credits the player has on him.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  decimal: Optional argument that makes it return human readable form with so many decimals.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>monies = player.credits()</code></li>
+	
+	<li><code>monies, readable = player.credits( 2 )
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The amount of credits the player has on him in both numerical and human-readable form.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.evtActive"></a><strong>player.evtActive</strong>&nbsp;(name)</dt>
+<dd>
+Checks to see if the player has an event active.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the mission to check.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if player.evtActive( "Shipwreck" ) then -- The shipwreck event is active
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if the mission is active, false if it isn't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.evtDone"></a><strong>player.evtDone</strong>&nbsp;(name)</dt>
+<dd>
+Checks to see if player has done an event.
+ 
+ This only works with events that have the unique flag.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the event to check.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if player.evtDone( "Shipwreck" ) then -- Player finished event</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if event was finished, false if it wasn't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.fuel"></a><strong>player.fuel</strong>&nbsp;()</dt>
+<dd>
+Gets the amount of fuel a player has.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>fuel, consumption = player.fuel()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The player's fuel and the amount needed per jump.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.getRating"></a><strong>player.getRating</strong>&nbsp;()</dt>
+<dd>
+Gets the player's combat rating.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Returns the combat rating (in raw number) and the actual
+ standing in human readable form.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.jumps"></a><strong>player.jumps</strong>&nbsp;()</dt>
+<dd>
+Gets a player's jump range based on their remaining fuel.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>jumps = player.jumps()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The player's maximum number of jumps.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.landWindow"></a><strong>player.landWindow</strong>&nbsp;(winname)</dt>
+<dd>
+Sets the active land window.
+ 
+ Valid windows are:<br/>
+ - main<br/>
+ - bar<br/>
+ - missions<br/>
+ - outfits<br/>
+ - shipyard<br/>
+ - equipment<br/>
+ - commodity<br/>
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  winname: Name of the window.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.landWindow( "outfits" )</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+True on success.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.misnActive"></a><strong>player.misnActive</strong>&nbsp;(name)</dt>
+<dd>
+Checks to see if the player has a mission active.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the mission to check.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if player.misnActive( "The Space Family" ) then -- Player is doing space family mission
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if the mission is active, false if it isn't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.misnDone"></a><strong>player.misnDone</strong>&nbsp;(name)</dt>
+<dd>
+Checks to see if player has done a mission.
+ 
+ This only works with missions that have the unique flag.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the mission to check.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if player.misnDone( "The Space Family" ) then -- Player finished mission</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if mission was finished, false if it wasn't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.msg"></a><strong>player.msg</strong>&nbsp;(message)</dt>
+<dd>
+Sends the player an ingame message.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  message: Message to send the player.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.msgClear"></a><strong>player.msgClear</strong>&nbsp;()</dt>
+<dd>
+Clears the player's message buffer.
+ 
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.name"></a><strong>player.name</strong>&nbsp;()</dt>
+<dd>
+Gets the player's name.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The name of the player.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.numOutfit"></a><strong>player.numOutfit</strong>&nbsp;(name)</dt>
+<dd>
+Gets the number of outfits the player owns in their list (excludes equipped on ships).
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the outfit to give.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The quantity the player owns.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.omsgAdd"></a><strong>player.omsgAdd</strong>&nbsp;(msg, duration, fontsize)</dt>
+<dd>
+Adds an overlay message.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  msg: Message to add.
+	</li>
+	
+	<li>
+	  duration: Duration to add message (if 0. is infinite).
+	</li>
+	
+	<li>
+	  fontsize: Size of the font to use, optional parameter.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.omsgAdd( "some_message", 5 )</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+ID of the created overlay message.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.omsgChange"></a><strong>player.omsgChange</strong>&nbsp;(id, msg, duration)</dt>
+<dd>
+Changes an overlay message.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the overlay message to change.
+	</li>
+	
+	<li>
+	  msg: Message to change to.
+	</li>
+	
+	<li>
+	  duration: New duration to set (0. for infinity).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.omsgChange( omsg_id, "new message", 3 )</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if all went well, false otherwise.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.omsgRm"></a><strong>player.omsgRm</strong>&nbsp;(id)</dt>
+<dd>
+Removes an overlay message.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the overlay message to remove.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.omsgRm( msg_id )</code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.outfits"></a><strong>player.outfits</strong>&nbsp;()</dt>
+<dd>
+Gets all the outfits the player owns.
+ 
+ If you want the quantity, call player.numOutfit() on the individual outfit.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.outfits() -- A table of all the player's outfits.
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.pay"></a><strong>player.pay</strong>&nbsp;(amount)</dt>
+<dd>
+Pays the player an amount of money.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  amount: Amount of money to pay the player in credits.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.pay( 500 ) -- Gives player 500 credits
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.pilot"></a><strong>player.pilot</strong>&nbsp;()</dt>
+<dd>
+Gets the player's associated pilot.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The player's pilot.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.pos"></a><strong>player.pos</strong>&nbsp;()</dt>
+<dd>
+Gets the player's position.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>v = player.pos()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The position of the player (Vec2).
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.refuel"></a><strong>player.refuel</strong>&nbsp;(fuel)</dt>
+<dd>
+Refuels the player.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  fuel: 
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>player.refuel() -- Refuel fully</code></li>
+	
+	<li><code>player.refuel( 200 ) -- Refuels partially
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.rmOutfit"></a><strong>player.rmOutfit</strong>&nbsp;(name, q)</dt>
+<dd>
+Removes an outfit from the player's outfit list.
+ 
+ "all" will remove all outfits.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the outfit to give.
+	</li>
+	
+	<li>
+	  q: Optional parameter that sets the quantity to give (default 1).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.rmOutfit( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.ship"></a><strong>player.ship</strong>&nbsp;()</dt>
+<dd>
+Gets the player's ship's name.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The name of the ship the player is currently in.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.shipOutfits"></a><strong>player.shipOutfits</strong>&nbsp;(name)</dt>
+<dd>
+Gets the outfits for one of the player's ships.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: 
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>outfits = player.shipOutfits("Llama") -- Gets the Llama's outfits
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.ships"></a><strong>player.ships</strong>&nbsp;()</dt>
+<dd>
+Gets the names of the player's ships.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>names = player.ships() -- The player's ship names.
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.swapShip"></a><strong>player.swapShip</strong>&nbsp;(ship, name, loc, noname, remove)</dt>
+<dd>
+Swaps the player's current ship with a new ship given to him.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  ship: Name of the ship to add.
+	</li>
+	
+	<li>
+	  name: Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+	</li>
+	
+	<li>
+	  loc: Location to add to, if nil or omitted it adds it to local planet (must be landed).
+	</li>
+	
+	<li>
+	  noname: If true does not let the player name the ship (defaults to false).
+	</li>
+	
+	<li>
+	  remove: If true removes the player's current ship (so it replaces and doesn't swap).
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.takeoff"></a><strong>player.takeoff</strong>&nbsp;()</dt>
+<dd>
+Forces the player to take off if they are landed.
+ 
+ Assume the pilot is still landed until the current running function returns
+ If you want to create pilots on take off please hook the takeoff/land hooks.
+ 
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.teleport"></a><strong>player.teleport</strong>&nbsp;(dest)</dt>
+<dd>
+Teleports the player to a new planet or system (only if not landed).
+ 
+ If the destination is a system, the coordinates of the player will not change.
+ If the destination is a planet, the player will be placed over that planet.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  dest: System or name of a system or planet or name of a planet to teleport the player to.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>player.teleport( system.get("Arcanis") ) -- Teleports the player to Arcanis.</code></li>
+	
+	<li><code>player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.</code></li>
+	
+	<li><code>player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="player.unboard"></a><strong>player.unboard</strong>&nbsp;()</dt>
+<dd>
+Unboards the player from its boarded target.
+ 
+ Use from inside a board hook.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>player.unboard()
+ </code>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

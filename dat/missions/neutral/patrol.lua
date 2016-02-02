@@ -48,7 +48,7 @@ else -- Default to English
 
    -- Messages
    msg    = {}
-   msg[1] = "Point secure. Proceed to next point."
+   msg[1] = "Point secure."
    msg[2] = "Hostiles detected. Engage hostiles."
    msg[3] = "Hostiles eliminated."
    msg[4] = "Patrol complete. You can now collect your pay."
@@ -264,6 +264,7 @@ function timer ()
          player.msg( msg[1] )
          osd_msg[2] = osd_msg_2:format( #points )
          misn.osdCreate( osd_title, osd_msg )
+         misn.osdActive(2)
          if mark ~= nil then
             system.mrkRm( mark )
             mark = nil

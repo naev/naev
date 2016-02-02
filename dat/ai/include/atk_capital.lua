@@ -42,9 +42,9 @@ function _atk_g_capital( target, dist )
    ai.weapset( mem.weapset )
 
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
-   if ai.pcurenergy() <= 1 then
+   if ai.pilot():energy() <= 1 then
       mem.recharge = true
-   elseif ai.pcurenergy() > 15 then
+   elseif ai.pilot():energy() > 15 then
       mem.recharge = false
    end
 

@@ -17,29 +17,21 @@ function atk_drone_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
 
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
-   local dist     = 0
-   local sizedist = 0
-
-   if enemy ~= nil then
-      sizedist = ai.dist(enemy)
-   end
-   if nearest_enemy ~= nil then
-      dist = ai.dist(nearest_enemy)
-   end
+   local dist     = ai.dist(target)
 
    local range = ai.getweaprange(3, 0)
    -- Get new target if it's closer
    --prioritize targets within the size limit
    if enemy ~= target and enemy ~= nil then
       -- Shouldn't switch targets if close
-      if sizedist > range * mem.atk_changetarget then
+      if dist > range * mem.atk_changetarget then
          ai.pushtask("attack", enemy )
       end
 
@@ -95,7 +87,7 @@ function atk_drone ()
 
    -- Otherwise melee
    else
-      if ai.shipmass(target) < 200 then
+      if target:stats().mass < 200 then
          _atk_d_space_sup( target, dist )
       else
          _atk_d_flyby( target, dist )

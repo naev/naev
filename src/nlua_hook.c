@@ -629,8 +629,8 @@ static int hook_safe( lua_State *L )
  * <ul>
  *    <li> "death" : triggered when pilot dies (before marked as dead). </li>
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. </li>
- *    <li> "boarding" : triggered when a pilot boards another ship (start of boarding)./li>
- *    <li> "board" : triggered when a pilot is boarded (start of boarding)./li>
+ *    <li> "boarding" : triggered when a pilot boards another ship (start of boarding).</li>
+ *    <li> "board" : triggered when a pilot is boarded (start of boarding).</li>
  *    <li> "disable" : triggered when pilot is disabled (with disable set).</li>
  *    <li> "undisable" : triggered when pilot recovers from being disabled.</li>
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).</li>

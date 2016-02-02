@@ -21,6 +21,7 @@
 #include <lualib.h>
 
 #include "log.h"
+#include "naev.h"
 #include "nlua.h"
 #include "nlua_cli.h"
 #include "nlua_tk.h"
@@ -58,6 +59,7 @@ static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
 static int cli_history     = 0; /**< Position in history. */
 static int cli_height      = 0; /**< Current console height. */
+static int cli_firstOpen   = 1; /**< First time opening. */
 
 
 /*
@@ -316,6 +318,9 @@ int cli_init (void)
    if (cli_state != NULL)
       return 0;
 
+   /* Set the height. */
+   cli_height = CLI_HEIGHT;
+
    /* Create the state. */
    cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
@@ -339,10 +344,6 @@ int cli_init (void)
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );
-
-   /* Put a friendly message at first. */
-   cli_addMessage( "Welcome to the Lua console!" );
-   cli_addMessage( "" );
 
    return 0;
 }
@@ -463,6 +464,17 @@ void cli_open (void)
    /* Must not be already open. */
    if (window_exists( "Lua Console" ))
       return;
+
+   /* Put a friendly message at first. */
+   if (cli_firstOpen) {
+      char buf[256];
+      cli_addMessage( "" );
+      cli_addMessage( "\egWelcome to the Lua console!" );
+      nsnprintf( buf, sizeof(buf), "\eg "APPNAME" v%s", naev_version(0) );
+      cli_addMessage( buf );
+      cli_addMessage( "" );
+      cli_firstOpen = 0;
+   }
 
    /* Create the window. */
    wid = window_create( "Lua Console", -1, -1, CLI_WIDTH, CLI_HEIGHT );

@@ -14,7 +14,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>2000</population>
   <hide>0.500000</hide>
   <services>
@@ -24,8 +24,8 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Officially, Fernando Station is a local security nexus, meant to keep the local systems safe from pirates and the FLF. But it is rather heavily equipped for simply maintaining law and order. Some people believe that the Dvaered are gradually reinforcing Ogat, preparing for a military conflict with the Empire. Nothing currently suggests that the Dvaered are on the warpath, but Fernando Station might be a harbinger of things to come.</description>
-  <bar>The spacedock bar is mainly frequented by Dvaered military pilots, as can be expected from a bar on a military base. The drinks served here are mostly free of mind-altering substances, a serious detractor to the ordinary visitor, but then Fernando Station isn't out to make itself attractive.</bar>
+  <description>Officially Fernando Station is a local security nexus, meant to keep the local systems safe from pirates and the FLF, but it is rather heavily equipped for simply maintaining law and order. Some people believe that the Dvaered are gradually reinforcing Ogat, preparing for military conflict with the Empire. Nothing currently suggests that the Dvaered are on the warpath but Fernando Station might be a harbinger of things to come.</description>
+  <bar>The spacedock bar is mainly frequented by Dvaered military pilots, as can be expected from a bar on a military base. The drinks served here are mostly free of mind-altering substances, a serious detractor for the ordinary visitor but then Fernando Station isn't out to make itself popular.</bar>
  </general>
  <tech>
   <item>Hulls Low</item>

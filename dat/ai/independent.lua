@@ -28,7 +28,7 @@ end
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
 
    -- No bribe
    local bribe_msg = {
@@ -40,8 +40,8 @@ function create ()
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel_msg = string.format("\"I'll supply your ship with fuel for %d credits.\"",
             mem.refuel);

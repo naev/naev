@@ -49,7 +49,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
    OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
-   OUTFIT_TYPE_MODIFCATION, /**< Modifies the ship base features. */
+   OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
    OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */

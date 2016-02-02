@@ -45,7 +45,7 @@ function atk_topdown_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -103,18 +103,11 @@ end
 function atk_heuristic_big_game_think ()
    local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
-   local dist = 0
-   local sizedist = 0
+   local dist = ai.dist(target)
 
-   if enemy ~= nil then
-      sizedist = ai.dist(enemy)
-   end   
-   if nearest_enemy ~= nil then
-      dist = ai.dist(nearest_enemy)
-   end
    local target = ai.target()
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -124,7 +117,7 @@ function atk_heuristic_big_game_think ()
    -- prioritize targets within the size limit
    if enemy ~= target and enemy ~= nil then
       -- Shouldn't switch targets if close
-      if sizedist > range * mem.atk_changetarget then
+      if dist > range * mem.atk_changetarget then
          ai.pushtask("attack", enemy )
       end
       

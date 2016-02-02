@@ -299,8 +299,8 @@ function pilot_death( p, attacker )
          hook.pilot( top_hunter, "land", "hunter_leave" )
          hook.jumpout( "hunter_leave" )
          hook.land( "hunter_leave" )
-         timer_rehail( top_hunter )
          player.msg( "\027r" .. msg[2]:format( name ) .. "\0270" )
+         hook.timer( 3000, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
          fail( msg[2]:format( name ) )
@@ -314,11 +314,9 @@ function pilot_jump ()
 end
 
 
-function timer_rehail( arg )
-   if rehailer ~= nil then hook.rm( rehailer ) end
+function timer_hail( arg )
    if arg ~= nil and arg:exists() then
       arg:hailPlayer()
-      rehailer = hook.timer( 8000, "timer_rehail", arg )
    end
 end
 
@@ -328,7 +326,7 @@ function hunter_hail( arg )
    if rehailer ~= nil then hook.rm( rehailer ) end
    player.commClose()
 
-   local text = share_text[ rnd.rnd( 1, #emp_share_text ) ]
+   local text = share_text[ rnd.rnd( 1, #share_text ) ]
    tk.msg( share_title, text:format( name ) )
 
    player.pay( credits )

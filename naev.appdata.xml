@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2014 Edgar Simo-Serra <bobbens@gmail.com> -->
+<!-- Copyright 2016 Edgar Simo-Serra <bobbens@gmail.com> -->
 <application>
  <id type="desktop">naev.desktop</id>
  <metadata_license>CC0-1.0</metadata_license>
@@ -18,7 +18,20 @@
  <updatecontact>bobbens@gmail.com</updatecontact>
  <!-- <project_group>NAEV</project_group> -->
  <screenshots>
-  <screenshot type="default">http://naev.googlecode.com/svn/trunk/site/screenshots/0.4.0-beta1/naev0.png</screenshot>
-  <screenshot>http://naev.googlecode.com/svn/trunk/site/screenshots/0.4.0-beta1/naev1.png</screenshot>
+  <screenshot type="default">http://blog.naev.org/wp-content/gallery/0-6-0-beta1/fight2.png</screenshot>
+  <screenshot>http://blog.naev.org/wp-content/gallery/0-6-0-beta1/menu.png</screenshot>
+  <screenshot>http://blog.naev.org/wp-content/gallery/0-6-0-beta1/map.png</screenshot>
+  <screenshot>http://blog.naev.org/wp-content/gallery/0-6-0-beta1/equip.png</screenshot>
+  <screenshot>http://blog.naev.org/wp-content/gallery/0-6-0-beta1/jump.png</screenshot>
+  <screenshot>http://blog.naev.org/wp-content/gallery/0-6-0-beta1/planet.png</screenshot>
  </screenshots>
+ <keywords>
+  <keyword>2D</keyword>
+  <keyword>action</keyword>
+  <keyword>rpg</keyword>
+  <keyword>space</keyword>
+  <keyword>trading</keyword>
+  <keyword>combat</keyword>
+  <keyword>game</keyword>
+ </keywords>
 </application>

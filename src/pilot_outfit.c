@@ -316,6 +316,10 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->nturrets++;
    else if (outfit_isBolt(outfit))
       pilot->ncannons++;
+   else if (outfit_isJammer(outfit))
+      pilot->njammers++;
+   else if (outfit_isAfterburner(outfit))
+      pilot->nafterburners++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
       s->u.beamid = 0;
@@ -865,7 +869,7 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
-   ShipStats amount, *s;
+   ShipStats amount, *s, *default_s;
 
    /*
     * set up the basic stuff
@@ -982,6 +986,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Slot voodoo. */
    s = &pilot->stats;
+   default_s = &pilot->ship->stats_array;
 
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
@@ -991,18 +996,18 @@ void pilot_calcStats( Pilot* pilot )
     *  6x 15% -> 42.51%
     */
    if (amount.fwd_firerate > 0) {
-      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
+      s->fwd_firerate = default_s->fwd_firerate + (s->fwd_firerate-default_s->fwd_firerate) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
    }
    /* Cruiser. */
    if (amount.tur_firerate > 0) {
-      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
+      s->tur_firerate = default_s->tur_firerate + (s->tur_firerate-default_s->tur_firerate) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
    }
    /*
     * Electronic warfare setting base parameters.
     */
-   s->ew_hide           = 1. + (s->ew_hide-1.)        * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.)      * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
-   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
+   s->ew_hide           = default_s->ew_hide + (s->ew_hide-default_s->ew_hide)                      * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
+   s->ew_detect         = default_s->ew_detect + (s->ew_detect-default_s->ew_detect)                * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
+   s->ew_jump_detect    = default_s->ew_jump_detect + (s->ew_jump_detect-default_s->ew_jump_detect) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
 
    /* Square the internal values to speed up comparisons. */
    pilot->ew_base_hide   = pow2( s->ew_hide );

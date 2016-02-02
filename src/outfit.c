@@ -452,7 +452,7 @@ int outfit_isTurret( const Outfit* o )
  */
 int outfit_isMod( const Outfit* o )
 {
-   return (o->type==OUTFIT_TYPE_MODIFCATION);
+   return (o->type==OUTFIT_TYPE_MODIFICATION);
 }
 /**
  * @brief Checks if outfit is an afterburner.
@@ -685,8 +685,25 @@ double outfit_range( const Outfit* o )
  */
 double outfit_speed( const Outfit* o )
 {
+   Outfit *amm;
+   double t;
    if (outfit_isBolt(o)) return o->u.blt.speed;
-   else if (outfit_isAmmo(o)) return o->u.amm.speed;
+   else if (outfit_isAmmo(o)) {
+      if (o->u.amm.thrust == 0)
+         return o->u.amm.speed;
+      else {     /*Gets the average speed*/
+         t = o->u.amm.speed / o->u.amm.thrust; /*time to reach max speed*/
+         if (t < o->u.amm.duration)
+            return (o->u.amm.thrust * t*t/2 + 
+                  o->u.amm.speed*(o->u.amm.duration-t))/o->u.amm.duration;
+         else return o->u.amm.thrust * o->u.amm.duration/2;
+      }
+   }
+   else if (outfit_isLauncher(o)) {
+      amm = outfit_ammo(o);
+      if (amm != NULL)
+         return outfit_speed(amm);
+   }
    return -1.;
 }
 /**
@@ -729,9 +746,19 @@ int outfit_soundHit( const Outfit* o )
  */
 double outfit_duration( const Outfit* o )
 {
+   Outfit *amm;
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
    else if (outfit_isJammer(o)) return INFINITY;
    else if (outfit_isAfterburner(o)) return INFINITY;
+   else if (outfit_isBolt(o)) return (o->u.blt.range / o->u.blt.speed);
+   else if (outfit_isBeam(o)) return o->u.bem.duration;
+   else if (outfit_isAmmo(o)) return o->u.amm.duration;
+   else if (outfit_isLauncher(o)) {
+      amm = outfit_ammo(o);
+      if (amm != NULL)
+         return outfit_duration(amm);
+   }
+   else if (outfit_isFighterBay(o)) return INFINITY;
    return -1.;
 }
 /**
@@ -929,7 +956,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("launcher",       OUTFIT_TYPE_LAUNCHER);
    O_CMP("ammo",           OUTFIT_TYPE_AMMO);
    O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
-   O_CMP("modification",   OUTFIT_TYPE_MODIFCATION);
+   O_CMP("modification",   OUTFIT_TYPE_MODIFICATION);
    O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
    O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
    O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
@@ -2439,7 +2466,7 @@ void outfit_free (void)
          free(o->u.fig.ship);
       if (outfit_isGUI(o) && o->u.gui.gui)
          free(o->u.gui.gui);
-      if (o->type == OUTFIT_TYPE_MODIFCATION)
+      if (o->type == OUTFIT_TYPE_MODIFICATION)
          ss_free( o->u.mod.stats );
       if (outfit_isMap(o)) {
          array_free( o->u.map->systems );

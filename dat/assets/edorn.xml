@@ -26,8 +26,8 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Edorn is a rather squalid world. Many Soromid citizens live here, but the standard of life isn't very high. With a few exceptions, most residential districts consist of featureless tenements housing lower class citizens who work in equally featureless manufactories.</description>
-  <bar>The spaceport bar is stark and unattractive, with plain concrete walls and pipes and cables crisscrossing overhead. It's a place for getting things done, not for kicking back. It's a pretty good model of what city life is like on the rest of the planet, actually.</bar>
+  <description>Edorn is a rather squalid world. Many Soromid citizens live here but the standard of life isn't very high. With a few exceptions, most residential districts consist of featureless tenements housing lower class citizens who work in equally featureless manufactories.</description>
+  <bar>The spaceport bar is stark and unattractive with plain concrete walls and pipes and cabling crisscrossing overhead. It's a place for getting things done, not for kicking back. It's a pretty good model of what city life is like on the rest of the planet, really.</bar>
  </general>
  <tech>
   <item>Missiles 1</item>

@@ -1,4 +1,5 @@
 include("dat/factions/spawn/common.lua")
+include("dat/factions/spawn/mercenary_helper.lua")
 
 
 -- @brief Spawns a small patrol fleet.
@@ -6,7 +7,9 @@ function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.5 then
+    if r < pbm then
+       pilots = spawnLtMerc("Frontier")
+    elseif r < 0.5 then
        scom.addPilot( pilots, "Frontier Lancelot", 30 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Frontier Hyena", 20 );
@@ -25,7 +28,9 @@ function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.5 then
+    if r < pbm then
+        pilots = spawnMdMerc("Frontier")
+    elseif r < 0.5 then
        scom.addPilot( pilots, "Frontier Lancelot", 30 );
        scom.addPilot( pilots, "Frontier Phalanx", 55 );
     else

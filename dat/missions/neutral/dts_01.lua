@@ -173,13 +173,13 @@ function defend_system()
   -- Create a fleet of raiding pirates
       raider_fleet = pilot.add( "DTS Raiders", "def", raider_position )
       for k,v in ipairs( raider_fleet) do
-         pilot.setHostile( v)
+         v:setHostile()
       end
 
   -- And a fleet of defending independents
       defense_fleet = pilot.add( "DTS Defense Fleet", "def", defense_position )
       for k,v in ipairs( defense_fleet) do
-         pilot.setFriendly( v)
+         v:setFriendly()
       end
 
   --[[ Set conditions for the end of the Battle:
@@ -204,7 +204,7 @@ function add_cas_and_check()
 
          raiders_left = pilot.get( { faction.get("Raider") } )
          for k, v in ipairs( raiders_left ) do
-            pilot.changeAI( v, "flee")
+            v:changeAI("flee")
          end
          if victory ~= true then  -- A few seconds after victory, the system is back under control
             victory = true

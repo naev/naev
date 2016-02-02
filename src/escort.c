@@ -40,8 +40,6 @@
 /* Static */
 static int escort_disabled( void *data );
 static int escort_command( Pilot *parent, int cmd, int param );
-/* Extern */
-extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**
@@ -182,6 +180,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
    int i, n;
    lua_State *L;
    Pilot *e;
+   LuaPilot p;
    char *buf;
 
    if (parent->nescorts == 0)
@@ -223,8 +222,10 @@ static int escort_command( Pilot *parent, int cmd, int param )
             return -1;
       }
       lua_getglobal(L, buf);
-      if (param >= 0)
-         lua_pushnumber(L, param);
+      if (param >= 0){
+         p.pilot = param;
+         lua_pushpilot(L, p);
+      }
 
       /* Run command. */
       if (lua_pcall(L, (param >= 0) ? 1 : 0, 0, 0))

@@ -1,0 +1,975 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: misn</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li><strong>misn</strong></li>
+	
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>misn</code></h1>
+
+<div>Mission Lua bindings.
+ 
+ An example would be:
+ <pre>
+ misn.setNPC( "Keer", "empire/unique/keer" )
+ misn.setDesc( "You see here Commodore Keer." )
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#misn.accept">misn.accept</a>&nbsp;()</td>
+	<td class="summary">Attempts to accept the mission.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.cargoAdd">misn.cargoAdd</a>&nbsp;(cargo, quantity)</td>
+	<td class="summary">Adds some mission cargo to the player.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.cargoJet">misn.cargoJet</a>&nbsp;(cargoid)</td>
+	<td class="summary">Jettisons the mission cargo.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.cargoRm">misn.cargoRm</a>&nbsp;(cargoid)</td>
+	<td class="summary">Removes the mission cargo.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.claim">misn.claim</a>&nbsp;(systems)</td>
+	<td class="summary">Tries to claim systems.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.factions">misn.factions</a>&nbsp;()</td>
+	<td class="summary">Gets the factions the mission is available for.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.finish">misn.finish</a>&nbsp;(properly)</td>
+	<td class="summary">Finishes the mission.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.markerAdd">misn.markerAdd</a>&nbsp;(sys, type)</td>
+	<td class="summary">Adds a new marker.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.markerMove">misn.markerMove</a>&nbsp;(id, sys)</td>
+	<td class="summary">Moves a marker to a new system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.markerRm">misn.markerRm</a>&nbsp;(id)</td>
+	<td class="summary">Removes a mission system marker.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.npcAdd">misn.npcAdd</a>&nbsp;(func, name, portrait, desc, priority)</td>
+	<td class="summary">Adds an NPC.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.npcRm">misn.npcRm</a>&nbsp;(id)</td>
+	<td class="summary">Removes an NPC.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.osdActive">misn.osdActive</a>&nbsp;(n)</td>
+	<td class="summary">Sets active in mission OSD.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.osdCreate">misn.osdCreate</a>&nbsp;(title, list)</td>
+	<td class="summary">Creates a mission OSD.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.osdDestroy">misn.osdDestroy</a>&nbsp;()</td>
+	<td class="summary">Destroys the mission OSD.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.setDesc">misn.setDesc</a>&nbsp;(desc)</td>
+	<td class="summary">Sets the current mission description.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.setNPC">misn.setNPC</a>&nbsp;(name, portrait)</td>
+	<td class="summary">Sets the current mission NPC.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.setReward">misn.setReward</a>&nbsp;(reward)</td>
+	<td class="summary">Sets the current mission reward description.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#misn.setTitle">misn.setTitle</a>&nbsp;(title)</td>
+	<td class="summary">Sets the current mission title.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="misn.accept"></a><strong>misn.accept</strong>&nbsp;()</dt>
+<dd>
+Attempts to accept the mission.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>if not misn.accept() then return end</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if mission was properly accepted.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.cargoAdd"></a><strong>misn.cargoAdd</strong>&nbsp;(cargo, quantity)</dt>
+<dd>
+Adds some mission cargo to the player.  He cannot sell it nor get rid of it
+ unless he abandons the mission in which case it'll get eliminated.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  cargo: Name of the cargo to add.
+	</li>
+	
+	<li>
+	  quantity: Quantity of cargo to add.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The id of the cargo which can be used in cargoRm.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.cargoJet"></a><strong>misn.cargoJet</strong>&nbsp;(cargoid)</dt>
+<dd>
+Jettisons the mission cargo.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  cargoid: ID of the cargo to jettison.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true on success.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.cargoRm"></a><strong>misn.cargoRm</strong>&nbsp;(cargoid)</dt>
+<dd>
+Removes the mission cargo.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  cargoid: Identifier of the mission cargo.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true on success.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.claim"></a><strong>misn.claim</strong>&nbsp;(systems)</dt>
+<dd>
+Tries to claim systems.
+ 
+ Claiming systems is a way to avoid mission collisions preemptively.
+ 
+ Note it does not actually claim the systems if it fails to claim. It also
+ does not work more than once.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  systems: Table of systems to claim or a single system.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end</code></li>
+	
+	<li><code>if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+true if was able to claim, false otherwise.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.factions"></a><strong>misn.factions</strong>&nbsp;()</dt>
+<dd>
+Gets the factions the mission is available for.
+ 
+
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>f = misn.factions()</code>
+
+
+
+<br />
+<h3>Return value:</h3>
+A containing the factions for whom the mission is available.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.finish"></a><strong>misn.finish</strong>&nbsp;(properly)</dt>
+<dd>
+Finishes the mission.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  properly: If true and the mission is unique it marks the mission
+ as completed.  If false it deletes the mission but
+ doesn't mark it as completed.  If the parameter isn't
+ passed it just ends the mission (without removing it
+ from the player's list of active missions).
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.markerAdd"></a><strong>misn.markerAdd</strong>&nbsp;(sys, type)</dt>
+<dd>
+Adds a new marker.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  sys: System to mark.
+	</li>
+	
+	<li>
+	  type: Colouring scheme to use.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>my_marker = misn.markerAdd( system.get("Gamma Polaris"), "low" )
+ 
+ Valid marker types are:<br/>
+ - "plot": Important plot marker.<br/>
+ - "high": High importance mission marker (lower than plot).<br/>
+ - "low": Low importance mission marker (lower than high).<br/>
+ - "computer": Mission computer marker.<br/>
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+A marker ID to be used with markerMove and markerRm.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.markerMove"></a><strong>misn.markerMove</strong>&nbsp;(id, sys)</dt>
+<dd>
+Moves a marker to a new system.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the mission marker to move.
+	</li>
+	
+	<li>
+	  sys: System to move the marker to.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>misn.markerMove( my_marker, system.get("Delta Pavonis") )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.markerRm"></a><strong>misn.markerRm</strong>&nbsp;(id)</dt>
+<dd>
+Removes a mission system marker.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the marker to remove.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>misn.markerRm( my_marker )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.npcAdd"></a><strong>misn.npcAdd</strong>&nbsp;(func, name, portrait, desc, priority)</dt>
+<dd>
+Adds an NPC.
+ 
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  func: Name of the function to run when approaching, gets passed the npc_id when called.
+	</li>
+	
+	<li>
+	  name: Name of the NPC
+	</li>
+	
+	<li>
+	  portrait: Portrait to use for the NPC (from GFX_PATH/portraits*.png).
+	</li>
+	
+	<li>
+	  desc: Description associated to the NPC.
+	</li>
+	
+	<li>
+	  priority: Optional priority argument (defaults to 5, highest is 0, lowest is 10).
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The ID of the NPC to pass to npcRm.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.npcRm"></a><strong>misn.npcRm</strong>&nbsp;(id)</dt>
+<dd>
+Removes an NPC.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the NPC to remove.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>misn.npcRm( npc_id )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.osdActive"></a><strong>misn.osdActive</strong>&nbsp;(n)</dt>
+<dd>
+Sets active in mission OSD.
+ 
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  n: Element of the OSD to make active.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.osdCreate"></a><strong>misn.osdCreate</strong>&nbsp;(title, list)</dt>
+<dd>
+Creates a mission OSD.
+ 
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  title: Title to give the OSD.
+	</li>
+	
+	<li>
+	  list: List of elements to put in the OSD.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.osdDestroy"></a><strong>misn.osdDestroy</strong>&nbsp;()</dt>
+<dd>
+Destroys the mission OSD.
+ 
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.setDesc"></a><strong>misn.setDesc</strong>&nbsp;(desc)</dt>
+<dd>
+Sets the current mission description.
+ 
+ Also sets the mission OSD unless you explicitly force an OSD, however you
+ can't specify bullet points or other fancy things like with the real OSD.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  desc: Description to use for mission.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.setNPC"></a><strong>misn.setNPC</strong>&nbsp;(name, portrait)</dt>
+<dd>
+Sets the current mission NPC.
+ 
+ This is used in bar missions where you talk to a person. The portraits are
+ the ones found in GFX_PATH/portraits without the png extension. So for
+ GFX_PATH/portraits/none.png you would just use "none".
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: Name of the NPC.
+	</li>
+	
+	<li>
+	  portrait: Name of the portrait to use for the NPC.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>misn.setNPC( "Invisible Man", "none" )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.setReward"></a><strong>misn.setReward</strong>&nbsp;(reward)</dt>
+<dd>
+Sets the current mission reward description.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  reward: Description of the reward to use.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="misn.setTitle"></a><strong>misn.setTitle</strong>&nbsp;(title)</dt>
+<dd>
+Sets the current mission title.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  title: Title to use for mission.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

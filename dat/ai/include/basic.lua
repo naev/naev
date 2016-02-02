@@ -151,7 +151,7 @@ function follow ()
    local target = ai.target()
  
    -- Will just float without a target to escort.
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -164,6 +164,29 @@ function follow ()
       ai.accel()
  
    end
+end
+function follow_accurate ()
+   local target = ai.target()
+   local p = ai.pilot()
+ 
+   -- Will just float without a target to escort.
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = ai.follow_accurate(target, mem.radius, 
+         mem.angle, mem.Kp, mem.Kd)
+
+   local mod = vec2.mod(goal - p:pos())
+
+   --  Always face the goal
+   local dir   = ai.face(goal)
+
+   if dir < 10 and mod > 300 then
+      ai.accel()
+   end
+
 end
 
 --[[
@@ -235,12 +258,14 @@ function land ()
 
    -- Make sure mem.land is valid target
    if mem.land == nil then
-      mem.land = ai.landplanet()
+      local landplanet = ai.landplanet()
+      if landplanet ~= nil then
+         mem.land = landplanet
 
       -- Bail out if no valid planet could be found.
-      if mem.land == nil then
+      else
          warn(string.format("Pilot '%s' tried to land with no landable assets!",
-               ai.getPilot():name()))
+               ai.pilot():name()))
          ai.poptask()
          return
       end
@@ -250,9 +275,17 @@ function land ()
 end
 function __landgo ()
    local target   = mem.land
-   local dir      = ai.face( target )
+   
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+
+   -- 2 methods depending on mem.careful
+   local dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -299,7 +332,7 @@ function __run_target ()
    local target = ai.target()
 
    -- Target must exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return true
    end
@@ -310,18 +343,17 @@ function __run_target ()
    local dir   = ai.face(target, true)
    ai.accel()
 
-   --[[
-   -- Todo afterburner handling.
-   if ai.hasafterburner() then
-      ai.afterburn(true)
+   -- Afterburner handling.         
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      ai.weapset( 8, true )
    end
-   ]]--
+
    return false
 end
 function __run_turret ()
    -- Shoot the target
    local target   = ai.target()
-   if ai.exists(target) then
+   if target:exists() then
       ai.hostile(target)
       ai.settarget( target )
       local dist    = ai.dist(target)
@@ -340,10 +372,25 @@ function __run_hyp ()
 
    -- Go towards jump
    local jump     = ai.subtarget()
-   local jdir     = ai.face(jump)
+   local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
-   if jdir < 10 and jdist > bdist then
+
+   if jdist > 3*bdist and ai.pilot():stats().mass < 600 then
+      jdir = ai.careful_face(jump)
+   else --Heavy ships should rush to jump point
+      jdir = ai.face(jump)
+   end
+   
+   --Afterburner: activate while far away from jump
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      if jdist > 3 * bdist then
+         ai.weapset( 8, true )
+      else
+         ai.weapset( 8, false )
+      end
+   end
+   if jdist > bdist and jdir < 10 then       
       ai.accel()
    elseif jdist < bdist then
       ai.pushsubtask( "__run_hypbrake" )
@@ -376,9 +423,16 @@ function hyperspace ()
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
-   local dir      = ai.face( target )
+   local dir
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+
+   -- 2 methods for dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -412,7 +466,7 @@ function board ()
    local target = ai.target()
 
    -- Make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -445,7 +499,7 @@ function __boardstop ()
    target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -488,13 +542,13 @@ function refuel ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
 
    -- See if finished refueling
-   if ai.donerefuel(target) then
+   if not ai.pilot():flags().refueling then
       ai.poptask()
       return
    end
@@ -520,7 +574,7 @@ function __refuelstop ()
    local target = ai.target()
 
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -529,12 +583,12 @@ function __refuelstop ()
    ai.settarget(target)
 
    -- See if finished refueling
-   if ai.donerefuel(target) then
-      ai.comm(target, "Finished fuel transfer.")
+   if not ai.pilot():flags().refueling then
+      ai.pilot():comm(target, "Finished fuel transfer.")
       ai.poptask()
 
       -- Untarget
-      ai.settarget( ai.getPilot():id() )
+      ai.settarget( ai.pilot() )
       return
    end
 
