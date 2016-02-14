@@ -26,7 +26,7 @@ typedef enum { WEAPON_LAYER_BG, WEAPON_LAYER_FG } WeaponLayer;
  */
 void weapon_add( const Outfit* outfit, const double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const Pilot *parent, const unsigned int target );
+      const Pilot *parent, const unsigned int target, double time );
 
 
 /*

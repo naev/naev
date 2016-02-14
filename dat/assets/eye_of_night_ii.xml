@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>A00.png</space>
-  <exterior>aquatic2.png</exterior>
+  <exterior>lava.png</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -10,19 +10,19 @@ mem.aggressive = true
 function create ()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.shipprice()/300, ai.shipprice()/70) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    r = rnd.rnd(0,20)
    if r == 0 then
-     ai.broadcast("The Empire is watching you.")
+     ai.pilot():broadcast("The Empire is watching you.")
     elseif r == 1 then
-      ai.broadcast("The Emperor sees all.")
+      ai.pilot():broadcast("The Emperor sees all.")
    end
 
    -- Get refuel chance
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 20 then
@@ -40,7 +40,7 @@ function create ()
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.rnd() + 1750.)
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
       mem.bribe_paid = "\"Now scram before I change my mind.\""
    else
@@ -89,7 +89,7 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.rnd(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

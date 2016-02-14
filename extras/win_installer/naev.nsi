@@ -2,7 +2,7 @@
 ;SetCompress Off
 
 ;Version, Arch, Icon and URL
-!define VERSION "0.6.0"
+!define VERSION "0.6.1"
 !define VERSION_SUFFIX "" ; This string can be used for betas and release candidates.
 !define ARCH "32"
 !define URL "http://naev.org"
@@ -131,7 +131,7 @@ SectionEnd
 
 Section "Naev Data (Download)" DataSection
    dwn:
-    AddSize 302587 ;Size (kB) of Naev ndata
+    AddSize 296859 ;Size (kB) of Naev ndata
     NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip

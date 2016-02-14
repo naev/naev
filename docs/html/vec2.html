@@ -1,0 +1,876 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: vec2</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li><strong>vec2</strong></li>
+	
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>vec2</code></h1>
+
+<div>Represents a 2D vector in Lua.
+ 
+ This module allows you to manipulate 2D vectors.  Usage is generally as follows:
+ 
+ <pre>
+ my_vec = vec2.new( 3, 2 ) -- my_vec is now (3,2)
+ my_vec:add( 5, 3 ) -- my_vec is now (8,5)
+ my_vec = my_vec * 3 -- my_vec is now (24,15)
+ your_vec = vec2.new( 5, 2 ) -- your_vec is now (5,2)
+ my_vec = my_vec - your_vec -- my_vec is now (19,13)
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#vec2.add">vec2.add</a>&nbsp;(v, x, y)</td>
+	<td class="summary">Adds two vectors or a vector and some cartesian coordinates.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.dist">vec2.dist</a>&nbsp;(v, v2)</td>
+	<td class="summary">Gets the distance from the Vec2.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.dist2">vec2.dist2</a>&nbsp;(v, v2)</td>
+	<td class="summary">Gets the squared distance from the Vec2 (saves a sqrt())
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.div">vec2.div</a>&nbsp;(v, mod)</td>
+	<td class="summary">Divides a vector by a number.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.get">vec2.get</a>&nbsp;(v)</td>
+	<td class="summary">Gets the cartesian positions of the vector.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.mod">vec2.mod</a>&nbsp;(v)</td>
+	<td class="summary">Gets the modulus of the vector.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.mul">vec2.mul</a>&nbsp;(v, mod)</td>
+	<td class="summary">Multiplies a vector by a number.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.new">vec2.new</a>&nbsp;(x, y)</td>
+	<td class="summary">Creates a new vector.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.newP">vec2.newP</a>&nbsp;(m, a)</td>
+	<td class="summary">Creates a new vector using polar coordinates.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.polar">vec2.polar</a>&nbsp;(v)</td>
+	<td class="summary">Gets polar coordinates of a vector.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.set">vec2.set</a>&nbsp;(v, x, y)</td>
+	<td class="summary">Sets the vector by cartesian coordinates.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.setP">vec2.setP</a>&nbsp;(v, m, a)</td>
+	<td class="summary">Sets the vector by polar coordinates.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#vec2.sub">vec2.sub</a>&nbsp;(v, x, y)</td>
+	<td class="summary">Subtracts two vectors or a vector and some cartesian coordinates.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="vec2.add"></a><strong>vec2.add</strong>&nbsp;(v, x, y)</dt>
+<dd>
+Adds two vectors or a vector and some cartesian coordinates.
+ 
+ If x is a vector it adds both vectors, otherwise it adds cartesian coordinates
+ to the vector.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector getting stuff subtracted from.
+	</li>
+	
+	<li>
+	  x: X coordinate or vector to add to.
+	</li>
+	
+	<li>
+	  y: Y coordinate or nil to add to.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>my_vec = my_vec + your_vec</code></li>
+	
+	<li><code>my_vec:add( your_vec )</code></li>
+	
+	<li><code>my_vec:add( 5, 3 )
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The result of the vector operation.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.dist"></a><strong>vec2.dist</strong>&nbsp;(v, v2)</dt>
+<dd>
+Gets the distance from the Vec2.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to act as origin.
+	</li>
+	
+	<li>
+	  v2: Vector to get distance from, uses origin (0,0) if not set.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>my_vec:dist() -- Gets length of the vector (distance from origin).</code></li>
+	
+	<li><code>my_vec:dist( your_vec ) -- Gets distance from both vectors (your_vec - my_vec).
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The distance calculated.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.dist2"></a><strong>vec2.dist2</strong>&nbsp;(v, v2)</dt>
+<dd>
+Gets the squared distance from the Vec2 (saves a sqrt())
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to act as origin.
+	</li>
+	
+	<li>
+	  v2: Vector to get squared distance from, uses origin (0,0) if not set.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>my_vec:dist2() -- Gets squared length of the vector (distance squared from origin).</code></li>
+	
+	<li><code>my_vec:dist2( your_vec ) -- Gets squared distance from both vectors (your_vec - my_vec)^2.
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The distance calculated.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.div"></a><strong>vec2.div</strong>&nbsp;(v, mod)</dt>
+<dd>
+Divides a vector by a number.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to divide.
+	</li>
+	
+	<li>
+	  mod: Amount to divide by.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>my_vec = my_vec / 3</code></li>
+	
+	<li><code>my_vec:div(3)
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The result of the vector operation.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.get"></a><strong>vec2.get</strong>&nbsp;(v)</dt>
+<dd>
+Gets the cartesian positions of the vector.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to get position of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>x,y = my_vec:get()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+X and Y position of the vector.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.mod"></a><strong>vec2.mod</strong>&nbsp;(v)</dt>
+<dd>
+Gets the modulus of the vector.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to get modulus of.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The modulus of the vector.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.mul"></a><strong>vec2.mul</strong>&nbsp;(v, mod)</dt>
+<dd>
+Multiplies a vector by a number.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to multiply.
+	</li>
+	
+	<li>
+	  mod: Amount to multiply by.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>my_vec = my_vec * 3</code></li>
+	
+	<li><code>my_vec:mul( 3 )
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The result of the vector operation.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.new"></a><strong>vec2.new</strong>&nbsp;(x, y)</dt>
+<dd>
+Creates a new vector.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  x: If set, the X value for the new vector.
+	</li>
+	
+	<li>
+	  y: If set, the Y value for the new vector.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>vec2.new( 5, 3 ) -- creates a vector at (5,3)</code></li>
+	
+	<li><code>vec2.new() -- creates a vector at (0,0)
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The new vector.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.newP"></a><strong>vec2.newP</strong>&nbsp;(m, a)</dt>
+<dd>
+Creates a new vector using polar coordinates.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  m: If set, the modulus for the new vector.
+	</li>
+	
+	<li>
+	  a: If set, the angle for the new vector, in degrees.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>vec2.newP( 1000, 90 ) -- creates a vector at (0,1000)</code></li>
+	
+	<li><code>vec2.newP() -- creates a vector at (0,0)
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The new vector.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.polar"></a><strong>vec2.polar</strong>&nbsp;(v)</dt>
+<dd>
+Gets polar coordinates of a vector.
+ 
+ The angle is in degrees, not radians.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to get polar coordinates of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>modulus, angle = my_vec:polar()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The modulus and angle of the vector.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.set"></a><strong>vec2.set</strong>&nbsp;(v, x, y)</dt>
+<dd>
+Sets the vector by cartesian coordinates.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to set coordinates of.
+	</li>
+	
+	<li>
+	  x: X coordinate to set.
+	</li>
+	
+	<li>
+	  y: Y coordinate to set.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>my_vec:set(5, 3) -- my_vec is now (5,3)
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.setP"></a><strong>vec2.setP</strong>&nbsp;(v, m, a)</dt>
+<dd>
+Sets the vector by polar coordinates.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector to set coordinates of.
+	</li>
+	
+	<li>
+	  m: Modulus to set.
+	</li>
+	
+	<li>
+	  a: Angle to set, in degrees.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>my_vec:setP( 1, 90 ) -- my_vec is now (0,1)
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="vec2.sub"></a><strong>vec2.sub</strong>&nbsp;(v, x, y)</dt>
+<dd>
+Subtracts two vectors or a vector and some cartesian coordinates.
+ 
+ If x is a vector it subtracts both vectors, otherwise it subtracts cartesian
+ coordinates to the vector.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  v: Vector getting stuff subtracted from.
+	</li>
+	
+	<li>
+	  x: X coordinate or vector to subtract.
+	</li>
+	
+	<li>
+	  y: Y coordinate or nil to subtract.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>my_vec = my_vec - your_vec</code></li>
+	
+	<li><code>my_vec:sub( your_vec )</code></li>
+	
+	<li><code>my_vec:sub( 5, 3 )
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+The result of the vector operation.
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

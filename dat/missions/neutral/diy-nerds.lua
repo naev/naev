@@ -166,7 +166,7 @@ function accept ()
    if not tk.yesno( title[1], string.format(text[1], planet.name(destPlanet) )) then
       misn.finish(false)
    else
-         if pilot.cargoFree(player.pilot()) < 4 then
+         if player.pilot():cargoFree() < 4 then
          tk.msg(title[16], text[16])
          misn.finish(false)
       end
@@ -179,7 +179,7 @@ function accept ()
 
       tk.msg(title[2], string.format(text[2], planet.name(destPlanet)))
       local distance = vec2.dist( planet.pos(srcPlanet), planet.pos(destPlanet) )
-      local stuperpx = 1 / pilot.stats(player.pilot()).speed_max * 30 -- from cargo_common.lua
+      local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from cargo_common.lua
       expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
       addNerdCargo()
@@ -262,7 +262,7 @@ function nerds_land2()
       end
       cleanup()
 
-         if pilot.cargoFree(player.pilot()) >= 4 then
+         if player.pilot():cargoFree() >= 4 then
       -- player has enough free cargo
          nerds_return()
       else
@@ -317,7 +317,7 @@ end
 function nerds_bar()
    hook.rm(jhook)
    hook.rm(lhook)
-   if pilot.cargoFree(player.pilot()) >= 4 then
+   if player.pilot():cargoFree() >= 4 then
       tk.msg(title[19], text[19])
       nerds_return()
    else

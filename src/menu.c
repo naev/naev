@@ -426,17 +426,17 @@ void menu_small (void)
 
    window_setCancel( wid, menu_small_close );
 
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
+   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnResume", "Resume", menu_small_close );
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+         "btnResume", "Resume", menu_small_close, SDLK_r );
+   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnInfo", "Info", menu_small_info );
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
+         "btnInfo", "Info", menu_small_info, SDLK_i );
+   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_small_exit );
+         "btnOptions", "Options", menu_options_button, SDLK_o );
+   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnExit", "Exit", menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
 }
@@ -565,17 +565,17 @@ void menu_death (void)
    /* Allow the player to continue if the savegame exists, if not, propose to restart */
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    if (!player_isTut() && nfile_fileExists(path))
-      window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnContinue", "Continue", menu_death_continue );
+      window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnContinue", "Continue", menu_death_continue, SDLK_c );
    else
-      window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRestart", "Restart", menu_death_restart );
+      window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRestart", "Restart", menu_death_restart, SDLK_r );
 
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+   window_addButtonKey( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnMain", "Main Menu", menu_death_main );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit Game", menu_exit );
+         "btnMain", "Main Menu", menu_death_main, SDLK_m );
+   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnExit", "Exit Game", menu_exit, SDLK_x );
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */

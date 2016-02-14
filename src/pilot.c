@@ -35,7 +35,7 @@
 #include "board.h"
 #include "debris.h"
 #include "ntime.h"
-#include "ai_extra.h"
+#include "ai.h"
 #include "faction.h"
 #include "font.h"
 #include "land.h"
@@ -1936,7 +1936,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
 
       /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER)) {
          /* Heat up the afterburner. */
          pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
 
@@ -1946,7 +1946,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
-            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            if (pilot->id == PLAYER_ID) spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
@@ -2964,7 +2964,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
       damage_cache   = dmg->damage;
       delay_cache    = outfit_delay( o );
       if ((damage_cache > 0) && (delay_cache > 0))
-         DPSaccum_target += ( damage_cache/delay_cache );
+         DPSaccum_pilot += ( damage_cache/delay_cache );
    }
 
    if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))

@@ -9,10 +9,10 @@ mem.aggressive = true
 
 function create ()
 
-   ai.setcredits( rnd.int(ai.shipprice()/150, ai.shipprice()/50) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
 
    if rnd.int() > 0.7 then
-      mem.bribe = math.sqrt( ai.shipmass() ) * (750. * rnd.int() + 2500.)
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.int() + 2500.)
       mem.bribe_prompt = string.format("\"Your life is worth %d credits to me.\"", mem.bribe )
       mem.bribe_paid = "\"Beat it.\""
    else
@@ -52,7 +52,7 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.int(1,#taunts) ])
 end
 
 

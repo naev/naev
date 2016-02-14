@@ -3,7 +3,7 @@
    This is the seventh mission of the Shark's teeth campaign. The player has to meet the FLF in Arandon.
    
    Stages :
-   0) Way to Arnadon
+   0) Way to Arandon
    1) Way back to Darkshed
 	
 --]]

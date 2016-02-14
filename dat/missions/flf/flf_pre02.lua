@@ -109,7 +109,7 @@ end
 
 
 function create ()
-   missys = patrol_getTargetSystem()
+   missys = system.get( "Arcanis" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
    misn.setNPC( npc_name, "flf/unique/benito" )
@@ -235,10 +235,10 @@ function hail ()
    if choice == 1 then
       tk.msg( DVtitle[4], DVtext[4]:format( DVplanet, DVsys ) )
 
-      faction.get("FLF"):modPlayerSingle( -200 )
+      faction.get("FLF"):setPlayerStanding( -100 )
       local standing = faction.get("Dvaered"):playerStanding()
       if standing < 0 then
-         faction.get("Dvaered"):modPlayerRaw( -standing )
+         faction.get("Dvaered"):setPlayerStanding( 0 )
       end
 
       for i, j in ipairs( fleetDV ) do
@@ -328,7 +328,7 @@ function pilot_death_dv ()
       job_done = true
       local standing = faction.get("Dvaered"):playerStanding()
       if standing >= 0 then
-         faction.get("Dvaered"):modPlayerRaw( -standing - 1 )
+         faction.get("Dvaered"):setPlayerStanding( -1 )
       end
       misn.osdActive( 3 )
       misn.markerRm( marker )
@@ -356,13 +356,14 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur():name() == "Sindbad" then
+   if planet.cur():faction():name() == "FLF" then
       tk.msg( title[4], text[4] )
       tk.msg( title[4], text[5]:format( player.name() ) )
       tk.msg( title[4], text[6] )
       tk.msg( title[4], text[7] )
       player.pay( 100000 )
-      faction.get("FLF"):modPlayer( 15 )
+      flf_setReputation( 20 )
+      faction.get("FLF"):modPlayer( 10 )
       var.pop( "flfbase_sysname" )
       var.pop( "flfbase_intro" )
       misn.finish( true )

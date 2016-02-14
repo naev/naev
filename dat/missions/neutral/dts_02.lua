@@ -183,7 +183,7 @@ function defend_system()
   -- Create a fleet of raiding pirates
       raider_fleet = pilot.add( "DTS Raiders", "def", raider_position )
       for k,v in ipairs( raider_fleet) do
-         pilot.setHostile( v)
+         v:setHostile()
       end
 
   -- And a fleet of defending independents
@@ -233,7 +233,7 @@ function add_cas_and_check()
 
          raiders_left = pilot.get( { faction.get("Raider") } )
          for k, v in ipairs( raiders_left ) do
-            pilot.changeAI( v, "flee")
+            v:changeAI("flee")
          end
          if victories < 1 then  -- Send in the second wave
             victories = victories + 1

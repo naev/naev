@@ -358,7 +358,7 @@ function renderWeapBar( weapon, x, y )
          if weapon.left_p < 1 then
             gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
          end
-         if not weapon.in_arc and pilot.player():target() ~= nil then
+         if not weapon.in_arc and player.pilot():target() ~= nil then
             col = col_lgray
          end
          

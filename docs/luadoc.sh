@@ -5,7 +5,7 @@ cd "$(dirname $0)"
 test -d lua || mkdir lua
 
 # Convert Doxygen comments to Luadoc comments
-for F in ../src/nlua_*.c; do
+for F in ../src/nlua_*.c ../src/ai.c; do
    sed -n '
          1 i -- This file was generated automatically from C sources to feed Luadoc.
 # Convert Doxygen /** to Luadoc ---
@@ -49,5 +49,5 @@ done
 (
    cd lua
    luadoc --nofiles --taglet "naev-taglet" -t templates/ *.luadoc
-	rm *.luadoc
+   rm *.luadoc
 )

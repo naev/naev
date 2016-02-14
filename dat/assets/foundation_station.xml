@@ -14,7 +14,7 @@
   <range>5</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>2</class>
   <population>1500</population>
   <hide>0.250000</hide>
   <services>
@@ -24,7 +24,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Foundation Station is the northern refuel point of the Qorel Expanse. As all pirate outposts, it also serves as trading post in which to exchange loots.</description>
+  <description>Foundation Station is the northern refuel point of the Qorel Expanse. As with all pirate outposts, it also serves as a trading post in which loot is exchanged.</description>
  </general>
  <tech>
   <item>Pirate Maps</item>

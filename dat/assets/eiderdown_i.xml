@@ -5,11 +5,11 @@
   <y>-9750.000000</y>
  </pos>
  <GFX>
-  <space>A01.png</space>
+  <space>O05.png</space>
   <exterior>aquatic.png</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>O</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>

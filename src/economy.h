@@ -9,6 +9,7 @@
 
 
 #include <stdint.h>
+#include "opengl.h"
 
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
@@ -31,6 +32,7 @@ typedef struct Commodity_ {
    char* description; /**< Description of the commodity. */
    /* Prices. */
    double price; /**< Base price of the commodity. */
+   glTexture* gfx_store; /**< Store graphic. */
 } Commodity;
 
 

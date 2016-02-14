@@ -15,6 +15,7 @@ int nfile_dirMakeExist( const char* path, ... ); /* Creates if doesn't exist, 0 
 int nfile_dirExists( const char* path, ... ); /* Returns 1 on exists. */
 int nfile_fileExists( const char* path, ... ); /* Returns 1 on exists */
 int nfile_backupIfExists( const char* path, ... );
+int nfile_copyIfExists( const char* path1, const char* path2 );
 char** nfile_readDir( int* nfiles, const char* path, ... );
 char** nfile_readDirRecursive( int* nfiles, const char* path, ... );
 char* nfile_readFile( int* filesize, const char* path, ... );

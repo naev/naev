@@ -68,11 +68,6 @@
   <chance>10</chance>
   <cond>system.cur():faction() ~= nil</cond>
  </event>
- <event name="Unique">
-  <lua>neutral/unique</lua>
-  <trigger>enter</trigger>
-  <chance>3</chance>
- </event>
  <event name="Flintley">
   <lua>neutral/baron_flintley</lua>
   <trigger>land</trigger>
@@ -175,6 +170,14 @@
   <cond>system.cur():name() == "Tuoladis"</cond>
   <flags>
    <unique />
+  </flags>
+ </event>
+ <event name="Warlords battle">
+  <lua>dvaered/warlords_battle</lua>
+  <trigger>enter</trigger>
+  <chance>2</chance>
+  <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
+  <flags>
   </flags>
  </event>
  <event name="Naev Needs You!">

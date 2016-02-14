@@ -97,7 +97,7 @@ function create()
 end
 
 function player_has_fast_ship()
-  local stats = pilot.player():stats()
+  local stats = player.pilot():stats()
   playershipspeed = stats.speed_max
   local has_fast_ship = false
      if playershipspeed > 200 then

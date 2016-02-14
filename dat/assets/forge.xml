@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>A04.png</space>
-  <exterior>station00.png</exterior>
+  <exterior>lava.png</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

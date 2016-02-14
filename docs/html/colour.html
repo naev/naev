@@ -1,0 +1,619 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: colour</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li><strong>colour</strong></li>
+	
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>colour</code></h1>
+
+<div>Lua bindings to interact with colours.
+ 
+ An example would be:
+ <pre>
+ col1 = colour.new( "Red" ) -- Get by name
+ col2 = colour.new( 0.5, 0.5, 0.5, 0.3 ) -- Create with RGB values
+ col3 = colour.new() -- White by default
+ col2:setHSV( col1:hsv() ) -- Set colour 2 with colour 1's HSV values
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#colour.__eq">colour.__eq</a>&nbsp;(c1, c2)</td>
+	<td class="summary">Compares two colours to see if they are the same.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.alpha">colour.alpha</a>&nbsp;(col)</td>
+	<td class="summary">Gets the alpha of a colour.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.hsv">colour.hsv</a>&nbsp;(col)</td>
+	<td class="summary">Gets the HSV values of a colour.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.new">colour.new</a>&nbsp;(r, g, b, a)</td>
+	<td class="summary">Gets a colour.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.rgb">colour.rgb</a>&nbsp;(col)</td>
+	<td class="summary">Gets the RGB values of a colour.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.setAlpha">colour.setAlpha</a>&nbsp;(col, alpha)</td>
+	<td class="summary">Sets the alpha of a colour.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.setHSV">colour.setHSV</a>&nbsp;(col, h, s, v)</td>
+	<td class="summary">Sets the colours values from the HSV colourspace.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#colour.setRGB">colour.setRGB</a>&nbsp;(col, r, g, b)</td>
+	<td class="summary">Sets the colours values from the RGB colourspace.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="colour.__eq"></a><strong>colour.__eq</strong>&nbsp;(c1, c2)</dt>
+<dd>
+Compares two colours to see if they are the same.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  c1: Colour 1 to compare.
+	</li>
+	
+	<li>
+	  c2: Colour 2 to compare.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true if both colours are the same.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.alpha"></a><strong>colour.alpha</strong>&nbsp;(col)</dt>
+<dd>
+Gets the alpha of a colour.
+ 
+ Value is from from 0. (transparent) to 1. (opaque).
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  col: Colour to get alpha of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>colour_alpha = col:alpha()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The alpha of the colour.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.hsv"></a><strong>colour.hsv</strong>&nbsp;(col)</dt>
+<dd>
+Gets the HSV values of a colour.
+ 
+ Values are from 0. to 1.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  col: Colour to get HSV values of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>h,s,v = col:rgb()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The hue, saturation and value values of the colour.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.new"></a><strong>colour.new</strong>&nbsp;(r, g, b, a)</dt>
+<dd>
+Gets a colour.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  r: Red value of the colour.
+	</li>
+	
+	<li>
+	  g: Green value of the colour.
+	</li>
+	
+	<li>
+	  b: Blue value of the colour.
+	</li>
+	
+	<li>
+	  a: Alpha value of the colour.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>colour.new( "Red" ) -- Gets colour by name</code></li>
+	
+	<li><code>colour.new( "Red", 0.5 ) -- Gets colour by name with alpha 0.5</code></li>
+	
+	<li><code>colour.new() -- Creates a white (blank) colour</code></li>
+	
+	<li><code>colour.new( 1., 0., 0. ) -- Creates a bright red colour</code></li>
+	
+	<li><code>colour.new( 1., 0., 0., 0.5 ) -- Creates a bright red colour with alpha 0.5
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+A newly created colour.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.rgb"></a><strong>colour.rgb</strong>&nbsp;(col)</dt>
+<dd>
+Gets the RGB values of a colour.
+ 
+ Values are from 0. to 1.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  col: Colour to get RGB values of.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>r,g,b = col:rgb()
+ </code>
+
+
+
+<br />
+<h3>Return value:</h3>
+The red, green and blue values of the colour.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.setAlpha"></a><strong>colour.setAlpha</strong>&nbsp;(col, alpha)</dt>
+<dd>
+Sets the alpha of a colour.
+ 
+ Value is from 0. (transparent) to 1. (opaque).
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  col: Colour to set alpha of.
+	</li>
+	
+	<li>
+	  alpha: Alpha value to set.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>col:setAlpha( 0.5 ) -- Make colour half transparent
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.setHSV"></a><strong>colour.setHSV</strong>&nbsp;(col, h, s, v)</dt>
+<dd>
+Sets the colours values from the HSV colourspace.
+ 
+ Values are from 0. to 1.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  col: Colour to set HSV values.
+	</li>
+	
+	<li>
+	  h: Hue value to set.
+	</li>
+	
+	<li>
+	  s: Saturation value to set.
+	</li>
+	
+	<li>
+	  v: Value to set.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>col:setHSV( h, s, v )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="colour.setRGB"></a><strong>colour.setRGB</strong>&nbsp;(col, r, g, b)</dt>
+<dd>
+Sets the colours values from the RGB colourspace.
+ 
+ Values are from 0. to 1.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  col: Colour to set RGB values.
+	</li>
+	
+	<li>
+	  r: Red value to set.
+	</li>
+	
+	<li>
+	  g: Green value to set.
+	</li>
+	
+	<li>
+	  b: Blue value to set.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>col:setRGB( r, g, b )
+ </code>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

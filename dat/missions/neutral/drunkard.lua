@@ -141,7 +141,7 @@ end
 function takeoff()
    if system.cur() == delivSys and droppedoff then
 
-      willie = pilot.add( "Trader Mule", "trader", pilot.player():pos() + vec2.new(-500,-500))[1]
+      willie = pilot.add( "Trader Mule", "trader", player.pilot():pos() + vec2.new(-500,-500))[1]
       willie:rename("Ol Bess")
       willie:setFaction("Civilian")
       willie:setFriendly()
@@ -150,7 +150,7 @@ function takeoff()
       willie:setHilight(true)
       willie:hailPlayer()
       willie:control()
-      willie:goto(pilot.player():pos() + vec2.new( 150, 75), true)
+      willie:goto(player.pilot():pos() + vec2.new( 150, 75), true)
       tk.msg( title[5], text[5] )
       hailhook = hook.pilot(willie, "hail", "hail")
    end

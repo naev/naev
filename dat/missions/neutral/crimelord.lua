@@ -5,7 +5,7 @@
            DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
-include "fleethelper.lua"
+include("dat/scripts/fleethelper.lua")
 
 lang = naev.lang()
 if lang == "es" then
@@ -97,9 +97,10 @@ function spawnBaddies ()
         ai = "baddie_norun"
     end
     thugs = addRawShips( "Admonisher", ai, last_system, "Thugs", 4 )
-    renameShips( thugs, "^.*", "Thug" )
+--    renameShips( thugs, "^.*", "Thug" )
     for pilot_number, pilot_object in ipairs(thugs) do
-        pilot_object:setHostile() --they don't like you
+	pilot_object:rename("Thug")
+        pilot_object:setHostile(true) --they don't like you
         pilot_object:rmOutfit("all") --strip them down
         pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets
         pilot_object:addOutfit("Plasma Blaster MK2", 2)
@@ -111,7 +112,7 @@ function spawnBaddies ()
         pilot_object:addOutfit("Shield Capacitor II")
         if system.cur() ~= targetsystem then
             pilot_object:control() --switch to manual control
-            pilot_object:attack( pilot.player() ) --they blindly attack you and only you
+            pilot_object:attack( player.pilot() ) --they blindly attack you and only you
         else
             thugs_alive = #thugs
             hook.pilot(pilot_object, "exploded", "pilotKilled") --trigger when one of them is killed

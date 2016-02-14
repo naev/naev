@@ -48,6 +48,7 @@ CODE_SOURCE = \
 	land.c \
 	land_outfits.c \
 	land_shipyard.c \
+	land_trade.c \
 	load.c \
 	log.c \
 	map.c \
@@ -145,7 +146,6 @@ CODE_SOURCE = \
 	unidiff.c \
 	weapon.c \
 	ai.h \
-	ai_extra.h \
 	array.h \
 	background.h \
 	board.h \

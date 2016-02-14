@@ -10,7 +10,7 @@
   <limit>emergency_shield_booster</limit>
   </general>
  <specific type="modification" group="8">
-  <active cooldown="25">8</active>
+  <active cooldown="12">4</active>
   <shield_regen>10</shield_regen>
   <shield_regen_mod>300</shield_regen_mod>
   <energy_loss>160</energy_loss>

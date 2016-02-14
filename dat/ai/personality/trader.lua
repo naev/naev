@@ -6,7 +6,7 @@ function idle ()
       ai.settimer(0, rnd.int(1000, 3000))
       ai.pushtask("enterdelay")
    else
-      mem.land = planet
+      mem.land = planet:pos()
       ai.pushtask("hyperspace")
       if not mem.tookoff then
          ai.pushtask("land")
