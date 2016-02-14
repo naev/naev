@@ -185,7 +185,6 @@ static int aiL_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
 static int aiL_isstopped( lua_State *L ); /* boolean isstopped() */
 static int aiL_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int aiL_isally( lua_State *L ); /* boolean isally( number ) */
-static int aiL_incombat( lua_State *L ); /* boolean incombat( [number] ) */
 static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
 
 /* movement */
@@ -269,7 +268,6 @@ static const luaL_reg aiL_methods[] = {
    { "isstopped", aiL_isstopped },
    { "isenemy", aiL_isenemy },
    { "isally", aiL_isally },
-   { "incombat", aiL_incombat },
    { "haslockon", aiL_haslockon },
    /* get */
    { "pilot", aiL_pilot },
@@ -1748,27 +1746,6 @@ static int aiL_isally( lua_State *L )
 
    /* Check if is ally. */
    lua_pushboolean(L,areAllies(cur_pilot->faction, p->faction));
-   return 1;
-}
-
-/**
- * @brief Checks to see if the target is in combat.
- *
- *    @luaparam target Pilot, defaults to self
- *    @luareturn Whether the target is in combat.
- *    @luafunc incombat( target )
- */
-static int aiL_incombat( lua_State *L )
-{
-   Pilot* p;
-
-   /* Get the pilot. */
-   if (lua_ispilot(L,1))
-      p = luaL_validpilot(L,1);
-   else
-      p = cur_pilot;
-
-   lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
    return 1;
 }
 
