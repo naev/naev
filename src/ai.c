@@ -2325,7 +2325,7 @@ static int aiL_drift_facing( lua_State *L )
 /**
  * @brief Brakes the pilot.
  *
- *    @luareturn 1 when braking is finished.
+ *    @luareturn Whether braking is finished.
  *    @luafunc brake()
  */
 
@@ -2338,7 +2338,7 @@ static int aiL_brake( lua_State *L )
    pilot_acc = cur_pilot->solid->thrust / cur_pilot->thrust;
    pilot_turn = cur_pilot->solid->dir_vel / cur_pilot->turn;
 
-   lua_pushnumber(L, ret);
+   lua_pushboolean(L, ret);
    return 1;
 }
 
