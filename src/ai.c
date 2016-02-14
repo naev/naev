@@ -1263,6 +1263,8 @@ static int ai_tasktarget( lua_State *L, Task *t )
  * ai.function( params )
  * @endcode
  *
+ * @luamod ai
+ *
  * @{
  */
 /**
