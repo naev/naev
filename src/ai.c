@@ -1419,7 +1419,7 @@ static int aiL_getsubtarget( lua_State *L )
 /**
  * @brief Gets the AI's pilot.
  *    @return The AI pilot's ship identifier.
- * @luafunc getPilot()
+ * @luafunc pilot()
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
