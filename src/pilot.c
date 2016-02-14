@@ -2960,7 +2960,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
       damage_cache   = dmg->damage;
       delay_cache    = outfit_delay( o );
       if ((damage_cache > 0) && (delay_cache > 0))
-         DPSaccum_target += ( damage_cache/delay_cache );
+         DPSaccum_pilot += ( damage_cache/delay_cache );
    }
 
    if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))

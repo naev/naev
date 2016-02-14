@@ -101,8 +101,7 @@ end
 function _atk_g_ranged( target, dist )
 
    -- Pilot thinks dogfight is the best
-   -- TODO : use also reldps
-   if ai.relhp(target) >= 0.5 
+   if ai.relhp(target)*ai.reldps(target) >= 0.25 
          or ai.getweapspeed(4) < target:stats().speed_max*1.2 
          or ai.getweaprange(4) < ai.getweaprange(1)*1.5 then
 
