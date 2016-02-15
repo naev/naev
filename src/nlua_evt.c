@@ -320,7 +320,6 @@ static int evt_save( lua_State *L )
  */
 static int evt_claim( lua_State *L )
 {
-   LuaSystem *ls;
    SysClaim_t *claim;
    Event_t *cur_event;
 
@@ -341,17 +340,13 @@ static int evt_claim( lua_State *L )
       /* Iterate over table. */
       lua_pushnil(L);
       while (lua_next(L, 1) != 0) {
-         if (lua_issystem(L,-1)) {
-            ls = lua_tosystem( L, -1 );
-            claim_add( claim, ls->id );
-         }
+         if (lua_issystem(L,-1))
+            claim_add( claim, lua_tosystem( L, -1 ) );
          lua_pop(L,1);
       }
    }
-   else if (lua_issystem(L, 1)) {
-      ls = lua_tosystem( L, 1 );
-      claim_add( claim, ls->id );
-   }
+   else if (lua_issystem(L, 1))
+      claim_add( claim, lua_tosystem( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
 

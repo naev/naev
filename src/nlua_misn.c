@@ -378,7 +378,7 @@ static int misn_setReward( lua_State *L )
 static int misn_markerAdd( lua_State *L )
 {
    int id;
-   LuaSystem *sys;
+   LuaSystem sys;
    const char *stype;
    SysMarker type;
    Mission *cur_mission;
@@ -404,7 +404,7 @@ static int misn_markerAdd( lua_State *L )
    cur_mission = misn_getFromLua(L);
 
    /* Add the marker. */
-   id = mission_addMarker( cur_mission, -1, sys->id, type );
+   id = mission_addMarker( cur_mission, -1, sys, type );
 
    /* Update system markers. */
    mission_sysMark();
@@ -426,7 +426,7 @@ static int misn_markerAdd( lua_State *L )
 static int misn_markerMove( lua_State *L )
 {
    int id;
-   LuaSystem *sys;
+   LuaSystem sys;
    MissionMarker *marker;
    int i, n;
    Mission *cur_mission;
@@ -458,7 +458,7 @@ static int misn_markerMove( lua_State *L )
    }
 
    /* Update system. */
-   marker->sys = sys->id;
+   marker->sys = sys;
 
    /* Update system markers. */
    mission_sysMark();
@@ -972,7 +972,6 @@ static int misn_npcRm( lua_State *L )
 static int misn_claim( lua_State *L )
 {
    int i, l;
-   LuaSystem *ls;
    SysClaim_t *claim;
    Mission *cur_mission;
 
@@ -994,17 +993,13 @@ static int misn_claim( lua_State *L )
       for (i=0; i<l; i++) {
          lua_pushnumber(L,i+1);
          lua_gettable(L,1);
-         if (lua_issystem(L,-1)) {
-            ls = lua_tosystem( L, -1 );
-            claim_add( claim, ls->id );
-         }
+         if (lua_issystem(L,-1))
+            claim_add( claim, lua_tosystem( L, -1 ) );
          lua_pop(L,1);
       }
    }
-   else if (lua_issystem(L, 1)) {
-      ls = lua_tosystem( L, 1 );
-      claim_add( claim, ls->id );
-   }
+   else if (lua_issystem(L, 1))
+      claim_add( claim, lua_tosystem( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
 

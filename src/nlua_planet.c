@@ -267,7 +267,7 @@ static int planetL_cur( lua_State *L )
       return 0; /* Not landed. */
    }
    lua_pushplanet(L,planet_index(land_planet));
-   sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
+   sys = system_index( system_get( planet_getSystem(land_planet->name) ) );
    lua_pushsystem(L,sys);
    return 2;
 }
@@ -295,7 +295,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    if (lua_isboolean(L,1)) {
       pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
       lua_pushplanet(L,planet_index( pnt ));
-      luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
+      luasys         = system_index( system_get( planet_getSystem(pnt->name) ) );
       lua_pushsystem(L,luasys);
       return 2;
    }
@@ -387,7 +387,7 @@ static int planetL_getBackend( lua_State *L, int landable )
       return 0;
    }
    lua_pushplanet(L,planet_index( pnt ));
-   luasys.id = system_index( sys );
+   luasys = system_index( sys );
    lua_pushsystem(L,luasys);
    return 2;
 }
@@ -473,7 +473,7 @@ static int planetL_system( lua_State *L )
    sysname = planet_getSystem( p->name );
    if (sysname == NULL)
       return 0;
-   sys.id = system_index( system_get( sysname ) );
+   sys = system_index( system_get( sysname ) );
    lua_pushsystem( L, sys );
    return 1;
 }

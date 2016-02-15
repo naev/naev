@@ -424,7 +424,6 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaFaction lf;
-   LuaSystem *ls;
    StarSystem *ss;
    Planet *planet;
    JumpPoint *target;
@@ -480,8 +479,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       vectnull( &vv );
    }
    else if (lua_issystem(L,3)) {
-      ls    = lua_tosystem(L,3);
-      ss    = system_getIndex( ls->id );
+      ss = system_getIndex( lua_tosystem(L,3) );
       for (i=0; i<cur_system->njumps; i++) {
          if ((cur_system->jumps[i].target == ss)
                && !jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )) {
@@ -1056,7 +1054,7 @@ static int pilotL_nav( lua_State *L )
    if (p->nav_hyperspace < 0)
       lua_pushnil(L);
    else {
-      ls.id = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      ls = cur_system->jumps[ p->nav_hyperspace ].targetid;
       lua_pushsystem( L, ls );
    }
 
@@ -3915,7 +3913,6 @@ static int pilotL_hyperspace( lua_State *L )
 {
    Pilot *p;
    Task *t;
-   LuaSystem *sys;
    StarSystem *ss;
    int i;
    JumpPoint *jp;
@@ -3924,12 +3921,10 @@ static int pilotL_hyperspace( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if ((lua_gettop(L) > 1) && !lua_isnil(L,2)) {
-      sys = luaL_checksystem( L, 2 );
-      ss  = system_getIndex( sys->id );
-   }
+   if ((lua_gettop(L) > 1) && !lua_isnil(L,2))
+      ss = system_getIndex( luaL_checksystem( L, 2 ) );
    else
-      sys = NULL;
+      ss = NULL;
    shoot = lua_toboolean(L,3);
 
    /* Set the task. */
@@ -3937,7 +3932,7 @@ static int pilotL_hyperspace( lua_State *L )
       t = pilotL_newtask( L, p, "__hyperspace_shoot" );
    else
       t = pilotL_newtask( L, p, "__hyperspace" );
-   if (sys != NULL) {
+   if (ss != NULL) {
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];

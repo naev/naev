@@ -92,7 +92,6 @@ static int nxml_saveJump( xmlTextWriterPtr writer,
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
 {
    int ret, b;
-   LuaSystem *s;
    Ship *sh;
    ntime_t t;
    LuaJump *lj;
@@ -198,8 +197,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_issystem(L,-1)) {
-            s  = lua_tosystem(L,-1);
-            ss = system_getIndex( s->id );
+            ss = system_getIndex( lua_tosystem(L,-1) );
             if (ss != NULL)
                nxml_saveData( writer, "system",
                      name, ss->name, keynum );
@@ -293,7 +291,6 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
  */
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
-   LuaSystem s;
    LuaJump lj;
    Planet *pnt;
    StarSystem *ss, *dest;
@@ -342,10 +339,8 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          }
          else if (strcmp(type,"system")==0) {
             ss = system_get(xml_get(node));
-            if (ss != NULL) {
-               s.id = system_index( ss );
-               lua_pushsystem(L,s);
-            }
+            if (ss != NULL)
+               lua_pushsystem(L,system_index( ss ));
             else
                WARN("Failed to load unexistent system '%s'", xml_get(node));
          }
