@@ -483,18 +483,18 @@ static int shipL_price( lua_State *L )
 static int shipL_gfxTarget( lua_State *L )
 {
    Ship *s;
-   LuaTex lt;
+   glTexture *tex;
 
    /* Get the ship. */
    s  = luaL_validship(L,1);
 
    /* Push graphic. */
-   lt.tex = gl_dupTexture( s->gfx_target );
-   if (lt.tex == NULL) {
+   tex = gl_dupTexture( s->gfx_target );
+   if (tex == NULL) {
       WARN("Unable to get ship target graphic for '%s'.", s->name);
       return 0;
    }
-   lua_pushtex( L, lt );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -513,18 +513,18 @@ static int shipL_gfxTarget( lua_State *L )
 static int shipL_gfx( lua_State *L )
 {
    Ship *s;
-   LuaTex lt;
+   glTexture *tex;
 
    /* Get the ship. */
    s  = luaL_validship(L,1);
 
    /* Push graphic. */
-   lt.tex = gl_dupTexture( s->gfx_space );
-   if (lt.tex == NULL) {
+   tex = gl_dupTexture( s->gfx_space );
+   if (tex == NULL) {
       WARN("Unable to get ship graphic for '%s'.", s->name);
       return 0;
    }
-   lua_pushtex( L, lt );
+   lua_pushtex( L, tex );
    return 1;
 }
 

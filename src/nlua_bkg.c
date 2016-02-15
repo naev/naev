@@ -99,14 +99,14 @@ static int bkgL_clear( lua_State *L )
  */
 static int bkgL_image( lua_State *L )
 {
-   LuaTex *lt;
+   glTexture *tex;
    double x,y, move, scale;
    LuaColour *lc;
    unsigned int id;
    int foreground;
 
    /* Parse parameters. */
-   lt    = luaL_checktex(L,1);
+   tex   = luaL_checktex(L,1);
    x     = luaL_checknumber(L,2);
    y     = luaL_checknumber(L,3);
    move  = luaL_checknumber(L,4);
@@ -121,7 +121,7 @@ static int bkgL_image( lua_State *L )
    }
 
    /* Create image. */
-   id = background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite, foreground );
+   id = background_addImage( tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite, foreground );
    lua_pushnumber(L,id);
    return 1;
 }

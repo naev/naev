@@ -502,14 +502,12 @@ static int factionL_allies( lua_State *L )
 static int factionL_logoSmall( lua_State *L )
 {
    int lf;
-   LuaTex lt;
    glTexture *tex;
    lf = luaL_validfaction(L,1);
    tex = faction_logoSmall( lf );
    if (tex == NULL)
       return 0;
-   lt.tex = gl_dupTexture( tex );
-   lua_pushtex( L, lt );
+   lua_pushtex( L, gl_dupTexture( tex ) );
    return 1;
 }
 
@@ -524,14 +522,12 @@ static int factionL_logoSmall( lua_State *L )
 static int factionL_logoTiny( lua_State *L )
 {
    int lf;
-   LuaTex lt;
    glTexture *tex;
    lf = luaL_validfaction(L,1);
    tex = faction_logoTiny( lf );
    if (tex == NULL)
       return 0;
-   lt.tex = gl_dupTexture( tex );
-   lua_pushtex( L, lt );
+   lua_pushtex( L, gl_dupTexture( tex ) );
    return 1;
 }
 

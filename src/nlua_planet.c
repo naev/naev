@@ -727,13 +727,13 @@ static int planetL_position( lua_State *L )
 static int planetL_gfxSpace( lua_State *L )
 {
    Planet *p;
-   LuaTex lt;
+   glTexture *tex;
    p        = luaL_validplanet(L,1);
    if (p->gfx_space == NULL) /* Not loaded. */
-      lt.tex   = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+      tex = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
    else
-      lt.tex   = gl_dupTexture( p->gfx_space );
-   lua_pushtex( L, lt );
+      tex = gl_dupTexture( p->gfx_space );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -749,10 +749,8 @@ static int planetL_gfxSpace( lua_State *L )
 static int planetL_gfxExterior( lua_State *L )
 {
    Planet *p;
-   LuaTex lt;
-   p        = luaL_validplanet(L,1);
-   lt.tex   = gl_newImage( p->gfx_exterior, 0 );
-   lua_pushtex( L, lt );
+   p = luaL_validplanet(L,1);
+   lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
    return 1;
 }
 
