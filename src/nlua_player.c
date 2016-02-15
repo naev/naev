@@ -406,10 +406,7 @@ static int playerL_getRating( lua_State *L )
  */
 static int playerL_getPosition( lua_State *L )
 {
-   LuaVector v;
-
-   vectcpy( &v.vec, &player.p->solid->pos );
-   lua_pushvector(L, v);
+   lua_pushvector(L, player.p->solid->pos);
    return 1;
 }
 

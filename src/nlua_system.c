@@ -886,15 +886,15 @@ static int systemL_mrkClear( lua_State *L )
 static int systemL_mrkAdd( lua_State *L )
 {
    const char *str;
-   LuaVector *lv;
+   Vector2d *vec;
    unsigned int id;
 
    /* Handle parameters. */
    str   = luaL_checkstring( L, 1 );
-   lv    = luaL_checkvector( L, 2 );
+   vec   = luaL_checkvector( L, 2 );
 
    /* Create marker. */
-   id    = ovr_mrkAddPoint( str, lv->vec.x, lv->vec.y );
+   id    = ovr_mrkAddPoint( str, vec->x, vec->y );
    lua_pushnumber( L, id );
    return 1;
 }

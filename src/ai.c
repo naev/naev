@@ -1181,7 +1181,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
 {
    const char *func;
    Task *t;
-   LuaVector *lv;
 
    /* Parse basic parameters. */
    func  = luaL_checkstring(L,1);
@@ -1201,8 +1200,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
       }
       else if (lua_isvector(L,2)) {
          t->dtype    = TASKDATA_VEC2;
-         lv          = lua_tovector(L,2);
-         vectcpy( &t->dat.vec, &lv->vec );
+         vectcpy( &t->dat.vec, lua_tovector(L,2) );
       }
       else
          NLUA_INVALID_PARAMETER(L);
@@ -1217,8 +1215,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
-   LuaVector lv;
-
    /* Pass task type. */
    switch (t->dtype) {
       case TASKDATA_INT:
@@ -1230,8 +1226,7 @@ static int ai_tasktarget( lua_State *L, Task *t )
          return 1;
 
       case TASKDATA_VEC2:
-         lv.vec = t->dat.vec;
-         lua_pushvector(L, lv);
+         lua_pushvector(L, t->dat.vec);
          return 1;
 
       default:
@@ -1484,14 +1479,11 @@ static int aiL_getnearestpilot( lua_State *L )
 static int aiL_getdistance( lua_State *L )
 {
    Vector2d *v;
-   LuaVector *lv;
    Pilot *p;
 
    /* vector as a parameter */
-   if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      v = &lv->vec;
-   }
+   if (lua_isvector(L,1))
+      v = lua_tovector(L,1);
 
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
@@ -1518,17 +1510,14 @@ static int aiL_getflybydistance( lua_State *L )
 {
    Vector2d *v;
    Vector2d perp_motion_unit, offset_vect;
-   LuaVector *lv;
    Pilot *p;
    int offset_distance;
 
    v = NULL;
 
    /* vector as a parameter */
-   if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      v = &lv->vec;
-   }
+   if (lua_isvector(L,1))
+      v = lua_tovector(L,1);
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
@@ -1781,7 +1770,6 @@ static int aiL_turn( lua_State *L )
  */
 static int aiL_face( lua_State *L )
 {
-   LuaVector *lv;
    Vector2d *tv; /* get the position to face */
    Pilot* p;
    double k_diff, k_vel, d, diff, vx, vy, dx, dy;
@@ -1800,10 +1788,8 @@ static int aiL_face( lua_State *L )
       else
          NLUA_INVALID_PARAMETER(L);
    }
-   else if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      tv = &lv->vec;
-   }
+   else if (lua_isvector(L,1))
+      tv = lua_tovector(L,1);
    else
       NLUA_INVALID_PARAMETER(L);
 
@@ -1878,7 +1864,6 @@ static int aiL_face( lua_State *L )
  */
 static int aiL_careful_face( lua_State *L )
 {
-   LuaVector *lv;
    Vector2d *tv, F, F1;
    Pilot* p;
    Pilot *p_i;
@@ -1902,10 +1887,8 @@ static int aiL_careful_face( lua_State *L )
       else
          NLUA_INVALID_PARAMETER(L);
    }
-   else if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      tv = &lv->vec;
-   }
+   else if (lua_isvector(L,1))
+      tv = lua_tovector(L,1);
    else
       NLUA_INVALID_PARAMETER(L);
 
@@ -2055,8 +2038,7 @@ static int aiL_aim( lua_State *L )
 static int aiL_iface( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaVector *lv;
-   Vector2d drift, reference_vector; /* get the position to face */
+   Vector2d *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    int azimuthal_sign;
@@ -2064,14 +2046,14 @@ static int aiL_iface( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
-   lv = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1))
       p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   if (lv==NULL) {
+   if (vec==NULL) {
       if (p == NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
@@ -2083,7 +2065,7 @@ static int aiL_iface( lua_State *L )
       /* Establish the current pilot velocity and position vectors */
       vect_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
       /* Establish the in-line coordinate reference */
-      vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
+      vect_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid->pos), VY(*vec) - VY(cur_pilot->solid->pos));
    }
 
    /* Break down the the velocity vectors of both craft into UV coordinates */
@@ -2145,33 +2127,32 @@ static int aiL_iface( lua_State *L )
 static int aiL_dir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaVector *lv;
-   Vector2d sv, tv; /* get the position to face */
+   Vector2d *vec, sv, tv; /* get the position to face */
    Pilot* p;
    double diff;
    int n;
 
    /* Get first parameter, aka what to face. */
    n  = -2;
-   lv = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
       vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
    }
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
-   if (lv==NULL) /* target is dynamic */
+   if (vec==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid->dir,
             (n==-1) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
       diff = angle_diff( cur_pilot->solid->dir,
             (n==-1) ? VANGLE(cur_pilot->solid->pos) :
-            vect_angle(&cur_pilot->solid->pos, &lv->vec));
+            vect_angle(&cur_pilot->solid->pos, vec));
 
 
    /* Return angle in degrees away from target. */
@@ -2189,8 +2170,7 @@ static int aiL_dir( lua_State *L )
 static int aiL_idir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaVector *lv;
-   Vector2d drift, reference_vector; /* get the position to face */
+   Vector2d *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    double speedmap;
@@ -2198,14 +2178,14 @@ static int aiL_idir( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
-   lv = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1))
       p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   if (lv==NULL) {
+   if (vec==NULL) {
       if (p == NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
@@ -2217,7 +2197,7 @@ static int aiL_idir( lua_State *L )
       /* Establish the current pilot velocity and position vectors */
       vect_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
       /* Establish the in-line coordinate reference */
-      vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
+      vect_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid->pos), VY(*vec) - VY(cur_pilot->solid->pos));
    }
 
    /* Break down the the velocity vectors of both craft into UV coordinates */
@@ -2469,7 +2449,7 @@ static int aiL_nearhyptarget( lua_State *L )
    JumpPoint *jp, *jiter;
    double mindist, dist;
    int i, j;
-   LuaVector lv;
+   Vector2d vec;
    double a, rad;
 
    /* No jumps. */
@@ -2498,18 +2478,18 @@ static int aiL_nearhyptarget( lua_State *L )
       return 0;
 
    /* Copy vector. */
-   vectcpy( &lv.vec, &jp->pos );
+   vectcpy( &vec, &jp->pos );
 
    /* Introduce some error. */
    a     = RNGF() * M_PI * 2.;
    rad   = RNGF() * 0.5 * jp->radius;
-   vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
+   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
 
    /* Set up target. */
    cur_pilot->nav_hyperspace = j;
 
    /* Return vector. */
-   lua_pushvector( L, lv );
+   lua_pushvector( L, vec );
    return 1;
 }
 
@@ -2521,7 +2501,7 @@ static int aiL_rndhyptarget( lua_State *L )
 {
    JumpPoint **jumps, *jiter;
    int i, j, r;
-   LuaVector lv;
+   Vector2d vec;
    int *id;
    double a, rad;
 
@@ -2546,12 +2526,12 @@ static int aiL_rndhyptarget( lua_State *L )
    r = RNG(0, j-1);
 
    /* Set up data. */
-   vectcpy( &lv.vec, &jumps[r]->pos );
+   vectcpy( &vec, &jumps[r]->pos );
 
    /* Introduce some error. */
    a     = RNGF() * M_PI * 2.;
    rad   = RNGF() * 0.5 * jumps[r]->radius;
-   vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
+   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
 
    /* Set up target. */
    cur_pilot->nav_hyperspace = id[r];
@@ -2561,7 +2541,7 @@ static int aiL_rndhyptarget( lua_State *L )
    free(id);
 
    /* Return vector. */
-   lua_pushvector( L, lv );
+   lua_pushvector( L, vec );
    return 1;
 }
 
@@ -2620,7 +2600,6 @@ static int aiL_relvel( lua_State *L )
 static int aiL_follow_accurate( lua_State *L )
 {
    Vector2d point, cons, goal, pv;
-   LuaVector lv;
    double radius, angle, Kp, Kd, angle2;
    Pilot *p, *target;
    const char *method;
@@ -2658,10 +2637,8 @@ static int aiL_follow_accurate( lua_State *L )
 
    vect_cset( &goal, cons.x + p->solid->pos.x, cons.y + p->solid->pos.y);
 
-   vectcpy( &lv.vec, &goal );
-
    /* Push info */
-   lua_pushvector( L, lv );
+   lua_pushvector( L, goal );
 
    return 1;
 

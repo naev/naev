@@ -424,7 +424,6 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaFaction lf;
-   LuaVector *lv;
    LuaSystem *ls;
    StarSystem *ss;
    Planet *planet;
@@ -476,8 +475,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    /* Handle third argument. */
    if (lua_isvector(L,3)) {
-      lv = lua_tovector(L,3);
-      vectcpy( &vp, &lv->vec );
+      vp = *lua_tovector(L,3);
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
@@ -1684,14 +1682,12 @@ static int pilotL_rename( lua_State *L )
 static int pilotL_position( lua_State *L )
 {
    Pilot *p;
-   LuaVector v;
 
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
 
    /* Push position. */
-   vectcpy( &v.vec, &p->solid->pos );
-   lua_pushvector(L, v);
+   lua_pushvector(L, p->solid->pos);
    return 1;
 }
 
@@ -1707,14 +1703,12 @@ static int pilotL_position( lua_State *L )
 static int pilotL_velocity( lua_State *L )
 {
    Pilot *p;
-   LuaVector v;
 
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
 
    /* Push velocity. */
-   vectcpy( &v.vec, &p->solid->vel );
-   lua_pushvector(L, v);
+   lua_pushvector(L, p->solid->vel);
    return 1;
 }
 
@@ -1839,14 +1833,14 @@ static int pilotL_spaceworthy( lua_State *L )
 static int pilotL_setPosition( lua_State *L )
 {
    Pilot *p;
-   LuaVector *v;
+   Vector2d *vec;
 
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
-   v     = luaL_checkvector(L,2);
+   vec   = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
-   vectcpy( &p->solid->pos, &v->vec );
+   vectcpy( &p->solid->pos, vec );
 
    /* Update if necessary. */
    if (pilot_isPlayer(p))
@@ -1867,14 +1861,14 @@ static int pilotL_setPosition( lua_State *L )
 static int pilotL_setVelocity( lua_State *L )
 {
    Pilot *p;
-   LuaVector *v;
+   Vector2d *vec;
 
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
-   v     = luaL_checkvector(L,2);
+   vec   = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
-   vectcpy( &p->solid->vel, &v->vec );
+   vectcpy( &p->solid->vel, vec );
    return 0;
 }
 
@@ -3698,13 +3692,13 @@ static int pilotL_goto( lua_State *L )
 {
    Pilot *p;
    Task *t;
-   LuaVector *lv;
+   Vector2d *vec;
    int brake, compensate;
    const char *tsk;
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
-   lv = luaL_checkvector(L,2);
+   vec = luaL_checkvector(L,2);
    if (lua_gettop(L) > 2)
       brake = lua_toboolean(L,3);
    else
@@ -3727,7 +3721,7 @@ static int pilotL_goto( lua_State *L )
    }
    t        = pilotL_newtask( L, p, tsk );
    t->dtype = TASKDATA_VEC2;
-   vectcpy( &t->dat.vec, &lv->vec );
+   vectcpy( &t->dat.vec, vec );
 
    return 0;
 }
@@ -3748,18 +3742,18 @@ static int pilotL_goto( lua_State *L )
 static int pilotL_face( lua_State *L )
 {
    Pilot *p, *pt;
-   LuaVector *vt;
+   Vector2d *vec;
    Task *t;
    int towards;
 
    /* Get parameters. */
    pt = NULL;
-   vt = NULL;
+   vec = NULL;
    p  = luaL_validpilot(L,1);
    if (lua_ispilot(L,2))
       pt = luaL_validpilot(L,2);
    else
-      vt = luaL_checkvector(L,2);
+      vec = luaL_checkvector(L,2);
    if (lua_gettop(L) > 2)
       towards = lua_toboolean(L,3);
    else
@@ -3776,7 +3770,7 @@ static int pilotL_face( lua_State *L )
    }
    else {
       t->dtype = TASKDATA_VEC2;
-      vectcpy( &t->dat.vec, &vt->vec );
+      vectcpy( &t->dat.vec, vec );
    }
 
    return 0;

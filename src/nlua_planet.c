@@ -721,10 +721,8 @@ static int planetL_getLandOverride( lua_State *L )
 static int planetL_position( lua_State *L )
 {
    Planet *p;
-   LuaVector v;
    p = luaL_validplanet(L,1);
-   vectcpy(&v.vec, &p->pos);
-   lua_pushvector(L, v);
+   lua_pushvector(L, p->pos);
    return 1;
 }
 
