@@ -3289,14 +3289,12 @@ static int pilotL_getColour( lua_State *L )
 {
    Pilot *p;
    const glColour *col;
-   LuaColour lc;
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
    col = pilot_getColour(p);
-   memcpy( &lc.col, col, sizeof(glColour) );
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, *col );
 
    return 1;
 }

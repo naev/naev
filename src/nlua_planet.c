@@ -561,13 +561,11 @@ static int planetL_colour( lua_State *L )
 {
    Planet *p;
    const glColour *col;
-   LuaColour lc;
 
    p = luaL_validplanet(L,1);
    col = planet_getColour( p );
 
-   memcpy( &lc.col, col, sizeof(glColour) );
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, *col );
 
    return 1;
 }

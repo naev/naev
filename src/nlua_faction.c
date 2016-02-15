@@ -542,14 +542,12 @@ static int factionL_logoTiny( lua_State *L )
 static int factionL_colour( lua_State *L )
 {
    int lf;
-   LuaColour lc;
    const glColour *col;
    lf = luaL_validfaction(L,1);
    col = faction_getColour(lf);
    if (col == NULL)
       return 0;
-   memcpy( &lc.col, col, sizeof(glColour) );
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, *col );
    return 1;
 }
 
