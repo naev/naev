@@ -822,7 +822,6 @@ static int planetL_commoditiesSold( lua_State *L )
 {
    Planet *p;
    int i, n;
-   LuaCommodity lc;
    Commodity **c;
 
    /* Get result and tech. */
@@ -833,8 +832,7 @@ static int planetL_commoditiesSold( lua_State *L )
    lua_newtable(L);
    for (i=0; i<n; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lc.commodity = c[i];
-      lua_pushcommodity(L,lc); /* value = LuaCommodity */
+      lua_pushcommodity(L,c[i]); /* value = LuaCommodity */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
