@@ -150,7 +150,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Run generic hail hooks. */
    hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = p->id;
+   hparam[0].u.lp       = p->id;
    hparam[1].type       = HOOK_PARAM_SENTINEL;
    run = 0;
    run += hooks_runParam( "hail", hparam );

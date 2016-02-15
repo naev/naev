@@ -881,11 +881,10 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
    int errf;
    lua_State *L;
    HookParam hparam[2];
-   LuaPilot lp;
 
    /* Custom hook parameters. */
    hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = attacker;
+   hparam[0].u.lp       = attacker;
    hparam[1].type       = HOOK_PARAM_NUMBER;
    hparam[1].u.num      = dmg;
 
@@ -910,8 +909,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    lua_getglobal(L, "attacked");
 
-   lp.pilot = attacker;
-   lua_pushpilot(L, lp);
+   lua_pushpilot(L, attacker);
    if (lua_pcall(L, 1, 0, errf)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -955,7 +953,6 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
    lua_State *L;
-   LuaPilot ldistressed, lattacker;
    int errf;
 
    /* Ignore distress signals when under manual control. */
@@ -988,14 +985,12 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    }
 
    /* Run the function. */
-   ldistressed.pilot = distressed->id;
+   lua_pushpilot(L, distressed->id);
    if (attacker != NULL)
-      lattacker.pilot = attacker->id;
+      lua_pushpilot(L, attacker->id);
    else /* Default to the victim's current target. */
-      lattacker.pilot = distressed->target;
-
-   lua_pushpilot(L, ldistressed);
-   lua_pushpilot(L, lattacker);
+      lua_pushpilot(L, distressed->target);
+   
    if (lua_pcall(L, 2, 0, errf)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -1016,7 +1011,6 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot, char *param )
 {
-   LuaPilot lp;
    lua_State *L;
    int errf, nparam;
    char *func;
@@ -1041,8 +1035,7 @@ static void ai_create( Pilot* pilot, char *param )
       errf = -3;
 #endif /* DEBUGGING */
       lua_getglobal(L, func);
-      lp.pilot = pilot->id;
-      lua_pushpilot(L,lp);
+      lua_pushpilot(L,pilot->id);
       if (lua_pcall(L, 1, 0, errf)) { /* Error has occurred. */
          WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(L,-1));
          lua_pop(L,1);
@@ -1080,14 +1073,12 @@ static void ai_create( Pilot* pilot, char *param )
    if (param != NULL) {
       /* Number */
       if (isdigit(param[0])) {
-         lp.pilot = atoi(param);
-         lua_pushpilot(L,lp);
+         lua_pushpilot(L,atoi(param));
       }
       /* Special case player. */
       else if (strcmp(param,"player")==0) {
       /* Special case player. */
-         lp.pilot = PLAYER_ID;
-         lua_pushpilot(L,lp);
+         lua_pushpilot(L,PLAYER_ID);
       }
       /* Default. */
       else
@@ -1188,8 +1179,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
 {
    const char *func;
    Task *t;
-   LuaVector *lv;
-   LuaPilot *p;
 
    /* Parse basic parameters. */
    func  = luaL_checkstring(L,1);
@@ -1204,14 +1193,12 @@ static Task* ai_createTask( lua_State *L, int subtask )
          t->dat.num  = (unsigned int)lua_tonumber(L,2);
       }
       else if (lua_ispilot(L,2)) {
-         p = luaL_checkpilot(L,2);
          t->dtype = TASKDATA_PILOT;
-	 t->dat.num = p->pilot;
+	 t->dat.num = luaL_checkpilot(L,2);
       }
       else if (lua_isvector(L,2)) {
          t->dtype    = TASKDATA_VEC2;
-         lv          = lua_tovector(L,2);
-         vectcpy( &t->dat.vec, &lv->vec );
+         vectcpy( &t->dat.vec, lua_tovector(L,2) );
       }
       else
          NLUA_INVALID_PARAMETER(L);
@@ -1226,9 +1213,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
-   LuaPilot p;
-   LuaVector lv;
-
    /* Pass task type. */
    switch (t->dtype) {
       case TASKDATA_INT:
@@ -1236,13 +1220,11 @@ static int ai_tasktarget( lua_State *L, Task *t )
          return 1;
 
       case TASKDATA_PILOT:
-         p.pilot = t->dat.num;
-         lua_pushpilot(L, p);
+         lua_pushpilot(L, t->dat.num);
          return 1;
 
       case TASKDATA_VEC2:
-         lv.vec = t->dat.vec;
-         lua_pushvector(L, lv);
+         lua_pushvector(L, t->dat.vec);
          return 1;
 
       default:
@@ -1423,10 +1405,7 @@ static int aiL_getsubtarget( lua_State *L )
  */
 static int aiL_pilot( lua_State *L )
 {
-   LuaPilot p;
-   p.pilot = cur_pilot->id;
-
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, cur_pilot->id);
    return 1;
 }
 
@@ -1441,7 +1420,6 @@ static int aiL_pilot( lua_State *L )
 static int aiL_getrndpilot( lua_State *L )
 {
    int p;
-   LuaPilot lp;
 
    p = RNG(0, pilot_nstack-1);
    /* Make sure it can't be the same pilot. */
@@ -1454,8 +1432,7 @@ static int aiL_getrndpilot( lua_State *L )
    if (pilot_stack[p]->id == cur_pilot->id)
       return 0;
    /* Actually found a pilot. */
-   lp.pilot = pilot_stack[p]->id;
-   lua_pushpilot(L, lp);
+   lua_pushpilot(L, pilot_stack[p]->id);
    return 1;
 }
 
@@ -1473,7 +1450,6 @@ static int aiL_getnearestpilot( lua_State *L )
    int dist=1000;
    int i;
    int candidate_id = -1;
-   LuaPilot p;
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
 
@@ -1491,8 +1467,7 @@ static int aiL_getnearestpilot( lua_State *L )
       return 0;
 
    /* Actually found a pilot. */
-   p.pilot = pilot_stack[candidate_id]->id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, pilot_stack[candidate_id]->id);
    return 1;
 }
 
@@ -1506,14 +1481,11 @@ static int aiL_getnearestpilot( lua_State *L )
 static int aiL_getdistance( lua_State *L )
 {
    Vector2d *v;
-   LuaVector *lv;
    Pilot *p;
 
    /* vector as a parameter */
-   if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      v = &lv->vec;
-   }
+   if (lua_isvector(L,1))
+      v = lua_tovector(L,1);
 
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
@@ -1540,17 +1512,14 @@ static int aiL_getflybydistance( lua_State *L )
 {
    Vector2d *v;
    Vector2d perp_motion_unit, offset_vect;
-   LuaVector *lv;
    Pilot *p;
    int offset_distance;
 
    v = NULL;
 
    /* vector as a parameter */
-   if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      v = &lv->vec;
-   }
+   if (lua_isvector(L,1))
+      v = lua_tovector(L,1);
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
@@ -1816,7 +1785,6 @@ static int aiL_turn( lua_State *L )
  */
 static int aiL_face( lua_State *L )
 {
-   LuaVector *lv;
    Vector2d *tv; /* get the position to face */
    Pilot* p;
    double k_diff, k_vel, d, diff, vx, vy, dx, dy;
@@ -1835,10 +1803,8 @@ static int aiL_face( lua_State *L )
       else
          NLUA_INVALID_PARAMETER(L);
    }
-   else if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      tv = &lv->vec;
-   }
+   else if (lua_isvector(L,1))
+      tv = lua_tovector(L,1);
    else
       NLUA_INVALID_PARAMETER(L);
 
@@ -1913,7 +1879,6 @@ static int aiL_face( lua_State *L )
  */
 static int aiL_careful_face( lua_State *L )
 {
-   LuaVector *lv;
    Vector2d *tv, F, F1;
    Pilot* p;
    Pilot *p_i;
@@ -1937,10 +1902,8 @@ static int aiL_careful_face( lua_State *L )
       else
          NLUA_INVALID_PARAMETER(L);
    }
-   else if (lua_isvector(L,1)) {
-      lv = lua_tovector(L,1);
-      tv = &lv->vec;
-   }
+   else if (lua_isvector(L,1))
+      tv = lua_tovector(L,1);
    else
       NLUA_INVALID_PARAMETER(L);
 
@@ -2090,8 +2053,7 @@ static int aiL_aim( lua_State *L )
 static int aiL_iface( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaVector *lv;
-   Vector2d drift, reference_vector; /* get the position to face */
+   Vector2d *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    int azimuthal_sign;
@@ -2099,14 +2061,14 @@ static int aiL_iface( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
-   lv = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1))
       p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   if (lv==NULL) {
+   if (vec==NULL) {
       if (p == NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
@@ -2118,7 +2080,7 @@ static int aiL_iface( lua_State *L )
       /* Establish the current pilot velocity and position vectors */
       vect_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
       /* Establish the in-line coordinate reference */
-      vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
+      vect_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid->pos), VY(*vec) - VY(cur_pilot->solid->pos));
    }
 
    /* Break down the the velocity vectors of both craft into UV coordinates */
@@ -2180,33 +2142,32 @@ static int aiL_iface( lua_State *L )
 static int aiL_dir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaVector *lv;
-   Vector2d sv, tv; /* get the position to face */
+   Vector2d *vec, sv, tv; /* get the position to face */
    Pilot* p;
    double diff;
    int n;
 
    /* Get first parameter, aka what to face. */
    n  = -2;
-   lv = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
       vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
    }
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
-   if (lv==NULL) /* target is dynamic */
+   if (vec==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid->dir,
             (n==-1) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
       diff = angle_diff( cur_pilot->solid->dir,
             (n==-1) ? VANGLE(cur_pilot->solid->pos) :
-            vect_angle(&cur_pilot->solid->pos, &lv->vec));
+            vect_angle(&cur_pilot->solid->pos, vec));
 
 
    /* Return angle in degrees away from target. */
@@ -2224,8 +2185,7 @@ static int aiL_dir( lua_State *L )
 static int aiL_idir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaVector *lv;
-   Vector2d drift, reference_vector; /* get the position to face */
+   Vector2d *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    double speedmap;
@@ -2233,14 +2193,14 @@ static int aiL_idir( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
-   lv = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1))
       p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   if (lv==NULL) {
+   if (vec==NULL) {
       if (p == NULL)
          return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
@@ -2252,7 +2212,7 @@ static int aiL_idir( lua_State *L )
       /* Establish the current pilot velocity and position vectors */
       vect_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
       /* Establish the in-line coordinate reference */
-      vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
+      vect_cset( &reference_vector, VX(*vec) - VX(cur_pilot->solid->pos), VY(*vec) - VY(cur_pilot->solid->pos));
    }
 
    /* Break down the the velocity vectors of both craft into UV coordinates */
@@ -2347,7 +2307,7 @@ static int aiL_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   planet.id = cur_system->planets[j]->id;
+   planet = cur_system->planets[j]->id;
    lua_pushplanet(L, planet);
 
    return 1;
@@ -2371,7 +2331,7 @@ static int aiL_getrndplanet( lua_State *L )
    p = RNG(0, cur_system->nplanets-1);
 
    /* Copy the data into a vector */
-   planet.id = cur_system->planets[p]->id;
+   planet = cur_system->planets[p]->id;
    lua_pushplanet(L, planet);
 
    return 1;
@@ -2426,7 +2386,7 @@ static int aiL_getlandplanet( lua_State *L )
    /* we can actually get a random planet now */
    i = RNG(0,nplanets-1);
    p = cur_system->planets[ ind[i] ];
-   planet.id = p->id;
+   planet = p->id;
    lua_pushplanet( L, planet );
    cur_pilot->nav_planet   = ind[ i ];
    free(ind);
@@ -2479,7 +2439,7 @@ static int aiL_land( lua_State *L )
       pilot_setFlag( cur_pilot, PILOT_LANDING );
 
       hparam.type    = HOOK_PARAM_ASSET;
-      hparam.u.la.id = planet->id;
+      hparam.u.la    = planet->id;
 
       pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
    }
@@ -2522,7 +2482,7 @@ static int aiL_nearhyptarget( lua_State *L )
    JumpPoint *jp, *jiter;
    double mindist, dist;
    int i, j;
-   LuaVector lv;
+   Vector2d vec;
    double a, rad;
 
    /* No jumps. */
@@ -2551,18 +2511,18 @@ static int aiL_nearhyptarget( lua_State *L )
       return 0;
 
    /* Copy vector. */
-   vectcpy( &lv.vec, &jp->pos );
+   vectcpy( &vec, &jp->pos );
 
    /* Introduce some error. */
    a     = RNGF() * M_PI * 2.;
    rad   = RNGF() * 0.5 * jp->radius;
-   vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
+   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
 
    /* Set up target. */
    cur_pilot->nav_hyperspace = j;
 
    /* Return vector. */
-   lua_pushvector( L, lv );
+   lua_pushvector( L, vec );
    return 1;
 }
 
@@ -2577,7 +2537,7 @@ static int aiL_rndhyptarget( lua_State *L )
 {
    JumpPoint **jumps, *jiter;
    int i, j, r;
-   LuaVector lv;
+   Vector2d vec;
    int *id;
    double a, rad;
 
@@ -2602,12 +2562,12 @@ static int aiL_rndhyptarget( lua_State *L )
    r = RNG(0, j-1);
 
    /* Set up data. */
-   vectcpy( &lv.vec, &jumps[r]->pos );
+   vectcpy( &vec, &jumps[r]->pos );
 
    /* Introduce some error. */
    a     = RNGF() * M_PI * 2.;
    rad   = RNGF() * 0.5 * jumps[r]->radius;
-   vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
+   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
 
    /* Set up target. */
    cur_pilot->nav_hyperspace = id[r];
@@ -2617,7 +2577,7 @@ static int aiL_rndhyptarget( lua_State *L )
    free(id);
 
    /* Return vector. */
-   lua_pushvector( L, lv );
+   lua_pushvector( L, vec );
    return 1;
 }
 
@@ -2673,7 +2633,6 @@ static int aiL_relvel( lua_State *L )
 static int aiL_follow_accurate( lua_State *L )
 {
    Vector2d point, cons, goal, pv;
-   LuaVector lv;
    double radius, angle, Kp, Kd, angle2;
    Pilot *p, *target;
    const char *method;
@@ -2711,10 +2670,8 @@ static int aiL_follow_accurate( lua_State *L )
 
    vect_cset( &goal, cons.x + p->solid->pos.x, cons.y + p->solid->pos.y);
 
-   vectcpy( &lv.vec, &goal );
-
    /* Push info */
-   lua_pushvector( L, lv );
+   lua_pushvector( L, goal );
 
    return 1;
 
@@ -2975,15 +2932,13 @@ static int aiL_shoot( lua_State *L )
 static int aiL_getenemy( lua_State *L )
 {
    unsigned int id;
-   LuaPilot p;
 
    id = pilot_getNearestEnemy(cur_pilot);
 
    if (id==0) /* No enemy found */
       return 0;
 
-   p.pilot = id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, id);
 
    return 1;
 }
@@ -2998,7 +2953,6 @@ static int aiL_getenemy( lua_State *L )
 static int aiL_getenemy_size( lua_State *L )
 {
    unsigned int id;
-   LuaPilot p;
    unsigned int LB, UB;
 
    NLUA_MIN_ARGS(2);
@@ -3016,8 +2970,7 @@ static int aiL_getenemy_size( lua_State *L )
    if (id==0) /* No enemy found */
       return 0;
 
-   p.pilot = id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, id);
    return 1;
 }
 
@@ -3036,7 +2989,6 @@ static int aiL_getenemy_heuristic( lua_State *L )
 {
 
    unsigned int id;
-   LuaPilot p;
    double mass_factor, health_factor, damage_factor, range_factor;
 
    mass_factor    = luaL_checklong(L,1);
@@ -3050,8 +3002,7 @@ static int aiL_getenemy_heuristic( lua_State *L )
    if (id==0) /* No enemy found */
       return 0;
 
-   p.pilot = id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, id);
    return 1;
 }
 

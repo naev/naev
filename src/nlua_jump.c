@@ -334,10 +334,8 @@ static int jumpL_eq( lua_State *L )
 static int jumpL_position( lua_State *L )
 {
    JumpPoint *jp;
-   LuaVector v;
    jp = luaL_validjump(L,1);
-   vectcpy(&v.vec, &jp->pos);
-   lua_pushvector(L, v);
+   lua_pushvector(L, jp->pos);
    return 1;
 }
 

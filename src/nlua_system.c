@@ -669,7 +669,6 @@ static int systemL_presences( lua_State *L )
 static int systemL_planets( lua_State *L )
 {
    int i, key;
-   LuaPlanet p;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
@@ -678,11 +677,10 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<s->nplanets; i++) {
-      p.id = planet_index( s->planets[i] );
       if(s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
-         lua_pushplanet(L,p); /* value */
+         lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
          lua_rawset(L,-3);
       }
    }
@@ -886,15 +884,15 @@ static int systemL_mrkClear( lua_State *L )
 static int systemL_mrkAdd( lua_State *L )
 {
    const char *str;
-   LuaVector *lv;
+   Vector2d *vec;
    unsigned int id;
 
    /* Handle parameters. */
    str   = luaL_checkstring( L, 1 );
-   lv    = luaL_checkvector( L, 2 );
+   vec   = luaL_checkvector( L, 2 );
 
    /* Create marker. */
-   id    = ovr_mrkAddPoint( str, lv->vec.x, lv->vec.y );
+   id    = ovr_mrkAddPoint( str, vec->x, vec->y );
    lua_pushnumber( L, id );
    return 1;
 }
