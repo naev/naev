@@ -94,7 +94,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    int ret, b;
    LuaSystem *s;
    Ship *sh;
-   LuaTime *lt;
+   ntime_t t;
    LuaJump *lj;
    Planet *pnt;
    StarSystem *ss, *dest;
@@ -228,8 +228,8 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_istime(L,-1)) {
-            lt = lua_totime(L,-1);
-            nsnprintf( buf, sizeof(buf), "%"PRId64, lt->t );
+            t = *lua_totime(L,-1);
+            nsnprintf( buf, sizeof(buf), "%"PRId64, t );
             nxml_saveData( writer, "time",
                   name, buf, keynum );
             /* key, value */
@@ -294,7 +294,6 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
    LuaSystem s;
-   LuaTime lt;
    LuaJump lj;
    Planet *pnt;
    StarSystem *ss, *dest;
@@ -356,8 +355,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"ship")==0)
             lua_pushship(L,ship_get(xml_get(node)));
          else if (strcmp(type,"time")==0) {
-            lt.t = xml_getLong(node);
-            lua_pushtime(L,lt);
+            lua_pushtime(L,xml_getLong(node));
          }
          else if (strcmp(type,"jump")==0) {
             ss = system_get(xml_get(node));
