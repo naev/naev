@@ -779,7 +779,6 @@ static int planetL_shipsSold( lua_State *L )
 {
    Planet *p;
    int i, n;
-   LuaShip ls;
    Ship **s;
 
    /* Get result and tech. */
@@ -790,8 +789,7 @@ static int planetL_shipsSold( lua_State *L )
    lua_newtable(L);
    for (i=0; i<n; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      ls.ship = s[i];
-      lua_pushship(L,ls); /* value = LuaShip */
+      lua_pushship(L,s[i]); /* value = LuaShip */
       lua_rawset(L,-3); /* store the value in the table */
    }
 

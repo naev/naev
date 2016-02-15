@@ -95,7 +95,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    LuaPlanet *p;
    LuaSystem *s;
    LuaFaction *f;
-   LuaShip *sh;
+   Ship *sh;
    LuaTime *lt;
    LuaJump *lj;
    Planet *pnt;
@@ -223,7 +223,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          }
          else if (lua_isship(L,-1)) {
             sh = lua_toship(L,-1);
-            str = sh->ship->name;
+            str = sh->name;
             if (str == NULL)
                break;
             nxml_saveData( writer, "ship",
@@ -300,7 +300,6 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    LuaPlanet p;
    LuaSystem s;
    LuaFaction f;
-   LuaShip sh;
    LuaTime lt;
    LuaJump lj;
    Planet *pnt;
@@ -362,10 +361,8 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             f.f = faction_get(xml_get(node));
             lua_pushfaction(L,f);
          }
-         else if (strcmp(type,"ship")==0) {
-            sh.ship = ship_get(xml_get(node));
-            lua_pushship(L,sh);
-         }
+         else if (strcmp(type,"ship")==0)
+            lua_pushship(L,ship_get(xml_get(node)));
          else if (strcmp(type,"time")==0) {
             lt.t = xml_getLong(node);
             lua_pushtime(L,lt);
