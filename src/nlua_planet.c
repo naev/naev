@@ -801,7 +801,6 @@ static int planetL_outfitsSold( lua_State *L )
 {
    Planet *p;
    int i, n;
-   LuaOutfit lo;
    Outfit **o;
 
    /* Get result and tech. */
@@ -812,8 +811,7 @@ static int planetL_outfitsSold( lua_State *L )
    lua_newtable(L);
    for (i=0; i<n; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lo.outfit = o[i];
-      lua_pushoutfit(L,lo); /* value = LuaOutfit */
+      lua_pushoutfit(L,o[i]); /* value = LuaOutfit */
       lua_rawset(L,-3); /* store the value in the table */
    }
 

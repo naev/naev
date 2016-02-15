@@ -341,7 +341,6 @@ static int shipL_getSlots( lua_State *L )
    Ship *s;
    OutfitSlot *slot;
    ShipOutfitSlot *sslot;
-   LuaOutfit lo;
    char *outfit_types[] = {"structure", "utility", "weapon"};
 
    s = luaL_validship(L,1);
@@ -387,9 +386,8 @@ static int shipL_getSlots( lua_State *L )
       lua_rawset(L, -3); /* table[key] = value */
 
       if (sslot->data != NULL) {
-         lo.outfit = sslot->data;
          lua_pushstring(L, "outfit"); /* key */
-         lua_pushoutfit(L, lo); /* value*/
+         lua_pushoutfit(L, sslot->data); /* value*/
          lua_rawset(L, -3); /* table[key] = value */
       }
 
