@@ -669,7 +669,6 @@ static int systemL_presences( lua_State *L )
 static int systemL_planets( lua_State *L )
 {
    int i, key;
-   LuaPlanet p;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
@@ -678,11 +677,10 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<s->nplanets; i++) {
-      p.id = planet_index( s->planets[i] );
       if(s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
-         lua_pushplanet(L,p); /* value */
+         lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
          lua_rawset(L,-3);
       }
    }

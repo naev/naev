@@ -1221,7 +1221,7 @@ void space_update( const double dt )
             hparam[0].type  = HOOK_PARAM_STRING;
             hparam[0].u.str = "asset";
             hparam[1].type  = HOOK_PARAM_ASSET;
-            hparam[1].u.la.id = cur_system->planets[i]->id;
+            hparam[1].u.la  = cur_system->planets[i]->id;
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
          }
@@ -1532,7 +1532,6 @@ void planet_updateLand( Planet *p )
    int errf;
    char *str;
    lua_State *L;
-   LuaPlanet lp;
 
    /* Must be inhabited. */
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
@@ -1563,8 +1562,7 @@ void planet_updateLand( Planet *p )
    else
       str = p->land_func;
    lua_getglobal( L, str );
-   lp.id = p->id;
-   lua_pushplanet( L, lp );
+   lua_pushplanet( L, p->id );
    if (lua_pcall(L, 1, 5, errf)) { /* error has occurred */
       WARN("Landing: '%s' : %s", str, lua_tostring(L,-1));
 #if DEBUGGING

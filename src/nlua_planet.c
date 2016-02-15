@@ -197,7 +197,7 @@ Planet* luaL_validplanet( lua_State *L, int ind )
 
    if (lua_isplanet(L, ind)) {
       lp = luaL_checkplanet(L, ind);
-      p  = planet_getIndex(lp->id);
+      p  = planet_getIndex(*lp);
    }
    else if (lua_isstring(L, ind))
       p = planet_get( lua_tostring(L, ind) );
@@ -261,14 +261,12 @@ int lua_isplanet( lua_State *L, int ind )
  */
 static int planetL_cur( lua_State *L )
 {
-   LuaPlanet planet;
    LuaSystem sys;
    if (land_planet == NULL) {
       NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
       return 0; /* Not landed. */
    }
-   planet.id = planet_index(land_planet);
-   lua_pushplanet(L,planet);
+   lua_pushplanet(L,planet_index(land_planet));
    sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
    lua_pushsystem(L,sys);
    return 2;
@@ -283,7 +281,6 @@ static int planetL_getBackend( lua_State *L, int landable )
    char **planets;
    int nplanets;
    const char *rndplanet;
-   LuaPlanet planet;
    LuaSystem luasys;
    LuaFaction *f;
    Planet *pnt;
@@ -297,8 +294,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
       pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
-      planet.id      = planet_index( pnt );
-      lua_pushplanet(L,planet);
+      lua_pushplanet(L,planet_index( pnt ));
       luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
       lua_pushsystem(L,luasys);
       return 2;
@@ -392,8 +388,7 @@ static int planetL_getBackend( lua_State *L, int landable )
       NLUA_ERROR(L, "Planet '%s' can't find system '%s'", rndplanet, sysname);
       return 0;
    }
-   planet.id = planet_index( pnt );
-   lua_pushplanet(L,planet);
+   lua_pushplanet(L,planet_index( pnt ));
    luasys.id = system_index( sys );
    lua_pushsystem(L,luasys);
    return 2;
@@ -446,7 +441,6 @@ static int planetL_getLandable( lua_State *L )
  */
 static int planetL_getAll( lua_State *L )
 {
-   LuaPlanet lp;
    Planet *p;
    int i, ind, n;
 
@@ -457,9 +451,8 @@ static int planetL_getAll( lua_State *L )
       /* Ignore virtual assets. */
       if (p[i].real == ASSET_VIRTUAL)
          continue;
-      lp.id = planet_index( &p[i] );
       lua_pushnumber( L, ind++ );
-      lua_pushplanet( L, lp );
+      lua_pushplanet( L, planet_index( &p[i] ) );
       lua_settable(   L, -3 );
    }
    return 1;
@@ -502,7 +495,7 @@ static int planetL_eq( lua_State *L )
    LuaPlanet *a, *b;
    a = luaL_checkplanet(L,1);
    b = luaL_checkplanet(L,2);
-   lua_pushboolean(L,(a->id == b->id));
+   lua_pushboolean(L,(a == b));
    return 1;
 }
 

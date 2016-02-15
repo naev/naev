@@ -2285,7 +2285,7 @@ static int aiL_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   planet.id = cur_system->planets[j]->id;
+   planet = cur_system->planets[j]->id;
    lua_pushplanet(L, planet);
 
    return 1;
@@ -2306,7 +2306,7 @@ static int aiL_getrndplanet( lua_State *L )
    p = RNG(0, cur_system->nplanets-1);
 
    /* Copy the data into a vector */
-   planet.id = cur_system->planets[p]->id;
+   planet = cur_system->planets[p]->id;
    lua_pushplanet(L, planet);
 
    return 1;
@@ -2360,7 +2360,7 @@ static int aiL_getlandplanet( lua_State *L )
    /* we can actually get a random planet now */
    i = RNG(0,nplanets-1);
    p = cur_system->planets[ ind[i] ];
-   planet.id = p->id;
+   planet = p->id;
    lua_pushplanet( L, planet );
    cur_pilot->nav_planet   = ind[ i ];
    free(ind);
@@ -2412,7 +2412,7 @@ static int aiL_land( lua_State *L )
       pilot_setFlag( cur_pilot, PILOT_LANDING );
 
       hparam.type    = HOOK_PARAM_ASSET;
-      hparam.u.la.id = planet->id;
+      hparam.u.la    = planet->id;
 
       pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
    }

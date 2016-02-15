@@ -1041,7 +1041,6 @@ static int pilotL_inrange( lua_State *L )
  */
 static int pilotL_nav( lua_State *L )
 {
-   LuaPlanet lp;
    LuaSystem ls;
    Pilot *p;
 
@@ -1053,10 +1052,8 @@ static int pilotL_nav( lua_State *L )
    /* Get planet target. */
    if (p->nav_planet < 0)
       lua_pushnil(L);
-   else {
-      lp.id = cur_system->planets[ p->nav_planet ]->id;
-      lua_pushplanet( L, lp  );
-   }
+   else
+      lua_pushplanet( L, cur_system->planets[ p->nav_planet ]->id );
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)

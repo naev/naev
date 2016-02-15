@@ -92,7 +92,6 @@ static int nxml_saveJump( xmlTextWriterPtr writer,
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
 {
    int ret, b;
-   LuaPlanet *p;
    LuaSystem *s;
    LuaFaction *f;
    Ship *sh;
@@ -190,8 +189,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
       /* User data must be handled here. */
       case LUA_TUSERDATA:
          if (lua_isplanet(L,-1)) {
-            p = lua_toplanet(L,-1);
-            pnt = planet_getIndex( p->id );
+            pnt = planet_getIndex( *lua_toplanet(L,-1) );
             if (pnt != NULL)
                nxml_saveData( writer, "planet",
                      name, pnt->name, keynum );
@@ -297,7 +295,6 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
  */
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
-   LuaPlanet p;
    LuaSystem s;
    LuaFaction f;
    LuaTime lt;
@@ -342,8 +339,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"planet")==0) {
             pnt = planet_get(xml_get(node));
             if (pnt != NULL) {
-               p.id = planet_index(pnt);
-               lua_pushplanet(L,p);
+               lua_pushplanet(L,planet_index(pnt));
             }
             else
                WARN("Failed to load unexistent planet '%s'", xml_get(node));
