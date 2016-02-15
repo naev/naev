@@ -180,7 +180,6 @@ static int escort_command( Pilot *parent, int cmd, int param )
    int i, n;
    lua_State *L;
    Pilot *e;
-   LuaPilot p;
    char *buf;
 
    if (parent->nescorts == 0)
@@ -223,8 +222,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
       }
       lua_getglobal(L, buf);
       if (param >= 0){
-         p.pilot = param;
-         lua_pushpilot(L, p);
+         lua_pushpilot(L, param);
       }
 
       /* Run command. */

@@ -883,11 +883,10 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
    int errf;
    lua_State *L;
    HookParam hparam[2];
-   LuaPilot lp;
 
    /* Custom hook parameters. */
    hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = attacker;
+   hparam[0].u.lp       = attacker;
    hparam[1].type       = HOOK_PARAM_NUMBER;
    hparam[1].u.num      = dmg;
 
@@ -912,8 +911,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    lua_getglobal(L, "attacked");
 
-   lp.pilot = attacker;
-   lua_pushpilot(L, lp);
+   lua_pushpilot(L, attacker);
    if (lua_pcall(L, 1, 0, errf)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -957,7 +955,6 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
    lua_State *L;
-   LuaPilot ldistressed, lattacker;
    int errf;
 
    /* Ignore distress signals when under manual control. */
@@ -990,14 +987,12 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    }
 
    /* Run the function. */
-   ldistressed.pilot = distressed->id;
+   lua_pushpilot(L, distressed->id);
    if (attacker != NULL)
-      lattacker.pilot = attacker->id;
+      lua_pushpilot(L, attacker->id);
    else /* Default to the victim's current target. */
-      lattacker.pilot = distressed->target;
-
-   lua_pushpilot(L, ldistressed);
-   lua_pushpilot(L, lattacker);
+      lua_pushpilot(L, distressed->target);
+   
    if (lua_pcall(L, 2, 0, errf)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -1018,7 +1013,6 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot, char *param )
 {
-   LuaPilot lp;
    lua_State *L;
    int errf, nparam;
    char *func;
@@ -1043,8 +1037,7 @@ static void ai_create( Pilot* pilot, char *param )
       errf = -3;
 #endif /* DEBUGGING */
       lua_getglobal(L, func);
-      lp.pilot = pilot->id;
-      lua_pushpilot(L,lp);
+      lua_pushpilot(L,pilot->id);
       if (lua_pcall(L, 1, 0, errf)) { /* Error has occurred. */
          WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(L,-1));
          lua_pop(L,1);
@@ -1082,14 +1075,12 @@ static void ai_create( Pilot* pilot, char *param )
    if (param != NULL) {
       /* Number */
       if (isdigit(param[0])) {
-         lp.pilot = atoi(param);
-         lua_pushpilot(L,lp);
+         lua_pushpilot(L,atoi(param));
       }
       /* Special case player. */
       else if (strcmp(param,"player")==0) {
       /* Special case player. */
-         lp.pilot = PLAYER_ID;
-         lua_pushpilot(L,lp);
+         lua_pushpilot(L,PLAYER_ID);
       }
       /* Default. */
       else
@@ -1191,7 +1182,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
    const char *func;
    Task *t;
    LuaVector *lv;
-   LuaPilot *p;
 
    /* Parse basic parameters. */
    func  = luaL_checkstring(L,1);
@@ -1206,9 +1196,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
          t->dat.num  = (unsigned int)lua_tonumber(L,2);
       }
       else if (lua_ispilot(L,2)) {
-         p = luaL_checkpilot(L,2);
          t->dtype = TASKDATA_PILOT;
-	 t->dat.num = p->pilot;
+	 t->dat.num = luaL_checkpilot(L,2);
       }
       else if (lua_isvector(L,2)) {
          t->dtype    = TASKDATA_VEC2;
@@ -1228,7 +1217,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
-   LuaPilot p;
    LuaVector lv;
 
    /* Pass task type. */
@@ -1238,8 +1226,7 @@ static int ai_tasktarget( lua_State *L, Task *t )
          return 1;
 
       case TASKDATA_PILOT:
-         p.pilot = t->dat.num;
-         lua_pushpilot(L, p);
+         lua_pushpilot(L, t->dat.num);
          return 1;
 
       case TASKDATA_VEC2:
@@ -1425,10 +1412,7 @@ static int aiL_getsubtarget( lua_State *L )
  */
 static int aiL_pilot( lua_State *L )
 {
-   LuaPilot p;
-   p.pilot = cur_pilot->id;
-
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, cur_pilot->id);
    return 1;
 }
 
@@ -1443,7 +1427,6 @@ static int aiL_pilot( lua_State *L )
 static int aiL_getrndpilot( lua_State *L )
 {
    int p;
-   LuaPilot lp;
 
    p = RNG(0, pilot_nstack-1);
    /* Make sure it can't be the same pilot. */
@@ -1456,8 +1439,7 @@ static int aiL_getrndpilot( lua_State *L )
    if (pilot_stack[p]->id == cur_pilot->id)
       return 0;
    /* Actually found a pilot. */
-   lp.pilot = pilot_stack[p]->id;
-   lua_pushpilot(L, lp);
+   lua_pushpilot(L, pilot_stack[p]->id);
    return 1;
 }
 
@@ -1475,7 +1457,6 @@ static int aiL_getnearestpilot( lua_State *L )
    int dist=1000;
    int i;
    int candidate_id = -1;
-   LuaPilot p;
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
 
@@ -1493,8 +1474,7 @@ static int aiL_getnearestpilot( lua_State *L )
       return 0;
 
    /* Actually found a pilot. */
-   p.pilot = pilot_stack[candidate_id]->id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, pilot_stack[candidate_id]->id);
    return 1;
 }
 
@@ -2915,15 +2895,13 @@ static int aiL_shoot( lua_State *L )
 static int aiL_getenemy( lua_State *L )
 {
    unsigned int id;
-   LuaPilot p;
 
    id = pilot_getNearestEnemy(cur_pilot);
 
    if (id==0) /* No enemy found */
       return 0;
 
-   p.pilot = id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, id);
 
    return 1;
 }
@@ -2938,7 +2916,6 @@ static int aiL_getenemy( lua_State *L )
 static int aiL_getenemy_size( lua_State *L )
 {
    unsigned int id;
-   LuaPilot p;
    unsigned int LB, UB;
 
    NLUA_MIN_ARGS(2);
@@ -2956,8 +2933,7 @@ static int aiL_getenemy_size( lua_State *L )
    if (id==0) /* No enemy found */
       return 0;
 
-   p.pilot = id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, id);
    return 1;
 }
 
@@ -2976,7 +2952,6 @@ static int aiL_getenemy_heuristic( lua_State *L )
 {
 
    unsigned int id;
-   LuaPilot p;
    double mass_factor, health_factor, damage_factor, range_factor;
 
    mass_factor    = luaL_checklong(L,1);
@@ -2990,8 +2965,7 @@ static int aiL_getenemy_heuristic( lua_State *L )
    if (id==0) /* No enemy found */
       return 0;
 
-   p.pilot = id;
-   lua_pushpilot(L, p);
+   lua_pushpilot(L, id);
    return 1;
 }
 

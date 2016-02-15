@@ -421,9 +421,7 @@ static int playerL_getPosition( lua_State *L )
  */
 static int playerL_getPilot( lua_State *L )
 {
-   LuaPilot lp;
-   lp.pilot = PLAYER_ID;
-   lua_pushpilot(L, lp);
+   lua_pushpilot(L, PLAYER_ID);
    return 1;
 }
 

@@ -1390,7 +1390,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* Run hook */
       if (shooter > 0) {
          hparam.type       = HOOK_PARAM_PILOT;
-         hparam.u.lp.pilot = shooter;
+         hparam.u.lp       = shooter;
       }
       else {
          hparam.type       = HOOK_PARAM_NIL;
@@ -1447,7 +1447,7 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    /* Pilot must die before setting death flag and probably messing with other flags. */
    if (killer > 0) {
       hparam.type       = HOOK_PARAM_PILOT;
-      hparam.u.lp.pilot = killer;
+      hparam.u.lp       = killer;
    }
    else
       hparam.type       = HOOK_PARAM_NIL;

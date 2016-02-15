@@ -975,7 +975,6 @@ static void system_scheduler( double dt, int init )
    int i, n, errf;
    lua_State *L;
    SystemPresence *p;
-   LuaPilot *lp;
    Pilot *pilot;
 
    /* Go through all the factions and reduce the timer. */
@@ -1083,8 +1082,7 @@ static void system_scheduler( double dt, int init )
                lua_pop(L,2); /* tk, k */
                continue;
             }
-            lp    = lua_topilot(L,-1);
-            pilot = pilot_get( lp->pilot );
+            pilot = pilot_get( lua_topilot(L,-1) );
             if (pilot == NULL) {
                lua_pop(L,2); /* tk, k */
                continue;

@@ -78,13 +78,13 @@ int nlua_loadCamera( lua_State *L, int readonly )
  */
 static int camL_set( lua_State *L )
 {
-   LuaPilot *lp;
+   LuaPilot lp;
    LuaVector *lv;
    Pilot *p;
    int soft_over, speed;
 
    /* Handle arguments. */
-   lp = NULL;
+   lp = 0;
    lv = NULL;
    if (lua_ispilot(L,1))
       lp = lua_topilot(L,1);
@@ -97,8 +97,8 @@ static int camL_set( lua_State *L )
       speed = 2500;
 
    /* Set the camera. */
-   if (lp != NULL) {
-      p = pilot_get( lp->pilot );
+   if (lp != 0) {
+      p = pilot_get( lp );
       if (p != NULL)
          cam_setTargetPilot( p->id, soft_over*speed );
    }
