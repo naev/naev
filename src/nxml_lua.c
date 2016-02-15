@@ -93,7 +93,6 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
 {
    int ret, b;
    LuaSystem *s;
-   LuaFaction *f;
    Ship *sh;
    LuaTime *lt;
    LuaJump *lj;
@@ -210,8 +209,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_isfaction(L,-1)) {
-            f = lua_tofaction(L,-1);
-            str = faction_name( f->f );
+            str = faction_name( lua_tofaction(L,-1) );
             if (str == NULL)
                break;
             nxml_saveData( writer, "faction",
@@ -296,7 +294,6 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
    LuaSystem s;
-   LuaFaction f;
    LuaTime lt;
    LuaJump lj;
    Planet *pnt;
@@ -354,8 +351,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                WARN("Failed to load unexistent system '%s'", xml_get(node));
          }
          else if (strcmp(type,"faction")==0) {
-            f.f = faction_get(xml_get(node));
-            lua_pushfaction(L,f);
+            lua_pushfaction(L,faction_get(xml_get(node)));
          }
          else if (strcmp(type,"ship")==0)
             lua_pushship(L,ship_get(xml_get(node)));

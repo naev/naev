@@ -452,8 +452,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          return 0;
       }
       faction = luaL_checkstring(L,4);
-      lf.f = faction_get(faction);
-      if (lf.f < 0) {
+      lf = faction_get(faction);
+      if (lf < 0) {
          NLUA_ERROR(L,"Faction '%s' not found in stack.", faction );
          return 0;
       }
@@ -464,7 +464,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          NLUA_ERROR(L,"Fleet '%s' doesn't exist.", fltname);
          return 0;
       }
-      lf.f = flt->faction;
+      lf = flt->faction;
    }
 
    /* Parse second argument - Fleet AI Override */
@@ -525,7 +525,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          ind = malloc( sizeof(int) * cur_system->nplanets );
          for (i=0; i<cur_system->nplanets; i++)
             if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-                  !areEnemies(lf.f,cur_system->planets[i]->faction))
+                  !areEnemies(lf,cur_system->planets[i]->faction))
                ind[ nind++ ] = i;
       }
 
@@ -542,7 +542,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
             target = jump_getTarget( cur_system, cur_system->jumps[i].target );
             if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
                   (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
-                  (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))))
+                  (system_getPresence( cur_system->jumps[i].target, lf ) > 0))))
                jumpind[ njumpind++ ] = i;
          }
       }
@@ -603,7 +603,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    lua_newtable(L);
    if (from_ship) {
       /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
+      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, -1 );
 
       /* we push each pilot created into a table and return it */
       lua_pushnumber(L,1); /* index, starts with 1 */
@@ -800,7 +800,6 @@ static int pilotL_getPilots( lua_State *L )
    int i, j, k, d;
    int *factions;
    int nfactions;
-   LuaFaction *f;
 
    /* Whether or not to get disabled. */
    d = lua_toboolean(L,2);
@@ -810,8 +809,7 @@ static int pilotL_getPilots( lua_State *L )
       if (lua_isfaction(L,1)) {
          nfactions = 1;
          factions = malloc( sizeof(int) );
-         f = lua_tofaction(L,1);
-         factions[0] = f->f;
+         factions[0] = lua_tofaction(L,1);
       }
       else {
          /* Get table length and preallocate. */
@@ -822,8 +820,7 @@ static int pilotL_getPilots( lua_State *L )
          i = 0;
          while (lua_next(L, -2) != 0) {
             if (lua_isfaction(L,-1)) {
-               f = lua_tofaction(L, -1);
-               factions[i++] = f->f;
+               factions[i++] = lua_tofaction(L, -1);
             }
             lua_pop(L,1);
          }
@@ -1782,14 +1779,12 @@ static int pilotL_temp( lua_State *L )
 static int pilotL_faction( lua_State *L )
 {
    Pilot *p;
-   LuaFaction f;
 
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
 
    /* Push faction. */
-   f.f   = p->faction;
-   lua_pushfaction(L,f);
+   lua_pushfaction(L,p->faction);
    return 1;
 }
 
@@ -1984,7 +1979,6 @@ static int pilotL_comm( lua_State *L )
 static int pilotL_setFaction( lua_State *L )
 {
    Pilot *p;
-   LuaFaction *f;
    int fid;
    const char *faction;
 
@@ -1995,8 +1989,7 @@ static int pilotL_setFaction( lua_State *L )
       fid = faction_get(faction);
    }
    else if (lua_isfaction(L,2)) {
-      f = lua_tofaction(L,2);
-      fid = f->f;
+      fid = lua_tofaction(L,2);
    }
    else NLUA_INVALID_PARAMETER(L);
 

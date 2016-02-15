@@ -376,17 +376,14 @@ static int systemL_name( lua_State *L )
  */
 static int systemL_faction( lua_State *L )
 {
-   LuaFaction lf;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
 
    if (s->faction == -1)
       return 0;
-   else
-      lf.f = s->faction;
 
-   lua_pushfaction(L,lf);
+   lua_pushfaction(L,s->faction);
    return 1;
 
 }

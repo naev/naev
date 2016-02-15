@@ -587,7 +587,7 @@ static int misn_factions( lua_State *L )
    lua_newtable(L);
    for (i=0; i<dat->avail.nfactions; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      f.f = dat->avail.factions[i];
+      f = dat->avail.factions[i];
       lua_pushfaction(L, f); /* value */
       lua_rawset(L,-3); /* store the value in the table */
    }

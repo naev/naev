@@ -282,7 +282,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    int nplanets;
    const char *rndplanet;
    LuaSystem luasys;
-   LuaFaction *f;
+   LuaFaction f;
    Planet *pnt;
    StarSystem *sys;
    char *sysname;
@@ -303,7 +303,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
       f        = lua_tofaction(L,1);
-      planets  = space_getFactionPlanet( &nplanets, &f->f, 1, landable );
+      planets  = space_getFactionPlanet( &nplanets, &f, 1, landable );
    }
 
    /* Get a planet by name */
@@ -333,10 +333,8 @@ static int planetL_getBackend( lua_State *L, int landable )
       lua_pushnil(L);
       i = 0;
       while (lua_next(L, -2) != 0) {
-         if (lua_isfaction(L, -1)) {
-            f = lua_tofaction(L, -1);
-            factions[i++] = f->f;
-         }
+         if (lua_isfaction(L, -1))
+            factions[i++] = lua_tofaction(L, -1);
          lua_pop(L,1);
       }
 
@@ -542,12 +540,10 @@ static int planetL_radius( lua_State *L )
 static int planetL_faction( lua_State *L )
 {
    Planet *p;
-   LuaFaction f;
    p = luaL_validplanet(L,1);
    if (p->faction < 0)
       return 0;
-   f.f = p->faction;
-   lua_pushfaction(L, f);
+   lua_pushfaction(L, p->faction);
    return 1;
 }
 
