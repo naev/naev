@@ -88,9 +88,9 @@ int nlua_loadCommodity( lua_State *L, int readonly )
  *    @param ind Index position to find the commodity.
  *    @return Commodity found at the index in the state.
  */
-LuaCommodity* lua_tocommodity( lua_State *L, int ind )
+Commodity* lua_tocommodity( lua_State *L, int ind )
 {
-   return (LuaCommodity*) lua_touserdata(L,ind);
+   return *((Commodity**) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets commodity at index or raises error if there is no commodity at index.
@@ -99,7 +99,7 @@ LuaCommodity* lua_tocommodity( lua_State *L, int ind )
  *    @param ind Index position to find commodity.
  *    @return Commodity found at the index in the state.
  */
-LuaCommodity* luaL_checkcommodity( lua_State *L, int ind )
+Commodity* luaL_checkcommodity( lua_State *L, int ind )
 {
    if (lua_iscommodity(L,ind))
       return lua_tocommodity(L,ind);
@@ -115,13 +115,10 @@ LuaCommodity* luaL_checkcommodity( lua_State *L, int ind )
  */
 Commodity* luaL_validcommodity( lua_State *L, int ind )
 {
-   LuaCommodity *lo;
    Commodity *o;
 
-   if (lua_iscommodity(L, ind)) {
-      lo = luaL_checkcommodity(L, ind);
-      o  = lo->commodity;
-   }
+   if (lua_iscommodity(L, ind))
+      o = luaL_checkcommodity(L, ind);
    else if (lua_isstring(L, ind))
       o = commodity_get( lua_tostring(L, ind) );
    else {
@@ -141,10 +138,10 @@ Commodity* luaL_validcommodity( lua_State *L, int ind )
  *    @param commodity Commodity to push.
  *    @return Newly pushed commodity.
  */
-LuaCommodity* lua_pushcommodity( lua_State *L, LuaCommodity commodity )
+Commodity** lua_pushcommodity( lua_State *L, Commodity* commodity )
 {
-   LuaCommodity *o;
-   o = (LuaCommodity*) lua_newuserdata(L, sizeof(LuaCommodity));
+   Commodity **o;
+   o = (Commodity**) lua_newuserdata(L, sizeof(Commodity*));
    *o = commodity;
    luaL_getmetatable(L, COMMODITY_METATABLE);
    lua_setmetatable(L, -2);
@@ -186,10 +183,10 @@ int lua_iscommodity( lua_State *L, int ind )
  */
 static int commodityL_eq( lua_State *L )
 {
-   LuaCommodity *a, *b;
+   Commodity *a, *b;
    a = luaL_checkcommodity(L,1);
    b = luaL_checkcommodity(L,2);
-   if (a->commodity == b->commodity)
+   if (a == b)
       lua_pushboolean(L,1);
    else
       lua_pushboolean(L,0);
@@ -211,20 +208,20 @@ static int commodityL_eq( lua_State *L )
 static int commodityL_get( lua_State *L )
 {
    const char *name;
-   LuaCommodity lo;
+   Commodity *commodity;
 
    /* Handle parameters. */
    name = luaL_checkstring(L,1);
 
    /* Get commodity. */
-   lo.commodity = commodity_get( name );
-   if (lo.commodity == NULL) {
+   commodity = commodity_get( name );
+   if (commodity == NULL) {
       NLUA_ERROR(L,"Commodity '%s' not found!", name);
       return 0;
    }
 
    /* Push. */
-   lua_pushcommodity(L, lo);
+   lua_pushcommodity(L, commodity);
    return 1;
 }
 /**

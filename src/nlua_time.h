@@ -15,14 +15,6 @@
 #define TIME_METATABLE   "time" /**< Planet metatable identifier. */
 
 
-/**
- * @brief Wrapper for ntime_t.
- */
-typedef struct LuaTime_s {
-   ntime_t t; /**< Wrapped time. */
-} LuaTime;
-
-
 /*
  * Library stuff.
  */
@@ -31,9 +23,9 @@ int nlua_loadTime( lua_State *L, int readonly );
 /*
  * Time operations.
  */
-LuaTime* lua_totime( lua_State *L, int ind );
-LuaTime* luaL_checktime( lua_State *L, int ind );
-LuaTime* lua_pushtime( lua_State *L, LuaTime time );
+ntime_t* lua_totime( lua_State *L, int ind );
+ntime_t* luaL_checktime( lua_State *L, int ind );
+ntime_t* lua_pushtime( lua_State *L, ntime_t time );
 ntime_t luaL_validtime( lua_State *L, int ind );
 int lua_istime( lua_State *L, int ind );
 

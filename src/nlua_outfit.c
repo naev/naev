@@ -339,10 +339,8 @@ static int outfitL_slot( lua_State *L )
  */
 static int outfitL_icon( lua_State *L )
 {
-   LuaTex lt;
    Outfit *o = luaL_validoutfit(L,1);
-   lt.tex = gl_dupTexture( o->gfx_store );
-   lua_pushtex( L, lt );
+   lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
    return 1;
 }
 

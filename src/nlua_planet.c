@@ -267,7 +267,7 @@ static int planetL_cur( lua_State *L )
       return 0; /* Not landed. */
    }
    lua_pushplanet(L,planet_index(land_planet));
-   sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
+   sys = system_index( system_get( planet_getSystem(land_planet->name) ) );
    lua_pushsystem(L,sys);
    return 2;
 }
@@ -282,7 +282,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    int nplanets;
    const char *rndplanet;
    LuaSystem luasys;
-   LuaFaction *f;
+   LuaFaction f;
    Planet *pnt;
    StarSystem *sys;
    char *sysname;
@@ -295,7 +295,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    if (lua_isboolean(L,1)) {
       pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
       lua_pushplanet(L,planet_index( pnt ));
-      luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
+      luasys         = system_index( system_get( planet_getSystem(pnt->name) ) );
       lua_pushsystem(L,luasys);
       return 2;
    }
@@ -303,7 +303,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
       f        = lua_tofaction(L,1);
-      planets  = space_getFactionPlanet( &nplanets, &f->f, 1, landable );
+      planets  = space_getFactionPlanet( &nplanets, &f, 1, landable );
    }
 
    /* Get a planet by name */
@@ -333,10 +333,8 @@ static int planetL_getBackend( lua_State *L, int landable )
       lua_pushnil(L);
       i = 0;
       while (lua_next(L, -2) != 0) {
-         if (lua_isfaction(L, -1)) {
-            f = lua_tofaction(L, -1);
-            factions[i++] = f->f;
-         }
+         if (lua_isfaction(L, -1))
+            factions[i++] = lua_tofaction(L, -1);
          lua_pop(L,1);
       }
 
@@ -389,7 +387,7 @@ static int planetL_getBackend( lua_State *L, int landable )
       return 0;
    }
    lua_pushplanet(L,planet_index( pnt ));
-   luasys.id = system_index( sys );
+   luasys = system_index( sys );
    lua_pushsystem(L,luasys);
    return 2;
 }
@@ -475,7 +473,7 @@ static int planetL_system( lua_State *L )
    sysname = planet_getSystem( p->name );
    if (sysname == NULL)
       return 0;
-   sys.id = system_index( system_get( sysname ) );
+   sys = system_index( system_get( sysname ) );
    lua_pushsystem( L, sys );
    return 1;
 }
@@ -542,12 +540,10 @@ static int planetL_radius( lua_State *L )
 static int planetL_faction( lua_State *L )
 {
    Planet *p;
-   LuaFaction f;
    p = luaL_validplanet(L,1);
    if (p->faction < 0)
       return 0;
-   f.f = p->faction;
-   lua_pushfaction(L, f);
+   lua_pushfaction(L, p->faction);
    return 1;
 }
 
@@ -565,13 +561,11 @@ static int planetL_colour( lua_State *L )
 {
    Planet *p;
    const glColour *col;
-   LuaColour lc;
 
    p = luaL_validplanet(L,1);
    col = planet_getColour( p );
 
-   memcpy( &lc.col, col, sizeof(glColour) );
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, *col );
 
    return 1;
 }
@@ -731,13 +725,13 @@ static int planetL_position( lua_State *L )
 static int planetL_gfxSpace( lua_State *L )
 {
    Planet *p;
-   LuaTex lt;
+   glTexture *tex;
    p        = luaL_validplanet(L,1);
    if (p->gfx_space == NULL) /* Not loaded. */
-      lt.tex   = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+      tex = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
    else
-      lt.tex   = gl_dupTexture( p->gfx_space );
-   lua_pushtex( L, lt );
+      tex = gl_dupTexture( p->gfx_space );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -753,10 +747,8 @@ static int planetL_gfxSpace( lua_State *L )
 static int planetL_gfxExterior( lua_State *L )
 {
    Planet *p;
-   LuaTex lt;
-   p        = luaL_validplanet(L,1);
-   lt.tex   = gl_newImage( p->gfx_exterior, 0 );
-   lua_pushtex( L, lt );
+   p = luaL_validplanet(L,1);
+   lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
    return 1;
 }
 
@@ -830,7 +822,6 @@ static int planetL_commoditiesSold( lua_State *L )
 {
    Planet *p;
    int i, n;
-   LuaCommodity lc;
    Commodity **c;
 
    /* Get result and tech. */
@@ -841,8 +832,7 @@ static int planetL_commoditiesSold( lua_State *L )
    lua_newtable(L);
    for (i=0; i<n; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lc.commodity = c[i];
-      lua_pushcommodity(L,lc); /* value = LuaCommodity */
+      lua_pushcommodity(L,c[i]); /* value = LuaCommodity */
       lua_rawset(L,-3); /* store the value in the table */
    }
 

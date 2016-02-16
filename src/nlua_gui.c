@@ -272,9 +272,7 @@ static int guiL_radarRender( lua_State *L )
  */
 static int guiL_targetPlanetGFX( lua_State *L )
 {
-   LuaTex *lt;
-   lt = luaL_checktex( L, 1 );
-   gui_targetPlanetGFX( lt->tex );
+   gui_targetPlanetGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
 
@@ -287,9 +285,7 @@ static int guiL_targetPlanetGFX( lua_State *L )
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {
-   LuaTex *lt;
-   lt = luaL_checktex( L, 1 );
-   gui_targetPilotGFX( lt->tex );
+   gui_targetPilotGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
 

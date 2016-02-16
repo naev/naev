@@ -514,7 +514,7 @@ static int playerL_autonavDest( lua_State *L )
    if (dest == NULL)
       return 0;
 
-   ls.id = system_index( dest );
+   ls = system_index( dest );
    lua_pushsystem( L, ls );
    lua_pushnumber( L, jumps );
    return 2;
