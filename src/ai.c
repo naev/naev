@@ -1154,6 +1154,9 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
+   if (t->dtype == TASKDATA_REF)
+       luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat.num);
+
    /* Recursive subtask freeing. */
    if (t->subtask != NULL) {
       ai_freetask(t->subtask);
@@ -1188,20 +1191,9 @@ static Task* ai_createTask( lua_State *L, int subtask )
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
-      if (lua_isnumber(L,2)) {
-         t->dtype    = TASKDATA_INT;
-         t->dat.num  = (unsigned int)lua_tonumber(L,2);
-      }
-      else if (lua_ispilot(L,2)) {
-         t->dtype = TASKDATA_PILOT;
-	 t->dat.num = luaL_checkpilot(L,2);
-      }
-      else if (lua_isvector(L,2)) {
-         t->dtype    = TASKDATA_VEC2;
-         vectcpy( &t->dat.vec, lua_tovector(L,2) );
-      }
-      else
-         NLUA_INVALID_PARAMETER(L);
+      t->dtype   = TASKDATA_REF;
+      t->dat.num = luaL_ref(L, LUA_REGISTRYINDEX);
+      t->L       = L;
    }
 
    return t;
@@ -1227,6 +1219,10 @@ static int ai_tasktarget( lua_State *L, Task *t )
          lua_pushvector(L, t->dat.vec);
          return 1;
 
+      case TASKDATA_REF:
+         lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat.num);
+	 return 1;
+
       default:
          return 0;
    }
@@ -1250,8 +1246,7 @@ static int ai_tasktarget( lua_State *L, Task *t )
 /**
  * @brief Pushes a task onto the pilot's task list.
  *    @luaparam func Function to call for task.
- *    @luaparam data Data to pass to the function.  Only int, pilot, or vec2
- *           are currently supported.
+ *    @luaparam data Data to pass to the function.  Supports any lua type.
  * @luafunc pushtask( func, data )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
@@ -1320,8 +1315,7 @@ static int aiL_gettarget( lua_State *L )
 /**
  * @brief Pushes a subtask onto the pilot's task's subtask list.
  *    @luaparam func Function to call for task.
- *    @luaparam data Data to pass to the function.  Only int, pilot, or vec2
- *           are currently supported.
+ *    @luaparam data Data to pass to the function.  Supports any lua type.
  * @luafunc pushsubtask( func, data )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
