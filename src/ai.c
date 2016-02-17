@@ -1198,7 +1198,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
       }
       else if (lua_isvector(L,2)) {
          t->dtype    = TASKDATA_VEC2;
-         vectcpy( &t->dat.vec, lua_tovector(L,2) );
+         t->dat.vec  = *lua_tovector(L,2);
       }
       else
          NLUA_INVALID_PARAMETER(L);
@@ -2511,7 +2511,7 @@ static int aiL_nearhyptarget( lua_State *L )
       return 0;
 
    /* Copy vector. */
-   vectcpy( &vec, &jp->pos );
+   vec = jp->pos;
 
    /* Introduce some error. */
    a     = RNGF() * M_PI * 2.;
@@ -2562,7 +2562,7 @@ static int aiL_rndhyptarget( lua_State *L )
    r = RNG(0, j-1);
 
    /* Set up data. */
-   vectcpy( &vec, &jumps[r]->pos );
+   vec = jumps[r]->pos;
 
    /* Introduce some error. */
    a     = RNGF() * M_PI * 2.;

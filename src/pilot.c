@@ -677,7 +677,7 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos )
 
    if (pilot_isStopped(p)) {
       if (pos != NULL)
-         vectcpy( pos, &p->solid->pos );
+         *pos = p->solid->pos;
 
       return 0;
    }
@@ -1918,7 +1918,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_rmFlag(pilot, PILOT_BOARDING);
       else {
          /* Match speeds. */
-         vectcpy( &pilot->solid->vel, &target->solid->vel );
+         pilot->solid->vel = target->solid->vel;
 
          /* See if boarding is finished. */
          if (pilot->ptimer < 0.)
@@ -2196,7 +2196,7 @@ static void pilot_refuel( Pilot *p, double dt )
    }
 
    /* Match speeds. */
-   vectcpy( &p->solid->vel, &target->solid->vel );
+   p->solid->vel = target->solid->vel;
 
    amount = CLAMP( 0., p->pdata, PILOT_REFUEL_RATE * dt);
    p->pdata -= amount;
