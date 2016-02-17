@@ -589,7 +589,7 @@ void player_swapShip( char* shipname )
       pilot_cargoMove( ship, player.p );
 
       /* Store position. */
-      vectcpy( &v, &player.p->solid->pos );
+      v = player.p->solid->pos;
       dir = player.p->solid->dir;
 
       /* extra pass to calculate stats */
@@ -606,7 +606,7 @@ void player_swapShip( char* shipname )
          }
 
       /* Copy position back. */
-      vectcpy( &player.p->solid->pos, &v );
+      player.p->solid->pos = v;
       player.p->solid->dir = dir;
 
       /* Fill the tank. */

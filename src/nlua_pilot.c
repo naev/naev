@@ -1828,7 +1828,7 @@ static int pilotL_setPosition( lua_State *L )
    vec   = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
-   vectcpy( &p->solid->pos, vec );
+   p->solid->pos = *vec;
 
    /* Update if necessary. */
    if (pilot_isPlayer(p))
@@ -1856,7 +1856,7 @@ static int pilotL_setVelocity( lua_State *L )
    vec   = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
-   vectcpy( &p->solid->vel, vec );
+   p->solid->vel = *vec;
    return 0;
 }
 
@@ -3705,7 +3705,7 @@ static int pilotL_goto( lua_State *L )
    }
    t        = pilotL_newtask( L, p, tsk );
    t->dtype = TASKDATA_VEC2;
-   vectcpy( &t->dat.vec, vec );
+   t->dat.vec = *vec;
 
    return 0;
 }
@@ -3754,7 +3754,7 @@ static int pilotL_face( lua_State *L )
    }
    else {
       t->dtype = TASKDATA_VEC2;
-      vectcpy( &t->dat.vec, vec );
+      t->dat.vec = *vec;
    }
 
    return 0;
@@ -3956,7 +3956,7 @@ static int pilotL_hyperspace( lua_State *L )
 
       /* Copy vector. */
       t->dtype = TASKDATA_VEC2;
-      vectcpy( &t->dat.vec, &jp->pos );
+      t->dat.vec = jp->pos;
 
       /* Introduce some error. */
       a     = RNGF() * M_PI * 2.;
@@ -4010,7 +4010,7 @@ static int pilotL_land( lua_State *L )
       /* Copy vector. */
       p->nav_planet = i;
       t->dtype = TASKDATA_VEC2;
-      vectcpy( &t->dat.vec, &pnt->pos );
+      t->dat.vec = pnt->pos;
       if (p->id == PLAYER_ID)
          gui_setNav();
 

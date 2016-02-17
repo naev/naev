@@ -217,11 +217,11 @@ static int var_add( misn_var *new_var )
    for (i=0; i<var_nstack; i++)
       if (strcmp(new_var->name,var_stack[i].name)==0) { /* overwrite */
          var_free( &var_stack[i] );
-         memcpy( &var_stack[i], new_var, sizeof(misn_var) );
+         var_stack[i] = *new_var;
          return 0;
       }
 
-   memcpy( &var_stack[var_nstack], new_var, sizeof(misn_var) );
+   var_stack[var_nstack] = *new_var;
    var_nstack++;
 
    return 0;

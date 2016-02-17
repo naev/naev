@@ -246,7 +246,7 @@ void omsg_render( double dt )
 
       /* Render. */
       font = omsg_getFont( omsg->font );
-      memcpy( &col, omsg->col, sizeof(glColour) );
+      col = *omsg->col;
       if (omsg->duration < 1.)
          col.a = omsg->duration;
       gl_printRestoreClear();

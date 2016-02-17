@@ -677,7 +677,7 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos )
 
    if (pilot_isStopped(p)) {
       if (pos != NULL)
-         vectcpy( pos, &p->solid->pos );
+         *pos = p->solid->pos;
 
       return 0;
    }
@@ -1476,7 +1476,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    Damage ddmg;
 
    rad2 = radius*radius;
-   memcpy( &ddmg, dmg, sizeof(Damage) );
+   ddmg = *dmg;
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -1918,7 +1918,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_rmFlag(pilot, PILOT_BOARDING);
       else {
          /* Match speeds. */
-         vectcpy( &pilot->solid->vel, &target->solid->vel );
+         pilot->solid->vel = target->solid->vel;
 
          /* See if boarding is finished. */
          if (pilot->ptimer < 0.)
@@ -2196,7 +2196,7 @@ static void pilot_refuel( Pilot *p, double dt )
    }
 
    /* Match speeds. */
-   vectcpy( &p->solid->vel, &target->solid->vel );
+   p->solid->vel = target->solid->vel;
 
    amount = CLAMP( 0., p->pdata, PILOT_REFUEL_RATE * dt);
    p->pdata -= amount;
@@ -2520,7 +2520,7 @@ Pilot* pilot_copy( Pilot* src )
    Pilot *dest = malloc(sizeof(Pilot));
 
    /* Copy data over, we'll have to reset all the pointers though. */
-   memcpy( dest, src, sizeof(Pilot) );
+   *dest = *src;
 
    /* Copy names. */
    if (src->name)
@@ -2530,7 +2530,7 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy solid. */
    dest->solid = malloc(sizeof(Solid));
-   memcpy( dest->solid, src->solid, sizeof(Solid) );
+   *dest->solid = *src->solid;
 
    /* Copy outfits. */
    dest->noutfits = src->noutfits;

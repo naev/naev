@@ -1317,7 +1317,7 @@ static int playerL_teleport( lua_State *L )
 
    /* Move to planet. */
    if (pnt != NULL)
-      vectcpy( &player.p->solid->pos, &pnt->pos );
+      player.p->solid->pos = pnt->pos;
 
    return 0;
 }
