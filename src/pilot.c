@@ -1476,7 +1476,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    Damage ddmg;
 
    rad2 = radius*radius;
-   memcpy( &ddmg, dmg, sizeof(Damage) );
+   ddmg = *dmg;
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -2520,7 +2520,7 @@ Pilot* pilot_copy( Pilot* src )
    Pilot *dest = malloc(sizeof(Pilot));
 
    /* Copy data over, we'll have to reset all the pointers though. */
-   memcpy( dest, src, sizeof(Pilot) );
+   *dest = *src;
 
    /* Copy names. */
    if (src->name)
@@ -2530,7 +2530,7 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy solid. */
    dest->solid = malloc(sizeof(Solid));
-   memcpy( dest->solid, src->solid, sizeof(Solid) );
+   *dest->solid = *src->solid;
 
    /* Copy outfits. */
    dest->noutfits = src->noutfits;

@@ -412,7 +412,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          dc = &cGrey60;
 
       /* Draw background. */
-      memcpy( &bc, dc, sizeof(bc) );
+      bc = *dc;
       bc.a = 0.4;
       if (i==selected)
          c = &cDConsole;
@@ -1572,7 +1572,7 @@ static void equipment_genOutfitList( unsigned int wid )
       if (c == NULL)
          c = &cBlack;
       col_blend( &blend, c, &cGrey70, 0.4 );
-      memcpy( &bg[i], &blend, sizeof(glColour) );
+      bg[i] = blend;
 
       /* Short description. */
       if (o->desc_short == NULL)

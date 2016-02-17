@@ -915,7 +915,7 @@ static double fps_elapsed (void)
       if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
          dt  = ts.tv_sec - global_time.tv_sec;
          dt += (ts.tv_nsec - global_time.tv_nsec) / 1000000000.0;
-         memcpy( &global_time, &ts, sizeof(struct timespec) );
+         global_time = ts;
          return dt;
       }
       WARN( "clock_gettime failed!" );

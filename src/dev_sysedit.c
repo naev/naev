@@ -834,7 +834,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   for (j=0; j<sysedit_nselect; j++) {
                      if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                         sysedit_dragSel   = 1;
-                        memcpy( &sysedit_tsel, &sel, sizeof(Select_t) );
+                        sysedit_tsel      = sel;
 
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
@@ -895,7 +895,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   for (j=0; j<sysedit_nselect; j++) {
                      if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                         sysedit_dragSel   = 1;
-                        memcpy( &sysedit_tsel, &sel, sizeof(Select_t) );
+			sysedit_tsel      = sel;
 
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
@@ -1127,7 +1127,7 @@ static void sysedit_selectAdd( Select_t *sel )
    }
 
    /* Add system. */
-   memcpy( &sysedit_select[ sysedit_nselect ], sel, sizeof(Select_t) );
+   sysedit_select[ sysedit_nselect ] = *sel;
    sysedit_nselect++;
 
    /* Button sanity. */
@@ -1920,7 +1920,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          sysedit_tex[j] = tex[j];
          png_files[j]   = strdup( files[i] );
          c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
-         memcpy( &bg[j], &c, sizeof(glColour) );
+         bg[j] = c;
          j++;
       }
       free( files[i] );
