@@ -110,6 +110,11 @@ int pfaction_load( xmlNodePtr parent );
 int faction_get( const char* name )
 {
    int i;
+
+   /* Escorts are part of the "player" faction. */
+   if (strcmp(name, "Escort") == 0)
+      return FACTION_PLAYER;
+
    if (name != NULL) {
       for (i=0; i<faction_nstack; i++)
          if (strcmp(faction_stack[i].name, name)==0)
