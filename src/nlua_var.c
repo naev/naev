@@ -25,6 +25,7 @@
 #include "faction.h"
 #include "nlua_faction.h"
 #include "nlua_planet.h"
+#include "nlua_system.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nxml.h"
@@ -38,6 +39,7 @@
 #define MISN_VAR_STR     3 /**< String type. */
 #define MISN_VAR_FACTION 4 /**< faction type. */
 #define MISN_VAR_PLANET  5 /**< planet type. */
+#define MISN_VAR_SYSTEM  6 /**< system type. */
 /**
  * @struct misn_var
  *
@@ -146,6 +148,10 @@ int var_save( xmlTextWriterPtr writer )
             xmlw_attr(writer,"type","planet");
             xmlw_str(writer,"%s",var_stack[i].d.str);
             break;
+         case MISN_VAR_SYSTEM:
+            xmlw_attr(writer,"type","system");
+            xmlw_str(writer,"%s",var_stack[i].d.str);
+            break;
       }
 
       xmlw_endElem(writer); /* "var" */
@@ -201,6 +207,10 @@ int var_load( xmlNodePtr parent )
                }
                else if (strcmp(str,"planet")==0) {
                   var.type = MISN_VAR_PLANET;
+                  var.d.str = xml_getStrd(cur);
+               }
+               else if (strcmp(str,"system")==0) {
+                  var.type = MISN_VAR_SYSTEM;
                   var.d.str = xml_getStrd(cur);
                }
                else { /* super error checking */
@@ -320,6 +330,9 @@ static int var_peek( lua_State *L )
             case MISN_VAR_PLANET:
                lua_pushplanet(L,planet_get(var_stack[i].d.str)->id);
                break;
+            case MISN_VAR_SYSTEM:
+               lua_pushsystem(L,system_get(var_stack[i].d.str)->id);
+               break;
          }
          return 1;
       }
@@ -393,6 +406,10 @@ static int var_push( lua_State *L )
       var.type = MISN_VAR_PLANET;
       var.d.str = strdup( planet_getIndex(*lua_toplanet(L,2))->name );
    }
+   else if (lua_issystem(L,2)) {
+      var.type = MISN_VAR_SYSTEM;
+      var.d.str = strdup( system_getIndex(*lua_toplanet(L,2))->name );
+   }
    else {
       NLUA_INVALID_PARAMETER(L);
       return 0;
@@ -414,6 +431,7 @@ static void var_free( misn_var* var )
       case MISN_VAR_STR:
       case MISN_VAR_FACTION:
       case MISN_VAR_PLANET:
+      case MISN_VAR_SYSTEM:
          if (var->d.str!=NULL) {
             free(var->d.str);
             var->d.str = NULL;
