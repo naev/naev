@@ -373,7 +373,7 @@ static int var_pop( lua_State *L )
  *
  *    @luaparam name Name to use for the new mission variable.
  *    @luaparam value Value of the new mission variable.  Accepted types are:
- *                  nil, bool, string, number, or faction.
+ *                  nil, bool, string, number, system, planet, or faction.
  * @luafunc push( name, value )
  */
 static int var_push( lua_State *L )
