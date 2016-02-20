@@ -24,6 +24,7 @@
 #include "nlua.h"
 #include "faction.h"
 #include "nlua_faction.h"
+#include "nlua_planet.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nxml.h"
@@ -36,6 +37,7 @@
 #define MISN_VAR_BOOL    2 /**< Boolean type. */
 #define MISN_VAR_STR     3 /**< String type. */
 #define MISN_VAR_FACTION 4 /**< faction type. */
+#define MISN_VAR_PLANET  5 /**< planet type. */
 /**
  * @struct misn_var
  *
@@ -139,6 +141,11 @@ int var_save( xmlTextWriterPtr writer )
          case MISN_VAR_FACTION:
             xmlw_attr(writer,"type","faction");
             xmlw_str(writer,"%s",var_stack[i].d.str);
+            break;
+         case MISN_VAR_PLANET:
+            xmlw_attr(writer,"type","planet");
+            xmlw_str(writer,"%s",var_stack[i].d.str);
+            break;
       }
 
       xmlw_endElem(writer); /* "var" */
@@ -190,6 +197,10 @@ int var_load( xmlNodePtr parent )
                }
                else if (strcmp(str,"faction")==0) {
                   var.type = MISN_VAR_FACTION;
+                  var.d.str = xml_getStrd(cur);
+               }
+               else if (strcmp(str,"planet")==0) {
+                  var.type = MISN_VAR_PLANET;
                   var.d.str = xml_getStrd(cur);
                }
                else { /* super error checking */
@@ -302,8 +313,12 @@ static int var_peek( lua_State *L )
                break;
             case MISN_VAR_STR:
                lua_pushstring(L,var_stack[i].d.str);
+               break;
             case MISN_VAR_FACTION:
                lua_pushfaction(L,faction_get(var_stack[i].d.str));
+               break;
+            case MISN_VAR_PLANET:
+               lua_pushplanet(L,planet_get(var_stack[i].d.str)->id);
                break;
          }
          return 1;
@@ -371,8 +386,12 @@ static int var_push( lua_State *L )
       var.d.str = strdup( lua_tostring(L,2) );
    }
    else if (lua_isfaction(L,2)) {
-      var.type = MISN_VAR_STR;
+      var.type = MISN_VAR_FACTION;
       var.d.str = strdup( faction_name(lua_tofaction(L,2)) );
+   }
+   else if (lua_isplanet(L,2)) {
+      var.type = MISN_VAR_PLANET;
+      var.d.str = strdup( planet_getIndex(*lua_toplanet(L,2))->name );
    }
    else {
       NLUA_INVALID_PARAMETER(L);
@@ -394,6 +413,7 @@ static void var_free( misn_var* var )
    switch (var->type) {
       case MISN_VAR_STR:
       case MISN_VAR_FACTION:
+      case MISN_VAR_PLANET:
          if (var->d.str!=NULL) {
             free(var->d.str);
             var->d.str = NULL;
