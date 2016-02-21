@@ -408,7 +408,7 @@ static int var_push( lua_State *L )
    }
    else if (lua_issystem(L,2)) {
       var.type = MISN_VAR_SYSTEM;
-      var.d.str = strdup( system_getIndex(*lua_toplanet(L,2))->name );
+      var.d.str = strdup( system_getIndex(lua_tosystem(L,2))->name );
    }
    else {
       NLUA_INVALID_PARAMETER(L);
