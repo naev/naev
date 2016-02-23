@@ -39,7 +39,8 @@ typedef enum TaskData_ {
    TASKDATA_NULL,
    TASKDATA_INT,
    TASKDATA_VEC2,
-   TASKDATA_PILOT
+   TASKDATA_PILOT,
+   TASKDATA_REF
 } TaskData;
 
 /**
@@ -59,6 +60,7 @@ typedef struct Task_ {
       unsigned int num; /**< Pilot ID, etc... */
       Vector2d vec; /**< Vector. */
    } dat; /**< Stores the data. */
+   lua_State *L;
 } Task;
 
 
