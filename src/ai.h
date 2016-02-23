@@ -33,6 +33,11 @@ typedef struct Pilot_ Pilot;
 /**
  * @enum TaskData
  *
+ * When task is created from Lua side, we can use TASKDATA_REF to directly
+ * reference the Lua object. This allows the passing of arbitrary data types.
+ * However, when created from C side, the data lives in C and such we have to use
+ * the different provided TASKDATA types.
+ *
  * @brief Task data types.
  */
 typedef enum TaskData_ {
