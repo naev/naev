@@ -260,7 +260,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
 /**
  * @brief Persists all the nxml Lua data.
  *
- * Does not save anything in tables nor functions of any type.
+ * Does not save anything in tables (unless .__save=true) nor functions of any type.
  *
  *    @param L Lua state to save.
  *    @param writer XML Writer to use.
