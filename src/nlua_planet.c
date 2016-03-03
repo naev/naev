@@ -493,7 +493,7 @@ static int planetL_eq( lua_State *L )
    LuaPlanet *a, *b;
    a = luaL_checkplanet(L,1);
    b = luaL_checkplanet(L,2);
-   lua_pushboolean(L,(a == b));
+   lua_pushboolean(L,(*a == *b));
    return 1;
 }
 
