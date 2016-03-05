@@ -54,6 +54,10 @@
 <ul>
 
 	<li>
+		<a href="./ai.html">ai</a>
+	</li>
+
+	<li>
 		<a href="./bkg.html">bkg</a>
 	</li>
 
@@ -220,7 +224,12 @@
 	</tr>
 
 	<tr>
-	<td class="name"><a href="#tk.msg">tk.msg</a>&nbsp;(title, message, image, width, height)</td>
+	<td class="name"><a href="#tk.msg">tk.msg</a>&nbsp;(title, message)</td>
+	<td class="summary">Creates a window with an ok button.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#tk.msgImg">tk.msgImg</a>&nbsp;(title, message, image, width, height)</td>
 	<td class="summary">Creates a window with an ok button, text and an image.</td>
 	</tr>
 
@@ -393,7 +402,44 @@ Returns the number of the choice and the name of the choice chosen.
 
 
 
-<dt><a name="tk.msg"></a><strong>tk.msg</strong>&nbsp;(title, message, image, width, height)</dt>
+<dt><a name="tk.msg"></a><strong>tk.msg</strong>&nbsp;(title, message)</dt>
+<dd>
+Creates a window with an ok button.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  title: Title of the window.
+	</li>
+	
+	<li>
+	  message: Message to display in the window.
+	</li>
+	
+</ul>
+
+
+
+
+<br />
+<h3>Usage:</h3>
+<code>tk.msg( "Title", "This is a message." )
+ </code>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="tk.msgImg"></a><strong>tk.msgImg</strong>&nbsp;(title, message, image, width, height)</dt>
 <dd>
 Creates a window with an ok button, text and an image.
  
@@ -430,7 +476,7 @@ Creates a window with an ok button, text and an image.
 
 <br />
 <h3>Usage:</h3>
-<code>tk.msg( "Title", "This is a message.", "character.png" )
+<code>tk.msgImg( "Title", "This is a message.", "character.png" )
  </code>
 
 
@@ -438,6 +484,7 @@ Creates a window with an ok button, text and an image.
 
 
 </dd>
+
 
 
 
