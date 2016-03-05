@@ -1,0 +1,2514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: ai</title>
+    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<!-- <div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> --><!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><a href="../index.html">Main</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li><strong>ai</strong></li>
+	
+	<li>
+		<a href="./bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="./camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="./colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="./commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="./diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="./evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="./faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="./gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="./gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="./hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="./jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="./misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="./music.html">music</a>
+	</li>
+
+	<li>
+		<a href="./naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="./news.html">news</a>
+	</li>
+
+	<li>
+		<a href="./outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="./pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="./planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="./player.html">player</a>
+	</li>
+
+	<li>
+		<a href="./rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="./ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="./system.html">system</a>
+	</li>
+
+	<li>
+		<a href="./tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="./time.html">time</a>
+	</li>
+
+	<li>
+		<a href="./tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="./tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="./var.html">var</a>
+	</li>
+
+	<li>
+		<a href="./vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>ai</code></h1>
+
+<div>Handles how the AI interacts with the universe.
+ 
+ Usage is:
+ <pre>
+ ai.function( params )
+ </pre>
+ </div>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name"><a href="#ai.accel">ai.accel</a>&nbsp;(acceleration)</td>
+	<td class="summary">Starts accelerating the pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.aim">ai.aim</a>&nbsp;(target)</td>
+	<td class="summary">Aims at a pilot, trying to hit it rather than move to it.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.board">ai.board</a>&nbsp;()</td>
+	<td class="summary">Attempts to board the pilot's target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.brake">ai.brake</a>&nbsp;()</td>
+	<td class="summary">Brakes the pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.canboard">ai.canboard</a>&nbsp;(target)</td>
+	<td class="summary">Checks to see if pilot can board the target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.careful_face">ai.careful_face</a>&nbsp;(target)</td>
+	<td class="summary">Gives the direction to follow in order to reach the target while
+ minimizating risk.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.combat">ai.combat</a>&nbsp;(val)</td>
+	<td class="summary">Sets the combat flag.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.dir">ai.dir</a>&nbsp;(target)</td>
+	<td class="summary">calculates the direction that the target is relative to the current pilot facing.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.dist">ai.dist</a>&nbsp;(pointer)</td>
+	<td class="summary">Gets the distance from the pointer.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.distress">ai.distress</a>&nbsp;(msg)</td>
+	<td class="summary">Sends a distress signal.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.dock">ai.dock</a>&nbsp;(target)</td>
+	<td class="summary">Docks the ship.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.drift_facing">ai.drift_facing</a>&nbsp;()</td>
+	<td class="summary">Calculate the offset between the pilot's current direction of travel and the pilot's current facing.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.e_attack">ai.e_attack</a>&nbsp;()</td>
+	<td class="summary">Tells the pilot's escorts to attack its target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.e_clear">ai.e_clear</a>&nbsp;()</td>
+	<td class="summary">Tells the pilot's escorts to clear orders.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.e_hold">ai.e_hold</a>&nbsp;()</td>
+	<td class="summary">Tells the pilot's escorts to attack hold position.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.e_return">ai.e_return</a>&nbsp;()</td>
+	<td class="summary">Tells the pilot's escorts to return to dock.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.face">ai.face</a>&nbsp;(target, invert, compensate)</td>
+	<td class="summary">Faces the target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.flyby_dist">ai.flyby_dist</a>&nbsp;(pointer)</td>
+	<td class="summary">Gets the distance from the pointer perpendicular to the current pilot's flight vector.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.follow_accurate">ai.follow_accurate</a>&nbsp;(target, radius, angle, Kp, Kd, method)</td>
+	<td class="summary">Computes the point to face in order to
+ follow an other pilot using a PD controller.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.getenemy">ai.getenemy</a>&nbsp;()</td>
+	<td class="summary">Gets the nearest enemy.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.getenemy_heuristic">ai.getenemy_heuristic</a>&nbsp;(mass, dps, hp, range)</td>
+	<td class="summary">Gets the nearest enemy within specified heuristic.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.getenemy_size">ai.getenemy_size</a>&nbsp;(lb, ub)</td>
+	<td class="summary">Gets the nearest enemy within specified size bounds.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.getstanding">ai.getstanding</a>&nbsp;(target)</td>
+	<td class="summary">Gets the standing of the target pilot with the current pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.getweaprange">ai.getweaprange</a>&nbsp;(id, level)</td>
+	<td class="summary">Gets the range of a weapon.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.getweapspeed">ai.getweapspeed</a>&nbsp;(id, level)</td>
+	<td class="summary">Gets the speed of a weapon.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.hasafterburners">ai.hasafterburners</a>&nbsp;()</td>
+	<td class="summary">Does the pilot have afterburners?
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.hascannons">ai.hascannons</a>&nbsp;()</td>
+	<td class="summary">Does the pilot have cannons?
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.hasjammers">ai.hasjammers</a>&nbsp;()</td>
+	<td class="summary">Does the pilot have jammers?
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.haslockon">ai.haslockon</a>&nbsp;()</td>
+	<td class="summary">Checks to see if pilot has a missile lockon.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.hasturrets">ai.hasturrets</a>&nbsp;()</td>
+	<td class="summary">Does the pilot have turrets?
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.hostile">ai.hostile</a>&nbsp;(target)</td>
+	<td class="summary">Sets the enemy hostile (basically notifies of an impending attack).</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.hyperspace">ai.hyperspace</a>&nbsp;()</td>
+	<td class="summary">Tries to enter hyperspace.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.idir">ai.idir</a>&nbsp;(target)</td>
+	<td class="summary">calculates angle between pilot facing and intercept-course to target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.iface">ai.iface</a>&nbsp;(target)</td>
+	<td class="summary">Maintains an intercept pursuit course.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.isally">ai.isally</a>&nbsp;(target)</td>
+	<td class="summary">Checks to see if target is an ally.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.isbribed">ai.isbribed</a>&nbsp;(target)</td>
+	<td class="summary">Checks to see if target has bribed pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.isenemy">ai.isenemy</a>&nbsp;(target)</td>
+	<td class="summary">Checks to see if target is an enemy.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.ismaxvel">ai.ismaxvel</a>&nbsp;()</td>
+	<td class="summary">Checks to see if pilot is at maximum velocity.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.isstopped">ai.isstopped</a>&nbsp;()</td>
+	<td class="summary">Checks to see if pilot is stopped.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.land">ai.land</a>&nbsp;()</td>
+	<td class="summary">Lands on a planet.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.landplanet">ai.landplanet</a>&nbsp;(only_friend)</td>
+	<td class="summary">Get a random friendly planet.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.minbrakedist">ai.minbrakedist</a>&nbsp;()</td>
+	<td class="summary">Gets the minimum braking distance.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.nearestpilot">ai.nearestpilot</a>&nbsp;()</td>
+	<td class="summary">gets the nearest pilot to the current pilot
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.nearestplanet">ai.nearestplanet</a>&nbsp;()</td>
+	<td class="summary">Get the nearest friendly planet to the pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.nearhyptarget">ai.nearhyptarget</a>&nbsp;()</td>
+	<td class="summary">Gets the nearest hyperspace target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.pilot">ai.pilot</a>&nbsp;()</td>
+	<td class="summary">Gets the AI's pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.popsubtask">ai.popsubtask</a>&nbsp;()</td>
+	<td class="summary">Pops the current running task.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.poptask">ai.poptask</a>&nbsp;()</td>
+	<td class="summary">Pops the current running task.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.pushsubtask">ai.pushsubtask</a>&nbsp;(func, data)</td>
+	<td class="summary">Pushes a subtask onto the pilot's task's subtask list.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.pushtask">ai.pushtask</a>&nbsp;(func, data)</td>
+	<td class="summary">Pushes a task onto the pilot's task list.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.refuel">ai.refuel</a>&nbsp;()</td>
+	<td class="summary">Attempts to refuel the pilot's target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.reldps">ai.reldps</a>&nbsp;(target)</td>
+	<td class="summary">Gets the relative damage output (total DPS) between the current pilot and the specified target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.relhp">ai.relhp</a>&nbsp;(target)</td>
+	<td class="summary">Gets the relative health (total shields and armour) between the current pilot and the specified target
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.relsize">ai.relsize</a>&nbsp;(target)</td>
+	<td class="summary">Gets the relative size (ship mass) between the current pilot and the specified target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.relvel">ai.relvel</a>&nbsp;()</td>
+	<td class="summary">Gets the relative velocity of a pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.rndhyptarget">ai.rndhyptarget</a>&nbsp;()</td>
+	<td class="summary">Gets a random hyperspace target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.rndpilot">ai.rndpilot</a>&nbsp;()</td>
+	<td class="summary">Gets a random pilot in the system.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.rndplanet">ai.rndplanet</a>&nbsp;()</td>
+	<td class="summary">Get a random planet.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.setcredits">ai.setcredits</a>&nbsp;(num)</td>
+	<td class="summary">Sets the pilot_nstack credits.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.settarget">ai.settarget</a>&nbsp;(target)</td>
+	<td class="summary">Sets the pilot's target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.settimer">ai.settimer</a>&nbsp;(timer, time)</td>
+	<td class="summary">Sets a timer.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.shoot">ai.shoot</a>&nbsp;(secondary)</td>
+	<td class="summary">Makes the pilot shoot
+  </td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.stop">ai.stop</a>&nbsp;()</td>
+	<td class="summary">Completely stops the pilot if it is below minimum vel error (no insta-stops).</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.subtarget">ai.subtarget</a>&nbsp;()</td>
+	<td class="summary">Gets the pilot's subtask target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.subtaskname">ai.subtaskname</a>&nbsp;()</td>
+	<td class="summary">Gets the current subtask's name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.target">ai.target</a>&nbsp;()</td>
+	<td class="summary">Gets the pilot's task target.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.taskname">ai.taskname</a>&nbsp;()</td>
+	<td class="summary">Gets the current task's name.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.timeup">ai.timeup</a>&nbsp;(timer)</td>
+	<td class="summary">Checks a timer.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.turn">ai.turn</a>&nbsp;(vel)</td>
+	<td class="summary">Starts turning the pilot.</td>
+	</tr>
+
+	<tr>
+	<td class="name"><a href="#ai.weapset">ai.weapset</a>&nbsp;(id, type)</td>
+	<td class="summary">Sets the active weapon set, fires another weapon set or activate an outfit.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="ai.accel"></a><strong>ai.accel</strong>&nbsp;(acceleration)</dt>
+<dd>
+Starts accelerating the pilot.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  acceleration: Fraction of pilot's maximum acceleration from 0 to 1.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.aim"></a><strong>ai.aim</strong>&nbsp;(target)</dt>
+<dd>
+Aims at a pilot, trying to hit it rather than move to it.
+ 
+ This method uses a polar UV decomposition to get a more accurate time-of-flight
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: The pilot to aim at
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The offset from the target aiming position (in degrees).
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.board"></a><strong>ai.board</strong>&nbsp;()</dt>
+<dd>
+Attempts to board the pilot's target.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true if was able to board the target.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.brake"></a><strong>ai.brake</strong>&nbsp;()</dt>
+<dd>
+Brakes the pilot.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether braking is finished.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.canboard"></a><strong>ai.canboard</strong>&nbsp;(target)</dt>
+<dd>
+Checks to see if pilot can board the target.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Target to see if pilot can board.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true if pilot can board, false if it can't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.careful_face"></a><strong>ai.careful_face</strong>&nbsp;(target)</dt>
+<dd>
+Gives the direction to follow in order to reach the target while
+ minimizating risk.
+ 
+ This method is based on a simplified version of trajectory generation in
+ mobile robotics using the potential method.
+ 
+ The principle is to consider the mobile object (ship) as a mechanical object.
+ Obstacles (enemies) and the target exert
+ attractive or repulsive force on this object.
+ 
+ Only visible ships are taken into account.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Target to go to.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>ai.careful_face( a_pilot ) -- Face a pilot</code></li>
+	
+	<li><code>ai.careful_face( a_vector ) -- Face a vector
+ </code></li>
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.combat"></a><strong>ai.combat</strong>&nbsp;(val)</dt>
+<dd>
+Sets the combat flag.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  val: Value to set flag to, default is on.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.dir"></a><strong>ai.dir</strong>&nbsp;(target)</dt>
+<dd>
+calculates the direction that the target is relative to the current pilot facing.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Position or pilot to compare facing to
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The facing offset to the target (in degrees).
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.dist"></a><strong>ai.dist</strong>&nbsp;(pointer)</dt>
+<dd>
+Gets the distance from the pointer.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  pointer: vec2 or pilot.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The distance from the pointer.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.distress"></a><strong>ai.distress</strong>&nbsp;(msg)</dt>
+<dd>
+Sends a distress signal.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  msg: Message to send or nil.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.dock"></a><strong>ai.dock</strong>&nbsp;(target)</dt>
+<dd>
+Docks the ship.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot to dock with.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.drift_facing"></a><strong>ai.drift_facing</strong>&nbsp;()</dt>
+<dd>
+Calculate the offset between the pilot's current direction of travel and the pilot's current facing.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Offset
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.e_attack"></a><strong>ai.e_attack</strong>&nbsp;()</dt>
+<dd>
+Tells the pilot's escorts to attack its target.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the command succeeded.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.e_clear"></a><strong>ai.e_clear</strong>&nbsp;()</dt>
+<dd>
+Tells the pilot's escorts to clear orders.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the command succeeded.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.e_hold"></a><strong>ai.e_hold</strong>&nbsp;()</dt>
+<dd>
+Tells the pilot's escorts to attack hold position.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the command succeeded.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.e_return"></a><strong>ai.e_return</strong>&nbsp;()</dt>
+<dd>
+Tells the pilot's escorts to return to dock.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the command succeeded.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.face"></a><strong>ai.face</strong>&nbsp;(target, invert, compensate)</dt>
+<dd>
+Faces the target.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Target to face.
+	</li>
+	
+	<li>
+	  invert: Invert away from target.
+	</li>
+	
+	<li>
+	  compensate: Compensate for velocity?
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li><code>ai.face( a_pilot ) -- Face a pilot</code></li>
+	
+	<li><code>ai.face( a_pilot, true ) -- Face away from a pilot</code></li>
+	
+	<li><code>ai.face( a_pilot, nil, true ) -- Compensate velocity facing a pilot
+ </code></li>
+	
+</ul>
+
+
+
+<br />
+<h3>Return value:</h3>
+Angle offset in degrees.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.flyby_dist"></a><strong>ai.flyby_dist</strong>&nbsp;(pointer)</dt>
+<dd>
+Gets the distance from the pointer perpendicular to the current pilot's flight vector.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  pointer: vec2 or pilot.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+offset_distance
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.follow_accurate"></a><strong>ai.follow_accurate</strong>&nbsp;(target, radius, angle, Kp, Kd, method)</dt>
+<dd>
+Computes the point to face in order to
+ follow an other pilot using a PD controller.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: The pilot to follow
+	</li>
+	
+	<li>
+	  radius: The requested distance between p and target
+	</li>
+	
+	<li>
+	  angle: The requested angle between p and target
+	</li>
+	
+	<li>
+	  Kp: The first controller parameter
+	</li>
+	
+	<li>
+	  Kd: The second controller parameter
+	</li>
+	
+	<li>
+	  method: (optional) Method to compute goal angle
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The point to go to as a vector2.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.getenemy"></a><strong>ai.getenemy</strong>&nbsp;()</dt>
+<dd>
+Gets the nearest enemy.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Pilot or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.getenemy_heuristic"></a><strong>ai.getenemy_heuristic</strong>&nbsp;(mass, dps, hp, range)</dt>
+<dd>
+Gets the nearest enemy within specified heuristic.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  mass: goal mass map (0-1)
+	</li>
+	
+	<li>
+	  dps: goal DPS map (0-1)
+	</li>
+	
+	<li>
+	  hp: goal HP map (0-1)
+	</li>
+	
+	<li>
+	  range: weighting for range (typically > 1)
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+the best fitting target
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.getenemy_size"></a><strong>ai.getenemy_size</strong>&nbsp;(lb, ub)</dt>
+<dd>
+Gets the nearest enemy within specified size bounds.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  lb: Lower size bound
+	</li>
+	
+	<li>
+	  ub: upper size bound
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.getstanding"></a><strong>ai.getstanding</strong>&nbsp;(target)</dt>
+<dd>
+Gets the standing of the target pilot with the current pilot.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot to get faction standing of.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The faction standing of the target [-100,100] or nil if invalid.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.getweaprange"></a><strong>ai.getweaprange</strong>&nbsp;(id, level)</dt>
+<dd>
+Gets the range of a weapon.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: Optional parameter indicating id of weapon set to get range of, defaults to selected one.
+	</li>
+	
+	<li>
+	  level: Level of weapon set to get range of.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The range of the weapon set.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.getweapspeed"></a><strong>ai.getweapspeed</strong>&nbsp;(id, level)</dt>
+<dd>
+Gets the speed of a weapon.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: Optional parameter indicating id of weapon set to get speed of, defaults to selected one.
+	</li>
+	
+	<li>
+	  level: Level of weapon set to get range of.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The range of the weapon set.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.hasafterburners"></a><strong>ai.hasafterburners</strong>&nbsp;()</dt>
+<dd>
+Does the pilot have afterburners?
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+True if the pilot has afterburners.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.hascannons"></a><strong>ai.hascannons</strong>&nbsp;()</dt>
+<dd>
+Does the pilot have cannons?
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+True if the pilot has cannons.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.hasjammers"></a><strong>ai.hasjammers</strong>&nbsp;()</dt>
+<dd>
+Does the pilot have jammers?
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+True if the pilot has jammers.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.haslockon"></a><strong>ai.haslockon</strong>&nbsp;()</dt>
+<dd>
+Checks to see if pilot has a missile lockon.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the pilot has a missile lockon.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.hasturrets"></a><strong>ai.hasturrets</strong>&nbsp;()</dt>
+<dd>
+Does the pilot have turrets?
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+True if the pilot has turrets.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.hostile"></a><strong>ai.hostile</strong>&nbsp;(target)</dt>
+<dd>
+Sets the enemy hostile (basically notifies of an impending attack).
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot to set hostile.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.hyperspace"></a><strong>ai.hyperspace</strong>&nbsp;()</dt>
+<dd>
+Tries to enter hyperspace.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Distance if too far away.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.idir"></a><strong>ai.idir</strong>&nbsp;(target)</dt>
+<dd>
+calculates angle between pilot facing and intercept-course to target.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Position or pilot to compare facing to
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The facing offset to intercept-course to the target (in degrees).
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.iface"></a><strong>ai.iface</strong>&nbsp;(target)</dt>
+<dd>
+Maintains an intercept pursuit course.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Position or pilot to intercept.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The offset from the proper intercept course (in degrees).
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.isally"></a><strong>ai.isally</strong>&nbsp;(target)</dt>
+<dd>
+Checks to see if target is an ally.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the target is an ally.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.isbribed"></a><strong>ai.isbribed</strong>&nbsp;(target)</dt>
+<dd>
+Checks to see if target has bribed pilot.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the target has bribed pilot.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.isenemy"></a><strong>ai.isenemy</strong>&nbsp;(target)</dt>
+<dd>
+Checks to see if target is an enemy.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the target is an enemy.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.ismaxvel"></a><strong>ai.ismaxvel</strong>&nbsp;()</dt>
+<dd>
+Checks to see if pilot is at maximum velocity.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the pilot is at maximum velocity.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.isstopped"></a><strong>ai.isstopped</strong>&nbsp;()</dt>
+<dd>
+Checks to see if pilot is stopped.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether the pilot is stopped.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.land"></a><strong>ai.land</strong>&nbsp;()</dt>
+<dd>
+Lands on a planet.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether landing was successful.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.landplanet"></a><strong>ai.landplanet</strong>&nbsp;(only_friend)</dt>
+<dd>
+Get a random friendly planet.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  only_friend: Only check for ally planets.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Planet or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.minbrakedist"></a><strong>ai.minbrakedist</strong>&nbsp;()</dt>
+<dd>
+Gets the minimum braking distance.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Minimum braking distance.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.nearestpilot"></a><strong>ai.nearestpilot</strong>&nbsp;()</dt>
+<dd>
+gets the nearest pilot to the current pilot
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Pilot or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.nearestplanet"></a><strong>ai.nearestplanet</strong>&nbsp;()</dt>
+<dd>
+Get the nearest friendly planet to the pilot.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Planet or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.nearhyptarget"></a><strong>ai.nearhyptarget</strong>&nbsp;()</dt>
+<dd>
+Gets the nearest hyperspace target.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+vec2 or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.pilot"></a><strong>ai.pilot</strong>&nbsp;()</dt>
+<dd>
+Gets the AI's pilot.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The AI's pilot.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.popsubtask"></a><strong>ai.popsubtask</strong>&nbsp;()</dt>
+<dd>
+Pops the current running task.
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.poptask"></a><strong>ai.poptask</strong>&nbsp;()</dt>
+<dd>
+Pops the current running task.
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.pushsubtask"></a><strong>ai.pushsubtask</strong>&nbsp;(func, data)</dt>
+<dd>
+Pushes a subtask onto the pilot's task's subtask list.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  func: Function to call for task.
+	</li>
+	
+	<li>
+	  data: Data to pass to the function.  Supports any lua type.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.pushtask"></a><strong>ai.pushtask</strong>&nbsp;(func, data)</dt>
+<dd>
+Pushes a task onto the pilot's task list.
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  func: Function to call for task.
+	</li>
+	
+	<li>
+	  data: Data to pass to the function.  Supports any lua type.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.refuel"></a><strong>ai.refuel</strong>&nbsp;()</dt>
+<dd>
+Attempts to refuel the pilot's target.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+true if pilot has begun refueling, false if it hasn't.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.reldps"></a><strong>ai.reldps</strong>&nbsp;(target)</dt>
+<dd>
+Gets the relative damage output (total DPS) between the current pilot and the specified target.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: The pilot whose DPS we will compare.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+A number from 0 to 1 mapping the relative DPSes.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.relhp"></a><strong>ai.relhp</strong>&nbsp;(target)</dt>
+<dd>
+Gets the relative health (total shields and armour) between the current pilot and the specified target
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: The pilot whose health we will compare.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+A number from 0 to 1 mapping the relative healths.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.relsize"></a><strong>ai.relsize</strong>&nbsp;(target)</dt>
+<dd>
+Gets the relative size (ship mass) between the current pilot and the specified target.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: The pilot whose mass we will compare.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+A number from 0 to 1 mapping the relative masses.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.relvel"></a><strong>ai.relvel</strong>&nbsp;()</dt>
+<dd>
+Gets the relative velocity of a pilot.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Relative velocity.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.rndhyptarget"></a><strong>ai.rndhyptarget</strong>&nbsp;()</dt>
+<dd>
+Gets a random hyperspace target.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+vec2 or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.rndpilot"></a><strong>ai.rndpilot</strong>&nbsp;()</dt>
+<dd>
+Gets a random pilot in the system.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The randomly selected pilot.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.rndplanet"></a><strong>ai.rndplanet</strong>&nbsp;()</dt>
+<dd>
+Get a random planet.
+ 
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Planet or nil.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.setcredits"></a><strong>ai.setcredits</strong>&nbsp;(num)</dt>
+<dd>
+Sets the pilot_nstack credits. Only call in create().
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  num: Number of credits.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.settarget"></a><strong>ai.settarget</strong>&nbsp;(target)</dt>
+<dd>
+Sets the pilot's target.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  target: Pilot to target.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.settimer"></a><strong>ai.settimer</strong>&nbsp;(timer, time)</dt>
+<dd>
+Sets a timer.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  timer: Timer number.
+	</li>
+	
+	<li>
+	  time: Number of seconds to set timer to.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.shoot"></a><strong>ai.shoot</strong>&nbsp;(secondary)</dt>
+<dd>
+Makes the pilot shoot
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  secondary: Fire secondary weapons instead of primary.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.stop"></a><strong>ai.stop</strong>&nbsp;()</dt>
+<dd>
+Completely stops the pilot if it is below minimum vel error (no insta-stops).
+ 
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.subtarget"></a><strong>ai.subtarget</strong>&nbsp;()</dt>
+<dd>
+Gets the pilot's subtask target.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The pilot's target ship identifier or nil if no target.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.subtaskname"></a><strong>ai.subtaskname</strong>&nbsp;()</dt>
+<dd>
+Gets the current subtask's name.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The current subtask name or "none" if there are no subtasks.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.target"></a><strong>ai.target</strong>&nbsp;()</dt>
+<dd>
+Gets the pilot's task target.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The pilot's target ship identifier or nil if no target.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.taskname"></a><strong>ai.taskname</strong>&nbsp;()</dt>
+<dd>
+Gets the current task's name.
+
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+The current task name or "none" if there are no tasks.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.timeup"></a><strong>ai.timeup</strong>&nbsp;(timer)</dt>
+<dd>
+Checks a timer.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  timer: Timer number.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<br />
+<h3>Return value:</h3>
+Whether time is up.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.turn"></a><strong>ai.turn</strong>&nbsp;(vel)</dt>
+<dd>
+Starts turning the pilot.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  vel: Directional velocity from -1 to 1.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="ai.weapset"></a><strong>ai.weapset</strong>&nbsp;(id, type)</dt>
+<dd>
+Sets the active weapon set, fires another weapon set or activate an outfit.
+ 
+
+
+<br />
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  id: ID of the weapon set to switch to or fire.
+	</li>
+	
+	<li>
+	  type: If type = true or nil, activate, else, deactivate
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>
