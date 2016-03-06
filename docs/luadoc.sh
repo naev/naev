@@ -45,9 +45,9 @@ for F in ../src/nlua_*.c ../src/ai.c; do
          ' $F > lua/"$(basename $F)".luadoc
 done
 
-# Run Luadoc, put HTML files into lua/ dir
+# Run Luadoc, put HTML files into html/ dir
 (
    cd lua
-   luadoc --nofiles --taglet "naev-taglet" -t templates/ *.luadoc
+   luadoc --nofiles --taglet "naev-taglet" -t templates/ -d ../html *.luadoc
    rm *.luadoc
 )
