@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title>Naev Lua API: camera</title>
-    <link rel="stylesheet" href="./luadoc.css" type="text/css" />
+    <title>Naev Lua API: tut</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
     <link rel="shortcut icon" href="../favicon.ico" />
 </head>
 
@@ -54,117 +54,117 @@
 <ul>
 
 	<li>
-		<a href="./ai.html">ai</a>
+		<a href="../modules/ai.html">ai</a>
 	</li>
 
 	<li>
-		<a href="./bkg.html">bkg</a>
+		<a href="../modules/bkg.html">bkg</a>
 	</li>
 
-	<li><strong>camera</strong></li>
+	<li>
+		<a href="../modules/camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="../modules/colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="../modules/commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="../modules/diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="../modules/evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="../modules/faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="../modules/gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="../modules/gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="../modules/hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="../modules/jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="../modules/misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="../modules/music.html">music</a>
+	</li>
+
+	<li>
+		<a href="../modules/naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="../modules/news.html">news</a>
+	</li>
+
+	<li>
+		<a href="../modules/outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="../modules/pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="../modules/planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="../modules/player.html">player</a>
+	</li>
+
+	<li>
+		<a href="../modules/rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="../modules/ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="../modules/system.html">system</a>
+	</li>
+
+	<li>
+		<a href="../modules/tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="../modules/time.html">time</a>
+	</li>
+
+	<li>
+		<a href="../modules/tk.html">tk</a>
+	</li>
+
+	<li><strong>tut</strong></li>
 	
 	<li>
-		<a href="./colour.html">colour</a>
+		<a href="../modules/var.html">var</a>
 	</li>
 
 	<li>
-		<a href="./commodity.html">commodity</a>
-	</li>
-
-	<li>
-		<a href="./diff.html">diff</a>
-	</li>
-
-	<li>
-		<a href="./evt.html">evt</a>
-	</li>
-
-	<li>
-		<a href="./faction.html">faction</a>
-	</li>
-
-	<li>
-		<a href="./gfx.html">gfx</a>
-	</li>
-
-	<li>
-		<a href="./gui.html">gui</a>
-	</li>
-
-	<li>
-		<a href="./hook.html">hook</a>
-	</li>
-
-	<li>
-		<a href="./jump.html">jump</a>
-	</li>
-
-	<li>
-		<a href="./misn.html">misn</a>
-	</li>
-
-	<li>
-		<a href="./music.html">music</a>
-	</li>
-
-	<li>
-		<a href="./naev.html">naev</a>
-	</li>
-
-	<li>
-		<a href="./news.html">news</a>
-	</li>
-
-	<li>
-		<a href="./outfit.html">outfit</a>
-	</li>
-
-	<li>
-		<a href="./pilot.html">pilot</a>
-	</li>
-
-	<li>
-		<a href="./planet.html">planet</a>
-	</li>
-
-	<li>
-		<a href="./player.html">player</a>
-	</li>
-
-	<li>
-		<a href="./rnd.html">rnd</a>
-	</li>
-
-	<li>
-		<a href="./ship.html">ship</a>
-	</li>
-
-	<li>
-		<a href="./system.html">system</a>
-	</li>
-
-	<li>
-		<a href="./tex.html">tex</a>
-	</li>
-
-	<li>
-		<a href="./time.html">time</a>
-	</li>
-
-	<li>
-		<a href="./tk.html">tk</a>
-	</li>
-
-	<li>
-		<a href="./tut.html">tut</a>
-	</li>
-
-	<li>
-		<a href="./var.html">var</a>
-	</li>
-
-	<li>
-		<a href="./vec2.html">vec2</a>
+		<a href="../modules/vec2.html">vec2</a>
 	</li>
 
 </ul>
@@ -182,12 +182,15 @@
 
 <div id="content">
 
-<h1>Module <code>camera</code></h1>
+<h1>Module <code>tut</code></h1>
 
-<div>Lua bindings to interact with the Camera.
+<div>Tutorial generic Lua bindings.
  
  An example would be:
  <pre>
+ if naev.lang() == "en" then
+ --Language is English.
+ end
  </pre>
  </div>
 
@@ -199,8 +202,8 @@
 <table class="function_list">
 
 	<tr>
-	<td class="name"><a href="#camera.set">camera.set</a>&nbsp;(target, soft_over, speed)</td>
-	<td class="summary">Sets the camera.</td>
+	<td class="name"><a href="#tut.main_menu">tut.main_menu</a>&nbsp;()</td>
+	<td class="summary">Opens the main menu.</td>
 	</tr>
 
 </table>
@@ -220,46 +223,19 @@
 
 
 
-<dt><a name="camera.set"></a><strong>camera.set</strong>&nbsp;(target, soft_over, speed)</dt>
+<dt><a name="tut.main_menu"></a><strong>tut.main_menu</strong>&nbsp;()</dt>
 <dd>
-Sets the camera.
+Opens the main menu.
  
- Make sure to reset camera after using it or we'll run into trouble.
  
+
+
+
 
 
 <br />
-<h3>Parameters</h3>
-<ul>
-	
-	<li>
-	  target: Should be either a vec2 or a pilot to focus on. It will follow pilots around. If nil, it follows the player.
-	</li>
-	
-	<li>
-	  soft_over: Defaults to false, indicates if the camera should fly over or instantly teleport.
-	</li>
-	
-	<li>
-	  speed: Speed at which to fly over. Defaults to 2500 if omitted and soft_over is true.
-	</li>
-	
-</ul>
-
-
-
-
-<h3>Usage</h3>
-<ul>
-	
-	<li><code>camera.set() -- Resets the camera to the pilot hard.</code></li>
-	
-	<li><code>camera.set( a_pilot, true ) -- Flies camera over to a_pilot.</code></li>
-	
-	<li><code>camera.set( vec2.new() ) -- Jumps camera to 0,0
- </code></li>
-	
-</ul>
+<h3>Usage:</h3>
+<code>tut.main_menu() -- Won't return, will kill the Lua</code>
 
 
 
