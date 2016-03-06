@@ -6,6 +6,7 @@
 
 import os
 import glob
+import shutil
 from datetime import datetime
 from optparse import OptionParser
 
@@ -265,14 +266,7 @@ if __name__ == "__main__":
             myTpl.stream(slotName=slotName, outfitData=outfitDetails,
                     date=date).dump(myStorage)
 
-    from shutil import copy
-    cssFiles = glob.glob(currentPath+'/*.css')
-    while len(cssFiles) > 0:
-        f = cssFiles.pop()
+    for f in glob.glob(currentPath+'/*.css'):
         bname = os.path.basename(f)
-        if not os.path.exists(storagePath + '/' + bname):
-            print('Copying css file: '+bname+' in '+storagePath)
-            copy(f, storagePath)
-        else:
-            pass
-
+        print('Copying css file: '+bname+' in '+storagePath)
+        shutil.copy(f, storagePath)
