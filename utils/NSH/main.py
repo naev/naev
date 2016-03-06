@@ -270,3 +270,11 @@ if __name__ == "__main__":
         bname = os.path.basename(f)
         print('Copying css file: '+bname+' in '+storagePath)
         shutil.copy(f, storagePath)
+
+    mediapath = storagePath + '/ships/media'
+    if not os.path.exists(mediapath):
+        os.mkdir(mediapath)
+    print('Copying image files...')
+    for f in glob.glob(currentPath+'/../../dat/gfx/ship/*/*_comm.png'):
+        bname = os.path.basename(f)
+        shutil.copy(f, mediapath)
