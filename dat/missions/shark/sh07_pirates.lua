@@ -4,7 +4,7 @@
    
    Stages :
    0) There are pirates to kill
-	1) Way to Alteris
+   1) Way to Alteris
 	
 --]]
 
@@ -43,7 +43,10 @@ if lang == "es" then
 	
    title[5] = "That was impressive"
    text[5] = [[As you land, Smith is already there. "Thanks to your actions I managed to create the sales subsidiary and I think nobody will prevent us from selling Sharks anymore. It was very nice working with you. Here is your bounty. Good luck in the future."]]
-	
+
+   title[6] = "Target is gone !"
+   text[6] = [[It seems the pirate went away. Don't worry: I bet you that if you come back in some time, he will still be there."]]
+
    -- Mission details
    misn_title = "The Last Detail"
    misn_reward = "%s credits"
@@ -155,11 +158,18 @@ end
 function enter()
    --Arrived in system
    if system.cur() == gawsys and gawdead == false then  --The Gawain
-      baddie = pilot.addRaw( "Gawain","dummy", nil, "Dummy" )[1]
+
+      -- Choose a random point in the system for him to stay around
+      sysrad = rnd.rnd() * system.cur():radius()
+      angle = rnd.rnd() * 360
+      pos = vec2.newP(sysrad, angle)
+
+      baddie = pilot.addRaw( "Gawain","dummy", nil, "Thugs" )[1]
       baddie:rename(gawname)
       baddie:setHostile()
       baddie:setHilight()
       baddie:control()
+      baddie:goto(pos)
 		
       --The pirate becomes nice defensive outfits
       baddie:rmOutfit("all")
@@ -168,6 +178,8 @@ function enter()
       baddie:addOutfit("S&K Ultralight Stealth Plating")
       baddie:addOutfit("Milspec Aegis 2201 Core System")
       baddie:addOutfit("Tricon Zephyr Engine")
+      baddie:setHealth(100,100)
+      baddie:setEnergy(100)
 		
       baddie:addOutfit("Shield Capacitor",2)
       baddie:addOutfit("Small Shield Booster")
@@ -175,9 +187,10 @@ function enter()
 		
       baddie:addOutfit("Laser Cannon MK3",2)
 		
-      --hook.pilot(baddie, "idle", "idle")
+      hook.pilot(baddie, "idle", "idle", pos)
       hook.pilot(baddie, "attacked", "attacked")
       hook.pilot(baddie, "death", "gawain_dead")
+      hook.pilot(baddie, "jump", "generic_jumped")
 		
       elseif system.cur() == kersys1 and kerdead1 == false then  --The Kestrel
       pilot.clear()
@@ -192,6 +205,7 @@ function enter()
       baddie:setHostile()
 		
       hook.pilot( baddie, "death", "kestrel_dead1")
+      hook.pilot(baddie, "jump", "generic_jumped")
 		
       elseif system.cur() == kersys2 and kerdead2 == false then  --The Kestrel
       pilot.clear()
@@ -207,6 +221,7 @@ function enter()
       baddie:setHostile()
 		
       hook.pilot( baddie, "death", "kestrel_dead2")
+      hook.pilot(baddie, "jump", "generic_jumped")
 		
       elseif system.cur() == godsys and goddead == false then  --The Goddard
       pilot.clear()
@@ -224,20 +239,22 @@ function enter()
       baddie:setHostile()
 		
       hook.pilot( baddie, "death", "goddard_dead")
+      hook.pilot(baddie, "jump", "generic_jumped")
 		
    end
    
 end
 
-function idle()  --the Gawain is flying around ??? needs fixed if you want an idle() function
-   baddie:goto(planet.get("Anubis"):pos() + vec2.new( 800,  800), false)
-   baddie:goto(planet.get("Anubis"):pos() + vec2.new(-800,  800), false)
-   baddie:goto(planet.get("Anubis"):pos() + vec2.new(-800, -800), false)
-   baddie:goto(planet.get("Anubis"):pos() + vec2.new( 800, -800), false)
+function idle(pilot,pos)  --the Gawain is flying around a random point
+   baddie:goto(pos + vec2.new( 800,  800), false, false)
+   baddie:goto(pos + vec2.new(-800,  800), false, false)
+   baddie:goto(pos + vec2.new(-800, -800), false, false)
+   baddie:goto(pos + vec2.new( 800, -800), false, false)
 end
 
 function attacked()  --the Gawain is going away
    if baddie:exists() then
+      baddie:taskClear() 
       baddie:runaway(player.pilot(), true)
    end
 end
@@ -276,4 +293,8 @@ function generic_dead()
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")
    end
+end
+
+function gnenric_jumped()
+   tk.msg(title[6], text[6])
 end
