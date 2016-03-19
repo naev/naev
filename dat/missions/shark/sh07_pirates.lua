@@ -44,7 +44,7 @@ if lang == "es" then
    title[5] = "That was impressive"
    text[5] = [[As you land, Smith is already there. "Thanks to your actions I managed to create the sales subsidiary and I think nobody will prevent us from selling Sharks anymore. It was very nice working with you. Here is your bounty. Good luck in the future."]]
 
-   title[6] = "Target is gone !"
+   title[6] = "Target is gone!"
    text[6] = [[It seems the pirate went away. Don't worry: I bet you that if you come back in some time, he will still be there."]]
 
    -- Mission details
