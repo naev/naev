@@ -67,6 +67,9 @@ Travel distance: %d]]
    baTo_title = "Back to normal"
    baTo_text = "The engine works again."
 
+   cannot_title = "You can not accept this mission"
+   cannot_text = "You are already testing an other engine."
+
    osd_title = "Za'lek Test"
    osd_msg = {"Fly to %s in the %s system."}
 end
@@ -110,6 +113,11 @@ function create()
 end
 
 function accept()
+
+   if player.misnActive("Za'lek Test") then
+       tk.msg(cannot_title, cannot_text)
+       misn.finish(false)
+   end
 
    if misn.accept() then -- able to accept the mission
       stage = 0
@@ -185,7 +193,7 @@ function land()
    end
 
    if isSlow then   --The player is still slow and will recover normal velocity
-      player.setSpeed(0)
+      player.pilot():setSpeedLimit(0)
    end
 
    curplanet = planet.cur()
