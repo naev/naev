@@ -30,10 +30,16 @@ function begin ()
 
    thissystem = system.cur()
 
-   if not evt.claim(thissystem) then
+   -- thissystem and source_system must be adjacent (for those who use player.teleport)
+   areAdj = false
+   for _,s in ipairs( source_system:adjacentSystems() ) do
+      if thissystem == s then areAdj = true end
+   end
+
+   if not evt.claim(thissystem) or not areAdj then
       evt.finish(false)
    end
-   
+
    --choose 1 particular planet 
    plan = thissystem:planets()
    cand = {}
