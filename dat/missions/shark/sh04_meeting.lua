@@ -96,7 +96,9 @@ function accept()
       misn.setTitle(misn_title)
       misn.setReward(misn_reward:format(numstring(reward)))
       misn.setDesc(misn_desc)
-      misn.osdCreate(misn_title, osd_msg)
+      osd = misn.osdCreate(osd_title, osd_msg)
+      misn.osdActive(1)
+
       marker = misn.markerAdd(missys, "low")
 		
       smith = misn.cargoAdd("Person", 0)  --Adding the cargo
@@ -124,6 +126,9 @@ function land()
       if misn.cargoRm(smith) then
          tk.msg(title[3], text[3])
          player.pay(reward)
+         misn.osdDestroy(osd)
+         hook.rm(enterhook)
+         hook.rm(landhook)
          misn.finish(true)
       end
    end

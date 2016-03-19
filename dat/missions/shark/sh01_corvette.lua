@@ -83,7 +83,9 @@ function accept()
       misn.setTitle(misn_title)
       misn.setReward(misn_reward:format(numstring(reward/2)))
       misn.setDesc(misn_desc)
-      misn.osdCreate(misn_title, osd_msg)
+      osd = misn.osdCreate(osd_title, osd_msg)
+      misn.osdActive(1)
+
       marker = misn.markerAdd(battlesys, "low")
       
       jumpouthook = hook.jumpout("jumpout")
@@ -108,6 +110,10 @@ function land()
    if stage == 2 and planet.cur() == paypla then
       tk.msg(title[3], text[3])
       player.pay(reward)
+      misn.osdDestroy(osd)
+      hook.rm(enterhook)
+      hook.rm(landhook)
+      hook.rm(jumpouthook)
       misn.finish(true)
    end
 end

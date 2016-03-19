@@ -116,7 +116,9 @@ function accept()
       misn.setTitle(misn_title)
       misn.setReward(misn_reward:format(numstring(reward)))
       misn.setDesc(misn_desc)
-      misn.osdCreate(misn_title, osd_msg)
+      osd = misn.osdCreate(osd_title, osd_msg)
+      misn.osdActive(1)
+
       markeri = misn.markerAdd(missys, "low")
       
       jumpouthook = hook.jumpout("jumpout")
@@ -140,6 +142,10 @@ function land()
    if planet.cur() == mispla and stage == 4 then
       tk.msg(title[5], text[6]:format(battlesys:name(), missys:name()))
       player.pay(reward)
+      misn.osdDestroy(osd)
+      hook.rm(enterhook)
+      hook.rm(landhook)
+      hook.rm(jumpouthook)
       misn.finish(true)
    end
    if stage == 2 then   --You were supposed to kill him, not to go away !
