@@ -68,7 +68,7 @@ Travel distance: %d]]
    baTo_text = "The engine works again."
 
    cannot_title = "You can not accept this mission"
-   cannot_text = "You are already testing an other engine."
+   cannot_text = "You are already testing another engine."
 
    osd_title = "Za'lek Test"
    osd_msg = {"Fly to %s in the %s system."}
