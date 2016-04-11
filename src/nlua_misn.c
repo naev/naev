@@ -674,7 +674,7 @@ static int misn_finish( lua_State *L )
  * @brief Adds some mission cargo to the player.  He cannot sell it nor get rid of it
  *  unless he abandons the mission in which case it'll get eliminated.
  *
- *    @luaparam cargo Name of the cargo to add.
+ *    @luaparam cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
  *    @luaparam quantity Quantity of cargo to add.
  *    @luareturn The id of the cargo which can be used in cargoRm.
  * @luafunc cargoAdd( cargo, quantity )
