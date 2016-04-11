@@ -205,7 +205,102 @@
    <planet>Halir</planet>
   </avail>
  </mission>
- <mission name="Collective Scouting">
+<mission name="Soromid Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo1</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>30</chance>
+   <done>Empire Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Dvaered Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo2</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Soromid Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+ <mission name="Za’lek Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo3</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Dvaered Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Frontier Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo4</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Za’lek Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+ <mission name="Sirius Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo5</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Frontier Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo6</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>100</chance>
+ <done>Sirius Long Distance Recruitment</done>   
+ <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+<mission name="Long Distance Empire Shipping">
+  <lua>empire/es_longdistancecargo</lua>
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>350</chance>
+   <done>Empire Long Distance Recruitment</done>
+   <location>Computer</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+<mission name="Collective Scouting">
   <lua>empire/collective/ec00</lua>
   <flags>
    <unique />
@@ -1168,3 +1263,4 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
+</Missions>
