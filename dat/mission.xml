@@ -290,7 +290,7 @@
   </avail>
  </mission> 
 <mission name="Long Distance Empire Shipping">
-  <lua>empire/es_longdistancecargo</lua>
+  <lua>empire/longdistanceshipping/es_longdistancecargo</lua>
   <avail>
    <priority>3</priority>
    <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
