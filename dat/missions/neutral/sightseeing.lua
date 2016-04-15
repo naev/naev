@@ -52,6 +52,7 @@ else -- Default to English
    ssmsg[4] = "Everyone seems like they're having a good time."
    ssmsg[5] = "A collective gasp of wonder travels through the cabin."
    ssmsg[6] = "A sense of terror and mystery engulfs the passengers as they contemplate their existance above the skies."
+   ssmsg[7] = "Truly a sight to behold for the passengers."
    
    osd_title  = "Sightseeing tour in %s"
    osd_msg    = {}
