@@ -141,6 +141,22 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
+<mission name="Sightseeing">
+  <lua>neutral/sightseeing</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>460</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
  <mission name="Empire Recruitment">
   <lua>empire/emp_cargo00</lua>
   <flags>
