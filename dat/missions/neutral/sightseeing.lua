@@ -2,24 +2,22 @@
 
    Sightseeing
    author:micahmumper
-
+   
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-
+  
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --
 
    Based on patrol mission, this mission ferries sightseers to various points.
-
+   
 --]]
 
 include "numstring.lua"
@@ -102,6 +100,7 @@ function create ()
 
    local planets = missys:planets()
    local numpoints = math.min( rnd.rnd( 2, 5 ), #planets )
+   attractions = numpoints
    points = {}
    points["__save"] = true
    while numpoints > 0 and #planets > 0 do
@@ -130,7 +129,8 @@ function create ()
    if friend < foe then
       misn.finish( false )
    end
-   credits = 25000
+   credits = missys:jumpDist()*2500 + attractions*4000
+   credits = credits + rnd.sigma() * (credits/3)
 
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
