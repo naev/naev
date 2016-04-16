@@ -130,8 +130,13 @@ function create ()
    if friend < foe then
       misn.finish( false )
    end
+   if player.pilot():ship():class() == "Luxury Yacht" then
+   credits = (missys:jumpDist()*2500 + attractions*4000)*rnd.rnd(2,6)
+   credits = credits + rnd.sigma() * (credits/5)
+   else
    credits = missys:jumpDist()*2500 + attractions*4000
    credits = credits + rnd.sigma() * (credits/3)
+   end
 
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
