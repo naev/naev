@@ -190,7 +190,7 @@ else --default english
                                {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
                                {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"},
 							   {"Za'lek Shipping Delivery", "So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money."},
-                               {"Sightseeing", "Rich folk will pay extra to go on a an offworld sightseeing tour in a luxury yacht. Look like you can put a price on luxury!"},
+                               {"Sightseeing", "Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. Look like you can put a price on luxury!"},
                               }
 
    -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
