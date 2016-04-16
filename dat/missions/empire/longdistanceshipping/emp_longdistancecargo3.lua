@@ -16,14 +16,14 @@ else -- default english
    bar_desc = "Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar."
    misn_title = "Za'lek Long Distance Recruitment"
    misn_reward = "50000 credits"
-   misn_desc = "Deliver a shipping diplomat for the Empire to Outbound Station in the Ganth system."
+   misn_desc = "Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth system."
    title = {}
    title[1] = "Spaceport Bar"
    title[2] = "Za'lek Long Distance Recruitment"
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[Lieutenant Czesc sits at the bar. He really does seem to handle business all across the Empire. You take the seat next to him. "Thanks to your help, the Empire Aramda Shipping Division will soon operate across the galaxy. Our next mission is to get House Za'lek on board. Interested in helping out again?"]]
-   text[2] = [["I had a feeling you would!" says Lieutenant Czesc. "I've got another bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, so keep your wits about you. The diplomat only needs to go to the Outbound Station in the Ganth system. He will let me know when trade relations have been established. There is still more work to be done, so I expect to see you again soon."]]
+   text[2] = [["I had a feeling you would!" says Lieutenant Czesc. "I've got another bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, so keep your wits about you. The diplomat only needs to go to the Gerhart Station in the Ganth system. He will let me know when trade relations have been established. There is still more work to be done, so I expect to see you again soon."]]
    text[3] = [[You drop the diplomat off on Outbound Station, and she hands you a credit chip. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]
 end
 
@@ -36,7 +36,7 @@ function create ()
 
    -- Set our target system and planet.
    targetworld_sys = system.get("Ganth")
-   targetworld = planet.get("Outbound Station")
+   targetworld = planet.get("Gerhart Station")
 
 
    misn.setNPC( "Lieutenant", "empire/unique/czesc" )
