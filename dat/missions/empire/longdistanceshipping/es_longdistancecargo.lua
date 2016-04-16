@@ -76,7 +76,7 @@ function create()
         misn.finish(false)        
     elseif destplanet:faction() == faction.get( "Independent" ) then
         misn.finish(false)        
-    elseif numjumps < 2 then
+    elseif numjumps < 3 then
     	misn.finish(false)
     end
 
@@ -95,8 +95,8 @@ function create()
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
-    jumpreward = 500
-    distreward = 0.35
+    jumpreward = 1000
+    distreward = 0.3
     reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
     misn.setTitle("ES: Long distance cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
