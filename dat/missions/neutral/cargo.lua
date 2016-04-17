@@ -29,7 +29,8 @@ else -- default english
     title_p2 = [[ 
 Cargo: %s (%d tons)
 Jumps: %d
-Travel distance: %d]]
+Travel distance: %d
+Piracy Risk: %s]]
 
     full = {}
     full[1] = "No room in ship"
@@ -62,8 +63,41 @@ function create()
 
     -- Calculate the route, distance, jumps and cargo to take
     destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+    
     if destplanet == nil then
        misn.finish(false)
+    end
+    
+    -- To determine risk of piracy, simulate a trip there and calculate pirates presence.
+    -- Assume shortest route with no interruptions.
+   jumps = system.jumpPath( system.cur(), destsys:name() )
+   risk = system.cur():presences()["Pirate"]
+   if risk == nil then risk = 0 end
+   if jumps then
+      for k, v in ipairs(jumps) do
+         travelrisk = v:system():presences()["Pirate"]
+         if travelrisk == nil then
+            travelrisk = 0
+         end
+         risk = risk+travelrisk
+      end
+   end
+   
+   -- Determines average piracy risk and how much pay is padded for delivery to high-piracy areas.
+    avgrisk = risk/(numjumps + 1)
+    
+    if avgrisk == 0 then
+       piracyrisk = "None"
+       riskreward = 0
+    elseif avgrisk <= 25 then
+       piracyrisk = "Low"
+       riskreward = 50
+    elseif avgrisk > 25 and avgrisk <= 75 then
+       piracyrisk = "Medium"
+       riskreward = 100
+    else
+       piracyrisk = "High"
+       riskreward = 150
     end
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
@@ -72,11 +106,11 @@ function create()
     amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
     jumpreward = 200
     distreward = 0.09
-    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    reward = 1.5^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
     misn.setTitle(buildCargoMissionDescription( nil, amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")
-    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist))
+    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, piracyrisk))
     misn.setReward(misn_reward:format(numstring(reward)))
     
 end
