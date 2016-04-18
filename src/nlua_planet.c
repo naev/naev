@@ -821,18 +821,16 @@ static int planetL_outfitsSold( lua_State *L )
 static int planetL_commoditiesSold( lua_State *L )
 {
    Planet *p;
-   int i, n;
-   Commodity **c;
+   int i;
 
    /* Get result and tech. */
    p = luaL_validplanet(L,1);
-   c = tech_getCommodity( p->tech, &n );
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<n; i++) {
+   for (i=0; i<p->ncommodities; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lua_pushcommodity(L,c[i]); /* value = LuaCommodity */
+      lua_pushcommodity(L,p->commodities[i]); /* value = LuaCommodity */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
