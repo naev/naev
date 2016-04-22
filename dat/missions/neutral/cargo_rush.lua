@@ -30,7 +30,9 @@ else -- default english
 Cargo: %s (%d tonnes)
 Jumps: %d
 Travel distance: %d
-Time limit: %s]]
+Piracy Risk: %s
+Time limit: %s
+]]
 
     full = {}
     full[1] = "No room in ship"
@@ -100,17 +102,50 @@ function create()
     timelimit  = time.get() + time.create(0, 0, allowance)
     timelimit2 = time.get() + time.create(0, 0, allowance * 1.2)
 
+    -- To determine risk of piracy, simulate a trip there and calculate pirates presence.
+    -- Assume shortest route with no interruptions.
+   jumps = system.jumpPath( system.cur(), destsys:name() )
+   risk = system.cur():presences()["Pirate"]
+   if risk == nil then risk = 0 end
+   if jumps then
+      for k, v in ipairs(jumps) do
+         travelrisk = v:system():presences()["Pirate"]
+         if travelrisk == nil then
+            travelrisk = 0
+         end
+         risk = risk+travelrisk
+      end
+   end
+   
+   -- Determines average piracy risk and how much pay is padded for delivery to high-piracy areas.
+    avgrisk = risk/(numjumps + 1)
+    
+    if avgrisk == 0 then
+       piracyrisk = "None"
+       riskreward = 0
+    elseif avgrisk <= 25 then
+       piracyrisk = "Low"
+       riskreward = 10
+    elseif avgrisk > 25 and avgrisk <= 100 then
+       piracyrisk = "Medium"
+       riskreward = 25
+    else
+       piracyrisk = "High"
+       riskreward = 50
+    end
+
+
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount     = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
-    jumpreward = 1000
-    distreward = 0.12
-    reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    jumpreward = commodity.price(cargo)*1.2
+    distreward = math.log(300*commodity.price(cargo))/100
+    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
     misn.setTitle( buildCargoMissionDescription(cargosize[tier], amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")
-    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, piracyrisk, (timelimit - time.get()):str()))
     misn.setReward(misn_reward:format(numstring(reward)))
 end
 

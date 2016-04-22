@@ -91,22 +91,23 @@ function create()
        riskreward = 0
     elseif avgrisk <= 25 then
        piracyrisk = "Low"
-       riskreward = 50
-    elseif avgrisk > 25 and avgrisk <= 75 then
+       riskreward = 10
+    elseif avgrisk > 25 and avgrisk <= 100 then
        piracyrisk = "Medium"
-       riskreward = 100
+       riskreward = 25
     else
        piracyrisk = "High"
-       riskreward = 150
+       riskreward = 50
     end
-    
+       
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
+    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
-    jumpreward = 200
-    distreward = 0.09
-    reward = 1.5^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    jumpreward = commodity.price(cargo)
+    distreward = math.log(100*commodity.price(cargo))/100
+    reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
     misn.setTitle(buildCargoMissionDescription( nil, amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")

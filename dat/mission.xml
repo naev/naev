@@ -91,6 +91,23 @@
    <faction>Trader</faction>
   </avail>
  </mission>
+ <mission name="Commodity Run">
+  <lua>neutral/commodityRun</lua>
+  <avail>
+   <priority>5</priority>
+   <chance>60</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
  <mission name="Dead Or Alive Bounty">
   <lua>neutral/pirbounty_dead</lua>
   <avail>

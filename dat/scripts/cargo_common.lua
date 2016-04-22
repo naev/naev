@@ -92,8 +92,11 @@ function cargo_calculateRoute ()
    
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    -- TODO: I'm using the standard cargo types for now, but this should be changed to custom cargo once local-defined commodities are implemented.
-   local cargoes = {"Food", "Industrial Goods", "Medicine", "Luxury Goods", "Ore"}
-   local cargo = cargoes[rnd.rnd(1, #cargoes)]
+   local cargoes = difference(planet.cur():commoditiesSold(),destplanet:commoditiesSold())
+   if #cargoes == 0 then
+      return
+   end
+   local cargo = cargoes[rnd.rnd(1,#cargoes)]:name()
 
    -- Return lots of stuff
    return destplanet, destsys, numjumps, traveldist, cargo, tier
@@ -134,4 +137,16 @@ function cargoValidDest( targetplanet )
       end
    end
    return true
+end
+
+--Determines the items in table a that are not in table b.
+--Used to determine what cargo is sold at current planet but not at destination planet.
+function difference(a, b)
+    local ai = {}
+    local r = {}
+    for k,v in pairs(a) do r[k] = v; ai[v]=true end
+    for k,v in pairs(b) do 
+        if ai[v]~=nil then   r[k] = nil   end
+    end
+    return r
 end
