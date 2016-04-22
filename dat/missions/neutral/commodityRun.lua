@@ -77,19 +77,19 @@ function land()
     amount = pilot.cargoHas(player.pilot(),Commodity:name())  
     --Determine bonus for amount delivered. 
     if amount <= 20 then
-        Bonus = 1.05 -- 10% bonus for <20 tons
+        Bonus = 1.05 -- 5% bonus for <20 tons
     elseif amount > 20 and amount <= 40 then
-        Bonus = 1.10 -- 20% bonus for 20 - 40 tons
+        Bonus = 1.10 -- 10% bonus for 20 - 40 tons
     elseif amount > 40 and amount <= 60 then
-        Bonus = 1.15 -- 30% bonus for 40 - 60 tons
+        Bonus = 1.15 -- 15% bonus for 40 - 60 tons
     elseif amount > 60 and amount <= 80 then
-        Bonus = 1.20 -- 40% bonus for 60 - 80 tons
+        Bonus = 1.20 -- 20% bonus for 60 - 80 tons
     elseif amount > 80 and amount <= 100 then
-        Bonus = 1.25 -- 50% bonus for 80 - 100 tons
+        Bonus = 1.25 -- 25% bonus for 80 - 100 tons
     elseif amount >100 and amount <= 150 then
-        Bonus = 1.30 -- 60% bonus for 100 - 150 tons
+        Bonus = 1.30 -- 30% bonus for 100 - 150 tons
     elseif amount > 150 and amount <= 200 then
-        Bonus = 1.35 -- 80% bonus for 150 - 200 tons
+        Bonus = 1.35 -- 35% bonus for 150 - 200 tons
     elseif amount > 200 and amount <= 250 then
         Bonus = 1.40 -- 40% bonus for 150 - 200 tons
     elseif amount > 250 and amount <= 300 then
