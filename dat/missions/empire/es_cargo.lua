@@ -30,6 +30,12 @@ Time limit: %s]]
    slow[1] = "Too slow"
    slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, and the Empire is not fond of delays. Accept the mission anyway?]]
 
+   piracyrisk = {}
+   piracyrisk[1] = "None"
+   piracyrisk[2] = "Low"
+   piracyrisk[3] = "Medium"
+   piracyrisk[4] = "High"
+
    msg_title = {}
    msg_title[1] = "Mission Accepted"
    msg_title[2] = "Too many missions"
@@ -65,7 +71,7 @@ function create()
     local routepos = origin_p:pos()
 
     -- target destination
-    destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
     if destplanet == nil then
        misn.finish(false)
     end
@@ -85,38 +91,21 @@ function create()
         timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
     end
 
-    -- To determine risk of piracy, simulate a trip there and calculate pirates presence.
-    -- Assume shortest route with no interruptions.
-   jumps = system.jumpPath( system.cur(), destsys:name() )
-   risk = system.cur():presences()["Pirate"]
-   if risk == nil then risk = 0 end
-   if jumps then
-      for k, v in ipairs(jumps) do
-         travelrisk = v:system():presences()["Pirate"]
-         if travelrisk == nil then
-            travelrisk = 0
-         end
-         risk = risk+travelrisk
-      end
-   end
-   
-   -- Determines average piracy risk and how much pay is padded for delivery to high-piracy areas.
-    avgrisk = risk/(numjumps + 1)
-    
-    if avgrisk == 0 then
-       piracyrisk = "None"
+	--Determine risk of piracy
+     if avgrisk == 0 then
+       piracyrisk = piracyrisk[1]
        riskreward = 0
     elseif avgrisk <= 25 then
-       piracyrisk = "Low"
+       piracyrisk = piracyrisk[2]
        riskreward = 10
     elseif avgrisk > 25 and avgrisk <= 100 then
-       piracyrisk = "Medium"
+       piracyrisk = piracyrisk[3]
        riskreward = 25
     else
-       piracyrisk = "High"
+       piracyrisk = piracyrisk[4]
        riskreward = 50
     end
-    
+ 
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
