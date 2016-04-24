@@ -90,13 +90,32 @@ function cargo_calculateRoute ()
    local numjumps   = origin_s:jumpDist(destsys)
    local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
    
+   
+   --Determine amount of piracy along the route
+   local jumps = system.jumpPath( system.cur(), destsys:name() )
+   local risk = system.cur():presences()["Pirate"]
+   if risk == nil then risk = 0 end
+   if jumps then
+      for k, v in ipairs(jumps) do
+         local travelrisk = v:system():presences()["Pirate"]
+         if travelrisk == nil then
+            travelrisk = 0
+         end
+         local risk = risk+travelrisk
+      end
+   end
+	local avgrisk = risk/(numjumps + 1)
+   
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    -- TODO: I'm using the standard cargo types for now, but this should be changed to custom cargo once local-defined commodities are implemented.
-   local cargoes = {"Food", "Industrial Goods", "Medicine", "Luxury Goods", "Ore"}
-   local cargo = cargoes[rnd.rnd(1, #cargoes)]
+   local cargoes = difference(planet.cur():commoditiesSold(),destplanet:commoditiesSold())
+   if #cargoes == 0 then
+      return
+   end
+   local cargo = cargoes[rnd.rnd(1,#cargoes)]:name()
 
    -- Return lots of stuff
-   return destplanet, destsys, numjumps, traveldist, cargo, tier
+   return destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier
 end
 
 
@@ -135,3 +154,16 @@ function cargoValidDest( targetplanet )
    end
    return true
 end
+
+--Determines the items in table a that are not in table b.
+--Used to determine what cargo is sold at current planet but not at destination planet.
+function difference(a, b)
+    local ai = {}
+    local r = {}
+    for k,v in pairs(a) do r[k] = v; ai[v]=true end
+    for k,v in pairs(b) do 
+        if ai[v]~=nil then   r[k] = nil   end
+    end
+    return r
+end
+

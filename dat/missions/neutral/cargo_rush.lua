@@ -30,17 +30,25 @@ else -- default english
 Cargo: %s (%d tonnes)
 Jumps: %d
 Travel distance: %d
-Time limit: %s]]
+Piracy Risk: %s
+Time limit: %s
+]]
 
     full = {}
     full[1] = "No room in ship"
     full[2] = "You don't have enough cargo space to accept this mission. It requires %d tonnes of free space (you need %d more)."
 
-   slow = {}
-   slow[1] = "Too slow"
-   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
+   	slow = {}
+  	slow[1] = "Too slow"
+  	slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
 
 Accept the mission anyway?]]
+
+	piracyrisk = {}
+	piracyrisk[1] = "None"
+	piracyrisk[2] = "Low"
+	piracyrisk[3] = "Medium"
+	piracyrisk[4] = "High"
 
    --=Landing=--
    
@@ -78,8 +86,8 @@ end
 function create()
     -- Note: this mission does not make any system claims. 
 
-    -- Calculate the route, distance, jumps and cargo to take
-    destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
+    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
     if destplanet == nil then
        misn.finish(false)
     end
@@ -100,17 +108,31 @@ function create()
     timelimit  = time.get() + time.create(0, 0, allowance)
     timelimit2 = time.get() + time.create(0, 0, allowance * 1.2)
 
+    if avgrisk == 0 then
+       piracyrisk = piracyrisk[1]
+       riskreward = 0
+    elseif avgrisk <= 25 then
+       piracyrisk = piracyrisk[2]
+       riskreward = 10
+    elseif avgrisk > 25 and avgrisk <= 100 then
+       piracyrisk = piracyrisk[3]
+       riskreward = 25
+    else
+       piracyrisk = piracyrisk[4]
+       riskreward = 50
+    end
+
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount     = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
-    jumpreward = 1000
-    distreward = 0.12
-    reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    jumpreward = commodity.price(cargo)*1.2
+    distreward = math.log(300*commodity.price(cargo))/100
+    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
     misn.setTitle( buildCargoMissionDescription(cargosize[tier], amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")
-    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, piracyrisk, (timelimit - time.get()):str()))
     misn.setReward(misn_reward:format(numstring(reward)))
 end
 
