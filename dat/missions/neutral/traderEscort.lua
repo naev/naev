@@ -117,21 +117,21 @@ function create()
     elseif convoysize == "small" then
 		tier = 2
 		jumpreward = commodity.price(cargo)
-		distreward = math.log(200*commodity.price(cargo))/100
+		distreward = math.log(250*commodity.price(cargo))/100
     elseif convoysize == "medium" then
 		tier = 3
 		jumpreward = commodity.price(cargo)
-		distreward = math.log(300*commodity.price(cargo))/100
+		distreward = math.log(500*commodity.price(cargo))/100
     elseif convoysize == "large" then
 		tier = 4
 		jumpreward = commodity.price(cargo)
-		distreward = math.log(400*commodity.price(cargo))/100
+		distreward = math.log(1000*commodity.price(cargo))/100
 	elseif convoysize == "huge" then
 		tier = 5
 		jumpreward = commodity.price(cargo)
-		distreward = math.log(500*commodity.price(cargo))/100
+		distreward = math.log(2000*commodity.price(cargo))/100
 	end
-    reward = 2.5^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    reward = 2.0^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
     misn.setTitle( misn_title:format( convoysize, destplanet:name(), destsys:name() ) )
     misn.setDesc(title_p1:format(convoysize, destplanet:name(), destsys:name()) .. title_p2:format(cargo, numjumps, traveldist, piracyrisk))
