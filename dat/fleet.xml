@@ -839,10 +839,10 @@
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot name="Convoy Koala" ship="Rhino"></pilot>
-   <pilot name="Convoy Koala" ship="Rhino"></pilot>
-   <pilot name="Convoy Koala" ship="Rhino"></pilot>
-   <pilot name="Convoy Koala" ship="Rhino"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
   </pilots>
  </fleet>
    <fleet name="Trader Convoy 5">
