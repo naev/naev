@@ -331,7 +331,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
       if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
 
-      if (pilot_stack[i]->solid->mass >= target_mass_LB && pilot_stack[i]->solid->mass <= target_mass_UB)
+      if (pilot_stack[i]->solid->mass < target_mass_LB || pilot_stack[i]->solid->mass > target_mass_UB)
          continue;
 
       /* Check distance. */
