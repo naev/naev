@@ -24,7 +24,7 @@ title = {}
 
     text[3] = [[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth 20,000 credits, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak...?]]
 
-    NPCname = "Civilian"
+    NPCname = "A Fyrra civilian"
     NPCdesc = "There's a civilian here, from the Fyrra echelon by the looks of him. He's got some kind of crate with him."
 
     misndesc = "You've been hired to transport a crate of specially engineered rodents to %s (%s system)."
