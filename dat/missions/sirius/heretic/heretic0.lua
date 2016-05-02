@@ -31,7 +31,7 @@ emsg[2] = [[You approach the man who appears to be the leader of the group. "One
 osd = {}
 osd[1] = "Deliver the shipment to %s in the %s system."
 --random odds and ends
-notenoughcargo = [["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 STU on you.]]
+notenoughcargo = [["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 seconds on you.]]
 rejected = [[He looks at you, almost appearing confused.
     "Well, thats your choice boy. Be on your way now. I'm busy."
     You walk away, wondering if you really missed out on an oppourtunity.]]

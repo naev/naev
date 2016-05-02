@@ -34,7 +34,7 @@ else -- default english
     "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.  
     "To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]
     text[3] = [["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]
-    text[4] = [["We will jump in approximately 8000 STU after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]
+    text[4] = [["We will jump in approximately 8000 seconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]
     
     refusetitle = "Nuts"
     refusetext = [["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]
