@@ -835,7 +835,7 @@
   <avail>
    <chance>3</chance>
    <location>Bar</location>
-   <faction>Sirius</faction>  -- Note: additional conditionals present in mission script!
+   <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
   </avail>
  </mission>
  <mission name="Empire Patrol Bounty">
