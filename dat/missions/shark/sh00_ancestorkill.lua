@@ -5,7 +5,7 @@
    Stages :
    0) Way to Ulios in Ingot
    1) Taking off from Ulios and going to Toaxis
-	2) Fight in Toaxis
+   2) Fight in Toaxis
    3) Pirate ran away
    4) Pirate was killed
    
@@ -28,7 +28,7 @@ if lang == "es" then
    text[1] = [[You approach the man and he introduces himself: "Hello, my name is Arnold Smith, I work for the Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
    Actually, this is more than a demonstration: if you accept, you will have to destroy a pirate Ancestor with only a Shark." The man shortly stops talking to look at your reaction. He then goes ahead: 
    "Of course, the pilot of the Ancestor has a bounty on his head, so it won't be a murder. The sum of the bounty will be paid to you and Nexus will add a little amount. Are you in?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["That's your choice," the man says. "Of course, there are other talented pilots in this galaxy, but I was quite sure, you were the perfect one for this job. Don't hesitate if you change your mind."]]
    
@@ -51,16 +51,16 @@ if lang == "es" then
    title[5] = "Congratulations!"
    text[6] = [[As you step on the ground, Arnold Smith comes to you: "Now that the Baron has seen how helpful a Shark can be in the hands of a good pilot, I have no doubts he will buy some to protect the %s-%s trade route".
    He then hands you your pay. "If we are again in need of a pilot, we will try to contact you again."]]
-	
+   
    title[6] = "You ran away!"
    text[7] = [[Your mission failed.]]
-	
+   
    title[7] = "It's time to take off"
    text[8] = [[The pirate just jumped in from %s!]]
    
    title[8] = "You need a Shark"
    text[9] = [[You receive a comm from %s: "You were supposed to use a Shark in this battle. You can't do this battle with an other ship." Your mission failed.]]
-	
+   
    -- Mission details
    misn_title = "A Shark Bites"
    misn_reward = "%s credits"
@@ -72,13 +72,13 @@ if lang == "es" then
    
    npc_desc[2] = "Arnold Smith"
    bar_desc[2] = [[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]
-	
+   
    -- OSD
-	osd_title = "A Shark Bites"
+   osd_title = "A Shark Bites"
    osd_msg[1] = "Buy a Shark, fly to the %s system and land on %s"
    osd_msg[2] = "Go to %s and kill the pirate with your Shark (and not an Empire Shark)"
    osd_msg[3] = "Land on %s and collect your fee"
-	piratejump_msg = "The pirate ran away: land on %s"
+   piratejump_msg = "The pirate ran away: land on %s"
 end
 
 function create ()
@@ -90,7 +90,7 @@ function create ()
    missys = system.get(sysname)
    mispla = planet.get(planame)
    battlesys = system.get(bsyname)
-	
+   
    if not misn.claim(battlesys) then
       misn.finish(false)
    end
@@ -103,7 +103,7 @@ function accept()
    
    stage = 0 
    reward = 500000
-	
+   
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       piratename = pirate_name()    --for now, we only need his name
@@ -172,7 +172,7 @@ function enter()
       
       --Check if the player uses a Shark
       playership = player.pilot():ship()
-      playershipname = playership:name()	
+      playershipname = playership:name()   
       
       if playershipname ~= "Shark" then
          tk.msg(title[8], text[9]:format(mispla:name()))

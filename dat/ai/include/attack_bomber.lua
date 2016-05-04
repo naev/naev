@@ -19,18 +19,18 @@ end
 --  until out and then will melee.
 --]]
 function atk_b ()
-	target = ai.target()
+   target = ai.target()
    ai.hostile(target) -- Mark as hostile
 
-	-- make sure pilot exists
-	if not target:exists() then
-		ai.poptask()
-		return
-	end
+   -- make sure pilot exists
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
    ai.settarget(target)
 
    -- Get stats about enemy
-	dist = ai.dist( target ) -- get distance
+   dist = ai.dist( target ) -- get distance
 
    -- Get bombing tool
    secondary, special = ai.secondary("ranged")

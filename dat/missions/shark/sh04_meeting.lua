@@ -5,9 +5,9 @@
    Stages :
    0) Way to Za'lek system
    1) Way back to Darkshed
-	
-	TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
-	
+   
+   TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
+   
 --]]
 
 --needed scripts
@@ -26,13 +26,13 @@ if lang == "es" then
    
    title[1] = "Travel"
    text[1] = [["Ok, are you ready for the travel to %s in %s?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["Ok, so come back when you are ready," Smith says.]]
    
    title[2] = "Time to go"
    text[2] = [["So let's go."]]
-	
+   
    title[3] = "End of mission"
    text[3] = [[Smith gets out of your ship and looks at you, smiling: "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault.
    Anyway, here is your pay, and goodbye."]]
@@ -45,7 +45,7 @@ if lang == "es" then
    title[5] = "What is going on?"
    text[5] = [[That drone was behaving strangely, and now it is attacking you. As you wonder what to do, you hear a comm from a remote Za'lek ship: "Attention please, it seems some of our drones has been hacked. If a drone is attacking you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."
    "Incredible, "Smith says, "they have managed to hire a Za'lek military engineer who has hacked some drones in order to make them attack our ship! That's strong," he says, admiringly.]]
-	
+   
    -- Mission details
    misn_title = "The Meeting"
    misn_reward = "%s credits"
@@ -54,7 +54,7 @@ if lang == "es" then
    -- NPC
    npc_desc[1] = "Arnold Smith"
    bar_desc[1] = [[What wouldn't this guy do to sell Sharks?]]
-	
+   
    -- OSD
    osd_title = "The Meeting"
    osd_msg[1] = "Go to %s and land on %s"
@@ -70,11 +70,11 @@ function create ()
    psyname = "Alteris"
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
-	
+   
    if not misn.claim(missys) then
       misn.finish(false)
    end
-	
+   
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
@@ -85,7 +85,7 @@ function accept()
    reward = 50000
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
-	
+   
    if tk.yesno(title[1], text[1]:format(mispla:name(), missys:name())) then
       misn.accept()
       tk.msg(title[2], text[2])
@@ -100,7 +100,7 @@ function accept()
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
-		
+      
       smith = misn.cargoAdd("Person", 0)  --Adding the cargo
       
       landhook = hook.land("land")
@@ -120,7 +120,7 @@ function land()
       misn.markerRm(marker)
       marker2 = misn.markerAdd(paysys, "low")
    end
-	
+   
    --Job is done
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(smith) then
@@ -158,7 +158,7 @@ function ambush()
       --Makes the drones follow the player
       j:control()
       j:follow(player.pilot())
-		
+      
       --as the player approaches, the drones reveal to be bad guys!
       badguyprox[i] = hook.timer(500, "proximity", {anchor = j, radius = 1000, funcname = "reveal"})
    end

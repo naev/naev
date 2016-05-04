@@ -5,7 +5,7 @@ include("dat/factions/equip/generic.lua")
 -- New script to equip the Collective drone swarm. Code probably crap.
 --
 --    TODO: Give Heavy Drones a proper, unique, and varied weapon loadout. Creativity is weak right now. Bleh.
---		~Areze
+--      ~Areze
 --]]
 function equip( p )
    -- Get ship info

@@ -5,9 +5,9 @@
    Stages :
    0) Way to Sirius world
    1) Way to Darkshed
-	
-	TODO: I didn't test the case when the player tries to do the mission with a freighter, and the case when the player's class is unknown
-	
+   
+   TODO: I didn't test the case when the player tries to do the mission with a freighter, and the case when the player's class is unknown
+   
 --]]
 
 include "numstring.lua"
@@ -26,21 +26,21 @@ if lang == "es" then
    Listen, I'll explain you the situation: the Empire, who was the first customer for the Shark, tend to use more and more drones from Robosys in its fleet, and less and less Sharks. That means for us that we will lose billions of credits if we can't find a big customer. Ingot bought 20 Sharks, but now, we need some major faction to use our fighter.
    As you surely know, the Frontier ships are mostly obsolete and old. We have clues that let us think that the Frontier is looking for a modern light fighter to equip it's pilots. The problem is that we suspect that a major imperial house is already in contact with frontier officials in order to sell them their light fighter.
    We need you to transport a... parcel on your ship, and bring it to me on %s in %s. Are you in?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["Ok, so never mind." Smith says. "See you again."]]
    
    title[2] = "The job"
    text[2] = [["Very good, so, go to %s in %s. There, our agent will be waiting for you and will load the special parcel in your ship. Listen, I trust you enough to tell you that it is a recording of a holophone conversation between a member of the Frontier council and a sales manager of house Sirius.
    Oh, yes, and, if you has to say my name to our contact, he knows me as James Neptune. So, good luck out there."]]
-	
+   
    title[3] = "Good job"
    text[3] = [[The Nexus employee greets you as you reach the ground and ask you if everything went well. He takes the parcel and gives you your pay. "We will analyze this, meet me in the bar, I will be there if I have an other job for you."]]
    
    title[4] = "Time to go back to Alteris"
    text[4] = [[You approach the agent, wondering why Nexus's henchmen always manage to look honest. It seems he knew who was supposed to pick his parcel. After asking the name of your contact, he gives you a little battery-looking tool. "Everything is in there," he just says. "By the way, stay vigilant, someone may be on our tracks."]]
    
-	
+   
    -- Mission details
    misn_title = "Unfair Competition"
    misn_reward = "%s credits"
@@ -53,7 +53,7 @@ if lang == "es" then
    bar_desc[2] = [[This guy matches exactly the description that was made to you.]]
    npc_desc[3] = "Arnold Smith"
    bar_desc[3] = [[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]]
-	
+   
    -- OSD
    osd_title = "Unfair Competition"
    osd_msg[1] = "Land on %s in %s and meet the Nexus agent"
@@ -65,20 +65,20 @@ function create ()
    
    --Change here to change the planets and the systems
    mispla,missys = planet.getLandable(faction.get("Sirius"))
-	
+   
    while mispla:services()["bar"] == false do  --It must be a bar on this Planet
       mispla,missys = planet.getLandable(faction.get("Sirius"))
    end
-	
+   
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
-	
+   
    if not misn.claim(missys) then
       misn.finish(false)
    end
-	
+   
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
@@ -88,7 +88,7 @@ function accept()
    stage = 0 
    reward = 50000
    proba = 0.3  --the chances you have to get an ambush
-	
+   
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then
       misn.accept()
       tk.msg(title[2], text[2]:format(mispla:name(),missys:name()))
@@ -117,7 +117,7 @@ function land()
    if stage == 0 and planet.cur() == mispla then
       agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/scientist", bar_desc[2])
    end
-	
+   
    --Job is done
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(records) then
@@ -149,7 +149,7 @@ function beginrun()
    misn.osdActive(2)
    misn.markerRm(marker)
    marker2 = misn.markerAdd(paysys, "low")
-	
+   
    --remove the spy
    misn.npcRm(agent)
 end
@@ -158,7 +158,7 @@ function ambush()
    --Looking at the player ship's class in order to spawn the most dangerous ennemy to him
    playerclass = player.pilot():ship():class()
    badguys = {}
-	
+   
    if playerclass == "Scout" or playerclass == "Fighter" or playerclass == "Drone" or playerclass == "Heavy Drone" or playerclass == "Luxury Yacht" or playerclass == "Yacht" or palyerclass == "Courier" then
       
       if rnd.rnd() < 0.7 then
@@ -166,7 +166,7 @@ function ambush()
          else
          hvy_intercept()
       end
-		
+      
       elseif playerclass == "Bomber" then
       
       local rand = rnd.rnd()
@@ -177,7 +177,7 @@ function ambush()
          else
          corvette()
       end
-		
+      
       elseif playerclass == "Freighter" then  --what a strange idea to use a Mule in this situation...
       
       if rnd.rnd() < 0.6 then
@@ -204,7 +204,7 @@ function ambush()
          else
          hvy_intercept()
       end
-		
+      
       else     --The fact you don't have a ship class in the list doesn't means you're safe !
       littleofall()
    end
@@ -225,15 +225,15 @@ function interceptors()
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("Unicorp D-2 Light Plating")
       badguys[i]:addOutfit("Unicorp PT-100 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
-		
+      
       badguys[i]:addOutfit("Laser Cannon MK2",2)
       badguys[i]:addOutfit("Unicorp Fury Launcher")
       badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
@@ -245,21 +245,21 @@ function hvy_intercept()
    for i in ipairs(number) do
       badguys[i] = pilot.addRaw( "Lancelot","mercenary", nil, "Mercenary" )[1]
       badguys[i]:setHostile()
-		
+      
       badguys[i]:rename("Mercenary")
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
       badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
-		
+      
       badguys[i]:addOutfit("Mass Driver MK1")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
       badguys[i]:addOutfit("Shield Capacitor",2)
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
@@ -275,14 +275,14 @@ function corvette()
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("Unicorp D-8 Medium Plating")
       badguys[i]:addOutfit("Unicorp PT-500 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
-		
+      
       badguys[i]:addOutfit("Razor Turret MK3",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
@@ -300,7 +300,7 @@ function cruiser()
    badguy:addOutfit("Unicorp D-16 Heavy Plating")
    badguy:addOutfit("Unicorp PT-900 Core System")
    badguy:addOutfit("Krain Remige Engine")
-	
+   
    badguy:addOutfit("Heavy Ripper Turret",2)
    badguy:addOutfit("Unicorp Headhunter Launcher",2)
    badguy:addOutfit("Enygma Systems Spearhead Launcher",2)
@@ -309,7 +309,7 @@ function cruiser()
    badguy:addOutfit("Improved Stabilizer",4)
    badguy:setHealth(100,100)
    badguy:setEnergy(100)
-	
+   
 end
 
 function bombers()
@@ -322,18 +322,18 @@ function bombers()
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("S&K Ultralight Combat Plating")
       badguys[i]:addOutfit("Milspec Prometheus 2203 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
-		
+      
       badguys[i]:addOutfit("Unicorp Caesar IV Launcher",2)
       badguys[i]:addOutfit("Neutron Disruptor")
       badguys[i]:addOutfit("Vulcan Gun")
-		
+      
       badguys[i]:addOutfit("Small Shield Booster",2)
       badguys[i]:addOutfit("Shield Capacitor",2)
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end

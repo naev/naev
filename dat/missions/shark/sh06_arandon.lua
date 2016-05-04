@@ -5,7 +5,7 @@
    Stages :
    0) Way to Arandon
    1) Way back to Darkshed
-	
+   
 --]]
 
 include "numstring.lua"
@@ -21,23 +21,23 @@ if lang == "es" then
    
    title[1] = "Let's go"
    text[1] = [["Is your ship ready for the dangers of the Nebula?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["Come back when you are ready."]]
    
    title[2] = "Go"
    text[2] = [[Smith once again steps in your ship in order to go to a meeting.]]
-	
+   
    title[3] = "Well done!"
    text[3] = [["Here is your pay," says Smith. I will be in the bar if I have an other task for you.]]
    
    title[4] = "The Meeting"
    text[4] = [[As you board, Arnold Smith insists on entering the FLF's ship alone. A few hours later, he comes back, satisfied. It seems, this time luck is on your side. "They will buy tons of these damn "Sharks", all we have to do now is to fix a few details, so let's go back to %s," he says happily.
    You unboard, wondering what kind of details he could be thinking about...]]
-	
+   
    title[5] = "Hail"
    text[5] = [[As you hail him, the Pacifier commander answers you and stops his ship, waiting to be boarded.]]
-	
+   
    -- Mission details
    misn_title = "A Journey To %s"
    misn_reward = "50 000 credits"
@@ -46,7 +46,7 @@ if lang == "es" then
    -- NPC
    npc_desc[1] = "Arnold Smith"
    bar_desc[1] = [[It's fun to see how this guy's dishonesty has led him to help the most idealistic group in the galaxy.]]
-	
+   
    -- OSD
    osd_title = "A Journey To %s"
    osd_msg[1] = "Go to %s and wait for the FLF ship, then hail and board it."
@@ -57,16 +57,16 @@ end
 function create ()
    
    --Change here to change the planets and the systems
-	missys = system.get("Arandon")
-	pplname = "Darkshed"
-	psyname = "Alteris"
-	paysys = system.get(psyname)
-	paypla = planet.get(pplname)
-	
+   missys = system.get("Arandon")
+   pplname = "Darkshed"
+   psyname = "Alteris"
+   paysys = system.get(psyname)
+   paypla = planet.get(pplname)
+   
    if not misn.claim(missys) then
       misn.finish(false)
    end
-	
+   
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
@@ -75,7 +75,7 @@ function accept()
    
    stage = 0 
    reward = 50000
-	
+   
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       tk.msg(title[2], text[2])
@@ -90,7 +90,7 @@ function accept()
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
-		
+      
       smith = misn.cargoAdd("Person", 0)  --Adding the cargo
       
       landhook = hook.land("land")
@@ -102,7 +102,7 @@ function accept()
 end
 
 function land()
-	--Job is done
+   --Job is done
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(smith) then
          tk.msg(title[3], text[3])
@@ -121,10 +121,10 @@ function enter()
       --Lets unspawn everybody (if any)
       pilot.clear()
       pilot.toggleSpawn(false)
-		
+      
       --Waiting to spawn the FLF in order to let the player's shield decrease
       hook.timer(10000,"flf_people")
-		
+      
    end
 end
 

@@ -104,7 +104,7 @@ function cargo_calculateRoute ()
          local risk = risk+travelrisk
       end
    end
-	local avgrisk = risk/(numjumps + 1)
+   local avgrisk = risk/(numjumps + 1)
    
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    -- TODO: I'm using the standard cargo types for now, but this should be changed to custom cargo once local-defined commodities are implemented.
@@ -158,12 +158,12 @@ end
 --Determines the items in table a that are not in table b.
 --Used to determine what cargo is sold at current planet but not at destination planet.
 function difference(a, b)
-    local ai = {}
-    local r = {}
-    for k,v in pairs(a) do r[k] = v; ai[v]=true end
-    for k,v in pairs(b) do 
-        if ai[v]~=nil then   r[k] = nil   end
-    end
-    return r
+   local ai = {}
+   local r = {}
+   for k,v in pairs(a) do r[k] = v; ai[v]=true end
+   for k,v in pairs(b) do 
+      if ai[v]~=nil then   r[k] = nil   end
+   end
+   return r
 end
 

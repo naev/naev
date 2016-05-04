@@ -246,7 +246,7 @@ function timer ()
          end
          points = new_points
 
-		 local sstxt = ssmsg[ rnd.rnd( 1, #ssmsg ) ]
+         local sstxt = ssmsg[ rnd.rnd( 1, #ssmsg ) ]
          player.msg( sstxt )
          osd_msg[2] = osd_msg_2:format( #points )
          misn.osdCreate( osd_title, osd_msg )

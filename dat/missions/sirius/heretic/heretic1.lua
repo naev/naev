@@ -1,8 +1,8 @@
 --[[misn title - the return]]
 --[[after smuggling a small arms shipment to the an'ku system,
-	the player is asked to deliver a message to a "shady character"
-	on the wringer in the suna system.]]
-	
+   the player is asked to deliver a message to a "shady character"
+   on the wringer in the suna system.]]
+   
 include "dat/scripts/numstring.lua"
 
 lang = naev.lang()

@@ -1,12 +1,12 @@
 --[[
    
    This is the fourth mission of the Shark's teeth campaign. The player has to hail a frontier ship.
-	There should not be any ambush in this mission but the player must fear it from the beginning to the end 
+   There should not be any ambush in this mission but the player must fear it from the beginning to the end 
    
    Stages :
    0) Way to Frontier system
    1) Way back to Darkshed
-	
+   
 --]]
 
 include "numstring.lua"
@@ -25,20 +25,20 @@ if lang == "es" then
    I can't send him a message without being spotted by the Sirii, so I need you to take contact with him: he must be flying in his Hawking in %s now. Go there, hail him, say him that I have to see him on %s in %s and he will understand. Oh, by the way, my new name is Donald Ulnish.
    And there is something else: I heard that the Sirii hired some henchmen to go after you, you maybe already have met them. The good news is that they don't know that Nexus is involved, but still, be careful.
    Are you in?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["Ok, so come back when you are interested," Smith says.]]
    
    title[2] = "Time to go"
    text[2] = [["Good luck"]]
-	
+   
    title[3] = "Good job"
    text[3] = [[Smith seems to relax as you says him that everything went according to plan. "Ok, so now, meet me in the bar when you are ready to bring me to %s in %s.]]
    
    title[4] = "Time to go back to %s"
    text[4] = [[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers. After having delivered your message, you quit, hoping that the journey back will be as quiet as the trip from %s.]]
    
-	
+   
    -- Mission details
    misn_title = "Invitation"
    misn_reward = "%s credits"
@@ -47,7 +47,7 @@ if lang == "es" then
    -- NPC
    npc_desc[1] = "Arnold Smith"
    bar_desc[1] = [[Arnold Smith (aka James Neptune): this guy seems more and more shifty]]
-	
+   
    -- OSD
    osd_title = "Invitation"
    osd_msg[1] = "Go to %s, find and hail the Air Force One"
@@ -64,11 +64,11 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
    nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting.lua!
-	
+   
    if not misn.claim(missys) then
       misn.finish(false)
    end
-	
+   
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
@@ -77,7 +77,7 @@ function accept()
    
    stage = 0 
    reward = 50000
-	
+   
    if tk.yesno(title[1], text[1]:format(missys:name(), nextpla:name(), nextsys:name())) then
       misn.accept()
       tk.msg(title[2], text[2])
@@ -102,7 +102,7 @@ function accept()
 end
 
 function land()
-	
+   
    --Job is done
    if stage == 1 and planet.cur() == paypla then
    tk.msg(title[3], text[3]:format(nextpla:name(), nextsys:name()))

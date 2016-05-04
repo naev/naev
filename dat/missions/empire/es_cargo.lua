@@ -66,57 +66,57 @@ end
 function create()
    -- Note: this mission does not make any system claims.
 
-    origin_p, origin_s = planet.cur()
-    local routesys = origin_s
-    local routepos = origin_p:pos()
+   origin_p, origin_s = planet.cur()
+   local routesys = origin_s
+   local routepos = origin_p:pos()
 
-    -- target destination
-    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-    if destplanet == nil then
-       misn.finish(false)
-    end
-    if destplanet:faction() ~= faction.get( "Empire" ) then
-        misn.finish(false)
-    end
+   -- target destination
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   if destplanet == nil then
+      misn.finish(false)
+   end
+   if destplanet:faction() ~= faction.get( "Empire" ) then
+      misn.finish(false)
+   end
 
    -- mission generics
-    stuperpx   = 0.3 - 0.015 * tier
-    stuperjump = 11000 - 75 * tier
-    stupertakeoff = 15000
-    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
+   stuperpx   = 0.3 - 0.015 * tier
+   stuperjump = 11000 - 75 * tier
+   stupertakeoff = 15000
+   timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
-    -- Allow extra time for refuelling stops.
-    local jumpsperstop = 3 + math.min(tier, 2)
-    if numjumps > jumpsperstop then
-        timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
-    end
+   -- Allow extra time for refuelling stops.
+   local jumpsperstop = 3 + math.min(tier, 2)
+   if numjumps > jumpsperstop then
+      timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
+   end
 
-	--Determine risk of piracy
-     if avgrisk == 0 then
-       piracyrisk = piracyrisk[1]
-       riskreward = 0
-    elseif avgrisk <= 25 then
-       piracyrisk = piracyrisk[2]
-       riskreward = 10
-    elseif avgrisk > 25 and avgrisk <= 100 then
-       piracyrisk = piracyrisk[3]
-       riskreward = 25
-    else
-       piracyrisk = piracyrisk[4]
-       riskreward = 50
-    end
+   --Determine risk of piracy
+    if avgrisk == 0 then
+      piracyrisk = piracyrisk[1]
+      riskreward = 0
+   elseif avgrisk <= 25 then
+      piracyrisk = piracyrisk[2]
+      riskreward = 10
+   elseif avgrisk > 25 and avgrisk <= 100 then
+      piracyrisk = piracyrisk[3]
+      riskreward = 25
+   else
+      piracyrisk = piracyrisk[4]
+      riskreward = 50
+   end
  
-    -- Choose amount of cargo and mission reward. This depends on the mission tier.
-    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
-    amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
-    jumpreward = commodity.price(cargo)*1.5
-    distreward = math.log(300*commodity.price(cargo))/100
-    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-    
-    misn.setTitle("ES: Cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
-    misn.markerAdd(destsys, "computer")
-    misn.setDesc(title:format(destplanet:name(), destsys:name(), cargo, amount, numjumps, traveldist, piracyrisk, (timelimit - time.get()):str()))
-    misn.setReward(misn_reward:format(numstring(reward)))
+   -- Choose amount of cargo and mission reward. This depends on the mission tier.
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
+   jumpreward = commodity.price(cargo)*1.5
+   distreward = math.log(300*commodity.price(cargo))/100
+   reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   
+   misn.setTitle("ES: Cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
+   misn.markerAdd(destsys, "computer")
+   misn.setDesc(title:format(destplanet:name(), destsys:name(), cargo, amount, numjumps, traveldist, piracyrisk, (timelimit - time.get()):str()))
+   misn.setReward(misn_reward:format(numstring(reward)))
 
 end
 
@@ -149,36 +149,36 @@ end
 
 -- Land hook
 function land()
-    if planet.cur() == destplanet then
-         tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
-        player.pay(reward)
-        n = var.peek("es_misn")
-        if n ~= nil then
-            var.push("es_misn", n+1)
-        else
-            var.push("es_misn", 1)
-        end
+   if planet.cur() == destplanet then
+      tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
+      player.pay(reward)
+      n = var.peek("es_misn")
+      if n ~= nil then
+         var.push("es_misn", n+1)
+      else
+         var.push("es_misn", 1)
+      end
 
-        -- increase faction
-        faction.modPlayerSingle("Empire", rnd.rnd(2, 4))
-        misn.finish(true)
-    end
+      -- increase faction
+      faction.modPlayerSingle("Empire", rnd.rnd(2, 4))
+      misn.finish(true)
+   end
 end
 
 -- Date hook
 function tick()
-    if timelimit >= time.get() then
-        -- Case still in time
-        osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
-        osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
-        misn.osdCreate(osd_title, osd_msg)
-    elseif timelimit <= time.get() then
-        -- Case missed deadline
-        player.msg(miss[3])
-        abort()
-    end
+   if timelimit >= time.get() then
+      -- Case still in time
+      osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+      osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
+      misn.osdCreate(osd_title, osd_msg)
+   elseif timelimit <= time.get() then
+      -- Case missed deadline
+      player.msg(miss[3])
+      abort()
+   end
 end
 
 function abort ()
-    misn.finish(false)
+   misn.finish(false)
 end

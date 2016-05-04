@@ -5,7 +5,7 @@
    Stages :
    0) Way to Eiger/Surano
    1) Way back to Darkshed
-	
+   
 --]]
 
 include "numstring.lua"
@@ -22,7 +22,7 @@ if lang == "es" then
    title[1] = "Nice to see you again!"
    text[1] = [[As you sit at his table, Arnold Smith welcomes you with a smile: "Hello, old boy, are you ready to take part to another sales project?" He then becomes serious: "This time, it's serious game: I really need your help to get in touch with somebody who could be very interested in the Shark.
    The problem is that this person is very difficult to spot." You ask him if he wants you to sell imperial fighters to a pirate, but he answers: "No, it isn't precisely that. In fact, we are looking to a contact with the FLF. Do you think, you can do it?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["Oh, I see, so, I guess, I'll have to find somebody else..." Smith says.]]
    
@@ -30,7 +30,7 @@ if lang == "es" then
    text[2] = [["Ok, that's good news for me. I don't know if you know people in there, and I don't want to know it. If you don't, I suggest you to try to hail a lone FLF ship. I think you could encounter some in %s.
    Maybe try to disable a FLF ship, board it and explain to it's crew what we want. If you success, set up a meeting in %s. I think, nobody is going to disturb us there.
    Ah, and don't mention the company for witch we are working."]]
-	
+   
    title[3] = "Good news"
    text[3] = [[As you land, you see Smith coming at you. When you have finished explaining to him that you managed to take contact with the FLF, he seems happy and pays you your fee.
    "Now, meet me in the bar when you are ready to bring me to %s."]]
@@ -40,7 +40,7 @@ if lang == "es" then
    
    title[5] = "The FLF executive"
    text[5] = [[After a short hesitation, you approach the man, who seems at first not wanting to talk to you. As you explain that you were sent by a company that wants to sell fighters to the FLF, he looks at you, surprised. You explain everything about the meeting in %s and he answers you: "Well, I will check with my superiors. If we don't come, that means that we are not interested."]]
-	
+   
    -- Mission details
    misn_title = "The FLF Contact"
    misn_reward = "%s credits"
@@ -51,7 +51,7 @@ if lang == "es" then
    bar_desc[1] = [[It seems, Nexus Shipyards is still looking for Shark customers.]]
    npc_desc[2] = "FLF executive"
    bar_desc[2] = [[This guy looks important]]
-	
+   
    -- OSD
    osd_title = "The FLF Contact"
    osd_msg[1] = "Placeholder"
@@ -67,7 +67,7 @@ function create ()
    mispla, missys = planet.get("Eiger")
    paypla, paysys = planet.get("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
-	
+   
    --Does the player have access to Eiger
    if diff.isApplied( "FLF_base") then
       sindbad = planet.get("Eiger")
@@ -76,13 +76,13 @@ function create ()
       osd_msg[1] = osd_nosindbad:format(missys:name())
    end
    osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-	paysys = system.get(paysys:name())
-	paypla = planet.get(paypla:name())
-	
+   paysys = system.get(paysys:name())
+   paypla = planet.get(paypla:name())
+   
    if not misn.claim(missys) then
       misn.finish(false)
    end
-	
+   
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
@@ -91,7 +91,7 @@ function accept()
    
    stage = 0 
    reward = 200000
-	
+   
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       tk.msg(title[2], text[2]:format(missys:name(), nextsys:name()))
@@ -117,7 +117,7 @@ function land()
    if stage == 0 and planet.cur() == sindbad then
       flfguy = misn.npcAdd("talktoguy", npc_desc[2], "neutral/thief1", bar_desc[2])
    end
-	
+   
    --Job is done
    if stage == 1 and planet.cur() == paypla then
       tk.msg(title[3], text[3]:format(nextsys:name()))
@@ -143,7 +143,7 @@ function enter()
       --Lets unspawn everybody
       pilot.clear()
       pilot.toggleSpawn(false)
-		
+      
       lancelot = pilot.add( "FLF Lancelot", nil, 0 )[1]
       hook.pilot(lancelot, "board", "discuss")
    end
