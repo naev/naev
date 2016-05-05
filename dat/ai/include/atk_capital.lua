@@ -62,7 +62,8 @@ function _atk_g_capital( target, dist )
    elseif dist > 0.6* range then
       --drifting away from target, so emphasize intercept 
       --course facing and accelerate to close
-      dir = ai.iface(target)
+      aimdir = ai.aim(target)
+      dir    = ai.iface(target)
       if dir < 10 and dir > -10 then
          ai.accel()
       end
@@ -71,7 +72,8 @@ function _atk_g_capital( target, dist )
    elseif dist > 0.3*range then
       --capital ship turning is slow
       --emphasize facing for being able to close quickly
-      dir = ai.iface(target)
+      aimdir = ai.aim(target)
+      dir    = ai.iface(target)
       -- Only accelerate if the target is getting away.
       if dir < 10 and dir > -10 and ai.relvel(target) > -10 then
          ai.accel()
@@ -90,7 +92,8 @@ function _atk_g_capital( target, dist )
    end
 
    if shoot and not mem.recharge then
-      if dir < 10 then
+      -- test if, by chance, the target can be hitten by cannons
+      if aimdir < 10 then
          ai.shoot()
       end
       ai.shoot(true)
