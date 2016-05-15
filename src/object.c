@@ -39,12 +39,12 @@ static void mesh_create( Mesh **meshes, const char* name,
    array_clear(corners);
 }
 
-static int readGLfloat( GLfloat *dest, int how_many )
+static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
 {
    char *token;
    int num = 0;
 
-   while ((token = strtok(NULL, DELIM)) != NULL) {
+   while ((token = strtok_r(NULL, DELIM, saveptr)) != NULL) {
       double d;
       sscanf(token, "%lf", &d);
       dest[num++] = d;
@@ -140,33 +140,34 @@ static void materials_readFromFile( const char *filename, Material **materials )
    char line[256];
    while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
+      char *saveptr;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
-      token = strtok(line, DELIM);
+      token = strtok_r(line, DELIM, &saveptr);
 
       if (token == NULL) {
          /* Missing */
       } else if (strcmp(token, "newmtl") == 0) {
-         token = strtok(NULL, DELIM);
+         token = strtok_r(NULL, DELIM, &saveptr);
          curr = &array_grow(materials);
          curr->name = strdup(token);
          DEBUG("Reading new material %s", curr->name);
       } else if (strcmp(token, "Ns") == 0) {
-         readGLfloat(&curr->Ns, 1);
+         readGLfloat(&curr->Ns, 1, &saveptr);
       } else if (strcmp(token, "Ni") == 0) {
-         readGLfloat(&curr->Ni, 1);
+         readGLfloat(&curr->Ni, 1, &saveptr);
       } else if (strcmp(token, "d") == 0) {
-         readGLfloat(&curr->d, 1);
+         readGLfloat(&curr->d, 1, &saveptr);
       } else if (strcmp(token, "Ka") == 0) {
-         readGLfloat(curr->Ka, 3);
+         readGLfloat(curr->Ka, 3, &saveptr);
          curr->Ka[3] = 1.0;
       } else if (strcmp(token, "Kd") == 0) {
-         readGLfloat(curr->Kd, 3);
+         readGLfloat(curr->Kd, 3, &saveptr);
          curr->Kd[3] = 1.0;
       } else if (strcmp(token, "Ks") == 0) {
-         readGLfloat(curr->Ks, 3);
+         readGLfloat(curr->Ks, 3, &saveptr);
          curr->Ks[3] = 1.0;
       } else if (strcmp(token, "map_Kd") == 0) {
-         token = strtok(NULL, DELIM);
+         token = strtok_r(NULL, DELIM, &saveptr);
          if (token[0] == '-')
             ERR("Options not supported for map_Kd");
 
@@ -223,12 +224,13 @@ Object *object_loadFromFile( const char *filename )
    while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
-      token = strtok(line, DELIM);
+      char *saveptr;
+      token = strtok_r(line, DELIM, &saveptr);
 
       if (token == NULL) {
          /* Missing */
       } else if (strcmp(token, "mtllib") == 0) {
-         while ((token = strtok(NULL, DELIM)) != NULL) {
+         while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
             /* token contains the filename describing materials */
 
             /* computes the path to materials */
@@ -245,23 +247,23 @@ Object *object_loadFromFile( const char *filename )
          }
       } else if (strcmp(token, "o") == 0) {
          mesh_create(&object->meshes, name, corners, material);
-         token = strtok(NULL, DELIM);
+         token = strtok_r(NULL, DELIM, &saveptr);
          free(name), name = strdup(token);
       } else if (strcmp(token, "v") == 0) {
          (void)array_grow(&vertex);
          (void)array_grow(&vertex);
          (void)array_grow(&vertex);
-         readGLfloat(array_end(vertex) - 3, 3);
+         readGLfloat(array_end(vertex) - 3, 3, &saveptr);
       } else if (strcmp(token, "vt") == 0) {
          (void)array_grow(&texture);
          (void)array_grow(&texture);
-         readGLfloat(array_end(texture) - 2, 2);
+         readGLfloat(array_end(texture) - 2, 2, &saveptr);
       } else if (strcmp(token, "f") == 0) {
          /* XXX reads only the geometric & texture vertices.
           * The standards says corners can also include normal vertices.
           */
          int num = 0;
-         while ((token = strtok(NULL, DELIM)) != NULL) {
+         while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
             int i_v, i_t;
             if (sscanf(token, "%d/%d", &i_v, &i_t) == 1)
                i_t = 0;
@@ -281,7 +283,7 @@ Object *object_loadFromFile( const char *filename )
          mesh_create(&object->meshes, name, corners, material);
 
          /* a new mesh with the same name */
-         token = strtok(NULL, DELIM);
+         token = strtok_r(NULL, DELIM, &saveptr);
          for (material = 0; material < array_size(object->materials); ++material)
             if (strcmp(token, object->materials[material].name) == 0)
                break;
