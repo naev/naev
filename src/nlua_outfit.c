@@ -96,9 +96,9 @@ int nlua_loadOutfit( lua_State *L, int readonly )
  *    @param ind Index position to find the outfit.
  *    @return Outfit found at the index in the state.
  */
-LuaOutfit* lua_tooutfit( lua_State *L, int ind )
+Outfit* lua_tooutfit( lua_State *L, int ind )
 {
-   return (LuaOutfit*) lua_touserdata(L,ind);
+   return *((Outfit**) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets outfit at index or raises error if there is no outfit at index.
@@ -107,7 +107,7 @@ LuaOutfit* lua_tooutfit( lua_State *L, int ind )
  *    @param ind Index position to find outfit.
  *    @return Outfit found at the index in the state.
  */
-LuaOutfit* luaL_checkoutfit( lua_State *L, int ind )
+Outfit* luaL_checkoutfit( lua_State *L, int ind )
 {
    if (lua_isoutfit(L,ind))
       return lua_tooutfit(L,ind);
@@ -123,13 +123,10 @@ LuaOutfit* luaL_checkoutfit( lua_State *L, int ind )
  */
 Outfit* luaL_validoutfit( lua_State *L, int ind )
 {
-   LuaOutfit *lo;
    Outfit *o;
 
-   if (lua_isoutfit(L, ind)) {
-      lo = luaL_checkoutfit(L,ind);
-      o  = lo->outfit;
-   }
+   if (lua_isoutfit(L, ind))
+      o  = luaL_checkoutfit(L,ind);
    else if (lua_isstring(L, ind))
       o = outfit_get( lua_tostring(L, ind) );
    else {
@@ -149,10 +146,10 @@ Outfit* luaL_validoutfit( lua_State *L, int ind )
  *    @param outfit Outfit to push.
  *    @return Newly pushed outfit.
  */
-LuaOutfit* lua_pushoutfit( lua_State *L, LuaOutfit outfit )
+Outfit** lua_pushoutfit( lua_State *L, Outfit *outfit )
 {
-   LuaOutfit *o;
-   o = (LuaOutfit*) lua_newuserdata(L, sizeof(LuaOutfit));
+   Outfit **o;
+   o = (Outfit**) lua_newuserdata(L, sizeof(Outfit*));
    *o = outfit;
    luaL_getmetatable(L, OUTFIT_METATABLE);
    lua_setmetatable(L, -2);
@@ -194,10 +191,11 @@ int lua_isoutfit( lua_State *L, int ind )
  */
 static int outfitL_eq( lua_State *L )
 {
-   LuaOutfit *a, *b;
+   Outfit *a, *b;
+
    a = luaL_checkoutfit(L,1);
    b = luaL_checkoutfit(L,2);
-   if (a->outfit == b->outfit)
+   if (a == b)
       lua_pushboolean(L,1);
    else
       lua_pushboolean(L,0);
@@ -219,14 +217,14 @@ static int outfitL_eq( lua_State *L )
 static int outfitL_get( lua_State *L )
 {
    const char *name;
-   LuaOutfit lo;
+   Outfit *lo;
 
    /* Handle parameters. */
    name = luaL_checkstring(L,1);
 
    /* Get outfit. */
-   lo.outfit = outfit_get( name );
-   if (lo.outfit == NULL) {
+   lo = outfit_get( name );
+   if (lo == NULL) {
       NLUA_ERROR(L,"Outfit '%s' not found!", name);
       return 0;
    }
@@ -341,10 +339,8 @@ static int outfitL_slot( lua_State *L )
  */
 static int outfitL_icon( lua_State *L )
 {
-   LuaTex lt;
    Outfit *o = luaL_validoutfit(L,1);
-   lt.tex = gl_dupTexture( o->gfx_store );
-   lua_pushtex( L, lt );
+   lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
    return 1;
 }
 

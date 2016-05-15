@@ -29,7 +29,7 @@ if lang == "es" then
    title[1] = "Do you want to take part to a challenge?"
    text[1] = [["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill him or the security staff won't forgive it. It is forbidden to use missiles, so you won't be allowed to have some while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on an other planet or to jump away during the championship.
    We are looking for pilots, are you in?"]]
-	
+   
    refusetitle = "Sorry, not interested"
    refusetext = [["That's your choice, goodbye" the person says.]]
 
@@ -72,7 +72,7 @@ if lang == "es" then
    comptitle[6] = "I am here to win the championship"
    comptext[6] = [["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
    Do you know who I am? I am the famous independant pilot who helped Dvaered High Command to destroy the FLF base in the nebula. I managed to defeat lots of FLF fighters with my ship! An other day, I will tell you my adventures, but now, I need to concentrate myself."]]
-	
+   
    -- Mission details
    misn_title = "The Dvaered Championship"
    misn_reward = "From 5k to 160k credits, depending on your rank"
@@ -96,7 +96,7 @@ if lang == "es" then
 
    npc_desc[6] = "Strange pilot"
    bar_desc[6] = [[This man looks like a pirate, but strangely enough, the authorities seems not to worry about him.]]
-	
+   
    -- OSD
    osd_title = "The Dvaered Championship, round %n"
    final_title = "The Dvaered Championship, final"
@@ -115,7 +115,7 @@ function create ()
    planame = "Dvaer Prime"
    missys = system.get(sysname)
    mispla = planet.get(planame)
-	
+   
    --No system claim
 
    portrait = {"neutral/female1", "neutral/male1", "neutral/thief1", "neutral/thief2", "neutral/thief3" }
@@ -170,7 +170,7 @@ function accept()
    
    level = 0
    reward = 5000
-	
+   
    if tk.yesno(title[1], text[1]) then
 
       misn.accept()

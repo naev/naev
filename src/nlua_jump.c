@@ -167,12 +167,12 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, Star
       if (lua_isstring(L, ind))
          a = system_get( lua_tostring( L, ind ));
       else if (lua_issystem(L, ind))
-         a = system_getIndex( lua_tosystem(L, ind)->id );
+         a = system_getIndex( lua_tosystem(L, ind) );
 
       if (lua_isstring(L, ind+1))
          b = system_get( lua_tostring( L, ind+1 ));
       else if (lua_issystem(L, ind+1))
-         b = system_getIndex( lua_tosystem(L, ind+1)->id );
+         b = system_getIndex( lua_tosystem(L, ind+1) );
 
       if (offset != NULL)
          *offset = 2;
@@ -273,12 +273,12 @@ static int jumpL_get( lua_State *L )
       if (lua_isstring(L, 1))
          a = system_get( lua_tostring(L, 1));
       else if (lua_issystem(L, 1))
-         a = system_getIndex( lua_tosystem(L, 1)->id );
+         a = system_getIndex( lua_tosystem(L, 1) );
 
       if (lua_isstring(L, 2))
          b = system_get( lua_tostring(L, 2));
       else if (lua_issystem(L, 2))
-         b = system_getIndex( lua_tosystem(L, 2)->id );
+         b = system_getIndex( lua_tosystem(L, 2) );
 
       if ((a == NULL) || (b == NULL)) {
          NLUA_ERROR(L, "No matching jump points found.");
@@ -334,10 +334,8 @@ static int jumpL_eq( lua_State *L )
 static int jumpL_position( lua_State *L )
 {
    JumpPoint *jp;
-   LuaVector v;
    jp = luaL_validjump(L,1);
-   vectcpy(&v.vec, &jp->pos);
-   lua_pushvector(L, v);
+   lua_pushvector(L, jp->pos);
    return 1;
 }
 
@@ -405,11 +403,9 @@ static int jumpL_exitonly( lua_State *L )
 static int jumpL_system( lua_State *L )
 {
    StarSystem *sys;
-   LuaSystem ls;
 
    luaL_validjumpSystem(L, 1, NULL, &sys);
-   ls.id = sys->id;
-   lua_pushsystem(L,ls);
+   lua_pushsystem(L,sys->id);
    return 1;
 }
 
@@ -425,11 +421,9 @@ static int jumpL_system( lua_State *L )
 static int jumpL_dest( lua_State *L )
 {
    JumpPoint *jp;
-   LuaSystem ls;
 
    jp = luaL_validjump(L,1);
-   ls.id = jp->targetid;
-   lua_pushsystem(L,ls);
+   lua_pushsystem(L,jp->targetid);
    return 1;
 }
 

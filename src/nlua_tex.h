@@ -15,14 +15,6 @@
 #define TEX_METATABLE      "tex" /**< Texture metatable identifier. */
 
 
-/**
- * @brief Lua texture wrapper.
- */
-typedef struct LuaTex_s {
-   glTexture *tex; /**< Texture wrapped around. */
-} LuaTex; /**< Wrapper for a texture. */
-
-
 /*
  * Library loading
  */
@@ -31,9 +23,9 @@ int nlua_loadTex( lua_State *L, int readonly );
 /*
  * Texture operations
  */
-LuaTex* lua_totex( lua_State *L, int ind );
-LuaTex* luaL_checktex( lua_State *L, int ind );
-LuaTex* lua_pushtex( lua_State *L, LuaTex tex );
+glTexture* lua_totex( lua_State *L, int ind );
+glTexture* luaL_checktex( lua_State *L, int ind );
+glTexture** lua_pushtex( lua_State *L, glTexture* tex );
 int lua_istex( lua_State *L, int ind );
 
 

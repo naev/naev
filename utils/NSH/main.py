@@ -4,20 +4,20 @@
 # License: X/MIT
 # author: Ludovic Bellière AKA. xrogaan
 
-from os import path
-from jinja2 import Environment, FileSystemLoader
+import os
 import glob
-try:
-    from lxml import etree
-except ImportError:
-    print("Failed to import lxml's ElementTree")
-    exit()
+import shutil
+from datetime import datetime
+from optparse import OptionParser
+
+from jinja2 import Environment, FileSystemLoader
+from lxml import etree
+import yaml
 
 __version__ = "1.0"
 
 class yamlLabelReader:
     def __init__(self, stream):
-        import yaml
         self.ydata = yaml.safe_load(stream)
         keys = self.ydata['shipstats'].keys()
         for label in self.ydata['shipstats'].iterkeys():
@@ -59,7 +59,7 @@ class harvester:
 
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = glob.glob(path.join(xmlPath, "ships/*.xml"))
+            self.__xmlData = glob.glob(os.path.join(xmlPath, "ships/*.xml"))
 
         self.ships = dict()
         self.shipSortBy = dict()
@@ -117,6 +117,10 @@ class harvester:
 
             self.ships[shipName].update({'name': shipName})
 
+            if 'movement' not in self.ships[shipName]:
+                self.ships[shipName].update({'movement': {'speed': 0,
+                    'thrust': 0, 'turn': 0}})
+
             for i in self.__tagsSortBase:
                 self.store_by(i, self.ships[shipName][i], self.ships[shipName])
 
@@ -145,9 +149,9 @@ class fashion:
     def __init__(self, xmlPath):
         if self.__xmlData is None:
             self.__xmlData = dict()
-            __xmlData = glob.glob(path.join(xmlPath, 'outfits/*/*.xml'))
+            __xmlData = glob.glob(os.path.join(xmlPath, 'outfits/*/*.xml'))
             for item in __xmlData:
-                basename = path.basename(item)
+                basename = os.path.basename(item)
                 self.__xmlData[basename] = etree.parse(item)
 
         self.slots={}
@@ -199,9 +203,7 @@ class fashion:
 
 
 if __name__ == "__main__":
-    from os import mkdir
-    from optparse import OptionParser
-    from datetime import datetime
+
 
     usage="Usage: %prog OUTPUTPATH"
     parser = OptionParser(usage=usage, version="%prog "+__version__,
@@ -217,10 +219,10 @@ if __name__ == "__main__":
 
     if len(arguments) != 1:
         parser.error("A wise man would know where to store the generated files.")
-    currentPath = path.abspath(path.curdir)
-    storagePath = path.abspath(path.normpath(arguments[0]))
-    tplPath = path.abspath(path.normpath(cfg.templates))
-    naevPath = path.abspath(path.normpath("../../dat/"))
+    currentPath = os.path.abspath(os.path.curdir)
+    storagePath = os.path.abspath(os.path.normpath(arguments[0]))
+    tplPath = os.path.abspath(os.path.normpath(cfg.templates))
+    naevPath = os.path.abspath(os.path.normpath("../../dat/"))
 
     date = str( datetime.utcnow().strftime("%c UTC") )
 
@@ -233,45 +235,46 @@ if __name__ == "__main__":
     # creating ships html
     myTpl = env.get_template('ships_index.html')
     yaarh = harvester(naevPath)
-    shipIStore = path.normpath(storagePath + '/ships/')
-    if not path.exists(storagePath):
-        mkdir(storagePath, 0755)
-    if not path.exists(shipIStore):
-        mkdir(shipIStore, 0755)
+    shipIStore = os.path.normpath(storagePath + '/ships/')
+    if not os.path.exists(storagePath):
+        os.mkdir(storagePath, 0755)
+    if not os.path.exists(shipIStore):
+        os.mkdir(shipIStore, 0755)
     myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore+'/index.html')
     del(myTpl)
 
     for (shipName, shipData) in yaarh.iter():
         myTpl = env.get_template('ship.html')
-        myPath = path.abspath(path.normpath("%s/ships/%s.html" % (storagePath,shipName)))
+        myPath = os.path.abspath(os.path.normpath("%s/ships/%s.html" % (storagePath,shipName)))
         myTpl.stream(shipName=shipName, shipData=shipData, date=date).dump(myPath)
 
     # fancy outfits
     myTpl = env.get_template('outfits_index.html')
     panty = fashion(naevPath)
-    outfitsStore = path.normpath(storagePath + '/outfits/')
-    if not path.exists(outfitsStore):
-        mkdir(outfitsStore, 0755)
+    outfitsStore = os.path.normpath(storagePath + '/outfits/')
+    if not os.path.exists(outfitsStore):
+        os.mkdir(outfitsStore, 0755)
     myTpl.stream(outfits=panty.groupBySlots(), date=date).dump(outfitsStore+'/index.html')
 
     for (slotName, outfitsList) in panty.slots.iteritems():
         for outfitDetails in outfitsList:
             myTpl = env.get_template('outfit.html')
-            myStorage = path.normpath("%s/outfits/%s.html") % (
+            myStorage = os.path.normpath("%s/outfits/%s.html") % (
                     storagePath,
                     outfitDetails['name']
                 )
             myTpl.stream(slotName=slotName, outfitData=outfitDetails,
                     date=date).dump(myStorage)
 
-    from shutil import copy
-    cssFiles = glob.glob(currentPath+'/*.css')
-    while len(cssFiles) > 0:
-        f = cssFiles.pop()
-        bname = path.basename(f)
-        if not path.exists(storagePath + '/' + bname):
-            print('Copying css file: '+bname+' in '+storagePath)
-            copy(f, storagePath)
-        else:
-            pass
+    for f in glob.glob(currentPath+'/*.css'):
+        bname = os.path.basename(f)
+        print('Copying css file: '+bname+' in '+storagePath)
+        shutil.copy(f, storagePath)
 
+    mediapath = storagePath + '/ships/media'
+    if not os.path.exists(mediapath):
+        os.mkdir(mediapath)
+    print('Copying image files...')
+    for f in glob.glob(currentPath+'/../../dat/gfx/ship/*/*_comm.png'):
+        bname = os.path.basename(f)
+        shutil.copy(f, mediapath)

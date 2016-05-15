@@ -91,6 +91,41 @@
    <faction>Trader</faction>
   </avail>
  </mission>
+ <mission name="Commodity Run">
+  <lua>neutral/commodityRun</lua>
+  <avail>
+   <priority>5</priority>
+   <chance>60</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
+ <mission name="Trader Escort">
+  <lua>neutral/traderEscort</lua>
+  <avail>
+   <priority>5</priority>
+   <cond>player.getRating() &gt; 200</cond>
+   <chance>560</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
  <mission name="Dead Or Alive Bounty">
   <lua>neutral/pirbounty_dead</lua>
   <avail>
@@ -130,6 +165,22 @@
    <priority>4</priority>
    <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
    <chance>560</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+<mission name="Sightseeing">
+  <lua>neutral/sightseeing</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>460</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
@@ -205,7 +256,102 @@
    <planet>Halir</planet>
   </avail>
  </mission>
- <mission name="Collective Scouting">
+<mission name="Soromid Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo1</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>30</chance>
+   <done>Empire Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Dvaered Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo2</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Soromid Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+ <mission name="Za’lek Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo3</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Dvaered Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Frontier Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo4</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Za’lek Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+ <mission name="Sirius Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo5</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>75</chance>
+   <done>Frontier Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Long Distance Recruitment">
+  <lua>empire/longdistanceshipping/emp_longdistancecargo6</lua>  
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>100</chance>
+ <done>Sirius Long Distance Recruitment</done>   
+ <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+<mission name="Long Distance Empire Shipping">
+  <lua>empire/longdistanceshipping/es_longdistancecargo</lua>
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>350</chance>
+   <done>Empire Long Distance Recruitment</done>
+   <location>Computer</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+<mission name="Collective Scouting">
   <lua>empire/collective/ec00</lua>
   <flags>
    <unique />
@@ -689,7 +835,7 @@
   <avail>
    <chance>3</chance>
    <location>Bar</location>
-   <faction>Sirius</faction>  -- Note: additional conditionals present in mission script!
+   <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
   </avail>
  </mission>
  <mission name="Empire Patrol Bounty">

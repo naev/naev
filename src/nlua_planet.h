@@ -18,9 +18,7 @@
 /**
  * @brief Lua Planet Wrapper.
  */
-typedef struct LuaPlanet_s {
-   int id; /**< ID to the planet. */
-} LuaPlanet;
+typedef int LuaPlanet;
 
 
 /*

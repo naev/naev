@@ -1,7 +1,7 @@
 --[[misn title - the patrol]]
 --[[in this mission, the player will be guarding the "high command" of the
-	nasin, the wringer/suna. house sirius is sending in recon parties.
-	the players job is to take out any and all sirius in the system.]]
+   nasin, the wringer/suna. house sirius is sending in recon parties.
+   the players job is to take out any and all sirius in the system.]]
 
 include "dat/scripts/numstring.lua"
 
@@ -22,10 +22,10 @@ chooser[1] = [[He looks at you, betraying a little emotion. "The Nasin are a pur
 chooser[2] = [[Draga motions you in closer. "We have reason to believe that %s is about to be attacked. We are expecting Sirius to send in recon elements any STU now. We want you to handle that, as you see fit. Keep them away from the station. Better yet, kill them. We can pay you %s. We do ask that you stay in-system and off-planet until the mission is complete, otherwise you'll be considered AWOL, which means you're fired."]]
 chooser[3] = [[Draga looks triumphant, but only for an instant. "Great. You should get going, we are expecting them at any second. Good luck, and godspeed."]]
 chooser[4] = [[You brace yourself, as Draga appears ready to attack. He waves his arms about in obvious anger. "Great! I knew you were a waste of time. Well, if you decide to outgrow your diapers, I'll be right here waiting for you."
-    You walk away insulted, but strangely curious.]]
+   You walk away insulted, but strangely curious.]]
 --message at the end
 emsg_1 = [[You land, having destroyed the small recon force. Draga is in the hangar, waiting for you.
-    "Good job on proving yourself more than a delivery boy! That wasn't so bad, was it? Here's your payment, meet me in the bar soon."]]
+   "Good job on proving yourself more than a delivery boy! That wasn't so bad, was it? Here's your payment, meet me in the bar soon."]]
 --mission osd
 osd = {}
 osd[1] = "Destroy the Sirius fighter element."
@@ -36,18 +36,18 @@ npc_name = "Draga"
 bar_desc = "An imposing man leans against the bar easily, looking right at you."
 not_finished = "Draga seems to swoop in out of nowhere as soon as you land. \"You are not finished! Get back up there quickly!\""
 chronic_failure = [[Draga swoops in. His nostrils are flaring, and he is obviously annoyed.
-    "Apparently you have better things to do. Get out of here. I don't want to see your face anymore."
-    You consider yourself fired.]]
+   "Apparently you have better things to do. Get out of here. I don't want to see your face anymore."
+   You consider yourself fired.]]
 doom_clock_msg = [[A scratchy voice jumps in on your comms priority channel. 
-    "You jumped out of the system! We are being scanned by the enemy! We need you back to take care of this situation now, or you are AWOL and are not getting paid!!" 
-    The voice and the scratch cuts out.]]
+   "You jumped out of the system! We are being scanned by the enemy! We need you back to take care of this situation now, or you are AWOL and are not getting paid!!" 
+   The voice and the scratch cuts out.]]
 out_sys_failure_msg = [[Your comm station flares up with a scratchy, obviously-from-far-away noise. A voice is heard through it.
-    "%s! We told you we needed you to stay in system! Apparently you have more important things to do. So get lost, kid! We'll take care of ourselves." The static cuts out, and you consider yourself fired.]]
+   "%s! We told you we needed you to stay in system! Apparently you have more important things to do. So get lost, kid! We'll take care of ourselves." The static cuts out, and you consider yourself fired.]]
 misn_desc = "Destroy the Sirius recon element that flew into %s. WARNING: DO NOT JUMP OUT-SYSTEM OR LAND ON THE PLANET PREMATURELY."
 
 function create()
    --this mission does make one system claim, in suna.
-	--initialize the variables
+   --initialize the variables
    homeasset, homesys = planet.cur()
    if not misn.claim(homesys) then
       misn.finish(false)

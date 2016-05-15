@@ -378,7 +378,7 @@ unsigned int background_addImage( glTexture *image, double x, double y,
    bkg->y      = y;
    bkg->move   = move;
    bkg->scale  = scale;
-   memcpy( &bkg->col, (col!=NULL) ? col : &cWhite, sizeof(glColour) );
+   bkg->col    = (col!=NULL) ? *col : cWhite;
 
    /* Sort if necessary. */
    bkg_sort( *arr );

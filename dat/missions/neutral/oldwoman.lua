@@ -73,7 +73,7 @@ end
 function accept ()
     if tk.yesno(title1, text1:format(destplanet:name(), destsys:name(), destplanet:name())) then
         tk.msg(title1, text2)
-        -- TODO: Add old woman passenger cargo.
+        oldwoman = misn.cargoAdd("Civilians", 0)
 
         misn.accept()
         misn.setDesc(misndesc:format(destplanet:name(), destsys:name()))
@@ -113,5 +113,9 @@ function land()
 end
 
 function abort ()
+    -- Remove the passenger.
+    if oldwoman then
+        misn.cargoRm(oldwoman)
+    end
     misn.finish(false)
 end

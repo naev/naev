@@ -35,13 +35,13 @@ function create ()
       mem.bribe_no = "\"I shall especially enjoy your death.\""
    else
       bribe_no = {
-            "\"Snivelling waste of carbon.\"",
-            "\"Money won't save you from being purged from the gene pool.\"",
-            "\"Culling you will be doing humanity a service.\"",
-            "\"We do not consort with vermin.\"",
-			"\"Who do you take us for, the Empire?\""
-     }
-     mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+         "\"Snivelling waste of carbon.\"",
+         "\"Money won't save you from being purged from the gene pool.\"",
+         "\"Culling you will be doing humanity a service.\"",
+         "\"We do not consort with vermin.\"",
+         "\"Who do you take us for, the Empire?\""
+      }
+      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
@@ -61,20 +61,20 @@ function taunt ( target, offense )
    -- some taunts
    if offense then
       taunts = {
-            "There is no room in this universe for scum like you!",
-            "Culling you will be doing humanity a service.",
-            "Enjoy your last moments, worm!",
-			"Time for a little natural selection!",
-			"Might makes right!",
-			"Embrace your weakness!"
+         "There is no room in this universe for scum like you!",
+         "Culling you will be doing humanity a service.",
+         "Enjoy your last moments, worm!",
+         "Time for a little natural selection!",
+         "Might makes right!",
+         "Embrace your weakness!"
       }
    else
       taunts = {
-            "Cunning, but foolish.",
-            "Ambush! Defend yourselves!",
-            "You should have picked easier prey!",
-            "You'll regret that!",
-            "That was a fatal mistake!"
+         "Cunning, but foolish.",
+         "Ambush! Defend yourselves!",
+         "You should have picked easier prey!",
+         "You'll regret that!",
+         "That was a fatal mistake!"
       }
    end
 

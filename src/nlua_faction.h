@@ -16,9 +16,7 @@
 /**
  * @brief Lua Faction wrapper.
  */
-typedef struct LuaFaction_s {
-   int f; /**< Internal use faction identifier. */
-} LuaFaction;
+typedef int LuaFaction;
 
 
 /*
@@ -29,7 +27,7 @@ int nlua_loadFaction( lua_State *L, int readonly );
 /*
  * Faction operations
  */
-LuaFaction* lua_tofaction( lua_State *L, int ind );
+LuaFaction lua_tofaction( lua_State *L, int ind );
 LuaFaction* lua_pushfaction( lua_State *L, LuaFaction faction );
 int luaL_validfaction( lua_State *L, int ind );
 int lua_isfaction( lua_State *L, int ind );

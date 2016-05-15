@@ -907,7 +907,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */
    s = &pilot->stats;
-   memcpy( s, &pilot->ship->stats_array, sizeof(ShipStats) );
+   *s = pilot->ship->stats_array;
    memset( &amount, 0, sizeof(ShipStats) );
 
    /*

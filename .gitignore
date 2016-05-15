@@ -12,9 +12,6 @@ naev.exe
 pack
 pack.exe
 docs/doxygen/*
-docs/lua/*.html
-docs/lua/*.css
-docs/lua/modules/*
 docs/lua/*.luadoc
 *.in
 *Makefile

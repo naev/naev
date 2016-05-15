@@ -1256,7 +1256,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       rdir -= 2.*M_PI;
 
    mass = 1; /* Lasers are presumed to have unitary mass */
-   vectcpy( &v, vel );
+   v = *vel;
    vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
@@ -1316,7 +1316,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       rdir -= 2.*M_PI;
 
    /* If thrust is 0. we assume it starts out at speed. */
-   vectcpy( &v, vel );
+   v = *vel;
    if (ammo->u.amm.thrust == 0.)
       vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
             sin(rdir) * w->outfit->u.amm.speed );

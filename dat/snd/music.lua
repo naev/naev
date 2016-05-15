@@ -159,7 +159,7 @@ ambient_neutral  = { "ambient2", "mission",
       "peace1", "peace2", "peace4", "peace6",
       "void_sensor", "ambiphonic",
       "ambient4", "terminal", "eureka",
-	  "ambient2_5" }
+      "ambient2_5" }
 --[[
 -- @brief Chooses ambient songs.
 --]]

@@ -11,15 +11,15 @@ include "dat/scripts/numstring.lua"
 
 -- This is in cargo_common, but we need to increase the range…
 function cargo_selectMissionDistance ()
-	local seed = rnd.rnd()
-	if     seed < 0.20 then missdist = 3
-	elseif seed < 0.40 then missdist = 4
-	elseif seed < 0.60 then missdist = 5
-	elseif seed < 0.80 then missdist = 6
-	else                    missdist = 7
-	end
+   local seed = rnd.rnd()
+   if     seed < 0.20 then missdist = 3
+   elseif seed < 0.40 then missdist = 4
+   elseif seed < 0.60 then missdist = 5
+   elseif seed < 0.80 then missdist = 6
+   else                    missdist = 7
+   end
 
-	return missdist
+   return missdist
 end
 
 lang = naev.lang()
@@ -66,64 +66,64 @@ Accept the mission anyway?]]
 end
 
 --[[
---	Pirates shipping missions are always timed, but quite lax on the schedules
---	and pays a lot more then the rush missions
+--   Pirates shipping missions are always timed, but quite lax on the schedules
+--   and pays a lot more then the rush missions
 --]]
 
 -- Create the mission
 function create()
    -- Note: this mission does not make any system claims.
 
-	origin_p, origin_s = planet.cur()
-	local routesys = origin_s
-	local routepos = origin_p:pos()
+   origin_p, origin_s = planet.cur()
+   local routesys = origin_s
+   local routepos = origin_p:pos()
 
-	-- target destination
-	destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
-	if destplanet == nil then
-	   misn.finish(false)
-	end
+   -- target destination
+   destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+   if destplanet == nil then
+      misn.finish(false)
+   end
 
-	-- We’re redefining the cargo
-	local cargoes = {
-		"Unmarked Boxes",
-		"Weapons",
-		"Drugs",
-		"Exotic Animals",
-		"Radioactive Materials",
-	}
-	cargo = cargoes[rnd.rnd(1, #cargoes)]
+   -- We’re redefining the cargo
+   local cargoes = {
+      "Unmarked Boxes",
+      "Weapons",
+      "Drugs",
+      "Exotic Animals",
+      "Radioactive Materials",
+   }
+   cargo = cargoes[rnd.rnd(1, #cargoes)]
 
-	-- It is my opinion that those cargos should come from Pirate worlds and be
-	-- destined to any other worlds, for black markets and such. Besides, 
-	-- Pirate worlds are too far away from one another.
-	--if destplanet:faction() ~= faction.get( "Pirate" ) then
-	--	misn.finish(false)
-	--end
+   -- It is my opinion that those cargos should come from Pirate worlds and be
+   -- destined to any other worlds, for black markets and such. Besides, 
+   -- Pirate worlds are too far away from one another.
+   --if destplanet:faction() ~= faction.get( "Pirate" ) then
+   --   misn.finish(false)
+   --end
 
    -- mission generics
-	stuperpx   = 0.3 - 0.015 * tier
-	stuperjump = 11000 - 75 * tier
-	stupertakeoff = 15000
-	timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
+   stuperpx   = 0.3 - 0.015 * tier
+   stuperjump = 11000 - 75 * tier
+   stupertakeoff = 15000
+   timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
-	-- Allow extra time for refuelling stops.
-	local jumpsperstop = 3 + math.min(tier, 1)
-	if numjumps > jumpsperstop then
-		timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
-	end
-	
-	-- Choose amount of cargo and mission reward. This depends on the mission tier.
-	finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
-	amount	 = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
-	jumpreward = 1500
-	distreward = 0.30
-	reward	 = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-	
-	misn.setTitle("Pirate cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
-	misn.markerAdd(destsys, "computer")
-	misn.setDesc(title_p1:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
-	misn.setReward(misn_reward:format(numstring(reward)))
+   -- Allow extra time for refuelling stops.
+   local jumpsperstop = 3 + math.min(tier, 1)
+   if numjumps > jumpsperstop then
+      timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
+   end
+   
+   -- Choose amount of cargo and mission reward. This depends on the mission tier.
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   amount    = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
+   jumpreward = 1500
+   distreward = 0.30
+   reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   
+   misn.setTitle("Pirate cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
+   misn.markerAdd(destsys, "computer")
+   misn.setDesc(title_p1:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
+   misn.setReward(misn_reward:format(numstring(reward)))
 
 end
 
@@ -131,61 +131,61 @@ end
 function accept()
    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
    if timelimit < playerbest then
-	  if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
-		 misn.finish()
-	  end
+      if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+         misn.finish()
+      end
    end
    if player.pilot():cargoFree() < amount then
-	  tk.msg( full[1], string.format( full[2], amount-player.pilot():cargoFree() ))
-	  misn.finish()
+      tk.msg( full[1], string.format( full[2], amount-player.pilot():cargoFree() ))
+      misn.finish()
    end
 
    if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-	  carg_id = misn.cargoAdd( cargo, amount )
-	  tk.msg( msg_title[1], string.format( msg_msg[1], amount, cargo ))
-	  osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
-	  osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
-	  misn.osdCreate(osd_title, osd_msg)
-	  hook.land( "land" ) -- only hook after accepting
-	  hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+      carg_id = misn.cargoAdd( cargo, amount )
+      tk.msg( msg_title[1], string.format( msg_msg[1], amount, cargo ))
+      osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+      osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
+      misn.osdCreate(osd_title, osd_msg)
+      hook.land( "land" ) -- only hook after accepting
+      hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
    else
-	  tk.msg( msg_title[2], msg_msg [2] )
-	  misn.finish()
+      tk.msg( msg_title[2], msg_msg [2] )
+      misn.finish()
    end
 end
 
 -- Land hook
 function land()
-	if planet.cur() == destplanet then
-		 tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
-		player.pay(reward)
-		n = var.peek("ps_misn")
-		if n ~= nil then
-			var.push("ps_misn", n+1)
-		else
-			var.push("ps_misn", 1)
-		end
+   if planet.cur() == destplanet then
+         tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
+      player.pay(reward)
+      n = var.peek("ps_misn")
+      if n ~= nil then
+         var.push("ps_misn", n+1)
+      else
+         var.push("ps_misn", 1)
+      end
 
-		-- increase faction
-		faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))
-		misn.finish(true)
-	end
+      -- increase faction
+      faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))
+      misn.finish(true)
+   end
 end
 
 -- Date hook
 function tick()
-	if timelimit >= time.get() then
-		-- Case still in time
-		osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
-		osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
-		misn.osdCreate(osd_title, osd_msg)
-	elseif timelimit <= time.get() then
-		-- Case missed deadline
-		player.msg(miss[3])
-		abort()
-	end
+   if timelimit >= time.get() then
+      -- Case still in time
+      osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+      osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
+      misn.osdCreate(osd_title, osd_msg)
+   elseif timelimit <= time.get() then
+      -- Case missed deadline
+      player.msg(miss[3])
+      abort()
+   end
 end
 
 function abort ()
-	misn.finish(false)
+   misn.finish(false)
 end

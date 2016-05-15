@@ -354,7 +354,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
       if (news_nlines == 0)
          gl_printRestoreInit( &news_restores[ news_nlines ] );
       else {
-         memcpy( &news_restores[ news_nlines ], &news_restores[ news_nlines-1 ], sizeof(glFontRestore) );
+         news_restores[ news_nlines ] = news_restores[ news_nlines-1 ];
          gl_printStore( &news_restores[ news_nlines ], news_lines[ news_nlines-1 ] );
       }
 

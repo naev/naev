@@ -406,10 +406,7 @@ static int playerL_getRating( lua_State *L )
  */
 static int playerL_getPosition( lua_State *L )
 {
-   LuaVector v;
-
-   vectcpy( &v.vec, &player.p->solid->pos );
-   lua_pushvector(L, v);
+   lua_pushvector(L, player.p->solid->pos);
    return 1;
 }
 
@@ -421,9 +418,7 @@ static int playerL_getPosition( lua_State *L )
  */
 static int playerL_getPilot( lua_State *L )
 {
-   LuaPilot lp;
-   lp.pilot = PLAYER_ID;
-   lua_pushpilot(L, lp);
+   lua_pushpilot(L, PLAYER_ID);
    return 1;
 }
 
@@ -519,7 +514,7 @@ static int playerL_autonavDest( lua_State *L )
    if (dest == NULL)
       return 0;
 
-   ls.id = system_index( dest );
+   ls = system_index( dest );
    lua_pushsystem( L, ls );
    lua_pushnumber( L, jumps );
    return 2;
@@ -784,7 +779,6 @@ static int playerL_shipOutfits( lua_State *L )
    int i, j, nships;
    const PlayerShip_t *ships;
    Pilot *p;
-   LuaOutfit lo;
 
    /* Get name. */
    str = luaL_checkstring(L, 1);
@@ -818,9 +812,8 @@ static int playerL_shipOutfits( lua_State *L )
          continue;
 
       /* Set the outfit. */
-      lo.outfit = p->outfits[i]->outfit;
       lua_pushnumber( L, j++ );
-      lua_pushoutfit( L, lo );
+      lua_pushoutfit( L, p->outfits[i]->outfit );
       lua_rawset( L, -3 );
    }
 
@@ -841,15 +834,13 @@ static int playerL_outfits( lua_State *L )
 {
    int i, noutfits;
    const PlayerOutfit_t *outfits;
-   LuaOutfit lo;
 
    outfits = player_getOutfits( &noutfits );
 
    lua_newtable(L);
    for (i=0; i<noutfits; i++) {
-      lo.outfit = (Outfit*)outfits[i].o;
       lua_pushnumber(L, i+1);
-      lua_pushoutfit(L, lo );
+      lua_pushoutfit(L, (Outfit*)outfits[i].o );
       lua_rawset(L, -3);
    }
 
@@ -1326,7 +1317,7 @@ static int playerL_teleport( lua_State *L )
 
    /* Move to planet. */
    if (pnt != NULL)
-      vectcpy( &player.p->solid->pos, &pnt->pos );
+      player.p->solid->pos = pnt->pos;
 
    return 0;
 }

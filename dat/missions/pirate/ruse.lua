@@ -185,7 +185,7 @@ function got_boarded(shipp)
    tk.msg( title[4], text[9] )
    -- turn mercs hostile
    for i=1,#badguys do
-     badguys[i]:setHostile(true)
+      badguys[i]:setHostile(true)
    end
    tk.msg( title[4], text[10] )
    player.pay(rnd.rnd(40,60)*1000)
@@ -193,10 +193,10 @@ function got_boarded(shipp)
 end
 -- idle
 function idle(shipp,pplanet)
-    shipp:goto(pplanet:pos() + vec2.new( 400,  400), false)
-    shipp:goto(pplanet:pos() + vec2.new(-400,  400), false)
-    shipp:goto(pplanet:pos() + vec2.new(-400, -400), false)
-    shipp:goto(pplanet:pos() + vec2.new( 400, -400), false)
+   shipp:goto(pplanet:pos() + vec2.new( 400,  400), false)
+   shipp:goto(pplanet:pos() + vec2.new(-400,  400), false)
+   shipp:goto(pplanet:pos() + vec2.new(-400, -400), false)
+   shipp:goto(pplanet:pos() + vec2.new( 400, -400), false)
 end
 --delay for msgs because if no delay they will pop in mid transit from system to system
 function do_msg ()
@@ -218,36 +218,36 @@ function spawn_baddies(sp)
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("Unicorp D-2 Light Plating")
       badguys[i]:addOutfit("Unicorp PT-100 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
-		
+      
       badguys[i]:addOutfit("Laser Cannon MK2",2)
       badguys[i]:addOutfit("Unicorp Fury Launcher")
       badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
    for i=3,4 do
       badguys[i] = pilot.addRaw( "Lancelot","mercenary", sp, "Mercenary" )[1]
       badguys[i]:setHostile(false)
-		
+      
       badguys[i]:rename("Mercenary")
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
       badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
-		
+      
       badguys[i]:addOutfit("Mass Driver MK1")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
       badguys[i]:addOutfit("Shield Capacitor",2)
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
@@ -259,14 +259,14 @@ function spawn_baddies(sp)
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-		
+      
       badguys[i]:addOutfit("Unicorp D-8 Medium Plating")
       badguys[i]:addOutfit("Unicorp PT-500 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
-		
+      
       badguys[i]:addOutfit("Razor Turret MK3",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
-		
+      
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end

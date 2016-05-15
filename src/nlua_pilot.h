@@ -18,9 +18,7 @@
 /**
  * @brief Lua Pilot wrapper.
  */
-typedef struct LuaPilot_s {
-   unsigned int pilot; /**< ID of the pilot. */
-} LuaPilot; /**< Wrapper for a Pilot. */
+typedef unsigned int LuaPilot; /**< Wrapper for a Pilot. */
 
 
 /*
@@ -31,8 +29,8 @@ int nlua_loadPilot( lua_State *L, int readonly );
 /*
  * Pilot operations
  */
-LuaPilot* lua_topilot( lua_State *L, int ind );
-LuaPilot* luaL_checkpilot( lua_State *L, int ind );
+LuaPilot lua_topilot( lua_State *L, int ind );
+LuaPilot luaL_checkpilot( lua_State *L, int ind );
 LuaPilot* lua_pushpilot( lua_State *L, LuaPilot pilot );
 Pilot* luaL_validpilot( lua_State *L, int ind );
 int lua_ispilot( lua_State *L, int ind );

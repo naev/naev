@@ -633,7 +633,7 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
       diff->mfailed += CHUNK_SIZE;
       diff->failed = realloc(diff->failed, sizeof(UniHunk_t) * diff->mfailed);
    }
-   memcpy( &diff->failed[diff->nfailed-1], hunk, sizeof(UniHunk_t) );
+   diff->failed[diff->nfailed-1] = *hunk;
 }
 
 
@@ -653,7 +653,7 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
       diff->mapplied += CHUNK_SIZE;
       diff->applied = realloc(diff->applied, sizeof(UniHunk_t) * diff->mapplied);
    }
-   memcpy( &diff->applied[diff->napplied-1], hunk, sizeof(UniHunk_t) );
+   diff->applied[diff->napplied-1] = *hunk;
 }
 
 
@@ -727,7 +727,7 @@ static int diff_removeDiff( UniDiff_t *diff )
    UniHunk_t hunk;
 
    for (i=0; i<diff->napplied; i++) {
-      memcpy( &hunk, &diff->applied[i], sizeof(UniHunk_t) );
+      hunk = diff->applied[i];
       /* Invert the type for reverting. */
       switch (hunk.type) {
          case HUNK_TYPE_ASSET_ADD:
