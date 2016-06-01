@@ -35,7 +35,7 @@ else -- Default to English
    kill_instead_title   = "Better Dead than Free"
    kill_instead_text    = {}
    kill_instead_text[1] = [[As you return to your ship, you are contacted by an officer. "I see you were unable to capture %s," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid %s credits if you finish him off right now."]]
-   kill_instead_text[2] = [[On your way back to your ship, you recieve a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill him now, you will be paid the lesser sum of %s credits."]]
+   kill_instead_text[2] = [[On your way back to your ship, you receive a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill him now, you will be paid the lesser sum of %s credits."]]
    kill_instead_text[3] = [[When you return to your cockpit, you are contacted by an officer. "Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off a couple low-life pirates?!" He sighs. "But lucky for you, I'm not in charge, and my higher-ups would rather %s be dead than free. So if you finish him off, you'll get %s credits. Just be snappy about it!" And with that, the officer ceases communication.]]
    kill_instead_text[4] = [[When you get back to the ship, you see a message giving you a new mission to kill %s; the reward is %s credits. Well, that's pitiful compared to what you were planning on collecting, but it's better than nothing.]]
 
@@ -51,7 +51,7 @@ else -- Default to English
    pay_kill_text    = {}
    pay_kill_text[1] = "After verifying that you killed %s, an officer hands you your pay."
    pay_kill_text[2] = "After verifying that %s is indeed dead, the officer sighs and hands you your pay."
-   pay_kill_text[3] = "This officer is clearly annoyed that %s is dead. " .. pronoun .. " mumbles something about incompetent bounty hunters the entire time as he takes care of the paperwork and hands you your bounty."
+   pay_kill_text[3] = "This officer is clearly annoyed that %s is dead. " .. pronoun .. " mumbles something about incompetent bounty hunters the entire time as " .. pronoun:lower() .. " takes care of the paperwork and hands you your bounty."
    pay_kill_text[4] = "The officer seems disappointed, yet unsurprised that you failed to capture %s alive. " .. pronoun .. " hands you your lesser bounty without speaking a word."
    pay_kill_text[5] = "When you ask the officer for your bounty on %s, " .. pronoun:lower() .. " sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless bounty hunters are."
    pay_kill_text[6] = "The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking annoyed the entire time."

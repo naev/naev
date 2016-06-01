@@ -54,7 +54,7 @@ else -- Default to English
    pay_kill_text[1] = "After verifying that you killed %s, an officer hands you your pay."
    pay_kill_text[2] = "After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay."
    pay_kill_text[3] = "The officer seems pleased that %s is finally dead. " .. pronoun .. " thanks you and promptly hands you your pay."
-   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. " .. pronoun .. " then pays you and sends you off."
+   pay_kill_text[4] = "The paranoid-looking officer takes you into a locked room, where " .. pronoun:lower() .. " quietly verifies the death of %s. " .. pronoun .. " then pays you and sends you off."
    pay_kill_text[5] = "When you ask the officer for your bounty on %s, " .. pronoun:lower() .. " sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless the bounty system is."
    pay_kill_text[6] = "The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking bored the entire time."
 
