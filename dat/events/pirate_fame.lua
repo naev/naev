@@ -1,26 +1,15 @@
+
 --[[
+-- Pirate Fame/Faction Standing script
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
+	When the player enters a system, his fame has a chance of being lowered.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+	If he is using a pirate ship, the chances of his fame being lowered are
+	reduced. If the player is using an impressive non-pirate ship, like the
+	cruiser or carrier of a major faction, will lower a bit less often, but
+	will lower more often than if he was using a purely pirate ship.
 
---
-
-   Pirate Fame/Faction Standing script
-
-   When the player enters a system, his fame has a chance of being lowered.
-
-   If he is using a pirate ship, the chances of his fame being lowered are
-   reduced. If the player is using an impressive non-pirate ship, like the
-   cruiser or carrier of a major faction, will lower a bit less often, but
-   will lower more often than if he was using a purely pirate ship.
-
-   This event will not reduce the player’s fame below a given level.
+	This event will not reduce the player’s fame below a given level.
 
 --]]
 
