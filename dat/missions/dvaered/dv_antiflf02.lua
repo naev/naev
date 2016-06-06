@@ -1,22 +1,9 @@
 --[[
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---
-
-   This is the second mission in the anti-FLF Dvaered campaign. The player is part of a Dvaered plot to smoke out the FLF base.
-   stack variable flfbase_intro:
-        1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
-        2 - The player has rescued the FLF agent. Conditional for flf_pre02
-        3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
-
+-- This is the second mission in the anti-FLF Dvaered campaign. The player is part of a Dvaered plot to smoke out the FLF base.
+-- stack variable flfbase_intro:
+--      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
+--      2 - The player has rescued the FLF agent. Conditional for flf_pre02
+--      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
 -- localization stuff, translators would work here
