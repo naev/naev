@@ -1,23 +1,10 @@
 --[[
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---
-
-   Shipwreck Event
- 
-   Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
-   See dat/missions/neutral/spacefamily.lua
- 
-   12/02/2010 - Added visibility/highlight options for use in bigsystems (Anatolis)
-
+-- Shipwreck Event
+-- 
+-- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
+-- See dat/missions/neutral/spacefamily.lua
+-- 
+-- 12/02/2010 - Added visibility/highlight options for use in bigsystems (Anatolis)
 --]]
 
 lang = naev.lang()
