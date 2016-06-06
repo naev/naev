@@ -1,16 +1,3 @@
---[[
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---]]
-
 --[[misn title - the patrol]]
 --[[in this mission, the player will be guarding the "high command" of the
 	nasin, the wringer/suna. house sirius is sending in recon parties.
