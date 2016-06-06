@@ -27,8 +27,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Gorgate is a loyal Sirian world. The local story goes that Sirichana once set foot on its surface personally, when the colony was only just established, and showed the colonists the light. This is said to have happened over a hundred years ago, however, and records of the colony's early days are scarce and unreliable at best. Still, the locals believe the story without question.</description>
-  <bar>The Gorgaters are always eager to tell outsiders about their alleged history. The spaceport bar contains a holodisplay that recounts the story of Sirichana's visit to this world, though it's anyone's guess how much of it is true and how much of it has been invented over the years.</bar>
+  <description>Gorgate is a loyal Sirian world. The local story goes that Sirichana once set foot on its surface personally, when the colony was only just established, and showed the colonists the light. This is said to have happened over a hundred cycles ago, however, and records of the colony's early days are scarce and unreliable at best. Still, the locals believe the story without question.</description>
+  <bar>The Gorgaters are always eager to tell outsiders about their alleged history. The spaceport bar contains a holodisplay that recounts the story of Sirichana's visit to this world, though it's anyone's guess how much of it is true and how much of it has been invented over the cycles.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>
