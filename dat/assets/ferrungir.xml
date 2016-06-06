@@ -30,8 +30,8 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <description>Ferrungir is a fairly low-profile industrial world. Raw materials are being mined here, and then either shipped offworld immediately or processed into low-level components first. There is not much else of value on this planet. The people who live here tend to be Shaira echelon who haven't been able to find a job anywhere else.</description>
-  <bar>The bar on Ferrungir is grim and simple. It's little more than a storage unit converted to a makeshift canteen. It's to be expected from a world as run down as this one.</bar>
+  <description>Ferrungir is a fairly low-profile industrial world. Raw materials are being mined here and then either shipped offworld immediately or processed into low-level components before heading the same way. There is not much else of value on this planet. The people who live here tend to be Shaira echelon who haven't been able to find a job anywhere else.</description>
+  <bar>The bar on Ferrungir is simple and grim. It's little more than a storage unit converted into a makeshift drinking establishment. It's to be expected from a world as run down as this one.</bar>
  </general>
  <tech>
   <item>Basic Trade Ships</item>

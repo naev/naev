@@ -6,10 +6,10 @@
  </pos>
  <GFX>
   <space>moon-D00.png</space>
-  <exterior>station02.png</exterior>
+  <exterior>asteroid.png</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>D</class>
   <population>0</population>
   <hide>0.500000</hide>
   <services/>

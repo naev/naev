@@ -92,11 +92,8 @@ static int nxml_saveJump( xmlTextWriterPtr writer,
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
 {
    int ret, b;
-   LuaPlanet *p;
-   LuaSystem *s;
-   LuaFaction *f;
-   LuaShip *sh;
-   LuaTime *lt;
+   Ship *sh;
+   ntime_t t;
    LuaJump *lj;
    Planet *pnt;
    StarSystem *ss, *dest;
@@ -190,8 +187,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
       /* User data must be handled here. */
       case LUA_TUSERDATA:
          if (lua_isplanet(L,-1)) {
-            p = lua_toplanet(L,-1);
-            pnt = planet_getIndex( p->id );
+            pnt = planet_getIndex( *lua_toplanet(L,-1) );
             if (pnt != NULL)
                nxml_saveData( writer, "planet",
                      name, pnt->name, keynum );
@@ -201,8 +197,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_issystem(L,-1)) {
-            s  = lua_tosystem(L,-1);
-            ss = system_getIndex( s->id );
+            ss = system_getIndex( lua_tosystem(L,-1) );
             if (ss != NULL)
                nxml_saveData( writer, "system",
                      name, ss->name, keynum );
@@ -212,8 +207,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_isfaction(L,-1)) {
-            f = lua_tofaction(L,-1);
-            str = faction_name( f->f );
+            str = faction_name( lua_tofaction(L,-1) );
             if (str == NULL)
                break;
             nxml_saveData( writer, "faction",
@@ -223,7 +217,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          }
          else if (lua_isship(L,-1)) {
             sh = lua_toship(L,-1);
-            str = sh->ship->name;
+            str = sh->name;
             if (str == NULL)
                break;
             nxml_saveData( writer, "ship",
@@ -232,8 +226,8 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_istime(L,-1)) {
-            lt = lua_totime(L,-1);
-            nsnprintf( buf, sizeof(buf), "%"PRId64, lt->t );
+            t = *lua_totime(L,-1);
+            nsnprintf( buf, sizeof(buf), "%"PRId64, t );
             nxml_saveData( writer, "time",
                   name, buf, keynum );
             /* key, value */
@@ -266,7 +260,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
 /**
  * @brief Persists all the nxml Lua data.
  *
- * Does not save anything in tables nor functions of any type.
+ * Does not save anything in tables (unless .__save=true) nor functions of any type.
  *
  *    @param L Lua state to save.
  *    @param writer XML Writer to use.
@@ -297,11 +291,6 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
  */
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
-   LuaPlanet p;
-   LuaSystem s;
-   LuaFaction f;
-   LuaShip sh;
-   LuaTime lt;
    LuaJump lj;
    Planet *pnt;
    StarSystem *ss, *dest;
@@ -343,32 +332,25 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"planet")==0) {
             pnt = planet_get(xml_get(node));
             if (pnt != NULL) {
-               p.id = planet_index(pnt);
-               lua_pushplanet(L,p);
+               lua_pushplanet(L,planet_index(pnt));
             }
             else
                WARN("Failed to load unexistent planet '%s'", xml_get(node));
          }
          else if (strcmp(type,"system")==0) {
             ss = system_get(xml_get(node));
-            if (ss != NULL) {
-               s.id = system_index( ss );
-               lua_pushsystem(L,s);
-            }
+            if (ss != NULL)
+               lua_pushsystem(L,system_index( ss ));
             else
                WARN("Failed to load unexistent system '%s'", xml_get(node));
          }
          else if (strcmp(type,"faction")==0) {
-            f.f = faction_get(xml_get(node));
-            lua_pushfaction(L,f);
+            lua_pushfaction(L,faction_get(xml_get(node)));
          }
-         else if (strcmp(type,"ship")==0) {
-            sh.ship = ship_get(xml_get(node));
-            lua_pushship(L,sh);
-         }
+         else if (strcmp(type,"ship")==0)
+            lua_pushship(L,ship_get(xml_get(node)));
          else if (strcmp(type,"time")==0) {
-            lt.t = xml_getLong(node);
-            lua_pushtime(L,lt);
+            lua_pushtime(L,xml_getLong(node));
          }
          else if (strcmp(type,"jump")==0) {
             ss = system_get(xml_get(node));

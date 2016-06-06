@@ -104,21 +104,6 @@ void vect_pset( Vector2d* v, const double mod, const double angle )
 
 
 /**
- * @brief Copies vector src to dest.
- *
- *    @param dest Destination vector.
- *    @param src Vector to copy.
- */
-void vectcpy( Vector2d* dest, const Vector2d* src )
-{
-   dest->x     = src->x;
-   dest->y     = src->y;
-   dest->mod   = src->mod;
-   dest->angle = src->angle;
-}
-
-
-/**
  * @brief Sets a vector to NULL.
  *
  *    @param v Vector to set to NULL.
@@ -449,13 +434,13 @@ void solid_init( Solid* dest, const double mass, const double dir,
    if (vel == NULL)
       vectnull( &dest->vel );
    else
-      vectcpy( &dest->vel, vel );
+      dest->vel = *vel;
 
    /* Set position. */
    if (pos == NULL)
       vectnull( &dest->pos );
    else
-      vectcpy( &dest->pos, pos);
+      dest->pos = *pos;
 
    /* Misc. */
    dest->speed_max = -1.; /* Negative is invalid. */

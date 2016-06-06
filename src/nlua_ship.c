@@ -103,9 +103,9 @@ int nlua_loadShip( lua_State *L, int readonly )
  *    @param ind Index position to find the ship.
  *    @return Ship found at the index in the state.
  */
-LuaShip* lua_toship( lua_State *L, int ind )
+Ship* lua_toship( lua_State *L, int ind )
 {
-   return (LuaShip*) lua_touserdata(L,ind);
+   return *((Ship**) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets ship at index or raises error if there is no ship at index.
@@ -114,7 +114,7 @@ LuaShip* lua_toship( lua_State *L, int ind )
  *    @param ind Index position to find ship.
  *    @return Ship found at the index in the state.
  */
-LuaShip* luaL_checkship( lua_State *L, int ind )
+Ship* luaL_checkship( lua_State *L, int ind )
 {
    if (lua_isship(L,ind))
       return lua_toship(L,ind);
@@ -130,13 +130,10 @@ LuaShip* luaL_checkship( lua_State *L, int ind )
  */
 Ship* luaL_validship( lua_State *L, int ind )
 {
-   LuaShip *ls;
    Ship *s;
 
-   if (lua_isship(L, ind)) {
-      ls = luaL_checkship(L,ind);
-      s  = ls->ship;
-   }
+   if (lua_isship(L, ind))
+      s = luaL_checkship(L,ind);
    else if (lua_isstring(L, ind))
       s = ship_get( lua_tostring(L, ind) );
    else {
@@ -156,10 +153,10 @@ Ship* luaL_validship( lua_State *L, int ind )
  *    @param ship Ship to push.
  *    @return Newly pushed ship.
  */
-LuaShip* lua_pushship( lua_State *L, LuaShip ship )
+Ship** lua_pushship( lua_State *L, Ship *ship )
 {
-   LuaShip *p;
-   p = (LuaShip*) lua_newuserdata(L, sizeof(LuaShip));
+   Ship **p;
+   p = (Ship**) lua_newuserdata(L, sizeof(Ship*));
    *p = ship;
    luaL_getmetatable(L, SHIP_METATABLE);
    lua_setmetatable(L, -2);
@@ -201,10 +198,10 @@ int lua_isship( lua_State *L, int ind )
  */
 static int shipL_eq( lua_State *L )
 {
-   LuaShip *a, *b;
+   Ship *a, *b;
    a = luaL_checkship(L,1);
    b = luaL_checkship(L,2);
-   if (a->ship == b->ship)
+   if (a == b)
       lua_pushboolean(L,1);
    else
       lua_pushboolean(L,0);
@@ -224,20 +221,20 @@ static int shipL_eq( lua_State *L )
 static int shipL_get( lua_State *L )
 {
    const char *name;
-   LuaShip ls;
+   Ship *ship;
 
    /* Handle parameters. */
    name = luaL_checkstring(L,1);
 
    /* Get ship. */
-   ls.ship = ship_get( name );
-   if (ls.ship == NULL) {
+   ship = ship_get( name );
+   if (ship == NULL) {
       NLUA_ERROR(L,"Ship '%s' not found!", name);
       return 0;
    }
 
    /* Push. */
-   lua_pushship(L, ls);
+   lua_pushship(L, ship);
    return 1;
 }
 /**
@@ -344,7 +341,6 @@ static int shipL_getSlots( lua_State *L )
    Ship *s;
    OutfitSlot *slot;
    ShipOutfitSlot *sslot;
-   LuaOutfit lo;
    char *outfit_types[] = {"structure", "utility", "weapon"};
 
    s = luaL_validship(L,1);
@@ -390,9 +386,8 @@ static int shipL_getSlots( lua_State *L )
       lua_rawset(L, -3); /* table[key] = value */
 
       if (sslot->data != NULL) {
-         lo.outfit = sslot->data;
          lua_pushstring(L, "outfit"); /* key */
-         lua_pushoutfit(L, lo); /* value*/
+         lua_pushoutfit(L, sslot->data); /* value*/
          lua_rawset(L, -3); /* table[key] = value */
       }
 
@@ -488,18 +483,18 @@ static int shipL_price( lua_State *L )
 static int shipL_gfxTarget( lua_State *L )
 {
    Ship *s;
-   LuaTex lt;
+   glTexture *tex;
 
    /* Get the ship. */
    s  = luaL_validship(L,1);
 
    /* Push graphic. */
-   lt.tex = gl_dupTexture( s->gfx_target );
-   if (lt.tex == NULL) {
+   tex = gl_dupTexture( s->gfx_target );
+   if (tex == NULL) {
       WARN("Unable to get ship target graphic for '%s'.", s->name);
       return 0;
    }
-   lua_pushtex( L, lt );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -518,18 +513,18 @@ static int shipL_gfxTarget( lua_State *L )
 static int shipL_gfx( lua_State *L )
 {
    Ship *s;
-   LuaTex lt;
+   glTexture *tex;
 
    /* Get the ship. */
    s  = luaL_validship(L,1);
 
    /* Push graphic. */
-   lt.tex = gl_dupTexture( s->gfx_space );
-   if (lt.tex == NULL) {
+   tex = gl_dupTexture( s->gfx_space );
+   if (tex == NULL) {
       WARN("Unable to get ship graphic for '%s'.", s->name);
       return 0;
    }
-   lua_pushtex( L, lt );
+   lua_pushtex( L, tex );
    return 1;
 }
 

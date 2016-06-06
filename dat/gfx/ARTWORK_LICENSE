@@ -10,7 +10,6 @@
      * space
        * moon-A00.png
        * moon-C00.png
-       * moon-D00.png
        * moon-D01.png
        * moon-G00.png
        * moon-H00.png
@@ -23,8 +22,223 @@
        * moon-O00.png
        * moon-P00.png
        * moon-P01.png
+       * moon-Y00.png
  
  * Author: Vega Strike, License: GPLv2+
+   * commodity
+    * acids.png
+    * advanced_medicines.png
+    * aeranervestimuli.png
+    * aera_ration.png
+    * ai_cores.png
+    * alkali_metals.png
+    * am_magcells.png
+    * animal_meat.png
+    * animal_products.png
+    * anti_corrosives.png
+    * aromatic_scents.png
+    * artificial_limbs.png
+    * artificial_organs.png
+    * assembly_tools.png
+    * astral_gases.png
+    * atasan_furs.png
+    * atmospheric_gases.png
+    * atmospheric_processors.png
+    * atmospheric_scrubbers.png
+    * automated_factories.png
+    * baakgah.png
+    * base.png
+    * beer.png
+    * bioapplicator.png
+    * biocell.png
+    * biogenerators.png
+    * bio_remodeler.png
+    * bipolite.png
+    * blood_plasma.png
+    * bonsai.png
+    * books.png
+    * boring_droids.png
+    * brandy.png
+    * bulk_seeds.png
+    * business_class_passenger.png
+    * butane.png
+    * carbonium.png
+    * cargo-hud.png
+    * cargo_expansion.png
+    * catalysts.png
+    * cellular_accelerant.png
+    * chemfuel.png
+    * chemical_mix.png
+    * chitty-boom.png
+    * classical_instruments.png
+    * cloaking_device_aeramilspec.png
+    * cloaking_device_experimental.png
+    * clones.png
+    * clothing.png
+    * coffee.png
+    * computer_fibres.png
+    * consoles.png
+    * construction_stone.png
+    * construction_vehicles.png
+    * corundum_crystal.png
+    * cotton.png
+    * cryogenic_pods.png
+    * cyborg_mercs.png
+    * diamonds.png
+    * diesel.png
+    * dilithium.png
+    * distillators.png
+    * dna_resequencer.png
+    * duranium.png
+    * dyes.png
+    * earthmover.png
+    * engineered_bacteria.png
+    * engineered_seeds.png
+    * enhanced_limbs.png
+    * enhanced_organs.png
+    * erotica.png
+    * esters.png
+    * ethanol.png
+    * experimental_drugs.png
+    * explosives.png
+    * facing_stone.png
+    * factory_constructors.png
+    * factory_equipment.png
+    * first_aid_kits.png
+    * first_class_passenger.png
+    * forest_regenerators.png
+    * fresh_water.png
+    * fullbody.png
+    * fusion_injectors.png
+    * games.png
+    * gold.png
+    * grains.png
+    * halogen_gases.png
+    * heavy_water.png
+    * holovids.png
+    * home_appliances.png
+    * home_furnishings.png
+    * hull_patches.png
+    * hydrocarbons.png
+    * hydroponics.png
+    * hyposyringes.png
+    * icbinf.png
+    * illegal_weapons.png
+    * incense.png
+    * industrial_gemstones.png
+    * intatouch.png
+    * isometal.png
+    * iso_member.png
+    * jewelry.png
+    * jewels.png
+    * jhurlon.png
+    * khaisalantimin_F62.png
+    * krystal.png
+    * laser_drills.png
+    * light_alls.png
+    * livestock.png
+    * livestock_equipment.png
+    * londegal_silks.png
+    * longevity_drugs.png
+    * luddite_tracts.png
+    * lumber.png
+    * luxury_mealpacks.png
+    * material_processors.png
+    * medical_kit.png
+    * music.png
+    * musical_instruments.png
+    * narcotics.png
+    * natural_gas.png
+    * natural_sculptures.png
+    * neural_computer.png
+    * neural_interface.png
+    * noble_gases.png
+    * nuclear_pods.png
+    * nutripacks.png
+    * obsidisteel.png
+    * oil.png
+    * overeager_immigrants.png
+    * ozone_replacement.png
+    * pai_wetware.png
+    * pearls.png
+    * personal_hygienics.png
+    * personal_transport.png
+    * pesticides.png
+    * petrochems.png
+    * petroleum.png
+    * pilot.png
+    * plasglass.png
+    * plasteel.png
+    * plastics.png
+    * pleasure_borgs.png
+    * political_prisoners.png
+    * polysteel.png
+    * precious.png
+    * prefab_buildings.png
+    * premium_pad.png
+    * produce.png
+    * pseudotherms.png
+    * quantum_processor.png
+    * quartz_crystal.png
+    * radioactives.png
+    * radium.png
+    * rare_artwork.png
+    * rare_catalysts.png
+    * rare_earths.png
+    * ration_mealpacks.png
+    * recycled_electronics.png
+    * recycled_metals.png
+    * recycled_oil.png
+    * recycled_plastics.png
+    * recycling_tanks.png
+    * regen_tank.png
+    * reinforced_rubber.png
+    * repair_droid01.png
+    * repulsor_beam.png
+    * resistant_biologics.png
+    * retrified_salt.png
+    * robotic_surgeons.png
+    * robot_servants.png
+    * robot_workers.png
+    * rubber.png
+    * salted_thok.png
+    * sarakan_tears.png
+    * seafood.png
+    * simple_medicines.png
+    * slaves.png
+    * sorir_lightstones.png
+    * space_grog.png
+    * specialty_wines.png
+    * spices.png
+    * spirits.png
+    * standard_mealpacks.png
+    * standard_PAD.png
+    * steel.png
+    * surgical_techniques.png
+    * sustipacks.png
+    * swj.png
+    * synthetic_fertilizer.png
+    * terraforming_units.png
+    * thermal_boreholes.png
+    * tractor_beam.png
+    * tractor_capability.png
+    * tractor_heavy.png
+    * trilithium_crystal.png
+    * tripezian_premium.png
+    * tritanium.png
+    * ultrapacks.png
+    * uranium.png
+    * vaccines.png
+    * virtual_tunneling_terminal.png
+    * virtuarea.png
+    * waste_recyclers.png
+    * water_dynamo.png
+    * weather_control.png
+    * welding_lasers.png
+    * wine.png
+    * wood_boards.png
+    * xenoforming_units.png
+    * zhollus.png
    * outfit
      * space
        * ion{M,L}.png
@@ -835,6 +1049,8 @@
    * planet
      * exterior
        * asteroid.png
+     * space
+       * moon-D00.png
 
  * Author: Ian D. Scott <ids1024>, License: PD
    * outfit
@@ -859,3 +1075,50 @@
    * outfit
      * store
        * license_pirate.png
+
+ * Author: Mutos, License: CC-by 3.0
+   * commodity
+    * _default.png
+
+ * Author: ESA, License: PD
+   * planet
+     * exterior
+       * uninhabited-rocky-airless-00.png
+       * uninhabited-rocky-airless-01.png
+       * uninhabited-rocky-airless-02.png
+       * uninhabited-rocky-airless-03.png
+       * uninhabited-rocky-airless-04.png
+
+ * Author: ESA, License: PD (with modifications by PhoenixRiver, License: PD)
+   * planet
+     * exterior
+       * uninhabited-rocky-red-00.png
+       * uninhabited-rocky-red-01.png
+       * uninhabited-rocky-red-02.png
+       * uninhabited-rocky-red-03.png
+       * uninhabited-rocky-red-04.png
+       * uninhabited-rocky-blue-00.png
+       * uninhabited-rocky-blue-01.png
+       * uninhabited-rocky-blue-02.png
+       * uninhabited-rocky-blue-03.png
+       * uninhabited-rocky-blue-04.png
+       * uninhabited-rocky-cyan-00.png
+       * uninhabited-rocky-cyan-01.png
+       * uninhabited-rocky-cyan-02.png
+       * uninhabited-rocky-cyan-03.png
+       * uninhabited-rocky-cyan-04.png
+       * uninhabited-rocky-green-00.png
+       * uninhabited-rocky-green-01.png
+       * uninhabited-rocky-green-02.png
+       * uninhabited-rocky-green-03.png
+       * uninhabited-rocky-green-04.png
+       * uninhabited-rocky-yellow-00.png
+       * uninhabited-rocky-yellow-01.png
+       * uninhabited-rocky-yellow-02.png
+       * uninhabited-rocky-yellow-03.png
+       * uninhabited-rocky-yellow-04.png
+       * uninhabited-rocky-magenta-00.png
+       * uninhabited-rocky-magenta-01.png
+       * uninhabited-rocky-magenta-02.png
+       * uninhabited-rocky-magenta-03.png
+       * uninhabited-rocky-magenta-04.png

@@ -87,9 +87,9 @@ int nlua_loadTex( lua_State *L, int readonly )
  *    @param ind Index position to find the texture.
  *    @return Texture found at the index in the state.
  */
-LuaTex* lua_totex( lua_State *L, int ind )
+glTexture* lua_totex( lua_State *L, int ind )
 {
-   return (LuaTex*) lua_touserdata(L,ind);
+   return *((glTexture**) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets texture at index or raises error if there is no texture at index.
@@ -98,7 +98,7 @@ LuaTex* lua_totex( lua_State *L, int ind )
  *    @param ind Index position to find texture.
  *    @return Texture found at the index in the state.
  */
-LuaTex* luaL_checktex( lua_State *L, int ind )
+glTexture* luaL_checktex( lua_State *L, int ind )
 {
    if (lua_istex(L,ind))
       return lua_totex(L,ind);
@@ -112,10 +112,10 @@ LuaTex* luaL_checktex( lua_State *L, int ind )
  *    @param texture Texture to push.
  *    @return Newly pushed texture.
  */
-LuaTex* lua_pushtex( lua_State *L, LuaTex texture )
+glTexture** lua_pushtex( lua_State *L, glTexture *texture )
 {
-   LuaTex *t;
-   t = (LuaTex*) lua_newuserdata(L, sizeof(LuaTex));
+   glTexture **t;
+   t = (glTexture**) lua_newuserdata(L, sizeof(glTexture*));
    *t = texture;
    luaL_getmetatable(L, TEX_METATABLE);
    lua_setmetatable(L, -2);
@@ -153,14 +153,8 @@ int lua_istex( lua_State *L, int ind )
  */
 static int texL_close( lua_State *L )
 {
-   LuaTex *lt;
-
-   /* Get texture. */
-   lt = luaL_checktex( L, 1 );
-
    /* Free texture. */
-   gl_freeTexture( lt->tex );
-   lt->tex = NULL;
+   gl_freeTexture( luaL_checktex( L, 1 ) );
 
    return 0;
 }
@@ -181,7 +175,7 @@ static int texL_close( lua_State *L )
 static int texL_open( lua_State *L )
 {
    const char *path;
-   LuaTex lt;
+   glTexture *tex;
    int sx, sy;
 
    /* Defaults. */
@@ -199,12 +193,12 @@ static int texL_open( lua_State *L )
 
    /* Push new texture. */
    if ((sx <=0 ) || (sy <= 0))
-      lt.tex = gl_newImage( path, 0 );
+      tex = gl_newImage( path, 0 );
    else
-      lt.tex = gl_newSprite( path, sx, sy, 0 );
-   if (lt.tex == NULL)
+      tex = gl_newSprite( path, sx, sy, 0 );
+   if (tex == NULL)
       return 0;
-   lua_pushtex( L, lt );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -220,16 +214,16 @@ static int texL_open( lua_State *L )
  */
 static int texL_dim( lua_State *L )
 {
-   LuaTex *lt;
+   glTexture *tex;
 
    /* Get texture. */
-   lt = luaL_checktex( L, 1 );
+   tex = luaL_checktex( L, 1 );
 
    /* Get all 4 values. */
-   lua_pushnumber( L, lt->tex->w  );
-   lua_pushnumber( L, lt->tex->h  );
-   lua_pushnumber( L, lt->tex->sw );
-   lua_pushnumber( L, lt->tex->sh );
+   lua_pushnumber( L, tex->w  );
+   lua_pushnumber( L, tex->h  );
+   lua_pushnumber( L, tex->sw );
+   lua_pushnumber( L, tex->sh );
    return 4;
 }
 
@@ -245,15 +239,15 @@ static int texL_dim( lua_State *L )
  */
 static int texL_sprites( lua_State *L )
 {
-   LuaTex *lt;
+   glTexture *tex;
 
    /* Get texture. */
-   lt = luaL_checktex( L, 1 );
+   tex = luaL_checktex( L, 1 );
 
    /* Get sprites. */
-   lua_pushnumber( L, lt->tex->sx*lt->tex->sy );
-   lua_pushnumber( L, lt->tex->sx );
-   lua_pushnumber( L, lt->tex->sy );
+   lua_pushnumber( L, tex->sx * tex->sy );
+   lua_pushnumber( L, tex->sx );
+   lua_pushnumber( L, tex->sy );
    return 3;
 }
 
@@ -272,11 +266,11 @@ static int texL_sprites( lua_State *L )
 static int texL_spriteFromDir( lua_State *L )
 {
    double a;
-   LuaTex *lt;
+   glTexture *tex;
    int sx, sy;
 
    /* Params. */
-   lt = luaL_checktex( L, 1 );
+   tex = luaL_checktex( L, 1 );
 
    /* Use radians if requested, otherwise convert to degrees. */
    if (lua_gettop(L) > 2 && (lua_toboolean(L, 3)))
@@ -290,7 +284,7 @@ static int texL_spriteFromDir( lua_State *L )
       if (a < 0.)
          a += 2.*M_PI;
    }
-   gl_getSpriteFromDir( &sx, &sy, lt->tex, a );
+   gl_getSpriteFromDir( &sx, &sy, tex, a );
 
    /* Return. */
    lua_pushinteger( L, sx+1 );

@@ -122,41 +122,41 @@ static int gfxL_dim( lua_State *L )
  */
 static int gfxL_renderTex( lua_State *L )
 {
-   LuaTex *lt;
-   LuaColour *lc;
+   glTexture *tex;
+   glColour *col;
    double x, y;
    int sx, sy;
 
    /* Parameters. */
-   lc = NULL;
-   lt = luaL_checktex( L, 1 );
-   x  = luaL_checknumber( L, 2 );
-   y  = luaL_checknumber( L, 3 );
+   col = NULL;
+   tex = luaL_checktex( L, 1 );
+   x   = luaL_checknumber( L, 2 );
+   y   = luaL_checknumber( L, 3 );
    if (lua_isnumber( L, 4 )) {
       sx    = luaL_checkinteger( L, 4 ) - 1;
       sy    = luaL_checkinteger( L, 5 ) - 1;
       if (lua_iscolour(L, 6))
-         lc    = luaL_checkcolour(L,6);
+         col = luaL_checkcolour(L,6);
    }
    else {
       sx    = 0;
       sy    = 0;
       if (lua_iscolour(L, 4))
-         lc    = luaL_checkcolour(L,4);
+         col = luaL_checkcolour(L,4);
    }
 
    /* Some sanity checking. */
 #if DEBUGGING
-   if (sx >= lt->tex->sx)
+   if (sx >= tex->sx)
       NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d.",
-            lt->tex->name, sx+1, lt->tex->sx );
-   if (sx >= lt->tex->sx)
+            tex->name, sx+1, tex->sx );
+   if (sx >= tex->sx)
       NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d.",
-            lt->tex->name, sy+1, lt->tex->sy );
+            tex->name, sy+1, tex->sy );
 #endif /* DEBUGGING */
 
    /* Render. */
-   gl_blitStaticSprite( lt->tex, x, y, sx, sy, (lc==NULL) ? NULL : &lc->col );
+   gl_blitStaticSprite( tex, x, y, sx, sy, col );
 
    return 0;
 }
@@ -188,14 +188,13 @@ static int gfxL_renderTex( lua_State *L )
 static int gfxL_renderTexRaw( lua_State *L )
 {
    glTexture *t;
-   LuaTex *lt;
-   LuaColour *lc;
+   glColour *col;
    double px,py, pw,ph, tx,ty, tw,th;
    int sx, sy;
 
    /* Parameters. */
-   lc = NULL;
-   lt = luaL_checktex( L, 1 );
+   col = NULL;
+   t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
    py = luaL_checknumber( L, 3 );
    pw = luaL_checknumber( L, 4 );
@@ -207,20 +206,19 @@ static int gfxL_renderTexRaw( lua_State *L )
    tw = luaL_checknumber( L, 10 );
    th = luaL_checknumber( L, 11 );
    if (lua_iscolour( L, 12 ))
-      lc = lua_tocolour( L, 12 );
+      col = lua_tocolour( L, 12 );
 
    /* Some sanity checking. */
 #if DEBUGGING
-   if (sx >= lt->tex->sx)
+   if (sx >= t->sx)
       NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d.",
-            lt->tex->name, sx+1, lt->tex->sx );
-   if (sx >= lt->tex->sx)
+            t->name, sx+1, t->sx );
+   if (sx >= t->sx)
       NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d.",
-            lt->tex->name, sy+1, lt->tex->sy );
+            t->name, sy+1, t->sy );
 #endif /* DEBUGGING */
 
    /* Translate as needed. */
-   t  = lt->tex;
    tx = (tx * t->sw + t->sw * (double)(sx)) / t->rw;
    tw = tw * t->srw;
    if (tw < 0)
@@ -231,7 +229,7 @@ static int gfxL_renderTexRaw( lua_State *L )
       ty -= th;
 
    /* Render. */
-   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, (lc==NULL) ? NULL : &lc->col );
+   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col );
    return 0;
 }
 
@@ -252,7 +250,7 @@ static int gfxL_renderTexRaw( lua_State *L )
  */
 static int gfxL_renderRect( lua_State *L )
 {
-   LuaColour *lc;
+   glColour *col;
    double x,y, w,h;
    int empty;
 
@@ -261,14 +259,14 @@ static int gfxL_renderRect( lua_State *L )
    y     = luaL_checknumber( L, 2 );
    w     = luaL_checknumber( L, 3 );
    h     = luaL_checknumber( L, 4 );
-   lc    = luaL_checkcolour( L, 5 );
+   col   = luaL_checkcolour( L, 5 );
    empty = lua_toboolean( L, 6 );
 
    /* Render. */
    if (empty)
-      gl_renderRectEmpty( x, y, w, h, &lc->col );
+      gl_renderRectEmpty( x, y, w, h, col );
    else
-      gl_renderRect( x, y, w, h, &lc->col );
+      gl_renderRect( x, y, w, h, col );
 
    return 0;
 }
@@ -345,7 +343,7 @@ static int gfxL_print( lua_State *L )
    glFont *font;
    const char *str;
    double x, y;
-   LuaColour *lc;
+   glColour *col;
    int max, mid;
 
    /* Parse parameters. */
@@ -353,7 +351,7 @@ static int gfxL_print( lua_State *L )
    str   = luaL_checkstring(L,2);
    x     = luaL_checknumber(L,3);
    y     = luaL_checknumber(L,4);
-   lc    = luaL_checkcolour(L,5);
+   col   = luaL_checkcolour(L,5);
    if (lua_gettop(L) >= 6)
       max = luaL_checkinteger(L,6);
    else
@@ -362,11 +360,11 @@ static int gfxL_print( lua_State *L )
 
    /* Render. */
    if (mid)
-      gl_printMidRaw( font, max, x, y, &lc->col, str );
+      gl_printMidRaw( font, max, x, y, col, str );
    else if (max > 0)
-      gl_printMaxRaw( font, max, x, y, &lc->col, str );
+      gl_printMaxRaw( font, max, x, y, col, str );
    else
-      gl_printRaw( font, x, y, &lc->col, str );
+      gl_printRaw( font, x, y, col, str );
    return 0;
 }
 
@@ -391,7 +389,7 @@ static int gfxL_printText( lua_State *L )
    const char *str;
    int w, h;
    double x, y;
-   LuaColour *lc;
+   glColour *col;
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
@@ -400,10 +398,10 @@ static int gfxL_printText( lua_State *L )
    y     = luaL_checknumber(L,4);
    w     = luaL_checkinteger(L,5);
    h     = luaL_checkinteger(L,6);
-   lc    = luaL_checkcolour(L,7);
+   col   = luaL_checkcolour(L,7);
 
    /* Render. */
-   gl_printTextRaw( font, w, h, x, y, &lc->col, str );
+   gl_printTextRaw( font, w, h, x, y, col, str );
 
    return 0;
 }

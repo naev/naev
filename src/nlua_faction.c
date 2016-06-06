@@ -138,8 +138,8 @@ static int factionL_get( lua_State *L )
    const char *name;
 
    name = luaL_checkstring(L,1);
-   f.f = faction_get(name);
-   if (f.f < 0) {
+   f = faction_get(name);
+   if (f < 0) {
       NLUA_ERROR(L,"Faction '%s' not found in stack.", name );
       return 0;
    }
@@ -155,9 +155,9 @@ static int factionL_get( lua_State *L )
  *    @param ind Index position to find the faction.
  *    @return Faction found at the index in the state.
  */
-LuaFaction* lua_tofaction( lua_State *L, int ind )
+LuaFaction lua_tofaction( lua_State *L, int ind )
 {
-   return (LuaFaction*) lua_touserdata(L,ind);
+   return *((LuaFaction*) lua_touserdata(L,ind));
 }
 
 
@@ -168,12 +168,12 @@ LuaFaction* lua_tofaction( lua_State *L, int ind )
  *    @param ind Index position to find the faction.
  *    @return Faction found at the index in the state.
  */
-int luaL_validfaction( lua_State *L, int ind )
+LuaFaction luaL_validfaction( lua_State *L, int ind )
 {
    int id;
 
    if (lua_isfaction(L,ind))
-      id = lua_tofaction(L,ind)->f;
+      id = lua_tofaction(L,ind);
    else if (lua_isstring(L,ind))
       id = faction_get( lua_tostring(L, ind) );
    else {
@@ -448,7 +448,6 @@ static int factionL_enemies( lua_State *L )
 {
    int i, n, f;
    int *factions;
-   LuaFaction fe;
 
    f = luaL_validfaction(L,1);
 
@@ -457,8 +456,7 @@ static int factionL_enemies( lua_State *L )
    factions = faction_getEnemies( f, &n );
    for (i=0; i<n; i++) {
       lua_pushnumber(L, i+1); /* key */
-      fe.f = factions[i];
-      lua_pushfaction(L, fe); /* value */
+      lua_pushfaction(L, factions[i]); /* value */
       lua_rawset(L, -3);
    }
 
@@ -478,7 +476,6 @@ static int factionL_allies( lua_State *L )
 {
    int i, n, f;
    int *factions;
-   LuaFaction fa;
 
    f = luaL_validfaction(L,1);
 
@@ -487,8 +484,7 @@ static int factionL_allies( lua_State *L )
    factions = faction_getAllies( f, &n );
    for (i=0; i<n; i++) {
       lua_pushnumber(L, i+1); /* key */
-      fa.f = factions[i];
-      lua_pushfaction(L, fa); /* value */
+      lua_pushfaction(L, factions[i]); /* value */
       lua_rawset(L, -3);
    }
 
@@ -506,14 +502,12 @@ static int factionL_allies( lua_State *L )
 static int factionL_logoSmall( lua_State *L )
 {
    int lf;
-   LuaTex lt;
    glTexture *tex;
    lf = luaL_validfaction(L,1);
    tex = faction_logoSmall( lf );
    if (tex == NULL)
       return 0;
-   lt.tex = gl_dupTexture( tex );
-   lua_pushtex( L, lt );
+   lua_pushtex( L, gl_dupTexture( tex ) );
    return 1;
 }
 
@@ -528,14 +522,12 @@ static int factionL_logoSmall( lua_State *L )
 static int factionL_logoTiny( lua_State *L )
 {
    int lf;
-   LuaTex lt;
    glTexture *tex;
    lf = luaL_validfaction(L,1);
    tex = faction_logoTiny( lf );
    if (tex == NULL)
       return 0;
-   lt.tex = gl_dupTexture( tex );
-   lua_pushtex( L, lt );
+   lua_pushtex( L, gl_dupTexture( tex ) );
    return 1;
 }
 
@@ -550,14 +542,12 @@ static int factionL_logoTiny( lua_State *L )
 static int factionL_colour( lua_State *L )
 {
    int lf;
-   LuaColour lc;
    const glColour *col;
    lf = luaL_validfaction(L,1);
    col = faction_getColour(lf);
    if (col == NULL)
       return 0;
-   memcpy( &lc.col, col, sizeof(glColour) );
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, *col );
    return 1;
 }
 

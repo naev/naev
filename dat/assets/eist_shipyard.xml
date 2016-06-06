@@ -14,7 +14,7 @@
   <range>1</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>1500</population>
   <hide>0.500000</hide>
   <services>
@@ -27,7 +27,7 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <description>Eist Shipyard is one of the primary ship construction facilities in Dvaered space. Most of the Dvaered's heavy military vessels are produced here, though production of the lighter ships is taken care of by shipyards outside of Dvaer. Eist Shipyard also supplies civilian models to individuals and organizations.</description>
+  <description>Eist Shipyard is one of the primary ship construction facilities in Dvaered space. Most of the Dvaered's heavy military vessels are produced here, though production of the lighter ships is taken care of by shipyards beyond Dvaer. Eist Shipyard also supplies civilian models to some individuals and organisations.</description>
  </general>
  <tech>
   <item>Heavy Civilian Combat Ships</item>

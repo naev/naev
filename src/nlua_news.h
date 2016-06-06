@@ -16,11 +16,7 @@
 /**
  * @brief Lua article Wrapper.
  */
-typedef struct _article {
-
-   int id; /**< pointer to article */
-
-} Lua_article;
+typedef int LuaArticle;
 
 
 /*

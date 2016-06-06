@@ -300,7 +300,7 @@ void dout_csvMod( const char *path )
       if (!outfit_isMod(o))
          continue;
 
-      memcpy( &stats, &base, sizeof(ShipStats) );
+      stats = base;
       ss_statsModFromList( &stats, o->u.mod.stats, NULL );
 
       l = nsnprintf( buf, sizeof(buf),

@@ -77,7 +77,7 @@ else --default english
                                "Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!",
                                "I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident.",
                                "Sometimes I look at the stars and wonder... are we the only sentient species in the universe?",
-                               "Hey, you ever wonder why we're here?\", you say, \"It's one of life's great mysteries isn't it?\", the citizen replys, \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are we in here, in this bar?"
+                               "Hey, you ever wonder why we're here?\", you say, \"It's one of life's great mysteries isn't it?\", the citizen replies, \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are we in here, in this bar?"
                               }
 
    msg_lore["Independent"] =  {"We're not part of any of the galactic superpowers. We can take care of ourselves!",
@@ -189,7 +189,8 @@ else --default english
    msg_mhint =                {{"Shadowrun", "Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"},
                                {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
                                {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"},
-							   {"Za'lek Shipping Delivery", "So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money."},
+                               {"Za'lek Shipping Delivery", "So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money."},
+                               {"Sightseeing", "Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. Look like you can put a price on luxury!"},
                               }
 
    -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.

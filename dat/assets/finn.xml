@@ -24,7 +24,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Finn is a prison rock. The surface is completely uninhabitable, but the natural caverns underground make for a perfect prison complex. The Empire dumps its worst criminals here, leaving them to fend for themselves, and many of the convicts from Jade Court end up here too.</description>
-  <bar>The spaceport is separated from the main prison complex by a long, twisting tube that must be traversed on foot. If there is ever a prison break, the tube can be blown apart by security guns mounted on the outer spaceport structure, instantly spacing any inmates inside.</bar>
+  <description>Finn is a prison rock. The surface is completely uninhabitable but the natural caverns underground make for a perfect prison complex. The Empire dumps its worst criminals here, leaving them to fend for themselves, many of the convicts from the Jade Court end up here too.</description>
+  <bar>The spaceport is separated from the main prison complex by a long, twisting tube that must be traversed on foot. If there is ever a prison break the tube can be blown apart by security guns mounted on the outer spaceport structure, instantly spacing any inmates inside.</bar>
  </general>
 </asset>

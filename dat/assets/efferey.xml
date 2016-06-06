@@ -14,7 +14,7 @@
   <range>5</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>2</class>
   <population>1500</population>
   <hide>0.250000</hide>
   <services>
@@ -25,7 +25,7 @@
   </services>
   <commodities/>
   <blackmarket/>
-  <description>Effetey's Efferey station is the southern part of the Expanse in which you'll be able to refuel. Most of the pirate traffic from or to Vorca has to land here.</description>
+  <description>Effetey's Efferey station is the southern most port of the Expanse in which you'll be able to refuel. Most of the pirate traffic from or to Vorca has to land here.</description>
  </general>
  <tech>
   <item>Pirate Maps</item>

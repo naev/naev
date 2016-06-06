@@ -48,6 +48,7 @@ CODE_SOURCE = \
 	land.c \
 	land_outfits.c \
 	land_shipyard.c \
+	land_trade.c \
 	load.c \
 	log.c \
 	map.c \

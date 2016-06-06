@@ -312,7 +312,7 @@ static void outfits_genList( unsigned int wid )
          if (c == NULL)
             c = &cBlack;
          col_blend( &blend, c, &cGrey70, 0.4 );
-         memcpy( &bg[i], &blend, sizeof(glColour) );
+         bg[i] = blend;
 
          /* Quantity. */
          owned = player_outfitOwned(outfits[i]);

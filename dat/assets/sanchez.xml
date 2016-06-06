@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>moon-G01.png</space>
-  <exterior>aquatic.png</exterior>
+  <exterior>mining3.png</exterior>
  </GFX>
  <presence>
   <faction>Pirate</faction>
@@ -14,7 +14,7 @@
   <range>5</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>G</class>
   <population>7500</population>
   <hide>0.250000</hide>
   <services>
@@ -26,8 +26,8 @@
   </services>
   <commodities/>
   <blackmarket/>
-  <description>Old King Cole's moon Sanchez is a rather dirty place. Being the only pirate hold for some distance helps with this, as well as being a little small for the duty. The local clanworld tries to make up for the lack with exploiting the resources from the other planets in system.</description>
-  <bar>The bar is quiet and orderly, with a few deals going down in closed-off booths, nice food, and only the occasional drunken brawl. The lord of Shanchez doesn't appreciate louts, it seems.</bar>
+  <description>Old King Cole's moon Sanchez is a rather dirty place. Being the only pirate hold for some distance helps with this, as well as being a little small for the duty. The local clanworld tries to make up for this lack by exploiting the resources of other planets in the system.</description>
+  <bar>The bar is quiet and orderly, with a few deals going down in closed-off booths, nice food and only the occasional drunken brawl. The lord of Shanchez doesn't appreciate louts, it seems.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

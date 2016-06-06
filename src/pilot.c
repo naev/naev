@@ -331,7 +331,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
       if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
 
-      if (pilot_stack[i]->solid->mass >= target_mass_LB && pilot_stack[i]->solid->mass <= target_mass_UB)
+      if (pilot_stack[i]->solid->mass < target_mass_LB || pilot_stack[i]->solid->mass > target_mass_UB)
          continue;
 
       /* Check distance. */
@@ -677,7 +677,7 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos )
 
    if (pilot_isStopped(p)) {
       if (pos != NULL)
-         vectcpy( pos, &p->solid->pos );
+         *pos = p->solid->pos;
 
       return 0;
    }
@@ -1390,7 +1390,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* Run hook */
       if (shooter > 0) {
          hparam.type       = HOOK_PARAM_PILOT;
-         hparam.u.lp.pilot = shooter;
+         hparam.u.lp       = shooter;
       }
       else {
          hparam.type       = HOOK_PARAM_NIL;
@@ -1447,7 +1447,7 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    /* Pilot must die before setting death flag and probably messing with other flags. */
    if (killer > 0) {
       hparam.type       = HOOK_PARAM_PILOT;
-      hparam.u.lp.pilot = killer;
+      hparam.u.lp       = killer;
    }
    else
       hparam.type       = HOOK_PARAM_NIL;
@@ -1476,7 +1476,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    Damage ddmg;
 
    rad2 = radius*radius;
-   memcpy( &ddmg, dmg, sizeof(Damage) );
+   ddmg = *dmg;
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -1918,7 +1918,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_rmFlag(pilot, PILOT_BOARDING);
       else {
          /* Match speeds. */
-         vectcpy( &pilot->solid->vel, &target->solid->vel );
+         pilot->solid->vel = target->solid->vel;
 
          /* See if boarding is finished. */
          if (pilot->ptimer < 0.)
@@ -2196,7 +2196,7 @@ static void pilot_refuel( Pilot *p, double dt )
    }
 
    /* Match speeds. */
-   vectcpy( &p->solid->vel, &target->solid->vel );
+   p->solid->vel = target->solid->vel;
 
    amount = CLAMP( 0., p->pdata, PILOT_REFUEL_RATE * dt);
    p->pdata -= amount;
@@ -2520,7 +2520,7 @@ Pilot* pilot_copy( Pilot* src )
    Pilot *dest = malloc(sizeof(Pilot));
 
    /* Copy data over, we'll have to reset all the pointers though. */
-   memcpy( dest, src, sizeof(Pilot) );
+   *dest = *src;
 
    /* Copy names. */
    if (src->name)
@@ -2530,7 +2530,7 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy solid. */
    dest->solid = malloc(sizeof(Solid));
-   memcpy( dest->solid, src->solid, sizeof(Solid) );
+   *dest->solid = *src->solid;
 
    /* Copy outfits. */
    dest->noutfits = src->noutfits;
@@ -2960,7 +2960,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
       damage_cache   = dmg->damage;
       delay_cache    = outfit_delay( o );
       if ((damage_cache > 0) && (delay_cache > 0))
-         DPSaccum_target += ( damage_cache/delay_cache );
+         DPSaccum_pilot += ( damage_cache/delay_cache );
    }
 
    if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))

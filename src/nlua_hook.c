@@ -681,7 +681,7 @@ static int hook_safe( lua_State *L )
 static int hook_pilot( lua_State *L )
 {
    unsigned int h;
-   LuaPilot *p;
+   LuaPilot p;
    int type;
    const char *hook_type;
    char buf[ PATH_MAX ];
@@ -690,7 +690,7 @@ static int hook_pilot( lua_State *L )
    if (lua_ispilot(L,1))
       p           = luaL_checkpilot(L,1);
    else if (lua_isnil(L,1))
-      p           = NULL;
+      p           = 0;
    else {
       NLUA_ERROR(L, "Invalid parameter #1 for hook.pilot, expecting pilot or nil.");
       return 0;
@@ -718,10 +718,10 @@ static int hook_pilot( lua_State *L )
    /* actually add the hook */
    nsnprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3, 0 );
-   if (p==NULL)
+   if (p==0)
       pilots_addGlobalHook( type, h );
    else
-      pilot_addHook( pilot_get(p->pilot), type, h );
+      pilot_addHook( pilot_get(p), type, h );
 
    lua_pushnumber( L, h );
    return 1;

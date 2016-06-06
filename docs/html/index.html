@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API</title>
+    <link rel="stylesheet" href="luadoc.css" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+
+<body>
+<div id="naev-header">
+   <div id="naev-top">
+       <a href="http://naev.org">
+           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       </a>
+   </div>
+   <ul class="naevlinks">
+       <li>
+           <a href="http://blog.naev.org/">Blog</a> &middot;
+           <a href="http://forum.naev.org/">Forum</a> &middot;
+           <a href="http://wiki.naev.org/">Wiki</a> &middot;
+           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="http://api.naev.org/">Lua API</a> &middot;
+           <a href="http://blog.naev.org/chat/">Chat</a>
+       </li>
+   </ul>
+</div>
+
+<div id="container">
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>Naev Lua API</h1>
+<ul>
+	
+	<li><strong>Main</strong></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="modules/ai.html">ai</a>
+	</li>
+
+	<li>
+		<a href="modules/bkg.html">bkg</a>
+	</li>
+
+	<li>
+		<a href="modules/camera.html">camera</a>
+	</li>
+
+	<li>
+		<a href="modules/colour.html">colour</a>
+	</li>
+
+	<li>
+		<a href="modules/commodity.html">commodity</a>
+	</li>
+
+	<li>
+		<a href="modules/diff.html">diff</a>
+	</li>
+
+	<li>
+		<a href="modules/evt.html">evt</a>
+	</li>
+
+	<li>
+		<a href="modules/faction.html">faction</a>
+	</li>
+
+	<li>
+		<a href="modules/gfx.html">gfx</a>
+	</li>
+
+	<li>
+		<a href="modules/gui.html">gui</a>
+	</li>
+
+	<li>
+		<a href="modules/hook.html">hook</a>
+	</li>
+
+	<li>
+		<a href="modules/jump.html">jump</a>
+	</li>
+
+	<li>
+		<a href="modules/misn.html">misn</a>
+	</li>
+
+	<li>
+		<a href="modules/music.html">music</a>
+	</li>
+
+	<li>
+		<a href="modules/naev.html">naev</a>
+	</li>
+
+	<li>
+		<a href="modules/news.html">news</a>
+	</li>
+
+	<li>
+		<a href="modules/outfit.html">outfit</a>
+	</li>
+
+	<li>
+		<a href="modules/pilot.html">pilot</a>
+	</li>
+
+	<li>
+		<a href="modules/planet.html">planet</a>
+	</li>
+
+	<li>
+		<a href="modules/player.html">player</a>
+	</li>
+
+	<li>
+		<a href="modules/rnd.html">rnd</a>
+	</li>
+
+	<li>
+		<a href="modules/ship.html">ship</a>
+	</li>
+
+	<li>
+		<a href="modules/system.html">system</a>
+	</li>
+
+	<li>
+		<a href="modules/tex.html">tex</a>
+	</li>
+
+	<li>
+		<a href="modules/time.html">time</a>
+	</li>
+
+	<li>
+		<a href="modules/tk.html">tk</a>
+	</li>
+
+	<li>
+		<a href="modules/tut.html">tut</a>
+	</li>
+
+	<li>
+		<a href="modules/var.html">var</a>
+	</li>
+
+	<li>
+		<a href="modules/vec2.html">vec2</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b>
+   Naev Lua API
+   </b></big></div>
+   <div id="product_description">
+      <p style="text-align: center;">This is the API used in Naev to interact with the game from Lua.</p>
+      <p><a href="http://www.lua.org">Lua</a> is a relatively simple scripting language used for a large portion of Naev's content. Missions, events, GUIs and AIs are all written using Lua and Naev's API, as are many minor features such as system backgrounds, reputation handling and others.</p>
+      <p>The Wiki has an in-depth <a href="http://wiki.naev.org/wiki/Mission_Tutorial">mission tutorial</a> covering both missions and events, and the API documentation provides common usage examples for each function.</p>
+      <p>Most API modules can also be used from the in-game Lua console (accessible by pressing <strong>F2</strong> by default) for <span style="text-decoration: line-through;">cheating</span> <em>experimenting</em> to your heart's content.</p>
+   </div>
+</div> <!-- id="product" -->
+
+
+<h2>Modules</h2>
+<table class="module_list">
+<!--<tr><td colspan="2">Modules</td></tr>-->
+
+	<tr>
+		<td class="name"><a href="modules/ai.html">ai</a></td>
+		<td class="summary">Handles how the AI interacts with the universe.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/bkg.html">bkg</a></td>
+		<td class="summary">Lua bindings to interact with the background.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/camera.html">camera</a></td>
+		<td class="summary">Lua bindings to interact with the Camera.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/colour.html">colour</a></td>
+		<td class="summary">Lua bindings to interact with colours.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/commodity.html">commodity</a></td>
+		<td class="summary">Lua bindings to interact with commodities.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/diff.html">diff</a></td>
+		<td class="summary">Lua bindings to apply/remove Universe Diffs.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/evt.html">evt</a></td>
+		<td class="summary">Event system Lua bindings.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/faction.html">faction</a></td>
+		<td class="summary">Lua bindings to deal with factions.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/gfx.html">gfx</a></td>
+		<td class="summary">Lua bindings to interact with rendering and the Naev graphical environment.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/gui.html">gui</a></td>
+		<td class="summary">Lua bindings to interact with the GUI elements.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/hook.html">hook</a></td>
+		<td class="summary">Lua bindings to manipulate hooks.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/jump.html">jump</a></td>
+		<td class="summary">This module allows you to handle the jumps from Lua.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/misn.html">misn</a></td>
+		<td class="summary">Mission Lua bindings.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/music.html">music</a></td>
+		<td class="summary">Music Lua module.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/naev.html">naev</a></td>
+		<td class="summary">Naev generic Lua bindings.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/news.html">news</a></td>
+		<td class="summary">Lua bindings to interact with the news.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/outfit.html">outfit</a></td>
+		<td class="summary">Lua bindings to interact with outfits.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/pilot.html">pilot</a></td>
+		<td class="summary">Lua bindings to interact with pilots.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/planet.html">planet</a></td>
+		<td class="summary">This module allows you to handle the planets from Lua.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/player.html">player</a></td>
+		<td class="summary">Lua bindings to interact with the player.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/rnd.html">rnd</a></td>
+		<td class="summary">Bindings for interacting with the random number generator.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/ship.html">ship</a></td>
+		<td class="summary">Lua bindings to interact with ships.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/system.html">system</a></td>
+		<td class="summary">Lua system module.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/tex.html">tex</a></td>
+		<td class="summary">Lua bindings to interact with OpenGL textures.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/time.html">time</a></td>
+		<td class="summary">Bindings for interacting with the time.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/tk.html">tk</a></td>
+		<td class="summary">Bindings for interacting with the Toolkit.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/tut.html">tut</a></td>
+		<td class="summary">Tutorial generic Lua bindings.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/var.html">var</a></td>
+		<td class="summary">Mission variable Lua bindings.</td>
+	</tr>
+
+	<tr>
+		<td class="name"><a href="modules/vec2.html">vec2</a></td>
+		<td class="summary">Represents a 2D vector in Lua.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

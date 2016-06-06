@@ -1029,7 +1029,7 @@ int hooks_runParam( const char* stack, HookParam *param )
       hq = calloc( 1, sizeof(HookQueue_t) );
       hq->stack = strdup(stack);
       for (i=0; param[i].type != HOOK_PARAM_SENTINEL; i++)
-         memcpy( &hq->hparam[i], &param[i], sizeof(HookParam) );
+         hq->hparam[i] = param[i];
 #ifdef DEBUGGING
       if (i >= HOOK_MAX_PARAM)
          WARN( "HOOK_MAX_PARAM is set too low (%d), need at least %d!", HOOK_MAX_PARAM, i );

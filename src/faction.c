@@ -110,6 +110,11 @@ int pfaction_load( xmlNodePtr parent );
 int faction_get( const char* name )
 {
    int i;
+
+   /* Escorts are part of the "player" faction. */
+   if (strcmp(name, "Escort") == 0)
+      return FACTION_PLAYER;
+
    if (name != NULL) {
       for (i=0; i<faction_nstack; i++)
          if (strcmp(faction_stack[i].name, name)==0)
@@ -500,7 +505,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    delta = faction->player - old;
    if (fabs(delta) > 1e-10) {
       hparam[0].type    = HOOK_PARAM_FACTION;
-      hparam[0].u.lf.f  = f;
+      hparam[0].u.lf    = f;
       hparam[1].type    = HOOK_PARAM_NUMBER;
       hparam[1].u.num   = delta;
       hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -590,7 +595,7 @@ void faction_modPlayerRaw( int f, double mod )
    faction->player += mod;
    /* Run hook if necessary. */
    hparam[0].type    = HOOK_PARAM_FACTION;
-   hparam[0].u.lf.f  = f;
+   hparam[0].u.lf    = f;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = mod;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -626,7 +631,7 @@ void faction_setPlayer( int f, double value )
    faction->player = value;
    /* Run hook if necessary. */
    hparam[0].type    = HOOK_PARAM_FACTION;
-   hparam[0].u.lf.f  = f;
+   hparam[0].u.lf    = f;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = mod;
    hparam[2].type    = HOOK_PARAM_SENTINEL;

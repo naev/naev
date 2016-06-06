@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>moon-G01.png</space>
-  <exterior>aquatic.png</exterior>
+  <exterior>mining2.png</exterior>
  </GFX>
  <presence>
   <faction>Pirate</faction>
@@ -14,7 +14,7 @@
   <range>4</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>G</class>
   <population>7500</population>
   <hide>0.250000</hide>
   <services>
@@ -26,8 +26,8 @@
   </services>
   <commodities/>
   <blackmarket/>
-  <description>Minor clan world in control of the whole Qorel Expanse, Qorellia could be seen as a civilian hub if its traffic wasn't constituted only of pirate ships.</description>
-  <bar>A standard pirate bar, with the exception of a local militia making sure no troublemaker stays unharmed.</bar>
+  <description>A minor clan world in control of the whole Qorel Expanse, Qorellia might be seen as a civilian hub if only its traffic didn't entirely consist of pirate ships.</description>
+  <bar>A standard pirate bar, with the exception of the local militia making sure no troublemaker stays unharmed.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

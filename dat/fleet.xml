@@ -826,6 +826,122 @@
    <pilot name="Trader Koala" ship="Koala"></pilot>
   </pilots>
  </fleet>
+  <fleet name="Trader Convoy 3">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Convoy Llama" ship="Llama"></pilot>
+   <pilot name="Convoy Llama" ship="Llama"></pilot>
+   <pilot name="Convoy Llama" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
+   <fleet name="Trader Convoy 4">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+   <pilot name="Convoy Koala" ship="Koala"></pilot>
+  </pilots>
+ </fleet>
+   <fleet name="Trader Convoy 5">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Trader Convoy 6">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   </pilots>
+   </fleet>
+ <fleet name="Trader Convoy 8">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Rhino" ship="Rhino"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+   <pilot name="Convoy Mule" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Trader Ambush 1">
+  <ai>baddie_norun</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Pirate Ancestor" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Vendetta" ship="Pirate Vendetta"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+   </pilots>
+</fleet>
+ <fleet name="Trader Ambush 2">
+  <ai>baddie_norun</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Pirate Ancestor" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Ancestor" ship="Pirate Vendetta"></pilot>
+   <pilot name="Pirate Vendetta" ship="Pirate Vendetta"></pilot>
+   <pilot name="Pirate Vendetta" ship="Pirate Vendetta"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Trader Ambush 3">
+  <ai>baddie_norun</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Pirate Admonisher" ship="Pirate Admonisher"></pilot>
+   <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
+   <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Trader Ambush 4">
+  <ai>baddie_norun</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Pirate Admonisher" ship="Pirate Admonisher"></pilot>
+   <pilot name="Pirate Phalanx" ship="Pirate Phalanx"></pilot>
+   <pilot name="Pirate Phalanx" ship="Pirate Phalanx"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Trader Ambush 5">
+  <ai>baddie_norun</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Pirate Kestrel" ship="Pirate Kestrel"></pilot>   
+   <pilot name="Pirate Admonisher" ship="Pirate Admonisher"></pilot>
+   <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+   <pilot name="Hyena" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Pirate Hyena Pack">
   <ai>pirate</ai>
   <faction>Pirate</faction>

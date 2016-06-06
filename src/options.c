@@ -939,7 +939,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 {
    unsigned int parent;
    KeybindType type;
-   int key;
+   int key, test_key_event;
    SDLMod mod, ev_mod;
    const char *str;
 
@@ -948,22 +948,23 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       case SDL_KEYDOWN:
          key  = event->key.keysym.sym;
          /* If control key make player hit twice. */
-         if (((key == SDLK_NUMLOCK) ||
-                  (key == SDLK_CAPSLOCK) ||
-                  (key == SDLK_SCROLLOCK) ||
-                  (key == SDLK_RSHIFT) ||
-                  (key == SDLK_LSHIFT) ||
-                  (key == SDLK_RCTRL) ||
-                  (key == SDLK_LCTRL) ||
-                  (key == SDLK_RALT) ||
-                  (key == SDLK_LALT) ||
+         test_key_event = (key == SDLK_NUMLOCK) ||
+                          (key == SDLK_CAPSLOCK) ||
+                          (key == SDLK_SCROLLOCK) ||
+                          (key == SDLK_RSHIFT) ||
+                          (key == SDLK_LSHIFT) ||
+                          (key == SDLK_RCTRL) ||
+                          (key == SDLK_LCTRL) ||
+                          (key == SDLK_RALT) ||
+                          (key == SDLK_LALT) ||
+                          (key == SDLK_RMETA) ||
+                          (key == SDLK_LMETA);
 #if !SDL_VERSION_ATLEAST(2,0,0) /* SUPER don't exist in 2.0.0 */
-                  (key == SDLK_LSUPER) ||
-                  (key == SDLK_RSUPER) ||
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-                  (key == SDLK_RMETA) ||
-                  (key == SDLK_LMETA))
-                  && (opt_lastKeyPress != key)) {
+         test_key_event = test_key_event ||
+                          (key == SDLK_LSUPER) ||
+                          (key == SDLK_RSUPER);
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */                 
+         if (test_key_event  && (opt_lastKeyPress != key)) {
             opt_lastKeyPress = key;
             return 0;
          }

@@ -44,7 +44,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    /* Set up hook parameters. */
    if (nparam <= 3) {
       hstaparam[0].type       = HOOK_PARAM_PILOT;
-      hstaparam[0].u.lp.pilot = p->id;
+      hstaparam[0].u.lp       = p->id;
       n  = 1;
       memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
       n += nparam;
@@ -55,7 +55,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    else {
       hdynparam   = malloc( sizeof(HookParam) * (nparam+2) );
       hdynparam[0].type       = HOOK_PARAM_PILOT;
-      hdynparam[0].u.lp.pilot = p->id;
+      hdynparam[0].u.lp       = p->id;
       memcpy( &hdynparam[1], param, sizeof(HookParam)*nparam );
       hdynparam[nparam+1].type  = HOOK_PARAM_SENTINEL;
       hparam                  = hdynparam;

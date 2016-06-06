@@ -91,9 +91,9 @@ int nlua_loadCol( lua_State *L, int readonly )
  *    @param ind Index position to find the colour.
  *    @return Colour found at the index in the state.
  */
-LuaColour* lua_tocolour( lua_State *L, int ind )
+glColour* lua_tocolour( lua_State *L, int ind )
 {
-   return (LuaColour*) lua_touserdata(L,ind);
+   return (glColour*) lua_touserdata(L,ind);
 }
 /**
  * @brief Gets colour at index or raises error if there is no colour at index.
@@ -102,7 +102,7 @@ LuaColour* lua_tocolour( lua_State *L, int ind )
  *    @param ind Index position to find colour.
  *    @return Colour found at the index in the state.
  */
-LuaColour* luaL_checkcolour( lua_State *L, int ind )
+glColour* luaL_checkcolour( lua_State *L, int ind )
 {
    if (lua_iscolour(L,ind))
       return lua_tocolour(L,ind);
@@ -116,10 +116,10 @@ LuaColour* luaL_checkcolour( lua_State *L, int ind )
  *    @param colour Colour to push.
  *    @return Newly pushed colour.
  */
-LuaColour* lua_pushcolour( lua_State *L, LuaColour colour )
+glColour* lua_pushcolour( lua_State *L, glColour colour )
 {
-   LuaColour *c;
-   c = (LuaColour*) lua_newuserdata(L, sizeof(LuaColour));
+   glColour *c;
+   c = (glColour*) lua_newuserdata(L, sizeof(glColour));
    *c = colour;
    luaL_getmetatable(L, COL_METATABLE);
    lua_setmetatable(L, -2);
@@ -159,10 +159,10 @@ int lua_iscolour( lua_State *L, int ind )
  */
 static int colL_eq( lua_State *L )
 {
-   LuaColour *c1, *c2;
+   glColour *c1, *c2;
    c1 = luaL_checkcolour(L,1);
    c2 = luaL_checkcolour(L,2);
-   lua_pushboolean( L, (memcmp( &c1->col, &c2->col, sizeof(glColour) )==0) );
+   lua_pushboolean( L, (memcmp( c1, c2, sizeof(glColour) )==0) );
    return 1;
 }
 
@@ -185,41 +185,39 @@ static int colL_eq( lua_State *L )
  */
 static int colL_new( lua_State *L )
 {
-   const glColour *col;
-   LuaColour lc, *lc2;
+   glColour col;
+   const glColour *col2;
 
    if (lua_gettop(L)==0) {
-      lc.col.r = lc.col.g = lc.col.b = lc.col.a = 1.;
+      col.r = col.g = col.b = col.a = 1.;
    }
    else if (lua_isnumber(L,1)) {
-      lc.col.r = luaL_checknumber(L,1);
-      lc.col.g = luaL_checknumber(L,2);
-      lc.col.b = luaL_checknumber(L,3);
+      col.r = luaL_checknumber(L,1);
+      col.g = luaL_checknumber(L,2);
+      col.b = luaL_checknumber(L,3);
       if (lua_isnumber(L,4))
-         lc.col.a = luaL_checknumber(L,4);
+         col.a = luaL_checknumber(L,4);
       else
-         lc.col.a = 1.;
+         col.a = 1.;
    }
    else if (lua_isstring(L,1)) {
-      col = col_fromName( lua_tostring(L,1) );
-      if (col == NULL) {
+      col2 = col_fromName( lua_tostring(L,1) );
+      if (col2 == NULL) {
          NLUA_ERROR( L, "Colour '%s' does not exist!", lua_tostring(L,1) );
          return 0;
       }
-      memcpy( &lc.col, col, sizeof(glColour) );
+      col = *col2;
       if (lua_isnumber(L,2))
-         lc.col.a = luaL_checknumber(L,2);
+         col.a = luaL_checknumber(L,2);
       else
-         lc.col.a = 1.;
+         col.a = 1.;
    }
-   else if (lua_iscolour(L,1)) {
-      lc2 = lua_tocolour(L,1);
-      memcpy( &lc, lc2, sizeof(LuaColour) );
-   }
+   else if (lua_iscolour(L,1))
+      col = *lua_tocolour(L,1);
    else
       NLUA_INVALID_PARAMETER(L);
 
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, col );
    return 1;
 }
 
@@ -237,9 +235,9 @@ static int colL_new( lua_State *L )
  */
 static int colL_alpha( lua_State *L )
 {
-   LuaColour *lc;
-   lc = luaL_checkcolour(L,1);
-   lua_pushnumber( L, lc->col.a );
+   glColour *col;
+   col = luaL_checkcolour(L,1);
+   lua_pushnumber( L, col->a );
    return 1;
 }
 
@@ -257,11 +255,11 @@ static int colL_alpha( lua_State *L )
  */
 static int colL_rgb( lua_State *L )
 {
-   LuaColour *lc;
-   lc = luaL_checkcolour(L,1);
-   lua_pushnumber( L, lc->col.r );
-   lua_pushnumber( L, lc->col.g );
-   lua_pushnumber( L, lc->col.b );
+   glColour *col;
+   col = luaL_checkcolour(L,1);
+   lua_pushnumber( L, col->r );
+   lua_pushnumber( L, col->g );
+   lua_pushnumber( L, col->b );
    return 3;
 }
 
@@ -280,9 +278,9 @@ static int colL_rgb( lua_State *L )
 static int colL_hsv( lua_State *L )
 {
    double h, s, v;
-   LuaColour *lc;
-   lc = luaL_checkcolour(L,1);
-   col_rgb2hsv( &h, &s, &v, lc->col.r, lc->col.g, lc->col.b );
+   glColour *col;
+   col = luaL_checkcolour(L,1);
+   col_rgb2hsv( &h, &s, &v, col->r, col->g, col->b );
    lua_pushnumber( L, h );
    lua_pushnumber( L, s );
    lua_pushnumber( L, v );
@@ -305,11 +303,11 @@ static int colL_hsv( lua_State *L )
  */
 static int colL_setrgb( lua_State *L )
 {
-   LuaColour *lc;
-   lc          = luaL_checkcolour(L,1);
-   lc->col.r   = luaL_checknumber(L,2);
-   lc->col.g   = luaL_checknumber(L,3);
-   lc->col.b   = luaL_checknumber(L,4);
+   glColour *col;
+   col     = luaL_checkcolour(L,1);
+   col->r  = luaL_checknumber(L,2);
+   col->g  = luaL_checknumber(L,3);
+   col->b  = luaL_checknumber(L,4);
    return 0;
 }
 
@@ -330,15 +328,15 @@ static int colL_setrgb( lua_State *L )
 static int colL_sethsv( lua_State *L )
 {
    double r, g, b, h, s, v;
-   LuaColour *lc;
-   lc = luaL_checkcolour(L,1);
+   glColour *col;
+   col = luaL_checkcolour(L,1);
    h  = luaL_checknumber(L,2);
    s  = luaL_checknumber(L,3);
    v  = luaL_checknumber(L,4);
    col_hsv2rgb( &r, &g, &b,  h, s, v );
-   lc->col.r = r;
-   lc->col.g = g;
-   lc->col.b = b;
+   col->r = r;
+   col->g = g;
+   col->b = b;
    return 0;
 }
 
@@ -356,9 +354,9 @@ static int colL_sethsv( lua_State *L )
  */
 static int colL_setalpha( lua_State *L )
 {
-   LuaColour *lc;
-   lc          = luaL_checkcolour(L,1);
-   lc->col.a   = luaL_checknumber(L,2);
+   glColour *col;
+   col = luaL_checkcolour(L,1);
+   col->a = luaL_checknumber(L,2);
    return 0;
 }
 

@@ -100,7 +100,7 @@ static unsigned int npc_add( NPC_t *npc )
    new_npc = &array_grow( &npc_array );
 
    /* Copy over. */
-   memcpy( new_npc, npc, sizeof(NPC_t) );
+   *new_npc = *npc;
 
    /* Set ID. */
    new_npc->id = ++npc_array_idgen;
@@ -121,7 +121,7 @@ static unsigned int npc_add_giver( Mission *misn )
    npc.priority   = misn->data->avail.priority;
    npc.portrait   = gl_dupTexture(misn->portrait);
    npc.desc       = strdup(misn->desc);
-   memcpy( &npc.u.g, misn, sizeof(Mission) );
+   npc.u.g        = *misn;
 
    return npc_add( &npc );
 }

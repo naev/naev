@@ -147,9 +147,9 @@ int nlua_loadSystem( lua_State *L, int readonly )
  *    @param ind Index position of system.
  *    @return The LuaSystem at ind.
  */
-LuaSystem* lua_tosystem( lua_State *L, int ind )
+LuaSystem lua_tosystem( lua_State *L, int ind )
 {
-   return (LuaSystem*) lua_touserdata(L,ind);
+   return *((LuaSystem*) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets system at index raising an error if type doesn't match.
@@ -158,12 +158,12 @@ LuaSystem* lua_tosystem( lua_State *L, int ind )
  *    @param ind Index position of system.
  *    @return The LuaSystem at ind.
  */
-LuaSystem* luaL_checksystem( lua_State *L, int ind )
+LuaSystem luaL_checksystem( lua_State *L, int ind )
 {
    if (lua_issystem(L,ind))
       return lua_tosystem(L,ind);
    luaL_typerror(L, ind, SYSTEM_METATABLE);
-   return NULL;
+   return 0;
 }
 
 /**
@@ -175,12 +175,12 @@ LuaSystem* luaL_checksystem( lua_State *L, int ind )
  */
 StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
-   LuaSystem *ls;
+   LuaSystem ls;
    StarSystem *s;
 
    if (lua_issystem(L, ind)) {
       ls = luaL_checksystem(L, ind);
-      s = system_getIndex( ls->id );
+      s = system_getIndex( ls );
    }
    else if (lua_isstring(L, ind))
       s = system_get( lua_tostring(L, ind) );
@@ -246,9 +246,7 @@ int lua_issystem( lua_State *L, int ind )
  */
 static int systemL_cur( lua_State *L )
 {
-   LuaSystem sys;
-   sys.id = system_index( cur_system );
-   lua_pushsystem(L,sys);
+   lua_pushsystem(L,system_index( cur_system ));
    return 1;
 }
 
@@ -269,36 +267,28 @@ static int systemL_cur( lua_State *L )
  */
 static int systemL_get( lua_State *L )
 {
-   LuaSystem sys;
    StarSystem *ss;
    Planet *pnt;
-
-   /* Invalid by default. */
-   sys.id = -1;
 
    /* Passing a string (systemname) */
    if (lua_isstring(L,1)) {
       ss = system_get( lua_tostring(L,1) );
-      if (ss != NULL)
-         sys.id = system_index( ss );
    }
    /* Passing a planet */
    else if (lua_isplanet(L,1)) {
       pnt = luaL_validplanet(L,1);
       ss = system_get( planet_getSystem( pnt->name ) );
-      if (ss != NULL)
-         sys.id = system_index( ss );
    }
    else NLUA_INVALID_PARAMETER(L);
 
    /* Error checking. */
-   if (sys.id < 0) {
+   if (ss == NULL) {
       NLUA_ERROR(L, "No matching systems found.");
       return 0;
    }
 
    /* return the system */
-   lua_pushsystem(L,sys);
+   lua_pushsystem(L,system_index(ss));
    return 1;
 }
 
@@ -309,7 +299,6 @@ static int systemL_get( lua_State *L )
  */
 static int systemL_getAll( lua_State *L )
 {
-   LuaSystem ls;
    StarSystem *sys;
    int i, ind, n;
 
@@ -318,9 +307,8 @@ static int systemL_getAll( lua_State *L )
 
    ind = 1;
    for (i=0; i<n; i++) {
-      ls.id = system_index( &sys[i] );
       lua_pushnumber( L, ind++ );
-      lua_pushsystem( L, ls );
+      lua_pushsystem( L, system_index( &sys[i] ) );
       lua_settable(   L, -3 );
    }
    return 1;
@@ -340,10 +328,10 @@ static int systemL_getAll( lua_State *L )
  */
 static int systemL_eq( lua_State *L )
 {
-   LuaSystem *a, *b;
+   LuaSystem a, b;
    a = luaL_checksystem(L,1);
    b = luaL_checksystem(L,2);
-   if (a->id == b->id)
+   if (a == b)
       lua_pushboolean(L,1);
    else
       lua_pushboolean(L,0);
@@ -376,17 +364,14 @@ static int systemL_name( lua_State *L )
  */
 static int systemL_faction( lua_State *L )
 {
-   LuaFaction lf;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
 
    if (s->faction == -1)
       return 0;
-   else
-      lf.f = s->faction;
 
-   lua_pushfaction(L,lf);
+   lua_pushfaction(L,s->faction);
    return 1;
 
 }
@@ -572,7 +557,7 @@ static int systemL_adjacent( lua_State *L )
          continue;
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
          continue;
-      sysp.id = system_index( s->jumps[i].target );
+      sysp = system_index( s->jumps[i].target );
       lua_pushnumber(L, id);   /* key. */
       lua_pushsystem(L, sysp); /* value. */
       lua_rawset(L,-3);
@@ -669,7 +654,6 @@ static int systemL_presences( lua_State *L )
 static int systemL_planets( lua_State *L )
 {
    int i, key;
-   LuaPlanet p;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
@@ -678,11 +662,10 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<s->nplanets; i++) {
-      p.id = planet_index( s->planets[i] );
       if(s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
-         lua_pushplanet(L,p); /* value */
+         lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
          lua_rawset(L,-3);
       }
    }
@@ -886,15 +869,15 @@ static int systemL_mrkClear( lua_State *L )
 static int systemL_mrkAdd( lua_State *L )
 {
    const char *str;
-   LuaVector *lv;
+   Vector2d *vec;
    unsigned int id;
 
    /* Handle parameters. */
    str   = luaL_checkstring( L, 1 );
-   lv    = luaL_checkvector( L, 2 );
+   vec   = luaL_checkvector( L, 2 );
 
    /* Create marker. */
-   id    = ovr_mrkAddPoint( str, lv->vec.x, lv->vec.y );
+   id    = ovr_mrkAddPoint( str, vec->x, vec->y );
    lua_pushnumber( L, id );
    return 1;
 }
