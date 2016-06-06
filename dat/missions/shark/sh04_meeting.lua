@@ -39,7 +39,7 @@ if lang == "es" then
    
    title[4] = "The meeting"
    text[4] = [[As you land, you see a group of people that were waiting for your ship. Smith hails them and says you to wait in the ship while he goes to a private part of the bar.
-   Several minutes later, he comes back and explains you that he didn't manage to get the support of the councilor, which means that the Frontier will not buy the Sharks.
+   A few STP later, he comes back and explains you that he didn't manage to get the support of the councilor, which means that the Frontier will not buy the Sharks.
    "Anyway," he says, "bring me back to %s in one piece and I will pay you."]]
    
    title[5] = "What is going on?"
