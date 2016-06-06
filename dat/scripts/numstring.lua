@@ -1,16 +1,3 @@
---[[
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---]]
-
 -- Converts an integer into a human readable string, delimiting every third digit with a comma.
 -- Note: rounds input to the nearest integer. Primary use is for payment descriptions.
 function numstring(number)
