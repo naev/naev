@@ -1,17 +1,6 @@
 --[[
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---
-
-   The player pays a fellow pirate to know where to steal a random ship.
+-- The player pays a fellow pirate to know where to steal a random ship.
 
 	The player pays to get the position of a ship on a random planet of a random
 	faction. When he gets there, the planet is guarded (which means he may have
