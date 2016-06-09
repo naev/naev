@@ -158,7 +158,7 @@ function accept ()
    -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld_sys:name() ) )
 
--- Comment out this line to reveal the planet Samson is in.
+-- Uncomment  this line to reveal the planet Samson is in.
 --   tk.msg( title, targetworld:name() )
 
    -- Set up hooks.
