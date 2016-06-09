@@ -157,7 +157,9 @@ function accept ()
    -- Create two windows that show up after the player has accepted.
    -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld_sys:name() ) )
-   tk.msg( title, targetworld:name() )
+
+-- Comment out this line to reveal the planet Samson is in.
+--   tk.msg( title, targetworld:name() )
 
    -- Set up hooks.
    -- These will be called when a certain situation occurs ingame..
