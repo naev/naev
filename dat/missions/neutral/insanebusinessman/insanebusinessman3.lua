@@ -149,6 +149,7 @@ function accept ()
    -- These will be called when a certain situation occurs ingame..
    hook.land("land")
    hook.jumpin("jumpin")
+   hook.jumpout("jumpout")
 end
 
    -- The function specified in the above hook.
@@ -164,14 +165,25 @@ function land ()
  
 end
 
+--If you manage to escape you still win
+function jumpout()
+   if system.cur() == targetworld_sys and hailed then
+      completeOSDSet()
+      victorious = true   
+   end
+
+   if system.cur() == targetworld_sys and not hailed then
+       misn.osdActive(1)
+   end
+
+end
+
 -- Moves to the next point upon jumping into target system
 function jumpin ()
-   if system.cur() == targetworld_sys then
+   if system.cur() == targetworld_sys and not hailed then
       misn.osdActive(2)
       spawn_pilots()
    end
-
-
 end
 
 -- Spawn pilot function
@@ -258,12 +270,7 @@ function pilot_death()
    end
 
    if hailed and dead_pilots == 3 then
-      tk.msg("true","true")
-      misn.osdDestroy ()
-      OSDdesc21 = "Return to the %s system and confront Crumb."
-      OSDtable2[1] = OSDdesc21:format( targetworld_sys:name() )
-      misn.osdCreate( OSDtitle2, OSDtable2 )          
-      misn.markerMove(landmarker, startworld_sys)
+      completeOSDSet()
       victorious = true
    end 
 end
@@ -278,4 +285,11 @@ end
 function abort ()
    -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
    misn.finish( false )
+end
+
+function completeOSDSet()
+   misn.osdDestroy ()
+   OSDtable2[1] = OSDdesc21:format( targetworld_sys:name() )
+   misn.osdCreate( OSDtitle2, OSDtable2 )
+   misn.markerMove(landmarker, startworld_sys)
 end

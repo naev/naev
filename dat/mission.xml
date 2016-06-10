@@ -1314,7 +1314,6 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
-
  <mission name="Insane Businessman">
   <lua>neutral/insanebusinessman/insanebusinessman</lua>
   <flags>
@@ -1340,6 +1339,9 @@
  </mission>
  <mission name="Insane Businessman Part 3">
   <lua>neutral/insanebusinessman/insanebusinessman3</lua>
+  <flags>
+    <unique />
+  </flags>
   <avail>
    <chance>100</chance>
    <location>Bar</location>
