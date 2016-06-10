@@ -32,8 +32,11 @@ misn_accomplished = [[You land back in %s but find Crumb a difficult person to l
 
 rendezvous_title = [[Rendezvous]]
 rendezvous_msg = [["%s! We've been waiting for you." says a voice over the comm. 
+
 "Great. Let's get going."
+
 "In a minute. There's been a slight change of plans. Mr Crumb has decided your services are no longer necessary. Sorry about this, just business"
+
 click!
 ]]
 
@@ -68,7 +71,7 @@ function create ()
    fake_targetworld_sys = system.get("Alteris")
 
    if not misn.claim ( {targetworld_sys} ) then
-      abort()
+      misn.finish()
    end
 
    reward = 10000
@@ -246,10 +249,6 @@ end
 --Mission fail function
 function fail(param)
    player.msg( msg[param] )
-   misn.finish( false )
-end
-
-function abort ()
    misn.finish( false )
 end
 

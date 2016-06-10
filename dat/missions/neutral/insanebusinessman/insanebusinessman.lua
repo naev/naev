@@ -68,7 +68,7 @@ function create ()
    targetworld = planet.get("Jaan")
 
    if not misn.claim ( {targetworld_sys} ) then
-      abort()
+      msn.finish()
    end
 
    reward = 10000
@@ -135,8 +135,3 @@ function takeoff ()
       misn.osdActive(2)
    end
 end
-
-function abort ()
-   misn.finish( false )
-end
-

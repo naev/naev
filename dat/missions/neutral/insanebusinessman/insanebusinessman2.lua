@@ -25,7 +25,7 @@ reward_desc = "%s credits on completion."
 post_accept = {}
 post_accept[1] = [["Find Samson in the %s system and get him to talk. I don't care how, just get me some information."]]
 
-misn_investigate = [[You check out all the local hangouts that Crumb told you Samson patrons. Turning up nothing you think you're completely out of luck when at last fortune shines upon you. A nondescript bartender tell you that he knows Samson. He also tells you Samson knows you're looking for him as someone has tipped him off. He finally says Samson was headed to the spaceport and was planning on leaving the planet and system.]]
+misn_investigate = [[You check out all the local hangouts that Crumb told you Samson patrons. Turning up nothing you think you're completely out of luck when at last fortune shines upon you. A nondescript bartender tells you that he knows Samson. He also tells you Samson knows you're looking for him as someone has tipped him off. He finally says Samson was headed to the spaceport and was planning on leaving the planet and system.]]
 
 misn_accomplished = [[When you tell Crumb what Samson has told you Crumb is enraged. He takes a deep breath and immediately calms down. "Rubbish! Someone is trying to kill me and I'm going to find out who it is! Well, here's your credits."
 
@@ -36,11 +36,16 @@ Oh so now someone is trying to kill him, you can't help but think. Funny how thi
 
 board_title = [[Samson's Ship]]
 board_msg = [[You board Samson's ship. "Please don't hurt me!" Samson yells. 
+
 "I'm not going to hurt you," you reply, "I just want information." 
-"What's there to say. Crumb is crazy. We used to be associates. We ran a business togeather. Selling and buying property. It's just that after..."
+
+"What's there to say. Crumb is crazy. We used to be associates. We ran a business together. Selling and buying property. It's just that after..."
+
 "After what?," you inquire.
-"There was an electrical accident in one of his hotels. Killed like three people.  The Empire went after him pretty hard for negligence. Ever since then he's progressively gotten more paranoid, alienating his friends and family. We used to be pretty close you know, but now...now, I think he's trying to kill me. Well, you can understand why I ran."
-Strange. Crumb thinks Samson is trying to ruin him, but Samson thinks Crumb sent me to kill him! Better return to Crumb and report this.
+
+"There was an electrical fire at one of his hotels. Killed like three people.  The Empire went after him pretty hard for negligence. Ever since then he's progressively gotten more paranoid, alienating his friends and family. We used to be pretty close you know, but now...now, I think he's trying to kill me. Well, you can understand why I ran." 
+
+Strange. Crumb thinks Samson is trying to ruin him, but Samson thinks Crumb sent you to kill him! Better return to Crumb and report this.
 ]]
 
 -- OSD
@@ -85,7 +90,7 @@ function create ()
    targetworld = targetworlds[targetworld_number]
 
    if not misn.claim ( {targetworld_sys} ) then
-      abort()
+      misn.finish()
    end
 
    reward = 10000
@@ -200,7 +205,7 @@ end
 function pilot_board()
    player.unboard()
    tk.msg(board_title, board_msg)
-   OSDtable3[1] = OSDdesc4:format( targetworld_sys:name() )
+   OSDtable3[1] = OSDdesc4:format( startworld_sys:name() )
    misn.osdCreate( OSDtitle3, OSDtable3 )   
    interrogated = true
    misn.markerMove(landmarker, startworld_sys)
@@ -220,12 +225,8 @@ function pilot_death()
    end 
 end
 
---Mission fail function. Basically, abort() with a message.
+--Mission fail function.
 function fail(param)
    player.msg( msg[param] )
-   misn.finish( false )
-end
-
-function abort ()
    misn.finish( false )
 end
