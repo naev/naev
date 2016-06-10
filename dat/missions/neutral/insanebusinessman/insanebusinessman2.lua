@@ -11,7 +11,7 @@ else -- default English text
 --[[This section is used to define lots of variables holding all the various texts.]]--
 
 npc_name = "A Businessman"
-bar_desc = "A disheveled looking businessman"
+bar_desc = "A disheveled but familiar looking businessman."
 title = "Insane Businessman Part 2"
 pre_accept = {}
 
@@ -158,6 +158,13 @@ function accept ()
    -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld_sys:name() ) )
 
+   -- Set OSD after mission accept
+   OSDtable1[1] = OSDdesc1:format( targetworld_sys:name() )
+   OSDtable1[2] = OSDdesc2
+   misn.osdCreate( OSDtitle1, OSDtable1 )
+   misn.osdActive(1)
+
+
 -- Uncomment  this line to reveal the planet Samson is in.
 --   tk.msg( title, targetworld:name() )
 
@@ -195,20 +202,13 @@ function land ()
 end
 
 function takeoff ()
-
-   -- Set OSD after accepting mission and taking off. 
-   if system.cur() == startworld_sys then
-      OSDtable1[1] = OSDdesc1:format( targetworld_sys:name() )
-      OSDtable1[2] = OSDdesc2
-      misn.osdCreate( OSDtitle1, OSDtable1 )
-      misn.osdActive(1)
-
+   
    -- Set OSD after finding Samson and taking off. Spawn Samson in space. 
-   elseif system.cur() == targetworld_sys and found and not spawned then
+   if system.cur() == targetworld_sys and found and not spawned then
       OSDtable2[1] = OSDdesc3
       misn.osdDestroy()
       misn.osdCreate( OSDtitle2, OSDtable2 )
-      spawn_samson( pos )
+      spawn_pilot()
       spawned = true
    end
 end
@@ -226,7 +226,7 @@ function jumpin ()
 end
 
 -- Spawn pilot Samson function
-function spawn_samson( param )
+function spawn_pilot()
    samson = pilot.addRaw( "Gawain", "mercenary" , targetworld , "Dummy")
    samson[1]:rename("Samson")
    samson[1]:control()
@@ -240,6 +240,7 @@ end
 
 --Executes when you disable and board the ship
 function pilot_board()
+   player.unboard()
    tk.msg(board_title, board_msg)
    OSDtable3[1] = OSDdesc4:format( targetworld_sys:name() )
    misn.osdCreate( OSDtitle3, OSDtable3 )   

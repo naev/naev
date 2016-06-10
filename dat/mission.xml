@@ -1318,8 +1318,8 @@
  <mission name="Insane Businessman">
   <lua>neutral/insanebusinessman/insanebusinessman</lua>
   <flags>
-  <unique />
- </flags>
+   <unique />
+  </flags>
   <avail>
    <chance>100</chance>
    <location>Bar</location>
@@ -1328,6 +1328,9 @@
  </mission>
  <mission name="Insane Businessman Part 2">
   <lua>neutral/insanebusinessman/insanebusinessman2</lua>
+  <flags>
+    <unique />
+  </flags>
   <avail>
    <chance>100</chance>
    <location>Bar</location>
@@ -1335,5 +1338,13 @@
    <done>Insane Businessman</done>
   </avail>
  </mission>
-
+ <mission name="Insane Businessman Part 3">
+  <lua>neutral/insanebusinessman/insanebusinessman3</lua>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Vault</planet>
+   <done>Insane Businessman Part 2</done>
+  </avail>
+ </mission>
 </Missions>

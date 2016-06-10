@@ -11,7 +11,7 @@ else -- default English text
 --[[This section is used to define lots of variables holding all the various texts. ]]--
 
 npc_name = "A Businessman"
-bar_desc = "A disheveled looking businessman"
+bar_desc = "A disheveled but familiar looking businessman."
 title = "Insane Businessman"
 pre_accept = {}
 
@@ -138,6 +138,12 @@ function accept ()
    -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld:name() ) )
 
+   -- Set OSD after accpeting the mission
+    OSDtable[1] = OSDdesc1:format( targetworld:name(), targetworld_sys:name() )
+    OSDtable[2] = OSDdesc2:format( startworld:name(), startworld_sys:name() )
+    misn.osdCreate( OSDtitle, OSDtable )
+
+
    -- Set up hooks.
    -- These will be called when a certain situation occurs ingame.
    -- See http://api.naev.org/modules/hook.html for further hooks.
@@ -160,7 +166,7 @@ function land ()
    end
    
     -- Are we at the target planet? What do we see there.
-    if planet.cur() == targetworld then
+    if planet.cur() == targetworld and not finished then
       tk.msg( title, string.format(misn_investigate) )
       finished = true
       misn.markerMove(landmarker, startworld_sys)
@@ -173,10 +179,6 @@ end
 function takeoff ()
    if finished then
       misn.osdActive(2)
-   else
-      OSDtable[1] = OSDdesc1:format( targetworld:name(), targetworld_sys:name() )
-      OSDtable[2] = OSDdesc2:format( startworld:name(), startworld_sys:name() )
-      misn.osdCreate( OSDtitle, OSDtable )
    end
 end
 
