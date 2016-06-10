@@ -1,14 +1,11 @@
 --[[Insane Businessman Part 2]]--
 
-
-
--- localization stuff, translators would work here
 lang = naev.lang()
-if lang == "es" then -- Spanish version of the texts would follow
-elseif lang == "de" then -- German version of the texts would follow 
-else -- default English text
+if lang == "es" then
+elseif lang == "de" then
+else
 
---[[This section is used to define lots of variables holding all the various texts.]]--
+--[[Mission Text]]--
 
 npc_name = "A Businessman"
 bar_desc = "A disheveled but familiar looking businessman."
@@ -48,7 +45,7 @@ Strange. Crumb thinks Samson is trying to ruin him, but Samson thinks Crumb sent
 
 -- OSD
 
-OSDtitle1 = "Find Samson and get him to talk."
+OSDtitle1 = "Find Samson."
 OSDdesc1 = "Go to the %s system."
 OSDdesc2 = "Find Samson."
 OSDdesc3 = "Catch Samson before he gets away."
@@ -69,21 +66,11 @@ msg[2] = "MISSION FAILURE! You killed Samson."
 
 end
 
-
-
---[[
-
-After the texts follow the functions.
-There are bascially two types, those defined inside this file and the API functions.]]--
-
 function create ()
-   -- This will get called when the conditions in mission.xml are met (or when the mission is initiated from another script).
-   -- It is used to set up mission variables.
 
-   -- Get the planet and system at which we currently are.
    startworld, startworld_sys = planet.cur()
 
-   -- Set our target system and planet. Picks a random planet in Delta Pavonis
+   -- Set our target system and planet. Picks a random planet target system
    targetworld_sys = system.get("Delta Pavonis")
    targetworlds = {}
    i = 0
@@ -97,24 +84,13 @@ function create ()
    targetworld_number = rnd.rnd(1,i)
    targetworld = targetworlds[targetworld_number]
 
-
-   -- IMPORTANT: system claiming
-   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
-   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
-   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
-   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
-   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
    if not misn.claim ( {targetworld_sys} ) then
-      abort() -- Note: this assumes you have an abort() function in your script. You may also just use misn.finish() here.
+      abort()
    end
 
-   -- Set a reward. This is just a useful variable, nothing special.
    reward = 10000
 
-   -- Set stuff up for the bar.
-   -- Give our NPC a name and a portrait.
    misn.setNPC( npc_name, "neutral/unique/shifty_merchant" )
-   -- Describe what the user should see when they click on the NPC in the bar.
    misn.setDesc( bar_desc )
 end
 
@@ -125,10 +101,6 @@ function accept ()
    tk.msg( title, pre_accept[1] )
    tk.msg( title, string.format( pre_accept[2], targetworld_sys:name() ) )
 
-   -- Show a yes/no dialog with a title and a text.
-   -- If the answer is no the following block will be executed.
-   -- In this case, misn.finish(), it ends the mission without changing its status.
-
    if not tk.yesno( title, string.format( pre_accept[3], targetworld:name() ) ) then
 
       tk.msg( title, decline )
@@ -136,26 +108,16 @@ function accept ()
       misn.finish()
    end
 
-   -- Set up mission information for the onboard computer and OSD.
-   -- The OSD Title takes up to 11 signs.
+   -- Onboard Computer 
    misn.setTitle( title )
-
-   -- Reward is only visible in the onboard computer.
    misn.setReward( string.format( reward_desc, reward ) )
-
-   -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setDesc( string.format( misn_desc, targetworld_sys:name() ) )
 
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
+   -- Marker
    landmarker = misn.markerAdd( targetworld_sys, "low")
 
-
-   -- Add mission
-   -- At this point the mission gets added to the players active missions.
    misn.accept()
 
-   -- Create two windows that show up after the player has accepted.
-   -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld_sys:name() ) )
 
    -- Set OSD after mission accept
@@ -168,33 +130,28 @@ function accept ()
 -- Uncomment  this line to reveal the planet Samson is in.
 --   tk.msg( title, targetworld:name() )
 
-   -- Set up hooks.
-   -- These will be called when a certain situation occurs ingame..
    hook.land("land")
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")
 end
 
-   -- The function specified in the above hook.
 function land ()
    -- Are we at our destination and did we find Samson?
    if planet.cur() == startworld and interrogated then
-      -- Give the player their reward.
+      
       player.pay( reward )
-
-      -- Pop up a window that tells the player they finished the mission and got their reward.
       tk.msg( title, string.format(misn_accomplished) )
-
-      -- Mark the mission as successfully finished.
       misn.finish(true)
+
    end
    
-    -- We find Samson is trying to escape.
+    -- First time we land on secret planet. Samson escapes..
    if planet.cur() == targetworld and not found then
       tk.msg( title, string.format(misn_investigate) )
       found = true
    end
-
+    
+   -- If the pilot has spawned and the player lands on a planet before boarding it, the mission fails. 
    if found and spawned and not interrogated then
       fail(1)
    end
@@ -203,7 +160,7 @@ end
 
 function takeoff ()
    
-   -- Set OSD after finding Samson and taking off. Spawn Samson in space. 
+   -- Make sure player landed on planet but pilot has not spawned yet. Set OSD. Spawn pilot. 
    if system.cur() == targetworld_sys and found and not spawned then
       OSDtable2[1] = OSDdesc3
       misn.osdDestroy()
@@ -213,12 +170,13 @@ function takeoff ()
    end
 end
 
--- Moves to the next point upon jumping into target system
+-- Moves to the next point on OSD upon jumping into target system
 function jumpin ()
    if system.cur() == targetworld_sys and not found then
       misn.osdActive(2)
    end
-   -- If you leave the system before interrgotating Samson
+
+   -- Player has landed on planet and pilot has spawned. If player leaves system, mission fails. 
    if found and spawned and not interrogated then
       fail(1) 
    end
@@ -227,14 +185,14 @@ end
 
 -- Spawn pilot Samson function
 function spawn_pilot()
-   samson = pilot.addRaw( "Gawain", "mercenary" , targetworld , "Dummy")
-   samson[1]:rename("Samson")
-   samson[1]:control()
-   samson[1]:runaway( player.pilot(), false )
-   samson[1]:setHilight( true )
-   hook.pilot( samson[1], "jump", "pilot_jump" )
-   hook.pilot( samson[1], "death", "pilot_death" )
-   hook.pilot( samson[1], "board", "pilot_board")
+   samson = pilot.addRaw( "Gawain", "mercenary" , targetworld , "Dummy")[1]
+   samson:rename("Samson")
+   samson:control()
+   samson:runaway( player.pilot(), false )
+   samson:setHilight( true )
+   hook.pilot( samson, "jump", "pilot_jump" )
+   hook.pilot( samson, "death", "pilot_death" )
+   hook.pilot( samson, "board", "pilot_board")
 end
 
 
@@ -248,28 +206,26 @@ function pilot_board()
    misn.markerMove(landmarker, startworld_sys)
 end
 
---Executes if he gets away
+--Executes if pilot jumps out of system
 function pilot_jump ()
    if not interrogated then
       fail(1)
    end
 end
 
---Executes if you kill him
+--Executes if you kill him before boarding
 function pilot_death()
    if not interrogated then
       fail(2)
    end 
 end
 
---Mission fail function
+--Mission fail function. Basically, abort() with a message.
 function fail(param)
    player.msg( msg[param] )
    misn.finish( false )
 end
 
--- This will be called when the player aborts the mission in the onboard computer.
 function abort ()
-   -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
    misn.finish( false )
 end

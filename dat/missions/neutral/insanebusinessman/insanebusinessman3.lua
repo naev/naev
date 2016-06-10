@@ -2,13 +2,13 @@
 
 
 
--- localization stuff, translators would work here
+-- localization stuff.
 lang = naev.lang()
-if lang == "es" then -- Spanish version of the texts would follow
-elseif lang == "de" then -- German version of the texts would follow 
-else -- default English text
+if lang == "es" then
+elseif lang == "de" then
+else
 
---[[This section is used to define lots of variables holding all the various texts.]]--
+--[[Mission text.]]--
 
 npc_name = "A Businessman"
 bar_desc = "A disheveled but familiar looking businessman."
@@ -57,14 +57,8 @@ end
 msg = {}
 msg[1] = "MISSION FAILED!!!! You killed your Rendezvous."
 
---[[
-
-After the texts follow the functions.
-There are bascially two types, those defined inside this file and the API functions.]]--
 
 function create ()
-   -- This will get called when the conditions in mission.xml are met (or when the mission is initiated from another script).
-   -- It is used to set up mission variables.
 
    -- Get the planet and system at which we currently are.
    startworld, startworld_sys = planet.cur()
@@ -73,36 +67,24 @@ function create ()
    targetworld_sys = system.get("Haven")
    fake_targetworld_sys = system.get("Alteris")
 
-   -- IMPORTANT: system claiming
-   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
-   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
-   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
-   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
-   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
    if not misn.claim ( {targetworld_sys} ) then
-      abort() -- Note: this assumes you have an abort() function in your script. You may also just use misn.finish() here.
+      abort()
    end
 
-   -- Set a reward. This is just a useful variable, nothing special.
    reward = 10000
+
+   -- Used later to determine all mercenaries were killed
    dead_pilots = 0
-   -- Set stuff up for the bar.
-   -- Give our NPC a name and a portrait.
+
    misn.setNPC( npc_name, "neutral/unique/shifty_merchant" )
-   -- Describe what the user should see when they click on the NPC in the bar.
    misn.setDesc( bar_desc )
 end
 
 
 function accept ()
-  
-   -- Some background mission text
+ 
    tk.msg( title, pre_accept[1] )
    tk.msg( title, string.format( pre_accept[2], player.name(), targetworld_sys:name(), fake_targetworld_sys:name() ) )
-
-   -- Show a yes/no dialog with a title and a text.
-   -- If the answer is no the following block will be executed.
-   -- In this case, misn.finish(), it ends the mission without changing its status.
 
    if not tk.yesno( title, pre_accept[3] ) then
 
@@ -111,26 +93,14 @@ function accept ()
       misn.finish()
    end
 
-   -- Set up mission information for the onboard computer and OSD.
-   -- The OSD Title takes up to 11 signs.
    misn.setTitle( title )
-
-   -- Reward is only visible in the onboard computer.
    misn.setReward( string.format( reward_desc, reward ) )
-
-   -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setDesc( string.format( misn_desc, targetworld_sys:name(), fake_targetworld_sys:name() ) )
 
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
    landmarker = misn.markerAdd( targetworld_sys, "low")
 
-
-   -- Add mission
-   -- At this point the mission gets added to the players active missions.
    misn.accept()
 
-   -- Create a windows that show up after the player has accepted.
-   -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld_sys:name(), fake_targetworld_sys:name() ) )
 
    -- Set OSD after accpeting the mission
@@ -140,45 +110,39 @@ function accept ()
    misn.osdCreate( OSDtitle1, OSDtable1 )
    misn.osdActive(1)
 
-   
 
--- Uncomment  this line to reveal the planet Samson is in.
---   tk.msg( title, targetworld:name() )
-
-   -- Set up hooks.
-   -- These will be called when a certain situation occurs ingame..
    hook.land("land")
    hook.jumpin("jumpin")
    hook.jumpout("jumpout")
 end
 
-   -- The function specified in the above hook.
 function land ()
+
+   -- If you land on start planet and have defeated mercenaries
    if planet.cur() == startworld and victorious then
        
-      -- Pop up a window that tells the player they finished the mission and got their reward.
       tk.msg( title,  string.format(misn_accomplished, startworld:name() ) )
-
-      -- Mark the mission as successfully finished.
       misn.finish(true)   
    end 
  
 end
 
---If you manage to escape you still win
 function jumpout()
+
+   -- If you manage to escape you still win.
    if system.cur() == targetworld_sys and hailed then
       completeOSDSet()
       victorious = true   
    end
 
+   -- If you jump out before accepting hail, osd returns to first point.
    if system.cur() == targetworld_sys and not hailed then
        misn.osdActive(1)
    end
 
 end
 
--- Moves to the next point upon jumping into target system
+-- Moves to the next point on OSD upon jumping into target system
 function jumpin ()
    if system.cur() == targetworld_sys and not hailed then
       misn.osdActive(2)
@@ -186,68 +150,69 @@ function jumpin ()
    end
 end
 
--- Spawn pilot function
+
+-- Spawn pilots function
 function spawn_pilots()
    
    from_system = system.get("Daled")  
 
-   pilot1 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")
-   pilot1[1]:rename("Rendezvous")
-   pilot1[1]:setHilight( true )
-   pilot1[1]:addOutfit("Laser Turret MK1", 2)
-   pilot1[1]:addOutfit("Laser Turret MK2", 1)
-   pilot1[1]:addOutfit("Gauss Gun", 2)
-   pilot1[1]:control()
-   pilot1[1]:follow(player.pilot())
-   hook.pilot( pilot1[1], "death", "pilot_death" )
-   hook.pilot( pilot1[1], "attacked", "pilot_attacked")
+   pilot1 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")[1]
+   pilot1:rename("Rendezvous")
+   pilot1:setHilight( true )
+   pilot1:addOutfit("Laser Turret MK1", 2)
+   pilot1:addOutfit("Laser Turret MK2", 1)
+   pilot1:addOutfit("Gauss Gun", 2)
+   pilot1:control()
+   pilot1:follow(player.pilot())
+   hook.pilot( pilot1, "death", "pilot_death" )
+   hook.pilot( pilot1, "attacked", "pilot_attacked")
 
-   pilot2 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")
-   pilot2[1]:rename("Rendezvous")
-   pilot2[1]:setHilight( true )
-   pilot2[1]:addOutfit("Laser Turret MK1", 2)
-   pilot2[1]:addOutfit("Laser Turret MK2", 1)
-   pilot2[1]:addOutfit("Gauss Gun", 2)
-   pilot2[1]:control()
-   pilot2[1]:follow(player.pilot())
-   hook.pilot( pilot2[1], "death", "pilot_death" ) 
-   hook.pilot( pilot2[1], "attacked", "pilot_attacked")
+   pilot2 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")[1]
+   pilot2:rename("Rendezvous")
+   pilot2:setHilight( true )
+   pilot2:addOutfit("Laser Turret MK1", 2)
+   pilot2:addOutfit("Laser Turret MK2", 1)
+   pilot2:addOutfit("Gauss Gun", 2)
+   pilot2:control()
+   pilot2:follow(player.pilot())
+   hook.pilot( pilot2, "death", "pilot_death" ) 
+   hook.pilot( pilot2, "attacked", "pilot_attacked")
 
-   pilot3 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")
-   pilot3[1]:rename("Rendezvous")
-   pilot3[1]:setHilight( true )
-   pilot3[1]:addOutfit("Laser Turret MK1", 2)
-   pilot3[1]:addOutfit("Laser Turret MK2", 1)
-   pilot3[1]:addOutfit("Gauss Gun", 2)
-   pilot3[1]:control()
-   pilot3[1]:follow(player.pilot())
-   hook.pilot( pilot3[1], "death", "pilot_death" )
-   hook.pilot( pilot3[1], "attacked", "pilot_attacked")
+   pilot3 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")[1]
+   pilot3:rename("Rendezvous")
+   pilot3:setHilight( true )
+   pilot3:addOutfit("Laser Turret MK1", 2)
+   pilot3:addOutfit("Laser Turret MK2", 1)
+   pilot3:addOutfit("Gauss Gun", 2)
+   pilot3:control()
+   pilot3:follow(player.pilot())
+   hook.pilot( pilot3, "death", "pilot_death" )
+   hook.pilot( pilot3, "attacked", "pilot_attacked")
 
-   pilot1[1]:hailPlayer()
-   hailing = hook.pilot(pilot1[1], "hail","hailme")
+   pilot1:hailPlayer()
+   hailing = hook.pilot(pilot1, "hail","hailme")
 
 end
 
 --If you attack the pilots before answering the hail, they will defend themselves
 function pilot_attacked()
-   if pilot1[1]:exists() then
-      pilot1[1]:control()
-      pilot1[1]:setHostile(true)
-      pilot1[1]:attack(player.pilot())
-      pilot1[1]:hailPlayer(false)
+   if pilot1:exists() then
+      pilot1:control()
+      pilot1:setHostile(true)
+      pilot1:attack(player.pilot())
+      pilot1:hailPlayer(false)
    end
   
-   if pilot2[1]:exists() then
-      pilot2[1]:control()
-      pilot2[1]:setHostile(true)
-      pilot2[1]:attack(player.pilot())
+   if pilot2:exists() then
+      pilot2:control()
+      pilot2:setHostile(true)
+      pilot2:attack(player.pilot())
    end
    
-   if pilot3[1]:exists() then
-      pilot3[1]:control()
-      pilot3[1]:setHostile(true)
-      pilot3[1]:attack(player.pilot())
+   if pilot3:exists() then
+      pilot3:control()
+      pilot3:setHostile(true)
+      pilot3:attack(player.pilot())
    end
 
 end
@@ -259,16 +224,19 @@ function hailme()
     pilot_attacked()
 end
 
---Executes if you kill him
 function pilot_death()
+
+   -- If you kill a pilot before accepting the hail, you fail the mission.
    if not hailed then
       fail(1)
    end
    
+   -- Counts how many pilots have been killed
    if dead_pilots < 3 then
       dead_pilots = dead_pilots + 1
    end
 
+   -- If all three pilots killed, you succeed.
    if hailed and dead_pilots == 3 then
       completeOSDSet()
       victorious = true
@@ -281,12 +249,11 @@ function fail(param)
    misn.finish( false )
 end
 
--- This will be called when the player aborts the mission in the onboard computer.
 function abort ()
-   -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
    misn.finish( false )
 end
 
+--This function handles moving the OSD and map marker.
 function completeOSDSet()
    misn.osdDestroy ()
    OSDtable2[1] = OSDdesc21:format( targetworld_sys:name() )

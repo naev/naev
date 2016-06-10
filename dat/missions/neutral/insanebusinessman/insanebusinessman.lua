@@ -2,13 +2,13 @@
 
 
 
--- localization stuff, translators would work here
+-- For Translations
 lang = naev.lang()
-if lang == "es" then -- Spanish version of the texts would follow
-elseif lang == "de" then -- German version of the texts would follow 
-else -- default English text
+if lang == "es" then
+elseif lang == "de" then 
+else
 
---[[This section is used to define lots of variables holding all the various texts. ]]--
+--[[Text of mission]]--
 
 npc_name = "A Businessman"
 bar_desc = "A disheveled but familiar looking businessman."
@@ -60,55 +60,28 @@ OSDtable = {}
 
 end
 
-
-
---[[
-After the texts follow the functions.
-There are bascially two types, those defined inside this file and the API functions.
-]]--
-
 function create ()
-   -- This will get called when the conditions in mission.xml are met (or when the mission is initiated from another script).
-   -- It is used to set up mission variables.
 
-   -- Get the planet and system at which we currently are.
    startworld, startworld_sys = planet.cur()
 
-   -- Set our target system and planet.
    targetworld_sys = system.get("Cygnus")
    targetworld = planet.get("Jaan")
 
-   -- IMPORTANT: system claiming
-   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
-   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
-   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
-   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
-   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
    if not misn.claim ( {targetworld_sys} ) then
-      abort() -- Note: this assumes you have an abort() function in your script. You may also just use misn.finish() here.
+      abort()
    end
 
-   -- Set a reward. This is just a useful variable, nothing special.
    reward = 10000
 
-   -- Set stuff up for the bar.
-   -- Give our NPC a name and a portrait.
    misn.setNPC( npc_name, "neutral/unique/shifty_merchant" )
-   -- Describe what the user should see when they click on the NPC in the bar.
    misn.setDesc( bar_desc )
 end
 
 
 function accept ()
 
-   -- Introductory text when you approach the NPC
-
    tk.msg( title, pre_accept[1] )
    tk.msg( title, string.format( pre_accept[2], targetworld:name() ) )
-
-   -- Show a yes/no dialog with a title and a text.
-   -- If the answer is no the following block will be executed.
-   -- In this case, misn.finish(), it ends the mission without changing its status.
 
    if not tk.yesno( title, string.format( pre_accept[3], targetworld:name(), targetworld_sys:name() ) ) then
 
@@ -117,55 +90,37 @@ function accept ()
       misn.finish()
    end
 
-   -- Set up mission information for the onboard computer and OSD.
-   -- The OSD Title takes up to 11 signs.
    misn.setTitle( title )
-
-   -- Reward is only visible in the onboard computer.
    misn.setReward( string.format( reward_desc, reward ) )
-
-   -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
+
    landmarker = misn.markerAdd( targetworld_sys, "low")
 
-
-   -- Add mission
-   -- At this point the mission gets added to the players active missions.
    misn.accept()
 
-   -- Create a windowa that shows up after the player has accepted.
-   -- Useful to explain further details.
    tk.msg( title, string.format( post_accept[1], targetworld:name() ) )
 
-   -- Set OSD after accpeting the mission
     OSDtable[1] = OSDdesc1:format( targetworld:name(), targetworld_sys:name() )
     OSDtable[2] = OSDdesc2:format( startworld:name(), startworld_sys:name() )
     misn.osdCreate( OSDtitle, OSDtable )
 
-
-   -- Set up hooks.
-   -- These will be called when a certain situation occurs ingame.
-   -- See http://api.naev.org/modules/hook.html for further hooks.
    hook.land("land")
    hook.takeoff("takeoff")
 end
 
-   -- The function specified in the above hook.
 function land ()
-   -- Are we back home and have we investigated the protesters?
-   if planet.cur() == startworld and finished then
-      -- Give the player their reward.
-      player.pay( reward )
 
-      -- Pop up a window that tells the player they finished the mission and got their reward.
+   -- Are we back home and have we landed on target planet at least once?
+   if planet.cur() == startworld and finished then
+
+      player.pay( reward )
       tk.msg( title, string.format(misn_accomplished, reward) )
 
-      -- Mark the mission as successfully finished.
       misn.finish(true)
+
    end
    
-    -- Are we at the target planet? What do we see there.
+    -- Checks to see if at target planet but has not landed there already.
     if planet.cur() == targetworld and not finished then
       tk.msg( title, string.format(misn_investigate) )
       finished = true
@@ -175,17 +130,13 @@ function land ()
 
 end
 
--- The takeoff hook function. Sets OSD. 
 function takeoff ()
    if finished then
       misn.osdActive(2)
    end
 end
 
-
--- This will be called when the player aborts the mission in the onboard computer.
 function abort ()
-   -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
    misn.finish( false )
 end
 
