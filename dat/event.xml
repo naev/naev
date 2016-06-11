@@ -200,7 +200,7 @@
    <unique />
   </flags>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>50</chance>
   <cond>player.misnDone("Insane Businessman Part 3") == true and system.cur():name() == "Mason"</cond>
  </event>
 </Events>
