@@ -194,4 +194,13 @@
   <chance>15</chance>
   <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
  </event>
+ <event name="Insane Businessman">
+  <lua>neutral/insanebusinessman</lua>
+  <flags>
+   <unique />
+  </flags>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>player.misnDone("Insane Businessman Part 3") == true and system.cur():name() == "Mason"</cond>
+ </event>
 </Events>
