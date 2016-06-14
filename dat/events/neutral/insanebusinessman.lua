@@ -26,7 +26,7 @@ function create ()
    spawn_pilot()
 
    hook.land("land")
-   hook.jumpin("jumpout")
+   hook.jumpout("jumpout")
 end
 
 function land()

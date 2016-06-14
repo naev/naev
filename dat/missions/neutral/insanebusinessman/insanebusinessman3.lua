@@ -106,7 +106,6 @@ function accept ()
 
    tk.msg( title, string.format( post_accept[1], targetworld_sys:name(), fake_targetworld_sys:name() ) )
 
-   -- Set OSD after accpeting the mission
    OSDtable1[1] = OSDdesc11:format( targetworld_sys:name() )
    OSDtable1[2] = OSDdesc12
    OSDtable1[3] = OSDdesc13:format( fake_targetworld_sys:name() )
