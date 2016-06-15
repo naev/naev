@@ -14,7 +14,7 @@ pre_accept = {}
 
 pre_accept[1] = [["Glad you could join me again,"says Crumb. "I think I know who's been feeding me the misinformation."]] 
 
-pre_accept[2] = [["A former associate of mine, Phillip Samson, has been hanging around the %s system. Find him and get him to talk. I know he's involved in the plots against me."]]
+pre_accept[2] = [["A former associate of mine, Phillip Samson, has been hanging around the %s system. I don't know what planet, that's something for you to find out. Find him and get him to talk. I know he's involved in the plots against me."]]
 
 pre_accept[3] = [[If there even are plots against him, you can't help but think. Do you accept the mission?]]
 
@@ -135,19 +135,17 @@ function accept ()
 -- Uncomment  this line to reveal the planet Samson is in.
 --   tk.msg( title, targetworld:name() )
 
-   hook.land("land")
-   hook.takeoff("takeoff")
-   hook.jumpin("jumpin")
+   landhook = hook.land("land")
+   takeoffhook = hook.takeoff("takeoff")
+   jumpinhook = hook.jumpin("jumpin")
 end
 
 function land ()
    -- Are we at our destination and did we find Samson?
    if planet.cur() == startworld and interrogated then
-      
       player.pay( reward )
       tk.msg( title, string.format(misn_accomplished) )
-      misn.finish(true)
-
+      abort(true,nil)
    end
    
     -- First time we land on secret planet. Samson escapes..
@@ -158,13 +156,12 @@ function land ()
     
    -- If the pilot has spawned and the player lands on a planet before boarding it, the mission fails. 
    if found and spawned and not interrogated then
-      fail(1)
+      abort(true,1)
    end
 
 end
 
 function takeoff ()
-   
    -- Make sure player landed on planet but pilot has not spawned yet. Set OSD. Spawn pilot. 
    if system.cur() == targetworld_sys and found and not spawned then
       OSDtable2[1] = OSDdesc3
@@ -172,6 +169,7 @@ function takeoff ()
       misn.osdCreate( OSDtitle2, OSDtable2 )
       spawn_pilot()
       spawned = true
+      hook.rm(takeoffhook)
    end
 end
 
@@ -183,7 +181,7 @@ function jumpin ()
 
    -- Player has landed on planet and pilot has spawned. If player leaves system, mission fails. 
    if found and spawned and not interrogated then
-      fail(1) 
+      abort(false,1)
    end
       
 end
@@ -195,9 +193,9 @@ function spawn_pilot()
    samson:control()
    samson:runaway( player.pilot(), false )
    samson:setHilight( true )
-   hook.pilot( samson, "jump", "pilot_jump" )
-   hook.pilot( samson, "death", "pilot_death" )
-   hook.pilot( samson, "board", "pilot_board")
+   pilotjumphook = hook.pilot( samson, "jump", "pilot_jump" )
+   pilotdeathhook = hook.pilot( samson, "death", "pilot_death" )
+   pilotboardhook = hook.pilot( samson, "board", "pilot_board")
 end
 
 
@@ -209,24 +207,35 @@ function pilot_board()
    misn.osdCreate( OSDtitle3, OSDtable3 )   
    interrogated = true
    misn.markerMove(landmarker, startworld_sys)
+   hook.rm(pilotboardhook)
 end
 
 --Executes if pilot jumps out of system
 function pilot_jump ()
    if not interrogated then
-      fail(1)
+      abort(false,1)
    end
 end
 
 --Executes if you kill him before boarding
 function pilot_death()
    if not interrogated then
-      fail(2)
+      abort(false,2)
    end 
 end
 
 --Mission fail function.
-function fail(param)
-   player.msg( msg[param] )
-   misn.finish( false )
+function abort(status,param)
+   
+   hooks = { landhook, takeoffhook, jumpinhook, pilotjumphook, pilotdeathhook, pilotboardhook }
+   for _, j in ipairs( hooks ) do
+      if j ~= nil then
+         hook.rm(j)
+      end
+   end
+
+   if param then
+      player.msg( msg[param] )
+   end
+   misn.finish( status)
 end

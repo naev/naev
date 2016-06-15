@@ -59,7 +59,7 @@ end
 -- Messages
 msg = {}
 msg[1] = "MISSION FAILED!!!! You killed your Rendezvous."
-
+msg[2] = "BUG: Could not claim system."
 
 function create ()
 
@@ -71,7 +71,7 @@ function create ()
    fake_targetworld_sys = system.get("Alteris")
 
    if not misn.claim ( {targetworld_sys} ) then
-      misn.finish()
+      abort(false,2)
    end
 
    reward = 10000
@@ -93,7 +93,7 @@ function accept ()
 
       tk.msg( title, decline )
 
-      misn.finish()
+      abort(false,nil)
    end
 
    misn.setTitle( title )
@@ -113,9 +113,9 @@ function accept ()
    misn.osdActive(1)
 
 
-   hook.land("land")
-   hook.jumpin("jumpin")
-   hook.jumpout("jumpout")
+   landhook = hook.land("land")
+   jumpouthook = hook.jumpout("jumpout")
+   jumpinhook = hook.jumpin("jumpin")
 end
 
 function land ()
@@ -124,7 +124,7 @@ function land ()
    if planet.cur() == startworld and victorious then
        
       tk.msg( title,  string.format(misn_accomplished, startworld:name() ) )
-      misn.finish(true)   
+      abort(true,nil)   
    end 
  
 end
@@ -134,7 +134,7 @@ function jumpout()
    -- If you manage to escape you still win.
    if system.cur() == targetworld_sys and hailed then
       completeOSDSet()
-      victorious = true   
+      victorious = true
    end
 
    -- If you jump out before accepting hail, osd returns to first point.
@@ -151,7 +151,7 @@ function jumpin ()
       pilot.clear()
       pilot.toggleSpawn(false)
       spawn_pilots()
-      hook.timer(3000, "timer")
+      timerhook = hook.timer(3000, "timer")
    end
 end
 
@@ -161,8 +161,9 @@ function timer()
    distance = player_pos:dist(pilot1_pos)
    if distance < 3500 then
       pilot1:hailPlayer()
+      hook.rm(timerhook)
       hailing = hook.pilot(pilot1, "hail","hailme")
-   else hook.timer(3000,"timer")
+   else timerhook = hook.timer(3000, "timer")
    end   
 end
 
@@ -175,30 +176,31 @@ function spawn_pilots()
    pilot1:rename("Rendezvous")
    pilot1:setHilight( true )
    pilot1:control()
-   hook.pilot( pilot1, "death", "pilot_death" )
-   hook.pilot( pilot1, "attacked", "pilot_attacked", pilot1)
+   deathhook1 = hook.pilot( pilot1, "death", "pilot_death" )
+   attackhook1 = hook.pilot( pilot1, "attacked", "pilot_attacked")
 
    pilot2 = pilot.addRaw( "Admonisher", "mercenary" , from_planet , "Dummy")[1]
    pilot2:rename("Rendezvous")
    pilot2:setHilight( true )
    pilot2:control()
-   hook.pilot( pilot2, "death", "pilot_death" ) 
-   hook.pilot( pilot2, "attacked", "pilot_attacked", pilot2)
+   deathhook2 = hook.pilot( pilot2, "death", "pilot_death" ) 
+   attackhook2 = hook.pilot( pilot2, "attacked", "pilot_attacked")
 
    pilot3 = pilot.addRaw( "Admonisher", "mercenary" , from_planet , "Dummy")[1]
    pilot3:rename("Rendezvous")
    pilot3:setHilight( true )
    pilot3:control()
-   hook.pilot( pilot3, "death", "pilot_death" )
-   hook.pilot( pilot3, "attacked", "pilot_attacked", pilot3)
+   
+   deathhook3 = hook.pilot( pilots, "death", "pilot_death" )
+   attackhook3 = hook.pilot( pilots, "attacked", "pilot_attacked")
 
 end
 
 --If you attack the pilots before answering the hail, they will defend themselves.
 --This is also the function that executes after the hail, setting the pilots hostile.
-function pilot_attacked(merc)
+function pilot_attacked()
 
-   if not merc:hostile() then
+   if not pilot1:hostile() then
 
       if pilot1:exists() then
          pilot1:control()
@@ -218,6 +220,11 @@ function pilot_attacked(merc)
          pilot3:setHostile(true)
          pilot3:attack(player.pilot())
       end
+      
+      hook.rm(attackhook1)
+      hook.rm(attackhook2)
+      hook.rm(attackhook3)
+     
    end
 end
 
@@ -225,6 +232,7 @@ function hailme()
     player.commClose()
     tk.msg(rendezvous_title, string.format(rendezvous_msg, player.name()))
     hailed = true
+    hook.rm(hailing)
     pilot_attacked(pilot1)
 end
 
@@ -232,7 +240,7 @@ function pilot_death()
 
    -- If you kill a pilot before accepting the hail, you fail the mission.
    if not hailed then
-      fail(1)
+      abort(false,1)
    end
    
    -- Counts how many pilots have been killed
@@ -244,13 +252,26 @@ function pilot_death()
    if hailed and dead_pilots == 3 then
       completeOSDSet()
       victorious = true
+      hook.rm(deathhook1)
+      hook.rm(deathhook2)
+      hook.rm(deathhook3)   
    end 
 end
 
 --Mission fail function
-function fail(param)
-   player.msg( msg[param] )
-   misn.finish( false )
+function abort(status,param)
+   if param then
+      player.msg( msg[param] )
+   end
+
+   hooks = { landhook, jumpouthook, jumpinhook, timerhook, hailing, attackhook1, attackhook2, attackhook3, deathhook1, deathhook2, deathhook3 }
+   for _, j in ipairs( hooks ) do
+      if j ~= nil then
+         hook.rm(j)
+      end
+   end
+
+   misn.finish( status )
 end
 
 --This function handles moving the OSD and map marker.

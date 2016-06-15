@@ -68,7 +68,7 @@ function create ()
    targetworld = planet.get("Jaan")
 
    if not misn.claim ( {targetworld_sys} ) then
-      msn.finish()
+      abort(false)
    end
 
    reward = 10000
@@ -87,7 +87,7 @@ function accept ()
 
       tk.msg( title, decline )
 
-      misn.finish()
+      abort(false)
    end
 
    misn.setTitle( title )
@@ -104,8 +104,8 @@ function accept ()
     OSDtable[2] = OSDdesc2:format( startworld:name(), startworld_sys:name() )
     misn.osdCreate( OSDtitle, OSDtable )
 
-   hook.land("land")
-   hook.takeoff("takeoff")
+   landhook = hook.land("land")
+   takeoffhook = hook.takeoff("takeoff")
 end
 
 function land ()
@@ -115,8 +115,9 @@ function land ()
 
       player.pay( reward )
       tk.msg( title, string.format(misn_accomplished, reward) )
-
-      misn.finish(true)
+      
+      
+      abort(true)
 
    end
    
@@ -134,4 +135,10 @@ function takeoff ()
    if finished then
       misn.osdActive(2)
    end
+end
+
+function abort(status)
+   hook.rm(landhook)
+   hook.rm(takeoffhook)   
+   misn.finish(status)
 end
