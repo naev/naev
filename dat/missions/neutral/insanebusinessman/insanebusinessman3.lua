@@ -148,82 +148,84 @@ end
 function jumpin ()
    if system.cur() == targetworld_sys and not hailed then
       misn.osdActive(2)
+      pilot.clear()
+      pilot.toggleSpawn(false)
       spawn_pilots()
+      hook.timer(3000, "timer")
    end
 end
 
+function timer()
+   pilot1_pos = pilot1:pos()
+   player_pos = player.pilot():pos()
+   distance = player_pos:dist(pilot1_pos)
+   if distance < 3500 then
+      pilot1:hailPlayer()
+      hailing = hook.pilot(pilot1, "hail","hailme")
+   else hook.timer(3000,"timer")
+   end   
+end
 
 -- Spawn pilots function
 function spawn_pilots()
    
-   from_system = system.get("Daled")  
+   from_planet = planet.get("Haven")  
 
-   pilot1 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")[1]
+   pilot1 = pilot.addRaw( "Admonisher", "mercenary" , from_planet , "Dummy")[1]
    pilot1:rename("Rendezvous")
    pilot1:setHilight( true )
-   pilot1:addOutfit("Laser Turret MK1", 2)
-   pilot1:addOutfit("Laser Turret MK2", 1)
-   pilot1:addOutfit("Gauss Gun", 2)
    pilot1:control()
-   pilot1:follow(player.pilot())
    hook.pilot( pilot1, "death", "pilot_death" )
-   hook.pilot( pilot1, "attacked", "pilot_attacked")
+   hook.pilot( pilot1, "attacked", "pilot_attacked", pilot1)
 
-   pilot2 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")[1]
+   pilot2 = pilot.addRaw( "Admonisher", "mercenary" , from_planet , "Dummy")[1]
    pilot2:rename("Rendezvous")
    pilot2:setHilight( true )
-   pilot2:addOutfit("Laser Turret MK1", 2)
-   pilot2:addOutfit("Laser Turret MK2", 1)
-   pilot2:addOutfit("Gauss Gun", 2)
    pilot2:control()
-   pilot2:follow(player.pilot())
    hook.pilot( pilot2, "death", "pilot_death" ) 
-   hook.pilot( pilot2, "attacked", "pilot_attacked")
+   hook.pilot( pilot2, "attacked", "pilot_attacked", pilot2)
 
-   pilot3 = pilot.addRaw( "Admonisher", "mercenary" , from_system , "Dummy")[1]
+   pilot3 = pilot.addRaw( "Admonisher", "mercenary" , from_planet , "Dummy")[1]
    pilot3:rename("Rendezvous")
    pilot3:setHilight( true )
-   pilot3:addOutfit("Laser Turret MK1", 2)
-   pilot3:addOutfit("Laser Turret MK2", 1)
-   pilot3:addOutfit("Gauss Gun", 2)
    pilot3:control()
-   pilot3:follow(player.pilot())
    hook.pilot( pilot3, "death", "pilot_death" )
-   hook.pilot( pilot3, "attacked", "pilot_attacked")
-
-   pilot1:hailPlayer()
-   hailing = hook.pilot(pilot1, "hail","hailme")
+   hook.pilot( pilot3, "attacked", "pilot_attacked", pilot3)
 
 end
 
---If you attack the pilots before answering the hail, they will defend themselves
-function pilot_attacked()
-   if pilot1:exists() then
-      pilot1:control()
-      pilot1:setHostile(true)
-      pilot1:attack(player.pilot())
-      pilot1:hailPlayer(false)
-   end
-  
-   if pilot2:exists() then
-      pilot2:control()
-      pilot2:setHostile(true)
-      pilot2:attack(player.pilot())
-   end
-   
-   if pilot3:exists() then
-      pilot3:control()
-      pilot3:setHostile(true)
-      pilot3:attack(player.pilot())
-   end
+--If you attack the pilots before answering the hail, they will defend themselves.
+--This is also the function that executes after the hail, setting the pilots hostile.
+function pilot_attacked(merc)
 
+   if not merc:hostile() then
+
+      if pilot1:exists() then
+         pilot1:control()
+         pilot1:setHostile(true)
+         pilot1:attack(player.pilot())
+         pilot1:hailPlayer(false)
+      end
+  
+      if pilot2:exists() then
+         pilot2:control()
+         pilot2:setHostile(true)
+         pilot2:attack(player.pilot())
+      end
+   
+      if pilot3:exists() then
+         pilot3:control()
+         pilot3:setHostile(true)
+         pilot3:attack(player.pilot())
+      end
+   end
 end
 
 function hailme()
     player.commClose()
     tk.msg(rendezvous_title, string.format(rendezvous_msg, player.name()))
     hailed = true
-    pilot_attacked()
+    pilot_attacked(pilot1)
 end
 
 function pilot_death()
@@ -254,7 +256,7 @@ end
 --This function handles moving the OSD and map marker.
 function completeOSDSet()
    misn.osdDestroy ()
-   OSDtable2[1] = OSDdesc21:format( targetworld_sys:name() )
+   OSDtable2[1] = OSDdesc21:format( startworld_sys:name() )
    misn.osdCreate( OSDtitle2, OSDtable2 )
    misn.markerMove(landmarker, startworld_sys)
 end
