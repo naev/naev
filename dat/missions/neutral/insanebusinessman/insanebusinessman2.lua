@@ -7,8 +7,8 @@ else
 
 --[[Mission Text]]--
 
-npc_name = "A Businessman"
-bar_desc = "A disheveled but familiar looking businessman."
+npc_name = "Mr. Crumb"
+bar_desc = "Mr. Crumb, the notorious businessman."
 title = "Insane Businessman Part 2"
 pre_accept = {}
 
