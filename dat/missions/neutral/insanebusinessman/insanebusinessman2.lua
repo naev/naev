@@ -51,7 +51,7 @@ misn_accomplished = [[Once again, Crumb impatiently waits for you at the spacepo
 ]]
 
 board_title = [[Samson's Ship]]
-board_msg = [[You board Samson's ship and find him cowering in a corner, fumbling with a blaster gun. "Please don't hurt me!" Samson pleads as he drops the blaster and raises him hands. 
+board_msg = [[You board Samson's ship and find him cowering in a corner, fumbling with a blaster gun. "Please don't hurt me!" Samson pleads as he drops the blaster and raises his hands. 
 
 "I'm not going to hurt you," you reply, "I just want information." 
 
