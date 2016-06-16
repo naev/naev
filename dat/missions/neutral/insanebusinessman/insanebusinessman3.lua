@@ -15,34 +15,34 @@ bar_desc = "A disheveled but familiar looking businessman."
 title = "Insane Businessman Part 3"
 pre_accept = {}
 
-pre_accept[1] = [["Thank you for speaking to me again,"says Crumb. "I have a really important mission for you."]] 
+pre_accept[1] = [["Thank you for speaking to me again,"says Crumb. "Don't feel bad you haven't discovered anything. Not all of us can be great pilots." With a stern look on his face, Crumb continues, "Another pilot has achieved what you could not, %s, he has gotten me information about a plot to kill me. That's ok. Your job now is to rendezvous with this pilot and his two associates in the uninhabited %s system. From there all four of you will travel to %s and await further instructions. Look for your rendezvous near the planet %s."]]
 
-pre_accept[2] = [[With a stern look on his face, Crumb begins to speak, "Another pilot has achieved what you could not, %s, he has gotten me information about a plot to kill me. That's ok. Your job now is to rendezvous with this pilot and his two associates in the uninhabited %s system. From there all four of you will travel to %s and await further instructions. I guarantee, once all this is over, you will be very happy...eh, financially..."]]
+pre_accept[2] = [[You think to yourself that you usually work alone.
 
-pre_accept[3] = [[You think to yourself that you usually work alone. Do you take the mission anyway?]]
+Do you take the mission anyway?]]
 
 decline = [["Ah, well some other time maybe..."]]
 
-misn_desc = "Fly to the %s system and find the rendezvous. Once you find him, fly to %s and await further instructions."
+misn_desc = "Fly to the %s system and find the rendezvous. Once you find him, fly to the %s system and await further instructions."
 reward_desc = "%s credits on completion."
 post_accept = {}
-post_accept[1] = [["Rendezvous with your contact in %s then fly to the %s and await further instructions."]]
+post_accept[1] = [["Rendezvous with your contact in %s then fly to the %s system and await further instructions."]]
 
-misn_accomplished = [[You land back in %s but find Crumb a difficult person to locate. He must have fled knowing that you defeated his mercenaries. However he couldn't have gone far...]]
+misn_accomplished = [[You land back in %s but Crumb is a difficult person to find. He must have fled knowing that you defeated his mercenaries. However he couldn't have gone far...]]
 
 rendezvous_title = [[Rendezvous]]
-rendezvous_msg = [["%s! We've been waiting for you." says a voice over the comm. 
+rendezvous_msg = [["%s! We've been waiting for you." says the voice over the comm. 
 
 "Great. Let's get going."
 
-"In a minute. There's been a slight change of plans. Mr Crumb has decided your services are no longer necessary. Sorry about this, just business"
+"In a minute. There's been a slight change of plans. Mr Crumb has decided that your services are no longer necessary. Sorry about this, pal, it's  just business"
 
 click!
 ]]
 
 -- OSD
 
-OSDtitle1 = "Find Crumb's Rendezvous"
+OSDtitle1 = "Find your Rendezvous"
 OSDdesc11 = "Go to the %s system."
 OSDdesc12 = "Find rendezvous."
 OSDdesc13 = "Go to the %s system and await orders."
@@ -58,7 +58,7 @@ end
 
 -- Messages
 msg = {}
-msg[1] = "MISSION FAILED!!!! You killed your Rendezvous."
+msg[1] = "MISSION FAILED!!!! Don't attack your rendezvous!"
 msg[2] = "BUG: Could not claim system."
 
 function create ()
@@ -68,6 +68,7 @@ function create ()
 
    -- Set our target system and planet.
    targetworld_sys = system.get("Haven")
+   targetworld = planet.get("Haven")
    fake_targetworld_sys = system.get("Alteris")
 
    if not misn.claim ( {targetworld_sys} ) then
@@ -86,10 +87,9 @@ end
 
 function accept ()
  
-   tk.msg( title, pre_accept[1] )
-   tk.msg( title, string.format( pre_accept[2], player.name(), targetworld_sys:name(), fake_targetworld_sys:name() ) )
+   tk.msg( title, string.format( pre_accept[1], player.name(), targetworld_sys:name(), fake_targetworld_sys:name(), targetworld:name() ) )
 
-   if not tk.yesno( title, pre_accept[3] ) then
+   if not tk.yesno( title, pre_accept[2] ) then
 
       tk.msg( title, decline )
 
@@ -133,7 +133,6 @@ function jumpout()
 
    -- If you manage to escape you still win.
    if system.cur() == targetworld_sys and hailed then
-      completeOSDSet()
       victorious = true
    end
 
@@ -190,7 +189,6 @@ function spawn_pilots()
    pilot3:rename("Rendezvous")
    pilot3:setHilight( true )
    pilot3:control()
-   
    deathhook3 = hook.pilot( pilots, "death", "pilot_death" )
    attackhook3 = hook.pilot( pilots, "attacked", "pilot_attacked")
 
@@ -199,7 +197,6 @@ end
 --If you attack the pilots before answering the hail, they will defend themselves.
 --This is also the function that executes after the hail, setting the pilots hostile.
 function pilot_attacked()
-
    if not pilot1:hostile() then
 
       if pilot1:exists() then
@@ -225,24 +222,22 @@ function pilot_attacked()
       hook.rm(attackhook2)
       hook.rm(attackhook3)
      
+      if not hailed then
+         abort(false,1)
+      end
    end
 end
 
 function hailme()
     player.commClose()
     tk.msg(rendezvous_title, string.format(rendezvous_msg, player.name()))
-    hailed = true
     hook.rm(hailing)
-    pilot_attacked(pilot1)
+    hailed = true
+    pilot_attacked()
+    completeOSDSet()
 end
 
 function pilot_death()
-
-   -- If you kill a pilot before accepting the hail, you fail the mission.
-   if not hailed then
-      abort(false,1)
-   end
-   
    -- Counts how many pilots have been killed
    if dead_pilots < 3 then
       dead_pilots = dead_pilots + 1
@@ -250,12 +245,19 @@ function pilot_death()
 
    -- If all three pilots killed, you succeed.
    if hailed and dead_pilots == 3 then
-      completeOSDSet()
       victorious = true
       hook.rm(deathhook1)
       hook.rm(deathhook2)
       hook.rm(deathhook3)   
    end 
+end
+
+--This function handles moving the OSD and map marker.
+function completeOSDSet()
+   misn.osdDestroy ()
+   OSDtable2[1] = OSDdesc21:format( startworld_sys:name() )
+   misn.osdCreate( OSDtitle2, OSDtable2 )
+   misn.markerMove(landmarker, startworld_sys)
 end
 
 --Mission fail function
@@ -272,12 +274,5 @@ function abort(status,param)
    end
 
    misn.finish( status )
-end
-
---This function handles moving the OSD and map marker.
-function completeOSDSet()
-   misn.osdDestroy ()
-   OSDtable2[1] = OSDdesc21:format( startworld_sys:name() )
-   misn.osdCreate( OSDtitle2, OSDtable2 )
-   misn.markerMove(landmarker, startworld_sys)
+   misn.osdDestroy()
 end

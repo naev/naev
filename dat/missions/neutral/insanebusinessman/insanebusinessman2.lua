@@ -12,41 +12,56 @@ bar_desc = "A disheveled but familiar looking businessman."
 title = "Insane Businessman Part 2"
 pre_accept = {}
 
-pre_accept[1] = [["Glad you could join me again,"says Crumb. "I think I know who's been feeding me the misinformation."]] 
+pre_accept[1] = [["Glad you could join me again,"says Crumb. "I'm gonna need you to do some more poking around."]] 
 
-pre_accept[2] = [["A former associate of mine, Phillip Samson, has been hanging around the %s system. I don't know what planet, that's something for you to find out. Find him and get him to talk. I know he's involved in the plots against me."]]
+pre_accept[2] = [["A former associate of mine, Phillip Samson, has been hanging around the %s system. I don't know what planet, that's something for you to find out. Find him and get him to talk. I know he's involved in the plots against me. Oh, and be sure to equip your ship with disabling weapons. He might get the drop on you and try to run. Samson knows I'm looking for him. But whatever you do, don't kill him, at least until he's talked he, he, he."]]
 
-pre_accept[3] = [[If there even are plots against him, you can't help but think. Do you accept the mission?]]
+pre_accept[3] = [["Does this sound like something you could do?" Accept the mission?]]
 
 decline = [["Ah, well some other time maybe..."]]
 
 misn_desc = "Fly to the %s system and find Samson. Once you find him, interrogate him and get him to talk."
 reward_desc = "%s credits on completion."
 post_accept = {}
-post_accept[1] = [["Find Samson in the %s system and get him to talk. I don't care how, just get me some information."]]
+post_accept[1] = [["Good, then find Samson in the %s system and get him to talk. I don't care how, just get me some real information."]]
 
-misn_investigate = [[You check out all the local hangouts that Crumb told you Samson patrons. Turning up nothing you think you're completely out of luck when at last fortune shines upon you. A nondescript bartender tells you that he knows Samson. He also tells you Samson knows you're looking for him as someone has tipped him off. He finally says Samson was headed to the spaceport and was planning on leaving the planet and system.]]
+misn_investigate = [[You check out all the local hangouts but turn up nothing. You think you're completely out of luck when at last fortune shines upon you. You're talking to one of your contacts when a man in a suit overhears you. 
 
-misn_accomplished = [[When you tell Crumb what Samson has told you Crumb is enraged. He takes a deep breath and immediately calms down. "Rubbish! Someone is trying to kill me and I'm going to find out who it is! Well, here's your credits."
+"Excuse me," he interrupts, "I know Mr. Samson. We ran a hedgefund together some years ago. Just had lunch with him as a matter of fact."
 
-Oh so now someone is trying to kill him, you can't help but think. Funny how things are progressing. 
+"You do? You did?" The words escape you before you can control yourself. Regaining your composure, you continue,"Tell me, where can I find him?"
 
-"I need you to do one more mission for me. Meet me at the bar," Crumb says, before storming off. 
+"Oh, you can't. He's leaving the planet. Told me someone was looking for him. What a character." The man chuckles not realizing you represent Mr. Crumb, and you both surely know Mr. Crumb means business.
+
+You rush over to the spaceport where you come accross some more good luck. You see a ship take off that matches the description of Samson's ship. You run the identification number through the database and confirm it is Samson. Catch Samson before he escapes!]]
+
+misn_accomplished = [[Once again, Crumb impatiently waits for you at the spaceport. "Well, what did you find out?" He asks, practically the moment you step off your ship.
+
+"Nothing," you say, "Apparently Samson knew nothing of a plot against you." 
+
+"Nothing?! Did you talk to him? What did he say?"
+
+"Well," you think twice about telling him what Samson said, but Crumb implores you. 
+
+"Tell me! I'm not paying you for nothing." It is true, Crumb is paying you to report on Samson. You may as well tell him the truth. 
+
+"Samson said there probably are no plots against you. He said you are paranoid."
+
+"Paranoid! That good for nothing, worthless, son of a...well whatever. Here are your credits. Meet me at the bar if you're interested in helping me uncover this plot to kill me."
 ]]
 
 board_title = [[Samson's Ship]]
-board_msg = [[You board Samson's ship. "Please don't hurt me!" Samson yells. 
+board_msg = [[You board Samson's ship and find him cowering in a corner, fumbling with a blaster gun. "Please don't hurt me!" Samson pleads as he drops the blaster and raises him hands. 
 
 "I'm not going to hurt you," you reply, "I just want information." 
 
-"What's there to say. Crumb is crazy. We used to be associates. We ran a business together. Selling and buying property. It's just that after..."
+"You want information? For Crumb? What can I say, I don't know anything. Crumb is crazy, he's paranoid!"
 
-"After what?," you inquire.
+"Go on," you demand.
 
-"There was an electrical fire at one of his hotels. Killed like three people.  The Empire went after him pretty hard for negligence. Ever since then he's progressively gotten more paranoid, alienating his friends and family. We used to be pretty close you know, but now...now, I think he's trying to kill me. Well, you can understand why I ran." 
+"Well, we used to be partners, friends even. Everything changed when an electrical fire killed three people in one of his hotels. After that, Crumb got paranoid and untrusting. It got even worse when the Empire investigated him for negligence. Now he sends people out to intimidate former associates, no offense." 
 
-Strange. Crumb thinks Samson is trying to ruin him, but Samson thinks Crumb sent you to kill him! Better return to Crumb and report this.
-]]
+"None taken," you reply and for some reason, you feel Samson's story is credible, at least if not more credible than Crumb's own conspiracies. Concluding that there is not much else to gain from this conversation you return to your ship wondering what it is you are going to tell Crumb.]]
 
 -- OSD
 
@@ -152,6 +167,7 @@ function land ()
    if planet.cur() == targetworld and not found then
       tk.msg( title, string.format(misn_investigate) )
       found = true
+      player.takeoff()      
    end
     
    -- If the pilot has spawned and the player lands on a planet before boarding it, the mission fails. 
@@ -238,4 +254,5 @@ function abort(status,param)
       player.msg( msg[param] )
    end
    misn.finish( status)
+   misn.osdDestroy()
 end
