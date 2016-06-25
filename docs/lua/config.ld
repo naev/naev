@@ -1,3 +1,5 @@
 dir = "../html"
 style = "./"
 template = "./"
+title = "Naev Lua API"
+project = "Naev Lua API"
