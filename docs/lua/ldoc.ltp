@@ -32,16 +32,6 @@ $(ldoc.include_file("header.ltp"))
 </ul>
 # end
 
-# --------- contents of module -------------
-# if module and not ldoc.no_summary and #module.items > 0 then
-<h2>Contents</h2>
-<ul>
-# for kind,items in module.kinds() do
-<li><a href="#$(no_spaces(kind))">$(kind)</a></li>
-# end
-</ul>
-# end
-
 
 # if ldoc.no_summary and module and not ldoc.one then -- bang out the functions on the side
 # for kind, items in module.kinds() do
