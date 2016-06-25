@@ -109,7 +109,7 @@ div.header, div.footer { margin-left: 0em; }
 	background-color: #ffffff;
 }
 
-#product h2 {
+#product big {
 	font-size: 2em;
 }
 
@@ -144,7 +144,7 @@ div.header, div.footer { margin-left: 0em; }
 	overflow:visible;
 }
 
-#navigation h1, #navigation h2 {
+#navigation h1 {
 	background-color:#e7e7e7;
 	font-size:1.1em;
 	color:#000000;
