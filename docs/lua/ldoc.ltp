@@ -11,13 +11,6 @@ $(ldoc.include_file("header.ltp"))
 
 <div id="container">
 
-<div id="product">
-	<div id="product_logo"></div>
-	<div id="product_name"><big><b></b></big></div>
-	<div id="product_description"></div>
-</div> <!-- id="product" -->
-
-
 <div id="main">
 
 # local no_spaces = ldoc.no_spaces
@@ -265,12 +258,14 @@ $(ldoc.include_file("header.ltp"))
 
 # else -- if module; project-level contents
 
+<div id="product">
 # if ldoc.description then
   <h2>$(M(ldoc.description,nil))</h2>
 # end
 # if ldoc.full_description then
-  <p>$(M(ldoc.full_description,nil))</p>
+  <div id="product_description">$(M(ldoc.full_description,nil))</div>
 # end
+</div>
 
 # for kind, mods in ldoc.kinds() do
 <h2>$(kind)</h2>
