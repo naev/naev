@@ -14,9 +14,9 @@ for F in ../src/nlua_*.c ../src/ai.c; do
 # Lines after @luafunc & @luamod will be ignored by Luadoc
 # Doxygen comments that do not contain any of these tags have no impact on
 # the Luadoc output.
-         s|^ *\* *@luafunc|function|p
+         s|^ *\* *@luafunc\(.*\)|function\1\nend|p
 # Rename some tags:
-         s|^ *\* *@brief|-- |p
+         s|^ *\* *@brief|--|p
          s|^ *\* *@luasee|-- @see|p
          s|^ *\* *@luaparam|-- @param|p
          s|^ *\* *@luareturn|-- @return|p #we accept both @luareturn & @return
