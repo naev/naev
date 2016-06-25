@@ -42,9 +42,20 @@ for F in ../src/nlua_*.c ../src/ai.c; do
          s|^ *\*|--|p
 # Delete everything else, just in case:
          d
-	 ' $F | awk 'BEGIN {RS="\n\n"}
-	             /\n-- @module/ {a=1}
-		     {if (a==1) print $0, "\n"}' > lua/"$(basename $F)".luadoc
+         ' $F | awk '
+         # This awk script removes all lines before @module, so LDoc will not
+         # implicitly declare the module and then produce an error when it is
+         # defined again by the @module command.
+         BEGIN {
+            RS="\n\n"
+         }
+         /\n-- @module/ {
+            a=1
+         }
+         {
+            if (a==1)
+               print $0, "\n"
+         }' > lua/"$(basename $F)".luadoc
 done
 
 # Run Luadoc, put HTML files into html/ dir
