@@ -13,6 +13,9 @@ tt {
     font-family: "Andale Mono", monospace; margin-left: 0em;
 }
 
+span.parameter { font-family:monospace; }
+span.parameter:after { content:":"; }
+
 body, td, th { font-size: 11pt; }
 
 h1, h2, h3, h4 { margin-left: 0em; }
