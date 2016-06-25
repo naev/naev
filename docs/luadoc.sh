@@ -7,7 +7,7 @@ test -d lua || mkdir lua
 # Convert Doxygen comments to Luadoc comments
 for F in ../src/nlua_*.c ../src/ai.c; do
    sed -n '
-         1 i -- This file was generated automatically from C sources to feed Luadoc.
+         1 i -- This file was generated automatically from C sources to feed LDoc.
 # Convert Doxygen /** to Luadoc ---
          s|^ */\*\* *$|---|p
 # Convert special tags to Lua expressions.
@@ -15,12 +15,12 @@ for F in ../src/nlua_*.c ../src/ai.c; do
 # Doxygen comments that do not contain any of these tags have no impact on
 # the Luadoc output.
          s|^ *\* *@luafunc|function|p
-         s|^ *\* *@luamod *\(.*\)|module "\1"|p
 # Rename some tags:
-         s|^ *\* *@brief|-- @description|p
+         s|^ *\* *@brief|-- |p
          s|^ *\* *@luasee|-- @see|p
          s|^ *\* *@luaparam|-- @param|p
          s|^ *\* *@luareturn|-- @return|p #we accept both @luareturn & @return
+         s|^ *\* *@luamod|-- @module|p
 # Keep tags Luadoc understands:
 #        s|^ *\* *@param|-- @param|p # use luaparam, param reserved for C arguments
 #        s|^ *\* *@see|-- @see|p # use luasee
@@ -42,12 +42,14 @@ for F in ../src/nlua_*.c ../src/ai.c; do
          s|^ *\*|--|p
 # Delete everything else, just in case:
          d
-         ' $F > lua/"$(basename $F)".luadoc
+	 ' $F | awk 'BEGIN {RS="\n\n"}
+	             /\n-- @module/ {a=1}
+		     {if (a==1) print $0, "\n"}' > lua/"$(basename $F)".luadoc
 done
 
 # Run Luadoc, put HTML files into html/ dir
 (
    cd lua
-   luadoc --nofiles --taglet "naev-taglet" -t templates/ -d ../html *.luadoc
+   ldoc .
    rm *.luadoc
 )

@@ -1,0 +1,3 @@
+dir = "../html"
+style = "./"
+template = "./"
