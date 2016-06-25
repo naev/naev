@@ -575,9 +575,9 @@ static int systemL_adjacent( lua_State *L )
  * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
  *    @luaparam s System to get the jumps of.
- *    @luaparam exitonly Whether to exclude exit-only jumps (default false).
+ *    @luaparam[opt] exitonly Whether to exclude exit-only jumps (default false).
  *    @luareturn An ordered table with all the jumps.
- * @luafunc jumps( s )
+ * @luafunc jumps( s, exitonly )
  */
 static int systemL_jumps( lua_State *L )
 {
@@ -798,8 +798,8 @@ static int systemL_isknown( lua_State *L )
  * @usage s:setKnown( false ) -- Makes system unknown.
  *    @luaparam s System to set known.
  *    @luaparam b Whether or not to set as known (defaults to false).
- *    @luaparam r Whether or not to iterate over the system's assets and jump points (defaults to false).
- * @luafunc setKnown( s, b )
+ *    @luaparam[opt] r Whether or not to iterate over the system's assets and jump points (defaults to false).
+ * @luafunc setKnown( s, b, r )
  */
 static int systemL_setknown( lua_State *L )
 {

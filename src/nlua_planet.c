@@ -858,7 +858,7 @@ static int planetL_isBlackMarket( lua_State *L )
  *
  * @usage b = p:known()
  *
- *    @luaparam s Planet to check if the player knows.
+ *    @luaparam p Planet to check if the player knows.
  *    @luareturn true if the player knows the planet.
  * @luafunc known( p )
  */

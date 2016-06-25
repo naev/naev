@@ -433,7 +433,7 @@ static int jumpL_dest( lua_State *L )
  *
  * @usage b = j:known()
  *
- *    @luaparam s Jump to check if the player knows.
+ *    @luaparam j Jump to check if the player knows.
  *    @luareturn true if the player knows the jump.
  * @luafunc known( j )
  */

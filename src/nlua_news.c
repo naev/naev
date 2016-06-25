@@ -105,11 +105,11 @@ int nlua_loadNews( lua_State *L, int readonly )
  *
  *    @luaparam faction faction of the article, "Generic" for non-factional
  *    @luaparam title Title of the article
- *    @luaparam content What's in the article
- *    @luaparam date_to_rm date to remove the article
- *    @luaparam date What time to put, defaults to current date, use 0 to not use a date
+ *    @luaparam body What's in the article
+ *    @luaparam[opt] date_to_rm date to remove the article
+ *    @luaparam[opt] date What time to put, defaults to current date, use 0 to not use a date
  *    @luareturn The article matching name or nil if error.
- * @luafunc add( s )
+ * @luafunc add( faction, title, body, date_to_rm, date )
  */
 int newsL_add( lua_State *L )
 {
@@ -338,7 +338,7 @@ int newsL_get( lua_State *L )
  *    @luaparam a1 article 1
  *    @luaparam a2 article 2
  *    @luareturn true if both systems are the same.
- * @luafunc __eq( s, comp )
+ * @luafunc __eq( a1, a2 )
  */
 int newsL_eq( lua_State *L )
 {
@@ -521,7 +521,7 @@ int newsL_date( lua_State *L )
  * @brief Tags an article or a table of articles with a string.
  *    @luaparam a article to get the faction of
  *    @luaparam tag
- * @luafunc bind(a)
+ * @luafunc bind(a, tag)
  */
 int newsL_bind( lua_State *L )
 {

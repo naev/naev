@@ -2620,9 +2620,9 @@ static int aiL_relvel( lua_State *L )
  *    @luaparam angle The requested angle between p and target
  *    @luaparam Kp The first controller parameter
  *    @luaparam Kd The second controller parameter
- *    @luaparam method (optional) Method to compute goal angle
+ *    @luaparam[opt] method Method to compute goal angle
  *    @luareturn The point to go to as a vector2.
- * @luafunc follow_accurate( target, radius, angle, Kp, Kd )
+ * @luafunc follow_accurate( target, radius, angle, Kp, Kd, method )
  */
 static int aiL_follow_accurate( lua_State *L )
 {
@@ -2800,8 +2800,8 @@ static int aiL_settarget( lua_State *L )
  * @brief Sets the active weapon set, fires another weapon set or activate an outfit.
  *
  *    @luaparam id ID of the weapon set to switch to or fire.
- *    @luaparam type If type = true or nil, activate, else, deactivate
- * @luafunc weapset( id )
+ *    @luaparam[opt] type If type = true or nil, activate, else, deactivate
+ * @luafunc weapset( id, type )
  */
 static int aiL_weapSet( lua_State *L )
 {
@@ -2973,8 +2973,8 @@ static int aiL_getenemy_size( lua_State *L )
  * @brief Gets the nearest enemy within specified heuristic.
  *
  *  @luaparam mass goal mass map (0-1)
- *  @luaparam hp goal HP map (0-1)
  *  @luaparam dps goal DPS map (0-1)
+ *  @luaparam hp goal HP map (0-1)
  *  @luaparam range weighting for range (typically > 1)
  *  @luareturn the best fitting target
  *  @luafunc getenemy_heuristic( mass, dps, hp, range )
