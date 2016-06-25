@@ -99,12 +99,12 @@ int nlua_loadVector( lua_State *L )
  * my_vec = my_vec - your_vec -- my_vec is now (19,13)
  * @endcode
  *
- * @luamod vec2
- *
  * To call members of the metatable always use:
  * @code
  * vector:function( param )
  * @endcode
+ *
+ * @luamod vec2
  */
 /**
  * @brief Gets vector at index.
