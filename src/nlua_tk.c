@@ -100,9 +100,9 @@ static int tk_msg( lua_State *L )
  *    @luaparam title Title of the window.
  *    @luaparam message Message to display in the window.
  *    @luaparam image Image file (*.png) to display in the window.
- *    @luaparam width (opt) width of the image to display. Negative values use image width. defaults to -1.
- *    @luaparam height (opt) height of the image to display. Negative values use image height. defaults to -1.
- * @luafunc msgImg( title, message, image )
+ *    @luaparam[opt] width width of the image to display. Negative values use image width. defaults to -1.
+ *    @luaparam[opt] height height of the image to display. Negative values use image height. defaults to -1.
+ * @luafunc msgImg( title, message, image, width, height )
  */
 static int tk_msgImg( lua_State *L )
 {

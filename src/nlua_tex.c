@@ -259,9 +259,9 @@ static int texL_sprites( lua_State *L )
  *
  *    @luaparam t Texture to get sprite of.
  *    @luaparam a Direction to have sprite facing (in degrees).
- *    @luaparam b Whether radians should be used instead of degrees.
+ *    @luaparam[opt] b Whether radians should be used instead of degrees.
  *    @luareturn x and y positions of the sprite.
- * @luafunc spriteFromDir( t, a )
+ * @luafunc spriteFromDir( t, a, b )
  */
 static int texL_spriteFromDir( lua_State *L )
 {

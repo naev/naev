@@ -13,6 +13,9 @@ tt {
     font-family: "Andale Mono", monospace; margin-left: 0em;
 }
 
+span.parameter { font-family:monospace; }
+span.parameter:after { content:":"; }
+
 body, td, th { font-size: 11pt; }
 
 h1, h2, h3, h4 { margin-left: 0em; }
@@ -109,7 +112,7 @@ div.header, div.footer { margin-left: 0em; }
 	background-color: #ffffff;
 }
 
-#product big {
+#product h2 {
 	font-size: 2em;
 }
 
@@ -144,7 +147,7 @@ div.header, div.footer { margin-left: 0em; }
 	overflow:visible;
 }
 
-#navigation h1 {
+#navigation h1, #navigation h2 {
 	background-color:#e7e7e7;
 	font-size:1.1em;
 	color:#000000;

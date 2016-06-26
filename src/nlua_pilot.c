@@ -993,6 +993,7 @@ static int pilotL_target( lua_State *L )
  * @usage detected, scanned = p:inrange( target )
  *
  *    @luaparam p Pilot to see if another pilot is in range.
+ *    @luaparam target Target pilot.
  *    @luareturn Checks to see if the target is detected and if it's scanned.
  * @luafunc inrange( p, target )
  */
@@ -1924,7 +1925,7 @@ static int pilotL_broadcast( lua_State *L )
  * @usage p:comm( target, "Got this?", true ) -- Messages target ignoring interference
  *
  *    @luaparam p Pilot to message the player.
- *    @ulaparam target Target to send message to.
+ *    @luaparam target Target to send message to.
  *    @luaparam msg Message to send.
  * @luafunc comm( p, target, msg )
  */
@@ -2435,6 +2436,7 @@ static int pilotL_setCooldown( lua_State *L )
  * @usage p:setNoJump( true )
  *
  *    @luaparam p Pilot to modify.
+ *    @luaparam[opt] state true or flase
  * @luafunc setNoJump( p, state )
  */
 static int pilotL_setNoJump( lua_State *L )
@@ -2467,6 +2469,7 @@ static int pilotL_setNoJump( lua_State *L )
  * @usage p:setNoLand( true )
  *
  *    @luaparam p Pilot to modify.
+ *    @luaparam[opt] state true or false
  * @luafunc setNoLand( p, state )
  */
 static int pilotL_setNoLand( lua_State *L )
