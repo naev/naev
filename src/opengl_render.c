@@ -379,6 +379,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
          gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
       else
          gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+      return;
    }
 
    /* Set default colour. */
