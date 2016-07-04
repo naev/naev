@@ -2217,7 +2217,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->type==0,"type");
    /*MELEMENT(temp->price==0,"price");*/
    MELEMENT(temp->description==NULL,"description");
-   MELEMENT(temp->level==0,"level");
+   //MELEMENT(temp->level==0,"level");
 #undef MELEMENT
 
    xmlFreeDoc(doc);
