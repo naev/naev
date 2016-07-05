@@ -72,7 +72,7 @@ AS_IF([test -z "$CUT"],[
 ])
 
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
-AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
+AC_CHECK_PROG([LDOC], [ldoc], [ldoc])
 AC_CHECK_PROG([GIT], [git], [git])
 
 #
@@ -588,7 +588,7 @@ AS_IF([test -n "$GIT_COMMIT"], [
 
 AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
-AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
+AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
