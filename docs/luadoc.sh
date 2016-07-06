@@ -19,8 +19,12 @@ for F in ../src/nlua_*.c ../src/ai.c; do
          s|^ *\* *@brief|--|p
          s|^ *\* *@luasee|-- @see|p
          s|^ *\* *@luaparam|-- @param|p
+         s|^ *\* *@luatparam|-- @tparam|p
          s|^ *\* *@luareturn|-- @return|p #we accept both @luareturn & @return
+         s|^ *\* *@luatreturn|-- @treturn|p
          s|^ *\* *@luamod|-- @module|p
+         s|^ *\* *@luatype|-- @type|p
+         s|^ *\* *@luaset|-- @set|p
 # Keep tags Luadoc understands:
 #        s|^ *\* *@param|-- @param|p # use luaparam, param reserved for C arguments
 #        s|^ *\* *@see|-- @see|p # use luasee

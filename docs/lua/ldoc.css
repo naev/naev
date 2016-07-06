@@ -15,6 +15,9 @@ tt {
 
 span.parameter { font-family:monospace; }
 span.parameter:after { content:":"; }
+span.types:before { content:"("; }
+span.types:after { content:")"; }
+.type { font-weight: bold; font-style:italic }
 
 body, td, th { font-size: 11pt; }
 

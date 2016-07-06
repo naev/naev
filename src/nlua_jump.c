@@ -256,8 +256,9 @@ int lua_isjump( lua_State *L, int ind )
  *    - system : Gets the jump by system. <br/>
  *
  * @usage j,r  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard and Goddard to Ogat jumps.
- *    @luaparam param See description.
- *    @luareturn Returns the jump and the inverse (where it exits).
+ *    @luatparam string|System param See description.
+ *    @luareturn Jump Returns the jump.
+ *    @luareturn Jump Returns the inverse.
  * @luafunc get( param )
  */
 static int jumpL_get( lua_State *L )
@@ -308,9 +309,9 @@ static int jumpL_get( lua_State *L )
  * @brief You can use the '=' operator within Lua to compare jumps with this.
  *
  * @usage if j:__eq( jump.get( "Rhu", "Ruttwi" ) ) then -- Do something
- *    @luaparam j Jump comparing.
- *    @luaparam comp jump to compare against.
- *    @luareturn true if both jumps are the same.
+ *    @luatparam Jump j Jump comparing.
+ *    @luatparam Jump comp jump to compare against.
+ *    @luatreturn boolean true if both jumps are the same.
  * @luafunc __eq( j, comp )
  */
 static int jumpL_eq( lua_State *L )
@@ -327,8 +328,8 @@ static int jumpL_eq( lua_State *L )
  * @brief Gets the position of the jump in the system.
  *
  * @usage v = j:pos()
- *    @luaparam j Jump to get the position of.
- *    @luareturn The position of the jump in the system as a vec2.
+ *    @luatparam Jump j Jump to get the position of.
+ *    @luatreturn Vec2 The position of the jump in the system.
  * @luafunc pos( j )
  */
 static int jumpL_position( lua_State *L )
@@ -344,8 +345,8 @@ static int jumpL_position( lua_State *L )
  * @brief Gets the angle of a jump in degrees.
  *
  * @usage v = j:angle()
- *    @luaparam j Jump to get the angle of.
- *    @luareturn The angle.
+ *    @luatparam Jump j Jump to get the angle of.
+ *    @luatreturn number The angle.
  * @luafunc angle( j )
  */
 static int jumpL_angle( lua_State *L )
@@ -362,8 +363,8 @@ static int jumpL_angle( lua_State *L )
  * @brief Checks whether a jump is hidden.
  *
  * @usage if not j:hidden() then -- Exclude hidden jumps.
- *    @luaparam j Jump to get the hidden status of.
- *    @luareturn Whether the jump is hidden.
+ *    @luatparam Jump j Jump to get the hidden status of.
+ *    @luatreturn boolean Whether the jump is hidden.
  * @luafunc hidden( j )
  */
 static int jumpL_hidden( lua_State *L )
@@ -379,8 +380,8 @@ static int jumpL_hidden( lua_State *L )
  * @brief Checks whether a jump is exit-only.
  *
  * @usage if jump.exitonly("Eneguoz", "Zied") then -- The jump point in Eneguoz cannot be entered.
- *    @luaparam j Jump to get the exit-only status of.
- *    @luareturn Whether the jump is exit-only.
+ *    @luatparam Jump j Jump to get the exit-only status of.
+ *    @luatreturn boolean Whether the jump is exit-only.
  * @luafunc exitonly( j )
  */
 static int jumpL_exitonly( lua_State *L )
@@ -396,8 +397,8 @@ static int jumpL_exitonly( lua_State *L )
  * @brief Gets the system that a jump point exists in.
  *
  * @usage s = j:system()
- *    @luaparam j Jump to get the system of.
- *    @luareturn The jump's system.
+ *    @luatparam Jump j Jump to get the system of.
+ *    @luatreturn System The jump's system.
  * @luafunc system( j )
  */
 static int jumpL_system( lua_State *L )
@@ -414,8 +415,8 @@ static int jumpL_system( lua_State *L )
  * @brief Gets the system that a jump point exits into.
  *
  * @usage v = j:dest()
- *    @luaparam j Jump to get the destination of.
- *    @luareturn The jump's destination system.
+ *    @luatparam Jump j Jump to get the destination of.
+ *    @luatreturn System The jump's destination system.
  * @luafunc dest( j )
  */
 static int jumpL_dest( lua_State *L )
@@ -433,8 +434,8 @@ static int jumpL_dest( lua_State *L )
  *
  * @usage b = j:known()
  *
- *    @luaparam j Jump to check if the player knows.
- *    @luareturn true if the player knows the jump.
+ *    @luatparam Jump j Jump to check if the player knows.
+ *    @luatreturn boolean true if the player knows the jump.
  * @luafunc known( j )
  */
 static int jumpL_isKnown( lua_State *L )
@@ -450,9 +451,9 @@ static int jumpL_isKnown( lua_State *L )
  * @brief Sets a jump's known state.
  *
  * @usage j:setKnown( false ) -- Makes jump unknown.
- *    @luaparam j Jump to set known.
- *    @luaparam b Whether or not to set as known (defaults to true).
- * @luafunc setKnown( j, b )
+ *    @luatparam Jump j Jump to set known.
+ *    @luatparam[opt=true] boolean value Whether or not to set as known.
+ * @luafunc setKnown( j, value )
  */
 static int jumpL_setKnown( lua_State *L )
 {

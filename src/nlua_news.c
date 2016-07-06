@@ -91,6 +91,77 @@ int nlua_loadNews( lua_State *L, int readonly )
 
 
 /**
+ * @brief Pushes an article on the stack.
+ *
+ *    @param L Lua state to push article into.
+ *    @param article article to push.
+ *    @return Newly pushed article.
+ */
+LuaArticle* lua_pusharticle( lua_State *L, LuaArticle article )
+{
+   LuaArticle *o;
+   o = (LuaArticle *)lua_newuserdata(L, sizeof(LuaArticle));
+   *o = article;
+   luaL_getmetatable(L, ARTICLE_METATABLE);
+   lua_setmetatable(L, -2);
+   return o;
+}
+
+
+/**
+ * @brief Makes sure the article is valid or raises a Lua error.
+ *
+ *    @param L State currently running.
+ *    @param ind Index of the article to validate.
+ *    @return The article (doesn't return if fails - raises Lua error ).
+ */
+LuaArticle* luaL_validarticle( lua_State *L, int ind )
+{
+   LuaArticle *Larticle;
+
+   if (lua_isarticle(L, ind)) {
+      Larticle = (LuaArticle *)lua_touserdata(L, ind);
+      if (news_get(*Larticle))
+         return Larticle;
+      else
+         NLUA_ERROR(L, "article is old");
+   }
+   else {
+      luaL_typerror(L, ind, ARTICLE_METATABLE);
+      return NULL;
+   }
+
+   NLUA_ERROR(L, "article is invalid.");
+
+   return NULL;
+}
+
+
+/**
+ * @brief Checks to see if ind is an article.
+ *
+ *    @param L Lua state to check.
+ *    @param ind Index position to check.
+ *    @return 1 if ind is a article.
+ */
+int lua_isarticle( lua_State *L, int ind )
+{
+   int ret;
+
+   if (lua_getmetatable(L, ind) == 0)
+      return 0;
+   lua_getfield(L, LUA_REGISTRYINDEX, ARTICLE_METATABLE);
+
+   ret = 0;
+   if (lua_rawequal(L, -1, -2)) /* does it have the correct mt? */
+      ret = 1;
+
+   lua_pop(L, 2); /* remove both metatables */
+   return ret;
+}
+
+
+/**
  * @brief Lua bindings to interact with the news.
  *
  * This will allow you to interact and manipulate the in-game news.
@@ -103,12 +174,12 @@ int nlua_loadNews( lua_State *L, int readonly )
  *
  * @usage s = news.add( "Empire", "Hello world!", "The Empire wishes to say hello!", 0 ) -- Adds an Empire specific article, with date 0.
  *
- *    @luaparam faction faction of the article, "Generic" for non-factional
- *    @luaparam title Title of the article
- *    @luaparam body What's in the article
- *    @luaparam[opt] date_to_rm date to remove the article
- *    @luaparam[opt] date What time to put, defaults to current date, use 0 to not use a date
- *    @luareturn The article matching name or nil if error.
+ *    @luatparam Faction|string faction of the article, "Generic" for non-factional
+ *    @luatparam string title Title of the article
+ *    @luatparam string body What's in the article
+ *    @luatparam[opt] number|Time date_to_rm date to remove the article
+ *    @luatparam[opt] number|Time date What time to put, defaults to current date, use 0 to not use a date
+ *    @luatreturn Article The article matching name or nil if error.
  * @luafunc add( faction, title, body, date_to_rm, date )
  */
 int newsL_add( lua_State *L )
@@ -238,8 +309,8 @@ int newsL_add( lua_State *L )
 
 /**
  * @brief Frees an article or a table of articles.
- *    @luaparam LuaArticle article to free
- * @luafunc rm( LuaArticle )
+ *    @luatparam Article article article to free
+ * @luafunc rm( article )
  */
 int newsL_rm( lua_State *L )
 {
@@ -275,8 +346,8 @@ int newsL_rm( lua_State *L )
 
 /**
  * @brief Gets all matching articles in a table.
- *    @luaparam characteristic characteristic to match, or no parameter for all articles
- *    @luareturn a table with matching articles
+ *    @luatparam[opt] number|String characteristic characteristic to match, or no parameter for all articles
+ *    @luatreturn {Article,...} a table with matching articles
  * @luafunc get(characteristic)
  */
 int newsL_get( lua_State *L )
@@ -335,9 +406,9 @@ int newsL_get( lua_State *L )
  *
  * Allows you to use the '=' operator in Lua with articles.
  *
- *    @luaparam a1 article 1
- *    @luaparam a2 article 2
- *    @luareturn true if both systems are the same.
+ *    @luatparam Article a1 article 1
+ *    @luatparam Article a2 article 2
+ *    @luatreturn boolean true if both systems are the same.
  * @luafunc __eq( a1, a2 )
  */
 int newsL_eq( lua_State *L )
@@ -355,80 +426,9 @@ int newsL_eq( lua_State *L )
 
 
 /**
- * @brief Makes sure the article is valid or raises a Lua error.
- *
- *    @param L State currently running.
- *    @param ind Index of the article to validate.
- *    @return The article (doesn't return if fails - raises Lua error ).
- */
-LuaArticle* luaL_validarticle( lua_State *L, int ind )
-{
-   LuaArticle *Larticle;
-
-   if (lua_isarticle(L, ind)) {
-      Larticle = (LuaArticle *)lua_touserdata(L, ind);
-      if (news_get(*Larticle))
-         return Larticle;
-      else
-         NLUA_ERROR(L, "article is old");
-   }
-   else {
-      luaL_typerror(L, ind, ARTICLE_METATABLE);
-      return NULL;
-   }
-
-   NLUA_ERROR(L, "article is invalid.");
-
-   return NULL;
-}
-
-
-/**
- * @brief Checks to see if ind is an article.
- *
- *    @param L Lua state to check.
- *    @param ind Index position to check.
- *    @return 1 if ind is a article.
- */
-int lua_isarticle( lua_State *L, int ind )
-{
-   int ret;
-
-   if (lua_getmetatable(L, ind) == 0)
-      return 0;
-   lua_getfield(L, LUA_REGISTRYINDEX, ARTICLE_METATABLE);
-
-   ret = 0;
-   if (lua_rawequal(L, -1, -2)) /* does it have the correct mt? */
-      ret = 1;
-
-   lua_pop(L, 2); /* remove both metatables */
-   return ret;
-}
-
-
-/**
- * @brief Pushes an article on the stack.
- *
- *    @param L Lua state to push article into.
- *    @param article article to push.
- *    @return Newly pushed article.
- */
-LuaArticle* lua_pusharticle( lua_State *L, LuaArticle article )
-{
-   LuaArticle *o;
-   o = (LuaArticle *)lua_newuserdata(L, sizeof(LuaArticle));
-   *o = article;
-   luaL_getmetatable(L, ARTICLE_METATABLE);
-   lua_setmetatable(L, -2);
-   return o;
-}
-
-
-/**
  * @brief Gets the article title.
- *    @luaparam a article to get the title of
- *    @luareturn title
+ *    @luatparam Article a article to get the title of
+ *    @luatreturn string title
  * @luafunc title(a)
  */
 int newsL_title( lua_State *L )
@@ -450,8 +450,8 @@ int newsL_title( lua_State *L )
 
 /**
  * @brief Gets the article description.
- *    @luaparam a article to get the desc of
- *    @luareturn desc
+ *    @luatparam Article a article to get the desc of
+ *    @luatreturn string desc
  * @luafunc desc(a)
  */
 int newsL_desc( lua_State *L )
@@ -473,8 +473,8 @@ int newsL_desc( lua_State *L )
 
 /**
  * @brief Gets the article faction.
- *    @luaparam a article to get the faction of
- *    @luareturn faction
+ *    @luatparam Article a article to get the faction of
+ *    @luatreturn Faction faction
  * @luafunc faction(a)
  */
 int newsL_faction( lua_State *L )
@@ -496,8 +496,8 @@ int newsL_faction( lua_State *L )
 
 /**
  * @brief Gets the article date.
- *    @luaparam a article to get the date of
- *    @luareturn date
+ *    @luatparam Article a article to get the date of
+ *    @luatreturn number date
  * @luafunc date(a)
  */
 int newsL_date( lua_State *L )
@@ -519,8 +519,8 @@ int newsL_date( lua_State *L )
 
 /**
  * @brief Tags an article or a table of articles with a string.
- *    @luaparam a article to get the faction of
- *    @luaparam tag
+ *    @luatparam Article a article to get the faction of
+ *    @luatparam string tag
  * @luafunc bind(a, tag)
  */
 int newsL_bind( lua_State *L )

@@ -299,7 +299,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
 /**
  * @brief Sets the current mission title.
  *
- *    @luaparam title Title to use for mission.
+ *    @luatparam string title Title to use for mission.
  * @luafunc setTitle( title )
  */
 static int misn_setTitle( lua_State *L )
@@ -322,7 +322,7 @@ static int misn_setTitle( lua_State *L )
  * Also sets the mission OSD unless you explicitly force an OSD, however you
  *  can't specify bullet points or other fancy things like with the real OSD.
  *
- *    @luaparam desc Description to use for mission.
+ *    @luatparam string desc Description to use for mission.
  * @luafunc setDesc( desc )
  */
 static int misn_setDesc( lua_State *L )
@@ -342,7 +342,7 @@ static int misn_setDesc( lua_State *L )
 /**
  * @brief Sets the current mission reward description.
  *
- *    @luaparam reward Description of the reward to use.
+ *    @luatparam string reward Description of the reward to use.
  * @luafunc setReward( reward )
  */
 static int misn_setReward( lua_State *L )
@@ -370,9 +370,9 @@ static int misn_setReward( lua_State *L )
  *  - "low": Low importance mission marker (lower than high).<br/>
  *  - "computer": Mission computer marker.<br/>
  *
- *    @luaparam sys System to mark.
- *    @luaparam type Colouring scheme to use.
- *    @luareturn A marker ID to be used with markerMove and markerRm.
+ *    @luatparam System sys System to mark.
+ *    @luatparam string type Colouring scheme to use.
+ *    @luatreturn number A marker ID to be used with markerMove and markerRm.
  * @luafunc markerAdd( sys, type )
  */
 static int misn_markerAdd( lua_State *L )
@@ -419,8 +419,8 @@ static int misn_markerAdd( lua_State *L )
  *
  * @usage misn.markerMove( my_marker, system.get("Delta Pavonis") )
  *
- *    @luaparam id ID of the mission marker to move.
- *    @luaparam sys System to move the marker to.
+ *    @luatparam number id ID of the mission marker to move.
+ *    @luatparam System sys System to move the marker to.
  * @luafunc markerMove( id, sys )
  */
 static int misn_markerMove( lua_State *L )
@@ -470,7 +470,7 @@ static int misn_markerMove( lua_State *L )
  *
  * @usage misn.markerRm( my_marker )
  *
- *    @luaparam id ID of the marker to remove.
+ *    @luatparam number id ID of the marker to remove.
  * @luafunc markerRm( id )
  */
 static int misn_markerRm( lua_State *L )
@@ -523,8 +523,8 @@ static int misn_markerRm( lua_State *L )
  *
  * @usage misn.setNPC( "Invisible Man", "none" )
  *
- *    @luaparam name Name of the NPC.
- *    @luaparam portrait Name of the portrait to use for the NPC.
+ *    @luatparam string name Name of the NPC.
+ *    @luatparam string portrait Name of the portrait to use for the NPC.
  * @luafunc setNPC( name, portrait )
  */
 static int misn_setNPC( lua_State *L )
@@ -570,7 +570,7 @@ static int misn_setNPC( lua_State *L )
  * @brief Gets the factions the mission is available for.
  *
  * @usage f = misn.factions()
- *    @luareturn A containing the factions for whom the mission is available.
+ *    @luatreturn {Faction,...} A table containing the factions for whom the mission is available.
  * @luafunc factions()
  */
 static int misn_factions( lua_State *L )
@@ -597,7 +597,7 @@ static int misn_factions( lua_State *L )
  * @brief Attempts to accept the mission.
  *
  * @usage if not misn.accept() then return end
- *    @luareturn true if mission was properly accepted.
+ *    @luatreturn boolean true if mission was properly accepted.
  * @luafunc accept()
  */
 static int misn_accept( lua_State *L )
@@ -636,7 +636,7 @@ static int misn_accept( lua_State *L )
 /**
  * @brief Finishes the mission.
  *
- *    @luaparam properly If true and the mission is unique it marks the mission
+ *    @luatparam[opt] boolean properly If true and the mission is unique it marks the mission
  *                     as completed.  If false it deletes the mission but
  *                     doesn't mark it as completed.  If the parameter isn't
  *                     passed it just ends the mission (without removing it
@@ -674,9 +674,9 @@ static int misn_finish( lua_State *L )
  * @brief Adds some mission cargo to the player.  He cannot sell it nor get rid of it
  *  unless he abandons the mission in which case it'll get eliminated.
  *
- *    @luaparam cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
- *    @luaparam quantity Quantity of cargo to add.
- *    @luareturn The id of the cargo which can be used in cargoRm.
+ *    @luatparam string cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
+ *    @luatparam number quantity Quantity of cargo to add.
+ *    @luatreturn number The id of the cargo which can be used in cargoRm.
  * @luafunc cargoAdd( cargo, quantity )
  */
 static int misn_cargoAdd( lua_State *L )
@@ -709,8 +709,8 @@ static int misn_cargoAdd( lua_State *L )
 /**
  * @brief Removes the mission cargo.
  *
- *    @luaparam cargoid Identifier of the mission cargo.
- *    @luareturn true on success.
+ *    @luatparam number cargoid Identifier of the mission cargo.
+ *    @luatreturn boolean true on success.
  * @luafunc cargoRm( cargoid )
  */
 static int misn_cargoRm( lua_State *L )
@@ -738,8 +738,8 @@ static int misn_cargoRm( lua_State *L )
 /**
  * @brief Jettisons the mission cargo.
  *
- *    @luaparam cargoid ID of the cargo to jettison.
- *    @luareturn true on success.
+ *    @luatparam number cargoid ID of the cargo to jettison.
+ *    @luatreturn boolean true on success.
  * @luafunc cargoJet( cargoid )
  */
 static int misn_cargoJet( lua_State *L )
@@ -773,8 +773,8 @@ static int misn_cargoJet( lua_State *L )
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *
- *    @luaparam title Title to give the OSD.
- *    @luaparam list List of elements to put in the OSD.
+ *    @luatparam string title Title to give the OSD.
+ *    @luatparam {string,...} list List of elements to put in the OSD.
  * @luafunc osdCreate( title, list )
  */
 static int misn_osdCreate( lua_State *L )
@@ -858,7 +858,7 @@ static int misn_osdDestroy( lua_State *L )
  *
  * @note Uses Lua indexes, so 1 is first member, 2 is second and so on.
  *
- *    @luaparam n Element of the OSD to make active.
+ *    @luatparam number n Element of the OSD to make active.
  * @luafunc osdActive( n )
  */
 static int misn_osdActive( lua_State *L )
@@ -885,12 +885,12 @@ static int misn_osdActive( lua_State *L )
  *
  * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
- *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits*.png).
- *    @luaparam desc Description associated to the NPC.
- *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
- *    @luareturn The ID of the NPC to pass to npcRm.
+ *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
+ *    @luatparam string name Name of the NPC
+ *    @luatparam string portrait Portrait to use for the NPC (from GFX_PATH/portraits*.png).
+ *    @luatparam string desc Description associated to the NPC.
+ *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
+ *    @luatreturn number The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd( func, name, portrait, desc, priority )
  */
 static int misn_npcAdd( lua_State *L )
@@ -935,7 +935,7 @@ static int misn_npcAdd( lua_State *L )
  *
  * @usage misn.npcRm( npc_id )
  *
- *    @luaparam id ID of the NPC to remove.
+ *    @luatparam number id ID of the NPC to remove.
  * @luafunc npcRm( id )
  */
 static int misn_npcRm( lua_State *L )
@@ -965,8 +965,8 @@ static int misn_npcRm( lua_State *L )
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
  *
- *    @luaparam systems Table of systems to claim or a single system.
- *    @luareturn true if was able to claim, false otherwise.
+ *    @luatparam System|{System,...} systems Table of systems to claim or a single system.
+ *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim( systems )
  */
 static int misn_claim( lua_State *L )

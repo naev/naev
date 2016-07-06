@@ -152,9 +152,9 @@ int lua_iscolour( lua_State *L, int ind )
 /**
  * @brief Compares two colours to see if they are the same.
  *
- *    @luaparam c1 Colour 1 to compare.
- *    @luaparam c2 Colour 2 to compare.
- *    @luareturn true if both colours are the same.
+ *    @luatparam Colour c1 Colour 1 to compare.
+ *    @luatparam Colour c2 Colour 2 to compare.
+ *    @luatreturn boolean true if both colours are the same.
  * @luafunc __eq( c1, c2 )
  */
 static int colL_eq( lua_State *L )
@@ -176,11 +176,11 @@ static int colL_eq( lua_State *L )
  * @usage colour.new( 1., 0., 0. ) -- Creates a bright red colour
  * @usage colour.new( 1., 0., 0., 0.5 ) -- Creates a bright red colour with alpha 0.5
  *
- *    @luaparam r Red value of the colour.
- *    @luaparam g Green value of the colour.
- *    @luaparam b Blue value of the colour.
- *    @luaparam a Alpha value of the colour.
- *    @luareturn A newly created colour.
+ *    @luatparam number r Red value of the colour.
+ *    @luatparam number g Green value of the colour.
+ *    @luatparam number b Blue value of the colour.
+ *    @luatparam[opt=1.] number a Alpha value of the colour.
+ *    @luatreturn Colour A newly created colour.
  * @luafunc new( r, g, b, a )
  */
 static int colL_new( lua_State *L )
@@ -229,8 +229,8 @@ static int colL_new( lua_State *L )
  *
  * @usage colour_alpha = col:alpha()
  *
- *    @luaparam col Colour to get alpha of.
- *    @luareturn The alpha of the colour.
+ *    @luatparam Colour col Colour to get alpha of.
+ *    @luatreturn number The alpha of the colour.
  * @luafunc alpha( col )
  */
 static int colL_alpha( lua_State *L )
@@ -249,8 +249,10 @@ static int colL_alpha( lua_State *L )
  *
  * @usage r,g,b = col:rgb()
  *
- *    @luaparam col Colour to get RGB values of.
- *    @luareturn The red, green and blue values of the colour.
+ *    @luatparam Colour col Colour to get RGB values of.
+ *    @luatreturn number The red value of the colour.
+ *    @luatreturn number The green value of the colour.
+ *    @luatreturn number The blue value of the colour.
  * @luafunc rgb( col )
  */
 static int colL_rgb( lua_State *L )
@@ -271,8 +273,10 @@ static int colL_rgb( lua_State *L )
  *
  * @usage h,s,v = col:rgb()
  *
- *    @luaparam col Colour to get HSV values of.
- *    @luareturn The hue, saturation and value values of the colour.
+ *    @luatparam Colour col Colour to get HSV values of.
+ *    @luatreturn number The hue of the colour.
+ *    @luatreturn number The saturation of the colour.
+ *    @luatreturn number The value of the colour.
  * @luafunc hsv( col )
  */
 static int colL_hsv( lua_State *L )
@@ -295,10 +299,10 @@ static int colL_hsv( lua_State *L )
  *
  * @usage col:setRGB( r, g, b )
  *
- *    @luaparam col Colour to set RGB values.
- *    @luaparam r Red value to set.
- *    @luaparam g Green value to set.
- *    @luaparam b Blue value to set.
+ *    @luatparam Colour col Colour to set RGB values.
+ *    @luatparam number r Red value to set.
+ *    @luatparam number g Green value to set.
+ *    @luatparam number b Blue value to set.
  * @luafunc setRGB( col, r, g, b )
  */
 static int colL_setrgb( lua_State *L )
@@ -319,10 +323,10 @@ static int colL_setrgb( lua_State *L )
  *
  * @usage col:setHSV( h, s, v )
  *
- *    @luaparam col Colour to set HSV values.
- *    @luaparam h Hue value to set.
- *    @luaparam s Saturation value to set.
- *    @luaparam v Value to set.
+ *    @luatparam Colour col Colour to set HSV values.
+ *    @luatparam number h Hue value to set.
+ *    @luatparam number s Saturation value to set.
+ *    @luatparam number v Value to set.
  * @luafunc setHSV( col, h, s, v )
  */
 static int colL_sethsv( lua_State *L )
@@ -348,8 +352,8 @@ static int colL_sethsv( lua_State *L )
  *
  * @usage col:setAlpha( 0.5 ) -- Make colour half transparent
  *
- *    @luaparam col Colour to set alpha of.
- *    @luaparam alpha Alpha value to set.
+ *    @luatparam Colour col Colour to set alpha of.
+ *    @luatparam number alpha Alpha value to set.
  * @luafunc setAlpha( col, alpha )
  */
 static int colL_setalpha( lua_State *L )
