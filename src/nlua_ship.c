@@ -32,7 +32,6 @@ static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_CPU( lua_State *L );
-static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
@@ -46,7 +45,6 @@ static const luaL_reg shipL_methods[] = {
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
    { "cpu", shipL_CPU },
-   { "outfitCPU", shipL_outfitCPU },
    { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
@@ -420,34 +418,6 @@ static int shipL_CPU( lua_State *L )
 
    /* Get CPU. */
    lua_pushnumber(L, s->cpu);
-   return 1;
-}
-
-
-/**
- * @brief Gets the outfit CPU usage.
- *
- * @usage cpu_used += s.outfitCPU( "Heavy Ion Turret" ) -- Adds the used cpu by the outfit
- *
- *    @luatparam string outfit Name of the outfit to get CPU usage of.
- *    @luatreturn number CPU the outfit uses.
- * @luafunc outfitCPU( outfit )
- */
-static int shipL_outfitCPU( lua_State *L )
-{
-   const char *outfit;
-   Outfit *o;
-
-   /* Get parameters. */
-   outfit = luaL_checkstring(L,1);
-
-   /* Get the outfit. */
-   o = outfit_get( outfit );
-   if (o == NULL)
-      return 0;
-
-   /* Return parameter. */
-   lua_pushnumber(L, outfit_cpu(o));
    return 1;
 }
 
