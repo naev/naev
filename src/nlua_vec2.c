@@ -178,9 +178,9 @@ int lua_isvector( lua_State *L, int ind )
  * @usage vec2.new( 5, 3 ) -- creates a vector at (5,3)
  * @usage vec2.new() -- creates a vector at (0,0)
  *
- *    @luaparam x If set, the X value for the new vector.
- *    @luaparam y If set, the Y value for the new vector.
- *    @luareturn The new vector.
+ *    @luatparam number x If set, the X value for the new vector.
+ *    @luatparam number y If set, the Y value for the new vector.
+ *    @luatreturn Vec2 The new vector.
  * @luafunc new( x, y )
  */
 static int vectorL_new( lua_State *L )
@@ -208,9 +208,9 @@ static int vectorL_new( lua_State *L )
  * @usage vec2.newP( 1000, 90 ) -- creates a vector at (0,1000)
  * @usage vec2.newP() -- creates a vector at (0,0)
  *
- *    @luaparam m If set, the modulus for the new vector.
- *    @luaparam a If set, the angle for the new vector, in degrees.
- *    @luareturn The new vector.
+ *    @luatparam[opt=0] number m If set, the modulus for the new vector.
+ *    @luatparam[opt=0] number a If set, the angle for the new vector, in degrees.
+ *    @luatreturn Vec2 The new vector.
  * @luafunc newP( m, a )
  */
 static int vectorL_newP( lua_State *L )
@@ -242,10 +242,10 @@ static int vectorL_newP( lua_State *L )
  * @usage my_vec:add( your_vec )
  * @usage my_vec:add( 5, 3 )
  *
- *    @luaparam v Vector getting stuff subtracted from.
- *    @luaparam x X coordinate or vector to add to.
- *    @luaparam y Y coordinate or nil to add to.
- *    @luareturn The result of the vector operation.
+ *    @luatparam Vector v Vector getting stuff subtracted from.
+ *    @luatparam number|Vec2 x X coordinate or vector to add to.
+ *    @luatparam number|nil y Y coordinate or nil to add to.
+ *    @luatreturn Vec2 The result of the vector operation.
  * @luafunc add( v, x, y )
  */
 static int vectorL_add( lua_State *L )
@@ -319,10 +319,10 @@ static int vectorL_add__( lua_State *L )
  * @usage my_vec:sub( your_vec )
  * @usage my_vec:sub( 5, 3 )
  *
- *    @luaparam v Vector getting stuff subtracted from.
- *    @luaparam x X coordinate or vector to subtract.
- *    @luaparam y Y coordinate or nil to subtract.
- *    @luareturn The result of the vector operation.
+ *    @luatparam Vec2 v Vector getting stuff subtracted from.
+ *    @luatparam number|Vec2 x X coordinate or vector to subtract.
+ *    @luatparam number|nil y Y coordinate or nil to subtract.
+ *    @luatreturn Vec2 The result of the vector operation.
  * @luafunc sub( v, x, y )
  */
 static int vectorL_sub( lua_State *L )
@@ -390,9 +390,9 @@ static int vectorL_sub__( lua_State *L )
  * @usage my_vec = my_vec * 3
  * @usage my_vec:mul( 3 )
  *
- *    @luaparam v Vector to multiply.
- *    @luaparam mod Amount to multiply by.
- *    @luareturn The result of the vector operation.
+ *    @luatparam Vec2 v Vector to multiply.
+ *    @luatparam number mod Amount to multiply by.
+ *    @luatreturn Vec2 The result of the vector operation.
  * @luafunc mul( v, mod )
  */
 static int vectorL_mul( lua_State *L )
@@ -430,9 +430,9 @@ static int vectorL_mul__( lua_State *L )
  * @usage my_vec = my_vec / 3
  * @usage my_vec:div(3)
  *
- *    @luaparam v Vector to divide.
- *    @luaparam mod Amount to divide by.
- *    @luareturn The result of the vector operation.
+ *    @luatparam Vec2 v Vector to divide.
+ *    @luatparam number mod Amount to divide by.
+ *    @luatreturn Vec2 The result of the vector operation.
  * @luafunc div( v, mod )
  */
 static int vectorL_div( lua_State *L )
@@ -470,8 +470,9 @@ static int vectorL_div__( lua_State *L )
  *
  * @usage x,y = my_vec:get()
  *
- *    @luaparam v Vector to get position of.
- *    @luareturn X and Y position of the vector.
+ *    @luatparam Vec2 v Vector to get position of.
+ *    @luatreturn number X position of the vector.
+ *    @luatreturn number Y position of the vector.
  * @luafunc get(v)
  */
 static int vectorL_get( lua_State *L )
@@ -494,8 +495,9 @@ static int vectorL_get( lua_State *L )
  *
  * @usage modulus, angle = my_vec:polar()
  *
- *    @luaparam v Vector to get polar coordinates of.
- *    @luareturn The modulus and angle of the vector.
+ *    @luatparam Vec2 v Vector to get polar coordinates of.
+ *    @luatreturn number The modulus of the vector.
+ *    @luatreturn number The angle of the vector.
  * @luafunc polar(v)
  */
 static int vectorL_polar( lua_State *L )
@@ -515,9 +517,9 @@ static int vectorL_polar( lua_State *L )
  *
  * @usage my_vec:set(5, 3) -- my_vec is now (5,3)
  *
- *    @luaparam v Vector to set coordinates of.
- *    @luaparam x X coordinate to set.
- *    @luaparam y Y coordinate to set.
+ *    @luatparam Vec2 v Vector to set coordinates of.
+ *    @luatparam number x X coordinate to set.
+ *    @luatparam number y Y coordinate to set.
  * @luafunc set( v, x, y )
  */
 static int vectorL_set( lua_State *L )
@@ -539,9 +541,9 @@ static int vectorL_set( lua_State *L )
  *
  * @usage my_vec:setP( 1, 90 ) -- my_vec is now (0,1)
  *
- *    @luaparam v Vector to set coordinates of.
- *    @luaparam m Modulus to set.
- *    @luaparam a Angle to set, in degrees.
+ *    @luatparam Vec2 v Vector to set coordinates of.
+ *    @luatparam number m Modulus to set.
+ *    @luatparam number a Angle to set, in degrees.
  * @luafunc setP( v, m, a )
  */
 static int vectorL_setP( lua_State *L )
@@ -564,9 +566,9 @@ static int vectorL_setP( lua_State *L )
  * @usage my_vec:dist() -- Gets length of the vector (distance from origin).
  * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors (your_vec - my_vec).
  *
- *    @luaparam v Vector to act as origin.
- *    @luaparam v2 Vector to get distance from, uses origin (0,0) if not set.
- *    @luareturn The distance calculated.
+ *    @luatparam Vec2 v Vector to act as origin.
+ *    @luatparam Vec2 v2 Vector to get distance from, uses origin (0,0) if not set.
+ *    @luatreturn number The distance calculated.
  * @luafunc dist( v, v2 )
  */
 static int vectorL_distance( lua_State *L )
@@ -600,9 +602,9 @@ static int vectorL_distance( lua_State *L )
  * @usage my_vec:dist2() -- Gets squared length of the vector (distance squared from origin).
  * @usage my_vec:dist2( your_vec ) -- Gets squared distance from both vectors (your_vec - my_vec)^2.
  *
- *    @luaparam v Vector to act as origin.
- *    @luaparam v2 Vector to get squared distance from, uses origin (0,0) if not set.
- *    @luareturn The distance calculated.
+ *    @luatparam Vec2 v Vector to act as origin.
+ *    @luatparam Vec2 v2 Vector to get squared distance from, uses origin (0,0) if not set.
+ *    @luatreturn number The distance calculated.
  * @luafunc dist2( v, v2 )
  */
 static int vectorL_distance2( lua_State *L )
@@ -632,8 +634,8 @@ static int vectorL_distance2( lua_State *L )
 
 /**
  * @brief Gets the modulus of the vector.
- *    @luaparam v Vector to get modulus of.
- *    @luareturn The modulus of the vector.
+ *    @luatparam Vec2 v Vector to get modulus of.
+ *    @luatreturn number The modulus of the vector.
  * @luafunc mod(v)
  */
 static int vectorL_mod( lua_State *L )

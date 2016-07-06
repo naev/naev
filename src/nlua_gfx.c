@@ -91,7 +91,8 @@ int nlua_loadGFX( lua_State *L, int readonly )
  *
  * @usage screen_w, screen_h = gfx.dim()
  *
- *    @luareturn The width and height of the Naev window.
+ *    @luatreturn number The width of the Naev window.
+ *    @luatreturn number The height of the Naev window.
  * @luafunc dim()
  */
 static int gfxL_dim( lua_State *L )
@@ -112,12 +113,12 @@ static int gfxL_dim( lua_State *L )
  * @usage gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3 (top-left is 1,1)
  * @usage gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position 4,3 (top-left is 1,1) with colour col
  *
- *    @luaparam tex Texture to render.
- *    @luaparam pos_x X position to render texture at.
- *    @luaparam pos_y Y position to render texture at.
- *    @luaparam sprite_x X sprite to render.
- *    @luaparam sprite_y Y sprite to render.
- *    @luaparam colour Colour to use when rendering.
+ *    @luatparam Tex tex Texture to render.
+ *    @luatparam number pos_x X position to render texture at.
+ *    @luatparam number pos_y Y position to render texture at.
+ *    @luatparam[opt=0] int sprite_x X sprite to render.
+ *    @luatparam[opt=0] int sprite_y Y sprite to render.
+ *    @luatparam[opt] Colour colour Colour to use when rendering.
  * @luafunc renderTex( tex, pos_x, pos_y, sprite_x, sprite_y, colour )
  */
 static int gfxL_renderTex( lua_State *L )
@@ -171,18 +172,18 @@ static int gfxL_renderTex( lua_State *L )
  *
  * @usage gfx.renderTexRaw( tex, 0., 0., 100., 100., 1, 1, 0., 0., 0.5, 0.5 ) -- Renders the bottom quarter of the sprite 1,1 of the image.
  *
- *    @luaparam tex Texture to render.
- *    @luaparam pos_x X position to render texture at.
- *    @luaparam pos_y Y position to render texture at.
- *    @luaparam pos_w Width of the image on screen.
- *    @luaparam pos_h Height of the image on screen.
- *    @luaparam sprite_x X sprite to render.
- *    @luaparam sprite_y Y sprite to render.
- *    @luaparam tex_x X sprite texture offset as [0.:1.].
- *    @luaparam tex_y Y sprite texture offset as [0.:1.].
- *    @luaparam tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
- *    @luaparam tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
- *    @luaparam colour [OPTIONAL] Colour to use when rendering.
+ *    @luatparam Tex tex Texture to render.
+ *    @luatparam number pos_x X position to render texture at.
+ *    @luatparam number pos_y Y position to render texture at.
+ *    @luatparam number pos_w Width of the image on screen.
+ *    @luatparam number pos_h Height of the image on screen.
+ *    @luatparam number sprite_x X sprite to render.
+ *    @luatparam number sprite_y Y sprite to render.
+ *    @luatparam number tex_x X sprite texture offset as [0.:1.].
+ *    @luatparam number tex_y Y sprite texture offset as [0.:1.].
+ *    @luatparam number tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
+ *    @luatparam number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
+ *    @luatparam[opt] Colour colour Colour to use when rendering.
  * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
  */
 static int gfxL_renderTexRaw( lua_State *L )
@@ -240,12 +241,12 @@ static int gfxL_renderTexRaw( lua_State *L )
  * @usage gfx.renderRect( 10., 30,. 40., 40., col ) -- Renders a 40 side square at position 10,30 of colour col
  * @usage gfx.renderRect( 10., 30,. 40., 40., col, True ) -- Renders a 40 side empty square at position 10,30 of colour col
  *
- *    @luaparam x X position to render at.
- *    @luaparam y Y position to render at.
- *    @luaparam w Width of the rectangle.
- *    @luaparam h Height of the rectangle.
- *    @luaparam col Colour to use.
- *    @luaparam empty Optional parameter on whether or not it should be empty, defaults to true.
+ *    @luatparam number x X position to render at.
+ *    @luatparam number y Y position to render at.
+ *    @luatparam number w Width of the rectangle.
+ *    @luatparam number h Height of the rectangle.
+ *    @luatparam Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
  * @luafunc renderRect( x, y, w, h, col, empty )
  */
 static int gfxL_renderRect( lua_State *L )
@@ -275,8 +276,8 @@ static int gfxL_renderRect( lua_State *L )
 /**
  * @brief Gets the size of the font.
  *
- *    @luaparam small Whether or not to get the size of the small font.
- *    @luareturn The size in pixels of the font.
+ *    @luatparam boolean small Whether or not to get the size of the small font.
+ *    @luatreturn[opt=false] The size in pixels of the font.
  * @luafunc fontSize( small )
  */
 static int gfxL_fontSize( lua_State *L )
@@ -294,9 +295,9 @@ static int gfxL_fontSize( lua_State *L )
  * @usage len = gfx.printDim( nil, "Hello World!" ) -- Length of string with normal font
  * @usage height = gfx.printDim( true, "Longer text", 20 ) -- Dimensions of text block
  *
- *    @luaparam small Whether or not to use the small font.
- *    @luaparam str Text to calculate length of.
- *    @luaparam width Optional parameter to indicate it is a block of text and to use this width.
+ *    @luatparam boolean small Whether or not to use the small font.
+ *    @luatparam string str Text to calculate length of.
+ *    @luatparam[opt] int width Optional parameter to indicate it is a block of text and to use this width.
  * @luafunc printDim( small, str, width )
  */
 static int gfxL_printDim( lua_State *L )
@@ -329,13 +330,13 @@ static int gfxL_printDim( lua_State *L )
  * @usage gfx.print( true, "Hello World!", 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
  * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
  *
- *    @luaparam small Whether or not to use a small font.
- *    @luaparam str String to print.
- *    @luaparam x X position to print at.
- *    @luaparam y Y position to print at.
- *    @luaparam col Colour to print text.
- *    @luaparam max Optional parameter to indicate maximum width to render up to.
- *    @luaparam center Optional boolean parameter indicating whether or not to center it.
+ *    @luatparam bookean small Whether or not to use a small font.
+ *    @luatparam string str String to print.
+ *    @luatparam number x X position to print at.
+ *    @luatparam number y Y position to print at.
+ *    @luatparam Colour col Colour to print text.
+ *    @luatparam[opt] int max Maximum width to render up to.
+ *    @luatparam[opt] boolean center Whether or not to center it.
  * @luafunc print( small, str, x, y, col, max, center )
  */
 static int gfxL_print( lua_State *L )
@@ -374,13 +375,13 @@ static int gfxL_print( lua_State *L )
  *
  * @usage gfx.printText( true, 100, 50, 50, 100, 100, col ) -- Displays a 100x100 block of text
  *
- *    @luaparam small Whether or not to use a small font.
- *    @luaparam str String to print.
- *    @luaparam x X position to print at.
- *    @luaparam y Y position to print at.
- *    @luaparam w Width of the block of text.
- *    @luaparam h Height of the block of text.
- *    @luaparam col Colour to print text.
+ *    @luatparam boolean small Whether or not to use a small font.
+ *    @luatparam string str String to print.
+ *    @luatparam number x X position to print at.
+ *    @luatparam number y Y position to print at.
+ *    @luatparam number w Width of the block of text.
+ *    @luatparam number h Height of the block of text.
+ *    @luatparam Colour col Colour to print text.
  * @luafunc printText( small, str, x, y, w, h, col )
  */
 static int gfxL_printText( lua_State *L )

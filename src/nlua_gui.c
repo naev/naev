@@ -100,10 +100,10 @@ int nlua_loadGUI( lua_State *L, int readonly )
  * @usage gui.viewport( 0, 0, screen_w, screen_h ) -- Resets viewport.
  * @usage gui.viewport( 0, 20, screen_w, screen_h-20 ) -- Gives 20 pixels for a bottom bar.
  *
- *    @luaparam x X position to start clipping (bottom left is 0.)
- *    @luaparam y Y position to start clipping (bottom left is 0.)
- *    @luaparam w Width of the clipping (width of the screen is default).
- *    @luaparam h Height of the clipping (height of the screen is default).
+ *    @luatparam number x X position to start clipping (bottom left is 0.)
+ *    @luatparam number y Y position to start clipping (bottom left is 0.)
+ *    @luatparam number w Width of the clipping (width of the screen is default).
+ *    @luatparam number h Height of the clipping (height of the screen is default).
  * @luafunc viewport( x, y, w, h )
  */
 static int guiL_viewport( lua_State *L )
@@ -144,10 +144,10 @@ static int guiL_fpsPos( lua_State *L )
 /**
  * @brief Initializes the mission OSD (on-screen display).
  *
- *    @luaparam x X position of the OSD display.
- *    @luaparam y Y position of the OSD display.
- *    @luaparam w Width of the OSD display.
- *    @luaparam h Height of the OSD display.
+ *    @luatparam number x X position of the OSD display.
+ *    @luatparam number y Y position of the OSD display.
+ *    @luatparam number w Width of the OSD display.
+ *    @luatparam number h Height of the OSD display.
  * @luafunc osdInit( x, y, w, h )
  */
 static int guiL_osdInit( lua_State *L )
@@ -169,9 +169,9 @@ static int guiL_osdInit( lua_State *L )
 /**
  * @brief Sets up the message box from which the player receives input.
  *
- *    @luaparam width Width of the message box.
- *    @luaparam x X position of message box.
- *    @luaparam y Y position of message box.
+ *    @luatparam number width Width of the message box.
+ *    @luatparam number x X position of message box.
+ *    @luatparam number y Y position of message box.
  * @luafunc mesgInit( width, x, y )
  */
 static int guiL_mesgInit( lua_State *L )
@@ -192,9 +192,9 @@ static int guiL_mesgInit( lua_State *L )
 /**
  * @brief Sets the center of the omsg messages and width.
  *
- *    @luaparam width Width of the omsg messages.
- *    @luaparam x X center of the omsg messages.
- *    @luaparam y Y center of the omsg messages.
+ *    @luatparam number width Width of the omsg messages.
+ *    @luatparam number x X center of the omsg messages.
+ *    @luatparam number y Y center of the omsg messages.
  * @luafunc omsgInit( width, x, y )
  */
 static int guiL_omsgInit( lua_State *L )
@@ -217,9 +217,9 @@ static int guiL_omsgInit( lua_State *L )
  *
  * @usage gui.radarInit( true, 82 ) -- Circular radar with 82 radius.
  *
- *    @luaparam circle Whether or not it should be a circle.
- *    @luaparam width Width if it's not a circle or radius if it is a circle.
- *    @luaparam height Only needed if not a circle.
+ *    @luatparam number circle Whether or not it should be a circle.
+ *    @luatparam number width Width if it's not a circle or radius if it is a circle.
+ *    @luatparam number height Only needed if not a circle.
  * @luafunc radarInit( circle, width, height )
  */
 static int guiL_radarInit( lua_State *L )
@@ -246,8 +246,8 @@ static int guiL_radarInit( lua_State *L )
  *
  * @usage gui.radarRender( 50, 50 )
  *
- *    @luaparam x X position to render at.
- *    @luaparam y Y position to render at.
+ *    @luatparam number x X position to render at.
+ *    @luatparam number y Y position to render at.
  * @luafunc radarRender( x, y )
  */
 static int guiL_radarRender( lua_State *L )
@@ -267,7 +267,7 @@ static int guiL_radarRender( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targeting.
+ *    @luatparam Tex tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPlanetGFX( lua_State *L )
@@ -280,7 +280,7 @@ static int guiL_targetPlanetGFX( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targeting.
+ *    @luatparam Tex tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPilotGFX( lua_State *L )
@@ -297,7 +297,7 @@ static int guiL_targetPilotGFX( lua_State *L )
  * function mouse_click( button, x, y, state ) <br />
  * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
  *
- *    @luaparam enable Whether or not to enable the mouse click callback.
+ *    @luatparam[opt=true] boolean enable Whether or not to enable the mouse click callback.
  * @luafunc mouseClickEnable()
  */
 static int guiL_mouseClickEnable( lua_State *L )
@@ -319,7 +319,7 @@ static int guiL_mouseClickEnable( lua_State *L )
  * function mouse_move( x, y ) <br />
  * With x/y being the position of the mouse.
  *
- *    @luaparam enable Whether or not to enable the mouse movement callback.
+ *    @luatparam[opt] boolean enable Whether or not to enable the mouse movement callback.
  * @luafunc mouseMoveEnable()
  */
 static int guiL_mouseMoveEnable( lua_State *L )
@@ -347,7 +347,7 @@ static int guiL_mouseMoveEnable( lua_State *L )
  *
  * @usage gui.menuInfo( "ship" ) -- Opens ship tab
  *
- *    @luaparam window Optional window parameter indicating the tab to open at.
+ *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
  * @luafunc menuInfo( window )
  */
 static int guiL_menuInfo( lua_State *L )

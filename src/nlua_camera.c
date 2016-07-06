@@ -71,9 +71,9 @@ int nlua_loadCamera( lua_State *L, int readonly )
  * @usage camera.set( a_pilot, true ) -- Flies camera over to a_pilot.
  * @usage camera.set( vec2.new() ) -- Jumps camera to 0,0
  *
- *    @luaparam target Should be either a vec2 or a pilot to focus on. It will follow pilots around. If nil, it follows the player.
- *    @luaparam soft_over Defaults to false, indicates if the camera should fly over or instantly teleport.
- *    @luaparam[opt] speed Speed at which to fly over. Defaults to 2500 if omitted and soft_over is true.
+ *    @luatparam Pilot|Vec2|nil target It will follow pilots around. If nil, it follows the player.
+ *    @luatparam[opt=false] boolean soft_over Indicates that the camera should fly over rather than instantly teleport.
+ *    @luaparam[opt=2500] speed Speed at which to fly over if soft_over is true.
  * @luafunc set( target, soft_over, speed )
  */
 static int camL_set( lua_State *L )

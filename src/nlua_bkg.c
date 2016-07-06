@@ -87,14 +87,14 @@ static int bkgL_clear( lua_State *L )
  * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0) ) -- Now with colour
  * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0), true ) -- Now with colour and on the foreground
  *
- *    @luaparam image Image to use.
- *    @luaparam x X position.
- *    @luaparam y Y position.
- *    @luaparam move Fraction of a pixel to move when the player moves one pixel.
- *    @luaparam scale How much to scale the image.
- *    @luaparam col Colour to tint image (optional parameter).
- *    @luaparam foreground Whether or not it should be rendered above the stars (optional parameter ). Defaults to false.
- *    @luareturn ID of the background.
+ *    @luatparam Tex image Image to use.
+ *    @luatparam number x X position.
+ *    @luatparam number y Y position.
+ *    @luatparam number move Fraction of a pixel to move when the player moves one pixel.
+ *    @luatparam number scale How much to scale the image.
+ *    @luatparam[opt] Colour col Colour to tint image.
+ *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the stars.
+ *    @luatreturn number ID of the background.
  * @luafunc image( image, x, y, move, scale, col, foreground )
  */
 static int bkgL_image( lua_State *L )
