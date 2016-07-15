@@ -35,6 +35,7 @@
 #include "nfile.h"
 #include "menu.h"
 #include "conf.h"
+#include "array.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -50,15 +51,11 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /*
  * Buffers.
  */
-#define BUF_LINES          128 /**< Number of lines in the buffer. */
-#define LINE_LENGTH        256 /**< Length of lines in the buffer. */
+#define CLI_MAX_INPUT      1024 /** Maximum characters typed into console. */
 #define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
 #define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
-static int cli_cursor      = 0; /**< Current cursor position. */
-static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
-static int cli_viewport    = 0; /**< Current viewport. */
+static char **cli_buffer; /**< CLI buffer. */
 static int cli_history     = 0; /**< Position in history. */
-static int cli_height      = 0; /**< Current console height. */
 static int cli_firstOpen   = 1; /**< First time opening. */
 
 
@@ -97,7 +94,7 @@ static int cli_printCore( lua_State *L, int cli_only )
 {
    int n; /* number of arguments */
    int i;
-   char buf[LINE_LENGTH];
+   char buf[CLI_MAX_INPUT];
    int p;
    const char *s;
 
@@ -117,8 +114,8 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      p += nsnprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
-      if (p >= LINE_LENGTH) {
+      p += nsnprintf( &buf[p], CLI_MAX_INPUT-p, "%s%s", (i>1) ? "   " : "", s );
+      if (p >= CLI_MAX_INPUT) {
          cli_addMessage(buf);
          p = 0;
       }
@@ -206,28 +203,13 @@ static int cli_script( lua_State *L )
  */
 void cli_addMessage( const char *msg )
 {
-   int n;
-
    /* Not initialized. */
    if (cli_state == NULL)
       return;
 
-   if (msg != NULL) {
-      strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
-      cli_buffer[cli_cursor][LINE_LENGTH-1] = '\0';
-   }
-   else
-      cli_buffer[cli_cursor][0] = '\0';
+   array_grow(&cli_buffer) = strdup((msg != NULL) ? msg : "");
 
-   cli_cursor = (cli_cursor+1) % BUF_LINES;
-   cli_history = cli_cursor; /* History matches cursor. */
-
-   /* Move viewport if needed. */
-   n = (cli_cursor - cli_viewport) % BUF_LINES;
-   if (cli_cursor < cli_viewport)
-      n += BUF_LINES;
-   if (n*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
-      cli_viewport = (cli_viewport+1) % BUF_LINES;
+   cli_history = array_size(cli_buffer) - 1;
 }
 
 
@@ -237,22 +219,13 @@ void cli_addMessage( const char *msg )
 static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i, y;
-   const glColour *c;
+   int i;
 
    /* Draw the text. */
-   i = cli_viewport;
-   for (y=h-cli_font->h-5; y>0; y -= cli_font->h + 5) {
-      if (cli_buffer[i][0] == '>')
-         c = &cDConsole;
-      else if (strncmp(cli_buffer[i], "cli:", 4)==0)
-         c = &cRed;
-      else
-         c = &cBlack;
-      gl_printMaxRaw( cli_font, w,
-            bx, by + y, c, cli_buffer[i] );
-      i = (i + 1) % BUF_LINES;
-   }
+   for (i=0; i<array_size(cli_buffer); i++)
+      gl_printMaxRaw( cli_font, w, bx,
+            by + h - (i+1)*(cli_font->h+5),
+            &cBlack, cli_buffer[i] );
 }
 
 
@@ -268,34 +241,30 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
 
       /* Go up in history. */
       case SDLK_UP:
-         i = cli_history-1;
-         while (cli_buffer[i][0] != '\0') {
-            if (cli_buffer[i][0] == '>') {
-               window_setInput( wid, "inpInput", &cli_buffer[i][3] );
+         for (i=cli_history-1; i>=0; i--) {
+            if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
+               window_setInput( wid, "inpInput", cli_buffer[i]+5 );
                cli_history = i;
                return 1;
             }
-            i--;
          }
          return 1;
 
       /* Go down in history. */
       case SDLK_DOWN:
          /* Clears buffer. */
-         if (cli_history >= cli_cursor) {
+         if (cli_history >= array_size(cli_buffer)-1) {
             window_setInput( wid, "inpInput", NULL );
             return 1;
          }
 
          /* Find next buffer. */
-         i = cli_history+1;
-         while (cli_buffer[i][0] != '\0') {
-            if (cli_buffer[i][0] == '>') {
-               window_setInput( wid, "inpInput", &cli_buffer[i][3] );
+         for (i=cli_history+1; i<array_size(cli_buffer); i++) {
+            if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
+               window_setInput( wid, "inpInput", cli_buffer[i]+5 );
                cli_history = i;
                return 1;
             }
-            i++;
          }
          cli_history = i-1;
          window_setInput( wid, "inpInput", NULL );
@@ -318,9 +287,6 @@ int cli_init (void)
    if (cli_state != NULL)
       return 0;
 
-   /* Set the height. */
-   cli_height = CLI_HEIGHT;
-
    /* Create the state. */
    cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
@@ -342,8 +308,8 @@ int cli_init (void)
    cli_font    = malloc( sizeof(glFont) );
    gl_fontInit( cli_font, "dat/mono.ttf", conf.font_size_console );
 
-   /* Clear the buffer. */
-   memset( cli_buffer, 0, sizeof(cli_buffer) );
+   /* Allocate the buffer. */
+   cli_buffer = array_create(char*);
 
    return 0;
 }
@@ -354,11 +320,19 @@ int cli_init (void)
  */
 void cli_exit (void)
 {
+   int i;
+
    /* Destroy the state. */
    if (cli_state != NULL) {
       lua_close( cli_state );
       cli_state = NULL;
    }
+
+   /* Free the buffer. */
+   for (i=0; i<array_size(cli_buffer); i++)
+      free(cli_buffer[i]);
+   array_free(cli_buffer);
+   cli_buffer = NULL;
 }
 
 
@@ -374,7 +348,7 @@ static void cli_input( unsigned int wid, char *unused )
    int status;
    char *str;
    lua_State *L;
-   char buf[LINE_LENGTH];
+   char buf[CLI_MAX_INPUT+7];
 
    /* Get the input. */
    str = window_getInput( wid, "inpInput" );
@@ -384,7 +358,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   nsnprintf( buf, LINE_LENGTH, "%s %s",
+   nsnprintf( buf, CLI_MAX_INPUT+7, "\eD%s %s\e0",
          cli_firstline ? "> " : ">>", str );
    cli_addMessage( buf );
 
@@ -487,7 +461,7 @@ void cli_open (void)
    /* Input box. */
    window_addInput( wid, 20, 20,
          CLI_WIDTH-60-BUTTON_WIDTH, BUTTON_HEIGHT,
-         "inpInput", LINE_LENGTH, 1, cli_font );
+         "inpInput", CLI_MAX_INPUT, 1, cli_font );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -497,9 +471,6 @@ void cli_open (void)
    window_addCust( wid, 20, -40,
          CLI_WIDTH-40, CLI_HEIGHT-80-BUTTON_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL );
-
-   /* Cache current height in case the window is resized. */
-   cli_height = CLI_HEIGHT;
 }
 
 
