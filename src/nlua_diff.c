@@ -75,7 +75,7 @@ int nlua_loadDiff( lua_State *L, int readonly )
 /**
  * @brief Applies a diff by name.
  *
- *    @luaparam name Name of the diff to apply.
+ *    @luatparam string name Name of the diff to apply.
  * @luafunc apply( name )
  */
 static int diff_applyL( lua_State *L )
@@ -90,7 +90,7 @@ static int diff_applyL( lua_State *L )
 /**
  * @brief Removes a diff by name.
  *
- *    @luaparam name Name of the diff to remove.
+ *    @luatparam string name Name of the diff to remove.
  * @luafunc remove( name )
  */
 static int diff_removeL( lua_State *L )
@@ -105,8 +105,8 @@ static int diff_removeL( lua_State *L )
 /**
  * @brief Checks to see if a diff is currently applied.
  *
- *    @luaparam name Name of the diff to check.
- *    @luareturn true if diff is applied, false if it isn't.
+ *    @luatparam string name Name of the diff to check.
+ *    @luatreturn boolean true if diff is applied, false if it isn't.
  * @luafunc isApplied( name )
  */
 static int diff_isappliedL( lua_State *L )

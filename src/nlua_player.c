@@ -188,7 +188,7 @@ int nlua_loadPlayer( lua_State *L, int readonly )
 /**
  * @brief Gets the player's name.
  *
- *    @luareturn The name of the player.
+ *    @luatreturn string The name of the player.
  * @luafunc name()
  */
 static int playerL_getname( lua_State *L )
@@ -199,7 +199,7 @@ static int playerL_getname( lua_State *L )
 /**
  * @brief Gets the player's ship's name.
  *
- *    @luareturn The name of the ship the player is currently in.
+ *    @luatreturn string The name of the ship the player is currently in.
  * @luafunc ship()
  */
 static int playerL_shipname( lua_State *L )
@@ -212,7 +212,7 @@ static int playerL_shipname( lua_State *L )
  *
  * @usage player.pay( 500 ) -- Gives player 500 credits
  *
- *    @luaparam amount Amount of money to pay the player in credits.
+ *    @luatparam number amount Amount of money to pay the player in credits.
  * @luafunc pay( amount )
  */
 static int playerL_pay( lua_State *L )
@@ -230,8 +230,9 @@ static int playerL_pay( lua_State *L )
  * @usage monies = player.credits()
  * @usage monies, readable = player.credits( 2 )
  *
- *    @luaparam decimal Optional argument that makes it return human readable form with so many decimals.
- *    @luareturn The amount of credits the player has on him in both numerical and human-readable form.
+ *    @luatparam number decimal Optional argument that makes it return human readable form with so many decimals.
+ *    @luatreturn number The amount of credits in numerical form.
+ *    @luatreturn string The amount of credits in human-readable form.
  * @luafunc credits( decimal )
  */
 static int playerL_credits( lua_State *L )
@@ -259,7 +260,7 @@ static int playerL_credits( lua_State *L )
 /**
  * @brief Sends the player an ingame message.
  *
- *    @luaparam message Message to send the player.
+ *    @luatparam string message Message to send the player.
  * @luafunc msg( message )
  */
 static int playerL_msg( lua_State *L )
@@ -286,10 +287,10 @@ static int playerL_msgClear( lua_State *L )
  * @brief Adds an overlay message.
  *
  * @usage player.omsgAdd( "some_message", 5 )
- *    @luaparam msg Message to add.
- *    @luaparam duration Duration to add message (if 0. is infinite).
- *    @luaparam fontsize Size of the font to use, optional parameter.
- *    @luareturn ID of the created overlay message.
+ *    @luatparam string msg Message to add.
+ *    @luatparam number duration Duration to add message (if 0. is infinite).
+ *    @luatparam[opt] number fontsize Size of the font to use.
+ *    @luatreturn number ID of the created overlay message.
  * @luafunc omsgAdd( msg, duration, fontsize )
  */
 static int playerL_omsgAdd( lua_State *L )
@@ -320,10 +321,10 @@ static int playerL_omsgAdd( lua_State *L )
  * @brief Changes an overlay message.
  *
  * @usage player.omsgChange( omsg_id, "new message", 3 )
- *    @luaparam id ID of the overlay message to change.
- *    @luaparam msg Message to change to.
- *    @luaparam duration New duration to set (0. for infinity).
- *    @luareturn true if all went well, false otherwise.
+ *    @luatparam number id ID of the overlay message to change.
+ *    @luatparam string msg Message to change to.
+ *    @luatparam number duration New duration to set (0. for infinity).
+ *    @luatreturn boolean true if all went well, false otherwise.
  * @luafunc omsgChange( id, msg, duration )
  */
 static int playerL_omsgChange( lua_State *L )
@@ -351,7 +352,7 @@ static int playerL_omsgChange( lua_State *L )
  * @brief Removes an overlay message.
  *
  * @usage player.omsgRm( msg_id )
- *    @luaparam id ID of the overlay message to remove.
+ *    @luatparam number id ID of the overlay message to remove.
  * @luafunc omsgRm( id )
  */
 static int playerL_omsgRm( lua_State *L )
@@ -365,7 +366,7 @@ static int playerL_omsgRm( lua_State *L )
  * @brief Sets player save ability.
  *
  * @usage player.allowSave( b )
- *    @luaparam b true if the player is allowed to save, false otherwise. Defaults to true.
+ *    @luatparam[opt=true] boolean b true if the player is allowed to save, false otherwise.
  * @luafunc allowSave( b )
  */
 static int playerL_allowSave( lua_State *L )
@@ -385,8 +386,8 @@ static int playerL_allowSave( lua_State *L )
 /**
  * @brief Gets the player's combat rating.
  *
- *    @luareturn Returns the combat rating (in raw number) and the actual
- *             standing in human readable form.
+ *    @luatreturn number The combat rating (in raw number).
+ *    @luatreturn string The actual standing in human readable form.
  * @luafunc getRating()
  */
 static int playerL_getRating( lua_State *L )
@@ -401,7 +402,7 @@ static int playerL_getRating( lua_State *L )
  *
  * @usage v = player.pos()
  *
- *    @luareturn The position of the player (Vec2).
+ *    @luatreturn Vec2 The position of the player.
  * @luafunc pos()
  */
 static int playerL_getPosition( lua_State *L )
@@ -413,7 +414,7 @@ static int playerL_getPosition( lua_State *L )
 /**
  * @brief Gets the player's associated pilot.
  *
- *    @luareturn The player's pilot.
+ *    @luatreturn Pilot The player's pilot.
  * @luafunc pilot()
  */
 static int playerL_getPilot( lua_State *L )
@@ -428,7 +429,7 @@ static int playerL_getPilot( lua_State *L )
  *
  * @usage jumps = player.jumps()
  *
- *    @luareturn The player's maximum number of jumps.
+ *    @luatreturn number The player's maximum number of jumps.
  * @luafunc jumps()
  */
 static int playerL_jumps( lua_State *L )
@@ -443,7 +444,8 @@ static int playerL_jumps( lua_State *L )
  *
  * @usage fuel, consumption = player.fuel()
  *
- *    @luareturn The player's fuel and the amount needed per jump.
+ *    @luatreturn number The player's fuel and
+ *    @luatreturn number The amount of fuel needed per jump.
  * @luafunc fuel()
  */
 static int playerL_fuel( lua_State *L )
@@ -460,7 +462,7 @@ static int playerL_fuel( lua_State *L )
  * @usage player.refuel() -- Refuel fully
  * @usage player.refuel( 200 ) -- Refuels partially
  *
- *    @param fuel Amount of fuel to add, will set to max if nil.
+ *    @luatparam[opt] number fuel Amount of fuel to add, will set to max if nil.
  * @luafunc refuel( fuel )
  */
 static int playerL_refuel( lua_State *L )
@@ -485,7 +487,7 @@ static int playerL_refuel( lua_State *L )
  * @brief Checks to see if the player has autonav enabled.
  *
  * @usage autonav = player.autonav()
- *    @luareturn true if the player has autonav enabled.
+ *    @luatreturn boolean true if the player has autonav enabled.
  * @luafunc autonav()
  */
 static int playerL_autonav( lua_State *L )
@@ -500,7 +502,8 @@ static int playerL_autonav( lua_State *L )
  *
  * @usage sys, jumps = player.autonavDest()
  *
- *    @luareturn The destination system (or nil if none selected) and the number of jumps left.
+ *    @luatreturn System|nil The destination system (or nil if none selected).
+ *    @luatreturn number|nil The number of jumps left.
  * @luafunc autonavDest()
  */
 static int playerL_autonavDest( lua_State *L )
@@ -533,8 +536,8 @@ static int playerL_autonavDest( lua_State *L )
  *
  * @usage player.cinematics( true, { gui = true } ) -- Enables cinematics without hiding gui.
  *
- *    @luaparam enable If true sets cinematics mode, if false disables. Defaults to disable.
- *    @luaparam options Table of options.
+ *    @luatparam boolean enable If true sets cinematics mode, if false disables. Defaults to disable.
+ *    @luatparam table options Table of options.
  * @luafunc cinematics( enable, options )
  */
 static int playerL_cinematics( lua_State *L )
@@ -646,8 +649,8 @@ static int playerL_takeoff( lua_State *L )
  * @usage player.allowLand( false ) -- Doesn't allow the player to land.
  * @usage player.allowLand( false, "No landing." ) -- Doesn't allow the player to land with the message "No landing."
  *
- *    @luaparam b Whether or not to allow the player to land (defaults to true if omitted).
- *    @luaparam msg Message displayed when player tries to land (only if disallowed to land). Can be omitted to use default.
+ *    @luatparam[opt=true] boolean b Whether or not to allow the player to land.
+ *    @luatparam[opt] string msg Message displayed when player tries to land (only if disallowed to land). Can be omitted to use default.
  * @luafunc allowLand( b, msg )
  */
 static int playerL_allowLand( lua_State *L )
@@ -687,8 +690,8 @@ static int playerL_allowLand( lua_State *L )
  *  - commodity<br/>
  *
  * @usage player.landWindow( "outfits" )
- *    @luaparam winname Name of the window.
- *    @luareturn True on success.
+ *    @luatparam string winname Name of the window.
+ *    @luatreturn boolean True on success.
  * @luafunc landWindow( winname )
  */
 static int playerL_landWindow( lua_State *L )
@@ -746,6 +749,7 @@ static int playerL_commclose( lua_State *L )
  *
  * @usage names = player.ships() -- The player's ship names.
  *
+ *   @luatreturn {String,...} Table of ship names.
  * @luafunc ships()
  */
 static int playerL_ships( lua_State *L )
@@ -771,6 +775,8 @@ static int playerL_ships( lua_State *L )
  *
  * @usage outfits = player.shipOutfits("Llama") -- Gets the Llama's outfits
  *
+ *   @luatparam string name Name of the ship to get the outfits of.
+ *   @luatreturn {Outfit,...} Table of outfits.
  * @luafunc shipOutfits( name )
  */
 static int playerL_shipOutfits( lua_State *L )
@@ -828,6 +834,7 @@ static int playerL_shipOutfits( lua_State *L )
  *
  * @usage player.outfits() -- A table of all the player's outfits.
  *
+ *   @luatreturn {Outfit,...} Table of outfits.
  * @luafunc outfits()
  */
 static int playerL_outfits( lua_State *L )
@@ -853,8 +860,8 @@ static int playerL_outfits( lua_State *L )
  *
  * @usage q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
  *
- *    @luaparam name Name of the outfit to give.
- *    @luareturn The quantity the player owns.
+ *    @luatparam string name Name of the outfit to give.
+ *    @luatreturn number The quantity the player owns.
  * @luafunc numOutfit( name )
  */
 static int playerL_numOutfit( lua_State *L )
@@ -885,8 +892,8 @@ static int playerL_numOutfit( lua_State *L )
  * @usage player.addOutfit( "Laser Cannon" ) -- Gives the player a laser cannon
  * @usage player.addOutfit( "Plasma Blaster", 2 ) -- Gives the player two plasma blasters
  *
- *    @luaparam name Name of the outfit to give.
- *    @luaparam q Optional parameter that sets the quantity to give (default 1).
+ *    @luatparam string name Name of the outfit to give.
+ *    @luatparam[opt=1] number q Quantity to give.
  * @luafunc addOutfit( name, q )
  */
 static int playerL_addOutfit( lua_State *L  )
@@ -925,8 +932,8 @@ static int playerL_addOutfit( lua_State *L  )
  *
  * @usage player.rmOutfit( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
  *
- *    @luaparam name Name of the outfit to give.
- *    @luaparam q Optional parameter that sets the quantity to give (default 1).
+ *    @luatparam string name Name of the outfit to give.
+ *    @luatparam[opt] number q Quantity to remove (default 1).
  * @luafunc rmOutfit( name, q )
  */
 static int playerL_rmOutfit( lua_State *L )
@@ -1058,10 +1065,10 @@ static Pilot* playerL_newShip( lua_State *L )
  *
  * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
- *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luaparam loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
- *    @luaparam noname If true does not let the player name the ship (defaults to false).
+ *    @luatparam string ship Name of the ship to add.
+ *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+ *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
+ *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
  * @luafunc addShip( ship, name, loc, noname )
  */
 static int playerL_addShip( lua_State *L )
@@ -1073,11 +1080,11 @@ static int playerL_addShip( lua_State *L )
 
 /**
  * @brief Swaps the player's current ship with a new ship given to him.
- *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luaparam loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
- *    @luaparam noname If true does not let the player name the ship (defaults to false).
- *    @luaparam remove If true removes the player's current ship (so it replaces and doesn't swap).
+ *    @luatparam string ship Name of the ship to add.
+ *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+ *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
+ *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
+ *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
  * @luafunc swapShip( ship, name, loc, noname, remove )
  */
 static int playerL_swapShip( lua_State *L )
@@ -1102,8 +1109,8 @@ static int playerL_swapShip( lua_State *L )
  *
  * @usage if player.misnActive( "The Space Family" ) then -- Player is doing space family mission
  *
- *    @luaparam name Name of the mission to check.
- *    @luareturn true if the mission is active, false if it isn't.
+ *    @luatparam string name Name of the mission to check.
+ *    @luatreturn boolean true if the mission is active, false if it isn't.
  * @luafunc misnActive( name )
  */
 static int playerL_misnActive( lua_State *L )
@@ -1128,8 +1135,8 @@ static int playerL_misnActive( lua_State *L )
  * This only works with missions that have the unique flag.
  *
  * @usage if player.misnDone( "The Space Family" ) then -- Player finished mission
- *    @luaparam name Name of the mission to check.
- *    @luareturn true if mission was finished, false if it wasn't.
+ *    @luatparam string name Name of the mission to check.
+ *    @luatreturn boolean true if mission was finished, false if it wasn't.
  * @luafunc misnDone( name )
  */
 static int playerL_misnDone( lua_State *L )
@@ -1157,8 +1164,8 @@ static int playerL_misnDone( lua_State *L )
  *
  * @usage if player.evtActive( "Shipwreck" ) then -- The shipwreck event is active
  *
- *    @luaparam name Name of the mission to check.
- *    @luareturn true if the mission is active, false if it isn't.
+ *    @luatparam string name Name of the mission to check.
+ *    @luatreturn boolean true if the mission is active, false if it isn't.
  * @luafunc evtActive( name )
  */
 static int playerL_evtActive( lua_State *L )
@@ -1184,8 +1191,8 @@ static int playerL_evtActive( lua_State *L )
  * This only works with events that have the unique flag.
  *
  * @usage if player.evtDone( "Shipwreck" ) then -- Player finished event
- *    @luaparam name Name of the event to check.
- *    @luareturn true if event was finished, false if it wasn't.
+ *    @luatparam string name Name of the event to check.
+ *    @luatreturn boolean true if event was finished, false if it wasn't.
  * @luafunc evtDone( name )
  */
 static int playerL_evtDone( lua_State *L )
@@ -1218,7 +1225,7 @@ static int playerL_evtDone( lua_State *L )
  * @usage player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  *
- *    @luaparam dest System or name of a system or planet or name of a planet to teleport the player to.
+ *    @luatparam System|Planet|string dest System or name of a system or planet or name of a planet to teleport the player to.
  * @luafunc teleport( dest )
  */
 static int playerL_teleport( lua_State *L )
