@@ -92,7 +92,7 @@
   </avail>
  </mission>
  <mission name="Commodity Run">
-  <lua>neutral/commodityRun</lua>
+  <lua>neutral/commodity_run</lua>
   <avail>
    <priority>5</priority>
    <chance>90</chance>
@@ -109,7 +109,7 @@
   </avail>
  </mission>
  <mission name="Trader Escort">
-  <lua>neutral/traderEscort</lua>
+  <lua>neutral/trader_escort</lua>
   <avail>
    <priority>5</priority>
    <cond>player.getRating() &gt; 200</cond>
