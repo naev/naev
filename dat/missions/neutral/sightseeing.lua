@@ -12,8 +12,10 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 --
 
    Based on patrol mission, this mission ferries sightseers to various points.
@@ -131,11 +133,11 @@ function create ()
       misn.finish( false )
    end
    if player.pilot():ship():class() == "Luxury Yacht" then
-   credits = (missys:jumpDist()*2500 + attractions*4000)*rnd.rnd(2,6)
-   credits = credits + rnd.sigma() * (credits/5)
+      credits = (missys:jumpDist()*2500 + attractions*4000)*rnd.rnd(2,6)
+      credits = credits + rnd.sigma() * (credits/5)
    else
-   credits = missys:jumpDist()*2500 + attractions*4000
-   credits = credits + rnd.sigma() * (credits/3)
+      credits = missys:jumpDist()*2500 + attractions*4000
+      credits = credits + rnd.sigma() * (credits/3)
    end
 
    -- Set mission details
@@ -158,6 +160,7 @@ function accept ()
    job_done = false
 
    hook.enter( "enter" )
+   hook.jumpout( "jumpout" )
    hook.land( "land" )
 end
 
@@ -169,7 +172,20 @@ function enter ()
 end
 
 
+function jumpout ()
+   if not job_done and system.cur() == missys then
+      misn.osdActive( 1 )
+      if timer_hook ~= nil then hook.rm( timer_hook ) end
+      if mark ~= nil then
+         system.mrkRm( mark )
+         mark = nil
+      end
+   end
+end
+
+
 function land ()
+   jumpout()
    if job_done and planet.cur() == startingplanet then
       misn.cargoRm( civs )
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
@@ -245,6 +261,7 @@ function timer ()
             new_points[ #new_points + 1 ] = points[i]
          end
          points = new_points
+         points["__save"] = true
 
          local sstxt = ssmsg[ rnd.rnd( 1, #ssmsg ) ]
          player.msg( sstxt )
@@ -267,6 +284,6 @@ function timer ()
    end
 
    if not job_done then
-      hook.timer( 50, "timer" )
+      timer_hook = hook.timer( 50, "timer" )
    end
 end
