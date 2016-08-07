@@ -71,7 +71,7 @@ function create ()
    misn.setTitle( misn_title:format( chosen_comm:name() ) )
    misn.markerAdd( system.cur(), "computer" )
    misn.setDesc( misn_desc:format( chosen_comm:name() ) )
-   misn.setReward( misn_reward:format( math.floor( price ) ) )
+   misn.setReward( misn_reward:format( numstring( price ) ) )
     
 end
 
