@@ -194,7 +194,7 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    if (o1->type < o2->type)
       return -1;
    else if (o1->type > o2->type)
-      return +1;
+         return +1;
 
    /* Compare named types. */
    if ((o1->typename == NULL) && (o2->typename != NULL))
@@ -1454,7 +1454,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"ai")) {
          buf = xml_get(node);
          if (buf != NULL) {
-
             if (strcmp(buf,"dumb")==0)
                temp->u.amm.ai = AMMO_AI_DUMB;
             else if (strcmp(buf,"seek")==0)
@@ -2056,7 +2055,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 /**
  * @brief Parses and returns Outfit from parent node.
-
+ 
  *    @param temp Outfit to load into.
  *    @param parent Parent node to parse outfit from.
  *    @return 0 on success.
@@ -2134,7 +2133,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             else if (xml_isNode(cur,"size")) {
                temp->slot.size = outfit_toSlotSize( xml_get(cur) );
                continue;
-            }
+			}
             WARN("Outfit '%s' has unknown general node '%s'",temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
@@ -2245,7 +2244,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 	   layerpos++;
 	   if (temp->slot.type != OUTFIT_SLOT_NA) {
 		   if (temp->slot.spid>0) {
-			   nsnprintf( buf, bufsize, OUTFIT_GFX_PATH"store/layers/slot_special_%s.png",  sp_display(temp->slot.spid));
+			   nsnprintf( buf, bufsize, OUTFIT_GFX_PATH"store/layers/slot_special_%s.png",  sp_name(temp->slot.spid));
 			   temp->gfx_store_layers[layerpos]=gl_newImage( buf, OPENGL_TEX_MIPMAPS );
 		   } else if (temp->slot.type == OUTFIT_SLOT_UTILITY) {
 			   temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_utility.png", OPENGL_TEX_MIPMAPS );
@@ -2376,7 +2375,6 @@ int outfit_load (void)
 
    return 0;
 }
-
 
 /**
  * @brief qsort compare function for names.
@@ -2557,4 +2555,3 @@ void outfit_free (void)
 
    array_free(outfit_stack);
 }
-
