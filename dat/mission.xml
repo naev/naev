@@ -95,7 +95,7 @@
   <lua>neutral/commodityRun</lua>
   <avail>
    <priority>5</priority>
-   <chance>60</chance>
+   <chance>90</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
