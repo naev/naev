@@ -42,9 +42,7 @@ else -- Default to English
 
    -- Messages
    msg    = {}
-   msg[2] = "Hostiles detected. Protect the passengers at all costs."
-   msg[3] = "Passengers safe."
-   msg[4] = "All attractions visited. Return to %s and collect your pay."
+   msg[1] = "All attractions visited. Return to %s and collect your pay."
 
    --Sightseeing Messages
    ssmsg = {}
@@ -68,19 +66,6 @@ else -- Default to English
 end
 
 
--- Get the number of enemies in a particular system
-function get_enemies( sys )
-   local enemies = 0
-   for i, j in ipairs( paying_faction:enemies() ) do
-      local p = sys:presences()[j:name()]
-      if p ~= nil then
-         enemies = enemies + p
-      end
-   end
-   return enemies
-end
-
-
 function create ()
    paying_faction = planet.cur():faction()
    startingplanet = planet.cur()
@@ -90,9 +75,7 @@ function create ()
          local this_faction = s:presences()[paying_faction:name()]
          return this_faction ~= nil and this_faction > 0
       end )
-   if get_enemies( system.cur() ) then
-      systems[ #systems + 1 ] = system.cur()
-   end
+   systems[ #systems + 1 ] = startingsystem
 
    if #systems <= 0 then
       misn.finish( false )
@@ -123,21 +106,17 @@ function create ()
       misn.finish( false )
    end
 
-   hostiles = {}
-   hostiles["__save"] = true
-   hostiles_encountered = false
-
    friend = missys:presence("friendly")
    foe = missys:presence("hostile")
    if friend < foe then
       misn.finish( false )
    end
+   credits = missys:jumpDist() * 2500 + attractions * 4000
    if player.pilot():ship():class() == "Luxury Yacht" then
-      credits = (missys:jumpDist()*2500 + attractions*4000)*rnd.rnd(2,6)
-      credits = credits + rnd.sigma() * (credits/5)
+      credits = credits * rnd.rnd( 2, 6 )
+      credits = credits + rnd.sigma() * ( credits / 5 )
    else
-      credits = missys:jumpDist()*2500 + attractions*4000
-      credits = credits + rnd.sigma() * (credits/3)
+      credits = credits + rnd.sigma() * ( credits / 3 )
    end
 
    -- Set mission details
@@ -196,57 +175,12 @@ function land ()
 end
 
 
-function pilot_leave ( pilot )
-   local new_hostiles = {}
-   for i, j in ipairs( hostiles ) do
-      if j ~= nil and j ~= pilot and j:exists() then
-         new_hostiles[ #new_hostiles + 1 ] = j
-      end
-   end
-
-   hostiles = new_hostiles
-end
-
-
 function timer ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
 
    local player_pos = player.pilot():pos()
-   local enemies = pilot.get( paying_faction:enemies() )
 
-   for i, j in ipairs( enemies ) do
-      if j ~= nil and j:exists() then
-         local already_in = false
-         for a, b in ipairs( hostiles ) do
-            if j == b then
-               already_in = true
-            end
-         end
-         if not already_in then
-            if player_pos:dist( j:pos() ) < 1500 then
-               j:setVisible( true )
-               j:setHilight( true )
-               j:setHostile( true )
-               hook.pilot( j, "death", "pilot_leave" )
-               hook.pilot( j, "jump", "pilot_leave" )
-               hook.pilot( j, "land", "pilot_leave" )
-               hostiles[ #hostiles + 1 ] = j
-            end
-         end
-      end
-   end
-
-   if #hostiles > 0 then
-      if not hostiles_encountered then
-         player.msg( msg[2] )
-         hostiles_encountered = true
-      end
-      misn.osdActive( 2 )
-   elseif #points > 0 then
-      if hostiles_encountered then
-         player.msg( msg[3] )
-         hostiles_encountered = false
-      end
+   if #points > 0 then
       misn.osdActive( 2 )
 
       local point_pos = points[1]:pos()
@@ -275,7 +209,7 @@ function timer ()
       end
    else
       job_done = true
-      player.msg( msg[4]:format( startingplanet:name() ) )
+      player.msg( msg[1]:format( startingplanet:name() ) )
       misn.osdActive( 3 )
       if marker ~= nil then
          misn.markerRm( marker )
