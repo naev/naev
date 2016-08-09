@@ -97,15 +97,6 @@
    <priority>5</priority>
    <chance>90</chance>
    <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-   <faction>Trader</faction>
   </avail>
  </mission>
  <mission name="Trader Escort">
