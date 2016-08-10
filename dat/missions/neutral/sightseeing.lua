@@ -28,6 +28,9 @@ include "jumpdist.lua"
 lang = naev.lang()
 if lang == "es" then
 else -- Default to English
+   nolux_title = "Not Very Luxurious"
+   nolux_text  = "Since your ship is not a Luxury Yacht class ship, you will only be paid %s credits. Accept the mission anyway?"
+
    pay_title = "Mission Completed"
    pay_text    = {}
    pay_text[1] = "The passengers disembark with a new appreciation for the wonders of the universe."
@@ -111,13 +114,11 @@ function create ()
    if friend < foe then
       misn.finish( false )
    end
+
    credits = missys:jumpDist() * 2500 + attractions * 4000
-   if player.pilot():ship():class() == "Luxury Yacht" then
-      credits = credits * rnd.rnd( 2, 6 )
-      credits = credits + rnd.sigma() * ( credits / 5 )
-   else
-      credits = credits + rnd.sigma() * ( credits / 3 )
-   end
+   credits_nolux = credits + rnd.sigma() * ( credits / 3 )
+   credits = credits * rnd.rnd( 2, 6 )
+   credits = credits + rnd.sigma() * ( credits / 5 )
 
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
@@ -128,6 +129,14 @@ end
 
 
 function accept ()
+   if player.pilot():ship():class() ~= "Luxury Yacht" then
+      if tk.yesno( nolux_title, nolux_text:format( numstring(credits_nolux) ) ) then
+         credits = credits_nolux
+      else
+         misn.finish()
+      end
+   end
+
    misn.accept()
 
    osd_title = osd_title:format( missys:name() )
