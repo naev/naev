@@ -86,11 +86,7 @@ function create ()
    paying_faction = planet.cur():faction()
    startingplanet = planet.cur()
    startingsystem = system.cur()
-   local systems = getsysatdistance( system.cur(), 1, 2,
-      function(s)
-         local this_faction = s:presences()[paying_faction:name()]
-         return this_faction ~= nil and this_faction > 0
-      end )
+   local systems = getsysatdistance( system.cur(), 1, 2 )
    systems[ #systems + 1 ] = startingsystem
 
    if #systems <= 0 then
