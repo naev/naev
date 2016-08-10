@@ -38,6 +38,19 @@ else -- Default to English
    pay_text[3] = "The passengers burst into cheers upon returning to the hanger. What a wonderful experience."
    pay_text[4] = "The passengers enjoyed their time aboard your vessel."
 
+   pay_s_lux_title = "Unexpected Bonus"
+   pay_s_lux_text    = {}
+   pay_s_lux_text[1] = "The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare."
+   pay_s_lux_text[2] = "Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation."
+   pay_s_lux_text[3] = "As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid."
+   pay_s_lux_text[4] = "When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all."
+
+   pay_s_nolux_title = "Disappointment"
+   pay_s_nolux_text    = {}
+   pay_s_nolux_text[1] = "Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment."
+   pay_s_nolux_text[2] = "While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare."
+   pay_s_nolux_text[3] = "Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been."
+
    -- Mission details
    misn_title  = "Sightseeing in the %s System"
    misn_reward = "%s credits"
@@ -119,6 +132,8 @@ function create ()
    credits_nolux = credits + rnd.sigma() * ( credits / 3 )
    credits = credits * rnd.rnd( 2, 6 )
    credits = credits + rnd.sigma() * ( credits / 5 )
+   nolux = false
+   nolux_known = false
 
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
@@ -131,7 +146,7 @@ end
 function accept ()
    if player.pilot():ship():class() ~= "Luxury Yacht" then
       if tk.yesno( nolux_title, nolux_text:format( numstring(credits_nolux) ) ) then
-         credits = credits_nolux
+         nolux_known = true
       else
          misn.finish()
       end
@@ -155,6 +170,9 @@ end
 
 function enter ()
    if system.cur() == missys and not job_done then
+      if player.pilot():ship():class() ~= "Luxury Yacht" then
+         nolux = true
+      end
       timer()
    end
 end
@@ -176,9 +194,26 @@ function land ()
    jumpout()
    if job_done and planet.cur() == startingplanet then
       misn.cargoRm( civs )
+
+      local ttl = pay_title
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
-      tk.msg( pay_title, txt )
-      player.pay( credits )
+      if nolux ~= nolux_known then
+         if nolux then
+            ttl = pay_s_nolux_title
+            txt = pay_s_nolux_text[ rnd.rnd( 1, #pay_s_nolux_text ) ]
+         else
+            ttl = pay_s_lux_title
+            txt = pay_s_lux_text[ rnd.rnd( 1, #pay_s_lux_text ) ]
+         end
+      end
+      tk.msg( ttl, txt )
+
+      if nolux then
+         player.pay( credits_nolux )
+      else
+         player.pay( credits )
+      end
+
       misn.finish( true )
    end
 end
