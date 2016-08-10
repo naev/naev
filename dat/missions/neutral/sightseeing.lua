@@ -97,7 +97,7 @@ function create ()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    local planets = missys:planets()
-   local numpoints = math.min( rnd.rnd( 2, 5 ), #planets )
+   local numpoints = rnd.rnd( 2, #planets )
    attractions = numpoints
    points = {}
    points["__save"] = true
