@@ -57,20 +57,20 @@ function create ()
    -- TODO: find a better way to index all available commodities
    local commchoices = planet.commoditiesSold("Darkshed")
 
-   chosen_comm = commchoices[ rnd.rnd( 1, #commchoices ) ]
+   chosen_comm = commchoices[ rnd.rnd( 1, #commchoices ) ]:name()
    local mult = rnd.rnd( 1, 3 ) + math.abs( rnd.threesigma() * 2 )
-   price = commodity.price( chosen_comm:name() ) * mult
+   price = commodity.price( chosen_comm ) * mult
 
    for k, v in pairs( planet.cur():commoditiesSold() ) do
-      if v == chosen_comm then
+      if v:name() == chosen_comm then
          misn.finish(false)
       end
    end
 
    -- Set Mission Details
-   misn.setTitle( misn_title:format( chosen_comm:name() ) )
+   misn.setTitle( misn_title:format( chosen_comm ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( chosen_comm:name() ) )
+   misn.setDesc( misn_desc:format( chosen_comm ) )
    misn.setReward( misn_reward:format( numstring( price ) ) )
     
 end
@@ -79,8 +79,8 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( chosen_comm:name() )
-   osd_msg[2] = osd_msg[2]:format( chosen_comm:name(), misplanet:name(), missys:name() )
+   osd_msg[1] = osd_msg[1]:format( chosen_comm )
+   osd_msg[2] = osd_msg[2]:format( chosen_comm, misplanet:name(), missys:name() )
    misn.osdCreate( osd_title, osd_msg )
 
    hook.enter( "enter" )
@@ -89,7 +89,7 @@ end
 
 
 function enter ()
-   if pilot.cargoHas( player.pilot(), chosen_comm:name() ) > 0 then
+   if pilot.cargoHas( player.pilot(), chosen_comm ) > 0 then
       misn.osdActive( 2 )
    else
       misn.osdActive( 1 )
@@ -98,17 +98,17 @@ end
 
 
 function land ()
-   local amount = pilot.cargoHas( player.pilot(), chosen_comm:name() )
+   local amount = pilot.cargoHas( player.pilot(), chosen_comm )
    local reward = amount * price
 
    if planet.cur() == misplanet and amount > 0 then
       local txt = (
          cargo_land_p1[ rnd.rnd( 1, #cargo_land_p1 ) ] ..
-         chosen_comm:name() ..
+         chosen_comm ..
          cargo_land_p2[ rnd.rnd( 1, #cargo_land_p2 ) ]:format( numstring( reward ) )
          )
       tk.msg( cargo_land_title, txt )
-      pilot.cargoRm( player.pilot(), chosen_comm:name(), amount )
+      pilot.cargoRm( player.pilot(), chosen_comm, amount )
       player.pay( reward )
       misn.finish( true )
    end
