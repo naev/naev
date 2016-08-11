@@ -95,6 +95,7 @@
   <lua>neutral/commodityRun</lua>
   <avail>
    <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") &lt; 3</cond>
    <chance>90</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>

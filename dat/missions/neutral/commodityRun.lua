@@ -48,6 +48,13 @@ else -- default english
 end
 
 
+function update_active_runs( change )
+   local current_runs = var.peek( "commodity_runs_active" )
+   if current_runs == nil then current_runs = 0 end
+   var.push( "commodity_runs_active", math.max( 0, current_runs + change ) )
+end
+
+
 function create ()
    -- Note: this mission does not make any system claims.
  
@@ -78,6 +85,7 @@ end
 
 function accept ()
    misn.accept()
+   update_active_runs( 1 )
 
    osd_msg[1] = osd_msg[1]:format( chosen_comm:name() )
    osd_msg[2] = osd_msg[2]:format( chosen_comm:name(), misplanet:name(), missys:name() )
@@ -110,7 +118,13 @@ function land ()
       tk.msg( cargo_land_title, txt )
       pilot.cargoRm( player.pilot(), chosen_comm:name(), amount )
       player.pay( reward )
+      update_active_runs( -1 )
       misn.finish( true )
    end
+end
+
+
+function abort ()
+   update_active_runs( -1 )
 end
 
