@@ -198,6 +198,7 @@ function addRefuelShip ()
    refship:setFriendly()
    refship:setVisplayer()
    refship:setHilight()
+   refship:setNoJump()
 
    -- Maximize fuel
    refship:rmOutfit("all") -- Only will have fuel pods
