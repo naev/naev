@@ -61,9 +61,11 @@ function create ()
    local mult = rnd.rnd( 1, 3 ) + math.abs( rnd.threesigma() * 2 )
    price = commodity.price( chosen_comm ) * mult
 
-   for k, v in pairs( planet.cur():commoditiesSold() ) do
-      if v:name() == chosen_comm then
-         misn.finish(false)
+   for i, j in ipairs( missys:planets() ) do
+      for k, v in pairs( j:commoditiesSold() ) do
+         if v:name() == chosen_comm then
+            misn.finish(false)
+         end
       end
    end
 
