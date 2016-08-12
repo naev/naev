@@ -101,7 +101,7 @@ function accept ()
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc )
-      marker = misn.markerAdd( missys, "plot" )
+      marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_reward )
 
       job_done = false
@@ -134,5 +134,6 @@ function approach ()
 
    misn.npcRm( npc )
    job_done = true
+   if marker ~= nil then misn.markerRm( marker ) end
    misn.osdActive( 2 )
 end
