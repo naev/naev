@@ -5,15 +5,15 @@
   <slot prop="hull">structure</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>55</mass>
+  <mass>40</mass>
   <price>120000</price>
   <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
   <gfx_store>plating_cargo</gfx_store>
  </general>
  <specific type="modification">
   <cargo>30</cargo>
-  <absorb>7</absorb>
-  <armour>80</armour>
+  <absorb>4</absorb>
+  <armour>45</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>
