@@ -1904,7 +1904,7 @@ static int aiL_careful_face( lua_State *L )
    /* Default gains. */
    k_diff = 10.;
    k_goal = 1.;
-   k_enemy = 4000000.;
+   k_enemy = 6000000.;
 
    /* Init the force */
    vect_cset( &F, 0., 0.) ;
@@ -1919,20 +1919,23 @@ static int aiL_careful_face( lua_State *L )
       p_i = pilot_stack[i];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
-      if(p_i->id != cur_pilot->id && pilot_inRangePilot( cur_pilot, p_i) == 1  
-            && p_i->id != p->id && !pilot_isDisabled(p_i) )
+      if (pilot_inRangePilot( cur_pilot, p_i) != 1) continue;
+      if (pilot_isDisabled(p_i) ) continue;
+      if (p_i->id == cur_pilot->id) continue;
+      if (p_i->id == p->id) continue; 
 
-      {
-           dist = vect_dist(&p_i->solid->pos, &cur_pilot->solid->pos) + 0.1; /* Avoid / 0*/
-           k_mult = pilot_relhp( p_i, cur_pilot );
+      /*If the enemy is too close, ignore it*/
+      dist = vect_dist(&p_i->solid->pos, &cur_pilot->solid->pos);
+      if (dist < 750) continue;
 
-           /* Check if friendly or not */
-           if ( areEnemies(cur_pilot->faction, p_i->faction) ){
-              factor = k_enemy * k_mult / dist/dist/dist;
-              vect_cset( &F, F.x + factor * (cur_pilot->solid->pos.x - p_i->solid->pos.x),
-                     F.y + factor * (cur_pilot->solid->pos.y - p_i->solid->pos.y) );
-           }
-       }
+      k_mult = pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
+
+      /* Check if friendly or not */
+      if ( areEnemies(cur_pilot->faction, p_i->faction) ){
+         factor = k_enemy * k_mult / dist/dist/dist;
+         vect_cset( &F, F.x + factor * (cur_pilot->solid->pos.x - p_i->solid->pos.x),
+                F.y + factor * (cur_pilot->solid->pos.y - p_i->solid->pos.y) );
+      }
    }
 
    vect_cset( &F, F.x + F1.x, F.y + F1.y );
