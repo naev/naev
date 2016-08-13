@@ -9,11 +9,13 @@
   <enemies />
  </faction>
  <faction name="Independent">
+  <static />
+  <invisible />
   <known/>
   <player>3</player>
   <colour>blue</colour>
   <spawn>independent</spawn>
-  <standing>independent</standing>
+  <standing>static</standing>
   <allies>
   </allies>
   <enemies>
