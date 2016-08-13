@@ -53,7 +53,7 @@ else -- Default to English
    pay_kill_text[2] = "After verifying that %s is indeed dead, the officer sighs and hands you your pay."
    pay_kill_text[3] = "This officer is clearly annoyed that %s is dead. " .. pronoun .. " mumbles something about incompetent bounty hunters the entire time as " .. pronoun:lower() .. " takes care of the paperwork and hands you your bounty."
    pay_kill_text[4] = "The officer seems disappointed, yet unsurprised that you failed to capture %s alive. " .. pronoun .. " hands you your lesser bounty without speaking a word."
-   pay_kill_text[5] = "When you ask the officer for your bounty on %s, " .. pronoun:lower() .. " sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless bounty hunters are."
+   pay_kill_text[5] = "When you ask the officer for your bounty on %s, he sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless bounty hunters are."
    pay_kill_text[6] = "The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking annoyed the entire time."
 
    fail_kill_text = "MISSION FAILURE! %s has been killed."
