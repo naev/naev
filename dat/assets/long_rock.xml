@@ -22,7 +22,6 @@
    <refuel/>
    <bar/>
    <missions/>
-   <commodity/>
   </services>
   <commodities>
    <commodity>Ore</commodity>
