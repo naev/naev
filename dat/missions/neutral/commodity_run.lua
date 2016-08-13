@@ -11,8 +11,7 @@
 
 --
 
-   Commodity delivery missions. Player receives a bonus for bringing
-   more of a commodity back.
+   Commodity delivery missions.
 --]]
 
 include "dat/scripts/numstring.lua"
@@ -48,6 +47,10 @@ else -- default english
 end
 
 
+-- TODO: find a better way to index all available commodities
+commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Luxury Goods" }
+
+
 function update_active_runs( change )
    local current_runs = var.peek( "commodity_runs_active" )
    if current_runs == nil then current_runs = 0 end
@@ -61,10 +64,7 @@ function create ()
    misplanet = planet.cur()
    missys = system.cur()
    
-   -- TODO: find a better way to index all available commodities
-   local commchoices = planet.commoditiesSold("Darkshed")
-
-   chosen_comm = commchoices[ rnd.rnd( 1, #commchoices ) ]:name()
+   chosen_comm = commchoices[ rnd.rnd( 1, #commchoices ) ]
    local mult = rnd.rnd( 1, 3 ) + math.abs( rnd.threesigma() * 2 )
    price = commodity.price( chosen_comm ) * mult
 
