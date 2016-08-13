@@ -15,6 +15,7 @@
   </p>
  </description>
  <url type="homepage">http://naev.org</url>
+ <url type="bugtracker">https://github.com/naev/naev/issues</url>
  <updatecontact>bobbens@gmail.com</updatecontact>
  <!-- <project_group>NAEV</project_group> -->
  <screenshots>
