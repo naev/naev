@@ -690,6 +690,19 @@
    <cond>diff.isApplied("collective_dead") and faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
   </avail>
  </mission>
+ <mission name="FLF-Empire Negotiations 2">
+  <lua>flf/empa/flf_empa02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <done>Empire Negotiations</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+  </avail>
+ </mission>
  <mission name="Take the Dvaered crew home">
   <lua>dvaered/dv_antiflf01</lua>
   <flags>
