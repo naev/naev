@@ -123,12 +123,10 @@ function jumpin ()
             local fleetCpos = vec2.new(0, 0)
             deathsC = 0
 
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetEpos)[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetE[1]:pos() + vec2.new(-500, 200))[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetE[1]:pos() + vec2.new(500, -200))[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", nil, fleetE[1]:pos() + vec2.new(-200, 460))[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", nil, fleetE[1]:pos() + vec2.new(500, 180))[1]
-            for i = 1, 7 do
+            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", nil, fleetEpos)[1]
+            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetE[1]:pos() + vec2.new(-200, 460))[1]
+            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetE[1]:pos() + vec2.new(500, 180))[1]
+            for i = 1, 6 do
                 fleetE[#fleetE + 1] = pilot.add("Empire Pacifier", nil, fleetE[1]:pos() + vec2.new(-230, -275) + vec2.new(75*i - 260, -30*i + 105))[1]
             end
             for i = 1, 15 do
@@ -145,7 +143,15 @@ function jumpin ()
                 fleetC[#fleetC]:setNodisable()
                 fleetC[#fleetC]:setFaction( "Collective" )
             end
-            droneC = addShips("Collective Drone", nil, fleetCpos, 60)
+            droneC = {}
+            for i = 1, 60 do
+                local pos = fleetCpos + vec2.new(rnd.rnd(-10000, 10000), rnd.rnd(-10000, 10000))
+                if i <= 10 then
+                    droneC[#droneC + 1] = pilot.add("Collective Heavy Drone", nil, pos)[1]
+                else
+                    droneC[#droneC + 1] = pilot.add("Collective Drone", nil, pos)[1]
+                end
+            end
             
             for _, j in ipairs(fleetE) do
                 j:control()
