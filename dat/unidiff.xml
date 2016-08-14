@@ -35,6 +35,9 @@
   <tech name="Heavy Civilian Combat Ships">
    <add>__Collective</add>
   </tech>
+  <faction name="Collective">
+   <invisible />
+  </faction>
  </unidiff>
  <unidiff name="heavy_weapons_license">
   <tech name="Basic Outfits 1">
