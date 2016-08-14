@@ -18,8 +18,6 @@
 
 --]]
 
-include "dat/missions/flf/flf_common.lua"
-
 -- localization stuff
 lang = naev.lang()
 if lang == "notreal" then
