@@ -289,6 +289,7 @@ function timer_lecture ()
       tk.msg( title[12], text[12] )
 
       misn.osdActive( 4 )
+      if marker ~= nil then misn.markerRm( marker ) end
       job_aborted = true
       flf_setReputation( 75 )
       faction.get("FLF"):modPlayer( 15 )
@@ -346,6 +347,7 @@ function land ()
       if not job_done and not job_aborted then
          tk.msg( title[15], text[15] )
          misn.osdActive( 4 )
+         if marker ~= nil then misn.markerRm( marker ) end
          job_done = true
          faction.get("Empire"):modPlayerSingle( 5 )
          faction.get("Dvaered"):modPlayerSingle( 5 )
