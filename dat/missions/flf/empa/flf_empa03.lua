@@ -248,7 +248,7 @@ end
 
 
 function pilot_death ()
-   local pos = player.pos() + vec2.new( -1500, -1500 )
+   local pos = player.pos() + vec2.new( -3000, 3000 )
    petridis = pilot.add( "Empire Pacifier", nil, pos )[1]
    petridis:control()
    petridis:setVisible( true )
@@ -345,6 +345,7 @@ function land ()
    elseif planet.cur() == misplanet then
       if not job_done and not job_aborted then
          tk.msg( title[15], text[15] )
+         misn.osdActive( 4 )
          job_done = true
          faction.get("Empire"):modPlayerSingle( 5 )
          faction.get("Dvaered"):modPlayerSingle( 5 )
