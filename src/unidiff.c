@@ -738,7 +738,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          hunk->o.name = faction_name( p->faction );
          return planet_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
-         return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->u.name) );
+         return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
 
       /* Making a faction visible. */
       case HUNK_TYPE_FACTION_VISIBLE:
