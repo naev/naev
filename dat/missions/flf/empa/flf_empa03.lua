@@ -215,7 +215,7 @@ function timer_raelidContact ()
          j:setVisible( true )
       end
 
-      timer_hook = hook.timer( 1000, "timer_flfAttack" )
+      timer_hook = hook.timer( 3000, "timer_flfAttack" )
    else
       timer_hook = hook.timer( 2000, "timer_raelidContact" )
    end
