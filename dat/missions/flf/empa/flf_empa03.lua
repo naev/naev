@@ -324,9 +324,11 @@ function land ()
       if job_done then
          tk.msg( title[16], text[16]:format( player.name() ) )
          player.pay( credits )
+         misn.finish( true )
       elseif job_aborted then
          tk.msg( title[13], text[13] )
          player.pay( alt_credits )
+         misn.finish( true )
       end
    elseif planet.cur() == misplanet then
       if not job_done and not job_aborted then
@@ -336,6 +338,13 @@ function land ()
          faction.get("Dvaered"):modPlayerSingle( 5 )
          var.push( "flf_raelid_disarmed", true )
       end
+   end
+end
+
+
+function abort ()
+   if job_done or job_aborted then
+      misn.finish( true )
    end
 end
 
