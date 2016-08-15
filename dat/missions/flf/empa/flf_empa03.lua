@@ -333,6 +333,7 @@ function land ()
       if not job_done and not job_aborted then
          tk.msg( title[15], text[15] )
          job_done = true
+         var.push( "flf_raelid_disarmed", true )
       end
    end
 end
