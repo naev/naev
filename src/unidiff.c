@@ -751,9 +751,9 @@ static int diff_patchHunk( UniHunk_t *hunk )
          a = faction_get( hunk->target.u.name );
          b = faction_get( hunk->u.name );
          if (areAllies(a, b))
-            hunk->o.data = 1;
+            hunk->o.data = 'A';
          else if (areEnemies(a, b))
-            hunk->o.data = 2;
+            hunk->o.data = 'E';
          else
             hunk->o.data = 0;
          faction_addAlly( a, b );
@@ -764,9 +764,9 @@ static int diff_patchHunk( UniHunk_t *hunk )
          a = faction_get( hunk->target.u.name );
          b = faction_get( hunk->u.name );
          if (areAllies(a, b))
-            hunk->o.data = 1;
+            hunk->o.data = 'A';
          else if (areEnemies(a, b))
-            hunk->o.data = 2;
+            hunk->o.data = 'E';
          else
             hunk->o.data = 0;
          faction_addEnemy( a, b );
@@ -777,9 +777,9 @@ static int diff_patchHunk( UniHunk_t *hunk )
          a = faction_get( hunk->target.u.name );
          b = faction_get( hunk->u.name );
          if (areAllies(a, b))
-            hunk->o.data = 1;
+            hunk->o.data = 'A';
          else if (areEnemies(a, b))
-            hunk->o.data = 2;
+            hunk->o.data = 'E';
          else
             hunk->o.data = 0;
          faction_rmAlly( a, b );
@@ -791,13 +791,13 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_FACTION_REALIGN:
          a = faction_get( hunk->target.u.name );
          b = faction_get( hunk->u.name );
-         if (hunk->o.data == 1) {
+         if (hunk->o.data == 'A') {
             faction_rmEnemy(a, b);
             faction_rmEnemy(b, a);
             faction_addAlly(a, b);
             faction_addAlly(b, a);
          }
-         else if (hunk->o.data == 2) {
+         else if (hunk->o.data == 'E') {
             faction_rmAlly(a, b);
             faction_rmAlly(b, a);
             faction_addEnemy(a, b);
