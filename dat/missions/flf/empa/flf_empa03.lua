@@ -260,6 +260,7 @@ function pilot_death ()
          hook.rm( hookFLF[i] )
          j:control()
          j:brake()
+         j:face( petridis, true )
       end
    end
    for i, j in ipairs( fleetDV ) do
@@ -267,7 +268,7 @@ function pilot_death ()
          hook.rm( hookDV[i] )
          j:control()
          j:brake()
-         j:face( petridis )
+         j:face( petridis, true )
          if firstdv == nil then firstdv = j end
       end
    end
