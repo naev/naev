@@ -455,9 +455,10 @@ void faction_addEnemy( int f, int o)
       return;
    }
 
-   for (i=0;i<ff->nenemies;i++)
+   for (i=0;i<ff->nenemies;i++) {
       if (ff->enemies[i] == o)
          return;
+   }
 
    ff->nenemies++;
    ff->enemies = realloc(ff->enemies, sizeof(int)*ff->nenemies);
@@ -485,12 +486,14 @@ void faction_rmEnemy( int f, int o)
       return;
    }
 
-   for (i=0;i<ff->nenemies;i++)
-      if (ff->enemies[i] == o)
+   for (i=0;i<ff->nenemies;i++) {
+      if (ff->enemies[i] == o) {
          ff->enemies[i] = ff->enemies[ff->nenemies-1];
          ff->nenemies--;
          ff->enemies = realloc(ff->enemies, sizeof(int)*ff->nenemies);
          return;
+      }
+   }
 }
 
 
@@ -529,9 +532,10 @@ void faction_addAlly( int f, int o)
       return;
    }
 
-   for (i=0;i<ff->nallies;i++)
+   for (i=0;i<ff->nallies;i++) {
       if (ff->allies[i] == o)
          return;
+   }
 
    ff->nallies++;
    ff->allies = realloc(ff->allies, sizeof(int)*ff->nallies);
@@ -559,12 +563,14 @@ void faction_rmAlly( int f, int o)
       return;
    }
 
-   for (i=0;i<ff->nallies;i++)
-      if (ff->allies[i] == o)
+   for (i=0;i<ff->nallies;i++) {
+      if (ff->allies[i] == o) {
          ff->allies[i] = ff->allies[ff->nallies-1];
          ff->nallies--;
          ff->allies = realloc(ff->allies, sizeof(int)*ff->nallies);
          return;
+      }
+   }
 }
 
 
