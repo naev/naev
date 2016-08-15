@@ -43,10 +43,11 @@ else -- default English
    text[4] = [["Wonderful! Now, there is a chance that this could be a trap. I don't think it is, but a couple people insisted on this: you will be escorted by several FLF pilots. Your escorts will meet with you when you get to Raelid. However, they have been instructed NOT to engage the Dvaereds except as an absolute last resort. You, especially, must follow this rule. If you act aggressively against Dvaered ships, the Empire will surely not only cancel the deal, but begin earnestly assisting the Dvaereds against us. We cannot survive if that happens."]]
 
    text[5] = [[Cheryl hands you a chip. "This data chip contains the authorization code you will need to land on Raelid Outpost, a map showing you the locations of all of the explosives, and instructions for how to disarm them," she explains. "Before you can land, you will need to wait for Raelid Outpost to contact you. When they do, transmit the authorization code on that chip. Once you are given clearance, land and complete your mission. Report back here when you are finished."
-    She stands, as do you. "Good luck, %s. I hope you are successful. We will await your return with great anticipation."]]
+    She stands, as do you. "Good luck, %s. I hope you are successful. We will await your return with great anticipation."
+    As Cheryl leaves, you notice her walking past an old acquaintance: Corporal Benito! How odd; she is drinking alone, and she seems troubled. What could possibly be on her mind?]]
 
    title[6] = "Benito's Grievance"
-   text[6] = [[As Cheryl leaves, you notice her walking past an old acquaintance: Corporal Benito! How odd; she is drinking alone, and she seems troubled. Wondering what could possibly be on her mind, you approach her, and she motions for you to sit down wordlessly. You do so.
+   text[6] = [[As you approach her, she motions for you to sit down wordlessly. You do so.
     After a few moments, she begins to speak. "%s, you're not honestly going along with all of this, are you? Allying with the Empire? As if! I have seen the conditions being laid out, and it's obvious: the Empire is setting us up." She looks up at you expectantly. Unsure of what to say, you tell Benito that it is your duty to do what you can to complete your mission, but that you will remain vigilant. She frowns.]]
    
    text[7] = [["Look, you're a bright kid. When I sent you on your first mission, you took our side, the side of justice. So please be receptive to what I am about to say: the higher-ups, they think we can appease the Empire by agreeing to their ridiculous terms, and that they will in turn somehow put a stop to Dvaered advancement.
@@ -97,6 +98,9 @@ else -- default English
    npc_name = "Cheryl"
    npc_desc = "Cheryl is walking around the room, seemingly looking for someone."
 
+   def_name = "Benito"
+   def_desc = "Corporal Benito is sitting alone. She appears troubled."
+
    osd_title   = "Raelid Outpost Rescue"
    osd_desc    = {}
    osd_desc[1] = "Go to the %s system"
@@ -130,9 +134,6 @@ function accept ()
    if tk.yesno( title[3], text[3] ) then
       tk.msg( title[3], text[4] )
       tk.msg( title[3], text[5]:format( player.name() ) )
-      tk.msg( title[6], text[6]:format( player.name() ) )
-      tk.msg( title[6], text[7] )
-      tk.msg( title[6], text[8]:format( player.name() ) )
 
       misn.accept()
 
@@ -148,11 +149,21 @@ function accept ()
       job_done = false
       job_aborted = false
 
+      npc = misn.npcAdd( "approach", def_name, "flf/unique/benito", def_desc )
+
       hook.enter( "enter" )
       hook.jumpout( "jumpout" )
       hook.land( "land" )
    else
    end
+end
+
+
+function approach ()
+   tk.msg( title[6], text[6]:format( player.name() ) )
+   tk.msg( title[6], text[7] )
+   tk.msg( title[6], text[8]:format( player.name() ) )
+   misn.npcRm( npc )
 end
 
 
