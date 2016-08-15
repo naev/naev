@@ -500,6 +500,9 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
          /* Faction type is constant. */
          hunk.type = HUNK_TYPE_FACTION_VISIBLE;
 
+         /* There is no name. */
+         hunk.u.name = NULL;
+
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
             diff_hunkFailed( diff, &hunk );
@@ -513,6 +516,9 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
 
          /* Faction type is constant. */
          hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
+
+         /* There is no name. */
+         hunk.u.name = NULL;
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
