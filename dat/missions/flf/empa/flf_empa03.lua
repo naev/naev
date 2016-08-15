@@ -115,6 +115,7 @@ function create ()
    credits = 100000
    reputation = 15
    emp_reputation = 5
+   dv_reputation = 5
 
    alt_credits = 50000
 
@@ -277,6 +278,8 @@ function timer_lecture ()
 
       misn.osdActive( 4 )
       job_aborted = true
+      flf_setReputation( 75 )
+      faction.get("FLF"):modPlayer( 15 )
       pilot.toggleSpawn( true )
 
       -- Make the Empire and FLF enemies
@@ -321,18 +324,16 @@ function land ()
       if job_done then
          tk.msg( title[16], text[16]:format( player.name() ) )
          player.pay( credits )
-         flf_setReputation( 75 )
-         faction.get("FLF"):modPlayerSingle( reputation )
       elseif job_aborted then
          tk.msg( title[13], text[13] )
          player.pay( alt_credits )
-         flf_setReputation( 75 )
-         faction.get("FLF"):modPlayer( reputation )
       end
    elseif planet.cur() == misplanet then
       if not job_done and not job_aborted then
          tk.msg( title[15], text[15] )
          job_done = true
+         faction.get("Empire"):modPlayerSingle( 5 )
+         faction.get("Dvaered"):modPlayerSingle( 5 )
          var.push( "flf_raelid_disarmed", true )
       end
    end
