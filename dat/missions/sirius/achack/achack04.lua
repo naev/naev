@@ -95,7 +95,7 @@ function create()
    startplanet, startsys = planet.get("Eenerim")
    tk.msg(title1, text1:format(player.name(), startplanet:name(), startsys:name(), startplanet:name()))
 
-   stages = enumerate("start", "findHarja", "killAssociates", "fetchHarja", "finish")
+   stages = enumerate({"start", "findHarja", "killAssociates", "fetchHarja", "finish"})
    stages["__save"] = true
    stage = 1
    
