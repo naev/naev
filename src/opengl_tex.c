@@ -346,8 +346,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    /* now lead the texture data up */
    SDL_LockSurface( surface );
    if (gl_texHasCompress()) {
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
-            surface->w, surface->h, 0, GL_COMPRESSED_RGBA,
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
+            surface->w, surface->h, 0, GL_RGBA,
             GL_UNSIGNED_BYTE, surface->pixels );
    }
    else {
