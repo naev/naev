@@ -186,6 +186,31 @@ void faction_clearKnown()
 }
 
 /**
+ * @brief Is the faction invisible?
+ */
+int faction_isInvisible( int id )
+{
+   return faction_isFlag( &faction_stack[id], FACTION_INVISIBLE );
+}
+
+/**
+ * @brief Sets the faction's invisible state
+ */
+int faction_setInvisible( int id, int state )
+{
+   if (!faction_isFaction(id)) {
+      WARN("Faction id '%d' is invalid.",id);
+      return -1;
+   }
+   if (state)
+      faction_setFlag( &faction_stack[id], FACTION_INVISIBLE );
+   else
+      faction_rmFlag( &faction_stack[id], FACTION_INVISIBLE );
+
+   return 0;
+}
+
+/**
  * @brief Is the faction known?
  */
 int faction_isKnown( int id )
@@ -392,6 +417,160 @@ int* faction_getAllies( int f, int *n )
 
    *n = faction_stack[f].nallies;
    return faction_stack[f].allies;
+}
+
+
+/**
+ * @brief Adds an enemy to the faction's enemies list.
+ *
+ *    @param f The faction to add an enemy to.
+ *    @param o The other faction to make an enemy.
+ */
+void faction_addEnemy( int f, int o)
+{
+   Faction *ff;
+   int i;
+
+   if (f==o) return;
+
+   if (faction_isFaction(f))
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN("addEnemy: %d is an invalid faction", f);
+      return;
+   }
+
+   if (!faction_isFaction(o)) { /* o is invalid */
+      WARN("addEnemy: %d is an invalid faction", o);
+      return;
+   }
+
+   /* player cannot be made an enemy this way */
+   if (f==FACTION_PLAYER) {
+      WARN("addEnemy: %d is the player faction", f);
+      return;
+   }
+   if (o==FACTION_PLAYER) {
+      WARN("addEnemy: %d is the player faction", o);
+      return;
+   }
+
+   for (i=0;i<ff->nenemies;i++) {
+      if (ff->enemies[i] == o)
+         return;
+   }
+
+   ff->nenemies++;
+   ff->enemies = realloc(ff->enemies, sizeof(int)*ff->nenemies);
+   ff->enemies[ff->nenemies-1] = o;
+}
+
+
+/**
+ * @brief Removes an enemy from the faction's enemies list.
+ *
+ *    @param f The faction to remove an enemy from.
+ *    @param o The other faction to remove as an enemy.
+ */
+void faction_rmEnemy( int f, int o)
+{
+   Faction *ff;
+   int i;
+
+   if (f==o) return;
+
+   if (faction_isFaction(f))
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN("rmEnemy: %d is an invalid faction", f);
+      return;
+   }
+
+   for (i=0;i<ff->nenemies;i++) {
+      if (ff->enemies[i] == o) {
+         ff->enemies[i] = ff->enemies[ff->nenemies-1];
+         ff->nenemies--;
+         ff->enemies = realloc(ff->enemies, sizeof(int)*ff->nenemies);
+         return;
+      }
+   }
+}
+
+
+/**
+ * @brief Adds an ally to the faction's allies list.
+ *
+ *    @param f The faction to add an ally to.
+ *    @param o The other faction to make an ally.
+ */
+void faction_addAlly( int f, int o)
+{
+   Faction *ff;
+   int i;
+
+   if (f==o) return;
+
+   if (faction_isFaction(f))
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN("addAlly: %d is an invalid faction", f);
+      return;
+   }
+
+   if (!faction_isFaction(o)) { /* o is invalid */
+      WARN("addAlly: %d is an invalid faction", o);
+      return;
+   }
+
+   /* player cannot be made an ally this way */
+   if (f==FACTION_PLAYER) {
+      WARN("addAlly: %d is the player faction", f);
+      return;
+   }
+   if (o==FACTION_PLAYER) {
+      WARN("addAlly: %d is the player faction", o);
+      return;
+   }
+
+   for (i=0;i<ff->nallies;i++) {
+      if (ff->allies[i] == o)
+         return;
+   }
+
+   ff->nallies++;
+   ff->allies = realloc(ff->allies, sizeof(int)*ff->nallies);
+   ff->allies[ff->nallies-1] = o;
+}
+
+
+/**
+ * @brief Removes an ally from the faction's allies list.
+ *
+ *    @param f The faction to remove an ally from.
+ *    @param o The other faction to remove as an ally.
+ */
+void faction_rmAlly( int f, int o)
+{
+   Faction *ff;
+   int i;
+
+   if (f==o) return;
+
+   if (faction_isFaction(f))
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN("rmAlly: %d is an invalid faction", f);
+      return;
+   }
+
+   for (i=0;i<ff->nallies;i++) {
+      if (ff->allies[i] == o) {
+         ff->allies[i] = ff->allies[ff->nallies-1];
+         ff->nallies--;
+         ff->allies = realloc(ff->allies, sizeof(int)*ff->nallies);
+         return;
+      }
+   }
 }
 
 
