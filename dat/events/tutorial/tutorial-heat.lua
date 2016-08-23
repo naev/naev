@@ -80,7 +80,7 @@ function create()
     tk.msg(title1, message1)
     tk.msg(title1, message2:format(tutGetKey("primary")))
     
-    stages = enumerate("weapons", "wait", "coolwait", "cool")
+    stages = enumerate({"weapons", "wait", "coolwait", "cool"})
     stage = stages.weapons
 
     flytime = 10 -- seconds of fly time
