@@ -10,9 +10,9 @@
  <specific type="ammo">
   <gfx>laser4L</gfx>
   <sound>neutron</sound>
-  <sound_hit>lrgexp0</sound_hit>
-  <spfx_shield>ShiM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpM</spfx_armour>
   <duration blowup="armour">1.5</duration>
   <thrust>1500</thrust>
   <speed>2000</speed>
