@@ -13,14 +13,14 @@
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>EmpS</spfx_shield>
   <spfx_armour>EmpM</spfx_armour>
-  <duration blowup="armour">1.5</duration>
+  <duration blowup="shield">5</duration>
   <thrust>1500</thrust>
   <speed>2000</speed>
   <damage>
    <type>ion</type>
-   <penetrate>0</penetrate>
-   <physical>20</physical>
-   <disable>5</disable>
+   <penetrate>25</penetrate>
+   <physical>25</physical>
+   <disable>10</disable>
   </damage>
   <ai>dumb</ai>
  </specific>
