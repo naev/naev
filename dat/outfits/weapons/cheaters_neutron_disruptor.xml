@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Heavy Neutron Disruptor">
+<outfit name="Cheater's Heavy Neutron Disruptor">
  <general>
   <slot>weapon</slot>
-  <size>medium</size>
+  <size>small</size>
   <mass>12</mass>
   <price>36500</price>
   <license>Heavy Weapon License</license>
-  <description>The Heavy Neutron Disruptor improves upon the processes behind the smaller Neutron Disruptor and mounts it on a swivel mount.</description>
+  <description>AI-only version of the Heavy Disruptor Turret. Not to be used by the player.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-12</cpu>
  </general>
@@ -20,8 +20,8 @@
   <range>950</range>
   <falloff>650</falloff>
   <gfx_end>neutron-end</gfx_end>
-  <energy>33</energy>
-  <heatup>35</heatup>
+  <energy>22</energy>
+  <heatup>25</heatup>
   <track>2</track>
   <damage>
    <type>normal</type>
