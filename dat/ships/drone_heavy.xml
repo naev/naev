@@ -20,9 +20,8 @@
   <fuel_consumption>100</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="medium" x="0" y="0" h="-5"/> 
   <weapon size="medium" x="8" y="1" h="-5"/>
-  <weapon size="small" x="8" y="-1" h="-5"/>
+  <weapon size="medium" x="8" y="-1" h="-5"/>
   <weapon size="small" x="5" y="5" h="-5"/>
   <weapon size="small" x="5" y="-5" h="-5"/>
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
