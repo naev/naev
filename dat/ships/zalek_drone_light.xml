@@ -4,7 +4,7 @@
  <GFX>zalek_drone_light</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>
- <class>Fighter</class>
+ <class>Drone</class>
  <price>120000</price>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be flown by the player.</description>
@@ -34,7 +34,7 @@
   <turn_mod>15</turn_mod>
   <thrust_mod>15</thrust_mod>
   <armour_mod>-70</armour_mod>
-  <shield_mod>40</shield_mod>
+  <shield_mod>0</shield_mod>
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
  </stats>
