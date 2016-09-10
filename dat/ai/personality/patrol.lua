@@ -14,7 +14,7 @@ function idle ()
              ai.pushtask("land")
           end
        end
-       else -- Stay. Have a beer.
+   else -- Stay. Have a beer.
        if not mem.boss then -- Pilot nover had a boss
            mem.boss = ai.getBoss()
        end
