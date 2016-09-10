@@ -15,9 +15,19 @@ function idle ()
           end
        end
    else -- Stay. Have a beer.
-      sysrad = rnd.rnd() * system.cur():radius()
-      angle = rnd.rnd() * 2 * math.pi
-      ai.pushtask("__goto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+       if not mem.boss then -- Pilot nover had a boss
+           mem.boss = ai.getBoss()
+       end
+       -- If the boss exists, follow him
+       if mem.boss and mem.boss:exists() then
+           mem.angle = rnd.rnd( 360 )
+           mem.radius = rnd.rnd( 100, 200 )
+           ai.pushtask("follow_accurate",mem.boss)
+       else  -- The pilot has no boss, he chooses his way
+           sysrad = rnd.rnd() * system.cur():radius()
+           angle = rnd.rnd() * 2 * math.pi
+           ai.pushtask("__goto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+       end
    end
    mem.loiter = mem.loiter - 1
 end
