@@ -244,6 +244,7 @@ static int aiL_timeup( lua_State *L ); /* boolean timeup( number ) */
 
 /* messages */
 static int aiL_distress( lua_State *L ); /* distress( string [, bool] ) */
+static int aiL_getBoss( lua_State *L ); /* number getBoss() */
 
 /* loot */
 static int aiL_credits( lua_State *L ); /* credits( number ) */
@@ -330,6 +331,7 @@ static const luaL_reg aiL_methods[] = {
    { "timeup", aiL_timeup },
    /* messages */
    { "distress", aiL_distress },
+   { "getBoss", aiL_getBoss },
    /* loot */
    { "setcredits", aiL_credits },
    /* misc */
@@ -3246,6 +3248,26 @@ static int aiL_distress( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Picks a pilot that will command the current pilot.
+ *
+ *    @luatreturn Pilot|nil
+ *    @luafunc getBoss()
+ */
+static int aiL_getBoss( lua_State *L )
+{
+   unsigned int id;
+
+   id = pilot_getBoss( cur_pilot );
+
+   if (id==0) /* No boss found */
+      return 0;
+
+   lua_pushpilot(L, id);
+
+   return 1;
+}
 
 /**
  * @brief Sets the pilot_nstack credits. Only call in create().
