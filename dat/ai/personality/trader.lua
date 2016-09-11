@@ -6,10 +6,9 @@ function idle ()
 
    -- If the boss exists, follow him
    if mem.boss and mem.boss:exists() then
-         --ai.follow_accurate(mem.boss, mem)
-         mem.angle = rnd.rnd( 360 )
-         mem.radius = rnd.rnd( 70, 130 )
-         ai.pushtask("follow_accurate",mem.boss)
+      mem.angle = rnd.rnd( 360 )
+      mem.radius = rnd.rnd( 70, 130 )
+      ai.pushtask("follow_accurate",mem.boss)
    else  -- The pilot has no boss, he chooses his target
       local planet = ai.landplanet( mem.land_friendly )
       -- planet must exist.
