@@ -56,6 +56,8 @@
   <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
   <item>Heavy Neutron Disruptor</item>
+  <item>Electron Burst Cannon</item>
+  <item>Electron Energy Cell</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
@@ -771,7 +773,8 @@
  </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
-  <item>Heavy Neutron Disruptor</item>
+  <item>Electron Burst Cannon</item>
+  <item>Electron Energy Cell</item>
   <item>Drone Fighter Bay</item>
   <item>Drone Fighter</item>
   <item>Drone</item>
