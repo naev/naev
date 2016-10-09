@@ -419,6 +419,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
+   map_renderDecorators( x, y, 1 );
+
    /* Render faction disks. */
    map_renderFactionDisks( x, y, 1 );
 
