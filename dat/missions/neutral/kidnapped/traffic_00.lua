@@ -119,7 +119,7 @@ function accept()
   rescued = false
   
   lhook =  hook.land("land1", "land")
-  hook.jumpin("jumpin")
+  hook.enter("enter")
 
 end
   
@@ -170,7 +170,7 @@ function secondpirates()
   eavesdropped2 = true
 end
 
-function jumpin()
+function enter()
 
   if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) then
     kidnappers = pilot.add("Trader Koala", nil, planet.get("Zhiru"):pos() + vec2.new(-800,-800))[1]

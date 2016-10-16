@@ -1,7 +1,7 @@
 --[[
 
    FLF-Empire Negotiations
-   Copyright (C) 2014, 2015 Julian Marchant <onpon4@riseup.net>
+   Copyright (C) 2014, 2015 Julie Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -101,7 +101,7 @@ function accept ()
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc )
-      marker = misn.markerAdd( missys, "plot" )
+      marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_reward )
 
       job_done = false
@@ -117,8 +117,8 @@ function land ()
       tk.msg( title[9], text[9]:format( player.name() ) )
       player.pay( credits )
       flf_setReputation( 60 )
-      faction.get("FLF"):modPlayer( reputation )
-      faction.get("Empire"):modPlayer( emp_reputation )
+      faction.get("FLF"):modPlayerSingle( reputation )
+      faction.get("Empire"):modPlayerSingle( emp_reputation )
       misn.finish( true )
    elseif planet.cur() == misplanet then
       npc = misn.npcAdd( "approach", emp_name, "empire/empire1", emp_desc )
@@ -134,5 +134,6 @@ function approach ()
 
    misn.npcRm( npc )
    job_done = true
+   if marker ~= nil then misn.markerRm( marker ) end
    misn.osdActive( 2 )
 end

@@ -1,7 +1,7 @@
 --[[
 
    Patrol
-   Copyright 2014, 2015 Julian Marchant
+   Copyright 2014-2016 Julie Marchant
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -167,6 +167,11 @@ end
 
 
 function jumpout ()
+   if mark ~= nil then
+      system.mrkRm( mark )
+      mark = nil
+   end
+
    jumps_permitted = jumps_permitted - 1
    local last_sys = system.cur()
    if not job_done then
@@ -180,6 +185,11 @@ end
 
 
 function land ()
+   if mark ~= nil then
+      system.mrkRm( mark )
+      mark = nil
+   end
+
    jumps_permitted = jumps_permitted - 1
    if job_done and planet.cur():faction() == paying_faction then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
@@ -260,6 +270,7 @@ function timer ()
             new_points[ #new_points + 1 ] = points[i]
          end
          points = new_points
+         points["__save"] = true
 
          player.msg( msg[1] )
          osd_msg[2] = osd_msg_2:format( #points )
@@ -280,7 +291,7 @@ function timer ()
    end
 
    if not job_done then
-      hook.timer( 50, "timer" )
+      timer_hook = hook.timer( 50, "timer" )
    end
 end
 

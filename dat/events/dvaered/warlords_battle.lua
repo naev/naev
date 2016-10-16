@@ -54,7 +54,7 @@ function begin ()
    end
 
    --If no planet matches the specs...
-   if cand == {} then
+   if #cand <= 0 then
       evt.finish(false)
    end
 

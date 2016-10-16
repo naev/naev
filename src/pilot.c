@@ -404,6 +404,76 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
 
 
 /**
+ * @brief Get the strongest ally in a given range.
+ *
+ *    @param p Pilot to get the boss of.
+ *    @return The boss.
+ */
+unsigned int pilot_getBoss( const Pilot* p )
+{
+   unsigned int t;
+   int i;
+   double td, dx, dy;
+   double relpower, ppower, curpower;
+   /* TODO : all the parameters should be adjustable with arguments */
+
+   t = 0;
+
+   /*Hack : the player is used as a reference (for initialization issues)*/
+   ppower = pilot_reldps(  p, pilot_stack[PLAYER_ID] )
+            * pilot_relhp(  p, pilot_stack[PLAYER_ID] );
+
+   for (i=0; i<pilot_nstack; i++) {
+
+      /* Must be in range. */
+      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+         continue;
+
+      /* Must not be self. */
+      if (pilot_stack[i] == p)
+         continue;
+
+      /* Shouldn't be disabled. */
+      if (pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Must be a valid target. */
+      if (!pilot_validTarget( p, pilot_stack[i] ))
+         continue;
+
+      /* Maximum distance in 2 seconds. */
+      dx = pilot_stack[i]->solid->pos.x + 2*pilot_stack[i]->solid->vel.x -
+           p->solid->pos.x - 2*p->solid->vel.x;
+      dy = pilot_stack[i]->solid->pos.y + 2*pilot_stack[i]->solid->vel.y -
+           p->solid->pos.y - 2*p->solid->vel.y;
+      td = sqrt( pow2(dx) + pow2(dy) );
+      if (td > 5000)
+         continue;
+
+      /* Must have the same faction. */
+      if (pilot_stack[i]->faction != p->faction)
+         continue;
+
+      /* Must be slower. */
+      if (pilot_stack[i]->speed > p->speed)
+         continue;
+
+      curpower = pilot_reldps(  pilot_stack[i], pilot_stack[PLAYER_ID] )
+                 * pilot_relhp(  pilot_stack[i], pilot_stack[PLAYER_ID] );
+
+      /*Should not be weaker than the current pilot*/
+      if (ppower >= curpower )
+         continue;
+
+      if (relpower < curpower ){
+         relpower = curpower;
+         t = pilot_stack[i]->id;
+      }
+   }
+   return t;
+}
+
+/**
  * @brief Get the nearest pilot to a pilot from a certain position.
  *
  *    @param p Pilot to get the nearest pilot of.

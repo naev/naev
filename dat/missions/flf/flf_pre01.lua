@@ -251,7 +251,6 @@ function outOfRange()
 end
 
 function abort()
-    var.pop("flfbase_sysname")
     var.pop("flfbase_flfshipkilled")
     misn.finish(false)
 end

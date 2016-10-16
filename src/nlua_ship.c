@@ -32,7 +32,6 @@ static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_CPU( lua_State *L );
-static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
@@ -46,7 +45,6 @@ static const luaL_reg shipL_methods[] = {
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
    { "cpu", shipL_CPU },
-   { "outfitCPU", shipL_outfitCPU },
    { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
@@ -191,9 +189,9 @@ int lua_isship( lua_State *L, int ind )
  *
  * @usage if s1 == s2 then -- Checks to see if ship s1 and s2 are the same
  *
- *    @luaparam s1 First ship to compare.
- *    @luaparam s2 Second ship to compare.
- *    @luareturn true if both ships are the same.
+ *    @luatparam Ship s1 First ship to compare.
+ *    @luatparam Ship s2 Second ship to compare.
+ *    @luatreturn boolean true if both ships are the same.
  * @luafunc __eq( s1, s2 )
  */
 static int shipL_eq( lua_State *L )
@@ -214,8 +212,8 @@ static int shipL_eq( lua_State *L )
  *
  * @usage s = ship.get( "Hyena" ) -- Gets the hyena
  *
- *    @luaparam s Name of the ship to get.
- *    @luareturn The ship matching name or nil if error.
+ *    @luatparam string s Name of the ship to get.
+ *    @luatreturn Ship The ship matching name or nil if error.
  * @luafunc get( s )
  */
 static int shipL_get( lua_State *L )
@@ -242,8 +240,8 @@ static int shipL_get( lua_State *L )
  *
  * @usage shipname = s:name()
  *
- *    @luaparam s Ship to get ship name.
- *    @luareturn The name of the ship.
+ *    @luatparam Ship s Ship to get ship name.
+ *    @luatreturn string The name of the ship.
  * @luafunc name( s )
  */
 static int shipL_name( lua_State *L )
@@ -266,8 +264,8 @@ static int shipL_name( lua_State *L )
  *
  * @usage type = s:baseType()
  *
- *    @luaparam s Ship to get the ship base type.
- *    @luareturn The name of the ship base type.
+ *    @luatparam Ship s Ship to get the ship base type.
+ *    @luatreturn string The name of the ship base type.
  * @luafunc baseType( s )
  */
 static int shipL_baseType( lua_State *L )
@@ -287,8 +285,8 @@ static int shipL_baseType( lua_State *L )
  *
  * @usage shipclass = s:class()
  *
- *    @luaparam s Ship to get ship class name.
- *    @luareturn The name of the ship's class.
+ *    @luatparam Ship s Ship to get ship class name.
+ *    @luatreturn string The name of the ship's class.
  * @luafunc class( s )
  */
 static int shipL_class( lua_State *L )
@@ -308,8 +306,10 @@ static int shipL_class( lua_State *L )
  *
  * @usage slots_weapon, slots_utility, slots_structure = p:slots()
  *
- *    @luaparam s Ship to get ship slots of.
- *    @luareturn Number of weapon, utility and structure slots.
+ *    @luatparam Ship s Ship to get ship slots of.
+ *    @luatreturn number Number of weapon slots.
+ *    @luatreturn number Number of utility slots.
+ *    @luatreturn number Number of structure slots.
  * @luafunc slots( s )
  */
 static int shipL_slots( lua_State *L )
@@ -334,6 +334,7 @@ static int shipL_slots( lua_State *L )
  *
  *    @luaparam s Ship to get slots of
  *    @luareturn A table of tables with slot properties string "size", string "type", and string "property"
+ * @luafunc getSlots( s )
  */
 static int shipL_getSlots( lua_State *L )
 {
@@ -404,8 +405,8 @@ static int shipL_getSlots( lua_State *L )
  *
  * @usage cpu_left = s:cpu()
  *
- *    @luaparam s Ship to get available CPU of.
- *    @luareturn The CPU available on the ship.
+ *    @luatparam Ship s Ship to get available CPU of.
+ *    @luatreturn number The CPU available on the ship.
  * @luafunc cpu( s )
  */
 static int shipL_CPU( lua_State *L )
@@ -422,40 +423,13 @@ static int shipL_CPU( lua_State *L )
 
 
 /**
- * @brief Gets the outfit CPU usage.
- *
- * @usage cpu_used += s.outfitCPU( "Heavy Ion Turret" ) -- Adds the used cpu by the outfit
- *
- *    @luaparam outfit Name of the outfit to get CPU usage of.
- *    @luareturn CPU the outfit uses.
- * @luafunc outfitCPU( outfit )
- */
-static int shipL_outfitCPU( lua_State *L )
-{
-   const char *outfit;
-   Outfit *o;
-
-   /* Get parameters. */
-   outfit = luaL_checkstring(L,1);
-
-   /* Get the outfit. */
-   o = outfit_get( outfit );
-   if (o == NULL)
-      return 0;
-
-   /* Return parameter. */
-   lua_pushnumber(L, outfit_cpu(o));
-   return 1;
-}
-
-
-/**
  * @brief Gets the ship's price, with and without default outfits.
  *
  * @usage price, base = s:price()
  *
- *    @luaparam s Ship to get the price of.
- *    @luareturn The ship's final purchase price and base price.
+ *    @luatparam Ship s Ship to get the price of.
+ *    @luatreturn number The ship's final purchase price.
+ *    @luatreturn number The ship's base price.
  * @luafunc price( s )
  */
 static int shipL_price( lua_State *L )
@@ -476,8 +450,8 @@ static int shipL_price( lua_State *L )
  *
  * @usage gfx = s:gfxTarget()
  *
- *    @luaparam s Ship to get target graphics of.
- *    @luareturn The target graphics of the ship.
+ *    @luatparam Ship s Ship to get target graphics of.
+ *    @luatreturn Tex The target graphics of the ship.
  * @luafunc gfxTarget( s )
  */
 static int shipL_gfxTarget( lua_State *L )
@@ -506,8 +480,8 @@ static int shipL_gfxTarget( lua_State *L )
  *
  * @usage gfx = s:gfx()
  *
- *    @luaparam s Ship to get graphics of.
- *    @luareturn The graphics of the ship.
+ *    @luatparam Ship s Ship to get graphics of.
+ *    @luatreturn Tex The graphics of the ship.
  * @luafunc gfx( s )
  */
 static int shipL_gfx( lua_State *L )

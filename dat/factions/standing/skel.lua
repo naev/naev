@@ -41,7 +41,7 @@ else -- Default English
    _ftext_friendly = "Friendly"
    _ftext_neutral  = "Neutral"
    _ftext_hostile  = "Hostile"
-   _ftext_bribed   = "Neutral"
+   _ftext_bribed   = "Bribed"
 end
 
 

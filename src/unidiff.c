@@ -41,6 +41,7 @@ typedef enum UniHunkTargetType_ {
    HUNK_TARGET_SYSTEM,
    HUNK_TARGET_ASSET,
    HUNK_TARGET_TECH,
+   HUNK_TARGET_FACTION,
 } UniHunkTargetType_t;
 
 
@@ -77,6 +78,13 @@ typedef enum UniHunkType_ {
    /* Target should be asset. */
    HUNK_TYPE_ASSET_FACTION,
    HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
+   /* Target should be faction. */
+   HUNK_TYPE_FACTION_VISIBLE,
+   HUNK_TYPE_FACTION_INVISIBLE,
+   HUNK_TYPE_FACTION_ALLY,
+   HUNK_TYPE_FACTION_ENEMY,
+   HUNK_TYPE_FACTION_NEUTRAL,
+   HUNK_TYPE_FACTION_REALIGN, /* For internal usage. */
 } UniHunkType_t;
 
 
@@ -95,6 +103,7 @@ typedef struct UniHunk_ {
    } u; /**< Actual data to patch. */
    union {
       char *name;
+      int data;
    } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
@@ -459,6 +468,106 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
 
 
 /**
+ * @brief Patches a faction.
+ *
+ *    @param diff Diff that is doing the patching.
+ *    @param node Node containing the asset.
+ *    @return 0 on success.
+ */
+static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
+{
+   UniHunk_t base, hunk;
+   xmlNodePtr cur;
+   char *buf;
+
+   /* Set the target. */
+   memset(&base, 0, sizeof(UniHunk_t));
+   base.target.type = HUNK_TARGET_FACTION;
+   xmlr_attr(node,"name",base.target.u.name);
+   if (base.target.u.name==NULL) {
+      WARN("Unidiff '%s' has an target node without a 'name' tag", diff->name);
+      return -1;
+   }
+
+   /* Now parse the possible changes. */
+   cur = node->xmlChildrenNode;
+   do {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"visible")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Faction type is constant. */
+         hunk.type = HUNK_TYPE_FACTION_VISIBLE;
+
+         /* There is no name. */
+         hunk.u.name = NULL;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"invisible")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Faction type is constant. */
+         hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
+
+         /* There is no name. */
+         hunk.u.name = NULL;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"faction")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Get the faction to set the association of. */
+         xmlr_attr(cur,"name",hunk.u.name);
+
+         /* Get the type. */
+         buf = xml_get(cur);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
+         if (strcmp(buf,"ally")==0)
+            hunk.type = HUNK_TYPE_FACTION_ALLY;
+         else if (strcmp(buf,"enemy")==0)
+            hunk.type = HUNK_TYPE_FACTION_ENEMY;
+         else if (strcmp(buf,"neutral")==0)
+            hunk.type = HUNK_TYPE_FACTION_NEUTRAL;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for faction '%s'.", diff->name, buf, hunk.u.name);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
+   } while (xml_nextNode(cur));
+
+   /* Clean up some stuff. */
+   free(base.target.u.name);
+   base.target.u.name = NULL;
+
+   return 0;
+}
+
+
+/**
  * @brief Actually applies a diff in XML node form.
  *
  *    @param parent Node containing the diff information.
@@ -492,6 +601,10 @@ static int diff_patch( xmlNodePtr parent )
       else if (xml_isNode(node, "asset")) {
          univ_update = 1;
          diff_patchAsset( diff, node );
+      }
+      else if (xml_isNode(node, "faction")) {
+         univ_update = 1;
+         diff_patchFaction( diff, node );
       }
       else
          WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
@@ -537,6 +650,30 @@ static int diff_patch( xmlNodePtr parent )
                WARN("   [%s] asset faction removal: '%s'", target,
                      fail->u.name );
                break;
+            case HUNK_TYPE_FACTION_VISIBLE:
+               WARN("   [%s] faction visible: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_FACTION_INVISIBLE:
+               WARN("   [%s] faction invisible: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_FACTION_ALLY:
+               WARN("   [%s] faction set ally: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_FACTION_ENEMY:
+               WARN("   [%s] faction set enemy: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_FACTION_NEUTRAL:
+               WARN("   [%s] faction set neutral: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_FACTION_REALIGN:
+               WARN("   [%s] faction alignment reset: '%s'", target,
+                     fail->u.name );
+               break;
 
             default:
                WARN("   unknown hunk '%d'", fail->type);
@@ -565,6 +702,7 @@ static int diff_patch( xmlNodePtr parent )
 static int diff_patchHunk( UniHunk_t *hunk )
 {
    Planet *p;
+   int a, b;
 
    switch (hunk->type) {
 
@@ -607,6 +745,77 @@ static int diff_patchHunk( UniHunk_t *hunk )
          return planet_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
          return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
+
+      /* Making a faction visible. */
+      case HUNK_TYPE_FACTION_VISIBLE:
+         return faction_setInvisible( faction_get(hunk->target.u.name), 0 );
+      /* Making a faction invisible. */
+      case HUNK_TYPE_FACTION_INVISIBLE:
+         return faction_setInvisible( faction_get(hunk->target.u.name), 1 );
+      /* Making two factions allies. */
+      case HUNK_TYPE_FACTION_ALLY:
+         a = faction_get( hunk->target.u.name );
+         b = faction_get( hunk->u.name );
+         if (areAllies(a, b))
+            hunk->o.data = 'A';
+         else if (areEnemies(a, b))
+            hunk->o.data = 'E';
+         else
+            hunk->o.data = 0;
+         faction_addAlly( a, b );
+         faction_addAlly( b, a );
+         return 0;
+      /* Making two factions enemies. */
+      case HUNK_TYPE_FACTION_ENEMY:
+         a = faction_get( hunk->target.u.name );
+         b = faction_get( hunk->u.name );
+         if (areAllies(a, b))
+            hunk->o.data = 'A';
+         else if (areEnemies(a, b))
+            hunk->o.data = 'E';
+         else
+            hunk->o.data = 0;
+         faction_addEnemy( a, b );
+         faction_addEnemy( b, a );
+         return 0;
+      /* Making two factions neutral (removing enemy/ally statuses). */
+      case HUNK_TYPE_FACTION_NEUTRAL:
+         a = faction_get( hunk->target.u.name );
+         b = faction_get( hunk->u.name );
+         if (areAllies(a, b))
+            hunk->o.data = 'A';
+         else if (areEnemies(a, b))
+            hunk->o.data = 'E';
+         else
+            hunk->o.data = 0;
+         faction_rmAlly( a, b );
+         faction_rmAlly( b, a );
+         faction_rmEnemy( a, b );
+         faction_rmEnemy( b, a );
+         return 0;
+      /* Resetting the alignment state of two factions. */
+      case HUNK_TYPE_FACTION_REALIGN:
+         a = faction_get( hunk->target.u.name );
+         b = faction_get( hunk->u.name );
+         if (hunk->o.data == 'A') {
+            faction_rmEnemy(a, b);
+            faction_rmEnemy(b, a);
+            faction_addAlly(a, b);
+            faction_addAlly(b, a);
+         }
+         else if (hunk->o.data == 'E') {
+            faction_rmAlly(a, b);
+            faction_rmAlly(b, a);
+            faction_addEnemy(a, b);
+            faction_addAlly(b, a);
+         }
+         else {
+            faction_rmAlly( a, b );
+            faction_rmAlly( b, a );
+            faction_rmEnemy( a, b );
+            faction_rmEnemy( b, a );
+         }
+         return 0;
 
       default:
          WARN("Unknown hunk type '%d'.", hunk->type);
@@ -762,6 +971,23 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_FACTION_REMOVE;
             break;
 
+         case HUNK_TYPE_FACTION_VISIBLE:
+            hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
+            break;
+         case HUNK_TYPE_FACTION_INVISIBLE:
+            hunk.type = HUNK_TYPE_FACTION_VISIBLE;
+            break;
+
+         case HUNK_TYPE_FACTION_ALLY:
+            hunk.type = HUNK_TYPE_FACTION_REALIGN;
+            break;
+         case HUNK_TYPE_FACTION_ENEMY:
+            hunk.type = HUNK_TYPE_FACTION_REALIGN;
+            break;
+         case HUNK_TYPE_FACTION_NEUTRAL:
+            hunk.type = HUNK_TYPE_FACTION_REALIGN;
+            break;
+
          default:
             WARN("Unknown Hunk type '%d'.", hunk.type);
             continue;
@@ -823,6 +1049,12 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_TECH_REMOVE:
       case HUNK_TYPE_ASSET_FACTION:
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
+      case HUNK_TYPE_FACTION_VISIBLE:
+      case HUNK_TYPE_FACTION_INVISIBLE:
+      case HUNK_TYPE_FACTION_ALLY:
+      case HUNK_TYPE_FACTION_ENEMY:
+      case HUNK_TYPE_FACTION_NEUTRAL:
+      case HUNK_TYPE_FACTION_REALIGN:
          if (hunk->u.name != NULL)
             free(hunk->u.name);
          hunk->u.name = NULL;

@@ -364,7 +364,6 @@ function land_flf ()
       player.pay( 100000 )
       flf_setReputation( 20 )
       faction.get("FLF"):modPlayer( 10 )
-      var.pop( "flfbase_sysname" )
       var.pop( "flfbase_intro" )
       misn.finish( true )
    end

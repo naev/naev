@@ -183,12 +183,12 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *
  * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
- *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
- *    @luaparam desc Description associated to the NPC.
- *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
- *    @luareturn The ID of the NPC to pass to npcRm.
+ *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
+ *    @luatparam string name Name of the NPC
+ *    @luatparam string portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
+ *    @luatparam string desc Description associated to the NPC.
+ *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
+ *    @luatreturn number The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd( func, name, portrait, desc, priority )
  */
 static int evt_npcAdd( lua_State *L )
@@ -233,7 +233,7 @@ static int evt_npcAdd( lua_State *L )
  *
  * @usage evt.npcRm( npc_id )
  *
- *    @luaparam id ID of the NPC to remove.
+ *    @luatparam number id ID of the NPC to remove.
  * @luafunc npcRm( id )
  */
 static int evt_npcRm( lua_State *L )
@@ -256,8 +256,8 @@ static int evt_npcRm( lua_State *L )
 /**
  * @brief Finishes the event.
  *
- *    @luaparam properly If true and the event is unique it marks the event
- *                     as completed.  If false or nil it deletes the event but
+ *    @luatparam[opt=false] boolean properly If true and the event is unique it marks the event
+ *                     as completed. If false it deletes the event but
  *                     doesn't mark it as completed.
  * @luafunc finish( properly )
  */
@@ -286,7 +286,7 @@ static int evt_finish( lua_State *L )
  *
  * @usage evt.save() -- Saves an event, which is by default disabled.
  *
- *    @luaparam enable If true or nil sets the event to save, otherwise tells the event to not save.
+ *    @luatparam[opt=true] boolean enable If true sets the event to save, otherwise tells the event to not save.
  * @luafunc save( enable )
  */
 static int evt_save( lua_State *L )
@@ -314,8 +314,8 @@ static int evt_save( lua_State *L )
  * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
  * @usage if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
  *
- *    @luaparam systems Table of systems to claim or a single system.
- *    @luareturn true if was able to claim, false otherwise.
+ *    @luatparam System|{System,...} systems Table of systems to claim or a single system.
+ *    @luatreturn number true if was able to claim, false otherwise.
  * @luafunc claim( systems )
  */
 static int evt_claim( lua_State *L )

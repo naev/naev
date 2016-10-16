@@ -5,15 +5,15 @@
   <slot prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>1350</mass>
+  <mass>1150</mass>
   <price>1100000</price>
   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
   <gfx_store>plating_cargo</gfx_store>
  </general>
  <specific type="modification">
   <cargo>300</cargo>
-  <absorb>32</absorb>
-  <armour>1750</armour>
+  <absorb>27</absorb>
+  <armour>1200</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>
