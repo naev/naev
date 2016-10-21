@@ -1,6 +1,7 @@
 dir = "../html"
 style = "./"
 template = "./"
+not_luadoc = true
 title = "Naev Lua API"
 project = "Naev Lua API"
 description = "Naev Lua API"
