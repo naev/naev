@@ -57,8 +57,8 @@ for F in ../src/nlua_*.c ../src/ai.c; do
 done
 
 # Run Luadoc, put HTML files into html/ dir
-(
-   cd lua
-   ldoc .
-   rm *.luadoc
-)
+cd lua
+ldoc .
+error=$?
+rm *.luadoc
+exit $error
