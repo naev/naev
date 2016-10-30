@@ -14,8 +14,8 @@ for F in ../src/nlua_*.c ../src/ai.c; do
 # Lines after @luafunc & @luamod will be ignored by Luadoc
 # Doxygen comments that do not contain any of these tags have no impact on
 # the Luadoc output.
-         s|^ *\* *@luafunc\(.*\)|function\1\nend|p
 # Rename some tags:
+         s|^ *\* *@luafunc|-- @function|p
          s|^ *\* *@brief|--|p
          s|^ *\* *@luasee|-- @see|p
          s|^ *\* *@luaparam|-- @param|p
@@ -47,24 +47,18 @@ for F in ../src/nlua_*.c ../src/ai.c; do
 # Delete everything else, just in case:
          d
          ' $F | awk '
-         # This awk script removes all lines before @module, so LDoc will not
-         # implicitly declare the module and then produce an error when it is
-         # defined again by the @module command.
+	 # Skips all comment blocks without an @ tag
          BEGIN {
             RS="\n\n"
          }
-         /\n-- @module/ {
-            a=1
-         }
-         {
-            if (a==1)
-               print $0, "\n"
+         /@/ {
+            print $0, "\n"
          }' > lua/"$(basename $F)".luadoc
 done
 
 # Run Luadoc, put HTML files into html/ dir
-(
-   cd lua
-   ldoc .
-   rm *.luadoc
-)
+cd lua
+ldoc .
+error=$?
+rm *.luadoc
+exit $error
