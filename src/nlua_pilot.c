@@ -3517,23 +3517,38 @@ static int pilotL_control( lua_State *L )
  */
 static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
 {
-   switch (lua_type( from, ind )) {
-      case LUA_TNIL:
-         lua_pushnil( to);
-         break;
-      case LUA_TNUMBER:
-         lua_pushnumber( to, lua_tonumber(from, ind) );
-         break;
-      case LUA_TBOOLEAN:
-         lua_pushboolean( to, lua_toboolean(from, ind) );
-         break;
-      case LUA_TSTRING:
-         lua_pushstring( to, lua_tostring(from, ind) );
-         break;
+   if (to == from) {
+      switch (lua_type( from, ind )) {
+         case LUA_TNIL:
+         case LUA_TNUMBER:
+         case LUA_TBOOLEAN:
+         case LUA_TSTRING:
+            // Same Lua state, so just copy to the top of the stack
+            lua_pushvalue( to, ind );
+            break;
+         default:
+            NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
+            break;
+      }
+   } else {
+      switch (lua_type( from, ind )) {
+         case LUA_TNIL:
+            lua_pushnil( to);
+            break;
+         case LUA_TNUMBER:
+            lua_pushnumber( to, lua_tonumber(from, ind) );
+            break;
+         case LUA_TBOOLEAN:
+            lua_pushboolean( to, lua_toboolean(from, ind) );
+            break;
+         case LUA_TSTRING:
+            lua_pushstring( to, lua_tostring(from, ind) );
+            break;
 
-      default:
-         NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
-         break;
+         default:
+            NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
+            break;
+      }
    }
    return 0;
 }
@@ -3568,13 +3583,15 @@ static int pilotL_memory( lua_State *L )
    pL = p->ai->L;
 
    /* Copy it over. */
+   /* We have to be very careful that this works even if L==pL */
    lua_getglobal( pL, AI_MEM );        /* pilotmem */
    lua_pushnumber( pL, p->id );        /* pilotmem, id */
    lua_gettable( pL, -2);              /* pilotmem, table */
-   lua_copyvalue( pL, L, 2 );          /* pilotmem, table, key */
-   lua_copyvalue( pL, L, 3 );          /* pilotmem, table, key, value */
-   lua_settable( pL, -3 );             /* pilotmem, table */
-   lua_pop( pL, 2 );                   /* */
+   lua_remove( pL, -2 );               /* table */
+   lua_copyvalue( pL, L, 2 );          /* table, key */
+   lua_copyvalue( pL, L, 3 );          /* table, key, value */
+   lua_settable( pL, -3 );             /* table */
+   lua_pop( pL, 1 );                   /* */
 
    return 0;
 }
@@ -3613,13 +3630,16 @@ static int pilotL_memoryCheck( lua_State *L )
    pL = p->ai->L;
 
    /* Copy it over. */
+   /* We have to be very careful that this works even if L==pL */
    lua_getglobal( pL, AI_MEM );        /* pilotmem */
    lua_pushnumber( pL, p->id );        /* pilotmem, id */
    lua_gettable( pL, -2);              /* pilotmem, table */
-   lua_copyvalue( pL, L, 2 );          /* pilotmem, table, key */
-   lua_gettable( pL, -2 );             /* pilotmem, table, value */
-   lua_copyvalue( L, pL, -1 );         /* pilotmem, table, value */
-   lua_pop( pL, 3 );                   /* */
+   lua_remove( pL, -2 );               /* table */
+   lua_copyvalue( pL, L, 2 );          /* table, key */
+   lua_gettable( pL, -2 );             /* table, value */
+   lua_remove( pL, -2 );               /* value */
+   lua_copyvalue( L, pL, -1 );         /* value */
+   lua_pop( pL, 1 );                   /* */
 
    return 1;
 }
