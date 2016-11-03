@@ -3564,7 +3564,6 @@ static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
  */
 static int pilotL_memory( lua_State *L )
 {
-   lua_State *pL;
    Pilot *p;
 
    if (lua_gettop(L) < 3) {
@@ -3580,18 +3579,16 @@ static int pilotL_memory( lua_State *L )
       NLUA_ERROR(L,"Pilot does not have AI.");
       return 0;
    }
-   pL = p->ai->L;
 
    /* Copy it over. */
    /* We have to be very careful that this works even if L==pL */
-   lua_getglobal( pL, AI_MEM );        /* pilotmem */
-   lua_pushnumber( pL, p->id );        /* pilotmem, id */
-   lua_gettable( pL, -2);              /* pilotmem, table */
-   lua_remove( pL, -2 );               /* table */
-   lua_copyvalue( pL, L, 2 );          /* table, key */
-   lua_copyvalue( pL, L, 3 );          /* table, key, value */
-   lua_settable( pL, -3 );             /* table */
-   lua_pop( pL, 1 );                   /* */
+   nlua_getenv( p->ai->env, AI_MEM );  /* pilotmem */
+   lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
+   lua_remove( naevL, -2 );            /* table */
+   lua_copyvalue( naevL, L, 2 );       /* table, key */
+   lua_copyvalue( naevL, L, 3 );       /* table, key, value */
+   lua_settable( naevL, -3 );          /* table */
+   lua_pop( naevL, 1 );                /* */
 
    return 0;
 }
@@ -3611,7 +3608,6 @@ static int pilotL_memory( lua_State *L )
  */
 static int pilotL_memoryCheck( lua_State *L )
 {
-   lua_State *pL;
    Pilot *p;
 
    if (lua_gettop(L) < 2) {
@@ -3627,19 +3623,17 @@ static int pilotL_memoryCheck( lua_State *L )
       NLUA_ERROR(L,"Pilot does not have AI.");
       return 0;
    }
-   pL = p->ai->L;
 
    /* Copy it over. */
    /* We have to be very careful that this works even if L==pL */
-   lua_getglobal( pL, AI_MEM );        /* pilotmem */
-   lua_pushnumber( pL, p->id );        /* pilotmem, id */
-   lua_gettable( pL, -2);              /* pilotmem, table */
-   lua_remove( pL, -2 );               /* table */
-   lua_copyvalue( pL, L, 2 );          /* table, key */
-   lua_gettable( pL, -2 );             /* table, value */
-   lua_remove( pL, -2 );               /* value */
-   lua_copyvalue( L, pL, -1 );         /* value */
-   lua_pop( pL, 1 );                   /* */
+   nlua_getenv( p->ai->env, AI_MEM );  /* pilotmem */
+   lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
+   lua_remove( naevL, -2 );            /* table */
+   lua_copyvalue( naevL, L, 2 );       /* table, key */
+   lua_gettable( naevL, -2 );          /* table, value */
+   lua_remove( naevL, -2 );            /* value */
+   lua_copyvalue( L, naevL, -1 );      /* value */
+   lua_pop( naevL, 1 );                /* */
 
    return 1;
 }

@@ -415,7 +415,7 @@ static void ai_setMemory (void)
 
    nlua_getenv(env, AI_MEM); /* pm */
    lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
-   lua_setenv(env, "mem"); /* pm */
+   nlua_setenv(env, "mem"); /* pm */
    lua_pop(naevL, 1); /* */
 }
 
@@ -871,7 +871,6 @@ void ai_think( Pilot* pilot, const double dt )
 void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 {
    int errf;
-   lua_State *L;
    HookParam hparam[2];
 
    /* Custom hook parameters. */
@@ -890,24 +889,23 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
       return;
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
-   L = cur_pilot->ai->L;
 
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
+   lua_pushcfunction(naevL, nlua_errTrace);
    errf = -3;
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
 
-   lua_getglobal(L, "attacked");
+   nlua_getenv(cur_pilot->ai->env, "attacked");
 
-   lua_pushpilot(L, attacker);
-   if (lua_pcall(L, 1, 0, errf)) {
-      WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
-      lua_pop(L,1);
+   lua_pushpilot(naevL, attacker);
+   if (lua_pcall(naevL, 1, 0, errf)) {
+      WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(naevL, -1));
+      lua_pop(naevL, 1);
    }
 #if DEBUGGING
-   lua_pop(L,1);
+   lua_pop(naevL,1);
 #endif /* DEBUGGING */
 }
 
@@ -944,7 +942,6 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
-   lua_State *L;
    int errf;
 
    /* Ignore distress signals when under manual control. */
@@ -957,38 +954,37 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 
    /* Set up the environment. */
    ai_setPilot(p);
-   L = cur_pilot->ai->L;
 
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
+   lua_pushcfunction(naevL, nlua_errTrace);
    errf = -4;
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
 
    /* See if function exists. */
-   lua_getglobal(L, "distress");
-   if (lua_isnil(L,-1)) {
-      lua_pop(L,1);
+   nlua_getenv(cur_pilot->ai->env, "distress");
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
 #if DEBUGGING
-      lua_pop(L,1);
+      lua_pop(naevL,1);
 #endif /* DEBUGGING */
       return;
    }
 
    /* Run the function. */
-   lua_pushpilot(L, distressed->id);
+   lua_pushpilot(naevL, distressed->id);
    if (attacker != NULL)
-      lua_pushpilot(L, attacker->id);
+      lua_pushpilot(naevL, attacker->id);
    else /* Default to the victim's current target. */
-      lua_pushpilot(L, distressed->target);
+      lua_pushpilot(naevL, distressed->target);
    
-   if (lua_pcall(L, 2, 0, errf)) {
-      WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
-      lua_pop(L,1);
+   if (lua_pcall(naevL, 2, 0, errf)) {
+      WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
 #if DEBUGGING
-   lua_pop(L,1);
+   lua_pop(naevL,1);
 #endif /* DEBUGGING */
 }
 

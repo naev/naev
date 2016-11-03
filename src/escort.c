@@ -178,7 +178,6 @@ static int escort_disabled( void *data )
 static int escort_command( Pilot *parent, int cmd, int param )
 {
    int i, n;
-   lua_State *L;
    Pilot *e;
    char *buf;
 
@@ -201,7 +200,6 @@ static int escort_command( Pilot *parent, int cmd, int param )
       ai_setPilot( e );
 
       /* Set up stack. */
-      L = e->ai->L;
       switch (cmd) {
          case ESCORT_ATTACK:
             buf = "e_attack";
@@ -220,15 +218,15 @@ static int escort_command( Pilot *parent, int cmd, int param )
             WARN("Invalid escort command '%d'.", cmd);
             return -1;
       }
-      lua_getglobal(L, buf);
+      nlua_getenv(e->ai->env, buf);
       if (param >= 0){
-         lua_pushpilot(L, param);
+         lua_pushpilot(naevL, param);
       }
 
       /* Run command. */
-      if (lua_pcall(L, (param >= 0) ? 1 : 0, 0, 0))
+      if (lua_pcall(naevL, (param >= 0) ? 1 : 0, 0, 0))
          WARN("Pilot '%s' ai -> '%s': %s", e->name,
-               buf, lua_tostring(L,-1));
+               buf, lua_tostring(naevL,-1));
    }
 
    return !n;

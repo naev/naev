@@ -100,7 +100,7 @@ void nlua_setenv(nlua_env env, const char *name) {
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
    lua_insert(naevL, -2);
    lua_setfield(naevL, -2, name);
-   lua_pop(naevL);
+   lua_pop(naevL, 1);
 }
 
 
