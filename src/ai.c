@@ -413,14 +413,10 @@ static void ai_setMemory (void)
    nlua_env env;
    env = cur_pilot->ai->env;
 
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* env */
-   lua_pushstring(naevL, AI_MEM); /* env, AI_MEM */
-   lua_rawget(naevL, -2); /* env, pm */
-   lua_rawgeti(naevL, -1, cur_pilot->id); /* env, pm, t */
-   lua_pushstring(naevL, "mem"); /* env, pm, t, "mem" */
-   lua_insert(naevL, -2); /* env, pm, "mem", t */
-   lua_rawset(naevL, -4); /* env, pm */
-   lua_pop(naevL, 2); /* */
+   nlua_getenv(env, AI_MEM); /* pm */
+   lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
+   lua_setenv(env, "mem"); /* pm */
+   lua_pop(naevL, 1); /* */
 }
 
 
@@ -451,10 +447,7 @@ static void ai_run( nlua_env env, const char *funcname )
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-   lua_pushstring(naevL, funcname);
-   lua_rawget(naevL, -2);
-   lua_remove(naevL, -2);
+   nlua_getenv(env, funcname);
 
 #ifdef DEBUGGING
    if (lua_isnil(naevL, -1)) {
@@ -526,13 +519,10 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
 
    /* Adds a new pilot memory in the memory table. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->ai->env); /* env */
-   lua_pushstring(naevL, AI_MEM);    /* env, AI_MEM */
-   lua_rawget(naevL, -2);            /* env, pm */
-   lua_remove(naevL, -2);            /* pm */
+   nlua_getenv(p->ai->env, AI_MEM);  /* pm */
    lua_newtable(naevL);              /* pm, nt */
-   lua_pushvalue(naevL,-2);          /* pm, nt, nt */
-   lua_rawseti(naevL, -3, p->id);    /* pm, nt */
+   lua_pushvalue(naevL, -1);         /* pm, nt, nt */
+   lua_rawseti(naevL, -2, p->id);    /* pm, nt */
 
    /* Copy defaults over. */
    lua_pushstring(naevL, AI_MEM_DEF);/* pm, nt, s */
@@ -591,12 +581,10 @@ void ai_destroy( Pilot* p )
 
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* env */
-      lua_pushstring(naevL, AI_MEM); /* env, AI_MEM */
-      lua_rawget(naevL, -2);     /* env, t */
-      lua_pushnil(naevL);        /* env, t, nil */
-      lua_rawseti(naevL,-2, p->id);/* env, t */
-      lua_pop(naevL, 2);         /* */
+      nlua_getenv(env, AI_MEM);  /* t */
+      lua_pushnil(naevL);        /* t, nil */
+      lua_rawseti(naevL,-2, p->id);/* t */
+      lua_pop(naevL, 1);         /* */
    }
 
    /* Clear the tasks. */
@@ -715,25 +703,21 @@ static int ai_loadProfile( const char* filename )
    env = prof->env;
 
    /* Register C functions in Lua */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* env */
-   lua_pushstring(naevL, "ai"); /* env, "ai" */
-   lua_newtable(naevL); /* env, "ai", ai */
-   luaL_register(naevL, NULL, aiL_methods); /* env, "ai", ai */
-   lua_rawset(naevL, -3); /* env */
+   lua_newtable(naevL); /* ai */
+   luaL_register(naevL, NULL, aiL_methods); /* ai */
+   nlua_setenv(env, "ai"); /*  */
 
    /* Add the player memory table. */
-   lua_newtable(naevL);              /* env, pm */
-   lua_pushstring(naevL, AI_MEM);    /* env, pm, AI_MEM */
-   lua_pushvalue(naevL, -2);         /* env, pm, AI_MEM, pm */
-   lua_rawset(naevL, -4);            /* env, pm */
+   lua_newtable(naevL);              /* pm */
+   lua_pushvalue(naevL, -1);         /* pm, pm */
+   nlua_setenv(env, AI_MEM);         /* pm */
 
    /* Set "mem" to be default template. */
-   lua_pushstring(naevL, "mem");     /* env, pm, "mem" */
-   lua_newtable(naevL);              /* env, pm, "mem", nt */
-   lua_pushvalue(naevL,-1);          /* env, pm, "mem", nt, nt */
-   lua_setfield(naevL,-4,AI_MEM_DEF); /* env, pm, "mem", nt */
-   lua_rawset(naevL, -4);            /* env, pm */
-   lua_pop(naevL, 2);                /*  */
+   lua_newtable(naevL);              /* pm, nt */
+   lua_pushvalue(naevL,-1);          /* pm, nt, nt */
+   lua_setfield(naevL,-3,AI_MEM_DEF); /* pm, nt */
+   nlua_setenv(env, "mem");          /* pm */
+   lua_pop(naevL, 1);                /*  */
 
    /* Now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
@@ -830,10 +814,7 @@ void ai_think( Pilot* pilot, const double dt )
    if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
          ((cur_pilot->tcontrol < 0.) || (t == NULL))) {
       ai_run(env, "control"); /* run control */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-      lua_pushstring(naevL, "control_rate");
-      lua_rawget(naevL, -2);
-      lua_remove(naevL, -2);
+      nlua_getenv(env, "control_rate");
       cur_pilot->tcontrol = lua_tonumber(naevL,-1);
       lua_pop(naevL,1);
 
@@ -1077,10 +1058,7 @@ static void ai_create( Pilot* pilot, char *param )
 #endif /* DEBUGGING */
 
    /* Prepare stack. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, cur_pilot->ai->env);
-   lua_pushstring(naevL, "create");
-   lua_rawget(naevL, -2);
-   lua_remove(naevL, -2);
+   nlua_getenv(cur_pilot->ai->env, "create");
 
    /* Parse parameter. */
    if (param != NULL) {

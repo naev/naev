@@ -22,6 +22,8 @@ void lua_init(void);
 void lua_exit(void);
 nlua_env nlua_newEnv(void);
 void nlua_freeEnv(nlua_env env);
+void nlua_setenv(nlua_env env, const char *name);
+void nlua_getenv(nlua_env env, const char *name);
 int nlua_dobufenv(nlua_env env,
                   const char *buff,
                   size_t sz,
