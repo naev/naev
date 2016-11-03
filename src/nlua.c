@@ -34,10 +34,60 @@
 #include "nstring.h"
 
 
+lua_State *naevL;
+
+
 /*
  * prototypes
  */
 static int nlua_packfileLoader( lua_State* L );
+
+
+void lua_init(void) {
+   naevL = nlua_newState();
+   nlua_loadBasic(naevL);
+   nlua_loadStandard(naevL, 1); /* XXX read-only API */
+}
+
+
+void lua_exit(void) {
+   lua_close(naevL);
+}
+
+
+int nlua_dobufenv(nlua_env env,
+                  const char *buff,
+                  size_t sz,
+                  const char *name) {
+   if (luaL_loadbuffer(naevL, buff, sz, name) != 0)
+      return -1;
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   lua_setfenv(naevL, -2);
+   if (lua_pcall(naevL, 0, LUA_MULTRET, 0) != 0)
+      return -1;
+   return 0;
+}
+
+
+nlua_env nlua_newEnv(void) {
+   nlua_env ref;
+   ref = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   lua_newtable(naevL);
+
+   /* Metatable */
+   lua_newtable(naevL);
+   lua_getglobal(naevL, "_G");
+   lua_setfield(naevL, -2, "__index");
+   lua_setmetatable(naevL, -2);
+
+   lua_rawseti(naevL, LUA_REGISTRYINDEX, ref);
+   return ref;
+}
+
+
+void nlua_freeEnv(nlua_env env) {
+   luaL_unref(naevL, LUA_REGISTRYINDEX, env);
+}
 
 
 /**
@@ -222,6 +272,7 @@ static int nlua_packfileLoader( lua_State* L )
  *  - tk
  *  - hook
  *  - music
+ *  - ai
  *
  *    @param L Lua State to load modules into.
  *    @param readonly Load as readonly (good for sandboxing).

@@ -12,10 +12,20 @@
 
 #define NLUA_DONE       "__done__"
 
+typedef int nlua_env;
+extern lua_State *naevL;
 
 /*
  * standard Lua stuff wrappers
  */
+void lua_init(void);
+void lua_exit(void);
+nlua_env nlua_newEnv(void);
+void nlua_freeEnv(nlua_env env);
+int nlua_dobufenv(nlua_env env,
+                  const char *buff,
+                  size_t sz,
+                  const char *name);
 lua_State *nlua_newState (void); /* creates a new state */
 int nlua_load( lua_State* L, lua_CFunction f );
 int nlua_loadBasic( lua_State* L );
@@ -23,5 +33,3 @@ int nlua_loadStandard( lua_State *L, int readonly );
 int nlua_errTrace( lua_State *L );
 
 #endif /* NLUA_H */
-
-

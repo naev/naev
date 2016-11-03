@@ -371,6 +371,7 @@ int main( int argc, char** argv )
       ERR("Unable to initialize the Nebula subsystem!");
       /* Weirdness will occur... */
    }
+   lua_init(); /* initializes lua */
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
@@ -524,6 +525,7 @@ int main( int argc, char** argv )
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+   lua_exit(); /* Closes Lua state. */
 
    /* Free the icon. */
    if (naev_icon)

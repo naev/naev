@@ -12,6 +12,7 @@
 #include <lua.h>
 
 #include "physics.h"
+#include "nlua.h"
 
 /* Forward declaration to avoid cyclical import. */
 struct Pilot_;
@@ -76,7 +77,7 @@ typedef struct Task_ {
  */
 typedef struct AI_Profile_ {
    char* name; /**< Name of the profile. */
-   lua_State *L; /**< Assosciated Lua State. */
+   nlua_env env; /**< Assosciated Lua Environment. */
 } AI_Profile;
 
 
