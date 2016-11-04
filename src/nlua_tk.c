@@ -49,7 +49,16 @@ static const luaL_reg tk_methods[] = {
  */
 int nlua_loadTk( lua_State *L )
 {
-   luaL_register(L, "tk", tk_methods);
+   /* XXX will be changed when transition to one state complete */
+   int index = LUA_GLOBALSINDEX;
+   if (L == NULL) {
+      L = naevL;
+      index = -1;
+   }
+
+   lua_newtable(L);
+   luaL_register(L, NULL, tk_methods);
+   lua_setfield(L, index, "tk");
    return 0;
 }
 

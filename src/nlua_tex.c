@@ -46,6 +46,13 @@ static const luaL_reg texL_methods[] = {
  */
 int nlua_loadTex( lua_State *L, int readonly )
 {
+   /* XXX will be changed when transition to one state complete */
+   int index = LUA_GLOBALSINDEX;
+   if (L == NULL) {
+      L = naevL;
+      index = -1;
+   }
+
    if (readonly) /* Nothing is read only */
       return 0;
 
@@ -60,7 +67,7 @@ int nlua_loadTex( lua_State *L, int readonly )
    luaL_register(L, NULL, texL_methods);
 
    /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, TEX_METATABLE);
+   lua_setfield(L, index, TEX_METATABLE);
 
    return 0;
 }

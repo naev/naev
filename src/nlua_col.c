@@ -51,6 +51,13 @@ static const luaL_reg colL_methods[] = {
  */
 int nlua_loadCol( lua_State *L, int readonly )
 {
+   /* XXX will be changed when transition to one state complete */
+   int index = LUA_GLOBALSINDEX;
+   if (L == NULL) {
+      L = naevL;
+      index = -1;
+   }
+
    if (readonly) /* Nothing is read only */
       return 0;
 
@@ -65,7 +72,7 @@ int nlua_loadCol( lua_State *L, int readonly )
    luaL_register(L, NULL, colL_methods);
 
    /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, COL_METATABLE);
+   lua_setfield(L, index, COL_METATABLE);
 
    return 0;
 }

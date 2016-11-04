@@ -42,11 +42,20 @@ static const luaL_reg bkgL_methods[] = {
  */
 int nlua_loadBackground( lua_State *L, int readonly )
 {
+   /* XXX will be changed when transition to one state complete */
+   int index = LUA_GLOBALSINDEX;
+   if (L == NULL) {
+      L = naevL;
+      index = -1;
+   }
+
    if (readonly) /* Nothing is read only */
       return 0;
 
    /* Register the values */
-   luaL_register(L, "bkg", bkgL_methods);
+   lua_newtable(L);
+   luaL_register(L, NULL, bkgL_methods);
+   lua_setfield(L, index, "bkg");
 
    return 0;
 }
