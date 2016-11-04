@@ -522,7 +522,7 @@ int ai_pinit( Pilot *p, const char *ai )
    nlua_getenv(p->ai->env, AI_MEM);  /* pm */
    lua_newtable(naevL);              /* pm, nt */
    lua_pushvalue(naevL, -1);         /* pm, nt, nt */
-   lua_rawseti(naevL, -2, p->id);    /* pm, nt */
+   lua_rawseti(naevL, -3, p->id);    /* pm, nt */
 
    /* Copy defaults over. */
    lua_pushstring(naevL, AI_MEM_DEF);/* pm, nt, s */
@@ -1047,7 +1047,7 @@ static void ai_create( Pilot* pilot, char *param )
 
    nparam = (param!=NULL) ? 1 : 0;
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
+   lua_pushcfunction(naevL, nlua_errTrace);
    errf = -2-nparam;
 #else /* DEBUGGING */
    errf = 0;

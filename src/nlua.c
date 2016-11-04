@@ -71,16 +71,22 @@ int nlua_dobufenv(nlua_env env,
 
 nlua_env nlua_newEnv(void) {
    nlua_env ref;
-   ref = luaL_ref(naevL, LUA_REGISTRYINDEX);
    lua_newtable(naevL);
+   lua_pushvalue(naevL, -1);
+   ref = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* Metatable */
    lua_newtable(naevL);
-   lua_getglobal(naevL, "_G");
+   lua_pushvalue(naevL, LUA_GLOBALSINDEX);
    lua_setfield(naevL, -2, "__index");
    lua_setmetatable(naevL, -2);
 
-   lua_rawseti(naevL, LUA_REGISTRYINDEX, ref);
+   /* Replace include() function with one that considers fenv */
+   lua_pushvalue(naevL, -1);
+   lua_pushcclosure(naevL, nlua_packfileLoader, 1);
+   lua_setfield(naevL, -2, "include");
+
+   lua_pop(naevL, 1);
    return ref;
 }
 
@@ -91,16 +97,17 @@ void nlua_freeEnv(nlua_env env) {
 
 
 void nlua_getenv(nlua_env env, const char *name) {
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-   lua_getfield(naevL, -1, name);
-   lua_remove(naevL, -2);
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* env */
+   lua_getfield(naevL, -1, name); /* env, value */
+   lua_remove(naevL, -2); /* value */
 }
 
 void nlua_setenv(nlua_env env, const char *name) {
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-   lua_insert(naevL, -2);
-   lua_setfield(naevL, -2, name);
-   lua_pop(naevL, 1);
+   /* value */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* value, env */
+   lua_insert(naevL, -2); /* env, value */
+   lua_setfield(naevL, -2, name); /* env */
+   lua_pop(naevL, 1); /*  */
 }
 
 
@@ -179,7 +186,9 @@ int nlua_loadBasic( lua_State* L )
    lua_register(L, "warn",  cli_warn);
 
    /* add our own */
-   lua_register(L, "include", nlua_packfileLoader);
+   lua_pushvalue(L, LUA_GLOBALSINDEX);
+   lua_pushcclosure(L, nlua_packfileLoader, 1);
+   lua_setglobal(L, "include");
 
    return 0;
 }
@@ -200,12 +209,16 @@ static int nlua_packfileLoader( lua_State* L )
    char *buf;
    int len;
    uint32_t bufsize;
+   int envtab;
+
+   /* Environment table to load module into */
+   envtab = lua_upvalueindex(1);
 
    /* Get parameters. */
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getglobal( L, "_include" ); /* t */
+   lua_getfield( L, envtab, "_include" ); /* t */
    if (!lua_isnil(L,-1)) {
       lua_getfield(L,-1,filename); /* t, f */
       /* Already included. */
@@ -218,7 +231,7 @@ static int nlua_packfileLoader( lua_State* L )
    /* Must create new _include table. */
    else {
       lua_newtable(L);              /* t */
-      lua_setglobal(L, "_include"); /* */
+      lua_setfield(L, envtab, "_include"); /* */
    }
 
    /* Try to locate the data directly */
@@ -242,15 +255,23 @@ static int nlua_packfileLoader( lua_State* L )
       return 1;
    }
 
+   if (luaL_loadbuffer(L, buf, bufsize, filename) != 0) {
+      lua_error(L);
+      return 1;
+   }
+
+   lua_pushvalue(L, envtab);
+   lua_setfenv(L, -2);
+
    /* run the buffer */
-   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+   if (lua_pcall(L, 0, LUA_MULTRET, 0) != 0) {
       /* will push the current error from the dobuffer */
       lua_error(L);
       return 1;
    }
 
    /* Mark as loaded. */
-   lua_getglobal(L, "_include");    /* t */
+   lua_getfield(L, envtab, "_include"); /* t */
    lua_pushboolean(L, 1);           /* t b */
    lua_setfield(L, -2, filename);   /* t */
    lua_pop(L, 1);
