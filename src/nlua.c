@@ -46,7 +46,7 @@ static int nlua_packfileLoader( lua_State* L );
 void lua_init(void) {
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
-   nlua_loadStandard(naevL, 1); /* XXX read-only API */
+   nlua_loadStandard(naevL, 0); /* XXX read-only API */
 }
 
 
