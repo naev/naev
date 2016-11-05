@@ -78,7 +78,7 @@ typedef struct Faction_ {
    lua_State *state; /**< Faction specific state. */
 
    /* Equipping. */
-   lua_State *equip_state; /**< Faction equipper state. */
+   nlua_env equip_env; /**< Faction equipper enviornment. */
 
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
@@ -591,14 +591,14 @@ lua_State *faction_getScheduler( int f )
 /**
  * @brief Gets the equipper state associated to the faction scheduler.
  */
-lua_State *faction_getEquipper( int f )
+nlua_env faction_getEquipper( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
-      return NULL;
+      return LUA_NOREF;
    }
 
-   return faction_stack[f].equip_state;
+   return faction_stack[f].equip_env;
 }
 
 
@@ -1283,6 +1283,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
+   temp->equip_env = LUA_NOREF;
 
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL)
@@ -1381,19 +1382,18 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "equip")) {
-         if (temp->equip_state != NULL)
+         if (temp->equip_env != LUA_NOREF)
             WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
-         temp->equip_state = nlua_newState();
-         nlua_loadStandard( temp->equip_state, 0 );
+         temp->equip_env = nlua_newEnv();
          dat = ndata_read( buf, &ndat );
-         if (luaL_dobuffer(temp->equip_state, dat, ndat, buf) != 0) {
+         if (nlua_dobufenv(temp->equip_env, dat, ndat, buf) != 0) {
             WARN("Failed to run equip script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
-                  buf, lua_tostring(temp->equip_state,-1));
-            lua_close( temp->equip_state );
-            temp->equip_state = NULL;
+                  buf, lua_tostring(naevL, -1));
+            nlua_freeEnv( temp->equip_env );
+            temp->equip_env = LUA_NOREF;
          }
          free(dat);
          continue;
@@ -1641,8 +1641,8 @@ void factions_free (void)
          lua_close( faction_stack[i].sched_state );
       if (faction_stack[i].state != NULL)
          lua_close( faction_stack[i].state );
-      if (faction_stack[i].equip_state != NULL)
-         lua_close( faction_stack[i].equip_state );
+      if (faction_stack[i].equip_env != LUA_NOREF)
+         nlua_freeEnv( faction_stack[i].equip_env );
    }
    free(faction_stack);
    faction_stack = NULL;

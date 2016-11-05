@@ -31,7 +31,7 @@ void faction_rmEnemy( int f, int o);
 void faction_addAlly( int f, int o);
 void faction_rmAlly( int f, int o);
 lua_State *faction_getScheduler( int f );
-lua_State *faction_getEquipper( int f );
+nlua_env faction_getEquipper( int f );
 glTexture* faction_logoSmall( int f );
 glTexture* faction_logoTiny( int f );
 const glColour* faction_colour( int f );

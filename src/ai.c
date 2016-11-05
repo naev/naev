@@ -130,7 +130,7 @@
  * all the AI profiles
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
-static lua_State *equip_L = NULL; /**< Equipment state. */
+static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
 
 
 /*
@@ -643,26 +643,21 @@ static int ai_loadEquip (void)
    char *buf;
    uint32_t bufsize;
    const char *filename = "dat/factions/equip/generic.lua";
-   lua_State *L;
 
    /* Make sure doesn't already exist. */
-   if (equip_L != NULL)
-      lua_close(equip_L);
+   if (equip_env != LUA_NOREF)
+      nlua_freeEnv(equip_env);
 
    /* Create new state. */
-   equip_L = nlua_newState();
-   L = equip_L;
-
-   /* Prepare state. */
-   nlua_loadStandard(L,0);
+   equip_env = nlua_newEnv();
 
    /* Load the file. */
    buf = ndata_read( filename, &bufsize );
-   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+   if (nlua_dobufenv(equip_env, buf, bufsize, filename) != 0) {
       WARN("Error loading file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
-            filename, lua_tostring(L,-1));
+            filename, lua_tostring(naevL, -1));
       return -1;
    }
    free(buf);
@@ -775,9 +770,9 @@ void ai_exit (void)
    array_free( profiles );
 
    /* Free equipment Lua. */
-   if (equip_L != NULL)
-      lua_close(equip_L);
-   equip_L = NULL;
+   if (equip_env != LUA_NOREF)
+      nlua_freeEnv(equip_env);
+   equip_env = LUA_NOREF;
 }
 
 
@@ -999,11 +994,11 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot, char *param )
 {
-   lua_State *L;
+   nlua_env env;
    int errf, nparam;
    char *func;
 
-   L = equip_L;
+   env = equip_env;
    func = "equip_generic";
    errf = 0;
 
@@ -1014,19 +1009,21 @@ static void ai_create( Pilot* pilot, char *param )
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_PLAYER) && (aiL_status==AI_STATUS_CREATE) &&
             !pilot_isFlag(pilot, PILOT_EMPTY)) {
-      if  (faction_getEquipper( pilot->faction ) != NULL) {
-         L = faction_getEquipper( pilot->faction );
+      if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
+         env = faction_getEquipper( pilot->faction );
          func = "equip";
       }
 #if DEBUGGING
-      lua_pushcfunction(L, nlua_errTrace);
+      lua_pushcfunction(naevL, nlua_errTrace);
       errf = -3;
 #endif /* DEBUGGING */
-      lua_getglobal(L, func);
-      lua_pushpilot(L,pilot->id);
-      if (lua_pcall(L, 1, 0, errf)) { /* Error has occurred. */
-         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(L,-1));
-         lua_pop(L,1);
+      nlua_getenv(env, func);
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+      lua_setfenv(naevL, -2);
+      lua_pushpilot(naevL, pilot->id);
+      if (lua_pcall(naevL, 1, 0, errf)) { /* Error has occurred. */
+         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(naevL, -1));
+         lua_pop(naevL, 1);
       }
    }
 
@@ -1035,7 +1032,7 @@ static void ai_create( Pilot* pilot, char *param )
 
 #if DEBUGGING
    if (errf)
-      lua_pop(L,1);
+      lua_pop(naevL ,1);
 #endif /* DEBUGGING */
 
    /* Must have AI. */
