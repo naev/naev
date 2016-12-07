@@ -419,9 +419,8 @@ unsigned int pilot_getBoss( const Pilot* p )
 
    t = 0;
 
-   /*Hack : the player is used as a reference (for initialization issues)*/
-   ppower = pilot_reldps(  p, pilot_stack[PLAYER_ID] )
-            * pilot_relhp(  p, pilot_stack[PLAYER_ID] );
+   /* Initialized to 0.25 which would mean equivalent power. */
+   ppower = 0.5*0.5;
 
    for (i=0; i<pilot_nstack; i++) {
 
@@ -458,10 +457,8 @@ unsigned int pilot_getBoss( const Pilot* p )
       if (pilot_stack[i]->speed > p->speed)
          continue;
 
-      curpower = pilot_reldps(  pilot_stack[i], pilot_stack[PLAYER_ID] )
-                 * pilot_relhp(  pilot_stack[i], pilot_stack[PLAYER_ID] );
-
-      /*Should not be weaker than the current pilot*/
+      /* Should not be weaker than the current pilot*/
+      curpower = pilot_reldps(  pilot_stack[i], p ) * pilot_relhp(  pilot_stack[i], p );
       if (ppower >= curpower )
          continue;
 
@@ -2994,13 +2991,15 @@ double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- *    @param p the pilot whose dps we will compare
- *    @return A number from 0 to 1 mapping the relative damage output
+ *    @param cur_pilot Reference pilot to compare against.
+ *    @param p The pilot whose dps we will compare
+ *    @return The relative dps of p with respect to cur_pilot (0.5 is equal, 1 is p is infinitely stronger, 0 is t is infinitely stronger).
  */
 double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 {
    int i;
-   int DPSaccum_target = 0, DPSaccum_pilot = 0;
+   double DPSaccum_target = 0.;
+   double DPSaccum_pilot = 0.;
    double delay_cache, damage_cache;
    Outfit *o;
    const Damage *dmg;
@@ -3033,24 +3032,25 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
          DPSaccum_pilot += ( damage_cache/delay_cache );
    }
 
-   if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))
-      return (1 - 1 / (1 + ((double)DPSaccum_pilot / (double)DPSaccum_target)) );
-   else if (DPSaccum_pilot > 0)
+   if ((DPSaccum_target > 1e-6) && (DPSaccum_pilot > 1e-6))
+      return DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);
+   else if (DPSaccum_pilot > 0.)
       return 1;
-   else
-      return 0;
+   return 0;
 }
 
 /**
  * @brief Gets the relative hp(combined shields and armour) between the current pilot and the specified target
  *
+ *    @param cur_pilot Reference pilot.
  *    @param p the pilot whose shields/armour we will compare
- *    @return A number from 0 to 1 mapping the relative HPs
+ *    @return A number from 0 to 1 mapping the relative HPs (0.5 is equal, 1 is reference pilot is infinity, 0 is current pilot is infinity)
  */
 double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
 {
-   return (1 - 1 / (1 + ((double)(cur_pilot -> armour_max + cur_pilot -> shield_max) /
-         (double)(p -> armour_max + p -> shield_max))));
+   double c_hp = cur_pilot -> armour_max + cur_pilot -> shield_max;
+   double p_hp = p -> armour_max + p -> shield_max;
+   return c_hp / (p_hp + c_hp);
 }
 
 
