@@ -29,7 +29,7 @@ if lang == "es" then
    title[2] = "Good luck"
    text[2] = [["Ok, that's good news for me. I don't know if you know people in there, and I don't want to know it. If you don't, I suggest you to try to hail a lone FLF ship. I think you could encounter some in %s.
    Maybe try to disable a FLF ship, board it and explain to it's crew what we want. If you success, set up a meeting in %s. I think, nobody is going to disturb us there.
-   Ah, and don't mention the company for witch we are working."]]
+   Ah, and don't mention the company for which we are working."]]
    
    title[3] = "Good news"
    text[3] = [[As you land, you see Smith coming at you. When you have finished explaining to him that you managed to take contact with the FLF, he seems happy and pays you your fee.
