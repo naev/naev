@@ -125,9 +125,9 @@ int misn_loadLibs( nlua_env env )
    nlua_loadCamera(env,0);
    nlua_loadTex(env,0);
    nlua_loadBackground(env,1);
+   nlua_loadMusic(env,0);
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
    nlua_loadTk(NULL);
-   nlua_loadMusic(NULL,0);
    lua_pop(naevL, 1);
    if (player_isTut())
       nlua_loadTut(env);

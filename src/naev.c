@@ -350,6 +350,7 @@ int main( int argc, char** argv )
          }
    }
 
+   lua_init(); /* initializes lua */
 
    /*
     * OpenAL - Sound
@@ -371,7 +372,6 @@ int main( int argc, char** argv )
       ERR("Unable to initialize the Nebula subsystem!");
       /* Weirdness will occur... */
    }
-   lua_init(); /* initializes lua */
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */

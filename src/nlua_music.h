@@ -10,11 +10,13 @@
 
 #include <lua.h>
 
+#include "nlua.h"
+
 
 /*
  * Lua control
  */
-int nlua_loadMusic( lua_State *L, int read_only );
+int nlua_loadMusic( nlua_env env, int read_only );
 
 
 #endif /* NLUA_MUSIC_H */

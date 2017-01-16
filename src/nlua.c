@@ -32,7 +32,7 @@
 #include "nstring.h"
 
 
-lua_State *naevL;
+lua_State *naevL = NULL;
 
 
 /*
@@ -50,6 +50,7 @@ void lua_init(void) {
 
 void lua_exit(void) {
    lua_close(naevL);
+   naevL = NULL;
 }
 
 
@@ -94,7 +95,8 @@ nlua_env nlua_newEnv(void) {
 
 
 void nlua_freeEnv(nlua_env env) {
-   luaL_unref(naevL, LUA_REGISTRYINDEX, env);
+   if (naevL != NULL)
+   	luaL_unref(naevL, LUA_REGISTRYINDEX, env);
 }
 
 

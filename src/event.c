@@ -287,9 +287,9 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadCamera(ev->env,0);
    nlua_loadTex(ev->env,0);
    nlua_loadBackground(ev->env,1);
+   nlua_loadMusic(ev->env,0);
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, ev->env);
    nlua_loadTk(NULL);
-   nlua_loadMusic(NULL,0);
    lua_pop(naevL, 1);
    if (player_isTut())
       nlua_loadTut(ev->env);

@@ -15,7 +15,6 @@
 
 #include "SDL.h"
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "music.h"
 #include "log.h"
@@ -56,24 +55,15 @@ static const luaL_reg music_methods[] = {
 /**
  * @brief Loads the music functions into a lua_State.
  *
- *    @param L Lua State to load the music functions into.
+ *    @param env Lua environment to load the music functions into.
  *    @param read_only Load the write functions?
  *    @return 0 on success.
  */
-int nlua_loadMusic( lua_State *L, int read_only )
+int nlua_loadMusic( nlua_env env, int read_only )
 {
    (void)read_only; /* future proof */
 
-   /* XXX will be changed when transition to one state complete */
-   int index = LUA_GLOBALSINDEX;
-   if (L == NULL) {
-      L = naevL;
-      index = -2;
-   }
-
-   lua_newtable(L);
-   luaL_register(L, NULL, music_methods);
-   lua_setfield(L, index, "music");
+   nlua_register(env, "music", music_methods);
 
    return 0;
 }
