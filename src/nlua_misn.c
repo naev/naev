@@ -125,7 +125,7 @@ int misn_loadLibs( nlua_env env )
    // XXX
    nlua_loadMisn(env);
    //nlua_loadTk(L);
-   //nlua_loadHook(L);
+   nlua_loadHook(env);
    //nlua_loadMusic(L,0);
    //nlua_loadTex(L,0);
    //nlua_loadBackground(L,1);

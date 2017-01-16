@@ -612,8 +612,8 @@ int npc_approach( int i )
          break;
 
       case NPC_TYPE_EVENT:
-         L = event_runStart( npc->u.e.id, npc->u.e.func );
-         lua_pushnumber( L, npc->id );
+         event_runStart( npc->u.e.id, npc->u.e.func );
+         lua_pushnumber( naevL, npc->id );
          event_runFunc( npc->u.e.id, npc->u.e.func, 1 );
          break;
 

@@ -262,28 +262,11 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
  *
  * Does not save anything in tables (unless .__save=true) nor functions of any type.
  *
- *    @param L Lua state to save.
+ *    @param env Lua environment to save.
  *    @param writer XML Writer to use.
  *    @return 0 on success.
  */
-int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
-{
-   int ret = 0;
-
-   lua_pushnil(L);         /* nil */
-   /* str, nil */
-   while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
-      /* key, value */
-      ret |= nxml_persistDataNode( L, writer, 0 );
-      /* key */
-   }
-
-   return ret;
-}
-
-
-// TODO delete previous function when unneded
-int nxml_persistLua_env( nlua_env env, xmlTextWriterPtr writer )
+int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
@@ -407,23 +390,11 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 /**
  * @brief Unpersists Lua data.
  *
- *    @param L State to unpersist data into.
+ *    @param env Environment to unpersist data into.
  *    @param parent Node containing all the Lua persisted data.
  *    @return 0 on success.
  */
-int nxml_unpersistLua( lua_State *L, xmlNodePtr parent )
-{
-   int ret;
-
-   lua_pushvalue(L,LUA_GLOBALSINDEX);
-   ret = nxml_unpersistDataNode(L,parent);
-   lua_pop(L,1);
-
-   return ret;
-}
-
-// TODO delete previous function when unneded
-int nxml_unpersistLua_env( nlua_env env, xmlNodePtr parent )
+int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
 {
    int ret;
 

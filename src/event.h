@@ -17,7 +17,7 @@
 typedef struct Event_s {
    unsigned int id; /**< Event ID. */
    int data; /**< EventData parent. */
-   lua_State *L; /**< Event Lua State. */
+   nlua_env env; /**< The environment of the running Lua code. */
    int save; /**< Whether or not it should be saved. */
    SysClaim_t *claims; /**< Event claims. */
 } Event_t;
@@ -48,7 +48,7 @@ void event_checkSanity (void);
  * Triggering.
  */
 int event_start( const char *name, unsigned int *id );
-lua_State *event_runStart( unsigned int eventid, const char *func );
+void event_runStart( unsigned int eventid, const char *func );
 int event_runFunc( unsigned int eventid, const char *func, int nargs );
 int event_run( unsigned int eventid, const char *func );
 void events_trigger( EventTrigger_t trigger );

@@ -1044,7 +1044,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Write Lua magic */
          xmlw_startElem(writer,"lua");
-         nxml_persistLua_env( player_missions[i]->env, writer );
+         nxml_persistLua( player_missions[i]->env, writer );
          xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
@@ -1215,7 +1215,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             if (xml_isNode(cur,"lua"))
                /* start the unpersist routine */
-               nxml_unpersistLua_env( misn->env, cur );
+               nxml_unpersistLua( misn->env, cur );
 
          } while (xml_nextNode(cur));
 

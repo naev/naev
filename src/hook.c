@@ -361,7 +361,6 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 {
    int ret;
-   lua_State *L;
    int n;
 
    /* Must match claims. */
@@ -373,17 +372,19 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   L = event_runStart( hook->u.event.parent, hook->u.event.func );
-   if (L == NULL) {
+   if (event_get(hook->u.event.parent) == NULL) {
       WARN("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook.", hook->stack,
             hook->id, hook->u.event.func);
       hook->delete = 1; /* Set for deletion. */
       return -1;
    }
-   n = hook_parseParam( L, param );
+
+   event_runStart( hook->u.event.parent, hook->u.event.func );
+
+   n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
-   hookL_getarg( L, hook->id );
+   hookL_getarg( naevL, hook->id );
    n++;
 
    /* Run the hook. */
@@ -864,23 +865,8 @@ void hook_rm( unsigned int id )
  */
 static void hook_rmRaw( Hook *h )
 {
-   Event_t *evt;
-
    h->delete = 1;
-   switch (h->type) {
-      case HOOK_TYPE_MISN:
-         hookL_unsetarg( naevL, h->id ); // XXX?
-         break;
-
-      case HOOK_TYPE_EVENT:
-         evt = event_get( h->u.event.parent );
-         if (evt != NULL)
-            hookL_unsetarg( evt->L, h->id );
-         break;
-
-      default:
-         break;
-   }
+   hookL_unsetarg( naevL, h->id ); // XXX?
 }
 
 

@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
 #include "nlua_time.h"
@@ -91,9 +90,9 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int nlua_loadHook( lua_State *L )
+int nlua_loadHook( nlua_env env )
 {
-   luaL_register(L, "hook", hook_methods);
+   nlua_register(env, "hook", hook_methods);
    return 0;
 }
 
