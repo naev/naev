@@ -528,6 +528,8 @@ void mission_cleanup( Mission* misn )
    }
    if (misn->osd > 0)
       osd_destroy(misn->osd);
+   if (misn->env != LUA_NOREF)
+      nlua_freeEnv(misn->env);
 
    /* Data. */
    if (misn->title != NULL)

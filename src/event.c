@@ -327,6 +327,9 @@ static int event_create( int dataid, unsigned int *id )
  */
 static void event_cleanup( Event_t *ev )
 {
+   /* Free lua env. */
+   nlua_freeEnv(ev->env);
+
    /* Free hooks. */
    hook_rmEventParent(ev->id);
 
