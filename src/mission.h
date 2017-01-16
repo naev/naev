@@ -174,6 +174,7 @@ void missions_cleanup (void);
  */
 int misn_tryRun( Mission *misn, const char *func );
 void misn_runStart( Mission *misn, const char *func );
+void misn_runEnd(void);
 int misn_runFunc( Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
 

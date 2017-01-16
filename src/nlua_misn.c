@@ -63,8 +63,6 @@
 /*
  * prototypes
  */
-/* static */
-static void misn_setEnv( lua_State *L, Mission *misn );
 
 
 /*
@@ -158,13 +156,17 @@ int nlua_loadMisn( nlua_env env )
  */
 int misn_tryRun( Mission *misn, const char *func )
 {
+   int ret;
+
    /* Get the function to run. */
    misn_runStart( misn, func );
    if (lua_isnil( naevL, -1 )) {
       lua_pop(naevL,1);
       return 0;
    }
-   return misn_runFunc( misn, func, 0 );
+   ret = misn_runFunc( misn, func, 0 );
+   misn_runEnd();
+   return ret;
 }
 
 
@@ -178,19 +180,13 @@ int misn_tryRun( Mission *misn, const char *func )
  */
 int misn_run( Mission *misn, const char *func )
 {
+   int ret;
+
    /* Run the function. */
    misn_runStart( misn, func );
-   return misn_runFunc( misn, func, 0 );
-}
-
-
-/**
- * @brief Sets the mission environment.
- */
-static void misn_setEnv( lua_State *L, Mission *misn )
-{
-   lua_pushlightuserdata( L, misn );
-   lua_setglobal( L, "__misn" );
+   ret = misn_runFunc( misn, func, 0 );
+   misn_runEnd();
+   return ret;
 }
 
 
@@ -220,10 +216,21 @@ void misn_runStart( Mission *misn, const char *func )
 #endif /* DEBUGGING */
 
    /* Set environment. */
-   misn_setEnv( naevL, misn );
+   lua_pushlightuserdata( naevL, misn );
+   lua_setglobal( naevL, "__misn" );
 
    /* Set the Lua state. */
    nlua_getenv( misn->env, func );
+}
+
+
+/**
+ * @brief Cleans up after misn_runFunc.
+ */
+void misn_runEnd()
+{
+   lua_pushnil( naevL );
+   lua_setglobal( naevL, "__misn" );
 }
 
 

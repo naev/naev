@@ -101,8 +101,11 @@ void event_setupLua( Event_t *ev, const char *func )
  */
 int event_runLua( Event_t *ev, const char *func )
 {
+   int ret;
    event_setupLua( ev, func );
-   return event_runLuaFunc( ev, func, 0 );
+   ret = event_runLuaFunc( ev, func, 0 );
+   event_runEnd();
+   return ret;
 }
 
 

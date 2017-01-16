@@ -390,6 +390,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
    hook->ran_once = 1;
+   event_runEnd();
    if (ret < 0) {
       hook_rmRaw( hook );
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
