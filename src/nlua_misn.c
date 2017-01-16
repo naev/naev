@@ -162,6 +162,7 @@ int misn_tryRun( Mission *misn, const char *func )
    misn_runStart( misn, func );
    if (lua_isnil( naevL, -1 )) {
       lua_pop(naevL,1);
+      misn_runEnd();
       return 0;
    }
    ret = misn_runFunc( misn, func, 0 );
