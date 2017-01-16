@@ -232,6 +232,8 @@ void misn_runEnd()
 {
    lua_pushnil( naevL );
    lua_setglobal( naevL, "__misn" );
+   lua_pushnil( naevL );
+   lua_setglobal( naevL, "__misn_delete" );
 }
 
 

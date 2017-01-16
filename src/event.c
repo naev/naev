@@ -159,6 +159,8 @@ void event_runEnd()
 {
    lua_pushnil( naevL );
    lua_setglobal( naevL, "__evt" );
+   lua_pushnil( naevL );
+   lua_setglobal( naevL, "__evt_delete" );
 }
 
 
