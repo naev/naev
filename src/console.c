@@ -295,8 +295,8 @@ int cli_init (void)
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env, 0 );
    nlua_loadMusic( cli_env, 0 );
+   nlua_loadTk( cli_env );
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, cli_env);
-   nlua_loadTk( NULL );
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
