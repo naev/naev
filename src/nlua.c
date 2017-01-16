@@ -84,6 +84,10 @@ nlua_env nlua_newEnv(void) {
    lua_pushcclosure(naevL, nlua_packfileLoader, 1);
    lua_setfield(naevL, -2, "include");
 
+   /* Some code expect _G to be it's global state, so don't inherit it */
+   lua_pushvalue(naevL, -1);
+   lua_setfield(naevL, -2, "_G");
+
    lua_pop(naevL, 1);
    return ref;
 }

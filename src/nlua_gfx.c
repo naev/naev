@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "opengl.h"
@@ -54,20 +53,22 @@ static const luaL_reg gfxL_methods[] = {
 /**
  * @brief Loads the graphics library.
  *
- *    @param L State to load graphics library into.
+ *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadGFX( lua_State *L, int readonly )
+int nlua_loadGFX( nlua_env env, int readonly )
 {
    if (readonly) /* Nothing is read only */
       return 0;
 
    /* Register the values */
-   luaL_register(L, "gfx", gfxL_methods);
+   nlua_register(env, "gfx", gfxL_methods);
 
    /* We also load the texture and colour modules as dependencies. */
-   nlua_loadTex( L, readonly );
-   nlua_loadCol( L, readonly );
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   nlua_loadTex( NULL, readonly );
+   nlua_loadCol( NULL, readonly );
+   lua_pop(naevL, 1);
 
    return 0;
 }

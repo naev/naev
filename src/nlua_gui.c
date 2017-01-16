@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "gui.h"
@@ -62,16 +61,16 @@ static const luaL_reg guiL_methods[] = {
 /**
  * @brief Loads the GUI library.
  *
- *    @param L State to load GUI library into.
+ *    @param env Environment to load GUI library into.
  *    @return 0 on success.
  */
-int nlua_loadGUI( lua_State *L, int readonly )
+int nlua_loadGUI( nlua_env env, int readonly )
 {
    if (readonly) /* Nothing is read only */
       return 0;
 
    /* Register the values */
-   luaL_register(L, "gui", guiL_methods);
+   nlua_register(env, "gui", guiL_methods);
 
    return 0;
 }
