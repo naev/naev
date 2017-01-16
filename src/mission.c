@@ -783,7 +783,6 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
 #ifdef DEBUGGING
    /* To check if mission is valid. */
-   lua_State *L;
    int ret;
    char *buf;
    uint32_t len;
@@ -816,15 +815,15 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
 #ifdef DEBUGGING
          /* Check to see if syntax is valid. */
-         L = luaL_newstate();
          buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(L, buf, len, temp->name );
+         ret = luaL_loadbuffer(naevL, buf, len, temp->name );
          if (ret == LUA_ERRSYNTAX) {
             WARN("Mission Lua '%s' of mission '%s' syntax error: %s",
-                  temp->name, temp->lua, lua_tostring(L,-1) );
+                  temp->name, temp->lua, lua_tostring(naevL,-1) );
+         } else {
+            lua_pop(naevL, 1);
          }
          free(buf);
-         lua_close(L);
 #endif /* DEBUGGING */
 
          continue;
