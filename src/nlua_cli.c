@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "mission.h"
@@ -29,22 +28,12 @@ static const luaL_reg cli_methods[] = {
 /**
  * @brief Loads the CLI Lua library.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadCLI( lua_State *L )
+int nlua_loadCLI( nlua_env env )
 {
-   /* XXX will be changed when transition to one state complete */
-   int index = LUA_GLOBALSINDEX;
-   if (L == NULL) {
-      L = naevL;
-      index = -2;
-   }
-
-   lua_newtable(L);
-   luaL_register(L, NULL, cli_methods);
-   lua_setfield(L, index, "cli");
-
+   nlua_register(env, "cli", cli_methods);
    return 0;
 }
 
