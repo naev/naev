@@ -238,6 +238,8 @@ int main( int argc, char** argv )
    /* Input must be initialized for config to work. */
    input_init();
 
+   lua_init(); /* initializes lua */
+
    conf_setDefaults(); /* set the default config values */
 
    /*
@@ -349,8 +351,6 @@ int main( int argc, char** argv )
             input_setDefault(1);
          }
    }
-
-   lua_init(); /* initializes lua */
 
    /*
     * OpenAL - Sound

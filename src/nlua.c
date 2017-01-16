@@ -68,6 +68,17 @@ int nlua_dobufenv(nlua_env env,
 }
 
 
+int nlua_dofileenv(nlua_env env, const char *filename) {
+   if (luaL_loadfile(naevL, filename) != 0)
+      return -1;
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   lua_setfenv(naevL, -2);
+   if (lua_pcall(naevL, 0, LUA_MULTRET, 0) != 0)
+      return -1;
+   return 0;
+}
+
+
 nlua_env nlua_newEnv(void) {
    nlua_env ref;
    lua_newtable(naevL);

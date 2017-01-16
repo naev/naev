@@ -30,6 +30,7 @@ int nlua_dobufenv(nlua_env env,
                   const char *buff,
                   size_t sz,
                   const char *name);
+int nlua_dofileenv(nlua_env env, const char *filename);
 lua_State *nlua_newState (void); /* creates a new state */
 int nlua_load( lua_State* L, lua_CFunction f );
 int nlua_loadBasic( lua_State* L );
