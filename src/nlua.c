@@ -12,8 +12,6 @@
 
 #include "naev.h"
 
-#include <lauxlib.h>
-
 #include "nluadef.h"
 #include "log.h"
 #include "ndata.h"
@@ -102,12 +100,20 @@ void nlua_getenv(nlua_env env, const char *name) {
    lua_remove(naevL, -2); /* value */
 }
 
+
 void nlua_setenv(nlua_env env, const char *name) {
    /* value */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* value, env */
    lua_insert(naevL, -2); /* env, value */
    lua_setfield(naevL, -2, name); /* env */
    lua_pop(naevL, 1); /*  */
+}
+
+
+void nlua_register(nlua_env env, const char *libname, const luaL_Reg *l) {
+   lua_newtable(naevL);
+   luaL_register(naevL, NULL, l);
+   nlua_setenv(env, libname);
 }
 
 

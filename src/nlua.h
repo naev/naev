@@ -8,6 +8,7 @@
 
 
 #include <lua.h>
+#include <lauxlib.h>
 
 
 #define NLUA_DONE       "__done__"
@@ -24,6 +25,7 @@ nlua_env nlua_newEnv(void);
 void nlua_freeEnv(nlua_env env);
 void nlua_setenv(nlua_env env, const char *name);
 void nlua_getenv(nlua_env env, const char *name);
+void nlua_register(nlua_env env, const char *libname, const luaL_Reg *l);
 int nlua_dobufenv(nlua_env env,
                   const char *buff,
                   size_t sz,

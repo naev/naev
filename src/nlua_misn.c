@@ -143,9 +143,7 @@ int misn_loadLibs( nlua_env env )
  */
 int nlua_loadMisn( nlua_env env )
 {
-   lua_newtable(naevL);
-   luaL_register(naevL, NULL, misn_methods);
-   nlua_setenv(env, "misn");
+   nlua_register(env, "misn", misn_methods);
    return 0;
 }
 
