@@ -606,8 +606,8 @@ int npc_approach( int i )
          return npc_approach_giver( npc );
 
       case NPC_TYPE_MISSION:
-         L = misn_runStart( npc->u.m.misn, npc->u.m.func );
-         lua_pushnumber( L, npc->id );
+         misn_runStart( npc->u.m.misn, npc->u.m.func );
+         lua_pushnumber( naevL, npc->id );
          misn_runFunc( npc->u.m.misn, npc->u.m.func, 1 );
          break;
 

@@ -120,18 +120,18 @@ static const luaL_reg misn_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int misn_loadLibs( lua_State *L )
+int misn_loadLibs( nlua_env env )
 {
-   nlua_loadStandard(L,0);
-   nlua_loadMisn(L);
-   nlua_loadTk(L);
-   nlua_loadHook(L);
-   nlua_loadMusic(L,0);
-   nlua_loadTex(L,0);
-   nlua_loadBackground(L,1);
-   nlua_loadCamera(L,0);
-   if (player_isTut())
-      nlua_loadTut(L);
+   // XXX
+   nlua_loadMisn(env);
+   //nlua_loadTk(L);
+   //nlua_loadHook(L);
+   //nlua_loadMusic(L,0);
+   //nlua_loadTex(L,0);
+   //nlua_loadBackground(L,1);
+   //nlua_loadCamera(L,0);
+   //if (player_isTut())
+   //   nlua_loadTut(L);
    return 0;
 }
 /*
@@ -141,9 +141,11 @@ int misn_loadLibs( lua_State *L )
  * @brief Loads the mission Lua library.
  *    @param L Lua state.
  */
-int nlua_loadMisn( lua_State *L )
+int nlua_loadMisn( nlua_env env )
 {
-   luaL_register(L, "misn", misn_methods);
+   lua_newtable(naevL);
+   luaL_register(naevL, NULL, misn_methods);
+   nlua_setenv(env, "misn");
    return 0;
 }
 
@@ -160,8 +162,8 @@ int misn_tryRun( Mission *misn, const char *func )
 {
    /* Get the function to run. */
    misn_runStart( misn, func );
-   if (lua_isnil( misn->L, -1 )) {
-      lua_pop(misn->L,1);
+   if (lua_isnil( naevL, -1 )) {
+      lua_pop(naevL,1);
       return 0;
    }
    return misn_runFunc( misn, func, 0 );
@@ -212,23 +214,18 @@ Mission* misn_getFromLua( lua_State *L )
 /**
  * @brief Sets up the mission to run misn_runFunc.
  */
-lua_State *misn_runStart( Mission *misn, const char *func )
+void misn_runStart( Mission *misn, const char *func )
 {
-   lua_State *L;
-
-   L = misn->L;
 
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
+   lua_pushcfunction(naevL, nlua_errTrace);
 #endif /* DEBUGGING */
 
    /* Set environment. */
-   misn_setEnv( L, misn );
+   misn_setEnv( naevL, misn );
 
    /* Set the Lua state. */
-   lua_getglobal( L, func );
-
-   return L;
+   nlua_getenv( misn->env, func );
 }
 
 
@@ -244,12 +241,8 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
    int i, ret, errf;
    const char* err;
-   lua_State *L;
    int misn_delete;
    Mission *cur_mission;
-
-   /* For comfort. */
-   L = misn->L;
 
 #if DEBUGGING
    errf = -2-nargs;
@@ -257,10 +250,10 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    errf = 0;
 #endif /* DEBUGGING */
 
-   ret = lua_pcall(L, nargs, 0, errf);
-   cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
+   ret = lua_pcall(naevL, nargs, 0, errf);
+   cur_mission = misn_getFromLua(naevL); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
@@ -268,16 +261,16 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
       }
       else
          ret = 1;
-      lua_pop(L,1);
+      lua_pop(naevL,1);
    }
 #if DEBUGGING
-   lua_pop(L,1);
+   lua_pop(naevL,1);
 #endif /* DEBUGGING */
 
    /* Get delete. */
-   lua_getglobal(L,"__misn_delete");
-   misn_delete = lua_toboolean(L,-1);
-   lua_pop(L,1);
+   lua_getglobal(naevL,"__misn_delete");
+   misn_delete = lua_toboolean(naevL,-1);
+   lua_pop(naevL,1);
 
    /* mission is finished */
    if (misn_delete) {

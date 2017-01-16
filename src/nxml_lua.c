@@ -282,6 +282,27 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
 }
 
 
+// TODO delete previous function when unneded
+int nxml_persistLua_env( nlua_env env, xmlTextWriterPtr writer )
+{
+   int ret = 0;
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+
+   lua_pushnil(naevL);         /* nil */
+   /* str, nil */
+   while (lua_next(naevL, -2) != 0) {
+      /* key, value */
+      ret |= nxml_persistDataNode( naevL, writer, 0 );
+      /* key */
+   }
+
+   lua_pop(naevL, 1);
+
+   return ret;
+}
+
+
 /**
  * @brief Unpersists Lua data.
  *
@@ -397,6 +418,18 @@ int nxml_unpersistLua( lua_State *L, xmlNodePtr parent )
    lua_pushvalue(L,LUA_GLOBALSINDEX);
    ret = nxml_unpersistDataNode(L,parent);
    lua_pop(L,1);
+
+   return ret;
+}
+
+// TODO delete previous function when unneded
+int nxml_unpersistLua_env( nlua_env env, xmlNodePtr parent )
+{
+   int ret;
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   ret = nxml_unpersistDataNode(naevL,parent);
+   lua_pop(naevL,1);
 
    return ret;
 }

@@ -121,7 +121,7 @@ typedef struct Mission_ {
    /* Claims. */
    SysClaim_t *claims; /**< System claims. */
 
-   lua_State *L; /**< The state of the running Lua code. */
+   nlua_env env; /**< The environment of the running Lua code. */
 } Mission;
 
 
@@ -173,7 +173,7 @@ void missions_cleanup (void);
  * Actually in nlua_misn.h
  */
 int misn_tryRun( Mission *misn, const char *func );
-lua_State *misn_runStart( Mission *misn, const char *func );
+void misn_runStart( Mission *misn, const char *func );
 int misn_runFunc( Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
 

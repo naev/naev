@@ -306,7 +306,6 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 {
    unsigned int id;
    Mission* misn;
-   lua_State *L;
    int n;
 
    /* Simplicity. */
@@ -336,11 +335,10 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   L = misn_runStart( misn, hook->u.misn.func );
-   n = hook_parseParam( L, param );
+   n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
-   hookL_getarg( L, id );
+   hookL_getarg( naevL, id );
    n++;
 
    /* Run mission code. */
@@ -866,15 +864,12 @@ void hook_rm( unsigned int id )
  */
 static void hook_rmRaw( Hook *h )
 {
-   Mission *misn;
    Event_t *evt;
 
    h->delete = 1;
    switch (h->type) {
       case HOOK_TYPE_MISN:
-         misn = hook_getMission( h );
-         if (misn != NULL)
-            hookL_unsetarg( misn->L, h->id );
+         hookL_unsetarg( naevL, h->id ); // XXX?
          break;
 
       case HOOK_TYPE_EVENT:

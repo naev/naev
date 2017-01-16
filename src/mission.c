@@ -176,13 +176,9 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    }
 
    /* init Lua */
-   mission->L = nlua_newState();
-   if (mission->L == NULL) {
-      WARN("Unable to create a new Lua state.");
-      return -1;
-   }
-   nlua_loadBasic( mission->L ); /* pairs and such */
-   misn_loadLibs( mission->L ); /* load our custom libraries */
+   mission->env = nlua_newEnv();
+
+   misn_loadLibs( mission->env ); /* load our custom libraries */
 
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
@@ -190,11 +186,11 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       WARN("Mission '%s' Lua script not found.", misn->lua );
       return -1;
    }
-   if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
+   if (nlua_dobufenv(mission->env, buf, bufsize, misn->lua) != 0) {
       WARN("Error loading mission file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
-            misn->lua, lua_tostring(mission->L,-1));
+            misn->lua, lua_tostring(naevL, -1));
       free(buf);
       return -1;
    }
@@ -532,8 +528,6 @@ void mission_cleanup( Mission* misn )
    }
    if (misn->osd > 0)
       osd_destroy(misn->osd);
-   if (misn->L)
-      lua_close(misn->L);
 
    /* Data. */
    if (misn->title != NULL)
@@ -1050,7 +1044,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Write Lua magic */
          xmlw_startElem(writer,"lua");
-         nxml_persistLua( player_missions[i]->L, writer );
+         nxml_persistLua_env( player_missions[i]->env, writer );
          xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
@@ -1221,7 +1215,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             if (xml_isNode(cur,"lua"))
                /* start the unpersist routine */
-               nxml_unpersistLua( misn->L, cur );
+               nxml_unpersistLua_env( misn->env, cur );
 
          } while (xml_nextNode(cur));
 
