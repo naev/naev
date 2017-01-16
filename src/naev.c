@@ -375,7 +375,6 @@ int main( int argc, char** argv )
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
-   cond_init(); /* Initialize conditional subsystem. */
    cli_init(); /* Initialize console. */
 
    /* Data loading */
@@ -724,7 +723,6 @@ void unload_all (void)
    gui_free(); /* cleans up the player's GUI */
    weapon_exit(); /* destroys all active weapons */
    pilots_free(); /* frees the pilots, they were locked up :( */
-   cond_exit(); /* destroy conditional subsystem. */
    land_exit(); /* Destroys landing vbo and friends. */
    npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */

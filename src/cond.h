@@ -7,8 +7,6 @@
 #  define COND_H
 
 
-int cond_init (void);
-void cond_exit (void);
 int cond_check( const char *cond );
 
 
