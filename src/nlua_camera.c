@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nlua_vec2.h"
@@ -39,22 +38,12 @@ static const luaL_reg cameraL_methods[] = {
  *    @param L State to load camera library into.
  *    @return 0 on success.
  */
-int nlua_loadCamera( lua_State *L, int readonly )
+int nlua_loadCamera( nlua_env env, int readonly )
 {
-   /* XXX will be changed when transition to one state complete */
-   int index = LUA_GLOBALSINDEX;
-   if (L == NULL) {
-      L = naevL;
-      index = -2;
-   }
-
    if (readonly) /* Nothing is read only */
       return 0;
 
-   /* Register the values */
-   lua_newtable(L);
-   luaL_register(L, NULL, cameraL_methods);
-   lua_setfield(L, index, "camera");
+   nlua_register(env, "camera", cameraL_methods);
 
    return 0;
 }

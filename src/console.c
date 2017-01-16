@@ -293,7 +293,7 @@ int cli_init (void)
    nlua_loadCol( NULL, 0 );
    nlua_loadTex( NULL, 0 );
    nlua_loadBackground( NULL, 0 );
-   nlua_loadCamera( NULL, 0 );
+   nlua_loadCamera( cli_env, 0 );
    nlua_loadTk( NULL );
    nlua_loadCLI( NULL );
    nlua_loadMusic( NULL, 0 );
