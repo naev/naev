@@ -101,7 +101,7 @@ static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
-static lua_State *landing_lua = NULL; /**< Landing lua. */
+static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 
@@ -1414,20 +1414,18 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   lua_State *L;
    uint32_t nfiles;
    int i, len;
 
    /* Load landing stuff. */
-   landing_lua = nlua_newState();
-   L           = landing_lua;
-   nlua_loadStandard(L, 1);
+   landing_env = nlua_newEnv();
+   //nlua_loadStandard(L, 1); // XXX
    buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
-   if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA_PATH) != 0) {
+   if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
       WARN( "Failed to load landing file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            LANDING_DATA_PATH, lua_tostring(L,-1));
+            LANDING_DATA_PATH, lua_tostring(naevL,-1));
    }
    free(buf);
 
@@ -1531,7 +1529,6 @@ void planet_updateLand( Planet *p )
 {
    int errf;
    char *str;
-   lua_State *L;
 
    /* Must be inhabited. */
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
@@ -1547,10 +1544,9 @@ void planet_updateLand( Planet *p )
    p->bribe_msg   = NULL;
    p->bribe_ack_msg = NULL;
    p->bribe_price = 0;
-   L = landing_lua;
 
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
+   lua_pushcfunction(naevL, nlua_errTrace);
    errf = -3;
 #else /* DEBUGGING */
    errf = 0;
@@ -1561,53 +1557,53 @@ void planet_updateLand( Planet *p )
       str = "land";
    else
       str = p->land_func;
-   lua_getglobal( L, str );
-   lua_pushplanet( L, p->id );
-   if (lua_pcall(L, 1, 5, errf)) { /* error has occurred */
-      WARN("Landing: '%s' : %s", str, lua_tostring(L,-1));
+   nlua_getenv( landing_env, str );
+   lua_pushplanet( naevL, p->id );
+   if (lua_pcall(naevL, 1, 5, errf)) { /* error has occurred */
+      WARN("Landing: '%s' : %s", str, lua_tostring(naevL,-1));
 #if DEBUGGING
-      lua_pop(L,2);
+      lua_pop(naevL,2);
 #else /* DEBUGGING */
-      lua_pop(L,1);
+      lua_pop(naevL,1);
 #endif /* DEBUGGING */
       return;
    }
 
    /* Parse parameters. */
-   p->can_land = lua_toboolean(L,-5);
-   if (lua_isstring(L,-4))
-      p->land_msg = strdup( lua_tostring(L,-4) );
+   p->can_land = lua_toboolean(naevL,-5);
+   if (lua_isstring(naevL,-4))
+      p->land_msg = strdup( lua_tostring(naevL,-4) );
    else {
       WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 2 is not a string!", str, p->name );
       p->land_msg = strdup( "Invalid land message" );
    }
    /* Parse bribing. */
-   if (!p->can_land && lua_isnumber(L,-3)) {
-      p->bribe_price = lua_tonumber(L,-3);
+   if (!p->can_land && lua_isnumber(naevL,-3)) {
+      p->bribe_price = lua_tonumber(naevL,-3);
       /* We need the bribe message. */
-      if (lua_isstring(L,-2))
-         p->bribe_msg = strdup( lua_tostring(L,-2) );
+      if (lua_isstring(naevL,-2))
+         p->bribe_msg = strdup( lua_tostring(naevL,-2) );
       else {
          WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 4 is not a string!", str, p->name );
          p->bribe_msg = strdup( "Invalid bribe message" );
       }
       /* We also need the bribe ACK message. */
-      if (lua_isstring(L,-1))
-         p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
+      if (lua_isstring(naevL,-1))
+         p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
       else {
          WARN( LANDING_DATA_PATH": %s -> return parameter 5 is not a string!", str, p->name );
          p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
       }
    }
-   else if (lua_isstring(L,-3))
-      p->bribe_msg = strdup( lua_tostring(L,-3) );
-   else if (!lua_isnil(L,-3))
+   else if (lua_isstring(naevL,-3))
+      p->bribe_msg = strdup( lua_tostring(naevL,-3) );
+   else if (!lua_isnil(naevL,-3))
       WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
 
 #if DEBUGGING
-   lua_pop(L,6);
+   lua_pop(naevL,6);
 #else /* DEBUGGING */
-   lua_pop(L,5);
+   lua_pop(naevL,5);
 #endif /* DEBUGGING */
 
    /* Unset bribe status if bribing is no longer possible. */
@@ -1755,12 +1751,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      if (tmp != NULL) {
                         planet->land_func = strdup(tmp);
 #ifdef DEBUGGING
-                        if (landing_lua != NULL) {
-                           lua_getglobal( landing_lua, tmp );
-                           if (lua_isnil(landing_lua,-1))
+                        if (landing_env != LUA_NOREF) {
+                           nlua_getenv( landing_env, tmp );
+                           if (lua_isnil(naevL,-1))
                               WARN("Planet '%s' has landing function '%s' which is not found in '%s'.",
                                     planet->name, tmp, LANDING_DATA_PATH);
-                           lua_pop(landing_lua,1);
+                           lua_pop(naevL,1);
                         }
 #endif /* DEBUGGING */
                      }
@@ -3013,9 +3009,9 @@ void space_exit (void)
    systems_mstack = 0;
 
    /* Free landing lua. */
-   if (landing_lua != NULL)
-      lua_close( landing_lua );
-   landing_lua = NULL;
+   if (landing_env != LUA_NOREF)
+      nlua_freeEnv( landing_env );
+   landing_env = LUA_NOREF;
 }
 
 
