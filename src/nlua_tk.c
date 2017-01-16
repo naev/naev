@@ -53,7 +53,7 @@ int nlua_loadTk( lua_State *L )
    int index = LUA_GLOBALSINDEX;
    if (L == NULL) {
       L = naevL;
-      index = -1;
+      index = -2;
    }
 
    lua_newtable(L);

@@ -120,16 +120,17 @@ static const luaL_reg misn_methods[] = {
  */
 int misn_loadLibs( nlua_env env )
 {
-   // XXX
    nlua_loadMisn(env);
-   //nlua_loadTk(L);
    nlua_loadHook(env);
-   //nlua_loadMusic(L,0);
-   //nlua_loadTex(L,0);
-   //nlua_loadBackground(L,1);
-   //nlua_loadCamera(L,0);
-   //if (player_isTut())
-   //   nlua_loadTut(L);
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   nlua_loadTk(NULL);
+   nlua_loadMusic(NULL,0);
+   nlua_loadTex(NULL,0);
+   nlua_loadBackground(NULL,1);
+   nlua_loadCamera(NULL,0);
+   lua_pop(naevL, 1);
+   if (player_isTut())
+      nlua_loadTut(env);
    return 0;
 }
 /*

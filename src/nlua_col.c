@@ -55,7 +55,7 @@ int nlua_loadCol( lua_State *L, int readonly )
    int index = LUA_GLOBALSINDEX;
    if (L == NULL) {
       L = naevL;
-      index = -1;
+      index = -2;
    }
 
    if (readonly) /* Nothing is read only */
