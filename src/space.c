@@ -973,17 +973,17 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
 static void system_scheduler( double dt, int init )
 {
    int i, n, errf;
-   lua_State *L;
+   nlua_env env;
    SystemPresence *p;
    Pilot *pilot;
 
    /* Go through all the factions and reduce the timer. */
    for (i=0; i < cur_system->npresence; i++) {
       p = &cur_system->presence[i];
-      L = faction_getScheduler( p->faction );
+      env = faction_getScheduler( p->faction );
 
       /* Must have a valid scheduler. */
-      if (L==NULL)
+      if (env==LUA_NOREF)
          continue;
 
       /* Spawning is disabled for this faction. */
@@ -993,16 +993,16 @@ static void system_scheduler( double dt, int init )
       /* Run the appropriate function. */
       if (init) {
 #if DEBUGGING
-         lua_pushcfunction(L, nlua_errTrace);
+         lua_pushcfunction(naevL, nlua_errTrace);
 #endif /* DEBUGGING */
-         lua_getglobal( L, "create" ); /* f */
-         if (lua_isnil(L,-1)) {
+         nlua_getenv( env, "create" ); /* f */
+         if (lua_isnil(naevL,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
                   faction_name( p->faction ) );
 #if DEBUGGING
-            lua_pop(L,2);
+            lua_pop(naevL,2);
 #else /* DEBUGGING */
-            lua_pop(L,1);
+            lua_pop(naevL,1);
 #endif /* DEBUGGING */
             continue;
          }
@@ -1015,23 +1015,23 @@ static void system_scheduler( double dt, int init )
             continue;
 
 #if DEBUGGING
-         lua_pushcfunction(L, nlua_errTrace);
+         lua_pushcfunction(naevL, nlua_errTrace);
 #endif /* DEBUGGING */
-         lua_getglobal( L, "spawn" ); /* f */
-         if (lua_isnil(L,-1)) {
+         nlua_getenv( env, "spawn" ); /* f */
+         if (lua_isnil(naevL,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
                   faction_name( p->faction ) );
 #if DEBUGGING
-            lua_pop(L,2);
+            lua_pop(naevL,2);
 #else /* DEBUGGING */
-            lua_pop(L,1);
+            lua_pop(naevL,1);
 #endif /* DEBUGGING */
             continue;
          }
-         lua_pushnumber( L, p->curUsed ); /* f, presence */
+         lua_pushnumber( naevL, p->curUsed ); /* f, presence */
          n = 1;
       }
-      lua_pushnumber( L, p->value ); /* f, [arg,], max */
+      lua_pushnumber( naevL, p->value ); /* f, [arg,], max */
 
 #if DEBUGGING
       errf = -2-(n+1);
@@ -1040,70 +1040,70 @@ static void system_scheduler( double dt, int init )
 #endif /* DEBUGGING */
 
       /* Actually run the function. */
-      if (lua_pcall(L, n+1, 2, errf)) { /* error has occurred */
+      if (lua_pcall(naevL, n+1, 2, errf)) { /* error has occurred */
          WARN("Lua Spawn script for faction '%s' : %s",
-               faction_name( p->faction ), lua_tostring(L,-1));
+               faction_name( p->faction ), lua_tostring(naevL,-1));
 #if DEBUGGING
-         lua_pop(L,2);
+         lua_pop(naevL,2);
 #else /* DEBUGGING */
-         lua_pop(L,1);
+         lua_pop(naevL,1);
 #endif /* DEBUGGING */
          continue;
       }
 
       /* Output is handled the same way. */
-      if (!lua_isnumber(L,-2)) {
+      if (!lua_isnumber(naevL,-2)) {
          WARN("Lua spawn script for faction '%s' failed to return timer value.",
                faction_name( p->faction ) );
 #if DEBUGGING
-         lua_pop(L,3);
+         lua_pop(naevL,3);
 #else /* DEBUGGING */
-         lua_pop(L,2);
+         lua_pop(naevL,2);
 #endif /* DEBUGGING */
          continue;
       }
-      p->timer    += lua_tonumber(L,-2);
+      p->timer    += lua_tonumber(naevL,-2);
       /* Handle table if it exists. */
-      if (lua_istable(L,-1)) {
-         lua_pushnil(L); /* tk, k */
-         while (lua_next(L,-2) != 0) { /* tk, k, v */
+      if (lua_istable(naevL,-1)) {
+         lua_pushnil(naevL); /* tk, k */
+         while (lua_next(naevL,-2) != 0) { /* tk, k, v */
             /* Must be table. */
-            if (!lua_istable(L,-1)) {
+            if (!lua_istable(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
 
-            lua_getfield( L, -1, "pilot" ); /* tk, k, v, p */
-            if (!lua_ispilot(L,-1)) {
+            lua_getfield( naevL, -1, "pilot" ); /* tk, k, v, p */
+            if (!lua_ispilot(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a pilot).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            pilot = pilot_get( lua_topilot(L,-1) );
+            pilot = pilot_get( lua_topilot(naevL,-1) );
             if (pilot == NULL) {
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            lua_pop(L,1); /* tk, k, v */
-            lua_getfield( L, -1, "presence" ); /* tk, k, v, p */
-            if (!lua_isnumber(L,-1)) {
+            lua_pop(naevL,1); /* tk, k, v */
+            lua_getfield( naevL, -1, "presence" ); /* tk, k, v, p */
+            if (!lua_isnumber(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a number).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            pilot->presence = lua_tonumber(L,-1);
+            pilot->presence = lua_tonumber(naevL,-1);
             p->curUsed     += pilot->presence;
-            lua_pop(L,2); /* tk, k */
+            lua_pop(naevL,2); /* tk, k */
          }
       }
 #if DEBUGGING
-      lua_pop(L,3);
+      lua_pop(naevL,3);
 #else /* DEBUGGING */
-      lua_pop(L,2);
+      lua_pop(naevL,2);
 #endif /* DEBUGGING */
    }
 }
@@ -3572,7 +3572,7 @@ int system_hasPlanet( const StarSystem *sys )
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
    int id, errf;
-   lua_State *L;
+   nlua_env env;
    SystemPresence *presence;
 
    /* Remove the presence. */
@@ -3584,57 +3584,57 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    presence->curUsed = MAX( 0, sys->presence[id].curUsed );
 
    /* Run lower hook. */
-   L = faction_getScheduler( faction );
+   env = faction_getScheduler( faction );
 
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
+   lua_pushcfunction(naevL, nlua_errTrace);
    errf = -5;
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
 
    /* Run decrease function if applicable. */
-   lua_getglobal( L, "decrease" ); /* f */
-   if (lua_isnil(L,-1)) {
+   nlua_getenv( env, "decrease" ); /* f */
+   if (lua_isnil(naevL,-1)) {
 #if DEBUGGING
-      lua_pop(L,2);
+      lua_pop(naevL,2);
 #else /* DEBUGGING */
-      lua_pop(L,1);
+      lua_pop(naevL,1);
 #endif /* DEBUGGING */
       return;
    }
-   lua_pushnumber( L, presence->curUsed ); /* f, cur */
-   lua_pushnumber( L, presence->value );   /* f, cur, max */
-   lua_pushnumber( L, presence->timer );   /* f, cur, max, timer */
+   lua_pushnumber( naevL, presence->curUsed ); /* f, cur */
+   lua_pushnumber( naevL, presence->value );   /* f, cur, max */
+   lua_pushnumber( naevL, presence->timer );   /* f, cur, max, timer */
 
    /* Actually run the function. */
-   if (lua_pcall(L, 3, 1, errf)) { /* error has occurred */
+   if (lua_pcall(naevL, 3, 1, errf)) { /* error has occurred */
       WARN("Lua decrease script for faction '%s' : %s",
-            faction_name( faction ), lua_tostring(L,-1));
+            faction_name( faction ), lua_tostring(naevL,-1));
 #if DEBUGGING
-      lua_pop(L,2);
+      lua_pop(naevL,2);
 #else /* DEBUGGING */
-      lua_pop(L,1);
+      lua_pop(naevL,1);
 #endif /* DEBUGGING */
       return;
    }
 
    /* Output is handled the same way. */
-   if (!lua_isnumber(L,-1)) {
+   if (!lua_isnumber(naevL,-1)) {
       WARN("Lua spawn script for faction '%s' failed to return timer value.",
             faction_name( presence->faction ) );
 #if DEBUGGING
-      lua_pop(L,2);
+      lua_pop(naevL,2);
 #else /* DEBUGGING */
-      lua_pop(L,1);
+      lua_pop(naevL,1);
 #endif /* DEBUGGING */
       return;
    }
-   presence->timer = lua_tonumber(L,-1);
+   presence->timer = lua_tonumber(naevL,-1);
 #if DEBUGGING
-   lua_pop(L,2);
+   lua_pop(naevL,2);
 #else /* DEBUGGING */
-   lua_pop(L,1);
+   lua_pop(naevL,1);
 #endif /* DEBUGGING */
 }
 
