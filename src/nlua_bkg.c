@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "nlua_col.h"
@@ -37,25 +36,16 @@ static const luaL_reg bkgL_methods[] = {
 /**
  * @brief Loads the graphics library.
  *
- *    @param L State to load graphics library into.
+ *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadBackground( lua_State *L, int readonly )
+int nlua_loadBackground( nlua_env env, int readonly )
 {
-   /* XXX will be changed when transition to one state complete */
-   int index = LUA_GLOBALSINDEX;
-   if (L == NULL) {
-      L = naevL;
-      index = -2;
-   }
-
    if (readonly) /* Nothing is read only */
       return 0;
 
    /* Register the values */
-   lua_newtable(L);
-   luaL_register(L, NULL, bkgL_methods);
-   lua_setfield(L, index, "bkg");
+   nlua_register(env, "bkg", bkgL_methods);
 
    return 0;
 }
@@ -67,7 +57,7 @@ int nlua_loadBackground( lua_State *L, int readonly )
  * An example would be:
  * @code
  * @endcode
- *
+ *`
  * @luamod bkg
  */
 

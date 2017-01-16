@@ -285,10 +285,10 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadEvt(ev->env);
    nlua_loadHook(ev->env);
    nlua_loadCamera(ev->env,0);
+   nlua_loadTex(ev->env,0);
+   nlua_loadBackground(ev->env,1);
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, ev->env);
    nlua_loadTk(NULL);
-   nlua_loadBackground(NULL,1);
-   nlua_loadTex(NULL,0);
    nlua_loadMusic(NULL,0);
    lua_pop(naevL, 1);
    if (player_isTut())

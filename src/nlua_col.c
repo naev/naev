@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 
@@ -46,33 +45,26 @@ static const luaL_reg colL_methods[] = {
 /**
  * @brief Loads the colour library.
  *
- *    @param L State to load colour library into.
+ *    @param env Environment to load colour library into.
  *    @return 0 on success.
  */
-int nlua_loadCol( lua_State *L, int readonly )
+int nlua_loadCol( nlua_env env, int readonly )
 {
-   /* XXX will be changed when transition to one state complete */
-   int index = LUA_GLOBALSINDEX;
-   if (L == NULL) {
-      L = naevL;
-      index = -2;
-   }
-
    if (readonly) /* Nothing is read only */
       return 0;
 
    /* Create the metatable */
-   luaL_newmetatable(L, COL_METATABLE);
+   luaL_newmetatable(naevL, COL_METATABLE);
 
    /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
+   lua_pushvalue(naevL,-1);
+   lua_setfield(naevL,-2,"__index");
 
    /* Register the values */
-   luaL_register(L, NULL, colL_methods);
+   luaL_register(naevL, NULL, colL_methods);
 
    /* Clean up. */
-   lua_setfield(L, index, COL_METATABLE);
+   nlua_setenv(env, COL_METATABLE);
 
    return 0;
 }

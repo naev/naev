@@ -289,10 +289,10 @@ int cli_init (void)
 
    /* Create the state. */
    cli_env = nlua_newEnv();
+   nlua_loadTex( cli_env, 0 );
+   nlua_loadCol( cli_env, 0 );
+   nlua_loadBackground( cli_env, 0 );
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, cli_env);
-   nlua_loadCol( NULL, 0 );
-   nlua_loadTex( NULL, 0 );
-   nlua_loadBackground( NULL, 0 );
    nlua_loadCamera( cli_env, 0 );
    nlua_loadTk( NULL );
    nlua_loadCLI( NULL );

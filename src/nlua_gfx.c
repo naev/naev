@@ -65,10 +65,8 @@ int nlua_loadGFX( nlua_env env, int readonly )
    nlua_register(env, "gfx", gfxL_methods);
 
    /* We also load the texture and colour modules as dependencies. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-   nlua_loadTex( NULL, readonly );
-   nlua_loadCol( NULL, readonly );
-   lua_pop(naevL, 1);
+   nlua_loadCol( env, readonly );
+   nlua_loadTex( env, readonly );
 
    return 0;
 }
