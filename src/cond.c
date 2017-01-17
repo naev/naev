@@ -18,6 +18,40 @@
 #include "nluadef.h"
 
 
+static nlua_env cond_env = LUA_NOREF; /** Conditional Lua env. */
+
+
+/**
+ * @brief Initializes the conditional subsystem.
+ */
+int cond_init (void)
+{
+   if (cond_env != LUA_NOREF)
+      return 0;
+
+   cond_env = nlua_newEnv(0);
+   //if (nlua_loadStandard(cond_env,1)) { // XXX
+   //   WARN("Failed to load standard Lua libraries.");
+   //   return -1;
+   //}
+
+   return 0;
+}
+
+
+/**
+ * @brief Destroys the conditional subsystem.
+ */
+void cond_exit (void)
+{
+   if (cond_env == LUA_NOREF)
+      return;
+
+   nlua_freeEnv(cond_env);
+   cond_env = LUA_NOREF;
+}
+
+
 /**
  * @brief Checks to see if a condition is true.
  *
@@ -47,7 +81,7 @@ int cond_check( const char* cond )
    }
 
    /* Run the string. */
-   ret = lua_pcall( naevL, 0, 1, 0 );
+   ret = nlua_pcall( cond_env, 0, 1 );
    switch (ret) {
       case LUA_ERRRUN:
          WARN("Lua Conditional had a runtime error: %s", lua_tostring(naevL, -1));
