@@ -476,7 +476,7 @@ int background_init (void)
  */
 int background_load( const char *name )
 {
-   int ret, errf;
+   int ret;
    nlua_env env;
    const char *err;
 
@@ -495,25 +495,15 @@ int background_load( const char *name )
    if (env == LUA_NOREF)
       return -1;
 
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
    /* Run Lua. */
    nlua_getenv(env,"background");
-   ret = lua_pcall(naevL, 0, 0, errf);
+   ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN("Background -> 'background' : %s",
             (err) ? err : "unknown error");
       lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(naevL, 1);
-#endif /* DEBUGGING */
    return ret;
 }
 

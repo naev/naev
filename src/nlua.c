@@ -390,7 +390,9 @@ int nlua_errTrace( lua_State *L )
 
 
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
-   int errf, ret;
+   int errf, ret, top;
+
+   top = lua_gettop(naevL);
 
 #if DEBUGGING
    lua_pushcfunction(naevL, nlua_errTrace);
@@ -409,7 +411,7 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    lua_setglobal(naevL, "__RW");
 
 #if DEBUGGING
-   lua_remove(naevL, -1-nresults);
+   lua_remove(naevL, top-nargs);
 #endif /* DEBUGGING */
 
    return ret;

@@ -871,23 +871,13 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
 
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-   errf = -3;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
    nlua_getenv(cur_pilot->ai->env, "attacked");
 
    lua_pushpilot(naevL, attacker);
-   if (lua_pcall(naevL, 1, 0, errf)) {
+   if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(naevL,1);
-#endif /* DEBUGGING */
 }
 
 
@@ -923,8 +913,6 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
-   int errf;
-
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
       return;
@@ -936,20 +924,10 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    /* Set up the environment. */
    ai_setPilot(p);
 
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-   errf = -4;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
    /* See if function exists. */
    nlua_getenv(cur_pilot->ai->env, "distress");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
-#if DEBUGGING
-      lua_pop(naevL,1);
-#endif /* DEBUGGING */
       return;
    }
 
@@ -960,13 +938,10 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    else /* Default to the victim's current target. */
       lua_pushpilot(naevL, distressed->target);
    
-   if (lua_pcall(naevL, 2, 0, errf)) {
+   if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(naevL,1);
-#endif /* DEBUGGING */
 }
 
 
@@ -981,12 +956,11 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 static void ai_create( Pilot* pilot, char *param )
 {
    nlua_env env;
-   int errf, nparam;
+   int nparam;
    char *func;
 
    env = equip_env;
    func = "equip_generic";
-   errf = 0;
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -999,15 +973,11 @@ static void ai_create( Pilot* pilot, char *param )
          env = faction_getEquipper( pilot->faction );
          func = "equip";
       }
-#if DEBUGGING
-      lua_pushcfunction(naevL, nlua_errTrace);
-      errf = -3;
-#endif /* DEBUGGING */
       nlua_getenv(env, func);
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
-      if (lua_pcall(naevL, 1, 0, errf)) { /* Error has occurred. */
+      if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
          WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
@@ -1015,11 +985,6 @@ static void ai_create( Pilot* pilot, char *param )
 
    /* Since the pilot changes outfits and cores, we must heal him up. */
    pilot_healLanded( pilot );
-
-#if DEBUGGING
-   if (errf)
-      lua_pop(naevL ,1);
-#endif /* DEBUGGING */
 
    /* Must have AI. */
    if (pilot->ai == NULL)
@@ -1029,12 +994,6 @@ static void ai_create( Pilot* pilot, char *param )
    ai_setPilot( pilot );
 
    nparam = (param!=NULL) ? 1 : 0;
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-   errf = -2-nparam;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* Prepare stack. */
    nlua_getenv(cur_pilot->ai->env, "create");
@@ -1056,13 +1015,10 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Run function. */
-   if (lua_pcall(naevL, nparam, 0, errf)) { /* error has occurred */
+   if (nlua_pcall(cur_pilot->ai->env, nparam, 0)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(naevL,1);
-#endif /* DEBUGGING */
 
    /* Recover normal mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
