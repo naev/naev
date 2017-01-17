@@ -1259,7 +1259,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
             WARN("Faction '%s' has duplicate 'spawn' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
          temp->sched_env = nlua_newEnv(1);
-         //nlua_loadStandard( temp->sched_state, 0 ); // XXX
+         nlua_loadStandard( temp->sched_env);
          dat = ndata_read( buf, &ndat );
          if (nlua_dobufenv(temp->sched_env, dat, ndat, buf) != 0) {
             WARN("Failed to run spawn script: %s\n"
@@ -1278,7 +1278,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
             WARN("Faction '%s' has duplicate 'standing' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
          temp->env = nlua_newEnv(1);
-         //nlua_loadStandard( temp->state, 0 ); // XXX
+         nlua_loadStandard( temp->env );
          dat = ndata_read( buf, &ndat );
          if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
             WARN("Failed to run standing script: %s\n"
@@ -1302,6 +1302,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
             WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
          temp->equip_env = nlua_newEnv(1);
+         nlua_loadStandard( temp->equip_env );
          dat = ndata_read( buf, &ndat );
          if (nlua_dobufenv(temp->equip_env, dat, ndat, buf) != 0) {
             WARN("Failed to run equip script: %s\n"

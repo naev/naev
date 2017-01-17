@@ -15,7 +15,7 @@
 /*
  * Library loading
  */
-int nlua_loadGUI( nlua_env env, int readonly );
+int nlua_loadGUI( nlua_env env );
 
 
 #endif /* NLUA_GUI_H */

@@ -33,7 +33,7 @@ static const luaL_reg cli_methods[] = {
  */
 int nlua_loadCLI( nlua_env env )
 {
-   nlua_register(env, "cli", cli_methods);
+   nlua_register(env, "cli", cli_methods, 0);
    return 0;
 }
 

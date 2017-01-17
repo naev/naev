@@ -26,7 +26,7 @@
 #include "nlua_player.h"
 #include "nlua_tk.h"
 #include "nlua_faction.h"
-#include "nlua_space.h"
+#include "nlua_system.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
 #include "nlua_music.h"
@@ -120,12 +120,13 @@ static const luaL_reg misn_methods[] = {
  */
 int misn_loadLibs( nlua_env env )
 {
+   nlua_loadStandard(env);
    nlua_loadMisn(env);
    nlua_loadHook(env);
-   nlua_loadCamera(env,0);
-   nlua_loadTex(env,0);
-   nlua_loadBackground(env,1);
-   nlua_loadMusic(env,0);
+   nlua_loadCamera(env);
+   nlua_loadTex(env);
+   nlua_loadBackground(env);
+   nlua_loadMusic(env);
    nlua_loadTk(env);
    if (player_isTut())
       nlua_loadTut(env);
@@ -140,7 +141,7 @@ int misn_loadLibs( nlua_env env )
  */
 int nlua_loadMisn( nlua_env env )
 {
-   nlua_register(env, "misn", misn_methods);
+   nlua_register(env, "misn", misn_methods, 0);
    return 0;
 }
 

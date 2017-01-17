@@ -15,7 +15,7 @@
 /*
  * Library loading
  */
-int nlua_loadCamera( nlua_env env, int readonly );
+int nlua_loadCamera( nlua_env env );
 
 
 #endif /* NLUA_CAMERA_H */

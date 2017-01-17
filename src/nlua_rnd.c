@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "rng.h"
@@ -40,12 +39,12 @@ static const luaL_reg rnd_methods[] = {
 /**
  * @brief Loads the Random Number Lua library.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadRnd( lua_State *L )
+int nlua_loadRnd( nlua_env env )
 {
-   luaL_register(L, "rnd", rnd_methods);
+   nlua_register(env, "rnd", rnd_methods, 0);
    return 0;
 }
 

@@ -15,7 +15,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
@@ -57,26 +56,12 @@ static const luaL_reg shipL_methods[] = {
 /**
  * @brief Loads the ship library.
  *
- *    @param L State to load ship library into.
+ *    @param env Environment to load ship library into.
  *    @return 0 on success.
  */
-int nlua_loadShip( lua_State *L, int readonly )
+int nlua_loadShip( nlua_env env )
 {
-   (void) readonly; /* Everything is readonly. */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, SHIP_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, shipL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, SHIP_METATABLE);
-
+   nlua_register(env, SHIP_METATABLE, shipL_methods, 1);
    return 0;
 }
 

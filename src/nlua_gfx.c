@@ -56,17 +56,14 @@ static const luaL_reg gfxL_methods[] = {
  *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadGFX( nlua_env env, int readonly )
+int nlua_loadGFX( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
    /* Register the values */
-   nlua_register(env, "gfx", gfxL_methods);
+   nlua_register(env, "gfx", gfxL_methods, 0);
 
    /* We also load the texture and colour modules as dependencies. */
-   nlua_loadCol( env, readonly );
-   nlua_loadTex( env, readonly );
+   nlua_loadCol( env );
+   nlua_loadTex( env );
 
    return 0;
 }
@@ -126,6 +123,8 @@ static int gfxL_renderTex( lua_State *L )
    glColour *col;
    double x, y;
    int sx, sy;
+
+   NLUA_CHECKRW(L);
 
    /* Parameters. */
    col = NULL;
@@ -192,6 +191,8 @@ static int gfxL_renderTexRaw( lua_State *L )
    double px,py, pw,ph, tx,ty, tw,th;
    int sx, sy;
 
+   NLUA_CHECKRW(L);
+
    /* Parameters. */
    col = NULL;
    t  = luaL_checktex( L, 1 );
@@ -253,6 +254,8 @@ static int gfxL_renderRect( lua_State *L )
    glColour *col;
    double x,y, w,h;
    int empty;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -346,6 +349,8 @@ static int gfxL_print( lua_State *L )
    glColour *col;
    int max, mid;
 
+   NLUA_CHECKRW(L);
+
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
@@ -390,6 +395,8 @@ static int gfxL_printText( lua_State *L )
    int w, h;
    double x, y;
    glColour *col;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;

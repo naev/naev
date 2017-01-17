@@ -15,7 +15,7 @@
 /*
  * Library loading
  */
-int nlua_loadGFX( nlua_env env, int readonly );
+int nlua_loadGFX( nlua_env env );
 
 
 #endif /* NLUA_GFX_H */

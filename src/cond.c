@@ -30,10 +30,10 @@ int cond_init (void)
       return 0;
 
    cond_env = nlua_newEnv(0);
-   //if (nlua_loadStandard(cond_env,1)) { // XXX
-   //   WARN("Failed to load standard Lua libraries.");
-   //   return -1;
-   //}
+   if (nlua_loadStandard(cond_env)) {
+      WARN("Failed to load standard Lua libraries.");
+      return -1;
+   }
 
    return 0;
 }
@@ -67,22 +67,12 @@ int cond_check( const char* cond )
    lua_pushstring(naevL, "return ");
    lua_pushstring(naevL, cond);
    lua_concat(naevL, 2);
-   ret = luaL_loadbuffer(naevL, lua_tostring(naevL,-1),
-         lua_strlen(naevL,-1), "Lua Conditional");
+   ret = nlua_dobufenv(cond_env, lua_tostring(naevL,-1),
+                       lua_strlen(naevL,-1), "Lua Conditional");
    switch (ret) {
       case  LUA_ERRSYNTAX:
          WARN("Lua conditional syntax error: %s", lua_tostring(naevL, -1));
          goto cond_err;
-      case LUA_ERRMEM:
-         WARN("Lua Conditional ran out of memory: %s", lua_tostring(naevL, -1));
-         goto cond_err;
-      default:
-         break;
-   }
-
-   /* Run the string. */
-   ret = nlua_pcall( cond_env, 0, 1 );
-   switch (ret) {
       case LUA_ERRRUN:
          WARN("Lua Conditional had a runtime error: %s", lua_tostring(naevL, -1));
          goto cond_err;

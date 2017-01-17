@@ -431,10 +431,10 @@ static nlua_env background_create( const char *name )
 
    /* Create the Lua env. */
    env = nlua_newEnv(1);
-   // nlua_loadStandard(L,1); // XXX
-   nlua_loadTex(env,0);
-   nlua_loadCol(env,0);
-   nlua_loadBackground(env,0);
+   nlua_loadStandard(env);
+   nlua_loadTex(env);
+   nlua_loadCol(env);
+   nlua_loadBackground(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );

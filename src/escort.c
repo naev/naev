@@ -16,7 +16,6 @@
 #include "player.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "hook.h"
 #include "nstring.h"
 

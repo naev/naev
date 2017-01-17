@@ -532,9 +532,8 @@ static int music_luaInit (void)
       music_luaQuit();
 
    music_env = nlua_newEnv(1);
-   //nlua_loadBasic(music_lua); // XXX
-   //nlua_loadStandard(music_lua,1);
-   nlua_loadMusic(music_env,0); /* write it */
+   nlua_loadStandard(music_env);
+   nlua_loadMusic(music_env); /* write it */
 
    /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );

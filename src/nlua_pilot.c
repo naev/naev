@@ -3,9 +3,9 @@
  */
 
 /**
- * @file nlua_space.c
+ * @file nlua_pilot.c
  *
- * @brief Handles the Lua space bindings.
+ * @brief Handles the Lua pilot bindings.
  *
  * These bindings control the planets and systems.
  */
@@ -239,28 +239,17 @@ static const luaL_reg pilotL_methods[] = {
 
 
 /**
- * @brief Loads the space library.
+ * @brief Loads the pilot library.
  *
- *    @param L State to load space library into.
+ *    @param env Environment to load library into.
  *    @return 0 on success.
  */
-int nlua_loadPilot( lua_State *L, int readonly )
+int nlua_loadPilot( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, PILOT_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, pilotL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, PILOT_METATABLE);
+   nlua_register(env, PILOT_METATABLE, pilotL_methods, 1);
 
    /* Pilot always loads ship. */
-   nlua_loadShip(L,readonly);
+   nlua_loadShip(env);
 
    return 0;
 }

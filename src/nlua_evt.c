@@ -73,7 +73,7 @@ static const luaL_reg evt_methods[] = {
  */
 int nlua_loadEvt( nlua_env env )
 {
-   nlua_register(env, "evt", evt_methods);
+   nlua_register(env, "evt", evt_methods, 0);
    return 0;
 }
 

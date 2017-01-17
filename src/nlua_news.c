@@ -15,7 +15,6 @@
 #include <lauxlib.h>
 
 #include "land.h"
-#include "nlua.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -50,42 +49,17 @@ static const luaL_reg news_methods[] = {
    {"__eq", newsL_eq},
    {0, 0}
 }; /**< News metatable methods. */
-static const luaL_reg news_cond_methods[] = {
-   {"get", newsL_get},
-   {"title", newsL_title},
-   {"desc", newsL_desc},
-   {"faction", newsL_faction},
-   {"date", newsL_date},
-   {"__eq", newsL_eq},
-   {0, 0}
-}; /**< Read only news metatable methods. */
 
 
 /**
  * @brief Loads the news library.
  *
- *    @param L State to load news library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load news library into.
  *    @return 0 on success.
  */
-int nlua_loadNews( lua_State *L, int readonly )
+int nlua_loadNews( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, ARTICLE_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L, -1);
-   lua_setfield(L, -2, "__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, news_cond_methods);
-   else
-      luaL_register(L, NULL, news_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, ARTICLE_METATABLE);
-
+   nlua_register(env, ARTICLE_METATABLE, news_methods, 1);
    return 0; /* No error */
 }
 
@@ -187,6 +161,8 @@ int newsL_add( lua_State *L )
    news_t *n_article;
    char *title, *content, *faction;
    ntime_t date, date_to_rm;
+
+   NLUA_CHECKRW(L);
 
    title   = NULL;
    content = NULL;
@@ -315,6 +291,8 @@ int newsL_add( lua_State *L )
 int newsL_rm( lua_State *L )
 {
    LuaArticle *Larticle;
+
+   NLUA_CHECKRW(L);
 
    if (lua_istable(L, 1)) {
       lua_pushnil(L);
@@ -528,6 +506,8 @@ int newsL_bind( lua_State *L )
    LuaArticle *a;
    news_t *article_ptr;
    char *tag;
+
+   NLUA_CHECKRW(L);
 
    a = NULL;
    tag = NULL;

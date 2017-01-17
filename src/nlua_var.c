@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nxml.h"
@@ -78,24 +77,16 @@ static const luaL_reg var_methods[] = {
    { "push", var_push },
    {0,0}
 }; /**< Mission variable Lua methods. */
-static const luaL_reg var_cond_methods[] = {
-   { "peek", var_peek },
-   {0,0}
-}; /**< Conditional mission variable Lua methods. */
 
 
 /**
  * @brief Loads the mission variable Lua library.
- *    @param L Lua state.
- *    @param readonly Whether to open in read-only form.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadVar( lua_State *L, int readonly )
+int nlua_loadVar( nlua_env env )
 {
-   if (readonly == 0)
-      luaL_register(L, "var", var_methods);
-   else
-      luaL_register(L, "var", var_cond_methods);
+   nlua_register(env, "var", var_methods, 0);
    return 0;
 }
 
@@ -312,6 +303,8 @@ static int var_pop( lua_State *L )
    int i;
    const char* str;
 
+   NLUA_CHECKRW(L);
+
    str = luaL_checkstring(L,1);
 
    for (i=0; i<var_nstack; i++)
@@ -340,6 +333,8 @@ static int var_push( lua_State *L )
 {
    const char *str;
    misn_var var;
+
+   NLUA_CHECKRW(L);
 
    str = luaL_checkstring(L,1);
 

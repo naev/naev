@@ -9,8 +9,10 @@
 
 #include <lua.h>
 
+#include "nlua.h"
 
-int nlua_loadNaev( lua_State *L ); /* always read only */
+
+int nlua_loadNaev( nlua_env env );
 
 
 #endif /* NLUA_NAEV_H */

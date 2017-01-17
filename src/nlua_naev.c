@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_evt.h"
 #include "nlua_misn.h"
@@ -50,12 +49,12 @@ static const luaL_reg naev_methods[] = {
 /**
  * @brief Loads the Naev Lua library.
  *
- *    @param L Lua state.
+ *    @param L Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadNaev( lua_State *L )
+int nlua_loadNaev( nlua_env env )
 {
-   luaL_register(L, "naev", naev_methods);
+   nlua_register(env, "naev", naev_methods, 0);
    return 0;
 }
 

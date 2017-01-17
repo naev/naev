@@ -309,7 +309,6 @@ void conf_loadConfigPath( void )
       return;
 
    nlua_env env = nlua_newEnv(0);
-   // nlua_loadBasic(L); /* For os library */ // XXX
    if (nlua_dofileenv(env, file) == 0)
       conf_loadString("datapath",conf.datapath);
 

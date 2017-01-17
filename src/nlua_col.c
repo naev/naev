@@ -48,24 +48,9 @@ static const luaL_reg colL_methods[] = {
  *    @param env Environment to load colour library into.
  *    @return 0 on success.
  */
-int nlua_loadCol( nlua_env env, int readonly )
+int nlua_loadCol( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   /* Create the metatable */
-   luaL_newmetatable(naevL, COL_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(naevL,-1);
-   lua_setfield(naevL,-2,"__index");
-
-   /* Register the values */
-   luaL_register(naevL, NULL, colL_methods);
-
-   /* Clean up. */
-   nlua_setenv(env, COL_METATABLE);
-
+   nlua_register(env, COL_METATABLE, colL_methods, 1);
    return 0;
 }
 
@@ -187,6 +172,8 @@ static int colL_new( lua_State *L )
    glColour col;
    const glColour *col2;
 
+   NLUA_CHECKRW(L);
+
    if (lua_gettop(L)==0) {
       col.r = col.g = col.b = col.a = 1.;
    }
@@ -306,6 +293,7 @@ static int colL_hsv( lua_State *L )
  */
 static int colL_setrgb( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    glColour *col;
    col     = luaL_checkcolour(L,1);
    col->r  = luaL_checknumber(L,2);
@@ -332,6 +320,7 @@ static int colL_sethsv( lua_State *L )
 {
    double r, g, b, h, s, v;
    glColour *col;
+   NLUA_CHECKRW(L);
    col = luaL_checkcolour(L,1);
    h  = luaL_checknumber(L,2);
    s  = luaL_checknumber(L,3);
@@ -358,6 +347,7 @@ static int colL_sethsv( lua_State *L )
 static int colL_setalpha( lua_State *L )
 {
    glColour *col;
+   NLUA_CHECKRW(L);
    col = luaL_checkcolour(L,1);
    col->a = luaL_checknumber(L,2);
    return 0;

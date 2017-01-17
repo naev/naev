@@ -85,7 +85,6 @@
 #include "escort.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "nlua_vec2.h"
 #include "nlua_rnd.h"
 #include "nlua_pilot.h"
@@ -636,6 +635,7 @@ static int ai_loadEquip (void)
 
    /* Create new state. */
    equip_env = nlua_newEnv(1);
+   nlua_loadStandard(equip_env);
 
    /* Load the file. */
    buf = ndata_read( filename, &bufsize );
@@ -680,13 +680,12 @@ static int ai_loadProfile( const char* filename )
    prof->name[len] = '\0';
 
    /* Create Lua. */
-   prof->env = nlua_newEnv(1);
-   env = prof->env;
+   env = nlua_newEnv(1);
+   nlua_loadStandard(env);
+   prof->env = env;
 
    /* Register C functions in Lua */
-   lua_newtable(naevL); /* ai */
-   luaL_register(naevL, NULL, aiL_methods); /* ai */
-   nlua_setenv(env, "ai"); /*  */
+   nlua_register(env, "ai", aiL_methods, 0);
 
    /* Add the player memory table. */
    lua_newtable(naevL);              /* pm */

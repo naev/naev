@@ -19,7 +19,9 @@
 #include "nlua_faction.h"
 #include "nlua_var.h"
 #include "nlua_naev.h"
-#include "nlua_space.h"
+#include "nlua_planet.h"
+#include "nlua_system.h"
+#include "nlua_jump.h"
 #include "nlua_time.h"
 #include "nlua_news.h"
 #include "nlua_player.h"
@@ -41,13 +43,13 @@ int __RW = 0;
  */
 static int nlua_packfileLoader( lua_State* L );
 lua_State *nlua_newState (void); /* creates a new state */
+int nlua_loadBasic( lua_State* L );
 int nlua_errTrace( lua_State *L );
 
 
 void lua_init(void) {
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
-   nlua_loadStandard(naevL, 0); /* XXX read-only API */
 }
 
 
@@ -133,9 +135,15 @@ void nlua_setenv(nlua_env env, const char *name) {
 }
 
 
-void nlua_register(nlua_env env, const char *libname, const luaL_Reg *l) {
-   lua_newtable(naevL);
-   luaL_register(naevL, NULL, l);
+void nlua_register(nlua_env env, const char *libname,
+                   const luaL_Reg *l, int metatable) {
+   if (luaL_newmetatable(naevL, libname)) {
+      if (metatable) {
+         lua_pushvalue(naevL,-1);
+         lua_setfield(naevL,-2,"__index");
+      }
+      luaL_register(naevL, NULL, l);
+   }
    nlua_setenv(env, libname);
 }
 
@@ -338,29 +346,29 @@ static int nlua_packfileLoader( lua_State* L )
  *  - music
  *  - ai
  *
- *    @param L Lua State to load modules into.
- *    @param readonly Load as readonly (good for sandboxing).
+ *    @param L Lua Environment to load modules into.
  *    @return 0 on success.
  */
-int nlua_loadStandard( lua_State *L, int readonly )
+int nlua_loadStandard( nlua_env env )
 {
    int r;
 
    r = 0;
-   r |= nlua_loadBasic(L);
-   r |= nlua_loadNaev(L);
-   r |= nlua_loadVar(L,readonly);
-   r |= nlua_loadSpace(L,readonly); /* systems, planets, jumps */
-   r |= nlua_loadTime(L,readonly);
-   r |= nlua_loadPlayer(L,readonly);
-   r |= nlua_loadPilot(L,readonly);
-   r |= nlua_loadRnd(L);
-   r |= nlua_loadDiff(L,readonly);
-   r |= nlua_loadFaction(L,readonly);
-   r |= nlua_loadVector(L);
-   r |= nlua_loadOutfit(L,readonly);
-   r |= nlua_loadCommodity(L,readonly);
-   r |= nlua_loadNews(L,readonly);
+   r |= nlua_loadNaev(env);
+   r |= nlua_loadVar(env);
+   r |= nlua_loadPlanet(env);
+   r |= nlua_loadSystem(env);
+   r |= nlua_loadJump(env);
+   r |= nlua_loadTime(env);
+   r |= nlua_loadPlayer(env);
+   r |= nlua_loadPilot(env);
+   r |= nlua_loadRnd(env);
+   r |= nlua_loadDiff(env);
+   r |= nlua_loadFaction(env);
+   r |= nlua_loadVector(env);
+   r |= nlua_loadOutfit(env);
+   r |= nlua_loadCommodity(env);
+   r |= nlua_loadNews(env);
 
    return r;
 }

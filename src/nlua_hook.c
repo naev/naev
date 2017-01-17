@@ -92,7 +92,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
  */
 int nlua_loadHook( nlua_env env )
 {
-   nlua_register(env, "hook", hook_methods);
+   nlua_register(env, "hook", hook_methods, 0);
    return 0;
 }
 

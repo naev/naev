@@ -280,14 +280,13 @@ static int event_create( int dataid, unsigned int *id )
 
    /* Open the new state. */
    ev->env = nlua_newEnv(1);
-   // XXX: Fix these
-   //nlua_loadStandard(L,0);
+   nlua_loadStandard(ev->env);
    nlua_loadEvt(ev->env);
    nlua_loadHook(ev->env);
-   nlua_loadCamera(ev->env,0);
-   nlua_loadTex(ev->env,0);
-   nlua_loadBackground(ev->env,1);
-   nlua_loadMusic(ev->env,0);
+   nlua_loadCamera(ev->env);
+   nlua_loadTex(ev->env);
+   nlua_loadBackground(ev->env);
+   nlua_loadMusic(ev->env);
    nlua_loadTk(ev->env);
    if (player_isTut())
       nlua_loadTut(ev->env);

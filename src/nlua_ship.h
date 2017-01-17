@@ -10,6 +10,7 @@
 #include <lua.h>
 
 #include "ship.h"
+#include "nlua.h"
 
 
 #define SHIP_METATABLE   "ship" /**< Ship metatable identifier. */
@@ -18,7 +19,7 @@
 /*
  * Library loading
  */
-int nlua_loadShip( lua_State *L, int readonly );
+int nlua_loadShip( nlua_env env );
 
 /*
  * Ship operations

@@ -16,7 +16,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "ntime.h"
@@ -53,50 +52,17 @@ static const luaL_reg time_methods[] = {
    { "fromnumber", time_fromnumber },
    {0,0}
 }; /**< Time Lua methods. */
-static const luaL_reg time_cond_methods[] = {
-   { "create", time_create },
-   { "add", time_add__ },
-   { "__add", time_add },
-   { "sub", time_sub__ },
-   { "__sub", time_sub },
-   { "__eq", time_eq },
-   { "__lt", time_lt },
-   { "__le", time_le },
-   { "get", time_get },
-   { "str", time_str },
-   { "__tostring", time_str },
-   { "tonumber", time_tonumber },
-   { "fromnumber", time_fromnumber },
-   {0,0}
-}; /**< Time Lua conditional methods. */
 
 
 /**
  * @brief Loads the Time Lua library.
  *
- *    @param L Lua state.
- *    @param readonly Whether to open it as read only.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadTime( lua_State *L, int readonly )
+int nlua_loadTime( nlua_env env )
 {
-   (void) readonly;
-   /* Create the metatable */
-   luaL_newmetatable(L, TIME_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, time_cond_methods);
-   else
-      luaL_register(L, NULL, time_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, TIME_METATABLE);
-
+   nlua_register(env, TIME_METATABLE, time_methods, 1);
    return 0; /* No error */
 }
 
@@ -422,6 +388,7 @@ static int time_str( lua_State *L )
  */
 static int time_inc( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    ntime_inc( luaL_validtime(L,1) );
    return 0;
 }

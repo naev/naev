@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
@@ -86,59 +85,17 @@ static const luaL_reg planet_methods[] = {
    { "setKnown", planetL_setKnown },
    {0,0}
 }; /**< Planet metatable methods. */
-static const luaL_reg planet_cond_methods[] = {
-   { "cur", planetL_cur },
-   { "get", planetL_get },
-   { "getLandable", planetL_getLandable },
-   { "getAll", planetL_getAll },
-   { "system", planetL_system },
-   { "__eq", planetL_eq },
-   { "__tostring", planetL_name },
-   { "name", planetL_name },
-   { "radius", planetL_radius },
-   { "faction", planetL_faction },
-   { "colour", planetL_colour },
-   { "class", planetL_class },
-   { "pos", planetL_position },
-   { "services", planetL_services },
-   { "canLand", planetL_canland },
-   { "getLandOverride", planetL_getLandOverride },
-   { "gfxSpace", planetL_gfxSpace },
-   { "gfxExterior", planetL_gfxExterior },
-   { "shipsSold", planetL_shipsSold },
-   { "outfitsSold", planetL_outfitsSold },
-   { "commoditiesSold", planetL_commoditiesSold },
-   { "blackmarket", planetL_isBlackMarket },
-   { "known", planetL_isKnown },
-   {0,0}
-}; /**< Read only planet metatable methods. */
 
 
 /**
  * @brief Loads the planet library.
  *
- *    @param L State to load planet library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load planet library into.
  *    @return 0 on success.
  */
-int nlua_loadPlanet( lua_State *L, int readonly )
+int nlua_loadPlanet( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, PLANET_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, planet_cond_methods);
-   else
-      luaL_register(L, NULL, planet_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, PLANET_METATABLE);
-
+   nlua_register(env, PLANET_METATABLE, planet_methods, 1);
    return 0; /* No error */
 }
 
@@ -672,6 +629,8 @@ static int planetL_landOverride( lua_State *L )
    Planet *p;
    int old;
 
+   NLUA_CHECKRW(L);
+
    p   = luaL_validplanet(L,1);
    old = p->land_override;
 
@@ -885,6 +844,8 @@ static int planetL_setKnown( lua_State *L )
 {
    int b, changed;
    Planet *p;
+
+   NLUA_CHECKRW(L);
 
    p = luaL_validplanet(L,1);
    b = lua_toboolean(L, 2);

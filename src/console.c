@@ -295,12 +295,13 @@ int cli_init (void)
 
    /* Create the state. */
    cli_env = nlua_newEnv(1);
-   nlua_loadTex( cli_env, 0 );
-   nlua_loadCol( cli_env, 0 );
-   nlua_loadBackground( cli_env, 0 );
+   nlua_loadStandard( cli_env );
+   nlua_loadTex( cli_env );
+   nlua_loadCol( cli_env );
+   nlua_loadBackground( cli_env );
    nlua_loadCLI( cli_env );
-   nlua_loadCamera( cli_env, 0 );
-   nlua_loadMusic( cli_env, 0 );
+   nlua_loadCamera( cli_env );
+   nlua_loadMusic( cli_env );
    nlua_loadTk( cli_env );
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, cli_env);
    luaL_register( naevL, NULL, cli_methods );

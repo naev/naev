@@ -19,7 +19,7 @@
 /*
  * Library loading
  */
-int nlua_loadCol( nlua_env env, int readonly );
+int nlua_loadCol( nlua_env env );
 
 /*
  * Colour operations

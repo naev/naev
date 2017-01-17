@@ -19,7 +19,7 @@
 /*
  * Library loading
  */
-int nlua_loadTex( nlua_env, int readonly );
+int nlua_loadTex( nlua_env );
 
 /*
  * Texture operations

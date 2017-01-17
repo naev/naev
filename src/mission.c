@@ -19,7 +19,6 @@
 
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "nlua_faction.h"
 #include "nlua_ship.h"
 #include "nlua_misn.h"

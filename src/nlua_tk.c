@@ -48,7 +48,7 @@ static const luaL_reg tk_methods[] = {
  */
 int nlua_loadTk( nlua_env env )
 {
-   nlua_register(env, "tk", tk_methods);
+   nlua_register(env, "tk", tk_methods, 0);
    return 0;
 }
 

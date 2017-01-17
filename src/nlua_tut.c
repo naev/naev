@@ -37,7 +37,7 @@ static const luaL_reg tut_methods[] = {
  */
 int nlua_loadTut( nlua_env env )
 {
-   nlua_register(env, "tut", tut_methods);
+   nlua_register(env, "tut", tut_methods, 0);
    return 0;
 }
 

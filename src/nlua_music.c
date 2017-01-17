@@ -56,15 +56,11 @@ static const luaL_reg music_methods[] = {
  * @brief Loads the music functions into a lua_State.
  *
  *    @param env Lua environment to load the music functions into.
- *    @param read_only Load the write functions?
  *    @return 0 on success.
  */
-int nlua_loadMusic( nlua_env env, int read_only )
+int nlua_loadMusic( nlua_env env )
 {
-   (void)read_only; /* future proof */
-
-   nlua_register(env, "music", music_methods);
-
+   nlua_register(env, "music", music_methods, 0);
    return 0;
 }
 

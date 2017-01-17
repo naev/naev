@@ -36,7 +36,6 @@
       luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
-
 #define NLUA_CHECKRW(L) \
 { \
    if (!__RW) { \

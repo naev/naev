@@ -43,24 +43,9 @@ static const luaL_reg texL_methods[] = {
  *    @param env Environment to load texture library into.
  *    @return 0 on success.
  */
-int nlua_loadTex( nlua_env env, int readonly )
+int nlua_loadTex( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   /* Create the metatable */
-   luaL_newmetatable(naevL, TEX_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(naevL,-1);
-   lua_setfield(naevL,-2,"__index");
-
-   /* Register the values */
-   luaL_register(naevL, NULL, texL_methods);
-
-   /* Clean up. */
-   nlua_setenv(env, TEX_METATABLE);
-
+   nlua_register(env, TEX_METATABLE, texL_methods, 1);
    return 0;
 }
 
@@ -177,6 +162,8 @@ static int texL_open( lua_State *L )
    glTexture *tex;
    int sx, sy;
 
+   NLUA_CHECKRW(L);
+
    /* Defaults. */
    sx = 0;
    sy = 0;
@@ -273,6 +260,8 @@ static int texL_spriteFromDir( lua_State *L )
    double a;
    glTexture *tex;
    int sx, sy;
+
+   NLUA_CHECKRW(L);
 
    /* Params. */
    tex = luaL_checktex( L, 1 );

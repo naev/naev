@@ -2096,9 +2096,9 @@ int gui_load( const char* name )
       return -1;
    }
    free(buf);
-   //nlua_loadStandard( gui_L, 1 ); // XXX
-   nlua_loadGFX( gui_env, 0 );
-   nlua_loadGUI( gui_env, 0 );
+   nlua_loadStandard( gui_env );
+   nlua_loadGFX( gui_env );
+   nlua_loadGUI( gui_env );
 
    /* Run create function. */
    if (gui_doFunc( "create" )) {

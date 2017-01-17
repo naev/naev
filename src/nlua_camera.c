@@ -38,13 +38,9 @@ static const luaL_reg cameraL_methods[] = {
  *    @param L State to load camera library into.
  *    @return 0 on success.
  */
-int nlua_loadCamera( nlua_env env, int readonly )
+int nlua_loadCamera( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   nlua_register(env, "camera", cameraL_methods);
-
+   nlua_register(env, "camera", cameraL_methods, 0);
    return 0;
 }
 
@@ -80,6 +76,8 @@ static int camL_set( lua_State *L )
    Vector2d *vec;
    Pilot *p;
    int soft_over, speed;
+
+   NLUA_CHECKRW(L);
 
    /* Handle arguments. */
    lp = 0;
