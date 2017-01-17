@@ -40,6 +40,7 @@ lua_State *naevL = NULL;
  */
 static int nlua_packfileLoader( lua_State* L );
 lua_State *nlua_newState (void); /* creates a new state */
+int nlua_errTrace( lua_State *L );
 
 
 void lua_init(void) {

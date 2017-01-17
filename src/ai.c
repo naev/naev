@@ -851,7 +851,6 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 {
-   int errf;
    HookParam hparam[2];
 
    /* Custom hook parameters. */
