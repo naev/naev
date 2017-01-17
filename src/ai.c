@@ -440,35 +440,21 @@ void ai_setPilot( Pilot *p )
  */
 static void ai_run( nlua_env env, const char *funcname )
 {
-   int errf;
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
    nlua_getenv(env, funcname);
 
 #ifdef DEBUGGING
    if (lua_isnil(naevL, -1)) {
       WARN("Pilot '%s' ai -> '%s': attempting to run non-existant function",
             cur_pilot->name, funcname );
-#if DEBUGGING
-      lua_pop(naevL,2);
-#else /* DEBUGGING */
       lua_pop(naevL,1);
-#endif /* DEBUGGING */
       return;
    }
 #endif /* DEBUGGING */
 
-   if (lua_pcall(naevL, 0, 0, errf)) { /* error has occurred */
+   if (nlua_pcall(env, 0, 0)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(naevL,1); /* Pop the cfunction. */
-#endif /* DEBUGGING */
 }
 
 

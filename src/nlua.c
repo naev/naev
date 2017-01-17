@@ -389,4 +389,28 @@ int nlua_errTrace( lua_State *L )
 }
 
 
+int nlua_pcall( nlua_env env, int nargs, int nresults ) {
+   int errf, ret;
 
+#if DEBUGGING
+   lua_pushcfunction(naevL, nlua_errTrace);
+   lua_insert(naevL, -2-nargs);
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   nlua_getenv(env, "__RW");
+   lua_setglobal(naevL, "__RW");
+
+   ret = lua_pcall(naevL, nargs, nresults, errf);
+
+   lua_pushnil(naevL);
+   lua_setglobal(naevL, "__RW");
+
+#if DEBUGGING
+   lua_remove(naevL, -1-nresults);
+#endif /* DEBUGGING */
+
+   return ret;
+}
