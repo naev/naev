@@ -1375,7 +1375,6 @@ static void land_stranded (void)
    char *buf;
    uint32_t bufsize;
    const char *file = "dat/rescue.lua";
-   int errf;
 
    /* Nothing to do if there's no rescue script. */
    if (!ndata_exists(file))
@@ -1398,23 +1397,12 @@ static void land_stranded (void)
       free(buf);
    }
 
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
-
    /* Run Lua. */
    nlua_getenv(rescue_env,"rescue");
-   if (lua_pcall(naevL, 0, 0, errf)) { /* error has occurred */
+   if (nlua_pcall(rescue_env, 0, 0)) { /* error has occurred */
       WARN("Rescue: 'rescue' : '%s'", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(naevL,1);
-#endif
 }
 
 

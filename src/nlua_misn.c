@@ -210,11 +210,6 @@ Mission* misn_getFromLua( lua_State *L )
  */
 void misn_runStart( Mission *misn, const char *func )
 {
-
-#if DEBUGGING
-   lua_pushcfunction(naevL, nlua_errTrace);
-#endif /* DEBUGGING */
-
    /* Set environment. */
    lua_pushlightuserdata( naevL, misn );
    lua_setglobal( naevL, "__misn" );
@@ -246,18 +241,12 @@ void misn_runEnd()
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
-   int i, ret, errf;
+   int i, ret;
    const char* err;
    int misn_delete;
    Mission *cur_mission;
 
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
-   ret = lua_pcall(naevL, nargs, 0, errf);
+   ret = nlua_pcall(misn->env, nargs, 0);
    cur_mission = misn_getFromLua(naevL); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
@@ -270,9 +259,6 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
          ret = 1;
       lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(naevL,1);
-#endif /* DEBUGGING */
 
    /* Get delete. */
    lua_getglobal(naevL,"__misn_delete");

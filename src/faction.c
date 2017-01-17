@@ -622,7 +622,6 @@ static void faction_sanitizePlayer( Faction* faction )
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary )
 {
    Faction *faction;
-   int errf;
    double old, delta;
    HookParam hparam[3];
 
@@ -637,12 +636,6 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    if (faction->env == LUA_NOREF)
       faction->player += mod;
    else {
-#if DEBUGGING
-      lua_pushcfunction(naevL, nlua_errTrace);
-      errf = -6;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_hit( current, amount, source, secondary ) */
@@ -653,13 +646,9 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
       lua_pushboolean( naevL, secondary );
 
       /* Call function. */
-      if (lua_pcall( naevL, 4, 1, errf )) { /* An error occurred. */
+      if (nlua_pcall( faction->env, 4, 1 )) { /* An error occurred. */
          WARN("Faction '%s': %s", faction->name, lua_tostring(naevL,-1));
-#if DEBUGGING
-         lua_pop( naevL, 2 );
-#else /* DEBUGGING */
          lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
          return;
       }
 
@@ -668,11 +657,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
          WARN( "Lua script for faction '%s' did not return a number from 'faction_hit(...)'.", faction->name );
       else
          faction->player = lua_tonumber( naevL, -1 );
-#if DEBUGGING
-      lua_pop( naevL, 2 );
-#else /* DEBUGGING */
       lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
    }
 
    /* Sanitize just in case. */
@@ -865,7 +850,6 @@ double faction_getPlayerDef( int f )
 int faction_isPlayerFriend( int f )
 {
    Faction *faction;
-   int errf;
    int r;
 
    faction = &faction_stack[f];
@@ -874,12 +858,6 @@ int faction_isPlayerFriend( int f )
       return 0;
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( naevL, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_player_friend( standing ) */
@@ -887,15 +865,11 @@ int faction_isPlayerFriend( int f )
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( lua_pcall( naevL, 1, 1, errf ) )
+      if ( nlua_pcall( faction->env, 1, 1 ) )
       {
          /* An error occurred. */
          WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
-#if DEBUGGING
-         lua_pop( naevL, 2 );
-#else /* DEBUGGING */
          lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
          return 0;
       }
 
@@ -907,11 +881,7 @@ int faction_isPlayerFriend( int f )
       }
       else
          r = lua_toboolean( naevL, -1 );
-#if DEBUGGING
-      lua_pop( naevL, 2 );
-#else /* DEBUGGING */
       lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
 
       return r;
    }
@@ -927,7 +897,6 @@ int faction_isPlayerFriend( int f )
 int faction_isPlayerEnemy( int f )
 {
    Faction *faction;
-   int errf;
    int r;
 
    faction = &faction_stack[f];
@@ -936,12 +905,6 @@ int faction_isPlayerEnemy( int f )
       return 0;
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( naevL, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_player_enemy( standing ) */
@@ -949,15 +912,11 @@ int faction_isPlayerEnemy( int f )
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( lua_pcall( naevL, 1, 1, errf ) )
+      if ( nlua_pcall( faction->env, 1, 1 ) )
       {
          /* An error occurred. */
          WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
-#if DEBUGGING
-         lua_pop( naevL, 2 );
-#else /* DEBUGGING */
          lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
          return 0;
       }
 
@@ -969,11 +928,7 @@ int faction_isPlayerEnemy( int f )
       }
       else
          r = lua_toboolean( naevL, -1 );
-#if DEBUGGING
-      lua_pop( naevL, 2 );
-#else /* DEBUGGING */
       lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
 
       return r;
    }
@@ -1024,7 +979,6 @@ char faction_getColourChar( int f )
 const char *faction_getStandingText( int f )
 {
    Faction *faction;
-   int errf;
    const char *r;
 
    faction = &faction_stack[f];
@@ -1033,12 +987,6 @@ const char *faction_getStandingText( int f )
       return "???";
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( naevL, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_standing_text( standing ) */
@@ -1046,15 +994,11 @@ const char *faction_getStandingText( int f )
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( lua_pcall( naevL, 1, 1, errf ) )
+      if ( nlua_pcall( faction->env, 1, 1 ) )
       {
          /* An error occurred. */
          WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
-#if DEBUGGING
-         lua_pop( naevL, 2 );
-#else /* DEBUGGING */
          lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
          return "???";
       }
 
@@ -1066,11 +1010,7 @@ const char *faction_getStandingText( int f )
       }
       else
          r = lua_tostring( naevL, -1 );
-#if DEBUGGING
-      lua_pop( naevL, 2 );
-#else /* DEBUGGING */
       lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
 
       return r;
    }
@@ -1088,7 +1028,6 @@ const char *faction_getStandingText( int f )
 const char *faction_getStandingBroad( int f, int bribed, int override )
 {
    Faction *faction;
-   int errf;
    const char *r;
 
    faction = &faction_stack[f];
@@ -1097,13 +1036,6 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       return "???";
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( naevL, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
-
       /* Set up the function:
        * faction_standing_broad( standing, bribed, override ) */
       nlua_getenv( faction->env, "faction_standing_broad" );
@@ -1112,15 +1044,11 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       lua_pushnumber( naevL, override );
 
       /* Call function. */
-      if ( lua_pcall( naevL, 3, 1, errf ) )
+      if ( nlua_pcall( faction->env, 3, 1 ) )
       {
          /* An error occurred. */
          WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
-#if DEBUGGING
-         lua_pop( naevL, 2 );
-#else /* DEBUGGING */
          lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
          return "???";
       }
 
@@ -1132,11 +1060,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       }
       else
          r = lua_tostring( naevL, -1 );
-#if DEBUGGING
-      lua_pop( naevL, 2 );
-#else /* DEBUGGING */
       lua_pop( naevL, 1 );
-#endif /* DEBUGGING */
 
       return r;
    }
