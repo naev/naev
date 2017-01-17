@@ -279,7 +279,7 @@ static int event_create( int dataid, unsigned int *id )
    data = &event_data[dataid];
 
    /* Open the new state. */
-   ev->env = nlua_newEnv();
+   ev->env = nlua_newEnv(1);
    // XXX: Fix these
    //nlua_loadStandard(L,0);
    nlua_loadEvt(ev->env);

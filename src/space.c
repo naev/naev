@@ -1386,7 +1386,7 @@ static int planets_load ( void )
    int i, len;
 
    /* Load landing stuff. */
-   landing_env = nlua_newEnv();
+   landing_env = nlua_newEnv(0);
    //nlua_loadStandard(L, 1); // XXX
    buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
    if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {

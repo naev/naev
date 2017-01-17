@@ -635,7 +635,7 @@ static int ai_loadEquip (void)
       nlua_freeEnv(equip_env);
 
    /* Create new state. */
-   equip_env = nlua_newEnv();
+   equip_env = nlua_newEnv(1);
 
    /* Load the file. */
    buf = ndata_read( filename, &bufsize );
@@ -680,7 +680,7 @@ static int ai_loadProfile( const char* filename )
    prof->name[len] = '\0';
 
    /* Create Lua. */
-   prof->env = nlua_newEnv();
+   prof->env = nlua_newEnv(1);
    env = prof->env;
 
    /* Register C functions in Lua */

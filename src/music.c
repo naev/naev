@@ -531,7 +531,7 @@ static int music_luaInit (void)
    if (music_env != LUA_NOREF)
       music_luaQuit();
 
-   music_env = nlua_newEnv();
+   music_env = nlua_newEnv(1);
    //nlua_loadBasic(music_lua); // XXX
    //nlua_loadStandard(music_lua,1);
    nlua_loadMusic(music_env,0); /* write it */

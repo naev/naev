@@ -21,7 +21,7 @@ extern lua_State *naevL;
  */
 void lua_init(void);
 void lua_exit(void);
-nlua_env nlua_newEnv(void);
+nlua_env nlua_newEnv(int rw);
 void nlua_freeEnv(nlua_env env);
 void nlua_setenv(nlua_env env, const char *name);
 void nlua_getenv(nlua_env env, const char *name);

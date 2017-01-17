@@ -288,7 +288,7 @@ int cli_init (void)
       return 0;
 
    /* Create the state. */
-   cli_env = nlua_newEnv();
+   cli_env = nlua_newEnv(1);
    nlua_loadTex( cli_env, 0 );
    nlua_loadCol( cli_env, 0 );
    nlua_loadBackground( cli_env, 0 );

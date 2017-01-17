@@ -81,7 +81,7 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
 }
 
 
-nlua_env nlua_newEnv(void) {
+nlua_env nlua_newEnv(int rw) {
    nlua_env ref;
    lua_newtable(naevL);
    lua_pushvalue(naevL, -1);
@@ -101,6 +101,9 @@ nlua_env nlua_newEnv(void) {
    /* Some code expect _G to be it's global state, so don't inherit it */
    lua_pushvalue(naevL, -1);
    lua_setfield(naevL, -2, "_G");
+
+   lua_pushboolean(naevL, rw);
+   lua_setfield(naevL, -2, "__RW");
 
    lua_pop(naevL, 1);
    return ref;

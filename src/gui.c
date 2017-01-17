@@ -2084,7 +2084,7 @@ int gui_load( const char* name )
    }
 
    /* Create Lua state. */
-   gui_env = nlua_newEnv();
+   gui_env = nlua_newEnv(1);
    if (nlua_dobufenv( gui_env, buf, bufsize, path ) != 0) {
       WARN("Failed to load GUI Lua: %s\n"
             "%s\n"

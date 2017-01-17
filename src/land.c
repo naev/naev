@@ -1381,7 +1381,7 @@ static void land_stranded (void)
       return;
 
    if (rescue_env == LUA_NOREF) {
-      rescue_env = nlua_newEnv();
+      rescue_env = nlua_newEnv(1);
       // nlua_loadStandard( rescue_L, 0 ); // XXX
       nlua_loadTk( rescue_env );
 
