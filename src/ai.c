@@ -892,8 +892,8 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    /* Create the task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup("refuel");
-   t->dtype    = TASKDATA_PILOT;
-   t->dat.num  = target;
+   lua_pushinteger(naevL, target);
+   t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* Prepend the task. */
    t->next     = refueler->task;
@@ -1034,7 +1034,8 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
-   t->dtype    = TASKDATA_NULL;
+   lua_pushnil(naevL);
+   t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* Handle subtask and general task. */
    if (!subtask) {
@@ -1078,8 +1079,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
-   if (t->dtype == TASKDATA_REF)
-       luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat.num);
+   luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat);
 
    /* Recursive subtask freeing. */
    if (t->subtask != NULL) {
@@ -1115,9 +1115,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
-      t->dtype   = TASKDATA_REF;
-      t->dat.num = luaL_ref(L, LUA_REGISTRYINDEX);
-      t->L       = L;
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      t->L   = L;
    }
 
    return t;
@@ -1129,27 +1128,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
-   /* Pass task type. */
-   switch (t->dtype) {
-      case TASKDATA_INT:
-         lua_pushnumber(L, t->dat.num);
-         return 1;
-
-      case TASKDATA_PILOT:
-         lua_pushpilot(L, t->dat.num);
-         return 1;
-
-      case TASKDATA_VEC2:
-         lua_pushvector(L, t->dat.vec);
-         return 1;
-
-      case TASKDATA_REF:
-         lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat.num);
-         return 1;
-
-      default:
-         return 0;
-   }
+   lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat);
+   return 1;
 }
 
 

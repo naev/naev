@@ -3758,8 +3758,8 @@ static int pilotL_goto( lua_State *L )
          tsk = "__goto_nobrake_raw";
    }
    t        = pilotL_newtask( L, p, tsk );
-   t->dtype = TASKDATA_VEC2;
-   t->dat.vec = *vec;
+   lua_pushvector( L, *vec );
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
 }
@@ -3805,13 +3805,12 @@ static int pilotL_face( lua_State *L )
    else
       t     = pilotL_newtask( L, p, "__face" );
    if (pt != NULL) {
-      t->dtype = TASKDATA_PILOT;
-      t->dat.num = pt->id;
+      lua_pushnil(L);
    }
    else {
-      t->dtype = TASKDATA_VEC2;
-      t->dat.vec = *vec;
+      lua_pushvector(L, *vec);
    }
+   t->dat = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    return 0;
 }
@@ -3878,8 +3877,8 @@ static int pilotL_follow( lua_State *L )
    else
       t = pilotL_newtask( L, p, "follow_accurate" );
 
-   t->dtype = TASKDATA_PILOT;
-   t->dat.num = pt->id;
+   lua_pushinteger(L, pt->id);
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
 }
@@ -3920,8 +3919,8 @@ static int pilotL_attack( lua_State *L )
 
    /* Set the task. */
    t        = pilotL_newtask( L, p, "attack" );
-   t->dtype = TASKDATA_PILOT;
-   t->dat.num = pid;
+   lua_pushpilot(L, pid);
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
 }
@@ -3955,8 +3954,8 @@ static int pilotL_runaway( lua_State *L )
 
    /* Set the task. */
    t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
-   t->dtype = TASKDATA_PILOT;
-   t->dat.num = pt->id;
+   lua_pushpilot(L, pt->id);
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);;
 
    return 0;
 }
@@ -4021,13 +4020,13 @@ static int pilotL_hyperspace( lua_State *L )
       p->nav_hyperspace = i;
 
       /* Copy vector. */
-      t->dtype = TASKDATA_VEC2;
-      t->dat.vec = jp->pos;
+      lua_pushvector(L, jp->pos);
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);;
 
       /* Introduce some error. */
       a     = RNGF() * M_PI * 2.;
       rad   = RNGF() * 0.5 * jp->radius;
-      vect_cadd( &t->dat.vec, rad*cos(a), rad*sin(a) );
+      vect_cadd( &jp->pos, rad*cos(a), rad*sin(a) );
    }
 
    return 0;
@@ -4077,15 +4076,15 @@ static int pilotL_land( lua_State *L )
 
       /* Copy vector. */
       p->nav_planet = i;
-      t->dtype = TASKDATA_VEC2;
-      t->dat.vec = pnt->pos;
+      lua_pushvector(L, pnt->pos);
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       if (p->id == PLAYER_ID)
          gui_setNav();
 
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;
       r = RNGF() * pnt->radius;
-      vect_cadd( &t->dat.vec, r*cos(a), r*sin(a) );
+      vect_cadd( &pnt->pos, r*cos(a), r*sin(a) );
    }
 
    return 0;
