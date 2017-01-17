@@ -392,9 +392,8 @@ int nlua_errTrace( lua_State *L )
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    int errf, ret, top;
 
-   top = lua_gettop(naevL);
-
 #if DEBUGGING
+   top = lua_gettop(naevL);
    lua_pushcfunction(naevL, nlua_errTrace);
    lua_insert(naevL, -2-nargs);
    errf = -2-nargs;
