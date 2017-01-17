@@ -33,6 +33,7 @@
 
 
 lua_State *naevL = NULL;
+int __RW = 0;
 
 
 /*
@@ -365,6 +366,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
 }
 
 
+
 /**
  * @brief Gets a trace from Lua.
  */
@@ -394,7 +396,7 @@ int nlua_errTrace( lua_State *L )
 
 
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
-   int errf, ret, top;
+   int errf, ret, top, prev;
 
 #if DEBUGGING
    top = lua_gettop(naevL);
@@ -405,13 +407,14 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    errf = 0;
 #endif /* DEBUGGING */
 
+   prev = __RW;
    nlua_getenv(env, "__RW");
-   lua_setglobal(naevL, "__RW");
+   __RW = lua_toboolean(naevL, -1);
+   lua_pop(naevL, 1);
 
    ret = lua_pcall(naevL, nargs, nresults, errf);
 
-   lua_pushnil(naevL);
-   lua_setglobal(naevL, "__RW");
+   __RW = prev;
 
 #if DEBUGGING
    lua_remove(naevL, top-nargs);

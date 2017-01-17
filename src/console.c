@@ -399,14 +399,10 @@ static void cli_input( unsigned int wid, char *unused )
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, cli_env);
       lua_setfenv(naevL, -2);
 
-      nlua_getenv(cli_env, "__RW");
-      lua_setglobal(naevL, "__RW");
-      if (lua_pcall(naevL, 0, LUA_MULTRET, 0)) {
+      if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
          cli_addMessage( lua_tostring(naevL, -1) );
          lua_pop(naevL, 1);
       }
-      lua_pushnil(naevL);
-      lua_setglobal(naevL, "__RW");
 
       if (lua_gettop(naevL) > 0) {
          nlua_getenv(cli_env, "print");

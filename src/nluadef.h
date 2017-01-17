@@ -36,15 +36,14 @@
       luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
+
 #define NLUA_CHECKRW(L) \
 { \
-   lua_getglobal(L, "__RW"); \
-   if (!lua_toboolean(L)) { \
+   if (!__RW) { \
       DEBUG( "Cannot call %s in read-only environment.", __func__ ); \
       luaL_error( L, "Cannot call %s in read-only environment.", __func__ ); \
       return 0; \
    } \
-   lua_pop(L, 1); \
 }
    
 #else /* DEBUGGING */
