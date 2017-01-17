@@ -224,7 +224,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
       }
 
       /* Run command. */
-      if (lua_pcall(naevL, (param >= 0) ? 1 : 0, 0, 0))
+      if (nlua_pcall(e->ai->env, (param >= 0) ? 1 : 0, 0))
          WARN("Pilot '%s' ai -> '%s': %s", e->name,
                buf, lua_tostring(naevL,-1));
    }
