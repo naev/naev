@@ -325,16 +325,16 @@ function enter()
          k:setHealth(100,100)
          k:setEnergy(100)
          k:control()
-         k:memory("radius", 300) --Set the radius for the follow function
+         k:memory().radius = 300 --Set the radius for the follow function
       end
 
       -- Set the angle for the follow function
-      tv1:memory("angle", 90)
-      sec11:memory("angle", 200)
-      sec12:memory("angle", 240)
-      tv2:memory("angle", 90)
-      sec21:memory("angle", 200)
-      sec22:memory("angle", 240)
+      tv1:memory().angle = 90
+      sec11:memory().angle = 200
+      sec12:memory().angle = 240
+      tv2:memory().angle = 90
+      sec21:memory().angle = 200
+      sec22:memory().angle = 240
 
       --The escort follows the competitors
       tv1:follow(player.pilot(), true)

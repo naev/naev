@@ -339,7 +339,7 @@ function distress ( pilot, attacker )
       elseif a_enemy then
          t = attacker
       -- We'll be nice and go after the aggressor if the victim is peaceful.
-      elseif not pilot:memoryCheck("aggressive") then
+      elseif not pilot:memory().aggressive then
          t = attacker
       -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
       else

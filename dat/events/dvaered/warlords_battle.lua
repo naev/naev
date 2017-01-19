@@ -114,15 +114,15 @@ function attack ()
    attackers[2*n+8] = pilot.add("Dvaered Goddard", nil, source_system)[1]
 
    -- The transport ships tend to run away
-   attackers[2*n+4]:memory("shield_run", 70)
-   attackers[2*n+5]:memory("shield_run", 70)
-   attackers[2*n+6]:memory("shield_run", 70)
-   attackers[2*n+7]:memory("shield_run", 70)
+   attackers[2*n+4]:memory().shield_run = 70
+   attackers[2*n+5]:memory().shield_run = 70
+   attackers[2*n+6]:memory().shield_run = 70
+   attackers[2*n+7]:memory().shield_run = 70
 
-   attackers[2*n+4]:memory("shield_return", 99)
-   attackers[2*n+5]:memory("shield_return", 99)
-   attackers[2*n+6]:memory("shield_return", 99)
-   attackers[2*n+7]:memory("shield_return", 99)
+   attackers[2*n+4]:memory().shield_return = 99
+   attackers[2*n+5]:memory().shield_return = 99
+   attackers[2*n+6]:memory().shield_return = 99
+   attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
 

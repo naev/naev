@@ -127,7 +127,6 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
-static int pilotL_memoryCheck( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_goto( lua_State *L );
 static int pilotL_face( lua_State *L );
@@ -220,7 +219,6 @@ static const luaL_reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
-   { "memoryCheck", pilotL_memoryCheck },
    { "taskClear", pilotL_taskclear },
    { "goto", pilotL_goto },
    { "face", pilotL_face },
@@ -3528,59 +3526,15 @@ static int pilotL_control( lua_State *L )
 
 
 /**
- * @brief Copies a value between two states.
+ * @brief Gets a pilots memory table.
  *
- *    @param to State to copy to.
- *    @param from State to copy from.
- *    @param ind Index of item to copy from state.
- * @return 0 on success.
- */
-static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
-{
-   if (to == from) {
-      switch (lua_type( from, ind )) {
-         case LUA_TNIL:
-         case LUA_TNUMBER:
-         case LUA_TBOOLEAN:
-         case LUA_TSTRING:
-            // Same Lua state, so just copy to the top of the stack
-            lua_pushvalue( to, ind );
-            break;
-         default:
-            NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
-            break;
-      }
-   } else {
-      switch (lua_type( from, ind )) {
-         case LUA_TNIL:
-            lua_pushnil( to);
-            break;
-         case LUA_TNUMBER:
-            lua_pushnumber( to, lua_tonumber(from, ind) );
-            break;
-         case LUA_TBOOLEAN:
-            lua_pushboolean( to, lua_toboolean(from, ind) );
-            break;
-         case LUA_TSTRING:
-            lua_pushstring( to, lua_tostring(from, ind) );
-            break;
-
-         default:
-            NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
-            break;
-      }
-   }
-   return 0;
-}
-
-
-/**
- * @brief Changes a parameter in the pilot's memory.
+ * The resulting table is indexable and mutable.
  *
- *    @luatparam Pilot p Pilot to change memory of.
- *    @luatparam string key Key of the memory part to change.
- *    @luatparam nil|number|boolean|string value Value to set to.
- * @luafunc memory( p, key, value )
+ * @usage aggr = p:memory().aggressive
+ * @usage p:memory().aggressive = false
+ *
+ *    @luatparam Pilot p Pilot to read memory of.
+ * @luafunc memory( p )
  */
 static int pilotL_memory( lua_State *L )
 {
@@ -3588,8 +3542,8 @@ static int pilotL_memory( lua_State *L )
 
    NLUA_CHECKRW(L);
 
-   if (lua_gettop(L) < 3) {
-      NLUA_ERROR(L, "pilot.memory requires 3 arguments!");
+   if (lua_gettop(L) < 1) {
+      NLUA_ERROR(L, "pilot.memory requires 1 argument!");
       return 0;
    }
 
@@ -3602,60 +3556,9 @@ static int pilotL_memory( lua_State *L )
       return 0;
    }
 
-   /* Copy it over. */
-   /* We have to be very careful that this works even if L==pL */
    nlua_getenv( p->ai->env, AI_MEM );  /* pilotmem */
    lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
    lua_remove( naevL, -2 );            /* table */
-   lua_copyvalue( naevL, L, 2 );       /* table, key */
-   lua_copyvalue( naevL, L, 3 );       /* table, key, value */
-   lua_settable( naevL, -3 );          /* table */
-   lua_pop( naevL, 1 );                /* */
-
-   return 0;
-}
-
-
-/**
- * @brief Gets the value of the pilot's memory.
- *
- * Equivalent to reading the pilot's "mem.str".
- *
- * @usage aggr = p:memoryCheck( "aggressive" ) -- See if the pilot is aggressive
- *
- *    @luatparam Pilot p Pilot to get memory of.
- *    @luatparam string str Name of the memory to get.
- *    @luatreturn nil|number|boolean|string The value stored.
- * @luafunc memoryCheck( p, str )
- */
-static int pilotL_memoryCheck( lua_State *L )
-{
-   Pilot *p;
-
-   if (lua_gettop(L) < 2) {
-      NLUA_ERROR(L, "pilot.memoryCheck requires 2 arguments!");
-      return 0;
-   }
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
-
-   /* Set the pilot's memory. */
-   if (p->ai == NULL) {
-      NLUA_ERROR(L,"Pilot does not have AI.");
-      return 0;
-   }
-
-   /* Copy it over. */
-   /* We have to be very careful that this works even if L==pL */
-   nlua_getenv( p->ai->env, AI_MEM );  /* pilotmem */
-   lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
-   lua_remove( naevL, -2 );            /* table */
-   lua_copyvalue( naevL, L, 2 );       /* table, key */
-   lua_gettable( naevL, -2 );          /* table, value */
-   lua_remove( naevL, -2 );            /* value */
-   lua_copyvalue( L, naevL, -1 );      /* value */
-   lua_pop( naevL, 1 );                /* */
 
    return 1;
 }
