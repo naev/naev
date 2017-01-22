@@ -97,6 +97,7 @@ static int cli_printCore( lua_State *L, int cli_only )
    char buf[CLI_MAX_INPUT];
    int p;
    const char *s;
+   char *line, *nextline, *tmp;
 
    n = lua_gettop(L);
    p = 0;
@@ -114,11 +115,19 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      p += nsnprintf( &buf[p], CLI_MAX_INPUT-p, "%s%s", (i>1) ? "   " : "", s );
-      if (p >= CLI_MAX_INPUT) {
-         cli_addMessage(buf);
-         p = 0;
+      tmp = strdup(s);
+      line = strtok(tmp, "\n");
+      while (line != NULL) {
+         nextline = strtok(NULL, "\n");
+         p += nsnprintf( &buf[p], CLI_MAX_INPUT-p, "%s%s",
+                         (i>1) ? "   " : "", line );
+         if ((p >= CLI_MAX_INPUT) || (nextline != NULL)) {
+            cli_addMessage(buf);
+            p = 0;
+         }
+         line = nextline;
       }
+      free(tmp);
       lua_pop(L, 1);  /* pop result */
    }
 
@@ -219,12 +228,13 @@ void cli_addMessage( const char *msg )
 static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i;
+   int i, start;
 
-   /* Draw the text. */
-   for (i=0; i<array_size(cli_buffer); i++)
+   start = MAX(0, array_size(cli_buffer) - 
+               (CLI_HEIGHT-80-BUTTON_HEIGHT)/(cli_font->h+5));
+   for (i=start; i<array_size(cli_buffer); i++)
       gl_printMaxRaw( cli_font, w, bx,
-            by + h - (i+1)*(cli_font->h+5),
+            by + h - (i+1-start)*(cli_font->h+5),
             &cBlack, cli_buffer[i] );
 }
 
