@@ -295,7 +295,7 @@ int nlua_loadBasic( lua_State* L )
  * Loads a module into the current Lua state from inside the data file.
  *
  *    @param module Name of the module to load.
- *    @return An error string on error.
+ *    @return The return value of the chunk, or true.
  */
 static int nlua_packfileLoader( lua_State* L )
 {
@@ -318,8 +318,8 @@ static int nlua_packfileLoader( lua_State* L )
       lua_getfield(L,-1,filename); /* t, f */
       /* Already included. */
       if (!lua_isnil(L,-1)) {
-         lua_pop(L,2); /* */
-         return 0;
+         lua_remove(L, -2); /* val */
+         return 1;
       }
       lua_pop(L,2); /* */
    }
@@ -346,7 +346,8 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      lua_pushfstring(L, "%s not found in ndata.", filename);
+      DEBUG("include(): %s not found in ndata.", filename);
+      luaL_error(L, "include(): %s not found in ndata.", filename);
       return 1;
    }
 
@@ -359,21 +360,26 @@ static int nlua_packfileLoader( lua_State* L )
    lua_setfenv(L, -2);
 
    /* run the buffer */
-   if (lua_pcall(L, 0, LUA_MULTRET, 0) != 0) {
+   if (lua_pcall(L, 0, 1, 0) != 0) {
       /* will push the current error from the dobuffer */
       lua_error(L);
       return 1;
    }
 
    /* Mark as loaded. */
-   lua_getfield(L, envtab, "_include"); /* t */
-   lua_pushboolean(L, 1);           /* t b */
-   lua_setfield(L, -2, filename);   /* t */
-   lua_pop(L, 1);
+   /* val */
+   if (lua_isnil(L,-1)) {
+      lua_pop(L, 1);
+      lua_pushboolean(L, 1);
+   }
+   lua_getfield(L, envtab, "_include"); /* val, t */
+   lua_pushvalue(L, -2); /* val, t, val */
+   lua_setfield(L, -2, filename);   /* val, t */
+   lua_pop(L, 1); /* val */
 
    /* cleanup, success */
    free(buf);
-   return 0;
+   return 1;
 }
 
 
