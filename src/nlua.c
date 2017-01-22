@@ -79,7 +79,7 @@ int nlua_dobufenv(nlua_env env,
                   const char *name) {
    if (luaL_loadbuffer(naevL, buff, sz, name) != 0)
       return -1;
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   nlua_pushenv(env);
    lua_setfenv(naevL, -2);
    if (lua_pcall(naevL, 0, LUA_MULTRET, 0) != 0)
       return -1;
@@ -96,7 +96,7 @@ int nlua_dobufenv(nlua_env env,
 int nlua_dofileenv(nlua_env env, const char *filename) {
    if (luaL_loadfile(naevL, filename) != 0)
       return -1;
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   nlua_pushenv(env);
    lua_setfenv(naevL, -2);
    if (lua_pcall(naevL, 0, LUA_MULTRET, 0) != 0)
       return -1;
@@ -152,6 +152,16 @@ void nlua_freeEnv(nlua_env env) {
 
 
 /*
+ * @brief Push environment table to stack
+ * 
+ *    @param env Environment.
+ */
+void nlua_pushenv(nlua_env env) {
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+}
+
+
+/*
  * @brief Gets variable from enviornment and pushes it to stack
  * 
  * This is meant to replace lua_getglobal()
@@ -160,7 +170,7 @@ void nlua_freeEnv(nlua_env env) {
  *    @param name Name of variable.
  */
 void nlua_getenv(nlua_env env, const char *name) {
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* env */
+   nlua_pushenv(env); /* env */
    lua_getfield(naevL, -1, name); /* env, value */
    lua_remove(naevL, -2); /* value */
 }
@@ -176,7 +186,7 @@ void nlua_getenv(nlua_env env, const char *name) {
  */
 void nlua_setenv(nlua_env env, const char *name) {
    /* value */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* value, env */
+   nlua_pushenv(env); /* value, env */
    lua_insert(naevL, -2); /* env, value */
    lua_setfield(naevL, -2, name); /* env */
    lua_pop(naevL, 1); /*  */

@@ -303,7 +303,8 @@ int cli_init (void)
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
    nlua_loadTk( cli_env );
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, cli_env);
+
+   nlua_pushenv(cli_env);
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
@@ -403,7 +404,7 @@ static void cli_input( unsigned int wid, char *unused )
    else if (status == 0) {
       lua_remove(naevL,1);
 
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, cli_env);
+      nlua_pushenv(cli_env);
       lua_setfenv(naevL, -2);
 
       if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {

@@ -972,7 +972,7 @@ static void ai_create( Pilot* pilot, char *param )
          func = "equip";
       }
       nlua_getenv(env, func);
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+      nlua_pushenv(env);
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
       if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */

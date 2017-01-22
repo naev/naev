@@ -272,7 +272,7 @@ int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   nlua_pushenv(env);
 
    lua_pushnil(naevL);         /* nil */
    /* str, nil */
@@ -400,7 +400,7 @@ int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
 {
    int ret;
 
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   nlua_pushenv(env);
    ret = nxml_unpersistDataNode(naevL,parent);
    lua_pop(naevL,1);
 
