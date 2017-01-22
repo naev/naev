@@ -47,18 +47,32 @@ int nlua_loadBasic( lua_State* L );
 int nlua_errTrace( lua_State *L );
 
 
+/*
+ * @brief Initializes the global Lua state.
+ */
 void lua_init(void) {
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
 }
 
 
+/*
+ * @brief Closes the global Lua state.
+ */
 void lua_exit(void) {
    lua_close(naevL);
    naevL = NULL;
 }
 
 
+/*
+ * @brief Run code from buffer in Lua environment.
+ *
+ *    @param env Lua environment.
+ *    @param buff Pointer to buffer.
+ *    @param sz Size of buffer.
+ *    @param name Name to use in error messages.
+ */
 int nlua_dobufenv(nlua_env env,
                   const char *buff,
                   size_t sz,
@@ -73,6 +87,12 @@ int nlua_dobufenv(nlua_env env,
 }
 
 
+/*
+ * @brief Run code a file in Lua environment.
+ *
+ *    @param env Lua environment.
+ *    @param filename Filename of Lua script.
+ */
 int nlua_dofileenv(nlua_env env, const char *filename) {
    if (luaL_loadfile(naevL, filename) != 0)
       return -1;
@@ -84,6 +104,13 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
 }
 
 
+/*
+ * @brief Create an new environment in global Lua state.
+ *
+ * An "environment" is a table used with setfenv for sandboxing.
+ *
+ *    @param rw Load libraries in read/write mode.
+ */
 nlua_env nlua_newEnv(int rw) {
    nlua_env ref;
    lua_newtable(naevL);
@@ -113,12 +140,25 @@ nlua_env nlua_newEnv(int rw) {
 }
 
 
+/*
+ * @brief Frees an environment created with nlua_newEnv()
+ *
+ *    @param env Enviornment to free.
+ */
 void nlua_freeEnv(nlua_env env) {
    if (naevL != NULL)
    	luaL_unref(naevL, LUA_REGISTRYINDEX, env);
 }
 
 
+/*
+ * @brief Gets variable from enviornment and pushes it to stack
+ * 
+ * This is meant to replace lua_getglobal()
+ *
+ *    @param env Environment.
+ *    @param name Name of variable.
+ */
 void nlua_getenv(nlua_env env, const char *name) {
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* env */
    lua_getfield(naevL, -1, name); /* env, value */
@@ -126,6 +166,14 @@ void nlua_getenv(nlua_env env, const char *name) {
 }
 
 
+/*
+ * @brief Pops a value from the stack and sets it in the environment.
+ * 
+ * This is meant to replace lua_setglobal()
+ *
+ *    @param env Environment.
+ *    @param name Name of variable.
+ */
 void nlua_setenv(nlua_env env, const char *name) {
    /* value */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env); /* value, env */
@@ -135,6 +183,16 @@ void nlua_setenv(nlua_env env, const char *name) {
 }
 
 
+/*
+ * @brief Registers C functions as lua library in environment
+ * 
+ * This is meant to replace luaL_register()
+ *
+ *    @param env Environment.
+ *    @param libname Name of library table.
+ *    @param l Array of functions to register.
+ *    @param metatable Library will be used as metatable (so register __index).
+ */
 void nlua_register(nlua_env env, const char *libname,
                    const luaL_Reg *l, int metatable) {
    if (luaL_newmetatable(naevL, libname)) {
@@ -403,6 +461,13 @@ int nlua_errTrace( lua_State *L )
 }
 
 
+/*
+ * @brief Wrapper around lua_pcall() that handles errors and enviornments
+ * 
+ *    @param env Environment.
+ *    @param nargs Number of arguments to pass.
+ *    @param nresults Number of return values to take.
+ */
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    int errf, ret, top, prev;
 
