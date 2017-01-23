@@ -1229,7 +1229,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
       /* Try to maintain same ship selected. */
       s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-      if ((s != NULL) && (selship != NULL) && (strcmp(s,selship)!=0)) {
+      if ((s != NULL) && (strcmp(s,selship)!=0)) {
          ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
          if (ret != 0) /* Failed to maintain. */
             toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );

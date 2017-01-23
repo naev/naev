@@ -164,6 +164,7 @@ int newsL_add( lua_State *L )
 
    NLUA_CHECKRW(L);
 
+   n_article = NULL;
    title   = NULL;
    content = NULL;
    faction = NULL;
@@ -220,10 +221,8 @@ int newsL_add( lua_State *L )
             date = ntime_get();
             date_to_rm = 50000000000000;
          }
-
          lua_pop(L, 1);
       }
-
       lua_pop(L, 1);
 
       /* If we're landed, we should regenerate the news buffer. */
@@ -243,7 +242,7 @@ int newsL_add( lua_State *L )
    }
 
    faction = strdup(lua_tostring(L, 1));
-   title = strdup(lua_tostring(L, 2));
+   title   = strdup(lua_tostring(L, 2));
    content = strdup(lua_tostring(L, 3));
 
    /* get date and date to remove, or leave at defaults*/
@@ -264,7 +263,7 @@ int newsL_add( lua_State *L )
    if (title && content && faction)
       n_article = new_article(title, content, faction, date, date_to_rm);
    else
-      WARN("Bad arguments");
+      NLUA_ERROR(L,"Bad arguments");
 
    lua_pusharticle(L, n_article->id);
 
