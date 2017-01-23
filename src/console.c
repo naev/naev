@@ -254,8 +254,8 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
       case SDLK_UP:
          for (i=cli_history-1; i>=0; i--) {
             if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
-               // Strip escape codes from beginning and end
-               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               /* Strip escape codes from beginning and end */
+               str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
                cli_history = i;
@@ -275,7 +275,7 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
          /* Find next buffer. */
          for (i=cli_history+1; i<array_size(cli_buffer); i++) {
             if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
-               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
                cli_history = i;
