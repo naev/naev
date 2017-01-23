@@ -54,8 +54,13 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 #define CLI_MAX_INPUT      1024 /** Maximum characters typed into console. */
 #define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
 #define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
+/** Height of console box */
+#define CLI_CONSOLE_HEIGHT  (CLI_HEIGHT-80-BUTTON_HEIGHT)
+/** Number of lines displayed at once */
+#define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5))
 static char **cli_buffer; /**< CLI buffer. */
 static int cli_history     = 0; /**< Position in history. */
+static int cli_scroll_pos  = -1; /**< Pistion in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
 
 
@@ -230,8 +235,11 @@ static void cli_render( double bx, double by, double w, double h, void *data )
    (void) data;
    int i, start;
 
-   start = MAX(0, array_size(cli_buffer) - 
-               (CLI_HEIGHT-80-BUTTON_HEIGHT)/(cli_font->h+5));
+   if (cli_scroll_pos == -1)
+      start = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
+   else
+      start = cli_scroll_pos;
+
    for (i=start; i<array_size(cli_buffer); i++)
       gl_printMaxRaw( cli_font, w, bx,
             by + h - (i+1-start)*(cli_font->h+5),
@@ -245,7 +253,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
 {
    (void) mod;
-   int i;
+   int i, pos;
    char *str;
 
    switch (key) {
@@ -284,6 +292,23 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
          }
          cli_history = i-1;
          window_setInput( wid, "inpInput", NULL );
+         return 1;
+
+      /* Scroll up */
+      case SDLK_PAGEUP:
+         pos = cli_scroll_pos;
+         if (pos == -1)
+            pos = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
+         cli_scroll_pos = MAX(0, pos - CLI_MAX_LINES);
+         return 1;
+
+      /* Scroll down */
+      case SDLK_PAGEDOWN:
+         if (cli_scroll_pos != -1) {
+            cli_scroll_pos = cli_scroll_pos + CLI_MAX_LINES;
+            if (cli_scroll_pos > (array_size(cli_buffer) - CLI_MAX_LINES))
+               cli_scroll_pos = -1;
+         }
          return 1;
 
       default:
@@ -440,6 +465,9 @@ static void cli_input( unsigned int wid, char *unused )
 
    /* Clear the box now. */
    window_setInput( wid, "inpInput", NULL );
+
+   /* Scroll to bottom */
+   cli_scroll_pos = -1;
 }
 
 
@@ -493,7 +521,7 @@ void cli_open (void)
 
    /* Custom console widget. */
    window_addCust( wid, 20, -40,
-         CLI_WIDTH-40, CLI_HEIGHT-80-BUTTON_HEIGHT,
+         CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL );
 }
 
