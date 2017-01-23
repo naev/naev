@@ -436,7 +436,9 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          (key != SDLK_RETURN) &&
          (key != SDLK_KP_ENTER) &&
          (key != SDLK_HOME) &&
-         (key != SDLK_END))
+         (key != SDLK_END) &&
+         (key != SDLK_PAGEUP) &&
+         (key != SDLK_PAGEDOWN))
 #if SDL_VERSION_ATLEAST(2,0,0)
       return 1; /* SDL2 uses TextInput and should eat most keys. Om nom. */
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
