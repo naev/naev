@@ -265,23 +265,18 @@ int nlua_loadBasic( lua_State* L )
          "collectgarbage",
          "dofile",
          "getfenv",
-         "getmetatable",
          "load",
          "loadfile",
          "loadstring",
-         "rawequal",
-         "rawget",
-         "rawset",
          "setfenv",
-         /*"setmetatable",*/
-         "END"
+	 NULL
    };
 
 
    luaL_openlibs(L);
 
    /* replace non-safe functions */
-   for (i=0; strcmp(override[i],"END")!=0; i++) {
+   for (i=0; override[i]!=NULL; i++) {
       lua_pushnil(L);
       lua_setglobal(L, override[i]);
    }
