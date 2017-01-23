@@ -71,9 +71,9 @@ static const luaL_reg evt_methods[] = {
  * @brief Loads the event Lua library.
  *    @param L Lua state.
  */
-int nlua_loadEvt( lua_State *L )
+int nlua_loadEvt( nlua_env env )
 {
-   luaL_register(L, "evt", evt_methods);
+   nlua_register(env, "evt", evt_methods, 0);
    return 0;
 }
 
@@ -81,25 +81,14 @@ int nlua_loadEvt( lua_State *L )
 /**
  * @brief Sets up the Lua environment to run a function.
  */
-lua_State *event_setupLua( Event_t *ev, const char *func )
+void event_setupLua( Event_t *ev, const char *func )
 {
-   lua_State *L;
-
-   /* Load event. */
-   L = ev->L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-
    /* Set up event pointer. */
-   lua_pushlightuserdata( L, ev );
-   lua_setglobal( L, "__evt" );
+   lua_pushlightuserdata( naevL, ev );
+   lua_setglobal( naevL, "__evt" );
 
    /* Get function. */
-   lua_getglobal(L, func );
-
-   return L;
+   nlua_getenv(ev->env, func );
 }
 
 
@@ -108,8 +97,11 @@ lua_State *event_setupLua( Event_t *ev, const char *func )
  */
 int event_runLua( Event_t *ev, const char *func )
 {
+   int ret;
    event_setupLua( ev, func );
-   return event_runLuaFunc( ev, func, 0 );
+   ret = event_runLuaFunc( ev, func, 0 );
+   event_runEnd();
+   return ret;
 }
 
 
@@ -135,23 +127,13 @@ Event_t *event_getFromLua( lua_State *L )
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 {
-   int ret, errf;
+   int ret;
    const char* err;
-   lua_State *L;
    int evt_delete;
 
-   /* Comfortability. */
-   L = ev->L;
-
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
-   ret = lua_pcall(L, nargs, 0, errf);
+   ret = nlua_pcall(ev->env, nargs, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Event '%s' -> '%s': %s",
                event_getData(ev->id), func, (err) ? err : "unknown error");
@@ -159,16 +141,13 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
       }
       else
          ret = 1;
-      lua_pop(L, 1);
+      lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(L, 1);
-#endif /* DEBUGGING */
 
    /* Time to remove the event. */
-   lua_getglobal( L, "__evt_delete" );
-   evt_delete = lua_toboolean(L,-1);
-   lua_pop(L,1);
+   lua_getglobal( naevL, "__evt_delete" );
+   evt_delete = lua_toboolean(naevL,-1);
+   lua_pop(naevL,1);
    if (evt_delete) {
       ret = 2;
       event_remove( ev->id );

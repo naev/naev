@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -129,27 +128,6 @@ static const luaL_reg playerL_methods[] = {
    { "teleport", playerL_teleport },
    {0,0}
 }; /**< Player Lua methods. */
-static const luaL_reg playerL_cond_methods[] = {
-   { "name", playerL_getname },
-   { "ship", playerL_shipname },
-   { "credits", playerL_credits },
-   { "getRating", playerL_getRating },
-   { "pos", playerL_getPosition },
-   { "pilot", playerL_getPilot },
-   { "jumps", playerL_jumps },
-   { "fuel", playerL_fuel },
-   { "autonav", playerL_autonav },
-   { "autonavDest", playerL_autonavDest },
-   { "ships", playerL_ships },
-   { "shipOutfits", playerL_shipOutfits },
-   { "outfits", playerL_outfits },
-   { "numOutfit", playerL_numOutfit },
-   { "misnActive", playerL_misnActive },
-   { "misnDone", playerL_misnDone },
-   { "evtActive", playerL_evtActive },
-   { "evtDone", playerL_evtDone },
-   {0,0}
-}; /**< Conditional player Lua methods. */
 
 
 /*
@@ -160,15 +138,11 @@ static Pilot* playerL_newShip( lua_State *L );
 
 /**
  * @brief Loads the player Lua library.
- *    @param L Lua state.
- *    @param readonly Whether to open in read-only form.
+ *    @param env Lua environment.
  */
-int nlua_loadPlayer( lua_State *L, int readonly )
+int nlua_loadPlayer( nlua_env env )
 {
-   if (readonly == 0)
-      luaL_register(L, "player", playerL_methods);
-   else
-      luaL_register(L, "player", playerL_cond_methods);
+   nlua_register(env, "player", playerL_methods, 0);
    return 0;
 }
 
@@ -219,6 +193,8 @@ static int playerL_pay( lua_State *L )
 {
    double money;
 
+   NLUA_CHECKRW(L);
+
    money = luaL_checknumber(L,1);
    player_modCredits( (credits_t)round(money) );
 
@@ -267,6 +243,8 @@ static int playerL_msg( lua_State *L )
 {
    const char* str;
 
+   NLUA_CHECKRW(L);
+
    str = luaL_checkstring(L,1);
    player_messageRaw(str);
 
@@ -280,6 +258,7 @@ static int playerL_msg( lua_State *L )
 static int playerL_msgClear( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    gui_clearMessages();
    return 0;
 }
@@ -299,6 +278,8 @@ static int playerL_omsgAdd( lua_State *L )
    double duration;
    unsigned int id;
    int fontsize;
+
+   NLUA_CHECKRW(L);
 
    /* Input. */
    str      = luaL_checkstring(L,1);
@@ -334,6 +315,8 @@ static int playerL_omsgChange( lua_State *L )
    unsigned int id;
    int ret;
 
+   NLUA_CHECKRW(L);
+
    /* Input. */
    id       = luaL_checklong(L,1);
    str      = luaL_checkstring(L,2);
@@ -358,6 +341,7 @@ static int playerL_omsgChange( lua_State *L )
 static int playerL_omsgRm( lua_State *L )
 {
    unsigned int id;
+   NLUA_CHECKRW(L);
    id       = luaL_checklong(L,1);
    omsg_rm( id );
    return 0;
@@ -372,6 +356,7 @@ static int playerL_omsgRm( lua_State *L )
 static int playerL_allowSave( lua_State *L )
 {
    unsigned int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L)==0)
       b = 1;
    else
@@ -469,6 +454,8 @@ static int playerL_refuel( lua_State *L )
 {
    double f;
 
+   NLUA_CHECKRW(L);
+
    if (lua_gettop(L) > 0) {
       f = luaL_checknumber(L,1);
       player.p->fuel += f;
@@ -546,6 +533,8 @@ static int playerL_cinematics( lua_State *L )
    const char *abort_msg;
    int f_gui, f_2x;
 
+   NLUA_CHECKRW(L);
+
    /* Defaults. */
    abort_msg = NULL;
    f_gui     = 0;
@@ -613,6 +602,7 @@ static int playerL_cinematics( lua_State *L )
 static int playerL_unboard( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    board_unboard();
    return 0;
 }
@@ -628,6 +618,8 @@ static int playerL_unboard( lua_State *L )
  */
 static int playerL_takeoff( lua_State *L )
 {
+   NLUA_CHECKRW(L);
+
    if (!landed) {
       NLUA_ERROR(L,"Player must be landed to force takeoff.");
       return 0;
@@ -657,6 +649,8 @@ static int playerL_allowLand( lua_State *L )
 {
    int b;
    const char *str;
+
+   NLUA_CHECKRW(L);
 
    str = NULL;
    if (lua_gettop(L) > 0) {
@@ -700,6 +694,8 @@ static int playerL_landWindow( lua_State *L )
    const char *str;
    int win;
 
+   NLUA_CHECKRW(L);
+
    if (!landed) {
       NLUA_ERROR(L, "Must be landed to set the active land window.");
       return 0;
@@ -739,6 +735,7 @@ static int playerL_landWindow( lua_State *L )
 static int playerL_commclose( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    comm_queueClose();
    return 0;
 }
@@ -902,6 +899,8 @@ static int playerL_addOutfit( lua_State *L  )
    Outfit *o;
    int q;
 
+   NLUA_CHECKRW(L);
+
    /* Defaults. */
    q = 1;
 
@@ -942,6 +941,8 @@ static int playerL_rmOutfit( lua_State *L )
    Outfit *o, **outfits;
    const PlayerOutfit_t *poutfits;
    int i, q, noutfits;
+
+   NLUA_CHECKRW(L);
 
    /* Defaults. */
    q = 1;
@@ -1073,6 +1074,7 @@ static Pilot* playerL_newShip( lua_State *L )
  */
 static int playerL_addShip( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    playerL_newShip( L );
    return 0;
 }
@@ -1092,6 +1094,8 @@ static int playerL_swapShip( lua_State *L )
    Pilot *p;
    char *cur;
    int remship;
+
+   NLUA_CHECKRW(L);
 
    remship = lua_toboolean(L,5);
    p       = playerL_newShip( L );
@@ -1233,6 +1237,8 @@ static int playerL_teleport( lua_State *L )
    Planet *pnt;
    StarSystem *sys;
    const char *name, *pntname;
+
+   NLUA_CHECKRW(L);
 
    /* Must not be landed. */
    if (landed)

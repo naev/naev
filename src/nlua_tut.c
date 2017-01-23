@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nstd.h"
@@ -36,9 +35,9 @@ static const luaL_reg tut_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int nlua_loadTut( lua_State *L )
+int nlua_loadTut( nlua_env env )
 {
-   luaL_register(L, "tut", tut_methods);
+   nlua_register(env, "tut", tut_methods, 0);
    return 0;
 }
 

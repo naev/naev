@@ -54,8 +54,8 @@ static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 /**
  * @brief Backgrounds.
  */
-static lua_State *bkg_cur_L = NULL; /**< Current Lua state. */
-static lua_State *bkg_def_L = NULL; /**< Default Lua state. */
+static nlua_env bkg_cur_env = LUA_NOREF; /**< Current Lua state. */
+static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
 
 
 /*
@@ -76,7 +76,7 @@ static GLfloat star_y = 0.; /**< Star Y movement. */
  * Prototypes.
  */
 static void background_renderImages( background_image_t *bkg_arr );
-static lua_State* background_create( const char *path );
+static nlua_env background_create( const char *path );
 static void background_clearCurrent (void);
 static void background_clearImgArr( background_image_t **arr );
 /* Sorting. */
@@ -419,44 +419,44 @@ static void background_renderImages( background_image_t *bkg_arr )
 /**
  * @brief Creates a background Lua state from a script.
  */
-static lua_State* background_create( const char *name )
+static nlua_env background_create( const char *name )
 {
    uint32_t bufsize;
    char path[PATH_MAX];
    char *buf;
-   lua_State *L;
+   nlua_env env;
 
    /* Create file name. */
    nsnprintf( path, sizeof(path), "dat/bkg/%s.lua", name );
 
-   /* Create the Lua state. */
-   L = nlua_newState();
-   nlua_loadStandard(L,1);
-   nlua_loadTex(L,0);
-   nlua_loadCol(L,0);
-   nlua_loadBackground(L,0);
+   /* Create the Lua env. */
+   env = nlua_newEnv(1);
+   nlua_loadStandard(env);
+   nlua_loadTex(env);
+   nlua_loadCol(env);
+   nlua_loadBackground(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN("Default background script '%s' not found.", path);
-      lua_close(L);
-      return NULL;
+      nlua_freeEnv(env);
+      return LUA_NOREF;
    }
 
    /* Load file. */
-   if (luaL_dobuffer(L, buf, bufsize, path) != 0) {
+   if (nlua_dobufenv(env, buf, bufsize, path) != 0) {
       WARN("Error loading background file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            path, lua_tostring(L,-1));
+            path, lua_tostring(naevL,-1));
       free(buf);
-      lua_close(L);
-      return NULL;
+      nlua_freeEnv(env);
+      return LUA_NOREF;
    }
    free(buf);
 
-   return L;
+   return env;
 }
 
 
@@ -466,7 +466,7 @@ static lua_State* background_create( const char *name )
 int background_init (void)
 {
    /* Load Lua. */
-   bkg_def_L = background_create( "default" );
+   bkg_def_env = background_create( "default" );
    return 0;
 }
 
@@ -476,8 +476,8 @@ int background_init (void)
  */
 int background_load( const char *name )
 {
-   int ret, errf;
-   lua_State *L;
+   int ret;
+   nlua_env env;
    const char *err;
 
    /* Free if exists. */
@@ -485,35 +485,25 @@ int background_load( const char *name )
 
    /* Load default. */
    if (name == NULL)
-      bkg_cur_L = bkg_def_L;
+      bkg_cur_env = bkg_def_env;
    /* Load new script. */
    else
-      bkg_cur_L = background_create( name );
+      bkg_cur_env = background_create( name );
 
    /* Comfort. */
-   L = bkg_cur_L;
-   if (L == NULL)
+   env = bkg_cur_env;
+   if (env == LUA_NOREF)
       return -1;
 
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
    /* Run Lua. */
-   lua_getglobal(L,"background");
-   ret = lua_pcall(L, 0, 0, errf);
+   nlua_getenv(env,"background");
+   ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN("Background -> 'background' : %s",
             (err) ? err : "unknown error");
-      lua_pop(L, 1);
+      lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(L, 1);
-#endif /* DEBUGGING */
    return ret;
 }
 
@@ -523,11 +513,11 @@ int background_load( const char *name )
  */
 static void background_clearCurrent (void)
 {
-   if (bkg_cur_L != bkg_def_L) {
-      if (bkg_cur_L != NULL)
-         lua_close( bkg_cur_L );
+   if (bkg_cur_env != bkg_def_env) {
+      if (bkg_cur_env != LUA_NOREF)
+         nlua_freeEnv( bkg_cur_env );
    }
-   bkg_cur_L = NULL;
+   bkg_cur_env = LUA_NOREF;
 }
 
 
@@ -576,9 +566,9 @@ void background_free (void)
 {
    /* Free the Lua. */
    background_clear();
-   if (bkg_def_L != NULL)
-      lua_close( bkg_def_L );
-   bkg_def_L = NULL;
+   if (bkg_def_env != LUA_NOREF)
+      nlua_freeEnv( bkg_def_env );
+   bkg_def_env = LUA_NOREF;
 
    /* Free the images. */
    if (bkg_image_arr_ft != NULL) {
@@ -591,9 +581,9 @@ void background_free (void)
    }
 
    /* Free the Lua. */
-   if (bkg_cur_L != NULL)
-      lua_close( bkg_cur_L );
-   bkg_cur_L = NULL;
+   if (bkg_cur_env != LUA_NOREF)
+      nlua_freeEnv( bkg_cur_env );
+   bkg_cur_env = LUA_NOREF;
 
    /* Destroy VBOs. */
    if (star_vertexVBO != NULL) {

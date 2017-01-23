@@ -16,7 +16,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "dialogue.h"
@@ -44,12 +43,12 @@ static const luaL_reg tk_methods[] = {
 /**
  * @brief Loads the Toolkit Lua library.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadTk( lua_State *L )
+int nlua_loadTk( nlua_env env )
 {
-   luaL_register(L, "tk", tk_methods);
+   nlua_register(env, "tk", tk_methods, 0);
    return 0;
 }
 

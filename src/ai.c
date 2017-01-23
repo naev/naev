@@ -85,7 +85,6 @@
 #include "escort.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "nlua_vec2.h"
 #include "nlua_rnd.h"
 #include "nlua_pilot.h"
@@ -130,7 +129,7 @@
  * all the AI profiles
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
-static lua_State *equip_L = NULL; /**< Equipment state. */
+static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
 
 
 /*
@@ -144,7 +143,7 @@ extern int pilot_nstack;
  * prototypes
  */
 /* Internal C routines */
-static void ai_run( lua_State *L, const char *funcname );
+static void ai_run( nlua_env env, const char *funcname );
 static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
@@ -410,14 +409,13 @@ static Task* ai_curTask( Pilot* pilot )
  */
 static void ai_setMemory (void)
 {
-   lua_State *L;
-   L = cur_pilot->ai->L;
+   nlua_env env;
+   env = cur_pilot->ai->env;
 
-   lua_getglobal(L, AI_MEM); /* pm */
-   lua_pushnumber(L, cur_pilot->id); /* pm, id */
-   lua_gettable(L, -2); /* pm, t */
-   lua_setglobal(L, "mem"); /* pm */
-   lua_pop(L,1); /* */
+   nlua_getenv(env, AI_MEM); /* pm */
+   lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
+   nlua_setenv(env, "mem"); /* pm */
+   lua_pop(naevL, 1); /* */
 }
 
 
@@ -439,37 +437,23 @@ void ai_setPilot( Pilot *p )
  *    @param[in] L Lua state to run function on.
  *    @param[in] funcname Function to run.
  */
-static void ai_run( lua_State *L, const char *funcname )
+static void ai_run( nlua_env env, const char *funcname )
 {
-   int errf;
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-   lua_getglobal(L, funcname);
+   nlua_getenv(env, funcname);
 
 #ifdef DEBUGGING
-   if (lua_isnil(L, -1)) {
+   if (lua_isnil(naevL, -1)) {
       WARN("Pilot '%s' ai -> '%s': attempting to run non-existant function",
             cur_pilot->name, funcname );
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+      lua_pop(naevL,1);
       return;
    }
 #endif /* DEBUGGING */
 
-   if (lua_pcall(L, 0, 0, errf)) { /* error has occurred */
-      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
-      lua_pop(L,1);
+   if (nlua_pcall(env, 0, 0)) { /* error has occurred */
+      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1); /* Pop the cfunction. */
-#endif /* DEBUGGING */
 }
 
 
@@ -486,7 +470,6 @@ int ai_pinit( Pilot *p, const char *ai )
 {
    int i, n;
    AI_Profile *prof;
-   lua_State *L;
    char buf[PATH_MAX], param[PATH_MAX];
 
    /* Split parameter from AI itself. */
@@ -519,31 +502,29 @@ int ai_pinit( Pilot *p, const char *ai )
       prof = ai_getProfile(buf);
    }
    p->ai = prof;
-   L = p->ai->L;
 
    /* Adds a new pilot memory in the memory table. */
-   lua_getglobal(L, AI_MEM);     /* pm */
-   lua_newtable(L);              /* pm, nt */
-   lua_pushnumber(L, p->id);     /* pm, nt, n */
-   lua_pushvalue(L,-2);          /* pm, nt, n, nt */
-   lua_settable(L,-4);           /* pm, nt */
+   nlua_getenv(p->ai->env, AI_MEM);  /* pm */
+   lua_newtable(naevL);              /* pm, nt */
+   lua_pushvalue(naevL, -1);         /* pm, nt, nt */
+   lua_rawseti(naevL, -3, p->id);    /* pm, nt */
 
    /* Copy defaults over. */
-   lua_pushstring(L, AI_MEM_DEF);/* pm, nt, s */
-   lua_gettable(L, -3);          /* pm, nt, dt */
+   lua_pushstring(naevL, AI_MEM_DEF);/* pm, nt, s */
+   lua_gettable(naevL, -3);          /* pm, nt, dt */
 #if DEBUGGING
-   if (lua_isnil(L,-1))
+   if (lua_isnil(naevL,-1))
       WARN( "AI profile '%s' has no default memory for pilot '%s'.",
             buf, p->name );
 #endif
-   lua_pushnil(L);               /* pm, nt, dt, nil */
-   while (lua_next(L,-2) != 0) { /* pm, nt, dt, k, v */
-      lua_pushvalue(L,-2);       /* pm, nt, dt, k, v, k */
-      lua_pushvalue(L,-2);       /* pm, nt, dt, k, v, k, v */
-      lua_remove(L, -3);         /* pm, nt, dt, k, k, v */
-      lua_settable(L,-5);        /* pm, nt, dt, k */
+   lua_pushnil(naevL);               /* pm, nt, dt, nil */
+   while (lua_next(naevL,-2) != 0) { /* pm, nt, dt, k, v */
+      lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k */
+      lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k, v */
+      lua_remove(naevL, -3);         /* pm, nt, dt, k, k, v */
+      lua_settable(naevL,-5);        /* pm, nt, dt, k */
    }                             /* pm, nt, dt */
-   lua_pop(L,3);                 /* */
+   lua_pop(naevL,3);                 /* */
 
    /* Create the pilot. */
    ai_create( p, (n!=0) ? param : NULL );
@@ -580,16 +561,15 @@ void ai_cleartasks( Pilot* p )
  */
 void ai_destroy( Pilot* p )
 {
-   lua_State *L;
-   L = p->ai->L;
+   nlua_env env;
+   env = p->ai->env;
 
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
-      lua_getglobal(L, AI_MEM);  /* t */
-      lua_pushnumber(L, p->id);  /* t, id */
-      lua_pushnil(L);            /* t, id, nil */
-      lua_settable(L,-3);        /* t */
-      lua_pop(L,1);              /* */
+      nlua_getenv(env, AI_MEM);  /* t */
+      lua_pushnil(naevL);        /* t, nil */
+      lua_rawseti(naevL,-2, p->id);/* t */
+      lua_pop(naevL, 1);         /* */
    }
 
    /* Clear the tasks. */
@@ -648,26 +628,22 @@ static int ai_loadEquip (void)
    char *buf;
    uint32_t bufsize;
    const char *filename = "dat/factions/equip/generic.lua";
-   lua_State *L;
 
    /* Make sure doesn't already exist. */
-   if (equip_L != NULL)
-      lua_close(equip_L);
+   if (equip_env != LUA_NOREF)
+      nlua_freeEnv(equip_env);
 
    /* Create new state. */
-   equip_L = nlua_newState();
-   L = equip_L;
-
-   /* Prepare state. */
-   nlua_loadStandard(L,0);
+   equip_env = nlua_newEnv(1);
+   nlua_loadStandard(equip_env);
 
    /* Load the file. */
    buf = ndata_read( filename, &bufsize );
-   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+   if (nlua_dobufenv(equip_env, buf, bufsize, filename) != 0) {
       WARN("Error loading file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
-            filename, lua_tostring(L,-1));
+            filename, lua_tostring(naevL, -1));
       return -1;
    }
    free(buf);
@@ -686,7 +662,7 @@ static int ai_loadProfile( const char* filename )
 {
    char* buf = NULL;
    uint32_t bufsize = 0;
-   lua_State *L;
+   nlua_env env;
    AI_Profile *prof;
    size_t len;
 
@@ -704,41 +680,35 @@ static int ai_loadProfile( const char* filename )
    prof->name[len] = '\0';
 
    /* Create Lua. */
-   prof->L = nlua_newState();
-   if (prof->L == NULL) {
-      WARN("Unable to create a new Lua state");
-      return -1;
-   }
-   L = prof->L;
-
-   /* Prepare API. */
-   nlua_loadStandard(L,0);
+   env = nlua_newEnv(1);
+   nlua_loadStandard(env);
+   prof->env = env;
 
    /* Register C functions in Lua */
-   luaL_register(L, "ai", aiL_methods);
+   nlua_register(env, "ai", aiL_methods, 0);
 
    /* Add the player memory table. */
-   lua_newtable(L);              /* pm */
-   lua_pushvalue(L,-1);          /* pm, pm */
-   lua_setglobal(L, AI_MEM );    /* pm */
+   lua_newtable(naevL);              /* pm */
+   lua_pushvalue(naevL, -1);         /* pm, pm */
+   nlua_setenv(env, AI_MEM);         /* pm */
 
    /* Set "mem" to be default template. */
-   lua_newtable(L);              /* pm, nt */
-   lua_pushvalue(L,-1);          /* pm, nt, nt */
-   lua_setfield(L,-3,AI_MEM_DEF); /* pm, nt */
-   lua_setglobal(L, "mem");      /* pm */
-   lua_pop(L,1);                 /* */
+   lua_newtable(naevL);              /* pm, nt */
+   lua_pushvalue(naevL,-1);          /* pm, nt, nt */
+   lua_setfield(naevL,-3,AI_MEM_DEF); /* pm, nt */
+   nlua_setenv(env, "mem");          /* pm */
+   lua_pop(naevL, 1);                /*  */
 
    /* Now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
-   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+   if (nlua_dobufenv(env, buf, bufsize, filename) != 0) {
       WARN("Error loading AI file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
-            filename, lua_tostring(L,-1));
+            filename, lua_tostring(naevL,-1));
       array_erase( &profiles, prof, &prof[1] );
       free(prof->name);
-      lua_close( L );
+      nlua_freeEnv( env );
       free(buf);
       return -1;
    }
@@ -780,14 +750,14 @@ void ai_exit (void)
    /* Free AI profiles. */
    for (i=0; i<array_size(profiles); i++) {
       free(profiles[i].name);
-      lua_close(profiles[i].L);
+      nlua_freeEnv(profiles[i].env);
    }
    array_free( profiles );
 
    /* Free equipment Lua. */
-   if (equip_L != NULL)
-      lua_close(equip_L);
-   equip_L = NULL;
+   if (equip_env != LUA_NOREF)
+      nlua_freeEnv(equip_env);
+   equip_env = LUA_NOREF;
 }
 
 
@@ -798,9 +768,9 @@ void ai_exit (void)
  */
 void ai_think( Pilot* pilot, const double dt )
 {
+   nlua_env env;
    (void) dt;
 
-   lua_State *L;
    Task *t;
 
    /* Must have AI. */
@@ -808,7 +778,7 @@ void ai_think( Pilot* pilot, const double dt )
       return;
 
    ai_setPilot(pilot);
-   L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
+   env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
    /* Clean up some variables */
    pilot_acc         = 0;
@@ -823,10 +793,10 @@ void ai_think( Pilot* pilot, const double dt )
    /* control function if pilot is idle or tick is up */
    if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
          ((cur_pilot->tcontrol < 0.) || (t == NULL))) {
-      ai_run(L, "control"); /* run control */
-      lua_getglobal(L,"control_rate");
-      cur_pilot->tcontrol = lua_tonumber(L,-1);
-      lua_pop(L,1);
+      ai_run(env, "control"); /* run control */
+      nlua_getenv(env, "control_rate");
+      cur_pilot->tcontrol = lua_tonumber(naevL,-1);
+      lua_pop(naevL,1);
 
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
@@ -836,9 +806,9 @@ void ai_think( Pilot* pilot, const double dt )
    if (t != NULL) {
       /* Run subtask if available, otherwise run main task. */
       if (t->subtask != NULL)
-         ai_run(L, t->subtask->name);
+         ai_run(env, t->subtask->name);
       else
-         ai_run(L, t->name);
+         ai_run(env, t->name);
 
       /* Manual control must check if IDLE hook has to be run. */
       if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
@@ -880,8 +850,6 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 {
-   int errf;
-   lua_State *L;
    HookParam hparam[2];
 
    /* Custom hook parameters. */
@@ -900,25 +868,14 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
       return;
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
-   L = cur_pilot->ai->L;
 
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -3;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
+   nlua_getenv(cur_pilot->ai->env, "attacked");
 
-   lua_getglobal(L, "attacked");
-
-   lua_pushpilot(L, attacker);
-   if (lua_pcall(L, 1, 0, errf)) {
-      WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
-      lua_pop(L,1);
+   lua_pushpilot(naevL, attacker);
+   if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
+      WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(naevL, -1));
+      lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif /* DEBUGGING */
 }
 
 
@@ -935,8 +892,8 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    /* Create the task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup("refuel");
-   t->dtype    = TASKDATA_PILOT;
-   t->dat.num  = target;
+   lua_pushinteger(naevL, target);
+   t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* Prepend the task. */
    t->next     = refueler->task;
@@ -954,9 +911,6 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
-   lua_State *L;
-   int errf;
-
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
       return;
@@ -967,39 +921,25 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 
    /* Set up the environment. */
    ai_setPilot(p);
-   L = cur_pilot->ai->L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -4;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* See if function exists. */
-   lua_getglobal(L, "distress");
-   if (lua_isnil(L,-1)) {
-      lua_pop(L,1);
-#if DEBUGGING
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+   nlua_getenv(cur_pilot->ai->env, "distress");
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
       return;
    }
 
    /* Run the function. */
-   lua_pushpilot(L, distressed->id);
+   lua_pushpilot(naevL, distressed->id);
    if (attacker != NULL)
-      lua_pushpilot(L, attacker->id);
+      lua_pushpilot(naevL, attacker->id);
    else /* Default to the victim's current target. */
-      lua_pushpilot(L, distressed->target);
+      lua_pushpilot(naevL, distressed->target);
    
-   if (lua_pcall(L, 2, 0, errf)) {
-      WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
-      lua_pop(L,1);
+   if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
+      WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif /* DEBUGGING */
 }
 
 
@@ -1013,13 +953,12 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot, char *param )
 {
-   lua_State *L;
-   int errf, nparam;
+   nlua_env env;
+   int nparam;
    char *func;
 
-   L = equip_L;
+   env = equip_env;
    func = "equip_generic";
-   errf = 0;
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1028,29 +967,22 @@ static void ai_create( Pilot* pilot, char *param )
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_PLAYER) && (aiL_status==AI_STATUS_CREATE) &&
             !pilot_isFlag(pilot, PILOT_EMPTY)) {
-      if  (faction_getEquipper( pilot->faction ) != NULL) {
-         L = faction_getEquipper( pilot->faction );
+      if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
+         env = faction_getEquipper( pilot->faction );
          func = "equip";
       }
-#if DEBUGGING
-      lua_pushcfunction(L, nlua_errTrace);
-      errf = -3;
-#endif /* DEBUGGING */
-      lua_getglobal(L, func);
-      lua_pushpilot(L,pilot->id);
-      if (lua_pcall(L, 1, 0, errf)) { /* Error has occurred. */
-         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(L,-1));
-         lua_pop(L,1);
+      nlua_getenv(env, func);
+      nlua_pushenv(env);
+      lua_setfenv(naevL, -2);
+      lua_pushpilot(naevL, pilot->id);
+      if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
+         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(naevL, -1));
+         lua_pop(naevL, 1);
       }
    }
 
    /* Since the pilot changes outfits and cores, we must heal him up. */
    pilot_healLanded( pilot );
-
-#if DEBUGGING
-   if (errf)
-      lua_pop(L,1);
-#endif /* DEBUGGING */
 
    /* Must have AI. */
    if (pilot->ai == NULL)
@@ -1059,42 +991,32 @@ static void ai_create( Pilot* pilot, char *param )
    /* Prepare AI (this sets cur_pilot among others). */
    ai_setPilot( pilot );
 
-   L = cur_pilot->ai->L;
    nparam = (param!=NULL) ? 1 : 0;
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -2-nparam;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* Prepare stack. */
-   lua_getglobal(L, "create");
+   nlua_getenv(cur_pilot->ai->env, "create");
 
    /* Parse parameter. */
    if (param != NULL) {
       /* Number */
       if (isdigit(param[0])) {
-         lua_pushpilot(L,atoi(param));
+         lua_pushpilot(naevL, atoi(param));
       }
       /* Special case player. */
       else if (strcmp(param,"player")==0) {
       /* Special case player. */
-         lua_pushpilot(L,PLAYER_ID);
+         lua_pushpilot(naevL, PLAYER_ID);
       }
       /* Default. */
       else
-         lua_pushstring(L, param);
+         lua_pushstring(naevL, param);
    }
 
    /* Run function. */
-   if (lua_pcall(L, nparam, 0, errf)) { /* error has occurred */
-      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(L,-1));
-      lua_pop(L,1);
+   if (nlua_pcall(cur_pilot->ai->env, nparam, 0)) { /* error has occurred */
+      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif /* DEBUGGING */
 
    /* Recover normal mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1112,7 +1034,8 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
-   t->dtype    = TASKDATA_NULL;
+   lua_pushnil(naevL);
+   t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* Handle subtask and general task. */
    if (!subtask) {
@@ -1156,8 +1079,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
-   if (t->dtype == TASKDATA_REF)
-       luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat.num);
+   luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat);
 
    /* Recursive subtask freeing. */
    if (t->subtask != NULL) {
@@ -1193,9 +1115,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
-      t->dtype   = TASKDATA_REF;
-      t->dat.num = luaL_ref(L, LUA_REGISTRYINDEX);
-      t->L       = L;
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      t->L   = L;
    }
 
    return t;
@@ -1207,27 +1128,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
-   /* Pass task type. */
-   switch (t->dtype) {
-      case TASKDATA_INT:
-         lua_pushnumber(L, t->dat.num);
-         return 1;
-
-      case TASKDATA_PILOT:
-         lua_pushpilot(L, t->dat.num);
-         return 1;
-
-      case TASKDATA_VEC2:
-         lua_pushvector(L, t->dat.vec);
-         return 1;
-
-      case TASKDATA_REF:
-         lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat.num);
-         return 1;
-
-      default:
-         return 0;
-   }
+   lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat);
+   return 1;
 }
 
 

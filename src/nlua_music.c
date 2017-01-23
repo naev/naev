@@ -15,7 +15,6 @@
 
 #include "SDL.h"
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "music.h"
 #include "log.h"
@@ -56,14 +55,12 @@ static const luaL_reg music_methods[] = {
 /**
  * @brief Loads the music functions into a lua_State.
  *
- *    @param L Lua State to load the music functions into.
- *    @param read_only Load the write functions?
+ *    @param env Lua environment to load the music functions into.
  *    @return 0 on success.
  */
-int nlua_loadMusic( lua_State *L, int read_only )
+int nlua_loadMusic( nlua_env env )
 {
-   (void)read_only; /* future proof */
-   luaL_register(L, "music", music_methods);
+   nlua_register(env, "music", music_methods, 0);
    return 0;
 }
 

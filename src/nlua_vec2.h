@@ -9,6 +9,7 @@
 
 #include <lua.h>
 #include "physics.h"
+#include "nlua.h"
 
 
 #define VECTOR_METATABLE   "vec2"   /**< Vector metatable identifier. */
@@ -17,7 +18,7 @@
 /*
  * Vector library.
  */
-int nlua_loadVector( lua_State *L );
+int nlua_loadVector( nlua_env env );
 
 /*
  * Vector operations.

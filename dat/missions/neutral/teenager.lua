@@ -77,7 +77,7 @@ function enter()
         target:control()
         target:rename("Credence")
         target:setFaction("Dummy")
-        target:memory("aggressive", true)
+        target:memory().aggressive = true
         target:setHilight(true)
         target:setVisplayer(true)
         hidle = hook.pilot(target, "idle", "targetIdle")

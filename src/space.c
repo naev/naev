@@ -101,7 +101,7 @@ static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
-static lua_State *landing_lua = NULL; /**< Landing lua. */
+static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 
@@ -972,18 +972,18 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
  */
 static void system_scheduler( double dt, int init )
 {
-   int i, n, errf;
-   lua_State *L;
+   int i, n;
+   nlua_env env;
    SystemPresence *p;
    Pilot *pilot;
 
    /* Go through all the factions and reduce the timer. */
    for (i=0; i < cur_system->npresence; i++) {
       p = &cur_system->presence[i];
-      L = faction_getScheduler( p->faction );
+      env = faction_getScheduler( p->faction );
 
       /* Must have a valid scheduler. */
-      if (L==NULL)
+      if (env==LUA_NOREF)
          continue;
 
       /* Spawning is disabled for this faction. */
@@ -992,18 +992,11 @@ static void system_scheduler( double dt, int init )
 
       /* Run the appropriate function. */
       if (init) {
-#if DEBUGGING
-         lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-         lua_getglobal( L, "create" ); /* f */
-         if (lua_isnil(L,-1)) {
+         nlua_getenv( env, "create" ); /* f */
+         if (lua_isnil(naevL,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
                   faction_name( p->faction ) );
-#if DEBUGGING
-            lua_pop(L,2);
-#else /* DEBUGGING */
-            lua_pop(L,1);
-#endif /* DEBUGGING */
+            lua_pop(naevL,1);
             continue;
          }
          n = 0;
@@ -1014,97 +1007,72 @@ static void system_scheduler( double dt, int init )
          if (p->timer >= 0.)
             continue;
 
-#if DEBUGGING
-         lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-         lua_getglobal( L, "spawn" ); /* f */
-         if (lua_isnil(L,-1)) {
+         nlua_getenv( env, "spawn" ); /* f */
+         if (lua_isnil(naevL,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
                   faction_name( p->faction ) );
-#if DEBUGGING
-            lua_pop(L,2);
-#else /* DEBUGGING */
-            lua_pop(L,1);
-#endif /* DEBUGGING */
+            lua_pop(naevL,1);
             continue;
          }
-         lua_pushnumber( L, p->curUsed ); /* f, presence */
+         lua_pushnumber( naevL, p->curUsed ); /* f, presence */
          n = 1;
       }
-      lua_pushnumber( L, p->value ); /* f, [arg,], max */
-
-#if DEBUGGING
-      errf = -2-(n+1);
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
+      lua_pushnumber( naevL, p->value ); /* f, [arg,], max */
 
       /* Actually run the function. */
-      if (lua_pcall(L, n+1, 2, errf)) { /* error has occurred */
+      if (nlua_pcall(env, n+1, 2)) { /* error has occurred */
          WARN("Lua Spawn script for faction '%s' : %s",
-               faction_name( p->faction ), lua_tostring(L,-1));
-#if DEBUGGING
-         lua_pop(L,2);
-#else /* DEBUGGING */
-         lua_pop(L,1);
-#endif /* DEBUGGING */
+               faction_name( p->faction ), lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
          continue;
       }
 
       /* Output is handled the same way. */
-      if (!lua_isnumber(L,-2)) {
+      if (!lua_isnumber(naevL,-2)) {
          WARN("Lua spawn script for faction '%s' failed to return timer value.",
                faction_name( p->faction ) );
-#if DEBUGGING
-         lua_pop(L,3);
-#else /* DEBUGGING */
-         lua_pop(L,2);
-#endif /* DEBUGGING */
+         lua_pop(naevL,2);
          continue;
       }
-      p->timer    += lua_tonumber(L,-2);
+      p->timer    += lua_tonumber(naevL,-2);
       /* Handle table if it exists. */
-      if (lua_istable(L,-1)) {
-         lua_pushnil(L); /* tk, k */
-         while (lua_next(L,-2) != 0) { /* tk, k, v */
+      if (lua_istable(naevL,-1)) {
+         lua_pushnil(naevL); /* tk, k */
+         while (lua_next(naevL,-2) != 0) { /* tk, k, v */
             /* Must be table. */
-            if (!lua_istable(L,-1)) {
+            if (!lua_istable(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
 
-            lua_getfield( L, -1, "pilot" ); /* tk, k, v, p */
-            if (!lua_ispilot(L,-1)) {
+            lua_getfield( naevL, -1, "pilot" ); /* tk, k, v, p */
+            if (!lua_ispilot(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a pilot).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            pilot = pilot_get( lua_topilot(L,-1) );
+            pilot = pilot_get( lua_topilot(naevL,-1) );
             if (pilot == NULL) {
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            lua_pop(L,1); /* tk, k, v */
-            lua_getfield( L, -1, "presence" ); /* tk, k, v, p */
-            if (!lua_isnumber(L,-1)) {
+            lua_pop(naevL,1); /* tk, k, v */
+            lua_getfield( naevL, -1, "presence" ); /* tk, k, v, p */
+            if (!lua_isnumber(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a number).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            pilot->presence = lua_tonumber(L,-1);
+            pilot->presence = lua_tonumber(naevL,-1);
             p->curUsed     += pilot->presence;
-            lua_pop(L,2); /* tk, k */
+            lua_pop(naevL,2); /* tk, k */
          }
       }
-#if DEBUGGING
-      lua_pop(L,3);
-#else /* DEBUGGING */
-      lua_pop(L,2);
-#endif /* DEBUGGING */
+      lua_pop(naevL,2);
    }
 }
 
@@ -1414,20 +1382,18 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   lua_State *L;
    uint32_t nfiles;
    int i, len;
 
    /* Load landing stuff. */
-   landing_lua = nlua_newState();
-   L           = landing_lua;
-   nlua_loadStandard(L, 1);
+   landing_env = nlua_newEnv(0);
+   nlua_loadStandard(landing_env);
    buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
-   if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA_PATH) != 0) {
+   if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
       WARN( "Failed to load landing file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            LANDING_DATA_PATH, lua_tostring(L,-1));
+            LANDING_DATA_PATH, lua_tostring(naevL,-1));
    }
    free(buf);
 
@@ -1529,9 +1495,7 @@ const glColour* planet_getColour( Planet *p )
  */
 void planet_updateLand( Planet *p )
 {
-   int errf;
    char *str;
-   lua_State *L;
 
    /* Must be inhabited. */
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
@@ -1547,68 +1511,52 @@ void planet_updateLand( Planet *p )
    p->bribe_msg   = NULL;
    p->bribe_ack_msg = NULL;
    p->bribe_price = 0;
-   L = landing_lua;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -3;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* Set up function. */
    if (p->land_func == NULL)
       str = "land";
    else
       str = p->land_func;
-   lua_getglobal( L, str );
-   lua_pushplanet( L, p->id );
-   if (lua_pcall(L, 1, 5, errf)) { /* error has occurred */
-      WARN("Landing: '%s' : %s", str, lua_tostring(L,-1));
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+   nlua_getenv( landing_env, str );
+   lua_pushplanet( naevL, p->id );
+   if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
+      WARN("Landing: '%s' : %s", str, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
       return;
    }
 
    /* Parse parameters. */
-   p->can_land = lua_toboolean(L,-5);
-   if (lua_isstring(L,-4))
-      p->land_msg = strdup( lua_tostring(L,-4) );
+   p->can_land = lua_toboolean(naevL,-5);
+   if (lua_isstring(naevL,-4))
+      p->land_msg = strdup( lua_tostring(naevL,-4) );
    else {
       WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 2 is not a string!", str, p->name );
       p->land_msg = strdup( "Invalid land message" );
    }
    /* Parse bribing. */
-   if (!p->can_land && lua_isnumber(L,-3)) {
-      p->bribe_price = lua_tonumber(L,-3);
+   if (!p->can_land && lua_isnumber(naevL,-3)) {
+      p->bribe_price = lua_tonumber(naevL,-3);
       /* We need the bribe message. */
-      if (lua_isstring(L,-2))
-         p->bribe_msg = strdup( lua_tostring(L,-2) );
+      if (lua_isstring(naevL,-2))
+         p->bribe_msg = strdup( lua_tostring(naevL,-2) );
       else {
          WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 4 is not a string!", str, p->name );
          p->bribe_msg = strdup( "Invalid bribe message" );
       }
       /* We also need the bribe ACK message. */
-      if (lua_isstring(L,-1))
-         p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
+      if (lua_isstring(naevL,-1))
+         p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
       else {
          WARN( LANDING_DATA_PATH": %s -> return parameter 5 is not a string!", str, p->name );
          p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
       }
    }
-   else if (lua_isstring(L,-3))
-      p->bribe_msg = strdup( lua_tostring(L,-3) );
-   else if (!lua_isnil(L,-3))
+   else if (lua_isstring(naevL,-3))
+      p->bribe_msg = strdup( lua_tostring(naevL,-3) );
+   else if (!lua_isnil(naevL,-3))
       WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
 
-#if DEBUGGING
-   lua_pop(L,6);
-#else /* DEBUGGING */
-   lua_pop(L,5);
-#endif /* DEBUGGING */
+   lua_pop(naevL,5);
 
    /* Unset bribe status if bribing is no longer possible. */
    if (p->bribed && p->bribe_ack_msg == NULL)
@@ -1755,12 +1703,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      if (tmp != NULL) {
                         planet->land_func = strdup(tmp);
 #ifdef DEBUGGING
-                        if (landing_lua != NULL) {
-                           lua_getglobal( landing_lua, tmp );
-                           if (lua_isnil(landing_lua,-1))
+                        if (landing_env != LUA_NOREF) {
+                           nlua_getenv( landing_env, tmp );
+                           if (lua_isnil(naevL,-1))
                               WARN("Planet '%s' has landing function '%s' which is not found in '%s'.",
                                     planet->name, tmp, LANDING_DATA_PATH);
-                           lua_pop(landing_lua,1);
+                           lua_pop(naevL,1);
                         }
 #endif /* DEBUGGING */
                      }
@@ -3013,9 +2961,9 @@ void space_exit (void)
    systems_mstack = 0;
 
    /* Free landing lua. */
-   if (landing_lua != NULL)
-      lua_close( landing_lua );
-   landing_lua = NULL;
+   if (landing_env != LUA_NOREF)
+      nlua_freeEnv( landing_env );
+   landing_env = LUA_NOREF;
 }
 
 
@@ -3571,8 +3519,8 @@ int system_hasPlanet( const StarSystem *sys )
  */
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
-   int id, errf;
-   lua_State *L;
+   int id;
+   nlua_env env;
    SystemPresence *presence;
 
    /* Remove the presence. */
@@ -3584,58 +3532,35 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    presence->curUsed = MAX( 0, sys->presence[id].curUsed );
 
    /* Run lower hook. */
-   L = faction_getScheduler( faction );
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -5;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
+   env = faction_getScheduler( faction );
 
    /* Run decrease function if applicable. */
-   lua_getglobal( L, "decrease" ); /* f */
-   if (lua_isnil(L,-1)) {
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+   nlua_getenv( env, "decrease" ); /* f */
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
       return;
    }
-   lua_pushnumber( L, presence->curUsed ); /* f, cur */
-   lua_pushnumber( L, presence->value );   /* f, cur, max */
-   lua_pushnumber( L, presence->timer );   /* f, cur, max, timer */
+   lua_pushnumber( naevL, presence->curUsed ); /* f, cur */
+   lua_pushnumber( naevL, presence->value );   /* f, cur, max */
+   lua_pushnumber( naevL, presence->timer );   /* f, cur, max, timer */
 
    /* Actually run the function. */
-   if (lua_pcall(L, 3, 1, errf)) { /* error has occurred */
+   if (nlua_pcall(env, 3, 1)) { /* error has occurred */
       WARN("Lua decrease script for faction '%s' : %s",
-            faction_name( faction ), lua_tostring(L,-1));
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+            faction_name( faction ), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
       return;
    }
 
    /* Output is handled the same way. */
-   if (!lua_isnumber(L,-1)) {
+   if (!lua_isnumber(naevL,-1)) {
       WARN("Lua spawn script for faction '%s' failed to return timer value.",
             faction_name( presence->faction ) );
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+      lua_pop(naevL,1);
       return;
    }
-   presence->timer = lua_tonumber(L,-1);
-#if DEBUGGING
-   lua_pop(L,2);
-#else /* DEBUGGING */
-   lua_pop(L,1);
-#endif /* DEBUGGING */
+   presence->timer = lua_tonumber(naevL,-1);
+   lua_pop(naevL,1);
 }
 
 

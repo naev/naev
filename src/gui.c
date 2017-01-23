@@ -97,7 +97,7 @@ extern int land_wid; /**< From land.c */
 /**
  * GUI Lua stuff.
  */
-static lua_State *gui_L; /**< Current GUI Lua State. */
+static nlua_env gui_env = LUA_NOREF; /**< Current GUI Lua environment. */
 static int gui_L_mclick = 0; /**< Use mouse click callback. */
 static int gui_L_mmove = 0; /**< Use mouse movement callback. */
 
@@ -888,15 +888,15 @@ void gui_render( double dt )
    gl_viewport( 0., 0., gl_screen.rw, gl_screen.rh );
 
    /* Run Lua. */
-   if (gui_L != NULL) {
+   if (gui_env != LUA_NOREF) {
       gui_prepFunc( "render" );
-      lua_pushnumber( gui_L, dt );
-      lua_pushnumber( gui_L, dt_mod );
+      lua_pushnumber( naevL, dt );
+      lua_pushnumber( naevL, dt_mod );
       gui_runFunc( "render", 2, 0 );
       if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
          gui_prepFunc( "render_cooldown" );
-         lua_pushnumber( gui_L, player.p->ctimer / player.p->cdelay  );
-         lua_pushnumber( gui_L, player.p->ctimer );
+         lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
+         lua_pushnumber( naevL, player.p->ctimer );
          gui_runFunc( "render_cooldown", 2, 0 );
       }
    }
@@ -1909,21 +1909,15 @@ static int gui_doFunc( const char* func )
  */
 static int gui_prepFunc( const char* func )
 {
-   lua_State *L;
-
-   /* For comfort. */
-   L = gui_L;
 #if DEBUGGING
-   if (L == NULL) {
+   if (gui_env == LUA_NOREF) {
       WARN( "Trying to run GUI func '%s' but no GUI is loaded!", func );
       return -1;
    }
-
-   lua_pushcfunction(L, nlua_errTrace);
 #endif /* DEBUGGING */
 
    /* Set up function. */
-   lua_getglobal( L, func );
+   nlua_getenv( gui_env, func );
    return 0;
 }
 
@@ -1937,31 +1931,18 @@ static int gui_prepFunc( const char* func )
  */
 static int gui_runFunc( const char* func, int nargs, int nret )
 {
-   int ret, errf;
+   int ret;
    const char* err;
-   lua_State *L;
-
-   /* For comfort. */
-   L = gui_L;
-
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* Run the function. */
-   ret = lua_pcall( L, nargs, nret, errf );
+   ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
             func, (err) ? err : "unknown error");
-      lua_pop(L,2);
+      lua_pop(naevL,2);
       return ret;
    }
-#if DEBUGGING
-   lua_remove(L,-(nret+1));
-#endif /* DEBUGGING */
 
    return ret;
 }
@@ -1972,7 +1953,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
  */
 void gui_reload (void)
 {
-   if (gui_L == NULL)
+   if (gui_env == LUA_NOREF)
       return;
 
    gui_load( gui_pick() );
@@ -1984,17 +1965,17 @@ void gui_reload (void)
  */
 void gui_setCargo (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_cargo" );
 }
 
 
 /**
- * @brief Player just changed their nav computer target.
+ * @brief PlNULLayer just changed their nav computer target.
  */
 void gui_setNav (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_nav" );
 }
 
@@ -2004,7 +1985,7 @@ void gui_setNav (void)
  */
 void gui_setTarget (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_target" );
 }
 
@@ -2014,7 +1995,7 @@ void gui_setTarget (void)
  */
 void gui_setShip (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_ship" );
 }
 
@@ -2024,7 +2005,7 @@ void gui_setShip (void)
  */
 void gui_setSystem (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_system" );
 }
 
@@ -2034,7 +2015,7 @@ void gui_setSystem (void)
  */
 void gui_updateFaction (void)
 {
-   if (gui_L != NULL && player.p->nav_planet != -1)
+   if (gui_env != LUA_NOREF && player.p->nav_planet != -1)
       gui_doFunc( "update_faction" );
 }
 
@@ -2046,7 +2027,7 @@ void gui_updateFaction (void)
  */
 void gui_setGeneric( Pilot* pilot )
 {
-   if (gui_L == NULL)
+   if (gui_env == LUA_NOREF)
       return;
 
    if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
@@ -2097,32 +2078,32 @@ int gui_load( const char* name )
    }
 
    /* Clean up. */
-   if (gui_L != NULL) {
-      lua_close( gui_L );
-      gui_L = NULL;
+   if (gui_env != LUA_NOREF) {
+      nlua_freeEnv(gui_env);
+      gui_env = LUA_NOREF;
    }
 
    /* Create Lua state. */
-   gui_L = nlua_newState();
-   if (luaL_dobuffer( gui_L, buf, bufsize, path ) != 0) {
+   gui_env = nlua_newEnv(1);
+   if (nlua_dobufenv( gui_env, buf, bufsize, path ) != 0) {
       WARN("Failed to load GUI Lua: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            path, lua_tostring(gui_L,-1));
-      lua_close( gui_L );
-      gui_L = NULL;
+            path, lua_tostring(naevL,-1));
+      nlua_freeEnv( gui_env );
+      gui_env = LUA_NOREF;
       free(buf);
       return -1;
    }
    free(buf);
-   nlua_loadStandard( gui_L, 1 );
-   nlua_loadGFX( gui_L, 0 );
-   nlua_loadGUI( gui_L, 0 );
+   nlua_loadStandard( gui_env );
+   nlua_loadGFX( gui_env );
+   nlua_loadGUI( gui_env );
 
    /* Run create function. */
    if (gui_doFunc( "create" )) {
-      lua_close( gui_L );
-      gui_L = NULL;
+      nlua_freeEnv( gui_env );
+      gui_env = LUA_NOREF;
    }
 
    /* Recreate land window if landed. */
@@ -2252,9 +2233,9 @@ void gui_cleanup (void)
    gui_yoff = 0.;
 
    /* Destroy lua. */
-   if (gui_L != NULL) {
-      lua_close( gui_L );
-      gui_L = NULL;
+   if (gui_env != LUA_NOREF) {
+      nlua_freeEnv( gui_env );
+      gui_env = LUA_NOREF;
    }
 
    /* OMSG */
@@ -2383,8 +2364,8 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_move" );
          gl_windowToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
-         lua_pushnumber( gui_L, x );
-         lua_pushnumber( gui_L, y );
+         lua_pushnumber( naevL, x );
+         lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
          break;
 
@@ -2394,14 +2375,14 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mclick)
             break;
          gui_prepFunc( "mouse_click" );
-         lua_pushnumber( gui_L, evt->button.button+1 );
+         lua_pushnumber( naevL, evt->button.button+1 );
          gl_windowToScreenPos( &x, &y, evt->button.x, evt->button.y );
-         lua_pushnumber( gui_L, x );
-         lua_pushnumber( gui_L, y );
-         lua_pushboolean( gui_L, (evt->type==SDL_MOUSEBUTTONDOWN) );
+         lua_pushnumber( naevL, x );
+         lua_pushnumber( naevL, y );
+         lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );
          gui_runFunc( "mouse_click", 4, 1 );
-         ret = lua_toboolean( gui_L, -1 );
-         lua_pop( gui_L, 1 );
+         ret = lua_toboolean( naevL, -1 );
+         lua_pop( naevL, 1 );
          break;
 
       /* Not interested in the rest. */

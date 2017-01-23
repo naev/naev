@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "log.h"
@@ -51,26 +50,12 @@ static const luaL_reg outfitL_methods[] = {
 /**
  * @brief Loads the outfit library.
  *
- *    @param L State to load outfit library into.
+ *    @param env Environment to load outfit library into.
  *    @return 0 on success.
  */
-int nlua_loadOutfit( lua_State *L, int readonly )
+int nlua_loadOutfit( nlua_env env )
 {
-   (void) readonly; /* Everything is readonly. */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, OUTFIT_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, outfitL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, OUTFIT_METATABLE);
-
+   nlua_register(env, OUTFIT_METATABLE, outfitL_methods, 1);
    return 0;
 }
 

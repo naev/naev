@@ -123,7 +123,7 @@ static char *errorlist_ptr;
 /*
  * Rescue.
  */
-static lua_State *rescue_L = NULL; /**< Rescue Lua state. */
+static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
 static void land_stranded (void);
 
 
@@ -1375,51 +1375,34 @@ static void land_stranded (void)
    char *buf;
    uint32_t bufsize;
    const char *file = "dat/rescue.lua";
-   int errf;
-   lua_State *L;
 
    /* Nothing to do if there's no rescue script. */
    if (!ndata_exists(file))
       return;
 
-   if (rescue_L == NULL) {
-      rescue_L = nlua_newState();
-      nlua_loadStandard( rescue_L, 0 );
-      nlua_loadTk( rescue_L );
-
-      L = rescue_L;
+   if (rescue_env == LUA_NOREF) {
+      rescue_env = nlua_newEnv(1);
+      nlua_loadStandard( rescue_env );
+      nlua_loadTk( rescue_env );
 
       buf = ndata_read( file, &bufsize );
-      if (luaL_dobuffer(L, buf, bufsize, file) != 0) {
+      if (nlua_dobufenv(rescue_env, buf, bufsize, file) != 0) {
          WARN("Error loading file: %s\n"
              "%s\n"
              "Most likely Lua file has improper syntax, please check",
-               file, lua_tostring(L,-1));
+               file, lua_tostring(naevL,-1));
          free(buf);
          return;
       }
       free(buf);
    }
-   else
-      L = rescue_L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
 
    /* Run Lua. */
-   lua_getglobal(L,"rescue");
-   if (lua_pcall(L, 0, 0, errf)) { /* error has occurred */
-      WARN("Rescue: 'rescue' : '%s'", lua_tostring(L,-1));
-      lua_pop(L,1);
+   nlua_getenv(rescue_env,"rescue");
+   if (nlua_pcall(rescue_env, 0, 0)) { /* error has occurred */
+      WARN("Rescue: 'rescue' : '%s'", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif
 }
 
 
@@ -1459,9 +1442,9 @@ void land_cleanup (void)
    npc_freeAll();
 
    /* Clean up rescue Lua. */
-   if (rescue_L != NULL) {
-      lua_close(rescue_L);
-      rescue_L = NULL;
+   if (rescue_env != LUA_NOREF) {
+      nlua_freeEnv(rescue_env);
+      rescue_env = LUA_NOREF;
    }
 }
 

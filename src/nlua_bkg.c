@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "nlua_col.h"
@@ -37,17 +36,12 @@ static const luaL_reg bkgL_methods[] = {
 /**
  * @brief Loads the graphics library.
  *
- *    @param L State to load graphics library into.
+ *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadBackground( lua_State *L, int readonly )
+int nlua_loadBackground( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   /* Register the values */
-   luaL_register(L, "bkg", bkgL_methods);
-
+   nlua_register(env, "bkg", bkgL_methods, 0);
    return 0;
 }
 
@@ -58,7 +52,7 @@ int nlua_loadBackground( lua_State *L, int readonly )
  * An example would be:
  * @code
  * @endcode
- *
+ *`
  * @luamod bkg
  */
 
@@ -71,7 +65,7 @@ int nlua_loadBackground( lua_State *L, int readonly )
  */
 static int bkgL_clear( lua_State *L )
 {
-   (void) L;
+   NLUA_CHECKRW(L);
    background_clear();
    return 0;
 }
@@ -104,6 +98,8 @@ static int bkgL_image( lua_State *L )
    const glColour *col;
    unsigned int id;
    int foreground;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    tex   = luaL_checktex(L,1);

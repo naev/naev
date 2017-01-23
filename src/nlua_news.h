@@ -9,6 +9,7 @@
 
 #include <lua.h>
 #include "news.h"
+#include "nlua.h"
 
 #define ARTICLE_METATABLE   "news" /**< System metatable identifier. */
 
@@ -22,6 +23,6 @@ typedef int LuaArticle;
 /*
  * Load the system library.
  */
-int nlua_loadNews( lua_State *L, int readonly );
+int nlua_loadNews( nlua_env env );
 
 #endif /* NLUA_NEWS_H */

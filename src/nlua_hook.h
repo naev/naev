@@ -8,9 +8,11 @@
 
 #include <lua.h>
 
+#include "nlua.h"
+
 
 /* individual library stuff */
-int nlua_loadHook( lua_State *L );
+int nlua_loadHook( nlua_env env );
 
 
 /* Misc. */

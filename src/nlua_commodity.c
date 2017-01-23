@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_planet.h"
 #include "log.h"
@@ -42,26 +41,12 @@ static const luaL_reg commodityL_methods[] = {
 /**
  * @brief Loads the commodity library.
  *
- *    @param L State to load commodity library into.
+ *    @param env Environment to load commodity library into.
  *    @return 0 on success.
  */
-int nlua_loadCommodity( lua_State *L, int readonly )
+int nlua_loadCommodity( nlua_env env )
 {
-   (void) readonly; /* Everything is readonly. */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, COMMODITY_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, commodityL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, COMMODITY_METATABLE);
-
+   nlua_register(env, COMMODITY_METATABLE, commodityL_methods, 1);
    return 0;
 }
 

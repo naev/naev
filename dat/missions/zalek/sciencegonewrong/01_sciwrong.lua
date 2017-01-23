@@ -96,7 +96,7 @@ function sys_enter ()
       target:control()
       target:rename(shpnm)
       target:setFaction("Soromid")
-      target:memory("aggressive", true)
+      target:memory().aggressive = true
       target:setHilight(true)
       target:setVisplayer(true)
       hidle = hook.pilot(target, "idle", "targetIdle")
