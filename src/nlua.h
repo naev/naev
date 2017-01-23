@@ -15,7 +15,7 @@
 
 typedef int nlua_env;
 extern lua_State *naevL;
-extern int __RW;
+extern int __NLUA_RW;
 
 /*
  * standard Lua stuff wrappers

@@ -35,7 +35,7 @@
 
 
 lua_State *naevL = NULL;
-int __RW = 0;
+int __NLUA_RW = 0;
 
 
 /*
@@ -496,14 +496,14 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    errf = 0;
 #endif /* DEBUGGING */
 
-   prev = __RW;
+   prev = __NLUA_RW;
    nlua_getenv(env, "__RW");
-   __RW = lua_toboolean(naevL, -1);
+   __NLUA_RW = lua_toboolean(naevL, -1);
    lua_pop(naevL, 1);
 
    ret = lua_pcall(naevL, nargs, nresults, errf);
 
-   __RW = prev;
+   __NLUA_RW = prev;
 
 #if DEBUGGING
    lua_remove(naevL, top-nargs);

@@ -38,7 +38,7 @@
    }
 #define NLUA_CHECKRW(L) \
 { \
-   if (!__RW) { \
+   if (!__NLUA_RW) { \
       DEBUG( "Cannot call %s in read-only environment.", __func__ ); \
       luaL_error( L, "Cannot call %s in read-only environment.", __func__ ); \
       return 0; \
