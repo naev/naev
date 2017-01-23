@@ -15,19 +15,36 @@
 /**
  * @brief System is Linux-class.
  */
-#define HAS_LINUX    (defined(linux) || defined(__linux) || defined(__linux__))
+#if (defined(linux) || defined(__linux) || defined(__linux__))
+#define HAS_LINUX 1
+#else
+#define HAS_LINUX 0
+#endif
 /**
  * @brief System is FreeBSD.
  */
-#define HAS_FREEBSD  (defined(__FreeBSD__))
+#if (defined(__FreeBSD__))
+#define HAS_FREEBSD 1
+#else
+#define HAS_FREEBSD 0
+#endif
 /**
  * @brief System is Windows-class.
  */
-#define HAS_WIN32    (defined(_WIN32))
+#if (defined(_WIN32))
+#define HAS_WIN32 1
+#else
+#define HAS_WIN32 0
+
+#endif
 /**
  * @brief System is Mac OS X.
  */
-#define HAS_MACOSX   (defined(__APPLE__) && defined(__MACH__))
+#if (defined(__APPLE__) && defined(__MACH__))
+#define HAS_MACOSX 1
+#else
+#define HAS_MACOSX 0
+#endif
 
 
 /* Standard specific. */
@@ -36,14 +53,22 @@
  *
  * @note Mac OS X does not define these macros, but does follow unix somewhat.
  */
-#define HAS_UNIX     (defined(__unix__) || defined(__unix) || HAS_MACOSX)
+#if (defined(__unix__) || defined(__unix) || HAS_MACOSX)
+#define HAS_UNIX 1
+#else
+#define HAS_UNIX 0
+#endif
 /**
  * @brief Whether or not the system is compliant to POSIX.1.
  *
  * @note Most systems don't actually follow it fully so they don't declare that
  *       they support it.  We consider unix good enough.
  */
-#define HAS_POSIX    HAS_UNIX /* (defined(_POSIX_VERSION) && (_POSIX_VERSION >= 200112L)) */
+#if HAS_UNIX
+#define HAS_POSIX 1
+#else
+#define HAS_POSIX 0
+#endif
 
 
 /*
@@ -52,18 +77,30 @@
 /**
  * @brief Whether or not the system is big endian.
  */
-#define HAS_BIGENDIAN (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+#if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+#define HAS_BIGENDIAN 1
+#else
+#define HAS_BIGENDIAN 0
+#endif
 /**
  * @brief Whether or not the system is little endian.
  */
-#define HAS_LILENDIAN (SDL_BYTEORDER == SDL_LIL_ENDIAN)
+#if (SDL_BYTEORDER == SDL_LIL_ENDIAN)
+#define HAS_LILENDIAN 1
+#else
+#define HAS_LILENDIAN 0
+#endif
 
 
 /* Misc stuff - mainly for debugging. */
 /**
  * @brief Whether or not to use filedescriptors.
  */
-#define HAS_FD     HAS_POSIX
+#if HAS_POSIX
+#define HAS_FD 1
+#else
+#define HAS_FD 0
+#endif
 
 
 #endif /* NCOMPAT_H */
