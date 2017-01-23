@@ -112,7 +112,7 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
  * Taken frob glibc.
  */
 #if !(HAS_POSIX && defined(_GNU_SOURCE))
-const char nstrndup( const char *s, size_t n )
+char* nstrndup( const char *s, size_t n )
 {
    size_t len = MIN( strlen(s), n );
    char *new = (char *) malloc (len + 1);

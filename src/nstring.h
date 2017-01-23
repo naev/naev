@@ -21,7 +21,7 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size );
 #else /* HAVE_POSIX && defined(_GNU_SOURCE) */
 const char *nstrcasestr( const char *haystack, const char *needle );
 int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
-const char nstrndup( const char *s, size_t n );
+char* nstrndup( const char *s, size_t n );
 #endif /* HAVE_POSIX */
 
 
