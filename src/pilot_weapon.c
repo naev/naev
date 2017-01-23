@@ -1315,7 +1315,7 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_CHANGE) {
+   if (p->weapon_sets[ p->active_set ].type != WEAPSET_TYPE_CHANGE) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
@@ -1323,7 +1323,7 @@ void pilot_weaponSetDefault( Pilot *p )
 
    /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!p->weapon_sets[i].type != WEAPSET_TYPE_CHANGE)
+      if (p->weapon_sets[i].type == WEAPSET_TYPE_CHANGE)
          break;
 
    /* Set active set to first if all fire groups or first non-fire group. */
