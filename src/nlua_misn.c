@@ -242,12 +242,13 @@ void misn_runEnd()
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
+   (void) misn;
    int i, ret;
    const char* err;
    int misn_delete;
    Mission *cur_mission;
 
-   ret = nlua_pcall(misn->env, nargs, 0);
+   ret = nlua_pcall(nargs, 0);
    cur_mission = misn_getFromLua(naevL); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;

@@ -450,7 +450,7 @@ static void ai_run( nlua_env env, const char *funcname )
    }
 #endif /* DEBUGGING */
 
-   if (nlua_pcall(env, 0, 0)) { /* error has occurred */
+   if (nlua_pcall(0, 0)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
@@ -872,7 +872,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
    nlua_getenv(cur_pilot->ai->env, "attacked");
 
    lua_pushpilot(naevL, attacker);
-   if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
+   if (nlua_pcall(1, 0)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
@@ -936,7 +936,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    else /* Default to the victim's current target. */
       lua_pushpilot(naevL, distressed->target);
    
-   if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
+   if (nlua_pcall(2, 0)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
@@ -975,7 +975,7 @@ static void ai_create( Pilot* pilot, char *param )
       nlua_pushenv(env);
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
-      if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
+      if (nlua_pcall(1, 0)) { /* Error has occurred. */
          WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
@@ -1013,7 +1013,7 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Run function. */
-   if (nlua_pcall(cur_pilot->ai->env, nparam, 0)) { /* error has occurred */
+   if (nlua_pcall(nparam, 0)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }

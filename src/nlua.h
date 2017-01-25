@@ -36,6 +36,6 @@ int nlua_dobufenv(nlua_env env,
 int nlua_dofileenv(nlua_env env, const char *filename);
 int nlua_load( lua_State* L, lua_CFunction f );
 int nlua_loadStandard( nlua_env env );
-int nlua_pcall( nlua_env env, int nargs, int nresults );
+int nlua_pcall( int nargs, int nresults );
 
 #endif /* NLUA_H */

@@ -475,11 +475,10 @@ int nlua_errTrace( lua_State *L )
 /*
  * @brief Wrapper around lua_pcall() that handles errors and enviornments
  * 
- *    @param env Environment.
  *    @param nargs Number of arguments to pass.
  *    @param nresults Number of return values to take.
  */
-int nlua_pcall( nlua_env env, int nargs, int nresults ) {
+int nlua_pcall( int nargs, int nresults ) {
    int errf, ret, top, prev;
 
 #if DEBUGGING
@@ -492,9 +491,10 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
 #endif /* DEBUGGING */
 
    prev = __NLUA_RW;
-   nlua_getenv(env, "__RW");
+   lua_getfenv(naevL, -1-nargs);
+   lua_getfield(naevL, -1, "__RW");
    __NLUA_RW = lua_toboolean(naevL, -1);
-   lua_pop(naevL, 1);
+   lua_pop(naevL, 2);
 
    ret = lua_pcall(naevL, nargs, nresults, errf);
 

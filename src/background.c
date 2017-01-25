@@ -497,7 +497,7 @@ int background_load( const char *name )
 
    /* Run Lua. */
    nlua_getenv(env,"background");
-   ret = nlua_pcall(env, 0, 0);
+   ret = nlua_pcall(0, 0);
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN("Background -> 'background' : %s",

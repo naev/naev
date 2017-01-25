@@ -131,7 +131,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    const char* err;
    int evt_delete;
 
-   ret = nlua_pcall(ev->env, nargs, 0);
+   ret = nlua_pcall(nargs, 0);
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
