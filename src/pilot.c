@@ -2509,6 +2509,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->msg_handlers = luaL_ref(naevL, LUA_REGISTRYINDEX);
    lua_newtable(naevL);
    pilot->comm_handlers = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   lua_newtable(naevL);
+   pilot->comm_conds = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* AI */
    if (ai != NULL)
@@ -2722,6 +2724,7 @@ void pilot_free( Pilot* p )
    array_free(p->messages);
    luaL_unref(naevL, p->msg_handlers, LUA_REGISTRYINDEX);
    luaL_unref(naevL, p->comm_handlers, LUA_REGISTRYINDEX);
+   luaL_unref(naevL, p->comm_conds, LUA_REGISTRYINDEX);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
@@ -3140,6 +3143,7 @@ void pilot_handlemessages( Pilot* p )
    }
 
    /* Remove comm handlers as well */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->comm_conds);
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->comm_handlers);
    lua_pushnil(naevL);
    while (lua_next(naevL, -2) != 0) {
@@ -3149,10 +3153,15 @@ void pilot_handlemessages( Pilot* p )
          lua_pushvalue(naevL, -4);
          lua_pushnil(naevL);
          lua_rawset(naevL, -7);
+
+         /* Remove the cond */
+         lua_pushvalue(naevL, -4);
+         lua_pushnil(naevL);
+         lua_rawset(naevL, -8);
       }
       lua_pop(naevL, 3);
    }
-   lua_pop(naevL, 1);
+   lua_pop(naevL, 2);
 
    /* Go through messages and call handlers */
    size = array_size(p->messages);

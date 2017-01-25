@@ -436,6 +436,7 @@ typedef struct Pilot_ {
    Message *messages;  /**< Messages received in past frame. */
    int msg_handlers;   /**< Handlers for messages (Lua ref). */
    int comm_handlers;  /**< Handlers for comm buttons (Lua ref). */
+   int comm_conds;     /**< Conditions for comm buttons (Lua ref). */
 } Pilot;
 
 

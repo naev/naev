@@ -4142,12 +4142,15 @@ static int pilotL_handleMsg( lua_State *L )
  *    @luatparam Pilot p Pilot to register handler for.
  *    @luatparam string name Text displayed in comm menu.
  *    @luatparam function|nil callback Called when button is pressed.
+ *    @luatparam[opt] function cond_callback If given, button displayed only if
+ *    it returns true.
  * @luafunc commRegister( p, type, callback )
  */
 static int pilotL_commRegister( lua_State *L )
 {
    Pilot *p;
    const char *name;
+   int use_cond = 0;
 
    NLUA_CHECKRW(L);
 
@@ -4155,6 +4158,13 @@ static int pilotL_commRegister( lua_State *L )
    name = luaL_checkstring(L,2);
    if (!lua_isfunction(L, 3) && !lua_isnil(L, 3))
       NLUA_INVALID_PARAMETER(L);
+   if (lua_gettop(L) >= 4) {
+      if (!lua_isfunction(L, 4) && !lua_isnil(L, 4)) {
+         NLUA_INVALID_PARAMETER(L);
+      } else {
+         use_cond = 1;
+      }
+   }
 
    lua_rawgeti(L, LUA_REGISTRYINDEX, p->comm_handlers);
 
@@ -4177,6 +4187,13 @@ static int pilotL_commRegister( lua_State *L )
    lua_pushvalue(L, 3);
    lua_setfield(L, -2, name);
    lua_pop(L, 1);
+
+   if (use_cond) {
+      lua_rawgeti(L, LUA_REGISTRYINDEX, p->comm_conds);
+      lua_pushvalue(L, 4);
+      lua_setfield(L, -2, name);
+      lua_pop(L, 1);
+   }
 
    return 0;
 }

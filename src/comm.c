@@ -216,10 +216,32 @@ static void comm_addPilotSpecialButtons( unsigned int wid )
             "Refuel", comm_requestFuel );
 
    /* Display buttons registered by pilot.commRegister() */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, comm_pilot->comm_conds);
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, comm_pilot->comm_handlers);
    lua_pushnil(naevL);
    i = 0;
    while (lua_next(naevL, -2) != 0) {
+      /* Run cond function if there is one */
+      lua_pushvalue(naevL, -2);
+      lua_rawget(naevL, -5);
+      if (!lua_isnil(naevL, -1)) {
+         lua_pushpilot(naevL, comm_pilot->id);
+         if (nlua_pcall(1, 1)) {
+            WARN("Lua comm cond for pilot '%s' : %s",
+                  comm_pilot->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,2);
+            i++;
+            continue;
+         } else if (!lua_toboolean(naevL, -1)) {
+            lua_pop(naevL,2);
+            i++;
+            continue;
+         }
+         lua_pop(naevL,1);
+      } else {
+         lua_pop(naevL,1);
+      }
+
       label = strdup(lua_tostring(naevL, -2));
       name = malloc(strlen(label) + 7);
       strcpy(name, "btnLua");
@@ -233,7 +255,7 @@ static void comm_addPilotSpecialButtons( unsigned int wid )
       lua_pop(naevL, 1);
       i++;
    }
-   lua_pop(naevL, 1);
+   lua_pop(naevL, 2);
 }
 
 
