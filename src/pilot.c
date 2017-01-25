@@ -3139,7 +3139,7 @@ void pilot_handlemessages( Pilot* p )
    /* Go through messages and call handlers */
    size = array_size(p->messages);
    for (i=0; i<size; i++) {
-      lua_getfield(naevL, -2, p->messages[i].type);
+      lua_getfield(naevL, -1, p->messages[i].type);
       if (lua_isnil(naevL, -1)) {
          lua_pop(naevL, 1);
       } else {
