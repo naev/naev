@@ -649,7 +649,11 @@ static void comm_luaButton( unsigned int wid, char *name ){
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, comm_pilot->comm_handlers);
    lua_getfield(naevL, -1, name+strlen("btnLua"));
    lua_pushpilot(naevL, comm_pilot->id);
-   nlua_pcall(1, 0);
+   if (nlua_pcall(1, 0)) {
+      WARN("Lua comm for pilot '%s' : %s",
+            comm_pilot->name, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
    lua_pop(naevL, 1);
 }
 
