@@ -230,11 +230,9 @@ static void comm_addPilotSpecialButtons( unsigned int wid )
             WARN("Lua comm cond for pilot '%s' : %s",
                   comm_pilot->name, lua_tostring(naevL,-1));
             lua_pop(naevL,2);
-            i++;
             continue;
          } else if (!lua_toboolean(naevL, -1)) {
             lua_pop(naevL,2);
-            i++;
             continue;
          }
          lua_pop(naevL,1);
