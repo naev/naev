@@ -527,7 +527,12 @@ void mission_cleanup( Mission* misn )
    }
    if (misn->osd > 0)
       osd_destroy(misn->osd);
-   if (misn->env != LUA_NOREF)
+   /*
+    * XXX With the way the mission code works, this function is called on a
+    * Mission struct of all zeros. Looking at the implementation, luaL_ref()
+    * never returns 0, but this is probably undefined behavior.
+    */
+   if (misn->env != LUA_NOREF && misn->env != 0)
       nlua_freeEnv(misn->env);
 
    /* Data. */

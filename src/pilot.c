@@ -80,6 +80,7 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
+void pilot_handlemessages( Pilot* p );
 
 
 /**
@@ -2502,6 +2503,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->ptimer = PILOT_TAKEOFF_DELAY;
    }
 
+   /* Create empty array for messages. */
+   pilot->messages = array_create(Message);
+   lua_newtable(naevL);
+   pilot->msg_handlers = luaL_ref(naevL, LUA_REGISTRYINDEX);
+
    /* AI */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
@@ -2709,6 +2715,11 @@ void pilot_free( Pilot* p )
    if (p->comm_msg != NULL)
       free(p->comm_msg);
 
+   /* Free messages. */
+   pilot_messagesclear(p);
+   array_free(p->messages);
+   luaL_unref(naevL, p->msg_handlers, LUA_REGISTRYINDEX);
+
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
 #endif /* DEBUGGING */
@@ -2843,6 +2854,8 @@ void pilots_update( double dt )
       /* Invisible, not doing anything. */
       if (pilot_isFlag(p, PILOT_INVISIBLE))
          continue;
+
+      pilot_handlemessages(p);
 
       /* See if should think. */
       if ((p->think==NULL) || (p->ai==NULL))
@@ -3077,5 +3090,75 @@ credits_t pilot_worth( const Pilot *p )
 }
 
 
+/**
+ * @brief Clear all of a pilots messages.
+ *
+ *    @param p Pilot.
+ */
+void pilot_messagesclear( Pilot* p )
+{
+   int i, j, size;
+
+   size = array_size(p->messages);
+   for (i=0; i<size; i++) {
+      free(p->messages->type);
+      for (j=0; j<p->messages->num_data; j++) {
+         luaL_unref(naevL, LUA_REGISTRYINDEX, p->messages->data[j]);
+      }
+      free(p->messages->data);
+   }
+
+   array_erase(&p->messages, p->messages, p->messages + size);
+}
 
 
+/**
+ * @brief Calls handlers to deal with of of the pilot's messages
+ *
+ *    @param p Pilot.
+ */
+void pilot_handlemessages( Pilot* p )
+{
+   int i, j, size;
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->msg_handlers);
+
+   /* Remove handlers from deleted environments */
+   lua_pushnil(naevL);
+   while (lua_next(naevL, -2) != 0) {
+      lua_getfenv(naevL, -1);
+      lua_getfield(naevL, -1, "__DELETED"); // Set by nlua_freeEnv()
+      if (lua_toboolean(naevL, -1)) {
+         lua_pushvalue(naevL, -4);
+         lua_pushnil(naevL);
+         lua_rawset(naevL, -7);
+      }
+      lua_pop(naevL, 3);
+   }
+
+   /* Go through messages and call handlers */
+   size = array_size(p->messages);
+   for (i=0; i<size; i++) {
+      lua_getfield(naevL, -2, p->messages[i].type);
+      if (lua_isnil(naevL, -1)) {
+         lua_pop(naevL, 1);
+      } else {
+         /* Hack to deal with handler in AI code */
+         lua_getfenv(naevL, -1);
+         lua_getfield(naevL, -1, AI_MEM);
+         if (!lua_isnil(naevL, -1)) /* Test if running from AI script */
+            ai_setPilot(p);
+         lua_pop(naevL, 2);
+
+         /* Arguments to handler */
+         lua_pushpilot(naevL, p->messages[i].sender);
+         for (j=0; j<p->messages[i].num_data; j++)
+            lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->messages[i].data[j]);
+
+         nlua_pcall(p->messages[i].num_data+1, 0);
+      }
+   }
+   lua_pop(naevL, 1);
+
+   pilot_messagesclear(p);
+}
