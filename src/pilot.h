@@ -435,6 +435,7 @@ typedef struct Pilot_ {
    double engine_glow; /**< Amount of engine glow to display. */
    Message *messages;  /**< Messages received in past frame. */
    int msg_handlers;   /**< Handlers for messages (Lua ref). */
+   int comm_handlers;  /**< Handlers for comm buttons (Lua ref). */
 } Pilot;
 
 

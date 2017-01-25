@@ -57,6 +57,7 @@ static void comm_close( unsigned int wid, char *unused );
 static void comm_bribePilot( unsigned int wid, char *unused );
 static void comm_bribePlanet( unsigned int wid, char *unused );
 static void comm_requestFuel( unsigned int wid, char *unused );
+static void comm_luaButton( unsigned int wid, char *name );
 static int comm_getNumber( double *val, char* str );
 static const char* comm_getString( char *str );
 
@@ -199,6 +200,9 @@ static unsigned int comm_openPilotWindow (void)
  */
 static void comm_addPilotSpecialButtons( unsigned int wid )
 {
+   char *name, *label;
+   int i;
+
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
    if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
@@ -210,6 +214,26 @@ static void comm_addPilotSpecialButtons( unsigned int wid )
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
             "Refuel", comm_requestFuel );
+
+   /* Display buttons registered by pilot.commRegister() */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, comm_pilot->comm_handlers);
+   lua_pushnil(naevL);
+   i = 0;
+   while (lua_next(naevL, -2) != 0) {
+      label = strdup(lua_tostring(naevL, -2));
+      name = malloc(strlen(label) + 7);
+      strcpy(name, "btnLua");
+      strcat(name, label);
+
+      window_addButton( wid, -20, 20 + (3 + i) * (BUTTON_HEIGHT + 20),
+            BUTTON_WIDTH, BUTTON_HEIGHT, name, label, comm_luaButton);
+
+      free(name);
+      free(label);
+      lua_pop(naevL, 1);
+      i++;
+   }
+   lua_pop(naevL, 1);
 }
 
 
@@ -616,6 +640,17 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* Last message. */
    if (price > 0)
       dialogue_msg( "Request Fuel", "\"On my way.\"" );
+}
+
+
+static void comm_luaButton( unsigned int wid, char *name ){
+   (void) wid;
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, comm_pilot->comm_handlers);
+   lua_getfield(naevL, -1, name+strlen("btnLua"));
+   lua_pushpilot(naevL, comm_pilot->id);
+   nlua_pcall(1, 0);
+   lua_pop(naevL, 1);
 }
 
 
