@@ -4253,7 +4253,6 @@ static int pilotL_setLeader( lua_State *L ) {
 }
 
 
-
 /**
  * @brief Get all of a pilots followers.
  *
