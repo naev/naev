@@ -4244,10 +4244,10 @@ static int pilotL_setLeader( lua_State *L ) {
    p = luaL_validpilot(L, 1);
    leader = luaL_validpilot(L, 2);
 
-   if (leader->leader == 0)
-      p->leader = leader->id;
-   else
+   if (leader->leader != 0 && pilot_get(leader->leader) != NULL)
       p->leader = leader->leader;
+   else
+      p->leader = leader->id;
 
    return 0;
 }
