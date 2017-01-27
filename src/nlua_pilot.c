@@ -146,6 +146,9 @@ static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
 static int pilotL_handleMsg( lua_State *L );
 static int pilotL_commRegister( lua_State *L );
+static int pilotL_leader( lua_State *L );
+static int pilotL_setLeader( lua_State *L );
+static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
@@ -242,6 +245,9 @@ static const luaL_reg pilotL_methods[] = {
    { "msg", pilotL_msg },
    { "handleMsg", pilotL_handleMsg },
    { "commRegister", pilotL_commRegister },
+   { "leader", pilotL_leader },
+   { "setLeader", pilotL_setLeader },
+   { "followers", pilotL_followers },
    { "hookClear", pilotL_hookClear },
    {0,0}
 }; /**< Pilot metatable methods. */
@@ -4196,6 +4202,79 @@ static int pilotL_commRegister( lua_State *L )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Gets a pilots leader.
+ *
+ *    @luatparam Pilot p Pilot to get the leader of.
+ *    @luatreturn Pilot|nil The leader or nil.
+ * @luafunc leader( p )
+ */
+static int pilotL_leader( lua_State *L ) {
+   Pilot *p;
+
+   p = luaL_validpilot(L, 1);
+
+   if (p->leader != 0)
+      lua_pushpilot(L, p->leader);
+   else
+      lua_pushnil(L);
+
+   return 1;
+}
+
+
+/**
+ * @brief Set a pilots leader.
+ *
+ *    @luatparam Pilot p Pilot to set the leader of.
+ *    @luatparam Pilot|nil leader Pilot to set as leader.
+ * @luafunc leader( p )
+ */
+static int pilotL_setLeader( lua_State *L ) {
+   Pilot *p, *leader;
+
+   NLUA_CHECKRW(L);
+
+   p = luaL_validpilot(L, 1);
+   leader = luaL_validpilot(L, 2);
+
+   if (leader->leader == 0)
+      p->leader = leader->id;
+   else
+      p->leader = leader->leader;
+
+   return 0;
+}
+
+
+
+/**
+ * @brief Get all of a pilots followers.
+ *
+ *    @luatparam Pilot p Pilot to get the followers of.
+ *    @luatreturn {Pilot,...} Table of followers.
+ * @luafunc leader( p )
+ */
+static int pilotL_followers( lua_State *L ) {
+   Pilot *p;
+   int i, k;
+
+   p = luaL_validpilot(L, 1);
+
+   lua_newtable(L);
+   k = 1;
+   for(i = 0; i<pilot_nstack; i++) {
+      if (pilot_stack[i]->leader == p->id) {
+         lua_pushnumber(L, k++);
+         lua_pushpilot(L, pilot_stack[i]->id);
+         lua_rawset(L, -3);
+      }
+   }
+
+   return 1;
 }
 
 

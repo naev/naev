@@ -437,6 +437,7 @@ typedef struct Pilot_ {
    int msg_handlers;   /**< Handlers for messages (Lua ref). */
    int comm_handlers;  /**< Handlers for comm buttons (Lua ref). */
    int comm_conds;     /**< Conditions for comm buttons (Lua ref). */
+   unsigned int leader; /**< ID of leader pilot. */
 } Pilot;
 
 
