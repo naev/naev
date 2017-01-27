@@ -4238,6 +4238,7 @@ static int pilotL_leader( lua_State *L ) {
  */
 static int pilotL_setLeader( lua_State *L ) {
    Pilot *p, *leader;
+   int i;
 
    NLUA_CHECKRW(L);
 
@@ -4248,6 +4249,13 @@ static int pilotL_setLeader( lua_State *L ) {
       p->leader = leader->leader;
    else
       p->leader = leader->id;
+
+   /* If the pilot has followers, they should be given the new leader as well */
+   for(i = 0; i<pilot_nstack; i++) {
+      if (pilot_stack[i]->leader == p->id) {
+         pilot_stack[i]->leader = leader->id;
+      }
+   }
 
    return 0;
 }
