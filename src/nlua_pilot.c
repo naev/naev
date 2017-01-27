@@ -4229,9 +4229,12 @@ static int pilotL_leader( lua_State *L ) {
 /**
  * @brief Set a pilots leader.
  *
+ * If leader has a leader itself, the leader will instead be set to that
+ * pilot's leader.
+ *
  *    @luatparam Pilot p Pilot to set the leader of.
  *    @luatparam Pilot|nil leader Pilot to set as leader.
- * @luafunc leader( p )
+ * @luafunc setLeader( p )
  */
 static int pilotL_setLeader( lua_State *L ) {
    Pilot *p, *leader;
@@ -4256,7 +4259,7 @@ static int pilotL_setLeader( lua_State *L ) {
  *
  *    @luatparam Pilot p Pilot to get the followers of.
  *    @luatreturn {Pilot,...} Table of followers.
- * @luafunc leader( p )
+ * @luafunc followers( p )
  */
 static int pilotL_followers( lua_State *L ) {
    Pilot *p;
