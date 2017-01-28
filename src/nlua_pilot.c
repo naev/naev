@@ -4055,38 +4055,52 @@ static int pilotL_hailPlayer( lua_State *L )
  * @brief Sends a message to another pilot.
  *
  *    @luatparam Pilot p Pilot to send message.
- *    @luatparam Pilot receiver Pilot to receive message.
+ *    @luatparam Pilot|{Pilot,...} receiver Pilot(s) to receive message.
  *    @luatparam string type Type of message.
  *    @luaparam[opt] data Data to send with message.
  * @luafunc msg( p, receiver, type, data )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot *p, *reciever;
+   Pilot *p, *reciever=NULL;
    const char *type;
 
    NLUA_CHECKRW(L);
 
    p = luaL_validpilot(L,1);
-   reciever = luaL_validpilot(L,2);
+   if (!lua_istable(L,2))
+      reciever = luaL_validpilot(L,2);
    type = luaL_checkstring(L,3);
 
-   lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages); /* messages */
+   lua_newtable(L); /* msg */
 
-   lua_newtable(L); /* messages, msg */
+   lua_pushpilot(L, p->id); /* msg, sender */
+   lua_rawseti(L, -2, 1); /* msg */
 
-   lua_pushpilot(L, p->id); /* messages, msg, sender */
-   lua_rawseti(L, -2, 1); /* messages, msg */
-
-   lua_pushstring(L, type); /* messages, msg, type */
-   lua_rawseti(L, -2, 2); /* messages, msg */
+   lua_pushstring(L, type); /* msg, type */
+   lua_rawseti(L, -2, 2); /* msg */
 
    if (lua_gettop(L) > 3) {
-      lua_pushvalue(L, 4); /* messages, msg, data */
-      lua_rawseti(L, -2, 3); /* messages, msg */
+      lua_pushvalue(L, 4); /* msg, data */
+      lua_rawseti(L, -2, 3); /* msg */
    }
 
-   lua_rawseti(L, -2, lua_objlen(L, -2)+1); /* messages */
+   if (reciever != NULL) {
+      lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages);
+      lua_pushvalue(L, -2);
+      lua_rawseti(L, -2, lua_objlen(L, -2)+1);
+      lua_pop(L, 1);
+   } else {
+      lua_pushnil(L);
+      while (lua_next(L, 2) != 0) {
+         reciever = luaL_validpilot(L,-1);
+         lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages);
+         lua_pushvalue(L, -4);
+         lua_rawseti(L, -2, lua_objlen(L, -2)+1);
+         lua_pop(L,2);
+      }
+   }
+
    lua_pop(L, 1); /*  */
 
    return 0;
