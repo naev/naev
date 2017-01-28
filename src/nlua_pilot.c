@@ -4062,16 +4062,16 @@ static int pilotL_hailPlayer( lua_State *L )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot *p;
+   Pilot *p, *reciever;
    const char *type;
 
    NLUA_CHECKRW(L);
 
    p = luaL_validpilot(L,1);
-   luaL_validpilot(L,2);
+   reciever = luaL_validpilot(L,2);
    type = luaL_checkstring(L,3);
 
-   lua_rawgeti(L, LUA_REGISTRYINDEX, p->messages); /* messages */
+   lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages); /* messages */
 
    lua_newtable(L); /* messages, msg */
 
