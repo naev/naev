@@ -205,6 +205,8 @@ static int cli_script( lua_State *L )
       lua_error(L);
 
    /* Return the stuff. */
+   nlua_pushenv(cli_env);
+   lua_setfenv(L, -2);
    lua_call(L, 0, LUA_MULTRET);
    return lua_gettop(L) - n;
 }
