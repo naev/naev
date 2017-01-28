@@ -79,7 +79,7 @@ function addRawShips( ship, ai, location, faction, count )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )[1]
+         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )
       end
    end
    if #out > 1 then

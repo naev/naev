@@ -218,7 +218,7 @@ function spawn_baddies(sp)
    badguys = {}
    --hyenas
    for i=1,2 do
-      badguys[i] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
       badguys[i]:setHostile(false)
       
       badguys[i]:rename("Mercenary")
@@ -238,7 +238,7 @@ function spawn_baddies(sp)
       badguys[i]:setEnergy(100)
    end
    for i=3,4 do
-      badguys[i] = pilot.addRaw( "Lancelot","mercenary", sp, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Lancelot","mercenary", sp, "Mercenary" )
       badguys[i]:setHostile(false)
       
       badguys[i]:rename("Mercenary")
@@ -260,7 +260,7 @@ function spawn_baddies(sp)
    end
 
    for i=5,6 do
-      badguys[i] = pilot.addRaw( "Admonisher","mercenary", sp, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Admonisher","mercenary", sp, "Mercenary" )
       badguys[i]:setHostile(false)
       badguys[i]:rename("Mercenary")
       

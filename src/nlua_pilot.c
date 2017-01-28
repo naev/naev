@@ -555,18 +555,14 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    if (a < 0.)
       a += 2.*M_PI;
 
-   lua_newtable(L);
    if (from_ship) {
       /* Create the pilot. */
       p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, -1 );
-
-      /* we push each pilot created into a table and return it */
-      lua_pushnumber(L,1); /* index, starts with 1 */
-      lua_pushpilot(L,p); /* value = LuaPilot */
-      lua_rawset(L,-3); /* store the value in the table */
+      lua_pushpilot(L,p);
    }
    else {
       /* now we start adding pilots and toss ids into the table we return */
+      lua_newtable(L);
       first = 1;
       for (i=0; i<flt->npilots; i++) {
          plt = &flt->pilots[i];
@@ -637,7 +633,7 @@ static int pilotL_addFleet( lua_State *L )
  *    @luatparam string|nil ai AI to give the pilot.
  *    @luatparam System|Planet param Position to create the pilot at. See pilot.add for further information.
  *    @luatparam Faction faction Faction to give the pilot.
- *    @luatreturn {Pilot,...} Table populated with the created pilot.
+ *    @luatreturn Pilot The created pilot.
  * @luafunc addRaw( shipname, ai, param, faction )
  */
 static int pilotL_addFleetRaw(lua_State *L )
