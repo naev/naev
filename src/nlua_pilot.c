@@ -144,7 +144,6 @@ static int pilotL_hyperspace( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
-static int pilotL_handleMsg( lua_State *L );
 static int pilotL_commRegister( lua_State *L );
 static int pilotL_leader( lua_State *L );
 static int pilotL_setLeader( lua_State *L );
@@ -243,7 +242,6 @@ static const luaL_reg pilotL_methods[] = {
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
    { "msg", pilotL_msg },
-   { "handleMsg", pilotL_handleMsg },
    { "commRegister", pilotL_commRegister },
    { "leader", pilotL_leader },
    { "setLeader", pilotL_setLeader },
@@ -4062,79 +4060,37 @@ static int pilotL_hailPlayer( lua_State *L )
  *    @luatparam Pilot receiver Pilot to receive message.
  *    @luatparam string type Type of message.
  *    @luaparam[opt] data Data to send with message.
- * @luafunc msg( p, receiver, type, ... )
+ * @luafunc msg( p, receiver, type, data )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot *p, *receiver;
-   const char *type;
-   int i, *data, num_data;
-   Message *message;
-
-   NLUA_CHECKRW(L);
-
-   p = luaL_validpilot(L,1);
-   receiver = luaL_validpilot(L,2);
-   type = luaL_checkstring(L,3);
-
-   num_data = lua_gettop(L) - 3;
-   data = malloc(num_data * sizeof(int));
-   for (i=0; i<num_data; i++) {
-      lua_pushvalue(L, i+4);
-      data[i] = luaL_ref(L, LUA_REGISTRYINDEX);
-   }
-
-   message = &array_grow(&receiver->messages);
-   message->sender = p->id;
-   message->type = strdup(type);
-   message->data = data;
-   message->num_data = num_data;
-
-   return 0;
-}
-
-
-/**
- * @brief Registers a message handler.
- *
- *    @luatparam Pilot p Pilot to register handler for.
- *    @luatparam string type Type of message.
- *    @luatparam function|nil callback Called when message is recieved.
- * @luafunc handleMsg( p, type, callback )
- */
-static int pilotL_handleMsg( lua_State *L )
-{
    Pilot *p;
    const char *type;
+   int i, num_data;
 
    NLUA_CHECKRW(L);
 
    p = luaL_validpilot(L,1);
-   type = luaL_checkstring(L,2);
-   if (!lua_isfunction(L, 3) && !lua_isnil(L, 3))
-      NLUA_INVALID_PARAMETER(L);
+   luaL_validpilot(L,2);
+   type = luaL_checkstring(L,3);
 
-   lua_rawgeti(L, LUA_REGISTRYINDEX, p->msg_handlers);
+   lua_rawgeti(L, LUA_REGISTRYINDEX, p->messages); /* messages */
 
-   if (!lua_isnil(L, 3)) {
-      lua_getfield(L, -1, type);
-      if (!lua_isnil(naevL, -1))
-         WARN("'%s' message handler for pilot '%s' redefined", type, p->name);
-      lua_pop(L, 1);
+   lua_newtable(L); /* messages, msg */
 
-      /* Kind of a hack */
-      lua_getfenv(L, 3);
-      lua_getfield(L, -1, AI_MEM);
-      if (!lua_isnil(L, -1)) { /* Test if running from AI script */
-         if (cur_pilot != p)
-            NLUA_ERROR(L, "Cannot call handleMsg() on another pilot from AI code.");
-      }
-      lua_pop(L, 2);
+   lua_pushpilot(L, p->id); /* messages, msg, sender */
+   lua_rawseti(L, -2, 1); /* messages, msg */
+
+   lua_pushstring(L, type); /* messages, msg, type */
+   lua_rawseti(L, -2, 2); /* messages, msg */
+
+   if (lua_gettop(L) > 3) {
+      lua_pushvalue(L, 4); /* messages, msg, data */
+      lua_rawseti(L, -2, 3); /* messages, msg */
    }
 
-   lua_pushvalue(L, 3);
-   lua_setfield(L, -2, type);
-   lua_pop(L, 1);
+   lua_rawseti(L, -2, lua_objlen(L, -2)+1); /* messages */
+   lua_pop(L, 1); /*  */
 
    return 0;
 }

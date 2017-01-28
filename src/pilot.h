@@ -261,17 +261,6 @@ typedef struct Escort_s {
 
 
 /**
- * @brief Stores an inter-pilot message.
- */
-typedef struct Message_ {
-   unsigned int sender; /**< ID of the sender. */
-   char *type;          /**< Name of the message type. */
-   int *data;           /**< References to values in registry to send as data. */
-   int num_data;        /**< Number of values in data. */
-} Message;
-
-
-/**
  * @brief The representation of an in-game pilot.
  */
 typedef struct Pilot_ {
@@ -433,8 +422,7 @@ typedef struct Pilot_ {
    double player_damage; /**< Accumulates damage done by player for hostileness.
                               In per one of max shield + armour. */
    double engine_glow; /**< Amount of engine glow to display. */
-   Message *messages;  /**< Messages received in past frame. */
-   int msg_handlers;   /**< Handlers for messages (Lua ref). */
+   int messages;       /**< Queued messages (Lua ref). */
    int comm_handlers;  /**< Handlers for comm buttons (Lua ref). */
    int comm_conds;     /**< Conditions for comm buttons (Lua ref). */
    unsigned int leader; /**< ID of leader pilot. */
@@ -569,7 +557,5 @@ char pilot_getFactionColourChar( const Pilot *p );
  * Misc details.
  */
 credits_t pilot_worth( const Pilot *p );
-
-void pilot_messagesclear( Pilot* p );
 
 #endif /* PILOT_H */

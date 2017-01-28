@@ -251,6 +251,7 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
+static int aiL_messages( lua_State *L );
 
 
 static const luaL_reg aiL_methods[] = {
@@ -336,6 +337,7 @@ static const luaL_reg aiL_methods[] = {
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
+   { "messages", aiL_messages },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -3187,6 +3189,21 @@ static int aiL_credits( lua_State *L )
    cur_pilot->credits = luaL_checklong(L,1);
 
    return 0;
+}
+
+
+/**
+ * @brief Retirms and clears the pilots message queue.
+ *
+ *    @luafunc messages()
+ *    @luatreturn {{},...} Messages.
+ */
+static int aiL_messages( lua_State *L )
+{
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
+   lua_newtable(naevL);
+   lua_rawseti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
+   return 1;
 }
 
 /**
