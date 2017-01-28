@@ -79,7 +79,6 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-void pilot_clean_comm_handlers( Pilot* p );
 
 
 /**
@@ -2506,9 +2505,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    lua_newtable(naevL);
    pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
    lua_newtable(naevL);
-   pilot->comm_handlers = luaL_ref(naevL, LUA_REGISTRYINDEX);
-   lua_newtable(naevL);
-   pilot->comm_conds = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* AI */
    if (ai != NULL)
@@ -2719,8 +2715,6 @@ void pilot_free( Pilot* p )
 
    /* Free messages. */
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
-   luaL_unref(naevL, p->comm_handlers, LUA_REGISTRYINDEX);
-   luaL_unref(naevL, p->comm_conds, LUA_REGISTRYINDEX);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
@@ -2852,8 +2846,6 @@ void pilots_update( double dt )
          i--; /* Must decrement iterator. */
          continue;
       }
-
-      pilot_clean_comm_handlers(p);
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(p, PILOT_INVISIBLE))
@@ -3092,30 +3084,4 @@ credits_t pilot_worth( const Pilot *p )
 }
 
 
-/**
- * @brief Clean comm handlers for deleted states
- *
- *    @param p Pilot.
- */
-void pilot_clean_comm_handlers( Pilot* p )
-{
-   /* Remove comm handlers as well */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->comm_conds);
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->comm_handlers);
-   lua_pushnil(naevL);
-   while (lua_next(naevL, -2) != 0) {
-      lua_getfenv(naevL, -1);
-      lua_getfield(naevL, -1, "__DELETED"); // Set by nlua_freeEnv()
-      if (lua_toboolean(naevL, -1)) {
-         lua_pushvalue(naevL, -4);
-         lua_pushnil(naevL);
-         lua_rawset(naevL, -7);
 
-         /* Remove the cond */
-         lua_pushvalue(naevL, -4);
-         lua_pushnil(naevL);
-         lua_rawset(naevL, -8);
-      }
-      lua_pop(naevL, 3);
-   }
-}

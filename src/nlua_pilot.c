@@ -144,7 +144,6 @@ static int pilotL_hyperspace( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
-static int pilotL_commRegister( lua_State *L );
 static int pilotL_leader( lua_State *L );
 static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
@@ -242,7 +241,6 @@ static const luaL_reg pilotL_methods[] = {
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
    { "msg", pilotL_msg },
-   { "commRegister", pilotL_commRegister },
    { "leader", pilotL_leader },
    { "setLeader", pilotL_setLeader },
    { "followers", pilotL_followers },
@@ -4091,71 +4089,6 @@ static int pilotL_msg( lua_State *L )
 
    lua_rawseti(L, -2, lua_objlen(L, -2)+1); /* messages */
    lua_pop(L, 1); /*  */
-
-   return 0;
-}
-
-
-/**
- * @brief Registers a button under the comm menu.
- *
- * Typically, the callback will use tk to display prompt, then pilot.msg().
- *
- *    @luatparam Pilot p Pilot to register handler for.
- *    @luatparam string name Text displayed in comm menu.
- *    @luatparam function|nil callback Called when button is pressed.
- *    @luatparam[opt] function cond_callback If given, button displayed only if
- *    it returns true.
- * @luafunc commRegister( p, type, callback )
- */
-static int pilotL_commRegister( lua_State *L )
-{
-   Pilot *p;
-   const char *name;
-   int use_cond = 0;
-
-   NLUA_CHECKRW(L);
-
-   p = luaL_validpilot(L,1);
-   name = luaL_checkstring(L,2);
-   if (!lua_isfunction(L, 3) && !lua_isnil(L, 3))
-      NLUA_INVALID_PARAMETER(L);
-   if (lua_gettop(L) >= 4) {
-      if (!lua_isfunction(L, 4) && !lua_isnil(L, 4)) {
-         NLUA_INVALID_PARAMETER(L);
-      } else {
-         use_cond = 1;
-      }
-   }
-
-   lua_rawgeti(L, LUA_REGISTRYINDEX, p->comm_handlers);
-
-   if (!lua_isnil(L, 3)) {
-      lua_getfield(L, -1, name);
-      if (!lua_isnil(naevL, -1))
-         WARN("'%s' comm handler for pilot '%s' redefined", name, p->name);
-      lua_pop(L, 1);
-
-      /* Kind of a hack */
-      lua_getfenv(L, 3);
-      lua_getfield(L, -1, AI_MEM);
-      if (!lua_isnil(L, -1)) { /* Test if running from AI script */
-         if (cur_pilot != p)
-            NLUA_ERROR(L, "Cannot call commRegister() on another pilot from AI code.");
-      }
-      lua_pop(L, 2);
-   }
-
-   lua_pushvalue(L, 3);
-   lua_setfield(L, -2, name);
-   lua_pop(L, 1);
-
-   if (use_cond) {
-      lua_rawgeti(L, LUA_REGISTRYINDEX, p->comm_conds);
-      lua_pushvalue(L, 4);
-      lua_setfield(L, -2, name);
-      lua_pop(L, 1);
-   }
 
    return 0;
 }
