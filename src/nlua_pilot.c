@@ -4064,7 +4064,6 @@ static int pilotL_msg( lua_State *L )
 {
    Pilot *p;
    const char *type;
-   int i, num_data;
 
    NLUA_CHECKRW(L);
 
