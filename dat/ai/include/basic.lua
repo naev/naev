@@ -155,14 +155,26 @@ function follow ()
       ai.poptask()
       return
    end
-   
-   local dir   = ai.face(target)
-   local dist  = ai.dist(target)
- 
+
+   local goal = target;
+
+   if mem.form_pos then
+      local position = mem.form_pos;
+      local offset = target:dir() / 180 * math.pi
+      local x = position.radius * math.cos(position.angle + offset)
+      local y = position.radius * math.sin(position.angle + offset)
+      local posit = target:pos() + vec2.new(x, y)
+      local cons = (posit-ai.pilot():pos())*10 + (target:vel()-ai.pilot():vel())*20  --Computing the direction using a pd controller
+      goal = cons + p:pos()
+   end
+
+   local dir   = ai.face(goal)
+   local dist  = ai.dist(goal)
+
    -- Must approach
    if dir < 10 and dist > 300 then
       ai.accel()
- 
+
    end
 end
 function follow_accurate ()

@@ -1,5 +1,6 @@
 include("dat/ai/include/basic.lua")
 include("dat/ai/include/attack.lua")
+local formation = include("dat/ai/include/formation.lua")
 
 --[[
 -- Variables to adjust AI
@@ -49,6 +50,18 @@ function control ()
    local enemy = ai.getenemy()
 
    local parmour, pshield = ai.pilot():health()
+
+   local followers = ai.pilot():followers()
+   if #followers ~= 0 then
+      formation(followers)
+   end
+
+   for _, v in ipairs(ai.messages()) do
+      local sender, msgtype, data = unpack(v)
+      if sender == ai.pilot():leader() and msgtype == "form-pos" then
+         mem.form_pos = data;
+      end
+   end
 
    -- Cooldown completes silently.
    if mem.cooldown then
@@ -112,6 +125,8 @@ function control ()
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
+      elseif ai.pilot():leader() and ai.pilot():leader():exists() then
+         ai.pushtask("follow", ai.pilot():leader())
       else
          idle()
       end
