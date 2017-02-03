@@ -59,7 +59,8 @@ function control ()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = unpack(v)
       if sender == ai.pilot():leader() and msgtype == "form-pos" then
-         mem.form_pos = data;
+         mem.angle, mem.radius = unpack(data)
+         mem.in_formation = true;
       end
    end
 

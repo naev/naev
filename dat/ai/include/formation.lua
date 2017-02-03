@@ -1,5 +1,5 @@
-local function cmd_pos(p, pos)
-   ai.pilot():msg(p, "form-pos", pos)
+local function cmd_pos(p, angle, radius)
+   ai.pilot():msg(p, "form-pos", {angle, radius})
 end
 
 
@@ -23,7 +23,7 @@ local function formation(pilots, formation)
       angle = 45 -- Spokes start rotated at a 45 degree angle.
       radius = 100 -- First ship distance.
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius}) -- Store as polar coordinates.
+         cmd_pos(p, angle, radius) -- Store as polar coordinates.
          angle = (angle + 90) % (360) -- Rotate spokes by 90 degrees.
          radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
       end
@@ -43,7 +43,7 @@ local function formation(pilots, formation)
             count[ship_class] = count[ship_class] + 1 --Update the count
          end
          radius = radii[ship_class] --Assign the radius, defined above.
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
       end
 
 
@@ -53,7 +53,7 @@ local function formation(pilots, formation)
       angle = 45 -- Arms start at a 45 degree angle.
       radius = 100 -- First ship distance.
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius}) -- Store as polar coordinates.
+         cmd_pos(p, angle, radius) -- Store as polar coordinates.
          angle = angle * -1 -- Flip the arms between -45 and 45 degrees.
          radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
       end
@@ -65,7 +65,7 @@ local function formation(pilots, formation)
       angle = (flip * 45) + 180
       radius = 100 -- First ship distance.
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius}) -- Store as polar coordinates.
+         cmd_pos(p, angle, radius) -- Store as polar coordinates.
          flip = flip * -1
          angle = (flip * 45) + 180 -- Flip the arms between 135 and 215 degrees.
          radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
@@ -77,7 +77,7 @@ local function formation(pilots, formation)
       flip = -1
       angle = (45 * 3) + (90 * flip)  --Flip between 45 degrees and 225 degrees.
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
          flip = flip * -1
          angle = (45 * 3) + (90 * flip)
          radius = 100 * (math.ceil(i / 2)) -- Increase the radius every 2 positions
@@ -89,7 +89,7 @@ local function formation(pilots, formation)
       flip = 1
       angle = (45 * 5) + (90 * flip) --Flip between 315 degrees, and 135 degrees
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
          flip = flip * -1
          angle = (45 * 5) + (90 * flip)
          radius = 100 * (math.ceil(i / 2))
@@ -101,7 +101,7 @@ local function formation(pilots, formation)
       flip = -1
       angle = 90 + (90 * flip)  --flip between 0 degrees and 180 degrees
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
          flip = flip * -1
          angle = 90 + (90 * flip)
          radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
@@ -113,7 +113,7 @@ local function formation(pilots, formation)
       flip = -1
       angle = 180 + (90 * flip) --flip between 90 degrees and 270 degrees
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
          flip = flip * -1
          angle = 180 + (90 * flip)
          radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
@@ -125,7 +125,7 @@ local function formation(pilots, formation)
       orig_radius = radius
       angle = (22.5 * flip) / (radius / orig_radius)
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
          if flip == 0 then
             flip = -1
             radius = (orig_radius * (math.ceil(i/3))) + ((orig_radius * (math.ceil(i/3))) / 30)
@@ -145,7 +145,7 @@ local function formation(pilots, formation)
       orig_radius = radius
       angle = (22.5 * flip) / (radius / orig_radius)
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle, radius = radius})
+         cmd_pos(p, angle, radius)
          if flip == 0 then
             flip = -1
             radius = (orig_radius * (math.ceil(i/3))) - ((orig_radius * (math.ceil(i/3))) / 20)
@@ -163,7 +163,7 @@ local function formation(pilots, formation)
       angle = 360 / #pilots -- The angle between each ship, in radians.
       radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
       for i, p in ipairs(pilots) do
-         cmd_pos(p, {angle = angle * i, radius = radius}) -- Store as polar coordinates.
+         cmd_pos(p, angle * i, radius) -- Store as polar coordinates.
       end
    end
 end

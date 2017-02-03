@@ -156,21 +156,20 @@ function follow ()
       return
    end
 
-   local goal = target;
-
-   if mem.form_pos then
-      local position = mem.form_pos;
-      goal = ai.follow_accurate(target, position.radius,
-                                position.angle, mem.Kp, mem.Kd)
+   local goal = target
+   if mem.in_formation then
+      goal = ai.follow_accurate(target, mem.radius, 
+             mem.angle, mem.Kp, mem.Kd)
    end
 
+   
    local dir   = ai.face(goal)
    local dist  = ai.dist(goal)
-
+ 
    -- Must approach
    if dir < 10 and dist > 300 then
       ai.accel()
-
+ 
    end
 end
 function follow_accurate ()
