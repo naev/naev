@@ -160,12 +160,8 @@ function follow ()
 
    if mem.form_pos then
       local position = mem.form_pos;
-      local offset = target:dir() / 180 * math.pi
-      local x = position.radius * math.cos(position.angle + offset)
-      local y = position.radius * math.sin(position.angle + offset)
-      local posit = target:pos() + vec2.new(x, y)
-      local cons = (posit-ai.pilot():pos())*10 + (target:vel()-ai.pilot():vel())*20  --Computing the direction using a pd controller
-      goal = cons + p:pos()
+      goal = ai.follow_accurate(target, position.radius,
+                                position.angle, mem.Kp, mem.Kd)
    end
 
    local dir   = ai.face(goal)
