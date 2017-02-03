@@ -81,11 +81,11 @@ function formations.echelon_left(pilots)
    --This formation forms a "/", with the fleader in the middle.
    local radius = 100
    local flip = -1
-   local angle = (45 * 3) + (90 * flip)  --Flip between 45 degrees and 225 degrees.
+   local angle = 135 + (90 * flip)  --Flip between 45 degrees and 225 degrees.
    for i, p in ipairs(pilots) do
       cmd_pos(p, angle, radius)
       flip = flip * -1
-      angle = (45 * 3) + (90 * flip)
+      angle = 135 + (90 * flip)
       radius = 100 * (math.ceil(i / 2)) -- Increase the radius every 2 positions
    end
 end
@@ -95,11 +95,11 @@ function formations.echelon_right(pilots)
    --This formation forms a "\", with the fleader in the middle.
    local radius = 100
    local flip = 1
-   local angle = (45 * 5) + (90 * flip) --Flip between 315 degrees, and 135 degrees
+   local angle = 225 + (90 * flip) --Flip between 315 degrees, and 135 degrees
    for i, p in ipairs(pilots) do
       cmd_pos(p, angle, radius)
       flip = flip * -1
-      angle = (45 * 5) + (90 * flip)
+      angle = 225 + (90 * flip)
       radius = 100 * (math.ceil(i / 2))
    end
 end
