@@ -2,7 +2,6 @@ local function cmd_pos(p, angle, radius)
    ai.pilot():msg(p, "form-pos", {angle, radius})
 end
 
-
 local function count_classes(pilots)
    local class_count = {}
    for i, p in ipairs(pilots) do
@@ -15,9 +14,7 @@ local function count_classes(pilots)
    return class_count
 end
 
-
 formations = {}
-
 
 function formations.cross(pilots)
    -- Cross logic. Forms an X.
@@ -29,7 +26,6 @@ function formations.cross(pilots)
       radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
    end
 end
-
 
 function formations.buffer(pilots)
    -- Buffer logic. Consecutive arcs eminating from the fleader. Stored as polar coordinates.
@@ -50,7 +46,6 @@ function formations.buffer(pilots)
    end
 end
 
-
 function formations.vee(pilots)
    -- The vee formation forms a v, with the fleader at the apex, and the arms extending in front.
    local angle = 45 -- Arms start at a 45 degree angle.
@@ -61,7 +56,6 @@ function formations.vee(pilots)
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
-   
 
 function formations.wedge(pilots)
    -- The wedge formation forms a v, with the fleader at the apex, and the arms extending out back.
@@ -76,7 +70,6 @@ function formations.wedge(pilots)
    end
 end
       
-
 function formations.echelon_left(pilots)
    --This formation forms a "/", with the fleader in the middle.
    local radius = 100
@@ -89,7 +82,6 @@ function formations.echelon_left(pilots)
       radius = 100 * (math.ceil(i / 2)) -- Increase the radius every 2 positions
    end
 end
-
 
 function formations.echelon_right(pilots)
    --This formation forms a "\", with the fleader in the middle.
@@ -104,7 +96,6 @@ function formations.echelon_right(pilots)
    end
 end
 
-
 function formations.column(pilots)
    --This formation is a simple "|", with fleader in the middle.
    local radius = 100
@@ -118,7 +109,6 @@ function formations.column(pilots)
    end
 end
 
-
 function formations.wall(pilots)
    --This formation is a "-", with the fleader in the middle.
    local radius = 100
@@ -131,7 +121,6 @@ function formations.wall(pilots)
       radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
    end
 end
-
 
 function formations.fishbone(pilots)
    local radius = 500
@@ -153,7 +142,6 @@ function formations.fishbone(pilots)
    end
 end
 
-
 function formations.chevron(pilots)
    local radius = 500
    local flip = -1
@@ -173,7 +161,6 @@ function formations.chevron(pilots)
       angle = (22.5 * flip) / (radius / orig_radius)
    end
 end
-
 
 function formations.circle(pilots)
    -- Default to circle.
