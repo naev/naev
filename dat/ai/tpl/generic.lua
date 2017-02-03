@@ -1,6 +1,6 @@
 include("dat/ai/include/basic.lua")
 include("dat/ai/include/attack.lua")
-local formation = include("dat/ai/include/formation.lua")
+local formation = include("dat/scripts/formation.lua")
 
 --[[
 -- Variables to adjust AI
@@ -53,7 +53,7 @@ function control ()
 
    local followers = ai.pilot():followers()
    if #followers ~= 0 then
-      formation.circle(followers)
+      formation.circle(ai.pilot(), followers)
    end
 
    for _, v in ipairs(ai.messages()) do

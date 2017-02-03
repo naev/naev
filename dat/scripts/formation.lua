@@ -1,7 +1,3 @@
-local function cmd_pos(p, angle, radius)
-   ai.pilot():msg(p, "form-pos", {angle, radius})
-end
-
 local function count_classes(pilots)
    local class_count = {}
    for i, p in ipairs(pilots) do
@@ -16,18 +12,18 @@ end
 
 formations = {}
 
-function formations.cross(pilots)
+function formations.cross(leader, pilots)
    -- Cross logic. Forms an X.
    local angle = 45 -- Spokes start rotated at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius) -- Store as polar coordinates.
+      leader:msg(p, "form-pos", {angle, radius})
       angle = (angle + 90) % (360) -- Rotate spokes by 90 degrees.
       radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
    end
 end
 
-function formations.buffer(pilots)
+function formations.buffer(leader, pilots)
    -- Buffer logic. Consecutive arcs eminating from the fleader. Stored as polar coordinates.
    local class_count = count_classes(pilots)
    local angle, radius
@@ -42,93 +38,93 @@ function formations.buffer(pilots)
          count[ship_class] = count[ship_class] + 1 --Update the count
       end
       radius = radii[ship_class] --Assign the radius, defined above.
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
    end
 end
 
-function formations.vee(pilots)
+function formations.vee(leader, pilots)
    -- The vee formation forms a v, with the fleader at the apex, and the arms extending in front.
    local angle = 45 -- Arms start at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius) -- Store as polar coordinates.
+      leader:msg(p, "form-pos", {angle, radius})
       angle = angle * -1 -- Flip the arms between -45 and 45 degrees.
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
 
-function formations.wedge(pilots)
+function formations.wedge(leader, pilots)
    -- The wedge formation forms a v, with the fleader at the apex, and the arms extending out back.
    local flip = -1
    local angle = (flip * 45) + 180
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius) -- Store as polar coordinates.
+      leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = (flip * 45) + 180 -- Flip the arms between 135 and 215 degrees.
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
       
-function formations.echelon_left(pilots)
+function formations.echelon_left(leader, pilots)
    --This formation forms a "/", with the fleader in the middle.
    local radius = 100
    local flip = -1
    local angle = 135 + (90 * flip)  --Flip between 45 degrees and 225 degrees.
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 135 + (90 * flip)
       radius = 100 * (math.ceil(i / 2)) -- Increase the radius every 2 positions
    end
 end
 
-function formations.echelon_right(pilots)
+function formations.echelon_right(leader, pilots)
    --This formation forms a "\", with the fleader in the middle.
    local radius = 100
    local flip = 1
    local angle = 225 + (90 * flip) --Flip between 315 degrees, and 135 degrees
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 225 + (90 * flip)
       radius = 100 * (math.ceil(i / 2))
    end
 end
 
-function formations.column(pilots)
+function formations.column(leader, pilots)
    --This formation is a simple "|", with fleader in the middle.
    local radius = 100
    local flip = -1
    local angle = 90 + (90 * flip)  --flip between 0 degrees and 180 degrees
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 90 + (90 * flip)
       radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
    end
 end
 
-function formations.wall(pilots)
+function formations.wall(leader, pilots)
    --This formation is a "-", with the fleader in the middle.
    local radius = 100
    local flip = -1
    local angle = 180 + (90 * flip) --flip between 90 degrees and 270 degrees
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 180 + (90 * flip)
       radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
    end
 end
 
-function formations.fishbone(pilots)
+function formations.fishbone(leader, pilots)
    local radius = 500
    local flip = -1
    local orig_radius = radius
    local angle = (22.5 * flip) / (radius / orig_radius)
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
       if flip == 0 then
          flip = -1
          radius = (orig_radius * (math.ceil(i/3))) + ((orig_radius * (math.ceil(i/3))) / 30)
@@ -142,13 +138,13 @@ function formations.fishbone(pilots)
    end
 end
 
-function formations.chevron(pilots)
+function formations.chevron(leader, pilots)
    local radius = 500
    local flip = -1
    local orig_radius = radius
    local angle = (22.5 * flip) / (radius / orig_radius)
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle, radius)
+      leader:msg(p, "form-pos", {angle, radius})
       if flip == 0 then
          flip = -1
          radius = (orig_radius * (math.ceil(i/3))) - ((orig_radius * (math.ceil(i/3))) / 20)
@@ -162,12 +158,12 @@ function formations.chevron(pilots)
    end
 end
 
-function formations.circle(pilots)
+function formations.circle(leader, pilots)
    -- Default to circle.
    local angle = 360 / #pilots -- The angle between each ship, in radians.
    local radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
    for i, p in ipairs(pilots) do
-      cmd_pos(p, angle * i, radius) -- Store as polar coordinates.
+      leader:msg(p, "form-pos", {angle * i, radius})
    end
 end
 
