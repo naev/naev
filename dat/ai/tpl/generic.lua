@@ -53,7 +53,7 @@ function control ()
 
    local followers = ai.pilot():followers()
    if #followers ~= 0 then
-      formation(followers)
+      formation.circle(followers)
    end
 
    for _, v in ipairs(ai.messages()) do
