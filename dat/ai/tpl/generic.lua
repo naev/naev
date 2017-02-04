@@ -51,9 +51,8 @@ function control ()
 
    local parmour, pshield = ai.pilot():health()
 
-   local followers = ai.pilot():followers()
-   if #followers ~= 0 then
-      formation.circle(ai.pilot(), followers)
+   if #ai.pilot():followers() ~= 0 then
+      formation.circle(ai.pilot())
    end
 
    for _, v in ipairs(ai.messages()) do

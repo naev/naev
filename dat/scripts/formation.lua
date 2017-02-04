@@ -12,7 +12,8 @@ end
 
 formations = {}
 
-function formations.cross(leader, pilots)
+function formations.cross(leader)
+   local pilots = leader:followers()
    -- Cross logic. Forms an X.
    local angle = 45 -- Spokes start rotated at a 45 degree angle.
    local radius = 100 -- First ship distance.
@@ -23,8 +24,9 @@ function formations.cross(leader, pilots)
    end
 end
 
-function formations.buffer(leader, pilots)
+function formations.buffer(leader)
    -- Buffer logic. Consecutive arcs eminating from the fleader. Stored as polar coordinates.
+   local pilots = leader:followers()
    local class_count = count_classes(pilots)
    local angle, radius
    local radii = {Scout = 1200, Fighter = 900, Bomber = 850, Corvette = 700, Destroyer = 500, Cruiser = 350, Carrier = 250} -- Different radii for each class.
@@ -42,8 +44,9 @@ function formations.buffer(leader, pilots)
    end
 end
 
-function formations.vee(leader, pilots)
+function formations.vee(leader)
    -- The vee formation forms a v, with the fleader at the apex, and the arms extending in front.
+   local pilots = leader:followers()
    local angle = 45 -- Arms start at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
@@ -53,8 +56,9 @@ function formations.vee(leader, pilots)
    end
 end
 
-function formations.wedge(leader, pilots)
+function formations.wedge(leader)
    -- The wedge formation forms a v, with the fleader at the apex, and the arms extending out back.
+   local pilots = leader:followers()
    local flip = -1
    local angle = (flip * 45) + 180
    local radius = 100 -- First ship distance.
@@ -66,8 +70,9 @@ function formations.wedge(leader, pilots)
    end
 end
       
-function formations.echelon_left(leader, pilots)
+function formations.echelon_left(leader)
    --This formation forms a "/", with the fleader in the middle.
+   local pilots = leader:followers()
    local radius = 100
    local flip = -1
    local angle = 135 + (90 * flip)  --Flip between 45 degrees and 225 degrees.
@@ -79,8 +84,9 @@ function formations.echelon_left(leader, pilots)
    end
 end
 
-function formations.echelon_right(leader, pilots)
+function formations.echelon_right(leader)
    --This formation forms a "\", with the fleader in the middle.
+   local pilots = leader:followers()
    local radius = 100
    local flip = 1
    local angle = 225 + (90 * flip) --Flip between 315 degrees, and 135 degrees
@@ -92,8 +98,9 @@ function formations.echelon_right(leader, pilots)
    end
 end
 
-function formations.column(leader, pilots)
+function formations.column(leader)
    --This formation is a simple "|", with fleader in the middle.
+   local pilots = leader:followers()
    local radius = 100
    local flip = -1
    local angle = 90 + (90 * flip)  --flip between 0 degrees and 180 degrees
@@ -105,8 +112,9 @@ function formations.column(leader, pilots)
    end
 end
 
-function formations.wall(leader, pilots)
+function formations.wall(leader)
    --This formation is a "-", with the fleader in the middle.
+   local pilots = leader:followers()
    local radius = 100
    local flip = -1
    local angle = 180 + (90 * flip) --flip between 90 degrees and 270 degrees
@@ -118,7 +126,8 @@ function formations.wall(leader, pilots)
    end
 end
 
-function formations.fishbone(leader, pilots)
+function formations.fishbone(leader)
+   local pilots = leader:followers()
    local radius = 500
    local flip = -1
    local orig_radius = radius
@@ -138,7 +147,8 @@ function formations.fishbone(leader, pilots)
    end
 end
 
-function formations.chevron(leader, pilots)
+function formations.chevron(leader)
+   local pilots = leader:followers()
    local radius = 500
    local flip = -1
    local orig_radius = radius
@@ -158,8 +168,9 @@ function formations.chevron(leader, pilots)
    end
 end
 
-function formations.circle(leader, pilots)
+function formations.circle(leader)
    -- Default to circle.
+   local pilots = leader:followers()
    local angle = 360 / #pilots -- The angle between each ship, in radians.
    local radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
    for i, p in ipairs(pilots) do
