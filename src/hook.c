@@ -1056,18 +1056,31 @@ static Hook* hook_get( unsigned int id )
  */
 nlua_env hook_env( unsigned int hook )
 {
+   Mission *misn;
+   Event_t *evt;
+
    Hook *h = hook_get(hook);
    if (h == NULL)
       return LUA_NOREF;
 
+   h->delete = 1;
+
    switch (h->type) {
       case HOOK_TYPE_MISN:
-         return hook_getMission( h )->env;
+         misn = hook_getMission( h );
+         if (misn != NULL)
+             return misn->env;
+         break;
       case HOOK_TYPE_EVENT:
-         return event_get( h->u.event.parent )->env;
+         evt = event_get( h->u.event.parent );
+         if (evt != NULL)
+            return evt->env;
+	 break;
       default:
-         return LUA_NOREF;
+	 break;
    }
+
+   return LUA_NOREF;
 }
 
 

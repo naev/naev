@@ -191,6 +191,9 @@ void hookL_unsetarg( unsigned int hook )
 {
    nlua_env env = hook_env(hook);
 
+   if (env == LUA_NOREF)
+       return;
+
    nlua_getenv(env, "__hook_arg"); /* t */
    if (!lua_isnil(naevL,-1)) {
       lua_pushnumber( naevL, hook );      /* t, h */
@@ -211,6 +214,9 @@ void hookL_unsetarg( unsigned int hook )
 int hookL_getarg( unsigned int hook )
 {
    nlua_env env = hook_env(hook);
+
+   if (env == LUA_NOREF)
+       return 0;
 
    nlua_getenv(env, "__hook_arg"); /* t */
    if (!lua_isnil(naevL,-1)) {    /* t */
