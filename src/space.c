@@ -1020,7 +1020,7 @@ static void system_scheduler( double dt, int init )
       lua_pushnumber( naevL, p->value ); /* f, [arg,], max */
 
       /* Actually run the function. */
-      if (nlua_pcall(n+1, 2)) { /* error has occurred */
+      if (nlua_pcall(env, n+1, 2)) { /* error has occurred */
          WARN("Lua Spawn script for faction '%s' : %s",
                faction_name( p->faction ), lua_tostring(naevL,-1));
          lua_pop(naevL,1);
@@ -1519,7 +1519,7 @@ void planet_updateLand( Planet *p )
       str = p->land_func;
    nlua_getenv( landing_env, str );
    lua_pushplanet( naevL, p->id );
-   if (nlua_pcall(1, 5)) { /* error has occurred */
+   if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
       WARN("Landing: '%s' : %s", str, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       return;
@@ -3545,7 +3545,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    lua_pushnumber( naevL, presence->timer );   /* f, cur, max, timer */
 
    /* Actually run the function. */
-   if (nlua_pcall(3, 1)) { /* error has occurred */
+   if (nlua_pcall(env, 3, 1)) { /* error has occurred */
       WARN("Lua decrease script for faction '%s' : %s",
             faction_name( faction ), lua_tostring(naevL,-1));
       lua_pop(naevL,1);

@@ -1399,7 +1399,7 @@ static void land_stranded (void)
 
    /* Run Lua. */
    nlua_getenv(rescue_env,"rescue");
-   if (nlua_pcall(0, 0)) { /* error has occurred */
+   if (nlua_pcall(rescue_env, 0, 0)) { /* error has occurred */
       WARN("Rescue: 'rescue' : '%s'", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }

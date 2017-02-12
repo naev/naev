@@ -449,7 +449,7 @@ static void cli_input( unsigned int wid, char *unused )
       nlua_pushenv(cli_env);
       lua_setfenv(naevL, -2);
 
-      if (nlua_pcall(0, LUA_MULTRET)) {
+      if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
          cli_addMessage( lua_tostring(naevL, -1) );
          lua_pop(naevL, 1);
       }

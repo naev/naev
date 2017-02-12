@@ -1935,7 +1935,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
    const char* err;
 
    /* Run the function. */
-   ret = nlua_pcall( nargs, nret );
+   ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
