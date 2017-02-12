@@ -35,7 +35,6 @@
 
 
 lua_State *naevL = NULL;
-int __NLUA_RW = 0;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 
 
@@ -465,7 +464,7 @@ int nlua_errTrace( lua_State *L )
  *    @param nresults Number of return values to take.
  */
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
-   int errf, ret, top, prev, prev_env;
+   int errf, ret, top, prev_env;
 
 #if DEBUGGING
    top = lua_gettop(naevL);
@@ -476,17 +475,11 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    errf = 0;
 #endif /* DEBUGGING */
 
-   prev = __NLUA_RW;
    prev_env = __NLUA_CURENV;
    __NLUA_CURENV = env;
 
-   nlua_getenv(env, "__RW");
-   __NLUA_RW = lua_toboolean(naevL, -1);
-   lua_pop(naevL, 1);
-
    ret = lua_pcall(naevL, nargs, nresults, errf);
 
-   __NLUA_RW = prev;
    __NLUA_CURENV = prev_env;
 
 #if DEBUGGING

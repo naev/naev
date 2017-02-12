@@ -15,7 +15,6 @@
 
 typedef int nlua_env;
 extern lua_State *naevL;
-extern int __NLUA_RW;
 extern nlua_env __NLUA_CURENV;
 
 /*
