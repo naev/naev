@@ -235,7 +235,7 @@ static int naev_eventStart( lua_State *L )
    ret = event_start( str, NULL );
 
    /* Get if console. */
-   lua_getglobal(L, "__cli");
+   nlua_getenv(__NLUA_CURENV, "__cli");
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);
@@ -264,7 +264,7 @@ static int naev_missionStart( lua_State *L )
    ret = mission_start( str, NULL );
 
    /* Get if console. */
-   lua_getglobal(L, "__cli");
+   nlua_getenv(__NLUA_CURENV, "__cli");
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);

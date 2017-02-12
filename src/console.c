@@ -416,6 +416,10 @@ int cli_init (void)
    nlua_loadMusic( cli_env );
    nlua_loadTk( cli_env );
 
+   /* Mark as console. */
+   lua_pushboolean( naevL, 1 );
+   nlua_setenv( cli_env, "__cli" );
+
    nlua_pushenv(cli_env);
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
@@ -490,10 +494,6 @@ static void cli_input( unsigned int wid, char *unused )
 
    status = luaL_loadbuffer( naevL, lua_tostring(naevL,-1), lua_strlen(naevL,-1), "=cli" );
 
-   /* Mark as console. */
-   lua_pushboolean( naevL, 1 );
-   lua_setglobal( naevL, "__cli" );
-
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;
@@ -535,10 +535,6 @@ static void cli_input( unsigned int wid, char *unused )
       lua_settop(naevL, 0);
       cli_firstline = 1;
    }
-
-   /* Unset __cli. */
-   lua_pushnil( naevL );
-   lua_setglobal( naevL, "__cli" );
 
    /* Clear the box now. */
    window_setInput( wid, "inpInput", NULL );

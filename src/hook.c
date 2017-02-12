@@ -338,7 +338,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
-   hookL_getarg( naevL, id );
+   hookL_getarg( id );
    n++;
 
    /* Run mission code. */
@@ -384,13 +384,12 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
-   hookL_getarg( naevL, hook->id );
+   hookL_getarg( hook->id );
    n++;
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
    hook->ran_once = 1;
-   event_runEnd();
    if (ret < 0) {
       hook_rmRaw( hook );
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
@@ -867,7 +866,7 @@ void hook_rm( unsigned int id )
 static void hook_rmRaw( Hook *h )
 {
    h->delete = 1;
-   hookL_unsetarg( naevL, h->id ); // XXX?
+   hookL_unsetarg( h->id );
 }
 
 
@@ -1049,6 +1048,39 @@ static Hook* hook_get( unsigned int id )
          return h;
 
    return NULL;
+}
+
+
+/**
+ * @brief Gets the lua env for a hook.
+ */
+nlua_env hook_env( unsigned int hook )
+{
+   Mission *misn;
+   Event_t *evt;
+
+   Hook *h = hook_get(hook);
+   if (h == NULL)
+      return LUA_NOREF;
+
+   h->delete = 1;
+
+   switch (h->type) {
+      case HOOK_TYPE_MISN:
+         misn = hook_getMission( h );
+         if (misn != NULL)
+             return misn->env;
+         break;
+      case HOOK_TYPE_EVENT:
+         evt = event_get( h->u.event.parent );
+         if (evt != NULL)
+            return evt->env;
+	 break;
+      default:
+	 break;
+   }
+
+   return LUA_NOREF;
 }
 
 

@@ -162,11 +162,9 @@ int misn_tryRun( Mission *misn, const char *func )
    misn_runStart( misn, func );
    if (lua_isnil( naevL, -1 )) {
       lua_pop(naevL,1);
-      misn_runEnd();
       return 0;
    }
    ret = misn_runFunc( misn, func, 0 );
-   misn_runEnd();
    return ret;
 }
 
@@ -186,19 +184,20 @@ int misn_run( Mission *misn, const char *func )
    /* Run the function. */
    misn_runStart( misn, func );
    ret = misn_runFunc( misn, func, 0 );
-   misn_runEnd();
    return ret;
 }
 
 
 /**
  * @brief Gets the mission that's being currently run in Lua.
+ *
+ * This should ONLY be called below an nlua_pcall, so __NLUA_CURENV is set
  */
 Mission* misn_getFromLua( lua_State *L )
 {
    Mission *misn;
 
-   lua_getglobal( L, "__misn" );
+   nlua_getenv(__NLUA_CURENV, "__misn");
    misn = (Mission*) lua_touserdata( L, -1 );
    lua_pop( L, 1 );
 
@@ -211,24 +210,8 @@ Mission* misn_getFromLua( lua_State *L )
  */
 void misn_runStart( Mission *misn, const char *func )
 {
-   /* Set environment. */
-   lua_pushlightuserdata( naevL, misn );
-   lua_setglobal( naevL, "__misn" );
-
    /* Set the Lua state. */
    nlua_getenv( misn->env, func );
-}
-
-
-/**
- * @brief Cleans up after misn_runFunc.
- */
-void misn_runEnd()
-{
-   lua_pushnil( naevL );
-   lua_setglobal( naevL, "__misn" );
-   lua_pushnil( naevL );
-   lua_setglobal( naevL, "__misn_delete" );
 }
 
 
@@ -248,7 +231,12 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    Mission *cur_mission;
 
    ret = nlua_pcall(misn->env, nargs, 0);
-   cur_mission = misn_getFromLua(naevL); /* The mission can change if accepted. */
+
+   /* The mission can change if accepted. */
+   nlua_getenv(misn->env, "__misn");
+   cur_mission = (Mission*) lua_touserdata(naevL, -1);
+   lua_pop(naevL, 1);
+
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
@@ -262,7 +250,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    }
 
    /* Get delete. */
-   lua_getglobal(naevL,"__misn_delete");
+   nlua_getenv(misn->env, "__misn_delete");
    misn_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
 
@@ -614,7 +602,7 @@ static int misn_accept( lua_State *L )
 
       /* Need to change pointer. */
       lua_pushlightuserdata(L,cur_mission);
-      lua_setglobal(L,"__misn");
+      nlua_setenv(cur_mission->env, "__misn");
    }
 
    lua_pushboolean(L,!ret); /* we'll convert C style return to Lua */
@@ -643,9 +631,10 @@ static int misn_finish( lua_State *L )
       return 0;
    }
 
-   lua_pushboolean( L, 1 );
-   lua_setglobal( L, "__misn_delete" );
    cur_mission = misn_getFromLua(L);
+
+   lua_pushboolean( L, 1 );
+   nlua_setenv(cur_mission->env, "__misn_delete");
 
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
       player_missionFinished( mission_getID( cur_mission->data->name ) );

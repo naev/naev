@@ -35,7 +35,7 @@
 
 
 lua_State *naevL = NULL;
-int __NLUA_RW = 0;
+nlua_env __NLUA_CURENV = LUA_NOREF;
 
 
 /*
@@ -81,7 +81,7 @@ int nlua_dobufenv(nlua_env env,
       return -1;
    nlua_pushenv(env);
    lua_setfenv(naevL, -2);
-   if (lua_pcall(naevL, 0, LUA_MULTRET, 0) != 0)
+   if (nlua_pcall(env, 0, LUA_MULTRET) != 0)
       return -1;
    return 0;
 }
@@ -98,7 +98,7 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
       return -1;
    nlua_pushenv(env);
    lua_setfenv(naevL, -2);
-   if (lua_pcall(naevL, 0, LUA_MULTRET, 0) != 0)
+   if (nlua_pcall(env, 0, LUA_MULTRET) != 0)
       return -1;
    return 0;
 }
@@ -233,22 +233,6 @@ lua_State *nlua_newState (void)
    }
 
    return L;
-}
-
-
-/**
- * @brief Opens a Lua library.
- *
- *    @param L Lua state to load the library into.
- *    @param f CFunction to load.
- */
-int nlua_load( lua_State* L, lua_CFunction f )
-{
-   lua_pushcfunction(L, f);
-   if (lua_pcall(L, 0, 0, 0))
-      WARN("nlua include error: %s",lua_tostring(L,1));
-
-   return 0;
 }
 
 
@@ -480,7 +464,7 @@ int nlua_errTrace( lua_State *L )
  *    @param nresults Number of return values to take.
  */
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
-   int errf, ret, top, prev;
+   int errf, ret, top, prev_env;
 
 #if DEBUGGING
    top = lua_gettop(naevL);
@@ -491,14 +475,12 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    errf = 0;
 #endif /* DEBUGGING */
 
-   prev = __NLUA_RW;
-   nlua_getenv(env, "__RW");
-   __NLUA_RW = lua_toboolean(naevL, -1);
-   lua_pop(naevL, 1);
+   prev_env = __NLUA_CURENV;
+   __NLUA_CURENV = env;
 
    ret = lua_pcall(naevL, nargs, nresults, errf);
 
-   __NLUA_RW = prev;
+   __NLUA_CURENV = prev_env;
 
 #if DEBUGGING
    lua_remove(naevL, top-nargs);
