@@ -146,11 +146,8 @@ nlua_env nlua_newEnv(int rw) {
  *    @param env Enviornment to free.
  */
 void nlua_freeEnv(nlua_env env) {
-   if (naevL != NULL && env != LUA_NOREF) {
-      lua_pushboolean(naevL, 1);
-      nlua_setenv(env, "__DELETED");
+   if (naevL != NULL)
       luaL_unref(naevL, LUA_REGISTRYINDEX, env);
-   }
 }
 
 
