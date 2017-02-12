@@ -153,18 +153,6 @@ void event_runStart( unsigned int eventid, const char *func )
 
 
 /**
- * @brief Cleans up after running function in event.
- */
-void event_runEnd()
-{
-   lua_pushnil( naevL );
-   lua_setglobal( naevL, "__evt" );
-   lua_pushnil( naevL );
-   lua_setglobal( naevL, "__evt_delete" );
-}
-
-
-/**
  * @brief Runs a function previously set up with event_runStart.
  */
 int event_runFunc( unsigned int eventid, const char *func, int nargs )
@@ -290,6 +278,9 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTk(ev->env);
    if (player_isTut())
       nlua_loadTut(ev->env);
+
+   lua_pushlightuserdata(naevL, ev);
+   nlua_setenv(ev->env, "__evt");
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );
