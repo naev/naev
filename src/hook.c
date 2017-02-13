@@ -335,6 +335,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
+   misn_runStart( misn, hook->u.misn.func );
    n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
