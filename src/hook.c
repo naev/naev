@@ -1064,8 +1064,6 @@ nlua_env hook_env( unsigned int hook )
    if (h == NULL)
       return LUA_NOREF;
 
-   h->delete = 1;
-
    switch (h->type) {
       case HOOK_TYPE_MISN:
          misn = hook_getMission( h );
