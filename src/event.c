@@ -279,9 +279,6 @@ static int event_create( int dataid, unsigned int *id )
    if (player_isTut())
       nlua_loadTut(ev->env);
 
-   lua_pushlightuserdata(naevL, ev);
-   nlua_setenv(ev->env, "__evt");
-
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );
    if (buf == NULL) {

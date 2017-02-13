@@ -210,6 +210,9 @@ Mission* misn_getFromLua( lua_State *L )
  */
 void misn_runStart( Mission *misn, const char *func )
 {
+   lua_pushlightuserdata( naevL, misn );
+   nlua_setenv( misn->env, "__misn" );
+
    /* Set the Lua state. */
    nlua_getenv( misn->env, func );
 }
@@ -229,11 +232,13 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    const char* err;
    int misn_delete;
    Mission *cur_mission;
+   nlua_env env;
 
-   ret = nlua_pcall(misn->env, nargs, 0);
+   env = misn->env;
+   ret = nlua_pcall(env, nargs, 0);
 
    /* The mission can change if accepted. */
-   nlua_getenv(misn->env, "__misn");
+   nlua_getenv(env, "__misn");
    cur_mission = (Mission*) lua_touserdata(naevL, -1);
    lua_pop(naevL, 1);
 
@@ -250,7 +255,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    }
 
    /* Get delete. */
-   nlua_getenv(misn->env, "__misn_delete");
+   nlua_getenv(env, "__misn_delete");
    misn_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
 

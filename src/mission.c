@@ -179,9 +179,6 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 
    misn_loadLibs( mission->env ); /* load our custom libraries */
 
-   lua_pushlightuserdata(naevL, mission);
-   nlua_setenv(mission->env, "__misn");
-
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
    if (buf == NULL) {
