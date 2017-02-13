@@ -335,6 +335,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
+   misn_runStart( misn, hook->u.misn.func );
    n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
@@ -1062,8 +1063,6 @@ nlua_env hook_env( unsigned int hook )
    Hook *h = hook_get(hook);
    if (h == NULL)
       return LUA_NOREF;
-
-   h->delete = 1;
 
    switch (h->type) {
       case HOOK_TYPE_MISN:
