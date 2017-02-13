@@ -95,15 +95,6 @@
 #include "array.h"
 
 
-/**
- * @def lua_regnumber(l,s,n)
- *
- * @brief Registers a number constant n to name s (syntax like lua_regfunc).
- */
-#define lua_regnumber(l,s,n)  \
-(lua_pushnumber(l,n), lua_setglobal(l,s))
-
-
 /*
  * ai flags
  *

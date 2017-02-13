@@ -15,7 +15,7 @@
 
 typedef int nlua_env;
 extern lua_State *naevL;
-extern int __NLUA_RW;
+extern nlua_env __NLUA_CURENV;
 
 /*
  * standard Lua stuff wrappers
@@ -34,7 +34,6 @@ int nlua_dobufenv(nlua_env env,
                   size_t sz,
                   const char *name);
 int nlua_dofileenv(nlua_env env, const char *filename);
-int nlua_load( lua_State* L, lua_CFunction f );
 int nlua_loadStandard( nlua_env env );
 int nlua_pcall( nlua_env env, int nargs, int nresults );
 

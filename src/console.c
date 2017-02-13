@@ -13,6 +13,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
+#include <ctype.h>
 #include "nstring.h"
 
 #define lua_c
@@ -90,6 +91,7 @@ static const luaL_Reg cli_methods[] = {
 static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
 static int cli_printCore( lua_State *L, int cli_only );
+void cli_tabComplete( unsigned int wid );
 
 
 /**
@@ -318,11 +320,86 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
          }
          return 1;
 
+      /* Tab completion */
+      case SDLK_TAB:
+         cli_tabComplete(wid);
+	 return 1;
+
       default:
          break;
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Basic tab completion for console.
+ */
+void cli_tabComplete( unsigned int wid ) {
+   int i;
+   const char *match, *old;
+   char *str, *cur, *new;
+
+   old = window_getInput( wid, "inpInput" );
+   if (old == NULL)
+      return;
+   str = strdup(old);
+
+   nlua_pushenv(cli_env);
+   cur = str;
+   for (i=0; str[i] != '\0'; i++) {
+      if (str[i] == '.' || str[i] == ':') {
+         str[i] = '\0';
+         lua_getfield(naevL, -1, cur);
+
+         /* If not indexable, replace with blank table */
+         if (!lua_istable(naevL, -1)) {
+            if (luaL_getmetafield(naevL, -1, "__index")) {
+               if (lua_istable(naevL, -1)) {
+                  /* Handles the metatables used by Naev's userdatas */
+                  lua_remove(naevL, -2);
+               } else {
+                  lua_pop(naevL, 2);
+                  lua_newtable(naevL);
+               }
+            } else {
+               lua_pop(naevL, 1);
+               lua_newtable(naevL);
+            }
+         }
+
+         lua_remove(naevL, -2);
+         cur = str + i + 1;
+      /* Start over on other non-identifier character */
+      } else if (!isalnum(str[i]) && str[i] != '_') {
+         lua_pop(naevL, 1);
+         nlua_pushenv(cli_env);
+         cur = str + i + 1;
+      }
+   }
+
+   if (strlen(cur) > 0) {
+      lua_pushnil(naevL);
+      while (lua_next(naevL, -2) != 0) {
+         if (lua_isstring(naevL, -2)) {
+            match = lua_tostring(naevL, -2);
+            if (strncmp(cur, match, strlen(cur)) == 0) {
+               new = malloc(strlen(old) + strlen(match) - strlen(cur) + 1);
+               strcpy(new, old);
+               strcat(new, match + strlen(cur));
+               window_setInput( wid, "inpInput", new);
+               free(new);
+               lua_pop(naevL, 2);
+               break;
+            }
+         }
+         lua_pop(naevL, 1);
+      }
+   }
+
+   free(str);
+   lua_pop(naevL, 1);
 }
 
 
@@ -345,6 +422,10 @@ int cli_init (void)
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
    nlua_loadTk( cli_env );
+
+   /* Mark as console. */
+   lua_pushboolean( naevL, 1 );
+   nlua_setenv( cli_env, "__cli" );
 
    nlua_pushenv(cli_env);
    luaL_register( naevL, NULL, cli_methods );
@@ -420,10 +501,6 @@ static void cli_input( unsigned int wid, char *unused )
 
    status = luaL_loadbuffer( naevL, lua_tostring(naevL,-1), lua_strlen(naevL,-1), "=cli" );
 
-   /* Mark as console. */
-   lua_pushboolean( naevL, 1 );
-   lua_setglobal( naevL, "__cli" );
-
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;
@@ -465,10 +542,6 @@ static void cli_input( unsigned int wid, char *unused )
       lua_settop(naevL, 0);
       cli_firstline = 1;
    }
-
-   /* Unset __cli. */
-   lua_pushnil( naevL );
-   lua_setglobal( naevL, "__cli" );
 
    /* Clear the box now. */
    window_setInput( wid, "inpInput", NULL );

@@ -85,7 +85,7 @@ void event_setupLua( Event_t *ev, const char *func )
 {
    /* Set up event pointer. */
    lua_pushlightuserdata( naevL, ev );
-   lua_setglobal( naevL, "__evt" );
+   nlua_setenv( ev->env, "__evt" );
 
    /* Get function. */
    nlua_getenv(ev->env, func );
@@ -100,19 +100,20 @@ int event_runLua( Event_t *ev, const char *func )
    int ret;
    event_setupLua( ev, func );
    ret = event_runLuaFunc( ev, func, 0 );
-   event_runEnd();
    return ret;
 }
 
 
 /**
  * @brief Gets the current running event from user data.
+ *
+ * This should ONLY be called below an nlua_pcall, so __NLUA_CURENV is set
  */
 Event_t *event_getFromLua( lua_State *L )
 {
    Event_t *ev;
 
-   lua_getglobal( L, "__evt" );
+   nlua_getenv(__NLUA_CURENV, "__evt");
    ev = (Event_t*) lua_touserdata( L, -1 );
    lua_pop( L, 1 );
    return ev;
@@ -145,7 +146,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    }
 
    /* Time to remove the event. */
-   lua_getglobal( naevL, "__evt_delete" );
+   nlua_getenv(ev->env, "__evt_delete");
    evt_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
    if (evt_delete) {
@@ -245,11 +246,12 @@ static int evt_finish( lua_State *L )
    int b;
    Event_t *cur_event;
 
+   cur_event = event_getFromLua(L);
+
    b = lua_toboolean(L,1);
    lua_pushboolean( L, 1 );
-   lua_setglobal( L, "__evt_delete" );
+   nlua_setenv(cur_event->env, "__evt_delete");
 
-   cur_event = event_getFromLua(L);
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );
 

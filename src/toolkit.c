@@ -2074,6 +2074,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDLKey key;
    SDLMod mod;
+   int handled = 0;
 #if !SDL_VERSION_ATLEAST(2,0,0)
    char buf[2];
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -2128,13 +2129,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
-      case SDLK_TAB:
-         if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
-            toolkit_prevFocus( wdw );
-         else
-            toolkit_nextFocus( wdw );
-         break;
-
       case SDLK_RETURN:
       case SDLK_KP_ENTER:
          if (wdw->accept_fptr != NULL) {
@@ -2156,7 +2150,15 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
    if (wdw->keyevent != NULL)
-      (*wdw->keyevent)( wdw->id, input_key, input_mod );
+      handled = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+
+   /* Placed here so it can be overriden in console for tab completion. */
+   if (!handled && key == SDLK_TAB) {
+      if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
+         toolkit_prevFocus( wdw );
+      else
+         toolkit_nextFocus( wdw );
+   }
 
    return 0;
 }
