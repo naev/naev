@@ -46,13 +46,7 @@ mem.Kd             = 20 -- Second control coefficient
 -- Required control rate
 control_rate   = 2
 
--- Required "control" function
-function control ()
-   local task = ai.taskname()
-   local enemy = ai.getenemy()
-
-   local parmour, pshield = ai.pilot():health()
-
+function lead_fleet ()
    if #ai.pilot():followers() ~= 0 then
       local form = formation[mem.formation]
       if form == nil then
@@ -61,6 +55,21 @@ function control ()
          form(ai.pilot())
       end
    end
+end
+
+-- Run instead of "control" when under manual control; use should be limited
+function control_manual ()
+   lead_fleet()
+end
+
+-- Required "control" function
+function control ()
+   local task = ai.taskname()
+   local enemy = ai.getenemy()
+
+   local parmour, pshield = ai.pilot():health()
+
+   lead_fleet()
 
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = unpack(v)

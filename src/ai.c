@@ -784,9 +784,15 @@ void ai_think( Pilot* pilot, const double dt )
    t = ai_curTask( cur_pilot );
 
    /* control function if pilot is idle or tick is up */
-   if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-         ((cur_pilot->tcontrol < 0.) || (t == NULL))) {
-      ai_run(env, "control"); /* run control */
+   if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
+      if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
+         nlua_getenv(env, "control_manual");
+         if (!lua_isnil(naevL, -1))
+            ai_run(env, "control_manual");
+         lua_pop(naevL, 1);
+      } else {
+         ai_run(env, "control"); /* run control */
+      }
 
       nlua_getenv(env, "control_rate");
       cur_pilot->tcontrol = lua_tonumber(naevL,-1);
