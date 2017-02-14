@@ -28,6 +28,8 @@ mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 
+mem.formation     = "circle" -- Formation to use when commanding fleet
+
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
 The reference direction is the target's velocity direction.
@@ -52,7 +54,12 @@ function control ()
    local parmour, pshield = ai.pilot():health()
 
    if #ai.pilot():followers() ~= 0 then
-      formation.circle(ai.pilot())
+      local form = formation[mem.formation]
+      if form == nil then
+         warn(string.format("Formation '%s' not found", mem.formation))
+      else
+         form(ai.pilot())
+      end
    end
 
    for _, v in ipairs(ai.messages()) do
