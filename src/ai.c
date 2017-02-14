@@ -787,6 +787,7 @@ void ai_think( Pilot* pilot, const double dt )
    if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
          ((cur_pilot->tcontrol < 0.) || (t == NULL))) {
       ai_run(env, "control"); /* run control */
+
       nlua_getenv(env, "control_rate");
       cur_pilot->tcontrol = lua_tonumber(naevL,-1);
       lua_pop(naevL,1);
@@ -1072,7 +1073,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
-   luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat);
+   luaL_unref(naevL, LUA_REGISTRYINDEX, t->dat);
 
    /* Recursive subtask freeing. */
    if (t->subtask != NULL) {
@@ -1109,7 +1110,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
    /* Set the data. */
    if (lua_gettop(L) > 1) {
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
-      t->L   = L;
    }
 
    return t;

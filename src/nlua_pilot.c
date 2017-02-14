@@ -3790,7 +3790,7 @@ static int pilotL_follow( lua_State *L )
    else
       t = pilotL_newtask( L, p, "follow_accurate" );
 
-   lua_pushinteger(L, pt->id);
+   lua_pushpilot(L, pt->id);
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
