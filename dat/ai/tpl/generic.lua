@@ -80,6 +80,10 @@ function control ()
          elseif msgtype == "hyperspace" then
             -- TODO: Made sure jump gate is the same
             ai.pushtask("hyperspace", ai.nearhyptarget())
+         elseif msgtype == "land" then
+            -- TODO: Made sure planet is the same
+            mem.land = ai.landplanet():pos()
+            ai.pushtask("land")
          end
       end
    end

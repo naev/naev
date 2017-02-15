@@ -330,6 +330,7 @@ function __landstop ()
       if not ai.land() then
          ai.popsubtask()
       else
+         ai.pilot():msg(ai.pilot():followers(), "land")
          ai.poptask() -- Done, pop task
       end
    end
