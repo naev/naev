@@ -44,7 +44,6 @@ typedef struct Task_ {
    struct Task_* subtask; /**< Subtasks of the current task. */
 
    int dat; /**< Lua reference to the data (index in registry). */
-   lua_State *L;
 } Task;
 
 

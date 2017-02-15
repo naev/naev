@@ -121,9 +121,9 @@ function takeoff()
    dist3 = rnd.rnd() * system.cur():radius()
    angle3 = rnd.rnd() * 2 * math.pi
    location3 = vec2.new(dist3 * math.cos(angle3), dist3 * math.sin(angle3))
-   checkpoint[1] = pilot.addRaw("Goddard", "stationary", location1, "Trader")[1]
-   checkpoint[2] = pilot.addRaw("Goddard", "stationary", location2, "Trader")[1]
-   checkpoint[3] = pilot.addRaw("Goddard", "stationary", location3, "Trader")[1]
+   checkpoint[1] = pilot.addRaw("Goddard", "stationary", location1, "Trader")
+   checkpoint[2] = pilot.addRaw("Goddard", "stationary", location2, "Trader")
+   checkpoint[3] = pilot.addRaw("Goddard", "stationary", location3, "Trader")
    for i, j in ipairs(checkpoint) do
       j:rename(string.format("Checkpoint %s", i))
       j:control()
@@ -132,11 +132,11 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")[1]
+   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")
    racers[1]:addOutfit("Engine Reroute")
-   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")[1]
+   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")
    racers[2]:addOutfit("Steering Thrusters")
-   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")[1]
+   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")
    racers[3]:addOutfit("Improved Stabilizer")
    for i, j in ipairs(racers) do
       j:rename(string.format("Racer %s", i))

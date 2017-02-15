@@ -19,7 +19,7 @@ end
 
 -- Just tries to guard mem.escort
 function idle ()
-   ai.pushtask("follow", mem.escort)
+   ai.pushtask("follow_fleet")
 end
 
 

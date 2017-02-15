@@ -37,6 +37,7 @@
 #include "camera.h"
 #include "damagetype.h"
 #include "land_outfits.h"
+#include "array.h"
 
 
 /*
@@ -44,6 +45,11 @@
  */
 extern Pilot** pilot_stack;
 extern int pilot_nstack;
+
+/*
+ * From ai.c
+ */
+extern Pilot *cur_pilot;
 
 
 /*
@@ -137,6 +143,10 @@ static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
+static int pilotL_msg( lua_State *L );
+static int pilotL_leader( lua_State *L );
+static int pilotL_setLeader( lua_State *L );
+static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
@@ -230,6 +240,10 @@ static const luaL_reg pilotL_methods[] = {
    { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
+   { "msg", pilotL_msg },
+   { "leader", pilotL_leader },
+   { "setLeader", pilotL_setLeader },
+   { "followers", pilotL_followers },
    { "hookClear", pilotL_hookClear },
    {0,0}
 }; /**< Pilot metatable methods. */
@@ -541,18 +555,14 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    if (a < 0.)
       a += 2.*M_PI;
 
-   lua_newtable(L);
    if (from_ship) {
       /* Create the pilot. */
       p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, -1 );
-
-      /* we push each pilot created into a table and return it */
-      lua_pushnumber(L,1); /* index, starts with 1 */
-      lua_pushpilot(L,p); /* value = LuaPilot */
-      lua_rawset(L,-3); /* store the value in the table */
+      lua_pushpilot(L,p);
    }
    else {
       /* now we start adding pilots and toss ids into the table we return */
+      lua_newtable(L);
       first = 1;
       for (i=0; i<flt->npilots; i++) {
          plt = &flt->pilots[i];
@@ -623,7 +633,7 @@ static int pilotL_addFleet( lua_State *L )
  *    @luatparam string|nil ai AI to give the pilot.
  *    @luatparam System|Planet param Position to create the pilot at. See pilot.add for further information.
  *    @luatparam Faction faction Faction to give the pilot.
- *    @luatreturn {Pilot,...} Table populated with the created pilot.
+ *    @luatreturn Pilot The created pilot.
  * @luafunc addRaw( shipname, ai, param, faction )
  */
 static int pilotL_addFleetRaw(lua_State *L )
@@ -3780,7 +3790,7 @@ static int pilotL_follow( lua_State *L )
    else
       t = pilotL_newtask( L, p, "follow_accurate" );
 
-   lua_pushinteger(L, pt->id);
+   lua_pushpilot(L, pt->id);
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
@@ -4034,6 +4044,150 @@ static int pilotL_hailPlayer( lua_State *L )
       pilot_rmFlag( p, PILOT_HAILING );
 
    return 0;
+}
+
+
+/**
+ * @brief Sends a message to another pilot.
+ *
+ *    @luatparam Pilot p Pilot to send message.
+ *    @luatparam Pilot|{Pilot,...} receiver Pilot(s) to receive message.
+ *    @luatparam string type Type of message.
+ *    @luaparam[opt] data Data to send with message.
+ * @luafunc msg( p, receiver, type, data )
+ */
+static int pilotL_msg( lua_State *L )
+{
+   Pilot *p, *reciever=NULL;
+   const char *type;
+
+   NLUA_CHECKRW(L);
+
+   p = luaL_validpilot(L,1);
+   if (!lua_istable(L,2))
+      reciever = luaL_validpilot(L,2);
+   type = luaL_checkstring(L,3);
+
+   lua_newtable(L); /* msg */
+
+   lua_pushpilot(L, p->id); /* msg, sender */
+   lua_rawseti(L, -2, 1); /* msg */
+
+   lua_pushstring(L, type); /* msg, type */
+   lua_rawseti(L, -2, 2); /* msg */
+
+   if (lua_gettop(L) > 3) {
+      lua_pushvalue(L, 4); /* msg, data */
+      lua_rawseti(L, -2, 3); /* msg */
+   }
+
+   if (reciever != NULL) {
+      lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages);
+      lua_pushvalue(L, -2);
+      lua_rawseti(L, -2, lua_objlen(L, -2)+1);
+      lua_pop(L, 1);
+   } else {
+      lua_pushnil(L);
+      while (lua_next(L, 2) != 0) {
+         reciever = luaL_validpilot(L,-1);
+         lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages);
+         lua_pushvalue(L, -4);
+         lua_rawseti(L, -2, lua_objlen(L, -2)+1);
+         lua_pop(L,2);
+      }
+   }
+
+   lua_pop(L, 1); /*  */
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets a pilots leader.
+ *
+ *    @luatparam Pilot p Pilot to get the leader of.
+ *    @luatreturn Pilot|nil The leader or nil.
+ * @luafunc leader( p )
+ */
+static int pilotL_leader( lua_State *L ) {
+   Pilot *p;
+
+   p = luaL_validpilot(L, 1);
+
+   if (p->leader != 0)
+      lua_pushpilot(L, p->leader);
+   else
+      lua_pushnil(L);
+
+   return 1;
+}
+
+
+/**
+ * @brief Set a pilots leader.
+ *
+ * If leader has a leader itself, the leader will instead be set to that
+ * pilot's leader.
+ *
+ *    @luatparam Pilot p Pilot to set the leader of.
+ *    @luatparam Pilot|nil leader Pilot to set as leader.
+ * @luafunc setLeader( p )
+ */
+static int pilotL_setLeader( lua_State *L ) {
+   Pilot *p, *leader;
+   int i;
+
+   NLUA_CHECKRW(L);
+
+   p = luaL_validpilot(L, 1);
+
+   if (lua_isnil(L, 2)) {
+      p->leader = 0;
+   } else {
+      leader = luaL_validpilot(L, 2);
+
+      if (leader->leader != 0 && pilot_get(leader->leader) != NULL)
+         p->leader = leader->leader;
+      else
+         p->leader = leader->id;
+   }
+
+   /* If the pilot has followers, they should be given the new leader as well */
+   for(i = 0; i<pilot_nstack; i++) {
+      if (pilot_stack[i]->leader == p->id) {
+         pilot_stack[i]->leader = p->leader;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Get all of a pilots followers.
+ *
+ *    @luatparam Pilot p Pilot to get the followers of.
+ *    @luatreturn {Pilot,...} Table of followers.
+ * @luafunc followers( p )
+ */
+static int pilotL_followers( lua_State *L ) {
+   Pilot *p;
+   int i, k;
+
+   p = luaL_validpilot(L, 1);
+
+   lua_newtable(L);
+   k = 1;
+   for(i = 0; i<pilot_nstack; i++) {
+      if (pilot_stack[i]->leader == p->id) {
+         lua_pushnumber(L, k++);
+         lua_pushpilot(L, pilot_stack[i]->id);
+         lua_rawset(L, -3);
+      }
+   }
+
+   return 1;
 }
 
 

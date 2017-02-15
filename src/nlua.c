@@ -147,7 +147,7 @@ nlua_env nlua_newEnv(int rw) {
  */
 void nlua_freeEnv(nlua_env env) {
    if (naevL != NULL)
-   	luaL_unref(naevL, LUA_REGISTRYINDEX, env);
+      luaL_unref(naevL, LUA_REGISTRYINDEX, env);
 }
 
 

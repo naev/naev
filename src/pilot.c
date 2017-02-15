@@ -41,7 +41,6 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
-#include "array.h"
 #include "camera.h"
 #include "damagetype.h"
 #include "pause.h"
@@ -2502,6 +2501,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->ptimer = PILOT_TAKEOFF_DELAY;
    }
 
+   /* Create empty table for messages, and for comm handlers. */
+   lua_newtable(naevL);
+   pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   lua_newtable(naevL);
+
    /* AI */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
@@ -2708,6 +2712,9 @@ void pilot_free( Pilot* p )
    /* Free comm message. */
    if (p->comm_msg != NULL)
       free(p->comm_msg);
+
+   /* Free messages. */
+   luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
@@ -3075,7 +3082,6 @@ credits_t pilot_worth( const Pilot *p )
 
    return price;
 }
-
 
 
 

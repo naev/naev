@@ -1,5 +1,6 @@
 include("dat/ai/include/basic.lua")
 include("dat/ai/include/attack.lua")
+local formation = include("dat/scripts/formation.lua")
 
 --[[
 -- Variables to adjust AI
@@ -27,6 +28,8 @@ mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 
+mem.formation     = "circle" -- Formation to use when commanding fleet
+
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
 The reference direction is the target's velocity direction.
@@ -43,12 +46,52 @@ mem.Kd             = 20 -- Second control coefficient
 -- Required control rate
 control_rate   = 2
 
+function lead_fleet ()
+   if #ai.pilot():followers() ~= 0 then
+      local form = formation[mem.formation]
+      if form == nil then
+         warn(string.format("Formation '%s' not found", mem.formation))
+      else
+         form(ai.pilot())
+      end
+   end
+end
+
+-- Run instead of "control" when under manual control; use should be limited
+function control_manual ()
+   lead_fleet()
+end
+
 -- Required "control" function
 function control ()
    local task = ai.taskname()
    local enemy = ai.getenemy()
 
    local parmour, pshield = ai.pilot():health()
+
+   lead_fleet()
+
+   for _, v in ipairs(ai.messages()) do
+      local sender, msgtype, data = unpack(v)
+      if sender == ai.pilot():leader() then
+         if msgtype == "form-pos" then
+            mem.angle, mem.radius = unpack(data)
+            mem.in_formation = true
+         elseif msgtype == "hyperspace" then
+            -- TODO: Made sure jump gate is the same
+            ai.pushtask("hyperspace", ai.nearhyptarget())
+         elseif msgtype == "land" then
+            -- TODO: Made sure planet is the same
+            mem.land = ai.landplanet():pos()
+            ai.pushtask("land")
+         end
+      end
+   end
+
+   -- TODO: Select new leader
+   if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
+      ai.pilot():setLeader(nil)
+   end
 
    -- Cooldown completes silently.
    if mem.cooldown then
@@ -112,6 +155,8 @@ function control ()
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
+      elseif ai.pilot():leader() and ai.pilot():leader():exists() then
+         ai.pushtask("follow_fleet")
       else
          idle()
       end
@@ -158,7 +203,7 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
-      if mem.norun then
+      if mem.norun or ai.pilot():leader() ~= nil then
          ai.poptask()
          return
       end

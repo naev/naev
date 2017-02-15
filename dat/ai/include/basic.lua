@@ -155,7 +155,7 @@ function follow ()
       ai.poptask()
       return
    end
-   
+
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
  
@@ -187,6 +187,32 @@ function follow_accurate ()
       ai.accel()
    end
 
+end
+
+-- Default action for non-leader pilot in fleet
+function follow_fleet ()
+   local leader = ai.pilot():leader()
+ 
+   if leader == nil or not leader:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = leader
+   if mem.in_formation then
+      goal = ai.follow_accurate(leader, mem.radius, 
+             mem.angle, mem.Kp, mem.Kd)
+   end
+
+   
+   local dir   = ai.face(goal)
+   local dist  = ai.dist(goal)
+ 
+   -- Must approach
+   if dir < 10 and dist > 300 then
+      ai.accel()
+ 
+   end
 end
 
 --[[
@@ -304,6 +330,7 @@ function __landstop ()
       if not ai.land() then
          ai.popsubtask()
       else
+         ai.pilot():msg(ai.pilot():followers(), "land")
          ai.poptask() -- Done, pop task
       end
    end
@@ -452,6 +479,7 @@ function __hyp_brake ()
 end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
+      ai.pilot():msg(ai.pilot():followers(), "hyperspace")
       ai.poptask()
    else
       ai.popsubtask()

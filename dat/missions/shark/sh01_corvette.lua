@@ -125,7 +125,7 @@ function enter()
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
       
       -- spawns the Shark 
-      sharkboy = pilot.addRaw( "Shark","baddie", nil, "Civilian" )[1]
+      sharkboy = pilot.addRaw( "Shark","baddie", nil, "Civilian" )
       sharkboy:setHostile()
       sharkboy:setHilight()
       

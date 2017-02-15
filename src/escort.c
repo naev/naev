@@ -105,6 +105,7 @@ unsigned int escort_create( Pilot *p, char *ship,
    e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f, -1 );
    pe = pilot_get(e);
    pe->parent = parent;
+   pe->leader = parent;
 
    /* Add to escort list. */
    if (add != 0)

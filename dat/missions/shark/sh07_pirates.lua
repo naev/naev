@@ -164,7 +164,7 @@ function enter()
       angle = rnd.rnd() * 360
       pos = vec2.newP(sysrad, angle)
 
-      baddie = pilot.addRaw( "Gawain","dummy", nil, "Thugs" )[1]
+      baddie = pilot.addRaw( "Gawain","dummy", nil, "Thugs" )
       baddie:rename(gawname)
       baddie:setHostile()
       baddie:setHilight()

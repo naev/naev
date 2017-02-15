@@ -242,6 +242,7 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 /* misc */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
+static int aiL_messages( lua_State *L );
 
 
 static const luaL_reg aiL_methods[] = {
@@ -327,6 +328,7 @@ static const luaL_reg aiL_methods[] = {
    /* misc */
    { "board", aiL_board },
    { "refuel", aiL_refuel },
+   { "messages", aiL_messages },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -335,7 +337,7 @@ static const luaL_reg aiL_methods[] = {
 /*
  * current pilot "thinking" and assorted variables
  */
-static Pilot *cur_pilot    = NULL; /**< Current pilot.  All functions use this. */
+Pilot *cur_pilot           = NULL; /**< Current pilot.  All functions use this. */
 static double pilot_acc    = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn   = 0.; /**< Current pilot's turning. */
 static int pilot_flags     = 0; /**< Handle stuff like weapon firing. */
@@ -782,9 +784,16 @@ void ai_think( Pilot* pilot, const double dt )
    t = ai_curTask( cur_pilot );
 
    /* control function if pilot is idle or tick is up */
-   if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-         ((cur_pilot->tcontrol < 0.) || (t == NULL))) {
-      ai_run(env, "control"); /* run control */
+   if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
+      if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
+         nlua_getenv(env, "control_manual");
+         if (!lua_isnil(naevL, -1))
+            ai_run(env, "control_manual");
+         lua_pop(naevL, 1);
+      } else {
+         ai_run(env, "control"); /* run control */
+      }
+
       nlua_getenv(env, "control_rate");
       cur_pilot->tcontrol = lua_tonumber(naevL,-1);
       lua_pop(naevL,1);
@@ -1070,7 +1079,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
-   luaL_unref(t->L, LUA_REGISTRYINDEX, t->dat);
+   luaL_unref(naevL, LUA_REGISTRYINDEX, t->dat);
 
    /* Recursive subtask freeing. */
    if (t->subtask != NULL) {
@@ -1107,7 +1116,6 @@ static Task* ai_createTask( lua_State *L, int subtask )
    /* Set the data. */
    if (lua_gettop(L) > 1) {
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
-      t->L   = L;
    }
 
    return t;
@@ -3178,6 +3186,21 @@ static int aiL_credits( lua_State *L )
    cur_pilot->credits = luaL_checklong(L,1);
 
    return 0;
+}
+
+
+/**
+ * @brief Retirms and clears the pilots message queue.
+ *
+ *    @luafunc messages()
+ *    @luatreturn {{},...} Messages.
+ */
+static int aiL_messages( lua_State *L )
+{
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
+   lua_newtable(naevL);
+   lua_rawseti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
+   return 1;
 }
 
 /**

@@ -422,6 +422,8 @@ typedef struct Pilot_ {
    double player_damage; /**< Accumulates damage done by player for hostileness.
                               In per one of max shield + armour. */
    double engine_glow; /**< Amount of engine glow to display. */
+   int messages;       /**< Queued messages (Lua ref). */
+   unsigned int leader; /**< ID of leader pilot. */
 } Pilot;
 
 
@@ -553,6 +555,5 @@ char pilot_getFactionColourChar( const Pilot *p );
  * Misc details.
  */
 credits_t pilot_worth( const Pilot *p );
-
 
 #endif /* PILOT_H */

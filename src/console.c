@@ -207,6 +207,8 @@ static int cli_script( lua_State *L )
       lua_error(L);
 
    /* Return the stuff. */
+   nlua_pushenv(cli_env);
+   lua_setfenv(L, -2);
    lua_call(L, 0, LUA_MULTRET);
    return lua_gettop(L) - n;
 }
@@ -262,10 +264,15 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
 
       /* Go up in history. */
       case SDLK_UP:
-         for (i=cli_history-1; i>=0; i--) {
+         for (i=cli_history; i>=0; i--) {
             if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
                /* Strip escape codes from beginning and end */
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               if (i == cli_history &&
+                  strcmp(window_getInput(wid, "inpInput"), str) == 0) {
+                  free(str);
+                  continue;
+               }
                window_setInput( wid, "inpInput", str );
                free(str);
                cli_history = i;

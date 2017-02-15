@@ -1456,6 +1456,9 @@ int factions_load (void)
    faction_stack = calloc( 1, sizeof(Faction) );
    faction_stack[0].name = strdup("Player");
    faction_stack[0].flags = FACTION_STATIC | FACTION_INVISIBLE;
+   faction_stack[0].equip_env = LUA_NOREF;
+   faction_stack[0].env = LUA_NOREF;
+   faction_stack[0].sched_env = LUA_NOREF;
    faction_nstack++;
 
    /* First pass - gets factions */
