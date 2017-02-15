@@ -156,15 +156,8 @@ function follow ()
       return
    end
 
-   local goal = target
-   if mem.in_formation then
-      goal = ai.follow_accurate(target, mem.radius, 
-             mem.angle, mem.Kp, mem.Kd)
-   end
-
-   
-   local dir   = ai.face(goal)
-   local dist  = ai.dist(goal)
+   local dir   = ai.face(target)
+   local dist  = ai.dist(target)
  
    -- Must approach
    if dir < 10 and dist > 300 then
@@ -194,6 +187,32 @@ function follow_accurate ()
       ai.accel()
    end
 
+end
+
+-- Default action for non-leader pilot in fleet
+function follow_fleet ()
+   local leader = ai.pilot():leader()
+ 
+   if leader == nil or not leader:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = leader
+   if mem.in_formation then
+      goal = ai.follow_accurate(leader, mem.radius, 
+             mem.angle, mem.Kp, mem.Kd)
+   end
+
+   
+   local dir   = ai.face(goal)
+   local dist  = ai.dist(goal)
+ 
+   -- Must approach
+   if dir < 10 and dist > 300 then
+      ai.accel()
+ 
+   end
 end
 
 --[[

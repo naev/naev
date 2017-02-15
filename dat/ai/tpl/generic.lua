@@ -142,7 +142,7 @@ function control ()
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
       elseif ai.pilot():leader() and ai.pilot():leader():exists() then
-         ai.pushtask("follow", ai.pilot():leader())
+         ai.pushtask("follow_fleet")
       else
          idle()
       end
