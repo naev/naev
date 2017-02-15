@@ -68,27 +68,33 @@ end
 -- @brief Actually spawns the pilots
 function scom.spawn( pilots )
    local spawned = {}
-   local pilots_spawned = {} -- used temporarily for fleets
+   local leader = nil
    for k,v in ipairs(pilots) do
       local p
       if type(v["pilot"])=='function' then
          p = v["pilot"]() -- Call function
       elseif not v["pilot"][1] then
-         p = pilot.add( v["pilot"] )
+         local pos = nil
+         if leader ~= nil then
+            pos = leader:pos()
+         end
+         p = pilot.add( v["pilot"], nil, pos )
       else
          p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5])
       end
       if #p == 0 then
          error("No pilots added")
       end
-      pilots_spawned[#pilots_spawned+1] = p 
       local presence = v["presence"] / #p
       for _,vv in ipairs(p) do
-         spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
-         if v.leader ~= nil and pilots_spawned[v.leader] ~= nil then
-            vv:setVisplayer(true)
-            vv:setLeader(pilots_spawned[v.leader][1])
+         if pilots.__fleet then
+            if leader == nil then
+               leader = vv
+            else
+               vv:setLeader(leader)
+            end
          end
+         spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
       end
    end
    return spawned
@@ -105,15 +111,13 @@ end
 
 
 -- @brief adds a pilot to the table
-function scom.addPilot( pilots, name, presence, leader )
-   pilots[ #pilots+1 ] = { pilot = name, presence = presence, leader = leader }
+function scom.addPilot( pilots, name, presence )
+   pilots[ #pilots+1 ] = { pilot = name, presence = presence }
    if pilots[ "__presence" ] then
       pilots[ "__presence" ] = pilots[ "__presence" ] + presence
    else
       pilots[ "__presence" ] = presence
    end
-
-   return #pilots
 end
 
 

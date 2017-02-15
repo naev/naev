@@ -54,34 +54,34 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
+   pilots.__fleet = true
 
    if rnd.rnd() < pbm then
       pilots = spawnBgMerc("Empire")
    else
       local r = rnd.rnd()
-      local leader
 
       -- Generate the capship
       if r < 0.7 then
-         leader = scom.addPilot( pilots, "Empire Hawking", 140 )
+         scom.addPilot( pilots, "Empire Hawking", 140 )
       elseif r < 0.97 then
-         leader = scom.addPilot( pilots, "Empire Peacemaker", 165 )
+         scom.addPilot( pilots, "Empire Peacemaker", 165 )
       else
-         leader = scom.addPilot( pilots, empire_unique, 200 )
+         scom.addPilot( pilots, empire_unique, 200 )
       end
 
       -- Generate the escorts
       r = rnd.rnd()
       if r < 0.5 then
-         scom.addPilot( pilots, "Empire Shark", 20, leader );
-         scom.addPilot( pilots, "Empire Lancelot", 25, leader );
-         scom.addPilot( pilots, "Empire Lancelot", 25, leader );
+         scom.addPilot( pilots, "Empire Shark", 20 );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
       elseif r < 0.8 then
-         scom.addPilot( pilots, "Empire Lancelot", 25, leader );
-         scom.addPilot( pilots, "Empire Admonisher", 45, leader );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Admonisher", 45 );
       else
-         scom.addPilot( pilots, "Empire Lancelot", 25, leader );
-         scom.addPilot( pilots, "Empire Pacifier", 75, leader );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Pacifier", 75 );
       end
    end
 
