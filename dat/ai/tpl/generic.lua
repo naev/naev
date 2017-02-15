@@ -88,6 +88,11 @@ function control ()
       end
    end
 
+   -- TODO: Select new leader
+   if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
+      ai.pilot():setLeader(nil)
+   end
+
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
