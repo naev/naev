@@ -198,7 +198,7 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
-      if mem.norun then
+      if mem.norun or ai.pilot():leader() ~= nil then
          ai.poptask()
          return
       end
