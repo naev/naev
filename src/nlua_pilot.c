@@ -4141,17 +4141,22 @@ static int pilotL_setLeader( lua_State *L ) {
    NLUA_CHECKRW(L);
 
    p = luaL_validpilot(L, 1);
-   leader = luaL_validpilot(L, 2);
 
-   if (leader->leader != 0 && pilot_get(leader->leader) != NULL)
-      p->leader = leader->leader;
-   else
-      p->leader = leader->id;
+   if (lua_isnil(L, 2)) {
+      p->leader = 0;
+   } else {
+      leader = luaL_validpilot(L, 2);
+
+      if (leader->leader != 0 && pilot_get(leader->leader) != NULL)
+         p->leader = leader->leader;
+      else
+         p->leader = leader->id;
+   }
 
    /* If the pilot has followers, they should be given the new leader as well */
    for(i = 0; i<pilot_nstack; i++) {
       if (pilot_stack[i]->leader == p->id) {
-         pilot_stack[i]->leader = leader->id;
+         pilot_stack[i]->leader = p->leader;
       }
    }
 
