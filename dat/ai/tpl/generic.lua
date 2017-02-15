@@ -73,9 +73,14 @@ function control ()
 
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = unpack(v)
-      if sender == ai.pilot():leader() and msgtype == "form-pos" then
-         mem.angle, mem.radius = unpack(data)
-         mem.in_formation = true;
+      if sender == ai.pilot():leader() then
+         if msgtype == "form-pos" then
+            mem.angle, mem.radius = unpack(data)
+            mem.in_formation = true
+         elseif msgtype == "hyperspace" then
+            -- TODO: Made sure jump gate is the same
+            ai.pushtask("hyperspace", ai.nearhyptarget())
+         end
       end
    end
 

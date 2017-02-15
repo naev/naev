@@ -478,6 +478,7 @@ function __hyp_brake ()
 end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
+      ai.pilot():msg(ai.pilot():followers(), "hyperspace")
       ai.poptask()
    else
       ai.popsubtask()
