@@ -178,4 +178,15 @@ function formations.circle(leader)
    end
 end
 
+
+local form_keys = {}
+for k, _ in pairs(formations) do
+   form_keys[#form_keys+1] = k
+end
+
+function formations.keys()
+   return form_keys
+end
+
+
 return formations
