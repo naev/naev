@@ -184,8 +184,8 @@ for k, _ in pairs(formations) do
    form_keys[#form_keys+1] = k
 end
 
-function formations.keys()
-   return form_keys
+function formations.random_key()
+   return form_keys[rnd.rnd(1, #form_keys)]
 end
 
 
