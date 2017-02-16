@@ -178,17 +178,17 @@ function formations.circle(leader)
    end
 end
 
-function formations.none(leader)
-   leader:msg(leader:followers(), "form-pos", nil)
-end
-
-
 local keys = {}
 for k, _ in pairs(formations) do
    keys[#keys+1] = k
 end
 
 formations.keys = keys
+
+-- Clear formation; not really a 'formation' so it is not in keys
+function formations.clear(leader)
+   leader:msg(leader:followers(), "form-pos", nil)
+end
 
 function formations.random_key()
    return keys[rnd.rnd(1, #keys)]
