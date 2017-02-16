@@ -179,13 +179,15 @@ function formations.circle(leader)
 end
 
 
-local form_keys = {}
+local keys = {}
 for k, _ in pairs(formations) do
-   form_keys[#form_keys+1] = k
+   keys[#keys+1] = k
 end
 
+formations.keys = keys
+
 function formations.random_key()
-   return form_keys[rnd.rnd(1, #form_keys)]
+   return keys[rnd.rnd(1, #keys)]
 end
 
 
