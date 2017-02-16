@@ -178,6 +178,10 @@ function formations.circle(leader)
    end
 end
 
+function formations.none(leader)
+   leader:msg(leader:followers(), "form-pos", nil)
+end
+
 
 local keys = {}
 for k, _ in pairs(formations) do
