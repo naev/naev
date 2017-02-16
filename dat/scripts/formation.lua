@@ -174,7 +174,7 @@ function formations.circle(leader)
    local angle = 360 / #pilots -- The angle between each ship, in radians.
    local radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle * i, radius})
+      leader:msg(p, "form-pos", {angle * i, radius, "absolute"})
    end
 end
 

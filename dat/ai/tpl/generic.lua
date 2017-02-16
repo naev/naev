@@ -29,6 +29,7 @@ mem.norun = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 
 mem.formation     = "circle" -- Formation to use when commanding fleet
+mem.form_pos      = nil -- Position in formation (for follower)
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
@@ -75,8 +76,7 @@ function control ()
       local sender, msgtype, data = unpack(v)
       if sender == ai.pilot():leader() then
          if msgtype == "form-pos" then
-            mem.angle, mem.radius = unpack(data)
-            mem.in_formation = true
+            mem.form_pos = data
          elseif msgtype == "hyperspace" then
             -- TODO: Made sure jump gate is the same
             ai.pushtask("hyperspace", ai.nearhyptarget())
