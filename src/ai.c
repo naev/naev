@@ -202,10 +202,6 @@ static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
 
 /* escorts */
-static int aiL_e_attack( lua_State *L ); /* bool e_attack() */
-static int aiL_e_hold( lua_State *L ); /* bool e_hold() */
-static int aiL_e_clear( lua_State *L ); /* bool e_clear() */
-static int aiL_e_return( lua_State *L ); /* bool e_return() */
 static int aiL_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
@@ -291,11 +287,6 @@ static const luaL_reg aiL_methods[] = {
    { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
-   /* escorts */
-   { "e_attack", aiL_e_attack },
-   { "e_hold", aiL_e_hold },
-   { "e_clear", aiL_e_clear },
-   { "e_return", aiL_e_return },
    { "dock", aiL_dock },
    /* combat */
    { "aim", aiL_aim },
@@ -2547,62 +2538,6 @@ static int aiL_stop( lua_State *L )
       vect_pset( &cur_pilot->solid->vel, 0., 0. );
 
    return 0;
-}
-
-/**
- * @brief Tells the pilot's escorts to attack its target.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_attack()
- */
-static int aiL_e_attack( lua_State *L )
-{
-   int ret;
-   ret = escorts_attack(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
-}
-
-/**
- * @brief Tells the pilot's escorts to attack hold position.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_hold()
- */
-static int aiL_e_hold( lua_State *L )
-{
-   int ret;
-   ret = escorts_hold(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
-}
-
-/**
- * @brief Tells the pilot's escorts to clear orders.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_clear()
- */
-static int aiL_e_clear( lua_State *L )
-{
-   int ret;
-   ret = escorts_clear(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
-}
-
-/**
- * @brief Tells the pilot's escorts to return to dock.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_return()
- */
-static int aiL_e_return( lua_State *L )
-{
-   int ret;
-   ret = escorts_return(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
 }
 
 /**

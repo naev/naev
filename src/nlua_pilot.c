@@ -3388,6 +3388,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "takingoff", .id = PILOT_TAKEOFF },
    { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
    { .name = "combat", .id = PILOT_COMBAT },
+   { .name = "carried", .id = PILOT_CARRIED },
    {NULL, -1}
 }; /**< Flags to get. */
 /**
@@ -4060,44 +4061,26 @@ static int pilotL_msg( lua_State *L )
 {
    Pilot *p, *reciever=NULL;
    const char *type;
+   unsigned int data;
 
    NLUA_CHECKRW(L);
 
    p = luaL_validpilot(L,1);
-   if (!lua_istable(L,2))
-      reciever = luaL_validpilot(L,2);
    type = luaL_checkstring(L,3);
+   data = lua_gettop(L) > 3 ? 4 : 0;
 
-   lua_newtable(L); /* msg */
-
-   lua_pushpilot(L, p->id); /* msg, sender */
-   lua_rawseti(L, -2, 1); /* msg */
-
-   lua_pushstring(L, type); /* msg, type */
-   lua_rawseti(L, -2, 2); /* msg */
-
-   if (lua_gettop(L) > 3) {
-      lua_pushvalue(L, 4); /* msg, data */
-      lua_rawseti(L, -2, 3); /* msg */
-   }
-
-   if (reciever != NULL) {
-      lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages);
-      lua_pushvalue(L, -2);
-      lua_rawseti(L, -2, lua_objlen(L, -2)+1);
-      lua_pop(L, 1);
+   if (!lua_istable(L,2)) {
+      reciever = luaL_validpilot(L,2);
+      pilot_msg(p, reciever, type, data);
    } else {
       lua_pushnil(L);
       while (lua_next(L, 2) != 0) {
          reciever = luaL_validpilot(L,-1);
-         lua_rawgeti(L, LUA_REGISTRYINDEX, reciever->messages);
-         lua_pushvalue(L, -4);
-         lua_rawseti(L, -2, lua_objlen(L, -2)+1);
-         lua_pop(L,2);
+         pilot_msg(p, reciever, type, data);
+         lua_pop(L, 1);
       }
+      lua_pop(L, 1);
    }
-
-   lua_pop(L, 1); /*  */
 
    return 0;
 }

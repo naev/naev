@@ -23,21 +23,12 @@
 #define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */
 
 
-/*
- * Different functions.
- */
-#define ESCORT_ATTACK      1 /**< Attack order. */
-#define ESCORT_HOLD        2 /**< Hold order. */
-#define ESCORT_RETURN      3 /**< Return to ship order. */
-#define ESCORT_CLEAR       4 /**< Clear orders. */
-
-
 
 /*
  * Prototypes.
  */
 /* Static */
-static int escort_command( Pilot *parent, int cmd, int param );
+static int escort_command( Pilot *parent, const char *cmd, int param );
 
 
 /**
@@ -143,61 +134,26 @@ unsigned int escort_create( Pilot *p, char *ship,
  *    @param param Parameter for order.
  *    @return 0 on success, 1 if no orders given.
  */
-static int escort_command( Pilot *parent, int cmd, int param )
+static int escort_command( Pilot *parent, const char *cmd, int param )
 {
-   int i, n;
+   int i;
    Pilot *e;
-   char *buf;
 
-   if (parent->nescorts == 0)
-      return 1;
-
-   n = 0;
    for (i=0; i<parent->nescorts; i++) {
       e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */
          continue;
 
-      /* Check if command makes sense. */
-      if ((cmd == ESCORT_RETURN) && !pilot_isFlag(e, PILOT_CARRIED))
-         continue;
-
-      n++; /* Amount of escorts left. */
-
-      /* Prepare AI. */
-      ai_setPilot( e );
-
-      /* Set up stack. */
-      switch (cmd) {
-         case ESCORT_ATTACK:
-            buf = "e_attack";
-            break;
-         case ESCORT_HOLD:
-            buf = "e_hold";
-            break;
-         case ESCORT_RETURN:
-            buf = "e_return";
-            break;
-         case ESCORT_CLEAR:
-            buf = "e_clear";
-            break;
-
-         default:
-            WARN("Invalid escort command '%d'.", cmd);
-            return -1;
-      }
-      nlua_getenv(e->ai->env, buf);
       if (param >= 0){
          lua_pushpilot(naevL, param);
+         pilot_msg(parent, e, cmd, -1);
+         lua_pop(naevL, 0);
+      } else {
+         pilot_msg(parent, e, cmd, 0);
       }
-
-      /* Run command. */
-      if (nlua_pcall(e->ai->env, (param >= 0) ? 1 : 0, 0))
-         WARN("Pilot '%s' ai -> '%s': %s", e->name,
-               buf, lua_tostring(naevL,-1));
    }
 
-   return !n;
+   return 0;
 }
 
 
@@ -221,7 +177,7 @@ int escorts_attack( Pilot *parent )
    /* Send command. */
    ret = 1;
    if (parent->target != parent->id)
-      ret = escort_command( parent, ESCORT_ATTACK, parent->target );
+      ret = escort_command( parent, "e_attack", parent->target );
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Attacking %s.", t->name);
    return ret;
@@ -234,7 +190,7 @@ int escorts_attack( Pilot *parent )
 int escorts_hold( Pilot *parent )
 {
    int ret;
-   ret = escort_command( parent, ESCORT_HOLD, -1 );
+   ret = escort_command( parent, "e_hold", -1 );
    if ((ret == 0) && (parent == player.p))
          player_message("\egEscorts: \e0Holding position.");
    return ret;
@@ -247,7 +203,7 @@ int escorts_hold( Pilot *parent )
 int escorts_return( Pilot *parent )
 {
    int ret;
-   ret = escort_command( parent, ESCORT_RETURN, -1 );
+   ret = escort_command( parent, "e_return", -1 );
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Returning to ship.");
    return ret;
@@ -260,7 +216,7 @@ int escorts_return( Pilot *parent )
 int escorts_clear( Pilot *parent )
 {
    int ret;
-   ret = escort_command( parent, ESCORT_CLEAR, -1);
+   ret = escort_command( parent, "e_clear", -1);
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Clearing orders.");
    return ret;

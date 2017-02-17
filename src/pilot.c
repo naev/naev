@@ -3091,4 +3091,33 @@ credits_t pilot_worth( const Pilot *p )
 }
 
 
+/**
+ * @brief Sends a message
+ *
+ * @param p Pilot to send message
+ * @param reciever Pilot to recieve it
+ * @param index Index of data on lua stack or 0
+ */
+void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int index)
+{
+   if (index != 0)
+      lua_pushvalue(naevL, index); /* data */
+   else
+      lua_pushnil(naevL); /* data */
 
+   lua_newtable(naevL); /* data, msg */
+
+   lua_pushpilot(naevL, p->id); /* data, msg, sender */
+   lua_rawseti(naevL, -2, 1); /* data, msg */
+
+   lua_pushstring(naevL, type); /* data, msg, type */
+   lua_rawseti(naevL, -2, 2); /* data, msg */
+
+   lua_pushvalue(naevL, -2); /* data, msg, data */
+   lua_rawseti(naevL, -2, 3); /* data, msg */
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, reciever->messages); /* data, msg, messages */
+   lua_pushvalue(naevL, -2); /* data, msg, messages, msg */
+   lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
+   lua_pop(naevL, 3); /*  */
+}

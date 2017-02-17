@@ -84,6 +84,25 @@ function control ()
             -- TODO: Made sure planet is the same
             mem.land = ai.landplanet():pos()
             ai.pushtask("land")
+         -- Escort commands
+         -- Attack target
+         elseif msgtype == "e_attack" then
+            if data ~= nil then
+               ai.pushtask("attack", data)
+            end
+         -- Hold position
+         elseif msgtype == "e_hold" then
+            ai.pushtask("hold" )
+         -- Return to carrier
+         elseif msgtype == "e_return" then
+            if ai.pilot():flags().carried then
+               ai.pushtask("flyback" )
+            end
+         -- Clear orders
+         elseif msgtype == "e_clear" then
+            while ai.taskname() ~= "none" do
+               ai.poptask()
+            end
          end
       end
    end
@@ -539,32 +558,5 @@ function flyback ()
    -- Far away, must approach
    elseif dir < 10 then
       ai.accel()
-   end
-end
-
-
---[[
---    Escort commands
---]]
--- Attack target
-function e_attack( target )
-   if target ~= nil then
-      ai.pushtask("attack", target)
-   end
-end
--- Hold position
-function e_hold ()
-   ai.pushtask("hold" )
-end
--- Return to carrier
-function e_return ()
-   if mem.carrier then
-      ai.pushtask("flyback" )
-   end
-end
--- Clear orders
-function e_clear ()
-   while ai.taskname() ~= "none" do
-      ai.poptask()
    end
 end
