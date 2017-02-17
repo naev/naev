@@ -755,7 +755,8 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
-      if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
+      if (pilot_isFlag(pilot,PILOT_PLAYER) ||
+          pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
          nlua_getenv(env, "control_manual");
          if (!lua_isnil(naevL, -1))
             ai_run(env, "control_manual");
@@ -2492,10 +2493,10 @@ static int aiL_follow_accurate( lua_State *L )
    Kp = luaL_checklong(L,4);
    Kd = luaL_checklong(L,5);
 
-   if (lua_gettop(L) > 5)
-      method = luaL_checkstring(L,6);
-   else
+   if (lua_isnoneornil(L, 6))
       method = "velocity";
+   else
+      method = luaL_checkstring(L,6);
 
    if (strcmp( method, "absolute" ) == 0)
       angle2 = angle * M_PI/180;
