@@ -116,7 +116,6 @@ unsigned int escort_create( Pilot *p, char *ship,
 
    /* Set flags. */
    pilot_clearFlagsRaw( f );
-   pilot_setFlagRaw( f, PILOT_ESCORT );
    pilot_setFlagRaw( f, PILOT_NOJUMP );
    if (type == ESCORT_TYPE_BAY)
       pilot_setFlagRaw( f, PILOT_CARRIED );

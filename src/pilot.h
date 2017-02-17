@@ -79,7 +79,6 @@ enum {
 enum {
    /* creation */
    PILOT_PLAYER,       /**< Pilot is a player. */
-   PILOT_ESCORT,       /**< Pilot is an escort. */
    PILOT_CARRIED,      /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,   /** Pilot has already created AI. */
    PILOT_EMPTY,        /**< Do not add pilot to stack. */

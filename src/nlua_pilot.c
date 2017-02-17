@@ -3375,7 +3375,6 @@ static const struct pL_flag pL_flags[] = {
    { .name = "noland", .id = PILOT_NOLAND },
    { .name = "nodeath", .id = PILOT_NODEATH },
    { .name = "nodisable", .id = PILOT_NODISABLE },
-   { .name = "escort", .id = PILOT_ESCORT },
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
