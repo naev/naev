@@ -1,8 +1,5 @@
 include("dat/ai/tpl/generic.lua")
 
--- Shouldn't think, should only obey orders.
-mem.command = true
-
 -- Don't run away from master ship
 mem.norun = true
 

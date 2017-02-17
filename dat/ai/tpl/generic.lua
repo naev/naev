@@ -548,29 +548,23 @@ end
 --]]
 -- Attack target
 function e_attack( target )
-   if mem.command then
-      if target ~= nil then
-         ai.pushtask("attack", target)
-      end
+   if target ~= nil then
+      ai.pushtask("attack", target)
    end
 end
 -- Hold position
 function e_hold ()
-   if mem.command then
-      ai.pushtask("hold" )
-   end
+   ai.pushtask("hold" )
 end
 -- Return to carrier
 function e_return ()
-   if mem.command and mem.carrier then
+   if mem.carrier then
       ai.pushtask("flyback" )
    end
 end
 -- Clear orders
 function e_clear ()
-   if mem.command then
-      while ai.taskname() ~= "none" do
-         ai.poptask()
-      end
+   while ai.taskname() ~= "none" do
+      ai.poptask()
    end
 end
