@@ -8,8 +8,7 @@ mem.norun = true
 
 
 -- Simple create function
-function create ( master )
-   mem.escort  = master
+function create ()
    mem.carrier = true
    attack_choose()
 

@@ -523,7 +523,7 @@ end
 
 -- Tries to fly back to carrier
 function flyback ()
-   local target = mem.escort
+   local target = ai.pilot():leader()
    local dir    = ai.face(target)
    local dist   = ai.dist(target)
    local bdist  = ai.minbrakedist()
