@@ -37,7 +37,6 @@
  * Prototypes.
  */
 /* Static */
-static int escort_disabled( void *data );
 static int escort_command( Pilot *parent, int cmd, int param );
 
 
@@ -66,6 +65,30 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
 
 
 /**
+ * @brief Remove from escorts list.
+ *
+ *    @param p Pilot to remove escort from.
+ *    @param id ID of the pilot representing the escort.
+ *    @return 0 on success.
+
+ */
+int escort_rmList( Pilot *p, unsigned int id ) {
+   int i;
+
+   for (i=0; i<p->nescorts; i++) {
+      if (p->escorts[i].id == id) {
+         p->nescorts--;
+         memmove( &p->escorts[i], &p->escorts[i+1],
+               sizeof(Escort_t)*(p->nescorts-i) );
+         break;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Creates an escort.
  *
  *    @param p Parent of the escort (who he's guarding).
@@ -86,7 +109,6 @@ unsigned int escort_create( Pilot *p, char *ship,
    char buf[16];
    unsigned int e;
    PilotFlags f;
-   unsigned int hook;
    unsigned int parent;
 
    /* Get important stuff. */
@@ -105,65 +127,12 @@ unsigned int escort_create( Pilot *p, char *ship,
    e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f, -1 );
    pe = pilot_get(e);
    pe->parent = parent;
-   pe->leader = parent;
 
    /* Add to escort list. */
    if (add != 0)
       escort_addList( p, ship, type, e );
 
-   /* Hook the disable to lose the count. */
-   hook = hook_addFunc( escort_disabled, pe, "disable" );
-   pilot_addHook( pe, PILOT_HOOK_DISABLE, hook );
-
    return e;
-}
-
-
-/**
- * @brief Hook to decrement count when pilot is disabled.
- *
- *    @param data Disabled pilot (should still be valid).
- */
-static int escort_disabled( void *data )
-{
-   int i;
-   Pilot *pe, *p;
-   Outfit *o;
-
-   /* Get escort that got disabled. */
-   pe = (Pilot*) data;
-
-   /* Get parent. */
-   p = pilot_get( pe->parent );
-   if (p == NULL) /* Parent is no longer with us. */
-      return 0;
-
-   /* Remove from escorts list. */
-   for (i=0; i<p->nescorts; i++) {
-      if (p->escorts[i].id == pe->id) {
-         p->nescorts--;
-         memmove( &p->escorts[i], &p->escorts[i+1],
-               sizeof(Escort_t)*(p->nescorts-i) );
-         break;
-      }
-   }
-
-   /* Remove from deployed list. */
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i]->outfit;
-      if (o==NULL)
-         continue;
-      if (outfit_isFighterBay(o)) {
-         o = outfit_ammo(o);
-         if (outfit_isFighter(o) &&
-               (strcmp(pe->ship->name,o->u.fig.ship)==0)) {
-            p->outfits[i]->u.ammo.deployed -= 1;
-            break;
-         }
-      }
-   }
-
-   return 0;
 }
 
 

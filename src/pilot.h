@@ -423,7 +423,6 @@ typedef struct Pilot_ {
                               In per one of max shield + armour. */
    double engine_glow; /**< Amount of engine glow to display. */
    int messages;       /**< Queued messages (Lua ref). */
-   unsigned int leader; /**< ID of leader pilot. */
 } Pilot;
 
 

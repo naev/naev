@@ -2731,7 +2731,14 @@ void pilot_free( Pilot* p )
  */
 void pilot_destroy(Pilot* p)
 {
+   Pilot *leader;
    int i;
+
+   if (p->parent != 0) {
+      leader = pilot_get(p->parent);
+      if (leader != NULL)
+         escort_rmList(leader, p->id);
+   }
 
    /* find the pilot */
    for (i=0; i < pilot_nstack; i++)

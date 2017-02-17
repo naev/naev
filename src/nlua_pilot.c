@@ -38,6 +38,7 @@
 #include "damagetype.h"
 #include "land_outfits.h"
 #include "array.h"
+#include "escort.h"
 
 
 /*
@@ -4115,8 +4116,8 @@ static int pilotL_leader( lua_State *L ) {
 
    p = luaL_validpilot(L, 1);
 
-   if (p->leader != 0)
-      lua_pushpilot(L, p->leader);
+   if (p->parent != 0)
+      lua_pushpilot(L, p->parent);
    else
       lua_pushnil(L);
 
@@ -4135,28 +4136,37 @@ static int pilotL_leader( lua_State *L ) {
  * @luafunc setLeader( p )
  */
 static int pilotL_setLeader( lua_State *L ) {
-   Pilot *p, *leader;
+   Pilot *p, *leader, *prev_leader;
    int i;
 
    NLUA_CHECKRW(L);
 
    p = luaL_validpilot(L, 1);
 
+   prev_leader = pilot_get(p->parent);
+
    if (lua_isnil(L, 2)) {
-      p->leader = 0;
+      p->parent = 0;
    } else {
       leader = luaL_validpilot(L, 2);
 
-      if (leader->leader != 0 && pilot_get(leader->leader) != NULL)
-         p->leader = leader->leader;
-      else
-         p->leader = leader->id;
+      if (leader->parent != 0 && pilot_get(leader->parent) != NULL)
+         leader = pilot_get(leader->parent);
+
+      p->parent = leader->id;
+
+      /* TODO: Figure out escort type */
+      escort_addList(leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id);
    }
+
+   /* Remove from previous leader's follower list */
+   if (prev_leader != NULL)
+      escort_rmList(prev_leader, p->id);
 
    /* If the pilot has followers, they should be given the new leader as well */
    for(i = 0; i<pilot_nstack; i++) {
-      if (pilot_stack[i]->leader == p->id) {
-         pilot_stack[i]->leader = p->leader;
+      if (pilot_stack[i]->parent == p->id) {
+         pilot_stack[i]->parent = p->parent;
       }
    }
 
@@ -4173,18 +4183,15 @@ static int pilotL_setLeader( lua_State *L ) {
  */
 static int pilotL_followers( lua_State *L ) {
    Pilot *p;
-   int i, k;
+   int i;
 
    p = luaL_validpilot(L, 1);
 
    lua_newtable(L);
-   k = 1;
-   for(i = 0; i<pilot_nstack; i++) {
-      if (pilot_stack[i]->leader == p->id) {
-         lua_pushnumber(L, k++);
-         lua_pushpilot(L, pilot_stack[i]->id);
-         lua_rawset(L, -3);
-      }
+   for(i = 0; i < p->nescorts; i++) {
+      lua_pushnumber(L, i+1);
+      lua_pushpilot(L, p->escorts[i].id);
+      lua_rawset(L, -3);
    }
 
    return 1;
