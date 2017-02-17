@@ -256,6 +256,8 @@ typedef struct Escort_s {
    char *ship;          /**< Type of the ship escort is flying. */
    EscortType_t type;   /**< Type of escort. */
    unsigned int id;     /**< ID of in-game pilot. */
+   /* TODO: something better than this */
+   int persist;         /**< True if escort should respawn on takeoff/landing */
 } Escort_t;
 
 

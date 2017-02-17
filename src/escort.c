@@ -49,7 +49,8 @@ static int escort_command( Pilot *parent, int cmd, int param );
  *    @param id ID of the pilot representing the escort.
  *    @return 0 on success.
  */
-int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
+int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id,
+		    int persist )
 {
    p->nescorts++;
    if (p->nescorts == 1)
@@ -59,6 +60,7 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
    p->escorts[p->nescorts-1].ship = strdup(ship);
    p->escorts[p->nescorts-1].type = type;
    p->escorts[p->nescorts-1].id   = id;
+   p->escorts[p->nescorts-1].persist = persist;
 
    return 0;
 }
@@ -127,7 +129,7 @@ unsigned int escort_create( Pilot *p, char *ship,
 
    /* Add to escort list. */
    if (add != 0)
-      escort_addList( p, ship, type, e );
+      escort_addList( p, ship, type, e, 1 );
 
    return e;
 }
