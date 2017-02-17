@@ -49,6 +49,11 @@ control_rate   = 2
 
 function lead_fleet ()
    if #ai.pilot():followers() ~= 0 then
+      if mem.formation == nil then
+         formation.clear(ai.pilot())
+         return
+      end
+
       local form = formation[mem.formation]
       if form == nil then
          warn(string.format("Formation '%s' not found", mem.formation))
