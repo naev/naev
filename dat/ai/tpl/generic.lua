@@ -65,7 +65,6 @@ end
 
 -- Required "control" function
 function control ()
-   local task = ai.taskname()
    local enemy = ai.getenemy()
 
    local parmour, pshield = ai.pilot():health()
@@ -106,6 +105,8 @@ function control ()
          end
       end
    end
+
+   local task = ai.taskname()
 
    -- TODO: Select new leader
    if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
