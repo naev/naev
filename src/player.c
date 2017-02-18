@@ -1032,9 +1032,10 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   ai_think( pplayer, dt );
+
    /* Under manual control is special. */
    if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
-      ai_think( pplayer, dt );
       return;
    }
 
@@ -2780,6 +2781,12 @@ int player_addEscorts (void)
    player_clearEscorts();
 
    for (i=0; i<player.p->nescorts; i++) {
+      if (!player.p->escorts[i].persist) {
+         escort_rmList(player.p, player.p->escorts[i].id);
+         i--;
+         continue;
+      }
+
       a = RNGF() * 2 * M_PI;
       vect_cset( &v, player.p->solid->pos.x + 50.*cos(a),
             player.p->solid->pos.y + 50.*sin(a) );
@@ -2832,10 +2839,12 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
    int i;
 
    for (i=0; i<player.p->nescorts; i++) {
-      xmlw_startElem(writer, "escort");
-      xmlw_attr(writer,"type","bay"); /**< @todo other types. */
-      xmlw_str(writer, "%s", player.p->escorts[i].ship);
-      xmlw_endElem(writer); /* "escort" */
+      if (player.p->escorts[i].persist) {
+         xmlw_startElem(writer, "escort");
+         xmlw_attr(writer,"type","bay"); /**< @todo other types. */
+         xmlw_str(writer, "%s", player.p->escorts[i].ship);
+         xmlw_endElem(writer); /* "escort" */
+      }
    }
 
    return 0;
@@ -3447,7 +3456,7 @@ static int player_parseEscorts( xmlNodePtr parent )
          ship = xml_get(node);
 
          /* Add escort to the list. */
-         escort_addList( player.p, ship, type, 0 );
+         escort_addList( player.p, ship, type, 0, 1 );
       }
    } while (xml_nextNode(node));
 

@@ -79,7 +79,6 @@ enum {
 enum {
    /* creation */
    PILOT_PLAYER,       /**< Pilot is a player. */
-   PILOT_ESCORT,       /**< Pilot is an escort. */
    PILOT_CARRIED,      /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,   /** Pilot has already created AI. */
    PILOT_EMPTY,        /**< Do not add pilot to stack. */
@@ -257,6 +256,8 @@ typedef struct Escort_s {
    char *ship;          /**< Type of the ship escort is flying. */
    EscortType_t type;   /**< Type of escort. */
    unsigned int id;     /**< ID of in-game pilot. */
+   /* TODO: something better than this */
+   int persist;         /**< True if escort should respawn on takeoff/landing */
 } Escort_t;
 
 
@@ -423,7 +424,6 @@ typedef struct Pilot_ {
                               In per one of max shield + armour. */
    double engine_glow; /**< Amount of engine glow to display. */
    int messages;       /**< Queued messages (Lua ref). */
-   unsigned int leader; /**< ID of leader pilot. */
 } Pilot;
 
 
@@ -555,5 +555,6 @@ char pilot_getFactionColourChar( const Pilot *p );
  * Misc details.
  */
 credits_t pilot_worth( const Pilot *p );
+void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int index);
 
 #endif /* PILOT_H */

@@ -137,7 +137,7 @@ extern int pilot_nstack;
 static void ai_run( nlua_env env, const char *funcname );
 static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
-static void ai_create( Pilot* pilot, char *param );
+static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
 /* Task management. */
 static void ai_taskGC( Pilot* pilot );
@@ -202,10 +202,6 @@ static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
 
 /* escorts */
-static int aiL_e_attack( lua_State *L ); /* bool e_attack() */
-static int aiL_e_hold( lua_State *L ); /* bool e_hold() */
-static int aiL_e_clear( lua_State *L ); /* bool e_clear() */
-static int aiL_e_return( lua_State *L ); /* bool e_return() */
 static int aiL_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
@@ -291,11 +287,6 @@ static const luaL_reg aiL_methods[] = {
    { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
-   /* escorts */
-   { "e_attack", aiL_e_attack },
-   { "e_hold", aiL_e_hold },
-   { "e_clear", aiL_e_clear },
-   { "e_return", aiL_e_return },
    { "dock", aiL_dock },
    /* combat */
    { "aim", aiL_aim },
@@ -461,31 +452,10 @@ static void ai_run( nlua_env env, const char *funcname )
  */
 int ai_pinit( Pilot *p, const char *ai )
 {
-   int i, n;
    AI_Profile *prof;
-   char buf[PATH_MAX], param[PATH_MAX];
+   char buf[PATH_MAX];
 
-   /* Split parameter from AI itself. */
-   n = 0;
-   for (i=0; ai[i] != '\0'; i++) {
-      /* Overflow protection. */
-      if (i > PATH_MAX)
-         break;
-
-      /* Check to see if we find the splitter. */
-      if (ai[i] == '*') {
-         buf[i] = '\0';
-         n = i+1;
-         continue;
-      }
-
-      if (n==0)
-         buf[i] = ai[i];
-      else
-         param[i-n] = ai[i];
-   }
-   if (n!=0) param[i-n] = '\0'; /* Terminate string if needed. */
-   else buf[i] = '\0';
+   strncpy(buf, ai, sizeof(buf));
 
    /* Set up the profile. */
    prof = ai_getProfile(buf);
@@ -520,7 +490,7 @@ int ai_pinit( Pilot *p, const char *ai )
    lua_pop(naevL,3);                 /* */
 
    /* Create the pilot. */
-   ai_create( p, (n!=0) ? param : NULL );
+   ai_create( p );
    pilot_setFlag(p, PILOT_CREATED_AI);
 
    /* Set fuel.  Hack until we do it through AI itself. */
@@ -785,7 +755,8 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
-      if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
+      if (pilot_isFlag(pilot,PILOT_PLAYER) ||
+          pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
          nlua_getenv(env, "control_manual");
          if (!lua_isnil(naevL, -1))
             ai_run(env, "control_manual");
@@ -949,12 +920,10 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  * Should create all the gear and such the pilot has.
  *
  *    @param pilot Pilot to "create".
- *    @param param Parameter to pass to "create" function.
  */
-static void ai_create( Pilot* pilot, char *param )
+static void ai_create( Pilot* pilot )
 {
    nlua_env env;
-   int nparam;
    char *func;
 
    env = equip_env;
@@ -991,29 +960,11 @@ static void ai_create( Pilot* pilot, char *param )
    /* Prepare AI (this sets cur_pilot among others). */
    ai_setPilot( pilot );
 
-   nparam = (param!=NULL) ? 1 : 0;
-
    /* Prepare stack. */
    nlua_getenv(cur_pilot->ai->env, "create");
 
-   /* Parse parameter. */
-   if (param != NULL) {
-      /* Number */
-      if (isdigit(param[0])) {
-         lua_pushpilot(naevL, atoi(param));
-      }
-      /* Special case player. */
-      else if (strcmp(param,"player")==0) {
-      /* Special case player. */
-         lua_pushpilot(naevL, PLAYER_ID);
-      }
-      /* Default. */
-      else
-         lua_pushstring(naevL, param);
-   }
-
    /* Run function. */
-   if (nlua_pcall(cur_pilot->ai->env, nparam, 0)) { /* error has occurred */
+   if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
@@ -2542,10 +2493,10 @@ static int aiL_follow_accurate( lua_State *L )
    Kp = luaL_checklong(L,4);
    Kd = luaL_checklong(L,5);
 
-   if (lua_gettop(L) > 5)
-      method = luaL_checkstring(L,6);
-   else
+   if (lua_isnoneornil(L, 6))
       method = "velocity";
+   else
+      method = luaL_checkstring(L,6);
 
    if (strcmp( method, "absolute" ) == 0)
       angle2 = angle * M_PI/180;
@@ -2588,62 +2539,6 @@ static int aiL_stop( lua_State *L )
       vect_pset( &cur_pilot->solid->vel, 0., 0. );
 
    return 0;
-}
-
-/**
- * @brief Tells the pilot's escorts to attack its target.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_attack()
- */
-static int aiL_e_attack( lua_State *L )
-{
-   int ret;
-   ret = escorts_attack(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
-}
-
-/**
- * @brief Tells the pilot's escorts to attack hold position.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_hold()
- */
-static int aiL_e_hold( lua_State *L )
-{
-   int ret;
-   ret = escorts_hold(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
-}
-
-/**
- * @brief Tells the pilot's escorts to clear orders.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_clear()
- */
-static int aiL_e_clear( lua_State *L )
-{
-   int ret;
-   ret = escorts_clear(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
-}
-
-/**
- * @brief Tells the pilot's escorts to return to dock.
- * 
- *    @luatreturn boolean Whether the command succeeded.
- *    @luafunc e_return()
- */
-static int aiL_e_return( lua_State *L )
-{
-   int ret;
-   ret = escorts_return(cur_pilot);
-   lua_pushboolean(L,!ret);
-   return 1;
 }
 
 /**

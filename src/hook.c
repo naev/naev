@@ -103,10 +103,6 @@ typedef struct Hook_ {
          unsigned int parent; /**< Event it's connected to. */
          char *func; /**< Function it runs. */
       } event; /**< Event Lua function. */
-      struct {
-         int (*func)( void *data ); /**< C function to run. */
-         void *data; /**< Data to pass to C function. */
-      } func; /**< Normal C function hook. */
    } u; /**< Type specific data. */
 } Hook;
 
@@ -135,7 +131,6 @@ static Hook* hook_new( HookType_t type, const char *stack );
 static int hook_parseParam( lua_State *L, HookParam *param );
 static int hook_runMisn( Hook *hook, HookParam *param, int claims );
 static int hook_runEvent( Hook *hook, HookParam *param, int claims );
-static int hook_runFunc( Hook *hook );
 static int hook_run( Hook *hook, HookParam *param, int claims );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
@@ -402,26 +397,6 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 
 
 /**
- * @brief Runs a C function hook.
- *
- *    @param hook Hook to run.
- *    @return 0 on success.
- */
-static int hook_runFunc( Hook *hook )
-{
-   int ret, id;
-   id = hook->id;
-   hook->ran_once = 1;
-   ret = hook->u.func.func( hook->u.func.data );
-   if (ret != 0) {
-      hook_rm( id );
-      return -1;
-   }
-   return 0;
-}
-
-
-/**
  * @brief Runs a hook.
  *
  *    @param hook Hook to run.
@@ -446,10 +421,6 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
 
       case HOOK_TYPE_EVENT:
          ret = hook_runEvent(hook, param, claims);
-         break;
-
-      case HOOK_TYPE_FUNC:
-         ret = hook_runFunc(hook);
          break;
 
       default:
@@ -803,30 +774,6 @@ void hooks_update( double dt )
 
    /* Second pass to delete. */
    hooks_purgeList();
-}
-
-
-/**
- * @brief Adds a new C function type hook.
- *
- *    @param func Function to hook.  Parameter is the data passed.  Function
- *           should return 0 if hook should stay or 1 if it should be deleted.
- *    @param data Data to pass to the hooked function.
- *    @param stack Stack to which the hook belongs.
- *    @return The new hook identifier.
- */
-unsigned hook_addFunc( int (*func)(void*), void* data, const char *stack )
-{
-   Hook *new_hook;
-
-   /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_FUNC, stack );
-
-   /* Put mission specific details. */
-   new_hook->u.func.func = func;
-   new_hook->u.func.data = data;
-
-   return new_hook->id;
 }
 
 
