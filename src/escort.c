@@ -173,7 +173,7 @@ int escorts_attack( Pilot *parent )
    if (parent->target != parent->id) {
       lua_pushpilot(naevL, parent->target);
       ret = escort_command( parent, "e_attack", -1 );
-      lua_pop(naevL, 0);
+      lua_pop(naevL, 1);
    }
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Attacking %s.", t->name);
