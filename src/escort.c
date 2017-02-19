@@ -220,3 +220,16 @@ int escorts_clear( Pilot *parent )
 }
 
 
+/**
+ * @brief Have a pilot order its escorts to jump.
+ *
+ *    @param parent Pilot giving the order.
+ */
+int escorts_jump( Pilot *parent )
+{
+   int ret;
+   ret = escort_command( parent, "hyperspace", 0 );
+   if ((ret == 0) && (parent == player.p))
+      player_message("\egEscorts: \e0Jumping.");
+   return ret;
+}
