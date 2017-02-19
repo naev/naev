@@ -2498,10 +2498,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->ptimer = PILOT_TAKEOFF_DELAY;
    }
 
-   /* Create empty table for messages, and for comm handlers. */
+   /* Create empty table for messages. */
    lua_newtable(naevL);
    pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
-   lua_newtable(naevL);
 
    /* AI */
    if (ai != NULL)
