@@ -773,6 +773,10 @@ void ai_think( Pilot* pilot, const double dt )
       t = ai_curTask( cur_pilot );
    }
 
+   if (pilot_isFlag(pilot,PILOT_PLAYER) &&
+       !pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
+      return;
+
    /* pilot has a currently running task */
    if (t != NULL) {
       /* Run subtask if available, otherwise run main task. */
