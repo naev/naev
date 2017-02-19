@@ -558,7 +558,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    if (from_ship) {
       /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, -1 );
+      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags );
       lua_pushpilot(L,p);
    }
    else {
@@ -575,7 +575,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          first = 0;
 
          /* Create the pilot. */
-         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags, -1 );
+         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
 
          /* we push each pilot created into a table and return it */
          lua_pushnumber(L,i+1); /* index, starts with 1 */

@@ -125,18 +125,6 @@ typedef struct StarSystem_ StarSystem;
 
 
 /**
- * @struct SystemFleet
- *
- * @brief Used for freeing presence when fleets in the system get destroyed.
- */
-typedef struct SystemFleet_ {
-   int npilots; /**< The number of pilots. */
-   int faction; /**< The faction of the fleet. */
-   double presenceUsed; /**< The amount of presence used by this fleet. */
-} SystemFleet;
-
-
-/**
  * @brief Represents presence in a system
  */
 typedef struct SystemPresence_ {
@@ -222,8 +210,6 @@ struct StarSystem_ {
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */
    int npresence; /**< Number of elements in the presence array. */
    int spilled; /**< If the system has been spilled to yet. */
-   int nsystemFleets; /**< The number of fleets in the system. */
-   SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
    double ownerpresence; /**< Amount of presence the owning faction has in a system. */
 
    /* Markers. */
