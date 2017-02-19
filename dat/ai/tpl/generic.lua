@@ -84,7 +84,7 @@ function handle_messages ()
          -- Escort commands
          -- Attack target
          elseif msgtype == "e_attack" then
-            if data ~= nil then
+            if data ~= nil and data:exists() then
                ai.pushtask("attack", data)
             end
          -- Hold position
