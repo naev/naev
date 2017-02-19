@@ -28,7 +28,7 @@
  * Prototypes.
  */
 /* Static */
-static int escort_command( Pilot *parent, const char *cmd, int param );
+static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
 
 
 /**
@@ -131,10 +131,10 @@ unsigned int escort_create( Pilot *p, char *ship,
  *
  *    @param parent Pilot who is giving orders.
  *    @param cmd Order to give.
- *    @param param Parameter for order.
+ *    @param index Lua index of argument or 0.
  *    @return 0 on success, 1 if no orders given.
  */
-static int escort_command( Pilot *parent, const char *cmd, int param )
+static int escort_command( Pilot *parent, const char *cmd, unsigned int index )
 {
    int i;
    Pilot *e;
@@ -144,13 +144,7 @@ static int escort_command( Pilot *parent, const char *cmd, int param )
       if (e == NULL) /* Most likely died. */
          continue;
 
-      if (param >= 0){
-         lua_pushpilot(naevL, param);
-         pilot_msg(parent, e, cmd, -1);
-         lua_pop(naevL, 0);
-      } else {
-         pilot_msg(parent, e, cmd, 0);
-      }
+      pilot_msg(parent, e, cmd, index);
    }
 
    return 0;
@@ -176,8 +170,11 @@ int escorts_attack( Pilot *parent )
 
    /* Send command. */
    ret = 1;
-   if (parent->target != parent->id)
-      ret = escort_command( parent, "e_attack", parent->target );
+   if (parent->target != parent->id) {
+      lua_pushpilot(naevL, parent->target);
+      ret = escort_command( parent, "e_attack", -1 );
+      lua_pop(naevL, 0);
+   }
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Attacking %s.", t->name);
    return ret;
@@ -190,7 +187,7 @@ int escorts_attack( Pilot *parent )
 int escorts_hold( Pilot *parent )
 {
    int ret;
-   ret = escort_command( parent, "e_hold", -1 );
+   ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
          player_message("\egEscorts: \e0Holding position.");
    return ret;
@@ -203,7 +200,7 @@ int escorts_hold( Pilot *parent )
 int escorts_return( Pilot *parent )
 {
    int ret;
-   ret = escort_command( parent, "e_return", -1 );
+   ret = escort_command( parent, "e_return", 0 );
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Returning to ship.");
    return ret;
@@ -216,7 +213,7 @@ int escorts_return( Pilot *parent )
 int escorts_clear( Pilot *parent )
 {
    int ret;
-   ret = escort_command( parent, "e_clear", -1);
+   ret = escort_command( parent, "e_clear", 0 );
    if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Clearing orders.");
    return ret;
