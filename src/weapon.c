@@ -602,7 +602,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             w->timer -= dt;
             if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
                   w->mount->stimer < 0.)) {
-               pilot_stopBeam(p, w->mount);
+               p = pilot_get(w->parent);
+               if (p != NULL)
+                  pilot_stopBeam(p, w->mount);
                weapon_destroy(w,layer);
                break;
             }
