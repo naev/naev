@@ -139,6 +139,9 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index )
    int i;
    Pilot *e;
 
+   if (parent->nescorts == 0)
+      return 1;
+
    for (i=0; i<parent->nescorts; i++) {
       e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */

@@ -1687,8 +1687,8 @@ int player_jump (void)
       pilot_shootStop( player.p, 1 );
 
       /* Order escorts to jump; just for aesthetics (for now) */
-      if (player.p->nescorts > 0)
-      	escorts_jump( player.p );
+      escorts_jump( player.p );
+
       return 1;
    }
    return 0;
