@@ -2369,7 +2369,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet )
+      const PilotFlags flags )
 {
    int i, p;
 
@@ -2390,9 +2390,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* faction */
    pilot->faction = faction;
-
-   /* System fleet. */
-   pilot->systemFleet = systemFleet;
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel, SOLID_UPDATE_RK4);
@@ -2523,7 +2520,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet )
+      const PilotFlags flags )
 {
    Pilot *dyn;
 
@@ -2548,7 +2545,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    pilot_nstack++; /* there's a new pilot */
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, systemFleet );
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
    return dyn->id;
 }
@@ -2574,7 +2571,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       return 0;
    }
    pilot_setFlagRaw( flags, PILOT_EMPTY );
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, -1 );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags );
    return dyn;
 }
 
@@ -2974,22 +2971,6 @@ void pilot_clearTimers( Pilot *pilot )
       pilot_calcStats( pilot );
 }
 
-
-/**
- * @brief Updates the systemFleet of all pilots.
- *
- * @param index Index number that was deleted.
- */
-void pilots_updateSystemFleet( const int deletedIndex )
-{
-   int i;
-
-   for(i = 0; i < pilot_nstack; i++)
-      if(pilot_stack[i]->systemFleet >= deletedIndex)
-         pilot_stack[i]->systemFleet--;
-
-   return;
-}
 
 /**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target

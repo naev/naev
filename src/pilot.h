@@ -272,7 +272,6 @@ typedef struct Pilot_ {
 
    /* Fleet/faction management. */
    int faction;      /**< Pilot's faction. */
-   int systemFleet;  /**< The system fleet the pilot belongs to. */
    int presence;     /**< Presence being used by the pilot. */
 
    /* Object characteristics */
@@ -491,10 +490,10 @@ ntime_t pilot_hyperspaceDelay( Pilot *p );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet );
+      const PilotFlags flags );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet );
+      const PilotFlags flags );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );
@@ -527,7 +526,6 @@ void pilots_render( double dt );
 void pilots_renderOverlay( double dt );
 void pilot_render( Pilot* pilot, const double dt );
 void pilot_renderOverlay( Pilot* p, const double dt );
-void pilots_updateSystemFleet( const int deletedIndex );
 
 
 /*

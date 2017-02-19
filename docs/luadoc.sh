@@ -44,6 +44,8 @@ for F in ../src/nlua_*.c ../src/ai.c; do
          \|^ *\*/|c
 # Keep other comments, replace * with --
          s|^ *\*|--|p
+# Keep blank lines
+         s|^\s*$||p
 # Delete everything else, just in case:
          d
          ' $F | awk '

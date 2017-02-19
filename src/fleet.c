@@ -70,14 +70,12 @@ Fleet* fleet_get( const char* name )
  *    @param vel Initial velocity.
  *    @param ai AI to use (NULL is default).
  *    @param flags Flags to create with.
- *    @param systemFleet System fleet the pilot belongs to.
  *    @return The ID of the pilot created.
  *
  * @sa pilot_create
  */
 unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, const char* ai, PilotFlags flags,
-      const int systemFleet )
+      Vector2d *pos, Vector2d *vel, const char* ai, PilotFlags flags )
 {
    unsigned int p;
    p = pilot_create( plt->ship,
@@ -89,8 +87,7 @@ unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
          dir,
          pos,
          vel,
-         flags,
-         systemFleet );
+         flags );
    return p;
 }
 

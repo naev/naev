@@ -114,7 +114,7 @@ unsigned int escort_create( Pilot *p, char *ship,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, -1 );
+   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f );
    pe = pilot_get(e);
    pe->parent = parent;
 

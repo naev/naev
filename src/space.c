@@ -1291,9 +1291,6 @@ void space_init( const char* sysname )
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
 
-   /* Reset any system fleets. */
-   cur_system->nsystemFleets = 0;
-
    /* Reset any schedules and used presence. */
    for (i=0; i<cur_system->npresence; i++) {
       cur_system->presence[i].curUsed  = 0;
@@ -2245,8 +2242,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    flags          = 0;
    sys->presence  = NULL;
    sys->npresence = 0;
-   sys->systemFleets  = NULL;
-   sys->nsystemFleets = 0;
    sys->ownerpresence = 0.;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
