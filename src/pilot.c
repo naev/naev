@@ -1807,7 +1807,7 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot->ptimer = 0.;
          }
          else
-            pilot_setFlag(pilot,PILOT_DELETE);
+            pilot_delete(pilot);
          return;
       }
    }
@@ -2054,6 +2054,15 @@ void pilot_update( Pilot* pilot, const double dt )
  */
 void pilot_delete( Pilot* p )
 {
+   Pilot *leader;
+
+   /* Remove from parent's escort list */
+   if (p->parent != 0) {
+      leader = pilot_get(p->parent);
+      if (leader != NULL)
+         escort_rmList(leader, p->id);
+   }
+
    /* Set flag to mark for deletion. */
    pilot_setFlag(p, PILOT_DELETE);
 }
@@ -2727,14 +2736,7 @@ void pilot_free( Pilot* p )
  */
 void pilot_destroy(Pilot* p)
 {
-   Pilot *leader;
    int i;
-
-   if (p->parent != 0) {
-      leader = pilot_get(p->parent);
-      if (leader != NULL)
-         escort_rmList(leader, p->id);
-   }
 
    /* find the pilot */
    for (i=0; i < pilot_nstack; i++)
