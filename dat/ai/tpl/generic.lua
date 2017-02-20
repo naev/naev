@@ -545,6 +545,8 @@ end
 function hold ()
    if not ai.isstopped() then
       ai.brake()
+   else
+      ai.stop()
    end
 end
 
