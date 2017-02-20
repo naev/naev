@@ -97,7 +97,7 @@ function handle_messages ()
             end
          -- Clear orders
          elseif msgtype == "e_clear" then
-            while ai.taskname() ~= "none" do
+            while ai.taskname() ~= nil do
                ai.poptask()
             end
          end
@@ -162,7 +162,7 @@ function control ()
    end
 
    -- Get new task
-   if task == "none" then
+   if task == nil then
       local attack = false
 
       -- We'll first check enemy.

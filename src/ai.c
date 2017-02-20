@@ -1137,7 +1137,7 @@ static int aiL_poptask( lua_State *L )
 
 /**
  * @brief Gets the current task's name.
- *    @luatreturn string The current task name or "none" if there are no tasks.
+ *    @luatreturn string The current task name or nil if there are no tasks.
  * @luafunc taskname()
  *    @param L Lua state.
  *    @return Number of Lua parameters.
@@ -1148,7 +1148,7 @@ static int aiL_taskname( lua_State *L )
    if (t)
       lua_pushstring(L, t->name);
    else
-      lua_pushstring(L, "none");
+      lua_pushnil(L);
    return 1;
 }
 
@@ -1216,7 +1216,7 @@ static int aiL_popsubtask( lua_State *L )
 
 /**
  * @brief Gets the current subtask's name.
- *    @luatreturn string The current subtask name or "none" if there are no subtasks.
+ *    @luatreturn string The current subtask name or nil if there are no subtasks.
  * @luafunc subtaskname()
  *    @param L Lua state.
  *    @return Number of Lua parameters.
@@ -1227,7 +1227,7 @@ static int aiL_subtaskname( lua_State *L )
    if ((t != NULL) && (t->subtask != NULL))
       lua_pushstring(L, t->subtask->name);
    else
-      lua_pushstring(L, "none");
+      lua_pushnil(L);
    return 1;
 }
 
