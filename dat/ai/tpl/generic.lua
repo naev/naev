@@ -97,9 +97,7 @@ function handle_messages ()
             end
          -- Clear orders
          elseif msgtype == "e_clear" then
-            while ai.taskname() ~= nil do
-               ai.poptask()
-            end
+            ai.pilot():taskClear()
          end
       end
    end
