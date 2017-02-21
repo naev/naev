@@ -15,7 +15,6 @@
 #include "naev.h"
 
 #include "log.h"
-#include "md5.h"
 #include "nxml.h"
 #include "ndata.h"
 
