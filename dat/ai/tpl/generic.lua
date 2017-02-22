@@ -75,8 +75,7 @@ function handle_messages ()
          if msgtype == "form-pos" then
             mem.form_pos = data
          elseif msgtype == "hyperspace" then
-            -- TODO: Made sure jump gate is the same
-            ai.pushtask("hyperspace", ai.nearhyptarget())
+            ai.pushtask("hyperspace", data)
          elseif msgtype == "land" then
             -- TODO: Made sure planet is the same
             mem.land = ai.landplanet():pos()
