@@ -2329,9 +2329,9 @@ static int aiL_hyperspace( lua_State *L )
 /**
  * @brief Sets hyperspace target.
  *
- *    @luatparam Jump Hyperspace target
+ *    @luatparam Jump target Hyperspace target
  *    @luareturn Vec2 Where to go to jump
- *    @luafunc sethyptarget()
+ *    @luafunc sethyptarget(target)
  */
 static int aiL_sethyptarget( lua_State *L )
 {
