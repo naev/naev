@@ -171,6 +171,26 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
+ * @brief Represents a single asteroid.
+ */
+typedef struct Asteroid_ {
+   Solid* solid;     /**< associated solid (physics) */
+} Asteroid;
+
+
+/**
+ * @brief Represents an asteroid field anchor.
+ */
+typedef struct AsteroidAnchor_ {
+   Vector2d pos; /**< Position in the system. */
+   double radius; /**< Radius the Field. */
+   double density; /**< Density of the field. */
+   Asteroid *asteroids; /**< Asteroids belonging to the field. */
+   int nb; /**< Number of asteroids. */
+} AsteroidAnchor;
+
+
+/**
  * @brief Represents a star system.
  *
  * The star system is the basic setting in Naev.
@@ -197,6 +217,10 @@ struct StarSystem_ {
    /* Jumps. */
    JumpPoint *jumps; /**< Jump points in the system */
    int njumps; /**< number of adjacent jumps */
+
+   /* Asteroids. */
+   AsteroidAnchor *asteroids; /**< Asteroids fields in the system */
+   int nasteroids; /**< number of asteroids fields */
 
    /* Fleets. */
    Fleet** fleets; /**< fleets that can appear in the current system */

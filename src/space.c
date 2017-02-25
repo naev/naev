@@ -100,6 +100,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
+glTexture *asteroid_gfx = NULL; /**< Provisional asteroid graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
@@ -130,11 +131,14 @@ static int planet_parse( Planet* planet, const xmlNodePtr parent );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
+static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
+static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
+static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
@@ -142,6 +146,7 @@ static void system_scheduler( double dt, int init );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
+static void space_renderAsteroid( Asteroid *p );
 /*
  * Externed prototypes.
  */
@@ -1093,10 +1098,12 @@ void space_factionChange (void)
  */
 void space_update( const double dt )
 {
-   int i;
+   int i, j;
    Pilot *p;
    Damage dmg;
    HookParam hparam[3];
+   AsteroidAnchor *ast;
+   Asteroid *a;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1208,6 +1215,39 @@ void space_update( const double dt )
             hooks_runParam( "discover", hparam );
          }
    }
+
+   /* Asteroids update */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+
+      for (j=0; j<ast->nb; j++) {
+         a = &ast->asteroids[j];
+         a->solid->speed_max = -1;
+
+         /* Computation of the acceleration:
+            This simulates a spheric attractive center with r=100. */
+         if (MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y ) > 100.) {
+            a->solid->thrust = 1000000 / 
+                   MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y ) /
+                   MOD(ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y )  ;
+         }
+         else {
+            a->solid->thrust =  1000000/1000000 * 
+                       MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
+         }
+
+         /* Asteroid solid always faces the center of the field */
+         a->solid->dir = ANGLE( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
+
+         /* run RK
+            Note : this is an explicit algo with no control at all
+            That means that there may be odd behaviour (numerical divergence)
+            IMHO, this could be managed by adjusting VMOD(vel) after RK
+            as the conservation of energy gives us VMOD(vel) from position and initial energy.
+            If nobody ever complains, nevermind. */
+         a->solid->update( a->solid, dt );
+      }
+   }
 }
 
 
@@ -1219,8 +1259,10 @@ void space_update( const double dt )
 void space_init( const char* sysname )
 {
    char* nt;
-   int i, n, s;
+   int i, j, n, s;
    Planet *pnt;
+   AsteroidAnchor *ast;
+   Asteroid *a;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1275,6 +1317,18 @@ void space_init( const char* sysname )
       pnt->bribed = 0;
       pnt->land_override = 0;
       planet_updateLand( pnt );
+   }
+
+   /* Set up asteroids. */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+
+      /* Add the asteroids to the anchor */
+      ast->asteroids = malloc( (ast->nb) * sizeof(Asteroid) );
+      for (j=0; j<ast->nb; j++) {
+         a = &ast->asteroids[j];
+         asteroid_init(a, ast);
+      }
    }
 
    /* Clear interference if you leave system with interference. */
@@ -1333,6 +1387,46 @@ void space_init( const char* sysname )
 
    /* Start background. */
    background_load( cur_system->background );
+}
+
+
+/**
+ * @brief Initialize an asteroid.
+ *    @param ast Asteroid to initialize.
+ *    @param field Asteroid field the asteroid belongs to.
+ */
+void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
+{
+   Vector2d pos, vel;
+   double dir, xa, ya, mod, theta, maxE, Ec, Ep, mvel;
+
+   /* Get a random position */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * (2*field->radius/3 - 100) + 100;
+   xa = mod*cos(theta) + field->pos.x;
+   ya = mod*sin(theta) + field->pos.y;
+
+   /* The asteroids are orbiting around the center of the field
+      This is physically wrong, but will make computations easier */
+
+   /* Get a random initial velocity 
+      We want to ensure that the asteroids keep in a disc with a prescripted diameter
+      This is performed thanks to the gravitational potential energy */
+   Ep = -1000000/mod;
+   maxE = -1000000/field->radius;
+   Ec = RNGF()*(maxE-Ep);
+
+   /* Compute velocity from cinetic energy (mass is 1) */
+   mvel = sqrt( 2*Ec );
+   theta = RNGF()*2.*M_PI;
+
+   /* Asteroid always faces the center of the field */
+   dir = ANGLE( field->pos.x-xa, field->pos.y-ya );
+
+   vect_cset( &pos, xa, ya );
+   vect_pset( &vel, mvel, theta );
+
+   ast->solid = solid_create(1, dir, &pos, &vel, SOLID_UPDATE_RK4);
 }
 
 
@@ -2300,6 +2394,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       /* Avoid warning. */
       if (xml_isNode(node,"jumps"))
          continue;
+      if (xml_isNode(node,"asteroids"))
+         continue;
 
       DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
    } while (xml_nextNode(node));
@@ -2615,6 +2711,87 @@ static void system_parseJumps( const xmlNodePtr parent )
 
 
 /**
+ * @brief Parses a single asteroid field for a system.
+ *
+ *    @param node Parent node containing asteroid field information.
+ *    @param sys System.
+ *    @return 0 on success.
+ */
+static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
+{
+   AsteroidAnchor *a;
+   xmlNodePtr cur, pcur;
+   double x, y;
+
+   /* Allocate more space. */
+   sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
+   a = &sys->asteroids[ sys->nasteroids ];
+   memset( a, 0, sizeof(AsteroidAnchor) );
+
+   /* Initialize stuff. */
+   a->radius  = 500.;
+   a->density = .2;
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xmlr_float( cur, "radius", a->radius );
+      /* Radius must > 100 */
+      if (a->radius < 200) {
+         WARN("asteroid field's radius in %d is too small. Taking 200.", sys->name);
+         a->radius = 200.0;
+      }
+
+      xmlr_float( cur,"density", a->density );
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         pcur = cur->children;
+         do {
+            xmlr_float( pcur, "x", x );
+            xmlr_float( pcur, "y", y );
+         } while (xml_nextNode(pcur));
+
+         /* Set position. */
+         vect_cset( &a->pos, x, y );
+      }
+
+   } while (xml_nextNode(cur));
+
+   /* Compute number of asteroids */
+   a->nb = floor( a->radius * a->radius / 10000 * a->density );
+
+   /* Added asteroid. */
+   sys->nasteroids++;
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the asteroid anchor into a system.
+ *
+ *    @param parent System parent node.
+ *    @param sys System.
+ */
+static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
+{
+   xmlNodePtr cur, node;
+
+   node  = parent->xmlChildrenNode;
+
+   do { /* load all the data */
+      if (xml_isNode(node,"asteroids")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"asteroid"))
+               system_parseAsteroidField( cur, sys );
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+}
+
+
+/**
  * @brief Loads the entire universe into ram - pretty big feat eh?
  *
  *    @return 0 on success.
@@ -2641,6 +2818,9 @@ int space_load (void)
    ret = systems_load();
    if (ret < 0)
       return ret;
+
+   /* Load asteroid graphics. */
+   asteroid_gfx = gl_newImage( PLANET_GFX_SPACE_PATH"asteroid-D00.png", OPENGL_TEX_MIPMAPS );
 
    /* Done loading. */
    systems_loading = 0;
@@ -2727,6 +2907,7 @@ static int systems_load (void)
 
       sys = system_new();
       system_parse( sys, node );
+      system_parseAsteroids(node, sys); /* load the asteroids anchors */
 
       /* Clean up. */
       xmlFreeDoc(doc);
@@ -2816,7 +2997,8 @@ void space_renderOverlay( const double dt )
  */
 void planets_render (void)
 {
-   int i;
+   int i, j;
+   AsteroidAnchor *ast;
 
    /* Must be a system. */
    if (cur_system==NULL)
@@ -2830,6 +3012,13 @@ void planets_render (void)
    for (i=0; i < cur_system->nplanets; i++)
       if (cur_system->planets[i]->real == ASSET_REAL)
          space_renderPlanet( cur_system->planets[i] );
+
+   /* Render the asteroids. */
+   for (i=0; i < cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+      for (j=0; j < ast->nb; j++)
+        space_renderAsteroid( &ast->asteroids[j] );
+      }
 }
 
 
@@ -2869,6 +3058,14 @@ static void space_renderPlanet( Planet *p )
    gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
+/**
+ * @brief Renders an asteroid.
+ */
+static void space_renderAsteroid( Asteroid *a )
+{
+   gl_blitSprite( asteroid_gfx, a->solid->pos.x, a->solid->pos.y, 0, 0, NULL );
+}
+
 
 /**
  * @brief Cleans up the system.
@@ -2885,6 +3082,10 @@ void space_exit (void)
    if (jumpbuoy_gfx != NULL)
       gl_freeTexture(jumpbuoy_gfx);
    jumpbuoy_gfx = NULL;
+
+   /* Free asteroid graphic. */
+   if (asteroid_gfx != NULL)
+      gl_freeTexture(asteroid_gfx);
 
    /* Free the names. */
    if (planetname_stack != NULL)
@@ -2931,6 +3132,8 @@ void space_exit (void)
    planet_stack = NULL;
    planet_nstack = 0;
    planet_mstack = 0;
+
+   /* TODO : Free the asteroids (not the anchors). */
 
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {

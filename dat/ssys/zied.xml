@@ -29,4 +29,14 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <pos>
+    <x>2000.000000</x>
+    <y>1000.000000</y>
+   </pos>
+   <radius>800.000000</radius>
+   <density>0.200000</density>
+  </asteroid>
+ </asteroids>
 </ssys>
