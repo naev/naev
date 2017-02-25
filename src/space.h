@@ -174,7 +174,8 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
-   Solid* solid;     /**< associated solid (physics) */
+   Solid* solid; /**< associated solid (physics) */
+   int gfxID; /**< ID of the asteroid gfx */
 } Asteroid;
 
 

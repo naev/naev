@@ -100,11 +100,12 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
-glTexture *asteroid_gfx = NULL; /**< Provisional asteroid graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
+glTexture **asteroid_gfx = NULL; /**< Asteroid graphics list. */
+uint32_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 
 
 /*
@@ -1427,6 +1428,9 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    vect_pset( &vel, mvel, theta );
 
    ast->solid = solid_create(1, dir, &pos, &vel, SOLID_UPDATE_RK4);
+
+   /* randomly init the gfx ID */
+   ast->gfxID = RNG(0,(int)nasterogfx);
 }
 
 
@@ -2798,9 +2802,10 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
  */
 int space_load (void)
 {
-   int i, j;
+   int i, j, len;
    int ret;
    StarSystem *sys;
+   char **asteroid_files, *file;
 
    /* Loading. */
    systems_loading = 1;
@@ -2820,7 +2825,15 @@ int space_load (void)
       return ret;
 
    /* Load asteroid graphics. */
-   asteroid_gfx = gl_newImage( PLANET_GFX_SPACE_PATH"asteroid-D00.png", OPENGL_TEX_MIPMAPS );
+   asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
+   asteroid_gfx = malloc( sizeof(StarSystem) * systems_mstack );
+
+   for (i=0; i<(int)nasterogfx; i++) {
+      len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
+      file = malloc( len );
+      nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i]);
+      asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+   }
 
    /* Done loading. */
    systems_loading = 0;
@@ -3063,7 +3076,7 @@ static void space_renderPlanet( Planet *p )
  */
 static void space_renderAsteroid( Asteroid *a )
 {
-   gl_blitSprite( asteroid_gfx, a->solid->pos.x, a->solid->pos.y, 0, 0, NULL );
+   gl_blitSprite( asteroid_gfx[a->gfxID], a->solid->pos.x, a->solid->pos.y, 0, 0, NULL );
 }
 
 
@@ -3083,9 +3096,10 @@ void space_exit (void)
       gl_freeTexture(jumpbuoy_gfx);
    jumpbuoy_gfx = NULL;
 
-   /* Free asteroid graphic. */
-   if (asteroid_gfx != NULL)
-      gl_freeTexture(asteroid_gfx);
+   /* Free asteroid graphics. */
+   for (i=0; i<(int)nasterogfx; i++) {
+      gl_freeTexture(asteroid_gfx[i]);
+   }
 
    /* Free the names. */
    if (planetname_stack != NULL)
