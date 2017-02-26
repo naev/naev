@@ -104,7 +104,7 @@ static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
-glTexture **asteroid_gfx = NULL; /**< Asteroid graphics list. */
+glTexture **asteroid_gfx = NULL;
 uint32_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 
 
@@ -1430,7 +1430,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->solid = solid_create(1, dir, &pos, &vel, SOLID_UPDATE_RK4);
 
    /* randomly init the gfx ID */
-   ast->gfxID = RNG(0,(int)nasterogfx);
+   ast->gfxID = RNG(0,(int)nasterogfx-1);
 }
 
 
@@ -3085,8 +3085,10 @@ static void space_renderAsteroid( Asteroid *a )
  */
 void space_exit (void)
 {
-   int i;
+   int i, j;
    Planet *pnt;
+   AsteroidAnchor *ast;
+   StarSystem *sys;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -3147,8 +3149,6 @@ void space_exit (void)
    planet_nstack = 0;
    planet_mstack = 0;
 
-   /* TODO : Free the asteroids (not the anchors). */
-
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
       free(systems_stack[i].name);
@@ -3166,6 +3166,16 @@ void space_exit (void)
          free(systems_stack[i].planets);
       if (systems_stack[i].planetsid != NULL)
          free(systems_stack[i].planetsid);
+
+      /* Free the asteroids. */
+      sys = &systems_stack[i];
+      
+      for (j=0; j < sys->nasteroids; j++) {
+         ast = &sys->asteroids[j];
+         free(ast->asteroids);
+      }
+      free(sys->asteroids);
+
    }
    free(systems_stack);
    systems_stack = NULL;
