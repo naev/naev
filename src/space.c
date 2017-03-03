@@ -1099,6 +1099,7 @@ void space_factionChange (void)
  */
 void space_update( const double dt )
 {
+   double r, theta;
    int i, j;
    Pilot *p;
    Damage dmg;
@@ -1227,26 +1228,27 @@ void space_update( const double dt )
 
          /* Computation of the acceleration:
             This simulates a spheric attractive center with r=100. */
-         if (MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y ) > 100.) {
-            a->solid->thrust = 1000000 / 
-                   MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y ) /
-                   MOD(ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y )  ;
+         r = MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
+         if (r > 100.) {
+            a->solid->thrust = 1000000 / r / r;
          }
          else {
-            a->solid->thrust =  1000000/1000000 * 
-                       MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
+            /* 10^6/100^3 = 1 */
+            a->solid->thrust = r;
          }
 
          /* Asteroid solid always faces the center of the field */
          a->solid->dir = ANGLE( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
 
-         /* run RK
-            Note : this is an explicit algo with no control at all
-            That means that there may be odd behaviour (numerical divergence)
-            IMHO, this could be managed by adjusting VMOD(vel) after RK
-            as the conservation of energy gives us VMOD(vel) from position and initial energy.
-            If nobody ever complains, nevermind. */
          a->solid->update( a->solid, dt );
+         r = MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
+
+         /* Use the conservation of energy (stabilization step). */
+         if (r > 100.) {
+            r = 1000000/( .5*VMOD(a->solid->vel)*VMOD(a->solid->vel) - a->E );
+            theta = ANGLE( a->solid->pos.x - ast->pos.x , a->solid->pos.y - ast->pos.y );
+            vect_cset( &a->solid->pos, ast->pos.x + r*cos(theta), ast->pos.y + r*sin(theta) );
+         }
       }
    }
 }
@@ -1417,6 +1419,9 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    maxE = -1000000/field->radius;
    Ec = RNGF()*(maxE-Ep);
 
+   /* Theorem of energy */
+   ast->E = Ec + Ep;
+
    /* Compute velocity from cinetic energy (mass is 1) */
    mvel = sqrt( 2*Ec );
    theta = RNGF()*2.*M_PI;
@@ -1427,7 +1432,8 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    vect_cset( &pos, xa, ya );
    vect_pset( &vel, mvel, theta );
 
-   ast->solid = solid_create(1, dir, &pos, &vel, SOLID_UPDATE_RK4);
+   /* Stabilization step makes it possible to use euler */
+   ast->solid = solid_create(1, dir, &pos, &vel, SOLID_UPDATE_EULER);
 
    /* randomly init the gfx ID */
    ast->gfxID = RNG(0,(int)nasterogfx-1);
