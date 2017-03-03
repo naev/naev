@@ -244,7 +244,8 @@ function __hyperspace_shoot ()
          return
       end
    end
-   ai.pushsubtask( "__hyp_approach_shoot", target )
+   local pos = ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach_shoot", pos )
 end
 function __hyp_approach_shoot ()
    -- Shoot
@@ -348,7 +349,8 @@ function runaway ()
    if t == nil then
       ai.pushsubtask( "__run_target" )
    else
-      ai.pushsubtask( "__run_hyp", t )
+      local pos = ai.sethyptarget(t)
+      ai.pushsubtask( "__run_hyp", pos )
    end
 end
 function runaway_nojump ()
@@ -446,7 +448,8 @@ function hyperspace ()
          return
       end
    end
-   ai.pushsubtask( "__hyp_approach", target )
+   local pos = ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach", pos )
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
@@ -479,7 +482,7 @@ function __hyp_brake ()
 end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
-      ai.pilot():msg(ai.pilot():followers(), "hyperspace")
+      ai.pilot():msg(ai.pilot():followers(), "hyperspace", ai.nearhyptarget())
       ai.poptask()
    else
       ai.popsubtask()

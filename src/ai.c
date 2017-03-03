@@ -197,6 +197,7 @@ static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
 
 /* Hyperspace. */
+static int aiL_sethyptarget( lua_State *L );
 static int aiL_nearhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
@@ -284,6 +285,7 @@ static const luaL_reg aiL_methods[] = {
    { "relvel", aiL_relvel },
    { "follow_accurate", aiL_follow_accurate },
    /* Hyperspace. */
+   { "sethyptarget", aiL_sethyptarget },
    { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
@@ -1137,7 +1139,7 @@ static int aiL_poptask( lua_State *L )
 
 /**
  * @brief Gets the current task's name.
- *    @luatreturn string The current task name or "none" if there are no tasks.
+ *    @luatreturn string The current task name or nil if there are no tasks.
  * @luafunc taskname()
  *    @param L Lua state.
  *    @return Number of Lua parameters.
@@ -1148,7 +1150,7 @@ static int aiL_taskname( lua_State *L )
    if (t)
       lua_pushstring(L, t->name);
    else
-      lua_pushstring(L, "none");
+      lua_pushnil(L);
    return 1;
 }
 
@@ -1216,7 +1218,7 @@ static int aiL_popsubtask( lua_State *L )
 
 /**
  * @brief Gets the current subtask's name.
- *    @luatreturn string The current subtask name or "none" if there are no subtasks.
+ *    @luatreturn string The current subtask name or nil if there are no subtasks.
  * @luafunc subtaskname()
  *    @param L Lua state.
  *    @return Number of Lua parameters.
@@ -1227,7 +1229,7 @@ static int aiL_subtaskname( lua_State *L )
    if ((t != NULL) && (t->subtask != NULL))
       lua_pushstring(L, t->subtask->name);
    else
-      lua_pushstring(L, "none");
+      lua_pushnil(L);
    return 1;
 }
 
@@ -2325,9 +2327,47 @@ static int aiL_hyperspace( lua_State *L )
 
 
 /**
+ * @brief Sets hyperspace target.
+ *
+ *    @luatparam Jump target Hyperspace target
+ *    @luareturn Vec2 Where to go to jump
+ *    @luafunc sethyptarget(target)
+ */
+static int aiL_sethyptarget( lua_State *L )
+{
+   JumpPoint *jp;
+   LuaJump *lj;
+   Vector2d vec;
+   double a, rad;
+
+   lj = luaL_checkjump( L, 1 );
+   jp = luaL_validjump( L, 1 );
+
+   if ( lj->srcid != cur_system->id )
+      NLUA_ERROR(L, "Jump point must be in current system.");
+
+   /* Copy vector. */
+   vec = jp->pos;
+
+   /* Introduce some error. */
+   a     = RNGF() * M_PI * 2.;
+   rad   = RNGF() * 0.5 * jp->radius;
+   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
+
+   /* Set up target. */
+   cur_pilot->nav_hyperspace = jp - cur_system->jumps;
+
+   /* Return vector. */
+   lua_pushvector( L, vec );
+
+   return 1;
+}
+
+
+/**
  * @brief Gets the nearest hyperspace target.
  *
- *    @luatreturn Vec2|nil
+ *    @luatreturn JumpPoint|nil
  *    @luafunc nearhyptarget()
  */
 static int aiL_nearhyptarget( lua_State *L )
@@ -2335,8 +2375,7 @@ static int aiL_nearhyptarget( lua_State *L )
    JumpPoint *jp, *jiter;
    double mindist, dist;
    int i, j;
-   Vector2d vec;
-   double a, rad;
+   LuaJump lj;
 
    /* No jumps. */
    if (cur_system->njumps == 0)
@@ -2363,19 +2402,11 @@ static int aiL_nearhyptarget( lua_State *L )
    if (jp == NULL)
       return 0;
 
-   /* Copy vector. */
-   vec = jp->pos;
+   lj.destid = jp->targetid;
+   lj.srcid = cur_system->id;
 
-   /* Introduce some error. */
-   a     = RNGF() * M_PI * 2.;
-   rad   = RNGF() * 0.5 * jp->radius;
-   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
-
-   /* Set up target. */
-   cur_pilot->nav_hyperspace = j;
-
-   /* Return vector. */
-   lua_pushvector( L, vec );
+   /* Return Jump. */
+   lua_pushjump( L, lj );
    return 1;
 }
 
@@ -2383,16 +2414,15 @@ static int aiL_nearhyptarget( lua_State *L )
 /**
  * @brief Gets a random hyperspace target.
  *
- *    @luatreturn Vec2|nil
+ *    @luatreturn JumpPoint|nil
  *    @luafunc rndhyptarget()
  */
 static int aiL_rndhyptarget( lua_State *L )
 {
    JumpPoint **jumps, *jiter;
    int i, j, r;
-   Vector2d vec;
    int *id;
-   double a, rad;
+   LuaJump lj;
 
    /* No jumps in the system. */
    if (cur_system->njumps == 0)
@@ -2414,23 +2444,15 @@ static int aiL_rndhyptarget( lua_State *L )
    /* Choose random jump point. */
    r = RNG(0, j-1);
 
-   /* Set up data. */
-   vec = jumps[r]->pos;
-
-   /* Introduce some error. */
-   a     = RNGF() * M_PI * 2.;
-   rad   = RNGF() * 0.5 * jumps[r]->radius;
-   vect_cadd( &vec, rad*cos(a), rad*sin(a) );
-
-   /* Set up target. */
-   cur_pilot->nav_hyperspace = id[r];
+   lj.destid = jumps[r]->targetid;
+   lj.srcid = cur_system->id;
 
    /* Clean up. */
    free(jumps);
    free(id);
 
-   /* Return vector. */
-   lua_pushvector( L, vec );
+   /* Return Jump. */
+   lua_pushjump( L, lj );
    return 1;
 }
 

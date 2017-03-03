@@ -92,6 +92,14 @@ Pilot** pilot_getAll( int *n )
 
 
 /**
+ * @brief Compare id (for use with bsearch)
+ */
+static int compid(const void *id, const void *p) {
+    return *((const unsigned int*)id) - (*((Pilot**)p))->id;
+}
+
+
+/**
  * @brief Gets the pilot's position in the stack.
  *
  *    @param id ID of the pilot to get.
@@ -100,18 +108,11 @@ Pilot** pilot_getAll( int *n )
 static int pilot_getStackPos( const unsigned int id )
 {
    /* binary search */
-   int l,m,h;
-   l = 0;
-   h = pilot_nstack-1;
-   while (l <= h) {
-      m = (l+h) >> 1; /* for impossible overflow returning neg value */
-      if (pilot_stack[m]->id > id) h = m-1;
-      else if (pilot_stack[m]->id < id) l = m+1;
-      else return m;
-   }
-
-   /* Not found. */
-   return -1;
+   Pilot **pp = bsearch(&id, pilot_stack, pilot_nstack, sizeof(Pilot*), compid);
+   if (pp == NULL)
+      return -1;
+   else
+      return pp - pilot_stack;
 }
 
 

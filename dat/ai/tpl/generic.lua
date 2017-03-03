@@ -75,8 +75,7 @@ function handle_messages ()
          if msgtype == "form-pos" then
             mem.form_pos = data
          elseif msgtype == "hyperspace" then
-            -- TODO: Made sure jump gate is the same
-            ai.pushtask("hyperspace", ai.nearhyptarget())
+            ai.pushtask("hyperspace", data)
          elseif msgtype == "land" then
             -- TODO: Made sure planet is the same
             mem.land = ai.landplanet():pos()
@@ -97,9 +96,7 @@ function handle_messages ()
             end
          -- Clear orders
          elseif msgtype == "e_clear" then
-            while ai.taskname() ~= "none" do
-               ai.poptask()
-            end
+            ai.pilot():taskClear()
          end
       end
    end
@@ -162,7 +159,7 @@ function control ()
    end
 
    -- Get new task
-   if task == "none" then
+   if task == nil then
       local attack = false
 
       -- We'll first check enemy.
