@@ -2374,7 +2374,7 @@ static int aiL_nearhyptarget( lua_State *L )
 {
    JumpPoint *jp, *jiter;
    double mindist, dist;
-   int i, j;
+   int i;
    LuaJump lj;
 
    /* No jumps. */
@@ -2384,7 +2384,6 @@ static int aiL_nearhyptarget( lua_State *L )
    /* Find nearest jump .*/
    mindist = INFINITY;
    jp      = NULL;
-   j       = 0;
    for (i=0; i <cur_system->njumps; i++) {
       jiter = &cur_system->jumps[i];
       /* We want only standard jump points to be used. */
@@ -2395,7 +2394,6 @@ static int aiL_nearhyptarget( lua_State *L )
       if (dist < mindist) {
          jp       = jiter;
          mindist  = dist;
-         j        = i;
       }
    }
    /* None available. */
