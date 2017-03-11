@@ -1383,18 +1383,18 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    glColour ccol;
 
    /* Make sure is in range. TODO: real detection system for asteroids */
-   if ( MOD( a->solid->pos.x - player.p->solid->pos.x,
-             a->solid->pos.y - player.p->solid->pos.y ) > 2000. )
+   if ( MOD( a->pos.x - player.p->solid->pos.x,
+             a->pos.y - player.p->solid->pos.y ) > 2000. )
       return;
 
    /* Get position. */
    if (overlay) {
-      x = (int)(a->solid->pos.x / res);
-      y = (int)(a->solid->pos.y / res);
+      x = (int)(a->pos.x / res);
+      y = (int)(a->pos.y / res);
    }
    else {
-      x = (int)((a->solid->pos.x - player.p->solid->pos.x) / res);
-      y = (int)((a->solid->pos.y - player.p->solid->pos.y) / res);
+      x = (int)((a->pos.x - player.p->solid->pos.x) / res);
+      y = (int)((a->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
    sx = 1.;

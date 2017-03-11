@@ -75,7 +75,7 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i;
+   int i, j;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
@@ -170,14 +170,17 @@ int dsys_saveSystem( StarSystem *sys )
       xmlw_startElem( writer, "asteroids" );
       for (i=0; i<sys->nasteroids; i++) {
          ast = &sys->asteroids[i];
-         /* Position */
          xmlw_startElem( writer, "asteroid" );
-         xmlw_startElem( writer, "pos" );
-         xmlw_elem( writer, "x", "%f", ast->pos.x );
-         xmlw_elem( writer, "y", "%f", ast->pos.y );
-         xmlw_endElem( writer ); /* "pos" */
-         /* Radius and misc properties. */
-         xmlw_elem( writer, "radius", "%f", ast->radius );
+
+         /* Corners */
+         for (j=0; j<ast->ncorners; j++) {
+            xmlw_startElem( writer, "corner" );
+            xmlw_elem( writer, "x", "%f", ast->corners[j].x );
+            xmlw_elem( writer, "y", "%f", ast->corners[j].y );
+            xmlw_endElem( writer ); /* "corner" */
+         }
+
+         /* Misc. properties. */
          xmlw_elem( writer, "density", "%f", ast->density );
          xmlw_endElem( writer ); /* "asteroid" */
       }

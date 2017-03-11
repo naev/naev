@@ -31,12 +31,23 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <pos>
-    <x>2000.000000</x>
+   <corner>
+    <x>5000.000000</x>
     <y>1000.000000</y>
-   </pos>
-   <radius>500.000000</radius>
-   <density>1.00000</density>
+   </corner>
+   <corner>
+    <x>2000.000000</x>
+    <y>3000.000000</y>
+   </corner>
+   <corner>
+    <x>1000.000000</x>
+    <y>1000.000000</y>
+   </corner>
+   <corner>
+    <x>2000.000000</x>
+    <y>-500.000000</y>
+   </corner>
+   <density>1.000000</density>
   </asteroid>
  </asteroids>
 </ssys>

@@ -1099,7 +1099,6 @@ void space_factionChange (void)
  */
 void space_update( const double dt )
 {
-   double r, theta;
    int i, j;
    Pilot *p;
    Damage dmg;
@@ -1224,30 +1223,32 @@ void space_update( const double dt )
 
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
-         a->solid->speed_max = -1;
 
-         /* Computation of the acceleration:
-            This simulates a spheric attractive center with r=100. */
-         r = MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
-         if (r > 100.) {
-            a->solid->thrust = 1000000 / r / r;
+         a->pos.x += a->vel.x * dt;
+         a->pos.y += a->vel.y * dt;
+
+         /* Grow and shrink */
+         if (a->appearing == 1) {
+            a->timer += dt;
+            if (a->timer >= 2.) {
+               a->timer = 0.;
+               a->appearing = 0;
+            }
          }
-         else {
-            /* 10^6/100^3 = 1 */
-            a->solid->thrust = r;
+
+         if (a->appearing == 2) {
+            a->timer += dt;
+            if (a->timer >= 2.) {
+               /* reinit any disappeared asteroid */
+               asteroid_init( a, ast );
+            }
          }
 
-         /* Asteroid solid always faces the center of the field */
-         a->solid->dir = ANGLE( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
-
-         a->solid->update( a->solid, dt );
-         r = MOD( ast->pos.x - a->solid->pos.x, ast->pos.y - a->solid->pos.y );
-
-         /* Use the conservation of energy (stabilization step). */
-         if (r > 100.) {
-            r = 1000000/( .5*VMOD(a->solid->vel)*VMOD(a->solid->vel) - a->E );
-            theta = ANGLE( a->solid->pos.x - ast->pos.x , a->solid->pos.y - ast->pos.y );
-            vect_cset( &a->solid->pos, ast->pos.x + r*cos(theta), ast->pos.y + r*sin(theta) );
+         /* Manage the asteroid getting outside the field */
+         if ( space_isInField(&a->pos)<0 && a->appearing==0 ) {
+            /* Make it shrink */
+            a->timer = 0.;
+            a->appearing = 2;
          }
       }
    }
@@ -1400,43 +1401,41 @@ void space_init( const char* sysname )
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   Vector2d pos, vel;
-   double dir, xa, ya, mod, theta, maxE, Ec, Ep, mvel;
+   int i, j;
+   double mod, theta, x, y;
 
-   /* Get a random position */
+   /* Get a random position: 
+       * choose a triangle 
+       * get a random position in a reference 1X1 rectangle
+       * transform it into a triangle (by folding)
+       * apply a linear transformation to the reference triangle */
+   i = RNG( 0, field->ncorners-1 );
+   if (i<field->ncorners-1)
+      j = i+1;
+   else
+      j = 0;
+   x = RNGF();
+   y = RNGF();
+   if (x+y > 1) {
+      x = 1-x;
+      y = 1-y;
+   }
+   ast->pos.x = field->pos.x*(1-x-y)
+                + field->corners[i].x*x + field->corners[j].x*y;
+   ast->pos.y = field->pos.y*(1-x-y)
+                + field->corners[i].y*x + field->corners[j].y*y;
+
+   /* And a random velocity */
    theta = RNGF()*2.*M_PI;
-   mod = RNGF() * (2*field->radius/3 - 100) + 100;
-   xa = mod*cos(theta) + field->pos.x;
-   ya = mod*sin(theta) + field->pos.y;
-
-   /* The asteroids are orbiting around the center of the field
-      This is physically wrong, but will make computations easier */
-
-   /* Get a random initial velocity 
-      We want to ensure that the asteroids keep in a disc with a prescripted diameter
-      This is performed thanks to the gravitational potential energy */
-   Ep = -1000000/mod;
-   maxE = -1000000/field->radius;
-   Ec = RNGF()*(maxE-Ep);
-
-   /* Theorem of energy */
-   ast->E = Ec + Ep;
-
-   /* Compute velocity from cinetic energy (mass is 1) */
-   mvel = sqrt( 2*Ec );
-   theta = RNGF()*2.*M_PI;
-
-   /* Asteroid always faces the center of the field */
-   dir = ANGLE( field->pos.x-xa, field->pos.y-ya );
-
-   vect_cset( &pos, xa, ya );
-   vect_pset( &vel, mvel, theta );
-
-   /* Stabilization step makes it possible to use euler */
-   ast->solid = solid_create(1, dir, &pos, &vel, SOLID_UPDATE_EULER);
+   mod = RNGF() * 20;
+   vect_pset( &ast->vel, mod, theta );
 
    /* randomly init the gfx ID */
    ast->gfxID = RNG(0,(int)nasterogfx-1);
+
+   /* Grow effect stuff */
+   ast->appearing = 1;
+   ast->timer = 0.;
 }
 
 
@@ -2729,6 +2728,7 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 {
+   int i;
    AsteroidAnchor *a;
    xmlNodePtr cur, pcur;
    double x, y;
@@ -2739,36 +2739,60 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    memset( a, 0, sizeof(AsteroidAnchor) );
 
    /* Initialize stuff. */
-   a->radius  = 500.;
-   a->density = .2;
+   a->density  = .2;
+   a->ncorners = 0;
+   a->corners  = NULL;
+   a->aera     = 0.;
+   vect_cset( &a->pos, 0., 0. );
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
-      xmlr_float( cur, "radius", a->radius );
-      /* Radius must > 100 */
-      if (a->radius < 200) {
-         WARN("asteroid field's radius in %d is too small. Taking 200.", sys->name);
-         a->radius = 200.0;
-      }
-
       xmlr_float( cur,"density", a->density );
-      /* Handle position. */
-      if (xml_isNode(cur,"pos")) {
+
+      /* Handle corners. */
+      if (xml_isNode(cur,"corner")) {
          pcur = cur->children;
          do {
             xmlr_float( pcur, "x", x );
             xmlr_float( pcur, "y", y );
          } while (xml_nextNode(pcur));
-
+         a->ncorners++;
+         if (a->corners==NULL)
+            a->corners = malloc( sizeof(Vector2d) );
+         else
+            a->corners = realloc( a->corners, (a->ncorners)*sizeof(Vector2d) );
          /* Set position. */
-         vect_cset( &a->pos, x, y );
+         vect_cset( &a->corners[a->ncorners-1], x, y );
+         /* Increment center. */
+         a->pos.x += x;
+         a->pos.y += y;
       }
 
    } while (xml_nextNode(cur));
 
+   if (a->ncorners < 3)
+       WARN("asteroid field in %d has less than 3 corners.", sys->name);
+
+   /* Normalize the center */
+   a->pos.x /= a->ncorners;
+   a->pos.y /= a->ncorners;
+
+   /* Compute the aera as a sum of triangles */
+   for (i=0; i<a->ncorners-1; i++) {
+      a->aera += (a->corners[i].x-a->pos.x)*(a->corners[i+1].y-a->pos.y) 
+               - (a->corners[i+1].x-a->pos.x)*(a->corners[i].y-a->pos.y);
+   }
+   /* And the last one to loop */
+   if (a->ncorners > 0) {
+      i = a->ncorners-1;
+      a->aera += (a->corners[i].x-a->pos.x)*(a->corners[0].y-a->pos.y) 
+               - (a->corners[0].x-a->pos.x)*(a->corners[i].y-a->pos.y);
+   }
+   a->aera /= 2;
+
    /* Compute number of asteroids */
-   a->nb = floor( a->radius * a->radius / 10000 * a->density );
+   a->nb = floor( ABS(a->aera) / 100000 * a->density );
 
    /* Added asteroid. */
    sys->nasteroids++;
@@ -3082,7 +3106,17 @@ static void space_renderPlanet( Planet *p )
  */
 static void space_renderAsteroid( Asteroid *a )
 {
-   gl_blitSprite( asteroid_gfx[a->gfxID], a->solid->pos.x, a->solid->pos.y, 0, 0, NULL );
+   double scale;
+
+   /* Check if needs scaling. */
+   if (a->appearing == 1)
+      scale = CLAMP( 0., 1., a->timer / 2. );
+   else if (a->appearing == 2)
+      scale = CLAMP( 0., 1., 1. - a->timer / 2. );
+   else
+      scale = 1.;
+   gl_blitSpriteInterpolateScale( asteroid_gfx[a->gfxID], asteroid_gfx[a->gfxID], 1,
+                                  a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
 }
 
 
@@ -3714,6 +3748,51 @@ void space_reconstructPresences( void )
       system_setFaction( &systems_stack[i] );
       systems_stack[i].ownerpresence = system_getPresence( &systems_stack[i], systems_stack[i].faction );
    }
+}
+
+
+/**
+ * @brief See if the position is in an asteroid field.
+ *
+ *    @param p pointer to the position.
+ *    @return -1 If false; index of the field otherwise.
+ */
+int space_isInField ( Vector2d *p )
+{
+   int i, j, isin, istotin;
+   AsteroidAnchor *a;
+   double aera;
+
+   istotin = -1;
+   for (i=0; i < cur_system->nasteroids; i++) {
+      a = &cur_system->asteroids[i];
+      isin = 1;
+      /* test every signed aera */
+      for (j=0; j < a->ncorners-1; j++) {
+         aera = (a->corners[j].x-p->x)*(a->corners[j+1].y-p->y) 
+              - (a->corners[j+1].x-p->x)*(a->corners[j].y-p->y);
+         if (a->aera*aera <= 0) {
+            isin = 0;
+            break;
+         }
+      }
+      /* And the last one to loop */
+      if (a->ncorners > 0) {
+         j = a->ncorners-1;
+         aera = (a->corners[j].x-p->x)*(a->corners[0].y-p->y) 
+              - (a->corners[0].x-p->x)*(a->corners[j].y-p->y);
+         if (a->aera*aera <= 0)
+            isin = 0;
+      }
+
+      if (isin) {
+         istotin = i;
+         break;
+      }
+
+   }
+
+   return istotin;
 }
 
 

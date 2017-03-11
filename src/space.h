@@ -174,9 +174,11 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
-   Solid* solid; /**< associated solid (physics). */
+   Vector2d pos; /**< Position. */
+   Vector2d vel; /**< Velocity. */
    int gfxID; /**< ID of the asteroid gfx. */
-   double E; /**< Total mecanical energy. */
+   double timer; /**< Internal timer for animations. */
+   int appearing; /**< 1: appearing, 2: disappaering, 0 otherwise. */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 
@@ -186,10 +188,12 @@ extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
  */
 typedef struct AsteroidAnchor_ {
    Vector2d pos; /**< Position in the system. */
-   double radius; /**< Radius the Field. */
    double density; /**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb; /**< Number of asteroids. */
+   Vector2d *corners; /**< Set of corners of the polygon. */
+   int ncorners; /**< Number of corners. */
+   double aera; /**< Field's aera. */
 } AsteroidAnchor;
 
 
@@ -378,6 +382,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /*
  * Misc.
  */
+int space_isInField ( Vector2d *p );
 void system_setFaction( StarSystem *sys );
 void space_factionChange (void);
 
