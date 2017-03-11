@@ -8,7 +8,7 @@
   <mass>25</mass>
   <price>675000</price>
   <description>A preferred engine of destroyer and time-focused freighter captains, the Cyclone II retains most of the original Cyclone's performance while more than doubling the engine's mass capacity. Its high power consumption is typically gladly written off given its exemplary performance.</description>
-  <gfx_store>engine03</gfx_store>
+  <gfx_store>engine06</gfx_store>
  </general>
  <specific type="modification">
   <thrust>100</thrust>
