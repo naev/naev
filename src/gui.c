@@ -964,6 +964,7 @@ void gui_radarRender( double x, double y )
 {
    int i, j;
    Radar *radar;
+   AsteroidAnchor *ast;
 
    /* The global radar. */
    radar = &gui_radar;
@@ -1014,6 +1015,13 @@ void gui_radarRender( double x, double y )
    /* render the targeted pilot */
    if (j!=0)
       gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
+
+   /* render the asteroids */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+      for (j=0; j<ast->nb; j++)
+         gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
+   }
 
    /* Interference. */
    gui_renderInterference();
@@ -1359,6 +1367,60 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
       gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., col, p->name );
+}
+
+
+/**
+ * @brief Renders an asteroid in the GUI radar.
+ *
+ *    @param a Asteroid to render.
+ */
+void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
+{
+   int x, y, sx, sy;
+   double px, py;
+   const glColour *col;
+   glColour ccol;
+
+   /* Make sure is in range. TODO: real detection system for asteroids */
+   if ( MOD( a->pos.x - player.p->solid->pos.x,
+             a->pos.y - player.p->solid->pos.y ) > 2000. )
+      return;
+
+   /* Get position. */
+   if (overlay) {
+      x = (int)(a->pos.x / res);
+      y = (int)(a->pos.y / res);
+   }
+   else {
+      x = (int)((a->pos.x - player.p->solid->pos.x) / res);
+      y = (int)((a->pos.y - player.p->solid->pos.y) / res);
+   }
+   /* Get size. */
+   sx = 1.;
+   sy = 1.;
+
+   /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
+   if (overlay) {
+      x += SCREEN_W / 2;
+      y += SCREEN_H / 2;
+      w *= 2.;
+      h *= 2.;
+   }
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
+
+   /* Draw square. */
+   px     = MAX(x-sx,-w);
+   py     = MAX(y-sy, -h);
+
+   col = &cWhite;
+   ccol.r = col->r;
+   ccol.g = col->g;
+   ccol.b = col->b;
+   ccol.a = 1.-interference_alpha;
+   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
 }
 
 

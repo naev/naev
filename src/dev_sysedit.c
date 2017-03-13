@@ -584,6 +584,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
+   AsteroidAnchor *ast;
    double x,y, z;
    const glColour *c;
    int selected;
@@ -647,6 +648,14 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       /* Render. */
       sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y,
             jp->sx, jp->sy, c, selected, jp->target->name );
+   }
+
+   /* Render asteroids */
+   for (i=0; i<sys->nasteroids; i++) {
+      ast = &sys->asteroids[i];
+      selected = 0;
+      sysedit_renderSprite( asteroid_gfx[0], x, y, ast->pos.x, ast->pos.y,
+                            0, 0, NULL, selected, "Asteroid Field" );
    }
 
    /* Render cursor position. */

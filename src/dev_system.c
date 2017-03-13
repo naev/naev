@@ -75,11 +75,12 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i;
+   int i, j;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
+   const AsteroidAnchor *ast;
    char file[PATH_MAX], *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
@@ -163,6 +164,28 @@ int dsys_saveSystem( StarSystem *sys )
    }
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
+
+   /* Asteroids. */
+   if (sys->nasteroids > 0) {
+      xmlw_startElem( writer, "asteroids" );
+      for (i=0; i<sys->nasteroids; i++) {
+         ast = &sys->asteroids[i];
+         xmlw_startElem( writer, "asteroid" );
+
+         /* Corners */
+         for (j=0; j<ast->ncorners; j++) {
+            xmlw_startElem( writer, "corner" );
+            xmlw_elem( writer, "x", "%f", ast->corners[j].x );
+            xmlw_elem( writer, "y", "%f", ast->corners[j].y );
+            xmlw_endElem( writer ); /* "corner" */
+         }
+
+         /* Misc. properties. */
+         xmlw_elem( writer, "density", "%f", ast->density );
+         xmlw_endElem( writer ); /* "asteroid" */
+      }
+      xmlw_endElem( writer ); /* "asteroids" */
+   }
 
    xmlw_endElem( writer ); /** "ssys" */
    xmlw_done(writer);
