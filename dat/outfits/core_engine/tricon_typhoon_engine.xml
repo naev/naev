@@ -8,7 +8,7 @@
   <mass>60</mass>
   <price>2700000</price>
   <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing light cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors.</description>
-  <gfx_store>engine02</gfx_store>
+  <gfx_store>engine05</gfx_store>
  </general>
  <specific type="modification">
   <thrust>65</thrust>

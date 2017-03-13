@@ -8,7 +8,7 @@
   <mass>180</mass>
   <price>400000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Hermes 5402 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
-  <gfx_store>core_system03</gfx_store>
+  <gfx_store>core_system04</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>135</cpu_max>
