@@ -3964,6 +3964,7 @@ static int pilotL_land( lua_State *L )
    Planet *pnt;
    int i;
    double a, r;
+   Vector2d v;
 
    NLUA_CHECKRW(L);
 
@@ -3988,17 +3989,20 @@ static int pilotL_land( lua_State *L )
          return 0;
       }
 
-      /* Copy vector. */
       p->nav_planet = i;
-      lua_pushvector(L, pnt->pos);
-      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       if (p->id == PLAYER_ID)
          gui_setNav();
+
+      /* Copy vector. */
+      v = pnt->pos;
 
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;
       r = RNGF() * pnt->radius;
-      vect_cadd( &pnt->pos, r*cos(a), r*sin(a) );
+      vect_cadd( &v, r*cos(a), r*sin(a) );
+
+      lua_pushvector(L, v);
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 
    return 0;
