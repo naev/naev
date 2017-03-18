@@ -227,10 +227,11 @@ int lua_isjump( lua_State *L, int ind )
  *    - system : Gets the jump by system. <br/>
  *
  * @usage j,r  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard and Goddard to Ogat jumps.
- *    @luatparam string|System param See description.
- *    @luareturn Jump Returns the jump.
- *    @luareturn Jump Returns the inverse.
- * @luafunc get( param )
+ *    @luatparam string|System src See description.
+ *    @luatparam string|System dest See description.
+ *    @luatreturn Jump Returns the jump.
+ *    @luatreturn Jump Returns the inverse.
+ * @luafunc get( src, dest )
  */
 static int jumpL_get( lua_State *L )
 {
