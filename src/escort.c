@@ -128,10 +128,10 @@ unsigned int escort_create( Pilot *p, char *ship,
  *
  *    @param parent Pilot who is giving orders.
  *    @param cmd Order to give.
- *    @param index Lua index of argument or 0.
+ *    @param idx Lua index of argument or 0.
  *    @return 0 on success, 1 if no orders given.
  */
-static int escort_command( Pilot *parent, const char *cmd, unsigned int index )
+static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
 {
    int i;
    Pilot *e;
@@ -144,7 +144,7 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index )
       if (e == NULL) /* Most likely died. */
          continue;
 
-      pilot_msg(parent, e, cmd, index);
+      pilot_msg(parent, e, cmd, idx);
    }
 
    return 0;
