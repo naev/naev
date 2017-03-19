@@ -184,6 +184,17 @@ extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 
 
 /**
+ * @brief Represents a convex subset of an asteroid field.
+ */
+typedef struct AsteroidSubset_ {
+   Vector2d *corners; /**< Set of corners of the polygon. */
+   int ncorners; /**< Number of corners. */
+   Vector2d pos; /**< Center. */
+   double aera; /**< Subset's aera. */
+} AsteroidSubset;
+
+
+/**
  * @brief Represents an asteroid field anchor.
  */
 typedef struct AsteroidAnchor_ {
@@ -194,6 +205,8 @@ typedef struct AsteroidAnchor_ {
    Vector2d *corners; /**< Set of corners of the polygon. */
    int ncorners; /**< Number of corners. */
    double aera; /**< Field's aera. */
+   AsteroidSubset *subsets; /**< Convex subsets. */
+   int nsubsets; /**< Number of convex subsets. */
 } AsteroidAnchor;
 
 

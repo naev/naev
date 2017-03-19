@@ -1401,16 +1401,21 @@ void space_init( const char* sysname )
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int i, j;
+   int i, j, k;
    double mod, theta, x, y;
+   AsteroidSubset *sub;
 
-   /* Get a random position: 
+   /* Get a random position:
+       * choose a convex subset
        * choose a triangle 
        * get a random position in a reference 1X1 rectangle
        * transform it into a triangle (by folding)
        * apply a linear transformation to the reference triangle */
-   i = RNG( 0, field->ncorners-1 );
-   if (i<field->ncorners-1)
+   k = RNG( 0, field->nsubsets-1 );
+   sub = &field->subsets[k];
+
+   i = RNG( 0, sub->ncorners-1 );
+   if (i<sub->ncorners-1)
       j = i+1;
    else
       j = 0;
@@ -1420,10 +1425,10 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
       x = 1-x;
       y = 1-y;
    }
-   ast->pos.x = field->pos.x*(1-x-y)
-                + field->corners[i].x*x + field->corners[j].x*y;
-   ast->pos.y = field->pos.y*(1-x-y)
-                + field->corners[i].y*x + field->corners[j].y*y;
+   ast->pos.x = sub->pos.x*(1-x-y)
+                + sub->corners[i].x*x + sub->corners[j].x*y;
+   ast->pos.y = sub->pos.y*(1-x-y)
+                + sub->corners[i].y*x + sub->corners[j].y*y;
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
@@ -2728,10 +2733,11 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 {
-   int i;
+   int i, j, k, l, m, n, retry, getout;
    AsteroidAnchor *a;
+   AsteroidSubset *sub, *newsub;
    xmlNodePtr cur, pcur;
-   double x, y;
+   double x, y, pro, prob;
 
    /* Allocate more space. */
    sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
@@ -2796,6 +2802,121 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Added asteroid. */
    sys->nasteroids++;
+
+   /* Initialize the convex subsets. */
+   a->subsets = malloc( sizeof(AsteroidSubset) );
+   a->subsets[0].ncorners = a->ncorners;
+   a->subsets[0].corners = a->corners;
+   a->nsubsets = 1;
+
+   /* Cut the subsets until they are all convex. */
+   retry  = 1;
+   getout = 0;
+
+   while (retry) {
+      retry = 0;
+      for (i=0; i<a->nsubsets; i++) {
+         sub = &a->subsets[i];
+         for (j=0; j<sub->ncorners; j++) {
+            /* Find the 2 other corners. */
+            if (j>0 && j<sub->ncorners-1) {
+               k = j-1;
+               l = j+1;
+            }
+            else if (j==0) {
+               k = sub->ncorners-1;
+               l = j+1;
+            }
+            else { /* (j==ncorners-1) */
+               k = j-1;
+               l = 0;
+            }
+
+            /* Test the orientation of the angle towards signed aera. */
+            pro = (sub->corners[k].x-sub->corners[j].x) *
+                  (sub->corners[l].y-sub->corners[j].y) - 
+                  (sub->corners[k].y-sub->corners[j].y) *
+                  (sub->corners[l].x-sub->corners[j].x);
+
+            if (pro * a->aera > 0) {
+               /* Cut here, find an other point. */
+               x = (sub->corners[k].x + sub->corners[l].x)/2;
+               y = (sub->corners[k].y + sub->corners[l].y)/2;
+
+               pro = 1.;
+               for (m=0; m<sub->ncorners; m++) {
+                  prob = (x-sub->corners[j].x)*(sub->corners[m].x-sub->corners[j].x) +
+                         (y-sub->corners[j].y)*(sub->corners[m].y-sub->corners[j].y);
+                  if ( prob < pro ) {
+                     pro = prob;
+                     n = m;
+                  }
+               }
+
+               if (pro>=0)
+                  WARN("Non-convex asteroid polygon seems to be self-intersecting in %d", sys->name);
+
+               /* Split subset i into 2 subsets */
+
+               a->subsets = realloc( a->subsets, (a->nsubsets+1)*sizeof(AsteroidSubset) );
+
+               /* Need to recall who is sub. */
+               sub = &a->subsets[i];
+               newsub = &a->subsets[a->nsubsets];
+
+               /* First, make sure n<j: invert j and n if needed */
+               if (j<n) {k=n; n=j; j=k;}
+
+               newsub->ncorners = j-n+1;
+               newsub->corners  = malloc( sizeof(Vector2d)*newsub->ncorners );
+
+               /* Add some nodes to the new subset */
+               k = 0;
+               for (m=n; m<j+1; m++) {
+                  newsub->corners[k] = sub->corners[m];
+                  k++;
+               }
+
+               /* Remove some nodes to the old subset */
+               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(j-n-1));
+               sub->ncorners = sub->ncorners-(j-n)+1;
+               sub->corners = realloc(sub->corners, sizeof(AsteroidSubset) * sub->ncorners);
+
+               a->nsubsets++;
+
+               getout = 1;
+               break;
+            }
+         }
+         if (getout) break;
+      }
+   }
+   for (i=0; i<a->nsubsets; i++) {
+      /* Get a center of the polygon */
+      sub = &a->subsets[i];
+      sub->pos.x = 0;
+      sub->pos.y = 0;
+      sub->aera  = 0;
+      for (j=0; j<sub->ncorners; j++) {
+         sub->pos.x += sub->corners[j].x;
+         sub->pos.y += sub->corners[j].y;
+      }
+      sub->pos.x /= sub->ncorners;
+      sub->pos.y /= sub->ncorners;
+
+      /* Compute the aera as a sum of triangles */
+      for (j=0; j<sub->ncorners-1; j++) {
+         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[j+1].y-sub->pos.y) 
+                    - (sub->corners[j+1].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+      }
+      /* And the last one to loop */
+      if (sub->ncorners > 0) {
+         j = sub->ncorners-1;
+         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[0].y-sub->pos.y) 
+                    - (sub->corners[0].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+      }
+      sub->aera /= 2;
+   }
 
    return 0;
 }
@@ -3213,6 +3334,7 @@ void space_exit (void)
       for (j=0; j < sys->nasteroids; j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);
+         free(ast->subsets);
       }
       free(sys->asteroids);
 
@@ -3759,37 +3881,41 @@ void space_reconstructPresences( void )
  */
 int space_isInField ( Vector2d *p )
 {
-   int i, j, isin, istotin;
+   int i, j, k, isin, istotin;
    AsteroidAnchor *a;
+   AsteroidSubset *sub;
    double aera;
 
    istotin = -1;
    for (i=0; i < cur_system->nasteroids; i++) {
       a = &cur_system->asteroids[i];
-      isin = 1;
-      /* test every signed aera */
-      for (j=0; j < a->ncorners-1; j++) {
-         aera = (a->corners[j].x-p->x)*(a->corners[j+1].y-p->y) 
-              - (a->corners[j+1].x-p->x)*(a->corners[j].y-p->y);
-         if (a->aera*aera <= 0) {
-            isin = 0;
+
+      for (k=0; k < a->nsubsets; k++) {
+         sub = &a->subsets[k];
+         isin = 1;
+         /* test every signed aera */
+         for (j=0; j < sub->ncorners-1; j++) {
+            aera = (sub->corners[j].x-p->x)*(sub->corners[j+1].y-p->y) 
+                 - (sub->corners[j+1].x-p->x)*(sub->corners[j].y-p->y);
+            if (sub->aera*aera <= 0) {
+               isin = 0;
+               break;
+            }
+         }
+         /* And the last one to loop */
+         if (sub->ncorners > 0) {
+            j = sub->ncorners-1;
+            aera = (sub->corners[j].x-p->x)*(sub->corners[0].y-p->y) 
+                 - (sub->corners[0].x-p->x)*(sub->corners[j].y-p->y);
+            if (sub->aera*aera <= 0)
+               isin = 0;
+         }
+
+         if (isin) {
+            istotin = i;
             break;
          }
       }
-      /* And the last one to loop */
-      if (a->ncorners > 0) {
-         j = a->ncorners-1;
-         aera = (a->corners[j].x-p->x)*(a->corners[0].y-p->y) 
-              - (a->corners[0].x-p->x)*(a->corners[j].y-p->y);
-         if (a->aera*aera <= 0)
-            isin = 0;
-      }
-
-      if (isin) {
-         istotin = i;
-         break;
-      }
-
    }
 
    return istotin;
