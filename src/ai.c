@@ -3109,7 +3109,7 @@ static int aiL_credits( lua_State *L )
 
 
 /**
- * @brief Retirms and clears the pilots message queue.
+ * @brief Returns and clears the pilots message queue.
  *
  *    @luafunc messages()
  *    @luatreturn {{},...} Messages.
