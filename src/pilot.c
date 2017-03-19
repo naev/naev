@@ -3079,12 +3079,12 @@ credits_t pilot_worth( const Pilot *p )
  *
  * @param p Pilot to send message
  * @param reciever Pilot to recieve it
- * @param index Index of data on lua stack or 0
+ * @param idx Index of data on lua stack or 0
  */
-void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int index)
+void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int idx)
 {
-   if (index != 0)
-      lua_pushvalue(naevL, index); /* data */
+   if (idx != 0)
+      lua_pushvalue(naevL, idx); /* data */
    else
       lua_pushnil(naevL); /* data */
 
