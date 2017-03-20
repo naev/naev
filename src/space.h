@@ -171,6 +171,16 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
+ * @brief Represents a small player-rendered debris.
+ */
+typedef struct Debris_ {
+   Vector2d pos; /**< Position. */
+   Vector2d vel; /**< Velocity. */
+   int gfxID; /**< ID of the asteroid gfx. */
+} Debris;
+
+
+/**
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
@@ -202,6 +212,8 @@ typedef struct AsteroidAnchor_ {
    double density; /**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb; /**< Number of asteroids. */
+   Debris *debris; /**< Debris belonging to the field. */
+   int ndebris; /**< Number of debris. */
    Vector2d *corners; /**< Set of corners of the polygon. */
    int ncorners; /**< Number of corners. */
    double aera; /**< Field's aera. */

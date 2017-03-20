@@ -70,6 +70,7 @@
 #define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
 #define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
 
+#define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
 /*
  * planet <-> system name stack
@@ -133,6 +134,7 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
+static void debris_init( Debris *deb );
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
@@ -147,7 +149,8 @@ static void system_scheduler( double dt, int init );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
-static void space_renderAsteroid( Asteroid *p );
+static void space_renderAsteroid( Asteroid *a );
+static void space_renderDebris( Debris *d, double x, double y );
 /*
  * Externed prototypes.
  */
@@ -1100,11 +1103,15 @@ void space_factionChange (void)
 void space_update( const double dt )
 {
    int i, j;
+   double x, y;
    Pilot *p;
    Damage dmg;
    HookParam hparam[3];
    AsteroidAnchor *ast;
    Asteroid *a;
+   Debris *d;
+   Pilot *pplayer;
+   Solid *psolid;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1217,7 +1224,7 @@ void space_update( const double dt )
          }
    }
 
-   /* Asteroids update */
+   /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
 
@@ -1251,6 +1258,33 @@ void space_update( const double dt )
             a->appearing = 2;
          }
       }
+
+      x = 0;
+      y = 0;
+      pplayer = pilot_get( PLAYER_ID );
+      if (pplayer != NULL) {
+         psolid  = pplayer->solid;
+         x = psolid->vel.x;
+         y = psolid->vel.y;
+      }
+
+      for (j=0; j<ast->ndebris; j++) {
+         d = &ast->debris[j];
+
+         d->pos.x += (d->vel.x-x) * dt;
+         d->pos.y += (d->vel.y-y) * dt;
+
+         /* Check boundaries */
+         if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
+            d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
+         else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
+            d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
+         else if (d->pos.x < -DEBRIS_BUFFER)
+            d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
+         else if (d->pos.y < -DEBRIS_BUFFER)
+            d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+      }
+
    }
 }
 
@@ -1267,6 +1301,7 @@ void space_init( const char* sysname )
    Planet *pnt;
    AsteroidAnchor *ast;
    Asteroid *a;
+   Debris *d;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1333,6 +1368,12 @@ void space_init( const char* sysname )
          a = &ast->asteroids[j];
          asteroid_init(a, ast);
       }
+      /* Add the debris to the anchor */
+      ast->debris = malloc( (ast->ndebris) * sizeof(Debris) );
+      for (j=0; j<ast->ndebris; j++) {
+         d = &ast->debris[j];
+         debris_init(d);
+      }
    }
 
    /* Clear interference if you leave system with interference. */
@@ -1395,7 +1436,7 @@ void space_init( const char* sysname )
 
 
 /**
- * @brief Initialize an asteroid.
+ * @brief Initializes an asteroid.
  *    @param ast Asteroid to initialize.
  *    @param field Asteroid field the asteroid belongs to.
  */
@@ -1441,6 +1482,29 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    /* Grow effect stuff */
    ast->appearing = 1;
    ast->timer = 0.;
+}
+
+
+/**
+ * @brief Initializes a debris.
+ *    @param deb Debris to initialize.
+ *    @param field Asteroid field the asteroid belongs to.
+ */
+void debris_init( Debris *deb )
+{
+   double theta, mod;
+
+   /* Position */
+   deb->pos.x = (double)RNG(-DEBRIS_BUFFER, SCREEN_W + DEBRIS_BUFFER);
+   deb->pos.y = (double)RNG(-DEBRIS_BUFFER, SCREEN_H + DEBRIS_BUFFER);
+
+   /* And a random velocity */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * 20;
+   vect_pset( &deb->vel, mod, theta );
+
+   /* randomly init the gfx ID */
+   deb->gfxID = RNG(0,(int)nasterogfx-1);
 }
 
 
@@ -2798,7 +2862,8 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->aera /= 2;
 
    /* Compute number of asteroids */
-   a->nb = floor( ABS(a->aera) / 100000 * a->density );
+   a->nb      = floor( ABS(a->aera) / 500000 * a->density );
+   a->ndebris = floor(100*a->density);
 
    /* Added asteroid. */
    sys->nasteroids++;
@@ -3162,7 +3227,10 @@ void space_renderOverlay( const double dt )
 void planets_render (void)
 {
    int i, j;
+   double x, y;
    AsteroidAnchor *ast;
+   Pilot *pplayer;
+   Solid *psolid;
 
    /* Must be a system. */
    if (cur_system==NULL)
@@ -3177,12 +3245,25 @@ void planets_render (void)
       if (cur_system->planets[i]->real == ASSET_REAL)
          space_renderPlanet( cur_system->planets[i] );
 
-   /* Render the asteroids. */
+   /* Get the player in order to compute the offset for debris. */
+   pplayer = pilot_get( PLAYER_ID );
+   if (pplayer != NULL)
+      psolid  = pplayer->solid;
+
+   /* Render the asteroids & debris. */
    for (i=0; i < cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j < ast->nb; j++)
         space_renderAsteroid( &ast->asteroids[j] );
+
+      if (pplayer != NULL) {
+         x = psolid->pos.x - SCREEN_W/2;
+         y = psolid->pos.y - SCREEN_H/2;
+         for (j=0; j < ast->ndebris; j++)
+           space_renderDebris( &ast->debris[j], x, y );
       }
+   }
+
 }
 
 
@@ -3222,6 +3303,7 @@ static void space_renderPlanet( Planet *p )
    gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
+
 /**
  * @brief Renders an asteroid.
  */
@@ -3238,6 +3320,27 @@ static void space_renderAsteroid( Asteroid *a )
       scale = 1.;
    gl_blitSpriteInterpolateScale( asteroid_gfx[a->gfxID], asteroid_gfx[a->gfxID], 1,
                                   a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
+}
+
+
+/**
+ * @brief Renders a debris.
+ */
+static void space_renderDebris( Debris *d, double x, double y )
+{
+   double scale;
+   Vector2d *testVect;
+
+   scale = .5;
+
+   testVect = malloc(sizeof(Vector2d));
+   testVect->x = d->pos.x + x;
+   testVect->y = d->pos.y + y;
+
+   if ( space_isInField( testVect ) == 0 )
+      gl_blitSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
+                                     d->pos.x + x, d->pos.y + y, scale, scale, 0, 0, NULL );
+   free(testVect);
 }
 
 
@@ -3334,6 +3437,7 @@ void space_exit (void)
       for (j=0; j < sys->nasteroids; j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);
+         free(ast->debris);
          free(ast->subsets);
       }
       free(sys->asteroids);
