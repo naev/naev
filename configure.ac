@@ -656,6 +656,7 @@ echo
 AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:   $used_csparse])
 AC_MSG_NOTICE([  lua:       $used_lua])
+AC_MSG_NOTICE([  libzip:    $with_libzip])
 echo
 AC_MSG_NOTICE([utils:       $have_utils])
 AC_MSG_NOTICE([  mkspr:     $have_mkspr])
