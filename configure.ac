@@ -209,6 +209,21 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
+# --with-libzip
+AC_MSG_CHECKING([whether to use libzip])
+AC_ARG_WITH([libzip],
+  AC_HELP_STRING([--with-libzip],
+     [use libzip for ndata (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_libzip=yes
+    ], [
+      with_libzip=no
+    ])
+  ], [
+    with_libzip=yes
+  ])
+AC_MSG_RESULT([$with_libzip])
+
 # --enable-lua
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
@@ -277,7 +292,9 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 PKG_CHECK_MODULES([PNG], [libpng])
 
 # libzip
-PKG_CHECK_MODULES([ZIP], [libzip])
+AS_IF([test "$with_libzip" = "yes"], [
+  PKG_CHECK_MODULES([ZIP], [libzip])
+])
 
 # lua
 case "$used_lua" in
@@ -553,6 +570,11 @@ AS_IF([test "x$have_openal" = "xyes"], [
 # USE_SDLMIX
 AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
+])
+
+# USE_LIBZIP
+AS_IF([test "x$with_libzip" = "xyes"], [
+  AC_DEFINE([USE_LIBZIP], 1, [Define to 1 if using libzip])
 ])
 
 # Operating system

@@ -1,3 +1,5 @@
+#ifdef USE_LIBZIP
+
 #include "nzip.h"
 
 #include <zip.h>
@@ -238,3 +240,5 @@ SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
    rwops->hidden.unknown.data1 = data;
    return rwops;
 }
+
+#endif /* USE_LIBZIP */
