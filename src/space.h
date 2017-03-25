@@ -171,6 +171,16 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
+ * @brief Represents a type of asteroid.
+ */
+typedef struct AsteroidType_ {
+   int ID; /**< ID ot the asteroid type. */
+   glTexture **gfxs; /**< asteroid possible gfxs. */
+   int ngfx; /**< nb of gfx. */
+} AsteroidType;
+
+
+/**
  * @brief Represents a small player-rendered debris.
  */
 typedef struct Debris_ {
@@ -189,6 +199,7 @@ typedef struct Asteroid_ {
    int gfxID; /**< ID of the asteroid gfx. */
    double timer; /**< Internal timer for animations. */
    int appearing; /**< 1: appearing, 2: disappaering, 0 otherwise. */
+   int type; /**< The ID of the asteroid type */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 

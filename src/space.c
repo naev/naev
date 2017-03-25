@@ -96,6 +96,12 @@ static int planet_nstack = 0; /**< Planet stack size. */
 static int planet_mstack = 0; /**< Memory size of planet stack. */
 
 /*
+ * Asteroid types stack.
+ */
+static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
+static int asteroid_ntypes = 0; /**< Asteroid types stack size. */
+
+/*
  * Misc.
  */
 static int systems_loading = 1; /**< Systems are loading. */
@@ -136,6 +142,7 @@ static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
 static void debris_init( Debris *deb );
 static int systems_load (void);
+static int asteroidTypes_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
@@ -1445,6 +1452,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    int i, j, k;
    double mod, theta, x, y;
    AsteroidSubset *sub;
+   AsteroidType *at;
 
    /* Get a random position:
        * choose a convex subset
@@ -1477,7 +1485,9 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    vect_pset( &ast->vel, mod, theta );
 
    /* randomly init the gfx ID */
-   ast->gfxID = RNG(0,(int)nasterogfx-1);
+   at = &asteroid_types[0];
+   ast->type = 0;
+   ast->gfxID = RNG(0,at->ngfx-1);
 
    /* Grow effect stuff */
    ast->appearing = 1;
@@ -3051,6 +3061,11 @@ int space_load (void)
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
+   /* Load asteroid types. */
+   ret = asteroidTypes_load();
+   if (ret < 0)
+      return ret;
+
    /* Done loading. */
    systems_loading = 0;
 
@@ -3075,6 +3090,93 @@ int space_load (void)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the asteroids types.
+ *
+ *    @return 0 on success.
+ */
+static int asteroidTypes_load (void)
+{
+   int i, len;
+   AsteroidType *at;
+   uint32_t bufsize;
+   char *buf, *file, *str;
+   xmlNodePtr node, cur;
+   xmlDocPtr doc;
+
+   /* Load the data. */
+   buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
+   if (buf == NULL) {
+      WARN("Unable to read data from '%s'", ASTERO_DATA_PATH);
+      return -1;
+   }
+
+   /* Load the document. */
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN("Unable to parse document '%s'", ASTERO_DATA_PATH);
+      return -1;
+   }
+
+   /* Get the root node. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,"Asteroid_types")) {
+      WARN("Malformed '"ASTERO_DATA_PATH"' file: missing root element 'Asteroid_types'");
+      return -1;
+   }
+
+   /* Get the first node. */
+   node = node->xmlChildrenNode; /* first event node */
+   if (node == NULL) {
+      WARN("Malformed '"ASTERO_DATA_PATH"' file: does not contain elements");
+      return -1;
+   }
+
+   do {
+      if (xml_isNode(node,"asteroid")) {
+
+         /* Grow memory. */
+         asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*(asteroid_ntypes+1));
+
+         /* Load it. */
+         at = &asteroid_types[asteroid_ntypes];
+         at->gfxs = NULL;
+
+         cur = node->children;
+         i = 0;
+         do {
+            if (xml_isNode(cur,"gfx")) {
+               at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
+               str = xml_get(cur);
+               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
+               file = malloc( len );
+               nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
+               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+               i++;
+            }
+            else if (xml_isNode(cur,"id"))
+               at->ID = xml_getInt(cur);
+         } while (xml_nextNode(cur));
+
+         if (i==0) WARN("Asteroid type has no gfx associated.");
+         else free(file);
+
+         at->ngfx = i;
+         asteroid_ntypes++;
+      }
+   } while (xml_nextNode(node));
+
+   /* Shrink to minimum. */
+   asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*asteroid_ntypes);
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(buf);
 
    return 0;
 }
@@ -3310,6 +3412,7 @@ static void space_renderPlanet( Planet *p )
 static void space_renderAsteroid( Asteroid *a )
 {
    double scale;
+   AsteroidType *at;
 
    /* Check if needs scaling. */
    if (a->appearing == 1)
@@ -3318,7 +3421,10 @@ static void space_renderAsteroid( Asteroid *a )
       scale = CLAMP( 0., 1., 1. - a->timer / 2. );
    else
       scale = 1.;
-   gl_blitSpriteInterpolateScale( asteroid_gfx[a->gfxID], asteroid_gfx[a->gfxID], 1,
+
+   at = &asteroid_types[a->type];
+
+   gl_blitSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
                                   a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
 }
 
@@ -3353,6 +3459,7 @@ void space_exit (void)
    Planet *pnt;
    AsteroidAnchor *ast;
    StarSystem *sys;
+   AsteroidType *at;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -3447,6 +3554,17 @@ void space_exit (void)
    systems_stack = NULL;
    systems_nstack = 0;
    systems_mstack = 0;
+
+   /* Free the asteroid types. */
+   for (i=0; i < asteroid_ntypes; i++) {
+      at = &asteroid_types[i];
+      for (j=0; j<at->ngfx; j++) {
+         gl_freeTexture(at->gfxs[j]);
+      }
+   }
+   free(asteroid_types);
+   asteroid_types = NULL;
+   asteroid_ntypes = 0;
 
    /* Free landing lua. */
    if (landing_env != LUA_NOREF)
