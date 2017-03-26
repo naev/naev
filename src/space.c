@@ -3031,7 +3031,7 @@ int space_load (void)
    int i, j, len;
    int ret;
    StarSystem *sys;
-   char **asteroid_files, *file;
+   char **asteroid_files, file[PATH_MAX];
 
    /* Loading. */
    systems_loading = 1;
@@ -3056,8 +3056,7 @@ int space_load (void)
 
    for (i=0; i<(int)nasterogfx; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
-      file = malloc( len );
-      nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i]);
+      nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
@@ -3105,7 +3104,7 @@ static int asteroidTypes_load (void)
    int i, len;
    AsteroidType *at;
    uint32_t bufsize;
-   char *buf, *file, *str;
+   char *buf, *str, file[PATH_MAX];
    xmlNodePtr node, cur;
    xmlDocPtr doc;
 
@@ -3154,17 +3153,16 @@ static int asteroidTypes_load (void)
                at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
-               file = malloc( len );
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
                at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
                i++;
             }
             else if (xml_isNode(cur,"id"))
-               at->ID = xml_getInt(cur);
+               at->ID = xml_getStrd(cur);
          } while (xml_nextNode(cur));
 
-         if (i==0) WARN("Asteroid type has no gfx associated.");
-         else free(file);
+         if (i==0)
+            WARN("Asteroid type has no gfx associated.");
 
          at->ngfx = i;
          asteroid_ntypes++;
@@ -3470,9 +3468,9 @@ void space_exit (void)
    jumpbuoy_gfx = NULL;
 
    /* Free asteroid graphics. */
-   for (i=0; i<(int)nasterogfx; i++) {
+   for (i=0; i<(int)nasterogfx; i++)
       gl_freeTexture(asteroid_gfx[i]);
-   }
+   free(asteroid_gfx);
 
    /* Free the names. */
    if (planetname_stack != NULL)
@@ -3558,6 +3556,7 @@ void space_exit (void)
    /* Free the asteroid types. */
    for (i=0; i < asteroid_ntypes; i++) {
       at = &asteroid_types[i];
+      free(at[i].ID);
       for (j=0; j<at->ngfx; j++) {
          gl_freeTexture(at->gfxs[j]);
       }

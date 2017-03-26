@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Asteroid_types>
  <asteroid>
-  <id>0</id>
+  <id>default</id>
   <gfx>asteroid-D00</gfx>
   <gfx>asteroid-D07</gfx>
   <gfx>asteroid-D08</gfx>
