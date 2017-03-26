@@ -70,6 +70,7 @@
 #define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
 #define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
 
+#define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
 /*
  * planet <-> system name stack
@@ -93,6 +94,12 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
 static Planet *planet_stack = NULL; /**< Planet stack. */
 static int planet_nstack = 0; /**< Planet stack size. */
 static int planet_mstack = 0; /**< Memory size of planet stack. */
+
+/*
+ * Asteroid types stack.
+ */
+static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
+static int asteroid_ntypes = 0; /**< Asteroid types stack size. */
 
 /*
  * Misc.
@@ -133,7 +140,9 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
+static void debris_init( Debris *deb );
 static int systems_load (void);
+static int asteroidTypes_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
@@ -147,7 +156,8 @@ static void system_scheduler( double dt, int init );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
-static void space_renderAsteroid( Asteroid *p );
+static void space_renderAsteroid( Asteroid *a );
+static void space_renderDebris( Debris *d, double x, double y );
 /*
  * Externed prototypes.
  */
@@ -1100,11 +1110,15 @@ void space_factionChange (void)
 void space_update( const double dt )
 {
    int i, j;
+   double x, y;
    Pilot *p;
    Damage dmg;
    HookParam hparam[3];
    AsteroidAnchor *ast;
    Asteroid *a;
+   Debris *d;
+   Pilot *pplayer;
+   Solid *psolid;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1217,7 +1231,7 @@ void space_update( const double dt )
          }
    }
 
-   /* Asteroids update */
+   /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
 
@@ -1251,6 +1265,33 @@ void space_update( const double dt )
             a->appearing = 2;
          }
       }
+
+      x = 0;
+      y = 0;
+      pplayer = pilot_get( PLAYER_ID );
+      if (pplayer != NULL) {
+         psolid  = pplayer->solid;
+         x = psolid->vel.x;
+         y = psolid->vel.y;
+      }
+
+      for (j=0; j<ast->ndebris; j++) {
+         d = &ast->debris[j];
+
+         d->pos.x += (d->vel.x-x) * dt;
+         d->pos.y += (d->vel.y-y) * dt;
+
+         /* Check boundaries */
+         if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
+            d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
+         else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
+            d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
+         else if (d->pos.x < -DEBRIS_BUFFER)
+            d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
+         else if (d->pos.y < -DEBRIS_BUFFER)
+            d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+      }
+
    }
 }
 
@@ -1267,6 +1308,7 @@ void space_init( const char* sysname )
    Planet *pnt;
    AsteroidAnchor *ast;
    Asteroid *a;
+   Debris *d;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1333,6 +1375,12 @@ void space_init( const char* sysname )
          a = &ast->asteroids[j];
          asteroid_init(a, ast);
       }
+      /* Add the debris to the anchor */
+      ast->debris = malloc( (ast->ndebris) * sizeof(Debris) );
+      for (j=0; j<ast->ndebris; j++) {
+         d = &ast->debris[j];
+         debris_init(d);
+      }
    }
 
    /* Clear interference if you leave system with interference. */
@@ -1395,22 +1443,28 @@ void space_init( const char* sysname )
 
 
 /**
- * @brief Initialize an asteroid.
+ * @brief Initializes an asteroid.
  *    @param ast Asteroid to initialize.
  *    @param field Asteroid field the asteroid belongs to.
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int i, j;
+   int i, j, k;
    double mod, theta, x, y;
+   AsteroidSubset *sub;
+   AsteroidType *at;
 
-   /* Get a random position: 
+   /* Get a random position:
+       * choose a convex subset
        * choose a triangle 
        * get a random position in a reference 1X1 rectangle
        * transform it into a triangle (by folding)
        * apply a linear transformation to the reference triangle */
-   i = RNG( 0, field->ncorners-1 );
-   if (i<field->ncorners-1)
+   k = RNG( 0, field->nsubsets-1 );
+   sub = &field->subsets[k];
+
+   i = RNG( 0, sub->ncorners-1 );
+   if (i<sub->ncorners-1)
       j = i+1;
    else
       j = 0;
@@ -1420,10 +1474,10 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
       x = 1-x;
       y = 1-y;
    }
-   ast->pos.x = field->pos.x*(1-x-y)
-                + field->corners[i].x*x + field->corners[j].x*y;
-   ast->pos.y = field->pos.y*(1-x-y)
-                + field->corners[i].y*x + field->corners[j].y*y;
+   ast->pos.x = sub->pos.x*(1-x-y)
+                + sub->corners[i].x*x + sub->corners[j].x*y;
+   ast->pos.y = sub->pos.y*(1-x-y)
+                + sub->corners[i].y*x + sub->corners[j].y*y;
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
@@ -1431,11 +1485,36 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    vect_pset( &ast->vel, mod, theta );
 
    /* randomly init the gfx ID */
-   ast->gfxID = RNG(0,(int)nasterogfx-1);
+   at = &asteroid_types[0];
+   ast->type = 0;
+   ast->gfxID = RNG(0,at->ngfx-1);
 
    /* Grow effect stuff */
    ast->appearing = 1;
    ast->timer = 0.;
+}
+
+
+/**
+ * @brief Initializes a debris.
+ *    @param deb Debris to initialize.
+ *    @param field Asteroid field the asteroid belongs to.
+ */
+void debris_init( Debris *deb )
+{
+   double theta, mod;
+
+   /* Position */
+   deb->pos.x = (double)RNG(-DEBRIS_BUFFER, SCREEN_W + DEBRIS_BUFFER);
+   deb->pos.y = (double)RNG(-DEBRIS_BUFFER, SCREEN_H + DEBRIS_BUFFER);
+
+   /* And a random velocity */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * 20;
+   vect_pset( &deb->vel, mod, theta );
+
+   /* randomly init the gfx ID */
+   deb->gfxID = RNG(0,(int)nasterogfx-1);
 }
 
 
@@ -2728,10 +2807,11 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 {
-   int i;
+   int i, j, k, l, m, n, retry, getout;
    AsteroidAnchor *a;
+   AsteroidSubset *sub, *newsub;
    xmlNodePtr cur, pcur;
-   double x, y;
+   double x, y, pro, prob;
 
    /* Allocate more space. */
    sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
@@ -2792,10 +2872,126 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->aera /= 2;
 
    /* Compute number of asteroids */
-   a->nb = floor( ABS(a->aera) / 100000 * a->density );
+   a->nb      = floor( ABS(a->aera) / 500000 * a->density );
+   a->ndebris = floor(100*a->density);
 
    /* Added asteroid. */
    sys->nasteroids++;
+
+   /* Initialize the convex subsets. */
+   a->subsets = malloc( sizeof(AsteroidSubset) );
+   a->subsets[0].ncorners = a->ncorners;
+   a->subsets[0].corners = a->corners;
+   a->nsubsets = 1;
+
+   /* Cut the subsets until they are all convex. */
+   retry  = 1;
+   getout = 0;
+
+   while (retry) {
+      retry = 0;
+      for (i=0; i<a->nsubsets; i++) {
+         sub = &a->subsets[i];
+         for (j=0; j<sub->ncorners; j++) {
+            /* Find the 2 other corners. */
+            if (j>0 && j<sub->ncorners-1) {
+               k = j-1;
+               l = j+1;
+            }
+            else if (j==0) {
+               k = sub->ncorners-1;
+               l = j+1;
+            }
+            else { /* (j==ncorners-1) */
+               k = j-1;
+               l = 0;
+            }
+
+            /* Test the orientation of the angle towards signed aera. */
+            pro = (sub->corners[k].x-sub->corners[j].x) *
+                  (sub->corners[l].y-sub->corners[j].y) - 
+                  (sub->corners[k].y-sub->corners[j].y) *
+                  (sub->corners[l].x-sub->corners[j].x);
+
+            if (pro * a->aera > 0) {
+               /* Cut here, find an other point. */
+               x = (sub->corners[k].x + sub->corners[l].x)/2;
+               y = (sub->corners[k].y + sub->corners[l].y)/2;
+
+               pro = 1.;
+               for (m=0; m<sub->ncorners; m++) {
+                  prob = (x-sub->corners[j].x)*(sub->corners[m].x-sub->corners[j].x) +
+                         (y-sub->corners[j].y)*(sub->corners[m].y-sub->corners[j].y);
+                  if ( prob < pro ) {
+                     pro = prob;
+                     n = m;
+                  }
+               }
+
+               if (pro>=0)
+                  WARN("Non-convex asteroid polygon seems to be self-intersecting in %d", sys->name);
+
+               /* Split subset i into 2 subsets */
+
+               a->subsets = realloc( a->subsets, (a->nsubsets+1)*sizeof(AsteroidSubset) );
+
+               /* Need to recall who is sub. */
+               sub = &a->subsets[i];
+               newsub = &a->subsets[a->nsubsets];
+
+               /* First, make sure n<j: invert j and n if needed */
+               if (j<n) {k=n; n=j; j=k;}
+
+               newsub->ncorners = j-n+1;
+               newsub->corners  = malloc( sizeof(Vector2d)*newsub->ncorners );
+
+               /* Add some nodes to the new subset */
+               k = 0;
+               for (m=n; m<j+1; m++) {
+                  newsub->corners[k] = sub->corners[m];
+                  k++;
+               }
+
+               /* Remove some nodes to the old subset */
+               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(j-n-1));
+               sub->ncorners = sub->ncorners-(j-n)+1;
+               sub->corners = realloc(sub->corners, sizeof(AsteroidSubset) * sub->ncorners);
+
+               a->nsubsets++;
+
+               getout = 1;
+               break;
+            }
+         }
+         if (getout) break;
+      }
+   }
+   for (i=0; i<a->nsubsets; i++) {
+      /* Get a center of the polygon */
+      sub = &a->subsets[i];
+      sub->pos.x = 0;
+      sub->pos.y = 0;
+      sub->aera  = 0;
+      for (j=0; j<sub->ncorners; j++) {
+         sub->pos.x += sub->corners[j].x;
+         sub->pos.y += sub->corners[j].y;
+      }
+      sub->pos.x /= sub->ncorners;
+      sub->pos.y /= sub->ncorners;
+
+      /* Compute the aera as a sum of triangles */
+      for (j=0; j<sub->ncorners-1; j++) {
+         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[j+1].y-sub->pos.y) 
+                    - (sub->corners[j+1].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+      }
+      /* And the last one to loop */
+      if (sub->ncorners > 0) {
+         j = sub->ncorners-1;
+         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[0].y-sub->pos.y) 
+                    - (sub->corners[0].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+      }
+      sub->aera /= 2;
+   }
 
    return 0;
 }
@@ -2865,6 +3061,11 @@ int space_load (void)
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
+   /* Load asteroid types. */
+   ret = asteroidTypes_load();
+   if (ret < 0)
+      return ret;
+
    /* Done loading. */
    systems_loading = 0;
 
@@ -2889,6 +3090,93 @@ int space_load (void)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the asteroids types.
+ *
+ *    @return 0 on success.
+ */
+static int asteroidTypes_load (void)
+{
+   int i, len;
+   AsteroidType *at;
+   uint32_t bufsize;
+   char *buf, *file, *str;
+   xmlNodePtr node, cur;
+   xmlDocPtr doc;
+
+   /* Load the data. */
+   buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
+   if (buf == NULL) {
+      WARN("Unable to read data from '%s'", ASTERO_DATA_PATH);
+      return -1;
+   }
+
+   /* Load the document. */
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN("Unable to parse document '%s'", ASTERO_DATA_PATH);
+      return -1;
+   }
+
+   /* Get the root node. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,"Asteroid_types")) {
+      WARN("Malformed '"ASTERO_DATA_PATH"' file: missing root element 'Asteroid_types'");
+      return -1;
+   }
+
+   /* Get the first node. */
+   node = node->xmlChildrenNode; /* first event node */
+   if (node == NULL) {
+      WARN("Malformed '"ASTERO_DATA_PATH"' file: does not contain elements");
+      return -1;
+   }
+
+   do {
+      if (xml_isNode(node,"asteroid")) {
+
+         /* Grow memory. */
+         asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*(asteroid_ntypes+1));
+
+         /* Load it. */
+         at = &asteroid_types[asteroid_ntypes];
+         at->gfxs = NULL;
+
+         cur = node->children;
+         i = 0;
+         do {
+            if (xml_isNode(cur,"gfx")) {
+               at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
+               str = xml_get(cur);
+               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
+               file = malloc( len );
+               nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
+               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+               i++;
+            }
+            else if (xml_isNode(cur,"id"))
+               at->ID = xml_getInt(cur);
+         } while (xml_nextNode(cur));
+
+         if (i==0) WARN("Asteroid type has no gfx associated.");
+         else free(file);
+
+         at->ngfx = i;
+         asteroid_ntypes++;
+      }
+   } while (xml_nextNode(node));
+
+   /* Shrink to minimum. */
+   asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*asteroid_ntypes);
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(buf);
 
    return 0;
 }
@@ -3041,7 +3329,10 @@ void space_renderOverlay( const double dt )
 void planets_render (void)
 {
    int i, j;
+   double x, y;
    AsteroidAnchor *ast;
+   Pilot *pplayer;
+   Solid *psolid;
 
    /* Must be a system. */
    if (cur_system==NULL)
@@ -3056,12 +3347,25 @@ void planets_render (void)
       if (cur_system->planets[i]->real == ASSET_REAL)
          space_renderPlanet( cur_system->planets[i] );
 
-   /* Render the asteroids. */
+   /* Get the player in order to compute the offset for debris. */
+   pplayer = pilot_get( PLAYER_ID );
+   if (pplayer != NULL)
+      psolid  = pplayer->solid;
+
+   /* Render the asteroids & debris. */
    for (i=0; i < cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j < ast->nb; j++)
         space_renderAsteroid( &ast->asteroids[j] );
+
+      if (pplayer != NULL) {
+         x = psolid->pos.x - SCREEN_W/2;
+         y = psolid->pos.y - SCREEN_H/2;
+         for (j=0; j < ast->ndebris; j++)
+           space_renderDebris( &ast->debris[j], x, y );
       }
+   }
+
 }
 
 
@@ -3101,12 +3405,14 @@ static void space_renderPlanet( Planet *p )
    gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
+
 /**
  * @brief Renders an asteroid.
  */
 static void space_renderAsteroid( Asteroid *a )
 {
    double scale;
+   AsteroidType *at;
 
    /* Check if needs scaling. */
    if (a->appearing == 1)
@@ -3115,8 +3421,32 @@ static void space_renderAsteroid( Asteroid *a )
       scale = CLAMP( 0., 1., 1. - a->timer / 2. );
    else
       scale = 1.;
-   gl_blitSpriteInterpolateScale( asteroid_gfx[a->gfxID], asteroid_gfx[a->gfxID], 1,
+
+   at = &asteroid_types[a->type];
+
+   gl_blitSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
                                   a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
+}
+
+
+/**
+ * @brief Renders a debris.
+ */
+static void space_renderDebris( Debris *d, double x, double y )
+{
+   double scale;
+   Vector2d *testVect;
+
+   scale = .5;
+
+   testVect = malloc(sizeof(Vector2d));
+   testVect->x = d->pos.x + x;
+   testVect->y = d->pos.y + y;
+
+   if ( space_isInField( testVect ) == 0 )
+      gl_blitSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
+                                     d->pos.x + x, d->pos.y + y, scale, scale, 0, 0, NULL );
+   free(testVect);
 }
 
 
@@ -3129,6 +3459,7 @@ void space_exit (void)
    Planet *pnt;
    AsteroidAnchor *ast;
    StarSystem *sys;
+   AsteroidType *at;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -3213,6 +3544,8 @@ void space_exit (void)
       for (j=0; j < sys->nasteroids; j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);
+         free(ast->debris);
+         free(ast->subsets);
       }
       free(sys->asteroids);
 
@@ -3221,6 +3554,17 @@ void space_exit (void)
    systems_stack = NULL;
    systems_nstack = 0;
    systems_mstack = 0;
+
+   /* Free the asteroid types. */
+   for (i=0; i < asteroid_ntypes; i++) {
+      at = &asteroid_types[i];
+      for (j=0; j<at->ngfx; j++) {
+         gl_freeTexture(at->gfxs[j]);
+      }
+   }
+   free(asteroid_types);
+   asteroid_types = NULL;
+   asteroid_ntypes = 0;
 
    /* Free landing lua. */
    if (landing_env != LUA_NOREF)
@@ -3759,37 +4103,41 @@ void space_reconstructPresences( void )
  */
 int space_isInField ( Vector2d *p )
 {
-   int i, j, isin, istotin;
+   int i, j, k, isin, istotin;
    AsteroidAnchor *a;
+   AsteroidSubset *sub;
    double aera;
 
    istotin = -1;
    for (i=0; i < cur_system->nasteroids; i++) {
       a = &cur_system->asteroids[i];
-      isin = 1;
-      /* test every signed aera */
-      for (j=0; j < a->ncorners-1; j++) {
-         aera = (a->corners[j].x-p->x)*(a->corners[j+1].y-p->y) 
-              - (a->corners[j+1].x-p->x)*(a->corners[j].y-p->y);
-         if (a->aera*aera <= 0) {
-            isin = 0;
+
+      for (k=0; k < a->nsubsets; k++) {
+         sub = &a->subsets[k];
+         isin = 1;
+         /* test every signed aera */
+         for (j=0; j < sub->ncorners-1; j++) {
+            aera = (sub->corners[j].x-p->x)*(sub->corners[j+1].y-p->y) 
+                 - (sub->corners[j+1].x-p->x)*(sub->corners[j].y-p->y);
+            if (sub->aera*aera <= 0) {
+               isin = 0;
+               break;
+            }
+         }
+         /* And the last one to loop */
+         if (sub->ncorners > 0) {
+            j = sub->ncorners-1;
+            aera = (sub->corners[j].x-p->x)*(sub->corners[0].y-p->y) 
+                 - (sub->corners[0].x-p->x)*(sub->corners[j].y-p->y);
+            if (sub->aera*aera <= 0)
+               isin = 0;
+         }
+
+         if (isin) {
+            istotin = i;
             break;
          }
       }
-      /* And the last one to loop */
-      if (a->ncorners > 0) {
-         j = a->ncorners-1;
-         aera = (a->corners[j].x-p->x)*(a->corners[0].y-p->y) 
-              - (a->corners[0].x-p->x)*(a->corners[j].y-p->y);
-         if (a->aera*aera <= 0)
-            isin = 0;
-      }
-
-      if (isin) {
-         istotin = i;
-         break;
-      }
-
    }
 
    return istotin;

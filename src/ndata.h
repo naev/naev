@@ -36,6 +36,7 @@
 #define FLEET_DATA_PATH          "dat/fleet.xml" /**< Where to find fleet data. */
 #define TECH_DATA_PATH           "dat/tech.xml"   /**< XML file containing techs. */
 #define DIFF_DATA_PATH           "dat/unidiff.xml" /**< Unidiff XML file. */
+#define ASTERO_DATA_PATH         "dat/asteroids.xml" /**< Asteroid types XML file. */
 
 #define MISSION_LUA_PATH         "dat/missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "dat/events/" /**< Path to Lua files. */

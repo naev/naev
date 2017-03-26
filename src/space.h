@@ -171,6 +171,26 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
+ * @brief Represents a type of asteroid.
+ */
+typedef struct AsteroidType_ {
+   int ID; /**< ID ot the asteroid type. */
+   glTexture **gfxs; /**< asteroid possible gfxs. */
+   int ngfx; /**< nb of gfx. */
+} AsteroidType;
+
+
+/**
+ * @brief Represents a small player-rendered debris.
+ */
+typedef struct Debris_ {
+   Vector2d pos; /**< Position. */
+   Vector2d vel; /**< Velocity. */
+   int gfxID; /**< ID of the asteroid gfx. */
+} Debris;
+
+
+/**
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
@@ -179,8 +199,20 @@ typedef struct Asteroid_ {
    int gfxID; /**< ID of the asteroid gfx. */
    double timer; /**< Internal timer for animations. */
    int appearing; /**< 1: appearing, 2: disappaering, 0 otherwise. */
+   int type; /**< The ID of the asteroid type */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
+
+
+/**
+ * @brief Represents a convex subset of an asteroid field.
+ */
+typedef struct AsteroidSubset_ {
+   Vector2d *corners; /**< Set of corners of the polygon. */
+   int ncorners; /**< Number of corners. */
+   Vector2d pos; /**< Center. */
+   double aera; /**< Subset's aera. */
+} AsteroidSubset;
 
 
 /**
@@ -191,9 +223,13 @@ typedef struct AsteroidAnchor_ {
    double density; /**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb; /**< Number of asteroids. */
+   Debris *debris; /**< Debris belonging to the field. */
+   int ndebris; /**< Number of debris. */
    Vector2d *corners; /**< Set of corners of the polygon. */
    int ncorners; /**< Number of corners. */
    double aera; /**< Field's aera. */
+   AsteroidSubset *subsets; /**< Convex subsets. */
+   int nsubsets; /**< Number of convex subsets. */
 } AsteroidAnchor;
 
 
