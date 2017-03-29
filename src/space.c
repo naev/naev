@@ -2953,7 +2953,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                }
 
                /* Remove some nodes to the old subset */
-               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(j-n-1));
+               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j) );
                sub->ncorners = sub->ncorners-(j-n)+1;
                sub->corners = realloc(sub->corners, sizeof(AsteroidSubset) * sub->ncorners);
 
