@@ -15,6 +15,7 @@
 #include "fleet.h"
 #include "mission.h"
 #include "tech.h"
+#include "explosion.h"
 
 
 #define SYSTEM_SIMULATE_TIME  15. /**< Time to simulate system before player is added. */
@@ -174,9 +175,12 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
  * @brief Represents a type of asteroid.
  */
 typedef struct AsteroidType_ {
-   char *ID; /**< ID ot the asteroid type. */
+   char *ID; /**< ID of the asteroid type. */
    glTexture **gfxs; /**< asteroid possible gfxs. */
    int ngfx; /**< nb of gfx. */
+   Commodity **material; /**< Materials contained in the asteroid. */
+   int *quantity; /**< Quantities of materials. */
+   int nmaterial; /**< size of both material stacks. */
 } AsteroidType;
 
 
@@ -198,7 +202,7 @@ typedef struct Asteroid_ {
    Vector2d vel; /**< Velocity. */
    int gfxID; /**< ID of the asteroid gfx. */
    double timer; /**< Internal timer for animations. */
-   int appearing; /**< 1: appearing, 2: disappaering, 0 otherwise. */
+   int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
    int type; /**< The ID of the asteroid type */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
@@ -416,9 +420,16 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 
 
 /*
+ * Asteroids
+ */
+void asteroid_hit( Asteroid *a);
+int space_isInField ( Vector2d *p );
+AsteroidType *space_getType ( int ID );
+
+
+/*
  * Misc.
  */
-int space_isInField ( Vector2d *p );
 void system_setFaction( StarSystem *sys );
 void space_factionChange (void);
 

@@ -153,6 +153,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
+static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
@@ -1231,6 +1232,9 @@ void space_update( const double dt )
          }
    }
 
+   /* Update the gatherable objects. */
+   gatherable_update(dt);
+
    /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
@@ -1255,6 +1259,15 @@ void space_update( const double dt )
             if (a->timer >= 2.) {
                /* reinit any disappeared asteroid */
                asteroid_init( a, ast );
+            }
+         }
+
+         /* Exploding asteroid */
+         if (a->appearing == 3) {
+            a->timer += dt;
+            if (a->timer >= 1.) {
+               /* Make it explode */
+               asteroid_explode( a, ast );
             }
          }
 
@@ -1316,6 +1329,8 @@ void space_init( const char* sysname )
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
+   gatherable_free(); /* get rid of gatherable stuff. */
+   gatherable_free();
    background_clear(); /* Get rid of the background. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
@@ -3050,6 +3065,11 @@ int space_load (void)
    if (ret < 0)
       return ret;
 
+   /* Load asteroid types. */
+   ret = asteroidTypes_load();
+   if (ret < 0)
+      return ret;
+
    /* Load asteroid graphics. */
    asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
    asteroid_gfx = malloc( sizeof(StarSystem) * systems_mstack );
@@ -3059,11 +3079,6 @@ int space_load (void)
       nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
-
-   /* Load asteroid types. */
-   ret = asteroidTypes_load();
-   if (ret < 0)
-      return ret;
 
    /* Done loading. */
    systems_loading = 0;
@@ -3101,12 +3116,16 @@ int space_load (void)
  */
 static int asteroidTypes_load (void)
 {
-   int i, len;
+   int i, j, len, namdef, qttdef;
    AsteroidType *at;
    uint32_t bufsize;
    char *buf, *str, file[PATH_MAX];
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, child;
    xmlDocPtr doc;
+   png_uint_32 w, h;
+   SDL_RWops *rw;
+   npng_t *npng;
+   SDL_Surface *surface;
 
    /* Load the data. */
    buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
@@ -3145,26 +3164,66 @@ static int asteroidTypes_load (void)
          /* Load it. */
          at = &asteroid_types[asteroid_ntypes];
          at->gfxs = NULL;
+         at->material = NULL;
+         at->quantity = NULL;
 
          cur = node->children;
-         i = 0;
+         i = 0; j = 0;
          do {
             if (xml_isNode(cur,"gfx")) {
                at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
-               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+
+               /* Load sprite and make collision possible. */
+               rw    = ndata_rwops( file );
+               npng  = npng_open( rw );
+               npng_dim( npng, &w, &h );
+               surface = npng_readSurface( npng, gl_needPOT(), 1 );
+
+               at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
+                             OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
+                             w, h, 1, 1, 0 );
                i++;
             }
+
             else if (xml_isNode(cur,"id"))
                at->ID = xml_getStrd(cur);
+
+            else if (xml_isNode(cur,"commodity")) {
+               at->material = realloc( at->material, sizeof(Commodity*)*(j+1) );
+               at->quantity  = realloc( at->quantity, sizeof(int)*(j+1) );
+
+               /* Check that name and quantity are defined. */
+               namdef = 0; qttdef = 0;
+
+               child = cur->children;
+               do{
+                  if (xml_isNode(child,"name")) {
+                     str = xml_get(child);
+                     at->material[j] = commodity_get( str );
+                     namdef = 1;
+                  }
+                  else if (xml_isNode(child,"quantity")) {
+                     at->quantity[j] = xml_getInt(child);
+                     qttdef = 1;
+                  }
+               } while (xml_nextNode(child));
+
+               if (namdef == 0 || qttdef == 0)
+                  WARN("Asteroid type's commodity lacks name or quantity.");
+
+               j++;
+            }
+
          } while (xml_nextNode(cur));
 
          if (i==0)
             WARN("Asteroid type has no gfx associated.");
 
          at->ngfx = i;
+         at->nmaterial = j;
          asteroid_ntypes++;
       }
    } while (xml_nextNode(node));
@@ -3364,6 +3423,9 @@ void planets_render (void)
       }
    }
 
+   /* Render gatherable stuff. */
+   gatherable_render();
+
 }
 
 
@@ -3557,6 +3619,8 @@ void space_exit (void)
    for (i=0; i < asteroid_ntypes; i++) {
       at = &asteroid_types[i];
       free(at[i].ID);
+      free(at->quantity);
+      free(at->material);
       for (j=0; j<at->ngfx; j++) {
          gl_freeTexture(at->gfxs[j]);
       }
@@ -3564,6 +3628,9 @@ void space_exit (void)
    free(asteroid_types);
    asteroid_types = NULL;
    asteroid_ntypes = 0;
+
+   /* Free the gatherable stack. */
+   gatherable_free();
 
    /* Free landing lua. */
    if (landing_env != LUA_NOREF)
@@ -4140,6 +4207,73 @@ int space_isInField ( Vector2d *p )
    }
 
    return istotin;
+}
+
+
+/**
+ * @brief Returns the asteroid type corresponding to an ID
+ *
+ *    @param ID ID of the type.
+ *    @return AsteroidType object.
+ */
+AsteroidType *space_getType ( int ID )
+{
+   return &asteroid_types[ ID ];
+}
+
+
+/**
+ * @brief Hits an asteroid.
+ *
+ *    @param a hitten asteroid
+ */
+void asteroid_hit( Asteroid *a )
+{
+   a->appearing = 3;
+   a->timer = 0.;
+}
+
+
+/**
+ * @brief Makes an asteroid explode.
+ *
+ *    @param a asteroid to make explode
+ */
+static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
+{
+   int i, j, nb;
+   Damage dmg;
+   AsteroidType *at;
+   Commodity *com;
+   Vector2d pos, vel;
+
+   /* Manage the explosion */
+   dmg.type          = dtype_get("explosion_splash");
+   dmg.damage        = 100.;
+   dmg.penetration   = 1.; /* Full penetration. */
+   dmg.disable       = 0.;
+   expl_explode( a->pos.x, a->pos.y, a->vel.x, a->vel.y,
+                 50., &dmg, NULL, EXPL_MODE_SHIP );
+
+   /* Release commodity */
+   at = &asteroid_types[a->type];
+
+   for (i=0; i < at->nmaterial; i++) {
+      nb = RNG(0,at->quantity[i]);
+      com = at->material[i];
+      for (j=0; j < nb; j++) {
+         pos = a->pos;
+         vel = a->vel;
+         pos.x += (RNGF()*30.-15.);
+         pos.y += (RNGF()*30.-15.);
+         vel.x += (RNGF()*20.-10.);
+         vel.y += (RNGF()*20.-10.);
+         gatherable_init( com, pos, vel );
+      }
+   }
+
+   /* Make it respawn elsewhere */
+   asteroid_init( a, field );
 }
 
 

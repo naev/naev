@@ -61,6 +61,11 @@ extern StarSystem *systems_stack; /**< Star system stack. */
 extern int systems_nstack; /**< Number of star systems. */
 
 
+/* gatherables stack */
+static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
+static int gatherable_nstack       = 0; /**< Number of gatherables in the stack. */
+
+
 /*
  * Nodal analysis simulation for dynamic economies.
  */
@@ -179,6 +184,8 @@ static void commodity_freeOne( Commodity* com )
       free(com->description);
    if (com->gfx_store)
       gl_freeTexture(com->gfx_store);
+   if (com->gfx_space)
+      gl_freeTexture(com->gfx_space);
 
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
@@ -251,6 +258,8 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
    }
 
+   temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.png", 0 );
+
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
    MELEMENT(temp->description==NULL,"description");
@@ -297,6 +306,110 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
 
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
+   }
+}
+
+
+/**
+ * @brief Initializes a gatherable object
+ *
+ *    @param com Type of commodity.
+ *    @param pos Position.
+ *    @param vel Velocity.
+ */
+void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel )
+{
+   gatherable_stack = realloc(gatherable_stack,
+                              sizeof(Gatherable)*(++gatherable_nstack));
+
+   gatherable_stack[gatherable_nstack-1].type = com;
+   gatherable_stack[gatherable_nstack-1].pos = pos;
+   gatherable_stack[gatherable_nstack-1].vel = vel;
+   gatherable_stack[gatherable_nstack-1].timer = 0.;
+   gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+}
+
+
+/**
+ * @brief Updates all gatherable objects
+ *
+ *    @param dt Elapsed time.
+ */
+void gatherable_update( double dt )
+{
+   int i;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gatherable_stack[i].timer += dt;
+      gatherable_stack[i].pos.x += dt*gatherable_stack[i].vel.x;
+      gatherable_stack[i].pos.y += dt*gatherable_stack[i].vel.y;
+
+      /* Remove the gatherable */
+      if (gatherable_stack[i].timer > gatherable_stack[i].lifeleng) {
+         gatherable_nstack--;
+         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                 sizeof(Gatherable)*(gatherable_nstack-i) );
+         gatherable_stack = realloc(gatherable_stack,
+                                    sizeof(Gatherable) * gatherable_nstack);
+         i--;
+      }
+   }
+}
+
+
+/**
+ * @brief Frees all the gatherables
+ */
+void gatherable_free( void )
+{
+   free(gatherable_stack);
+   gatherable_stack = NULL;
+   gatherable_nstack = 0;
+}
+
+
+/**
+ * @brief Renders all the gatherables
+ */
+void gatherable_render( void )
+{
+   int i;
+   Gatherable *gat;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+      gl_blitSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
+   }
+}
+
+
+/**
+ * @brief See if the pilot can gather anything
+ *
+ *    @param pilot ID of the pilot
+ */
+void gatherable_gather( int pilot )
+{
+   int i;
+   Gatherable *gat;
+   Pilot* p;
+
+   p = pilot_get( pilot );
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+
+      if ( vect_dist( &p->solid->pos, &gat->pos ) < 10. ) {
+         /* Remove the object from space. */
+         gatherable_nstack--;
+         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                 sizeof(Gatherable)*(gatherable_nstack-i) );
+         gatherable_stack = realloc(gatherable_stack,
+                                    sizeof(Gatherable) * gatherable_nstack);
+
+         /* Add cargo to pilot. */
+         //pilot_cargoAdd( p, gat->type, RNG(1,10), 0 );
+      }
    }
 }
 

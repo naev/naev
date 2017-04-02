@@ -10,5 +10,9 @@
   <gfx>asteroid-D11</gfx>
   <gfx>asteroid-D12</gfx>
   <gfx>asteroid-D13</gfx>
+  <commodity>
+   <name>Ore</name>
+   <quantity>5</quantity>
+  </commodity>
  </asteroid>
 </Asteroid_types>

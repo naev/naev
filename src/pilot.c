@@ -2046,6 +2046,10 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
+
+   /* See if there is commodities to gather */
+   gatherable_gather( pilot->id );
+
 }
 
 /**
