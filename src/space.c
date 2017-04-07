@@ -1499,9 +1499,11 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    mod = RNGF() * 20;
    vect_pset( &ast->vel, mod, theta );
 
+   /* randomly init the type of asteroid */
+   i = RNG(0,field->ntype-1);
+   ast->type = field->type[i];
    /* randomly init the gfx ID */
-   at = &asteroid_types[0];
-   ast->type = 0;
+   at = &asteroid_types[ast->type];
    ast->gfxID = RNG(0,at->ngfx-1);
 
    /* Grow effect stuff */
@@ -2827,6 +2829,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    AsteroidSubset *sub, *newsub;
    xmlNodePtr cur, pcur;
    double x, y, pro, prob;
+   char *name;
 
    /* Allocate more space. */
    sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
@@ -2838,12 +2841,30 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->ncorners = 0;
    a->corners  = NULL;
    a->aera     = 0.;
+   a->ntype    = 0;
+   a->type     = NULL;
    vect_cset( &a->pos, 0., 0. );
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
       xmlr_float( cur,"density", a->density );
+
+      /* Handle types of asteroids. */
+      if (xml_isNode(cur,"type")) {
+         a->ntype++;
+         if (a->type==NULL)
+            a->type = malloc( sizeof(int) );
+         else
+            a->type = realloc( a->type, (a->ntype)*sizeof(int) );
+
+         name = xml_get(cur);
+         /* Find the ID */
+         for (i=0; i<asteroid_ntypes; i++) {
+            if ( (strcmp(asteroid_types[i].ID,name)==0) )
+               a->type[a->ntype-1] = i;
+         }
+      }
 
       /* Handle corners. */
       if (xml_isNode(cur,"corner")) {
@@ -2868,6 +2889,13 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    if (a->ncorners < 3)
        WARN("asteroid field in %d has less than 3 corners.", sys->name);
+
+   /* By default, take the first in the list. */
+   if (a->type == NULL) {
+       a->type = malloc( sizeof(int) );
+       a->ntype = 1;
+       a->type[0] = 0;
+   }
 
    /* Normalize the center */
    a->pos.x /= a->ncorners;
@@ -3007,7 +3035,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       }
       sub->aera /= 2;
    }
-
    return 0;
 }
 
@@ -3060,13 +3087,13 @@ int space_load (void)
    if (ret < 0)
       return ret;
 
-   /* Load systems. */
-   ret = systems_load();
+   /* Load asteroid types. */
+   ret = asteroidTypes_load();
    if (ret < 0)
       return ret;
 
-   /* Load asteroid types. */
-   ret = asteroidTypes_load();
+   /* Load systems. */
+   ret = systems_load();
    if (ret < 0)
       return ret;
 
@@ -3606,6 +3633,7 @@ void space_exit (void)
          free(ast->asteroids);
          free(ast->debris);
          free(ast->subsets);
+         free(ast->type);
       }
       free(sys->asteroids);
 
@@ -3618,9 +3646,9 @@ void space_exit (void)
    /* Free the asteroid types. */
    for (i=0; i < asteroid_ntypes; i++) {
       at = &asteroid_types[i];
-      free(at[i].ID);
-      free(at->quantity);
+      free(at->ID);
       free(at->material);
+      free(at->quantity);
       for (j=0; j<at->ngfx; j++) {
          gl_freeTexture(at->gfxs[j]);
       }

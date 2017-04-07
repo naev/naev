@@ -32,6 +32,7 @@
 #include "log.h"
 #include "spfx.h"
 #include "pilot.h"
+#include "player.h"
 #include "rng.h"
 #include "space.h"
 #include "ntime.h"
@@ -243,6 +244,9 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      if (xml_isNode(node,"gfx_space"))
+         temp->gfx_space = xml_parseTexture( node,
+               COMMODITY_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
       if (xml_isNode(node,"gfx_store")) {
          temp->gfx_store = xml_parseTexture( node,
                COMMODITY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -253,12 +257,16 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
    } while (xml_nextNode(node));
-   if ((temp->gfx_store == NULL) && (temp->price>0)) {
-      WARN("No <gfx_store> node found, using default texture for commodity \"%s\"", temp->name);
-      temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+   if ((temp->price>0)) {
+      if (temp->gfx_store == NULL) {
+         WARN("No <gfx_store> node found, using default texture for commodity \"%s\"", temp->name);
+         temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+      }
+      if (temp->gfx_space == NULL)
+         temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.png", 0 );
    }
 
-   temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.png", 0 );
+   
 
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
@@ -390,7 +398,7 @@ void gatherable_render( void )
  */
 void gatherable_gather( int pilot )
 {
-   int i;
+   int i, q;
    Gatherable *gat;
    Pilot* p;
 
@@ -399,16 +407,22 @@ void gatherable_gather( int pilot )
    for (i=0; i < gatherable_nstack; i++) {
       gat = &gatherable_stack[i];
 
-      if ( vect_dist( &p->solid->pos, &gat->pos ) < 10. ) {
-         /* Remove the object from space. */
-         gatherable_nstack--;
-         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
-                 sizeof(Gatherable)*(gatherable_nstack-i) );
-         gatherable_stack = realloc(gatherable_stack,
-                                    sizeof(Gatherable) * gatherable_nstack);
-
+      if ( .1*vect_dist( &p->solid->pos, &gat->pos ) +
+           .03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
          /* Add cargo to pilot. */
-         //pilot_cargoAdd( p, gat->type, RNG(1,10), 0 );
+         q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
+
+         if ( q>0 ) {
+            if (pilot_isPlayer(p))
+               player_message( "%i tons gathered", q );
+
+            /* Remove the object from space. */
+            gatherable_nstack--;
+            memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                    sizeof(Gatherable)*(gatherable_nstack-i) );
+            gatherable_stack = realloc(gatherable_stack,
+                                       sizeof(Gatherable) * gatherable_nstack);
+         }
       }
    }
 }

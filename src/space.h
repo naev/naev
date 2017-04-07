@@ -234,6 +234,8 @@ typedef struct AsteroidAnchor_ {
    double aera; /**< Field's aera. */
    AsteroidSubset *subsets; /**< Convex subsets. */
    int nsubsets; /**< Number of convex subsets. */
+   int *type; /**< Types of asteroids. */
+   int ntype; /**< Number of types. */
 } AsteroidAnchor;
 
 
