@@ -26,7 +26,7 @@
 #include "nlua_player.h"
 #include "nlua_tk.h"
 #include "nlua_faction.h"
-#include "nlua_space.h"
+#include "nlua_system.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
 #include "nlua_music.h"
@@ -63,8 +63,6 @@
 /*
  * prototypes
  */
-/* static */
-static void misn_setEnv( lua_State *L, Mission *misn );
 
 
 /*
@@ -120,18 +118,18 @@ static const luaL_reg misn_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int misn_loadLibs( lua_State *L )
+int misn_loadLibs( nlua_env env )
 {
-   nlua_loadStandard(L,0);
-   nlua_loadMisn(L);
-   nlua_loadTk(L);
-   nlua_loadHook(L);
-   nlua_loadMusic(L,0);
-   nlua_loadTex(L,0);
-   nlua_loadBackground(L,1);
-   nlua_loadCamera(L,0);
+   nlua_loadStandard(env);
+   nlua_loadMisn(env);
+   nlua_loadHook(env);
+   nlua_loadCamera(env);
+   nlua_loadTex(env);
+   nlua_loadBackground(env);
+   nlua_loadMusic(env);
+   nlua_loadTk(env);
    if (player_isTut())
-      nlua_loadTut(L);
+      nlua_loadTut(env);
    return 0;
 }
 /*
@@ -141,9 +139,9 @@ int misn_loadLibs( lua_State *L )
  * @brief Loads the mission Lua library.
  *    @param L Lua state.
  */
-int nlua_loadMisn( lua_State *L )
+int nlua_loadMisn( nlua_env env )
 {
-   luaL_register(L, "misn", misn_methods);
+   nlua_register(env, "misn", misn_methods, 0);
    return 0;
 }
 
@@ -158,13 +156,16 @@ int nlua_loadMisn( lua_State *L )
  */
 int misn_tryRun( Mission *misn, const char *func )
 {
+   int ret;
+
    /* Get the function to run. */
    misn_runStart( misn, func );
-   if (lua_isnil( misn->L, -1 )) {
-      lua_pop(misn->L,1);
+   if (lua_isnil( naevL, -1 )) {
+      lua_pop(naevL,1);
       return 0;
    }
-   return misn_runFunc( misn, func, 0 );
+   ret = misn_runFunc( misn, func, 0 );
+   return ret;
 }
 
 
@@ -178,30 +179,25 @@ int misn_tryRun( Mission *misn, const char *func )
  */
 int misn_run( Mission *misn, const char *func )
 {
+   int ret;
+
    /* Run the function. */
    misn_runStart( misn, func );
-   return misn_runFunc( misn, func, 0 );
-}
-
-
-/**
- * @brief Sets the mission environment.
- */
-static void misn_setEnv( lua_State *L, Mission *misn )
-{
-   lua_pushlightuserdata( L, misn );
-   lua_setglobal( L, "__misn" );
+   ret = misn_runFunc( misn, func, 0 );
+   return ret;
 }
 
 
 /**
  * @brief Gets the mission that's being currently run in Lua.
+ *
+ * This should ONLY be called below an nlua_pcall, so __NLUA_CURENV is set
  */
 Mission* misn_getFromLua( lua_State *L )
 {
    Mission *misn;
 
-   lua_getglobal( L, "__misn" );
+   nlua_getenv(__NLUA_CURENV, "__misn");
    misn = (Mission*) lua_touserdata( L, -1 );
    lua_pop( L, 1 );
 
@@ -212,23 +208,13 @@ Mission* misn_getFromLua( lua_State *L )
 /**
  * @brief Sets up the mission to run misn_runFunc.
  */
-lua_State *misn_runStart( Mission *misn, const char *func )
+void misn_runStart( Mission *misn, const char *func )
 {
-   lua_State *L;
-
-   L = misn->L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-
-   /* Set environment. */
-   misn_setEnv( L, misn );
+   lua_pushlightuserdata( naevL, misn );
+   nlua_setenv( misn->env, "__misn" );
 
    /* Set the Lua state. */
-   lua_getglobal( L, func );
-
-   return L;
+   nlua_getenv( misn->env, func );
 }
 
 
@@ -242,25 +228,22 @@ lua_State *misn_runStart( Mission *misn, const char *func )
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
-   int i, ret, errf;
+   int i, ret;
    const char* err;
-   lua_State *L;
    int misn_delete;
    Mission *cur_mission;
+   nlua_env env;
 
-   /* For comfort. */
-   L = misn->L;
+   env = misn->env;
+   ret = nlua_pcall(env, nargs, 0);
 
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
+   /* The mission can change if accepted. */
+   nlua_getenv(env, "__misn");
+   cur_mission = (Mission*) lua_touserdata(naevL, -1);
+   lua_pop(naevL, 1);
 
-   ret = lua_pcall(L, nargs, 0, errf);
-   cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
@@ -268,16 +251,13 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
       }
       else
          ret = 1;
-      lua_pop(L,1);
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif /* DEBUGGING */
 
    /* Get delete. */
-   lua_getglobal(L,"__misn_delete");
-   misn_delete = lua_toboolean(L,-1);
-   lua_pop(L,1);
+   nlua_getenv(env, "__misn_delete");
+   misn_delete = lua_toboolean(naevL,-1);
+   lua_pop(naevL,1);
 
    /* mission is finished */
    if (misn_delete) {
@@ -627,7 +607,7 @@ static int misn_accept( lua_State *L )
 
       /* Need to change pointer. */
       lua_pushlightuserdata(L,cur_mission);
-      lua_setglobal(L,"__misn");
+      nlua_setenv(cur_mission->env, "__misn");
    }
 
    lua_pushboolean(L,!ret); /* we'll convert C style return to Lua */
@@ -656,9 +636,10 @@ static int misn_finish( lua_State *L )
       return 0;
    }
 
-   lua_pushboolean( L, 1 );
-   lua_setglobal( L, "__misn_delete" );
    cur_mission = misn_getFromLua(L);
+
+   lua_pushboolean( L, 1 );
+   nlua_setenv(cur_mission->env, "__misn_delete");
 
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
       player_missionFinished( mission_getID( cur_mission->data->name ) );

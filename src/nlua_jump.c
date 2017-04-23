@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_vec2.h"
 #include "nlua_system.h"
@@ -49,45 +48,17 @@ static const luaL_reg jump_methods[] = {
    { "setKnown", jumpL_setKnown },
    {0,0}
 }; /**< Jump metatable methods. */
-static const luaL_reg jump_cond_methods[] = {
-   { "get", jumpL_get },
-   { "__eq", jumpL_eq },
-   { "pos", jumpL_position },
-   { "angle", jumpL_angle },
-   { "hidden", jumpL_hidden },
-   { "exitonly", jumpL_exitonly },
-   { "system", jumpL_system },
-   { "dest", jumpL_dest },
-   { "known", jumpL_isKnown },
-   {0,0}
-}; /**< Read only jump metatable methods. */
 
 
 /**
  * @brief Loads the jump library.
  *
- *    @param L State to load jump library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load jump library into.
  *    @return 0 on success.
  */
-int nlua_loadJump( lua_State *L, int readonly )
+int nlua_loadJump( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, JUMP_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, jump_cond_methods);
-   else
-      luaL_register(L, NULL, jump_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, JUMP_METATABLE);
-
+   nlua_register(env, JUMP_METATABLE, jump_methods, 1);
    return 0; /* No error */
 }
 
@@ -256,10 +227,11 @@ int lua_isjump( lua_State *L, int ind )
  *    - system : Gets the jump by system. <br/>
  *
  * @usage j,r  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard and Goddard to Ogat jumps.
- *    @luatparam string|System param See description.
- *    @luareturn Jump Returns the jump.
- *    @luareturn Jump Returns the inverse.
- * @luafunc get( param )
+ *    @luatparam string|System src See description.
+ *    @luatparam string|System dest See description.
+ *    @luatreturn Jump Returns the jump.
+ *    @luatreturn Jump Returns the inverse.
+ * @luafunc get( src, dest )
  */
 static int jumpL_get( lua_State *L )
 {
@@ -459,6 +431,8 @@ static int jumpL_setKnown( lua_State *L )
 {
    int b, offset, changed;
    JumpPoint *jp;
+
+   NLUA_CHECKRW(L);
 
    jp = luaL_validjumpSystem(L, 1, &offset, NULL);
 

@@ -41,7 +41,6 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
-#include "array.h"
 #include "camera.h"
 #include "damagetype.h"
 #include "pause.h"
@@ -93,6 +92,14 @@ Pilot** pilot_getAll( int *n )
 
 
 /**
+ * @brief Compare id (for use with bsearch)
+ */
+static int compid(const void *id, const void *p) {
+    return *((const unsigned int*)id) - (*((Pilot**)p))->id;
+}
+
+
+/**
  * @brief Gets the pilot's position in the stack.
  *
  *    @param id ID of the pilot to get.
@@ -101,18 +108,11 @@ Pilot** pilot_getAll( int *n )
 static int pilot_getStackPos( const unsigned int id )
 {
    /* binary search */
-   int l,m,h;
-   l = 0;
-   h = pilot_nstack-1;
-   while (l <= h) {
-      m = (l+h) >> 1; /* for impossible overflow returning neg value */
-      if (pilot_stack[m]->id > id) h = m-1;
-      else if (pilot_stack[m]->id < id) l = m+1;
-      else return m;
-   }
-
-   /* Not found. */
-   return -1;
+   Pilot **pp = bsearch(&id, pilot_stack, pilot_nstack, sizeof(Pilot*), compid);
+   if (pp == NULL)
+      return -1;
+   else
+      return pp - pilot_stack;
 }
 
 
@@ -419,9 +419,8 @@ unsigned int pilot_getBoss( const Pilot* p )
 
    t = 0;
 
-   /*Hack : the player is used as a reference (for initialization issues)*/
-   ppower = pilot_reldps(  p, pilot_stack[PLAYER_ID] )
-            * pilot_relhp(  p, pilot_stack[PLAYER_ID] );
+   /* Initialized to 0.25 which would mean equivalent power. */
+   ppower = 0.5*0.5;
 
    for (i=0; i<pilot_nstack; i++) {
 
@@ -458,10 +457,8 @@ unsigned int pilot_getBoss( const Pilot* p )
       if (pilot_stack[i]->speed > p->speed)
          continue;
 
-      curpower = pilot_reldps(  pilot_stack[i], pilot_stack[PLAYER_ID] )
-                 * pilot_relhp(  pilot_stack[i], pilot_stack[PLAYER_ID] );
-
-      /*Should not be weaker than the current pilot*/
+      /* Should not be weaker than the current pilot*/
+      curpower = pilot_reldps(  pilot_stack[i], p ) * pilot_relhp(  pilot_stack[i], p );
       if (ppower >= curpower )
          continue;
 
@@ -1811,7 +1808,7 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot->ptimer = 0.;
          }
          else
-            pilot_setFlag(pilot,PILOT_DELETE);
+            pilot_delete(pilot);
          return;
       }
    }
@@ -2058,6 +2055,15 @@ void pilot_update( Pilot* pilot, const double dt )
  */
 void pilot_delete( Pilot* p )
 {
+   Pilot *leader;
+
+   /* Remove from parent's escort list */
+   if (p->parent != 0) {
+      leader = pilot_get(p->parent);
+      if (leader != NULL)
+         escort_rmList(leader, p->id);
+   }
+
    /* Set flag to mark for deletion. */
    pilot_setFlag(p, PILOT_DELETE);
 }
@@ -2373,7 +2379,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet )
+      const PilotFlags flags )
 {
    int i, p;
 
@@ -2394,9 +2400,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* faction */
    pilot->faction = faction;
-
-   /* System fleet. */
-   pilot->systemFleet = systemFleet;
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel, SOLID_UPDATE_RK4);
@@ -2505,6 +2508,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->ptimer = PILOT_TAKEOFF_DELAY;
    }
 
+   /* Create empty table for messages. */
+   lua_newtable(naevL);
+   pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
+
    /* AI */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
@@ -2522,7 +2529,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet )
+      const PilotFlags flags )
 {
    Pilot *dyn;
 
@@ -2547,7 +2554,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    pilot_nstack++; /* there's a new pilot */
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, systemFleet );
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
    return dyn->id;
 }
@@ -2573,7 +2580,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       return 0;
    }
    pilot_setFlagRaw( flags, PILOT_EMPTY );
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, -1 );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags );
    return dyn;
 }
 
@@ -2711,6 +2718,9 @@ void pilot_free( Pilot* p )
    /* Free comm message. */
    if (p->comm_msg != NULL)
       free(p->comm_msg);
+
+   /* Free messages. */
+   luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
@@ -2965,22 +2975,6 @@ void pilot_clearTimers( Pilot *pilot )
 
 
 /**
- * @brief Updates the systemFleet of all pilots.
- *
- * @param index Index number that was deleted.
- */
-void pilots_updateSystemFleet( const int deletedIndex )
-{
-   int i;
-
-   for(i = 0; i < pilot_nstack; i++)
-      if(pilot_stack[i]->systemFleet >= deletedIndex)
-         pilot_stack[i]->systemFleet--;
-
-   return;
-}
-
-/**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target
  *
  *    @param p the pilot whose mass we will compare
@@ -2994,13 +2988,15 @@ double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- *    @param p the pilot whose dps we will compare
- *    @return A number from 0 to 1 mapping the relative damage output
+ *    @param cur_pilot Reference pilot to compare against.
+ *    @param p The pilot whose dps we will compare
+ *    @return The relative dps of p with respect to cur_pilot (0.5 is equal, 1 is p is infinitely stronger, 0 is t is infinitely stronger).
  */
 double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 {
    int i;
-   int DPSaccum_target = 0, DPSaccum_pilot = 0;
+   double DPSaccum_target = 0.;
+   double DPSaccum_pilot = 0.;
    double delay_cache, damage_cache;
    Outfit *o;
    const Damage *dmg;
@@ -3033,24 +3029,25 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
          DPSaccum_pilot += ( damage_cache/delay_cache );
    }
 
-   if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))
-      return (1 - 1 / (1 + ((double)DPSaccum_pilot / (double)DPSaccum_target)) );
-   else if (DPSaccum_pilot > 0)
+   if ((DPSaccum_target > 1e-6) && (DPSaccum_pilot > 1e-6))
+      return DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);
+   else if (DPSaccum_pilot > 0.)
       return 1;
-   else
-      return 0;
+   return 0;
 }
 
 /**
  * @brief Gets the relative hp(combined shields and armour) between the current pilot and the specified target
  *
+ *    @param cur_pilot Reference pilot.
  *    @param p the pilot whose shields/armour we will compare
- *    @return A number from 0 to 1 mapping the relative HPs
+ *    @return A number from 0 to 1 mapping the relative HPs (0.5 is equal, 1 is reference pilot is infinity, 0 is current pilot is infinity)
  */
 double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
 {
-   return (1 - 1 / (1 + ((double)(cur_pilot -> armour_max + cur_pilot -> shield_max) /
-         (double)(p -> armour_max + p -> shield_max))));
+   double c_hp = cur_pilot -> armour_max + cur_pilot -> shield_max;
+   double p_hp = p -> armour_max + p -> shield_max;
+   return c_hp / (p_hp + c_hp);
 }
 
 
@@ -3077,5 +3074,33 @@ credits_t pilot_worth( const Pilot *p )
 }
 
 
+/**
+ * @brief Sends a message
+ *
+ * @param p Pilot to send message
+ * @param reciever Pilot to recieve it
+ * @param idx Index of data on lua stack or 0
+ */
+void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int idx)
+{
+   if (idx != 0)
+      lua_pushvalue(naevL, idx); /* data */
+   else
+      lua_pushnil(naevL); /* data */
 
+   lua_newtable(naevL); /* data, msg */
 
+   lua_pushpilot(naevL, p->id); /* data, msg, sender */
+   lua_rawseti(naevL, -2, 1); /* data, msg */
+
+   lua_pushstring(naevL, type); /* data, msg, type */
+   lua_rawseti(naevL, -2, 2); /* data, msg */
+
+   lua_pushvalue(naevL, -2); /* data, msg, data */
+   lua_rawseti(naevL, -2, 3); /* data, msg */
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, reciever->messages); /* data, msg, messages */
+   lua_pushvalue(naevL, -2); /* data, msg, messages, msg */
+   lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
+   lua_pop(naevL, 3); /*  */
+}

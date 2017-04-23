@@ -74,7 +74,7 @@ typedef struct Weapon_ {
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
-   const PilotOutfitSlot *mount; /**< Used for beam weapons. */
+   PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
@@ -602,7 +602,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             w->timer -= dt;
             if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
                   w->mount->stimer < 0.)) {
-               pilot_stopBeam(p, (PilotOutfitSlot*) w->mount);
+               p = pilot_get(w->parent);
+               if (p != NULL)
+                  pilot_stopBeam(p, w->mount);
                weapon_destroy(w,layer);
                break;
             }
@@ -1538,7 +1540,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 unsigned int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target,
-      const PilotOutfitSlot *mount )
+      PilotOutfitSlot *mount )
 {
    WeaponLayer layer;
    Weapon *w;

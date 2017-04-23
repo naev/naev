@@ -591,7 +591,6 @@ static int npc_approach_giver( NPC_t *npc )
 int npc_approach( int i )
 {
    NPC_t *npc;
-   lua_State *L;
 
    /* Make sure in bounds. */
    if ((i<0) || (i>=array_size(npc_array)))
@@ -606,14 +605,14 @@ int npc_approach( int i )
          return npc_approach_giver( npc );
 
       case NPC_TYPE_MISSION:
-         L = misn_runStart( npc->u.m.misn, npc->u.m.func );
-         lua_pushnumber( L, npc->id );
+         misn_runStart( npc->u.m.misn, npc->u.m.func );
+         lua_pushnumber( naevL, npc->id );
          misn_runFunc( npc->u.m.misn, npc->u.m.func, 1 );
          break;
 
       case NPC_TYPE_EVENT:
-         L = event_runStart( npc->u.e.id, npc->u.e.func );
-         lua_pushnumber( L, npc->id );
+         event_runStart( npc->u.e.id, npc->u.e.func );
+         lua_pushnumber( naevL, npc->id );
          event_runFunc( npc->u.e.id, npc->u.e.func, 1 );
          break;
 

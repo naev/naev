@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "gui.h"
@@ -62,16 +61,13 @@ static const luaL_reg guiL_methods[] = {
 /**
  * @brief Loads the GUI library.
  *
- *    @param L State to load GUI library into.
+ *    @param env Environment to load GUI library into.
  *    @return 0 on success.
  */
-int nlua_loadGUI( lua_State *L, int readonly )
+int nlua_loadGUI( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
    /* Register the values */
-   luaL_register(L, "gui", guiL_methods);
+   nlua_register(env, "gui", guiL_methods, 0);
 
    return 0;
 }
@@ -110,6 +106,8 @@ static int guiL_viewport( lua_State *L )
 {
    double x,y, w,h;
 
+   NLUA_CHECKRW(L);
+
    /* Parameters. */
    x = luaL_checknumber(L,1);
    y = luaL_checknumber(L,2);
@@ -134,6 +132,7 @@ static int guiL_viewport( lua_State *L )
 static int guiL_fpsPos( lua_State *L )
 {
    double x,y;
+   NLUA_CHECKRW(L);
    x = luaL_checknumber(L,1);
    y = luaL_checknumber(L,2);
    fps_setPos( x, y );
@@ -153,6 +152,8 @@ static int guiL_fpsPos( lua_State *L )
 static int guiL_osdInit( lua_State *L )
 {
    int x,y, w,h;
+
+   NLUA_CHECKRW(L);
 
    /* Parameters. */
    x = luaL_checkinteger(L,1);
@@ -178,6 +179,8 @@ static int guiL_mesgInit( lua_State *L )
 {
    int w, x, y;
 
+   NLUA_CHECKRW(L);
+
    /* Parse parameters. */
    w = luaL_checkinteger( L, 1 );
    x = luaL_checkinteger( L, 2 );
@@ -200,6 +203,8 @@ static int guiL_mesgInit( lua_State *L )
 static int guiL_omsgInit( lua_State *L )
 {
    double w, x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    w = luaL_checkinteger( L, 1 );
@@ -225,6 +230,8 @@ static int guiL_omsgInit( lua_State *L )
 static int guiL_radarInit( lua_State *L )
 {
    int id, circle, width, height;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    circle = lua_toboolean( L, 1 );
@@ -254,6 +261,8 @@ static int guiL_radarRender( lua_State *L )
 {
    double x, y;
 
+   NLUA_CHECKRW(L);
+
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
    y     = luaL_checknumber( L, 2 );
@@ -272,6 +281,7 @@ static int guiL_radarRender( lua_State *L )
  */
 static int guiL_targetPlanetGFX( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    gui_targetPlanetGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
@@ -285,6 +295,7 @@ static int guiL_targetPlanetGFX( lua_State *L )
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    gui_targetPilotGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
@@ -303,6 +314,7 @@ static int guiL_targetPilotGFX( lua_State *L )
 static int guiL_mouseClickEnable( lua_State *L )
 {
    int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -325,6 +337,7 @@ static int guiL_mouseClickEnable( lua_State *L )
 static int guiL_mouseMoveEnable( lua_State *L )
 {
    int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -354,6 +367,8 @@ static int guiL_menuInfo( lua_State *L )
 {
    const char *str;
    int window;
+
+   NLUA_CHECKRW(L);
 
    if (menu_open)
       return 0;
@@ -401,6 +416,7 @@ static int guiL_menuInfo( lua_State *L )
 static int guiL_menuSmall( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    if (menu_open)
       return 0;
    menu_small();

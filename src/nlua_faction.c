@@ -17,7 +17,6 @@
 #include <lauxlib.h>
 
 #include "log.h"
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "nlua_col.h"
@@ -65,47 +64,17 @@ static const luaL_reg faction_methods[] = {
    { "setKnown", factionL_setknown },
    {0,0}
 }; /**< Faction metatable methods. */
-static const luaL_reg faction_methods_cond[] = {
-   { "get", factionL_get },
-   { "__eq", factionL_eq },
-   { "__tostring", factionL_name },
-   { "name", factionL_name },
-   { "longname", factionL_longname },
-   { "areEnemies", factionL_areenemies },
-   { "areAllies", factionL_areallies },
-   { "playerStanding", factionL_playerstanding },
-   { "enemies", factionL_enemies },
-   { "allies", factionL_allies },
-   { "logoSmall", factionL_logoSmall },
-   { "logoTiny", factionL_logoTiny },
-   { "colour", factionL_colour },
-   { "known", factionL_isknown },
-   {0,0}
-}; /**< Factions read only metatable methods. */
 
 
 /**
  * @brief Loads the faction library.
  *
- *    @param L State to load faction library into.
- *    @param readonly Load as read only?
+ *    @param env Environment to load faction library into.
  *    @return 0 on success.
  */
-int nlua_loadFaction( lua_State *L, int readonly )
+int nlua_loadFaction( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, FACTION_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, (readonly) ? faction_methods_cond : faction_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, FACTION_METATABLE);
-
+   nlua_register(env, FACTION_METATABLE, faction_methods, 1);
    return 0; /* No error */
 }
 
@@ -337,6 +306,8 @@ static int factionL_modplayer( lua_State *L )
    int f;
    double n;
 
+   NLUA_CHECKRW(L);
+
    f = luaL_validfaction(L,1);
    n = luaL_checknumber(L,2);
    faction_modPlayer( f, n, "script" );
@@ -359,6 +330,8 @@ static int factionL_modplayersingle( lua_State *L )
 {
    int f;
    double n;
+
+   NLUA_CHECKRW(L);
 
    f = luaL_validfaction(L,1);
    n = luaL_checknumber(L,2);
@@ -384,6 +357,8 @@ static int factionL_modplayerraw( lua_State *L )
    int f;
    double n;
 
+   NLUA_CHECKRW(L);
+
    f = luaL_validfaction(L,1);
    n = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, n );
@@ -404,6 +379,8 @@ static int factionL_setplayerstanding( lua_State *L )
 {
    int f;
    double n;
+
+   NLUA_CHECKRW(L);
 
    f = luaL_validfaction( L, 1 );
    n = luaL_checknumber( L, 2 );
@@ -580,6 +557,8 @@ static int factionL_isknown( lua_State *L )
 static int factionL_setknown( lua_State *L )
 {
    int b, fac;
+
+   NLUA_CHECKRW(L);
 
    fac = luaL_validfaction(L, 1);
    b   = lua_toboolean(L, 2);

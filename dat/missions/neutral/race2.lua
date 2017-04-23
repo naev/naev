@@ -155,9 +155,9 @@ function takeoff()
    else
       shiptype = "Koala"
    end
-   checkpoint[1] = pilot.addRaw(shiptype, "stationary", location1, "Trader")[1]
-   checkpoint[2] = pilot.addRaw(shiptype, "stationary", location2, "Trader")[1]
-   checkpoint[3] = pilot.addRaw(shiptype, "stationary", location3, "Trader")[1]
+   checkpoint[1] = pilot.addRaw(shiptype, "stationary", location1, "Trader")
+   checkpoint[2] = pilot.addRaw(shiptype, "stationary", location2, "Trader")
+   checkpoint[3] = pilot.addRaw(shiptype, "stationary", location3, "Trader")
    for i, j in ipairs(checkpoint) do
       j:rename(string.format("Checkpoint %s", i))
       j:control()
@@ -166,9 +166,9 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")[1]
-   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")[1]
-   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")[1]
+   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")
+   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")
+   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
       racers[2]:addOutfit("Steering Thrusters")

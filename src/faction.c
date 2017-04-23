@@ -72,13 +72,13 @@ typedef struct Faction_ {
    double player; /**< Standing with player - from -100 to 100 */
 
    /* Scheduler. */
-   lua_State *sched_state; /**< Lua scheduler script. */
+   nlua_env sched_env; /**< Lua scheduler script. */
 
    /* Behaviour. */
-   lua_State *state; /**< Faction specific state. */
+   nlua_env env; /**< Faction specific environment. */
 
    /* Equipping. */
-   lua_State *equip_state; /**< Faction equipper state. */
+   nlua_env equip_env; /**< Faction equipper enviornment. */
 
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
@@ -577,28 +577,28 @@ void faction_rmAlly( int f, int o)
 /**
  * @brief Gets the state associated to the faction scheduler.
  */
-lua_State *faction_getScheduler( int f )
+nlua_env faction_getScheduler( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
-      return NULL;
+      return LUA_NOREF;
    }
 
-   return faction_stack[f].sched_state;
+   return faction_stack[f].sched_env;
 }
 
 
 /**
  * @brief Gets the equipper state associated to the faction scheduler.
  */
-lua_State *faction_getEquipper( int f )
+nlua_env faction_getEquipper( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
-      return NULL;
+      return LUA_NOREF;
    }
 
-   return faction_stack[f].equip_state;
+   return faction_stack[f].equip_env;
 }
 
 
@@ -622,8 +622,6 @@ static void faction_sanitizePlayer( Faction* faction )
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary )
 {
    Faction *faction;
-   lua_State *L;
-   int errf;
    double old, delta;
    HookParam hparam[3];
 
@@ -633,48 +631,33 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    if (faction_isFlag(faction, FACTION_STATIC))
       return;
 
-   L     = faction->state;
    old   = faction->player;
 
-   if (L == NULL)
+   if (faction->env == LUA_NOREF)
       faction->player += mod;
    else {
-#if DEBUGGING
-      lua_pushcfunction(L, nlua_errTrace);
-      errf = -6;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_hit( current, amount, source, secondary ) */
-      lua_getglobal(   L, "faction_hit" );
-      lua_pushnumber(  L, faction->player );
-      lua_pushnumber(  L, mod );
-      lua_pushstring(  L, source );
-      lua_pushboolean( L, secondary );
+      nlua_getenv( faction->env, "faction_hit" );
+      lua_pushnumber(  naevL, faction->player );
+      lua_pushnumber(  naevL, mod );
+      lua_pushstring(  naevL, source );
+      lua_pushboolean( naevL, secondary );
 
       /* Call function. */
-      if (lua_pcall( L, 4, 1, errf )) { /* An error occurred. */
-         WARN("Faction '%s': %s", faction->name, lua_tostring(L,-1));
-#if DEBUGGING
-         lua_pop( L, 2 );
-#else /* DEBUGGING */
-         lua_pop( L, 1 );
-#endif /* DEBUGGING */
+      if (nlua_pcall( faction->env, 4, 1 )) { /* An error occurred. */
+         WARN("Faction '%s': %s", faction->name, lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
          return;
       }
 
       /* Parse return. */
-      if (!lua_isnumber( L, -1 ))
+      if (!lua_isnumber( naevL, -1 ))
          WARN( "Lua script for faction '%s' did not return a number from 'faction_hit(...)'.", faction->name );
       else
-         faction->player = lua_tonumber( L, -1 );
-#if DEBUGGING
-      lua_pop( L, 2 );
-#else /* DEBUGGING */
-      lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         faction->player = lua_tonumber( naevL, -1 );
+      lua_pop( naevL, 1 );
    }
 
    /* Sanitize just in case. */
@@ -867,55 +850,38 @@ double faction_getPlayerDef( int f )
 int faction_isPlayerFriend( int f )
 {
    Faction *faction;
-   lua_State *L;
-   int errf;
    int r;
 
    faction = &faction_stack[f];
 
-   L = faction->state;
-   if ( L == NULL )
+   if ( faction->env == LUA_NOREF )
       return 0;
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( L, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_player_friend( standing ) */
-      lua_getglobal(  L, "faction_player_friend" );
-      lua_pushnumber( L, faction->player );
+      nlua_getenv( faction->env, "faction_player_friend" );
+      lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( lua_pcall( L, 1, 1, errf ) )
+      if ( nlua_pcall( faction->env, 1, 1 ) )
       {
          /* An error occurred. */
-         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
-#if DEBUGGING
-         lua_pop( L, 2 );
-#else /* DEBUGGING */
-         lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
          return 0;
       }
 
       /* Parse return. */
-      if ( !lua_isboolean( L, -1 ) )
+      if ( !lua_isboolean( naevL, -1 ) )
       {
          WARN( "Lua script for faction '%s' did not return a boolean from 'faction_player_friend(...)'.", faction->name );
          r = 0;
       }
       else
-         r = lua_toboolean( L, -1 );
-#if DEBUGGING
-      lua_pop( L, 2 );
-#else /* DEBUGGING */
-      lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         r = lua_toboolean( naevL, -1 );
+      lua_pop( naevL, 1 );
 
       return r;
    }
@@ -931,55 +897,38 @@ int faction_isPlayerFriend( int f )
 int faction_isPlayerEnemy( int f )
 {
    Faction *faction;
-   lua_State *L;
-   int errf;
    int r;
 
    faction = &faction_stack[f];
 
-   L = faction->state;
-   if ( L == NULL )
+   if ( faction->env == LUA_NOREF )
       return 0;
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( L, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_player_enemy( standing ) */
-      lua_getglobal(  L, "faction_player_enemy" );
-      lua_pushnumber( L, faction->player );
+      nlua_getenv( faction->env, "faction_player_enemy" );
+      lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( lua_pcall( L, 1, 1, errf ) )
+      if ( nlua_pcall( faction->env, 1, 1 ) )
       {
          /* An error occurred. */
-         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
-#if DEBUGGING
-         lua_pop( L, 2 );
-#else /* DEBUGGING */
-         lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
          return 0;
       }
 
       /* Parse return. */
-      if ( !lua_isboolean( L, -1 ) )
+      if ( !lua_isboolean( naevL, -1 ) )
       {
          WARN( "Lua script for faction '%s' did not return a boolean from 'faction_player_enemy(...)'.", faction->name );
          r = 0;
       }
       else
-         r = lua_toboolean( L, -1 );
-#if DEBUGGING
-      lua_pop( L, 2 );
-#else /* DEBUGGING */
-      lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         r = lua_toboolean( naevL, -1 );
+      lua_pop( naevL, 1 );
 
       return r;
    }
@@ -1030,55 +979,38 @@ char faction_getColourChar( int f )
 const char *faction_getStandingText( int f )
 {
    Faction *faction;
-   lua_State *L;
-   int errf;
    const char *r;
 
    faction = &faction_stack[f];
 
-   L = faction->state;
-   if ( L == NULL )
+   if ( faction->env == LUA_NOREF )
       return "???";
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( L, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
 
       /* Set up the function:
        * faction_standing_text( standing ) */
-      lua_getglobal(  L, "faction_standing_text" );
-      lua_pushnumber( L, faction->player );
+      nlua_getenv( faction->env, "faction_standing_text" );
+      lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( lua_pcall( L, 1, 1, errf ) )
+      if ( nlua_pcall( faction->env, 1, 1 ) )
       {
          /* An error occurred. */
-         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
-#if DEBUGGING
-         lua_pop( L, 2 );
-#else /* DEBUGGING */
-         lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
          return "???";
       }
 
       /* Parse return. */
-      if ( !lua_isstring( L, -1 ) )
+      if ( !lua_isstring( naevL, -1 ) )
       {
          WARN( "Lua script for faction '%s' did not return a string from 'faction_standing_text(...)'.", faction->name );
          r = "???";
       }
       else
-         r = lua_tostring( L, -1 );
-#if DEBUGGING
-      lua_pop( L, 2 );
-#else /* DEBUGGING */
-      lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         r = lua_tostring( naevL, -1 );
+      lua_pop( naevL, 1 );
 
       return r;
    }
@@ -1096,57 +1028,39 @@ const char *faction_getStandingText( int f )
 const char *faction_getStandingBroad( int f, int bribed, int override )
 {
    Faction *faction;
-   lua_State *L;
-   int errf;
    const char *r;
 
    faction = &faction_stack[f];
 
-   L = faction->state;
-   if ( L == NULL )
+   if ( faction->env == LUA_NOREF )
       return "???";
    else
    {
-#if DEBUGGING
-      lua_pushcfunction( L, nlua_errTrace );
-      errf = -3;
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
-
       /* Set up the function:
        * faction_standing_broad( standing, bribed, override ) */
-      lua_getglobal(  L, "faction_standing_broad" );
-      lua_pushnumber( L, faction->player );
-      lua_pushboolean( L, bribed );
-      lua_pushnumber( L, override );
+      nlua_getenv( faction->env, "faction_standing_broad" );
+      lua_pushnumber( naevL, faction->player );
+      lua_pushboolean( naevL, bribed );
+      lua_pushnumber( naevL, override );
 
       /* Call function. */
-      if ( lua_pcall( L, 3, 1, errf ) )
+      if ( nlua_pcall( faction->env, 3, 1 ) )
       {
          /* An error occurred. */
-         WARN( "Faction '%s': %s", faction->name, lua_tostring( L, -1 ) );
-#if DEBUGGING
-         lua_pop( L, 2 );
-#else /* DEBUGGING */
-         lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         WARN( "Faction '%s': %s", faction->name, lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
          return "???";
       }
 
       /* Parse return. */
-      if ( !lua_isstring( L, -1 ) )
+      if ( !lua_isstring( naevL, -1 ) )
       {
          WARN( "Lua script for faction '%s' did not return a string from 'faction_standing_broad(...)'.", faction->name );
          r = "???";
       }
       else
-         r = lua_tostring( L, -1 );
-#if DEBUGGING
-      lua_pop( L, 2 );
-#else /* DEBUGGING */
-      lua_pop( L, 1 );
-#endif /* DEBUGGING */
+         r = lua_tostring( naevL, -1 );
+      lua_pop( naevL, 1 );
 
       return r;
    }
@@ -1283,6 +1197,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
+   temp->equip_env = LUA_NOREF;
+   temp->env = LUA_NOREF;
+   temp->sched_env = LUA_NOREF;
 
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL)
@@ -1338,38 +1255,38 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "spawn")) {
-         if (temp->sched_state != NULL)
+         if (temp->sched_env != LUA_NOREF)
             WARN("Faction '%s' has duplicate 'spawn' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
-         temp->sched_state = nlua_newState();
-         nlua_loadStandard( temp->sched_state, 0 );
+         temp->sched_env = nlua_newEnv(1);
+         nlua_loadStandard( temp->sched_env);
          dat = ndata_read( buf, &ndat );
-         if (luaL_dobuffer(temp->sched_state, dat, ndat, buf) != 0) {
+         if (nlua_dobufenv(temp->sched_env, dat, ndat, buf) != 0) {
             WARN("Failed to run spawn script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
-                  buf, lua_tostring(temp->sched_state,-1));
-            lua_close( temp->sched_state );
-            temp->sched_state = NULL;
+                  buf, lua_tostring(naevL,-1));
+            nlua_freeEnv( temp->sched_env );
+            temp->sched_env = LUA_NOREF;
          }
          free(dat);
          continue;
       }
 
       if (xml_isNode(node, "standing")) {
-         if (temp->state != NULL)
+         if (temp->env != LUA_NOREF)
             WARN("Faction '%s' has duplicate 'standing' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
-         temp->state = nlua_newState();
-         nlua_loadStandard( temp->state, 0 );
+         temp->env = nlua_newEnv(1);
+         nlua_loadStandard( temp->env );
          dat = ndata_read( buf, &ndat );
-         if (luaL_dobuffer(temp->state, dat, ndat, buf) != 0) {
+         if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
             WARN("Failed to run standing script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
-                  buf, lua_tostring(temp->state,-1));
-            lua_close( temp->state );
-            temp->state = NULL;
+                  buf, lua_tostring(naevL,-1));
+            nlua_freeEnv( temp->env );
+            temp->env = LUA_NOREF;
          }
          free(dat);
          continue;
@@ -1381,19 +1298,19 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "equip")) {
-         if (temp->equip_state != NULL)
+         if (temp->equip_env != LUA_NOREF)
             WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
          nsnprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
-         temp->equip_state = nlua_newState();
-         nlua_loadStandard( temp->equip_state, 0 );
+         temp->equip_env = nlua_newEnv(1);
+         nlua_loadStandard( temp->equip_env );
          dat = ndata_read( buf, &ndat );
-         if (luaL_dobuffer(temp->equip_state, dat, ndat, buf) != 0) {
+         if (nlua_dobufenv(temp->equip_env, dat, ndat, buf) != 0) {
             WARN("Failed to run equip script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
-                  buf, lua_tostring(temp->equip_state,-1));
-            lua_close( temp->equip_state );
-            temp->equip_state = NULL;
+                  buf, lua_tostring(naevL, -1));
+            nlua_freeEnv( temp->equip_env );
+            temp->equip_env = LUA_NOREF;
          }
          free(dat);
          continue;
@@ -1428,7 +1345,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    if (player==0)
       DEBUG("Faction '%s' missing player tag.", temp->name);
-   if ((temp->state==NULL) && !faction_isFlag( temp, FACTION_STATIC ))
+   if ((temp->env==LUA_NOREF) && !faction_isFlag( temp, FACTION_STATIC ))
       WARN("Faction '%s' has no Lua and isn't static!", temp->name);
 
    return 0;
@@ -1539,6 +1456,9 @@ int factions_load (void)
    faction_stack = calloc( 1, sizeof(Faction) );
    faction_stack[0].name = strdup("Player");
    faction_stack[0].flags = FACTION_STATIC | FACTION_INVISIBLE;
+   faction_stack[0].equip_env = LUA_NOREF;
+   faction_stack[0].env = LUA_NOREF;
+   faction_stack[0].sched_env = LUA_NOREF;
    faction_nstack++;
 
    /* First pass - gets factions */
@@ -1637,12 +1557,12 @@ void factions_free (void)
          free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0)
          free(faction_stack[i].enemies);
-      if (faction_stack[i].sched_state != NULL)
-         lua_close( faction_stack[i].sched_state );
-      if (faction_stack[i].state != NULL)
-         lua_close( faction_stack[i].state );
-      if (faction_stack[i].equip_state != NULL)
-         lua_close( faction_stack[i].equip_state );
+      if (faction_stack[i].sched_env != LUA_NOREF)
+         nlua_freeEnv( faction_stack[i].sched_env );
+      if (faction_stack[i].env != LUA_NOREF)
+         nlua_freeEnv( faction_stack[i].env );
+      if (faction_stack[i].equip_env != LUA_NOREF)
+         nlua_freeEnv( faction_stack[i].equip_env );
    }
    free(faction_stack);
    faction_stack = NULL;

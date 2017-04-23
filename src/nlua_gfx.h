@@ -9,11 +9,13 @@
 
 #include <lua.h>
 
+#include "nlua.h"
+
 
 /*
  * Library loading
  */
-int nlua_loadGFX( lua_State *L, int readonly );
+int nlua_loadGFX( nlua_env env );
 
 
 #endif /* NLUA_GFX_H */

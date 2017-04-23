@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
 #include "nlua_time.h"
@@ -82,7 +81,7 @@ static const luaL_reg hook_methods[] = {
 /*
  * Prototypes.
  */
-static int hookL_setarg( lua_State *L, unsigned int hook, int ind );
+static int hookL_setarg( unsigned int hook, int ind );
 static unsigned int hook_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date );
 
 
@@ -91,9 +90,9 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int nlua_loadHook( lua_State *L )
+int nlua_loadHook( nlua_env env )
 {
-   luaL_register(L, "hook", hook_methods);
+   nlua_register(env, "hook", hook_methods, 0);
    return 0;
 }
 
@@ -137,7 +136,7 @@ static int hookL_rm( lua_State *L )
    hook_rm( h );
 
    /* Clean up hook data. */
-   lua_getglobal( L, "__hook_arg" );
+   nlua_getenv(__NLUA_CURENV, "__hook_arg");
    if (!lua_isnil(L,-1)) {
       lua_pushnumber( L, h ); /* t, n */
       lua_pushnil( L );       /* t, n, nil */
@@ -157,28 +156,30 @@ static int hookL_rm( lua_State *L )
  *    @param ind Index of argument to set.
  *    @return 0 on success.
  */
-static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
+static int hookL_setarg( unsigned int hook, int ind )
 {
-   lua_pushvalue( L, ind );   /* v */
+   nlua_env env = hook_env(hook);
+
+   lua_pushvalue( naevL, ind );   /* v */
    /* If a table set __save, this won't work for tables of tables however. */
-   if (lua_istable(L, -1)) {
-      lua_pushboolean( L, 1 );/* v, b */
-      lua_setfield( L, -2, "__save" ); /* v */
+   if (lua_istable(naevL, -1)) {
+      lua_pushboolean( naevL, 1 );/* v, b */
+      lua_setfield( naevL, -2, "__save" ); /* v */
    }
    /* Create if necessary the actual hook argument table. */
-   lua_getglobal( L, "__hook_arg" ); /* v, t */
-   if (lua_isnil(L,-1)) {     /* v, nil */
-      lua_pop( L, 1 );        /* v */
-      lua_newtable( L );      /* v, t */
-      lua_pushvalue( L, -1 ); /* v, t, t */
-      lua_setglobal( L, "__hook_arg" ); /* v, t */
-      lua_pushboolean( L, 1 ); /* v, t, s */
-      lua_setfield( L, -2, "__save" ); /* v, t */
+   nlua_getenv(env, "__hook_arg"); /* v, t */
+   if (lua_isnil(naevL,-1)) {     /* v, nil */
+      lua_pop( naevL, 1 );        /* v */
+      lua_newtable( naevL );      /* v, t */
+      lua_pushvalue( naevL, -1 ); /* v, t, t */
+      nlua_setenv(env, "__hook_arg"); /* v, t */
+      lua_pushboolean( naevL, 1 ); /* v, t, s */
+      lua_setfield( naevL, -2, "__save" ); /* v, t */
    }
-   lua_pushnumber( L, hook ); /* v, t, k */
-   lua_pushvalue( L, -3 );    /* v, t, k, v */
-   lua_settable( L, -3 );     /* v, t */
-   lua_pop( L, 2 );           /* */
+   lua_pushnumber( naevL, hook ); /* v, t, k */
+   lua_pushvalue( naevL, -3 );    /* v, t, k, v */
+   lua_settable( naevL, -3 );     /* v, t */
+   lua_pop( naevL, 2 );           /* */
    return 0;
 }
 
@@ -186,16 +187,20 @@ static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
 /**
  * @brief Unsets a Lua argument.
  */
-void hookL_unsetarg( lua_State *L, unsigned int hook )
+void hookL_unsetarg( unsigned int hook )
 {
-   lua_getglobal( L, "__hook_arg" ); /* t */
-   if (lua_isnil(L,-1)) {            /* */
-      lua_pop(L,1);
+   nlua_env env = hook_env(hook);
+
+   if (env == LUA_NOREF)
+       return;
+
+   nlua_getenv(env, "__hook_arg"); /* t */
+   if (!lua_isnil(naevL,-1)) {
+      lua_pushnumber( naevL, hook );      /* t, h */
+      lua_pushnil( naevL );               /* t, h, n */
+      lua_settable( naevL, -3 );          /* t */
    }
-   lua_pushnumber( L, hook );       /* t, h */
-   lua_pushnil( L );                /* t, h, n */
-   lua_settable( L, -3 );           /* t */
-   lua_pop( L, 1 );
+   lua_pop( naevL, 1 );
 }
 
 
@@ -206,13 +211,20 @@ void hookL_unsetarg( lua_State *L, unsigned int hook )
  *    @param hook Hook to get argument of.
  *    @return 0 on success.
  */
-int hookL_getarg( lua_State *L, unsigned int hook )
+int hookL_getarg( unsigned int hook )
 {
-   lua_getglobal( L, "__hook_arg" ); /* t */
-   if (!lua_isnil(L,-1)) {    /* t */
-      lua_pushnumber( L, hook ); /* t, k */
-      lua_gettable( L, -2 );  /* t, v */
-      lua_remove( L, -2 );    /* v */
+   nlua_env env = hook_env(hook);
+
+   if (env == LUA_NOREF) {
+       lua_pushnil(naevL);
+       return 0;
+   }
+
+   nlua_getenv(env, "__hook_arg"); /* t */
+   if (!lua_isnil(naevL,-1)) {    /* t */
+      lua_pushnumber( naevL, hook ); /* t, k */
+      lua_gettable( naevL, -2 );  /* t, v */
+      lua_remove( naevL, -2 );    /* v */
    }
    return 0;
 }
@@ -282,7 +294,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
 
    /* Check parameter. */
    if (!lua_isnil(L,pos+1))
-      hookL_setarg( L, h, pos+1 );
+      hookL_setarg( h, pos+1 );
 
    return h;
 }
@@ -726,4 +738,3 @@ static int hook_pilot( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
-

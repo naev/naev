@@ -1218,7 +1218,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.getRating() &gt; 100 and player.misnDone("Operation Cold Metal") and planet.cur() ~= planet.get("Ulios")</cond>
+   <cond>player.getRating() &gt; 100 and planet.cur() ~= planet.get("Ulios")</cond>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
@@ -1258,7 +1258,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Sharkman Is Back")</cond>
+   <cond>player.misnDone("Sharkman Is Back") and player.misnDone("Operation Cold Metal")</cond>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>

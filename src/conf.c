@@ -14,7 +14,6 @@
 #include <getopt.h> /* getopt_long */
 
 #include "nlua.h"
-#include <lauxlib.h> /* luaL_dofile */
 
 #include "log.h"
 #include "player.h"
@@ -28,35 +27,35 @@
 
 
 #define  conf_loadInt(n,i)    \
-lua_getglobal(L,n); \
-if (lua_isnumber(L, -1)) { \
-   i = (int)lua_tonumber(L, -1); \
+nlua_getenv(env,n); \
+if (lua_isnumber(naevL, -1)) { \
+   i = (int)lua_tonumber(naevL, -1); \
 } \
-lua_pop(L,1);
+lua_pop(naevL,1);
 
 #define  conf_loadFloat(n,f)    \
-lua_getglobal(L,n); \
-if (lua_isnumber(L, -1)) { \
-   f = (double)lua_tonumber(L, -1); \
+nlua_getenv(env,n); \
+if (lua_isnumber(naevL, -1)) { \
+   f = (double)lua_tonumber(naevL, -1); \
 } \
-lua_pop(L,1);
+lua_pop(naevL,1);
 
 #define  conf_loadBool(n,b)   \
-lua_getglobal(L, n); \
-if (lua_isnumber(L,-1)) \
-   b = (lua_tonumber(L,-1) != 0.); \
-else if (!lua_isnil(L,-1)) \
-   b = lua_toboolean(L, -1); \
-lua_pop(L,1);
+nlua_getenv(env, n); \
+if (lua_isnumber(naevL,-1)) \
+   b = (lua_tonumber(naevL,-1) != 0.); \
+else if (!lua_isnil(naevL,-1)) \
+   b = lua_toboolean(naevL, -1); \
+lua_pop(naevL,1);
 
 #define  conf_loadString(n,s) \
-lua_getglobal(L, n); \
-if (lua_isstring(L, -1)) { \
+nlua_getenv(env, n); \
+if (lua_isstring(naevL, -1)) { \
    if (s != NULL) \
       free(s); \
-   s = strdup(lua_tostring(L, -1));   \
+   s = strdup(lua_tostring(naevL, -1));   \
 } \
-lua_pop(L,1);
+lua_pop(naevL,1);
 
 
 /* Global configuration. */
@@ -309,12 +308,11 @@ void conf_loadConfigPath( void )
    if (!nfile_fileExists(file))
       return;
 
-   lua_State *L = nlua_newState();
-   nlua_loadBasic(L); /* For os library */
-   if (luaL_dofile(L, file) == 0)
+   nlua_env env = nlua_newEnv(0);
+   if (nlua_dofileenv(env, file) == 0)
       conf_loadString("datapath",conf.datapath);
 
-   lua_close(L);
+   nlua_freeEnv(env);
 }
 
 
@@ -335,8 +333,8 @@ int conf_loadConfig ( const char* file )
       return nfile_touch(file);
 
    /* Load the configuration. */
-   lua_State *L = nlua_newState();
-   if (luaL_dofile(L, file) == 0) {
+   nlua_env env = nlua_newEnv(0);
+   if (nlua_dofileenv(env, file) == 0) {
 
       /* ndata. */
       conf_loadString("data",conf.ndata);
@@ -389,12 +387,12 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("music",conf.music);
 
       /* Joystick. */
-      lua_getglobal(L, "joystick");
-      if (lua_isnumber(L, -1))
-         conf.joystick_ind = (int)lua_tonumber(L, -1);
-      else if (lua_isstring(L, -1))
-         conf.joystick_nam = strdup(lua_tostring(L, -1));
-      lua_pop(L,1);
+      nlua_getenv(env, "joystick");
+      if (lua_isnumber(naevL, -1))
+         conf.joystick_ind = (int)lua_tonumber(naevL, -1);
+      else if (lua_isstring(naevL, -1))
+         conf.joystick_nam = strdup(lua_tostring(naevL, -1));
+      lua_pop(naevL,1);
 
       /* GUI. */
       conf_loadInt("mesg_visible",conf.mesg_visible);
@@ -443,22 +441,22 @@ int conf_loadConfig ( const char* file )
        * Keybindings.
        */
       for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
-         lua_getglobal(L, keybind_info[i][0]);
+         nlua_getenv(env, keybind_info[i][0]);
          /* Handle "none". */
-         if (lua_isstring(L,-1)) {
-            str = lua_tostring(L,-1);
+         if (lua_isstring(naevL,-1)) {
+            str = lua_tostring(naevL,-1);
             if (strcmp(str,"none")==0) {
                input_setKeybind( keybind_info[i][0],
                      KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
          }
-         else if (lua_istable(L, -1)) { /* it's a table */
+         else if (lua_istable(naevL, -1)) { /* it's a table */
             /* gets the event type */
-            lua_pushstring(L, "type");
-            lua_gettable(L, -2);
-            if (lua_isstring(L, -1))
-               str = lua_tostring(L, -1);
-            else if (lua_isnil(L, -1)) {
+            lua_pushstring(naevL, "type");
+            lua_gettable(naevL, -2);
+            if (lua_isstring(naevL, -1))
+               str = lua_tostring(naevL, -1);
+            else if (lua_isnil(naevL, -1)) {
                WARN("Found keybind with no type field!");
                str = "null";
             }
@@ -466,16 +464,16 @@ int conf_loadConfig ( const char* file )
                WARN("Found keybind with invalid type field!");
                str = "null";
             }
-            lua_pop(L,1);
+            lua_pop(naevL,1);
 
             /* gets the key */
-            lua_pushstring(L, "key");
-            lua_gettable(L, -2);
-            t = lua_type(L, -1);
+            lua_pushstring(naevL, "key");
+            lua_gettable(naevL, -2);
+            t = lua_type(naevL, -1);
             if (t == LUA_TNUMBER)
-               key = (int)lua_tonumber(L, -1);
+               key = (int)lua_tonumber(naevL, -1);
             else if (t == LUA_TSTRING)
-               key = input_keyConv( lua_tostring(L, -1));
+               key = input_keyConv( lua_tostring(naevL, -1));
             else if (t == LUA_TNIL) {
                WARN("Found keybind with no key field!");
                key = SDLK_UNKNOWN;
@@ -484,16 +482,16 @@ int conf_loadConfig ( const char* file )
                WARN("Found keybind with invalid key field!");
                key = SDLK_UNKNOWN;
             }
-            lua_pop(L,1);
+            lua_pop(naevL,1);
 
             /* Get the modifier. */
-            lua_pushstring(L, "mod");
-            lua_gettable(L, -2);
-            if (lua_isstring(L, -1))
-               mod = lua_tostring(L, -1);
+            lua_pushstring(naevL, "mod");
+            lua_gettable(naevL, -2);
+            if (lua_isstring(naevL, -1))
+               mod = lua_tostring(naevL, -1);
             else
                mod = NULL;
-            lua_pop(L,1);
+            lua_pop(naevL,1);
 
             if (str != NULL) { /* keybind is valid */
                if (key == SDLK_UNKNOWN) {
@@ -544,17 +542,17 @@ int conf_loadConfig ( const char* file )
                WARN("Malformed keybind for '%s' in '%s'.", keybind_info[i][0], file);
          }
          /* clean up after table stuff */
-         lua_pop(L,1);
+         lua_pop(naevL,1);
       }
    }
    else { /* failed to load the config file */
       WARN("Config file '%s' has invalid syntax:", file );
-      WARN("   %s", lua_tostring(L,-1));
-      lua_close(L);
+      WARN("   %s", lua_tostring(naevL,-1));
+      nlua_freeEnv(env);
       return 1;
    }
 
-   lua_close(L);
+   nlua_freeEnv(env);
    return 0;
 }
 

@@ -130,7 +130,7 @@ function theFunBegins()
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")[1]
+   preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()

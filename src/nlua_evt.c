@@ -71,9 +71,9 @@ static const luaL_reg evt_methods[] = {
  * @brief Loads the event Lua library.
  *    @param L Lua state.
  */
-int nlua_loadEvt( lua_State *L )
+int nlua_loadEvt( nlua_env env )
 {
-   luaL_register(L, "evt", evt_methods);
+   nlua_register(env, "evt", evt_methods, 0);
    return 0;
 }
 
@@ -81,25 +81,14 @@ int nlua_loadEvt( lua_State *L )
 /**
  * @brief Sets up the Lua environment to run a function.
  */
-lua_State *event_setupLua( Event_t *ev, const char *func )
+void event_setupLua( Event_t *ev, const char *func )
 {
-   lua_State *L;
-
-   /* Load event. */
-   L = ev->L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-
    /* Set up event pointer. */
-   lua_pushlightuserdata( L, ev );
-   lua_setglobal( L, "__evt" );
+   lua_pushlightuserdata( naevL, ev );
+   nlua_setenv( ev->env, "__evt" );
 
    /* Get function. */
-   lua_getglobal(L, func );
-
-   return L;
+   nlua_getenv(ev->env, func );
 }
 
 
@@ -108,19 +97,23 @@ lua_State *event_setupLua( Event_t *ev, const char *func )
  */
 int event_runLua( Event_t *ev, const char *func )
 {
+   int ret;
    event_setupLua( ev, func );
-   return event_runLuaFunc( ev, func, 0 );
+   ret = event_runLuaFunc( ev, func, 0 );
+   return ret;
 }
 
 
 /**
  * @brief Gets the current running event from user data.
+ *
+ * This should ONLY be called below an nlua_pcall, so __NLUA_CURENV is set
  */
 Event_t *event_getFromLua( lua_State *L )
 {
    Event_t *ev;
 
-   lua_getglobal( L, "__evt" );
+   nlua_getenv(__NLUA_CURENV, "__evt");
    ev = (Event_t*) lua_touserdata( L, -1 );
    lua_pop( L, 1 );
    return ev;
@@ -135,23 +128,13 @@ Event_t *event_getFromLua( lua_State *L )
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 {
-   int ret, errf;
+   int ret;
    const char* err;
-   lua_State *L;
    int evt_delete;
 
-   /* Comfortability. */
-   L = ev->L;
-
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
-   ret = lua_pcall(L, nargs, 0, errf);
+   ret = nlua_pcall(ev->env, nargs, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Event '%s' -> '%s': %s",
                event_getData(ev->id), func, (err) ? err : "unknown error");
@@ -159,16 +142,13 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
       }
       else
          ret = 1;
-      lua_pop(L, 1);
+      lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(L, 1);
-#endif /* DEBUGGING */
 
    /* Time to remove the event. */
-   lua_getglobal( L, "__evt_delete" );
-   evt_delete = lua_toboolean(L,-1);
-   lua_pop(L,1);
+   nlua_getenv(ev->env, "__evt_delete");
+   evt_delete = lua_toboolean(naevL,-1);
+   lua_pop(naevL,1);
    if (evt_delete) {
       ret = 2;
       event_remove( ev->id );
@@ -266,11 +246,12 @@ static int evt_finish( lua_State *L )
    int b;
    Event_t *cur_event;
 
+   cur_event = event_getFromLua(L);
+
    b = lua_toboolean(L,1);
    lua_pushboolean( L, 1 );
-   lua_setglobal( L, "__evt_delete" );
+   nlua_setenv(cur_event->env, "__evt_delete");
 
-   cur_event = event_getFromLua(L);
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );
 

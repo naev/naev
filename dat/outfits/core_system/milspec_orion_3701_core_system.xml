@@ -8,7 +8,7 @@
   <mass>50</mass>
   <price>210000</price>
   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3701 core system is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
-  <gfx_store>core_system01</gfx_store>
+  <gfx_store>core_system02</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>55</cpu_max>

@@ -140,15 +140,15 @@ int event_start( const char *name, unsigned int *id )
 /**
  * @brief Starts running a function, allows programmer to set up arguments.
  */
-lua_State *event_runStart( unsigned int eventid, const char *func )
+void event_runStart( unsigned int eventid, const char *func )
 {
    Event_t *ev;
 
    ev = event_get( eventid );
    if (ev == NULL)
-      return NULL;
+      return;
 
-   return event_setupLua( ev, func );
+   event_setupLua( ev, func );
 }
 
 
@@ -244,7 +244,6 @@ static unsigned int event_genID (void)
  */
 static int event_create( int dataid, unsigned int *id )
 {
-   lua_State *L;
    uint32_t bufsize;
    char *buf;
    Event_t *ev;
@@ -268,18 +267,17 @@ static int event_create( int dataid, unsigned int *id )
    data = &event_data[dataid];
 
    /* Open the new state. */
-   ev->L = nlua_newState();
-   L = ev->L;
-   nlua_loadStandard(L,0);
-   nlua_loadEvt(L);
-   nlua_loadHook(L);
-   nlua_loadTk(L);
-   nlua_loadBackground(L,1);
-   nlua_loadCamera(L,0);
-   nlua_loadTex(L,0);
-   nlua_loadMusic(L,0);
+   ev->env = nlua_newEnv(1);
+   nlua_loadStandard(ev->env);
+   nlua_loadEvt(ev->env);
+   nlua_loadHook(ev->env);
+   nlua_loadCamera(ev->env);
+   nlua_loadTex(ev->env);
+   nlua_loadBackground(ev->env);
+   nlua_loadMusic(ev->env);
+   nlua_loadTk(ev->env);
    if (player_isTut())
-      nlua_loadTut(L);
+      nlua_loadTut(ev->env);
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );
@@ -287,11 +285,11 @@ static int event_create( int dataid, unsigned int *id )
       WARN("Event '%s' Lua script not found.", data->lua );
       return -1;
    }
-   if (luaL_dobuffer(L, buf, bufsize, data->lua) != 0) {
+   if (nlua_dobufenv(ev->env, buf, bufsize, data->lua) != 0) {
       WARN("Error loading event file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            data->lua, lua_tostring(L,-1));
+            data->lua, lua_tostring(naevL,-1));
       free(buf);
       return -1;
    }
@@ -314,8 +312,8 @@ static int event_create( int dataid, unsigned int *id )
  */
 static void event_cleanup( Event_t *ev )
 {
-   /* Destroy Lua. */
-   lua_close(ev->L);
+   /* Free lua env. */
+   nlua_freeEnv(ev->env);
 
    /* Free hooks. */
    hook_rmEventParent(ev->id);
@@ -458,7 +456,6 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 
 #ifdef DEBUGGING
    /* To check if event is valid. */
-   lua_State *L;
    int ret;
    uint32_t len;
 #endif /* DEBUGGING */
@@ -484,15 +481,15 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 
 #ifdef DEBUGGING
          /* Check to see if syntax is valid. */
-         L = luaL_newstate();
          buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(L, buf, len, temp->name );
+         ret = luaL_loadbuffer(naevL, buf, len, temp->name );
          if (ret == LUA_ERRSYNTAX) {
             WARN("Event Lua '%s' of event '%s' syntax error: %s",
-                  temp->name, temp->lua, lua_tostring(L,-1) );
+                  temp->name, temp->lua, lua_tostring(naevL,-1) );
+         } else {
+            lua_pop(naevL, 1);
          }
          free(buf);
-         lua_close(L);
 #endif /* DEBUGGING */
 
          continue;
@@ -789,7 +786,7 @@ int events_saveActive( xmlTextWriterPtr writer )
 
       /* Write Lua magic */
       xmlw_startElem(writer,"lua");
-      nxml_persistLua( ev->L, writer );
+      nxml_persistLua( ev->env, writer );
       xmlw_endElem(writer); /* "lua" */
 
       xmlw_endElem(writer); /* "event" */
@@ -880,7 +877,7 @@ static int events_parseActive( xmlNodePtr parent )
       cur = node->xmlChildrenNode;
       do {
          if (xml_isNode(cur,"lua"))
-            nxml_unpersistLua( ev->L, cur );
+            nxml_unpersistLua( ev->env, cur );
       } while (xml_nextNode(cur));
 
       /* Claims. */

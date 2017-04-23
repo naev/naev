@@ -39,4 +39,25 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <corner>
+    <x>-14000.000000</x>
+    <y>-8000.000000</y>
+   </corner>
+   <corner>
+    <x>-10000.000000</x>
+    <y>-12000.000000</y>
+   </corner>
+   <corner>
+    <x>-16000.000000</x>
+    <y>-13000.000000</y>
+   </corner>
+   <corner>
+    <x>-13000.000000</x>
+    <y>-11000.000000</y>
+   </corner>
+   <density>0.500000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

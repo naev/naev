@@ -415,7 +415,6 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    double d;
    credits_t price;
    const char *str;
-   lua_State *L;
 
    /* Unbribable. */
    str = comm_getString( "bribe_no" );
@@ -474,11 +473,10 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Don't allow rebribe. */
    if (comm_pilot->ai != NULL) {
-      L = comm_pilot->ai->L;
-      lua_getglobal(L, "mem");
-      lua_pushnumber(L, 0);
-      lua_setfield(L, -2, "bribe");
-      lua_pop(L,1);
+      nlua_getenv(comm_pilot->ai->env, "mem");
+      lua_pushnumber(naevL, 0);
+      lua_setfield(naevL, -2, "bribe");
+      lua_pop(naevL,1);
    }
 
    /* Reopen window. */
@@ -635,26 +633,24 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 static int comm_getNumber( double *val, char* str )
 {
    int ret;
-   lua_State *L;
 
    if (comm_pilot->ai == NULL)
       return 1;
 
    /* Set up the state. */
-   L = comm_pilot->ai->L;
-   lua_getglobal( L, "mem" );
+   nlua_getenv(comm_pilot->ai->env, "mem");
 
    /* Get number amount. */
-   lua_getfield( L, -1, str );
+   lua_getfield(naevL, -1, str);
    /* Check to see if it's a number. */
-   if (!lua_isnumber(L, -1))
+   if (!lua_isnumber(naevL, -1))
       ret = 1;
    else {
-      *val = lua_tonumber(L, -1);
+      *val = lua_tonumber(naevL, -1);
       ret = 0;
    }
    /* Clean up. */
-   lua_pop(L, 2);
+   lua_pop(naevL, 2);
    return ret;
 }
 
@@ -673,23 +669,21 @@ static int comm_getNumber( double *val, char* str )
  */
 static const char* comm_getString( char *str )
 {
-   lua_State *L;
    const char *ret;
 
    if (comm_pilot->ai == NULL)
       return NULL;
 
    /* Get memory table. */
-   L = comm_pilot->ai->L;
-   lua_getglobal( L, "mem" );
+   nlua_getenv(comm_pilot->ai->env, "mem");
 
    /* Get str message. */
-   lua_getfield(L, -1, str );
-   if (!lua_isstring(L, -1))
+   lua_getfield(naevL, -1, str );
+   if (!lua_isstring(naevL, -1))
       ret = NULL;
    else
-      ret = lua_tostring(L, -1);
-   lua_pop(L, 2);
+      ret = lua_tostring(naevL, -1);
+   lua_pop(naevL, 2);
 
    return ret;
 }

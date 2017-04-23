@@ -280,6 +280,10 @@ static void solid_update_euler (Solid *obj, const double dt)
    px += vx*dt + 0.5*ax * dt*dt;
    py += vy*dt + 0.5*ay * dt*dt;
 
+   /* v = a*dt */
+   vx += ax*dt;
+   vy += ay*dt;
+
    /* Update position and velocity. */
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );

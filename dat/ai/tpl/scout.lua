@@ -12,7 +12,7 @@ control_rate = 2
 function control ()
    task = ai.taskname()
 
-   if task == "none" or task == "idle" then
+   if task == nil or task == "idle" then
       enemy = ai.getenemy()
 
       -- There is an enemy
@@ -40,7 +40,7 @@ function control ()
       end
 
       -- Go idle if no task
-      if task == "none" then
+      if task == nil then
          ai.pushtask("idle")
          return
       end

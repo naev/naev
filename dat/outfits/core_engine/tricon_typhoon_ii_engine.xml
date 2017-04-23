@@ -8,7 +8,7 @@
   <mass>80</mass>
   <price>3600000</price>
   <description>The largest Tricon engine in production, the Typhoon II boasts surprisingly high performance for a capital ship engine. Its power consumption is markedly higher than anything in its class, but most captains are willing to make the trade for superior manoeuvrability</description>
-  <gfx_store>engine02</gfx_store>
+  <gfx_store>engine05</gfx_store>
  </general>
  <specific type="modification">
   <thrust>50</thrust>

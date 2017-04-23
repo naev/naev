@@ -251,7 +251,7 @@ function enter()
 
       shiplist = ships[level+1]
       oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.addRaw( oppotype, "baddie", mispla, "Thugs" )[1]
+      opponent = pilot.addRaw( oppotype, "baddie", mispla, "Thugs" )
 
       opponent:rmOutfit("all")
       opponent:rmOutfit("cores")
@@ -294,12 +294,12 @@ function enter()
       opponent:goto(mispla:pos() + vec2.new( 1000,  1500))
 
       --The TV and the security
-      tv1 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )[1]
-      tv2 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )[1]
-      sec11 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
-      sec12 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
-      sec21 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
-      sec22 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
+      tv1 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )
+      tv2 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )
+      sec11 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      sec12 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      sec21 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      sec22 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
 
       hooks = {}
 
@@ -325,16 +325,16 @@ function enter()
          k:setHealth(100,100)
          k:setEnergy(100)
          k:control()
-         k:memory("radius", 300) --Set the radius for the follow function
+         k:memory().radius = 300 --Set the radius for the follow function
       end
 
       -- Set the angle for the follow function
-      tv1:memory("angle", 90)
-      sec11:memory("angle", 200)
-      sec12:memory("angle", 240)
-      tv2:memory("angle", 90)
-      sec21:memory("angle", 200)
-      sec22:memory("angle", 240)
+      tv1:memory().angle = 90
+      sec11:memory().angle = 200
+      sec12:memory().angle = 240
+      tv2:memory().angle = 90
+      sec21:memory().angle = 200
+      sec22:memory().angle = 240
 
       --The escort follows the competitors
       tv1:follow(player.pilot(), true)

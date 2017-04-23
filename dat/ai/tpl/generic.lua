@@ -1,5 +1,6 @@
 include("dat/ai/include/basic.lua")
 include("dat/ai/include/attack.lua")
+local formation = include("dat/scripts/formation.lua")
 
 --[[
 -- Variables to adjust AI
@@ -27,6 +28,9 @@ mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 
+mem.formation     = "circle" -- Formation to use when commanding fleet
+mem.form_pos      = nil -- Position in formation (for follower)
+
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
 The reference direction is the target's velocity direction.
@@ -43,12 +47,76 @@ mem.Kd             = 20 -- Second control coefficient
 -- Required control rate
 control_rate   = 2
 
+function lead_fleet ()
+   if #ai.pilot():followers() ~= 0 then
+      if mem.formation == nil then
+         formation.clear(ai.pilot())
+         return
+      end
+
+      local form = formation[mem.formation]
+      if form == nil then
+         warn(string.format("Formation '%s' not found", mem.formation))
+      else
+         form(ai.pilot())
+      end
+   end
+end
+
+-- Run instead of "control" when under manual control; use should be limited
+function control_manual ()
+   lead_fleet()
+end
+
+function handle_messages ()
+   for _, v in ipairs(ai.messages()) do
+      local sender, msgtype, data = unpack(v)
+      if sender == ai.pilot():leader() then
+         if msgtype == "form-pos" then
+            mem.form_pos = data
+         elseif msgtype == "hyperspace" then
+            ai.pushtask("hyperspace", data)
+         elseif msgtype == "land" then
+            -- TODO: Made sure planet is the same
+            mem.land = ai.landplanet():pos()
+            ai.pushtask("land")
+         -- Escort commands
+         -- Attack target
+         elseif msgtype == "e_attack" then
+            if data ~= nil and data:exists() then
+               ai.pushtask("attack", data)
+            end
+         -- Hold position
+         elseif msgtype == "e_hold" then
+            ai.pushtask("hold" )
+         -- Return to carrier
+         elseif msgtype == "e_return" then
+            if ai.pilot():flags().carried then
+               ai.pushtask("flyback" )
+            end
+         -- Clear orders
+         elseif msgtype == "e_clear" then
+            ai.pilot():taskClear()
+         end
+      end
+   end
+end
+
 -- Required "control" function
 function control ()
-   local task = ai.taskname()
    local enemy = ai.getenemy()
 
    local parmour, pshield = ai.pilot():health()
+
+   lead_fleet()
+   handle_messages()
+
+   local task = ai.taskname()
+
+   -- TODO: Select new leader
+   if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
+      ai.pilot():setLeader(nil)
+   end
 
    -- Cooldown completes silently.
    if mem.cooldown then
@@ -91,7 +159,7 @@ function control ()
    end
 
    -- Get new task
-   if task == "none" then
+   if task == nil then
       local attack = false
 
       -- We'll first check enemy.
@@ -112,6 +180,8 @@ function control ()
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
+      elseif ai.pilot():leader() and ai.pilot():leader():exists() then
+         ai.pushtask("follow_fleet")
       else
          idle()
       end
@@ -158,7 +228,7 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
-      if mem.norun then
+      if mem.norun or ai.pilot():leader() ~= nil then
          ai.poptask()
          return
       end
@@ -339,7 +409,7 @@ function distress ( pilot, attacker )
       elseif a_enemy then
          t = attacker
       -- We'll be nice and go after the aggressor if the victim is peaceful.
-      elseif not pilot:memoryCheck("aggressive") then
+      elseif not pilot:memory().aggressive then
          t = attacker
       -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
       else
@@ -464,5 +534,37 @@ function should_cooldown()
    end
    if pshield == nil then
       player.msg("pshield = nil")
+   end
+end
+
+
+-- Holds position
+function hold ()
+   if not ai.isstopped() then
+      ai.brake()
+   else
+      ai.stop()
+   end
+end
+
+
+-- Tries to fly back to carrier
+function flyback ()
+   local target = ai.pilot():leader()
+   local dir    = ai.face(target)
+   local dist   = ai.dist(target)
+   local bdist  = ai.minbrakedist()
+
+   -- Try to brake
+   if not ai.isstopped() and dist < bdist then
+      ai.pushtask("brake")
+
+   -- Try to dock
+   elseif ai.isstopped() and dist < 30 then
+      ai.dock(target)
+
+   -- Far away, must approach
+   elseif dir < 10 then
+      ai.accel()
    end
 end

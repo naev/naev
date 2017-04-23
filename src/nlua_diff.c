@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "unidiff.h"
@@ -37,24 +36,16 @@ static const luaL_reg diff_methods[] = {
    { "isApplied", diff_isappliedL },
    {0,0}
 }; /**< Unidiff Lua methods. */
-static const luaL_reg diff_cond_methods[] = {
-   { "isApplied", diff_isappliedL },
-   {0,0}
-}; /**< Unidiff Lua read only methods. */
 
 
 /**
  * @brief Loads the diff Lua library.
- *    @param L Lua state.
- *    @param readonly Load read only functions?
+ *    @param env Lua enviornment.
  *    @return 0 on success.
  */
-int nlua_loadDiff( lua_State *L, int readonly )
+int nlua_loadDiff( nlua_env env )
 {
-   if (readonly == 0)
-      luaL_register(L, "diff", diff_methods);
-   else
-      luaL_register(L, "diff", diff_cond_methods);
+   nlua_register(env, "diff", diff_methods, 0);
    return 0;
 }
 
@@ -82,6 +73,8 @@ static int diff_applyL( lua_State *L )
 {
    const char *name;
 
+   NLUA_CHECKRW(L);
+
    name = luaL_checkstring(L,1);
 
    diff_apply( name );
@@ -96,6 +89,8 @@ static int diff_applyL( lua_State *L )
 static int diff_removeL( lua_State *L )
 {
    const char *name;
+
+   NLUA_CHECKRW(L);
 
    name = luaL_checkstring(L,1);
 

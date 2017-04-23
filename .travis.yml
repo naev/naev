@@ -1,10 +1,19 @@
 language: c
+sudo: required
+dist: trusty
 compiler:
    - gcc
    - clang
 before_install:
-   # Travis uses Ubuntu 12.04, which is far too old for SDL2, so build with
-   # SDL 1.2.
    - sudo apt-get update -qq
-   - sudo apt-get install -y build-essential automake libsdl-image1.2-dev libsdl-mixer1.2-dev libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng12-dev libopenal-dev libvorbis-dev binutils-dev libzip-dev
-script: ./autogen.sh && ./configure && make
+   - sudo apt-get install -y build-essential automake libsdl2-dev libsdl2-image-dev libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng12-dev libopenal-dev libvorbis-dev binutils-dev libzip-dev libiberty-dev libluajit-5.1-dev luarocks
+   - sudo luarocks install ldoc
+script:
+   - "./autogen.sh && ./configure && make"
+   - cd docs && ./luadoc.sh && cd ..
+deploy:
+   provider: script
+   script: ".travis/deploy.sh"
+   skip_cleanup: true
+   on:
+      condition: "$CC = gcc"

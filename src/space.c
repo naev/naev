@@ -70,6 +70,7 @@
 #define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
 #define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
 
+#define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
 /*
  * planet <-> system name stack
@@ -95,15 +96,23 @@ static int planet_nstack = 0; /**< Planet stack size. */
 static int planet_mstack = 0; /**< Memory size of planet stack. */
 
 /*
+ * Asteroid types stack.
+ */
+static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
+static int asteroid_ntypes = 0; /**< Asteroid types stack size. */
+
+/*
  * Misc.
  */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
-static lua_State *landing_lua = NULL; /**< Landing lua. */
+static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
+glTexture **asteroid_gfx = NULL;
+uint32_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 
 
 /*
@@ -130,11 +139,16 @@ static int planet_parse( Planet* planet, const xmlNodePtr parent );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
+static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
+static void debris_init( Debris *deb );
 static int systems_load (void);
+static int asteroidTypes_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
+static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
+static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
@@ -142,6 +156,8 @@ static void system_scheduler( double dt, int init );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
+static void space_renderAsteroid( Asteroid *a );
+static void space_renderDebris( Debris *d, double x, double y );
 /*
  * Externed prototypes.
  */
@@ -972,18 +988,18 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
  */
 static void system_scheduler( double dt, int init )
 {
-   int i, n, errf;
-   lua_State *L;
+   int i, n;
+   nlua_env env;
    SystemPresence *p;
    Pilot *pilot;
 
    /* Go through all the factions and reduce the timer. */
    for (i=0; i < cur_system->npresence; i++) {
       p = &cur_system->presence[i];
-      L = faction_getScheduler( p->faction );
+      env = faction_getScheduler( p->faction );
 
       /* Must have a valid scheduler. */
-      if (L==NULL)
+      if (env==LUA_NOREF)
          continue;
 
       /* Spawning is disabled for this faction. */
@@ -992,18 +1008,11 @@ static void system_scheduler( double dt, int init )
 
       /* Run the appropriate function. */
       if (init) {
-#if DEBUGGING
-         lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-         lua_getglobal( L, "create" ); /* f */
-         if (lua_isnil(L,-1)) {
+         nlua_getenv( env, "create" ); /* f */
+         if (lua_isnil(naevL,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
                   faction_name( p->faction ) );
-#if DEBUGGING
-            lua_pop(L,2);
-#else /* DEBUGGING */
-            lua_pop(L,1);
-#endif /* DEBUGGING */
+            lua_pop(naevL,1);
             continue;
          }
          n = 0;
@@ -1014,97 +1023,72 @@ static void system_scheduler( double dt, int init )
          if (p->timer >= 0.)
             continue;
 
-#if DEBUGGING
-         lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-         lua_getglobal( L, "spawn" ); /* f */
-         if (lua_isnil(L,-1)) {
+         nlua_getenv( env, "spawn" ); /* f */
+         if (lua_isnil(naevL,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
                   faction_name( p->faction ) );
-#if DEBUGGING
-            lua_pop(L,2);
-#else /* DEBUGGING */
-            lua_pop(L,1);
-#endif /* DEBUGGING */
+            lua_pop(naevL,1);
             continue;
          }
-         lua_pushnumber( L, p->curUsed ); /* f, presence */
+         lua_pushnumber( naevL, p->curUsed ); /* f, presence */
          n = 1;
       }
-      lua_pushnumber( L, p->value ); /* f, [arg,], max */
-
-#if DEBUGGING
-      errf = -2-(n+1);
-#else /* DEBUGGING */
-      errf = 0;
-#endif /* DEBUGGING */
+      lua_pushnumber( naevL, p->value ); /* f, [arg,], max */
 
       /* Actually run the function. */
-      if (lua_pcall(L, n+1, 2, errf)) { /* error has occurred */
+      if (nlua_pcall(env, n+1, 2)) { /* error has occurred */
          WARN("Lua Spawn script for faction '%s' : %s",
-               faction_name( p->faction ), lua_tostring(L,-1));
-#if DEBUGGING
-         lua_pop(L,2);
-#else /* DEBUGGING */
-         lua_pop(L,1);
-#endif /* DEBUGGING */
+               faction_name( p->faction ), lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
          continue;
       }
 
       /* Output is handled the same way. */
-      if (!lua_isnumber(L,-2)) {
+      if (!lua_isnumber(naevL,-2)) {
          WARN("Lua spawn script for faction '%s' failed to return timer value.",
                faction_name( p->faction ) );
-#if DEBUGGING
-         lua_pop(L,3);
-#else /* DEBUGGING */
-         lua_pop(L,2);
-#endif /* DEBUGGING */
+         lua_pop(naevL,2);
          continue;
       }
-      p->timer    += lua_tonumber(L,-2);
+      p->timer    += lua_tonumber(naevL,-2);
       /* Handle table if it exists. */
-      if (lua_istable(L,-1)) {
-         lua_pushnil(L); /* tk, k */
-         while (lua_next(L,-2) != 0) { /* tk, k, v */
+      if (lua_istable(naevL,-1)) {
+         lua_pushnil(naevL); /* tk, k */
+         while (lua_next(naevL,-2) != 0) { /* tk, k, v */
             /* Must be table. */
-            if (!lua_istable(L,-1)) {
+            if (!lua_istable(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
 
-            lua_getfield( L, -1, "pilot" ); /* tk, k, v, p */
-            if (!lua_ispilot(L,-1)) {
+            lua_getfield( naevL, -1, "pilot" ); /* tk, k, v, p */
+            if (!lua_ispilot(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a pilot).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            pilot = pilot_get( lua_topilot(L,-1) );
+            pilot = pilot_get( lua_topilot(naevL,-1) );
             if (pilot == NULL) {
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            lua_pop(L,1); /* tk, k, v */
-            lua_getfield( L, -1, "presence" ); /* tk, k, v, p */
-            if (!lua_isnumber(L,-1)) {
+            lua_pop(naevL,1); /* tk, k, v */
+            lua_getfield( naevL, -1, "presence" ); /* tk, k, v, p */
+            if (!lua_isnumber(naevL,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a number).",
                      faction_name( p->faction ) );
-               lua_pop(L,2); /* tk, k */
+               lua_pop(naevL,2); /* tk, k */
                continue;
             }
-            pilot->presence = lua_tonumber(L,-1);
+            pilot->presence = lua_tonumber(naevL,-1);
             p->curUsed     += pilot->presence;
-            lua_pop(L,2); /* tk, k */
+            lua_pop(naevL,2); /* tk, k */
          }
       }
-#if DEBUGGING
-      lua_pop(L,3);
-#else /* DEBUGGING */
-      lua_pop(L,2);
-#endif /* DEBUGGING */
+      lua_pop(naevL,2);
    }
 }
 
@@ -1125,10 +1109,16 @@ void space_factionChange (void)
  */
 void space_update( const double dt )
 {
-   int i;
+   int i, j;
+   double x, y;
    Pilot *p;
    Damage dmg;
    HookParam hparam[3];
+   AsteroidAnchor *ast;
+   Asteroid *a;
+   Debris *d;
+   Pilot *pplayer;
+   Solid *psolid;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1240,6 +1230,69 @@ void space_update( const double dt )
             hooks_runParam( "discover", hparam );
          }
    }
+
+   /* Asteroids/Debris update */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+
+      for (j=0; j<ast->nb; j++) {
+         a = &ast->asteroids[j];
+
+         a->pos.x += a->vel.x * dt;
+         a->pos.y += a->vel.y * dt;
+
+         /* Grow and shrink */
+         if (a->appearing == 1) {
+            a->timer += dt;
+            if (a->timer >= 2.) {
+               a->timer = 0.;
+               a->appearing = 0;
+            }
+         }
+
+         if (a->appearing == 2) {
+            a->timer += dt;
+            if (a->timer >= 2.) {
+               /* reinit any disappeared asteroid */
+               asteroid_init( a, ast );
+            }
+         }
+
+         /* Manage the asteroid getting outside the field */
+         if ( space_isInField(&a->pos)<0 && a->appearing==0 ) {
+            /* Make it shrink */
+            a->timer = 0.;
+            a->appearing = 2;
+         }
+      }
+
+      x = 0;
+      y = 0;
+      pplayer = pilot_get( PLAYER_ID );
+      if (pplayer != NULL) {
+         psolid  = pplayer->solid;
+         x = psolid->vel.x;
+         y = psolid->vel.y;
+      }
+
+      for (j=0; j<ast->ndebris; j++) {
+         d = &ast->debris[j];
+
+         d->pos.x += (d->vel.x-x) * dt;
+         d->pos.y += (d->vel.y-y) * dt;
+
+         /* Check boundaries */
+         if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
+            d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
+         else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
+            d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
+         else if (d->pos.x < -DEBRIS_BUFFER)
+            d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
+         else if (d->pos.y < -DEBRIS_BUFFER)
+            d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+      }
+
+   }
 }
 
 
@@ -1251,8 +1304,11 @@ void space_update( const double dt )
 void space_init( const char* sysname )
 {
    char* nt;
-   int i, n, s;
+   int i, j, n, s;
    Planet *pnt;
+   AsteroidAnchor *ast;
+   Asteroid *a;
+   Debris *d;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1309,6 +1365,24 @@ void space_init( const char* sysname )
       planet_updateLand( pnt );
    }
 
+   /* Set up asteroids. */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+
+      /* Add the asteroids to the anchor */
+      ast->asteroids = malloc( (ast->nb) * sizeof(Asteroid) );
+      for (j=0; j<ast->nb; j++) {
+         a = &ast->asteroids[j];
+         asteroid_init(a, ast);
+      }
+      /* Add the debris to the anchor */
+      ast->debris = malloc( (ast->ndebris) * sizeof(Debris) );
+      for (j=0; j<ast->ndebris; j++) {
+         d = &ast->debris[j];
+         debris_init(d);
+      }
+   }
+
    /* Clear interference if you leave system with interference. */
    if (cur_system->interference == 0.)
       interference_alpha = 0.;
@@ -1322,9 +1396,6 @@ void space_init( const char* sysname )
 
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
-
-   /* Reset any system fleets. */
-   cur_system->nsystemFleets = 0;
 
    /* Reset any schedules and used presence. */
    for (i=0; i<cur_system->npresence; i++) {
@@ -1372,6 +1443,82 @@ void space_init( const char* sysname )
 
 
 /**
+ * @brief Initializes an asteroid.
+ *    @param ast Asteroid to initialize.
+ *    @param field Asteroid field the asteroid belongs to.
+ */
+void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
+{
+   int i, j, k;
+   double mod, theta, x, y;
+   AsteroidSubset *sub;
+   AsteroidType *at;
+
+   /* Get a random position:
+       * choose a convex subset
+       * choose a triangle 
+       * get a random position in a reference 1X1 rectangle
+       * transform it into a triangle (by folding)
+       * apply a linear transformation to the reference triangle */
+   k = RNG( 0, field->nsubsets-1 );
+   sub = &field->subsets[k];
+
+   i = RNG( 0, sub->ncorners-1 );
+   if (i<sub->ncorners-1)
+      j = i+1;
+   else
+      j = 0;
+   x = RNGF();
+   y = RNGF();
+   if (x+y > 1) {
+      x = 1-x;
+      y = 1-y;
+   }
+   ast->pos.x = sub->pos.x*(1-x-y)
+                + sub->corners[i].x*x + sub->corners[j].x*y;
+   ast->pos.y = sub->pos.y*(1-x-y)
+                + sub->corners[i].y*x + sub->corners[j].y*y;
+
+   /* And a random velocity */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * 20;
+   vect_pset( &ast->vel, mod, theta );
+
+   /* randomly init the gfx ID */
+   at = &asteroid_types[0];
+   ast->type = 0;
+   ast->gfxID = RNG(0,at->ngfx-1);
+
+   /* Grow effect stuff */
+   ast->appearing = 1;
+   ast->timer = 0.;
+}
+
+
+/**
+ * @brief Initializes a debris.
+ *    @param deb Debris to initialize.
+ *    @param field Asteroid field the asteroid belongs to.
+ */
+void debris_init( Debris *deb )
+{
+   double theta, mod;
+
+   /* Position */
+   deb->pos.x = (double)RNG(-DEBRIS_BUFFER, SCREEN_W + DEBRIS_BUFFER);
+   deb->pos.y = (double)RNG(-DEBRIS_BUFFER, SCREEN_H + DEBRIS_BUFFER);
+
+   /* And a random velocity */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * 20;
+   vect_pset( &deb->vel, mod, theta );
+
+   /* randomly init the gfx ID */
+   deb->gfxID = RNG(0,(int)nasterogfx-1);
+}
+
+
+/**
  * @brief Creates a new planet.
  */
 Planet *planet_new (void)
@@ -1414,20 +1561,18 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   lua_State *L;
    uint32_t nfiles;
    int i, len;
 
    /* Load landing stuff. */
-   landing_lua = nlua_newState();
-   L           = landing_lua;
-   nlua_loadStandard(L, 1);
+   landing_env = nlua_newEnv(0);
+   nlua_loadStandard(landing_env);
    buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
-   if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA_PATH) != 0) {
+   if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
       WARN( "Failed to load landing file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            LANDING_DATA_PATH, lua_tostring(L,-1));
+            LANDING_DATA_PATH, lua_tostring(naevL,-1));
    }
    free(buf);
 
@@ -1529,9 +1674,7 @@ const glColour* planet_getColour( Planet *p )
  */
 void planet_updateLand( Planet *p )
 {
-   int errf;
    char *str;
-   lua_State *L;
 
    /* Must be inhabited. */
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
@@ -1547,68 +1690,52 @@ void planet_updateLand( Planet *p )
    p->bribe_msg   = NULL;
    p->bribe_ack_msg = NULL;
    p->bribe_price = 0;
-   L = landing_lua;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -3;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* Set up function. */
    if (p->land_func == NULL)
       str = "land";
    else
       str = p->land_func;
-   lua_getglobal( L, str );
-   lua_pushplanet( L, p->id );
-   if (lua_pcall(L, 1, 5, errf)) { /* error has occurred */
-      WARN("Landing: '%s' : %s", str, lua_tostring(L,-1));
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+   nlua_getenv( landing_env, str );
+   lua_pushplanet( naevL, p->id );
+   if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
+      WARN("Landing: '%s' : %s", str, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
       return;
    }
 
    /* Parse parameters. */
-   p->can_land = lua_toboolean(L,-5);
-   if (lua_isstring(L,-4))
-      p->land_msg = strdup( lua_tostring(L,-4) );
+   p->can_land = lua_toboolean(naevL,-5);
+   if (lua_isstring(naevL,-4))
+      p->land_msg = strdup( lua_tostring(naevL,-4) );
    else {
       WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 2 is not a string!", str, p->name );
       p->land_msg = strdup( "Invalid land message" );
    }
    /* Parse bribing. */
-   if (!p->can_land && lua_isnumber(L,-3)) {
-      p->bribe_price = lua_tonumber(L,-3);
+   if (!p->can_land && lua_isnumber(naevL,-3)) {
+      p->bribe_price = lua_tonumber(naevL,-3);
       /* We need the bribe message. */
-      if (lua_isstring(L,-2))
-         p->bribe_msg = strdup( lua_tostring(L,-2) );
+      if (lua_isstring(naevL,-2))
+         p->bribe_msg = strdup( lua_tostring(naevL,-2) );
       else {
          WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 4 is not a string!", str, p->name );
          p->bribe_msg = strdup( "Invalid bribe message" );
       }
       /* We also need the bribe ACK message. */
-      if (lua_isstring(L,-1))
-         p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
+      if (lua_isstring(naevL,-1))
+         p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
       else {
          WARN( LANDING_DATA_PATH": %s -> return parameter 5 is not a string!", str, p->name );
          p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
       }
    }
-   else if (lua_isstring(L,-3))
-      p->bribe_msg = strdup( lua_tostring(L,-3) );
-   else if (!lua_isnil(L,-3))
+   else if (lua_isstring(naevL,-3))
+      p->bribe_msg = strdup( lua_tostring(naevL,-3) );
+   else if (!lua_isnil(naevL,-3))
       WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
 
-#if DEBUGGING
-   lua_pop(L,6);
-#else /* DEBUGGING */
-   lua_pop(L,5);
-#endif /* DEBUGGING */
+   lua_pop(naevL,5);
 
    /* Unset bribe status if bribing is no longer possible. */
    if (p->bribed && p->bribe_ack_msg == NULL)
@@ -1755,12 +1882,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      if (tmp != NULL) {
                         planet->land_func = strdup(tmp);
 #ifdef DEBUGGING
-                        if (landing_lua != NULL) {
-                           lua_getglobal( landing_lua, tmp );
-                           if (lua_isnil(landing_lua,-1))
+                        if (landing_env != LUA_NOREF) {
+                           nlua_getenv( landing_env, tmp );
+                           if (lua_isnil(naevL,-1))
                               WARN("Planet '%s' has landing function '%s' which is not found in '%s'.",
                                     planet->name, tmp, LANDING_DATA_PATH);
-                           lua_pop(landing_lua,1);
+                           lua_pop(naevL,1);
                         }
 #endif /* DEBUGGING */
                      }
@@ -2297,8 +2424,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    flags          = 0;
    sys->presence  = NULL;
    sys->npresence = 0;
-   sys->systemFleets  = NULL;
-   sys->nsystemFleets = 0;
    sys->ownerpresence = 0.;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
@@ -2356,6 +2481,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
       /* Avoid warning. */
       if (xml_isNode(node,"jumps"))
+         continue;
+      if (xml_isNode(node,"asteroids"))
          continue;
 
       DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
@@ -2672,15 +2799,239 @@ static void system_parseJumps( const xmlNodePtr parent )
 
 
 /**
+ * @brief Parses a single asteroid field for a system.
+ *
+ *    @param node Parent node containing asteroid field information.
+ *    @param sys System.
+ *    @return 0 on success.
+ */
+static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
+{
+   int i, j, k, l, m, n, retry, getout;
+   AsteroidAnchor *a;
+   AsteroidSubset *sub, *newsub;
+   xmlNodePtr cur, pcur;
+   double x, y, pro, prob;
+
+   /* Allocate more space. */
+   sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
+   a = &sys->asteroids[ sys->nasteroids ];
+   memset( a, 0, sizeof(AsteroidAnchor) );
+
+   /* Initialize stuff. */
+   a->density  = .2;
+   a->ncorners = 0;
+   a->corners  = NULL;
+   a->aera     = 0.;
+   vect_cset( &a->pos, 0., 0. );
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xmlr_float( cur,"density", a->density );
+
+      /* Handle corners. */
+      if (xml_isNode(cur,"corner")) {
+         pcur = cur->children;
+         do {
+            xmlr_float( pcur, "x", x );
+            xmlr_float( pcur, "y", y );
+         } while (xml_nextNode(pcur));
+         a->ncorners++;
+         if (a->corners==NULL)
+            a->corners = malloc( sizeof(Vector2d) );
+         else
+            a->corners = realloc( a->corners, (a->ncorners)*sizeof(Vector2d) );
+         /* Set position. */
+         vect_cset( &a->corners[a->ncorners-1], x, y );
+         /* Increment center. */
+         a->pos.x += x;
+         a->pos.y += y;
+      }
+
+   } while (xml_nextNode(cur));
+
+   if (a->ncorners < 3)
+       WARN("asteroid field in %d has less than 3 corners.", sys->name);
+
+   /* Normalize the center */
+   a->pos.x /= a->ncorners;
+   a->pos.y /= a->ncorners;
+
+   /* Compute the aera as a sum of triangles */
+   for (i=0; i<a->ncorners-1; i++) {
+      a->aera += (a->corners[i].x-a->pos.x)*(a->corners[i+1].y-a->pos.y) 
+               - (a->corners[i+1].x-a->pos.x)*(a->corners[i].y-a->pos.y);
+   }
+   /* And the last one to loop */
+   if (a->ncorners > 0) {
+      i = a->ncorners-1;
+      a->aera += (a->corners[i].x-a->pos.x)*(a->corners[0].y-a->pos.y) 
+               - (a->corners[0].x-a->pos.x)*(a->corners[i].y-a->pos.y);
+   }
+   a->aera /= 2;
+
+   /* Compute number of asteroids */
+   a->nb      = floor( ABS(a->aera) / 500000 * a->density );
+   a->ndebris = floor(100*a->density);
+
+   /* Added asteroid. */
+   sys->nasteroids++;
+
+   /* Initialize the convex subsets. */
+   a->subsets = malloc( sizeof(AsteroidSubset) );
+   a->subsets[0].ncorners = a->ncorners;
+   a->subsets[0].corners = a->corners;
+   a->nsubsets = 1;
+
+   /* Cut the subsets until they are all convex. */
+   retry  = 1;
+   getout = 0;
+
+   while (retry) {
+      retry = 0;
+      for (i=0; i<a->nsubsets; i++) {
+         sub = &a->subsets[i];
+         for (j=0; j<sub->ncorners; j++) {
+            /* Find the 2 other corners. */
+            if (j>0 && j<sub->ncorners-1) {
+               k = j-1;
+               l = j+1;
+            }
+            else if (j==0) {
+               k = sub->ncorners-1;
+               l = j+1;
+            }
+            else { /* (j==ncorners-1) */
+               k = j-1;
+               l = 0;
+            }
+
+            /* Test the orientation of the angle towards signed aera. */
+            pro = (sub->corners[k].x-sub->corners[j].x) *
+                  (sub->corners[l].y-sub->corners[j].y) - 
+                  (sub->corners[k].y-sub->corners[j].y) *
+                  (sub->corners[l].x-sub->corners[j].x);
+
+            if (pro * a->aera > 0) {
+               /* Cut here, find an other point. */
+               x = (sub->corners[k].x + sub->corners[l].x)/2;
+               y = (sub->corners[k].y + sub->corners[l].y)/2;
+
+               pro = 1.;
+               for (m=0; m<sub->ncorners; m++) {
+                  prob = (x-sub->corners[j].x)*(sub->corners[m].x-sub->corners[j].x) +
+                         (y-sub->corners[j].y)*(sub->corners[m].y-sub->corners[j].y);
+                  if ( prob < pro ) {
+                     pro = prob;
+                     n = m;
+                  }
+               }
+
+               if (pro>=0)
+                  WARN("Non-convex asteroid polygon seems to be self-intersecting in %d", sys->name);
+
+               /* Split subset i into 2 subsets */
+
+               a->subsets = realloc( a->subsets, (a->nsubsets+1)*sizeof(AsteroidSubset) );
+
+               /* Need to recall who is sub. */
+               sub = &a->subsets[i];
+               newsub = &a->subsets[a->nsubsets];
+
+               /* First, make sure n<j: invert j and n if needed */
+               if (j<n) {k=n; n=j; j=k;}
+
+               newsub->ncorners = j-n+1;
+               newsub->corners  = malloc( sizeof(Vector2d)*newsub->ncorners );
+
+               /* Add some nodes to the new subset */
+               k = 0;
+               for (m=n; m<j+1; m++) {
+                  newsub->corners[k] = sub->corners[m];
+                  k++;
+               }
+
+               /* Remove some nodes to the old subset */
+               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j) );
+               sub->ncorners = sub->ncorners-(j-n)+1;
+               sub->corners = realloc(sub->corners, sizeof(AsteroidSubset) * sub->ncorners);
+
+               a->nsubsets++;
+
+               getout = 1;
+               break;
+            }
+         }
+         if (getout) break;
+      }
+   }
+   for (i=0; i<a->nsubsets; i++) {
+      /* Get a center of the polygon */
+      sub = &a->subsets[i];
+      sub->pos.x = 0;
+      sub->pos.y = 0;
+      sub->aera  = 0;
+      for (j=0; j<sub->ncorners; j++) {
+         sub->pos.x += sub->corners[j].x;
+         sub->pos.y += sub->corners[j].y;
+      }
+      sub->pos.x /= sub->ncorners;
+      sub->pos.y /= sub->ncorners;
+
+      /* Compute the aera as a sum of triangles */
+      for (j=0; j<sub->ncorners-1; j++) {
+         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[j+1].y-sub->pos.y) 
+                    - (sub->corners[j+1].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+      }
+      /* And the last one to loop */
+      if (sub->ncorners > 0) {
+         j = sub->ncorners-1;
+         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[0].y-sub->pos.y) 
+                    - (sub->corners[0].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+      }
+      sub->aera /= 2;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the asteroid anchor into a system.
+ *
+ *    @param parent System parent node.
+ *    @param sys System.
+ */
+static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
+{
+   xmlNodePtr cur, node;
+
+   node  = parent->xmlChildrenNode;
+
+   do { /* load all the data */
+      if (xml_isNode(node,"asteroids")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"asteroid"))
+               system_parseAsteroidField( cur, sys );
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+}
+
+
+/**
  * @brief Loads the entire universe into ram - pretty big feat eh?
  *
  *    @return 0 on success.
  */
 int space_load (void)
 {
-   int i, j;
+   int i, j, len;
    int ret;
    StarSystem *sys;
+   char **asteroid_files, file[PATH_MAX];
 
    /* Loading. */
    systems_loading = 1;
@@ -2696,6 +3047,21 @@ int space_load (void)
 
    /* Load systems. */
    ret = systems_load();
+   if (ret < 0)
+      return ret;
+
+   /* Load asteroid graphics. */
+   asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
+   asteroid_gfx = malloc( sizeof(StarSystem) * systems_mstack );
+
+   for (i=0; i<(int)nasterogfx; i++) {
+      len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
+      nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
+      asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+   }
+
+   /* Load asteroid types. */
+   ret = asteroidTypes_load();
    if (ret < 0)
       return ret;
 
@@ -2723,6 +3089,92 @@ int space_load (void)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the asteroids types.
+ *
+ *    @return 0 on success.
+ */
+static int asteroidTypes_load (void)
+{
+   int i, len;
+   AsteroidType *at;
+   uint32_t bufsize;
+   char *buf, *str, file[PATH_MAX];
+   xmlNodePtr node, cur;
+   xmlDocPtr doc;
+
+   /* Load the data. */
+   buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
+   if (buf == NULL) {
+      WARN("Unable to read data from '%s'", ASTERO_DATA_PATH);
+      return -1;
+   }
+
+   /* Load the document. */
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN("Unable to parse document '%s'", ASTERO_DATA_PATH);
+      return -1;
+   }
+
+   /* Get the root node. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,"Asteroid_types")) {
+      WARN("Malformed '"ASTERO_DATA_PATH"' file: missing root element 'Asteroid_types'");
+      return -1;
+   }
+
+   /* Get the first node. */
+   node = node->xmlChildrenNode; /* first event node */
+   if (node == NULL) {
+      WARN("Malformed '"ASTERO_DATA_PATH"' file: does not contain elements");
+      return -1;
+   }
+
+   do {
+      if (xml_isNode(node,"asteroid")) {
+
+         /* Grow memory. */
+         asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*(asteroid_ntypes+1));
+
+         /* Load it. */
+         at = &asteroid_types[asteroid_ntypes];
+         at->gfxs = NULL;
+
+         cur = node->children;
+         i = 0;
+         do {
+            if (xml_isNode(cur,"gfx")) {
+               at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
+               str = xml_get(cur);
+               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
+               nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
+               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+               i++;
+            }
+            else if (xml_isNode(cur,"id"))
+               at->ID = xml_getStrd(cur);
+         } while (xml_nextNode(cur));
+
+         if (i==0)
+            WARN("Asteroid type has no gfx associated.");
+
+         at->ngfx = i;
+         asteroid_ntypes++;
+      }
+   } while (xml_nextNode(node));
+
+   /* Shrink to minimum. */
+   asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*asteroid_ntypes);
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(buf);
 
    return 0;
 }
@@ -2784,6 +3236,7 @@ static int systems_load (void)
 
       sys = system_new();
       system_parse( sys, node );
+      system_parseAsteroids(node, sys); /* load the asteroids anchors */
 
       /* Clean up. */
       xmlFreeDoc(doc);
@@ -2873,7 +3326,11 @@ void space_renderOverlay( const double dt )
  */
 void planets_render (void)
 {
-   int i;
+   int i, j;
+   double x, y;
+   AsteroidAnchor *ast;
+   Pilot *pplayer;
+   Solid *psolid;
 
    /* Must be a system. */
    if (cur_system==NULL)
@@ -2887,6 +3344,26 @@ void planets_render (void)
    for (i=0; i < cur_system->nplanets; i++)
       if (cur_system->planets[i]->real == ASSET_REAL)
          space_renderPlanet( cur_system->planets[i] );
+
+   /* Get the player in order to compute the offset for debris. */
+   pplayer = pilot_get( PLAYER_ID );
+   if (pplayer != NULL)
+      psolid  = pplayer->solid;
+
+   /* Render the asteroids & debris. */
+   for (i=0; i < cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+      for (j=0; j < ast->nb; j++)
+        space_renderAsteroid( &ast->asteroids[j] );
+
+      if (pplayer != NULL) {
+         x = psolid->pos.x - SCREEN_W/2;
+         y = psolid->pos.y - SCREEN_H/2;
+         for (j=0; j < ast->ndebris; j++)
+           space_renderDebris( &ast->debris[j], x, y );
+      }
+   }
+
 }
 
 
@@ -2928,12 +3405,59 @@ static void space_renderPlanet( Planet *p )
 
 
 /**
+ * @brief Renders an asteroid.
+ */
+static void space_renderAsteroid( Asteroid *a )
+{
+   double scale;
+   AsteroidType *at;
+
+   /* Check if needs scaling. */
+   if (a->appearing == 1)
+      scale = CLAMP( 0., 1., a->timer / 2. );
+   else if (a->appearing == 2)
+      scale = CLAMP( 0., 1., 1. - a->timer / 2. );
+   else
+      scale = 1.;
+
+   at = &asteroid_types[a->type];
+
+   gl_blitSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
+                                  a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
+}
+
+
+/**
+ * @brief Renders a debris.
+ */
+static void space_renderDebris( Debris *d, double x, double y )
+{
+   double scale;
+   Vector2d *testVect;
+
+   scale = .5;
+
+   testVect = malloc(sizeof(Vector2d));
+   testVect->x = d->pos.x + x;
+   testVect->y = d->pos.y + y;
+
+   if ( space_isInField( testVect ) == 0 )
+      gl_blitSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
+                                     d->pos.x + x, d->pos.y + y, scale, scale, 0, 0, NULL );
+   free(testVect);
+}
+
+
+/**
  * @brief Cleans up the system.
  */
 void space_exit (void)
 {
-   int i;
+   int i, j;
    Planet *pnt;
+   AsteroidAnchor *ast;
+   StarSystem *sys;
+   AsteroidType *at;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -2942,6 +3466,11 @@ void space_exit (void)
    if (jumpbuoy_gfx != NULL)
       gl_freeTexture(jumpbuoy_gfx);
    jumpbuoy_gfx = NULL;
+
+   /* Free asteroid graphics. */
+   for (i=0; i<(int)nasterogfx; i++)
+      gl_freeTexture(asteroid_gfx[i]);
+   free(asteroid_gfx);
 
    /* Free the names. */
    if (planetname_stack != NULL)
@@ -3006,16 +3535,40 @@ void space_exit (void)
          free(systems_stack[i].planets);
       if (systems_stack[i].planetsid != NULL)
          free(systems_stack[i].planetsid);
+
+      /* Free the asteroids. */
+      sys = &systems_stack[i];
+      
+      for (j=0; j < sys->nasteroids; j++) {
+         ast = &sys->asteroids[j];
+         free(ast->asteroids);
+         free(ast->debris);
+         free(ast->subsets);
+      }
+      free(sys->asteroids);
+
    }
    free(systems_stack);
    systems_stack = NULL;
    systems_nstack = 0;
    systems_mstack = 0;
 
+   /* Free the asteroid types. */
+   for (i=0; i < asteroid_ntypes; i++) {
+      at = &asteroid_types[i];
+      free(at[i].ID);
+      for (j=0; j<at->ngfx; j++) {
+         gl_freeTexture(at->gfxs[j]);
+      }
+   }
+   free(asteroid_types);
+   asteroid_types = NULL;
+   asteroid_ntypes = 0;
+
    /* Free landing lua. */
-   if (landing_lua != NULL)
-      lua_close( landing_lua );
-   landing_lua = NULL;
+   if (landing_env != LUA_NOREF)
+      nlua_freeEnv( landing_env );
+   landing_env = LUA_NOREF;
 }
 
 
@@ -3542,6 +4095,55 @@ void space_reconstructPresences( void )
 
 
 /**
+ * @brief See if the position is in an asteroid field.
+ *
+ *    @param p pointer to the position.
+ *    @return -1 If false; index of the field otherwise.
+ */
+int space_isInField ( Vector2d *p )
+{
+   int i, j, k, isin, istotin;
+   AsteroidAnchor *a;
+   AsteroidSubset *sub;
+   double aera;
+
+   istotin = -1;
+   for (i=0; i < cur_system->nasteroids; i++) {
+      a = &cur_system->asteroids[i];
+
+      for (k=0; k < a->nsubsets; k++) {
+         sub = &a->subsets[k];
+         isin = 1;
+         /* test every signed aera */
+         for (j=0; j < sub->ncorners-1; j++) {
+            aera = (sub->corners[j].x-p->x)*(sub->corners[j+1].y-p->y) 
+                 - (sub->corners[j+1].x-p->x)*(sub->corners[j].y-p->y);
+            if (sub->aera*aera <= 0) {
+               isin = 0;
+               break;
+            }
+         }
+         /* And the last one to loop */
+         if (sub->ncorners > 0) {
+            j = sub->ncorners-1;
+            aera = (sub->corners[j].x-p->x)*(sub->corners[0].y-p->y) 
+                 - (sub->corners[0].x-p->x)*(sub->corners[j].y-p->y);
+            if (sub->aera*aera <= 0)
+               isin = 0;
+         }
+
+         if (isin) {
+            istotin = i;
+            break;
+         }
+      }
+   }
+
+   return istotin;
+}
+
+
+/**
  * @brief See if the system has a planet or station.
  *
  *    @param sys Pointer to the system to process.
@@ -3571,8 +4173,8 @@ int system_hasPlanet( const StarSystem *sys )
  */
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
-   int id, errf;
-   lua_State *L;
+   int id;
+   nlua_env env;
    SystemPresence *presence;
 
    /* Remove the presence. */
@@ -3584,58 +4186,35 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    presence->curUsed = MAX( 0, sys->presence[id].curUsed );
 
    /* Run lower hook. */
-   L = faction_getScheduler( faction );
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -5;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
+   env = faction_getScheduler( faction );
 
    /* Run decrease function if applicable. */
-   lua_getglobal( L, "decrease" ); /* f */
-   if (lua_isnil(L,-1)) {
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+   nlua_getenv( env, "decrease" ); /* f */
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
       return;
    }
-   lua_pushnumber( L, presence->curUsed ); /* f, cur */
-   lua_pushnumber( L, presence->value );   /* f, cur, max */
-   lua_pushnumber( L, presence->timer );   /* f, cur, max, timer */
+   lua_pushnumber( naevL, presence->curUsed ); /* f, cur */
+   lua_pushnumber( naevL, presence->value );   /* f, cur, max */
+   lua_pushnumber( naevL, presence->timer );   /* f, cur, max, timer */
 
    /* Actually run the function. */
-   if (lua_pcall(L, 3, 1, errf)) { /* error has occurred */
+   if (nlua_pcall(env, 3, 1)) { /* error has occurred */
       WARN("Lua decrease script for faction '%s' : %s",
-            faction_name( faction ), lua_tostring(L,-1));
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+            faction_name( faction ), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
       return;
    }
 
    /* Output is handled the same way. */
-   if (!lua_isnumber(L,-1)) {
+   if (!lua_isnumber(naevL,-1)) {
       WARN("Lua spawn script for faction '%s' failed to return timer value.",
             faction_name( presence->faction ) );
-#if DEBUGGING
-      lua_pop(L,2);
-#else /* DEBUGGING */
-      lua_pop(L,1);
-#endif /* DEBUGGING */
+      lua_pop(naevL,1);
       return;
    }
-   presence->timer = lua_tonumber(L,-1);
-#if DEBUGGING
-   lua_pop(L,2);
-#else /* DEBUGGING */
-   lua_pop(L,1);
-#endif /* DEBUGGING */
+   presence->timer = lua_tonumber(naevL,-1);
+   lua_pop(naevL,1);
 }
 
 

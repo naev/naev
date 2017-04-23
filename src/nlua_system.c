@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
@@ -74,55 +73,17 @@ static const luaL_reg system_methods[] = {
    { "mrkRm", systemL_mrkRm },
    {0,0}
 }; /**< System metatable methods. */
-static const luaL_reg system_cond_methods[] = {
-   { "cur", systemL_cur },
-   { "get", systemL_get },
-   { "getAll", systemL_getAll },
-   { "__eq", systemL_eq },
-   { "__tostring", systemL_name },
-   { "name", systemL_name },
-   { "faction", systemL_faction },
-   { "nebula", systemL_nebula },
-   { "jumpDist", systemL_jumpdistance },
-   { "jumpPath", systemL_jumpPath },
-   { "adjacentSystems", systemL_adjacent },
-   { "jumps", systemL_jumps },
-   { "presences", systemL_presences },
-   { "planets", systemL_planets },
-   { "presence", systemL_presence },
-   { "radius", systemL_radius },
-   { "known", systemL_isknown },
-   {0,0}
-}; /**< Read only system metatable methods. */
 
 
 /**
  * @brief Loads the system library.
  *
- *    @param L State to load system library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load system library into.
  *    @return 0 on success.
  */
-int nlua_loadSystem( lua_State *L, int readonly )
+int nlua_loadSystem( nlua_env env )
 {
-   (void)readonly; /* only read only atm */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, SYSTEM_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, system_cond_methods);
-   else
-      luaL_register(L, NULL, system_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, SYSTEM_METATABLE);
-
+   nlua_register(env, SYSTEM_METATABLE, system_methods, 1);
    return 0; /* No error */
 }
 
@@ -807,6 +768,8 @@ static int systemL_setknown( lua_State *L )
    int b, r, i;
    StarSystem *sys;
 
+   NLUA_CHECKRW(L);
+
    r = 0;
    sys = luaL_validsystem(L, 1);
    b   = lua_toboolean(L, 2);
@@ -852,6 +815,7 @@ static int systemL_setknown( lua_State *L )
 static int systemL_mrkClear( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    ovr_mrkClear();
    return 0;
 }
@@ -872,6 +836,8 @@ static int systemL_mrkAdd( lua_State *L )
    const char *str;
    Vector2d *vec;
    unsigned int id;
+
+   NLUA_CHECKRW(L);
 
    /* Handle parameters. */
    str   = luaL_checkstring( L, 1 );
@@ -895,6 +861,7 @@ static int systemL_mrkAdd( lua_State *L )
 static int systemL_mrkRm( lua_State *L )
 {
    unsigned int id;
+   NLUA_CHECKRW(L);
    id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );
    return 0;

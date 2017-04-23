@@ -19,7 +19,6 @@
 
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "nlua_faction.h"
 #include "nlua_ship.h"
 #include "nlua_misn.h"
@@ -176,13 +175,9 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    }
 
    /* init Lua */
-   mission->L = nlua_newState();
-   if (mission->L == NULL) {
-      WARN("Unable to create a new Lua state.");
-      return -1;
-   }
-   nlua_loadBasic( mission->L ); /* pairs and such */
-   misn_loadLibs( mission->L ); /* load our custom libraries */
+   mission->env = nlua_newEnv(1);
+
+   misn_loadLibs( mission->env ); /* load our custom libraries */
 
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
@@ -190,11 +185,11 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       WARN("Mission '%s' Lua script not found.", misn->lua );
       return -1;
    }
-   if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
+   if (nlua_dobufenv(mission->env, buf, bufsize, misn->lua) != 0) {
       WARN("Error loading mission file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
-            misn->lua, lua_tostring(mission->L,-1));
+            misn->lua, lua_tostring(naevL, -1));
       free(buf);
       return -1;
    }
@@ -532,8 +527,13 @@ void mission_cleanup( Mission* misn )
    }
    if (misn->osd > 0)
       osd_destroy(misn->osd);
-   if (misn->L)
-      lua_close(misn->L);
+   /*
+    * XXX With the way the mission code works, this function is called on a
+    * Mission struct of all zeros. Looking at the implementation, luaL_ref()
+    * never returns 0, but this is probably undefined behavior.
+    */
+   if (misn->env != LUA_NOREF && misn->env != 0)
+      nlua_freeEnv(misn->env);
 
    /* Data. */
    if (misn->title != NULL)
@@ -787,7 +787,6 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
 #ifdef DEBUGGING
    /* To check if mission is valid. */
-   lua_State *L;
    int ret;
    char *buf;
    uint32_t len;
@@ -820,15 +819,15 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
 #ifdef DEBUGGING
          /* Check to see if syntax is valid. */
-         L = luaL_newstate();
          buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(L, buf, len, temp->name );
+         ret = luaL_loadbuffer(naevL, buf, len, temp->name );
          if (ret == LUA_ERRSYNTAX) {
             WARN("Mission Lua '%s' of mission '%s' syntax error: %s",
-                  temp->name, temp->lua, lua_tostring(L,-1) );
+                  temp->name, temp->lua, lua_tostring(naevL,-1) );
+         } else {
+            lua_pop(naevL, 1);
          }
          free(buf);
-         lua_close(L);
 #endif /* DEBUGGING */
 
          continue;
@@ -1050,7 +1049,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Write Lua magic */
          xmlw_startElem(writer,"lua");
-         nxml_persistLua( player_missions[i]->L, writer );
+         nxml_persistLua( player_missions[i]->env, writer );
          xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
@@ -1221,7 +1220,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             if (xml_isNode(cur,"lua"))
                /* start the unpersist routine */
-               nxml_unpersistLua( misn->L, cur );
+               nxml_unpersistLua( misn->env, cur );
 
          } while (xml_nextNode(cur));
 

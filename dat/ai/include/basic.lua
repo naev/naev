@@ -155,7 +155,7 @@ function follow ()
       ai.poptask()
       return
    end
-   
+
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
  
@@ -189,6 +189,32 @@ function follow_accurate ()
 
 end
 
+-- Default action for non-leader pilot in fleet
+function follow_fleet ()
+   local leader = ai.pilot():leader()
+ 
+   if leader == nil or not leader:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = leader
+   if mem.form_pos ~= nil then
+      local angle, radius, method = unpack(mem.form_pos)
+      goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method)
+   end
+
+   
+   local dir   = ai.face(goal)
+   local dist  = ai.dist(goal)
+ 
+   -- Must approach
+   if dir < 10 and dist > 300 then
+      ai.accel()
+ 
+   end
+end
+
 --[[
 -- Tries to runaway and jump asap.
 --]]
@@ -218,7 +244,8 @@ function __hyperspace_shoot ()
          return
       end
    end
-   ai.pushsubtask( "__hyp_approach_shoot", target )
+   local pos = ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach_shoot", pos )
 end
 function __hyp_approach_shoot ()
    -- Shoot
@@ -304,6 +331,7 @@ function __landstop ()
       if not ai.land() then
          ai.popsubtask()
       else
+         ai.pilot():msg(ai.pilot():followers(), "land")
          ai.poptask() -- Done, pop task
       end
    end
@@ -321,7 +349,8 @@ function runaway ()
    if t == nil then
       ai.pushsubtask( "__run_target" )
    else
-      ai.pushsubtask( "__run_hyp", t )
+      local pos = ai.sethyptarget(t)
+      ai.pushsubtask( "__run_hyp", pos )
    end
 end
 function runaway_nojump ()
@@ -419,7 +448,8 @@ function hyperspace ()
          return
       end
    end
-   ai.pushsubtask( "__hyp_approach", target )
+   local pos = ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach", pos )
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
@@ -452,6 +482,7 @@ function __hyp_brake ()
 end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
+      ai.pilot():msg(ai.pilot():followers(), "hyperspace", ai.nearhyptarget())
       ai.poptask()
    else
       ai.popsubtask()

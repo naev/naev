@@ -209,6 +209,21 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
+# --with-libzip
+AC_MSG_CHECKING([whether to use libzip])
+AC_ARG_WITH([libzip],
+  AC_HELP_STRING([--with-libzip],
+     [use libzip for ndata (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_libzip=yes
+    ], [
+      with_libzip=no
+    ])
+  ], [
+    with_libzip=yes
+  ])
+AC_MSG_RESULT([$with_libzip])
+
 # --enable-lua
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
@@ -277,7 +292,9 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 PKG_CHECK_MODULES([PNG], [libpng])
 
 # libzip
-PKG_CHECK_MODULES([ZIP], [libzip])
+AS_IF([test "$with_libzip" = "yes"], [
+  PKG_CHECK_MODULES([ZIP], [libzip])
+])
 
 # lua
 case "$used_lua" in
@@ -345,7 +362,7 @@ AS_IF([test "$with_openal" = "yes"], [
 AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
 AS_IF([test "$with_sdlmixer" = "yes"], [
   PKG_CHECK_MODULES([SDLMIXER], [$SDLMIXER_NAME], [have_sdlmixer=yes], [have_sdlmixer=no])
-])
+], [have_sdlmixer=no])
 
 # SDL_image
 VAR_SAVE([LIBS])
@@ -555,6 +572,11 @@ AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
+# USE_LIBZIP
+AS_IF([test "x$with_libzip" = "xyes"], [
+  AC_DEFINE([USE_LIBZIP], 1, [Define to 1 if using libzip])
+])
+
 # Operating system
 case "$host" in
   *-linux*)
@@ -634,6 +656,7 @@ echo
 AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:   $used_csparse])
 AC_MSG_NOTICE([  lua:       $used_lua])
+AC_MSG_NOTICE([  libzip:    $with_libzip])
 echo
 AC_MSG_NOTICE([utils:       $have_utils])
 AC_MSG_NOTICE([  mkspr:     $have_mkspr])

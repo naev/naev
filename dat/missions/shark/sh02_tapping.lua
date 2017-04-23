@@ -218,7 +218,7 @@ function interceptors()
    --spawning high speed Hyenas
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Hyena","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Hyena","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
       
       badguys[i]:rename("Mercenary")
@@ -243,7 +243,7 @@ function hvy_intercept()
    --spawning Lancelots
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Lancelot","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Lancelot","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
       
       badguys[i]:rename("Mercenary")
@@ -269,7 +269,7 @@ function corvette()
    --spawning Admonishers
    number = {1,2}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Admonisher","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Admonisher","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
       badguys[i]:rename("Mercenary")
       
@@ -290,7 +290,7 @@ end
 
 function cruiser()
    --spawning a Krestel with massive missile weaponry
-   badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )[1]
+   badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )
    badguy:setHostile()
    badguy:rename("Mercenary")
    
@@ -316,7 +316,7 @@ function bombers()
    --spawning Ancestors
    number = {1,2,3}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Ancestor","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Ancestor","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
       badguys[i]:rename("Mercenary")
       
@@ -341,7 +341,7 @@ end
 
 function add_llama()
    --adding an useless Llama
-   useless = pilot.addRaw( "Llama","mercenary", nil, "Mercenary" )[1]
+   useless = pilot.addRaw( "Llama","mercenary", nil, "Mercenary" )
    useless:setHostile()
    useless:rename("Amateur Mercenary")
    

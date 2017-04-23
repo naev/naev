@@ -107,22 +107,22 @@ function attack ()
    attackers[2*n+1] = pilot.add("Dvaered Phalanx", nil, source_system)[1]
    attackers[2*n+2] = pilot.add("Dvaered Phalanx", nil, source_system)[1]
    attackers[2*n+3] = pilot.add("Dvaered Vigilance", nil, source_system)[1]
-   attackers[2*n+4] = pilot.addRaw("Rhino", "dvaered", source_system, "Thugs")[1] --some transport ships
-   attackers[2*n+5] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")[1]
-   attackers[2*n+6] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")[1]
-   attackers[2*n+7] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")[1]
+   attackers[2*n+4] = pilot.addRaw("Rhino", "dvaered", source_system, "Thugs") --some transport ships
+   attackers[2*n+5] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")
+   attackers[2*n+6] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")
+   attackers[2*n+7] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")
    attackers[2*n+8] = pilot.add("Dvaered Goddard", nil, source_system)[1]
 
    -- The transport ships tend to run away
-   attackers[2*n+4]:memory("shield_run", 70)
-   attackers[2*n+5]:memory("shield_run", 70)
-   attackers[2*n+6]:memory("shield_run", 70)
-   attackers[2*n+7]:memory("shield_run", 70)
+   attackers[2*n+4]:memory().shield_run = 70
+   attackers[2*n+5]:memory().shield_run = 70
+   attackers[2*n+6]:memory().shield_run = 70
+   attackers[2*n+7]:memory().shield_run = 70
 
-   attackers[2*n+4]:memory("shield_return", 99)
-   attackers[2*n+5]:memory("shield_return", 99)
-   attackers[2*n+6]:memory("shield_return", 99)
-   attackers[2*n+7]:memory("shield_return", 99)
+   attackers[2*n+4]:memory().shield_return = 99
+   attackers[2*n+5]:memory().shield_return = 99
+   attackers[2*n+6]:memory().shield_return = 99
+   attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
 

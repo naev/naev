@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_evt.h"
 #include "nlua_misn.h"
@@ -50,12 +49,12 @@ static const luaL_reg naev_methods[] = {
 /**
  * @brief Loads the Naev Lua library.
  *
- *    @param L Lua state.
+ *    @param L Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadNaev( lua_State *L )
+int nlua_loadNaev( nlua_env env )
 {
-   luaL_register(L, "naev", naev_methods);
+   nlua_register(env, "naev", naev_methods, 0);
    return 0;
 }
 
@@ -178,6 +177,8 @@ static int naev_keyEnable( lua_State *L )
    const char *key;
    int enable;
 
+   NLUA_CHECKRW(L);
+
    /* Parameters. */
    key = luaL_checkstring(L,1);
    enable = lua_toboolean(L,2);
@@ -195,7 +196,7 @@ static int naev_keyEnable( lua_State *L )
  */
 static int naev_keyEnableAll( lua_State *L )
 {
-   (void) L;
+   NLUA_CHECKRW(L);
    input_enableAll();
    return 0;
 }
@@ -209,7 +210,7 @@ static int naev_keyEnableAll( lua_State *L )
  */
 static int naev_keyDisableAll( lua_State *L )
 {
-   (void) L;
+   NLUA_CHECKRW(L);
    input_disableAll();
    return 0;
 }
@@ -228,11 +229,13 @@ static int naev_eventStart( lua_State *L )
    int ret;
    const char *str;
 
+   NLUA_CHECKRW(L);
+
    str = luaL_checkstring(L, 1);
    ret = event_start( str, NULL );
 
    /* Get if console. */
-   lua_getglobal(L, "__cli");
+   nlua_getenv(__NLUA_CURENV, "__cli");
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);
@@ -255,11 +258,13 @@ static int naev_missionStart( lua_State *L )
    int ret;
    const char *str;
 
+   NLUA_CHECKRW(L);
+
    str = luaL_checkstring(L, 1);
    ret = mission_start( str, NULL );
 
    /* Get if console. */
-   lua_getglobal(L, "__cli");
+   nlua_getenv(__NLUA_CURENV, "__cli");
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);

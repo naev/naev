@@ -8,7 +8,7 @@
   <mass>200</mass>
   <price>600000</price>
   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 5501 core system is a high-end solution for medium ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
-  <gfx_store>core_system03</gfx_store>
+  <gfx_store>core_system04</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>110</cpu_max>

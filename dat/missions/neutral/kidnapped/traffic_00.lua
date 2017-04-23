@@ -178,7 +178,7 @@ function enter()
     kidnappers:setFaction("Kidnappers")
     kidnappers:setHilight(true)
     kidnappers:setVisible(true)
-    kidnappers:memory("aggressive", true)
+    kidnappers:memory().aggressive = true
     kidnappers:control()
     idlehook = hook.pilot(kidnappers, "idle", "idle")
     attackhook = hook.pilot(kidnappers, "attacked", "attackedkidnappers")

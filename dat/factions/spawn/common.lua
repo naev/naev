@@ -4,7 +4,7 @@ scom = {}
 
 
 -- @brief Calculates when next spawn should occur
-scom.calcNextSpawn = function( cur, new, max )
+function scom.calcNextSpawn( cur, new, max )
     if cur == 0 then return rnd.rnd(0, 10) end -- Kickstart spawning.
     
     local stddelay = 10 -- seconds
@@ -28,7 +28,7 @@ end
       @param weights Weighted spawn function table to use to generate the spawn table.
       @return The matching spawn table.
 --]]
-scom.createSpawnTable = function( weights )
+function scom.createSpawnTable( weights )
    local spawn_table = {}
    local max = 0
 
@@ -54,7 +54,7 @@ end
 
 
 -- @brief Chooses what to spawn
-scom.choose = function( stable )
+function scom.choose( stable )
    local r = rnd.rnd()
    for k,v in ipairs( stable ) do
       if r < v["chance"] then
@@ -66,14 +66,19 @@ end
 
 
 -- @brief Actually spawns the pilots
-scom.spawn = function( pilots )
+function scom.spawn( pilots )
    local spawned = {}
+   local leader = nil
    for k,v in ipairs(pilots) do
       local p
       if type(v["pilot"])=='function' then
          p = v["pilot"]() -- Call function
       elseif not v["pilot"][1] then
-         p = pilot.add( v["pilot"] )
+         local pos = nil
+         if leader ~= nil then
+            pos = leader:pos()
+         end
+         p = pilot.add( v["pilot"], nil, pos )
       else
          p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5])
       end
@@ -82,6 +87,13 @@ scom.spawn = function( pilots )
       end
       local presence = v["presence"] / #p
       for _,vv in ipairs(p) do
+         if pilots.__fleet then
+            if leader == nil then
+               leader = vv
+            else
+               vv:setLeader(leader)
+            end
+         end
          spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
       end
    end
@@ -90,8 +102,8 @@ end
 
 
 -- @brief spawn a pilot with addRaw
-scom.spawnRaw = function( ship, name, ai, equip, faction)
-   local p = pilot.addRaw( ship, ai, nil, equip )
+function scom.spawnRaw( ship, name, ai, equip, faction)
+   local p = {pilot.addRaw( ship, ai, nil, equip )}
    p[1]:rename(name)
    p[1]:setFaction(faction)
    return p
@@ -99,7 +111,7 @@ end
 
 
 -- @brief adds a pilot to the table
-scom.addPilot = function( pilots, name, presence )
+function scom.addPilot( pilots, name, presence )
    pilots[ #pilots+1 ] = { pilot = name, presence = presence }
    if pilots[ "__presence" ] then
       pilots[ "__presence" ] = pilots[ "__presence" ] + presence
@@ -110,7 +122,7 @@ end
 
 
 -- @brief Gets the presence value of a group of pilots
-scom.presence = function( pilots )
+function scom.presence( pilots )
    if pilots[ "__presence" ] then
       return pilots[ "__presence" ]
    else
@@ -120,7 +132,7 @@ end
 
 
 -- @brief Default decrease function
-scom.decrease = function( cur, max, timer )
+function scom.decrease( cur, max, timer )
    return timer
 end
 

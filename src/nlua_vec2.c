@@ -16,7 +16,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 
@@ -64,24 +63,12 @@ static const luaL_reg vector_methods[] = {
 /**
  * @brief Loads the vector metatable.
  *
- *    @param L State to load the vector metatable into.
+ *    @param env Environment to load the vector metatable into.
  *    @return 0 on success.
  */
-int nlua_loadVector( lua_State *L )
+int nlua_loadVector( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, VECTOR_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, vector_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, VECTOR_METATABLE);
-
+   nlua_register(env, VECTOR_METATABLE, vector_methods, 1);
    return 0;
 }
 
