@@ -106,6 +106,7 @@ function default_hit( current, amount, source, secondary )
    local cap
    local mod = 1
    if source == "distress" then
+      cap   = _fcap_kill
       delta = clone(_fdelta_distress)
 
       -- Adjust for secondary hit
