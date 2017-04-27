@@ -119,6 +119,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
+   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction name="Soromid">
@@ -169,6 +170,7 @@
   <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
+   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction name="Dvaered">
@@ -186,6 +188,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
+   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction name="Za'lek">
@@ -233,6 +236,18 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction name="Rogue FLF">
+  <static />
+  <invisible />
+  <player>-100</player>
+  <colour>red</colour>
+  <standing>static</standing>
+  <enemies>
+   <enemy>FLF</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
   </enemies>
  </faction>
  <faction name="Mercenary">

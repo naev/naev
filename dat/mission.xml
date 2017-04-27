@@ -745,6 +745,29 @@
    <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
   </avail>
  </mission>
+ <mission name="The FLF Coup">
+  <lua>flf/empa/flf_empa04</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <done>Raelid Outpost Rescue</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>not diff.isApplied("flf_vs_empire")</cond>
+  </avail>
+ </mission>
+ <mission name="Rogue FLF">
+  <lua>flf/flf_rogue</lua>
+  <avail>
+   <priority>5</priority>
+   <chance>550</chance>
+   <done>The FLF Coup</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
  <mission name="Take the Dvaered crew home">
   <lua>dvaered/dv_antiflf01</lua>
   <flags>
