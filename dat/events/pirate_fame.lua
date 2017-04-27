@@ -69,7 +69,9 @@ function create()
    -- If the player already has a low reputation, just stop there. 20 is the
    -- minimum required to land on a pirate planet without having to bribe the
    -- guy in charge of landing ships.
-   if fame <= 20 then
+   local floor = var.peek("_ffloor_decay_pirate")
+   if floor == nil then floor = -20 end
+   if fame <= floor then
       evt.finish()
    end
 
