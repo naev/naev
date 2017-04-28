@@ -66,27 +66,22 @@ end
 function create()
    local fame = faction.playerStanding("Pirate")
 
-   -- If the player already has a low reputation, just stop there. 20 is the
-   -- minimum required to land on a pirate planet without having to bribe the
-   -- guy in charge of landing ships.
    local floor = var.peek("_ffloor_decay_pirate")
    if floor == nil then floor = -20 end
    if fame <= floor then
       evt.finish()
    end
 
-   local maybe
+   local amt
    if using_pirate_ship() then
-      maybe = 0.05
+      amt = 0.15 + rnd.sigma() * 0.05
    elseif using_impressive_ship() then
-      maybe = 0.10
+      amt = 0.5 + rnd.sigma() * 0.10
    else
-      maybe = 0.15
+      amt = 1 + rnd.sigma() * 0.25
    end
 
-   if rnd.rnd() < maybe then
-      faction.modPlayerSingle("Pirate",-1)
-   end
+   faction.modPlayerSingle( "Pirate", -amt )
 
    evt.finish()
 end
