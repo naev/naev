@@ -181,7 +181,7 @@ char* planet_getServiceName( int service )
       case PLANET_SERVICE_COMMODITY:   return "Commodity";
       case PLANET_SERVICE_OUTFITS:     return "Outfits";
       case PLANET_SERVICE_SHIPYARD:    return "Shipyard";
-      case PLANET_SERVICE_BLACKMARKET: return "Black Market";
+      case PLANET_SERVICE_BLACKMARKET: return "Blackmarket";
    }
    return NULL;
 }
@@ -204,7 +204,7 @@ int planet_getService( char *name )
       return PLANET_SERVICE_OUTFITS;
    else if (strcmp(name,"Shipyard")==0)
       return PLANET_SERVICE_SHIPYARD;
-   else if (strcmp(name,"Black Market")==0)
+   else if (strcmp(name,"Blackmarket")==0)
       return PLANET_SERVICE_BLACKMARKET;
    return -1;
 }
