@@ -715,11 +715,11 @@ static int diff_patchHunk( UniHunk_t *hunk )
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
       /* Making an asset a black market. */
       case HUNK_TYPE_ASSET_BLACKMARKET:
-         planet_setBlackMarket( planet_get(hunk->u.name) );
+         planet_addService( planet_get(hunk->u.name), PLANET_SERVICE_BLACKMARKET );
          return 0;
       /* Making an asset a legal market. */
       case HUNK_TYPE_ASSET_LEGALMARKET:
-         planet_rmFlag( planet_get(hunk->u.name), PLANET_BLACKMARKET );
+         planet_rmService( planet_get(hunk->u.name), PLANET_SERVICE_BLACKMARKET );
          return 0;
 
       /* Adding a Jump. */
