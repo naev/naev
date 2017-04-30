@@ -176,6 +176,11 @@ end
 
 function land()
 
+   if isSlow then   --The player is still slow and will recover normal velocity
+      player.pilot():setSpeedLimit(0)
+      isSlow = false
+   end
+
    if planet.cur() == destplanet and stage == 0 then
       tk.msg( msg_title[3], msg_msg[3])
       player.pay(reward)
@@ -190,10 +195,6 @@ function land()
    if planet.cur() ~= curplanet and stage == 1 then  --Lands elsewhere without the engine
       tk.msg( misst, miss)
       abort()
-   end
-
-   if isSlow then   --The player is still slow and will recover normal velocity
-      player.pilot():setSpeedLimit(0)
    end
 
    curplanet = planet.cur()
