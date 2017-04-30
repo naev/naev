@@ -342,15 +342,38 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway ()
-   if __run_target() then return end
+
+   -- Target must exist
+   local target = ai.target()
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
 
    -- See if there's a target to use when running
    local t = ai.nearhyptarget()
-   if t == nil then
+   local p = ai.nearestplanet()
+
+   if p == nil and t == nil then
       ai.pushsubtask( "__run_target" )
-   else
+   elseif p == nil then
       local pos = ai.sethyptarget(t)
       ai.pushsubtask( "__run_hyp", pos )
+   elseif t == nil then
+      mem.land = p:pos()
+      ai.pushsubtask( "__landgo" )
+   else 
+      -- find which one is the closest
+      local pilpos = ai.pilot():pos()
+      local modt = vec2.mod(t:pos()-pilpos) 
+      local modp = vec2.mod(p:pos()-pilpos)
+      if modt < modp then
+         local pos = ai.sethyptarget(t)
+         ai.pushsubtask( "__run_hyp", pos )
+      else
+         mem.land = p:pos()
+         ai.pushsubtask( "__run_landgo" )
+      end
    end
 end
 function runaway_nojump ()
@@ -434,6 +457,42 @@ function __run_hypbrake ()
       ai.popsubtask()
       ai.pushsubtask( "__hyp_jump" )
    end
+end
+
+function __run_landgo ()
+   -- Shoot the target
+   __run_turret()
+
+   local target   = mem.land
+   local dist     = ai.dist( target )
+   local bdist    = ai.minbrakedist()
+
+   -- 2 methods depending on mem.careful
+   local dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
+
+   --Afterburner
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      if dist > 3 * bdist then
+         ai.weapset( 8, true )
+      else
+         ai.weapset( 8, false )
+      end
+   end
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
+      ai.accel()
+
+   -- Need to start braking
+   elseif dist < bdist then
+      ai.pushsubtask( "__landstop" )
+   end
+
 end
 
 
