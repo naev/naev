@@ -379,7 +379,7 @@ int shipyard_canBuy ( char *shipname, Planet *planet )
 
    /* Must have enough credits and the necessary license. */
    if ((!player_hasLicense(ship->license)) &&
-         ((planet == NULL) || (!planet_isBlackMarket(planet)))) {
+         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
       land_errDialogueBuild( "You lack the %s.", ship->license );
       failure = 1;
    }

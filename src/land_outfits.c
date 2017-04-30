@@ -615,7 +615,7 @@ int outfit_canBuy( char *name, Planet *planet )
    }
    /* Needs license. */
    if ((!player_hasLicense(outfit->license)) &&
-         ((planet == NULL) || (!planet_isBlackMarket(planet)))) {
+         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
       land_errDialogueBuild( "You need the '%s' license to buy this outfit.",
                outfit->license );
       failure = 1;

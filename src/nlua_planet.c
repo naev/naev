@@ -563,6 +563,7 @@ static int planetL_class(lua_State *L )
  *  - "commodity"<br />
  *  - "outfits"<br />
  *  - "shipyard"<br />
+ *  - "blackmarket"<br />
  *
  * @usage if p:services()["refuel"] then -- Planet has refuel service.
  * @usage if p:services()["shipyard"] then -- Planet has shipyard service.
@@ -812,7 +813,7 @@ static int planetL_commoditiesSold( lua_State *L )
 static int planetL_isBlackMarket( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-   lua_pushboolean(L, planet_isBlackMarket(p));
+   lua_pushboolean(L, planet_hasService(p, PLANET_SERVICE_BLACKMARKET));
    return 1;
 }
 

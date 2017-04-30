@@ -173,14 +173,15 @@ extern credits_t economy_getPrice( const Commodity *com,
 char* planet_getServiceName( int service )
 {
    switch (service) {
-      case PLANET_SERVICE_LAND:      return "Land";
-      case PLANET_SERVICE_INHABITED: return "Inhabited";
-      case PLANET_SERVICE_REFUEL:    return "Refuel";
-      case PLANET_SERVICE_BAR:       return "Bar";
-      case PLANET_SERVICE_MISSIONS:  return "Missions";
-      case PLANET_SERVICE_COMMODITY: return "Commodity";
-      case PLANET_SERVICE_OUTFITS:   return "Outfits";
-      case PLANET_SERVICE_SHIPYARD:  return "Shipyard";
+      case PLANET_SERVICE_LAND:        return "Land";
+      case PLANET_SERVICE_INHABITED:   return "Inhabited";
+      case PLANET_SERVICE_REFUEL:      return "Refuel";
+      case PLANET_SERVICE_BAR:         return "Bar";
+      case PLANET_SERVICE_MISSIONS:    return "Missions";
+      case PLANET_SERVICE_COMMODITY:   return "Commodity";
+      case PLANET_SERVICE_OUTFITS:     return "Outfits";
+      case PLANET_SERVICE_SHIPYARD:    return "Shipyard";
+      case PLANET_SERVICE_BLACKMARKET: return "Blackmarket";
    }
    return NULL;
 }
@@ -203,6 +204,8 @@ int planet_getService( char *name )
       return PLANET_SERVICE_OUTFITS;
    else if (strcmp(name,"Shipyard")==0)
       return PLANET_SERVICE_SHIPYARD;
+   else if (strcmp(name,"Blackmarket")==0)
+      return PLANET_SERVICE_BLACKMARKET;
    return -1;
 }
 
@@ -856,16 +859,6 @@ void planet_setKnown( Planet *p )
 {
    if (p->real == ASSET_REAL)
       planet_setFlag(p, PLANET_KNOWN);
-}
-
-
-/**
- * @brief Sets a planet as a black market, if it's real.
- */
-void planet_setBlackMarket( Planet *p )
-{
-   if (p->real == ASSET_REAL)
-      planet_setFlag(p, PLANET_BLACKMARKET);
 }
 
 
@@ -1904,6 +1897,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "shipyard"))
                      planet->services |= PLANET_SERVICE_SHIPYARD | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "blackmarket"))
+                     planet->services |= PLANET_SERVICE_BLACKMARKET;
                   else
                      WARN("Planet '%s' has unknown services tag '%s'", planet->name, ccur->name);
 
@@ -1935,7 +1930,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             }
 
             else if (xml_isNode(cur, "blackmarket")) {
-               planet_setBlackMarket(planet);
+               planet_addService(planet, PLANET_SERVICE_BLACKMARKET);
             }
          } while (xml_nextNode(cur));
          continue;
