@@ -113,7 +113,7 @@ int claim_test( Claim_t *claim )
    }
 
    /* Check strings. */
-   if (claim->strs != NULL) {
+   if ((claim->strs != NULL) && (claimed_strs != NULL)) {
       for (i=0; i<array_size(claim->strs); i++) {
          for (j=0; j<array_size(claimed_strs); j++) {
             if (strcmp( claim->strs[i], claimed_strs[j] )==0)
@@ -254,6 +254,8 @@ void claim_activate( Claim_t *claim )
 
    /* Add strings. */
    if (claim->strs != NULL) {
+      if (claimed_strs == NULL)
+         claimed_strs = array_create( char* );
       for (i=0; i<array_size(claim->strs); i++) {
          s = &array_grow( &claimed_strs );
          *s = strdup( claim->strs[i] );
