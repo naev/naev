@@ -936,19 +936,21 @@ static int misn_npcRm( lua_State *L )
 
 
 /**
- * @brief Tries to claim systems.
+ * @brief Tries to claim systems or strings.
  *
- * Claiming systems is a way to avoid mission collisions preemptively.
+ * Claiming systems and strings is a way to avoid mission collisions preemptively.
  *
- * Note it does not actually claim the systems if it fails to claim. It also
+ * Note it does not actually perform the claim if it fails to claim. It also
  *  does not work more than once.
  *
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
+ * @usage if not misn.claim( 'some_string' ) then misn.finish( false ) end
+ * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' ) then misn.finish( false ) end
  *
- *    @luatparam System|{System,...} systems Table of systems to claim or a single system.
+ *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
- * @luafunc claim( systems )
+ * @luafunc claim( params )
  */
 static int misn_claim( lua_State *L )
 {

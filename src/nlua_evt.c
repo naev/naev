@@ -285,19 +285,21 @@ static int evt_save( lua_State *L )
 
 
 /**
- * @brief Tries to claim systems.
+ * @brief Tries to claim systems or strings.
  *
- * Claiming systems is a way to avoid mission/event collisions preemptively.
+ * Claiming systems and strings is a way to avoid mission collisions preemptively.
  *
- * Note it does not actually claim the systems if it fails to claim. It also
- *  does not work more then once.
+ * Note it does not actually perform the claim if it fails to claim. It also
+ *  does not work more than once.
  *
  * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
  * @usage if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
+ * @usage if not evt.claim( 'some_string' ) then evt.finish( false ) end
+ * @usage if not evt.claim( { system.get("Gamma Polaris"), 'some_string' ) then evt.finish( false ) end
  *
- *    @luatparam System|{System,...} systems Table of systems to claim or a single system.
- *    @luatreturn number true if was able to claim, false otherwise.
- * @luafunc claim( systems )
+ *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
+ *    @luatreturn boolean true if was able to claim, false otherwise.
+ * @luafunc claim( params )
  */
 static int evt_claim( lua_State *L )
 {
