@@ -295,7 +295,7 @@ static int evt_save( lua_State *L )
  * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
  * @usage if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
  * @usage if not evt.claim( 'some_string' ) then evt.finish( false ) end
- * @usage if not evt.claim( { system.get("Gamma Polaris"), 'some_string' ) then evt.finish( false ) end
+ * @usage if not evt.claim( { system.get("Gamma Polaris"), 'some_string' } ) then evt.finish( false ) end
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
