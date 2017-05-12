@@ -946,7 +946,7 @@ static int misn_npcRm( lua_State *L )
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
  * @usage if not misn.claim( 'some_string' ) then misn.finish( false ) end
- * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' ) then misn.finish( false ) end
+ * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
