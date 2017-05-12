@@ -277,20 +277,24 @@ int claim_xmlSave( xmlTextWriterPtr writer, Claim_t *claim )
    int i;
    StarSystem *sys;
 
-   if ((claim == NULL) || ((claim->ids == NULL) && (claim->strs == NULL)))
+   if (claim == NULL)
       return 0;
 
-   for (i=0; i<array_size(claim->ids); i++) {
-      sys = system_getIndex( claim->ids[i] );
-      if (sys != NULL) {
-         xmlw_elem( writer, "sys", "%s", sys->name );
+   if (claim->ids != NULL) {
+      for (i=0; i<array_size(claim->ids); i++) {
+         sys = system_getIndex( claim->ids[i] );
+         if (sys != NULL) {
+            xmlw_elem( writer, "sys", "%s", sys->name );
+         }
+         else
+            WARN("System Claim has inexistent system.");
       }
-      else
-         WARN("System Claim has inexistent system.");
    }
 
-   for (i=0; i<array_size(claim->strs); i++)
-      xmlw_elem( writer, "str", "%s", claim->strs[i] );
+   if (claim->strs != NULL) {
+      for (i=0; i<array_size(claim->strs); i++)
+         xmlw_elem( writer, "str", "%s", claim->strs[i] );
+   }
 
    return 0;
 }
