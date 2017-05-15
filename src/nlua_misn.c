@@ -936,24 +936,25 @@ static int misn_npcRm( lua_State *L )
 
 
 /**
- * @brief Tries to claim systems.
+ * @brief Tries to claim systems or strings.
  *
- * Claiming systems is a way to avoid mission collisions preemptively.
+ * Claiming systems and strings is a way to avoid mission collisions preemptively.
  *
- * Note it does not actually claim the systems if it fails to claim. It also
+ * Note it does not actually perform the claim if it fails to claim. It also
  *  does not work more than once.
  *
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
+ * @usage if not misn.claim( 'some_string' ) then misn.finish( false ) end
+ * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
  *
- *    @luatparam System|{System,...} systems Table of systems to claim or a single system.
+ *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
- * @luafunc claim( systems )
+ * @luafunc claim( params )
  */
 static int misn_claim( lua_State *L )
 {
-   int i, l;
-   SysClaim_t *claim;
+   Claim_t *claim;
    Mission *cur_mission;
 
    /* Get mission. */
@@ -970,17 +971,19 @@ static int misn_claim( lua_State *L )
 
    if (lua_istable(L,1)) {
       /* Iterate over table. */
-      l = lua_objlen(L,1);
-      for (i=0; i<l; i++) {
-         lua_pushnumber(L,i+1);
-         lua_gettable(L,1);
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
          if (lua_issystem(L,-1))
-            claim_add( claim, lua_tosystem( L, -1 ) );
+            claim_addSys( claim, lua_tosystem( L, -1 ) );
+         else if (lua_isstring(L,-1))
+            claim_addStr( claim, lua_tostring( L, -1 ) );
          lua_pop(L,1);
       }
    }
    else if (lua_issystem(L, 1))
-      claim_add( claim, lua_tosystem( L, 1 ) );
+      claim_addSys( claim, lua_tosystem( L, 1 ) );
+   else if (lua_isstring(L, 1))
+      claim_addStr( claim, lua_tostring( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
 

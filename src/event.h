@@ -19,7 +19,7 @@ typedef struct Event_s {
    int data; /**< EventData parent. */
    nlua_env env; /**< The environment of the running Lua code. */
    int save; /**< Whether or not it should be saved. */
-   SysClaim_t *claims; /**< Event claims. */
+   Claim_t *claims; /**< Event claims. */
 } Event_t;
 
 
