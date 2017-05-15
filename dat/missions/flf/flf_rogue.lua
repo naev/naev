@@ -81,6 +81,9 @@ function create ()
    credits = credits * system.cur():jumpDist( missys ) / 3
    credits = credits + rnd.sigma() * 8000
 
+   emp_reputation = 5
+   dv_reputation = 5
+
    local desc
    if ships == 1 then
       desc = misn_desc[2]:format( missys:name() )
@@ -177,6 +180,15 @@ function land_flf ()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
+
+      if player.misnDone( "FLF Instability" ) and missys:presences()[ "Empire" ] then
+         faction.get("Empire"):modPlayerSingle( emp_reputation )
+      end
+
+      if false and missys:presences()[ "Dvaered" ] then
+         faction.get("Dvaered"):modPlayerSingle( dv_reputation )
+      end
+
       misn.finish( true )
    end
 end
