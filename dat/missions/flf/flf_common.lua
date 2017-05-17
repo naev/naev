@@ -50,7 +50,7 @@ function flf_getPirateSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if p[ "Frontier" ] and p[ "Pirate" ] then
+      if j:faction() == faction.get("Frontier") and p[ "Pirate" ] then
          choices[ #choices + 1 ] = j:name()
       end
    end

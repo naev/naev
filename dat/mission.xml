@@ -799,7 +799,7 @@
   <lua>flf/flf_pirates</lua>
   <avail>
    <priority>6</priority>
-   <chance>550</chance>
+   <chance>860</chance>
    <done>The FLF Common Enemy</done>
    <location>Computer</location>
    <faction>FLF</faction>
