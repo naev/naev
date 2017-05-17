@@ -1,7 +1,6 @@
 --[[
 
    FLF mission common functions.
-   Copyright (C) 2014, 2015 Julie Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,6 +38,19 @@ function flf_getTargetSystem ()
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
       if p[ "FLF" ] and p[ "Dvaered" ] then
+         choices[ #choices + 1 ] = j:name()
+      end
+   end
+   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+end
+
+
+-- Get a pirate-infested Frontier system.
+function flf_getPirateSystem ()
+   local choices = {}
+   for i, j in ipairs( system.getAll() ) do
+      local p = j:presences()
+      if p[ "Frontier" ] and p[ "Pirate" ] then
          choices[ #choices + 1 ] = j:name()
       end
    end
