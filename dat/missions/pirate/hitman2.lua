@@ -8,6 +8,8 @@
 
 --]]
 
+include "dat/missions/pirate/common.lua"
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
 if lang == "es" then
@@ -117,6 +119,7 @@ function landed()
       tk.msg(title[3], text[3])
       player.pay(100000) -- 100k
       faction.modPlayerSingle("Pirate",5)
+      pir_modDecayFloor( 3 )
       misn.finish(true)
    end
 end
