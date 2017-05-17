@@ -806,19 +806,6 @@
    <faction>Frontier</faction>
   </avail>
  </mission>
- <mission name="FLF Instability">
-  <lua>flf/empa/flf_empa05</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>60</chance>
-   <done>The FLF Coup</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-   <cond>faction.playerStanding("Empire") &gt;= 30</cond>
-  </avail>
- </mission>
  <mission name="Take the Dvaered crew home">
   <lua>dvaered/dv_antiflf01</lua>
   <flags>
