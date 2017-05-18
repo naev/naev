@@ -136,6 +136,7 @@ function accept ()
 
    dv_ships_left = 0
    job_done = false
+   last_system = planet.cur()
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -204,6 +205,7 @@ end
 
 function land_flf ()
    leave()
+   last_system = planet.cur()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )

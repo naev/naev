@@ -108,6 +108,7 @@ function land_flf ()
       tk.msg( title[3], text[3]:format( player.name(), missys:name() ) )
       tk.msg( title[3], text[4] )
       player.pay( credits )
+      flf_setReputation( 75 )
       faction.get("FLF"):modPlayerSingle( reputation )
       faction.get("Frontier"):modPlayerSingle( other_reputation )
       if missys:presences()[ "Dvaered" ] then
