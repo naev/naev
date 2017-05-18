@@ -69,7 +69,7 @@ function create ()
    level = rnd.rnd( 1, #misn_level )
    ships = 0
    has_boss = false
-   has_ancestor = false
+   has_phalanx = false
    has_kestrel = false
    flfships = 0
    reputation = 0
@@ -91,7 +91,7 @@ function create ()
       other_reputation = 1
    elseif level == 5 then
       ships = 6
-      has_ancestor = true
+      has_phalanx = true
       flfships = rnd.rnd( 4, 6 )
       reputation = 10
       other_reputation = 2
@@ -114,7 +114,7 @@ function create ()
    else
       desc = misn_desc[1]:format( ships, missys:name() )
    end
-   if has_ancestor then desc = desc .. misn_desc[3] end
+   if has_phalanx then desc = desc .. misn_desc[3] end
    if has_kestrel then desc = desc .. misn_desc[4] end
    if flfships > 0 then
       desc = desc .. misn_desc[5]:format( flfships )
@@ -154,8 +154,8 @@ function enter ()
          local boss
          if has_kestrel then
             boss = "Pirate Kestrel"
-         elseif has_ancestor then
-            boss = "Pirate Ancestor"
+         elseif has_phalanx then
+            boss = "Pirate Phalanx"
          elseif has_boss then
             local choices = { "Pirate Admonisher", "Pirate Rhino" }
             boss = choices[ rnd.rnd( 1, #choices ) ]
