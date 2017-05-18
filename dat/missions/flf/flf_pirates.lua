@@ -68,6 +68,7 @@ function create ()
 
    level = rnd.rnd( 1, #misn_level )
    ships = 0
+   has_boss = false
    has_ancestor = false
    has_kestrel = false
    flfships = 0
@@ -76,17 +77,16 @@ function create ()
    if level == 1 then
       ships = 1
    elseif level == 2 then
-      ships = rnd.rnd( 3, 4 )
+      ships = rnd.rnd( 2, 3 )
       reputation = 1
    elseif level == 3 then
       ships = 5
-      if rnd.rnd() < 0.5 then
-         flfships = 2
-      end
+      flfships = rnd.rnd( 0, 2 )
       reputation = 2
    elseif level == 4 then
       ships = 6
-      flfships = rnd.rnd( 2, 4 )
+      has_boss = true
+      flfships = rnd.rnd( 4, 6 )
       reputation = 5
       other_reputation = 1
    elseif level == 5 then
@@ -139,6 +139,7 @@ function accept ()
 
    pirate_ships_left = 0
    job_done = false
+   last_system = planet.cur()
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -155,6 +156,9 @@ function enter ()
             boss = "Pirate Kestrel"
          elseif has_ancestor then
             boss = "Pirate Ancestor"
+         elseif has_boss then
+            local choices = { "Pirate Admonisher", "Pirate Rhino" }
+            boss = choices[ rnd.rnd( 1, #choices ) ]
          end
          patrol_spawnPirates( ships, boss )
 
@@ -207,6 +211,7 @@ end
 
 function land_flf ()
    leave()
+   last_system = planet.cur()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
@@ -241,7 +246,7 @@ function patrol_spawnPirates( n, boss )
       if i == 1 and boss ~= nil then
          shipname = boss
       else
-         local shipnames = { "Pirate Hyena", "Pirate Shark", "Pirate Vendetta", "Pirate Ancestor", "Pirate Rhino" }
+         local shipnames = { "Pirate Hyena", "Pirate Shark", "Pirate Vendetta", "Pirate Ancestor" }
          shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       end
       local pstk = pilot.add( shipname, "baddie_norun", vec2.new( x, y ) )
