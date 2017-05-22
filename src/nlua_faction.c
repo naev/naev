@@ -199,7 +199,7 @@ int lua_isfaction( lua_State *L, int ind )
 /**
  * @brief __eq (equality) metamethod for factions.
  *
- * You can use the '=' operator within Lua to compare factions with this.
+ * You can use the '==' operator within Lua to compare factions with this.
  *
  * @usage if f == faction.get( "Dvaered" ) then
  *

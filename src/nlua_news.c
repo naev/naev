@@ -381,7 +381,7 @@ int newsL_get( lua_State *L )
 /**
  * @brief Check articles for equality.
  *
- * Allows you to use the '=' operator in Lua with articles.
+ * Allows you to use the '==' operator in Lua with articles.
  *
  *    @luatparam Article a1 article 1
  *    @luatparam Article a2 article 2
