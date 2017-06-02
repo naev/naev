@@ -17,7 +17,7 @@ else -- Default to English
 
    -- Mission details
    misn_title  = "Pirate Hitman 3"
-   misn_reward = "Pirate landing permision"
+   misn_reward = "More easy money."
    misn_desc   = "The Empire patrol vessel known as %s must be terminated. It was last seen near the %s system."
    misn_desc2  = "Return to %s to get your rewards."
 
@@ -27,8 +27,8 @@ else -- Default to English
    title[1] = "Spaceport Bar"
    title[2] = "Mission Complete"
    text[1]  = [[As you approach, the man merely glances at you before pushing out a chair for you. "Hello. A certain trader associate of mine has recommended your services." You nod knowingly, and he continues, "A certain Empire pilot has been... consistent in refusing our bribes. We'd like to be rid of him as soon as possible. Are you up for it?]]
-   text[2]  = [["Excellent. If you're successful in removing him, I have a token that will grant you landing access to all pirate worlds." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]]
-   text[3] = [[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's the landing pass, you're now free to land at any pirate colony. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]]
+   text[2]  = [["Excellent. If you're successful in removing him, you will of course be rewarded." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]]
+   text[3] = [[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's your pay. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]]
 
    msg = {}
    msg[1] = "Target destroyed. Mission objective updated"
@@ -138,16 +138,10 @@ function landed ()
    if planet.cur() == misn_base then
       tk.msg(title[2], text[3])
 
-      -- Give factions
-      local f = faction.playerStanding("Pirate")
-      if f < 0 then
-            f = 0 - f
-            faction.modPlayerSingle( "Pirate", f )
-      end
-   
-      -- Give landing pass   
-      player.addOutfit("Pirate Landing Pass")
+      -- Give rewards
+      faction.modPlayerSingle( "Pirate", 5 )
       player.pay( 100000 ) -- 100k
+      pir_modDecayFloor( 5 )
 
       -- Finish mission
       misn.finish(true)

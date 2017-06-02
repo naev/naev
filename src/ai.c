@@ -869,7 +869,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    /* Create the task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup("refuel");
-   lua_pushinteger(naevL, target);
+   lua_pushpilot(naevL, target);
    t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* Prepend the task. */
@@ -2150,7 +2150,9 @@ static int aiL_getnearestplanet( lua_State *L )
    if (cur_system->nplanets == 0) return 0; /* no planets */
 
    /* cycle through planets */
-   for (dist=0., j=-1, i=0; i<cur_system->nplanets; i++) {
+   for (dist=1./0., j=-1, i=0; i<cur_system->nplanets; i++) {
+      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+         continue;
       d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->faction)) &&
             (d < dist)) { /* closer friendly planet */
@@ -2162,6 +2164,7 @@ static int aiL_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
+   cur_pilot->nav_planet = j;
    planet = cur_system->planets[j]->id;
    lua_pushplanet(L, planet);
 

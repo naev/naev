@@ -75,7 +75,10 @@ Travel distance: %d]]
 end
 
 function create()
-   -- Note: this mission does not make any system claims.
+   -- Claim core engine slot
+   if not misn.claim( 'outfit_engine_core' ) then
+      misn.finish( false )
+   end
 
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
@@ -176,6 +179,11 @@ end
 
 function land()
 
+   if isSlow then   --The player is still slow and will recover normal velocity
+      player.pilot():setSpeedLimit(0)
+      isSlow = false
+   end
+
    if planet.cur() == destplanet and stage == 0 then
       tk.msg( msg_title[3], msg_msg[3])
       player.pay(reward)
@@ -190,10 +198,6 @@ function land()
    if planet.cur() ~= curplanet and stage == 1 then  --Lands elsewhere without the engine
       tk.msg( misst, miss)
       abort()
-   end
-
-   if isSlow then   --The player is still slow and will recover normal velocity
-      player.pilot():setSpeedLimit(0)
    end
 
    curplanet = planet.cur()

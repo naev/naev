@@ -23,9 +23,9 @@
    <bar/>
    <outfits/>
    <shipyard/>
+   <blackmarket/>
   </services>
   <commodities/>
-  <blackmarket/>
   <description>A minor clan world in control of the whole Qorel Expanse, Qorellia might be seen as a civilian hub if only its traffic didn't entirely consist of pirate ships.</description>
   <bar>A standard pirate bar, with the exception of the local militia making sure no troublemaker stays unharmed.</bar>
  </general>

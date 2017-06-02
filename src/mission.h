@@ -119,7 +119,7 @@ typedef struct Mission_ {
    int osd_set; /**< OSD was set explicitly. */
 
    /* Claims. */
-   SysClaim_t *claims; /**< System claims. */
+   Claim_t *claims; /**< System claims. */
 
    nlua_env env; /**< The environment of the running Lua code. */
 } Mission;

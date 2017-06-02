@@ -36,8 +36,11 @@
 #define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
 #define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
 #define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
-#define PLANET_SERVICES_MAX         (PLANET_SERVICE_SHIPYARD<<1)
+#define PLANET_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
+#define PLANET_SERVICES_MAX         (PLANET_SERVICE_BLACKMARKET<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
+#define planet_addService(p,s)      ((p)->services |= (s)) /**< Adds a planet service. */
+#define planet_rmService(p,s)       ((p)->services &= ~(s)) /**< Removes a planet service. */
 
 
 /*
@@ -49,7 +52,6 @@
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
-#define planet_isBlackMarket(p) planet_isFlag(p,PLANET_BLACKMARKET) /**< Checks if planet is a black market. */
 
 
 /**
@@ -171,6 +173,26 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
+ * @brief Represents a type of asteroid.
+ */
+typedef struct AsteroidType_ {
+   char *ID; /**< ID ot the asteroid type. */
+   glTexture **gfxs; /**< asteroid possible gfxs. */
+   int ngfx; /**< nb of gfx. */
+} AsteroidType;
+
+
+/**
+ * @brief Represents a small player-rendered debris.
+ */
+typedef struct Debris_ {
+   Vector2d pos; /**< Position. */
+   Vector2d vel; /**< Velocity. */
+   int gfxID; /**< ID of the asteroid gfx. */
+} Debris;
+
+
+/**
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
@@ -179,8 +201,20 @@ typedef struct Asteroid_ {
    int gfxID; /**< ID of the asteroid gfx. */
    double timer; /**< Internal timer for animations. */
    int appearing; /**< 1: appearing, 2: disappaering, 0 otherwise. */
+   int type; /**< The ID of the asteroid type */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
+
+
+/**
+ * @brief Represents a convex subset of an asteroid field.
+ */
+typedef struct AsteroidSubset_ {
+   Vector2d *corners; /**< Set of corners of the polygon. */
+   int ncorners; /**< Number of corners. */
+   Vector2d pos; /**< Center. */
+   double aera; /**< Subset's aera. */
+} AsteroidSubset;
 
 
 /**
@@ -191,9 +225,13 @@ typedef struct AsteroidAnchor_ {
    double density; /**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb; /**< Number of asteroids. */
+   Debris *debris; /**< Debris belonging to the field. */
+   int ndebris; /**< Number of debris. */
    Vector2d *corners; /**< Set of corners of the polygon. */
    int ncorners; /**< Number of corners. */
    double aera; /**< Field's aera. */
+   AsteroidSubset *subsets; /**< Convex subsets. */
+   int nsubsets; /**< Number of convex subsets. */
 } AsteroidAnchor;
 
 
@@ -274,7 +312,6 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
-void planet_setBlackMarket( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
