@@ -439,7 +439,7 @@ static int planetL_system( lua_State *L )
 }
 
 /**
- * @brief You can use the '=' operator within Lua to compare planets with this.
+ * @brief You can use the '==' operator within Lua to compare planets with this.
  *
  * @usage if p.__eq( planet.get( "Anecu" ) ) then -- Do something
  * @usage if p == planet.get( "Anecu" ) then -- Do something

@@ -419,8 +419,7 @@ static int music_thread( void* unused )
                   break;
                }
             }
-
-            /* Purpose fallthrough. */
+            /* fallthrough */
 
          /* Play the song if needed. */
          case MUSIC_STATE_PLAYING:

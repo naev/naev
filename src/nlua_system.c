@@ -278,7 +278,7 @@ static int systemL_getAll( lua_State *L )
 /**
  * @brief Check systems for equality.
  *
- * Allows you to use the '=' operator in Lua with systems.
+ * Allows you to use the '==' operator in Lua with systems.
  *
  * @usage if sys == system.get( "Draygar" ) then -- Do something
  *
