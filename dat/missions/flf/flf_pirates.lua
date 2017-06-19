@@ -83,24 +83,25 @@ function create ()
       ships = 5
       flfships = rnd.rnd( 0, 2 )
       reputation = 2
+      other_reputation = 1
    elseif level == 4 then
       ships = 6
       has_boss = true
       flfships = rnd.rnd( 4, 6 )
       reputation = 5
-      other_reputation = 1
+      other_reputation = 2
    elseif level == 5 then
       ships = 6
       has_phalanx = true
       flfships = rnd.rnd( 4, 6 )
       reputation = 10
-      other_reputation = 2
+      other_reputation = 4
    elseif level == 6 then
       ships = rnd.rnd( 6, 9 )
       has_kestrel = true
       flfships = rnd.rnd( 8, 10 )
       reputation = 20
-      other_reputation = 4
+      other_reputation = 8
    end
 
    credits = ships * 190000 - flfships * 1000
