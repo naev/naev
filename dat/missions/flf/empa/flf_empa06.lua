@@ -27,7 +27,7 @@ else -- default english
    text[1] = [[Cheryl seems pleased to see you. She motions for you to sit. "I have some good news, %s", she says. "As you know, having personally had to deal with this lately, we have had some... dissidents. Of course, this is a serious problem.
     "However, we have come up with a solution. See, a large group of pirates has been terrorizing the %s system lately. It's come to the point where no one is willing to put a stop to them. So that's where we come in. This is a perfect opportunity to change our operations to suit the Empire's wishes. So I need you to lead the first of one of many missions protecting the Frontier from pirate terror. Are you ready?"]]
 
-   text[2] = [[Perfect! After this mission, we will immediately cease assigning missions to attack the Dvaered forces. I am confident that the Dvaereds will begin to open up to us as we clean Frontier-Dvaered border systems of dangerous pirates. Good luck!]]
+   text[2] = [[Perfect! After this mission, we will immediately cease assigning missions to attack the Dvaered forces, and begin assigning more missions such as this one. I am confident that the Dvaereds will begin to open up to us as we clean Frontier-Dvaered border systems of dangerous pirates, and that will enable you to negotiate a cease-fire deal with House Dvaered. Good luck!]]
 
    title[3] = "A New Horizon"
    text[3] = [[As you enter Sindbad after successfully completing your mission, you are warmly greeted by not only Cheryl, but several FLF soldiers. A few FLF personnel still seem dissatisfied, but you quickly brush them off. Considering how positive the reception to this mission has been, you are certain they will come around before long.
