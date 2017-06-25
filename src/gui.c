@@ -1866,7 +1866,7 @@ void gui_setViewport( double x, double y, double w, double h )
  */
 void gui_clearViewport (void)
 {
-   gl_setDefViewport( 0., 0., gl_screen.w, gl_screen.h );
+   gl_setDefViewport( 0., 0., gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 }
 

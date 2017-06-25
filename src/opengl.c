@@ -818,7 +818,7 @@ void gl_resize( int w, int h )
    gl_screen.scale = 1./conf.scalefactor;
 
    gl_setupScaling();
-   gl_setDefViewport( 0, 0, gl_screen.w, gl_screen.h );
+   gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 
    gl_checkErr();
