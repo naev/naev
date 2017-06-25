@@ -491,7 +491,6 @@ int main( int argc, char** argv )
       main_loop( 1 );
    }
 
-
    /* Save configuration. */
    conf_saveConfig(buf);
 
