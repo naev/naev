@@ -174,7 +174,6 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
 
-
    if (!log_isTerminal())
       log_copy(1);
 #if HAS_WIN32
@@ -283,7 +282,6 @@ int main( int argc, char** argv )
    else
       log_purge();
 
-
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
@@ -331,7 +329,6 @@ int main( int argc, char** argv )
    loadscreen_load();
    loadscreen_render( 0., "Initializing subsystems..." );
    time_ms = SDL_GetTicks();
-
 
    /*
     * Input
