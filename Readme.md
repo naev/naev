@@ -38,8 +38,10 @@ Mac Dependencies are different, see extras/macosx/COMPILE for details.
 
 Run: 
 
+```bash
 ./autogen.sh && ./configure
 make
+```
 
 If you need special settings you should pass flags to configure, using -h
 will tell you what it supports.
