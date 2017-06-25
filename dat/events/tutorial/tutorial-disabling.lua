@@ -94,17 +94,14 @@ function getdisabled()
     tk.msg(title1, message4)
     drone:rm()
     pp:control()
-    pirates = addRawShips( "Pirate Vendetta", "pirate", pp:pos() + vec2.new(1000, 0), "Pirate", 2 )
-    pirates[1]:rmOutfit("all")
-    pirates[1]:addOutfit("Laser Cannon MK2", 2)
-    pirates[1]:addOutfit("Ion Cannon", 2)
-    pirates[2]:rmOutfit("all")
-    pirates[2]:addOutfit("Laser Cannon MK2", 2)
-    pirates[2]:addOutfit("Ion Cannon", 2)
-    pirates[1]:control()
-    pirates[2]:control()
-    pirates[1]:attack(pp)
-    pirates[2]:attack(pp)
+    pirates = addRawShips( "Pirate Vendetta", "pirate", pp:pos() + vec2.new(1000, 0), "Pirate", 6 )
+    for _,p in ipairs(pirates) do
+        p:rmOutfit("all")
+        p:addOutfit("Laser Cannon MK2", 2)
+        p:addOutfit("Ion Cannon", 2)
+        p:control()
+        p:attack(pp)
+    end
     hook.pilot(pp, "attacked", "playerattacked")
     hook.pilot(pp, "disable", "playerdisabled")
 end
@@ -118,10 +115,10 @@ end
 -- Player is disabled
 function playerdisabled()
    player.pilot():setInvincible(true)
-   pirates[1]:control()
-   pirates[2]:control()
-   pirates[1]:hyperspace()
-   pirates[2]:hyperspace()
+   for _,p in ipairs(pirates) do
+      p:control()
+      p:hyperspace()
+   end
    hook.timer(25000, "duringdisabled")
 end
 
