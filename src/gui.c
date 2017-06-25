@@ -1866,7 +1866,7 @@ void gui_setViewport( double x, double y, double w, double h )
  */
 void gui_clearViewport (void)
 {
-   gl_setDefViewport( 0., 0., gl_screen.rw, gl_screen.rh );
+   gl_setDefViewport( 0., 0., gl_screen.w, gl_screen.h );
    gl_defViewport();
 }
 
@@ -1942,7 +1942,7 @@ int gui_init (void)
    /*
     * Set viewport.
     */
-   gui_setViewport( 0., 0., gl_screen.rw, gl_screen.rh );
+   gui_setViewport( 0., 0., gl_screen.w, gl_screen.h );
 
    /*
     * Icons.

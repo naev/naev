@@ -739,7 +739,6 @@ int gl_init (void)
 
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
-   gl_setScale( conf.scalefactor );
    if (conf.fullscreen) {
       gl_screen.flags |= OPENGL_FULLSCREEN;
 #if SDL_VERSION_ATLEAST(2,0,0)
@@ -774,12 +773,8 @@ int gl_init (void)
    /* Set default opengl state. */
    gl_defState();
 
-   /* Set up possible scaling. */
-   gl_setupScaling();
-
-   /* Handle setting the default viewport. */
-   gl_setDefViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-   gl_defViewport();
+   /* Handles resetting the viewport and scaling, rw/rh are set in createWindow. */
+   gl_resize( gl_screen.w, gl_screen.h );
 
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
@@ -825,7 +820,7 @@ void gl_resize( int w, int h )
    gl_setScale( conf.scalefactor );
 
    gl_setupScaling();
-   gl_setDefViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+   gl_setDefViewport( 0, 0, gl_screen.w, gl_screen.h );
    gl_defViewport();
 
    gl_checkErr();
