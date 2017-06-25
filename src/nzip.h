@@ -20,14 +20,16 @@ char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles );
 
 SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename );
 
-#else
+#else /* USE_LIBZIP */
 
 #define nzip_isZip(a) 0
 #define nzip_open(a) NULL
 #define nzip_close(a)
+
 #define nzip_hasFile(a, b) 0
 #define nzip_readFile(a, b, c) NULL
 #define nzip_listFiles(a, b) NULL
+
 #define nzip_rwops(a, b) NULL
 
 #endif /* USE_LIBZIP */
