@@ -719,6 +719,7 @@ int gl_init (void)
    int dw, dh;
 
    /* Defaults. */
+   /* desktop_w and desktop_h get set in naev.c when initializing. */
    dw = gl_screen.desktop_w;
    dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
