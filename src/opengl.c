@@ -774,7 +774,7 @@ int gl_init (void)
    gl_defState();
 
    /* Handles resetting the viewport and scaling, rw/rh are set in createWindow. */
-   gl_resize( gl_screen.w, gl_screen.h );
+   gl_resize( gl_screen.rw, gl_screen.rh );
 
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
@@ -801,8 +801,6 @@ int gl_init (void)
    return 0;
 }
 
-
-#if SDL_VERSION_ATLEAST(2,0,0)
 /**
  * @brief Handles a window resize and resets gl_screen parametes.
  *
@@ -817,7 +815,7 @@ void gl_resize( int w, int h )
    gl_screen.rh = h;
 
    /* Reset scaling. */
-   gl_setScale( conf.scalefactor );
+   gl_screen.scale = 1./conf.scalefactor;
 
    gl_setupScaling();
    gl_setDefViewport( 0, 0, gl_screen.w, gl_screen.h );
@@ -825,22 +823,6 @@ void gl_resize( int w, int h )
 
    gl_checkErr();
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
-
-
-/**
- * @brief Sets the scale factor.
- *
- *    @param scalefactor Factor to scale by.
- */
-double gl_setScale( double scalefactor )
-{
-   gl_screen.scale = 1./scalefactor;
-
-   /* Return actual used scalefactor. */
-   return gl_screen.scale;
-}
-
 
 /**
  * @brief Sets the opengl viewport.
@@ -897,8 +879,8 @@ void gl_defViewport (void)
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 {
-   *sx = gl_screen.mxscale * (double)(wx - gl_screen.x);
-   *sy = gl_screen.myscale * (double)(gl_screen.rh - wy - gl_screen.y);
+   *sx = gl_screen.mxscale * (double)wx - (double)gl_screen.x;
+   *sy = gl_screen.myscale * (double)(gl_screen.rh - wy) - (double)gl_screen.y;
 }
 
 
