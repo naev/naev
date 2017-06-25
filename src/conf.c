@@ -99,6 +99,7 @@ static void print_usage( char **argv )
    LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
    LOG("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)");
+   LOG("   -X, --scale           defines the scale factor");
 #ifdef DEBUGGING
    LOG("   --devmode             enables dev mode perks like the editors");
    LOG("   --devcsv              generates csv output from the ndata for development purposes");
@@ -603,6 +604,7 @@ void conf_parseCLI( int argc, char** argv )
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
       { "nondata", no_argument, 0, 'N' },
+      { "scale", required_argument, 0, 'X' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
       { "devcsv", no_argument, 0, 'C' },
@@ -619,7 +621,7 @@ void conf_parseCLI( int argc, char** argv )
     */
    optind = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:Vd:j:J:W:H:MSm:s:GNhv",
+         "fF:Vd:j:J:W:H:MSm:s:X:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'd':
@@ -667,6 +669,9 @@ void conf_parseCLI( int argc, char** argv )
             if (conf.ndata != NULL)
                free(conf.ndata);
             conf.ndata = NULL;
+            break;
+         case 'X':
+            conf.scalefactor = atof(optarg);
             break;
 #ifdef DEBUGGING
          case 'D':
