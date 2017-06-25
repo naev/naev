@@ -56,10 +56,13 @@ typedef struct glInfo_ {
    int desktop_h; /**< Desktop height. */
    int x; /**< X offset of window viewport. */
    int y; /**< Y offset of window viewport. */
+   /* Viewport considers x/y offset. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
+   /* Scaled window is the effective window resolution without considering offsets. */
    int nw; /**< Scaled window width. */
    int nh; /**< Scaled window height. */
+   /* Real window resolution is the real window resolution, unscaled and without offsets. */
    int rw; /**< Real window width. */
    int rh; /**< Real window height. */
    double scale; /**< Scale factor. */
