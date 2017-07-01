@@ -25,7 +25,7 @@ BEGIN
 			VALUE "LegalCopyright", "Copyright (C) 2006-2017"
 			VALUE "OriginalFilename", "naev.exe"
 			VALUE "ProductName", "Naev: Sea of Darkness"
-			VALUE "ProductVersion", "0.6.1"
+			VALUE "ProductVersion", "0.7.0"
 		END
 	END
 	BLOCK "VarFileInfo"
