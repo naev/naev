@@ -653,31 +653,23 @@ static int gl_defState (void)
  */
 static int gl_setupScaling (void)
 {
+   int minwh;
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
+   /* Small windows get handled here. */
+   minwh = MIN(gl_screen.nw, gl_screen.nh);
+   if (minwh < 600) {
+      if (gl_screen.scale != 1.)
+         DEBUG("Screen size too small, upscaling...");
+      gl_screen.scale = (double)minwh / 600.;
+      /* Rescale. */
+      gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
+      gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
+   }
    /* Viewport matches new window size. */
    gl_screen.w  = gl_screen.nw;
    gl_screen.h  = gl_screen.nh;
-   /* Small windows get handled here. */
-   if ((SCREEN_W < 600) && (SCREEN_W <= SCREEN_H)) {
-      if (gl_screen.scale != 1.)
-         DEBUG("Screen size too small, upscaling...");
-      gl_screen.scale = (double)gl_screen.w / 600.;
-      /* Must keep the proportion the same for the screen. */
-      gl_screen.h  = (gl_screen.h * 600) / SCREEN_W;
-      gl_screen.nh = (gl_screen.rh * SCREEN_W) / 600;
-      gl_screen.w  = 600;
-   }
-   else if ((SCREEN_H < 600) && (SCREEN_W >= SCREEN_H)) {
-      if (gl_screen.scale != 1.)
-         DEBUG("Screen size too small, upscaling...");
-      gl_screen.scale = (double)gl_screen.h / 600.;
-      /* Must keep the proportion the same for the screen. */
-      gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
-      gl_screen.nw = (gl_screen.rw * SCREEN_H) / 600;
-      gl_screen.h  = 600;
-   }
    /* Set scale factors. */
    gl_screen.wscale  = (double)gl_screen.nw / (double)gl_screen.w;
    gl_screen.hscale  = (double)gl_screen.nh / (double)gl_screen.h;
