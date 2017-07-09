@@ -565,6 +565,10 @@ AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
 AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
 AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
 
+AC_SUBST([VMAJOR])
+AC_SUBST([VMINOR])
+AC_SUBST([VREV])
+
 # USE_OPENAL
 AS_IF([test "x$have_openal" = "xyes"], [
   AC_DEFINE([USE_OPENAL], 1, [Define to 1 if using OpenAL])
@@ -594,6 +598,7 @@ case "$host" in
     ;;
   *-darwin*)
     AC_DEFINE([MACOSX], 1, [Define to 1 if running on Mac OS X])
+    have_macosx=yes
     ;;
 esac
 

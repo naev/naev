@@ -13,7 +13,8 @@ pack
 pack.exe
 docs/doxygen/*
 docs/lua/*.luadoc
-*.in
+config.h.in
+Makefile.in
 *Makefile
 *.deps/
 src/.dirstamp
@@ -37,8 +38,9 @@ stdout.txt
 .DS_Store
 *.pbxuser
 *.mode1v3
-extras/macosx/build/
+extras/macos/Info.plist
 extras/.dirstamp
+Naev.app
 datapath.lua
 core
 
