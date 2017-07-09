@@ -38,12 +38,12 @@
 
 #endif
 /**
- * @brief System is Mac OS X.
+ * @brief System is macOS.
  */
 #if (defined(__APPLE__) && defined(__MACH__))
-#define HAS_MACOSX 1
+#define HAS_MACOS 1
 #else
-#define HAS_MACOSX 0
+#define HAS_MACOS 0
 #endif
 
 
@@ -51,9 +51,9 @@
 /**
  * @brief Whether or not the system follows unix standards like $HOME.
  *
- * @note Mac OS X does not define these macros, but does follow unix somewhat.
+ * @note macOS does not define these macros, but does follow unix somewhat.
  */
-#if (defined(__unix__) || defined(__unix) || HAS_MACOSX)
+#if (defined(__unix__) || defined(__unix) || HAS_MACOS)
 #define HAS_UNIX 1
 #else
 #define HAS_UNIX 0

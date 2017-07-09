@@ -7,7 +7,7 @@
  *
  * @brief Handles read/write abstractions to the users directory.
  *
- * @todo Add support for Windows and Mac OS X.
+ * @todo Add support for Windows and macOS.
  */
 
 

@@ -597,8 +597,7 @@ case "$host" in
     AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
     ;;
   *-darwin*)
-    AC_DEFINE([MACOSX], 1, [Define to 1 if running on Mac OS X])
-    have_macosx=yes
+    AC_DEFINE([MACOS], 1, [Define to 1 if running on macOS])
     ;;
 esac
 
