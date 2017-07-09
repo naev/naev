@@ -29,6 +29,7 @@ config.status
 configure
 m4/pkg.m4
 naev_csv
+bintray.json
 /*.dll
 /*.exe
 asset.xml

@@ -545,7 +545,7 @@ VAR_RESTORE([LIBS])
 #
 AC_MSG_CHECKING([for the current Git commit identifier])
 AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
-  GIT_COMMIT=$(cd "$srcdir" && "$GIT" describe --always --tags)
+  GIT_COMMIT=$(cd "$srcdir" && "$GIT" rev-parse --short HEAD)
   AC_MSG_RESULT([$GIT_COMMIT])
 ], [
   GIT_COMMIT=
@@ -609,6 +609,7 @@ AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
 AS_IF([test -n "$GIT_COMMIT"], [
   AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
      [Define to the current Git commit identifier])
+  AC_SUBST([GIT_COMMIT])
 ])
 
 #

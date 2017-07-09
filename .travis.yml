@@ -7,6 +7,7 @@ matrix:
       compiler: gcc
       sudo: false
       env:
+        - BITS=64
         - CFLAGs="-O3"
     - os: osx
       osx_image: xcode7.3
@@ -72,12 +73,30 @@ script:
   - |
     # Build Naev Lua docs
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      export PATH="$PATH:$HOME/.luarocks/bin"
       (cd docs && ./luadoc.sh)
     fi
 
+before_deploy:
+  - |
+    ./config.status --file .travis/bintray.json
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      gzip -9 < src/naev > ".travis/naev-linux$BITS.gz"
+    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      zip -9r .travis/naev-macos.zip Naev.app
+    else
+      echo "Don't know how to deploy this target!"
+      exit 1
+    fi
+
 deploy:
-   provider: script
-   script: .travis/deploy.sh
-   skip_cleanup: true
-   on:
+  - provider: bintray
+    file: .travis/bintray.json
+    user: stephank
+    key:
+      secure: "GWamsTqHNn0sb+ON+OOESSOwmxBeCyYGyId83IWluHtbvb0kZjVWVoZ2ZiGwo7uFwaPM25SpFneGLlXwsEe2KMEs/pLUDzucfGWErIp1Y0MYh6VXrzyFZa2Vsa7nNDZhAP2u1bvrG6Er3gxLGqfSy6X4YnGTg67Frt823nbdKAs="
+  - provider: script
+    script: .travis/deploy.sh
+    skip_cleanup: true
+    on:
       condition: "$TRAVIS_OS_NAME = linux"
