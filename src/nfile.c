@@ -28,6 +28,9 @@
 #include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
@@ -51,7 +54,7 @@ typedef struct filedata {
 static int nfile_sortCompare( const void *p1, const void *p2 );
 
 
-#if HAS_UNIX
+#if HAS_UNIX && !HAS_MACOS
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -126,16 +129,19 @@ static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
  */
 const char* nfile_dataPath (void)
 {
-    char *path;
-
     if (naev_dataPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
            nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
            return naev_dataPath;
         }
-#if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
+#if HAS_MACOS
+        if (macos_dataPath( naev_dataPath, PATH_MAX ) != 0) {
+           WARN("Cannot determine data path, using current directory.");
+           nsnprintf( naev_dataPath, PATH_MAX, "./naev/" );
+        }
+#elif HAS_UNIX
+        char *path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
         if (path == NULL) {
             WARN("$XDG_DATA_HOME isn't set, using current directory.");
             path = strdup(".");
@@ -147,7 +153,7 @@ const char* nfile_dataPath (void)
             free (path);
         }
 #elif HAS_WIN32
-      path = SDL_getenv("APPDATA");
+      char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
@@ -170,16 +176,19 @@ static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
  */
 const char* nfile_configPath (void)
 {
-    char *path;
-
     if (naev_configPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
            nsnprintf( naev_configPath, PATH_MAX, "%s/", conf.datapath );
            return naev_configPath;
         }
-#if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
+#if HAS_MACOS
+        if (macos_configPath( naev_configPath, PATH_MAX ) != 0) {
+           WARN("Cannot determine config path, using current directory.");
+           nsnprintf( naev_configPath, PATH_MAX, "./naev/" );
+        }
+#elif HAS_UNIX
+        char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
         if (path == NULL) {
             WARN("$XDG_CONFIG_HOME isn't set, using current directory.");
             path = strdup(".");
@@ -191,7 +200,7 @@ const char* nfile_configPath (void)
             free (path);
         }
 #elif HAS_WIN32
-      path = SDL_getenv("APPDATA");
+      char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
@@ -214,16 +223,19 @@ static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
  */
 const char* nfile_cachePath (void)
 {
-    char *path;
-
     if (naev_cachePath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
            nsnprintf( naev_cachePath, PATH_MAX, "%s/", conf.datapath );
            return naev_cachePath;
         }
-#if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
+#if HAS_MACOS
+        if (macos_cachePath( naev_cachePath, PATH_MAX ) != 0) {
+           WARN("Cannot determine cache path, using current directory.");
+           nsnprintf( naev_cachePath, PATH_MAX, "./naev/" );
+        }
+#elif HAS_UNIX
+        char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
         if (path == NULL) {
             WARN("$XDG_CACHE_HOME isn't set, using current directory.");
             path = strdup(".");
@@ -235,7 +247,7 @@ const char* nfile_cachePath (void)
             free (path);
         }
 #elif HAS_WIN32
-      path = SDL_getenv("APPDATA");
+      char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";

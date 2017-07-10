@@ -62,6 +62,7 @@ AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
 # Checks for programs.
 #
 AC_PROG_CC
+AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
 PKG_PROG_PKG_CONFIG
@@ -467,6 +468,9 @@ case "$host" in
   *-mingw*)
     NAEV_LIBS="$NAEV_LIBS -mwindows"
     ;;
+  *-darwin*)
+    NAEV_LIBS="$NAEV_LIBS -framework Foundation"
+    ;;
 esac
 
 # This is a list of in-tree static libs that naev depends on.  It is used by
@@ -598,6 +602,7 @@ case "$host" in
     ;;
   *-darwin*)
     AC_DEFINE([MACOS], 1, [Define to 1 if running on macOS])
+    have_macos=yes
     ;;
 esac
 
@@ -617,6 +622,7 @@ AS_IF([test -n "$GIT_COMMIT"], [
 #
 
 AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
+AM_CONDITIONAL([HAVE_MACOS], [test "x$have_macos" = "xyes"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
