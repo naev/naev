@@ -29,6 +29,7 @@
 
 #include "log.h"
 #include "ndata.h"
+#include "utf8.h"
 
 
 /**
@@ -206,7 +207,9 @@ static int font_limitSize( const glFont *ft_font, int *width,
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width )
 {
-   int i, n, lastspace;
+   int n, lastspace;
+   size_t i;
+   uint32_t ch;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -216,7 +219,6 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
    n = 0; /* current width */
    i = 0; /* current position */
    while ((text[i] != '\n') && (text[i] != '\0')) {
-
       /* Characters we should ignore. */
       if (text[i] == '\t') {
          i++;
@@ -232,23 +234,28 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          continue;
       }
 
-      /* Increase size. */
-      n += ft_font->chars[ (int)text[i] ].adv_x;
-
       /* Save last space. */
       if (text[i] == ' ')
          lastspace = i;
+
+      ch = u8_nextchar( text, &i );
+      if (isascii(ch)) {
+         /* Increase size. */
+         n += ft_font->chars[ ch ].adv_x;
+      }
+      else {
+         /* Unicode. */
+      }
 
       /* Check if out of bounds. */
       if (n > width) {
          if (lastspace > 0)
             return lastspace;
-         else
-            return i-1;
+         else {
+            u8_dec( text, &i );
+            return i;
+         }
       }
-
-      /* Check next character. */
-      i++;
    }
 
    return i;
@@ -270,7 +277,9 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   int i, s;
+   int s;
+   size_t i;
+   uint32_t ch;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -278,8 +287,9 @@ void gl_printRaw( const glFont *ft_font,
    /* Render it. */
    s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
-   for (i=0; text[i] != '\0'; i++)
-      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
+   i = 0;
+   while ((ch = u8_nextchar( text, &i )))
+      s = gl_fontRenderCharacter( ft_font, ch, c, s );
    gl_fontRenderEnd();
 }
 
@@ -329,7 +339,9 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   int ret, i, s;
+   int ret, s;
+   size_t i;
+   uint32_t ch;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -340,8 +352,9 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    /* Render it. */
    s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
-   for (i=0; i < ret; i++)
-      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
+   i = 0;
+   while ((ch = u8_nextchar( text, &i )))
+      s = gl_fontRenderCharacter( ft_font, ch, c, s );
    gl_fontRenderEnd();
 
    return ret;
@@ -394,7 +407,9 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       const glColour* c, const char *text )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-   int n, ret, i, s;
+   int n, ret, s;
+   size_t i;
+   uint32_t ch;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -406,8 +421,9 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    /* Render it. */
    s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
-   for (i=0; i < ret; i++)
-      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
+   i = 0;
+   while ((ch = u8_nextchar( text, &i )))
+      s = gl_fontRenderCharacter( ft_font, ch, c, s );
    gl_fontRenderEnd();
 
    return ret;
@@ -464,8 +480,10 @@ int gl_printTextRaw( const glFont *ft_font,
       double bx, double by,
       const glColour* c, const char *text )
 {
-   int ret, i, p, s;
+   int p, s;
    double x,y;
+   size_t i, ret;
+   uint32_t ch;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -476,23 +494,26 @@ int gl_printTextRaw( const glFont *ft_font,
    /* Clears restoration. */
    gl_printRestoreClear();
 
+   i = 0;
    s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
-      ret = gl_printWidthForText( ft_font, &text[p], width );
+      ret = p + gl_printWidthForText( ft_font, &text[p], width );
 
       /* Must restore stuff. */
       gl_printRestoreLast();
 
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
-      for (i=0; i < ret; i++)
-         s = gl_fontRenderCharacter( ft_font, text[p+i], c, s );
+      for (i=p; i<ret; ) {
+         ch = u8_nextchar( text, &i);
+         s = gl_fontRenderCharacter( ft_font, ch, c, s );
+      }
       gl_fontRenderEnd();
 
       if (text[p+i] == '\0')
          break;
-      p += i;
+      p = i;
       if ((text[p] == '\n') || (text[p] == ' '))
          p++; /* Skip "empty char". */
       y -= 1.5*(double)ft_font->h; /* move position down */
