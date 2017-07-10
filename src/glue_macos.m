@@ -16,6 +16,37 @@
 
 
 /**
+ * @brief Write an NSString to a C buffer
+ */
+static int macos_writeString ( NSString *str, char *res, size_t n )
+{
+   BOOL ok = [str getCString:res
+                   maxLength:n
+                    encoding:NSUTF8StringEncoding];
+   return ok ? 0 : -1;
+}
+
+
+/**
+ * @brief Determine if we're running from inside an app bundle
+ */
+int macos_isBundle ()
+{
+   NSString *path = [[NSBundle mainBundle] bundlePath];
+   return [path hasSuffix:@".app"] ? 1 : 0;
+}
+
+/**
+ * @brief Get the path to the bundle resources directory
+ */
+int macos_resourcesPath ( char *res, size_t n )
+{
+   NSString *path = [[NSBundle mainBundle] resourcePath];
+   return macos_writeString( path, res, n );
+}
+
+
+/**
  * @brief Get the path to the specified user directory
  */
 static int macos_userLibraryDir ( NSString *kind, char *res, size_t n )
@@ -26,11 +57,7 @@ static int macos_userLibraryDir ( NSString *kind, char *res, size_t n )
       kind,
       @"/org.naev.Naev/"
    ] componentsJoinedByString:@""];
-
-   BOOL ok = [path getCString:res
-                    maxLength:n
-                     encoding:NSUTF8StringEncoding];
-   return ok ? 0 : -1;
+   return macos_writeString( path, res, n );
 }
 
 
