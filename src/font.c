@@ -183,9 +183,9 @@ static int font_limitSize( const glFont *ft_font, int *width,
       }
 
       /* Count length. */
-      n += ft_font->glyphs[ (int)text[i] ].adv_x;
+      n += ft_font->ascii[ (int)text[i] ].adv_x;
       if (n > max) {
-         n -= ft_font->glyphs[ (int)text[i] ].adv_x; /* actual size */
+         n -= ft_font->ascii[ (int)text[i] ].adv_x; /* actual size */
          break;
       }
    }
@@ -241,7 +241,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       ch = u8_nextchar( text, &i );
       if (isascii(ch)) {
          /* Increase size. */
-         n += ft_font->glyphs[ ch ].adv_x;
+         n += ft_font->ascii[ ch ].adv_x;
       }
       else {
          /* Unicode. */
@@ -585,7 +585,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       }
 
       /* Increment width. */
-      n += ft_font->glyphs[ (int)text[i] ].adv_x;
+      n += ft_font->ascii[ (int)text[i] ].adv_x;
    }
 
    return n;
@@ -808,8 +808,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       }
 
       /* Store character information. */
-      font->glyphs[i].adv_x = chars[i].adv_x;
-      font->glyphs[i].adv_y = chars[i].adv_y;
+      font->ascii[i].adv_x = chars[i].adv_x;
+      font->ascii[i].adv_y = chars[i].adv_y;
 
       /* Store temporary information. */
       chars[i].tx = x_off;
@@ -986,6 +986,44 @@ static const glColour* gl_fontGetColour( uint32_t ch )
    return col;
 }
 
+/**
+ * @brief Hash function for integers.
+ *
+ * Taken from http://burtleburtle.net/bob/hash/integer.html (Thomas Wang).
+ * Meant to only use the low bits, not the high bits.
+ */
+static uint32_t hashint( uint32_t a )
+{
+   a += ~(a<<15);
+   a ^=  (a>>10);
+   a +=  (a<<3);
+   a ^=  (a>>6);
+   a += ~(a<<11);
+   a ^=  (a>>16);
+   return a;
+}
+
+/**
+ * @brief Gets or caches a glyph to render.
+ */
+static glFontGlyph* gl_fontGetGlyph( const glFont* font, uint32_t ch )
+{
+   int i;
+   unsigned int h;
+
+   /* Use hash table and linked lists to find the glyph. */
+   h = hashint(ch) & (HASH_LUT_SIZE-1);
+   i = font->lut[h];
+   while (i != -1) {
+      if (font->glyphs[i].codepoint == ch)
+         return &font->glyphs[i];
+      i = font->glyphs[i].next;
+   }
+
+   /* Glyph not found, have to generate. */
+   return NULL;
+}
+
 
 /**
  * @brief Renders a character.
@@ -1014,30 +1052,43 @@ static int gl_fontRenderGlyph( const glFont* font, uint32_t ch, const glColour *
       return 0;
    }
 
-   if (!isspace(ch)) {
-      if (isascii(ch)) {
-         /*
-         * Global  Local
-         * 0--1      0--1 4
-         * | /|  =>  | / /|
-         * |/ |      |/ / |
-         * 3--2      2 3--5
-         */
-         ind[0] = 4*ch + 0;
-         ind[1] = 4*ch + 1;
-         ind[2] = 4*ch + 3;
-         ind[3] = 4*ch + 1;
-         ind[4] = 4*ch + 3;
-         ind[5] = 4*ch + 2;
-
-         /* Draw the element. */
-         glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
-      }
-      else {
-         /* Scary unicode. */
-         //get_glyph( stash, fnt, ch, (short)(font->h*10.0f) );
-      }
+   if (isspace(ch)) {
+      /* Advance. */
+      gl_matrixTranslate( font->ascii[ch].adv_x, font->ascii[ch].adv_y );
+      return 0;
    }
+
+   if (isascii(ch)) {
+      /*
+      * Global  Local
+      * 0--1      0--1 4
+      * | /|  =>  | / /|
+      * |/ |      |/ / |
+      * 3--2      2 3--5
+      */
+      ind[0] = 4*ch + 0;
+      ind[1] = 4*ch + 1;
+      ind[2] = 4*ch + 3;
+      ind[3] = 4*ch + 1;
+      ind[4] = 4*ch + 3;
+      ind[5] = 4*ch + 2;
+
+      /* Draw the element. */
+      glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+
+      /* Advance. */
+      gl_matrixTranslate( font->ascii[ch].adv_x, font->ascii[ch].adv_y );
+      return 0;
+   }
+
+   /* Unicode goes here.
+    * First try to find the glyph. */
+   glFontGlyph *glyph;
+   glyph = gl_fontGetGlyph( font, ch );
+   if (glyph == NULL)
+      return -1;
+
+   /*  */
 
    /* Translate matrix. */
    gl_matrixTranslate( font->glyphs[ch].adv_x, font->glyphs[ch].adv_y );
@@ -1087,9 +1138,9 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    }
 
    /* Allocage. */
-   font->glyphs = malloc(sizeof(glFontGlyph)*128);
+   font->ascii = malloc(sizeof(glFontGlyph)*128);
    font->h = (int)floor((double)h);
-   if (font->glyphs==NULL) {
+   if (font->ascii==NULL) {
       WARN("Out of memory!");
       return;
    }
@@ -1101,7 +1152,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       return;
    }
 
-   /* object which freetype uses to store font info */
+   /* Object which freetype uses to store font info. */
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
       WARN("FT_New_Face failed loading library from %s",
             (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
@@ -1149,9 +1200,9 @@ void gl_freeFont( glFont* font )
    if (font == NULL)
       font = &gl_defFont;
    glDeleteTextures(1,&font->texture);
-   if (font->glyphs != NULL)
-      free(font->glyphs);
-   font->glyphs = NULL;
+   if (font->ascii != NULL)
+      free(font->ascii);
+   font->ascii = NULL;
    if (font->vbo_tex != NULL)
       gl_vboDestroy(font->vbo_tex);
    font->vbo_tex = NULL;

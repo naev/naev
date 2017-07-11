@@ -10,6 +10,17 @@
 
 #include "opengl.h"
 
+#define HASH_LUT_SIZE 256
+
+
+/**
+ * @brief Represents ascii characters.
+ */
+typedef struct glFontASCII_s {
+   double adv_x; /**< X advancement. */
+   double adv_y; /**< Y advancement. */
+} glFontASCII;
+
 
 /**
  * @brief Represents a character in the font.
@@ -18,8 +29,8 @@ typedef struct glFontGlyph_s {
    uint32_t codepoint; /**< Real character. */
    double adv_x; /**< X advancement. */
    double adv_y; /**< Y advancement. */
-   double off_x; /**< X offset. */
-   int next;
+   /* Offsets are stored in the VBO and thus not an issue. */
+   int next; /**< Stored as a linked list. */
 } glFontGlyph;
 
 
@@ -31,7 +42,9 @@ typedef struct glFont_s {
    GLuint texture; /**< Font atlas. */
    gl_vbo *vbo_tex; /**< VBO associated to texture coordinates. */
    gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
+   glFontASCII *ascii; /**< Characters in the font. */
    glFontGlyph *glyphs; /**< Characters in the font. */
+   int lut[HASH_LUT_SIZE]; /**< Look up table. */
 } glFont;
 extern glFont gl_defFont; /**< Default font. */
 extern glFont gl_smallFont; /**< Small font. */
