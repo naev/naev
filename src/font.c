@@ -108,11 +108,11 @@ typedef struct glFontStash_s {
    GLuint texture; /**< Font atlas. */
    gl_vbo *vbo_tex; /**< VBO associated to texture coordinates. */
    gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
-   GLfloat *vbo_tex_data;
-   GLshort *vbo_vert_data;
+   GLfloat *vbo_tex_data; /**< Copy of texture coordinate data. */
+   GLshort *vbo_vert_data; /**< Copy of vertex coordinate data. */
    int nvbo; /**< Amount of vbo data. */
    glFontASCII *ascii; /**< Characters in the font. */
-   glFontGlyph *glyphs; /**< Characters in the font. */
+   glFontGlyph *glyphs; /**< Unicode glyphs. */
    int lut[HASH_LUT_SIZE]; /**< Look up table. */
 
    /* Freetype stuff. */
@@ -252,7 +252,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    /* Update VBOs. */
    stsh->nvbo++;
    n = 8*stsh->nvbo;
-   stsh->vbo_tex_data  = realloc( stsh->vbo_tex_data, n*sizeof(GLfloat) );
+   stsh->vbo_tex_data  = realloc( stsh->vbo_tex_data,  n*sizeof(GLfloat) );
    stsh->vbo_vert_data = realloc( stsh->vbo_vert_data, n*sizeof(GLshort) );
    vbo_tex  = &stsh->vbo_tex_data[n-8];
    vbo_vert = &stsh->vbo_vert_data[n-8];
@@ -308,9 +308,9 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    vbo_vert[ 5 ] = vy;
    vbo_vert[ 6 ] = vx;    /* Bottom left. */
    vbo_vert[ 7 ] = vy;
-   /* Write to vbo. */
-   gl_vboData( stsh->vbo_tex,  sizeof(GLfloat)*n, vbo_tex );
-   gl_vboData( stsh->vbo_vert, sizeof(GLshort)*n, vbo_vert );
+   /* Create new vbos. */
+   gl_vboData( stsh->vbo_tex, sizeof(GLfloat)*n,  stsh->vbo_tex_data );
+   gl_vboData( stsh->vbo_vert, sizeof(GLshort)*n, stsh->vbo_vert_data );
 
    /* Add space for the new character. */
    gr->x += ch->w;
@@ -1430,6 +1430,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
 
    /* Translate matrix. */
    gl_matrixTranslate( glyph->adv_x, glyph->adv_y );
+
    return 0;
 }
 
