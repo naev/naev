@@ -28,6 +28,7 @@
 #include FT_GLYPH_H
 
 #include "log.h"
+#include "array.h"
 #include "ndata.h"
 #include "utf8.h"
 
@@ -700,7 +701,7 @@ int gl_printHeight( const glFont *ft_font,
  */
 /**
  */
-static int font_makeChar( font_char_t *c, FT_Face face, char ch )
+static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
 {
    FT_Bitmap bitmap;
    FT_GlyphSlot slot;
@@ -736,7 +737,7 @@ static int font_makeChar( font_char_t *c, FT_Face face, char ch )
 /**
  * @brief Generates the font's texture atlas.
  */
-static int font_genTextureAtlas( glFont* font, FT_Face face )
+static int font_genTextureAtlasASCII( glFont* font, FT_Face face )
 {
    font_char_t chars[128];
    int i, n;
@@ -1036,7 +1037,51 @@ static glFontGlyph* gl_fontGetGlyph( const glFont* font, uint32_t ch )
    }
 
    /* Glyph not found, have to generate. */
-   return NULL;
+   glFontGlyph *glyph;
+   int x, y, offset, idx, x_off, y_off, w;
+   font_char_t ft_char;
+   char *data;
+
+   /* Load data from freetype. */
+   font_makeChar( &ft_char, ft_face, ch );
+
+   /* Find empty texture. */
+
+   /* Render character. */
+   for (y=0; y<ft_char.h; y++) {
+      for (x=0; x<ft_char.w; x++) {
+         offset  = (y_off + y) * w;
+         offset += x_off + x;
+         data[ offset*2     ] = 0xcf; /* Constant luminance. */
+         data[ offset*2 + 1 ] = ft_char.data[ y*ft_char.w + x ];
+      }
+   }
+
+   /* Update VBOs. */
+
+   /* Create new character. */
+   glyph = &array_grow( &font->glyphs );
+   glyph->codepoint = ch;
+   glyph->texture = 0;
+   glyph->adv_x = ft_char.adv_x;
+   glyph->adv_y = ft_char.adv_y;
+   glyph->next  = -1;
+   idx = glyph - font->glyphs;
+
+   /* Insert in linked list. */
+   i = font->lut[h];
+   if (i == -1) {
+      font->lut[h] = idx;
+   }
+   else {
+      while (i != -1) {
+         if (font->glyphs[i].next == -1)
+            font->glyphs[i].next = idx;
+         i = font->glyphs[i].next;
+      }
+   }
+
+   return glyph;
 }
 
 
@@ -1074,6 +1119,8 @@ static int gl_fontRenderGlyph( const glFont* font, uint32_t ch, const glColour *
    }
 
    if (isascii(ch)) {
+      glBindTexture(GL_TEXTURE_2D, font->texture);
+
       /*
       * Global  Local
       * 0--1      0--1 4
@@ -1103,11 +1150,22 @@ static int gl_fontRenderGlyph( const glFont* font, uint32_t ch, const glColour *
    if (glyph == NULL)
       return -1;
 
+   /* Activate texture. */
+   glBindTexture(GL_TEXTURE_2D, glyph->texture);
+
    /*  */
+   ind[0] = 4*ch + 0;
+   ind[1] = 4*ch + 1;
+   ind[2] = 4*ch + 3;
+   ind[3] = 4*ch + 1;
+   ind[4] = 4*ch + 3;
+   ind[5] = 4*ch + 2;
+
+   /* Draw the element. */
+   glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
 
    /* Translate matrix. */
-   gl_matrixTranslate( font->glyphs[ch].adv_x, font->glyphs[ch].adv_y );
-
+   gl_matrixTranslate( glyph->adv_x, glyph->adv_y );
    return 0;
 }
 
@@ -1140,6 +1198,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    FT_Face face;
    uint32_t bufsize;
    FT_Byte* buf;
+   int i;
 
    /* Get default font if not set. */
    if (font == NULL)
@@ -1152,7 +1211,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       return;
    }
 
-   /* Allocage. */
+   /* Allocate ASCII. */
    font->ascii = malloc(sizeof(glFontGlyph)*128);
    font->h = (int)floor((double)h);
    if (font->ascii==NULL) {
@@ -1160,7 +1219,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       return;
    }
 
-   /* create a FreeType font library */
+   /* Create a FreeType font library. */
    if (FT_Init_FreeType(&library)) {
       WARN("FT_Init_FreeType failed with font %s.",
             (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
@@ -1191,15 +1250,16 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       WARN("FT_Select_Charmap failed to change character mapping.");
 
    /* Generate the font atlas. */
-   font_genTextureAtlas( font, face );
+   font_genTextureAtlasASCII( font, face );
+
+   /* Initialize the unicode support. */
+   for (i=0; i<HASH_LUT_SIZE; i++)
+      font->lut[i] = -1;
+   font->glyphs = array_create( glFontGlyph );
 
    /* We can now free the face and library */
    FT_Done_Face(face);
    FT_Done_FreeType(library);
-
-   /* Initialize stash. */
-   //font->stash = sth_create( 512, 512 );
-   //sth_add_font_from_memory( font->stash, buf );
 
    /* Free read buffer. */
    free(buf);
@@ -1218,6 +1278,9 @@ void gl_freeFont( glFont* font )
    if (font->ascii != NULL)
       free(font->ascii);
    font->ascii = NULL;
+   if (font->glyphs != NULL)
+      array_free( font->glyphs );
+   font->glyphs = NULL;
    if (font->vbo_tex != NULL)
       gl_vboDestroy(font->vbo_tex);
    font->vbo_tex = NULL;
@@ -1225,3 +1288,5 @@ void gl_freeFont( glFont* font )
       gl_vboDestroy(font->vbo_vert);
    font->vbo_vert = NULL;
 }
+
+

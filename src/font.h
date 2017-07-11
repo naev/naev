@@ -30,6 +30,7 @@ typedef struct glFontGlyph_s {
    double adv_x; /**< X advancement. */
    double adv_y; /**< Y advancement. */
    /* Offsets are stored in the VBO and thus not an issue. */
+   GLuint texture; /**< Might be on different texture. */
    int next; /**< Stored as a linked list. */
 } glFontGlyph;
 
@@ -45,6 +46,8 @@ typedef struct glFont_s {
    glFontASCII *ascii; /**< Characters in the font. */
    glFontGlyph *glyphs; /**< Characters in the font. */
    int lut[HASH_LUT_SIZE]; /**< Look up table. */
+
+   char *fontdata; /**< Font data buffer. */
 } glFont;
 extern glFont gl_defFont; /**< Default font. */
 extern glFont gl_smallFont; /**< Small font. */
