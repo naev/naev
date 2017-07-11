@@ -67,6 +67,8 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
+/* Get unicode glyphs from cache. */
+static glFontGlyph* gl_fontGetGlyph( const glFont* font, uint32_t ch );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
 static int gl_fontRenderGlyph( const glFont* font, uint32_t ch, const glColour *c, int state );
@@ -166,26 +168,39 @@ void gl_printStore( glFontRestore *restore, const char *text )
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max )
 {
-   int n, i;
+   int n;
+   size_t i;
+   uint32_t ch;
+   int adv_x;
 
    /* Avoid segfaults. */
    if (text == NULL)
       return 0;
 
    /* limit size */
+   i = 0;
    n = 0;
-   for (i=0; text[i] != '\0'; i++) {
+   while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
-      if (text[i] == '\e') {
-         if (text[i+1] != '\0')
+      if (ch == '\e') {
+         if (text[i] != '\0')
             i += 1;
          continue;
       }
 
       /* Count length. */
-      n += ft_font->ascii[ (int)text[i] ].adv_x;
+      if (isascii(ch)) {
+         adv_x = ft_font->ascii[ch].adv_x;
+      }
+      else {
+         glFontGlyph *glyph = gl_fontGetGlyph( ft_font, ch );
+         adv_x = glyph->adv_x;
+      }
+
+      /* See if enough room. */
+      n += adv_x;
       if (n > max) {
-         n -= ft_font->ascii[ (int)text[i] ].adv_x; /* actual size */
+         n -= adv_x; /* actual size */
          break;
       }
    }
