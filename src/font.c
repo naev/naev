@@ -1332,6 +1332,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    GLushort ind[6];
    double a;
    const glColour *col;
+   int vbo_id;
 
    /* Handle escape sequences. */
    if (ch == '\e') /* Start sequence. */
@@ -1393,12 +1394,13 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glBindTexture(GL_TEXTURE_2D, glyph->tex->id);
 
    /* VBO indices. */
-   ind[0] = 4*ch + 0;
-   ind[1] = 4*ch + 1;
-   ind[2] = 4*ch + 3;
-   ind[3] = 4*ch + 1;
-   ind[4] = 4*ch + 3;
-   ind[5] = 4*ch + 2;
+   vbo_id = glyph->vbo_id;
+   ind[0] = vbo_id + 0;
+   ind[1] = vbo_id + 1;
+   ind[2] = vbo_id + 3;
+   ind[3] = vbo_id + 1;
+   ind[4] = vbo_id + 3;
+   ind[5] = vbo_id + 2;
 
    /* Draw the element. */
    glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
