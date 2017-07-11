@@ -161,7 +161,7 @@ static glFontStash *gl_fontGetStash( const glFont *font )
 }
 
 
-static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch )
+static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *glyph )
 {
    int i, j, n, offset;
    GLubyte *data;
@@ -178,18 +178,23 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch )
    for (i=0; i<array_size( stsh->tex ); i++) {
       for (j=0; j<MAX_ROWS; j++) {
          r = &stsh->tex->rows[j];
+         /* Fits in current row, so use that. */
          if ((r->h == ch->h) && (r->x+ch->w < stsh->tw)) {
             tex = &stsh->tex[i];
             gr = r;
             break;
          }
-         /* If empty row, try to fit. */
-         if ((r->h == 0) &&
-               ((j==0) || (stsh->tex->rows[j-1].y+stsh->tex->rows[j-1].h+ch->h < stsh->th))) {
+         /* If not empty row, skip. */
+         if (r->h != 0)
+            continue;
+         /* See if height fits. */
+         if ((j==0) || (stsh->tex->rows[j-1].y+stsh->tex->rows[j-1].h+ch->h < stsh->th)) {
             r->h = ch->h;
             if (j>0)
                r->y = stsh->tex->rows[j-1].y + stsh->tex->rows[j-1].h;
+            tex = &stsh->tex[i];
             gr = r;
+            break;
          }
       }
    }
@@ -210,18 +215,22 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch )
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
+      /* Initialize size. */
+      data = calloc( 2*stsh->tw*stsh->th, sizeof(GLubyte) );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, stsh->tw, stsh->th, 0,
+            GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
+      free(data);
+
       /* Check for errors. */
       gl_checkErr();
 
       gr = &tex->rows[0];
-   }
-   else {
-      glBindTexture( GL_TEXTURE_2D, tex->id );
+      gr->h = ch->h;
    }
 
    /* Render character.
     * TODO change everything from GL_LUMINANCE_ALPHA to GL_ALPHA only. */
-   data = malloc( sizeof(GLubyte) * ch->w*ch->h );
+   data = malloc( sizeof(GLubyte) * 2*ch->w*ch->h );
    for (j=0; j<ch->h; j++) {
       for (i=0; i<ch->w; i++) {
          offset  = j*ch->w + i;
@@ -229,19 +238,24 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch )
          data[ offset*2 + 1 ] = ch->data[ j*ch->w + i ];
       }
    }
-   free( data );
 
    /* Upload data. */
+   glBindTexture( GL_TEXTURE_2D, tex->id );
+   glPixelStorei(GL_UNPACK_ALIGNMENT,1);
    glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
-         GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, ch->data );
+         GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
+   free( data );
+
+   /* Check for error. */
+   gl_checkErr();
 
    /* Update VBOs. */
    stsh->nvbo++;
    n = 8*stsh->nvbo;
    stsh->vbo_tex_data  = realloc( stsh->vbo_tex_data, n*sizeof(GLfloat) );
    stsh->vbo_vert_data = realloc( stsh->vbo_vert_data, n*sizeof(GLshort) );
-   vbo_tex  = &stsh->vbo_tex_data[n];
-   vbo_vert = &stsh->vbo_vert_data[n];
+   vbo_tex  = &stsh->vbo_tex_data[n-8];
+   vbo_vert = &stsh->vbo_vert_data[n-8];
    /* We do something like the following for vertex coordinates.
       *
       *
@@ -301,7 +315,11 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch )
    /* Add space for the new character. */
    gr->x += ch->w;
 
-   return n/2; /* Return vbo_id */
+   /* Save glyph data. */
+   glyph->vbo_id = n/2;
+   glyph->tex = tex;
+
+   return 0;
 }
 
 
@@ -953,13 +971,18 @@ static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
 {
    FT_Bitmap bitmap;
    FT_GlyphSlot slot;
+   FT_UInt glyph_index;
    int w,h;
 
    slot = face->glyph; /* Small shortcut. */
 
+   /* Get glyph index. */
+   glyph_index = FT_Get_Char_Index( face, ch );
+
    /* Load the glyph. */
-   if (FT_Load_Char( face, ch, FT_LOAD_RENDER )) {
-      WARN("FT_Load_Char failed.");
+   //if (FT_Load_Char( face, ch, FT_LOAD_RENDER )) {
+   if (FT_Load_Glyph( face, glyph_index, FT_LOAD_RENDER )) {
+      WARN("FT_Load_Glyph failed.");
       return -1;
    }
 
@@ -1318,7 +1341,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    }
 
    /* Find empty texture and render char. */
-   glyph->vbo_id = gl_fontAddGlyphTex( stsh, &ft_char );
+   gl_fontAddGlyphTex( stsh, &ft_char, glyph );
 
    return glyph;
 }
@@ -1461,12 +1484,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       return -1;
    }
 
-   /* Set up heavy lifters. */
-   stsh->fontname = strdup( (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
-   stsh->face     = face;
-   stsh->library  = library;
-   stsh->fontdata = buf;
-
    /* Default sizes. */
    stsh->tw = 1024;
    stsh->th = 1024;
@@ -1517,6 +1534,12 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       stsh->lut[i] = -1;
    stsh->glyphs = array_create( glFontGlyph );
    stsh->tex    = array_create( glFontTex );
+
+   /* Set up font stuff for next glyphs. */
+   stsh->fontname = strdup( (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
+   stsh->face     = face;
+   stsh->library  = library;
+   stsh->fontdata = buf;
 
 #if 0
    /* We can now free the face and library */
