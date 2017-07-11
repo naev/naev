@@ -66,10 +66,10 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
  */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
-static const glColour* gl_fontGetColour( int ch );
+static const glColour* gl_fontGetColour( uint32_t ch );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
-static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
+static int gl_fontRenderGlyph( const glFont* font, uint32_t ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
 
 
@@ -183,9 +183,9 @@ static int font_limitSize( const glFont *ft_font, int *width,
       }
 
       /* Count length. */
-      n += ft_font->chars[ (int)text[i] ].adv_x;
+      n += ft_font->glyphs[ (int)text[i] ].adv_x;
       if (n > max) {
-         n -= ft_font->chars[ (int)text[i] ].adv_x; /* actual size */
+         n -= ft_font->glyphs[ (int)text[i] ].adv_x; /* actual size */
          break;
       }
    }
@@ -241,7 +241,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       ch = u8_nextchar( text, &i );
       if (isascii(ch)) {
          /* Increase size. */
-         n += ft_font->chars[ ch ].adv_x;
+         n += ft_font->glyphs[ ch ].adv_x;
       }
       else {
          /* Unicode. */
@@ -289,7 +289,7 @@ void gl_printRaw( const glFont *ft_font,
    gl_fontRenderStart(ft_font, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )))
-      s = gl_fontRenderCharacter( ft_font, ch, c, s );
+      s = gl_fontRenderGlyph( ft_font, ch, c, s );
    gl_fontRenderEnd();
 }
 
@@ -354,7 +354,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    gl_fontRenderStart(ft_font, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )))
-      s = gl_fontRenderCharacter( ft_font, ch, c, s );
+      s = gl_fontRenderGlyph( ft_font, ch, c, s );
    gl_fontRenderEnd();
 
    return ret;
@@ -423,7 +423,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    gl_fontRenderStart(ft_font, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )))
-      s = gl_fontRenderCharacter( ft_font, ch, c, s );
+      s = gl_fontRenderGlyph( ft_font, ch, c, s );
    gl_fontRenderEnd();
 
    return ret;
@@ -507,7 +507,7 @@ int gl_printTextRaw( const glFont *ft_font,
       gl_fontRenderStart(ft_font, x, y, c);
       for (i=p; i<ret; ) {
          ch = u8_nextchar( text, &i);
-         s = gl_fontRenderCharacter( ft_font, ch, c, s );
+         s = gl_fontRenderGlyph( ft_font, ch, c, s );
       }
       gl_fontRenderEnd();
 
@@ -585,7 +585,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       }
 
       /* Increment width. */
-      n += ft_font->chars[ (int)text[i] ].adv_x;
+      n += ft_font->glyphs[ (int)text[i] ].adv_x;
    }
 
    return n;
@@ -808,8 +808,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       }
 
       /* Store character information. */
-      font->chars[i].adv_x = chars[i].adv_x;
-      font->chars[i].adv_y = chars[i].adv_y;
+      font->glyphs[i].adv_x = chars[i].adv_x;
+      font->glyphs[i].adv_y = chars[i].adv_y;
 
       /* Store temporary information. */
       chars[i].tx = x_off;
@@ -922,7 +922,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 
    /* Enable textures. */
    glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, font->texture);
+   glBindTexture(GL_TEXTURE_2D, font->texture);
 
    /* Set up matrix. */
    gl_matrixMode(GL_MODELVIEW);
@@ -951,7 +951,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 /**
  * @brief Gets the colour from a character.
  */
-static const glColour* gl_fontGetColour( int ch )
+static const glColour* gl_fontGetColour( uint32_t ch )
 {
    const glColour *col;
    switch (ch) {
@@ -990,7 +990,7 @@ static const glColour* gl_fontGetColour( int ch )
 /**
  * @brief Renders a character.
  */
-static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state )
+static int gl_fontRenderGlyph( const glFont* font, uint32_t ch, const glColour *c, int state )
 {
    GLushort ind[6];
    double a;
@@ -1015,26 +1015,32 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
    }
 
    if (!isspace(ch)) {
-      /*
-       * Global  Local
-       * 0--1      0--1 4
-       * | /|  =>  | / /|
-       * |/ |      |/ / |
-       * 3--2      2 3--5
-       */
-      ind[0] = 4*ch + 0;
-      ind[1] = 4*ch + 1;
-      ind[2] = 4*ch + 3;
-      ind[3] = 4*ch + 1;
-      ind[4] = 4*ch + 3;
-      ind[5] = 4*ch + 2;
+      if (isascii(ch)) {
+         /*
+         * Global  Local
+         * 0--1      0--1 4
+         * | /|  =>  | / /|
+         * |/ |      |/ / |
+         * 3--2      2 3--5
+         */
+         ind[0] = 4*ch + 0;
+         ind[1] = 4*ch + 1;
+         ind[2] = 4*ch + 3;
+         ind[3] = 4*ch + 1;
+         ind[4] = 4*ch + 3;
+         ind[5] = 4*ch + 2;
 
-      /* Draw the element. */
-      glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+         /* Draw the element. */
+         glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+      }
+      else {
+         /* Scary unicode. */
+         //get_glyph( stash, fnt, ch, (short)(font->h*10.0f) );
+      }
    }
 
    /* Translate matrix. */
-   gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );
+   gl_matrixTranslate( font->glyphs[ch].adv_x, font->glyphs[ch].adv_y );
 
    return 0;
 }
@@ -1081,9 +1087,9 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    }
 
    /* Allocage. */
-   font->chars = malloc(sizeof(glFontChar)*128);
+   font->glyphs = malloc(sizeof(glFontGlyph)*128);
    font->h = (int)floor((double)h);
-   if (font->chars==NULL) {
+   if (font->glyphs==NULL) {
       WARN("Out of memory!");
       return;
    }
@@ -1121,9 +1127,15 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Generate the font atlas. */
    font_genTextureAtlas( font, face );
 
-   /* we can now free the face and library */
+   /* We can now free the face and library */
    FT_Done_Face(face);
    FT_Done_FreeType(library);
+
+   /* Initialize stash. */
+   //font->stash = sth_create( 512, 512 );
+   //sth_add_font_from_memory( font->stash, buf );
+
+   /* Free read buffer. */
    free(buf);
 }
 
@@ -1137,9 +1149,9 @@ void gl_freeFont( glFont* font )
    if (font == NULL)
       font = &gl_defFont;
    glDeleteTextures(1,&font->texture);
-   if (font->chars != NULL)
-      free(font->chars);
-   font->chars = NULL;
+   if (font->glyphs != NULL)
+      free(font->glyphs);
+   font->glyphs = NULL;
    if (font->vbo_tex != NULL)
       gl_vboDestroy(font->vbo_tex);
    font->vbo_tex = NULL;

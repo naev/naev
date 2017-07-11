@@ -14,10 +14,13 @@
 /**
  * @brief Represents a character in the font.
  */
-typedef struct glFontChar_s {
+typedef struct glFontGlyph_s {
+   uint32_t codepoint; /**< Real character. */
    double adv_x; /**< X advancement. */
    double adv_y; /**< Y advancement. */
-} glFontChar;
+   double off_x; /**< X offset. */
+   int next;
+} glFontGlyph;
 
 
 /**
@@ -28,7 +31,7 @@ typedef struct glFont_s {
    GLuint texture; /**< Font atlas. */
    gl_vbo *vbo_tex; /**< VBO associated to texture coordinates. */
    gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
-   glFontChar *chars; /**< Characters in the font. */
+   glFontGlyph *glyphs; /**< Characters in the font. */
 } glFont;
 extern glFont gl_defFont; /**< Default font. */
 extern glFont gl_smallFont; /**< Small font. */
@@ -89,7 +92,6 @@ int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
       const glColour* c, const char *fmt, ... );
-
 
 /* Dimension stuff. */
 int gl_printWidthForText( const glFont *ft_font, const char *text,
