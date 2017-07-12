@@ -232,7 +232,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
       /* We can't wrap the text, so we need to scroll it out. */
       n = gl_printWidthRaw( inp->dat.inp.font, inp->dat.inp.input+inp->dat.inp.view );
       if (n+10 > inp->w)
-         inp->dat.inp.view++;
+         u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
    }
 
    return 1;
@@ -473,7 +473,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          n = gl_printWidthRaw( &gl_smallFont,
                inp->dat.inp.input + inp->dat.inp.view - 1 );
          if (n+10 < inp->w)
-            inp->dat.inp.view--;
+            inp->dat.inp.view += curpos - inp->dat.inp.pos;
       }
 
       if (inp->dat.inp.fptr != NULL)
@@ -579,9 +579,11 @@ static void inp_clampView( Widget *inp )
          &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
 
    /* Shift the view right until the cursor is visible. */
-   while (inp->dat.inp.view + visible < inp->dat.inp.pos)
+   while (inp->dat.inp.view + visible < inp->dat.inp.pos) {
       visible = gl_printWidthForText( inp->dat.inp.font,
-            &inp->dat.inp.input[ inp->dat.inp.view++ ], inp->w - 10 );
+            &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
+      u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
+   }
 }
 
 
