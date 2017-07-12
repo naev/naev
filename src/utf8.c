@@ -22,10 +22,6 @@
 
 #if HAS_WIN32
 #include <malloc.h>
-#else /* HAS_WIN32 */
-#if !HAS_FREEBSD
-#include <alloca.h>
-#endif /* !HAS_FREEBSD */
 #endif /* HAS_WIN32 */
 #include <assert.h>
 
