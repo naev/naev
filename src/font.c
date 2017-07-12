@@ -57,15 +57,6 @@ typedef struct glFontTex_s {
 
 
 /**
- * @brief Represents ascii characters.
- */
-typedef struct glFontASCII_s {
-   double adv_x; /**< X advancement. */
-   double adv_y; /**< Y advancement. */
-} glFontASCII;
-
-
-/**
  * @brief Represents a character in the font.
  */
 typedef struct glFontGlyph_s {
@@ -105,13 +96,12 @@ typedef struct glFontStash_s {
    int tw; /**< Width of textures. */
    int th; /**< Height of textures. */
    glFontTex *tex; /**< Textures. */
-   GLuint texture; /**< Font atlas. */
    gl_vbo *vbo_tex; /**< VBO associated to texture coordinates. */
    gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
    GLfloat *vbo_tex_data; /**< Copy of texture coordinate data. */
    GLshort *vbo_vert_data; /**< Copy of vertex coordinate data. */
    int nvbo; /**< Amount of vbo data. */
-   glFontASCII *ascii; /**< Characters in the font. */
+   int mvbo; /**< Amount of vbo memory. */
    glFontGlyph *glyphs; /**< Unicode glyphs. */
    int lut[HASH_LUT_SIZE]; /**< Look up table. */
 
@@ -251,9 +241,12 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
 
    /* Update VBOs. */
    stsh->nvbo++;
+   if (stsh->nvbo > stsh->mvbo) {
+      stsh->mvbo *= 2;
+      stsh->vbo_tex_data  = realloc( stsh->vbo_tex_data,  8*stsh->mvbo*sizeof(GLfloat) );
+      stsh->vbo_vert_data = realloc( stsh->vbo_vert_data, 8*stsh->mvbo*sizeof(GLshort) );
+   }
    n = 8*stsh->nvbo;
-   stsh->vbo_tex_data  = realloc( stsh->vbo_tex_data,  n*sizeof(GLfloat) );
-   stsh->vbo_vert_data = realloc( stsh->vbo_vert_data, n*sizeof(GLshort) );
    vbo_tex  = &stsh->vbo_tex_data[n-8];
    vbo_vert = &stsh->vbo_vert_data[n-8];
    /* We do something like the following for vertex coordinates.
@@ -308,7 +301,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    vbo_vert[ 5 ] = vy;
    vbo_vert[ 6 ] = vx;    /* Bottom left. */
    vbo_vert[ 7 ] = vy;
-   /* Create new vbos. */
+   /* Update vbos. */
    gl_vboData( stsh->vbo_tex, sizeof(GLfloat)*n,  stsh->vbo_tex_data );
    gl_vboData( stsh->vbo_vert, sizeof(GLshort)*n, stsh->vbo_vert_data );
 
@@ -437,13 +430,8 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
       }
 
       /* Count length. */
-      if (isascii(ch)) {
-         adv_x = ft_font->ascii[ch].adv_x;
-      }
-      else {
-         glFontGlyph *glyph = gl_fontGetGlyph( ft_font, ch );
-         adv_x = glyph->adv_x;
-      }
+      glFontGlyph *glyph = gl_fontGetGlyph( ft_font, ch );
+      adv_x = glyph->adv_x;
 
       /* See if enough room. */
       n += adv_x;
@@ -504,16 +492,10 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          lastspace = i;
 
       ch = u8_nextchar( text, &i );
-      if (isascii(ch)) {
-         /* Increase size. */
-         n += stsh->ascii[ ch ].adv_x;
-      }
-      else {
-         /* Unicode. */
-         glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-         if (glyph!=NULL)
-            n += glyph->adv_x;
-      }
+      /* Unicode. */
+      glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
+      if (glyph!=NULL)
+         n += glyph->adv_x;
 
       /* Check if out of bounds. */
       if (n > width) {
@@ -862,13 +844,8 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       }
 
       /* Increment width. */
-      if (isascii(ch)) {
-         n += stsh->ascii[ ch ].adv_x;
-      }
-      else {
-         glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-         n += glyph->adv_x;
-      }
+      glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
+      n += glyph->adv_x;
    }
 
    return n;
@@ -1007,204 +984,6 @@ static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
 
 
 /**
- * @brief Generates the font's texture atlas.
- */
-static int font_genTextureAtlasASCII( glFontStash* font, FT_Face face )
-{
-   font_char_t chars[128];
-   int i, n;
-   int x, y, x_off, y_off;
-   int total_w;
-   int w, h, max_h;
-   int offset;
-   GLubyte *data;
-   GLfloat *vbo_tex;
-   GLshort *vbo_vert;
-   GLfloat tx, ty, txw, tyh;
-   GLfloat fw, fh;
-   GLshort vx, vy, vw, vh;
-
-   /* Render characters into software. */
-   total_w  = 0;
-   max_h    = 0;
-   for (i=0; i<128; i++) {
-      font_makeChar( &chars[i], face, i );
-      total_w += chars[i].w;
-      if (chars[i].h > max_h)
-         max_h = chars[i].h;
-   }
-
-   /* Calculate how to fit them.
-    * rows * Hmax = Wtotal / rows
-    * rows^2 = Wtotal / Hmax
-    * rows = sqrt( Wtotal / Hmax )
-    */
-   n = ceil( sqrt( (double)total_w / (double)max_h ) );
-   w = ceil( total_w / n ) + 1;
-   h = ceil( max_h * n ) + 1;
-
-   /* Check if need to be POT. */
-   if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
-      w = gl_pot(w);
-      h = gl_pot(h);
-   }
-
-   /* Test fit - formula isn't perfect. */
-   x_off = 0;
-   y_off = 0;
-   for (i=0; i<128; i++) {
-      if (x_off + chars[i].w >= w) {
-         x_off  = 0;
-         y_off += max_h;
-
-         /* Check for overflow. */
-         if (y_off + max_h >= h) {
-            h += max_h;
-
-            /* POT needs even more. */
-            if (1) /*gl_needPOT()) */ /** @TODO fix this stuff. */
-               h = gl_pot(h);
-         }
-      }
-
-      /* Displace offset. */
-      x_off += chars[i].w;
-   }
-
-   /* Generate the texture. */
-   data  = calloc( w*h*2, 1 );
-   x_off = 0;
-   y_off = 0;
-   for (i=0; i<128; i++) {
-      /* Check if need to skip to newline. */
-      if (x_off + chars[i].w >= w) {
-         x_off  = 0;
-         y_off += max_h;
-
-         if (y_off + max_h >= h)
-            WARN("Font is still too small - something went wrong.");
-      }
-
-      /* Render character. */
-      for (y=0; y<chars[i].h; y++) {
-         for (x=0; x<chars[i].w; x++) {
-            offset  = (y_off + y) * w;
-            offset += x_off + x;
-            data[ offset*2     ] = 0xcf; /* Constant luminance. */
-            data[ offset*2 + 1 ] = chars[i].data[ y*chars[i].w + x ];
-         }
-      }
-
-      /* Store character information. */
-      font->ascii[i].adv_x = chars[i].adv_x;
-      font->ascii[i].adv_y = chars[i].adv_y;
-
-      /* Store temporary information. */
-      chars[i].tx = x_off;
-      chars[i].ty = y_off;
-      chars[i].tw = chars[i].w;
-      chars[i].th = chars[i].h;
-
-      /* Displace offset. */
-      x_off += chars[i].w;
-
-      /* Free memory. */
-      free(chars[i].data);
-   }
-
-   /* Create the font texture. */
-   glGenTextures( 1, &font->texture );
-   glBindTexture( GL_TEXTURE_2D, font->texture );
-
-   /* Shouldn't ever scale - we'll generate appropriate size font. */
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-   /* Clamp texture .*/
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-   /* Upload data. */
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, w, h, 0,
-         GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
-
-   /* Check for errors. */
-   gl_checkErr();
-
-   /* Create the VBOs. */
-   n           = 8 * 128;
-   vbo_tex     = malloc(sizeof(GLfloat) * n);
-   vbo_vert    = malloc(sizeof(GLshort) * n);
-   for (i=0; i<128; i++) {
-      /* We do something like the following for vertex coordinates.
-       *
-       *
-       *  +----------------- top reference   \  <------- font->h
-       *  |                                  |
-       *  |                                  | --- off_y
-       *  +----------------- glyph top       /
-       *  |
-       *  |
-       *  +----------------- glyph bottom
-       *  |
-       *  v   y
-       *
-       *
-       *  +----+------------->  x
-       *  |    |
-       *  |    glyph start
-       *  |
-       *  side reference
-       *
-       *  \----/
-       *   off_x
-       */
-      /* Temporary variables. */
-      fw  = (GLfloat) w;
-      fh  = (GLfloat) h;
-      tx  = (GLfloat)chars[i].tx / fw;
-      ty  = (GLfloat)chars[i].ty / fh;
-      txw = (GLfloat)(chars[i].tx + chars[i].tw) / fw;
-      tyh = (GLfloat)(chars[i].ty + chars[i].th) / fh;
-      vx  = chars[i].off_x;
-      vy  = chars[i].off_y - chars[i].h;
-      vw  = chars[i].w;
-      vh  = chars[i].h;
-      /* Texture coords. */
-      vbo_tex[  8*i + 0 ] = tx;  /* Top left. */
-      vbo_tex[  8*i + 1 ] = ty;
-      vbo_tex[  8*i + 2 ] = txw; /* Top right. */
-      vbo_tex[  8*i + 3 ] = ty;
-      vbo_tex[  8*i + 4 ] = txw; /* Bottom right. */
-      vbo_tex[  8*i + 5 ] = tyh;
-      vbo_tex[  8*i + 6 ] = tx;  /* Bottom left. */
-      vbo_tex[  8*i + 7 ] = tyh;
-      /* Vertex coords. */
-      vbo_vert[ 8*i + 0 ] = vx;    /* Top left. */
-      vbo_vert[ 8*i + 1 ] = vy+vh;
-      vbo_vert[ 8*i + 2 ] = vx+vw; /* Top right. */
-      vbo_vert[ 8*i + 3 ] = vy+vh;
-      vbo_vert[ 8*i + 4 ] = vx+vw; /* Bottom right. */
-      vbo_vert[ 8*i + 5 ] = vy;
-      vbo_vert[ 8*i + 6 ] = vx;    /* Bottom left. */
-      vbo_vert[ 8*i + 7 ] = vy;
-   }
-   font->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*n, vbo_tex );
-   font->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*n, vbo_vert );
-
-   /* Save data for updating. */
-   font->vbo_tex_data  = vbo_tex;
-   font->vbo_vert_data = vbo_vert;
-   font->nvbo = 128;
-
-   /* Free the data. */
-   free(data);
-
-   return 0;
-}
-
-
-/**
  * @brief Starts the rendering engine.
  */
 static void gl_fontRenderStart( const glFontStash* font, double x, double y, const glColour *c )
@@ -1213,7 +992,6 @@ static void gl_fontRenderStart( const glFontStash* font, double x, double y, con
 
    /* Enable textures. */
    glEnable(GL_TEXTURE_2D);
-   glBindTexture(GL_TEXTURE_2D, font->texture);
 
    /* Set up matrix. */
    gl_matrixMode(GL_MODELVIEW);
@@ -1379,37 +1157,6 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       return 0;
    }
 
-   if (isascii(ch)) {
-      if (isspace(ch)) {
-         /* Advance. */
-         gl_matrixTranslate( stsh->ascii[ch].adv_x, stsh->ascii[ch].adv_y );
-         return 0;
-      }
-
-      glBindTexture(GL_TEXTURE_2D, stsh->texture);
-
-      /*
-      * Global  Local
-      * 0--1      0--1 4
-      * | /|  =>  | / /|
-      * |/ |      |/ / |
-      * 3--2      2 3--5
-      */
-      ind[0] = 4*ch + 0;
-      ind[1] = 4*ch + 1;
-      ind[2] = 4*ch + 3;
-      ind[3] = 4*ch + 1;
-      ind[4] = 4*ch + 3;
-      ind[5] = 4*ch + 2;
-
-      /* Draw the element. */
-      glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
-
-      /* Advance. */
-      gl_matrixTranslate( stsh->ascii[ch].adv_x, stsh->ascii[ch].adv_y );
-      return 0;
-   }
-
    /* Unicode goes here.
     * First try to find the glyph. */
    glFontGlyph *glyph;
@@ -1481,6 +1228,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    if (avail_fonts==NULL)
       avail_fonts = array_create( glFontStash );
    stsh = &array_grow( &avail_fonts );
+   memset( stsh, 0, sizeof(glFontStash) );
    font->id = stsh - avail_fonts;
    font->h = (int)floor((double)h);
 
@@ -1494,14 +1242,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Default sizes. */
    stsh->tw = 1024;
    stsh->th = 1024;
-
-   /* Allocate ASCII. */
-   stsh->ascii = malloc(sizeof(glFontGlyph)*128);
    stsh->h = font->h;
-   if (stsh->ascii==NULL) {
-      WARN("Out of memory!");
-      return -1;
-   }
 
    /* Create a FreeType font library. */
    if (FT_Init_FreeType(&library)) {
@@ -1533,9 +1274,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
       WARN("FT_Select_Charmap failed to change character mapping.");
 
-   /* Generate the font atlas. */
-   font_genTextureAtlasASCII( stsh, face );
-
    /* Initialize the unicode support. */
    for (i=0; i<HASH_LUT_SIZE; i++)
       stsh->lut[i] = -1;
@@ -1547,6 +1285,17 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    stsh->face     = face;
    stsh->library  = library;
    stsh->fontdata = buf;
+
+   /* Set up VBOs. */
+   stsh->mvbo = 256;
+   stsh->vbo_tex_data  = calloc( 8*stsh->mvbo, sizeof(GLfloat) );
+   stsh->vbo_vert_data = calloc( 8*stsh->mvbo, sizeof(GLshort) );
+   stsh->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*8*stsh->mvbo,  stsh->vbo_tex_data );
+   stsh->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*8*stsh->mvbo, stsh->vbo_vert_data );
+
+   /* Initializes ASCII. */
+   for (i=0; i<128; i++)
+      gl_fontGetGlyph( stsh, i );
 
 #if 0
    /* We can now free the face and library */
@@ -1567,6 +1316,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
  */
 void gl_freeFont( glFont* font )
 {
+   int i;
+
    if (font == NULL)
       font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( font );
@@ -1576,10 +1327,11 @@ void gl_freeFont( glFont* font )
    //FT_Done_FreeType(stsh->library);
    free(stsh->fontdata);
 
-   glDeleteTextures(1,&stsh->texture);
-   if (stsh->ascii != NULL)
-      free(stsh->ascii);
-   stsh->ascii = NULL;
+   for (i=0; i<array_size(stsh->tex); i++)
+      glDeleteTextures( 1, &stsh->tex->id );
+   array_free( stsh->tex );
+   stsh->tex = NULL;
+
    if (stsh->glyphs != NULL)
       array_free( stsh->glyphs );
    stsh->glyphs = NULL;
