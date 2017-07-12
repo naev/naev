@@ -32,9 +32,9 @@
 #include "ndata.h"
 #include "utf8.h"
 
-#define HASH_LUT_SIZE 512
-
-#define MAX_ROWS 128
+#define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
+#define MAX_ROWS 128 /**< Max number of rows per texture cache. */
+#define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 
 
 /**
@@ -1229,8 +1229,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    }
 
    /* Default sizes. */
-   stsh->tw = 1024;
-   stsh->th = 1024;
+   stsh->tw = DEFAULT_TEXTURE_SIZE;
+   stsh->th = DEFAULT_TEXTURE_SIZE;
    stsh->h = font->h;
 
    /* Create a FreeType font library. */
