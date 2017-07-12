@@ -32,7 +32,7 @@
 #include "ndata.h"
 #include "utf8.h"
 
-#define HASH_LUT_SIZE 256
+#define HASH_LUT_SIZE 512
 
 #define MAX_ROWS 128
 
