@@ -205,7 +205,7 @@ void menu_main (void)
 
    /* Buttons. */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "ロードゲーム", menu_main_load, SDLK_l );
+         "btnLoad", "Load Game", menu_main_load, SDLK_l );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Game", menu_main_new, SDLK_n );
