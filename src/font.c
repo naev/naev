@@ -945,25 +945,27 @@ int gl_printHeight( const glFont *ft_font,
  */
 /**
  */
-static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
+static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 {
    FT_Bitmap bitmap;
    FT_GlyphSlot slot;
    FT_UInt glyph_index;
    int w,h;
 
-   slot = face->glyph; /* Small shortcut. */
+   slot = stsh->face->glyph; /* Small shortcut. */
 
    /* Get glyph index. */
-   glyph_index = FT_Get_Char_Index( face, ch );
+   glyph_index = FT_Get_Char_Index( stsh->face, ch );
 
    /* Load the glyph. */
-   if (FT_Load_Glyph( face, glyph_index, FT_LOAD_RENDER | FT_LOAD_NO_BITMAP)) {
+   if (FT_Load_Glyph( stsh->face, glyph_index, FT_LOAD_RENDER | FT_LOAD_NO_BITMAP | FT_LOAD_TARGET_NORMAL)) {
       WARN("FT_Load_Glyph failed.");
       return -1;
    }
 
    bitmap = slot->bitmap; /* to simplify */
+   if (bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
+      WARN("Font '%s' not using FT_PIXEL_MODE_GRAY!", stsh->fontname);
 
    /* need the POT wrapping for opengl */
    w = bitmap.width;
@@ -978,6 +980,7 @@ static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
    c->off_y = slot->bitmap_top;
    c->adv_x = (GLfloat)slot->advance.x / 64.;
    c->adv_y = (GLfloat)slot->advance.y / 64.;
+
    return 0;
 }
 
@@ -1094,7 +1097,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    int idx;
 
    /* Load data from freetype. */
-   font_makeChar( &ft_char, stsh->face, ch );
+   font_makeChar( stsh, &ft_char, ch );
 
    /* Create new character. */
    glyph = &array_grow( &stsh->glyphs );
