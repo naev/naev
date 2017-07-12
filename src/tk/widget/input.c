@@ -16,13 +16,14 @@
 
 #include "nstd.h"
 #include "nstring.h"
+#include "utf8.h"
 
 
 static void inp_render( Widget* inp, double bx, double by );
 static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
 static int inp_text( Widget* inp, const char *buf );
-static int inp_addKey( Widget* inp, SDLKey key );
+static int inp_addKey( Widget* inp, uint32_t ch );
 static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 static void inp_focusGain( Widget* inp );
@@ -72,7 +73,7 @@ void window_addInput( const unsigned int wid,
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos     = 0;
    wgt->dat.inp.view    = 0;
-   wgt->dat.inp.input   = calloc( wgt->dat.inp.max, 1 );
+   wgt->dat.inp.input   = calloc( wgt->dat.inp.max, 4 ); /* Maximum length of a unicode character is 4 bytes. */
    wgt->dat.inp.fptr    = NULL;
 
    /* position/size */
@@ -93,7 +94,8 @@ static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
    char buf[ 512 ], *str;
-   int w, m, p, s;
+   int m, s;
+   size_t p, w;
    int lines;
    char c;
 
@@ -174,15 +176,14 @@ static void inp_render( Widget* inp, double bx, double by )
  */
 static int inp_text( Widget* inp, const char *buf )
 {
-   int i;
+   size_t i;
    int ret;
+   uint32_t ch;
 
    i = 0;
    ret = 0;
-   while (buf[i] != '\0') {
-      ret |= inp_addKey( inp, buf[i] );
-      i++;
-   }
+   while ((ch = u8_nextchar( buf, &i )))
+      ret |= inp_addKey( inp, ch );
 
    if (ret && inp->dat.inp.fptr != NULL)
       inp->dat.inp.fptr( inp->wdw, inp->name );
@@ -198,39 +199,33 @@ static int inp_text( Widget* inp, const char *buf )
  *    @param key Key to receive.
  *    @return 1 if key was used.
  */
-static int inp_addKey( Widget* inp, SDLKey key )
+static int inp_addKey( Widget* inp, uint32_t ch )
 {
-   int i;
+   size_t i, len;
    int n;
-   char c;
-
-   /*
-    * Handle arrow keys.
-    * @todo finish implementing, no cursor makes it complicated to see where you are.
-    */
-
-   /* Only catch some keys. */
-   if (!nstd_isgraph(key) && (key != ' '))
-      return 0;
-
-   /* No sense to use SDLKey below this. */
-   c = key;
+   uint32_t c;
+   char buf[8];
 
    /* Check to see if is in filter to ignore. */
-   if (inp->dat.inp.filter != NULL)
-      for (i=0; inp->dat.inp.filter[i] != '\0'; i++)
-         if (inp->dat.inp.filter[i] == c)
+   if (inp->dat.inp.filter != NULL) {
+      while ((c = u8_nextchar( inp->dat.inp.filter, &i )))
+         if (c == ch)
             return 1; /* Ignored. */
+   }
 
    /* Make sure it's not full. */
-   if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+   if (u8_strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
       return 1;
 
+   /* Render back to utf8. */
+   len = u8_toutf8( buf, sizeof(buf), &ch, 1 );
+
    /* Add key. */
-   memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+   memmove( &inp->dat.inp.input[ inp->dat.inp.pos+len ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
-         inp->dat.inp.max - inp->dat.inp.pos - 2 );
-   inp->dat.inp.input[ inp->dat.inp.pos++ ] = c;
+         inp->dat.inp.max - inp->dat.inp.pos - 1 - len );
+   for (i=0; i<len; i++)
+      inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
    inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0';
 
    if (inp->dat.inp.oneline) {
@@ -274,8 +269,8 @@ static int inp_isBreaker(char c)
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 {
    (void) mod;
-   int n, curpos, prevpos, curchars, prevchars, charsfromleft, lines;
-   int len;
+   int n, prevpos, curchars, prevchars, charsfromleft, lines;
+   size_t curpos, len;
    char* str;
 
    /*
@@ -292,37 +287,37 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
                /* We want to position the cursor at the start of the previous or current word. */
                /* Begin by skipping all breakers. */
                while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
-                  inp->dat.inp.pos--;
+                  u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
                }
                /* Now skip until we encounter a breaker (or SOL). */
                while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
-                  inp->dat.inp.pos--;
+                  u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
                }
             }
             else
-               inp->dat.inp.pos -= 1;
+               u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
 
             inp_clampView( inp );
          }
       }
       else if (key == SDLK_RIGHT) {
-         len = (int)strlen(inp->dat.inp.input);
+         len = strlen(inp->dat.inp.input);
          if (inp->dat.inp.pos < len) {
             if (mod & KMOD_CTRL) {
                /* We want to position the cursor at the start of the next word. */
                /* Begin by skipping all non-breakers. */
                while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
                      && (inp->dat.inp.pos < len)) {
-                  inp->dat.inp.pos++;
+                  u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
                }
                /* Now skip until we encounter a non-breaker (or EOL). */
                while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
                      && (inp->dat.inp.pos < len)) {
-                  inp->dat.inp.pos++;
+                  u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
                }
             }
             else
-               inp->dat.inp.pos += 1;
+               u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
 
             inp_clampView( inp );
          }
@@ -379,7 +374,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          lines    = 0;
 
          /* We can't move beyond the current line, as it is the last one. */
-         if (inp->dat.inp.pos == (int)strlen(inp->dat.inp.input))
+         if (inp->dat.inp.pos == strlen(inp->dat.inp.input))
             return 1;
 
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
@@ -416,7 +411,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
           * But make sure never to go past the end of the string. */
          inp->dat.inp.pos  = prevpos;
          inp->dat.inp.pos += MIN(charsfromleft, curchars);
-         inp->dat.inp.pos  = MIN(inp->dat.inp.pos, (int)strlen(inp->dat.inp.input));
+         inp->dat.inp.pos  = MIN(inp->dat.inp.pos, strlen(inp->dat.inp.input));
       }
 
       return 1;
@@ -457,15 +452,15 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             /* We want to delete up to the start of the previous or current word. */
             /* Begin by skipping all breakers. */
             while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
-               inp->dat.inp.pos--;
+               u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
             }
             /* Now skip until we encounter a breaker (or SOL). */
             while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
-               inp->dat.inp.pos--;
+               u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
             }
          }
          else {
-            inp->dat.inp.pos--;
+            u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
          }
       }
       /* Actually delete the chars. */
@@ -498,16 +493,16 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             /* Begin by skipping all non-breakers. */
             while (!inp_isBreaker(inp->dat.inp.input[curpos])
                   && (curpos < len)) {
-               curpos++;
+               u8_inc( inp->dat.inp.input, &curpos );
             }
             /* Now skip until we encounter a non-breaker (or EOL). */
             while (inp_isBreaker(inp->dat.inp.input[curpos])
                   && (curpos < len)) {
-               curpos++;
+               u8_inc( inp->dat.inp.input, &curpos );
             }
          }
          else {
-            curpos++;
+            u8_inc( inp->dat.inp.input, &curpos );
          }
       }
       /* Actually delete the chars. */

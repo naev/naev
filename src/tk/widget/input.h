@@ -17,10 +17,10 @@
 typedef struct WidgetInputData_ {
    char *filter; /**< Characters to filter. */
    char *input; /**< Input buffer. */
-   int max; /**< Maximum length. */
    int oneline; /**< Is it a one-liner? no '\n' and friends */
-   int view; /**< View position. */
-   int pos; /**< Cursor position. */
+   size_t max; /**< Maximum length. */
+   size_t view; /**< View position. */
+   size_t pos; /**< Cursor position. */
    glFont *font; /**< Font to use. */
    void (*fptr) (unsigned int, char*); /**< Modify callback - triggered on text input. */
 } WidgetInputData;
