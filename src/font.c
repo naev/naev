@@ -958,8 +958,7 @@ static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
    glyph_index = FT_Get_Char_Index( face, ch );
 
    /* Load the glyph. */
-   //if (FT_Load_Char( face, ch, FT_LOAD_RENDER )) {
-   if (FT_Load_Glyph( face, glyph_index, FT_LOAD_RENDER )) {
+   if (FT_Load_Glyph( face, glyph_index, FT_LOAD_RENDER | FT_LOAD_NO_BITMAP)) {
       WARN("FT_Load_Glyph failed.");
       return -1;
    }
