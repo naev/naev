@@ -52,7 +52,7 @@ typedef struct glFontRow_s {
  */
 typedef struct glFontTex_s {
    GLuint id; /**< Texture id. */
-   glFontRow rows[ MAX_ROWS ];
+   glFontRow rows[ MAX_ROWS ]; /**< Stores font row information. */
 } glFontTex;
 
 
@@ -153,7 +153,7 @@ static glFontStash *gl_fontGetStash( const glFont *font )
 
 static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *glyph )
 {
-   int i, j, n, offset;
+   int i, j, n;
    GLubyte *data;
    glFontRow *r, *gr;
    glFontTex *tex;
@@ -207,8 +207,8 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
 
       /* Initialize size. */
       data = calloc( 2*stsh->tw*stsh->th, sizeof(GLubyte) );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, stsh->tw, stsh->th, 0,
-            GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, stsh->tw, stsh->th, 0,
+            GL_ALPHA, GL_UNSIGNED_BYTE, data );
       free(data);
 
       /* Check for errors. */
@@ -218,23 +218,11 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       gr->h = ch->h;
    }
 
-   /* Render character.
-    * TODO change everything from GL_LUMINANCE_ALPHA to GL_ALPHA only. */
-   data = malloc( sizeof(GLubyte) * 2*ch->w*ch->h );
-   for (j=0; j<ch->h; j++) {
-      for (i=0; i<ch->w; i++) {
-         offset  = j*ch->w + i;
-         data[ offset*2     ] = 0xcf; /* Constant luminance. */
-         data[ offset*2 + 1 ] = ch->data[ j*ch->w + i ];
-      }
-   }
-
    /* Upload data. */
    glBindTexture( GL_TEXTURE_2D, tex->id );
    glPixelStorei(GL_UNPACK_ALIGNMENT,1);
    glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
-         GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
-   free( data );
+         GL_ALPHA, GL_UNSIGNED_BYTE, ch->data );
 
    /* Check for error. */
    gl_checkErr();
