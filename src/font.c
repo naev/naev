@@ -141,7 +141,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
 /*
  * prototypes
  */
-static int font_limitSize( glFontStash *ft_font, int *width,
+static size_t font_limitSize( glFontStash *ft_font, int *width,
       const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
 /* Get unicode glyphs from cache. */
@@ -413,7 +413,7 @@ void gl_printStore( glFontRestore *restore, const char *text )
  *    @param max Max to look for.
  *    @return Number of characters that fit.
  */
-static int font_limitSize( glFontStash *ft_font, int *width,
+static size_t font_limitSize( glFontStash *ft_font, int *width,
       const char *text, const int max )
 {
    int n;
@@ -422,7 +422,7 @@ static int font_limitSize( glFontStash *ft_font, int *width,
    int adv_x;
 
    /* Avoid segfaults. */
-   if (text == NULL)
+   if ((text == NULL) || (text[0]=='\0'))
       return 0;
 
    /* limit size */
@@ -448,6 +448,7 @@ static int font_limitSize( glFontStash *ft_font, int *width,
       /* See if enough room. */
       n += adv_x;
       if (n > max) {
+         u8_dec( text, &i );
          n -= adv_x; /* actual size */
          break;
       }
@@ -607,8 +608,8 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   int ret, s;
-   size_t i;
+   int s;
+   size_t ret, i;
    uint32_t ch;
 
    if (ft_font == NULL)
@@ -622,7 +623,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    s = 0;
    gl_fontRenderStart(stsh, x, y, c);
    i = 0;
-   while ((ch = u8_nextchar( text, &i )))
+   while ((ch = u8_nextchar( text, &i )) && (i <= ret))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
 
@@ -676,8 +677,8 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       const glColour* c, const char *text )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-   int n, ret, s;
-   size_t i;
+   int n, s;
+   size_t ret, i;
    uint32_t ch;
 
    if (ft_font == NULL)
@@ -692,7 +693,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    s = 0;
    gl_fontRenderStart(stsh, x, y, c);
    i = 0;
-   while ((ch = u8_nextchar( text, &i )))
+   while ((ch = u8_nextchar( text, &i )) && (i <= ret))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
 
@@ -1360,8 +1361,9 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    int vbo_id;
 
    /* Handle escape sequences. */
-   if (ch == '\e') /* Start sequence. */
+   if (ch == '\e') {/* Start sequence. */
       return 1;
+   }
    if (state == 1) {
       col = gl_fontGetColour( ch );
       a   = (c==NULL) ? 1. : c->a;
@@ -1377,13 +1379,13 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       return 0;
    }
 
-   if (isspace(ch)) {
-      /* Advance. */
-      gl_matrixTranslate( stsh->ascii[ch].adv_x, stsh->ascii[ch].adv_y );
-      return 0;
-   }
-
    if (isascii(ch)) {
+      if (isspace(ch)) {
+         /* Advance. */
+         gl_matrixTranslate( stsh->ascii[ch].adv_x, stsh->ascii[ch].adv_y );
+         return 0;
+      }
+
       glBindTexture(GL_TEXTURE_2D, stsh->texture);
 
       /*
@@ -1412,8 +1414,10 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
     * First try to find the glyph. */
    glFontGlyph *glyph;
    glyph = gl_fontGetGlyph( stsh, ch );
-   if (glyph == NULL)
+   if (glyph == NULL) {
+      WARN("Unable to find glyph '%d'!", ch );
       return -1;
+   }
 
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, glyph->tex->id);
