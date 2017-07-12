@@ -83,6 +83,7 @@ static int spacename_mstack = 0; /**< Size of memory in planet<->system stack. *
 
 /*
  * Star system stack.
+ * TODO should be removed in favour of our array framework (array.h)
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 int systems_nstack = 0; /**< Number of star systems. */
@@ -90,6 +91,7 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
 
 /*
  * Planet stack.
+ * TODO should be removed in favour of our array framework (array.h)
  */
 static Planet *planet_stack = NULL; /**< Planet stack. */
 static int planet_nstack = 0; /**< Planet stack size. */
