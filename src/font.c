@@ -1215,7 +1215,7 @@ static char *gl_fontFind( const char *fname )
    
    config = FcInitLoadConfigAndFonts();
    pat = FcNameParse( (const FcChar8*)fname );
-   FcConfigSubstitute(config, pat, FcMatchPattern);
+   FcConfigSubstitute( config, pat, FcMatchPattern );
    FcDefaultSubstitute(pat);
    font = FcFontMatch(config, pat, &result);
    if (font) {

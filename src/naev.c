@@ -316,9 +316,9 @@ int main( int argc, char** argv )
       exit(EXIT_FAILURE);
    }
    window_caption();
-   gl_fontInit( NULL, "NotoSansCJK", FONT_DEFAULT_PATH, conf.font_size_def ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, "Noto Sans CJK", FONT_DEFAULT_PATH, conf.font_size_small ); /* small font */
-   gl_fontInit( &gl_defFontMono, "Mono", FONT_MONOSPACE_PATH, conf.font_size_def );
+   gl_fontInit( NULL, "Arial", FONT_DEFAULT_PATH, conf.font_size_def ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, "Arial", FONT_DEFAULT_PATH, conf.font_size_small ); /* small font */
+   gl_fontInit( &gl_defFontMono, "Monospace", FONT_MONOSPACE_PATH, conf.font_size_def );
 
 #if SDL_VERSION_ATLEAST(2,0,0)
    /* Detect size changes that occurred after window creation. */
