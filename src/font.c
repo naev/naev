@@ -280,12 +280,12 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       *   off_x
       */
    /* Temporary variables. */
-   fw  = (GLfloat) ch->w;
-   fh  = (GLfloat) ch->h;
-   tx  = (GLfloat)ch->tx / fw;
-   ty  = (GLfloat)ch->ty / fh;
-   txw = (GLfloat)(ch->tx + ch->tw) / fw;
-   tyh = (GLfloat)(ch->ty + ch->th) / fh;
+   fw  = (GLfloat) stsh->tw;
+   fh  = (GLfloat) stsh->th;
+   tx  = (GLfloat) gr->x / fw;
+   ty  = (GLfloat) gr->y / fh;
+   txw = (GLfloat) (gr->x + ch->w) / fw;
+   tyh = (GLfloat) (gr->y + ch->h) / fh;
    vx  = ch->off_x;
    vy  = ch->off_y - ch->h;
    vw  = ch->w;
@@ -316,7 +316,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    gr->x += ch->w;
 
    /* Save glyph data. */
-   glyph->vbo_id = n/2;
+   glyph->vbo_id = n/2-4;
    glyph->tex = tex;
 
    return 0;
