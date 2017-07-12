@@ -154,6 +154,9 @@ static glFontStash *gl_fontGetStash( const glFont *font )
 }
 
 
+/**
+ * @brief Adds a font glyph to the texture stash.
+ */
 static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *glyph )
 {
    int i, j, n;
