@@ -146,6 +146,8 @@ void conf_setDefaults (void)
    conf.font_size_intro   = 18;
    conf.font_size_def     = 12;
    conf.font_size_small   = 10;
+   conf.font_name_default = NULL;
+   conf.font_name_monospace = NULL;
 
    /* Misc. */
    conf.redirect_file = 1;
@@ -416,6 +418,8 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("font_size_intro",conf.font_size_intro);
       conf_loadInt("font_size_def",conf.font_size_def);
       conf_loadInt("font_size_small",conf.font_size_small);
+      conf_loadString("font_name_default",conf.font_name_default);
+      conf_loadString("font_name_monospace",conf.font_name_monospace);
 
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
@@ -1058,6 +1062,20 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("font_size_def",conf.font_size_def);
    conf_saveComment("Small size: 10");
    conf_saveInt("font_size_small",conf.font_size_small);
+   conf_saveComment("Default font to use: unset");
+   if (conf.font_name_default) {
+      conf_saveString("font_name_default",conf.font_name_default);
+   }
+   else {
+      conf_saveComment("font_name_default = \"/path/to/file.ttf\"");
+   }
+   conf_saveComment("Default monospace font to use: unset");
+   if (conf.font_name_monospace) {
+      conf_saveString("font_name_monospace",conf.font_name_monospace);
+   }
+   else {
+      conf_saveComment("font_name_monospace = \"/path/to/file.ttf\"");
+   }
    conf_saveEmptyLine();
 
    /* Misc. */

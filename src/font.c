@@ -31,6 +31,7 @@
 
 #include "log.h"
 #include "array.h"
+#include "conf.h"
 #include "ndata.h"
 #include "nfile.h"
 #include "utf8.h"
@@ -1248,13 +1249,33 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
    glFontStash *stsh;
    char *used_font;
 
-   /* Try to use system font. */
-   used_font = gl_fontFind( fname );
+   /* See if we should override fonts. */
+   used_font = NULL;
+   if ((strcmp( fallback, FONT_DEFAULT_PATH )==0) &&
+      (conf.font_name_default!=NULL)) {
+      used_font = strdup( conf.font_name_default );
+   }
+   else if ((strcmp( fallback, FONT_MONOSPACE_PATH )==0) &&
+      (conf.font_name_monospace!=NULL)) {
+      used_font = strdup( conf.font_name_monospace );
+   }
    if (used_font) {
       buf = (FT_Byte*)nfile_readFile( &bufsize, used_font );
       if (buf==NULL) {
          free(used_font);
          used_font = NULL;
+      }
+   }
+
+   /* Try to use system font. */
+   if (used_font==NULL) {
+      used_font = gl_fontFind( fname );
+      if (used_font) {
+         buf = (FT_Byte*)nfile_readFile( &bufsize, used_font );
+         if (buf==NULL) {
+            free(used_font);
+            used_font = NULL;
+         }
       }
    }
 
@@ -1269,8 +1290,10 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
    }
 
    /* Get default font if not set. */
-   if (font == NULL)
+   if (font == NULL) {
       font = &gl_defFont;
+      DEBUG( "Using default font '%s'", used_font );
+   }
 
    /* Get font stash. */
    if (avail_fonts==NULL)
