@@ -1334,8 +1334,10 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    }
    else {
       while (i != -1) {
-         if (stsh->glyphs[i].next == -1)
+         if (stsh->glyphs[i].next == -1) {
             stsh->glyphs[i].next = idx;
+            break;
+         }
          i = stsh->glyphs[i].next;
       }
    }
