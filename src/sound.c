@@ -700,7 +700,7 @@ void sound_setSpeed( double s )
 static int sound_makeList (void)
 {
    char** files;
-   uint32_t nfiles,i;
+   size_t nfiles,i;
    char path[PATH_MAX];
    char tmp[64];
    int len, suflen, flen;

@@ -2126,7 +2126,7 @@ int gui_load( const char* name )
 {
    (void) name;
    char *buf, path[PATH_MAX];
-   uint32_t bufsize;
+   size_t bufsize;
 
    /* Set defaults. */
    gui_cleanup();

@@ -304,7 +304,7 @@ static void music_free (void)
 static int music_find (void)
 {
    char** files;
-   uint32_t nfiles,i;
+   size_t nfiles,i;
    int suflen, flen;
    int nmusic;
 
@@ -523,7 +523,7 @@ void music_setPos( double sec )
 static int music_luaInit (void)
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
 
    if (music_disabled)
       return 0;

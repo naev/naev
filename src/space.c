@@ -112,7 +112,7 @@ static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
-uint32_t nasterogfx = 0; /**< Nb of asteroid gfx. */
+static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 
 
 /*
@@ -1549,13 +1549,13 @@ Planet *planet_new (void)
  */
 static int planets_load ( void )
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, **planet_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   uint32_t nfiles;
-   int i, len;
+   size_t nfiles;
+   size_t i, len;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -1578,7 +1578,7 @@ static int planets_load ( void )
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
@@ -1612,7 +1612,7 @@ static int planets_load ( void )
    }
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<nfiles; i++)
       free( planet_files[i] );
    free( planet_files );
 
@@ -3098,7 +3098,7 @@ static int asteroidTypes_load (void)
 {
    int i, len;
    AsteroidType *at;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, *str, file[PATH_MAX];
    xmlNodePtr node, cur;
    xmlDocPtr doc;
@@ -3187,13 +3187,13 @@ static int asteroidTypes_load (void)
  */
 static int systems_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, **system_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   int i, len;
-   uint32_t nfiles;
+   size_t i, len;
+   size_t nfiles;
 
    /* Allocate if needed. */
    if (systems_stack == NULL) {
@@ -3207,7 +3207,7 @@ static int systems_load (void)
    /*
     * First pass - loads all the star systems_stack.
     */
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
@@ -3242,7 +3242,7 @@ static int systems_load (void)
    /*
     * Second pass - loads all the jump routes.
     */
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
@@ -3275,7 +3275,7 @@ static int systems_load (void)
          planet_nstack, (planet_nstack==1) ? "" : "s" );
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<nfiles; i++)
       free( system_files[i] );
    free( system_files );
 

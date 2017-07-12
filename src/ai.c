@@ -550,7 +550,7 @@ void ai_destroy( Pilot* p )
 int ai_load (void)
 {
    char** files;
-   uint32_t nfiles, i;
+   size_t nfiles, i;
    char path[PATH_MAX];
    int flen, suflen;
    int n;
@@ -591,7 +591,7 @@ int ai_load (void)
 static int ai_loadEquip (void)
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
    const char *filename = "dat/factions/equip/generic.lua";
 
    /* Make sure doesn't already exist. */
@@ -626,7 +626,7 @@ static int ai_loadEquip (void)
 static int ai_loadProfile( const char* filename )
 {
    char* buf = NULL;
-   uint32_t bufsize = 0;
+   size_t bufsize = 0;
    nlua_env env;
    AI_Profile *prof;
    size_t len;

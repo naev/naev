@@ -27,9 +27,12 @@
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
+#include <fontconfig/fontconfig.h>
+
 #include "log.h"
 #include "array.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "utf8.h"
 
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
@@ -1191,6 +1194,34 @@ static void gl_fontRenderEnd (void)
    gl_checkErr();
 }
 
+/**
+ * @brief Tries to find a system font.
+ */
+static char *gl_fontFind( const char *fname )
+{
+   FcConfig* config;
+   FcPattern *pat, *font;
+   FcResult result;
+   FcChar8* file;
+   char *fontFile;
+   
+   config = FcInitLoadConfigAndFonts();
+   pat = FcNameParse( (const FcChar8*)fname );
+   FcConfigSubstitute(config, pat, FcMatchPattern);
+   FcDefaultSubstitute(pat);
+   font = FcFontMatch(config, pat, &result);
+   if (font) {
+      file = NULL;
+      if (FcPatternGetString(font, FC_FILE, 0, &file) == FcResultMatch) {
+         fontFile = strdup( (char*)file );
+         FcPatternDestroy(pat);
+         return fontFile;
+      }
+   }
+   FcPatternDestroy(pat);
+   return NULL;
+}
+
 
 /**
  * @brief Initializes a font.
@@ -1200,14 +1231,35 @@ static void gl_fontRenderEnd (void)
  *    @param h Height of the font to generate.
  *    @return 0 on success.
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
+int gl_fontInit( glFont* font, const char *fname, const char *fallback, const unsigned int h )
 {
    FT_Library library;
    FT_Face face;
-   uint32_t bufsize;
+   size_t bufsize;
    FT_Byte* buf;
    int i;
    glFontStash *stsh;
+   char *used_font;
+
+   /* Try to use system font. */
+   used_font = gl_fontFind( fname );
+   if (used_font) {
+      buf = (FT_Byte*)nfile_readFile( &bufsize, used_font );
+      if (buf==NULL) {
+         free(used_font);
+         used_font = NULL;
+      }
+   }
+
+   /* Fallback to packaged font. */
+   if (used_font==NULL) {
+      buf = ndata_read( (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH, &bufsize );
+      if (buf == NULL) {
+         WARN("Unable to read font: %s", (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH);
+         return -1;
+      }
+      used_font = strdup( fallback );
+   }
 
    /* Get default font if not set. */
    if (font == NULL)
@@ -1221,13 +1273,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    font->id = stsh - avail_fonts;
    font->h = (int)floor((double)h);
 
-   /* Read the font. */
-   buf = ndata_read( (fname!=NULL) ? fname : FONT_DEFAULT_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN("Unable to read font: %s", (fname!=NULL) ? fname : FONT_DEFAULT_PATH);
-      return -1;
-   }
-
    /* Default sizes. */
    stsh->tw = DEFAULT_TEXTURE_SIZE;
    stsh->th = DEFAULT_TEXTURE_SIZE;
@@ -1236,14 +1281,14 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Create a FreeType font library. */
    if (FT_Init_FreeType(&library)) {
       WARN("FT_Init_FreeType failed with font %s.",
-            (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
+            (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
       return -1;
    }
 
    /* Object which freetype uses to store font info. */
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
       WARN("FT_New_Face failed loading library from %s",
-            (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
+            (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
       return -1;
    }
 
@@ -1270,7 +1315,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    stsh->tex    = array_create( glFontTex );
 
    /* Set up font stuff for next glyphs. */
-   stsh->fontname = strdup( (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
+   stsh->fontname = strdup( (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
    stsh->face     = face;
    stsh->library  = library;
    stsh->fontdata = buf;

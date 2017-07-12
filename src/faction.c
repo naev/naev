@@ -1193,7 +1193,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    int player;
    char buf[PATH_MAX], *dat, *ctmp;
    glColour *col;
-   uint32_t ndat;
+   size_t ndat;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
@@ -1434,7 +1434,7 @@ void factions_reset (void)
 int factions_load (void)
 {
    int mem;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf = ndata_read( FACTION_DATA_PATH, &bufsize);
 
    xmlNodePtr factions, node;

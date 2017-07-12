@@ -292,7 +292,7 @@ static int nlua_packfileLoader( lua_State* L )
    char *path_filename;
    char *buf;
    int len;
-   uint32_t bufsize;
+   size_t bufsize;
    int envtab;
 
    /* Environment table to load module into */

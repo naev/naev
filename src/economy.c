@@ -308,7 +308,7 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
  */
 int commodity_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;

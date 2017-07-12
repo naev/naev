@@ -244,7 +244,7 @@ static unsigned int event_genID (void)
  */
 static int event_create( int dataid, unsigned int *id )
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    Event_t *ev;
    EventData_t *data;
@@ -457,7 +457,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 #ifdef DEBUGGING
    /* To check if event is valid. */
    int ret;
-   uint32_t len;
+   size_t len;
 #endif /* DEBUGGING */
 
    memset( temp, 0, sizeof(EventData_t) );
@@ -559,7 +559,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 int events_load (void)
 {
    int m;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;

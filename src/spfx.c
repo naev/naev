@@ -218,7 +218,7 @@ int spfx_get( char* name )
 int spfx_load (void)
 {
    int mem;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;

@@ -79,7 +79,7 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
  */
 static int intro_load( const char *text )
 {
-   uint32_t intro_size;
+   size_t intro_size;
    char *intro_buf;
    char img_src[128];     /* path to image to be displayed alongside text. */
    int length;
@@ -93,7 +93,7 @@ static int intro_load( const char *text )
    intro_length = intro_size; /* Length approximation. */
 
    /* Create intro font. */
-   gl_fontInit( &intro_font, "dat/mono.ttf", conf.font_size_intro );
+   gl_fontInit( &intro_font, "Mono", "dat/mono.ttf", conf.font_size_intro );
 
    /* Load lines. */
    p = 0;

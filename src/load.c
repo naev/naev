@@ -176,7 +176,7 @@ static int load_load( nsave_t *save, const char *path )
 int load_refresh (void)
 {
    char **files, buf[PATH_MAX], *tmp;
-   int nfiles, i, len;
+   size_t nfiles, i, len;
    int ok;
    nsave_t *ns;
 

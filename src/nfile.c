@@ -518,7 +518,7 @@ err:
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDir( int* nfiles, const char* path, ... )
+char** nfile_readDir( size_t* nfiles, const char* path, ... )
 {
    char file[PATH_MAX], base[PATH_MAX];
    char **files;
@@ -534,11 +534,11 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-   int i;
+   size_t i;
    DIR *d;
    struct dirent *dir;
    char *name;
-   int mfiles;
+   size_t mfiles;
    struct stat sb;
 
    d = opendir(base);
@@ -604,10 +604,10 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
+char** nfile_readDirRecursive( size_t* nfiles, const char* path, ... )
 {
    char **tfiles, **out, **cfiles, *buf, base[PATH_MAX];
-   int i, j, ls, mfiles, tmp, cn;
+   size_t i, j, ls, mfiles, tmp, cn;
    va_list ap;
 
    va_start(ap, path);
@@ -665,7 +665,7 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
  *    @param path Path of the file.
  *    @return The file data.
  */
-char* nfile_readFile( int* filesize, const char* path, ... )
+char* nfile_readFile( size_t* filesize, const char* path, ... )
 {
    int n;
    char base[PATH_MAX];
@@ -779,9 +779,9 @@ int nfile_touch( const char* path, ... )
  *    @param path Path of the file.
  *    @return 0 on success, -1 on error.
  */
-int nfile_writeFile( const char* data, int len, const char* path, ... )
+int nfile_writeFile( const char* data, size_t len, const char* path, ... )
 {
-   int n;
+   size_t n;
    char base[PATH_MAX];
    FILE *file;
    size_t pos;

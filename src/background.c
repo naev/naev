@@ -421,7 +421,7 @@ static void background_renderImages( background_image_t *bkg_arr )
  */
 static nlua_env background_create( const char *name )
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char path[PATH_MAX];
    char *buf;
    nlua_env env;

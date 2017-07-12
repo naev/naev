@@ -1373,7 +1373,7 @@ void takeoff( int delay )
 static void land_stranded (void)
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
    const char *file = "dat/rescue.lua";
 
    /* Nothing to do if there's no rescue script. */

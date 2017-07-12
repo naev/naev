@@ -908,7 +908,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   uint32_t bufsize, nfiles;
+   size_t bufsize, nfiles;
    char *buf, **ship_files, *file;
    int i, sl;
    xmlNodePtr node;

@@ -52,7 +52,7 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;

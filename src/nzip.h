@@ -15,8 +15,8 @@ struct zip* nzip_open ( const char* filename );
 void nzip_close ( struct zip* arc );
 
 int nzip_hasFile ( struct zip* arc, const char* filename );
-void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size );
-char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles );
+void* nzip_readFile ( struct zip* arc, const char* filename, size_t* size );
+char** nzip_listFiles ( struct zip* arc, size_t* nfiles );
 
 SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename );
 

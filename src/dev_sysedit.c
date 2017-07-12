@@ -1885,7 +1885,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 {
    (void) wid_unused;
    unsigned int wid;
-   uint32_t nfiles, i, j;
+   size_t nfiles, i, j;
    char *path, buf[PATH_MAX];
    char **files, **png_files;
    glTexture **tex, *t;

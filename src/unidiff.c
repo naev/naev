@@ -193,7 +193,7 @@ int diff_apply( const char *name )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    char *diffname;
 

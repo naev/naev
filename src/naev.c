@@ -316,9 +316,9 @@ int main( int argc, char** argv )
       exit(EXIT_FAILURE);
    }
    window_caption();
-   gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
-   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
+   gl_fontInit( NULL, "Arial", NULL, conf.font_size_def ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, "Arial", NULL, conf.font_size_small ); /* small font */
+   gl_fontInit( &gl_defFontMono, "Mono", "dat/mono.ttf", conf.font_size_def );
 
 #if SDL_VERSION_ATLEAST(2,0,0)
    /* Detect size changes that occurred after window creation. */
@@ -403,7 +403,7 @@ int main( int argc, char** argv )
    /* TODO get rid of this cruft ASAP. */
    if ((oldconfig) && (!conf.datapath)) {
       char path[PATH_MAX], *script, *home;
-      uint32_t scriptsize;
+      size_t scriptsize;
       int ret;
 
       nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
@@ -426,7 +426,7 @@ int main( int argc, char** argv )
 
          /* Running from laid-out files or ndata_read failed. */
          if ((nfile_fileExists(path)) && (ret == -1)) {
-            script = nfile_readFile( (int*)&scriptsize, path );
+            script = nfile_readFile( &scriptsize, path );
             if (script != NULL)
                ret = system(script);
          }
@@ -554,7 +554,7 @@ void loadscreen_load (void)
    unsigned int i;
    char file_path[PATH_MAX];
    char **loadscreens;
-   uint32_t nload;
+   size_t nload;
 
    /* Count the loading screens */
    loadscreens = ndata_list( GFX_PATH"loading/", &nload );

@@ -91,13 +91,13 @@ int nzip_hasFile ( struct zip* arc, const char* filename )
  *    @param[out] size Size of returned buffer
  *    @return A pointer to the file contents in memory
  */
-void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
+void* nzip_readFile ( struct zip* arc, const char* filename, size_t* size )
 {
    struct zip_file* file;
    struct zip_stat stats;
    void* data;
    int err;
-   uint32_t read;
+   size_t read;
    int flags = 0;
 
    // Get info about file
@@ -149,11 +149,11 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
  *    @param[out] nfiles Number of files found
  *    @return List of file names found
  */
-char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles )
+char** nzip_listFiles ( struct zip* arc, size_t* nfiles )
 {
    struct zip_stat stats;
    char **filelist, **shrunk;
-   uint32_t i, j;
+   size_t i, j;
    int err;
    int flags = 0;
 
@@ -231,7 +231,7 @@ int nzip_rwopsClose ( struct SDL_RWops* context )
 SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
 {
    void* data;
-   uint32_t size;
+   size_t size;
    SDL_RWops* rwops;
 
    data = nzip_readFile ( arc, filename, &size );

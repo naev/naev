@@ -831,7 +831,7 @@ int conf_saveConfig ( const char* file )
    int i;
    char *old;
    const char *oldfooter;
-   int oldsize;
+   size_t oldsize;
    char buf[32*1024];
    size_t pos;
    SDLKey key;

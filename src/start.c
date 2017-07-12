@@ -54,7 +54,7 @@ static ndata_start_t start_data; /**< The actual starting data. */
  */
 int start_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc;

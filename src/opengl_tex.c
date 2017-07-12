@@ -397,7 +397,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
    glTexture *texture;
-   int i, filesize;
+   size_t i, filesize;
    size_t cachesize, pngsize;
    uint8_t *trans;
    char *cachefile, *data;

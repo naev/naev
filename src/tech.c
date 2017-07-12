@@ -97,7 +97,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 int tech_load (void)
 {
    int i, ret, s;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, *data;
    xmlNodePtr node, parent;
    xmlDocPtr doc;

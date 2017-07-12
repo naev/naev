@@ -210,7 +210,7 @@ if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
 static int fleet_loadFleets (void)
 {
    int mem;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;

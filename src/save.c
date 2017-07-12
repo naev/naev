@@ -184,7 +184,7 @@ void save_reload (void)
 int save_hasSave (void)
 {
    char **files;
-   int nfiles, i, len;
+   size_t nfiles, i, len;
    int has_save;
 
    /* Look for saved games. */

@@ -2067,7 +2067,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    char *prop;
    const char *cprop;
    int group;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf = ndata_read( file, &bufsize );
 
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -2232,12 +2232,11 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
  */
 static int outfit_loadDir( char *dir )
 {
-   uint32_t nfiles;
+   size_t i, nfiles;
    char **outfit_files;
-   int i;
 
    outfit_files = ndata_listRecursive( dir, &nfiles );
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
       outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
       free( outfit_files[i] );
    }
@@ -2334,9 +2333,8 @@ static int outfit_compareNames( const void *name1, const void *name2 )
  */
 int outfit_mapParse (void)
 {
-   int i, len;
    Outfit *o;
-   uint32_t bufsize, nfiles;
+   size_t i, len, bufsize, nfiles;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
@@ -2344,7 +2342,7 @@ int outfit_mapParse (void)
    char *file, *n;
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
 
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
@@ -2389,7 +2387,7 @@ int outfit_mapParse (void)
    }
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<nfiles; i++)
       free( map_files[i] );
    free( map_files );
 

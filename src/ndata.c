@@ -75,7 +75,7 @@ static int ndata_source             = 0;
  * File list.
  */
 static char **ndata_fileList  = NULL; /**< List of files in the archive. */
-static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
+static size_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
 
 
 /*
@@ -89,10 +89,10 @@ static int ndata_isndata( const char *path, ... );
 static int ndata_prompt( void *data );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int ndata_notfound (void);
-static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs );
+static char** ndata_listBackend( const char* path, size_t* nfiles, int dirs );
 static char **stripPath( const char **list, int nlist, const char *path );
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles, int recursive );
+      const char* path, size_t* nfiles, int recursive );
 
 
 /**
@@ -336,9 +336,10 @@ static int ndata_isndata( const char *path, ... )
  */
 static char *ndata_findInDir( const char *path )
 {
-   int i, l;
+   size_t i;
+   int l;
    char **files;
-   int nfiles;
+   size_t nfiles;
    size_t len;
    char *ndata_file;
 
@@ -484,7 +485,7 @@ static int ndata_openFile (void)
 static void ndata_testVersion (void)
 {
    int ret;
-   uint32_t size;
+   size_t size;
    int version[3];
    char *buf;
    int diff;
@@ -670,10 +671,10 @@ int ndata_exists( const char* filename )
  *    @param[out] filesize Stores the size of the file.
  *    @return The file data or NULL on error.
  */
-void* ndata_read( const char* filename, uint32_t *filesize )
+void* ndata_read( const char* filename, size_t *filesize )
 {
    char *buf, path[PATH_MAX];
-   int nbuf;
+   size_t nbuf;
 
    /* See if needs to load ndata archive. */
    if (ndata_archive == NULL) {
@@ -877,7 +878,7 @@ static char **stripPath( const char **list, int nlist, const char *path )
  *    @param[out] nfiles Files that match.
  */
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles, int recursive )
+      const char* path, size_t* nfiles, int recursive )
 {
    char **filtered;
    int i, j, k, len;
@@ -924,12 +925,12 @@ static char** filterList( const char** list, int nlist,
  *    @param nfiles Number of files found.
  *    @return List of files found.
  */
-static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursive )
+static char** ndata_listBackend( const char* path, size_t* nfiles, int recursive )
 {
    (void) path;
    char **files, **tfiles, buf[PATH_MAX], *tmp;
-   int n;
-   char** (*nfile_readFunc) ( int* nfiles, const char* path, ... ) = NULL;
+   size_t n;
+   char** (*nfile_readFunc) ( size_t* nfiles, const char* path, ... ) = NULL;
 
    if (recursive)
       nfile_readFunc = nfile_readDirRecursive;
@@ -1014,7 +1015,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
  *
  *    @sa ndata_listBackend
  */
-char** ndata_list( const char* path, uint32_t* nfiles )
+char** ndata_list( const char* path, size_t* nfiles )
 {
    return ndata_listBackend( path, nfiles, 0 );
 }
@@ -1025,7 +1026,7 @@ char** ndata_list( const char* path, uint32_t* nfiles )
  *
  *    @sa ndata_listBackend
  */
-char** ndata_listRecursive( const char* path, uint32_t* nfiles )
+char** ndata_listRecursive( const char* path, size_t* nfiles )
 {
    return ndata_listBackend( path, nfiles, 1 );
 }
@@ -1051,7 +1052,7 @@ static int ndata_sortFunc( const void *name1, const void *name2 )
  *    @param files Filenames to sort.
  *    @param nfiles Number of files to sort.
  */
-void ndata_sortName( char **files, uint32_t nfiles )
+void ndata_sortName( char **files, size_t nfiles )
 {
    qsort( files, nfiles, sizeof(char*), ndata_sortFunc );
 }

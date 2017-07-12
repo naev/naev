@@ -433,7 +433,7 @@ int cli_init (void)
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, "dat/mono.ttf", conf.font_size_console );
+   gl_fontInit( cli_font, "Mono", "dat/mono.ttf", conf.font_size_console );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);

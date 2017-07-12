@@ -158,7 +158,7 @@ MissionData* mission_getFromName( const char* name )
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
    int ret;
 
    /* clear the mission */
@@ -789,7 +789,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
    /* To check if mission is valid. */
    int ret;
    char *buf;
-   uint32_t len;
+   size_t len;
 #endif /* DEBUGGING */
 
    /* Clear memory. */
@@ -892,7 +892,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 int missions_load (void)
 {
    int i, m;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
 
    for (i=0; i<MISSION_MAX; i++)
