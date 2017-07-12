@@ -61,8 +61,8 @@ typedef struct glFontTex_s {
  */
 typedef struct glFontGlyph_s {
    uint32_t codepoint; /**< Real character. */
-   double adv_x; /**< X advancement. */
-   double adv_y; /**< Y advancement. */
+   GLfloat adv_x; /**< X advancement. */
+   GLfloat adv_y; /**< Y advancement. */
    /* Offsets are stored in the VBO and thus not an issue. */
    glFontTex *tex; /**< Might be on different texture. */
    int vbo_id; /**< VBO index to use. */
@@ -79,8 +79,8 @@ typedef struct font_char_s {
    int h; /**< Height. */
    int off_x; /**< X offset when rendering. */
    int off_y; /**< Y offset when rendering. */
-   int adv_x; /**< X advancement. */
-   int adv_y; /**< Y advancement. */
+   GLfloat adv_x; /**< X advancement. */
+   GLfloat adv_y; /**< Y advancement. */
    int tx; /**< Texture x position. */
    int ty; /**< Texture y position. */
    int tw; /**< Texture width. */
@@ -447,9 +447,10 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width )
 {
-   int n, lastspace;
+   int lastspace;
    size_t i;
    uint32_t ch;
+   GLfloat n;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -457,7 +458,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
    /* limit size per line */
    lastspace = 0; /* last ' ' or '\n' in the text */
-   n = 0; /* current width */
+   n = 0.; /* current width */
    i = 0; /* current position */
    while ((text[i] != '\n') && (text[i] != '\0')) {
       /* Characters we should ignore. */
@@ -486,7 +487,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          n += glyph->adv_x;
 
       /* Check if out of bounds. */
-      if (n > width) {
+      if (n > (GLfloat)width) {
          if (lastspace > 0)
             return lastspace;
          else {
@@ -812,7 +813,7 @@ int gl_printText( const glFont *ft_font,
  */
 int gl_printWidthRaw( const glFont *ft_font, const char *text )
 {
-   int n;
+   GLfloat n;
    size_t i;
    uint32_t ch;
 
@@ -820,7 +821,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       ft_font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
-   n = 0;
+   n = 0.;
    i = 0;
    while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
@@ -836,7 +837,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       n += glyph->adv_x;
    }
 
-   return n;
+   return (int)n;
 }
 
 
@@ -965,8 +966,8 @@ static int font_makeChar( font_char_t *c, FT_Face face, uint32_t ch )
    c->h     = h;
    c->off_x = slot->bitmap_left;
    c->off_y = slot->bitmap_top;
-   c->adv_x = slot->advance.x >> 6;
-   c->adv_y = slot->advance.y >> 6;
+   c->adv_x = (GLfloat)slot->advance.x / 64.;
+   c->adv_y = (GLfloat)slot->advance.y / 64.;
    return 0;
 }
 
