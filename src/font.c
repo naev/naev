@@ -765,7 +765,7 @@ int gl_printTextRaw( const glFont *ft_font,
       }
       gl_fontRenderEnd();
 
-      if (text[p+i] == '\0')
+      if (ch == '\0')
          break;
       p = i;
       if ((text[p] == '\n') || (text[p] == ' '))
