@@ -79,6 +79,7 @@ static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, char *str );
 static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
+static void opt_setScalefactor( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, char *str );
@@ -1179,7 +1180,13 @@ static void opt_video( unsigned int wid )
    }
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
-   y -= 150;
+   y -= 120;
+   window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
+         NULL, &cBlack, NULL );
+   window_addFader( wid, x+120, y, cw-140, 20, "fadScale", 1., 3.,
+         conf.scalefactor, opt_setScalefactor );
+   opt_setScalefactor( wid, "fadScale" );
+   y -= 60;
 
    /* FPS stuff. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
@@ -1501,7 +1508,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    nsnprintf( buf, sizeof(buf), "%d", FPS_MAX_DEFAULT );
    window_setInput( wid, "inpFPS", buf );
 
-   /* Checkboxkes. */
+   /* Checkboxes. */
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkVBO", VBO_DEFAULT );
@@ -1511,4 +1518,25 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
+
+   /* Faders. */
+   window_faderValue(  wid, "fadScale", SCALE_FACTOR_DEFAULT );
+}
+
+/**
+ * @brief Callback to set the scaling factor.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ *    @param type 0 for sound, 1 for audio.
+ */
+static void opt_setScalefactor( unsigned int wid, char *str )
+{
+   char buf[32];
+   double scale = window_getFaderValue(wid, str);
+   if (fabs(conf.scalefactor-scale) > 1e-4)
+      opt_needRestart();
+   conf.scalefactor = scale;
+   nsnprintf( buf, sizeof(buf), "Scaling: %.1fx", conf.scalefactor );
+   window_modifyText( wid, "txtScale", buf );
 }
