@@ -56,7 +56,7 @@
 #define START_DATA_PATH          "dat/start.xml" /**< Path to module start file. */
 
 #define FONT_DEFAULT_PATH        "dat/font.ttf" /**< Default font path. */
-#define OMSG_FONT_DEFAULT_PATH   "dat/mono.ttf" /**< Default font path. */
+#define FONT_MONOSPACE_PATH      "dat/mono.ttf" /**< Default monospace font path. */
 
 #define LUA_INCLUDE_PATH         "dat/scripts/" /**< Path for Lua includes. */
 #define AI_PATH                  "dat/ai/" /**< Location of the AI files. */

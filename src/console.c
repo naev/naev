@@ -24,6 +24,7 @@
 #include "log.h"
 #include "naev.h"
 #include "nlua.h"
+#include "ndata.h"
 #include "nlua_cli.h"
 #include "nlua_tk.h"
 #include "nlua_tex.h"
@@ -433,7 +434,7 @@ int cli_init (void)
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, "Mono", "dat/mono.ttf", conf.font_size_console );
+   gl_fontInit( cli_font, "Mono", FONT_MONOSPACE_PATH, conf.font_size_console );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);
