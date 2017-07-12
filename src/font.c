@@ -116,9 +116,9 @@ typedef struct glFontStash_s {
 } glFontStash;
 
 /**
- * Available fonts.
+ * Available fonts stashes.
  */
-static glFontStash *avail_fonts = NULL;
+static glFontStash *avail_fonts = NULL;  /**< These are pointed to by the font struct exposed in font.h. */
 
 /* default font */
 glFont gl_defFont; /**< Default font. */
@@ -139,7 +139,11 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
 static const glColour* gl_fontGetColour( uint32_t ch );
 /* Get unicode glyphs from cache. */
 static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
-/* Render. */
+/* Render.
+ * TODO this should be changed to be more like font-stash (https://github.com/akrinke/Font-Stash)
+ * In particular, instead of writing char by char, they should be batched up by textures and rendered
+ * when gl_fontRenderEnd() is called, saving lots of opengl calls.
+ */
 static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c );
 static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
