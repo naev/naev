@@ -406,7 +406,7 @@ AS_IF([test "$have_sdl2" = "yes"], [
 ])
 
 # global
-GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -DLOCALEDIR='\"$(localedir)\"'"
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
 GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
 GLOBAL_LIBS=
 
@@ -526,6 +526,8 @@ AC_TYPE_UINT8_T
 #
 # Checks for functions
 #
+AC_CHECK_FUNCS([setlocale])
+
 VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])
 VAR_RESTORE([LIBS])
@@ -627,7 +629,8 @@ AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 # Output
 #
 SHAVE_INIT([build], [enable])
-AC_CONFIG_FILES([Makefile po/Makefile.in
+AC_CONFIG_FILES([Makefile
+      po/Makefile.in
       lib/Makefile
       src/Makefile
       src/tk/Makefile
