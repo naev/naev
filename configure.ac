@@ -65,6 +65,7 @@ AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
 # Checks for programs.
 #
 AC_PROG_CC
+AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
 PKG_PROG_PKG_CONFIG
@@ -470,6 +471,9 @@ case "$host" in
   *-mingw*)
     NAEV_LIBS="$NAEV_LIBS -mwindows"
     ;;
+  *-darwin*)
+    NAEV_LIBS="$NAEV_LIBS -framework Foundation"
+    ;;
 esac
 
 # This is a list of in-tree static libs that naev depends on.  It is used by
@@ -550,7 +554,7 @@ VAR_RESTORE([LIBS])
 #
 AC_MSG_CHECKING([for the current Git commit identifier])
 AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
-  GIT_COMMIT=$(cd "$srcdir" && "$GIT" describe --always --tags)
+  GIT_COMMIT=$(cd "$srcdir" && "$GIT" rev-parse --short HEAD)
   AC_MSG_RESULT([$GIT_COMMIT])
 ], [
   GIT_COMMIT=
@@ -569,6 +573,10 @@ VREV=$(echo "$VERSION" | cut -d. -f3)
 AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
 AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
 AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
+
+AC_SUBST([VMAJOR])
+AC_SUBST([VMINOR])
+AC_SUBST([VREV])
 
 # USE_OPENAL
 AS_IF([test "x$have_openal" = "xyes"], [
@@ -598,7 +606,8 @@ case "$host" in
     AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
     ;;
   *-darwin*)
-    AC_DEFINE([MACOSX], 1, [Define to 1 if running on Mac OS X])
+    AC_DEFINE([MACOS], 1, [Define to 1 if running on macOS])
+    have_macos=yes
     ;;
 esac
 
@@ -610,6 +619,7 @@ AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
 AS_IF([test -n "$GIT_COMMIT"], [
   AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
      [Define to the current Git commit identifier])
+  AC_SUBST([GIT_COMMIT])
 ])
 
 #
@@ -617,6 +627,7 @@ AS_IF([test -n "$GIT_COMMIT"], [
 #
 
 AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
+AM_CONDITIONAL([HAVE_MACOS], [test "x$have_macos" = "xyes"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])

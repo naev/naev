@@ -1,44 +1,40 @@
-#!/bin/sh
-# This script migrates Naev's data from the deprecated ~/.naev directory
-# into a number of XDG-compliant directories. It aims to avoid data loss
-# by only migrating explicitly Naev-owned files.
+#!/bin/bash
+set -e
+
+# This script migrates Naev's local files from deprecated locations to their
+# new locations. Currently, this targets just macOS, moving files from XDG
+# directories to macOS standard directories.
+
+# Check for macOS.
+[[ "$(uname)" == "Darwin" ]] || exit
 
 # Set defaults if XDG variables aren't defined.
 test -z "$XDG_DATA_HOME" && XDG_DATA_HOME=$HOME/.local/share
 test -z "$XDG_CONFIG_HOME" && XDG_CONFIG_HOME=$HOME/.config
 test -z "$XDG_CACHE_HOME" && XDG_CACHE_HOME=$HOME/.cache
 
-# ~/.naev must exist.
-test -d "$HOME/.naev" || exit
+# Determine Naev directories.
+XDG_DATA="$XDG_DATA_HOME/naev"
+XDG_CONFIG="$XDG_CONFIG_HOME/naev"
+XDG_CACHE="$XDG_CACHE_HOME/naev"
 
-# Handle weird cases where ~/.naev isn't readable/executable.
-cd "$HOME/.naev" || exit
+# Determine Naev directories on macOS.
+MAC_DATA="$HOME/Library/Application Support/org.naev.Naev"
+MAC_CONFIG="$HOME/Library/Preferences/org.naev.Naev"
+MAC_CACHE="$HOME/Library/Caches/org.naev.Naev"
 
-if mkdir -p "$XDG_DATA_HOME/naev"; then
-   # Attempt to migrate each save, but don't overwrite existing ones.
-   if test -d saves/ && mkdir -p "$XDG_DATA_HOME/naev/saves"; then
-      mv -n saves/*.ns "$XDG_DATA_HOME/naev/saves/"
-      stat *.ns.backup >/dev/null 2>&1 && mv -n saves/*.ns.backup "$XDG_DATA_HOME/naev/saves"
-   fi
-
-   # Screenshots are numbered from zero, so old screenshots cannot coexist with new ones.
-   test -d screenshots/ && mv -n screenshots/ "$XDG_DATA_HOME/naev/"
+# Attempt to migrate each of the XDG directories to macOS directories.
+if compgen -G "$XDG_DATA/*" > /dev/null && mkdir -p $MAC_DATA; then
+   mv -n "$XDG_DATA"/* "$MAC_DATA/"
 fi
+rmdir $XDG_DATA 2> /dev/null || true
 
-# Naev writes the config on exit. Clobber if necessary.
-if mkdir -p "$XDG_CONFIG_HOME/naev"; then
-   test -r conf.lua && mv conf.lua "$XDG_CONFIG_HOME/naev/"
-   test -r conf.lua.backup && mv conf.lua.backup "$XDG_CONFIG_HOME/naev/"
+if compgen -G "$XDG_CONFIG/*" > /dev/null && mkdir -p $MAC_CONFIG; then
+   mv -n "$XDG_CONFIG"/* "$MAC_CONFIG/"
 fi
+rmdir $XDG_CONFIG 2> /dev/null || true
 
-# Nebula images are generated on first-run if absent; we'll clobber the new ones if necessary.
-if test -d gen/ && mkdir -p "$XDG_CACHE_HOME/naev/nebula"; then
-   mv gen/nebu_bg_*.png "$XDG_CACHE_HOME/naev/nebula/"
+if compgen -G "$XDG_CACHE/*" > /dev/null && mkdir -p $MAC_CACHE; then
+   mv -n "$XDG_CACHE"/* "$MAC_CACHE/"
 fi
-
-# Clean up if nothing remains.
-for dir in saves screenshots gen; do
-   test -d "$dir" && rmdir --ignore-fail-on-non-empty "$dir/"
-done
-
-rmdir --ignore-fail-on-non-empty "$HOME/.naev/"
+rmdir $XDG_CACHE 2> /dev/null || true
