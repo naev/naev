@@ -267,19 +267,18 @@ int main( int argc, char** argv )
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
-#if HAS_UNIX
+#if HAS_MACOS
    /* TODO get rid of this cruft ASAP. */
-   int oldconfig = 0;
+   char oldconfig[PATH_MAX] = "";
    if (!nfile_fileExists( buf )) {
-      char *home, buf2[PATH_MAX];
-      home = SDL_getenv( "HOME" );
+      char *home = SDL_getenv( "HOME" );
       if (home != NULL) {
-         nsnprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
-         if (nfile_fileExists( buf2 ))
-            oldconfig = 1;
+         nsnprintf( oldconfig, PATH_MAX, "%s/.config/naev/"CONF_FILE, home );
+         if (!nfile_fileExists( oldconfig ))
+            oldconfig[0] = '\0';
       }
    }
-#endif /* HAS_UNIX */
+#endif /* HAS_MACOS */
 
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -411,10 +410,10 @@ int main( int argc, char** argv )
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
 
-#if HAS_UNIX
-   /* Tell the player to migrate their configuration files out of ~/.naev */
+#if HAS_MACOS
+   /* Tell the player to migrate their configuration files */
    /* TODO get rid of this cruft ASAP. */
-   if ((oldconfig) && (!conf.datapath)) {
+   if ((oldconfig[0] != '\0') && (!conf.datapath)) {
       char path[PATH_MAX], *script, *home;
       size_t scriptsize;
       int ret;
@@ -422,10 +421,10 @@ int main( int argc, char** argv )
       nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
       home = SDL_getenv("HOME");
       ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
-            "   \er%s/.naev/\e0\n\n"
+            "   \er%s\e0\n\n"
             "The update script can likely be found in your Naev data directory:\n"
             "   \er%s\e0\n\n"
-            "Would you like to run it automatically?"), home, path );
+            "Would you like to run it automatically?"), oldconfig, path );
 
       /* Try to run the script. */
       if (ret) {
@@ -473,7 +472,7 @@ int main( int argc, char** argv )
                "   \er%s/naev-confupdate.sh\e0"), home, path );
       }
    }
-#endif
+#endif /* HAS_MACOS */
 
    /*
     * main loop
