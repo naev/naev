@@ -12,17 +12,17 @@
 #include <stdio.h>
 #include <signal.h>
 
+/* Get text stuff. */
 #include <libintl.h>
- 
 #define _(STRING) gettext(STRING)
 
-#define LOG(str, args...)  (logprintf(stdout,str"\n", ## args))
+#define LOG(str, args...)  (logprintf(stdout, NULL, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
-#define WARN(str, args...) (logprintf(stderr, "Warning: [%s] "str"\n", __func__, ## args), abort())
+#define WARN(str, args...) (logprintf(stderr, "Warning: [%s] ", str, __func__, ## args), abort())
 #else /* DEBUG_PARANOID */
-#define WARN(str, args...) (logprintf(stderr, "Warning: [%s] "str"\n", __func__, ## args))
+#define WARN(str, args...) (logprintf(stderr, "Warning: [%s] ", str, __func__, ## args))
 #endif /* DEBUG_PARANOID */
-#define ERR(str, args...)  (logprintf(stderr, "ERROR %s:%d [%s]: "str"\n", __FILE__, __LINE__, __func__, ## args), abort())
+#define ERR(str, args...)  (logprintf(stderr, "ERROR %s:%d [%s]: ", str, __FILE__, __LINE__, __func__, ## args), abort())
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...) LOG(str, ## args)
@@ -34,7 +34,7 @@
 #endif /* DEBUG */
 
 
-int logprintf( FILE *stream, const char *fmt, ... );
+int logprintf( FILE *stream, const char *hdr, const char *fmt, ... );
 void log_redirect (void);
 int log_isTerminal (void);
 void log_copy( int enable );

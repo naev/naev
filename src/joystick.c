@@ -107,7 +107,7 @@ int joystick_use( int indjoystick )
    joystick_initHaptic();
 
    /* For style purposes. */
-   DEBUG();
+   DEBUG("");
 
    return 0;
 }

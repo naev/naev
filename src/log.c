@@ -55,17 +55,24 @@ static void log_append( FILE *stream, char *str );
 /**
  * @brief Like fprintf but also prints to the naev console.
  */
-int logprintf( FILE *stream, const char *fmt, ... )
+int logprintf( FILE *stream, const char *hdr, const char *fmt, ... )
 {
    va_list ap;
    char buf[2048];
+   size_t n;
 
    if (fmt == NULL)
       return 0;
    else { /* get the message */
+      /* Add header if necessary. */
+      n = (hdr) ? nsnprintf( &buf[2], sizeof(buf)-2, hdr )-1 : 0;
+      /* Print variable text. */
       va_start( ap, fmt );
-      vsnprintf( &buf[2], sizeof(buf)-2, fmt, ap );
+      n += vsnprintf( &buf[2+n], sizeof(buf)-3-n, fmt, ap )-1;
       va_end( ap );
+      /* Finally add newline. */
+      buf[2+n+1]   = '\n';
+      buf[2+n+2] = '\0';
    }
 
 #ifndef NOLOGPRINTFCONSOLE

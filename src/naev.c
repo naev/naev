@@ -220,7 +220,7 @@ int main( int argc, char** argv )
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN( "Unable to initialize SDL Video: %s", SDL_GetError());
+      WARN( _("Unable to initialize SDL Video: %s"), SDL_GetError());
       return -1;
    }
 
@@ -262,7 +262,7 @@ int main( int argc, char** argv )
 
    /* Create the home directory if needed. */
    if (nfile_dirMakeExist("%s", nfile_configPath()))
-      WARN("Unable to create config directory '%s'", nfile_configPath());
+      WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
@@ -299,19 +299,19 @@ int main( int argc, char** argv )
 
    /* Open data. */
    if (ndata_open() != 0)
-      ERR("Failed to open ndata.");
+      ERR( _("Failed to open ndata.") );
 
    /* Load the start info. */
    if (start_load())
-      ERR("Failed to load module start data.");
+      ERR( _("Failed to load module start data.") );
 
    /* Load the data basics. */
    LOG(" %s", ndata_name());
-   DEBUG();
+   DEBUG("");
 
    /* Display the SDL Version. */
    print_SDLversion();
-   DEBUG();
+   DEBUG("");
 
    /* random numbers */
    rng_init();
