@@ -738,9 +738,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.g = cRed.g;
    col.b = cRed.b;
 
-   if (!gl_vendorIsIntel())
-      glEnable(GL_LINE_SMOOTH);
-   glEnable(GL_POINT_SMOOTH);
+   glDisable(GL_LINE_SMOOTH);
+   glDisable(GL_POINT_SMOOTH);
 
    /* Selected system. */
    if (map_selected != -1) {
@@ -832,8 +831,8 @@ void map_renderJumps( double x, double y, int editor)
 
    /* Generate smooth lines. */
    glShadeModel( GL_SMOOTH );
-   glEnable( GL_LINE_SMOOTH );
-   glLineWidth( CLAMP(1., 4., 2. * map_zoom) );
+   glDisable( GL_LINE_SMOOTH );
+   glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -911,11 +910,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    StarSystem *sys;
    double tx, ty;
 
-
    /* Smoother circles. */
-   if (!gl_vendorIsIntel())
-      glEnable(GL_LINE_SMOOTH);
-   glEnable(GL_POINT_SMOOTH);
+   glDisable(GL_LINE_SMOOTH);
+   glDisable(GL_POINT_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -978,11 +975,10 @@ static void map_renderPath( double x, double y, double a )
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
 
-
       /* Generate smooth lines. */
       glShadeModel( GL_SMOOTH );
-      glEnable( GL_LINE_SMOOTH );
-      glLineWidth( CLAMP(1., 4., 2. * map_zoom) );
+      glDisable( GL_LINE_SMOOTH );
+      glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
