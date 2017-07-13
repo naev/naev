@@ -24,7 +24,7 @@ cp extras/macos/naev.icns Naev.app/Contents/Resources/
 cp src/naev Naev.app/Contents/MacOS/
 
 # Bundle the SDL2 framework.
-cp -r ~/Library/Frameworks/SDL2.framework \
+cp -R ~/Library/Frameworks/SDL2.framework \
   Naev.app/Contents/Frameworks/SDL2.framework
 
 # Find all Homebrew dependencies (from /usr/local),
