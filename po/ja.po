@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-13 09:35+0900\n"
+"POT-Creation-Date: 2017-07-13 20:36+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -17,6 +17,298 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/land.c:176
+#, c-format
+msgid "You're already onboard the %s."
+msgstr ""
+
+#: src/land.c:180
+#, c-format
+msgid "You must transport the ship to %s to be able to get in."
+msgstr ""
+
+#: src/land.c:185
+#, c-format
+msgid "You have %d tons more cargo than the new ship can hold."
+msgstr ""
+
+#: src/land.c:190
+msgid "You can't strand your fighters in space."
+msgstr ""
+
+#: src/land.c:294 src/land.c:553 src/land.c:1161
+msgid "Take Off"
+msgstr ""
+
+#: src/land.c:297
+msgid "Approach"
+msgstr ""
+
+#: src/land.c:556 src/land.c:628
+msgid "Accept Mission"
+msgstr ""
+
+#: src/land.c:563
+msgid ""
+"Date:\n"
+"Free Space:"
+msgstr ""
+
+#: src/land.c:571
+msgid "Reward:"
+msgstr ""
+
+#: src/land.c:617 src/land.c:685 src/land.c:719
+#, fuzzy
+msgid "No Missions"
+msgstr "ミッション読み込み中…"
+
+#: src/land.c:624
+msgid "You have too many active missions."
+msgstr ""
+
+#: src/land.c:629
+msgid "Are you sure you want to accept this mission?"
+msgstr ""
+
+#: src/land.c:722
+msgid "There are no missions available here."
+msgstr ""
+
+#: src/land.c:776 src/land.c:807
+#, c-format
+msgid "Outfit '%s' does not exist!"
+msgstr ""
+
+#: src/land.c:818
+#, c-format
+msgid "Buy Local Map (%s)"
+msgstr ""
+
+#: src/land.c:932
+#, fuzzy
+msgid "Landing Main"
+msgstr "ミッション読み込み中…"
+
+#: src/land.c:936
+msgid "Spaceport Bar"
+msgstr ""
+
+#: src/land.c:941
+msgid "Missions"
+msgstr ""
+
+#: src/land.c:946
+msgid "Outfits"
+msgstr ""
+
+#: src/land.c:951
+msgid "Shipyard"
+msgstr ""
+
+#: src/land.c:957
+msgid "Equipment"
+msgstr ""
+
+#: src/land.c:962
+msgid "Commodity"
+msgstr ""
+
+#: src/land.c:1284
+msgid "Ship not fit for flight"
+msgstr ""
+
+#: src/land.c:1331
+msgid ""
+"Failed to save game! You should exit and check the log to see what happened "
+"and then file a bug report!"
+msgstr ""
+
+#: src/land.c:1337
+#, c-format
+msgid "epTaking off from %s on %s."
+msgstr ""
+
+#: src/land.c:1381
+#, c-format
+msgid ""
+"Error loading file: %s\n"
+"%s\n"
+"Most likely Lua file has improper syntax, please check"
+msgstr ""
+
+#: src/land.c:1394
+#, c-format
+msgid "Rescue: 'rescue' : '%s'"
+msgstr ""
+
+#: src/load.c:96
+#, c-format
+msgid "Unable to parse save path '%s'."
+msgstr ""
+
+#: src/load.c:101
+#, c-format
+msgid "Unable to get child node of save '%s'."
+msgstr ""
+
+#: src/load.c:343
+msgid "Back"
+msgstr ""
+
+#: src/load.c:345
+#, fuzzy
+msgid "Load"
+msgstr "ロード"
+
+#: src/load.c:347
+msgid "Del"
+msgstr ""
+
+#: src/load.c:388
+#, c-format
+msgid ""
+"eDName:\n"
+"e0   %s\n"
+"eDVersion:\n"
+"e0   %s\n"
+"eDDate:\n"
+"e0   %s\n"
+"eDPlanet:\n"
+"e0   %s\n"
+"eDCredits:\n"
+"e0   %s\n"
+"eDShip Name:\n"
+"e0   %s\n"
+"eDShip Model:\n"
+"e0   %s"
+msgstr ""
+
+#: src/load.c:435
+msgid "Save game version mismatch"
+msgstr ""
+
+#: src/load.c:436
+#, c-format
+msgid ""
+"Save game '%s' version does not match Naev version:\n"
+"   Save version: er%se0\n"
+"   Naev version: eD%se0\n"
+"Are you sure you want to load this game? It may lose data."
+msgstr ""
+
+#: src/load.c:476
+msgid "Permanently Delete?"
+msgstr ""
+
+#: src/load.c:477
+#, c-format
+msgid "Are you sure you want to permanently delete '%s'?"
+msgstr ""
+
+#: src/load.c:547
+msgid "Savegame file seems to have been deleted."
+msgstr ""
+
+#: src/load.c:563
+#, c-format
+msgid "egWelcome to %s!"
+msgstr ""
+
+#: src/load.c:573
+msgid "Old version detected. Sanitizing ships for slots"
+msgstr ""
+
+#: src/load.c:620
+#, c-format
+msgid "Savegame '%s' invalid!"
+msgstr ""
+
+#: src/map.c:217
+msgid "Faction:"
+msgstr ""
+
+#: src/map.c:224
+msgid "Standing:"
+msgstr ""
+
+#: src/map.c:231
+msgid "Presence:"
+msgstr ""
+
+#: src/map.c:238
+msgid "Planets:"
+msgstr ""
+
+#: src/map.c:245
+msgid "Services:"
+msgstr ""
+
+#: src/map.c:251
+msgid "Close"
+msgstr ""
+
+#: src/map.c:254
+msgid "Find"
+msgstr ""
+
+#: src/map.c:257
+msgid "Autonav"
+msgstr ""
+
+#: src/map.c:335 src/map.c:341 src/map.c:347 src/map.c:353 src/map.c:359
+#: src/map.c:365 src/map.c:451
+msgid "Unknown"
+msgstr ""
+
+#: src/map.c:389
+msgid "Multiple"
+msgstr ""
+
+#: src/map.c:395 src/map.c:396
+msgid "N/A"
+msgstr ""
+
+#: src/map.c:513
+msgid "None"
+msgstr ""
+
+#: src/map.c:527
+msgid " Volatile"
+msgstr ""
+
+#: src/map.c:529
+msgid " Dangerous"
+msgstr ""
+
+#: src/map.c:531
+msgid " Unstable"
+msgstr ""
+
+#: src/map.c:535 src/map.c:548
+msgid " Dense"
+msgstr ""
+
+#: src/map.c:537 src/map.c:550
+msgid " Light"
+msgstr ""
+
+#: src/map.c:538
+msgid " Nebula"
+msgstr ""
+
+#: src/map.c:544
+msgid ","
+msgstr ""
+
+#: src/map.c:552
+msgid " Interference"
+msgstr ""
+
+#: src/menu.c:158
+msgid "Menu main is already open."
+msgstr ""
 
 #: src/menu.c:208
 msgid "Load Game"
@@ -34,7 +326,7 @@ msgstr "チュートリアル"
 msgid "Editor"
 msgstr "編集"
 
-#: src/menu.c:222
+#: src/menu.c:222 src/menu.c:437
 msgid "Options"
 msgstr "設定"
 
@@ -42,19 +334,102 @@ msgstr "設定"
 msgid "Credits"
 msgstr "クレジット"
 
-#: src/menu.c:228
+#: src/menu.c:228 src/menu.c:439
 msgid "Exit"
 msgstr "終了"
+
+#: src/menu.c:312
+msgid "Main menu does not exist."
+msgstr ""
+
+#: src/menu.c:431
+msgid "Resume"
+msgstr ""
+
+#: src/menu.c:434
+msgid "Info"
+msgstr ""
+
+#: src/menu.c:499
+msgid "Exited game."
+msgstr ""
+
+#: src/menu.c:569
+msgid "Continue"
+msgstr ""
+
+#: src/menu.c:572
+msgid "Restart"
+msgstr ""
+
+#: src/menu.c:576
+msgid "Main Menu"
+msgstr ""
+
+#: src/menu.c:578
+#, fuzzy
+msgid "Exit Game"
+msgstr "終了"
+
+#: src/menu.c:633
+msgid "Quit Naev"
+msgstr ""
+
+#: src/menu.c:633
+msgid "Are you sure you want to quit Naev?"
+msgstr ""
+
+#: src/naev.c:223
+#, c-format
+msgid "Unable to initialize SDL Video: %s"
+msgstr ""
+
+#: src/naev.c:265
+#, c-format
+msgid "Unable to create config directory '%s'"
+msgstr ""
+
+#: src/naev.c:302
+msgid "Failed to open ndata."
+msgstr ""
+
+#: src/naev.c:306
+msgid "Failed to load module start data."
+msgstr ""
+
+#: src/naev.c:323
+msgid "Initializing video output failed, exiting..."
+msgstr ""
 
 #: src/naev.c:341
 msgid "Initializing subsystems..."
 msgstr "サブシステム起動中…"
 
-#: src/naev.c:422
+#: src/naev.c:349
+msgid "Error initializing joystick input"
+msgstr ""
+
+#: src/naev.c:352 src/naev.c:359
+msgid "Failure to open any joystick, falling back to default keybinds"
+msgstr ""
+
+#: src/naev.c:368
+msgid "Sound is disabled!"
+msgstr ""
+
+#: src/naev.c:373
+msgid "Problem setting up sound!"
+msgstr ""
+
+#: src/naev.c:382
+msgid "Unable to initialize the Nebula subsystem!"
+msgstr ""
+
+#: src/naev.c:424
 msgid "Warning"
 msgstr "注意"
 
-#: src/naev.c:422
+#: src/naev.c:424
 #, c-format
 msgid ""
 "Your configuration files are in a deprecated location and must be migrated:\n"
@@ -66,7 +441,7 @@ msgid ""
 "Would you like to run it automatically?"
 msgstr ""
 
-#: src/naev.c:447
+#: src/naev.c:449
 #, c-format
 msgid ""
 "The update script was not found at:\n"
@@ -75,15 +450,15 @@ msgid ""
 "Please locate and run it manually."
 msgstr ""
 
-#: src/naev.c:452
+#: src/naev.c:454
 msgid "Update Completed"
 msgstr ""
 
-#: src/naev.c:453
+#: src/naev.c:455
 msgid "Configuration files were successfully migrated. Naev will now restart."
 msgstr ""
 
-#: src/naev.c:457
+#: src/naev.c:459
 #, c-format
 msgid ""
 "The update script encountered an error. Please exit Naev and move your "
@@ -100,12 +475,16 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/naev.c:468
+#: src/naev.c:470
 #, c-format
 msgid ""
 "To manually migrate your configuration files please exit Naev and run the "
 "update script, likely found in your Naev data directory:\n"
 "   er%s/naev-confupdate.she0"
+msgstr ""
+
+#: src/naev.c:577
+msgid "No loading screens found!"
 msgstr ""
 
 #: src/naev.c:696
@@ -164,9 +543,71 @@ msgstr "地図書き込み中…"
 msgid "Loading Completed!"
 msgstr "ロード完了"
 
+#: src/naev.c:907
+msgid "clock_gettime failed, disabling posix time."
+msgstr ""
+
+#: src/naev.c:932
+msgid "clock_gettime failed!"
+msgstr ""
+
 #: src/naev.c:1130
 msgid "PAUSED"
 msgstr "中止"
+
+#: src/naev.c:1156
+msgid "Icon (icon.png) not found!"
+msgstr ""
+
+#: src/naev.c:1164
+msgid "Unable to load icon.png!"
+msgstr ""
+
+#: src/naev.c:1245
+msgid "Version format is too long!"
+msgstr ""
+
+#: src/naev.c:1257
+msgid "Version has too many '.'."
+msgstr ""
+
+#: src/naev.c:1325
+#, c-format
+msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
+msgstr ""
+
+#: src/naev.c:1335
+msgid "SDL is newer than compiled version"
+msgstr ""
+
+#: src/naev.c:1337
+msgid "SDL is older than compiled version."
+msgstr ""
+
+#: src/naev.c:1436
+#, c-format
+msgid "Naev received %s!"
+msgstr ""
+
+#: src/naev.c:1444
+msgid "Report this to project maintainer with the backtrace."
+msgstr ""
+
+#: src/naev.c:1490
+msgid "Unable to set up SIGSEGV signal handler."
+msgstr ""
+
+#: src/naev.c:1493
+msgid "Unable to set up SIGFPE signal handler."
+msgstr ""
+
+#: src/naev.c:1496
+msgid "Unable to set up SIGABRT signal handler."
+msgstr ""
+
+#: src/naev.c:1497
+msgid "BFD backtrace catching enabled."
+msgstr ""
 
 #: src/nebula.c:761
 msgid "Generating Nebula (slow, run once)..."
