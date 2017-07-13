@@ -10,6 +10,9 @@ AC_CONFIG_AUX_DIR([build])
 
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
+
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
 # fix the problem.
@@ -403,7 +406,7 @@ AS_IF([test "$have_sdl2" = "yes"], [
 ])
 
 # global
-GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -DLOCALEDIR='\"$(localedir)\"'"
 GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
 GLOBAL_LIBS=
 
@@ -624,7 +627,7 @@ AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 # Output
 #
 SHAVE_INIT([build], [enable])
-AC_CONFIG_FILES([Makefile
+AC_CONFIG_FILES([Makefile po/Makefile.in
       lib/Makefile
       src/Makefile
       src/tk/Makefile

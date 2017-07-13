@@ -205,27 +205,27 @@ void menu_main (void)
 
    /* Buttons. */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load Game", menu_main_load, SDLK_l );
+         "btnLoad", _("Load Game"), menu_main_load, SDLK_l );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Game", menu_main_new, SDLK_n );
+         "btnNew", _("New Game"), menu_main_new, SDLK_n );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnTutorial", "Tutorial", menu_main_tutorial, SDLK_t );
+         "btnTutorial", _("Tutorial"), menu_main_tutorial, SDLK_t );
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
       window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnEditor", "Editor", uniedit_open, SDLK_e );
+            "btnEditor", _("Editor"), uniedit_open, SDLK_e );
       y -= BUTTON_HEIGHT+20;
    }
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", menu_options_button, SDLK_o );
+         "btnOptions", _("Options"), menu_options_button, SDLK_o );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCredits", "Credits", menu_main_credits, SDLK_c );
+         "btnCredits", _("Credits"), menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_exit, SDLK_x );
+         "btnExit", _("Exit"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
    if (!save_hasSave())

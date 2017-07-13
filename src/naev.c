@@ -43,6 +43,9 @@
 #include <bfd.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
+/* Locale setting. */
+#include <locale.h>
+
 /* local */
 #include "conf.h"
 #include "physics.h"
@@ -186,6 +189,12 @@ int main( int argc, char** argv )
    }
 #endif
 
+   /* Set up locales. */
+   setlocale(LC_ALL, "");
+   //bindtextdomain("naev", LOCALEDIR);
+   bindtextdomain("naev", "po/");
+   textdomain("naev");
+
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
 
@@ -211,7 +220,7 @@ int main( int argc, char** argv )
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
+      WARN( "Unable to initialize SDL Video: %s", SDL_GetError());
       return -1;
    }
 
@@ -316,6 +325,8 @@ int main( int argc, char** argv )
       exit(EXIT_FAILURE);
    }
    window_caption();
+
+   /* Have to set up fonts before rendering anything. */
    gl_fontInit( NULL, "Arial", FONT_DEFAULT_PATH, conf.font_size_def ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, "Arial", FONT_DEFAULT_PATH, conf.font_size_small ); /* small font */
    gl_fontInit( &gl_defFontMono, "Monospace", FONT_MONOSPACE_PATH, conf.font_size_def );
@@ -327,7 +338,7 @@ int main( int argc, char** argv )
 
    /* Display the load screen. */
    loadscreen_load();
-   loadscreen_render( 0., "Initializing subsystems..." );
+   loadscreen_render( 0., _("Initializing subsystems...") );
    time_ms = SDL_GetTicks();
 
    /*
@@ -408,11 +419,11 @@ int main( int argc, char** argv )
 
       nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
       home = SDL_getenv("HOME");
-      ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
+      ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
             "   \er%s/.naev/\e0\n\n"
             "The update script can likely be found in your Naev data directory:\n"
             "   \er%s\e0\n\n"
-            "Would you like to run it automatically?", home, path );
+            "Would you like to run it automatically?"), home, path );
 
       /* Try to run the script. */
       if (ret) {
@@ -433,20 +444,20 @@ int main( int argc, char** argv )
 
          /* We couldn't find the script. */
          if (ret == -1) {
-            dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
-                  "Please locate and run it manually.", path );
+            dialogue_alert( _("The update script was not found at:\n\er%s\e0\n\n"
+                  "Please locate and run it manually."), path );
          }
          /* Restart, as the script succeeded. */
          else if (!ret) {
-            dialogue_msg( "Update Completed",
-                  "Configuration files were successfully migrated. Naev will now restart." );
+            dialogue_msg( _("Update Completed"),
+                  _("Configuration files were successfully migrated. Naev will now restart.") );
             execv(argv[0], argv);
          }
          else { /* I sincerely hope this else is never hit. */
-            dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
+            dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
                   "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
                   "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n",
+                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n"),
                   home, ".naev/conf.lua", nfile_configPath(),
                   home, ".naev/{saves,screenshots}/", nfile_dataPath(),
                   home, ".naev/gen/*.png", nfile_cachePath() );
@@ -454,10 +465,10 @@ int main( int argc, char** argv )
       }
       else {
          dialogue_alert(
-               "To manually migrate your configuration files "
+               _("To manually migrate your configuration files "
                "please exit Naev and run the update script, "
                "likely found in your Naev data directory:\n"
-               "   \er%s/naev-confupdate.sh\e0", home, path );
+               "   \er%s/naev-confupdate.sh\e0"), home, path );
       }
    }
 #endif
@@ -680,35 +691,35 @@ void load_all (void)
    sp_load();
 
    /* order is very important as they're interdependent */
-   loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
+   loadscreen_render( 1./LOADING_STAGES, _("Loading Commodities...") );
    commodity_load(); /* dep for space */
-   loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
+   loadscreen_render( 2./LOADING_STAGES, _("Loading Factions...") );
    factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 3./LOADING_STAGES, "Loading AI..." );
+   loadscreen_render( 3./LOADING_STAGES, _("Loading AI...") );
    ai_load(); /* dep for fleets */
-   loadscreen_render( 4./LOADING_STAGES, "Loading Missions..." );
+   loadscreen_render( 4./LOADING_STAGES, _("Loading Missions...") );
    missions_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, "Loading Events..." );
+   loadscreen_render( 5./LOADING_STAGES, _("Loading Events...") );
    events_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
+   loadscreen_render( 6./LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Damage Types..." );
+   loadscreen_render( 6./LOADING_STAGES, _("Loading Damage Types...") );
    dtype_load(); /* no dep */
-   loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
+   loadscreen_render( 7./LOADING_STAGES, _("Loading Outfits...") );
    outfit_load(); /* dep for ships */
-   loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
+   loadscreen_render( 8./LOADING_STAGES, _("Loading Ships...") );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 9./LOADING_STAGES, "Loading Fleets..." );
+   loadscreen_render( 9./LOADING_STAGES, _("Loading Fleets...") );
    fleet_load(); /* dep for space */
-   loadscreen_render( 10./LOADING_STAGES, "Loading Techs..." );
+   loadscreen_render( 10./LOADING_STAGES, _("Loading Techs...") );
    tech_load(); /* dep for space */
-   loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
+   loadscreen_render( 11./LOADING_STAGES, _("Loading the Universe...") );
    space_load();
-   loadscreen_render( 12./LOADING_STAGES, "Populating Maps..." );
+   loadscreen_render( 12./LOADING_STAGES, _("Populating Maps...") );
    outfit_mapParse();
    background_init();
    player_init(); /* Initialize player stuff. */
-   loadscreen_render( 1., "Loading Completed!" );
+   loadscreen_render( 1., _("Loading Completed!") );
 }
 /**
  * @brief Unloads all data, simplifies main().
@@ -1114,7 +1125,7 @@ static void display_fps( const double dt )
 
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, "PAUSED" );
+         NULL, _("PAUSED") );
 }
 
 

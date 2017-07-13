@@ -758,7 +758,7 @@ static int nebu_generate (void)
    int ret;
 
    /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebula (slow, run once)..." );
+   loadscreen_render( 0.05, _("Generating Nebula (slow, run once)...") );
 
    /* Get resolution to create at. */
    w = SCREEN_W;
@@ -773,7 +773,7 @@ static int nebu_generate (void)
    nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
 
    /* Start saving - compression can take a bit. */
-   loadscreen_render( 0.05, "Compressing Nebula layers..." );
+   loadscreen_render( 0.05, _("Compressing Nebula layers...") );
 
    /* Save each nebula as an image */
    for (i=0; i<NEBULA_Z; i++) {
@@ -800,7 +800,7 @@ static void nebu_generatePuffs (void)
    float *nebu;
 
    /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebula Puffs..." );
+   loadscreen_render( 0.05, _("Generating Nebula Puffs...") );
 
    /* Generate the nebula puffs */
    for (i=0; i<NEBULA_PUFFS; i++) {

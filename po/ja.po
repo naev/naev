@@ -1,0 +1,181 @@
+# Japanese translations for naev package
+# naev パッケージに対する英訳.
+# Copyright (C) 2017 Free Software Foundation, Inc.
+# This file is distributed under the same license as the naev package.
+#  <bobbens@gmail.com>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: naev 0.7.0\n"
+"Report-Msgid-Bugs-To: bobbens@gmail.com\n"
+"POT-Creation-Date: 2017-07-13 09:35+0900\n"
+"PO-Revision-Date: 2017-07-13 08:52+0900\n"
+"Last-Translator:  <bobbens@gmail.com>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/menu.c:208
+msgid "Load Game"
+msgstr "ロード"
+
+#: src/menu.c:211
+msgid "New Game"
+msgstr "新ゲーム"
+
+#: src/menu.c:214
+msgid "Tutorial"
+msgstr "チュートリアル"
+
+#: src/menu.c:218
+msgid "Editor"
+msgstr "編集"
+
+#: src/menu.c:222
+msgid "Options"
+msgstr "設定"
+
+#: src/menu.c:225
+msgid "Credits"
+msgstr "クレジット"
+
+#: src/menu.c:228
+msgid "Exit"
+msgstr "終了"
+
+#: src/naev.c:341
+msgid "Initializing subsystems..."
+msgstr "サブシステム起動中…"
+
+#: src/naev.c:422
+msgid "Warning"
+msgstr "注意"
+
+#: src/naev.c:422
+#, c-format
+msgid ""
+"Your configuration files are in a deprecated location and must be migrated:\n"
+"   er%s/.naev/e0\n"
+"\n"
+"The update script can likely be found in your Naev data directory:\n"
+"   er%se0\n"
+"\n"
+"Would you like to run it automatically?"
+msgstr ""
+
+#: src/naev.c:447
+#, c-format
+msgid ""
+"The update script was not found at:\n"
+"er%se0\n"
+"\n"
+"Please locate and run it manually."
+msgstr ""
+
+#: src/naev.c:452
+msgid "Update Completed"
+msgstr ""
+
+#: src/naev.c:453
+msgid "Configuration files were successfully migrated. Naev will now restart."
+msgstr ""
+
+#: src/naev.c:457
+#, c-format
+msgid ""
+"The update script encountered an error. Please exit Naev and move your "
+"config and save files manually:\n"
+"\n"
+"er%s/%se0 =>\n"
+"   eD%se0\n"
+"\n"
+"er%s/%se0 =>\n"
+"   eD%se0\n"
+"\n"
+"er%s/%se0 =>\n"
+"   eD%snebula/e0\n"
+"\n"
+msgstr ""
+
+#: src/naev.c:468
+#, c-format
+msgid ""
+"To manually migrate your configuration files please exit Naev and run the "
+"update script, likely found in your Naev data directory:\n"
+"   er%s/naev-confupdate.she0"
+msgstr ""
+
+#: src/naev.c:696
+msgid "Loading Commodities..."
+msgstr "商品読み込み中…"
+
+#: src/naev.c:698
+msgid "Loading Factions..."
+msgstr "党派読み込み中…"
+
+#: src/naev.c:700
+msgid "Loading AI..."
+msgstr "人工知能読み込み中…"
+
+#: src/naev.c:702
+msgid "Loading Missions..."
+msgstr "ミッション読み込み中…"
+
+#: src/naev.c:704
+msgid "Loading Events..."
+msgstr "イベント読み込み中"
+
+#: src/naev.c:706
+msgid "Loading Special Effects..."
+msgstr "特撮エフェクト読み込み中…"
+
+#: src/naev.c:708
+msgid "Loading Damage Types..."
+msgstr "ダメージ読み込み中…"
+
+#: src/naev.c:710
+msgid "Loading Outfits..."
+msgstr "モド読み込み中…"
+
+#: src/naev.c:712
+msgid "Loading Ships..."
+msgstr "宇宙飛行機読み込み中…"
+
+#: src/naev.c:714
+msgid "Loading Fleets..."
+msgstr "フリーと読み込み中…"
+
+#: src/naev.c:716
+msgid "Loading Techs..."
+msgstr "技術読み込み中…"
+
+#: src/naev.c:718
+msgid "Loading the Universe..."
+msgstr "宇宙読み込み中…"
+
+#: src/naev.c:720
+msgid "Populating Maps..."
+msgstr "地図書き込み中…"
+
+#: src/naev.c:724
+msgid "Loading Completed!"
+msgstr "ロード完了"
+
+#: src/naev.c:1130
+msgid "PAUSED"
+msgstr "中止"
+
+#: src/nebula.c:761
+msgid "Generating Nebula (slow, run once)..."
+msgstr "星雲生成中…"
+
+#: src/nebula.c:776
+msgid "Compressing Nebula layers..."
+msgstr "星雲圧縮中…"
+
+#: src/nebula.c:803
+msgid "Generating Nebula Puffs..."
+msgstr "星雲の欠片生成中…"
