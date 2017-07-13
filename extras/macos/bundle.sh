@@ -79,4 +79,7 @@ for dep in Naev.app/Contents/Frameworks/*.dylib; do
     $dep
 done
 
+# Strip headers, especially from the SDL2 framework.
+find Naev.app -name Headers -prune | xargs rm -r
+
 echo "Successfully created Naev.app"
