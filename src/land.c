@@ -80,15 +80,6 @@ int landed = 0; /**< Is player landed. */
 int land_loaded = 0; /**< Finished loading? */
 unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
-static const char *land_windowNames[LAND_NUMWINDOWS] = {
-   "Landing Main",
-   "Spaceport Bar",
-   "Missions",
-   "Outfits",
-   "Shipyard",
-   "Equipment",
-   "Commodity"
-};
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
@@ -182,21 +173,21 @@ int can_swapEquipment( char* shipname )
    newship = player_getShip(shipname);
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
-      land_errDialogueBuild( "You're already onboard the %s.", shipname );
+      land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       failure = 1;
    }
    if (strcmp(loc,land_planet->name)) { /* Ship isn't here. */
-      dialogue_alert( "You must transport the ship to %s to be able to get in.",
+      dialogue_alert( _("You must transport the ship to %s to be able to get in."),
             land_planet->name );
       failure = 1;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( "You have %d tons more cargo than the new ship can hold.",
+      land_errDialogueBuild( _("You have %d tons more cargo than the new ship can hold."),
             pilot_cargoUsed(player.p) - pilot_cargoFree(newship), shipname );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( "You can't strand your fighters in space.");
+      land_errDialogueBuild( _("You can't strand your fighters in space.") );
       failure = 1;
    }
    return !failure;
@@ -300,10 +291,10 @@ static void bar_open( unsigned int wid )
    /* Buttons */
    window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseBar",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
-         "Approach", bar_approach, SDLK_a );
+         _("Approach"), bar_approach, SDLK_a );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
@@ -559,25 +550,25 @@ static void misn_open( unsigned int wid )
    /* buttons */
    window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
-         "Accept Mission", misn_accept, SDLK_a );
+         _("Accept Mission"), misn_accept, SDLK_a );
 
    /* text */
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
          "txtSDate", NULL, &cDConsole,
-         "Date:\n"
-         "Free Space:");
+         _("Date:\n"
+         "Free Space:"));
    window_addText( wid, w/2 + 110, y,
          w/2 - 90, 40, 0,
          "txtDate", NULL, &cBlack, NULL );
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
+         "txtSReward", &gl_smallFont, &cDConsole, _("Reward:") );
    window_addText( wid, w/2 + 70, y,
          w/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
@@ -623,19 +614,19 @@ static void misn_accept( unsigned int wid, char* str )
    misn_name = toolkit_getList( wid, "lstMission" );
 
    /* Make sure you have missions. */
-   if (strcmp(misn_name,"No Missions")==0)
+   if (strcmp(misn_name,_("No Missions"))==0)
       return;
 
    /* Make sure player can accept the mission. */
    for (i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->data == NULL) break;
    if (i >= MISSION_MAX) {
-      dialogue_alert("You have too many active missions.");
+      dialogue_alert( _("You have too many active missions.") );
       return;
    }
 
-   if (dialogue_YesNo("Accept Mission",
-         "Are you sure you want to accept this mission?")) {
+   if (dialogue_YesNo( _("Accept Mission"),
+         _("Are you sure you want to accept this mission?"))) {
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
@@ -691,7 +682,7 @@ static void misn_genList( unsigned int wid, int first )
       if (j==0)
          free(misn_names);
       misn_names = malloc(sizeof(char*));
-      misn_names[0] = strdup("No Missions");
+      misn_names[0] = strdup(_("No Missions"));
       j = 1;
    }
    window_addList( wid, 20, -40,
@@ -725,10 +716,10 @@ static void misn_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDate", txt );
 
    active_misn = toolkit_getList( wid, "lstMission" );
-   if (strcmp(active_misn,"No Missions")==0) {
+   if (strcmp(active_misn,_("No Missions"))==0) {
       window_modifyText( wid, "txtReward", "None" );
       window_modifyText( wid, "txtDesc",
-            "There are no missions available here." );
+            _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
       return;
    }
@@ -782,7 +773,7 @@ static void spaceport_buyMap( unsigned int wid, char *str )
 
    o = outfit_get( LOCAL_MAP_NAME );
    if (o == NULL) {
-      WARN("Outfit '%s' does not exist!", LOCAL_MAP_NAME);
+      WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
       return;
    }
 
@@ -813,7 +804,7 @@ void land_checkAddMap (void)
 
    o = outfit_get( LOCAL_MAP_NAME );
    if (o == NULL) {
-      WARN("Outfit '%s' does not exist!", LOCAL_MAP_NAME);
+      WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
       return;
    }
 
@@ -824,7 +815,7 @@ void land_checkAddMap (void)
    else {
       /* Refuel button. */
       credits2str( cred, o->price, 2 );
-      nsnprintf( buf, sizeof(buf), "Buy Local Map (%s)", cred );
+      nsnprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnMap",
             buf, spaceport_buyMap, SDLK_b );
@@ -938,37 +929,37 @@ void land_genWindows( int load, int changetab )
    j = 0;
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
-   names[j++] = land_windowNames[LAND_WINDOW_MAIN];
+   names[j++] = _("Landing Main");
    /* Bar. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR)) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_BAR];
+      names[j++] = _("Spaceport Bar");
    }
    /* Missions. */
    if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS)) {
       land_windowsMap[LAND_WINDOW_MISSION] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_MISSION];
+      names[j++] = _("Missions");
    }
    /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
       land_windowsMap[LAND_WINDOW_OUTFITS] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_OUTFITS];
+      names[j++] = _("Outfits");
    }
    /* Shipyard. */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_SHIPYARD] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_SHIPYARD];
+      names[j++] = _("Shipyard");
    }
    /* Equipment. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
          planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_EQUIPMENT];
+      names[j++] = _("Equipment");
    }
    /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
       land_windowsMap[LAND_WINDOW_COMMODITY] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_COMMODITY];
+      names[j++] = _("Commodity");
    }
 
    /* Create tabbed window. */
@@ -1167,7 +1158,7 @@ static void land_createMainTab( unsigned int wid )
    /* first column */
    window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
 
    /* Add "no refueling" notice if needed. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
@@ -1290,7 +1281,7 @@ void takeoff( int delay )
    if (!player_canTakeoff()) {
       char message[512];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
-      dialogue_msg( "Ship not fit for flight", message );
+      dialogue_msg( _("Ship not fit for flight"), message );
 
       /* Check whether the player needs rescuing. */
       land_stranded();
@@ -1337,13 +1328,13 @@ void takeoff( int delay )
 
    /* cleanup */
    if (save_all() < 0) /* must be before cleaning up planet */
-      dialogue_alert( "Failed to save game! You should exit and check the log to see what happened and then file a bug report!" );
+      dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
    nt = ntime_pretty( 0, 2 );
-   player_message("\epTaking off from %s on %s.", land_planet->name, nt);
+   player_message( _("\epTaking off from %s on %s."), land_planet->name, nt);
    free(nt);
 
    /* Hooks and stuff. */
@@ -1387,9 +1378,9 @@ static void land_stranded (void)
 
       buf = ndata_read( file, &bufsize );
       if (nlua_dobufenv(rescue_env, buf, bufsize, file) != 0) {
-         WARN("Error loading file: %s\n"
+         WARN( _("Error loading file: %s\n"
              "%s\n"
-             "Most likely Lua file has improper syntax, please check",
+             "Most likely Lua file has improper syntax, please check"),
                file, lua_tostring(naevL,-1));
          free(buf);
          return;
@@ -1400,7 +1391,7 @@ static void land_stranded (void)
    /* Run Lua. */
    nlua_getenv(rescue_env,"rescue");
    if (nlua_pcall(rescue_env, 0, 0)) { /* error has occurred */
-      WARN("Rescue: 'rescue' : '%s'", lua_tostring(naevL,-1));
+      WARN( _("Rescue: 'rescue' : '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
