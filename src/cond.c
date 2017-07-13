@@ -31,7 +31,7 @@ int cond_init (void)
 
    cond_env = nlua_newEnv(0);
    if (nlua_loadStandard(cond_env)) {
-      WARN("Failed to load standard Lua libraries.");
+      WARN(_("Failed to load standard Lua libraries."));
       return -1;
    }
 
@@ -71,16 +71,16 @@ int cond_check( const char* cond )
                        lua_strlen(naevL,-1), "Lua Conditional");
    switch (ret) {
       case  LUA_ERRSYNTAX:
-         WARN("Lua conditional syntax error: %s", lua_tostring(naevL, -1));
+         WARN(_("Lua conditional syntax error: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       case LUA_ERRRUN:
-         WARN("Lua Conditional had a runtime error: %s", lua_tostring(naevL, -1));
+         WARN(_("Lua Conditional had a runtime error: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       case LUA_ERRMEM:
-         WARN("Lua Conditional ran out of memory: %s", lua_tostring(naevL, -1));
+         WARN(_("Lua Conditional ran out of memory: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       case LUA_ERRERR:
-         WARN("Lua Conditional had an error while handling error function: %s", lua_tostring(naevL, -1));
+         WARN(_("Lua Conditional had an error while handling error function: %s"), lua_tostring(naevL, -1));
          goto cond_err;
       default:
          break;
@@ -100,7 +100,7 @@ int cond_check( const char* cond )
 
       return ret;
    }
-   WARN("Lua Conditional didn't return a boolean");
+   WARN(_("Lua Conditional didn't return a boolean"));
 
 cond_err:
    /* Clear the stack. */

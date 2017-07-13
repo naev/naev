@@ -439,16 +439,16 @@ static nlua_env background_create( const char *name )
    /* Open file. */
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
-      WARN("Default background script '%s' not found.", path);
+      WARN( _("Default background script '%s' not found."), path);
       nlua_freeEnv(env);
       return LUA_NOREF;
    }
 
    /* Load file. */
    if (nlua_dobufenv(env, buf, bufsize, path) != 0) {
-      WARN("Error loading background file: %s\n"
+      WARN( _("Error loading background file: %s\n"
             "%s\n"
-            "Most likely Lua file has improper syntax, please check",
+            "Most likely Lua file has improper syntax, please check"),
             path, lua_tostring(naevL,-1));
       free(buf);
       nlua_freeEnv(env);
@@ -500,8 +500,8 @@ int background_load( const char *name )
    ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
-      WARN("Background -> 'background' : %s",
-            (err) ? err : "unknown error");
+      WARN( _("Background -> 'background' : %s"),
+            (err) ? err : _("unknown error"));
       lua_pop(naevL, 1);
    }
    return ret;

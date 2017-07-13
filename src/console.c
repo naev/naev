@@ -157,7 +157,7 @@ int cli_warn( lua_State *L )
    const char *msg;
 
    msg = luaL_checkstring(L,1);
-   logprintf( stderr, "Warning: %s\n", msg );
+   logprintf( stderr, _("Warning: %s\n"), msg );
 
    return 0;
 }
@@ -536,7 +536,7 @@ static void cli_input( unsigned int wid, char *unused )
          nlua_getenv(cli_env, "print");
          lua_insert(naevL, 1);
          if (lua_pcall(naevL, lua_gettop(naevL)-1, 0, 0) != 0)
-            cli_addMessage( "Error printing results." );
+            cli_addMessage( _("Error printing results.") );
       }
 
       /* Clear stack. */
@@ -576,7 +576,7 @@ void cli_open (void)
    if (cli_firstOpen) {
       char buf[256];
       cli_addMessage( "" );
-      cli_addMessage( "\egWelcome to the Lua console!" );
+      cli_addMessage( _("\egWelcome to the Lua console!") );
       nsnprintf( buf, sizeof(buf), "\eg "APPNAME" v%s", naev_version(0) );
       cli_addMessage( buf );
       cli_addMessage( "" );
@@ -598,7 +598,7 @@ void cli_open (void)
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", _("Close"), window_close );
 
    /* Custom console widget. */
    window_addCust( wid, 20, -40,
