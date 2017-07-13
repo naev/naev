@@ -33,6 +33,9 @@
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #include <stdarg.h>
 
 #include "SDL.h"
@@ -404,6 +407,15 @@ static int ndata_openFile (void)
    /* Check dirname first. */
    if ((ndata_filename == NULL) && (ndata_dirname != NULL))
       ndata_filename = ndata_findInDir( ndata_dirname );
+
+#if HAS_MACOS
+   /* Look in the bundle resources directory */
+   if ((ndata_filename == NULL) && macos_isBundle()) {
+      if (macos_resourcesPath( pathname, PATH_MAX ) == 0) {
+         ndata_filename = ndata_findInDir( pathname );
+      }
+   }
+#endif /* HAS_MACOS */
 
    /*
     * Try to find the ndata file.

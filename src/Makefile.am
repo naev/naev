@@ -291,11 +291,16 @@ CODE_SOURCE = \
 
 if HAVE_WINDRES
 WINDOWS_RESOURCE = ../extras/resource.rc
-naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE)
-
 .rc.o:
 	@WINDRES@ $< -O coff $@
 else
-naev_SOURCES = $(CODE_SOURCE)
+WINDOWS_RESOURCE =
 endif
 
+if HAVE_MACOS
+MACOS_SOURCE = glue_macos.m
+else
+MACOS_SOURCE =
+endif
+
+naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE) $(MACOS_SOURCE)

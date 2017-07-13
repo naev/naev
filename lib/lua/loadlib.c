@@ -4,7 +4,7 @@
 ** See Copyright Notice in lua.h
 **
 ** This module contains an implementation of loadlib for Unix systems
-** that have dlfcn, an implementation for Darwin (Mac OS X), an
+** that have dlfcn, an implementation for Darwin (macOS), an
 ** implementation for Windows, and a stub for other systems.
 */
 
@@ -144,7 +144,7 @@ static lua_CFunction ll_sym (lua_State *L, void *lib, const char *sym) {
 #elif defined(LUA_DL_DYLD)
 /*
 ** {======================================================================
-** Native Mac OS X / Darwin Implementation
+** Native macOS / Darwin Implementation
 ** =======================================================================
 */
 

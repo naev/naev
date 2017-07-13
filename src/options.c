@@ -254,8 +254,8 @@ static void opt_gameplay( unsigned int wid )
          "Linux\n"
 #elif defined(FREEBSD)
          "FreeBSD\n"
-#elif defined(MACOSX)
-         "Mac OS X\n"
+#elif defined(MACOS)
+         "macOS\n"
 #elif defined(WIN32)
          "Windows\n"
 #else

@@ -32,8 +32,6 @@ being disabled.
 See http://wiki.naev.org/wiki/Compiling_Nix for package lists for several
 distributions.
 
-Mac Dependencies are different, see extras/macosx/COMPILE for details.
-
 ## COMPILING
 
 Run: 
@@ -45,8 +43,6 @@ make
 
 If you need special settings you should pass flags to configure, using -h
 will tell you what it supports.
-
-On Mac OS X, see extras/macosx/COMPILE for details. Uses Xcode, not gcc.
 
 ## INSTALLATION
 
