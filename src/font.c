@@ -69,7 +69,7 @@ typedef struct glFontGlyph_s {
    GLfloat adv_y; /**< Y advancement. */
    /* Offsets are stored in the VBO and thus not an issue. */
    glFontTex *tex; /**< Might be on different texture. */
-   int vbo_id; /**< VBO index to use. */
+   GLushort vbo_id; /**< VBO index to use. */
    int next; /**< Stored as a linked list. */
 } glFontGlyph;
 
@@ -301,15 +301,19 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    vbo_vert[ 6 ] = vx;    /* Bottom left. */
    vbo_vert[ 7 ] = vy;
    /* Update vbos. */
-   gl_vboData( stsh->vbo_tex, sizeof(GLfloat)*n,  stsh->vbo_tex_data );
+   gl_vboData( stsh->vbo_tex,  sizeof(GLfloat)*n,  stsh->vbo_tex_data );
    gl_vboData( stsh->vbo_vert, sizeof(GLshort)*n, stsh->vbo_vert_data );
 
    /* Add space for the new character. */
    gr->x += ch->w;
 
    /* Save glyph data. */
-   glyph->vbo_id = n/2-4;
+   glyph->vbo_id = (n-8)/2;
    glyph->tex = tex;
+
+   /* Since the VBOs have possibly changed, we have to reset the data. */
+   gl_vboActivateOffset( stsh->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( stsh->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
 
    return 0;
 }
@@ -537,8 +541,8 @@ void gl_printRaw( const glFont *ft_font,
 
    /* Render it. */
    s = 0;
-   gl_fontRenderStart(stsh, x, y, c);
    i = 0;
+   gl_fontRenderStart(stsh, x, y, c);
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
