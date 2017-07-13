@@ -320,7 +320,7 @@ int main( int argc, char** argv )
     * OpenGL
     */
    if (gl_init()) { /* initializes video output */
-      ERR("Initializing video output failed, exiting...");
+      ERR( _("Initializing video output failed, exiting...") );
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
@@ -345,17 +345,18 @@ int main( int argc, char** argv )
     * Input
     */
    if ((conf.joystick_ind >= 0) || (conf.joystick_nam != NULL)) {
-      if (joystick_init()) WARN("Error initializing joystick input");
+      if (joystick_init())
+         WARN( _("Error initializing joystick input") );
       if (conf.joystick_nam != NULL) { /* use the joystick name to find a joystick */
          if (joystick_use(joystick_get(conf.joystick_nam))) {
-            WARN("Failure to open any joystick, falling back to default keybinds");
+            WARN( _("Failure to open any joystick, falling back to default keybinds") );
             input_setDefault(1);
          }
          free(conf.joystick_nam);
       }
       else if (conf.joystick_ind >= 0) /* use a joystick id instead */
          if (joystick_use(conf.joystick_ind)) {
-            WARN("Failure to open any joystick, falling back to default keybinds");
+            WARN( _("Failure to open any joystick, falling back to default keybinds") );
             input_setDefault(1);
          }
    }
@@ -364,11 +365,12 @@ int main( int argc, char** argv )
     * OpenAL - Sound
     */
    if (conf.nosound) {
-      LOG("Sound is disabled!");
+      LOG( _("Sound is disabled!") );
       sound_disabled = 1;
       music_disabled = 1;
    }
-   if (sound_init()) WARN("Problem setting up sound!");
+   if (sound_init())
+      WARN( _("Problem setting up sound!") );
    music_choose("load");
 
    /* FPS stuff. */
@@ -377,7 +379,7 @@ int main( int argc, char** argv )
    /* Misc graphics init */
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
-      ERR("Unable to initialize the Nebula subsystem!");
+      ERR( _("Unable to initialize the Nebula subsystem!") );
       /* Weirdness will occur... */
    }
    gui_init(); /* initializes the GUI graphics */
@@ -572,7 +574,7 @@ void loadscreen_load (void)
 
    /* Must have loading screens */
    if (nload==0) {
-      WARN("No loading screens found!");
+      WARN( _("No loading screens found!") );
       loading = NULL;
       return;
    }
@@ -902,7 +904,7 @@ static void fps_init (void)
     * could skew up the dt calculations. */
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
-   WARN("clock_gettime failed, disabling posix time.");
+   WARN( _("clock_gettime failed, disabling posix time.") );
    use_posix_time = 0;
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
@@ -927,7 +929,7 @@ static double fps_elapsed (void)
          global_time = ts;
          return dt;
       }
-      WARN( "clock_gettime failed!" );
+      WARN( _("clock_gettime failed!") );
    }
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 
@@ -1151,7 +1153,7 @@ static void window_caption (void)
    /* Load icon. */
    rw = ndata_rwops( GFX_PATH"icon.png" );
    if (rw == NULL) {
-      WARN("Icon (icon.png) not found!");
+      WARN( _("Icon (icon.png) not found!") );
       return;
    }
    npng        = npng_open( rw );
@@ -1159,7 +1161,7 @@ static void window_caption (void)
    npng_close( npng );
    SDL_RWclose( rw );
    if (naev_icon == NULL) {
-      WARN("Unable to load icon.png!");
+      WARN( _("Unable to load icon.png!") );
       return;
    }
 
@@ -1240,7 +1242,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
 
    /* Check length. */
    if (nbuf > (int)sizeof(cbuf)) {
-      WARN("Version format is too long!");
+      WARN( _("Version format is too long!") );
       return -1;
    }
 
@@ -1252,7 +1254,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
          cbuf[j] = '\0';
          version[s++] = atoi(cbuf);
          if (s >= 3) {
-            WARN("Version has too many '.'.");
+            WARN( _("Version has too many '.'.") );
             return -1;
          }
          j = 0;
@@ -1320,7 +1322,7 @@ static void print_SDLversion (void)
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    linked = SDL_Linked_Version();
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
-   DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
+   DEBUG( _("SDL: %d.%d.%d [compiled: %d.%d.%d]"),
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
 
@@ -1330,9 +1332,9 @@ static void print_SDLversion (void)
 
    /* Check if major/minor version differ. */
    if (version_linked > version_compiled)
-      WARN("SDL is newer than compiled version");
+      WARN( _("SDL is newer than compiled version") );
    if (version_linked < version_compiled)
-      WARN("SDL is older than compiled version.");
+      WARN( _("SDL is older than compiled version.") );
 }
 
 
@@ -1431,7 +1433,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
 
-   DEBUG("Naev received %s!",
+   DEBUG( _("Naev received %s!"),
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++) {
       if (abfd != NULL)
@@ -1439,7 +1441,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
       else
          DEBUG("   %s", symbols[i]);
    }
-   DEBUG("Report this to project maintainer with the backtrace.");
+   DEBUG( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */
    exit(1);
@@ -1485,14 +1487,14 @@ static void debug_sigInit (void)
    /* Attach signals. */
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGSEGV signal handler.");
+      DEBUG( _("Unable to set up SIGSEGV signal handler.") );
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGFPE signal handler.");
+      DEBUG( _("Unable to set up SIGFPE signal handler.") );
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGABRT signal handler.");
-   DEBUG("BFD backtrace catching enabled.");
+      DEBUG( _("Unable to set up SIGABRT signal handler.") );
+   DEBUG( _("BFD backtrace catching enabled.") );
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 }
 
