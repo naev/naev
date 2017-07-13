@@ -1,3 +1,4 @@
+src/log.h
 src/ai.c
 src/array.c
 src/background.c
