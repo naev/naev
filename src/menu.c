@@ -155,7 +155,7 @@ void menu_main (void)
    int h, y;
 
    if (menu_isOpen(MENU_MAIN)) {
-      WARN("Menu main is already open.");
+      WARN( _("Menu main is already open.") );
       return;
    }
 
@@ -309,7 +309,7 @@ void menu_main_close (void)
    if (window_exists("Main Menu"))
       window_destroy( window_get("Main Menu") );
    else
-      WARN("Main menu does not exist.");
+      WARN( _("Main menu does not exist.") );
 
    menu_Close(MENU_MAIN);
    pause_game();
@@ -428,15 +428,15 @@ void menu_small (void)
 
    window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnResume", "Resume", menu_small_close, SDLK_r );
+         "btnResume", _("Resume"), menu_small_close, SDLK_r );
    window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnInfo", "Info", menu_small_info, SDLK_i );
+         "btnInfo", _("Info"), menu_small_info, SDLK_i );
    window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", menu_options_button, SDLK_o );
+         "btnOptions", _("Options"), menu_options_button, SDLK_o );
    window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_small_exit, SDLK_x );
+         "btnExit", _("Exit"), menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
 }
@@ -496,7 +496,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    }
 
    /* Stop player sounds because sometimes they hang. */
-   player_restoreControl( 0, "Exited game." );
+   player_restoreControl( 0, _("Exited game.") );
    player_soundStop();
 
    /* Clean up. */
@@ -566,16 +566,16 @@ void menu_death (void)
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    if (!player_isTut() && nfile_fileExists(path))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnContinue", "Continue", menu_death_continue, SDLK_c );
+         "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRestart", "Restart", menu_death_restart, SDLK_r );
+         "btnRestart", _("Restart"), menu_death_restart, SDLK_r );
 
    window_addButtonKey( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnMain", "Main Menu", menu_death_main, SDLK_m );
+         "btnMain", _("Main Menu"), menu_death_main, SDLK_m );
    window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit Game", menu_exit, SDLK_x );
+         "btnExit", _("Exit Game"), menu_exit, SDLK_x );
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */
@@ -630,7 +630,7 @@ int menu_askQuit (void)
 
    /* Ask if should quit. */
    menu_Open( MENU_ASKQUIT );
-   if (dialogue_YesNoRaw( "Quit Naev", "Are you sure you want to quit Naev?" )) {
+   if (dialogue_YesNoRaw( _("Quit Naev"), _("Are you sure you want to quit Naev?") )) {
       exit_game();
       return 1;
    }
