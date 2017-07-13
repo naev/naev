@@ -11,7 +11,7 @@ AC_CONFIG_AUX_DIR([build])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT_VERSION([0.18.0])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
