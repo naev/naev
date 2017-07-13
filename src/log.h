@@ -18,11 +18,11 @@
 
 #define LOG(str, args...)  (logprintf(stdout, NULL, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
-#define WARN(str, args...) (logprintf(stderr, "Warning: [%s] ", str, __func__, ## args), abort())
+#define WARN(str, args...) (logprintf(stderr, _("Warning: [%s] "), str, __func__, ## args), abort())
 #else /* DEBUG_PARANOID */
-#define WARN(str, args...) (logprintf(stderr, "Warning: [%s] ", str, __func__, ## args))
+#define WARN(str, args...) (logprintf(stderr, _("Warning: [%s] "), str, __func__, ## args))
 #endif /* DEBUG_PARANOID */
-#define ERR(str, args...)  (logprintf(stderr, "ERROR %s:%d [%s]: ", str, __FILE__, __LINE__, __func__, ## args), abort())
+#define ERR(str, args...)  (logprintf(stderr, _("ERROR %s:%d [%s]: "), str, __FILE__, __LINE__, __func__, ## args), abort())
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...) LOG(str, ## args)
