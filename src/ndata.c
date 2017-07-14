@@ -160,10 +160,10 @@ static int ndata_prompt( void *data )
 {
    int ret;
 
-   ret = SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Missing Data",
-         "Ndata could not be found. If you have the ndata file, drag\n"
+   ret = SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, _("Missing Data"),
+         _("Ndata could not be found. If you have the ndata file, drag\n"
          "and drop it onto the 'NAEV - INSERT NDATA' window.\n\n"
-         "If you don't have the ndata, download it from naev.org", (SDL_Window*)data );
+         "If you don't have the ndata, download it from naev.org"), (SDL_Window*)data );
 
    return ret;
 }
@@ -182,12 +182,12 @@ static int ndata_notfound (void)
    SDL_Surface *sur;
    SDL_RWops *rw;
    npng_t *npng;
-   const char *title = "NAEV - INSERT NDATA";
+   const char *title = _("NAEV - INSERT NDATA");
    int found;
 
    /* Make sure it's initialized. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
-      WARN("Unable to init SDL Video subsystem");
+      WARN(_("Unable to init SDL Video subsystem"));
       return 0;
    }
 
@@ -203,12 +203,12 @@ static int ndata_notfound (void)
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
    if (screen == NULL) {
-      WARN("Unable to set video mode");
+      WARN(_("Unable to set video mode"));
       return 0;
    }
 
    /* Set caption. */
-   SDL_WM_SetCaption( title, "NAEV" );
+   SDL_WM_SetCaption( title, APPNAME );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Create the surface. */
@@ -424,7 +424,7 @@ static int ndata_openFile (void)
 
       /* Check ndata with version appended. */
 #if VREV < 0
-      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
+      nsnprintf ( pathname, PATH_MAX, _("%s-%d.%d.0-beta%d"), NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
 #else /* VREV < 0 */
       nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
@@ -466,9 +466,9 @@ static int ndata_openFile (void)
    /* Open the archive. */
    if (ndata_isndata( ndata_filename ) != 1) {
       if (!ndata_loadedfile) {
-         WARN("Cannot find ndata file!");
-         WARN("Please run with ndata path suffix or specify in conf.lua.");
-         WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
+         WARN(_("Cannot find ndata file!"));
+         WARN(_("Please run with ndata path suffix or specify in conf.lua."));
+         WARN(_("E.g. naev ~/ndata or data = \"~/ndata\""));
 
          /* Display the not found message. */
          if (!ndata_notfound())
@@ -479,7 +479,7 @@ static int ndata_openFile (void)
    }
    ndata_archive = nzip_open( ndata_filename );
    if (ndata_archive == NULL)
-      WARN("Unable to open ndata from '%s'.", ndata_filename );
+      WARN(_("Unable to open ndata from '%s'."), ndata_filename );
 
    /* Close lock. */
    SDL_mutexV(ndata_lock);
@@ -507,21 +507,21 @@ static void ndata_testVersion (void)
    ret = naev_versionParse( version, buf, (int)size );
    free(buf);
    if (ret != 0) {
-      WARN("Problem reading VERSION file from ndata!");
+      WARN(_("Problem reading VERSION file from ndata!"));
       return;
    }
 
    diff = naev_versionCompare( version );
    if (diff != 0) {
-      WARN( "ndata version inconsistancy with this version of Naev!" );
-      WARN( "Expected ndata version %d.%d.%d got %d.%d.%d.",
+      WARN( _("ndata version inconsistancy with this version of Naev!") );
+      WARN( _("Expected ndata version %d.%d.%d got %d.%d.%d."),
             VMAJOR, VMINOR, VREV, version[0], version[1], version[2] );
 
       if (ABS(diff) > 2)
-         ERR( "Please get a compatible ndata version!" );
+         ERR( _("Please get a compatible ndata version!") );
 
       if (ABS(diff) > 1)
-         WARN( "Naev will probably crash now as the versions are probably not compatible." );
+         WARN( _("Naev will probably crash now as the versions are probably not compatible.") );
    }
 }
 
@@ -754,7 +754,7 @@ void* ndata_read( const char* filename, size_t *filesize )
 
    /* Wasn't able to open the file. */
    if (ndata_archive == NULL) {
-      WARN("Unable to open file '%s': not found.", filename);
+      WARN(_("Unable to open file '%s': not found."), filename);
       *filesize = 0;
       return NULL;
    }
@@ -833,7 +833,7 @@ SDL_RWops *ndata_rwops( const char* filename )
 
    /* Wasn't able to open the file. */
    if (ndata_archive == NULL) {
-      WARN("Unable to open file '%s': not found.", filename);
+      WARN(_("Unable to open file '%s': not found."), filename);
       return NULL;
    }
 
