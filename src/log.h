@@ -14,7 +14,8 @@
 
 /* Get text stuff. */
 #include <libintl.h>
-#define _(STRING) gettext(STRING)
+#define _(String) gettext(String)
+#define gettext_noop(String) String
 
 #define LOG(str, args...)  (logprintf(stdout, NULL, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
