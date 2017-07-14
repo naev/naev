@@ -125,7 +125,7 @@ Ship* luaL_validship( lua_State *L, int ind )
    }
 
    if (s == NULL)
-      NLUA_ERROR(L, "Ship is invalid.");
+      NLUA_ERROR(L, _("Ship is invalid."));
 
    return s;
 }
@@ -212,7 +212,7 @@ static int shipL_get( lua_State *L )
    /* Get ship. */
    ship = ship_get( name );
    if (ship == NULL) {
-      NLUA_ERROR(L,"Ship '%s' not found!", name);
+      NLUA_ERROR(L,_("Ship '%s' not found!"), name);
       return 0;
    }
 
@@ -450,7 +450,7 @@ static int shipL_gfxTarget( lua_State *L )
    /* Push graphic. */
    tex = gl_dupTexture( s->gfx_target );
    if (tex == NULL) {
-      WARN("Unable to get ship target graphic for '%s'.", s->name);
+      WARN(_("Unable to get ship target graphic for '%s'."), s->name);
       return 0;
    }
    lua_pushtex( L, tex );
@@ -480,7 +480,7 @@ static int shipL_gfx( lua_State *L )
    /* Push graphic. */
    tex = gl_dupTexture( s->gfx_space );
    if (tex == NULL) {
-      WARN("Unable to get ship graphic for '%s'.", s->name);
+      WARN(_("Unable to get ship graphic for '%s'."), s->name);
       return 0;
    }
    lua_pushtex( L, tex );

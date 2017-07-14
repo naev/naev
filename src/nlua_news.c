@@ -98,14 +98,14 @@ LuaArticle* luaL_validarticle( lua_State *L, int ind )
       if (news_get(*Larticle))
          return Larticle;
       else
-         NLUA_ERROR(L, "article is old");
+         NLUA_ERROR(L, _("article is old"));
    }
    else {
       luaL_typerror(L, ind, ARTICLE_METATABLE);
       return NULL;
    }
 
-   NLUA_ERROR(L, "article is invalid.");
+   NLUA_ERROR(L, _("article is invalid."));
 
    return NULL;
 }
@@ -209,7 +209,7 @@ int newsL_add( lua_State *L )
             if (title && content && faction)
                new_article(title, content, faction, date, date_to_rm);
             else
-               WARN("Bad arguments");
+               WARN(_("Bad arguments"));
 
             free(faction);
             free(title);
@@ -236,8 +236,8 @@ int newsL_add( lua_State *L )
    }
 
    if (!(lua_isstring(L, 1) && lua_isstring(L, 2) && lua_isstring(L, 3))) {
-      WARN("\nBad arguments, use "
-           "addArticle(\"Faction\",\"Title\",\"Content\",[date,[date_to_rm]])");
+      WARN(_("\nBad arguments, use "
+           "addArticle(\"Faction\",\"Title\",\"Content\",[date,[date_to_rm]])"));
       return 0;
    }
 
@@ -263,7 +263,7 @@ int newsL_add( lua_State *L )
    if (title && content && faction)
       n_article = new_article(title, content, faction, date, date_to_rm);
    else
-      NLUA_ERROR(L,"Bad arguments");
+      NLUA_ERROR(L,_("Bad arguments"));
 
    lua_pusharticle(L, n_article->id);
 
@@ -413,11 +413,11 @@ int newsL_title( lua_State *L )
    LuaArticle *a;
    news_t *article_ptr;
    if (!(a = luaL_validarticle(L, 1))) {
-      WARN("Bad argument to news.date(), must be article");
+      WARN(_("Bad argument to news.date(), must be article"));
       return 0;
    }
    if ((article_ptr = news_get(*a)) == NULL) {
-      WARN("\nArticle not valid");
+      WARN(_("\nArticle not valid"));
       return 0;
    }
    lua_pushstring(L, article_ptr->title);
@@ -436,11 +436,11 @@ int newsL_desc( lua_State *L )
    LuaArticle *a;
    news_t *article_ptr;
    if (!(a = luaL_validarticle(L, 1))) {
-      WARN("Bad argument to news.date(), must be article");
+      WARN(_("Bad argument to news.date(), must be article"));
       return 0;
    }
    if ((article_ptr = news_get(*a)) == NULL) {
-      WARN("\nArticle not valid");
+      WARN(_("\nArticle not valid"));
       return 0;
    }
    lua_pushstring(L, article_ptr->desc);
@@ -459,11 +459,11 @@ int newsL_faction( lua_State *L )
    LuaArticle *a;
    news_t *article_ptr;
    if (!(a = luaL_validarticle(L, 1))) {
-      WARN("Bad argument to news.date(), must be article");
+      WARN(_("Bad argument to news.date(), must be article"));
       return 0;
    }
    if ((article_ptr = news_get(*a)) == NULL) {
-      WARN("\nArticle not valid");
+      WARN(_("\nArticle not valid"));
       return 0;
    }
    lua_pushstring(L, article_ptr->faction);
@@ -482,11 +482,11 @@ int newsL_date( lua_State *L )
    LuaArticle *a;
    news_t *article_ptr;
    if (!(a = luaL_validarticle(L, 1))) {
-      WARN("Bad argument to news.date(), must be article");
+      WARN(_("Bad argument to news.date(), must be article"));
       return 0;
    }
    if ((article_ptr = news_get(*a)) == NULL) {
-      WARN("\nArticle not valid");
+      WARN(_("\nArticle not valid"));
       return 0;
    }
    lua_pushinteger(L, (lua_Integer)article_ptr->date);
@@ -513,7 +513,7 @@ int newsL_bind( lua_State *L )
 
    if (lua_istable(L, 1)) {
       if (!lua_isstring(L, 2)) {
-         WARN("\n2nd argument is invalid, use a string");
+         WARN(_("\n2nd argument is invalid, use a string"));
          return 1;
       }
 
@@ -526,12 +526,12 @@ int newsL_bind( lua_State *L )
       /* traverse table */
       while (lua_next(L, -2)) {
          if (!(a = luaL_validarticle(L, -1))) {
-            WARN("Bad argument to news.date(), must be article or a table of "
-                 "articles");
+            WARN(_("Bad argument to news.date(), must be article or a table of "
+                 "articles"));
             return 0;
          }
          if (article_ptr == NULL) {
-            WARN("\nArticle not valid");
+            WARN(_("\nArticle not valid"));
             return 0;
          }
          article_ptr = news_get(*a);
@@ -541,17 +541,17 @@ int newsL_bind( lua_State *L )
    }
    else {
       if (!(a = luaL_validarticle(L, 1))) {
-         WARN("Bad argument to news.date(), must be article or a table of "
-              "articles");
+         WARN(_("Bad argument to news.date(), must be article or a table of "
+              "articles"));
          return 0;
       }
       article_ptr = news_get(*a);
       if (article_ptr == NULL) {
-         WARN("\nArticle not valid");
+         WARN(_("\nArticle not valid"));
          return 0;
       }
       if (!lua_isstring(L, 2)) {
-         WARN("\n2nd argument is invalid, use a string");
+         WARN(_("\n2nd argument is invalid, use a string"));
          return 1;
       }
 

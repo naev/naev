@@ -174,7 +174,7 @@ static int texL_open( lua_State *L )
       sx = luaL_checkinteger(L,2);
       sy = luaL_checkinteger(L,3);
       if ((sx < 0 ) || (sy < 0))
-         NLUA_ERROR( L, "Spritesheet dimensions must be positive" );
+         NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
    }
 
    /* Push new texture. */

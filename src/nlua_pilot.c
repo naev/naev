@@ -323,7 +323,7 @@ Pilot* luaL_validpilot( lua_State *L, int ind )
    /* Get the pilot. */
    p  = pilot_get(luaL_checkpilot(L,ind));
    if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
+      NLUA_ERROR(L,_("Pilot is invalid."));
       return NULL;
    }
 
@@ -406,20 +406,20 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    if (from_ship) {
       ship = ship_get( fltname );
       if (ship == NULL) {
-         NLUA_ERROR(L,"Ship '%s' not found!", fltname);
+         NLUA_ERROR(L,_("Ship '%s' not found!"), fltname);
          return 0;
       }
       faction = luaL_checkstring(L,4);
       lf = faction_get(faction);
       if (lf < 0) {
-         NLUA_ERROR(L,"Faction '%s' not found in stack.", faction );
+         NLUA_ERROR(L,_("Faction '%s' not found in stack."), faction );
          return 0;
       }
    }
    else {
       flt = fleet_get( fltname );
       if (flt == NULL) {
-         NLUA_ERROR(L,"Fleet '%s' doesn't exist.", fltname);
+         NLUA_ERROR(L,_("Fleet '%s' doesn't exist."), fltname);
          return 0;
       }
       lf = flt->faction;
@@ -448,12 +448,12 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       }
       if (jump < 0) {
          if (cur_system->njumps > 0) {
-            WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
+            WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
                   fltname, ss->name, cur_system->name );
             jump = RNG_SANE(0,cur_system->njumps-1);
          }
          else
-            WARN("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points.",
+            WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
                   fltname, ss->name, cur_system->name );
       }
    }
@@ -512,7 +512,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
                jumpind[ njumpind++ ] = i;
          }
          else {
-            WARN("Creating pilot in system with no jumps nor planets to take off from!");
+            WARN(_("Creating pilot in system with no jumps nor planets to take off from!"));
             vectnull( &vp );
             a = RNGF() * 2.*M_PI;
             vectnull( &vv );
@@ -664,7 +664,7 @@ static int pilotL_remove( lua_State *L )
 
    /* Make sure it's not the player. */
    if (player.p == p) {
-      NLUA_ERROR( L, "Trying to remove the bloody player!" );
+      NLUA_ERROR( L, _("Trying to remove the bloody player!") );
       return 0;
    }
 
@@ -2545,7 +2545,7 @@ static int pilotL_addOutfit( lua_State *L )
    /* Get the outfit. */
    o = outfit_get( outfit );
    if (o == NULL) {
-      NLUA_ERROR(L, "Outfit '%s' not found!", outfit );
+      NLUA_ERROR(L, _("Outfit '%s' not found!"), outfit );
       return 0;
    }
 
@@ -2661,7 +2661,7 @@ static int pilotL_rmOutfit( lua_State *L )
       /* Get the outfit. */
       o = outfit_get( outfit );
       if (o == NULL) {
-         NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
+         NLUA_ERROR(L,_("Outfit isn't found in outfit stack."));
          return 0;
       }
 
@@ -3211,12 +3211,12 @@ static int pilotL_cargoAdd( lua_State *L )
    /* Get cargo. */
    cargo    = commodity_get( str );
    if (cargo == NULL) {
-      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
       return 0;
    }
 
    if (quantity < 0) {
-      NLUA_ERROR( L, "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)" );
+      NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)") );
       return 0;
    }
 
@@ -3255,12 +3255,12 @@ static int pilotL_cargoRm( lua_State *L )
    /* Get cargo. */
    cargo    = commodity_get( str );
    if (cargo == NULL) {
-      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
       return 0;
    }
 
    if (quantity < 0) {
-      NLUA_ERROR( L, "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)" );
+      NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)") );
       return 0;
    }
 
@@ -3555,7 +3555,7 @@ static int pilotL_memory( lua_State *L )
    NLUA_CHECKRW(L);
 
    if (lua_gettop(L) < 1) {
-      NLUA_ERROR(L, "pilot.memory requires 1 argument!");
+      NLUA_ERROR(L, _("pilot.memory requires 1 argument!"));
       return 0;
    }
 
@@ -3564,7 +3564,7 @@ static int pilotL_memory( lua_State *L )
 
    /* Set the pilot's memory. */
    if (p->ai == NULL) {
-      NLUA_ERROR(L,"Pilot does not have AI.");
+      NLUA_ERROR(L,_("Pilot does not have AI."));
       return 0;
    }
 
@@ -3609,7 +3609,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
 
    /* Must be on manual control. */
    if (!pilot_isFlag( p, PILOT_MANUAL_CONTROL)) {
-      NLUA_ERROR( L, "Pilot is not on manual control." );
+      NLUA_ERROR( L, _("Pilot is not on manual control.") );
       return 0;
    }
 
@@ -3921,13 +3921,13 @@ static int pilotL_hyperspace( lua_State *L )
          /* Found target. */
 
          if (jp_isFlag( jp, JP_EXITONLY )) {
-            NLUA_ERROR( L, "Pilot '%s' can't jump out exit only jump '%s'", p->name, ss->name );
+            NLUA_ERROR( L, _("Pilot '%s' can't jump out exit only jump '%s'"), p->name, ss->name );
             return 0;
          }
          break;
       }
       if (i >= cur_system->njumps) {
-         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", ss->name, cur_system->name );
+         NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
          return 0;
       }
 
@@ -3980,7 +3980,7 @@ static int pilotL_land( lua_State *L )
          }
       }
       if (i >= cur_system->nplanets) {
-         NLUA_ERROR( L, "Planet '%s' not found in system '%s'", pnt->name, cur_system->name );
+         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
 
@@ -4034,7 +4034,7 @@ static int pilotL_hailPlayer( lua_State *L )
    if (enable) {
       /* Send message. */
       c = pilot_getFactionColourChar( p );
-      player_message( "\a%c%s\a0 is hailing you.", c, p->name );
+      player_message( _("\a%c%s\a0 is hailing you."), c, p->name );
 
       /* Set flag. */
       pilot_setFlag( p, PILOT_HAILING );

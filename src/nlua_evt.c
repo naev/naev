@@ -136,8 +136,8 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
-         WARN("Event '%s' -> '%s': %s",
-               event_getData(ev->id), func, (err) ? err : "unknown error");
+         WARN(_("Event '%s' -> '%s': %s"),
+               event_getData(ev->id), func, (err) ? err : _("unknown error"));
          ret = -1;
       }
       else
@@ -228,7 +228,7 @@ static int evt_npcRm( lua_State *L )
    ret = npc_rm_event( id, cur_event->id );
 
    if (ret != 0)
-      NLUA_ERROR(L, "Invalid NPC ID!");
+      NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
@@ -311,7 +311,7 @@ static int evt_claim( lua_State *L )
 
    /* Check to see if already claimed. */
    if (cur_event->claims != NULL) {
-      NLUA_ERROR(L, "Event trying to claim but already has.");
+      NLUA_ERROR(L, _("Event trying to claim but already has."));
       return 0;
    }
 

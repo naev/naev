@@ -228,7 +228,7 @@ lua_State *nlua_newState (void)
    /* try to create the new state */
    L = luaL_newstate();
    if (L == NULL) {
-      WARN("Failed to create new Lua state.");
+      WARN(_("Failed to create new Lua state."));
       return NULL;
    }
 
@@ -335,8 +335,8 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      DEBUG("include(): %s not found in ndata.", filename);
-      luaL_error(L, "include(): %s not found in ndata.", filename);
+      DEBUG(_("include(): %s not found in ndata."), filename);
+      luaL_error(L, _("include(): %s not found in ndata."), filename);
       return 1;
    }
 

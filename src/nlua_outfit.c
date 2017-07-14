@@ -120,7 +120,7 @@ Outfit* luaL_validoutfit( lua_State *L, int ind )
    }
 
    if (o == NULL)
-      NLUA_ERROR(L, "Outfit is invalid.");
+      NLUA_ERROR(L, _("Outfit is invalid."));
 
    return o;
 }
@@ -210,7 +210,7 @@ static int outfitL_get( lua_State *L )
    /* Get outfit. */
    lo = outfit_get( name );
    if (lo == NULL) {
-      NLUA_ERROR(L,"Outfit '%s' not found!", name);
+      NLUA_ERROR(L,_("Outfit '%s' not found!"), name);
       return 0;
    }
 
