@@ -73,7 +73,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 
    /* Check if it fits. */
    if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
-      WARN("Unable to copy cargo over from pilot '%s' to '%s'", src->name, dest->name );
+      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'"), src->name, dest->name );
       return -1;
    }
 
