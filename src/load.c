@@ -326,7 +326,7 @@ void load_loadGameMenu (void)
    /* case there are no files */
    else {
       names = malloc(sizeof(char*));
-      names[0] = strdup("None");
+      names[0] = strdup(_("None"));
       n     = 1;
    }
 
@@ -372,7 +372,7 @@ static void load_menu_update( unsigned int wid, char *str )
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
-   if (strcmp(save,"None") == 0)
+   if (strcmp(save,_("None")) == 0)
       return;
 
    /* Get position. */
@@ -421,7 +421,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    wid = window_get( "Load Game" );
    save = toolkit_getList( wid, "lstSaves" );
 
-   if (strcmp(save,"None") == 0)
+   if (strcmp(save,_("None")) == 0)
       return;
 
    pos = toolkit_getListPos( wid, "lstSaves" );

@@ -304,6 +304,6 @@ static void log_append( FILE *stream, char *str )
 
 copy_err:
    log_purge();
-   WARN("An error occurred while buffering %s!",
+   WARN(_("An error occurred while buffering %s!"),
       stream == stdout ? "stdout" : "stderr");
 }
