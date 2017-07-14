@@ -29,8 +29,6 @@
 #include "nmath.h"
 
 
-#define MAP_WDWNAME     "Star Map" /**< Map window name. */
-
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
