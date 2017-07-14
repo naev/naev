@@ -1012,7 +1012,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    /* Only really affects player.p atm. */
    if (target == PLAYER_ID) {
       c = pilot_getFactionColourChar( p );
-      player_message( _("\a%cComm %s>\a0 \")%s\"", c, p->name, msg );
+      player_message( _("\a%cComm %s>\a0 \"%s\""), c, p->name, msg );
 
       /* Set comm message. */
       pilot_setCommMsg( p, msg );
@@ -1040,7 +1040,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
       return;
 
    c = pilot_getFactionColourChar( p );
-   player_message( _("\a%cBroadcast %s>\a0 \")%s\"", c, p->name, msg );
+   player_message( _("\a%cBroadcast %s>\a0 \"%s\""), c, p->name, msg );
 
    /* Set comm message. */
    pilot_setCommMsg( p, msg );
