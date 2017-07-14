@@ -487,7 +487,7 @@ static void map_update( unsigned int wid )
          break;
    }
    if(hasPlanets == 0)
-      strncpy( buf, "None", PATH_MAX );
+      strncpy( buf, _("None"), PATH_MAX );
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", x, y );
