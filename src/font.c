@@ -963,13 +963,13 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 
    /* Load the glyph. */
    if (FT_Load_Glyph( stsh->face, glyph_index, FT_LOAD_RENDER | FT_LOAD_NO_BITMAP | FT_LOAD_TARGET_NORMAL)) {
-      WARN("FT_Load_Glyph failed.");
+      WARN(_("FT_Load_Glyph failed."));
       return -1;
    }
 
    bitmap = slot->bitmap; /* to simplify */
    if (bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
-      WARN("Font '%s' not using FT_PIXEL_MODE_GRAY!", stsh->fontname);
+      WARN(_("Font '%s' not using FT_PIXEL_MODE_GRAY!"), stsh->fontname);
 
    /* need the POT wrapping for opengl */
    w = bitmap.width;
@@ -1168,7 +1168,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glFontGlyph *glyph;
    glyph = gl_fontGetGlyph( stsh, ch );
    if (glyph == NULL) {
-      WARN("Unable to find glyph '%d'!", ch );
+      WARN(_("Unable to find glyph '%d'!"), ch );
       return -1;
    }
 
@@ -1289,7 +1289,7 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
    if (used_font==NULL) {
       buf = ndata_read( (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH, &bufsize );
       if (buf == NULL) {
-         WARN("Unable to read font: %s", (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH);
+         WARN(_("Unable to read font: %s"), (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH);
          return -1;
       }
       used_font = strdup( fallback );
@@ -1298,7 +1298,7 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
    /* Get default font if not set. */
    if (font == NULL) {
       font = &gl_defFont;
-      DEBUG( "Using default font '%s'", used_font );
+      DEBUG( _("Using default font '%s'"), used_font );
    }
 
    /* Get font stash. */
@@ -1316,14 +1316,14 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
 
    /* Create a FreeType font library. */
    if (FT_Init_FreeType(&library)) {
-      WARN("FT_Init_FreeType failed with font %s.",
+      WARN(_("FT_Init_FreeType failed with font %s."),
             (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
       return -1;
    }
 
    /* Object which freetype uses to store font info. */
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
-      WARN("FT_New_Face failed loading library from %s",
+      WARN(_("FT_New_Face failed loading library from %s"),
             (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
       return -1;
    }
@@ -1335,14 +1335,14 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
                h << 6, /* In 1/64th of a pixel. */
                96, /* Create at 96 DPI */
                96)) /* Create at 96 DPI */
-         WARN("FT_Set_Char_Size failed.");
+         WARN(_("FT_Set_Char_Size failed."));
    }
    else
-      WARN("Font isn't resizable!");
+      WARN(_("Font isn't resizable!"));
 
    /* Select the character map. */
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
-      WARN("FT_Select_Charmap failed to change character mapping.");
+      WARN(_("FT_Select_Charmap failed to change character mapping."));
 
    /* Initialize the unicode support. */
    for (i=0; i<HASH_LUT_SIZE; i++)
