@@ -342,7 +342,7 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
          break;
 
       default:
-         WARN("Unknown VBO class.");
+         WARN(_("Unknown VBO class."));
          break;
    }
 
