@@ -541,7 +541,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
    temp->chance /= 100.;
 
 #define MELEMENT(o,s) \
-   if (o) WARN(_("Mission '%s' missing/invalid '%s' element"), s, temp->name)
+   if (o) WARN(_("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->lua==NULL,"lua");
    MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");

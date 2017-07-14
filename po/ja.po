@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-14 11:20+0900\n"
+"POT-Creation-Date: 2017-07-14 16:57+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/log.h:21 src/log.h:23
+#: src/log.h:22 src/log.h:24
 #, c-format
 msgid "Warning: [%s] "
 msgstr "注意: [%s] "
 
-#: src/log.h:25
+#: src/log.h:26
 #, c-format
 msgid "ERROR %s:%d [%s]: "
-msgstr ""
+msgstr "エラー %s:%d [%s]: "
 
 #: src/ai.c:432
 #, c-format
@@ -139,7 +139,8 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:504 src/gui.c:2004
+#: src/background.c:504 src/gui.c:2004 src/nlua_evt.c:140 src/nlua_misn.c:249
+#: src/sound_openal.c:1511
 msgid "unknown error"
 msgstr ""
 
@@ -266,7 +267,7 @@ msgstr ""
 #: src/board.c:485 src/board.c:500 src/board.c:511
 #, c-format
 msgid "none\n"
-msgstr ""
+msgstr "なし\n"
 
 #: src/board.c:504
 #, c-format
@@ -317,7 +318,7 @@ msgstr ""
 
 #: src/comm.c:203
 msgid "Greet"
-msgstr ""
+msgstr "挨拶"
 
 #: src/comm.c:208 src/comm.c:257
 msgid "Bribe"
@@ -338,8 +339,9 @@ msgstr ""
 #: src/dev_uniedit.c:175 src/dev_uniedit.c:1061 src/dev_uniedit.c:1273
 #: src/dev_uniedit.c:1521 src/info.c:218 src/info.c:289 src/info.c:375
 #: src/info.c:481 src/info.c:698 src/info.c:878 src/info.c:966 src/map.c:251
+#: src/map_find.c:1087
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: src/comm.c:422 src/comm.c:442 src/comm.c:444 src/comm.c:448 src/comm.c:454
 #: src/comm.c:461 src/comm.c:463
@@ -356,7 +358,11 @@ msgid "\"Money won't save your hide now!\""
 msgstr ""
 
 #: src/comm.c:442
-msgid "\"I'm gonna need at least %"
+msgid ""
+"\"I'm gonna need at least %PRIu64 credits to not leave you as a hunk of "
+"floating debris.\"\n"
+"\n"
+"Pay %PRIu64 credits?"
 msgstr ""
 
 #: src/comm.c:444 src/comm.c:589
@@ -879,7 +885,7 @@ msgstr "生成完了！"
 msgid "Unable to open '%s' for writing: %s"
 msgstr ""
 
-#: src/dev_planet.c:42 src/dev_system.c:92 src/dev_system.c:244
+#: src/dev_planet.c:42 src/dev_system.c:92 src/dev_system.c:244 src/save.c:106
 msgid "testXmlwriterDoc: Error creating the xml writer"
 msgstr ""
 
@@ -1000,12 +1006,12 @@ msgstr ""
 #: src/dev_uniedit.c:1175 src/dev_uniedit.c:1399 src/dev_uniedit.c:1464
 #: src/equipment.c:133 src/equipment.c:1539 src/equipment.c:1557
 #: src/equipment.c:1780 src/info.c:318 src/info.c:728 src/info.c:1031
-#: src/land.c:720 src/land_outfits.c:298 src/land_outfits.c:393
+#: src/input.c:582 src/land.c:720 src/land_outfits.c:298 src/land_outfits.c:393
 #: src/land_outfits.c:426 src/land_outfits.c:652 src/land_outfits.c:718
 #: src/land_shipyard.c:149 src/land_shipyard.c:188 src/land_shipyard.c:287
 #: src/land_shipyard.c:341 src/land_shipyard.c:477 src/land_trade.c:108
 #: src/land_trade.c:137 src/load.c:329 src/load.c:375 src/load.c:424
-#: src/map.c:513
+#: src/map.c:490 src/map.c:513 src/map_find.c:731
 msgid "None"
 msgstr "なし"
 
@@ -1017,7 +1023,7 @@ msgstr "人口"
 msgid "Class"
 msgstr ""
 
-#: src/dev_sysedit.c:1236
+#: src/dev_sysedit.c:1236 src/input.c:101
 msgid "Land"
 msgstr ""
 
@@ -1143,7 +1149,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:220 src/map.c:254
+#: src/dev_uniedit.c:220 src/map.c:254 src/map_find.c:1085
 msgid "Find"
 msgstr ""
 
@@ -1282,6 +1288,7 @@ msgid "Warning"
 msgstr "注意"
 
 #: src/dialogue.c:145 src/dialogue.c:273 src/dialogue.c:328 src/dialogue.c:718
+#: src/options.c:205 src/options.c:476 src/options.c:764 src/options.c:1114
 msgid "OK"
 msgstr "了解"
 
@@ -1306,7 +1313,8 @@ msgstr "終了"
 msgid "Input must be at least %d character%s long!"
 msgstr ""
 
-#: src/dialogue.c:720
+#: src/dialogue.c:720 src/map_find.c:245 src/options.c:208 src/options.c:656
+#: src/options.c:767 src/options.c:1063 src/options.c:1117
 msgid "Cancel"
 msgstr ""
 
@@ -1335,12 +1343,12 @@ msgstr ""
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/economy.c:336 src/faction.c:1451
+#: src/economy.c:336 src/faction.c:1451 src/space.c:1598 src/space.c:3228
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
-#: src/economy.c:359
+#: src/economy.c:359 src/slots.c:84 src/spfx.c:261 src/start.c:163
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
@@ -1367,9 +1375,9 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:661
+#: src/economy.c:661 src/nfile.c:726
 msgid "Out of Memory!"
-msgstr ""
+msgstr "メモリ不足"
 
 #: src/economy.c:682
 msgid "Failed to solve the Economy System."
@@ -1718,22 +1726,24 @@ msgstr ""
 msgid "Mission '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/event.c:570
+#: src/event.c:570 src/space.c:3111
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
 
-#: src/event.c:577
+#: src/event.c:577 src/space.c:3118
 #, c-format
 msgid "Unable to parse document '%s'"
 msgstr ""
 
-#: src/event.c:584
+#: src/event.c:584 src/mission.c:908 src/slots.c:68 src/spfx.c:233
+#: src/start.c:78
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/event.c:591
+#: src/event.c:591 src/mission.c:914 src/slots.c:75 src/space.c:3132
+#: src/spfx.c:240 src/start.c:84
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -1780,7 +1790,8 @@ msgstr ""
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
 
-#: src/faction.c:127
+#: src/faction.c:127 src/nlua_faction.c:112 src/nlua_faction.c:154
+#: src/nlua_pilot.c:415
 #, c-format
 msgid "Faction '%s' not found in stack."
 msgstr ""
@@ -2062,9 +2073,10 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: src/gui.c:1924
+#: src/gui.c:1924 src/opengl_tex.c:432 src/perlin.c:559 src/perlin.c:663
+#: src/perlin.c:753
 msgid "Out of memory!"
-msgstr ""
+msgstr "メモリ不足"
 
 #: src/gui.c:1976
 #, c-format
@@ -2354,6 +2366,557 @@ msgstr ""
 msgid "You currently have no active missions."
 msgstr ""
 
+#: src/input.c:63
+msgid "Accelerate"
+msgstr ""
+
+#: src/input.c:63
+msgid "Makes your ship accelerate forward."
+msgstr ""
+
+#: src/input.c:64
+msgid "Turn Left"
+msgstr ""
+
+#: src/input.c:64
+msgid "Makes your ship turn left."
+msgstr ""
+
+#: src/input.c:65
+msgid "Turn Right"
+msgstr ""
+
+#: src/input.c:65
+msgid "Makes your ship turn right."
+msgstr ""
+
+#: src/input.c:66
+msgid "Reverse"
+msgstr ""
+
+#: src/input.c:66
+msgid ""
+"Makes your ship face the direction you're moving from. Useful for braking."
+msgstr ""
+
+#: src/input.c:68
+msgid "Target Next"
+msgstr ""
+
+#: src/input.c:68
+msgid "Cycles through ship targets."
+msgstr ""
+
+#: src/input.c:69
+msgid "Target Previous"
+msgstr ""
+
+#: src/input.c:69
+msgid "Cycles backwards through ship targets."
+msgstr ""
+
+#: src/input.c:70
+msgid "Target Nearest"
+msgstr ""
+
+#: src/input.c:70
+msgid "Targets the nearest non-disabled ship."
+msgstr ""
+
+#: src/input.c:71
+msgid "Target Next Hostile"
+msgstr ""
+
+#: src/input.c:71
+msgid "Cycles through hostile ship targets."
+msgstr ""
+
+#: src/input.c:72
+msgid "Target Previous Hostile"
+msgstr ""
+
+#: src/input.c:72
+msgid "Cycles backwards through hostile ship targets."
+msgstr ""
+
+#: src/input.c:73
+msgid "Target Nearest Hostile"
+msgstr ""
+
+#: src/input.c:73
+msgid "Targets the nearest hostile ship."
+msgstr ""
+
+#: src/input.c:74
+msgid "Clear Target"
+msgstr ""
+
+#: src/input.c:74
+msgid "Clears the currently-targeted ship, planet or jump point."
+msgstr ""
+
+#: src/input.c:76
+msgid "Fire Primary Weapon"
+msgstr ""
+
+#: src/input.c:76
+msgid "Fires primary weapons."
+msgstr ""
+
+#: src/input.c:77
+msgid "Face Target"
+msgstr ""
+
+#: src/input.c:77
+msgid ""
+"Faces the targeted ship if one is targeted, otherwise faces targeted planet "
+"or jump point."
+msgstr ""
+
+#: src/input.c:78
+msgid "Board Target"
+msgstr ""
+
+#: src/input.c:78
+msgid "Attempts to board the targeted ship."
+msgstr ""
+
+#: src/input.c:80
+msgid "Fire Secondary Weapon"
+msgstr ""
+
+#: src/input.c:80
+msgid "Fires secondary weapons."
+msgstr ""
+
+#: src/input.c:81
+msgid "Weapon Set 1"
+msgstr ""
+
+#: src/input.c:81
+msgid "Activates weapon set 1."
+msgstr ""
+
+#: src/input.c:82
+msgid "Weapon Set 2"
+msgstr ""
+
+#: src/input.c:82
+msgid "Activates weapon set 2."
+msgstr ""
+
+#: src/input.c:83
+msgid "Weapon Set 3"
+msgstr ""
+
+#: src/input.c:83
+msgid "Activates weapon set 3."
+msgstr ""
+
+#: src/input.c:84
+msgid "Weapon Set 4"
+msgstr ""
+
+#: src/input.c:84
+msgid "Activates weapon set 4."
+msgstr ""
+
+#: src/input.c:85
+msgid "Weapon Set 5"
+msgstr ""
+
+#: src/input.c:85
+msgid "Activates weapon set 5."
+msgstr ""
+
+#: src/input.c:86
+msgid "Weapon Set 6"
+msgstr ""
+
+#: src/input.c:86
+msgid "Activates weapon set 6."
+msgstr ""
+
+#: src/input.c:87
+msgid "Weapon Set 7"
+msgstr ""
+
+#: src/input.c:87
+msgid "Activates weapon set 7."
+msgstr ""
+
+#: src/input.c:88
+msgid "Weapon Set 8"
+msgstr ""
+
+#: src/input.c:88
+msgid "Activates weapon set 8."
+msgstr ""
+
+#: src/input.c:89
+msgid "Weapon Set 9"
+msgstr ""
+
+#: src/input.c:89
+msgid "Activates weapon set 9."
+msgstr ""
+
+#: src/input.c:90
+msgid "Weapon Set 0"
+msgstr ""
+
+#: src/input.c:90
+msgid "Activates weapon set 0."
+msgstr ""
+
+#: src/input.c:92
+msgid "Target Next Escort"
+msgstr ""
+
+#: src/input.c:92
+msgid "Cycles through your escorts."
+msgstr ""
+
+#: src/input.c:93
+msgid "Target Previous Escort"
+msgstr ""
+
+#: src/input.c:93
+msgid "Cycles backwards through your escorts."
+msgstr ""
+
+#: src/input.c:94
+msgid "Escort Attack Command"
+msgstr ""
+
+#: src/input.c:94
+msgid "Orders escorts to attack your target."
+msgstr ""
+
+#: src/input.c:95
+msgid "Escort Hold Command"
+msgstr ""
+
+#: src/input.c:95
+msgid "Orders escorts to hold their positions."
+msgstr ""
+
+#: src/input.c:96
+msgid "Escort Return Command"
+msgstr ""
+
+#: src/input.c:96
+msgid "Orders escorts to return to your ship hangars."
+msgstr ""
+
+#: src/input.c:97
+msgid "Escort Clear Commands"
+msgstr ""
+
+#: src/input.c:97
+msgid "Clears your escorts of commands."
+msgstr ""
+
+#: src/input.c:99
+msgid "Autonavigation On"
+msgstr ""
+
+#: src/input.c:99
+msgid "Initializes the autonavigation system."
+msgstr ""
+
+#: src/input.c:100
+#, fuzzy
+msgid "Target Planet"
+msgstr "新惑星"
+
+#: src/input.c:100
+msgid "Cycles through planet targets."
+msgstr ""
+
+#: src/input.c:101
+msgid ""
+"Attempts to land on the targeted planet or targets the nearest landable "
+"planet. Requests permission if necessary."
+msgstr ""
+
+#: src/input.c:102
+msgid "Target Jumpgate"
+msgstr ""
+
+#: src/input.c:102
+msgid "Cycles through jump points."
+msgstr ""
+
+#: src/input.c:103
+msgid "Star Map"
+msgstr ""
+
+#: src/input.c:103
+msgid "Opens the star map."
+msgstr ""
+
+#: src/input.c:104
+msgid "Initiate Jump"
+msgstr ""
+
+#: src/input.c:104
+msgid "Attempts to jump via a jump point."
+msgstr ""
+
+#: src/input.c:105
+msgid "Overlay Map"
+msgstr ""
+
+#: src/input.c:105
+msgid "Opens the in-system overlay map."
+msgstr ""
+
+#: src/input.c:106
+msgid "Mouse Flight"
+msgstr ""
+
+#: src/input.c:106
+msgid "Toggles mouse flying."
+msgstr ""
+
+#: src/input.c:107
+msgid "Autobrake"
+msgstr ""
+
+#: src/input.c:107
+msgid "Begins automatic braking or active cooldown, if stopped."
+msgstr ""
+
+#: src/input.c:109
+msgid "Log Scroll Up"
+msgstr ""
+
+#: src/input.c:109
+msgid "Scrolls the log upwards."
+msgstr ""
+
+#: src/input.c:110
+msgid "Log Scroll Down"
+msgstr ""
+
+#: src/input.c:110
+msgid "Scrolls the log downwards."
+msgstr ""
+
+#: src/input.c:111
+msgid "Hail Target"
+msgstr ""
+
+#: src/input.c:111
+msgid "Attempts to initialize communication with the targeted ship."
+msgstr ""
+
+#: src/input.c:112
+msgid "Autohail"
+msgstr ""
+
+#: src/input.c:112
+msgid "Automatically initialize communication with a ship that is hailing you."
+msgstr ""
+
+#: src/input.c:114
+msgid "Radar Zoom In"
+msgstr ""
+
+#: src/input.c:114
+msgid "Zooms in on the radar."
+msgstr ""
+
+#: src/input.c:115
+msgid "Radar Zoom Out"
+msgstr ""
+
+#: src/input.c:115
+msgid "Zooms out on the radar."
+msgstr ""
+
+#: src/input.c:116
+msgid "Screenshot"
+msgstr ""
+
+#: src/input.c:116
+msgid "Takes a screenshot."
+msgstr ""
+
+#: src/input.c:117
+msgid "Toggle Fullscreen"
+msgstr ""
+
+#: src/input.c:117
+msgid "Toggles between windowed and fullscreen mode."
+msgstr ""
+
+#: src/input.c:118
+msgid "Pause"
+msgstr ""
+
+#: src/input.c:118
+msgid "Pauses the game."
+msgstr ""
+
+#: src/input.c:119
+msgid "Toggle 2x Speed"
+msgstr ""
+
+#: src/input.c:119
+msgid "Toggles 2x speed modifier."
+msgstr ""
+
+#: src/input.c:120
+msgid "Small Menu"
+msgstr ""
+
+#: src/input.c:120
+msgid "Opens the small in-game menu."
+msgstr ""
+
+#: src/input.c:121
+msgid "Information Menu"
+msgstr ""
+
+#: src/input.c:121
+msgid "Opens the information menu."
+msgstr ""
+
+#: src/input.c:122
+msgid "Lua Console"
+msgstr ""
+
+#: src/input.c:122
+#, fuzzy
+msgid "Opens the Lua console."
+msgstr "eg%sへようこそ！"
+
+#: src/input.c:123
+msgid "Switch Tab 1"
+msgstr ""
+
+#: src/input.c:123
+msgid "Switches to tab 1."
+msgstr ""
+
+#: src/input.c:124
+msgid "Switch Tab 2"
+msgstr ""
+
+#: src/input.c:124
+msgid "Switches to tab 2."
+msgstr ""
+
+#: src/input.c:125
+msgid "Switch Tab 3"
+msgstr ""
+
+#: src/input.c:125
+msgid "Switches to tab 3."
+msgstr ""
+
+#: src/input.c:126
+msgid "Switch Tab 4"
+msgstr ""
+
+#: src/input.c:126
+msgid "Switches to tab 4."
+msgstr ""
+
+#: src/input.c:127
+msgid "Switch Tab 5"
+msgstr ""
+
+#: src/input.c:127
+msgid "Switches to tab 5."
+msgstr ""
+
+#: src/input.c:128
+msgid "Switch Tab 6"
+msgstr ""
+
+#: src/input.c:128
+msgid "Switches to tab 6."
+msgstr ""
+
+#: src/input.c:129
+msgid "Switch Tab 7"
+msgstr ""
+
+#: src/input.c:129
+msgid "Switches to tab 7."
+msgstr ""
+
+#: src/input.c:130
+msgid "Switch Tab 8"
+msgstr ""
+
+#: src/input.c:130
+msgid "Switches to tab 8."
+msgstr ""
+
+#: src/input.c:131
+msgid "Switch Tab 9"
+msgstr ""
+
+#: src/input.c:131
+msgid "Switches to tab 9."
+msgstr ""
+
+#: src/input.c:132
+msgid "Switch Tab 0"
+msgstr ""
+
+#: src/input.c:132
+msgid "Switches to tab 0."
+msgstr ""
+
+#: src/input.c:481 src/input.c:518
+#, c-format
+msgid "Keyname '%s' doesn't match any key."
+msgstr ""
+
+#: src/input.c:544
+#, c-format
+msgid "Unable to set keybinding '%s', that command doesn't exist"
+msgstr ""
+
+#: src/input.c:568
+#, c-format
+msgid "Unable to get keybinding '%s', that command doesn't exist"
+msgstr ""
+
+#: src/input.c:583
+msgid "Ctrl"
+msgstr ""
+
+#: src/input.c:584
+msgid "Shift"
+msgstr ""
+
+#: src/input.c:585
+msgid "Alt"
+msgstr ""
+
+#: src/input.c:586
+msgid "Meta"
+msgstr ""
+
+#: src/input.c:587
+msgid "Any"
+msgstr ""
+
+#: src/input.c:588
+msgid "unknown"
+msgstr ""
+
+#: src/input.c:651
+#, c-format
+msgid "Unable to get keybinding description '%s', that command doesn't exist"
+msgstr ""
+
 #: src/intro.c:239
 msgid "Intro scrolling too fast!"
 msgstr ""
@@ -2442,7 +3005,7 @@ msgid ""
 "Free Space:"
 msgstr ""
 
-#: src/land.c:624
+#: src/land.c:624 src/npc.c:565
 msgid "You have too many active missions."
 msgstr ""
 
@@ -2483,7 +3046,7 @@ msgstr "バー"
 msgid "Missions"
 msgstr "ミッション"
 
-#: src/land.c:946
+#: src/land.c:946 src/map_find.c:1098
 msgid "Outfits"
 msgstr ""
 
@@ -2535,7 +3098,7 @@ msgstr ""
 msgid "Find Outfits"
 msgstr ""
 
-#: src/land_outfits.c:142
+#: src/land_outfits.c:142 src/map_find.c:669
 msgid ""
 "Owned:\n"
 "\n"
@@ -2565,7 +3128,7 @@ msgid ""
 "NA\n"
 msgstr ""
 
-#: src/land_outfits.c:433
+#: src/land_outfits.c:433 src/map_find.c:716
 #, c-format
 msgid ""
 "%d\n"
@@ -2945,6 +3508,97 @@ msgstr "、"
 msgid " Interference"
 msgstr ""
 
+#: src/map_find.c:243
+msgid "Select"
+msgstr ""
+
+#: src/map_find.c:325
+msgid "Jump to first system not found!"
+msgstr ""
+
+#: src/map_find.c:361
+msgid "Matching jumps not found, something is up..."
+msgstr ""
+
+#: src/map_find.c:449
+#, c-format
+msgid "%s (unknown route)"
+msgstr ""
+
+#: src/map_find.c:452
+#, c-format
+msgid "%s (%d jumps, %.0fk distance)"
+msgstr ""
+
+#: src/map_find.c:554 src/map_find.c:830 src/map_find.c:984
+#, c-format
+msgid "\a%c%s (%s, unknown route)"
+msgstr ""
+
+#: src/map_find.c:558 src/map_find.c:834 src/map_find.c:988
+#, c-format
+msgid "\a%c%s (%s, %d jumps, %.0fk distance)"
+msgstr ""
+
+#: src/map_find.c:775 src/map_find.c:930
+msgid "Search Results"
+msgstr ""
+
+#: src/map_find.c:777
+#, c-format
+msgid "Search results for outfits matching '%s':"
+msgstr ""
+
+#: src/map_find.c:931
+#, c-format
+msgid "Search results for ships matching '%s':"
+msgstr ""
+
+#: src/map_find.c:1028
+msgid "System"
+msgstr ""
+
+#: src/map_find.c:1032
+#, fuzzy
+msgid "Planet"
+msgstr "惑星："
+
+#: src/map_find.c:1036
+msgid "Outfit"
+msgstr ""
+
+#: src/map_find.c:1040
+#, fuzzy
+msgid "Ship"
+msgstr "造船所"
+
+#: src/map_find.c:1046
+#, c-format
+msgid "%s matching '%s' not found!"
+msgstr ""
+
+#: src/map_find.c:1075
+msgid "Enter keyword to search for:"
+msgstr ""
+
+#: src/map_find.c:1092
+msgid "Systems"
+msgstr ""
+
+#: src/map_find.c:1095
+#, fuzzy
+msgid "Planets"
+msgstr "惑星："
+
+#: src/map_find.c:1101
+#, fuzzy
+msgid "Ships"
+msgstr "宇宙船検索"
+
+#: src/map_overlay.c:246
+msgid "GOTO"
+msgstr ""
+
 #: src/menu.c:158
 msgid "Menu main is already open."
 msgstr ""
@@ -3013,7 +3667,178 @@ msgstr ""
 msgid "Are you sure you want to quit Naev?"
 msgstr ""
 
-#: src/naev.c:223
+#: src/mission.c:115 src/nlua_player.c:1128 src/nlua_player.c:1157
+#, c-format
+msgid "Mission '%s' not found in stack"
+msgstr ""
+
+#: src/mission.c:174
+msgid "No description."
+msgstr ""
+
+#: src/mission.c:185
+#, c-format
+msgid "Mission '%s' Lua script not found."
+msgstr ""
+
+#: src/mission.c:189
+#, c-format
+msgid ""
+"Error loading mission file: %s\n"
+"%s\n"
+"Most likely Lua file has improper syntax, please check"
+msgstr ""
+
+#: src/mission.c:284
+#, c-format
+msgid "Conditional for mission '%s' failed to run"
+msgstr ""
+
+#: src/mission.c:488
+#, c-format
+msgid "Mission '%s' attempting to unlink inexistant cargo %d."
+msgstr ""
+
+#: src/mission.c:523
+#, c-format
+msgid "Failed to remove mission cargo '%d' for mission '%s'."
+msgstr ""
+
+#: src/mission.c:804
+#, c-format
+msgid "Mission in %s has invalid or no name"
+msgstr ""
+
+#: src/mission.c:825
+#, c-format
+msgid "Mission Lua '%s' of mission '%s' syntax error: %s"
+msgstr ""
+
+#: src/mission.c:843
+#, c-format
+msgid "Mission '%s' has unknown flag node '%s'."
+msgstr ""
+
+#: src/mission.c:868
+#, c-format
+msgid "Mission '%s' has unknown avail node '%s'."
+msgstr ""
+
+#: src/mission.c:873
+#, c-format
+msgid "Unknown node '%s' in mission '%s'"
+msgstr ""
+
+#: src/mission.c:877
+#, c-format
+msgid "Mission '%s' missing/invalid '' element"
+msgstr ""
+
+#: src/mission.c:941
+#, fuzzy, c-format
+msgid "Loaded %d Mission%s"
+msgstr "ミッション読み込み中…"
+
+#: src/mission.c:1118
+#, c-format
+msgid "Mission '%s' from savegame not found in game - ignoring."
+msgstr ""
+
+#: src/mission.c:1124
+#, c-format
+msgid "Mission '%s' from savegame failed to load properly - ignoring."
+msgstr ""
+
+#: src/mission.c:1162
+#, c-format
+msgid "System Marker to '%s' does not exist"
+msgstr ""
+
+#: src/mission.c:1196
+msgid "Inconsistency with 'nitems' in savefile."
+msgstr ""
+
+#: src/music.c:153
+#, c-format
+msgid "Error while choosing music: %s"
+msgstr ""
+
+#: src/music.c:195 src/sound.c:232
+msgid "SDL_mixer support not compiled in!"
+msgstr ""
+
+#: src/music.c:223 src/sound.c:188
+msgid "OpenAL support not compiled in!"
+msgstr ""
+
+#: src/music.c:228
+#, c-format
+msgid "Unknown sound backend '%s'."
+msgstr ""
+
+#: src/music.c:246
+msgid "Music has invalid value, clamping to [0:1]."
+msgstr ""
+
+#: src/music.c:333
+#, c-format
+msgid "Loaded %d song%c"
+msgstr ""
+
+#: src/music.c:406
+#, c-format
+msgid "Music '%s' not found."
+msgstr ""
+
+#: src/music.c:541
+#, c-format
+msgid ""
+"Error loading music file: %s\n"
+"%s\n"
+"Most likely Lua file has improper syntax, please check"
+msgstr ""
+
+#: src/music_openal.c:578
+msgid "OGG: Vorbis hole detected in music!"
+msgstr ""
+
+#: src/music_openal.c:584
+msgid "OGG: Invalid stream section or corrupt link in music!"
+msgstr ""
+
+#: src/music_openal.c:707
+#, c-format
+msgid "Song '%s' does not appear to be a vorbis bitstream."
+msgstr ""
+
+#: src/music_openal.c:729
+#, c-format
+msgid "Song '%s' has no replaygain information."
+msgstr ""
+
+#: src/music_openal.c:910
+msgid "Unable to seek vorbis file."
+msgstr ""
+
+#: src/music_openal.c:955
+msgid "Music thread did not exit when asked, ignoring..."
+msgstr ""
+
+#: src/music_openal.c:957
+msgid "Music thread did not exit when asked, slaughtering..."
+msgstr ""
+
+#: src/music_sdlmix.c:124 src/music_sdlmix.c:144 src/music_sdlmix.c:156
+#, c-format
+msgid "SDL_Mixer: %s"
+msgstr ""
+
+#: src/naev.c:204
+#, c-format
+msgid " git HEAD at %s"
+msgstr ""
+
+#: src/naev.c:223 src/opengl.c:748
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr ""
@@ -3193,6 +4018,10 @@ msgstr ""
 msgid "Unable to load icon.png!"
 msgstr ""
 
+#: src/naev.c:1217
+msgid " debug"
+msgstr ""
+
 #: src/naev.c:1244
 msgid "Version format is too long!"
 msgstr ""
@@ -3212,6 +4041,70 @@ msgstr ""
 
 #: src/naev.c:1336
 msgid "SDL is older than compiled version."
+msgstr ""
+
+#: src/naev.c:1352
+msgid "SIGFPE (raised by program)"
+msgstr ""
+
+#: src/naev.c:1353
+msgid "SIGFPE (integer divide by zero)"
+msgstr ""
+
+#: src/naev.c:1354
+msgid "SIGFPE (integer overflow)"
+msgstr ""
+
+#: src/naev.c:1355
+msgid "SIGFPE (floating-point divide by zero)"
+msgstr ""
+
+#: src/naev.c:1356
+msgid "SIGFPE (floating-point overflow)"
+msgstr ""
+
+#: src/naev.c:1357
+msgid "SIGFPE (floating-point underflow)"
+msgstr ""
+
+#: src/naev.c:1358
+msgid "SIGFPE (floating-point inexact result)"
+msgstr ""
+
+#: src/naev.c:1359
+msgid "SIGFPE (floating-point invalid operation)"
+msgstr ""
+
+#: src/naev.c:1360
+msgid "SIGFPE (subscript out of range)"
+msgstr ""
+
+#: src/naev.c:1361
+msgid "SIGFPE"
+msgstr ""
+
+#: src/naev.c:1365
+msgid "SIGSEGV (raised by program)"
+msgstr ""
+
+#: src/naev.c:1366
+msgid "SIGSEGV (address not mapped to object)"
+msgstr ""
+
+#: src/naev.c:1367
+msgid "SIGSEGV (invalid permissions for mapped object)"
+msgstr ""
+
+#: src/naev.c:1368
+msgid "SIGSEGV"
+msgstr ""
+
+#: src/naev.c:1372
+msgid "SIGABRT (raised by program)"
+msgstr ""
+
+#: src/naev.c:1373
+msgid "SIGABRT"
 msgstr ""
 
 #: src/naev.c:1435
@@ -3239,6 +4132,104 @@ msgstr ""
 msgid "BFD backtrace catching enabled."
 msgstr ""
 
+#: src/ndata.c:163
+#, fuzzy
+msgid "Missing Data"
+msgstr "ミッション"
+
+#: src/ndata.c:164
+msgid ""
+"Ndata could not be found. If you have the ndata file, drag\n"
+"and drop it onto the 'NAEV - INSERT NDATA' window.\n"
+"\n"
+"If you don't have the ndata, download it from naev.org"
+msgstr ""
+
+#: src/ndata.c:185
+msgid "NAEV - INSERT NDATA"
+msgstr ""
+
+#: src/ndata.c:190
+msgid "Unable to init SDL Video subsystem"
+msgstr ""
+
+#: src/ndata.c:206
+msgid "Unable to set video mode"
+msgstr ""
+
+#: src/ndata.c:427
+#, c-format
+msgid "%s-%d.%d.0-beta%d"
+msgstr ""
+
+#: src/ndata.c:469
+msgid "Cannot find ndata file!"
+msgstr ""
+
+#: src/ndata.c:470
+msgid "Please run with ndata path suffix or specify in conf.lua."
+msgstr ""
+
+#: src/ndata.c:471
+msgid "E.g. naev ~/ndata or data = \"~/ndata\""
+msgstr ""
+
+#: src/ndata.c:482
+#, c-format
+msgid "Unable to open ndata from '%s'."
+msgstr ""
+
+#: src/ndata.c:510
+msgid "Problem reading VERSION file from ndata!"
+msgstr ""
+
+#: src/ndata.c:516
+msgid "ndata version inconsistancy with this version of Naev!"
+msgstr ""
+
+#: src/ndata.c:517
+#, c-format
+msgid "Expected ndata version %d.%d.%d got %d.%d.%d."
+msgstr ""
+
+#: src/ndata.c:521
+msgid "Please get a compatible ndata version!"
+msgstr ""
+
+#: src/ndata.c:524
+msgid ""
+"Naev will probably crash now as the versions are probably not compatible."
+msgstr ""
+
+#: src/ndata.c:757 src/ndata.c:836
+#, c-format
+msgid "Unable to open file '%s': not found."
+msgstr ""
+
+#: src/nebula.c:130
+msgid ""
+"Unable to generate nebula after 3 attempts, something has really gone wrong!"
+msgstr ""
+
+#: src/nebula.c:164
+#, c-format
+msgid "Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)"
+msgstr ""
+
+#: src/nebula.c:177
+#, c-format
+msgid "Loaded %d Nebula Layers"
+msgstr ""
+
+#: src/nebula.c:184
+msgid "No nebula found, generating (this may take a while)."
+msgstr ""
+
+#: src/nebula.c:275
+#, c-format
+msgid "Nebula size doesn't match expected! (%dx%d instead of %dx%d)"
+msgstr ""
+
 #: src/nebula.c:761
 msgid "Generating Nebula (slow, run once)..."
 msgstr "星雲生成中…"
@@ -3250,3 +4241,2071 @@ msgstr "星雲圧縮中…"
 #: src/nebula.c:803
 msgid "Generating Nebula Puffs..."
 msgstr "星雲の欠片生成中…"
+
+#: src/nebula.c:881
+#, c-format
+msgid "Unable to create rwops from Nebula image: %s"
+msgstr ""
+
+#: src/nebula.c:886
+#, c-format
+msgid "Unable to open Nebula image: %s"
+msgstr ""
+
+#: src/nebula.c:894
+#, c-format
+msgid "Unable to load Nebula image: %s"
+msgstr ""
+
+#: src/news.c:103
+msgid "Out of Memory."
+msgstr "メモリ不足"
+
+#: src/news.c:147
+msgid ""
+"\n"
+"Last article, do not remove"
+msgstr ""
+
+#: src/news.c:157
+msgid ""
+"\n"
+"Article to remove not found"
+msgstr ""
+
+#: src/news.c:303
+msgid ""
+"\n"
+"\n"
+"Sorry, no news today\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/news.c:658
+#, c-format
+msgid "Event is missing '%s', skipping."
+msgstr ""
+
+#: src/nfile.c:140
+msgid "Cannot determine data path, using current directory."
+msgstr ""
+
+#: src/nfile.c:146
+msgid "$XDG_DATA_HOME isn't set, using current directory."
+msgstr ""
+
+#: src/nfile.c:158 src/nfile.c:205 src/nfile.c:252
+#, c-format
+msgid "%%APPDATA%% isn't set, using current directory."
+msgstr ""
+
+#: src/nfile.c:187
+msgid "Cannot determine config path, using current directory."
+msgstr ""
+
+#: src/nfile.c:193
+msgid "$XDG_CONFIG_HOME isn't set, using current directory."
+msgstr ""
+
+#: src/nfile.c:234
+msgid "Cannot determine cache path, using current directory."
+msgstr ""
+
+#: src/nfile.c:240
+msgid "$XDG_CACHE_HOME isn't set, using current directory."
+msgstr ""
+
+#: src/nfile.c:369
+#, c-format
+msgid "Dir '%s' does not exist and unable to create: %s"
+msgstr ""
+
+#: src/nfile.c:487 src/nfile.c:516
+#, c-format
+msgid "Failure to copy '%s' to '%s': %s"
+msgstr ""
+
+#: src/nfile.c:703 src/nfile.c:813
+#, c-format
+msgid "Error occurred while opening '%s': %s"
+msgstr ""
+
+#: src/nfile.c:710 src/nfile.c:717
+#, c-format
+msgid "Error occurred while seeking '%s': %s"
+msgstr ""
+
+#: src/nfile.c:738
+#, c-format
+msgid "Error occurred while reading '%s': %s"
+msgstr ""
+
+#: src/nfile.c:777
+#, c-format
+msgid "Unable to touch file '%s': %s"
+msgstr ""
+
+#: src/nfile.c:822
+#, c-format
+msgid "Error occurred while writing '%s': %s"
+msgstr ""
+
+#: src/nfile.c:831
+#, c-format
+msgid "Error occurred while closing '%s': %s"
+msgstr ""
+
+#: src/nfile.c:848
+#, c-format
+msgid "Error deleting file %s"
+msgstr ""
+
+#: src/nfile.c:864
+#, c-format
+msgid "Can not rename non existant file %s"
+msgstr ""
+
+#: src/nfile.c:868
+msgid "Can not rename to NULL file name"
+msgstr ""
+
+#: src/nfile.c:872
+#, c-format
+msgid "Error renaming %s to %s. %s already exists"
+msgstr ""
+
+#: src/nfile.c:876
+#, c-format
+msgid "Error renaming %s to %s"
+msgstr ""
+
+#: src/nlua.c:231
+msgid "Failed to create new Lua state."
+msgstr ""
+
+#: src/nlua.c:338 src/nlua.c:339
+#, c-format
+msgid "include(): %s not found in ndata."
+msgstr ""
+
+#: src/nlua_col.c:192
+#, c-format
+msgid "Colour '%s' does not exist!"
+msgstr ""
+
+#: src/nlua_commodity.c:115
+#, fuzzy
+msgid "Commodity is invalid."
+msgstr "商売"
+
+#: src/nlua_commodity.c:204
+#, c-format
+msgid "Commodity '%s' not found!"
+msgstr ""
+
+#: src/nlua_commodity.c:272
+#, c-format
+msgid "Planet '%s' does not belong to a system"
+msgstr ""
+
+#: src/nlua_commodity.c:277
+#, c-format
+msgid "Planet '%s' can not find its system '%s'"
+msgstr ""
+
+#: src/nlua_evt.c:139
+#, c-format
+msgid "Event '%s' -> '%s': %s"
+msgstr ""
+
+#: src/nlua_evt.c:231 src/nlua_misn.c:933
+msgid "Invalid NPC ID!"
+msgstr ""
+
+#: src/nlua_evt.c:314
+msgid "Event trying to claim but already has."
+msgstr ""
+
+#: src/nlua_gfx.c:150 src/nlua_gfx.c:215
+#, c-format
+msgid ""
+"Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
+msgstr ""
+
+#: src/nlua_gfx.c:153 src/nlua_gfx.c:218
+#, c-format
+msgid ""
+"Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
+msgstr ""
+
+#: src/nlua_gui.c:398
+#, c-format
+msgid "Invalid window info name '%s'."
+msgstr ""
+
+#: src/nlua_hook.c:266
+msgid "Mission not in stack trying to hook, forgot to run misn.accept()?"
+msgstr ""
+
+#: src/nlua_hook.c:286
+msgid "Attempting to set a hook outside of a mission or event."
+msgstr ""
+
+#: src/nlua_hook.c:291
+msgid "No hook target was set."
+msgstr ""
+
+#: src/nlua_hook.c:707
+msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
+msgstr ""
+
+#: src/nlua_hook.c:726
+#, c-format
+msgid "Invalid pilot hook type: '%s'"
+msgstr ""
+
+#: src/nlua_jump.c:160
+msgid "Jump is invalid"
+msgstr ""
+
+#: src/nlua_jump.c:257
+msgid "No matching jump points found."
+msgstr ""
+
+#: src/nlua_misn.c:248
+#, c-format
+msgid "Mission '%s' -> '%s': %s"
+msgstr ""
+
+#: src/nlua_misn.c:380
+#, c-format
+msgid "Unknown marker type: %s"
+msgstr ""
+
+#: src/nlua_misn.c:422
+msgid "Mission has no markers set!"
+msgstr ""
+
+#: src/nlua_misn.c:436
+#, c-format
+msgid "Mission does not have a marker with id '%d'"
+msgstr ""
+
+#: src/nlua_misn.c:599
+msgid "Mission already accepted!"
+msgstr ""
+
+#: src/nlua_misn.c:677
+#, c-format
+msgid "Cargo '%s' not found."
+msgstr ""
+
+#: src/nlua_misn.c:773
+msgid "Can't create an OSD on an unaccepted mission!"
+msgstr ""
+
+#: src/nlua_misn.c:965
+msgid "Mission trying to claim but already has."
+msgstr ""
+
+#: src/nlua_music.c:105
+#, c-format
+msgid "Music '%s' invalid or failed to load."
+msgstr ""
+
+#: src/nlua_naev.c:129 src/options.c:611
+msgid "Not bound"
+msgstr ""
+
+#: src/nlua_naev.c:146
+#, c-format
+msgid "joy button %d"
+msgstr ""
+
+#: src/nlua_naev.c:151
+#, c-format
+msgid "joy axis %d-"
+msgstr ""
+
+#: src/nlua_naev.c:156
+#, c-format
+msgid "joy axis %d+"
+msgstr ""
+
+#: src/nlua_news.c:101
+msgid "article is old"
+msgstr ""
+
+#: src/nlua_news.c:108
+msgid "article is invalid."
+msgstr ""
+
+#: src/nlua_news.c:212 src/nlua_news.c:266
+msgid "Bad arguments"
+msgstr ""
+
+#: src/nlua_news.c:239
+msgid ""
+"\n"
+"Bad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date,"
+"[date_to_rm]])"
+msgstr ""
+
+#: src/nlua_news.c:416 src/nlua_news.c:439 src/nlua_news.c:462
+#: src/nlua_news.c:485
+msgid "Bad argument to news.date(), must be article"
+msgstr ""
+
+#: src/nlua_news.c:420 src/nlua_news.c:443 src/nlua_news.c:466
+#: src/nlua_news.c:489 src/nlua_news.c:534 src/nlua_news.c:550
+msgid ""
+"\n"
+"Article not valid"
+msgstr ""
+
+#: src/nlua_news.c:516 src/nlua_news.c:554
+msgid ""
+"\n"
+"2nd argument is invalid, use a string"
+msgstr ""
+
+#: src/nlua_news.c:529 src/nlua_news.c:544
+msgid "Bad argument to news.date(), must be article or a table of articles"
+msgstr ""
+
+#: src/nlua_outfit.c:123
+msgid "Outfit is invalid."
+msgstr ""
+
+#: src/nlua_outfit.c:213 src/nlua_pilot.c:2548
+#, c-format
+msgid "Outfit '%s' not found!"
+msgstr ""
+
+#: src/nlua_pilot.c:326
+msgid "Pilot is invalid."
+msgstr ""
+
+#: src/nlua_pilot.c:409 src/nlua_ship.c:215
+#, c-format
+msgid "Ship '%s' not found!"
+msgstr ""
+
+#: src/nlua_pilot.c:422
+#, c-format
+msgid "Fleet '%s' doesn't exist."
+msgstr ""
+
+#: src/nlua_pilot.c:451
+#, c-format
+msgid "Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."
+msgstr ""
+
+#: src/nlua_pilot.c:456
+#, c-format
+msgid ""
+"Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."
+msgstr ""
+
+#: src/nlua_pilot.c:515
+msgid "Creating pilot in system with no jumps nor planets to take off from!"
+msgstr ""
+
+#: src/nlua_pilot.c:667
+msgid "Trying to remove the bloody player!"
+msgstr ""
+
+#: src/nlua_pilot.c:2664
+msgid "Outfit isn't found in outfit stack."
+msgstr ""
+
+#: src/nlua_pilot.c:3214 src/nlua_pilot.c:3258
+#, c-format
+msgid "Cargo '%s' does not exist!"
+msgstr ""
+
+#: src/nlua_pilot.c:3219
+msgid ""
+"Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
+msgstr ""
+
+#: src/nlua_pilot.c:3263
+msgid ""
+"Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
+msgstr ""
+
+#: src/nlua_pilot.c:3558
+msgid "pilot.memory requires 1 argument!"
+msgstr ""
+
+#: src/nlua_pilot.c:3567
+msgid "Pilot does not have AI."
+msgstr ""
+
+#: src/nlua_pilot.c:3612
+msgid "Pilot is not on manual control."
+msgstr ""
+
+#: src/nlua_pilot.c:3924
+#, c-format
+msgid "Pilot '%s' can't jump out exit only jump '%s'"
+msgstr ""
+
+#: src/nlua_pilot.c:3930
+#, c-format
+msgid "System '%s' is not adjacent to current system '%s'"
+msgstr ""
+
+#: src/nlua_pilot.c:3983
+#, c-format
+msgid "Planet '%s' not found in system '%s'"
+msgstr ""
+
+#: src/nlua_pilot.c:4037
+#, c-format
+msgid "\a%c%s\a0 is hailing you."
+msgstr ""
+
+#: src/nlua_planet.c:167
+msgid "Planet is invalid"
+msgstr ""
+
+#: src/nlua_planet.c:224
+msgid "Attempting to get landed planet when player not landed."
+msgstr ""
+
+#: src/nlua_planet.c:274 src/nlua_planet.c:334
+#, c-format
+msgid "Planet '%s' not found in stack"
+msgstr ""
+
+#: src/nlua_planet.c:339
+#, c-format
+msgid "Planet '%s' is not placed in a system"
+msgstr ""
+
+#: src/nlua_planet.c:344
+#, c-format
+msgid "Planet '%s' can't find system '%s'"
+msgstr ""
+
+#: src/nlua_player.c:547
+msgid "Second parameter to cinematics should be a table of options or omitted!"
+msgstr ""
+
+#: src/nlua_player.c:624
+msgid "Player must be landed to force takeoff."
+msgstr ""
+
+#: src/nlua_player.c:700
+msgid "Must be landed to set the active land window."
+msgstr ""
+
+#: src/nlua_player.c:807
+#, c-format
+msgid "Player does not own a ship named '%s'"
+msgstr ""
+
+#: src/nlua_player.c:915 src/nlua_player.c:978
+#, c-format
+msgid "Outfit '%s' not found."
+msgstr ""
+
+#: src/nlua_player.c:1017
+msgid ""
+"Must be landed to add a new ship to the player without specifying planet to "
+"add to!"
+msgstr ""
+
+#: src/nlua_player.c:1026
+#, c-format
+msgid "Planet '%s' not found!"
+msgstr ""
+
+#: src/nlua_player.c:1038
+msgid "Player must be landed to add a ship without location parameter."
+msgstr ""
+
+#: src/nlua_player.c:1045
+#, c-format
+msgid "Ship '%s' not found."
+msgstr ""
+
+#: src/nlua_player.c:1183 src/nlua_player.c:1213
+#, c-format
+msgid "Event '%s' not found in stack"
+msgstr ""
+
+#: src/nlua_player.c:1245
+msgid "Can not teleport the player while landed!"
+msgstr ""
+
+#: src/nlua_player.c:1247
+msgid "Can not teleport the player while the comm is open!"
+msgstr ""
+
+#: src/nlua_player.c:1249
+msgid "Can not teleport the player while they are boarded!"
+msgstr ""
+
+#: src/nlua_player.c:1263 src/nlua_player.c:1281
+#, c-format
+msgid "Planet '%s' does not belong to a system.."
+msgstr ""
+
+#: src/nlua_player.c:1272
+#, c-format
+msgid "'%s' is not a valid teleportation target."
+msgstr ""
+
+#: src/nlua_player.c:1291
+#, c-format
+msgid "System '%s' does not exist."
+msgstr ""
+
+#: src/nlua_ship.c:128
+msgid "Ship is invalid."
+msgstr ""
+
+#: src/nlua_ship.c:453
+#, c-format
+msgid "Unable to get ship target graphic for '%s'."
+msgstr ""
+
+#: src/nlua_ship.c:483
+#, c-format
+msgid "Unable to get ship graphic for '%s'."
+msgstr ""
+
+#: src/nlua_system.c:154
+msgid "System is invalid"
+msgstr ""
+
+#: src/nlua_system.c:247
+msgid "No matching systems found."
+msgstr ""
+
+#: src/nlua_tex.c:177
+msgid "Spritesheet dimensions must be positive"
+msgstr ""
+
+#: src/nlua_tut.c:67
+msgid "Can not go to main menu while landed."
+msgstr ""
+
+#: src/nlua_var.c:177
+#, c-format
+msgid "Unknown var type '%s'"
+msgstr ""
+
+#: src/npc.c:416
+msgid "Freeing NPC of invalid type."
+msgstr ""
+
+#: src/npc.c:620
+msgid "Unknown NPC type!"
+msgstr ""
+
+#: src/npng.c:93
+msgid "Out of memory."
+msgstr "メモリ不足"
+
+#: src/npng.c:102
+msgid "png_create_read_struct failed"
+msgstr ""
+
+#: src/npng.c:107
+msgid "png_create_info_struct failed"
+msgstr ""
+
+#: src/npng.c:114
+msgid "RWops not recognized as a PNG file."
+msgstr ""
+
+#: src/npng.c:126
+msgid "Error during setjmp"
+msgstr ""
+
+#: src/npng.c:294 src/npng.c:297 src/npng.c:358 src/npng.c:366
+#: src/opengl_tex.c:189 src/physics.c:484
+msgid "Out of Memory"
+msgstr "メモリ不足"
+
+#: src/ntime.c:217
+#, c-format
+msgid "%04d STU"
+msgstr ""
+
+#: src/ntime.c:219
+#, c-format
+msgid "%.*f STP"
+msgstr ""
+
+#: src/ntime.c:221
+#, c-format
+msgid "UST %d:%.*f"
+msgstr ""
+
+#: src/nxml_lua.c:197
+msgid "Failed to save invalid planet."
+msgstr ""
+
+#: src/nxml_lua.c:207
+msgid "Failed to save invalid system."
+msgstr ""
+
+#: src/nxml_lua.c:243
+msgid "Failed to save invalid jump."
+msgstr ""
+
+#: src/nxml_lua.c:344
+#, c-format
+msgid "Failed to load unexistent planet '%s'"
+msgstr ""
+
+#: src/nxml_lua.c:351
+#, c-format
+msgid "Failed to load unexistent system '%s'"
+msgstr ""
+
+#: src/nxml_lua.c:371
+#, c-format
+msgid "Failed to load unexistent jump from '%s' to '%s'"
+msgstr ""
+
+#: src/nxml_lua.c:374
+msgid "Unknown Lua data type!"
+msgstr ""
+
+#: src/nzip.c:53
+#, c-format
+msgid "Error opening zip file %s"
+msgstr ""
+
+#: src/nzip.c:68
+msgid "Error closing zip file"
+msgstr ""
+
+#: src/nzip.c:108 src/nzip.c:117 src/nzip.c:130
+#, c-format
+msgid "Error reading %s from archive"
+msgstr ""
+
+#: src/nzip.c:171
+msgid "Error getting file list from archive"
+msgstr ""
+
+#: src/opengl.c:182
+msgid "Unable to create RGB surface."
+msgstr ""
+
+#: src/opengl.c:187 src/opengl_tex.c:267
+#, c-format
+msgid "Unable to fill rect: %s"
+msgstr ""
+
+#: src/opengl.c:328
+msgid "GL invalid enum"
+msgstr ""
+
+#: src/opengl.c:331
+msgid "GL invalid value"
+msgstr ""
+
+#: src/opengl.c:334
+msgid "GL invalid operation"
+msgstr ""
+
+#: src/opengl.c:337
+msgid "GL stack overflow"
+msgstr ""
+
+#: src/opengl.c:340
+msgid "GL stack underflow"
+msgstr ""
+
+#: src/opengl.c:343
+msgid "GL out of memory"
+msgstr "GL メモリ不足"
+
+#: src/opengl.c:346
+msgid "GL table too large"
+msgstr ""
+
+#: src/opengl.c:350
+msgid "GL unknown error"
+msgstr ""
+
+#: src/opengl.c:353
+#, c-format
+msgid "OpenGL error [%s:%d]: %s"
+msgstr ""
+
+#: src/opengl.c:377
+msgid "VSync unsupported on old SDL versions (before 1.2.10)."
+msgstr ""
+
+#: src/opengl.c:432 src/opengl.c:479
+#, c-format
+msgid ""
+"Fullscreen mode %dx%d is not supported by your setup, however no other modes "
+"are supported, bailing!"
+msgstr ""
+
+#: src/opengl.c:437 src/opengl.c:483
+#, c-format
+msgid ""
+"Fullscreen mode %dx%d is not supported by your setup\n"
+"   switching to %dx%d"
+msgstr ""
+
+#: src/opengl.c:448
+msgid "No fullscreen modes available"
+msgstr ""
+
+#: src/opengl.c:450
+msgid "Disabling fullscreen mode"
+msgstr ""
+
+#: src/opengl.c:455
+msgid "All fullscreen modes available"
+msgstr ""
+
+#: src/opengl.c:457
+msgid "Available fullscreen modes:"
+msgstr ""
+
+#: src/opengl.c:459
+#, c-format
+msgid "  %d x %d"
+msgstr ""
+
+#: src/opengl.c:512
+msgid "Unable to create window!"
+msgstr ""
+
+#: src/opengl.c:525
+msgid "Unable to create OpenGL context!"
+msgstr ""
+
+#: src/opengl.c:543
+#, c-format
+msgid ""
+"Video Mode %dx%d @ %d bpp not supported   going to try to create it "
+"anyways..."
+msgstr ""
+
+#: src/opengl.c:547
+#, c-format
+msgid "Depth %d bpp unavailable, will use %d bpp"
+msgstr ""
+
+#: src/opengl.c:554
+msgid "Unable to create OpenGL window: Trying without FSAA."
+msgstr ""
+
+#: src/opengl.c:559
+#, c-format
+msgid "Unable to create OpenGL window: %s"
+msgstr ""
+
+#: src/opengl.c:602
+#, c-format
+msgid "OpenGL Window Created: %dx%d@%dbpp %s"
+msgstr ""
+
+#: src/opengl.c:603 src/options.c:1391 src/options.c:1423
+msgid "fullscreen"
+msgstr "フルスクリーン"
+
+#: src/opengl.c:603
+msgid "window"
+msgstr "ウインドウ"
+
+#: src/opengl.c:604
+#, c-format
+msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
+msgstr "赤：%d、緑：%d、青：%d、透：%d、DB：%s、FSAA：%d、TEX：%d"
+
+#: src/opengl.c:606 src/opengl.c:609 src/opengl.c:610 src/opengl.c:611
+#: src/opengl.c:612 src/opengl.c:613
+#, fuzzy
+msgid "yes"
+msgstr "有"
+
+#: src/opengl.c:606 src/opengl.c:609 src/opengl.c:610 src/opengl.c:611
+#: src/opengl.c:612 src/opengl.c:613
+#, fuzzy
+msgid "no"
+msgstr "無"
+
+#: src/opengl.c:608
+#, c-format
+msgid "vsync: %s, vbo: %s, mm: %s, compress: %s, npot: %s"
+msgstr ""
+
+#: src/opengl.c:614 src/sound_openal.c:358 src/sound_sdlmix.c:130
+#, c-format
+msgid "Renderer: %s"
+msgstr "レンダラ：%s"
+
+#: src/opengl.c:615
+#, c-format
+msgid "Version: %s"
+msgstr "バージョン：%s"
+
+#: src/opengl.c:619
+#, c-format
+msgid "Missing texture units (%d required, %d found)"
+msgstr ""
+
+#: src/opengl.c:622
+#, c-format
+msgid "Unable to get requested FSAA level (%d requested, got %d)"
+msgstr ""
+
+#: src/opengl.c:664
+msgid "Screen size too small, upscaling..."
+msgstr ""
+
+#: src/opengl.c:916
+#, c-format
+msgid "Unable to open '%s' for writing."
+msgstr ""
+
+#: src/opengl.c:922
+msgid "Unable to create png write struct."
+msgstr ""
+
+#: src/opengl.c:926
+msgid "Unable to create PNG info struct."
+msgstr ""
+
+#: src/opengl_tex.c:262
+#, c-format
+msgid "Unable to create POT surface: %s"
+msgstr ""
+
+#: src/opengl_tex.c:468
+#, c-format
+msgid "Texture '%s' has no RWops"
+msgstr ""
+
+#: src/opengl_tex.c:655
+#, c-format
+msgid "Failed to load surface '%s' from ndata."
+msgstr ""
+
+#: src/opengl_tex.c:660
+#, c-format
+msgid "File '%s' is not a png."
+msgstr ""
+
+#: src/opengl_tex.c:676
+#, c-format
+msgid "'%s' could not be opened"
+msgstr ""
+
+#: src/opengl_tex.c:731
+msgid "Attempting to free NULL texture!"
+msgstr ""
+
+#: src/opengl_tex.c:767
+#, c-format
+msgid "Attempting to free texture '%s' not found in stack!"
+msgstr ""
+
+#: src/opengl_tex.c:806
+#, c-format
+msgid "Unable to duplicate texture '%s'."
+msgstr ""
+
+#: src/opengl_tex.c:848
+#, c-format
+msgid "Angle not between 0 and 2.*M_PI [%f]."
+msgstr ""
+
+#: src/opengl_tex.c:910
+msgid "Texture leak detected!"
+msgstr ""
+
+#: src/opengl_tex.c:912
+#, c-format
+msgid "   '%s' opened %d times"
+msgstr ""
+
+#: src/opengl_vbo.c:345
+msgid "Unknown VBO class."
+msgstr ""
+
+#: src/options.c:211 src/options.c:482 src/options.c:770 src/options.c:1120
+msgid "Defaults"
+msgstr ""
+
+#: src/options.c:221
+#, c-format
+msgid "Commit: %s"
+msgstr "コミット：%s"
+
+#: src/options.c:228
+msgid "not using ndata"
+msgstr ""
+
+#: src/options.c:230
+#, c-format
+msgid "ndata: %s"
+msgstr ""
+
+#: src/options.c:242
+msgid "Compilation Flags"
+msgstr ""
+
+#: src/options.c:286
+msgid "Stop Speedup At:"
+msgstr ""
+
+#: src/options.c:298
+msgid "Settings"
+msgstr ""
+
+#: src/options.c:302
+msgid "Enable manual zoom control"
+msgstr ""
+
+#: src/options.c:305
+msgid "Enable double-tap afterburn"
+msgstr ""
+
+#: src/options.c:308
+msgid "Enable mouse-flying thrust control"
+msgstr ""
+
+#: src/options.c:311
+msgid "Enable savegame compression"
+msgstr ""
+
+#: src/options.c:313
+msgid "Visible Messages"
+msgstr ""
+
+#: src/options.c:319
+msgid "Max Time Compression Factor"
+msgstr ""
+
+#: src/options.c:431
+msgid "Enemy Presence"
+msgstr ""
+
+#: src/options.c:433
+#, c-format
+msgid "%.0f%% Shield"
+msgstr ""
+
+#: src/options.c:435
+msgid "Armour Damage"
+msgstr ""
+
+#: src/options.c:479
+msgid "Set Key"
+msgstr ""
+
+#: src/options.c:616
+#, c-format
+msgid "keyboard:   %s%s%c"
+msgstr ""
+
+#: src/options.c:621
+#, c-format
+msgid "keyboard:   %s%s%s"
+msgstr ""
+
+#: src/options.c:627
+#, c-format
+msgid "joy axis pos:   <%d>"
+msgstr ""
+
+#: src/options.c:630
+#, c-format
+msgid "joy axis neg:   <%d>"
+msgstr ""
+
+#: src/options.c:633
+#, c-format
+msgid "joy button:   <%d>"
+msgstr ""
+
+#: src/options.c:654
+msgid "WASD"
+msgstr ""
+
+#: src/options.c:655
+msgid "Arrow Keys"
+msgstr ""
+
+#: src/options.c:659
+msgid "Restore Defaults"
+msgstr ""
+
+#: src/options.c:660
+msgid "Which layout do you want to use?"
+msgstr ""
+
+#: src/options.c:689
+msgid "Defaults Restored"
+msgstr ""
+
+#: src/options.c:689
+msgid "Keybindings restored to defaults."
+msgstr ""
+
+#: src/options.c:734
+msgid "Music"
+msgstr "音楽"
+
+#: src/options.c:734
+msgid "Sound"
+msgstr ""
+
+#: src/options.c:738
+#, c-format
+msgid "%s Volume: Muted"
+msgstr ""
+
+#: src/options.c:741
+#, c-format
+msgid "%s Volume: %.2f (%.0f dB)"
+msgstr ""
+
+#: src/options.c:777
+msgid "General"
+msgstr ""
+
+#: src/options.c:780
+msgid "Disable all sound/music"
+msgstr ""
+
+#: src/options.c:782
+#, fuzzy
+msgid "Backends"
+msgstr "戻る"
+
+#: src/options.c:793
+msgid "openal"
+msgstr ""
+
+#: src/options.c:798
+msgid "sdlmix"
+msgstr ""
+
+#: src/options.c:801 src/options.c:915
+msgid "none"
+msgstr "なし"
+
+#: src/options.c:807
+msgid "OpenAL"
+msgstr "OpenAL"
+
+#: src/options.c:810
+msgid "EFX (More CPU)"
+msgstr ""
+
+#: src/options.c:817
+msgid "Volume Levels"
+msgstr ""
+
+#: src/options.c:1017
+#, c-format
+msgid ""
+"Key '%s' overlaps with key '%s' that was just set. You may want to correct "
+"this."
+msgstr ""
+
+#: src/options.c:1058
+msgid ""
+"To use a modifier key hit that key twice in a row, otherwise it will "
+"register as a modifier. To set with any modifier click the checkbox."
+msgstr ""
+
+#: src/options.c:1067
+msgid "Unset"
+msgstr ""
+
+#: src/options.c:1071
+msgid "Set any modifier"
+msgstr ""
+
+#: src/options.c:1127
+msgid "Resolution"
+msgstr "解像度"
+
+#: src/options.c:1133
+msgid "Fullscreen"
+msgstr ""
+
+#: src/options.c:1194
+msgid "FPS Control"
+msgstr ""
+
+#: src/options.c:1196
+msgid "FPS Limit"
+msgstr ""
+
+#: src/options.c:1208
+msgid "Show FPS"
+msgstr ""
+
+#: src/options.c:1217
+msgid "OpenGL"
+msgstr "OpenGL"
+
+#: src/options.c:1220
+msgid "Vertical Sync"
+msgstr ""
+
+#: src/options.c:1223
+msgid "Vertex Buffer Objects*"
+msgstr ""
+
+#: src/options.c:1226
+msgid "Mipmaps*"
+msgstr ""
+
+#: src/options.c:1229
+msgid "Interpolation*"
+msgstr ""
+
+#: src/options.c:1232
+msgid "NPOT Textures*"
+msgstr ""
+
+#: src/options.c:1235
+msgid "*Disable for compatibility."
+msgstr ""
+
+#: src/options.c:1240
+msgid "Features"
+msgstr ""
+
+#: src/options.c:1243
+msgid "Engine Glow (More RAM)"
+msgstr ""
+
+#: src/options.c:1248
+msgid "Minimize on focus loss"
+msgstr ""
+
+#: src/options.c:1265
+msgid "Restart Naev for changes to take effect."
+msgstr ""
+
+#: src/options.c:1316
+msgid "Height/Width invalid. Should be formatted like 1024x768."
+msgstr ""
+
+#: src/options.c:1364
+msgid "Resolution can't be changed while maximized."
+msgstr ""
+
+#: src/options.c:1389
+msgid "Keep Video Settings"
+msgstr ""
+
+#: src/options.c:1390
+#, c-format
+msgid "Do you want to keep running at %dx%d %s?"
+msgstr ""
+
+#: src/options.c:1391 src/options.c:1423
+msgid "windowed"
+msgstr ""
+
+#: src/options.c:1421
+msgid "Video Settings Restored"
+msgstr ""
+
+#: src/options.c:1422
+#, c-format
+msgid "Resolution reset to %dx%d %s."
+msgstr ""
+
+#: src/options.c:1541
+#, c-format
+msgid "Scaling: %.1fx"
+msgstr ""
+
+#: src/perlin.c:669
+#, fuzzy, c-format
+msgid "Generating Nebula of size %dx%dx%d"
+msgstr "星雲の欠片生成中…"
+
+#: src/perlin.c:715
+#, c-format
+msgid "Nebula Generated in %d ms"
+msgstr ""
+
+#: src/physics.c:463
+msgid "Solid initialization did not specify correct update function!"
+msgstr ""
+
+#: src/plasmaf.c:71
+msgid "Out of memory"
+msgstr "メモリ不足"
+
+#: src/save.c:125
+msgid "Trying to save game data"
+msgstr ""
+
+#: src/save.c:136
+#, c-format
+msgid "Failed to create save directory '%ssaves'."
+msgstr ""
+
+#: src/save.c:144
+#, fuzzy
+msgid "Aborting save..."
+msgstr "イベント読み込み中"
+
+#: src/save.c:154
+msgid ""
+"Failed to write savegame!  You'll most likely have to restore it by copying "
+"your backup savegame over your current savegame."
+msgstr ""
+
+#: src/slots.c:107
+#, c-format
+msgid "Slot Property '%s' has unknown node '%s'."
+msgstr ""
+
+#: src/slots.c:155
+#, c-format
+msgid "Slot property '%s' not found in array."
+msgstr ""
+
+#: src/sound.c:236
+#, c-format
+msgid "Unknown/Unavailable sound backend '%s'."
+msgstr ""
+
+#: src/sound.c:238 src/sound.c:248
+msgid "Sound disabled."
+msgstr ""
+
+#: src/sound.c:255
+msgid "Unable to create voice mutex."
+msgstr ""
+
+#: src/sound.c:266
+msgid "Music disabled."
+msgstr ""
+
+#: src/sound.c:271
+msgid "Sound has invalid value, clamping to [0:1]."
+msgstr ""
+
+#: src/sound.c:356
+#, c-format
+msgid "Sound '%s' not found in sound list"
+msgstr ""
+
+#: src/sound.c:758
+#, c-format
+msgid "Loaded %d sound%s"
+msgstr ""
+
+#: src/sound_openal.c:224
+msgid "Unable to open default sound device"
+msgstr ""
+
+#: src/sound_openal.c:243
+msgid "Unable to create OpenAL context"
+msgstr ""
+
+#: src/sound_openal.c:253
+msgid "Failure to set default context"
+msgstr ""
+
+#: src/sound_openal.c:357
+#, c-format
+msgid "OpenAL started: %d Hz"
+msgstr ""
+
+#: src/sound_openal.c:360
+#, c-format
+msgid "Version: %s without EFX"
+msgstr ""
+
+#: src/sound_openal.c:362
+#, c-format
+msgid "Version: %s with EFX %d.%d"
+msgstr ""
+
+#: src/sound_openal.c:431
+msgid "OpenAL EFX functions not found, disabling EFX."
+msgstr ""
+
+#: src/sound_openal.c:443
+msgid "OpenAL Reverb not found, disabling."
+msgstr ""
+
+#: src/sound_openal.c:458
+msgid "OpenAL Echo not found, disabling."
+msgstr ""
+
+#: src/sound_openal.c:559
+#, c-format
+msgid "SDL_LoadWav_RW failed: %s"
+msgstr ""
+
+#: src/sound_openal.c:575
+msgid "Big endian WAVs unsupported!"
+msgstr ""
+
+#: src/sound_openal.c:578
+msgid "Invalid WAV format!"
+msgstr ""
+
+#: src/sound_openal.c:602
+msgid "A read from media returned an error."
+msgstr ""
+
+#: src/sound_openal.c:603
+msgid "Internal logic fault; indicates a bug or heap/stack corruption."
+msgstr ""
+
+#: src/sound_openal.c:604
+msgid "Feature not implemented."
+msgstr ""
+
+#: src/sound_openal.c:605
+msgid ""
+"Either an invalid argument, or incompletely initialized argument passed to "
+"libvorbisfile call"
+msgstr ""
+
+#: src/sound_openal.c:606
+msgid "Bitstream is not Vorbis data."
+msgstr ""
+
+#: src/sound_openal.c:607
+msgid "Invalid Vorbis bitstream header."
+msgstr ""
+
+#: src/sound_openal.c:608
+msgid "Vorbis version mismatch."
+msgstr ""
+
+#: src/sound_openal.c:609
+msgid ""
+"The given link exists in the Vorbis data stream, but is not decipherable due "
+"to garbacge or corruption."
+msgstr ""
+
+#: src/sound_openal.c:610
+msgid "The given stream is not seekable."
+msgstr ""
+
+#: src/sound_openal.c:612
+msgid "Unknown vorbisfile error."
+msgstr ""
+
+#: src/sound_openal.c:636
+#, c-format
+msgid "Failed to finish loading Ogg file: %s"
+msgstr ""
+
+#: src/sound_openal.c:704
+#, c-format
+msgid "Failed to load sound file '%s'."
+msgstr ""
+
+#: src/sound_openal.c:716
+#, c-format
+msgid "Something went wrong when loading sound file '%s'."
+msgstr ""
+
+#: src/sound_openal.c:1237 src/sound_openal.c:1306 src/sound_sdlmix.c:527
+#, c-format
+msgid "Group '%d' not found."
+msgstr ""
+
+#: src/sound_openal.c:1299
+#, c-format
+msgid "Group '%d' has no free sounds."
+msgstr ""
+
+#: src/sound_openal.c:1495
+msgid "a bad name (ID) was passed to an OpenAL function"
+msgstr ""
+
+#: src/sound_openal.c:1498
+msgid "an invalid enum value was passed to an OpenAL function"
+msgstr ""
+
+#: src/sound_openal.c:1501
+msgid "an invalid value was passed to an OpenAL function"
+msgstr ""
+
+#: src/sound_openal.c:1504
+msgid "the requested operation is not valid"
+msgstr ""
+
+#: src/sound_openal.c:1507
+msgid "the requested operation resulted in OpenAL running out of memory"
+msgstr ""
+
+#: src/sound_openal.c:1514
+#, c-format
+msgid "OpenAL error [%s]: %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:80
+#, c-format
+msgid "Opening Audio: %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:122
+#, c-format
+msgid "SDL_Mixer Started: %d Hz %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:123
+msgid "Stereo"
+msgstr "ステレオ"
+
+#: src/sound_sdlmix.c:123
+msgid "Mono"
+msgstr "モノ"
+
+#: src/sound_sdlmix.c:126
+msgid "SDL_Mixer is newer than compiled version"
+msgstr ""
+
+#: src/sound_sdlmix.c:128
+msgid "SDL_Mixer is older than compiled version."
+msgstr ""
+
+#: src/sound_sdlmix.c:131
+#, c-format
+msgid "Version: %d.%d.%d [compiled: %d.%d.%d]"
+msgstr "バージョン：%d.%d.%d「コンパイル：%d.%d.%d」"
+
+#: src/sound_sdlmix.c:216
+#, c-format
+msgid "Unable to set sound position: %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:434
+#, c-format
+msgid "Unable to load sound '%s': %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:492
+#, c-format
+msgid "Unable to reserve sound channels: %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:506
+#, c-format
+msgid "Unable to create sound group: %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:552
+#, c-format
+msgid "Group '%d' has no free channels!"
+msgstr ""
+
+#: src/sound_sdlmix.c:560
+#, c-format
+msgid "Unable to play sound %s for group %d: %s"
+msgstr ""
+
+#: src/sound_sdlmix.c:567
+#, c-format
+msgid "Group '%d' does not exist!"
+msgstr ""
+
+#: src/space.c:326
+#, c-format
+msgid "Unable to find jump in point for '%s' in '%s': not connected"
+msgstr ""
+
+#: src/space.c:742
+#, c-format
+msgid "System '%s' not found in stack"
+msgstr ""
+
+#: src/space.c:785
+#, c-format
+msgid "Planet '%s' not found in planetname stack"
+msgstr ""
+
+#: src/space.c:801
+msgid "Trying to find NULL planet..."
+msgstr ""
+
+#: src/space.c:809
+#, c-format
+msgid "Planet '%s' not found in the universe"
+msgstr ""
+
+#: src/space.c:824
+#, c-format
+msgid "Planet index '%d' out of range (max %d)"
+msgstr ""
+
+#: src/space.c:942
+msgid "Trying to find NULL jump point..."
+msgstr ""
+
+#: src/space.c:952
+#, c-format
+msgid "Jump point '%s' not found in %s"
+msgstr ""
+
+#: src/space.c:973
+#, c-format
+msgid "Jump point to '%s' not found in %s"
+msgstr ""
+
+#: src/space.c:1008
+#, c-format
+msgid ""
+"Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
+msgstr ""
+
+#: src/space.c:1023
+#, c-format
+msgid ""
+"Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
+msgstr ""
+
+#: src/space.c:1035
+#, c-format
+msgid "Lua Spawn script for faction '%s' : %s"
+msgstr ""
+
+#: src/space.c:1043 src/space.c:4208
+#, c-format
+msgid "Lua spawn script for faction '%s' failed to return timer value."
+msgstr ""
+
+#: src/space.c:1055
+#, c-format
+msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
+msgstr ""
+
+#: src/space.c:1063
+#, c-format
+msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
+msgstr ""
+
+#: src/space.c:1076
+#, c-format
+msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
+msgstr ""
+
+#: src/space.c:1203
+#, c-format
+msgid "You discovered \a%c%s\a"
+msgstr ""
+
+#: src/space.c:1218
+msgid "You discovered a Jump Point."
+msgstr ""
+
+#: src/space.c:1324
+msgid "Cannot reinit system if there is no system previously loaded"
+msgstr ""
+
+#: src/space.c:1331
+#, c-format
+msgid "System %s not found in stack"
+msgstr ""
+
+#: src/space.c:1335
+#, c-format
+msgid "\apEntering System %s on %s."
+msgstr ""
+
+#: src/space.c:1567
+#, c-format
+msgid ""
+"Failed to load landing file: %s\n"
+"%s\n"
+"Most likely Lua file has improper syntax, please check"
+msgstr ""
+
+#: src/space.c:1590 src/space.c:3221
+#, c-format
+msgid "%s file is invalid xml!"
+msgstr ""
+
+#: src/space.c:1697
+#, fuzzy, c-format
+msgid "Landing: '%s' : %s"
+msgstr "注意: [%s] "
+
+#: src/space.c:1707
+#, c-format
+msgid "%s: %s (%s) -> return parameter 2 is not a string!"
+msgstr ""
+
+#: src/space.c:1708
+msgid "Invalid land message"
+msgstr ""
+
+#: src/space.c:1718
+msgid "Invalid bribe message"
+msgstr ""
+
+#: src/space.c:1724
+#, c-format
+msgid "%s: %s -> return parameter 5 is not a string!"
+msgstr ""
+
+#: src/space.c:1725
+msgid "Invalid bribe ack message"
+msgstr ""
+
+#: src/space.c:1731
+#, c-format
+msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
+msgstr ""
+
+#: src/space.c:1883
+#, c-format
+msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
+msgstr ""
+
+#: src/space.c:1905
+#, c-format
+msgid "Planet '%s' has unknown services tag '%s'"
+msgstr ""
+
+#: src/space.c:1945
+#, c-format
+msgid "Unknown node '%s' in planet '%s'"
+msgstr ""
+
+#: src/space.c:1951
+#, c-format
+msgid "Planet '%s' missing '%s' element"
+msgstr ""
+
+#: src/space.c:2005
+#, c-format
+msgid "Planet '%s' has inexisting graphic '%s'!"
+msgstr ""
+
+#: src/space.c:2105
+#, c-format
+msgid "Unable to remove planet '%s' from NULL system."
+msgstr ""
+
+#: src/space.c:2117
+#, c-format
+msgid "Planet '%s' not found in system '%s' for removal."
+msgstr ""
+
+#: src/space.c:2142
+#, c-format
+msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
+msgstr ""
+
+#: src/space.c:2207
+#, c-format
+msgid "Unable to remove jump point '%s' from NULL system."
+msgstr ""
+
+#: src/space.c:2219
+#, c-format
+msgid "Jump point '%s' not found in system '%s' for removal."
+msgstr ""
+
+#: src/space.c:2485
+#, c-format
+msgid "Unknown node '%s' in star system '%s'"
+msgstr ""
+
+#: src/space.c:2488
+#, c-format
+msgid "Star System '%s' missing '%s' element"
+msgstr ""
+
+#: src/space.c:2489
+#, c-format
+msgid "Star System '%s' missing 'name' tag"
+msgstr ""
+
+#: src/space.c:2575 src/space.c:2668
+#, c-format
+msgid "JumpPoint node for system '%s' has no target attribute."
+msgstr ""
+
+#: src/space.c:2580 src/space.c:2673
+#, c-format
+msgid "JumpPoint node for system '%s' has invalid target '%s'."
+msgstr ""
+
+#: src/space.c:2592 src/space.c:2685
+#, c-format
+msgid "Star System '%s' has duplicate jump point to '%s'."
+msgstr ""
+
+#: src/space.c:2714
+#, c-format
+msgid ""
+"JumpPoint for system '%s' has position node missing 'x' position, using 0."
+msgstr ""
+
+#: src/space.c:2723
+#, c-format
+msgid ""
+"JumpPoint for system '%s' has position node missing 'y' position, using 0."
+msgstr ""
+
+#: src/space.c:2746
+#, c-format
+msgid ""
+"JumpPoint in system '%s' is missing pos element but does not have autopos "
+"flag."
+msgstr ""
+
+#: src/space.c:2779
+#, c-format
+msgid "System '%s' was not found in the stack for some reason"
+msgstr ""
+
+#: src/space.c:2852
+#, c-format
+msgid "asteroid field in %d has less than 3 corners."
+msgstr ""
+
+#: src/space.c:2929
+#, c-format
+msgid "Non-convex asteroid polygon seems to be self-intersecting in %d"
+msgstr ""
+
+#: src/space.c:3125
+#, c-format
+msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
+msgstr ""
+
+#: src/space.c:3162
+msgid "Asteroid type has no gfx associated."
+msgstr ""
+
+#: src/space.c:3275
+#, c-format
+msgid "Loaded %d Star System%s with %d Planet%s"
+msgstr ""
+
+#: src/space.c:3649 src/space.c:3693
+msgid "Unknown marker type."
+msgstr ""
+
+#: src/space.c:4200
+#, c-format
+msgid "Lua decrease script for faction '%s' : %s"
+msgstr ""
+
+#: src/spfx.c:157
+#, c-format
+msgid "SPFX '%s' has unknown node '%s'."
+msgstr ""
+
+#: src/spfx.c:167
+#, c-format
+msgid "SPFX '%s' missing/invalid '' element"
+msgstr ""
+
+#: src/spfx.c:331
+msgid "Trying to add spfx with invalid effect!"
+msgstr ""
+
+#: src/spfx.c:361
+msgid "Invalid SPFX layer."
+msgstr ""
+
+#: src/spfx.c:635
+#, c-format
+msgid "Unable to upload haptic effect: %s."
+msgstr ""
+
+#: src/spfx.c:674
+#, c-format
+msgid "Failed to update haptic effect: %s."
+msgstr ""
+
+#: src/spfx.c:729
+msgid "Rendering invalid SPFX layer."
+msgstr ""
+
+#: src/start.c:114 src/start.c:153
+#, c-format
+msgid "'%s' has unknown system node '%s'."
+msgstr ""
+
+#: src/start.c:118
+#, c-format
+msgid "'%s' has unknown player node '%s'."
+msgstr ""
+
+#: src/start.c:131
+#, c-format
+msgid "'%s' has unknown date node '%s'."
+msgstr ""
+
+#: src/start.c:158
+#, c-format
+msgid "'%s' has unknown tutorial node '%s'."
+msgstr ""
+
+#: src/start.c:172
+#, c-format
+msgid "Module start data missing/invalid '%s' element"
+msgstr ""
+
+#: src/threadpool.c:199
+msgid "Tried to dequeue while the queue was empty!"
+msgstr ""
+
+#: src/threadpool.c:261
+msgid "Threadpool has not been initialized yet!"
+msgstr ""
+
+#: src/threadpool.c:297 src/threadpool.c:403 src/threadpool.c:434
+#: src/threadpool.c:594
+#, c-format
+msgid "SDL_SemWait failed! Error: %s"
+msgstr ""
+
+#: src/threadpool.c:481
+msgid "Threadpool has already been initialized!"
+msgstr ""
+
+#: src/toolkit.c:219
+#, c-format
+msgid ""
+"Trying to create widget '%s' over existing one that hasn't been destroyed"
+msgstr ""
+
+#: src/toolkit.c:305
+#, c-format
+msgid "Widget '%s' not found in window '%u'!"
+msgstr ""
+
+#: src/toolkit.c:557
+#, c-format
+msgid "Window with name '%s' already exists!"
+msgstr ""
+
+#: src/toolkit.c:910
+#, c-format
+msgid "window '%d' does not exist"
+msgstr ""
+
+#: src/toolkit.c:945
+#, c-format
+msgid "Widget '%s' not found in window '%s'"
+msgstr ""
+
+#: src/toolkit.c:1959
+#, c-format
+msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
+msgstr ""
+
+#: src/unidiff.c:209
+msgid "Malformed unidiff file: missing root element 'unidiffs'"
+msgstr ""
+
+#: src/unidiff.c:215
+msgid "Malformed unidiff file: does not contain elements"
+msgstr ""
+
+#: src/unidiff.c:244
+#, c-format
+msgid "UniDiff '%s' not found in %s."
+msgstr ""
+
+#: src/unidiff.c:267
+#, c-format
+msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
+msgstr ""
+
+#: src/unidiff.c:285 src/unidiff.c:316 src/unidiff.c:540
+#, c-format
+msgid "Unidiff '%s': Null hunk type."
+msgstr ""
+
+#: src/unidiff.c:297
+#, c-format
+msgid "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
+msgstr ""
+
+#: src/unidiff.c:325
+#, c-format
+msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
+msgstr ""
+
+#: src/unidiff.c:336 src/unidiff.c:406 src/unidiff.c:459 src/unidiff.c:559
+#: src/unidiff.c:610
+#, c-format
+msgid "Unidiff '%s' has unknown node '%s'."
+msgstr ""
+
+#: src/unidiff.c:364 src/unidiff.c:434 src/unidiff.c:488
+#, c-format
+msgid "Unidiff '%s' has an target node without a 'name' tag"
+msgstr ""
+
+#: src/unidiff.c:550
+#, c-format
+msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
+msgstr ""
+
+#: src/unidiff.c:614
+#, c-format
+msgid "Unidiff '%s' failed to apply %d hunks."
+msgstr ""
+
+#: src/unidiff.c:620
+#, c-format
+msgid "   [%s] asset add: '%s'"
+msgstr ""
+
+#: src/unidiff.c:623
+#, c-format
+msgid "   [%s] asset remove: '%s'"
+msgstr ""
+
+#: src/unidiff.c:626
+#, c-format
+msgid "   [%s] asset blackmarket: '%s'"
+msgstr ""
+
+#: src/unidiff.c:629
+#, c-format
+msgid "   [%s] asset legalmarket: '%s'"
+msgstr ""
+
+#: src/unidiff.c:632
+#, c-format
+msgid "   [%s] jump add: '%s'"
+msgstr ""
+
+#: src/unidiff.c:635
+#, c-format
+msgid "   [%s] jump remove: '%s'"
+msgstr ""
+
+#: src/unidiff.c:638
+#, c-format
+msgid "   [%s] tech add: '%s'"
+msgstr ""
+
+#: src/unidiff.c:642
+#, c-format
+msgid "   [%s] tech remove: '%s'"
+msgstr ""
+
+#: src/unidiff.c:646
+#, c-format
+msgid "   [%s] asset faction: '%s'"
+msgstr ""
+
+#: src/unidiff.c:650
+#, c-format
+msgid "   [%s] asset faction removal: '%s'"
+msgstr ""
+
+#: src/unidiff.c:654
+#, c-format
+msgid "   [%s] faction visible: '%s'"
+msgstr ""
+
+#: src/unidiff.c:658
+#, c-format
+msgid "   [%s] faction invisible: '%s'"
+msgstr ""
+
+#: src/unidiff.c:662
+#, c-format
+msgid "   [%s] faction set ally: '%s'"
+msgstr ""
+
+#: src/unidiff.c:666
+#, c-format
+msgid "   [%s] faction set enemy: '%s'"
+msgstr ""
+
+#: src/unidiff.c:670
+#, c-format
+msgid "   [%s] faction set neutral: '%s'"
+msgstr ""
+
+#: src/unidiff.c:674
+#, c-format
+msgid "   [%s] faction alignment reset: '%s'"
+msgstr ""
+
+#: src/unidiff.c:679
+#, c-format
+msgid "   unknown hunk '%d'"
+msgstr ""
+
+#: src/unidiff.c:821
+#, c-format
+msgid "Unknown hunk type '%d'."
+msgstr ""
+
+#: src/unidiff.c:992
+#, c-format
+msgid "Unknown Hunk type '%d'."
+msgstr ""
+
+#: src/unidiff.c:997
+#, c-format
+msgid "Failed to remove hunk type '%d'."
+msgstr ""
+
+#: src/weapon.c:366
+#, c-format
+msgid "Unknown weapon status for '%s'"
+msgstr ""
+
+#: src/weapon.c:482 src/weapon.c:663 src/weapon.c:1494 src/weapon.c:1676
+msgid "Unknown weapon layer!"
+msgstr ""
+
+#: src/weapon.c:621
+#, c-format
+msgid "Weapon of type '%s' has no update implemented yet!"
+msgstr ""
+
+#: src/weapon.c:803
+#, c-format
+msgid "Weapon of type '%s' has no render implemented yet!"
+msgstr ""
+
+#: src/weapon.c:1436
+#, c-format
+msgid "Weapon of type '%s' has no create implemented yet!"
+msgstr ""
+
+#: src/weapon.c:1473
+msgid "Trying to create a Weapon from a non-Weapon type Outfit"
+msgstr ""
+
+#: src/weapon.c:1552
+msgid "Trying to create a Beam Weapon from a non-beam outfit."
+msgstr ""
+
+#: src/weapon.c:1576 src/weapon.c:1638 src/weapon.c:1820
+msgid "Invalid WEAPON_LAYER specified"
+msgstr ""
+
+#: src/weapon.c:1682
+msgid "Trying to destroy weapon not found in stack!"
+msgstr ""

@@ -164,7 +164,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
       temp->ttl = temp->anim;
 
 #define MELEMENT(o,s) \
-   if (o) WARN( _("SPFX '%s' missing/invalid '' element"), temp->name, s) /**< Define to help check for data errors. */
+   if (o) WARN( _("SPFX '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->anim==0.,"anim");
    MELEMENT(temp->ttl==0.,"ttl");
    MELEMENT(temp->gfx==NULL,"gfx");
