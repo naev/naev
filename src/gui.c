@@ -1446,7 +1446,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, "You" );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
 }
 
 
@@ -1833,7 +1833,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, sys_isKnown(jp->target) ? jp->target->name : "Unknown" );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
 #undef CHECK_PIXEL
 
@@ -1921,7 +1921,7 @@ int gui_init (void)
    if (mesg_stack == NULL) {
       mesg_stack = calloc(mesg_max, sizeof(Mesg));
       if (mesg_stack == NULL) {
-         ERR("Out of memory!");
+         ERR(_("Out of memory!"));
          return -1;
       }
    }
@@ -1973,7 +1973,7 @@ static int gui_prepFunc( const char* func )
 {
 #if DEBUGGING
    if (gui_env == LUA_NOREF) {
-      WARN( "Trying to run GUI func '%s' but no GUI is loaded!", func );
+      WARN( _("Trying to run GUI func '%s' but no GUI is loaded!"), func );
       return -1;
    }
 #endif /* DEBUGGING */
@@ -2000,8 +2000,8 @@ static int gui_runFunc( const char* func, int nargs, int nret )
    ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
-      WARN("GUI Lua -> '%s': %s",
-            func, (err) ? err : "unknown error");
+      WARN(_("GUI Lua -> '%s': %s"),
+            func, (err) ? err : _("unknown error"));
       lua_pop(naevL,2);
       return ret;
    }
@@ -2135,7 +2135,7 @@ int gui_load( const char* name )
    nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
-      WARN("Unable to find GUI '%s'.", path );
+      WARN(_("Unable to find GUI '%s'."), path );
       return -1;
    }
 
@@ -2148,9 +2148,9 @@ int gui_load( const char* name )
    /* Create Lua state. */
    gui_env = nlua_newEnv(1);
    if (nlua_dobufenv( gui_env, buf, bufsize, path ) != 0) {
-      WARN("Failed to load GUI Lua: %s\n"
+      WARN(_("Failed to load GUI Lua: %s\n"
             "%s\n"
-            "Most likely Lua file has improper syntax, please check",
+            "Most likely Lua file has improper syntax, please check"),
             path, lua_tostring(naevL,-1));
       nlua_freeEnv( gui_env );
       gui_env = LUA_NOREF;
@@ -2202,7 +2202,7 @@ static void gui_createInterference( Radar *radar )
       h = radar->h*2.;
    }
    else {
-      WARN("Radar shape is invalid.");
+      WARN( _("Radar shape is invalid.") );
       return;
    }
 
@@ -2354,7 +2354,7 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( "\epRadar set to %dx.", (int)gui_radar.res );
+   player_message( _("\epRadar set to %dx."), (int)gui_radar.res );
 }
 
 

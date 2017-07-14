@@ -242,7 +242,7 @@ static OSD_t *osd_get( unsigned int osd )
          return ll;
    }
 
-   WARN("OSD '%d' not found.", osd);
+   WARN(_("OSD '%d' not found."), osd);
    return NULL;
 }
 
@@ -302,7 +302,7 @@ int osd_destroy( unsigned int osd )
       return 0;
    }
 
-   WARN("OSD '%u' not found to destroy.", osd );
+   WARN(_("OSD '%u' not found to destroy."), osd );
    return 0;
 }
 
@@ -323,7 +323,7 @@ int osd_active( unsigned int osd, int msg )
       return -1;
 
    if ((msg < 0) || (msg >= o->nitems)) {
-      WARN("OSD '%s' only has %d items (requested %d)", o->title, o->nitems, msg );
+      WARN(_("OSD '%s' only has %d items (requested %d)"), o->title, o->nitems, msg );
       return -1;
    }
 
