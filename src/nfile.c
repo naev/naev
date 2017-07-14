@@ -312,20 +312,41 @@ static int mkpath( const char *path )
    strncpy( opath, path, sizeof(opath) );
    opath[ PATH_MAX-1 ] = '\0';
    len = strlen(opath);
-   if (opath[len - 1] == '/')
-      opath[len - 1] = '\0';
-   for (p=&opath[1]; p[0]!='\0'; p++) {
+
+   p = &opath[len-1];
+   if (p[0] == '/') {
+      p[0] = '\0';
+      p--;
+   }
+
+   // Traverse up until we find a directory that exists.
+   for (; p >= opath; p--) {
       if (p[0] == '/') {
          p[0] = '\0';
-         if (!nfile_dirExists(opath)) {
-            ret = MKDIR;
-            if (ret)
-               return ret;
+         if (nfile_dirExists(opath)) {
+            p[0] = '/';
+            break;
          }
          p[0] = '/';
       }
    }
-   if (!nfile_dirExists(opath)) { /* if path is not terminated with / */
+   // This skips the directory that exists, or puts us
+   // back at the start if the loop fell through.
+   p++;
+
+   // Traverse down, creating directories.
+   for (; p[0] != '\0'; p++) {
+      if (p[0] == '/') {
+         p[0] = '\0';
+         ret = MKDIR;
+         if (ret)
+            return ret;
+         p[0] = '/';
+      }
+   }
+
+   // Create the final directory.
+   if (!nfile_dirExists(opath)) {
       ret = MKDIR;
       if (ret)
          return ret;

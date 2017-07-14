@@ -7,7 +7,7 @@
 	<key>CFBundleIconFile</key>
 	<string>naev.icns</string>
 	<key>CFBundleIdentifier</key>
-  <string>org.naev.naev</string>
+	<string>org.naev.Naev</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
