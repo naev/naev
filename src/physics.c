@@ -460,7 +460,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
          break;
 
       default:
-         WARN("Solid initialization did not specify correct update function!");
+         WARN(_("Solid initialization did not specify correct update function!"));
          dest->update = solid_update_rk4;
          break;
    }
@@ -481,7 +481,7 @@ Solid* solid_create( const double mass, const double dir,
 {
    Solid* dyn = malloc(sizeof(Solid));
    if (dyn==NULL)
-      ERR("Out of Memory");
+      ERR(_("Out of Memory"));
    solid_init( dyn, mass, dir, pos, vel, update );
    return dyn;
 }
