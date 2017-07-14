@@ -4034,7 +4034,7 @@ static int pilotL_hailPlayer( lua_State *L )
    if (enable) {
       /* Send message. */
       c = pilot_getFactionColourChar( p );
-      player_message( "\e%c%s\e0 is hailing you.", c, p->name );
+      player_message( "\a%c%s\a0 is hailing you.", c, p->name );
 
       /* Set flag. */
       pilot_setFlag( p, PILOT_HAILING );

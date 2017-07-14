@@ -798,7 +798,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\eS%s", sp_display( slot->sslot->slot.spid ) );
+            "\aS%s", sp_display( slot->sslot->slot.spid ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
@@ -816,7 +816,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          o->name );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\eSSlot %s\e0"),
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aSSlot %s\a0"),
             sp_display( o->slot.spid ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
@@ -1468,7 +1468,7 @@ static void equipment_genOutfitList( unsigned int wid )
       equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      _("All"), _("\eb W "), _("\eg U "), _("\ep S "), _("\eRCore")
+      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore")
    };
 
    int active, i, l, p, noutfits;
@@ -1582,7 +1582,7 @@ static void equipment_genOutfitList( unsigned int wid )
          alt[i] = malloc( l );
          p  = snprintf( &alt[i][0], l, "%s\n", o->name );
          if ((o->slot.spid!=0) && (p < l))
-            p += snprintf( &alt[i][p], l-p, _("\eSSlot %s\e0\n"),
+            p += snprintf( &alt[i][p], l-p, _("\aSSlot %s\a0\n"),
                   sp_display( o->slot.spid ) );
          if (p < l)
             p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
@@ -1693,22 +1693,22 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s credits\n"
          "\n"
-         "%.0f\e0 tonnes\n"
-         "\e%c%s\e0 average\n"
-         "\e%c%.0f\e0 kN/tonne\n"
-         "\e%c%.0f\e0 m/s (max \e%c%.0f\e0 m/s)\n"
-         "\e%c%.0f\e0 deg/s\n"
+         "%.0f\a0 tonnes\n"
+         "\a%c%s\a0 average\n"
+         "\a%c%.0f\a0 kN/tonne\n"
+         "\a%c%.0f\a0 m/s (max \a%c%.0f\a0 m/s)\n"
+         "\a%c%.0f\a0 deg/s\n"
          "\n"
-         "\e%c%.0f%%\n"
-         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
-         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
-         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
-         "%d / \e%c%d\e0 tonnes\n"
-         "%.0f / \e%c%.0f\e0 units (%d jumps)\n"
+         "\a%c%.0f%%\n"
+         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+         "%d / \a%c%d\a0 tonnes\n"
+         "%.0f / \a%c%.0f\a0 units (%d jumps)\n"
          "\n"
          "%s credits\n"
          "%s%s\n"
-         "\e%c%s\e0"),
+         "\a%c%s\a0"),
          /* Generic. */
       ship->name,
       ship->ship->name,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-14 10:34+0900\n"
+"POT-Creation-Date: 2017-07-14 11:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,37 +143,37 @@ msgid "unknown error"
 msgstr ""
 
 #: src/board.c:87
-msgid "erYou need a target to board first!"
+msgid "\arYou need a target to board first!"
 msgstr ""
 
 #: src/board.c:97
-msgid "erTarget ship can not be boarded."
+msgid "\arTarget ship can not be boarded."
 msgstr ""
 
 #: src/board.c:101
-msgid "erYour target cannot be boarded again."
+msgid "\arYour target cannot be boarded again."
 msgstr ""
 
 #: src/board.c:105
-msgid "erYou cannot board a ship that isn't disabled!"
+msgid "\arYou cannot board a ship that isn't disabled!"
 msgstr ""
 
 #: src/board.c:110
-msgid "erYou are too far away to board your target."
+msgid "\arYou are too far away to board your target."
 msgstr ""
 
 #: src/board.c:116
-msgid "erYou are going too fast to board the ship."
+msgid "\arYou are going too fast to board the ship."
 msgstr ""
 
 #: src/board.c:124
 #, c-format
-msgid "epYou recover eg%sep into your fighter bay."
+msgid "\apYou recover \ag%s\ap into your fighter bay."
 msgstr ""
 
 #: src/board.c:134
 #, c-format
-msgid "epBoarding ship e%c%se0."
+msgid "\apBoarding ship \a%c%s\a0."
 msgstr ""
 
 #: src/board.c:162
@@ -205,61 +205,61 @@ msgid "Leave"
 msgstr ""
 
 #: src/board.c:224
-msgid "epThe ship has no credits."
+msgid "\apThe ship has no credits."
 msgstr ""
 
 #: src/board.c:233
-msgid "epYou manage to steal the ship's credits."
+msgid "\apYou manage to steal the ship's credits."
 msgstr ""
 
 #: src/board.c:252
-msgid "epThe ship has no cargo."
+msgid "\apThe ship has no cargo."
 msgstr ""
 
 #: src/board.c:256
-msgid "erYou have no room for the ship's cargo."
+msgid "\arYou have no room for the ship's cargo."
 msgstr ""
 
 #: src/board.c:271
-msgid "epYou manage to steal the ship's cargo."
+msgid "\apYou manage to steal the ship's cargo."
 msgstr ""
 
 #: src/board.c:289
-msgid "epThe ship has no fuel."
+msgid "\apThe ship has no fuel."
 msgstr ""
 
 #: src/board.c:293
-msgid "erYour ship is at maximum fuel capacity."
+msgid "\arYour ship is at maximum fuel capacity."
 msgstr ""
 
 #: src/board.c:311
-msgid "epYou manage to steal the ship's fuel."
+msgid "\apYou manage to steal the ship's fuel."
 msgstr ""
 
 #: src/board.c:332
-msgid "erThe ship has no ammo."
+msgid "\arThe ship has no ammo."
 msgstr ""
 
 #: src/board.c:337
-msgid "erYou are already at max ammo."
+msgid "\arYou are already at max ammo."
 msgstr ""
 
 #: src/board.c:382
 #, c-format
-msgid "epYou looted %d %s(s)"
+msgid "\apYou looted %d %s(s)"
 msgstr ""
 
 #: src/board.c:392
-msgid "erThere is no ammo compatible with your launchers on board."
+msgid "\arThere is no ammo compatible with your launchers on board."
 msgstr ""
 
 #: src/board.c:454
-msgid "epYou have tripped the ship's self-destruct mechanism!"
+msgid "\apYou have tripped the ship's self-destruct mechanism!"
 msgstr ""
 
 #: src/board.c:456
 #, c-format
-msgid "epThe ship's security system locks %s out."
+msgid "\apThe ship's security system locks %s out."
 msgstr ""
 
 #: src/board.c:485 src/board.c:500 src/board.c:511
@@ -279,7 +279,7 @@ msgstr ""
 
 #: src/board.c:595
 #, c-format
-msgid "e%c%se0 has plundered %s credits from your ship!"
+msgid "\a%c%s\a0 has plundered %s credits from your ship!"
 msgstr ""
 
 #: src/claim.c:290
@@ -301,17 +301,17 @@ msgid "Unknown colour %"
 msgstr ""
 
 #: src/comm.c:111
-msgid "erTarget is out of communications range"
+msgid "\arTarget is out of communications range"
 msgstr ""
 
 #: src/comm.c:125
 #, c-format
-msgid "e%c%ser is jumping and can't respond"
+msgid "\a%c%s\ar is jumping and can't respond"
 msgstr ""
 
 #: src/comm.c:131
 #, c-format
-msgid "e%c%ser does not respond"
+msgid "\a%c%s\ar does not respond"
 msgstr ""
 
 #: src/comm.c:203
@@ -851,7 +851,7 @@ msgid "Error printing results."
 msgstr ""
 
 #: src/console.c:579
-msgid "egWelcome to the Lua console!"
+msgid "\agWelcome to the Lua console!"
 msgstr ""
 
 #: src/debris.c:57
@@ -934,12 +934,13 @@ msgstr ""
 
 #: src/dev_sysedit.c:359 src/dev_sysedit.c:418
 #, c-format
-msgid "Planet by the name of er'%s'e0 already exists in the er'%s'e0 system"
+msgid ""
+"Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"
 msgstr ""
 
 #: src/dev_sysedit.c:412
 #, c-format
-msgid "What do you want to rename the planet er%se0?"
+msgid "What do you want to rename the planet \ar%s\a0?"
 msgstr ""
 
 #: src/dev_sysedit.c:460
@@ -1171,7 +1172,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:711
 #, c-format
-msgid "What do you want to rename er%se0?"
+msgid "What do you want to rename \ar%s\a0?"
 msgstr ""
 
 #: src/dev_uniedit.c:760
@@ -1211,11 +1212,11 @@ msgstr ""
 
 #: src/dev_uniedit.c:1277
 #, c-format
-msgid "Name: en%s"
+msgid "Name: \an%s"
 msgstr ""
 
 #: src/dev_uniedit.c:1277 src/dev_uniedit.c:1575
-msgid "ervarious"
+msgid "\arvarious"
 msgstr ""
 
 #: src/dev_uniedit.c:1285
@@ -1480,7 +1481,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"eSSlot %se0"
+"\aSSlot %s\a0"
 msgstr ""
 
 #: src/equipment.c:825 src/equipment.c:1591
@@ -1504,24 +1505,24 @@ msgid "All"
 msgstr ""
 
 #: src/equipment.c:1471 src/land_outfits.c:236
-msgid "eb W "
+msgid "\ab W "
 msgstr ""
 
 #: src/equipment.c:1471 src/land_outfits.c:236
-msgid "eg U "
+msgid "\ag U "
 msgstr ""
 
 #: src/equipment.c:1471 src/land_outfits.c:236
-msgid "ep S "
+msgid "\ap S "
 msgstr ""
 
 #: src/equipment.c:1471 src/land_outfits.c:236
-msgid "eRCore"
+msgid "\aRCore"
 msgstr ""
 
 #: src/equipment.c:1585
 #, c-format
-msgid "eSSlot %se0\n"
+msgid "\aSSlot %s\a0\n"
 msgstr ""
 
 #: src/equipment.c:1602
@@ -1545,22 +1546,22 @@ msgid ""
 "%s\n"
 "%s credits\n"
 "\n"
-"%.0fe0 tonnes\n"
-"e%c%se0 average\n"
-"e%c%.0fe0 kN/tonne\n"
-"e%c%.0fe0 m/s (max e%c%.0fe0 m/s)\n"
-"e%c%.0fe0 deg/s\n"
+"%.0f\a0 tonnes\n"
+"\a%c%s\a0 average\n"
+"\a%c%.0f\a0 kN/tonne\n"
+"\a%c%.0f\a0 m/s (max \a%c%.0f\a0 m/s)\n"
+"\a%c%.0f\a0 deg/s\n"
 "\n"
-"e%c%.0f%%\n"
-"e%c%.0fe0 MJ (e%c%.1fe0 MW)\n"
-"e%c%.0fe0 MJ (e%c%.1fe0 MW)\n"
-"e%c%.0fe0 MJ (e%c%.1fe0 MW)\n"
-"%d / e%c%de0 tonnes\n"
-"%.0f / e%c%.0fe0 units (%d jumps)\n"
+"\a%c%.0f%%\n"
+"\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+"\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+"\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+"%d / \a%c%d\a0 tonnes\n"
+"%.0f / \a%c%.0f\a0 units (%d jumps)\n"
 "\n"
 "%s credits\n"
 "%s%s\n"
-"e%c%se0"
+"\a%c%s\a0"
 msgstr ""
 
 #: src/equipment.c:1752
@@ -1638,23 +1639,23 @@ msgstr ""
 
 #: src/escort.c:179
 #, c-format
-msgid "egEscorts: e0Attacking %s."
+msgid "\agEscorts: \a0Attacking %s."
 msgstr ""
 
 #: src/escort.c:192
-msgid "egEscorts: e0Holding position."
+msgid "\agEscorts: \a0Holding position."
 msgstr ""
 
 #: src/escort.c:205
-msgid "egEscorts: e0Returning to ship."
+msgid "\agEscorts: \a0Returning to ship."
 msgstr ""
 
 #: src/escort.c:218
-msgid "egEscorts: e0Clearing orders."
+msgid "\agEscorts: \a0Clearing orders."
 msgstr ""
 
 #: src/escort.c:233
-msgid "egEscorts: e0Jumping."
+msgid "\agEscorts: \a0Jumping."
 msgstr ""
 
 #: src/event.c:285
@@ -2092,7 +2093,7 @@ msgstr ""
 
 #: src/gui.c:2357
 #, c-format
-msgid "epRadar set to %dx."
+msgid "\apRadar set to %dx."
 msgstr ""
 
 #: src/gui_osd.c:245
@@ -2512,7 +2513,7 @@ msgstr ""
 
 #: src/land.c:1337
 #, c-format
-msgid "epTaking off from %s on %s."
+msgid "\apTaking off from %s on %s."
 msgstr ""
 
 #: src/land.c:1394
@@ -2811,20 +2812,20 @@ msgstr ""
 #: src/load.c:388
 #, c-format
 msgid ""
-"eDName:\n"
-"e0   %s\n"
-"eDVersion:\n"
-"e0   %s\n"
-"eDDate:\n"
-"e0   %s\n"
-"eDPlanet:\n"
-"e0   %s\n"
-"eDCredits:\n"
-"e0   %s\n"
-"eDShip Name:\n"
-"e0   %s\n"
-"eDShip Model:\n"
-"e0   %s"
+"\aDName:\n"
+"\a0   %s\n"
+"\aDVersion:\n"
+"\a0   %s\n"
+"\aDDate:\n"
+"\a0   %s\n"
+"\aDPlanet:\n"
+"\a0   %s\n"
+"\aDCredits:\n"
+"\a0   %s\n"
+"\aDShip Name:\n"
+"\a0   %s\n"
+"\aDShip Model:\n"
+"\a0   %s"
 msgstr ""
 
 #: src/load.c:435
@@ -2835,8 +2836,8 @@ msgstr ""
 #, c-format
 msgid ""
 "Save game '%s' version does not match Naev version:\n"
-"   Save version: er%se0\n"
-"   Naev version: eD%se0\n"
+"   Save version: \ar%s\a0\n"
+"   Naev version: \aD%s\a0\n"
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
 
@@ -2855,7 +2856,7 @@ msgstr ""
 
 #: src/load.c:563
 #, c-format
-msgid "egWelcome to %s!"
+msgid "\agWelcome to %s!"
 msgstr ""
 
 #: src/load.c:573
@@ -3046,10 +3047,10 @@ msgstr ""
 #, c-format
 msgid ""
 "Your configuration files are in a deprecated location and must be migrated:\n"
-"   er%se0\n"
+"   \ar%s\a0\n"
 "\n"
 "The update script can likely be found in your Naev data directory:\n"
-"   er%se0\n"
+"   \ar%s\a0\n"
 "\n"
 "Would you like to run it automatically?"
 msgstr ""
@@ -3058,7 +3059,7 @@ msgstr ""
 #, c-format
 msgid ""
 "The update script was not found at:\n"
-"er%se0\n"
+"\ar%s\a0\n"
 "\n"
 "Please locate and run it manually."
 msgstr ""
@@ -3077,14 +3078,14 @@ msgid ""
 "The update script encountered an error. Please exit Naev and move your "
 "config and save files manually:\n"
 "\n"
-"er%s/%se0 =>\n"
-"   eD%se0\n"
+"\ar%s/%s\a0 =>\n"
+"   \aD%s\a0\n"
 "\n"
-"er%s/%se0 =>\n"
-"   eD%se0\n"
+"\ar%s/%s\a0 =>\n"
+"   \aD%s\a0\n"
 "\n"
-"er%s/%se0 =>\n"
-"   eD%snebula/e0\n"
+"\ar%s/%s\a0 =>\n"
+"   \aD%snebula/\a0\n"
 "\n"
 msgstr ""
 
@@ -3093,7 +3094,7 @@ msgstr ""
 msgid ""
 "To manually migrate your configuration files please exit Naev and run the "
 "update script, likely found in your Naev data directory:\n"
-"   er%s/naev-confupdate.she0"
+"   \ar%s/naev-confupdate.sh\a0"
 msgstr ""
 
 #: src/naev.c:576

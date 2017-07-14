@@ -108,7 +108,7 @@ int comm_openPilot( unsigned int pilot )
    /* Make sure pilot in range. */
    if (!pilot_isFlag(p, PILOT_HAILING) &&
          pilot_inRangePilot( player.p, comm_pilot ) <= 0) {
-      player_message(_("\erTarget is out of communications range"));
+      player_message(_("\arTarget is out of communications range"));
       comm_pilot = NULL;
       return -1;
    }
@@ -122,13 +122,13 @@ int comm_openPilot( unsigned int pilot )
 
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
-      player_message(_("\e%c%s\er is jumping and can't respond"), c, comm_pilot->name);
+      player_message(_("\a%c%s\ar is jumping and can't respond"), c, comm_pilot->name);
       return 0;
    }
 
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
-      player_message(_("\e%c%s\er does not respond"), c, comm_pilot->name);
+      player_message(_("\a%c%s\ar does not respond"), c, comm_pilot->name);
       return 0;
    }
 
@@ -239,7 +239,7 @@ int comm_openPlanet( Planet *planet )
    /* Make sure planet in range. */
    /* Function uses planet index in local system, so I moved this to player.c.
    if ( pilot_inRangePlanet( player.p, planet->id ) <= 0 ) {
-      player_message("\erTarget is out of communications range.");
+      player_message("\arTarget is out of communications range.");
       comm_planet = NULL;
       return 0;
    }

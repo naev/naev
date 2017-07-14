@@ -649,7 +649,7 @@ int u8_escape_wchar(char *buf, size_t sz, uint32_t ch)
     else if (ch == L'\r')
         return buf_put2c(buf, "\\r");
     else if (ch == 033) // L'\e'
-        return buf_put2c(buf, "\\e");
+        return buf_put2c(buf, "\\a");
     else if (ch == L'\b')
         return buf_put2c(buf, "\\b");
     else if (ch == L'\f')

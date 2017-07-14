@@ -76,12 +76,12 @@ void player_autonavStart (void)
    }
 
    if (player.p->fuel < player.p->fuel_consumption) {
-      player_message("\erNot enough fuel to jump for autonav.");
+      player_message("\arNot enough fuel to jump for autonav.");
       return;
    }
 
    if (pilot_isFlag( player.p, PILOT_NOJUMP)) {
-      player_message("\erHyperspace drive is offline.");
+      player_message("\arHyperspace drive is offline.");
       return;
    }
 
@@ -107,7 +107,7 @@ static int player_autonavSetup (void)
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message("\epAutonav initialized.");
+   player_message("\apAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
       tc_base   = player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.;
@@ -247,9 +247,9 @@ void player_autonavAbort( const char *reason )
 
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
-         player_message("\erAutonav aborted: %s!", reason);
+         player_message("\arAutonav aborted: %s!", reason);
       else
-         player_message("\erAutonav aborted!");
+         player_message("\arAutonav aborted!");
       player_rmFlag(PLAYER_AUTONAV);
 
       /* Get rid of acceleration. */
@@ -258,7 +258,7 @@ void player_autonavAbort( const char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
-         player_message("\epAborting hyperspace sequence.");
+         player_message("\apAborting hyperspace sequence.");
       }
 
       /* Reset time compression. */
@@ -342,7 +342,7 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at position." );
+            player_message( "\apAutonav arrived at position." );
             player_autonavEnd();
          }
          else if (!tc_rampdown)
@@ -351,7 +351,7 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at \e%c%s\e\0.",
+            player_message( "\apAutonav arrived at \a%c%s\a\0.",
                   planet_getColourChar( planet_get(player.autonavmsg) ),
                   player.autonavmsg );
             player_autonavEnd();

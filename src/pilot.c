@@ -860,7 +860,7 @@ void pilot_cooldown( Pilot *p )
    }
 
    if (p->id == PLAYER_ID)
-      player_message("\epActive cooldown engaged.");
+      player_message("\apActive cooldown engaged.");
 
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
@@ -915,12 +915,12 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
-         player_message("\epActive cooldown completed.");
+         player_message("\apActive cooldown completed.");
       else {
          if (reason != NULL)
-            player_message("\erActive cooldown aborted: %s!", reason);
+            player_message("\arActive cooldown aborted: %s!", reason);
          else
-            player_message("\erActive cooldown aborted!");
+            player_message("\arActive cooldown aborted!");
       }
    }
 
@@ -1012,7 +1012,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    /* Only really affects player.p atm. */
    if (target == PLAYER_ID) {
       c = pilot_getFactionColourChar( p );
-      player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
+      player_message( "\a%cComm %s>\a0 \"%s\"", c, p->name, msg );
 
       /* Set comm message. */
       pilot_setCommMsg( p, msg );
@@ -1040,7 +1040,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
       return;
 
    c = pilot_getFactionColourChar( p );
-   player_message( "\e%cBroadcast %s>\e0 \"%s\"", c, p->name, msg );
+   player_message( "\a%cBroadcast %s>\a0 \"%s\"", c, p->name, msg );
 
    /* Set comm message. */
    pilot_setCommMsg( p, msg );
@@ -2125,14 +2125,14 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( "\erStrayed too far from jump point: jump aborted." );
+               player_message( "\arStrayed too far from jump point: jump aborted." );
       }
       else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
          pilot_hyperspaceAbort( p );
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( "\erAfterburner active: jump aborted." );
+               player_message( "\arAfterburner active: jump aborted." );
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
@@ -2152,7 +2152,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( "\erStrayed too far from jump point: jump aborted." );
+               player_message( "\arStrayed too far from jump point: jump aborted." );
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */

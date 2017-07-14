@@ -1200,7 +1200,7 @@ void space_update( const double dt )
       for (i=0; i<cur_system->nplanets; i++)
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
-            player_message( "You discovered \e%c%s\e\0.",
+            player_message( "You discovered \a%c%s\a\0.",
                   planet_getColourChar( cur_system->planets[i] ),
                   cur_system->planets[i]->name );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1332,7 +1332,7 @@ void space_init( const char* sysname )
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message("\epEntering System %s on %s.", sysname, nt);
+      player_message("\apEntering System %s on %s.", sysname, nt);
       free(nt);
 
       /* Handle background */

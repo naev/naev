@@ -551,11 +551,11 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               "\a%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
                names[i], sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               "\a%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
                names[i], sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -827,11 +827,11 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               "\a%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               "\a%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -981,11 +981,11 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               "\a%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               "\a%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }

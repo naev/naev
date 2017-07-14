@@ -266,7 +266,7 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
       /* Go up in history. */
       case SDLK_UP:
          for (i=cli_history; i>=0; i--) {
-            if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
+            if (strncmp(cli_buffer[i], "\aD>", 3) == 0) {
                /* Strip escape codes from beginning and end */
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
@@ -292,7 +292,7 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
 
          /* Find next buffer. */
          for (i=cli_history+1; i<array_size(cli_buffer); i++) {
-            if (strncmp(cli_buffer[i], "\eD>", 3) == 0) {
+            if (strncmp(cli_buffer[i], "\aD>", 3) == 0) {
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
@@ -485,7 +485,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   nsnprintf( buf, CLI_MAX_INPUT+7, "\eD%s %s\e0",
+   nsnprintf( buf, CLI_MAX_INPUT+7, "\aD%s %s\a0",
          cli_firstline ? "> " : ">>", str );
    cli_addMessage( buf );
 
@@ -576,8 +576,8 @@ void cli_open (void)
    if (cli_firstOpen) {
       char buf[256];
       cli_addMessage( "" );
-      cli_addMessage( _("\egWelcome to the Lua console!") );
-      nsnprintf( buf, sizeof(buf), "\eg "APPNAME" v%s", naev_version(0) );
+      cli_addMessage( _("\agWelcome to the Lua console!") );
+      nsnprintf( buf, sizeof(buf), "\ag "APPNAME" v%s", naev_version(0) );
       cli_addMessage( buf );
       cli_addMessage( "" );
       cli_firstOpen = 0;

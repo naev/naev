@@ -1334,7 +1334,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\epTaking off from %s on %s."), land_planet->name, nt);
+   player_message( _("\apTaking off from %s on %s."), land_planet->name, nt);
    free(nt);
 
    /* Hooks and stuff. */

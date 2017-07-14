@@ -256,8 +256,8 @@ void player_newTutorial (void)
    ntime_set( start_date() );
 
    /* Welcome message - must be before space_init. */
-   player_message( "\egWelcome to "APPNAME" Tutorial!" );
-   player_message( "\eg v%s", naev_version(0) );
+   player_message( "\agWelcome to "APPNAME" Tutorial!" );
+   player_message( "\ag v%s", naev_version(0) );
 
    /* Try to create the pilot, if fails reask for player name. */
    player_ship = ship_get( start_ship() );
@@ -387,8 +387,8 @@ static int player_newMake (void)
    ntime_set( start_date() );
 
    /* Welcome message - must be before space_init. */
-   player_message( "\egWelcome to "APPNAME"!" );
-   player_message( "\eg v%s", naev_version(0) );
+   player_message( "\agWelcome to "APPNAME"!" );
+   player_message( "\ag v%s", naev_version(0) );
 
    /* Try to create the pilot, if fails reask for player name. */
    ship = ship_get( start_ship() );
@@ -1365,7 +1365,7 @@ void player_land (void)
 
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
-      player_messageRaw( "\erThere are no planets to land on." );
+      player_messageRaw( "\arThere are no planets to land on." );
       return;
    }
 
@@ -1398,36 +1398,36 @@ void player_land (void)
    }
 
    if (player_isFlag(PLAYER_NOLAND)) {
-      player_message( "\er%s", player_message_noland );
+      player_message( "\ar%s", player_message_noland );
       return;
    }
    else if (pilot_isFlag( player.p, PILOT_NOLAND)) {
-      player_message( "\erDocking stabilizers malfunctioning, cannot land." );
+      player_message( "\arDocking stabilizers malfunctioning, cannot land." );
       return;
    }
 
    /* attempt to land at selected planet */
    planet = cur_system->planets[player.p->nav_planet];
    if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-      player_messageRaw( "\erYou can't land here." );
+      player_messageRaw( "\arYou can't land here." );
       return;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
       if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
          if (planet->can_land || (planet->land_override > 0))
-            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+            player_message( "\a%c%s>\a0 %s", planet_getColourChar(planet),
                   planet->name, planet->land_msg );
          else if (planet->bribed && (planet->land_override >= 0))
-            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+            player_message( "\a%c%s>\a0 %s", planet_getColourChar(planet),
                   planet->name, planet->bribe_ack_msg );
          else { /* Hostile */
-            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+            player_message( "\a%c%s>\a0 %s", planet_getColourChar(planet),
                   planet->name, planet->land_msg );
             return;
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
-         player_message( "\epReady to land on %s.", planet->name );
+         player_message( "\apReady to land on %s.", planet->name );
 
       player_setFlag(PLAYER_LANDACK);
       if (!silent)
@@ -1436,12 +1436,12 @@ void player_land (void)
       return;
    }
    else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
-      player_message("\erYou are too far away to land on %s.", planet->name);
+      player_message("\arYou are too far away to land on %s.", planet->name);
       return;
    }
    else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message("\erYou are going too fast to land on %s.", planet->name);
+      player_message("\arYou are going too fast to land on %s.", planet->name);
       return;
    }
 
@@ -1490,7 +1490,7 @@ void player_checkLandAck( void )
       return;
 
    player_rmFlag(PLAYER_LANDACK);
-   player_message( "\e%c%s>\e0 Landing permission revoked.",
+   player_message( "\a%c%s>\a0 Landing permission revoked.",
          planet_getColourChar(p), p->name );
 }
 
@@ -1614,7 +1614,7 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    /* Abort autonav. */
-   player_messageRaw("\erReceiving hail!");
+   player_messageRaw("\arReceiving hail!");
    player_autonavResetSpeed();
    player.autonav_timer = MAX( player.autonav_timer, 10. );
 }
@@ -1666,20 +1666,20 @@ int player_jump (void)
    /* Already jumping, so we break jump. */
    if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       pilot_hyperspaceAbort(player.p);
-      player_message("\erAborting hyperspace sequence.");
+      player_message("\arAborting hyperspace sequence.");
       return 0;
    }
 
    /* Try to hyperspace. */
    i = space_hyperspace(player.p);
    if (i == -1)
-      player_message("\erYou are too far from a jump point to initiate hyperspace.");
+      player_message("\arYou are too far from a jump point to initiate hyperspace.");
    else if (i == -2)
-      player_message("\erHyperspace drive is offline.");
+      player_message("\arHyperspace drive is offline.");
    else if (i == -3)
-      player_message("\erYou do not have enough fuel to hyperspace jump.");
+      player_message("\arYou do not have enough fuel to hyperspace jump.");
    else {
-      player_message("\epPreparing for hyperspace.");
+      player_message("\apPreparing for hyperspace.");
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
@@ -1747,11 +1747,11 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
-         player_message( "\epAutonav arrived at the %s system.", cur_system->name);
+         player_message( "\apAutonav arrived at the %s system.", cur_system->name);
          player_autonavEnd();
       }
       else {
-         player_message( "\epAutonav continuing until destination (%d jump%s left).",
+         player_message( "\apAutonav continuing until destination (%d jump%s left).",
                map_npath, (map_npath==1) ? "" : "s" );
       }
    }
@@ -2031,7 +2031,7 @@ static void player_checkHail (void)
  */
 static void player_planetOutOfRangeMsg (void)
 {
-   player_message( "\er%s is out of comm range, unable to contact.",
+   player_message( "\ar%s is out of comm range, unable to contact.",
          cur_system->planets[player.p->nav_planet]->name );
 }
 
@@ -2055,7 +2055,7 @@ void player_hail (void)
          player_planetOutOfRangeMsg();
    }
    else
-      player_message("\erNo target selected to hail.");
+      player_message("\arNo target selected to hail.");
 
    /* Clear hails if none found. */
    player_checkHail();
@@ -2078,7 +2078,7 @@ void player_hailPlanet (void)
          player_planetOutOfRangeMsg();
    }
    else
-      player_message("\erNo target selected to hail.");
+      player_message("\arNo target selected to hail.");
 }
 
 
@@ -2106,7 +2106,7 @@ void player_autohail (void)
 
    /* Not found any. */
    if (i >= pilot_nstack) {
-      player_message("\erYou haven't been hailed by any pilots.");
+      player_message("\arYou haven't been hailed by any pilots.");
       return;
    }
 
@@ -2127,13 +2127,13 @@ void player_toggleMouseFly(void)
 {
    if (!player_isFlag(PLAYER_MFLY)) {
       input_mouseShow();
-      player_message("\epMouse flying enabled.");
+      player_message("\apMouse flying enabled.");
       player_setFlag(PLAYER_MFLY);
    }
    else {
       input_mouseHide();
       player_rmFlag(PLAYER_MFLY);
-      player_message("\erMouse flying disabled.");
+      player_message("\arMouse flying disabled.");
 
       if (conf.mouse_thrust)
          player_accelOver();

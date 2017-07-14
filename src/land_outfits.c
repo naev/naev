@@ -233,7 +233,7 @@ static void outfits_genList( unsigned int wid )
       outfit_filterOther
    };
    const char *tabnames[] = {
-      _("All"), _("\eb W "), _("\eg U "), _("\ep S "), _("\eRCore"), _("Other")
+      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
    };
 
    int i, active, owned, len;
@@ -427,7 +427,7 @@ void outfits_update( unsigned int wid, char* str )
    else if (player_hasLicense( outfit->license ))
       strncpy( buf4, outfit->license, sizeof(buf4) );
    else
-      nsnprintf( buf4, sizeof(buf4), "\er%s\e0", outfit->license );
+      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", outfit->license );
 
    nsnprintf( buf, PATH_MAX,
          _("%d\n"
