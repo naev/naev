@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-15 22:02+0900\n"
+"POT-Creation-Date: 2017-07-16 08:30+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Fuel"
 msgstr ""
 
-#: src/board.c:177
+#: src/board.c:177 src/outfit.c:824
 msgid "Ammo"
 msgstr ""
 
@@ -1343,7 +1343,8 @@ msgstr ""
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/economy.c:336 src/faction.c:1451 src/space.c:1598 src/space.c:3228
+#: src/economy.c:336 src/faction.c:1451 src/ship.c:948 src/space.c:1598
+#: src/space.c:3228
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
@@ -1376,8 +1377,11 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:661 src/nfile.c:747
-msgid "Out of Memory!"
+#: src/economy.c:661 src/gui.c:1924 src/news.c:103 src/nfile.c:747
+#: src/npng.c:93 src/npng.c:294 src/npng.c:297 src/npng.c:358 src/npng.c:366
+#: src/opengl_tex.c:189 src/opengl_tex.c:432 src/perlin.c:559 src/perlin.c:663
+#: src/perlin.c:753 src/physics.c:484 src/plasmaf.c:71
+msgid "Out of Memory"
 msgstr "メモリ不足"
 
 #: src/economy.c:682
@@ -1387,7 +1391,7 @@ msgstr ""
 #: src/equipment.c:282 src/land.c:294 src/land.c:553 src/land.c:1161
 #: src/land_outfits.c:116 src/land_shipyard.c:87 src/land_trade.c:64
 msgid "Take Off"
-msgstr ""
+msgstr "出発"
 
 #: src/equipment.c:288 src/equipment.c:2042
 msgid "Sell Ship"
@@ -1743,8 +1747,8 @@ msgstr ""
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/event.c:591 src/mission.c:914 src/slots.c:75 src/space.c:3132
-#: src/spfx.c:240 src/start.c:84
+#: src/event.c:591 src/mission.c:914 src/outfit.c:2077 src/outfit.c:2356
+#: src/slots.c:75 src/space.c:3132 src/spfx.c:240 src/start.c:84
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -2073,14 +2077,9 @@ msgid "You"
 msgstr ""
 
 #: src/gui.c:1836 src/map.c:333 src/map.c:339 src/map.c:345 src/map.c:351
-#: src/map.c:357 src/map.c:363 src/map.c:449
+#: src/map.c:357 src/map.c:363 src/map.c:449 src/outfit.c:835
 msgid "Unknown"
 msgstr ""
-
-#: src/gui.c:1924 src/opengl_tex.c:432 src/perlin.c:559 src/perlin.c:663
-#: src/perlin.c:753
-msgid "Out of memory!"
-msgstr "メモリ不足"
 
 #: src/gui.c:1976
 #, c-format
@@ -4259,10 +4258,6 @@ msgstr ""
 msgid "Unable to load Nebula image: %s"
 msgstr ""
 
-#: src/news.c:103
-msgid "Out of Memory."
-msgstr "メモリ不足"
-
 #: src/news.c:147
 msgid ""
 "\n"
@@ -4809,10 +4804,6 @@ msgstr ""
 msgid "Unknown NPC type!"
 msgstr ""
 
-#: src/npng.c:93
-msgid "Out of memory."
-msgstr "メモリ不足"
-
 #: src/npng.c:102
 msgid "png_create_read_struct failed"
 msgstr ""
@@ -4828,11 +4819,6 @@ msgstr ""
 #: src/npng.c:126
 msgid "Error during setjmp"
 msgstr ""
-
-#: src/npng.c:294 src/npng.c:297 src/npng.c:358 src/npng.c:366
-#: src/opengl_tex.c:189 src/physics.c:484
-msgid "Out of Memory"
-msgstr "メモリ不足"
 
 #: src/ntime.c:217
 #, c-format
@@ -5436,11 +5422,342 @@ msgstr ""
 msgid "Scaling: %.1fx"
 msgstr ""
 
+#: src/outfit.c:95
+#, c-format
+msgid "Outfit '%s' not found in stack."
+msgstr ""
+
+#: src/outfit.c:336
+#, c-format
+msgid "'%s' does not match any outfit slot sizes."
+msgstr ""
+
+#: src/outfit.c:352
+#, c-format
+msgid "Outfit '%s' has implicit slot size, setting to '%s'."
+msgstr ""
+
+#: src/outfit.c:821
+msgid "Bolt Weapon"
+msgstr ""
+
+#: src/outfit.c:822
+msgid "Beam Weapon"
+msgstr ""
+
+#: src/outfit.c:823
+msgid "Launcher"
+msgstr ""
+
+#: src/outfit.c:825
+msgid "Turret"
+msgstr ""
+
+#: src/outfit.c:826
+msgid "Modification"
+msgstr ""
+
+#: src/outfit.c:827
+msgid "Afterburner"
+msgstr ""
+
+#: src/outfit.c:828
+msgid "Jammer"
+msgstr ""
+
+#: src/outfit.c:829
+msgid "Fighter Bay"
+msgstr ""
+
+#: src/outfit.c:830
+msgid "Fighter"
+msgstr ""
+
+#: src/outfit.c:831
+msgid "Map"
+msgstr ""
+
+#: src/outfit.c:832
+msgid "Local Map"
+msgstr ""
+
+#: src/outfit.c:833
+msgid "GUI"
+msgstr ""
+
+#: src/outfit.c:834
+msgid "License"
+msgstr ""
+
+#: src/outfit.c:847
+msgid "Dumb"
+msgstr ""
+
+#: src/outfit.c:848
+msgid "Seek"
+msgstr ""
+
+#: src/outfit.c:849
+msgid "Smart"
+msgstr ""
+
+#: src/outfit.c:853
+#, c-format
+msgid "Outfit '%s' is not an ammo outfit"
+msgstr ""
+
+#: src/outfit.c:969
+#, c-format
+msgid "Invalid outfit type: '%s'"
+msgstr ""
+
+#: src/outfit.c:1014
+#, c-format
+msgid "Unknown damage type '%s'"
+msgstr ""
+
+#: src/outfit.c:1018
+#, c-format
+msgid "Damage has unknown node '%s'"
+msgstr ""
+
+#: src/outfit.c:1067 src/outfit.c:1409
+#, c-format
+msgid "Outfit '%s' has invalid blowup property: '%s'"
+msgstr ""
+
+#: src/outfit.c:1121 src/outfit.c:1272 src/outfit.c:1354 src/outfit.c:1469
+#: src/outfit.c:1573 src/outfit.c:1671 src/outfit.c:1734 src/outfit.c:1779
+#: src/outfit.c:1851 src/outfit.c:1872 src/outfit.c:1914 src/outfit.c:1953
+#: src/outfit.c:1987 src/outfit.c:2021 src/outfit.c:2205
+#, c-format
+msgid "Outfit '%s' has unknown node '%s'"
+msgstr ""
+
+#: src/outfit.c:1150 src/outfit.c:2417
+#, c-format
+msgid ""
+"%s [%s]\n"
+"%.0f CPU\n"
+"%.0f%% Penetration\n"
+"%.2f DPS [%.0f Damage]\n"
+msgstr ""
+
+#: src/outfit.c:1160 src/outfit.c:2428
+#, c-format
+msgid "%.2f Disable/s [%.0f Disable]\n"
+msgstr ""
+
+#: src/outfit.c:1164
+#, c-format
+msgid ""
+"%.1f Shots Per Second\n"
+"%.1f EPS [%.0f Energy]\n"
+"%.0f Range\n"
+"%.1f second heat up"
+msgstr ""
+
+#: src/outfit.c:1174
+#, c-format
+msgid ""
+"\n"
+"%.1f degree swivel"
+msgstr ""
+
+#: src/outfit.c:1180 src/outfit.c:1314 src/outfit.c:1501 src/outfit.c:1708
+#: src/outfit.c:1754 src/outfit.c:1789 src/outfit.c:1888 src/outfit.c:1927
+#: src/outfit.c:1962 src/outfit.c:1997 src/outfit.c:2049 src/outfit.c:2209
+#, c-format
+msgid "Outfit '%s' missing/invalid '%s' element"
+msgstr ""
+
+#: src/outfit.c:1290
+#, c-format
+msgid ""
+"%s\n"
+"%.0f CPU\n"
+"%.0f%% Penetration\n"
+"%.2f DPS [%s]\n"
+msgstr ""
+
+#: src/outfit.c:1300
+#, c-format
+msgid "%.0f Disable/s\n"
+msgstr ""
+
+#: src/outfit.c:1304
+#, c-format
+msgid ""
+"%.1f EPS\n"
+"%.1f Duration %.1f Cooldown\n"
+"%.0f Range\n"
+"%.1f second heat up"
+msgstr ""
+
+#: src/outfit.c:1366
+#, c-format
+msgid "Outfit '%s' missing '%s' element"
+msgstr ""
+
+#: src/outfit.c:1465
+#, c-format
+msgid "Ammo '%s' has unknown ai type '%s'."
+msgstr ""
+
+#: src/outfit.c:1479
+#, c-format
+msgid ""
+"%s\n"
+"%.0f%% Penetration\n"
+"%.0f Damage [%s]\n"
+msgstr ""
+
+#: src/outfit.c:1487
+#, c-format
+msgid "%.0f Disable\n"
+msgstr ""
+
+#: src/outfit.c:1491
+#, c-format
+msgid ""
+"%.0f Energy\n"
+"%.0f Maximum Speed\n"
+"%.0f%% Jam resistance\n"
+"%.1f duration"
+msgstr ""
+
+#: src/outfit.c:1586
+msgid ""
+"\n"
+"\arActivated Outfit\a0"
+msgstr ""
+
+#: src/outfit.c:1677
+#, c-format
+msgid ""
+"%s\n"
+"\arActivated Outfit\a0\n"
+"%.0f CPU\n"
+"Only one can be equipped\n"
+"%.0f Maximum Effective Mass\n"
+"%.0f%% Thrust\n"
+"%.0f%% Maximum Speed\n"
+"%.1f EPS\n"
+"%.1f Rumble"
+msgstr ""
+
+#: src/outfit.c:1744
+#, c-format
+msgid ""
+"%s\n"
+"%.0f CPU\n"
+"%.1f Launches Per Second\n"
+"Holds %d %s"
+msgstr ""
+
+#: src/outfit.c:1840
+#, c-format
+msgid "Map '%s' has invalid asset '%s'"
+msgstr ""
+
+#: src/outfit.c:1848
+#, c-format
+msgid "Map '%s' has invalid jump point '%s'"
+msgstr ""
+
+#: src/outfit.c:1855
+#, c-format
+msgid "Map '%s' has invalid system '%s'"
+msgstr ""
+
+#: src/outfit.c:1959
+msgid "GUI (Graphical User Interface)"
+msgstr ""
+
+#: src/outfit.c:2032
+#, c-format
+msgid ""
+"%s\n"
+"\arActivated Outfit\a0\n"
+"%.0f CPU\n"
+"Only one can be equipped\n"
+"%.0f Range\n"
+"%.0f%% Power\n"
+"%.1f EPS"
+msgstr ""
+
+#: src/outfit.c:2086
+#, c-format
+msgid "Outfit in %s has invalid or no name"
+msgstr ""
+
+#: src/outfit.c:2115
+#, c-format
+msgid "Outfit '%s' has an slot type invalid."
+msgstr ""
+
+#: src/outfit.c:2123
+#, c-format
+msgid "Outfit '%s' has unknown slot type '%s'."
+msgstr ""
+
+#: src/outfit.c:2136
+#, c-format
+msgid "Outfit '%s' has unknown general node '%s'"
+msgstr ""
+
+#: src/outfit.c:2146
+#, c-format
+msgid "Outfit '%s' element 'specific' missing property 'type'"
+msgstr ""
+
+#: src/outfit.c:2163
+#, c-format
+msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
+msgstr ""
+
+#: src/outfit.c:2172
+#, c-format
+msgid "Outfit '%s' is of type NONE"
+msgstr ""
+
+#: src/outfit.c:2275
+#, c-format
+msgid "Outfit '%s' missing/invalid 'ew_target' element"
+msgstr ""
+
+#: src/outfit.c:2277
+#, c-format
+msgid "Outfit '%s' missing/invalid 'lockon' element"
+msgstr ""
+
+#: src/outfit.c:2279
+#, c-format
+msgid "Outfit '%s' missing/invalid 'arc' element"
+msgstr ""
+
+#: src/outfit.c:2304
+#, c-format
+msgid "Name collision! %d outfits are named '%s'"
+msgstr ""
+
 #: src/outfit.c:2310
 #, fuzzy, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] "モド読み込み中…"
+
+#: src/outfit.c:2409
+#, c-format
+msgid "Outfit '%s' already has a short description"
+msgstr ""
+
+#: src/outfit.c:2432
+#, c-format
+msgid ""
+"%.1f Shots Per Second\n"
+"Holds %d %s"
+msgstr ""
 
 #: src/perlin.c:669
 #, fuzzy, c-format
@@ -5737,10 +6054,6 @@ msgstr ""
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/plasmaf.c:71
-msgid "Out of memory"
-msgstr "メモリ不足"
-
 #: src/player.c:253
 msgid "John Doe"
 msgstr ""
@@ -5924,7 +6237,7 @@ msgstr ""
 msgid "\arYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1677
+#: src/player.c:1677 src/player_autonav.c:84
 msgid "\arHyperspace drive is offline."
 msgstr ""
 
@@ -6139,6 +6452,49 @@ msgstr ""
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
+#: src/player_autonav.c:79
+msgid "\arNot enough fuel to jump for autonav."
+msgstr ""
+
+#: src/player_autonav.c:110
+msgid "\apAutonav initialized."
+msgstr ""
+
+#: src/player_autonav.c:250
+#, c-format
+msgid "\arAutonav aborted: %s!"
+msgstr ""
+
+#: src/player_autonav.c:252
+msgid "\arAutonav aborted!"
+msgstr ""
+
+#: src/player_autonav.c:261
+msgid "\apAborting hyperspace sequence."
+msgstr ""
+
+#: src/player_autonav.c:345
+msgid "\apAutonav arrived at position."
+msgstr ""
+
+#: src/player_autonav.c:354
+#, c-format
+msgid "\apAutonav arrived at \a%c%s\a"
+msgstr ""
+
+#: src/player_autonav.c:513
+msgid "Target changed to current system"
+msgstr ""
+
+#: src/player_autonav.c:517
+msgid "Not enough fuel for autonav to continue"
+msgstr ""
+
+#: src/player_gui.c:69
+#, c-format
+msgid "GUI '%s' does not exist as a file: '%s' not found."
+msgstr ""
+
 #: src/save.c:125
 msgid "Trying to save game data"
 msgstr ""
@@ -6159,11 +6515,297 @@ msgid ""
 "your backup savegame over your current savegame."
 msgstr ""
 
+#: src/ship.c:75
+#, c-format
+msgid "Ship %s does not exist"
+msgstr ""
+
+#: src/ship.c:279
+msgid "Negative ship base price!"
+msgstr ""
+
+#: src/ship.c:394
+#, c-format
+msgid "Unable to create ship '%s' targeting surface."
+msgstr ""
+
+#: src/ship.c:490
+#, c-format
+msgid "Failed to get base path of '%s'."
+msgstr ""
+
+#: src/ship.c:519
+#, c-format
+msgid "Ship '%s' does not have an engine sprite (%s)."
+msgstr ""
+
+#: src/ship.c:573
+#, c-format
+msgid "Ship '%s' has implicit slot size, setting to '%s'"
+msgstr ""
+
+#: src/ship.c:585
+#, c-format
+msgid "Ship '%s' missing 'x' element of 'weapon' slot."
+msgstr ""
+
+#: src/ship.c:595
+#, c-format
+msgid "Ship '%s' missing 'y' element of 'weapon' slot."
+msgstr ""
+
+#: src/ship.c:602
+#, c-format
+msgid "Ship '%s' missing 'h' element of 'weapon' slot."
+msgstr ""
+
+#: src/ship.c:637
+#, c-format
+msgid "Ship '%s' has default outfit '%s' which does not exist."
+msgstr ""
+
+#: src/ship.c:647
+#, c-format
+msgid "Ship '%s' has required slot without a default outfit."
+msgstr ""
+
+#: src/ship.c:677
+#, c-format
+msgid "Ship in %s has invalid or no name"
+msgstr ""
+
+#: src/ship.c:701
+#, c-format
+msgid "Ship '%s': GFX element is NULL"
+msgstr ""
+
+#: src/ship.c:757
+#, c-format
+msgid "Ship '%s' has unknown movement node '%s'."
+msgstr ""
+
+#: src/ship.c:773
+#, c-format
+msgid "Ship '%s' has unknown health node '%s'."
+msgstr ""
+
+#: src/ship.c:788
+#, c-format
+msgid "Ship '%s' has unknown characteristic node '%s'."
+msgstr ""
+
+#: src/ship.c:804
+#, c-format
+msgid "Ship '%s' has unknown slot node '%s'."
+msgstr ""
+
+#: src/ship.c:843
+#, c-format
+msgid "Ship '%s' has unknown stat '%s'."
+msgstr ""
+
+#: src/ship.c:867
+#, c-format
+msgid "Ship '%s' has unknown node '%s'."
+msgstr ""
+
+#: src/ship.c:875
+#, c-format
+msgid "Ship '%s' missing '%s' element"
+msgstr ""
+
+#: src/ship.c:939 src/space.c:1590 src/space.c:3221
+#, c-format
+msgid "%s file is invalid xml!"
+msgstr ""
+
 #: src/ship.c:966
 #, fuzzy, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
 msgstr[0] "ミッション読み込み中…"
+
+#: src/shipstats.c:83
+msgid "Speed"
+msgstr ""
+
+#: src/shipstats.c:84
+msgid "Turn"
+msgstr ""
+
+#: src/shipstats.c:85
+msgid "Thrust"
+msgstr ""
+
+#: src/shipstats.c:86
+msgid "Cargo space"
+msgstr ""
+
+#: src/shipstats.c:87
+msgid "Armour strength"
+msgstr ""
+
+#: src/shipstats.c:88
+msgid "Armour regeneration"
+msgstr ""
+
+#: src/shipstats.c:89
+msgid "Shield strength"
+msgstr ""
+
+#: src/shipstats.c:90
+msgid "Shield regeneration"
+msgstr ""
+
+#: src/shipstats.c:91
+msgid "Energy capacity"
+msgstr ""
+
+#: src/shipstats.c:92
+msgid "Energy regeneration"
+msgstr ""
+
+#: src/shipstats.c:93
+msgid "CPU capacity"
+msgstr ""
+
+#: src/shipstats.c:95
+msgid "Jump Time"
+msgstr ""
+
+#: src/shipstats.c:96
+msgid "Cargo Inertia"
+msgstr ""
+
+#: src/shipstats.c:98
+msgid "Cloaking"
+msgstr ""
+
+#: src/shipstats.c:99
+msgid "Detection"
+msgstr ""
+
+#: src/shipstats.c:100
+msgid "Jump Detection"
+msgstr ""
+
+#: src/shipstats.c:102
+msgid "Launch Rate"
+msgstr ""
+
+#: src/shipstats.c:103
+msgid "Launch Range"
+msgstr ""
+
+#: src/shipstats.c:104
+msgid "Ammo Capacity"
+msgstr ""
+
+#: src/shipstats.c:105
+msgid "Launch Lockon"
+msgstr ""
+
+#: src/shipstats.c:107
+msgid "Heat (Cannon)"
+msgstr ""
+
+#: src/shipstats.c:108
+msgid "Damage (Cannon)"
+msgstr ""
+
+#: src/shipstats.c:109
+msgid "Fire Rate (Cannon)"
+msgstr ""
+
+#: src/shipstats.c:110
+msgid "Energy Usage (Cannon)"
+msgstr ""
+
+#: src/shipstats.c:112
+msgid "Heat (Turret)"
+msgstr ""
+
+#: src/shipstats.c:113
+msgid "Damage (Turret)"
+msgstr ""
+
+#: src/shipstats.c:114
+msgid "Tracking (Turret)"
+msgstr ""
+
+#: src/shipstats.c:115
+msgid "Fire Rate (Turret)"
+msgstr ""
+
+#: src/shipstats.c:116
+msgid "Energy Usage (Turret)"
+msgstr ""
+
+#: src/shipstats.c:118
+msgid "Nebula Resistance (Shield)"
+msgstr ""
+
+#: src/shipstats.c:119
+msgid "Nebula Resistance (Armour)"
+msgstr ""
+
+#: src/shipstats.c:121
+msgid "Heat Dissipation"
+msgstr ""
+
+#: src/shipstats.c:122
+msgid "Stress Dissipation"
+msgstr ""
+
+#: src/shipstats.c:123
+msgid "Crew"
+msgstr ""
+
+#: src/shipstats.c:124
+msgid "Mass"
+msgstr ""
+
+#: src/shipstats.c:125 src/shipstats.c:131
+msgid "Engine Mass Limit"
+msgstr ""
+
+#: src/shipstats.c:127
+msgid "Energy Capacity"
+msgstr ""
+
+#: src/shipstats.c:128
+msgid "Energy Usage"
+msgstr ""
+
+#: src/shipstats.c:129
+msgid "CPU Capacity"
+msgstr ""
+
+#: src/shipstats.c:133
+msgid "Hidden Jump Detection"
+msgstr ""
+
+#: src/shipstats.c:135
+msgid "Instant Jump"
+msgstr ""
+
+#: src/shipstats.c:136
+msgid "Reverse Thrusters"
+msgstr ""
+
+#: src/shipstats.c:210
+#, c-format
+msgid "ss_lookup: %s should have id %d but has %d"
+msgstr ""
+
+#: src/shipstats.c:377
+#, c-format
+msgid "ss_typeFromName: No ship stat matching '%s'"
+msgstr ""
+
+#: src/shipstats.c:603
+msgid "Buffer out of space, CSV output truncated"
+msgstr ""
 
 #: src/slots.c:107
 #, c-format
@@ -6203,8 +6845,8 @@ msgstr ""
 
 #: src/sound.c:758
 #, fuzzy, c-format
-msgid "Loaded %d sound"
-msgid_plural "Loaded %d sounds"
+msgid "Loaded %d Sound"
+msgid_plural "Loaded %d Sounds"
 msgstr[0] "ミッション読み込み中…"
 
 #: src/sound_openal.c:224
@@ -6528,11 +7170,6 @@ msgid ""
 "Failed to load landing file: %s\n"
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
-msgstr ""
-
-#: src/space.c:1590 src/space.c:3221
-#, c-format
-msgid "%s file is invalid xml!"
 msgstr ""
 
 #: src/space.c:1697
@@ -7218,3 +7855,4 @@ msgid ""
 "Target Paul 2 with %s, then request landing permission with %s. Once "
 "granted, press %s again to land"
 msgstr ""
+
