@@ -71,7 +71,7 @@ int logprintf( FILE *stream, const char *hdr, const char *fmt, ... )
       n += vsnprintf( &buf[2+n], sizeof(buf)-3-n, fmt, ap )-1;
       va_end( ap );
       /* Finally add newline. */
-      buf[2+n+1]   = '\n';
+      buf[2+n+1] = '\n';
       buf[2+n+2] = '\0';
    }
 
