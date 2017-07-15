@@ -658,7 +658,7 @@ int economy_update( unsigned int dt )
    /* Create the vector to solve the system. */
    X = malloc(sizeof(double)*systems_nstack);
    if (X == NULL) {
-      WARN(_("Out of Memory!"));
+      WARN(_("Out of Memory"));
       return -1;
    }
 

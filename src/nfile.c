@@ -744,7 +744,7 @@ char* nfile_readFile( size_t* filesize, const char* path, ... )
    /* Allocate buffer. */
    buf = malloc( len+1 );
    if (buf == NULL) {
-      WARN(_("Out of Memory!"));
+      WARN(_("Out of Memory"));
       fclose(file);
       *filesize = 0;
       return NULL;

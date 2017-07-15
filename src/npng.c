@@ -90,7 +90,7 @@ npng_t *npng_open( SDL_RWops *rw )
    /* Allocate memory. */
    npng = malloc( sizeof(npng_t) );
    if (npng == NULL) {
-      WARN(_("Out of memory."));
+      WARN(_("Out of Memory"));
       return NULL;
    }
    memset( npng, 0, sizeof(npng_t) );

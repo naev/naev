@@ -429,7 +429,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
       data = malloc(pngsize);
       if (data == NULL)
-         WARN(_("Out of memory!"));
+         WARN(_("Out of Memory"));
       else {
          SDL_RWread( rw, data, pngsize, 1 );
          md5_append( &md5, (md5_byte_t*)data, pngsize );

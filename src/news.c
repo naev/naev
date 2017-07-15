@@ -100,7 +100,7 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
    if ( !( (n_article->title = strdup(title)) &&
          (n_article->desc = strdup(content)) &&
          (n_article->faction = strdup(faction)))) {
-      ERR(_("Out of Memory."));
+      ERR(_("Out of Memory"));
       return NULL;
    }
 

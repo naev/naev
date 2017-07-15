@@ -1921,7 +1921,7 @@ int gui_init (void)
    if (mesg_stack == NULL) {
       mesg_stack = calloc(mesg_max, sizeof(Mesg));
       if (mesg_stack == NULL) {
-         ERR(_("Out of memory!"));
+         ERR(_("Out of Memory"));
          return -1;
       }
    }
