@@ -3273,7 +3273,7 @@ static int systems_load (void)
    }
 
    DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
-   DEBUG( ngettext( "  with %d Planet",      "  with %d Planets", planet_nstack ), planet_nstack );
+   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", planet_nstack ), planet_nstack );
 
    /* Clean up. */
    for (i=0; i<nfiles; i++)
