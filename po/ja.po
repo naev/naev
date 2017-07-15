@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-14 16:57+0900\n"
+"POT-Creation-Date: 2017-07-15 22:02+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -21,12 +21,12 @@ msgstr ""
 #: src/log.h:22 src/log.h:24
 #, c-format
 msgid "Warning: [%s] "
-msgstr "注意: [%s] "
+msgstr "注意：「%s」　"
 
 #: src/log.h:26
 #, c-format
 msgid "ERROR %s:%d [%s]: "
-msgstr "エラー %s:%d [%s]: "
+msgstr "エラー %s：%d「%s」："
 
 #: src/ai.c:432
 #, c-format
@@ -55,8 +55,9 @@ msgstr ""
 
 #: src/ai.c:578
 #, c-format
-msgid "Loaded %d AI Profile%c"
-msgstr ""
+msgid "Loaded %d AI Profile"
+msgid_plural "Loaded %d AI Profiles"
+msgstr[0] ""
 
 #: src/ai.c:608 src/land.c:1381
 #, c-format
@@ -338,7 +339,7 @@ msgstr ""
 #: src/dev_sysedit.c:1653 src/dev_sysedit.c:1828 src/dev_sysedit.c:1909
 #: src/dev_uniedit.c:175 src/dev_uniedit.c:1061 src/dev_uniedit.c:1273
 #: src/dev_uniedit.c:1521 src/info.c:218 src/info.c:289 src/info.c:375
-#: src/info.c:481 src/info.c:698 src/info.c:878 src/info.c:966 src/map.c:251
+#: src/info.c:481 src/info.c:698 src/info.c:878 src/info.c:966 src/map.c:249
 #: src/map_find.c:1087
 msgid "Close"
 msgstr "閉じる"
@@ -858,9 +859,8 @@ msgid "Error printing results."
 msgstr ""
 
 #: src/console.c:579
-#, fuzzy
 msgid "\agWelcome to the Lua console!"
-msgstr "eg%sへようこそ！"
+msgstr "\ag%sへようこそ！"
 
 #: src/debris.c:57
 msgid "No debris special effects found."
@@ -1011,7 +1011,7 @@ msgstr ""
 #: src/land_shipyard.c:149 src/land_shipyard.c:188 src/land_shipyard.c:287
 #: src/land_shipyard.c:341 src/land_shipyard.c:477 src/land_trade.c:108
 #: src/land_trade.c:137 src/load.c:329 src/load.c:375 src/load.c:424
-#: src/map.c:490 src/map.c:513 src/map_find.c:731
+#: src/map.c:488 src/map.c:511 src/map_find.c:731 src/pilot_outfit.c:855
 msgid "None"
 msgstr "なし"
 
@@ -1149,15 +1149,15 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:220 src/map.c:254 src/map_find.c:1085
+#: src/dev_uniedit.c:220 src/map.c:252 src/map_find.c:1085
 msgid "Find"
 msgstr ""
 
-#: src/dev_uniedit.c:229 src/map.c:231
+#: src/dev_uniedit.c:229 src/map.c:229
 msgid "Presence:"
 msgstr ""
 
-#: src/dev_uniedit.c:231 src/dev_uniedit.c:903 src/map.c:395 src/map.c:396
+#: src/dev_uniedit.c:231 src/dev_uniedit.c:903 src/map.c:393 src/map.c:394
 msgid "N/A"
 msgstr ""
 
@@ -1354,9 +1354,10 @@ msgid "'%s' has unknown node '%s'."
 msgstr ""
 
 #: src/economy.c:365
-#, c-format
-msgid "Loaded %d Commodit%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Loaded %d Commodity"
+msgid_plural "Loaded %d Commodities"
+msgstr[0] "商売"
 
 #: src/economy.c:415
 #, c-format
@@ -1375,7 +1376,7 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:661 src/nfile.c:726
+#: src/economy.c:661 src/nfile.c:747
 msgid "Out of Memory!"
 msgstr "メモリ不足"
 
@@ -1630,7 +1631,7 @@ msgstr ""
 msgid "You have sold your ship %s for %s credits."
 msgstr ""
 
-#: src/equipment.c:2073
+#: src/equipment.c:2073 src/player.c:449
 msgid "Ship Name"
 msgstr ""
 
@@ -1643,7 +1644,7 @@ msgstr ""
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2083
+#: src/equipment.c:2083 src/player.c:474
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -1721,7 +1722,7 @@ msgstr ""
 msgid "Unknown node '%s' in event '%s'"
 msgstr ""
 
-#: src/event.c:544
+#: src/event.c:544 src/mission.c:877
 #, c-format
 msgid "Mission '%s' missing/invalid '%s' element"
 msgstr ""
@@ -1749,9 +1750,10 @@ msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
 
 #: src/event.c:618
-#, c-format
-msgid "Loaded %d Event%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Loaded %d Event"
+msgid_plural "Loaded %d Events"
+msgstr[0] "ミッション読み込み中…"
 
 #: src/event.c:692
 #, c-format
@@ -1959,9 +1961,10 @@ msgid "Faction: %s and %s aren't completely mutual enemies!"
 msgstr ""
 
 #: src/faction.c:1532
-#, c-format
-msgid "Loaded %d Faction%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Loaded %d Faction"
+msgid_plural "Loaded %d Factions"
+msgstr[0] "ミッション読み込み中…"
 
 #: src/fleet.c:117
 #, c-format
@@ -2014,9 +2017,10 @@ msgid "Malformed %s file: does not contain elements."
 msgstr ""
 
 #: src/fleet.c:268
-#, c-format
-msgid "Loaded %d Fleet%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Loaded %d Fleet"
+msgid_plural "Loaded %d Fleets"
+msgstr[0] "フリーと読み込み中…"
 
 #: src/font.c:966
 msgid "FT_Load_Glyph failed."
@@ -2068,8 +2072,8 @@ msgstr ""
 msgid "You"
 msgstr ""
 
-#: src/gui.c:1836 src/map.c:335 src/map.c:341 src/map.c:347 src/map.c:353
-#: src/map.c:359 src/map.c:365 src/map.c:451
+#: src/gui.c:1836 src/map.c:333 src/map.c:339 src/map.c:345 src/map.c:351
+#: src/map.c:357 src/map.c:363 src/map.c:449
 msgid "Unknown"
 msgstr ""
 
@@ -2965,8 +2969,9 @@ msgstr ""
 
 #: src/joystick.c:173
 #, c-format
-msgid "%d joystick%s detected"
-msgstr ""
+msgid "%d joystick detected"
+msgid_plural "%d joysticks detected"
+msgstr[0] ""
 
 #: src/land.c:176
 #, c-format
@@ -3433,7 +3438,7 @@ msgstr "'%s'を完全に削除する？"
 msgid "Savegame file seems to have been deleted."
 msgstr ""
 
-#: src/load.c:563
+#: src/load.c:563 src/player.c:390
 #, fuzzy, c-format
 msgid "\agWelcome to %s!"
 msgstr "eg%sへようこそ！"
@@ -3452,59 +3457,59 @@ msgstr ""
 msgid "An error occurred while buffering %s!"
 msgstr ""
 
-#: src/map.c:217
+#: src/map.c:215
 msgid "Faction:"
 msgstr ""
 
-#: src/map.c:224
+#: src/map.c:222
 msgid "Standing:"
 msgstr ""
 
-#: src/map.c:238
+#: src/map.c:236
 msgid "Planets:"
 msgstr "惑星："
 
-#: src/map.c:245
+#: src/map.c:243
 msgid "Services:"
 msgstr ""
 
-#: src/map.c:257
+#: src/map.c:255
 msgid "Autonav"
 msgstr ""
 
-#: src/map.c:389
+#: src/map.c:387
 msgid "Multiple"
 msgstr "複数"
 
-#: src/map.c:527
+#: src/map.c:525
 msgid " Volatile"
 msgstr ""
 
-#: src/map.c:529
+#: src/map.c:527
 msgid " Dangerous"
 msgstr ""
 
-#: src/map.c:531
+#: src/map.c:529
 msgid " Unstable"
 msgstr ""
 
-#: src/map.c:535 src/map.c:548
+#: src/map.c:533 src/map.c:546
 msgid " Dense"
 msgstr ""
 
-#: src/map.c:537 src/map.c:550
+#: src/map.c:535 src/map.c:548
 msgid " Light"
 msgstr ""
 
-#: src/map.c:538
+#: src/map.c:536
 msgid " Nebula"
 msgstr ""
 
-#: src/map.c:544
+#: src/map.c:542
 msgid ","
 msgstr "、"
 
-#: src/map.c:552
+#: src/map.c:550
 msgid " Interference"
 msgstr ""
 
@@ -3729,15 +3734,11 @@ msgstr ""
 msgid "Unknown node '%s' in mission '%s'"
 msgstr ""
 
-#: src/mission.c:877
-#, c-format
-msgid "Mission '%s' missing/invalid '' element"
-msgstr ""
-
 #: src/mission.c:941
 #, fuzzy, c-format
-msgid "Loaded %d Mission%s"
-msgstr "ミッション読み込み中…"
+msgid "Loaded %d Mission"
+msgid_plural "Loaded %d Missions"
+msgstr[0] "ミッション読み込み中…"
 
 #: src/mission.c:1118
 #, c-format
@@ -3781,9 +3782,10 @@ msgid "Music has invalid value, clamping to [0:1]."
 msgstr ""
 
 #: src/music.c:333
-#, c-format
-msgid "Loaded %d song%c"
-msgstr ""
+#, fuzzy, c-format
+msgid "Loaded %d Song"
+msgid_plural "Loaded %d Songs"
+msgstr[0] "ミッション読み込み中…"
 
 #: src/music.c:406
 #, c-format
@@ -4316,66 +4318,66 @@ msgstr ""
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
 msgstr ""
 
-#: src/nfile.c:369
+#: src/nfile.c:390
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
 msgstr ""
 
-#: src/nfile.c:487 src/nfile.c:516
+#: src/nfile.c:508 src/nfile.c:537
 #, c-format
 msgid "Failure to copy '%s' to '%s': %s"
 msgstr ""
 
-#: src/nfile.c:703 src/nfile.c:813
+#: src/nfile.c:724 src/nfile.c:834
 #, c-format
 msgid "Error occurred while opening '%s': %s"
 msgstr ""
 
-#: src/nfile.c:710 src/nfile.c:717
+#: src/nfile.c:731 src/nfile.c:738
 #, c-format
 msgid "Error occurred while seeking '%s': %s"
 msgstr ""
 
-#: src/nfile.c:738
+#: src/nfile.c:759
 #, c-format
 msgid "Error occurred while reading '%s': %s"
 msgstr ""
 
-#: src/nfile.c:777
+#: src/nfile.c:798
 #, c-format
 msgid "Unable to touch file '%s': %s"
 msgstr ""
 
-#: src/nfile.c:822
+#: src/nfile.c:843
 #, c-format
 msgid "Error occurred while writing '%s': %s"
 msgstr ""
 
-#: src/nfile.c:831
+#: src/nfile.c:852
 #, c-format
 msgid "Error occurred while closing '%s': %s"
 msgstr ""
 
-#: src/nfile.c:848
+#: src/nfile.c:869
 #, c-format
 msgid "Error deleting file %s"
 msgstr ""
 
-#: src/nfile.c:864
+#: src/nfile.c:885
 #, c-format
 msgid "Can not rename non existant file %s"
 msgstr ""
 
-#: src/nfile.c:868
+#: src/nfile.c:889
 msgid "Can not rename to NULL file name"
 msgstr ""
 
-#: src/nfile.c:872
+#: src/nfile.c:893
 #, c-format
 msgid "Error renaming %s to %s. %s already exists"
 msgstr ""
 
-#: src/nfile.c:876
+#: src/nfile.c:897
 #, c-format
 msgid "Error renaming %s to %s"
 msgstr ""
@@ -4514,21 +4516,21 @@ msgstr ""
 msgid "Music '%s' invalid or failed to load."
 msgstr ""
 
-#: src/nlua_naev.c:129 src/options.c:611
+#: src/nlua_naev.c:131 src/options.c:611
 msgid "Not bound"
 msgstr ""
 
-#: src/nlua_naev.c:146
+#: src/nlua_naev.c:148
 #, c-format
 msgid "joy button %d"
 msgstr ""
 
-#: src/nlua_naev.c:151
+#: src/nlua_naev.c:153
 #, c-format
 msgid "joy axis %d-"
 msgstr ""
 
-#: src/nlua_naev.c:156
+#: src/nlua_naev.c:158
 #, c-format
 msgid "joy axis %d+"
 msgstr ""
@@ -5434,6 +5436,12 @@ msgstr ""
 msgid "Scaling: %.1fx"
 msgstr ""
 
+#: src/outfit.c:2310
+#, fuzzy, c-format
+msgid "Loaded %d Outfit"
+msgid_plural "Loaded %d Outfits"
+msgstr[0] "モド読み込み中…"
+
 #: src/perlin.c:669
 #, fuzzy, c-format
 msgid "Generating Nebula of size %dx%dx%d"
@@ -5448,9 +5456,688 @@ msgstr ""
 msgid "Solid initialization did not specify correct update function!"
 msgstr ""
 
+#: src/pilot.c:863
+msgid "\apActive cooldown engaged."
+msgstr ""
+
+#: src/pilot.c:918
+msgid "\apActive cooldown completed."
+msgstr ""
+
+#: src/pilot.c:921
+#, c-format
+msgid "\arActive cooldown aborted: %s!"
+msgstr ""
+
+#: src/pilot.c:923
+msgid "\arActive cooldown aborted!"
+msgstr ""
+
+#: src/pilot.c:1015
+#, c-format
+msgid "\a%cComm %s>\a0 \"%s\""
+msgstr ""
+
+#: src/pilot.c:1043
+#, c-format
+msgid "\a%cBroadcast %s>\a0 \"%s\""
+msgstr ""
+
+#: src/pilot.c:2128 src/pilot.c:2155
+msgid "\arStrayed too far from jump point: jump aborted."
+msgstr ""
+
+#: src/pilot.c:2135
+msgid "\arAfterburner active: jump aborted."
+msgstr ""
+
+#: src/pilot.c:2175
+#, c-format
+msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
+msgstr ""
+
+#: src/pilot.c:2472
+#, c-format
+msgid "Pilot '%s' failed sanity check: %s"
+msgstr ""
+
+#: src/pilot.c:2539 src/pilot.c:2579
+msgid "Unable to allocate memory"
+msgstr ""
+
+#: src/pilot_cargo.c:76
+#, c-format
+msgid "Unable to copy cargo over from pilot '%s' to '%s'"
+msgstr ""
+
+#: src/pilot_hook.c:72 src/pilot_hook.c:85
+#, c-format
+msgid "Pilot '%s' failed to run hook type %d"
+msgstr ""
+
+#: src/pilot_outfit.c:361
+#, c-format
+msgid ""
+"Pilot '%s': trying to add outfit '%s' to slot that already has an outfit"
+msgstr ""
+
+#: src/pilot_outfit.c:368
+#, c-format
+msgid "Pilot '%s': Not enough CPU to add outfit '%s'"
+msgstr ""
+
+#: src/pilot_outfit.c:374
+#, c-format
+msgid "Pilot '%s': Trying to add outfit but %s"
+msgstr ""
+
+#: src/pilot_outfit.c:459
+#, c-format
+msgid "Pilot '%s': Trying to remove outfit but %s"
+msgstr ""
+
+#: src/pilot_outfit.c:522
+msgid "Doesn't fit slot"
+msgstr ""
+
+#: src/pilot_outfit.c:526
+msgid "Insufficient CPU"
+msgstr ""
+
+#: src/pilot_outfit.c:530
+msgid "Insufficient Thrust"
+msgstr ""
+
+#: src/pilot_outfit.c:532
+msgid "Insufficient Speed"
+msgstr ""
+
+#: src/pilot_outfit.c:534
+msgid "Insufficient Turn"
+msgstr ""
+
+#: src/pilot_outfit.c:538
+msgid "Insufficient Armour"
+msgstr ""
+
+#: src/pilot_outfit.c:540
+msgid "Insufficient Armour Regeneration"
+msgstr ""
+
+#: src/pilot_outfit.c:542
+msgid "Insufficient Shield"
+msgstr ""
+
+#: src/pilot_outfit.c:544
+msgid "Insufficient Shield Regeneration"
+msgstr ""
+
+#: src/pilot_outfit.c:546
+msgid "Insufficient Energy"
+msgstr ""
+
+#: src/pilot_outfit.c:548
+msgid "Insufficient Energy Regeneration"
+msgstr ""
+
+#: src/pilot_outfit.c:552
+msgid "Insufficient Fuel Maximum"
+msgstr ""
+
+#: src/pilot_outfit.c:554
+msgid "Insufficient Fuel Consumption"
+msgstr ""
+
+#: src/pilot_outfit.c:556
+msgid "Insufficient Free Cargo Space"
+msgstr ""
+
+#: src/pilot_outfit.c:560
+msgid "Not All Core Slots are equipped"
+msgstr ""
+
+#: src/pilot_outfit.c:582
+msgid "Not All Core Slots are equipped\n"
+msgstr ""
+
+#: src/pilot_outfit.c:584
+msgid "Insufficient CPU\n"
+msgstr ""
+
+#: src/pilot_outfit.c:587
+msgid "Insufficient Thrust\n"
+msgstr ""
+
+#: src/pilot_outfit.c:588
+msgid "Insufficient Speed\n"
+msgstr ""
+
+#: src/pilot_outfit.c:589
+msgid "Insufficient Turn\n"
+msgstr ""
+
+#: src/pilot_outfit.c:592
+msgid "Insufficient Armour\n"
+msgstr ""
+
+#: src/pilot_outfit.c:593
+msgid "Insufficient Armour Regeneration\n"
+msgstr ""
+
+#: src/pilot_outfit.c:594
+msgid "Insufficient Shield\n"
+msgstr ""
+
+#: src/pilot_outfit.c:595
+msgid "Insufficient Shield Regeneration\n"
+msgstr ""
+
+#: src/pilot_outfit.c:596
+msgid "Insufficient Energy\n"
+msgstr ""
+
+#: src/pilot_outfit.c:597
+msgid "Insufficient Energy Regeneration\n"
+msgstr ""
+
+#: src/pilot_outfit.c:600
+msgid "Insufficient Fuel Maximum\n"
+msgstr ""
+
+#: src/pilot_outfit.c:601
+msgid "Insufficient Fuel Consumption\n"
+msgstr ""
+
+#: src/pilot_outfit.c:602
+msgid "Insufficient Free Cargo Space\n"
+msgstr ""
+
+#: src/pilot_outfit.c:614
+#, fuzzy
+msgid "Spaceworthy"
+msgstr "バー"
+
+#: src/pilot_outfit.c:657
+msgid "Nothing selected."
+msgstr ""
+
+#: src/pilot_outfit.c:662
+msgid "Does not fit slot."
+msgstr ""
+
+#: src/pilot_outfit.c:665
+msgid "Already have an outfit of this type installed"
+msgstr ""
+
+#: src/pilot_outfit.c:670
+msgid "Recall the fighters first"
+msgstr ""
+
+#: src/pilot_outfit.c:693
+#, c-format
+msgid "Pilot '%s': Trying to add ammo to unequiped slot."
+msgstr ""
+
+#: src/pilot_outfit.c:697
+#, c-format
+msgid ""
+"Pilot '%s': Trying to add ammo to non-launcher/fighterbay type outfit '%s'"
+msgstr ""
+
+#: src/pilot_outfit.c:702
+#, c-format
+msgid "Pilot '%s': Trying to add non-ammo/fighter type outfit '%s' as ammo."
+msgstr ""
+
+#: src/pilot_outfit.c:707
+#, c-format
+msgid "Pilot '%s': Trying to add fighter '%s' as launcher '%s' ammo"
+msgstr ""
+
+#: src/pilot_outfit.c:712
+#, c-format
+msgid "Pilot '%s': Trying to add ammo '%s' as fighter bay '%s' ammo"
+msgstr ""
+
+#: src/pilot_outfit.c:718
+#, c-format
+msgid "Pilot '%s': Trying to add ammo to outfit that already has ammo."
+msgstr ""
+
+#: src/pilot_outfit.c:754
+#, c-format
+msgid "Pilot '%s': Trying to remove ammo from unequiped slot."
+msgstr ""
+
+#: src/pilot_outfit.c:758
+#, c-format
+msgid ""
+"Pilot '%s': Trying to remove ammo from non-launcher/fighter bay type outfit "
+"'%s'"
+msgstr ""
+
+#: src/pilot_weapon.c:371
+msgid "Unused"
+msgstr ""
+
+#: src/pilot_weapon.c:373
+msgid "Weapons - Switched"
+msgstr ""
+
+#: src/pilot_weapon.c:374
+msgid "Weapons - Instant"
+msgstr ""
+
+#: src/pilot_weapon.c:375
+msgid "Abilities - Toggled"
+msgstr ""
+
+#: src/pilot_weapon.c:1153
+#, c-format
+msgid "Shooting unknown weapon type: %s"
+msgstr ""
+
 #: src/plasmaf.c:71
 msgid "Out of memory"
 msgstr "メモリ不足"
+
+#: src/player.c:253
+msgid "John Doe"
+msgstr ""
+
+#: src/player.c:259
+#, c-format
+msgid "\agWelcome to %s Tutorial!"
+msgstr "\ag%sのチュートリアルへようこそ！"
+
+#: src/player.c:265 src/player.c:397
+msgid "Ship not properly set by module."
+msgstr ""
+
+#: src/player.c:269
+msgid "Star Voyager"
+msgstr ""
+
+#: src/player.c:301
+#, c-format
+msgid "Failed to run start tutorial mission '%s'."
+msgstr ""
+
+#: src/player.c:307 src/player.c:364
+#, c-format
+msgid "Failed to run start event '%s'."
+msgstr ""
+
+#: src/player.c:328
+msgid "Player Name"
+msgstr ""
+
+#: src/player.c:329
+msgid "Please write your name:"
+msgstr ""
+
+#: src/player.c:338
+msgid "Overwrite"
+msgstr ""
+
+#: src/player.c:339
+#, c-format
+msgid "You already have a pilot named %s. Overwrite?"
+msgstr ""
+
+#: src/player.c:358
+#, c-format
+msgid "Failed to run start mission '%s'."
+msgstr ""
+
+#: src/player.c:450
+msgid "Please name your new ship:"
+msgstr ""
+
+#: src/player.c:473
+msgid "Name collision"
+msgstr ""
+
+#: src/player.c:483
+msgid "Player ship isn't valid... This shouldn't happen!"
+msgstr ""
+
+#: src/player.c:553
+msgid ""
+"Something seriously wonky went on, newly created player does not exist, "
+"bailing!"
+msgstr ""
+
+#: src/player.c:623
+#, c-format
+msgid "Unable to swap player.p with ship '%s': ship does not exist!"
+msgstr ""
+
+#: src/player.c:652
+#, c-format
+msgid "Unable to find price for player's ship '%s': ship does not exist!"
+msgstr ""
+
+#: src/player.c:933
+msgid "Harmless"
+msgstr ""
+
+#: src/player.c:934
+msgid "Mostly Harmless"
+msgstr ""
+
+#: src/player.c:935
+msgid "Smallfry"
+msgstr ""
+
+#: src/player.c:936
+msgid "Average"
+msgstr ""
+
+#: src/player.c:937
+msgid "Above Average"
+msgstr ""
+
+#: src/player.c:938
+msgid "Major"
+msgstr ""
+
+#: src/player.c:939
+msgid "Intimidating"
+msgstr ""
+
+#: src/player.c:940
+msgid "Fearsome"
+msgstr ""
+
+#: src/player.c:941
+msgid "Terrifying"
+msgstr ""
+
+#: src/player.c:942
+msgid "Unstoppable"
+msgstr ""
+
+#: src/player.c:943
+msgid "Godlike"
+msgstr ""
+
+#: src/player.c:1287
+#, c-format
+msgid "Trying to set player's planet target to invalid ID '%d'"
+msgstr ""
+
+#: src/player.c:1367
+msgid "\arThere are no planets to land on."
+msgstr ""
+
+#: src/player.c:1404
+msgid "\arDocking stabilizers malfunctioning, cannot land."
+msgstr ""
+
+#: src/player.c:1411
+msgid "\arYou can't land here."
+msgstr ""
+
+#: src/player.c:1429
+#, c-format
+msgid "\apReady to land on %s."
+msgstr ""
+
+#: src/player.c:1438
+#, c-format
+msgid "\arYou are too far away to land on %s."
+msgstr ""
+
+#: src/player.c:1443
+#, c-format
+msgid "\arYou are going too fast to land on %s."
+msgstr ""
+
+#: src/player.c:1481
+msgid "Player has landing permission, but no valid planet targeted."
+msgstr ""
+
+#: src/player.c:1492
+#, c-format
+msgid "\a%c%s>\a0 Landing permission revoked."
+msgstr ""
+
+#: src/player.c:1516
+msgid "You are not allowed to land at this moment."
+msgstr ""
+
+#: src/player.c:1530
+#, c-format
+msgid "Trying to set player's hyperspace target to invalid ID '%d'"
+msgstr ""
+
+#: src/player.c:1616
+msgid "\arReceiving hail!"
+msgstr ""
+
+#: src/player.c:1668
+msgid "\arAborting hyperspace sequence."
+msgstr ""
+
+#: src/player.c:1675
+msgid "\arYou are too far from a jump point to initiate hyperspace."
+msgstr ""
+
+#: src/player.c:1677
+msgid "\arHyperspace drive is offline."
+msgstr ""
+
+#: src/player.c:1679
+msgid "\arYou do not have enough fuel to hyperspace jump."
+msgstr ""
+
+#: src/player.c:1681
+msgid "\apPreparing for hyperspace."
+msgstr ""
+
+#: src/player.c:1749
+#, c-format
+msgid "\apAutonav arrived at the %s system."
+msgstr ""
+
+#: src/player.c:1753
+#, c-format
+msgid "\apAutonav continuing until destination (%d jump%s left)."
+msgstr ""
+
+#: src/player.c:1981
+#, fuzzy
+msgid "Aborting screenshot"
+msgstr "イベント読み込み中"
+
+#: src/player.c:1994
+msgid "You have reached the maximum amount of screenshots [999]"
+msgstr ""
+
+#: src/player.c:1999
+#, c-format
+msgid "Taking screenshot [%03d]..."
+msgstr ""
+
+#: src/player.c:2033
+#, c-format
+msgid "\ar%s is out of comm range, unable to contact."
+msgstr ""
+
+#: src/player.c:2057 src/player.c:2080
+msgid "\arNo target selected to hail."
+msgstr ""
+
+#: src/player.c:2108
+msgid "\arYou haven't been hailed by any pilots."
+msgstr ""
+
+#: src/player.c:2129
+msgid "\apMouse flying enabled."
+msgstr ""
+
+#: src/player.c:2135
+msgid "\arMouse flying disabled."
+msgstr ""
+
+#: src/player.c:2357 src/player.c:2379 src/player.c:2402
+#, c-format
+msgid "Player ship '%s' not found in stack"
+msgstr ""
+
+#: src/player.c:2830
+msgid "Unable to mark escort as deployed"
+msgstr ""
+
+#: src/player.c:3046
+msgid "Found mission cargo without associated mission."
+msgstr ""
+
+#: src/player.c:3047
+msgid "Please reload save game to remove the dead cargo."
+msgstr ""
+
+#: src/player.c:3222
+#, c-format
+msgid "Outfit '%s' was saved but does not exist!"
+msgstr ""
+
+#: src/player.c:3232
+#, c-format
+msgid "Outfit '%s' was saved without quantity!"
+msgstr ""
+
+#: src/player.c:3252
+msgid "Player ship does not exist!"
+msgstr ""
+
+#: src/player.c:3255
+msgid "Player has no other ships, giving starting ship."
+msgstr ""
+
+#: src/player.c:3266
+#, c-format
+msgid "Giving player ship '%s'."
+msgstr ""
+
+#: src/player.c:3272
+msgid "Something went horribly wrong, player does not exist after load..."
+msgstr ""
+
+#: src/player.c:3279
+msgid "Save has no time information, setting to start information."
+msgstr ""
+
+#: src/player.c:3288
+#, c-format
+msgid ""
+"Player starts out in non-existent or invalid planet '%s',trying to find a "
+"suitable one instead."
+msgstr ""
+
+#: src/player.c:3318
+#, c-format
+msgid "Could not find a planet satisfying criteria %d."
+msgstr ""
+
+#: src/player.c:3322
+msgid "Could not find a suitable planet. Choosing a random planet."
+msgstr ""
+
+#: src/player.c:3374
+#, c-format
+msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
+msgstr ""
+
+#: src/player.c:3402
+#, c-format
+msgid "Event '%s' doesn't seem to exist anymore, removing from save."
+msgstr ""
+
+#: src/player.c:3454
+#, c-format
+msgid "Escort has invalid type '%s'."
+msgstr ""
+
+#: src/player.c:3478
+#, c-format
+msgid ""
+"Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
+"stock."
+msgstr ""
+
+#: src/player.c:3486
+#, c-format
+msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
+msgstr ""
+
+#: src/player.c:3508
+msgid "Empty ship slot node found, skipping."
+msgstr ""
+
+#: src/player.c:3584
+#, c-format
+msgid "Player ship '%s' not found!"
+msgstr ""
+
+#: src/player.c:3639 src/player.c:3657 src/player.c:3675
+msgid "Outfit slot out of range, not adding."
+msgstr ""
+
+#: src/player.c:3697
+#, c-format
+msgid "Unknown commodity '%s' detected, removing."
+msgstr ""
+
+#: src/player.c:3723
+#, c-format
+msgid ""
+"Player ship '%s' failed slot sanity check , removing all outfits and adding "
+"to stock."
+msgstr ""
+
+#: src/player.c:3739
+msgid "Uknown"
+msgstr ""
+
+#: src/player.c:3776
+#, c-format
+msgid ""
+"Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
+"'weaponset')."
+msgstr ""
+
+#: src/player.c:3784
+#, c-format
+msgid "Player ship '%s' missing 'id' tag for weapon set."
+msgstr ""
+
+#: src/player.c:3790
+#, c-format
+msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
+msgstr ""
+
+#: src/player.c:3810
+#, c-format
+msgid "Player ship '%s' missing 'type' tag for weapon set."
+msgstr ""
+
+#: src/player.c:3824
+#, c-format
+msgid ""
+"Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
+msgstr ""
+
+#: src/player.c:3832
+#, c-format
+msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
+msgstr ""
+
+#: src/player.c:3839
+#, c-format
+msgid "Player ship '%s' has invalid weapon id %d [max %d]."
+msgstr ""
 
 #: src/save.c:125
 msgid "Trying to save game data"
@@ -5471,6 +6158,12 @@ msgid ""
 "Failed to write savegame!  You'll most likely have to restore it by copying "
 "your backup savegame over your current savegame."
 msgstr ""
+
+#: src/ship.c:966
+#, fuzzy, c-format
+msgid "Loaded %d Ship"
+msgid_plural "Loaded %d Ships"
+msgstr[0] "ミッション読み込み中…"
 
 #: src/slots.c:107
 #, c-format
@@ -5509,9 +6202,10 @@ msgid "Sound '%s' not found in sound list"
 msgstr ""
 
 #: src/sound.c:758
-#, c-format
-msgid "Loaded %d sound%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Loaded %d sound"
+msgid_plural "Loaded %d sounds"
+msgstr[0] "ミッション読み込み中…"
 
 #: src/sound_openal.c:224
 msgid "Unable to open default sound device"
@@ -5785,7 +6479,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1043 src/space.c:4208
+#: src/space.c:1043 src/space.c:4207
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
@@ -5998,14 +6692,21 @@ msgstr ""
 
 #: src/space.c:3275
 #, c-format
-msgid "Loaded %d Star System%s with %d Planet%s"
-msgstr ""
+msgid "Loaded %d Star System"
+msgid_plural "Loaded %d Star Systems"
+msgstr[0] ""
 
-#: src/space.c:3649 src/space.c:3693
+#: src/space.c:3276
+#, fuzzy, c-format
+msgid "       with %d Planet"
+msgid_plural "       with %d Planets"
+msgstr[0] "新惑星"
+
+#: src/space.c:3648 src/space.c:3692
 msgid "Unknown marker type."
 msgstr ""
 
-#: src/space.c:4200
+#: src/space.c:4199
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
@@ -6017,7 +6718,7 @@ msgstr ""
 
 #: src/spfx.c:167
 #, c-format
-msgid "SPFX '%s' missing/invalid '' element"
+msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr ""
 
 #: src/spfx.c:331
@@ -6066,6 +6767,12 @@ msgstr ""
 #, c-format
 msgid "Module start data missing/invalid '%s' element"
 msgstr ""
+
+#: src/tech.c:176
+#, c-format
+msgid "Loaded %d tech group"
+msgid_plural "Loaded %d tech groups"
+msgstr[0] ""
 
 #: src/threadpool.c:199
 msgid "Tried to dequeue while the queue was empty!"
@@ -6308,4 +7015,206 @@ msgstr ""
 
 #: src/weapon.c:1682
 msgid "Trying to destroy weapon not found in stack!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:6
+msgid "Tutorial Menu"
+msgstr "チュートリアルのメニュー"
+
+#: dat/events/tutorial/tutorial.lua:7
+msgid ""
+"Welcome to the Naev tutorial menu. Please select a tutorial module from the "
+"list below:"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:9
+msgid "Play All"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:11 dat/events/tutorial/tutorial-basic.lua:8
+msgid "Tutorial: Basic Operation"
+msgstr "チュートリアル：操作の基礎"
+
+#: dat/events/tutorial/tutorial.lua:12
+msgid "Tutorial: Exploration and Discovery"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:13
+msgid "Tutorial: Interstellar Flight"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:14
+#, fuzzy
+msgid "Tutorial: Basic Combat"
+msgstr "チュートリアル：操作の基礎"
+
+#: dat/events/tutorial/tutorial.lua:15
+#, fuzzy
+msgid "Tutorial: Missile Combat"
+msgstr "チュートリアル：操作の基礎"
+
+#: dat/events/tutorial/tutorial.lua:16
+#, fuzzy
+msgid "Tutorial: Heat"
+msgstr "チュートリアルのメニュー"
+
+#: dat/events/tutorial/tutorial.lua:17
+msgid "Tutorial: Activated Outfits"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:18
+#, fuzzy
+msgid "Tutorial: Disabling"
+msgstr "チュートリアル：操作の基礎"
+
+#: dat/events/tutorial/tutorial.lua:19
+msgid "Tutorial: The Planetary Screen"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:20
+#, fuzzy
+msgid "Tutorial: Trade"
+msgstr "チュートリアルのメニュー"
+
+#: dat/events/tutorial/tutorial.lua:21
+msgid "Tutorial: Missions and Events"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:22
+#, fuzzy
+msgid "Tutorial: Communications"
+msgstr "チュートリアル：操作の基礎"
+
+#: dat/events/tutorial/tutorial.lua:23
+#, fuzzy
+msgid "Quit to Main Menu"
+msgstr "チュートリアルのメニュー"
+
+#: dat/events/tutorial/tutorial-basic.lua:9
+msgid ""
+"Welcome to the basic operation tutorial.\n"
+"\n"
+"This tutorial will teach you what Naev is about, and show you the elementary "
+"controls of your ship."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:12
+#, lua-format
+msgid ""
+"We will start by flying around. Use %s and %s to turn, and %s to accelerate. "
+"Try flying around the planet."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:13
+#, lua-format
+msgid ""
+"Flying is easy, but stopping is another thing. To stop, you will need to "
+"thrust in the opposite of the direction you're heading in. To make this task "
+"easier, you can use %s to reverse your direction. Once you have turned "
+"around completely, thrust to decrease your speed. Try this now."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:14
+#, lua-format
+msgid ""
+"Well done. For convenience, it's also possible to automatically turn around "
+"and stop by pressing %s.\n"
+"\n"
+"Note that your ship can also fly towards the mouse, which can be toggled "
+"with %s or clicking your middle mouse button.\n"
+"\n"
+"During the game, however, you will often need to travel great distances "
+"within a star system. To make this easier, you can use the overlay system "
+"map. It is accessed with %s. Open the overlay map now."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:19
+msgid ""
+"This is the system overlay map. It displays an overview of the star system "
+"you're currently in, displaying planets, jump points and any ships your "
+"scanners are currently detecting.\n"
+"You can use the overlay map to navigate around the system. Right click on a "
+"location to make your ship automatically fly there. Time will speed up "
+"during the journey, so you'll be there shortly.\n"
+"\n"
+"There is a marker on the map. Order your ship to fly to it. You can close "
+"the overlay map once you're underway if you wish."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:23
+msgid ""
+"Excellent. Autopilot navigation in time compression is the most convenient "
+"way to get around in a system. Note that the autopilot will NOT stop you, "
+"you need to do that yourself."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:24
+#, lua-format
+msgid ""
+"As you can see, there is another ship here. We're going to board it. For "
+"this, you must do three things.\n"
+"- First, target the ship. You can do this with %s, or by clicking on the "
+"ship.\n"
+"- Then, come to a (near) stop right on top of the ship. You learned how to "
+"do this earlier.\n"
+"- Finally, use %s to board the ship."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:28
+msgid ""
+"You have successfully boarded the ship. Boarding is useful in a number of "
+"situations, for example when you want to steal cargo or credits from a ship "
+"you've disabled in combat, or if a ship is asking for help."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:29
+#, lua-format
+msgid ""
+"The final step in this tutorial is landing. Landing works the same way as "
+"boarding, but with planets and stations. Target a planet with %s or the "
+"mouse, then use %s to request landing permission. If permission is granted, "
+"slow to a stop over the planet or station, then press %s again to land.\n"
+"\n"
+"Land on Paul 2 now. Remember, you can use the overlay map to get there "
+"quicker!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:32
+#, lua-format
+msgid ""
+"Good job, you have landed on Paul 2. Your game will automatically be saved "
+"whenever you land. As a final tip, you can press %s even if you haven't "
+"targeted a planet or station - you will automatically target the nearest "
+"landable one.\n"
+"\n"
+"Congratulations! This concludes the basic operation tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:36
+#, lua-format
+msgid "Fly around (%ds remaining)"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:37
+#, lua-format
+msgid ""
+"Press and hold %s until you stop turning, then thrust until you come to a "
+"(near) stop"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:38
+#, lua-format
+msgid "Press %s to open the overlay map"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:39
+#, lua-format
+msgid "Target the ship with %s, then approach it and press %s to board"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:40
+#, lua-format
+msgid ""
+"Target Paul 2 with %s, then request landing permission with %s. Once "
+"granted, press %s again to land"
 msgstr ""

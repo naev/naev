@@ -147,3 +147,5 @@ src/toolkit.c
 src/unidiff.c
 src/utf8.c
 src/weapon.c
+dat/events/tutorial/tutorial.lua
+dat/events/tutorial/tutorial-basic.lua
