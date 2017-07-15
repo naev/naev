@@ -33,6 +33,7 @@ static int naev_keyEnableAll( lua_State *L );
 static int naev_keyDisableAll( lua_State *L );
 static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
+static int naev_gettext( lua_State *L );
 static const luaL_reg naev_methods[] = {
    { "lang", naev_lang },
    { "ticks", naev_ticks },
@@ -42,6 +43,7 @@ static const luaL_reg naev_methods[] = {
    { "keyDisableAll", naev_keyDisableAll },
    { "eventStart", naev_eventStart },
    { "missionStart", naev_missionStart },
+   { "gettext", naev_gettext },
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -273,6 +275,21 @@ static int naev_missionStart( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief gettext supporte.
+ * 
+ * @usage naev.gettext( str )
+ *    @luatparam str String to gettext on.
+ *    @luatreturn The string converted to gettext.
+ * @luafunc gettext( str )
+ */
+static int naev_gettext( lua_State *L )
+{
+   const char *str;
+   str = luaL_checkstring(L, 1);
+   lua_pushstring(L, _(str) );
+   return 1;
+}
 
 
 
