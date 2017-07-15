@@ -963,7 +963,7 @@ int ships_load (void)
 
    /* Shrink stack. */
    array_shrink(&ship_stack);
-   DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
    for (i=0; i<(int)nfiles; i++)

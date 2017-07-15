@@ -755,7 +755,7 @@ static int sound_makeList (void)
    /* shrink to minimum ram usage */
    sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
-   DEBUG(_("Loaded %d sound%s"), sound_nlist, (sound_nlist==1)?"":"s");
+   DEBUG( ngettext("Loaded %d sound", "Loaded %d sounds", sound_nlist), sound_nlist );
 
    /* More clean up. */
    free(files);

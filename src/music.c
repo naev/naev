@@ -330,7 +330,7 @@ static int music_find (void)
       free(files[i]);
    }
 
-   DEBUG(_("Loaded %d song%c"), nmusic, (nmusic==1)?' ':'s');
+   DEBUG( ngettext("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
    free(files);

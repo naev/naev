@@ -575,7 +575,7 @@ int ai_load (void)
    }
 
    n = array_size(profiles);
-   DEBUG( _("Loaded %d AI Profile%c"), n, (n==1)?' ':'s');
+   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", n ), n );
 
    /* More clean up. */
    free(files);

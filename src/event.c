@@ -615,7 +615,7 @@ int events_load (void)
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG(_("Loaded %d Event%s"), event_ndata, (event_ndata==1) ? "" : "s" );
+   DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", event_ndata ), event_ndata );
 
    return 0;
 }

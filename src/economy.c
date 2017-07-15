@@ -362,7 +362,7 @@ int commodity_load (void)
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG(_("Loaded %d Commodit%s"), commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
+   DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 
    return 0;
 

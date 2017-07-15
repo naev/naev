@@ -2307,7 +2307,7 @@ int outfit_load (void)
    free(outfit_names);
 #endif
 
-   DEBUG("Loaded %d Outfit%s", noutfits, (noutfits == 1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
 }

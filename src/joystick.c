@@ -170,7 +170,7 @@ int joystick_init (void)
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
-   DEBUG(_("%d joystick%s detected"), numjoysticks, (numjoysticks==1)?"":"s" );
+   DEBUG( ngettext("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
    for (i=0; i < numjoysticks; i++) {
       const char *jname;
 #if SDL_VERSION_ATLEAST(2,0,0)

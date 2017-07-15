@@ -938,7 +938,7 @@ int missions_load (void)
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG(_("Loaded %d Mission%s"), mission_nstack, (mission_nstack==1) ? "" : "s" );
+   DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", mission_nstack ), mission_nstack );
 
    return 0;
 }
