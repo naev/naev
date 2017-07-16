@@ -1201,14 +1201,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    temp->env = LUA_NOREF;
    temp->sched_env = LUA_NOREF;
 
-   temp->name = xml_nodeProp(parent,"name");
-   if (temp->name == NULL)
-      WARN(_("Faction from %s has invalid or no name"), FACTION_DATA_PATH);
-
    player = 0;
-   node = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode; 
    do {
-
       /* Only care about nodes. */
       xml_onlyNodes(node);
 
@@ -1219,6 +1214,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
+      xmlr_strd(node,"name",temp->name);
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
       if (xml_isNode(node, "colour")) {
@@ -1343,6 +1339,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       DEBUG(_("Unknown node '%s' in faction '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
+   if (temp->name == NULL)
+      WARN(_("Faction from %s has invalid or no name"), FACTION_DATA_PATH);
    if (player==0)
       DEBUG(_("Faction '%s' missing player tag."), temp->name);
    if ((temp->env==LUA_NOREF) && !faction_isFlag( temp, FACTION_STATIC ))
@@ -1365,10 +1363,18 @@ static void faction_parseSocial( xmlNodePtr parent )
    int mod;
    int mem;
 
-   buf = xml_nodeProp(parent,"name");
-   base = &faction_stack[faction_get(buf)];
-   free(buf);
+   /* Get name. */
+   base = NULL;
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+      if (xml_isNode(node,"name")) {
+         base = &faction_stack[ faction_get( xml_get(node) ) ];
+         break;
+      }
+   } while (xml_nextNode(node));
 
+   /* Parse social stuff. */
    node = parent->xmlChildrenNode;
    do {
 
