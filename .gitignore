@@ -2,6 +2,8 @@
 *.d
 *.a
 *.pyc
+m4/*.m4
+m4/*.m4~
 .hgignore
 VERSION
 ndata
@@ -44,6 +46,7 @@ extras/.dirstamp
 Naev.app
 datapath.lua
 core
+po/POTFILES
 
 /.cproject
 /.project
