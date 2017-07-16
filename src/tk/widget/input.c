@@ -208,6 +208,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
 
    /* Check to see if is in filter to ignore. */
    if (inp->dat.inp.filter != NULL) {
+      i = 0;
       while ((c = u8_nextchar( inp->dat.inp.filter, &i )))
          if (c == ch)
             return 1; /* Ignored. */
