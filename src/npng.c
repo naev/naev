@@ -73,7 +73,7 @@ static void npng_warn( png_structp png_ptr, png_const_charp warning_message )
       if (strcmp(&ignore[i], warning_message) == 0)
          return;
 
-   logprintf(stderr, "%s\n", warning_message);
+   logprintf(stderr, 1, "%s", warning_message);
 }
 
 /**

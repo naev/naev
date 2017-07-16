@@ -157,7 +157,7 @@ int cli_warn( lua_State *L )
    const char *msg;
 
    msg = luaL_checkstring(L,1);
-   logprintf( stderr, _("Warning: %s\n"), msg );
+   logprintf( stderr, 1, _("Warning: %s\n"), msg );
 
    return 0;
 }

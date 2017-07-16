@@ -17,13 +17,13 @@
 #define _(String) gettext(String)
 #define gettext_noop(String) String
 
-#define LOG(str, args...)  (logprintf(stdout, NULL, str, ## args))
+#define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
-#define WARN(str, args...) (logprintf(stderr, _("Warning: [%s] "), str, __func__, ## args), abort())
+#define WARN(str, args...) (logprintf(stderr, 0, _("Warning: [%s] "), __func__), logprintf( stderr, 1, str, ## args), abort())
 #else /* DEBUG_PARANOID */
-#define WARN(str, args...) (logprintf(stderr, _("Warning: [%s] "), str, __func__, ## args))
+#define WARN(str, args...) (logprintf(stderr, 0, _("Warning: [%s] "), __func__), logprintf( stderr, 1, str, ## args))
 #endif /* DEBUG_PARANOID */
-#define ERR(str, args...)  (logprintf(stderr, _("ERROR %s:%d [%s]: "), str, __FILE__, __LINE__, __func__, ## args), abort())
+#define ERR(str, args...)  (logprintf(stderr, 0, _("ERROR %s:%d [%s]: "), __FILE__, __LINE__, __func__), logprintf( stderr, 1, str, ## args), abort())
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...) LOG(str, ## args)
@@ -35,7 +35,7 @@
 #endif /* DEBUG */
 
 
-int logprintf( FILE *stream, const char *hdr, const char *fmt, ... );
+int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_redirect (void);
 int log_isTerminal (void);
 void log_copy( int enable );
