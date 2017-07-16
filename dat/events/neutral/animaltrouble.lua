@@ -5,18 +5,13 @@
 -- This event occurs after the player has done the "Animal transport" mission.
 --]]
 
-lang = naev.lang()
-if lang == "es" then
-    -- not translated atm
-else -- default english 
-    text = {}
-    text[1] = [[Suddenly, your instruments go haywire, and your ship careens out of control. The controls aren't responding! Something is wrong with your systems!]]
-    text[2] = [[You've found the cause of the problem. One of the little rodents you transported for that Sirian apparently got out of the crate on the way, and gnawed through some of your ship's circuitry. The creature died in the ensuing short-circuit. You've fixed the damage, and your ship is under control again.]]
+text = {}
+text[1] = _([[Suddenly, your instruments go haywire, and your ship careens out of control. The controls aren't responding! Something is wrong with your systems!]])
+text[2] = _([[You've found the cause of the problem. One of the little rodents you transported for that Sirian apparently got out of the crate on the way, and gnawed through some of your ship's circuitry. The creature died in the ensuing short-circuit. You've fixed the damage, and your ship is under control again.]])
 
-    title = {}
-    title[1] = "Panic!"
-    title[2] = "Calm"
-end 
+title = {}
+title[1] = _("Panic!")
+title[2] = _("Calm")
 
 
 function create ()
