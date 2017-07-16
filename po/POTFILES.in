@@ -426,3 +426,4 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/snd/music.lua
+dat/commodity.xml
