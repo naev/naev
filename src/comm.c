@@ -439,9 +439,9 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
    if (str == NULL)
-      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %PRIu64 credits to not leave you as a hunk of floating debris.\"\n\nPay %PRIu64 credits?"), price, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %"PRIu64" credits to not leave you as a hunk of floating debris.\"\n\nPay %"PRIu64" credits?"), price, price );
    else
-      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %PRIu64 credits?"), str, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %"PRIu64" credits?"), str, price );
 
    /* Said no. */
    if (answer == 0) {
@@ -597,7 +597,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg( _("Request Fuel"), _("You need %PRIu64 more credits!"),
+      dialogue_msg( _("Request Fuel"), _("You need %"PRIu64" more credits!"),
             price - player.p->credits);
       return;
    }

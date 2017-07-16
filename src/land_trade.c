@@ -140,7 +140,7 @@ void commodity_update( unsigned int wid, char* str )
          "NA Cr./Ton\n"
          "\n"
          "%d Tons\n"
-         "%PRIu64 Cr.\n"),
+         "%"PRIu64" Cr.\n"),
          pilot_cargoFree(player.p),
          pilot_modCredits(player.p, 0) );
       window_modifyText( wid, "txtDInfo", buf );
@@ -157,10 +157,10 @@ void commodity_update( unsigned int wid, char* str )
    /* modify text */
    nsnprintf( buf, PATH_MAX,
          _("%d Tons\n"
-         "%PRIu64 Cr./Ton\n"
+         "%"PRIu64" Cr./Ton\n"
          "\n"
          "%d Tons\n"
-         "%PRIu64 Cr.\n"),
+         "%"PRIu64" Cr.\n"),
          pilot_cargoOwned( player.p, comname ),
          planet_commodityPrice( land_planet, com ),
          pilot_cargoFree(player.p),
