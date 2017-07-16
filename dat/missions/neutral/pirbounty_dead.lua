@@ -299,7 +299,7 @@ function pilot_death( p, attacker )
          hook.pilot( top_hunter, "land", "hunter_leave" )
          hook.jumpout( "hunter_leave" )
          hook.land( "hunter_leave" )
-         player.msg( "\027r" .. msg[2]:format( name ) .. "\0270" )
+         player.msg( "\ar" .. msg[2]:format( name ) .. "\a0" )
          hook.timer( 3000, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
@@ -425,11 +425,11 @@ end
 function fail( message )
    if message ~= nil then
       -- Pre-colourized, do nothing.
-      if message:find("\027") then
+      if message:find("\a") then
          player.msg( message )
       -- Colourize in red.
       else
-         player.msg( "\027r" .. message .. "\0270" )
+         player.msg( "\ar" .. message .. "\a0" )
       end
    end
    misn.finish( false )

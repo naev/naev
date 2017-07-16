@@ -2,7 +2,6 @@
 -- This script allows the player to choose a tutorial module to run, or return to the main menu.
 
 -- localization stuff, translators would work here
-_ = naev.gettext
 menutitle = _("Tutorial Menu")
 menutext = _("Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:")
 

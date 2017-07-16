@@ -87,7 +87,7 @@ function jumpin()
     if not firstjump then player.refuel() end
     if system.cur() == system.get("Navajo") then
         hook.land( "land_clean" )
-        hook.timer(2000, "jumpmsg", message7:format("\027bshift\0270"))
+        hook.timer(2000, "jumpmsg", message7:format("\abshift\a0"))
         player.omsgChange(omsg, hyperomsg3:format(tutGetKey("land")), 0)
     elseif firstjump then
         hook.timer(2000, "jumpmsg", message6)

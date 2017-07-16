@@ -300,11 +300,11 @@ end
 function fail( message )
    if message ~= nil then
       -- Pre-colourized, do nothing.
-      if message:find("\027") then
+      if message:find("\a") then
          player.msg( message )
       -- Colourize in red.
       else
-         player.msg( "\027r" .. message .. "\0270" )
+         player.msg( "\ar" .. message .. "\a0" )
       end
    end
    misn.finish( false )

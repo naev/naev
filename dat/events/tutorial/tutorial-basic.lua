@@ -4,7 +4,6 @@ include("proximity.lua")
 include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
-_ = naev.gettext
 title1 = _("Tutorial: Basic Operation")
 message1 = _([[Welcome to the basic operation tutorial.
 
