@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-16 08:30+0900\n"
+"POT-Creation-Date: 2017-07-16 16:47+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1324,69 +1324,69 @@ msgstr ""
 msgid "Commodity '%s' not found in stack"
 msgstr ""
 
-#: src/economy.c:231
+#: src/economy.c:246
 #, c-format
 msgid "Commodity from %s has invalid or no name"
 msgstr ""
 
-#: src/economy.c:250
+#: src/economy.c:248
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
 
-#: src/economy.c:324
+#: src/economy.c:322
 #, c-format
 msgid "'%s' is not valid XML."
 msgstr ""
 
-#: src/economy.c:330 src/faction.c:1445
+#: src/economy.c:328 src/faction.c:1451
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/economy.c:336 src/faction.c:1451 src/ship.c:948 src/space.c:1598
+#: src/economy.c:334 src/faction.c:1457 src/ship.c:948 src/space.c:1598
 #: src/space.c:3228
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
-#: src/economy.c:359 src/slots.c:84 src/spfx.c:261 src/start.c:163
+#: src/economy.c:357 src/slots.c:84 src/spfx.c:261 src/start.c:163
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/economy.c:365
+#: src/economy.c:363
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/economy.c:415
+#: src/economy.c:413
 #, c-format
 msgid "Price for commodity '%s' not known."
 msgstr ""
 
-#: src/economy.c:524
+#: src/economy.c:522
 msgid "Unable to create CSparse Matrix."
 msgstr ""
 
-#: src/economy.c:542 src/economy.c:545
+#: src/economy.c:540 src/economy.c:543
 msgid "Unable to enter CSparse Matrix Cell."
 msgstr ""
 
-#: src/economy.c:558
+#: src/economy.c:556
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:661 src/gui.c:1924 src/news.c:103 src/nfile.c:747
+#: src/economy.c:659 src/gui.c:1924 src/news.c:103 src/nfile.c:747
 #: src/npng.c:93 src/npng.c:294 src/npng.c:297 src/npng.c:358 src/npng.c:366
 #: src/opengl_tex.c:189 src/opengl_tex.c:432 src/perlin.c:559 src/perlin.c:663
 #: src/perlin.c:753 src/physics.c:484 src/plasmaf.c:71
 msgid "Out of Memory"
 msgstr ""
 
-#: src/economy.c:682
+#: src/economy.c:680
 msgid "Failed to solve the Economy System."
 msgstr ""
 
@@ -1893,17 +1893,12 @@ msgstr ""
 msgid "areEnemies: %d is an invalid faction"
 msgstr ""
 
-#: src/faction.c:1206
-#, c-format
-msgid "Faction from %s has invalid or no name"
-msgstr ""
-
-#: src/faction.c:1259
+#: src/faction.c:1255
 #, c-format
 msgid "Faction '%s' has duplicate 'spawn' tag."
 msgstr ""
 
-#: src/faction.c:1265
+#: src/faction.c:1261
 #, c-format
 msgid ""
 "Failed to run spawn script: %s\n"
@@ -1911,12 +1906,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1278
+#: src/faction.c:1274
 #, c-format
 msgid "Faction '%s' has duplicate 'standing' tag."
 msgstr ""
 
-#: src/faction.c:1284
+#: src/faction.c:1280
 #, c-format
 msgid ""
 "Failed to run standing script: %s\n"
@@ -1924,12 +1919,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1302
+#: src/faction.c:1298
 #, c-format
 msgid "Faction '%s' has duplicate 'equip' tag."
 msgstr ""
 
-#: src/faction.c:1308
+#: src/faction.c:1304
 #, c-format
 msgid ""
 "Failed to run equip script: %s\n"
@@ -1937,37 +1932,42 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1321
+#: src/faction.c:1317
 #, c-format
 msgid "Faction '%s' has duplicate 'logo' tag."
 msgstr ""
 
-#: src/faction.c:1343
+#: src/faction.c:1339
 #, c-format
 msgid "Unknown node '%s' in faction '%s'"
 msgstr ""
 
-#: src/faction.c:1347
+#: src/faction.c:1343
+#, c-format
+msgid "Faction from %s has invalid or no name"
+msgstr ""
+
+#: src/faction.c:1345
 #, c-format
 msgid "Faction '%s' missing player tag."
 msgstr ""
 
-#: src/faction.c:1349
+#: src/faction.c:1347
 #, c-format
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1509
+#: src/faction.c:1515
 #, c-format
 msgid "Faction: %s and %s aren't completely mutual allies!"
 msgstr ""
 
-#: src/faction.c:1523
+#: src/faction.c:1529
 #, c-format
 msgid "Faction: %s and %s aren't completely mutual enemies!"
 msgstr ""
 
-#: src/faction.c:1532
+#: src/faction.c:1538
 #, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
@@ -3441,7 +3441,7 @@ msgstr ""
 msgid "Savegame '%s' invalid!"
 msgstr ""
 
-#: src/log.c:307
+#: src/log.c:310
 #, c-format
 msgid "An error occurred while buffering %s!"
 msgstr ""
@@ -4364,11 +4364,11 @@ msgstr ""
 msgid "Error renaming %s to %s"
 msgstr ""
 
-#: src/nlua.c:231
+#: src/nlua.c:248
 msgid "Failed to create new Lua state."
 msgstr ""
 
-#: src/nlua.c:338 src/nlua.c:339
+#: src/nlua.c:356 src/nlua.c:357
 #, c-format
 msgid "include(): %s not found in ndata."
 msgstr ""
@@ -4497,21 +4497,21 @@ msgstr ""
 msgid "Music '%s' invalid or failed to load."
 msgstr ""
 
-#: src/nlua_naev.c:131 src/options.c:611
+#: src/nlua_naev.c:129 src/options.c:611
 msgid "Not bound"
 msgstr ""
 
-#: src/nlua_naev.c:148
+#: src/nlua_naev.c:146
 #, c-format
 msgid "joy button %d"
 msgstr ""
 
-#: src/nlua_naev.c:153
+#: src/nlua_naev.c:151
 #, c-format
 msgid "joy axis %d-"
 msgstr ""
 
-#: src/nlua_naev.c:158
+#: src/nlua_naev.c:156
 #, c-format
 msgid "joy axis %d+"
 msgstr ""
@@ -7640,73 +7640,1215 @@ msgstr ""
 msgid "Trying to destroy weapon not found in stack!"
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:6
-msgid "Tutorial Menu"
+#: dat/ai/baddie.lua:18
+msgid "You can't bribe me!"
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:7
+#: dat/ai/baddie.lua:19
+msgid "I won't give you fuel!"
+msgstr ""
+
+#: dat/ai/base.lua:9 dat/ai/collective.lua:11
+msgid "No response."
+msgstr ""
+
+#: dat/ai/civilian.lua:8 dat/ai/trader.lua:8
+msgid "Mayday! We are under attack!"
+msgstr ""
+
+#: dat/ai/civilian.lua:9 dat/ai/independent.lua:16 dat/ai/thurion.lua:16
+#: dat/ai/trader.lua:9
+msgid "Requesting assistance. We are under attack!"
+msgstr ""
+
+#: dat/ai/civilian.lua:10
+msgid "Civilian vessel under attack! Requesting help!"
+msgstr ""
+
+#: dat/ai/civilian.lua:11 dat/ai/independent.lua:18 dat/ai/thurion.lua:18
+#: dat/ai/trader.lua:11
+msgid "Help! Ship under fire!"
+msgstr ""
+
+#: dat/ai/civilian.lua:12 dat/ai/independent.lua:19 dat/ai/thurion.lua:19
+#: dat/ai/trader.lua:12
+msgid "Taking hostile fire! Need assistance!"
+msgstr ""
+
+#: dat/ai/civilian.lua:13 dat/ai/independent.lua:20 dat/ai/thurion.lua:20
+#: dat/ai/trader.lua:13
+msgid "We are under attack, require support!"
+msgstr ""
+
+#: dat/ai/civilian.lua:14 dat/ai/independent.lua:21 dat/ai/thurion.lua:21
+#: dat/ai/trader.lua:14
+msgid "Mayday! Ship taking damage!"
+msgstr ""
+
+#: dat/ai/civilian.lua:15
+#, lua-format
+msgid "Mayday! Civilian %s being assaulted!"
+msgstr ""
+
+#: dat/ai/civilian.lua:37 dat/ai/independent.lua:35
+msgid "\"Just leave me alone!\""
+msgstr ""
+
+#: dat/ai/civilian.lua:38 dat/ai/independent.lua:36
+msgid "\"What do you want from me!?\""
+msgstr ""
+
+#: dat/ai/civilian.lua:39 dat/ai/independent.lua:37
+msgid "\"Get away from me!\""
+msgstr ""
+
+#: dat/ai/civilian.lua:48 dat/ai/independent.lua:46 dat/ai/thurion.lua:47
+#: dat/ai/trader.lua:44
+#, lua-format
+msgid "\"I'll supply your ship with fuel for %d credits.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:16 dat/ai/frontier_police.lua:16 dat/ai/soromid.lua:35
+msgid "\"I shall especially enjoy your death.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:19 dat/ai/frontier_police.lua:19 dat/ai/goddard.lua:16
+msgid "\"You insult my honour.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:20 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:17
+msgid "\"I find your lack of honour disturbing.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:21 dat/ai/frontier_police.lua:21 dat/ai/goddard.lua:18
+msgid "\"You disgust me.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:22 dat/ai/frontier_police.lua:22 dat/ai/goddard.lua:19
+msgid "\"Bribery carries a harsh penalty.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:23
+msgid "\"House Dvaered does not lower itself to common scum.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:34
+msgid "\"You are not worthy of my attention.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:36 dat/ai/frontier_police.lua:36
+#, lua-format
+msgid "\"For you I could make an exception for %d credits.\""
+msgstr ""
+
+#: dat/ai/dvaered.lua:56 dat/ai/goddard.lua:44
+msgid "Prepare to face annihilation!"
+msgstr ""
+
+#: dat/ai/dvaered.lua:57 dat/ai/goddard.lua:45
+msgid "I shall wash my hull in your blood!"
+msgstr ""
+
+#: dat/ai/dvaered.lua:58 dat/ai/frontier_police.lua:58 dat/ai/goddard.lua:46
+msgid "Your head will make a great trophy!"
+msgstr ""
+
+#: dat/ai/dvaered.lua:59
+msgid "You're no match for the Dvaered!"
+msgstr ""
+
+#: dat/ai/dvaered.lua:60 dat/ai/frontier_police.lua:60
+msgid "Death awaits you!"
+msgstr ""
+
+#: dat/ai/empire.lua:18
+msgid "The Empire is watching you."
+msgstr ""
+
+#: dat/ai/empire.lua:20
+msgid "The Emperor sees all."
+msgstr ""
+
+#: dat/ai/empire.lua:29 dat/ai/empire.lua:32
+msgid "\"My fuel is property of the Empire.\""
+msgstr ""
+
+#: dat/ai/empire.lua:38 dat/ai/soromid.lua:30
+#, lua-format
+msgid "\"I suppose I could spare some fuel for %d credits.\""
+msgstr ""
+
+#: dat/ai/empire.lua:44
+#, lua-format
+msgid "\"For some %d credits I could forget about seeing you.\""
+msgstr ""
+
+#: dat/ai/empire.lua:45
+msgid "\"Now scram before I change my mind.\""
+msgstr ""
+
+#: dat/ai/empire.lua:48 dat/ai/mercenary.lua:20 dat/ai/proteron.lua:40
+msgid "\"You won't buy your way out of this one.\""
+msgstr ""
+
+#: dat/ai/empire.lua:49
+msgid "\"The Empire likes to make examples out of scum like you.\""
+msgstr ""
+
+#: dat/ai/empire.lua:50 dat/ai/proteron.lua:42
+msgid "\"You've made a huge mistake.\""
+msgstr ""
+
+#: dat/ai/empire.lua:51 dat/ai/proteron.lua:43
+msgid "\"Bribery carries a harsh penalty, scum.\""
+msgstr ""
+
+#: dat/ai/empire.lua:52 dat/ai/proteron.lua:44
+msgid "\"I'm not interested in your blood money!\""
+msgstr ""
+
+#: dat/ai/empire.lua:53 dat/ai/proteron.lua:45
+msgid "\"All the money in the world won't save you now!\""
+msgstr ""
+
+#: dat/ai/empire.lua:76 dat/ai/proteron.lua:68 dat/ai/soromid.lua:64
+msgid "There is no room in this universe for scum like you!"
+msgstr ""
+
+#: dat/ai/empire.lua:77
+msgid "The Empire will enjoy your death!"
+msgstr ""
+
+#: dat/ai/empire.lua:78
+msgid "Your head will make a fine gift for the Emperor!"
+msgstr ""
+
+#: dat/ai/empire.lua:79
+msgid "None survive the wrath of the Emperor!"
+msgstr ""
+
+#: dat/ai/empire.lua:80 dat/ai/proteron.lua:72
+msgid "Enjoy your last moments, criminal!"
+msgstr ""
+
+#: dat/ai/empire.lua:84 dat/ai/proteron.lua:76
+msgid "You dare attack me!"
+msgstr ""
+
+#: dat/ai/empire.lua:85
+msgid "You are no match for the Empire!"
+msgstr ""
+
+#: dat/ai/empire.lua:86 dat/ai/proteron.lua:78
+msgid "The Empire will have your head!"
+msgstr ""
+
+#: dat/ai/empire.lua:87 dat/ai/flf.lua:68 dat/ai/proteron.lua:79
+#: dat/ai/soromid.lua:76
+msgid "You'll regret that!"
+msgstr ""
+
+#: dat/ai/empire.lua:88 dat/ai/proteron.lua:80 dat/ai/soromid.lua:77
+msgid "That was a fatal mistake!"
+msgstr ""
+
+#: dat/ai/empire_refuel.lua:7
+msgid "Empire refuel ship under attack!"
+msgstr ""
+
+#: dat/ai/empire_refuel.lua:19
+msgid "\"Sure thing.\""
+msgstr ""
+
+#: dat/ai/empire_refuel.lua:24
+msgid "I'm out of here."
+msgstr ""
+
+#: dat/ai/flf.lua:28
+msgid "\"The only way to deal with scum like you is with cannons!\""
+msgstr ""
+
+#: dat/ai/flf.lua:31
+#, lua-format
+msgid "\"It'll cost you %d credits for me to ignore your dirty presence.\""
+msgstr ""
+
+#: dat/ai/flf.lua:32
+msgid "\"Begone before I change my mind.\""
+msgstr ""
+
+#: dat/ai/flf.lua:38
+#, lua-format
+msgid "\"I should be able to spare some fuel for %d credits.\""
+msgstr ""
+
+#: dat/ai/flf.lua:40
+msgid "\"I can't spare fuel for you.\""
+msgstr ""
+
+#: dat/ai/flf.lua:60
+msgid "For the Frontier!"
+msgstr ""
+
+#: dat/ai/flf.lua:61
+msgid "You'll make great target practice!"
+msgstr ""
+
+#: dat/ai/flf.lua:62
+msgid "Purge the oppressors!"
+msgstr ""
+
+#: dat/ai/flf.lua:66
+msgid "You are no match for the FLF."
+msgstr ""
+
+#: dat/ai/flf.lua:67
+msgid "I've killed scum far more dangerous than you."
+msgstr ""
+
+#: dat/ai/flf.lua:69
+msgid "Death to the enemies of the Frontier!"
+msgstr ""
+
+#: dat/ai/frontier_police.lua:23
+msgid "\"The Frontier does not lower itself to common scum.\""
+msgstr ""
+
+#: dat/ai/frontier_police.lua:34
 msgid ""
-"Welcome to the Naev tutorial menu. Please select a tutorial module from the "
-"list below:"
+"\"Mare magno turbantibus. That means that I don't care about your problems.\""
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:9
-msgid "Play All"
+#: dat/ai/frontier_police.lua:56
+msgid "Alea iacta est!"
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:11 dat/events/tutorial/tutorial-basic.lua:8
-msgid "Tutorial: Basic Operation"
+#: dat/ai/frontier_police.lua:57
+msgid "Morituri te salutant!"
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:12
-msgid "Tutorial: Exploration and Discovery"
+#: dat/ai/frontier_police.lua:59
+msgid "Cave canem!"
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:13
-msgid "Tutorial: Interstellar Flight"
+#: dat/ai/goddard.lua:20
+msgid "\"House Goddard does not lower itself to common scum.\""
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:14
-msgid "Tutorial: Basic Combat"
+#: dat/ai/goddard.lua:30
+#, lua-format
+msgid "\"I could do you the favour of refueling for the price of %d credits.\""
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:15
-msgid "Tutorial: Missile Combat"
+#: dat/ai/goddard.lua:47
+msgid "These moments will be your last!"
 msgstr ""
 
+#: dat/ai/goddard.lua:48
+msgid "You are a parasite!"
+msgstr ""
+
+#: dat/ai/independent.lua:15 dat/ai/thurion.lua:15
+msgid "Local security: requesting assistance!"
+msgstr ""
+
+#: dat/ai/independent.lua:17 dat/ai/thurion.lua:17
+msgid "Vessel under attack! Requesting help!"
+msgstr ""
+
+#: dat/ai/mercenary.lua:16
+#, lua-format
+msgid "\"Your life is worth %d credits to me.\""
+msgstr ""
+
+#: dat/ai/mercenary.lua:17
+msgid "\"Beat it.\""
+msgstr ""
+
+#: dat/ai/mercenary.lua:22
+msgid "\"I'm afraid you can't make it worth my while.\""
+msgstr ""
+
+#: dat/ai/mercenary.lua:43
+msgid "Don't take this personally."
+msgstr ""
+
+#: dat/ai/mercenary.lua:44
+msgid "It's just business."
+msgstr ""
+
+#: dat/ai/mercenary.lua:48
+msgid "Your skull will make a great hood ornament."
+msgstr ""
+
+#: dat/ai/mercenary.lua:49
+msgid "I've destroyed ships twice the size of yours!"
+msgstr ""
+
+#: dat/ai/mercenary.lua:50
+msgid "I'll crush you like a grape!"
+msgstr ""
+
+#: dat/ai/mercenary.lua:51
+msgid "This isn't what I signed up for!"
+msgstr ""
+
+#: dat/ai/pirate.lua:32
+msgid "\"You won't be able to slide out of this one!\""
+msgstr ""
+
+#: dat/ai/pirate.lua:36
+#, lua-format
+msgid "\"It'll cost you %d credits for me to ignore your pile of rubbish.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:37
+#, lua-format
+msgid "\"I'm in a good mood so I'll let you go for %d credits.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:38
+#, lua-format
+msgid "\"Send me %d credits or you're dead.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:39
+#, lua-format
+msgid "\"Pay up %d credits or it's the end of the line.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:40
+#, lua-format
+msgid "\"Your money or your life. %d credits and make the choice quickly.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:41
+#, lua-format
+msgid "\"Money talks bub. %d up front or get off my channel.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:42
+#, lua-format
+msgid "\"Shut up and give me your money! %d credits now.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:43
+#, lua-format
+msgid ""
+"\"You're either really stupid to be chatting or really rich. %d or shut up.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:44
+#, lua-format
+msgid ""
+"\"If you're willing to negotiate I'll gladly take %d credits to not kill you."
+"\""
+msgstr ""
+
+#: dat/ai/pirate.lua:45
+#, lua-format
+msgid "\"You give me %d credits and I'll act like I never saw you.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:46
+#, lua-format
+msgid ""
+"\"So this is the part where you pay up or get shot up. Your choice. What'll "
+"be, %d or...\""
+msgstr ""
+
+#: dat/ai/pirate.lua:47
+#, lua-format
+msgid ""
+"\"Pay up or don't. %d credits now just means I'll wait till later to collect "
+"the rest.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:48
+#, lua-format
+msgid "\"This is a toll road, pay up %d credits or die.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:52
+msgid "\"You're lucky I'm so kind.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:53
+msgid "\"Life doesn't get easier than this.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:54
+msgid "\"Pleasure doing business.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:55
+msgid "\"See you again, real soon.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:56
+msgid "\"I'll be around if you get generous again.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:57
+msgid "\"Lucky day, lucky day!\""
+msgstr ""
+
+#: dat/ai/pirate.lua:58
+msgid "\"And I didn't even have to kill anyone!\""
+msgstr ""
+
+#: dat/ai/pirate.lua:59
+msgid "\"See, this is how we become friends.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:60
+msgid "\"Now if I kill you it'll be just for fun!\""
+msgstr ""
+
+#: dat/ai/pirate.lua:61
+msgid "\"You just made a good financial decision today.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:62
+msgid "\"Know what? I won't kill you.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:63
+msgid ""
+"\"Something feels strange. It's almost as if my urge to kill you has "
+"completely dissipated.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:64
+msgid "\"Can I keep shooting you anyhow? No? You sure? Fine.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:65
+msgid "\"And it only cost you an arm and a leg.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:78
+#, lua-format
+msgid "\"For you, only %d credits for a hundred units of fuel.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:99
+msgid "Prepare to be boarded!"
+msgstr ""
+
+#: dat/ai/pirate.lua:100
+msgid "Yohoho!"
+msgstr ""
+
+#: dat/ai/pirate.lua:101
+msgid "Arr!"
+msgstr ""
+
+#: dat/ai/pirate.lua:102
+msgid "What's a ship like you doing in a place like this?"
+msgstr ""
+
+#: dat/ai/pirate.lua:103
+msgid "Prepare to have your booty plundered!"
+msgstr ""
+
+#: dat/ai/pirate.lua:104
+msgid "Give me your credits or die!"
+msgstr ""
+
+#: dat/ai/pirate.lua:105
+msgid "Your ship's mine!"
+msgstr ""
+
+#: dat/ai/pirate.lua:106
+msgid "Oh ho ho, what do I see here?"
+msgstr ""
+
+#: dat/ai/pirate.lua:107
+msgid "You may want to send that distress signal now."
+msgstr ""
+
+#: dat/ai/pirate.lua:108
+msgid "It's time to die."
+msgstr ""
+
+#: dat/ai/pirate.lua:109
+msgid "Back so soon?"
+msgstr ""
+
+#: dat/ai/pirate.lua:110
+msgid "What? Were you expecting prince charming?"
+msgstr ""
+
+#: dat/ai/pirate.lua:111
+msgid "Long time no see."
+msgstr ""
+
+#: dat/ai/pirate.lua:112
+msgid "Nothing personal, just business."
+msgstr ""
+
+#: dat/ai/pirate.lua:113
+msgid "Nothing personal."
+msgstr ""
+
+#: dat/ai/pirate.lua:114
+msgid "Just business."
+msgstr ""
+
+#: dat/ai/pirate.lua:115
+msgid "I can already taste the rum."
+msgstr ""
+
+#: dat/ai/pirate.lua:116
+msgid "How else am I going to pay off my tab?"
+msgstr ""
+
+#: dat/ai/pirate.lua:117
+msgid "Seems you're being shot at."
+msgstr ""
+
+#: dat/ai/pirate.lua:118
+msgid "I'm trying to kill you. Is it working?"
+msgstr ""
+
+#: dat/ai/pirate.lua:119
+msgid "I'm sorry, I just don't like you."
+msgstr ""
+
+#: dat/ai/pirate.lua:123
+msgid "You dare attack me?!"
+msgstr ""
+
+#: dat/ai/pirate.lua:124
+msgid "You think that you can take me on?"
+msgstr ""
+
+#: dat/ai/pirate.lua:125
+msgid "Die!"
+msgstr ""
+
+#: dat/ai/pirate.lua:126
+msgid "You'll regret this!"
+msgstr ""
+
+#: dat/ai/pirate.lua:127
+msgid "You can either pray now or sit in hell later."
+msgstr ""
+
+#: dat/ai/pirate.lua:128
+msgid "Game over, you're dead!"
+msgstr ""
+
+#: dat/ai/pirate.lua:129
+msgid "I'm sorry things couldn't work out between us."
+msgstr ""
+
+#: dat/ai/pirate.lua:130
+msgid "Knock it off!"
+msgstr ""
+
+#: dat/ai/pirate.lua:131
+msgid "Shooting back isn't allowed!"
+msgstr ""
+
+#: dat/ai/pirate.lua:132
+msgid "You owe me 20 credits!"
+msgstr ""
+
+#: dat/ai/pirate.lua:133
+msgid "You owe me a new paint job!"
+msgstr ""
+
+#: dat/ai/pirate.lua:134
+msgid "Fred here said to shoot the red blip."
+msgstr ""
+
+#: dat/ai/pirate.lua:135
+msgid "Now you're in for it!"
+msgstr ""
+
+#: dat/ai/pirate.lua:136
+msgid "Did you really think you would get away with that?"
+msgstr ""
+
+#: dat/ai/pirate.lua:137
+msgid "I just painted this thing!"
+msgstr ""
+
+#: dat/ai/pirate.lua:138
+msgid "Rot."
+msgstr ""
+
+#: dat/ai/pirate.lua:139
+msgid "Burn."
+msgstr ""
+
+#: dat/ai/pirate.lua:140
+msgid "I can't wait to see you burn."
+msgstr ""
+
+#: dat/ai/pirate.lua:141
+msgid "Just. Stop. Moving."
+msgstr ""
+
+#: dat/ai/pirate.lua:142
+msgid "Die already!"
+msgstr ""
+
+#: dat/ai/pirate.lua:143
+msgid ""
+"Tell you what, if you can keep dodging for 20 minutes I'll let you live."
+msgstr ""
+
+#: dat/ai/pirate.lua:144
+msgid "Stop dodging!"
+msgstr ""
+
+#: dat/ai/pirate.lua:145
+msgid "Okay, that's enough of that!"
+msgstr ""
+
+#: dat/ai/proteron.lua:21
+msgid "\"My fuel isn't for sale.\""
+msgstr ""
+
+#: dat/ai/proteron.lua:24
+msgid "\"Sorry, my fuel isn't for sale.\""
+msgstr ""
+
+#: dat/ai/proteron.lua:30
+#, lua-format
+msgid "\"I can transfer some fuel for %d credits.\""
+msgstr ""
+
+#: dat/ai/proteron.lua:36
+#, lua-format
+msgid ""
+"\"House Proteron can always use some income. %d credits and you were never "
+"here.\""
+msgstr ""
+
+#: dat/ai/proteron.lua:37
+msgid "\"Get lost before I have to dispose of you.\""
+msgstr ""
+
+#: dat/ai/proteron.lua:41
+msgid "\"House Proteron likes to make examples out of scum like you.\""
+msgstr ""
+
+#: dat/ai/proteron.lua:69
+msgid "House Proteron will enjoy your death!"
+msgstr ""
+
+#: dat/ai/proteron.lua:70
+msgid "Your head will make a fine addition to my collection!"
+msgstr ""
+
+#: dat/ai/proteron.lua:71
+msgid "None survive the wrath of House Proteron!"
+msgstr ""
+
+#: dat/ai/proteron.lua:77
+msgid "You are no match for House Proteron!"
+msgstr ""
+
+#: dat/ai/sirius.lua:21 dat/ai/zalek.lua:22
+msgid "\"I do not have fuel to spare.\""
+msgstr ""
+
+#: dat/ai/sirius.lua:26
+#, lua-format
+msgid "\"I would be able to refuel your ship for %d credits.\""
+msgstr ""
+
+#: dat/ai/sirius.lua:31
+msgid "\"Your money is of no interest to me.\""
+msgstr ""
+
+#: dat/ai/sirius.lua:52
+msgid "The universe shall be cleansed of your presence!"
+msgstr ""
+
+#: dat/ai/sirius.lua:56
+msgid "Sirichana protect me!"
+msgstr ""
+
+#: dat/ai/sirius.lua:57
+msgid "You have made a grave error!"
+msgstr ""
+
+#: dat/ai/sirius.lua:58
+msgid "You do wrong in your provocations!"
+msgstr ""
+
+#: dat/ai/soromid.lua:21 dat/ai/soromid.lua:24
+msgid "\"The warriors of Sorom are not your personal refueller.\""
+msgstr ""
+
+#: dat/ai/soromid.lua:38
+msgid "\"Snivelling waste of carbon.\""
+msgstr ""
+
+#: dat/ai/soromid.lua:39
+msgid "\"Money won't save you from being purged from the gene pool.\""
+msgstr ""
+
+#: dat/ai/soromid.lua:40
+msgid "\"Culling you will be doing humanity a service.\""
+msgstr ""
+
+#: dat/ai/soromid.lua:41
+msgid "\"We do not consort with vermin.\""
+msgstr ""
+
+#: dat/ai/soromid.lua:42
+msgid "\"Who do you take us for, the Empire?\""
+msgstr ""
+
+#: dat/ai/soromid.lua:65
+msgid "Culling you will be doing humanity a service."
+msgstr ""
+
+#: dat/ai/soromid.lua:66
+msgid "Enjoy your last moments, worm!"
+msgstr ""
+
+#: dat/ai/soromid.lua:67
+msgid "Time for a little natural selection!"
+msgstr ""
+
+#: dat/ai/soromid.lua:68
+msgid "Might makes right!"
+msgstr ""
+
+#: dat/ai/soromid.lua:69
+msgid "Embrace your weakness!"
+msgstr ""
+
+#: dat/ai/soromid.lua:73
+msgid "Cunning, but foolish."
+msgstr ""
+
+#: dat/ai/soromid.lua:74
+msgid "Ambush! Defend yourselves!"
+msgstr ""
+
+#: dat/ai/soromid.lua:75
+msgid "You should have picked easier prey!"
+msgstr ""
+
+#: dat/ai/thurion.lua:22
+msgid "01010101011011100110010001100101011100100010000001100001011101000111010001100001011000110110101100100001"
+msgstr ""
+
+#: dat/ai/thurion.lua:36
+msgid "\"The Thurion will not be bribed!\""
+msgstr ""
+
+#: dat/ai/thurion.lua:37
+msgid "\"I have no use for your money.\""
+msgstr ""
+
+#: dat/ai/thurion.lua:38
+msgid "\"Credits are no replacement for a good shield.\""
+msgstr ""
+
+#: dat/ai/tpl/generic.lua:59
+#, lua-format
+msgid "Formation '%s' not found"
+msgstr ""
+
+#: dat/ai/trader.lua:10
+msgid "Merchant vessel under attack! Requesting help!"
+msgstr ""
+
+#: dat/ai/trader.lua:15
+#, lua-format
+msgid "Mayday! Merchant %s being assaulted!"
+msgstr ""
+
+#: dat/ai/trader.lua:36
+msgid "\"The Space Traders do not negotiate with criminals.\""
+msgstr ""
+
+#: dat/ai/zalek.lua:27
+#, lua-format
+msgid "\"I will agree to refuel your ship for %d credits.\""
+msgstr ""
+
+#: dat/ai/zalek.lua:33
+#, lua-format
+msgid "\"We will agree to end the battle for %d credits.\""
+msgstr ""
+
+#: dat/ai/zalek.lua:34
+msgid "\"Temporarily stopping fire.\""
+msgstr ""
+
+#: dat/ai/zalek.lua:39
+msgid "\"Keep your cash, you troglodyte.\""
+msgstr ""
+
+#: dat/ai/zalek.lua:40
+msgid "\"Don't make me laugh. Eat laser beam!\""
+msgstr ""
+
+#: dat/ai/zalek.lua:41
+msgid ""
+"\"My drones aren't interested in your ill-gotten gains and neither am I!\""
+msgstr ""
+
+#: dat/ai/zalek.lua:42
+msgid "\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\""
+msgstr ""
+
+#: dat/ai/zalek.lua:43
+msgid ""
+"\"While I admire the spirit of it, testing my patience will is suicide, NOT "
+"science.\""
+msgstr ""
+
+#: dat/ai/zalek.lua:63
+msgid "Move drones in to engage. Cook this clown!"
+msgstr ""
+
+#: dat/ai/zalek.lua:64
+msgid "Say hello to my little friends!"
+msgstr ""
+
+#: dat/ai/zalek.lua:65
+msgid "Ooh, more victi- ah, volunteers for our experiments!"
+msgstr ""
+
+#: dat/ai/zalek.lua:66
+msgid "We need a test subject to test our attack on; you'll do nicely!"
+msgstr ""
+
+#: dat/ai/zalek.lua:67
+msgid "Ready for a physics lesson, punk?"
+msgstr ""
+
+#: dat/ai/zalek.lua:68
+msgid "After we wax you, we can return to our experiments!"
+msgstr ""
+
+#: dat/ai/zalek.lua:72
+msgid "We're being attacked! Prepare defence protocols!"
+msgstr ""
+
+#: dat/ai/zalek.lua:73
+msgid "You just made a big mistake!"
+msgstr ""
+
+#: dat/ai/zalek.lua:74
+msgid "Our technology will fix your attitude!"
+msgstr ""
+
+#: dat/ai/zalek.lua:75
+msgid "You wanna do this? Have it your way."
+msgstr ""
+
+#: dat/events/start.lua:7
+msgid "Flying License Acquired!"
+msgstr ""
+
+#: dat/events/start.lua:8
+#, lua-format
+msgid ""
+"\"Congratulations, %s,\" your flying instructor says through the radio. "
+"\"You have earned your flying license! I must say, you are an excellent "
+"pilot, and one of my best students to date. You can keep that ship as a free "
+"gift.\""
+msgstr ""
+
+#: dat/events/start.lua:10
+msgid "Refresher"
+msgstr ""
+
+#: dat/events/start.lua:11
+msgid ""
+"\"I've got some extra time,\" says your flight instructor. \"Would you like "
+"a quick refresher on the flight controls, just to make sure you've got it "
+"all down?\""
+msgstr ""
+
+#: dat/events/start.lua:13
+msgid "No, thanks"
+msgstr ""
+
+#: dat/events/start.lua:14
+msgid ""
+"\"Ha, I guess you're eager to start, eh? Well, I won't hold you back. Just "
+"remember that you can review all of your ship's controls in the Options "
+"menu. Good luck!\" And with that, you set off on your journey."
+msgstr ""
+
+#: dat/events/start.lua:16
+msgid "I'll Take Some Refreshments"
+msgstr ""
+
+#: dat/events/start.lua:17
+msgid "\"Alright. Let's review your flight controls, then.\""
+msgstr ""
+
+#: dat/events/start.lua:19
+#, lua-format
+msgid ""
+"\"Move your ship with %s, %s, %s, and %s. You can also press %s and your "
+"ship will automatically follow the mouse pointer. Personally, I like to use "
+"the keyboard, but to each his own.\""
+msgstr ""
+
+#: dat/events/start.lua:21
+#, lua-format
+msgid ""
+"\"You can target planets, ships, and jump points by \ableft-clicking\a0 on "
+"them on your view, minimap, or overlay map. %s targets the nearest hostile "
+"ship, which is very useful in the heat of battle.\""
+msgstr ""
+
+#: dat/events/start.lua:23
+msgid ""
+"\"You can do whatever action is most appropriate with a planet, ship, or "
+"jump point by \abdouble-clicking\a0 on it or its indicator on your radar.\""
+msgstr ""
+
+#: dat/events/start.lua:25
+#, lua-format
+msgid ""
+"\"You can fire your primary weapon with %s, and your secondary weapon with "
+"%s. Don't forget that some weapons won't work properly unless you target the "
+"ship first, and some homing missile weapons require you to face your target "
+"until you get a lock.\""
+msgstr ""
+
+#: dat/events/start.lua:27
+#, lua-format
+msgid ""
+"\"Pressing %s will bring up the overlay map. This map shows everything you "
+"know about in the current system. You can right-click anywhere on this map "
+"to engage Autonav, which will automatically fly you to that location.\""
+msgstr ""
+
+#: dat/events/start.lua:29
+#, lua-format
+msgid ""
+"\"Pressing %s will bring up the star map, where you can look at the systems "
+"you know about. From here, you can also use Autonav to easily and quickly "
+"travel between systems.\""
+msgstr ""
+
+#: dat/events/start.lua:31
+#, lua-format
+msgid ""
+"\"Pressing %s will bring up the small menu, where you can quit the game or "
+"access the options menu.\""
+msgstr ""
+
+#: dat/events/start.lua:33
+#, lua-format
+msgid ""
+"\"And finally, pressing %s will bring up your information screen, where you "
+"can view your stats and missions.\""
+msgstr ""
+
+#: dat/events/start.lua:35
+#, lua-format
+msgid ""
+"\"Well, that's pretty much it! There are more controls, but they aren't "
+"really essential. You can review them later on in the Options menu if you "
+"want to. If you want a more in-depth overview, you can go through the "
+"tutorials from the main menu. Good luck, %s!\" And with that, you set off on "
+"your journey."
+msgstr ""
+
+#: dat/events/start.lua:40
+msgid "Pathfinder"
+msgstr ""
+
+#: dat/events/start.lua:41
+msgid "Death Trap"
+msgstr ""
+
+#: dat/events/start.lua:42
+msgid "Little Rascal"
+msgstr ""
+
+#: dat/events/start.lua:43
+msgid "Gunboat Diplomat"
+msgstr ""
+
+#: dat/events/start.lua:44
+msgid "Attitude Adjuster"
+msgstr ""
+
+#: dat/events/start.lua:45
+msgid "Vagabond"
+msgstr ""
+
+#: dat/events/start.lua:46
+msgid "Sky Cutter"
+msgstr ""
+
+#: dat/events/start.lua:47
+msgid "Blind Jump"
+msgstr ""
+
+#: dat/events/start.lua:48
+msgid "Terminal Velocity"
+msgstr ""
+
+#: dat/events/start.lua:49
+msgid "Eclipse"
+msgstr ""
+
+#: dat/events/start.lua:50
+msgid "Windjammer"
+msgstr ""
+
+#: dat/events/start.lua:51
+msgid "Icarus"
+msgstr ""
+
+#: dat/events/start.lua:52
+msgid "Heart of Lead"
+msgstr ""
+
+#: dat/events/start.lua:53
+msgid "Exitprise"
+msgstr ""
+
+#: dat/events/start.lua:54
+msgid "Commuter"
+msgstr ""
+
+#: dat/events/start.lua:55
+msgid "Serendipity"
+msgstr ""
+
+#: dat/events/start.lua:56
+msgid "Aluminum Mallard"
+msgstr ""
+
+#: dat/events/start.lua:57
+msgid "Titanic MLXVII"
+msgstr ""
+
+#: dat/events/start.lua:58
+msgid "Planet Jumper"
+msgstr ""
+
+#: dat/events/start.lua:59
+msgid "Outward Bound"
+msgstr ""
+
+#: dat/events/start.lua:60
+msgid "Shove Off"
+msgstr ""
+
+#: dat/events/start.lua:61
+msgid "Opportunity"
+msgstr ""
+
+#: dat/events/start.lua:62
+msgid "Myrmidon"
+msgstr ""
+
+#: dat/events/start.lua:63
+msgid "Fire Hazard"
+msgstr ""
+
+#: dat/events/start.lua:64
+msgid "Armchair Traveller"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-aoutfits.lua:6
 #: dat/events/tutorial/tutorial.lua:16
-msgid "Tutorial: Heat"
-msgstr ""
-
-#: dat/events/tutorial/tutorial.lua:17
 msgid "Tutorial: Activated Outfits"
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:18
-msgid "Tutorial: Disabling"
+#: dat/events/tutorial/tutorial-aoutfits.lua:7
+msgid ""
+"Welcome to the activated outfits tutorial.\n"
+"\n"
+"This tutorial explains how activated outfits differ from regular ones, and "
+"how to use them."
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:19
-msgid "Tutorial: The Planetary Screen"
+#: dat/events/tutorial/tutorial-aoutfits.lua:10
+msgid ""
+"Let's begin with some theory. In general, there exist three types of "
+"outfits: passive outfits, activated outfits and weapons. Weapons are covered "
+"in another tutorial. Let's examine passive and activated outfits here.\n"
+"\n"
+"Passive outfits modify your ship some way, and are always in effect. Engine "
+"Reroutes, Generators, Armor and Fuel Pods are examples of passive outfits.\n"
+"\n"
+"Activated outfits have three possible states they can be in: off, on and "
+"cooldown. While off or in cooldown, the outfit does nothing for you. It only "
+"weighs down your ship. When on, its effects are applied to your ship, and it "
+"will consume whatever resources it demands from your ship."
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:20
-msgid "Tutorial: Trade"
+#: dat/events/tutorial/tutorial-aoutfits.lua:15
+#, lua-format
+msgid ""
+"In this tutorial, your ship has been equipped with a single Unicorp Jammer. "
+"This is an activated outfit that can help you evade incoming missiles, but "
+"only when it's active.\n"
+"\n"
+"The Jammer has automatically been assigned to a group, and can be activated "
+"by pressing %s.\n"
+"\n"
+"Activated outfits can also be manually assigned to groups, just like "
+"weapons. To do so, open the information menu using %s, select a group you "
+"want to use for the outfit, then click on the outfit in the slots diagram. "
+"The group will switch from a weapon group to an activated outfit group "
+"automatically.\n"
+"\n"
+"Once this is done, you can use the hotkey associated with the group (%s, %s, "
+"%s, %s, %s, %s, %s, %s, %s or %s) to turn the outfit on and off.\n"
+"\n"
+"Try activating your Jammer now. Keep an eye on your energy reserves when it "
+"is active."
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:21
-msgid "Tutorial: Missions and Events"
+#: dat/events/tutorial/tutorial-aoutfits.lua:24
+msgid ""
+"As you can see, the Jammer drains your energy while it is on. Since you will "
+"need your energy for other things, it's a good idea to only activate it when "
+"you need it.\n"
+"\n"
+"It is important to know that some activated outfits can remain on as long as "
+"you have the energy, while others will only stay on for a maximum amount of "
+"time. Also, some outfits will need to go through a cooldown period after "
+"shutting off, during which time you can't use them. When an outfit is in its "
+"cooldown period, you can look at its icon to see how far along it is.\n"
+"\n"
+"Some outfits may also lose effectiveness or shut off completely if they get "
+"hot."
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:22
-msgid "Tutorial: Communications"
+#: dat/events/tutorial/tutorial-aoutfits.lua:30
+msgid ""
+"You now know how to assign an activated outfit to a group and how to turn it "
+"on. As a final tip, remember that you can assign as many activated outfits "
+"to the same group as you like. You can combine outfit effects this way.\n"
+"\n"
+"Congratulations! This concludes the activated outfits tutorial."
 msgstr ""
 
-#: dat/events/tutorial/tutorial.lua:23
-msgid "Quit to Main Menu"
+#: dat/events/tutorial/tutorial-aoutfits.lua:34
+#, lua-format
+msgid "Press %s to turn your Jammer on."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:9
+#: dat/events/tutorial/tutorial-basic.lua:7 dat/events/tutorial/tutorial.lua:10
+msgid "Tutorial: Basic Operation"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-basic.lua:8
 msgid ""
 "Welcome to the basic operation tutorial.\n"
 "\n"
@@ -7714,14 +8856,14 @@ msgid ""
 "controls of your ship."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:12
+#: dat/events/tutorial/tutorial-basic.lua:11
 #, lua-format
 msgid ""
 "We will start by flying around. Use %s and %s to turn, and %s to accelerate. "
 "Try flying around the planet."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:13
+#: dat/events/tutorial/tutorial-basic.lua:12
 #, lua-format
 msgid ""
 "Flying is easy, but stopping is another thing. To stop, you will need to "
@@ -7730,7 +8872,7 @@ msgid ""
 "around completely, thrust to decrease your speed. Try this now."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:14
+#: dat/events/tutorial/tutorial-basic.lua:13
 #, lua-format
 msgid ""
 "Well done. For convenience, it's also possible to automatically turn around "
@@ -7744,7 +8886,7 @@ msgid ""
 "map. It is accessed with %s. Open the overlay map now."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:19
+#: dat/events/tutorial/tutorial-basic.lua:18
 msgid ""
 "This is the system overlay map. It displays an overview of the star system "
 "you're currently in, displaying planets, jump points and any ships your "
@@ -7757,14 +8899,14 @@ msgid ""
 "the overlay map once you're underway if you wish."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:23
+#: dat/events/tutorial/tutorial-basic.lua:22
 msgid ""
 "Excellent. Autopilot navigation in time compression is the most convenient "
 "way to get around in a system. Note that the autopilot will NOT stop you, "
 "you need to do that yourself."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:24
+#: dat/events/tutorial/tutorial-basic.lua:23
 #, lua-format
 msgid ""
 "As you can see, there is another ship here. We're going to board it. For "
@@ -7776,14 +8918,14 @@ msgid ""
 "- Finally, use %s to board the ship."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:28
+#: dat/events/tutorial/tutorial-basic.lua:27
 msgid ""
 "You have successfully boarded the ship. Boarding is useful in a number of "
 "situations, for example when you want to steal cargo or credits from a ship "
 "you've disabled in combat, or if a ship is asking for help."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:29
+#: dat/events/tutorial/tutorial-basic.lua:28
 #, lua-format
 msgid ""
 "The final step in this tutorial is landing. Landing works the same way as "
@@ -7795,7 +8937,7 @@ msgid ""
 "quicker!"
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:32
+#: dat/events/tutorial/tutorial-basic.lua:31
 #, lua-format
 msgid ""
 "Good job, you have landed on Paul 2. Your game will automatically be saved "
@@ -7806,31 +8948,1248 @@ msgid ""
 "Congratulations! This concludes the basic operation tutorial."
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:36
+#: dat/events/tutorial/tutorial-basic.lua:35
 #, lua-format
 msgid "Fly around (%ds remaining)"
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:37
+#: dat/events/tutorial/tutorial-basic.lua:36
 #, lua-format
 msgid ""
 "Press and hold %s until you stop turning, then thrust until you come to a "
 "(near) stop"
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:38
+#: dat/events/tutorial/tutorial-basic.lua:37
 #, lua-format
 msgid "Press %s to open the overlay map"
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:39
+#: dat/events/tutorial/tutorial-basic.lua:38
 #, lua-format
 msgid "Target the ship with %s, then approach it and press %s to board"
 msgstr ""
 
-#: dat/events/tutorial/tutorial-basic.lua:40
+#: dat/events/tutorial/tutorial-basic.lua:39
 #, lua-format
 msgid ""
 "Target Paul 2 with %s, then request landing permission with %s. Once "
 "granted, press %s again to land"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:6
+#: dat/events/tutorial/tutorial.lua:13
+msgid "Tutorial: Basic Combat"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:7
+msgid ""
+"Welcome to the basic combat tutorial.\n"
+"\n"
+"Combat is an important aspect of Naev, and you will have to fight off "
+"enemies sooner or later, no matter what career you decide to pursue. In this "
+"tutorial, you will learn the basic principles of combat."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:10
+#, lua-format
+msgid ""
+"For this tutorial, you will be flying a Lancelot fighter. It comes equipped "
+"with two advanced laser cannons. You can fire your weapons by pressing %s. "
+"Try this now."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:11
+#, lua-format
+msgid ""
+"You may have noticed that as you fired your weapons, you depleted your "
+"energy gauge. Most energy weapons use energy while firing, and when you run "
+"out of energy you can no longer use them. Energy recharges automatically "
+"over time.\n"
+"\n"
+"Now we will examine another type of weapon that uses ammunition instead of "
+"energy. Ammunition does not automatically recharge, you will have to buy it "
+"on planets or stations.\n"
+"\n"
+"You have been equipped with a Mace rocket launcher, which is treated as a "
+"secondary weapon by default. Fire it now using %s and watch its ammunition "
+"deplete."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:16
+#, lua-format
+msgid ""
+"Let's take a closer look at the difference between primary and secondary "
+"weapons.\n"
+"\n"
+"Open the info menu by pressing %s."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:19
+#, lua-format
+msgid ""
+"The weapons tab on the info menu allows you to manage your weapons. You have "
+"ten weapon groups available to you. Each weapon may be assigned to any or "
+"all of these weapon groups, as either a primary or a secondary weapon. As "
+"you have just seen, primary weapons are fired with %s while secondary "
+"weapons are fired with %s. During flight, you may switch between weapon "
+"groups at any time by using the appropriate buttons (%s, %s, %s, %s, %s, %s, "
+"%s, %s, %s and %s).\n"
+"\n"
+"Additionally, you may set weapon groups to fire when activated. If you do "
+"this, then you may fire the weapons in that weapon group simply by holding "
+"down the key for that weapon group. Your current weapon group will remain "
+"selected in this case.\n"
+"\n"
+"Configure your weapons as you like now, or simply leave them as they are. "
+"Then close the info menu."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:24
+#, lua-format
+msgid ""
+"A target practice drone has been placed in space close to you. This drone "
+"won't move or fight back. Your task is to fire your weapons at it until you "
+"destroy it.\n"
+"\n"
+"Before you attack the drone, you should target it. To do so, you can use %s, "
+"which will target the nearest hostile enemy. You can also click on it with "
+"the mouse. It's a good idea to always use targeting in combat, because some "
+"weapons only work when you have a target, and you can tell your ship to face "
+"a targeted enemy by pressing %s.\n"
+"\n"
+"Target the drone, then shoot at it until it is destroyed."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:29
+msgid ""
+"Well done, you have just destroyed your enemy. You now know the basics of "
+"ship to ship combat. As the final part of this tutorial, you're going to "
+"fight against a live opponent. We've hired the best fighter pilot in the "
+"sector to test your mettle, he will jump into the system any moment now. "
+"Good luck, you're going to need it!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:30
+msgid ""
+"Oh. Well, good job, you've defeated your opponent. Don't worry about him "
+"though, he made it out before his ship blew. He mentioned he was good at "
+"that. Maybe that should have given us a clue..."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:31
+msgid ""
+"You now know the basic principles of combat. As a final tip, you can target "
+"specific enemies at long range by clicking on them on the overlay map.\n"
+"\n"
+"Congratulations! This concludes the basic combat tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:35
+#, lua-format
+msgid "Use %s to test your weapons (%ds remaining)"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:36
+#, lua-format
+msgid "Use %s to to open the info menu"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:39
+#: dat/events/tutorial/tutorial-combat2.lua:28
+msgid "Bring on the pain!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:40
+#: dat/events/tutorial/tutorial-combat2.lua:29
+msgid "You're no match for the fearsome T. Practice!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:41
+#: dat/events/tutorial/tutorial-combat2.lua:30
+msgid "I've been shot by ships ten times your size!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:42
+#: dat/events/tutorial/tutorial-combat2.lua:31
+msgid "Let's get it on!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:43
+#: dat/events/tutorial/tutorial-combat2.lua:32
+msgid "I  haven't got all day."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:44
+#: dat/events/tutorial/tutorial-combat2.lua:33
+msgid "You're as threatening as an unborn child!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:45
+#: dat/events/tutorial/tutorial-combat2.lua:34
+msgid "I've snacked on foes much larger than yourself!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:46
+#: dat/events/tutorial/tutorial-combat2.lua:35
+msgid "Who's your daddy? I am!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:47
+#: dat/events/tutorial/tutorial-combat2.lua:36
+msgid "You're less intimidating than a fruit cake!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:48
+#: dat/events/tutorial/tutorial-combat2.lua:37
+msgid "My ship is the best in the galaxy!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:49
+#: dat/events/tutorial/tutorial-combat2.lua:38
+msgid "Bow down before me, and I may spare your life!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:50
+#: dat/events/tutorial/tutorial-combat2.lua:39
+msgid "Someone's about to set you up the bomb."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:51
+#: dat/events/tutorial/tutorial-combat2.lua:40
+msgid "Your crew quarters are as pungent as an over-ripe banana!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:52
+#: dat/events/tutorial/tutorial-combat2.lua:41
+msgid "I'm invincible, I cannot be vinced!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:53
+#: dat/events/tutorial/tutorial-combat2.lua:42
+msgid "You think you can take me?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:54
+#: dat/events/tutorial/tutorial-combat2.lua:43
+msgid "When I'm done, you'll look like pastrami!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:55
+#: dat/events/tutorial/tutorial-combat2.lua:44
+msgid "I've got better things to do. Hurry up and die!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:56
+#: dat/events/tutorial/tutorial-combat2.lua:45
+msgid "You call that a barrage? Pah!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:57
+#: dat/events/tutorial/tutorial-combat2.lua:46
+msgid "You mother isn't much to look at, either!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:58
+#: dat/events/tutorial/tutorial-combat2.lua:47
+msgid "You're not exactly a crack-shot, are you?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:59
+#: dat/events/tutorial/tutorial-combat2.lua:48
+msgid "I've had meals that gave me more resistance than you!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:60
+#: dat/events/tutorial/tutorial-combat2.lua:49
+msgid "You're a pathetic excuse for a pilot!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:61
+#: dat/events/tutorial/tutorial-combat2.lua:50
+msgid "Surrender or face destruction!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:62
+#: dat/events/tutorial/tutorial-combat2.lua:51
+msgid "That all you got?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:63
+#: dat/events/tutorial/tutorial-combat2.lua:52
+msgid "I am Iron Man!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:64
+#: dat/events/tutorial/tutorial-combat2.lua:53
+msgid "My shields are holding fine!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:65
+#: dat/events/tutorial/tutorial-combat2.lua:54
+msgid "You'd be dead if I'd remembered to pack my weapons!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:66
+#: dat/events/tutorial/tutorial-combat2.lua:55
+msgid "I'll end you!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:67
+#: dat/events/tutorial/tutorial-combat2.lua:56
+msgid "This is your last chance to surrender!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:68
+#: dat/events/tutorial/tutorial-combat2.lua:57
+msgid "I'm going to report you to the NPC Rights watchdog."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:69
+#: dat/events/tutorial/tutorial-combat2.lua:58
+msgid "Keep going, see what happens!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:70
+#: dat/events/tutorial/tutorial-combat2.lua:59
+msgid "You don't scare me!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:71
+#: dat/events/tutorial/tutorial-combat2.lua:60
+msgid "What do you think this is, knitting hour?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:72
+#: dat/events/tutorial/tutorial-combat2.lua:61
+msgid "Go on, shoot me."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:73
+#: dat/events/tutorial/tutorial-combat2.lua:62
+msgid "You can do it! I believe in you."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:74
+#: dat/events/tutorial/tutorial-combat2.lua:63
+msgid "Shoot me!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:75
+#: dat/events/tutorial/tutorial-combat2.lua:64
+msgid "Okay, listen. I'm doing this for attention."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:76
+#: dat/events/tutorial/tutorial-combat2.lua:65
+msgid "If you don't shoot me, I'll tell the galaxy your terrible secret!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:79
+#: dat/events/tutorial/tutorial-combat2.lua:68
+msgid "Okay, that's about enough."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:80
+#: dat/events/tutorial/tutorial-combat2.lua:69
+msgid "You can stop now."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:81
+#: dat/events/tutorial/tutorial-combat2.lua:70
+msgid "I was wrong about you."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:82
+#: dat/events/tutorial/tutorial-combat2.lua:71
+msgid "Forgive and forget?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:83
+#: dat/events/tutorial/tutorial-combat2.lua:72
+msgid "Let's be pals, I'll buy you an ale!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:84
+#: dat/events/tutorial/tutorial-combat2.lua:73
+msgid "Game over, you win."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:85
+#: dat/events/tutorial/tutorial-combat2.lua:74
+msgid "I've got a wife and kids! And a cat!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:86
+#: dat/events/tutorial/tutorial-combat2.lua:75
+msgid "Surely you must have some mercy?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:87
+#: dat/events/tutorial/tutorial-combat2.lua:76
+msgid "Please stop!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:88
+#: dat/events/tutorial/tutorial-combat2.lua:77
+msgid "I'm sorry!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:89
+#: dat/events/tutorial/tutorial-combat2.lua:78
+msgid "Leave me alone!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:90
+#: dat/events/tutorial/tutorial-combat2.lua:79
+msgid "What did I ever do to you?"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:91
+#: dat/events/tutorial/tutorial-combat2.lua:80
+msgid "I didn't sign up for this!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:92
+#: dat/events/tutorial/tutorial-combat2.lua:81
+msgid "Not my ship, anything but my ship!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:93
+#: dat/events/tutorial/tutorial-combat2.lua:82
+msgid "We can talk this out!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:94
+#: dat/events/tutorial/tutorial-combat2.lua:83
+msgid "I'm scared! Hold me."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:95
+#: dat/events/tutorial/tutorial-combat2.lua:84
+msgid "Make the bad ship go away, mommy!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:96
+#: dat/events/tutorial/tutorial-combat2.lua:85
+msgid "If you don't stop I'll cry!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat1.lua:219
+#: dat/events/tutorial/tutorial-combat2.lua:158
+msgid "Captain T. Practice"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat2.lua:6
+#: dat/events/tutorial/tutorial.lua:14
+msgid "Tutorial: Missile Combat"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat2.lua:20
+msgid ""
+"Very good. Of course, this was just a target drone. A mobile target will "
+"give you a better idea of how missiles behave in real combat. Fortunately, "
+"we have an excellent pilot on hand who can help out there. He assured us "
+"that reports of his recent obliteration in another tutorial were highly "
+"exaggerated, and we trust him implicitly on that.\n"
+"\n"
+"You have been given two fully loaded Unicorp Fury Launchers. Engage Captain "
+"T. Practice with them. Notice how the missiles will actively seek out the "
+"target. It's possible to avoid guided missiles, even the fast Fury missiles, "
+"but it's not easy to do."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat2.lua:23
+msgid ""
+"Hmm, that was over quick. Oh well. You should now have a solid grasp on how "
+"to use missile weapons. As a final tip, turreted missile launchers have a "
+"full 360 degree lockon arc, so all you have to do to acquire a lock is "
+"target an enemy.\n"
+"\n"
+"Congratulations! This concludes the missile combat tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-combat2.lua:121
+msgid "Target drone"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:6 dat/events/tutorial/tutorial.lua:21
+msgid "Tutorial: Communications"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:7
+msgid ""
+"Welcome to the communications tutorial.\n"
+"\n"
+"This tutorial will show you how you can contact other ships, as well as "
+"planets and stations."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:10
+#, lua-format
+msgid ""
+"Your ship comes with a built-in communications array. To use it, target "
+"whatever you want to contact (be it a ship or a planet) and press %s. But be "
+"careful, if you have both a planet and a ship targeted, you will contact the "
+"ship rather than the planet. If you want to speak to a planet, you should "
+"first clear your target with %s.\n"
+"\n"
+"To proceed to the next step, target the nearby ship and contact it. You may "
+"contact the planet first if you wish, to see what options are available when "
+"you do so."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:13
+msgid ""
+"Well done. Normally, when hailing a ship, you may ask it to sell you fuel or "
+"bribe it if it's attacking you, but that's about all you can do. However, "
+"sometimes a mission requires you to contact a ship in order to proceed. "
+"Since this is a drone, there's not much you can say to it.\n"
+"You may also try to bribe planets by contacting them. This is a good way to "
+"get to planets that would otherwise deny you access. Note that you can't "
+"bribe planets that will let you land in the first place."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:15
+msgid ""
+"You now know how to use the communications system, so I suppose that's it "
+"for this tutorial...\n"
+"\n"
+"But wait, what's this? A ship is taking off from the planet below, and it "
+"seems it's interested in talking to you!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:18
+#, lua-format
+msgid ""
+"As you just witnessed, ships that are trying to contact you will have an "
+"animated icon next to them. You will also be notified in the message log, "
+"and a sound will alert you that someone's hailing you.\n"
+"\n"
+"Let's respond to the ship. You could do this in the same way you just "
+"learned, by targeting the ship and pressing %s, but that can be inconvenient "
+"when there are many ships around. An easy way to respond to the incoming "
+"call is by using the auto-respond shortcut, which is %s. Try answering the "
+"ship now."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:21
+msgid ""
+"Excellent. Ships won't often hail you, but when they do it's highly likely "
+"they have something important to say. Keep a look out for ships trying to "
+"contact you!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:22
+msgid ""
+"You now know how to talk to ships and planets, and you know what to do when "
+"ships want to talk to you. As a final tip, remember that auto-responding to "
+"a ship will automatically target it, so be sure not to accidentally attack "
+"it!\n"
+"\n"
+"Congratulations! This concludes the communications tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:26
+#, lua-format
+msgid "Target the drone and use %s to contact it"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-comms.lua:27
+#, lua-format
+msgid "Use %s to respond to the hail "
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:7
+#: dat/events/tutorial/tutorial.lua:17
+msgid "Tutorial: Disabling"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:8
+msgid ""
+"Welcome to the disabling tutorial.\n"
+"\n"
+"During the game it is sometimes desirable or necessary to disable another "
+"ship, and other ships may end up disabling you as well. This tutorial shows "
+"you how disabling works and shows what happens when you yourself are "
+"disabled."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:11
+msgid ""
+"The first thing you should know about disabling is that it cannot be done "
+"reliably with most weapons in the game. Each weapon deals two kinds of "
+"damage on each hit: regular damage and \"stress\" damage. Stress damage is "
+"what causes ships to become disabled.\n"
+"\n"
+"A target practice drone has been placed in the system near your location. "
+"Target it and fire at it using your Ion Cannons (they're secondary weapons "
+"by default). Pay close attention to the target's armour bar."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:14
+msgid ""
+"Good. As you will have noticed, the target's armour bar filled up with a "
+"different colour while you were shooting at it. This is how stress damage is "
+"represented in the game. Stress damage builds up in the armour bar until all "
+"remaining armour is filled with stress damage. Stress damage disappears from "
+"a ship at a constant rate, unless the ship is actually disabled. This means "
+"that to successfully disable a ship, you will need to keep dealing enough "
+"stress damage to overcome this falloff.\n"
+"\n"
+"A ship becomes disabled as soon as the total amount of stress it has accrued "
+"equals its remaining hit points. This means that the less armour the ship "
+"has, the easier it is to disable. In addition, dealing regular damage to a "
+"ship not only removes armour, it also proportionally reduces stress damage! "
+"What this means is that it's not possible to first deal stress damage, and "
+"then reduce the ship's armour to go below it."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:17
+msgid ""
+"You can disable enemies, but of course enemies can do the same to you. In a "
+"moment, some pirates will attack you with Ion Cannons. For the purpose of "
+"this tutorial you will not be able to fight back, but don't worry. You can't "
+"die from this attack.\n"
+"\n"
+"Close this message and observe."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:20
+msgid ""
+"As you just saw, time compression automatically kicks in when you are "
+"disabled. The reason for this is simple: disabled ships don't stay disabled "
+"forever. Ships will eventually repair themselves and become mobile once "
+"again. When this happens to you, the player, time compression makes sure you "
+"don't have to wait too long. Of course, you can still be destroyed and "
+"boarded in the meantime!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-disabling.lua:21
+msgid ""
+"You now know how to disable ships and what happens when you are disabled "
+"yourself. As a final tip, remember that you can see how much stress damage "
+"each weapon does on the outfitter and equipment screens.\n"
+"\n"
+"Congratulations! This concludes the disabling tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:6
+#: dat/events/tutorial/tutorial.lua:11
+msgid "Tutorial: Exploration and Discovery"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:7
+msgid ""
+"Welcome to the exploration and discovery tutorial.\n"
+"\n"
+"This tutorial will tell you a little about the exploration aspect of the "
+"game."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:10
+#, lua-format
+msgid ""
+"In this tutorial, you have been placed in a high-interference system. You "
+"may notice that visibility is fairly low here. Some systems, such as this "
+"one, have a certain degree of sensor interference. Sensor interference does "
+"what you would expect it to do - it lowers the range of your sensors.\n"
+"\n"
+"Open your system map (%s key)."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:13
+msgid ""
+"You're looking at the system map for this system. But it appears empty! This "
+"is because at the moment, your sensors haven't picked up anything yet. The "
+"interference is too strong to see anything from here.\n"
+"\n"
+"A marker has been placed on your map. Navigate toward it. Remember, you can "
+"right-click on a location to get there faster."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:16
+msgid ""
+"Something just happened. You discovered a planet in this system, called "
+"Tein. Planets are the biggest objects you'll encounter in any system, so you "
+"will usually discover them before anything else.\n"
+"\n"
+"Keep going."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:19
+msgid ""
+"You've discovered something else, Tein's moon Rein. Moons are a lot smaller "
+"than planets and are therefore harder to detect.\n"
+"\n"
+"You now know where Tein and Rein are located. Their positions have been "
+"added to your ship's computer, so you won't have to search for them again. "
+"Even if you fly away from them again, you will still be able to see them on "
+"the map.\n"
+"\n"
+"There is still one thing left in this system for you to find: the jump point "
+"leading to the next system. Jump points are generally much more difficult to "
+"find than planets or moons, especialy in a high interference system such as "
+"this one. Look at your map, the marker is now toward the right hand side. "
+"Fly there."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:24
+msgid ""
+"Well done, you have found the jump point. As you can see, you had to get "
+"pretty close to it before it appeared! Just like with planets though, jump "
+"points will always be visible to you once you know where they are."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:25
+msgid ""
+"Jump points are vitally important to pilots who want to travel through the "
+"galaxy, yet they can be hard to find. Fortunately, there are a few things "
+"that make this easier:\n"
+"\n"
+"- Keep an eye on other ships in the system. Especially trader ships have a "
+"tendency to travel to other systems. If you see one heading to a part of "
+"space that seems empty to you, follow them! They will likely lead you to a "
+"jump point.\n"
+"\n"
+"- When you land on a planet, don't forget to chat up the people in the bar. "
+"They can be quite friendly, and some of them may even help you out by "
+"telling you the location of a jump point in the system.\n"
+"\n"
+"- Keep a look out for Star Maps. These maps are sold on planets, and each "
+"one reveals a specific part of the galaxy. Most maps reveal several systems "
+"at once, and will usually reveal some or all of their jump points as well.\n"
+"\n"
+"- Not all jump points are hard to find! Some of them have buoys placed next "
+"to them that transmit their coordinates. You will be able to see these jump "
+"points from any distance away. Jumps like these are usually arranged in a "
+"long chain of jumps, and these chains are called Highways. Highways are "
+"found in large faction territories."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:35
+msgid ""
+"You now know about discovering planets and jump points, and you also know "
+"that some systems can make that process more difficult. As a final tip, "
+"rumor has it that some jump points can not be discovered at all unless you "
+"have special sensors on board and know exactly where to look. It even seems "
+"some jump points can not be seen or used at all, and only serve as exit "
+"points...\n"
+"\n"
+"Congratulations! This concludes the exploration and discovery tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:39
+msgid "Navigate to the marker on the map"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-discovery.lua:66
+#: dat/events/tutorial/tutorial-discovery.lua:80
+msgid "Fly here"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:7 dat/events/tutorial/tutorial.lua:15
+msgid "Tutorial: Heat"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:8
+msgid ""
+"Welcome to the heat tutorial.\n"
+"\n"
+"In this tutorial we will examine how heat accumulates in your ship, how it "
+"affects you, and what you can do to get rid of it."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:11
+#, lua-format
+msgid ""
+"Heat is generated by outfits, particularly weapons. Each time you fire a "
+"weapon, some of the energy needed to fire it will be converted into heat. "
+"This heat accumulates in the weapon outfit, and if the outfit gets hotter "
+"and hotter, it starts to lose its efficiency. For weapons, this means that "
+"they become inaccurate when they get hot, and start firing more slowly when "
+"very hot.\n"
+"\n"
+"You have been equipped with two Vulcan Cannons. To see how heat builds up in "
+"weapons, try firing into space (using %s) now. Keep an eye on your weapon "
+"indicators on the HUD - after a short while you should see the bars filling "
+"up red."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:14
+msgid ""
+"As you probably saw, your weapons started shooting slightly off to the sides "
+"when they heated up. This can be very problematic in combat, so always keep "
+"an eye on your weapons' heat levels.\n"
+"\n"
+"When weapons get hot, they will automatically cool because the heat flows "
+"from the outfits into the ship hull. So, it can be a good idea to not use "
+"all of your weapons at the same time if you expect a long fight. Switch "
+"between weapons to let them cool down periodically."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:17
+msgid ""
+"So that's heat in a nutshell, right? As it turns out, there's more to it. We "
+"just learned that weapons cool down by transferring heat into the ship hull. "
+"But what if the ship hull gets hot?\n"
+"\n"
+"One thing that happens is that the ship becomes more visible to enemies. "
+"Objects that are hotter than the space around them will stand out more. So "
+"if your ship is hot, you might attract more attention.\n"
+"\n"
+"Another thing that happens is that your outfits, which are connected to the "
+"hull, start to cool more slowly! After all, heat transfer depends heavily on "
+"the difference in temperature between objects. So, if your ship gets very "
+"hot, you may find that your weapons don't cool as fast anymore, or not at "
+"all in extreme cases.\n"
+"\n"
+"For the purpose of this tutorial, we have made your ship rather hot. Notice "
+"the ship temperature indicator on the HUD, and notice also how your weapons "
+"aren't cooling anymore."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:24
+msgid ""
+"As you can see, having a hot ship is very inconvenient. It would be nice if "
+"ships could lose their heat somehow, wouldn't it? Fortunately, there are "
+"some ways to lose heat.\n"
+"\n"
+"First of all, ships radiate off heat if they are hotter than the space "
+"around them. This happens automatically and continuously, but it is a "
+"relatively slow process, especially for larger ships. It may be possible to "
+"accelerate the rate of heat loss by installing outfits to that effect.\n"
+"\n"
+"Heat is also reset to the base level when you land. So every time you take "
+"off, you will start out with a nice, cool hull.\n"
+"\n"
+"There is a third way to lose heat, however."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:31
+#, lua-format
+msgid ""
+"Every ship has the ability to go into a special cooling mode called Active "
+"Cooldown. When in Active Cooldown, ships rapidly lose their heat. By the end "
+"of the cooldown cycle, the ship and all its outfits will have cooled to the "
+"galactic base temperature.\n"
+"\n"
+"Let's try this now. If you're moving, press %s to begin braking, and then "
+"press it again to enter Active Cooldown mode. When not moving, pressing %s "
+"will immediately enter Active Cooldown mode."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:35
+msgid ""
+"You are now in Active Cooldown mode. You will see a progress bar above your "
+"ship. It is slowly draining. When the bar is completely empty, your ship "
+"will have cooled down. Don't touch any of the controls, or Active Cooldown "
+"will be canceled and you will have to restart it.\n"
+"\n"
+"While you are in active cooldown, your energy and shields will not recharge. "
+"So try to use it only in a safe spot.\n"
+"\n"
+"Wait for your ship to cool. Keep a close eye on the temperature of your ship!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:40
+msgid ""
+"Well done! You have completed the Active Cooldown cycle, and your ship is as "
+"cool as the space around it.\n"
+"\n"
+"As you might have noticed during the cooldown process, your heat didn't drop "
+"very quickly until the cooling process was almost over. This is because heat "
+"is lost at an exponential rate in Active Cooldown mode. It starts off very "
+"slow, but picks up a lot of speed over time. What this means is that when "
+"using Active Cooldown, you're going to want to wait all the way until the "
+"end. Active Cooldown always takes a minimum amount of time, and if you abort "
+"the cooldown period, you have to start over from the beginning next time!\n"
+"\n"
+"Another important thing to remember is that Active Cooldown only works if "
+"the ship is sitting still. You can't do it on the move! So while it might "
+"seem attractive to use Active Cooldown in a fight to cool your weapons, you "
+"make yourself very vulnerable by doing so."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:45
+msgid ""
+"You now know about the important heat mechanics in the game. As a final tip, "
+"remember that the heat rules apply to other ships just as much as they do to "
+"you. Dodging an enemy until his weapons overheat is a valid tactic!\n"
+"\n"
+"Congratulations! This concludes the heat tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:49
+#, lua-format
+msgid "Use %s to fire your weapons (%ds remaining)"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:50
+#, lua-format
+msgid "Observe your ship's heat (%ds remaining)"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-heat.lua:51
+#, lua-format
+msgid "Enter Active Cooldown (%s while braking or stopped)"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:6
+#: dat/events/tutorial/tutorial.lua:12
+msgid "Tutorial: Interstellar Flight"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:7
+msgid ""
+"Welcome to the interstellar flight tutorial.\n"
+"\n"
+"In this tutorial you will learn how to travel from one star system to "
+"another, and how to use the galaxy map."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:10
+#, lua-format
+msgid ""
+"In this tutorial we will leave the Mohawk system and travel the stars.\n"
+"\n"
+"Each star system is connected to one or more other star systems by means of "
+"\"jump points\". These jump points are the ONLY places where you may enter "
+"hyperspace, and once you do you will appear near the jump point leading the "
+"other way in the destination system. Jump points are shown on your overlay "
+"map as triangles with the names of the destination systems next to them.\n"
+"\n"
+"Let's select a jump point now. You can press %s to do this."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:15
+#, lua-format
+msgid ""
+"Good. If you look at the bar at the bottom of the screen, you'll see that it "
+"has changed to show that you have selected a hyperspace target (next to \"Nav"
+"\"). Currently, the target is unknown, because you don't know anything about "
+"it yet. To actually use the jump point you've just selected you need to fly "
+"close to it and engage your hyperdrive. This is done with %s, but we're not "
+"going to do that right now, as there's an easier way.\n"
+"\n"
+"For now, press %s to deselect your target. If you also have planets or ships "
+"targeted, you can use %s multiple times to select your most recent targets, "
+"in order."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:18
+#, lua-format
+msgid ""
+"Another method of selecting a hyperspace target is by opening the galaxy map "
+"and clicking on the system you want to go to. The galaxy map is accessed by "
+"pressing %s, do so now."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:19
+#, lua-format
+msgid ""
+"This is the galaxy map. It shows you a lot of information about the systems "
+"you've visited, and lets you plot jump routes to other star systems. "
+"Clicking a system will select it as your hyperspace target.\n"
+"\n"
+"You'll see a button in the lower right that says \"Autonav\". Clicking this "
+"button will automatically make your ship fly to your selected destination. "
+"You can also engage the autonav at any time during flight by pressing %s. "
+"The autonav will continue to jump until it either reaches its destination, "
+"until you run out of fuel or until you come under enemy attack, whichever "
+"comes first.\n"
+"\n"
+"Note that the autonav can also be used to fly to a planet or station. Simply "
+"target one and engage the autonav - this has the same effect as right-"
+"clicking on it on the map overlay.\n"
+"\n"
+"Select a hyperspace target and jump to another system."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:26
+msgid ""
+"Well done! You've successfully performed a hyperspace jump to another "
+"system. From here you can jump to yet other systems to continue your "
+"exploration.\n"
+"\n"
+"But watch out! That jump just now has drained your fuel reserves, as the "
+"bottom bar will tell you. If you run out of fuel you can't jump anymore. You "
+"can get more fuel by refueling at a planet, by buying fuel off other ships, "
+"or by boarding disabled ships and stealing it fom them. Keep an eye on your "
+"fuel when traveling!\n"
+"\n"
+"For the remainder of this tutorial, you will have unlimited fuel. Continue "
+"to make hyperjumps until you reach system Navajo."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:31
+#, lua-format
+msgid ""
+"Excellent. You have learned how to make hyperspace jumps and explore the "
+"galaxy. You may continue jumping around if you wish. Once you're ready to "
+"move on, land on either Rin in the Navajo system, or Paul 2 in the Mohawk "
+"system. As a final tip, you can hold down %s while clicking on the galaxy "
+"map to specify a manual path for the autonav.\n"
+"\n"
+"Congratulations! This concludes the interstellar flight tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:35
+#, lua-format
+msgid "Press %s to target a jump point"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:36
+#, lua-format
+msgid "Press %s to deselect your target"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:37
+#, lua-format
+msgid "Press %s to open the galaxy map"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:38
+#, lua-format
+msgid ""
+"Select a hyperspace target with %s or by using the galaxy map, then press %s "
+"to engage the autonav (or jump manually with %s)"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:39
+msgid "Continue exploring until you reach the Navajo system"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:40
+#, lua-format
+msgid ""
+"Land (with %s) on Rin in the Navajo system or Paul 2 in the Mohawk system to "
+"complete the tutorial"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-interstellar.lua:86
+msgid "\abshift\a0"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:6
+#: dat/events/tutorial/tutorial.lua:20
+msgid "Tutorial: Missions and Events"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:7
+msgid ""
+"Welcome to the missions and events tutorial.\n"
+"\n"
+"This tutorial explains missions, which are the main driving force behind the "
+"game, as well as events, which give flavor to the game.\n"
+"\n"
+"Please note that this tutorial assumes you know how to pilot your ship. If "
+"you don't, you should consider playing the earlier tutorials first."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:12
+msgid ""
+"A mission, as you might expect, is a task given to you, the player, to "
+"complete for some kind of reward. Missions come in two varieties, computer "
+"missions and NPC missions. Computer missions are exclusively obtained from "
+"the mission computer, and these missions are typically randomly generated. "
+"They serve to provide you with opportunities for work wherever you go.\n"
+"NPC missions are given to you by game characters. This most often happens in "
+"the spaceport bar, but sometimes a mission might come to you in other ways, "
+"so keep a look out."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:14
+msgid ""
+"We're going to accept a mission from an NPC. The NPC is waiting for you on "
+"Rin, in the spaceport bar. Land on Rin, then select the bar tab on the "
+"planet screen."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:15
+msgid ""
+"As you can see, there's someone here in the bar. He will give you a mission "
+"if you approach him. To do so, click on his portrait first, then click on "
+"the approach button.\n"
+"\n"
+"It's worth noting here that not all NPCs you encounter in the spaceport bars "
+"will give you missions. Those that do tend to look slightly different "
+"though, and they tend to be grouped near the beginning of the NPC list."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:18
+msgid ""
+"Now that you know how missions work, it's easy to explain what events are. "
+"Events work much the same as missions, but they happen by themselves. You "
+"don't get to search them out, you don't get to accept or decline them, nor "
+"can you abort them. If an event happens to you, you're just going to have to "
+"ride it out, for better or for worse. In fact, one is happening to you right "
+"now, since this tutorial itself is an event as well!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:19
+msgid ""
+"You now know how to play missions. Missions are where most of the action in "
+"the game happens, and your career will depend greatly on which missions you "
+"choose to accept. As a final tip, some missions only appear in certain areas "
+"of space, so be sure to travel around a lot and check the spaceport bars "
+"wherever you go.\n"
+"\n"
+"Congratulations! This concludes the missions and events tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:23
+msgid "Land on Rin and visit the spaceport bar"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:52
+msgid "Tutorial employee"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-missions.lua:52
+msgid "This person has a mission for you!"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:6
+#: dat/events/tutorial/tutorial.lua:18
+msgid "Tutorial: The Planetary Screen"
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:7
+msgid ""
+"Welcome to the planetary screen tutorial.\n"
+"\n"
+"In this tutorial you will learn about what you can expect on a planet or "
+"station once you land on it. We'll start by landing on Paul 2. Landing is "
+"covered in another tutorial, so for now we'll land automatically."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:10
+msgid ""
+"Once landed, you will be presented with the landing screen. This is the "
+"default screen for all planets or stations you land on. The landing screen "
+"gives you information about the planet or station in general and lets you "
+"refuel.\n"
+"\n"
+"To access the more interesting facilities on Paul 2, you will need to click "
+"on the tabs at the bottom of the planet menu. Each tab represents a "
+"different area of the spaceport. Some spaceports may not have all of the "
+"facilities you see here, and the things on offer will vary from planet to "
+"planet. Sometimes you will have to fly to another planet to get what you "
+"need.\n"
+"\n"
+"Select any tab now to view a short explanation on what you can do there. "
+"Once you have seen enough, press the takeoff button to end this tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:15
+msgid ""
+"This is the outfit seller. Here you may buy and sell things such as weapons, "
+"ship upgrades and ammunition. Note that you need to visit the equipment "
+"facility to actually install most outfits into your ship.\n"
+"\n"
+"A particular item of interest that most outfit sellers will carry is the "
+"star map. Buying a star map will give you information on remote systems and "
+"their jump points, so it's a useful item when you're just starting out."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:18
+msgid ""
+"This is the spaceport bar. Here you may find people who are interested in "
+"giving you missions. You will also see a news feed on the right of the "
+"screen. You can approach patrons by clicking on their portrait and then "
+"clicking on the \"approach\" button.\n"
+"\n"
+"There are no mission givers here at the moment. Missions are explained in "
+"more detail in another tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:21
+msgid ""
+"This is the mission computer. This is where you can find work if you're in "
+"need of credits. Most missions here will initially involve ferrying "
+"passengers or cargo, but you may be able to unlock more mission types during "
+"the course of the game.\n"
+"\n"
+"There is no work available right now. Missions are explained in more detail "
+"in another tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:24
+msgid ""
+"This is the equipment screen, where you can customize your ship, as well as "
+"switch to another ship if you own more than one.\n"
+"\n"
+"You have been given a modest selection of equipment. Try installing it in "
+"your ship by right-clicking the item boxes in the inventory panel. You can "
+"uninstall them again by right-clicking on the ship slots they are installed "
+"in. There are a few things to keep in mind:\n"
+"\n"
+"- Each outfit is either a Structure, Utility or Weapon outfit, and can ONLY "
+"be installed in an appropriate slot.\n"
+"\n"
+"- Each outfit has a size. Possible sizes are small, medium and large. Sizes "
+"are currently indicated by yellow, green and blue, respectively. Outfits can "
+"ONLY be installed in a slot that's big enough.\n"
+"\n"
+"- Each outfit uses up a certain amount of CPU. Your CPU capacity is shown as "
+"a green bar that turns red as CPU is used up. You can only take off if you "
+"haven't exceeded your CPU capacity.\n"
+"\n"
+"- Each outfit has a mass that will be added to your ship when installed. If "
+"your ship's mass exceeds the engine's mass limit, your speed and thrust will "
+"be reduced."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:35
+msgid ""
+"If you look at your ship's slots on the right hand side of the menu, you "
+"will see that three of them are different than the others. This is because "
+"these three slots are your ship's \"core\" slots.\n"
+"\n"
+"Core slots are special slots that can only contain their corresponding core "
+"outfits. Engine slots can only hold engines, system slots can only hold "
+"systems and hull slots can only hold hull mods. The important thing to know "
+"is that if even one of these slots is empty, your ship can't take off!\n"
+"\n"
+"Core outfits can be found in the Core tab of the equipment browser."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:41
+msgid ""
+"This is the shipyard. You can buy new ships and sell ships you currently own "
+"here.\n"
+"\n"
+"There are no ships for sale here, but generally you will always find at "
+"least a modest selection of ships in any shipyard you encounter."
+msgstr ""
+
+#: dat/events/tutorial/tutorial-planet.lua:44
+msgid ""
+"This is the commodity exchange. Here you can buy and sell goods.\n"
+"\n"
+"The trade system is currently in an early stage of development. Once the "
+"system is more developed, it will be explained in a separate tutorial."
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:5
+msgid "Tutorial Menu"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:6
+msgid ""
+"Welcome to the Naev tutorial menu. Please select a tutorial module from the "
+"list below:"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:8
+msgid "Play All"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:19
+msgid "Tutorial: Trade"
+msgstr ""
+
+#: dat/events/tutorial/tutorial.lua:22
+msgid "Quit to Main Menu"
 msgstr ""
