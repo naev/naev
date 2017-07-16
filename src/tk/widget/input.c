@@ -108,10 +108,9 @@ static void inp_render( Widget* inp, double bx, double by )
    if (inp->dat.inp.oneline)
       /* center vertically */
       ty = y - (inp->h - gl_smallFont.h)/2.;
-   else {
+   else
       /* Align top-left. */
       ty = y - gl_smallFont.h / 2.;
-   }
 
    /* Draw text. */
    gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
@@ -737,9 +736,11 @@ static void inp_focusGain( Widget* inp )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
    SDL_Rect input_pos;
+   Window *w;
 
-   input_pos.x = (int)inp->x;
-   input_pos.y = (int)inp->y;
+   w = window_wget( inp->wdw );
+   gl_screenToWindowPos( &input_pos.x, &input_pos.y, w->x + inp->x + 5., w->y + inp->y );
+   input_pos.y -= inp->h;
    input_pos.w = (int)inp->w;
    input_pos.h = (int)inp->h;
 

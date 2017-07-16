@@ -23,14 +23,12 @@
 
 /* Toolkit methods. */
 static int tk_msg( lua_State *L );
-static int tk_msgImg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
 static const luaL_reg tk_methods[] = {
    { "msg", tk_msg },
-   { "msgImg", tk_msgImg },
    { "yesno", tk_yesno },
    { "input", tk_input },
    { "choice", tk_choice },
@@ -72,38 +70,19 @@ int nlua_loadTk( nlua_env env )
  *  @luamod tk
  */
 /**
- * @brief Creates a window with an ok button.
+ * @brief Creates a window with an ok button, and optionally an image.
  *
  * @usage tk.msg( "Title", "This is a message." )
+ * @usage tk.msg( "Title", "This is a message.", "character.png" )
  *
  *    @luatparam string title Title of the window.
  *    @luatparam string message Message to display in the window.
+ *    @luatparam[opt=-1] string image Image file (*.png) to display in the window.
+ *    @luatparam[opt=-1] number width width of the image to display. Negative values use image width.
+ *    @luatparam[opt=-1] number height height of the image to display. Negative values use image height.
  * @luafunc msg( title, message )
  */
 static int tk_msg( lua_State *L )
-{
-   const char *title, *str;
-   NLUA_MIN_ARGS(2);
-
-   title = luaL_checkstring(L,1);
-   str   = luaL_checkstring(L,2);
-
-   dialogue_msgRaw( title, str );
-   return 0;
-}
-/**
- * @brief Creates a window with an ok button, text and an image.
- *
- * @usage tk.msgImg( "Title", "This is a message.", "character.png" )
- *
- *    @luatparam string title Title of the window.
- *    @luatparam string message Message to display in the window.
- *    @luatparam string image Image file (*.png) to display in the window.
- *    @luatparam[opt=-1] number width width of the image to display. Negative values use image width.
- *    @luatparam[opt=-1] number height height of the image to display. Negative values use image height.
- * @luafunc msgImg( title, message, image, width, height )
- */
-static int tk_msgImg( lua_State *L )
 {
    const char *title, *str, *img;
    int width, height;
@@ -112,13 +91,18 @@ static int tk_msgImg( lua_State *L )
    // Get fixed arguments : title, string to display and image filename
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
-   img   = luaL_checkstring(L,3);
 
-   // Get optional arguments : width and height
-   width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
-   height = (lua_gettop(L) < 5) ? -1 : luaL_checkinteger(L,5);
+   if (lua_gettop(L) > 2) {
+      img   = luaL_checkstring(L,3);
 
-   dialogue_msgImgRaw( title, str, img, width, height );
+      // Get optional arguments : width and height
+      width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
+      height = (lua_gettop(L) < 5) ? -1 : luaL_checkinteger(L,5);
+
+      dialogue_msgImgRaw( title, str, img, width, height );
+      return 0;
+   }
+   dialogue_msgRaw( title, str );
    return 0;
 }
 /**
