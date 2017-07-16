@@ -5,14 +5,14 @@ include("dat/ai/personality/trader.lua")
 -- Sends a distress signal which causes faction loss
 function sos ()
    msg = {
-      "Mayday! We are under attack!",
-      "Requesting assistance. We are under attack!",
-      "Merchant vessel under attack! Requesting help!",
-      "Help! Ship under fire!",
-      "Taking hostile fire! Need assistance!",
-      "We are under attack, require support!",
-      "Mayday! Ship taking damage!",
-      string.format("Mayday! Merchant %s being assaulted!", string.lower( ai.pilot():ship():class() ))
+      _("Mayday! We are under attack!"),
+      _("Requesting assistance. We are under attack!"),
+      _("Merchant vessel under attack! Requesting help!"),
+      _("Help! Ship under fire!"),
+      _("Taking hostile fire! Need assistance!"),
+      _("We are under attack, require support!"),
+      _("Mayday! Ship taking damage!"),
+      string.format(_("Mayday! Merchant %s being assaulted!"), string.lower( ai.pilot():ship():class() ))
    }
    ai.settarget( ai.target() )
    ai.distress( msg[ rnd.int(1,#msg) ])
@@ -33,7 +33,7 @@ function create ()
    ai.setcredits( rnd.int(ai.pilot():ship():price()/100, ai.pilot():ship():price()/25) )
 
    -- Communication stuff
-   mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
+   mem.bribe_no = _("\"The Space Traders do not negotiate with criminals.\"")
    mem.refuel = rnd.rnd( 3000, 5000 )
    p = player.pilot()
    if p:exists() then
@@ -41,7 +41,7 @@ function create ()
       if standing > 50 then mem.refuel = mem.refuel * 0.75
       elseif standing > 80 then mem.refuel = mem.refuel * 0.5
       end
-      mem.refuel_msg = string.format("\"I'll supply your ship with fuel for %d credits.\"",
+      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %d credits.\""),
             mem.refuel);
    end
 
