@@ -8,10 +8,15 @@ AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
 
-AM_INIT_AUTOMAKE([foreign subdir-objects])
+AM_PO_SUBDIRS
 
 AM_GNU_GETTEXT([external])
 #AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT_VERSION([0.18])
+
+IT_PROG_INTLTOOL
+
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
