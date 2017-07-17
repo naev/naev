@@ -36,6 +36,7 @@ addons:
       - luarocks
       - gettext
       - autopoint
+      - intltool
 
 before_install:
   - |
