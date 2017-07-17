@@ -877,6 +877,16 @@ void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 
 
 /**
+ * @Brief Translates the screen position to windos position.
+ */
+void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
+{
+   *wx = (sx + (double)gl_screen.x) / gl_screen.mxscale;
+   *wy = (double)gl_screen.rh - (sy + (double)gl_screen.y) / gl_screen.myscale;
+}
+
+
+/**
  * @brief Cleans up OpenGL, the works.
  */
 void gl_exit (void)
