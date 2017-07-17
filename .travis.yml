@@ -53,7 +53,10 @@ before_install:
         libvorbis \
         libzip \
         luajit \
-        gettext
+        gettext \
+        intltool
+
+      brew link --force gettext
     fi
 
   - |
