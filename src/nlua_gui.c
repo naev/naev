@@ -395,7 +395,7 @@ static int guiL_menuInfo( lua_State *L )
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
    else {
-      NLUA_ERROR(L,"Invalid window info name '%s'.", str);
+      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
       return 0;
    }
 

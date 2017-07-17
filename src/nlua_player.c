@@ -544,7 +544,7 @@ static int playerL_cinematics( lua_State *L )
    b = lua_toboolean( L, 1 );
    if (lua_gettop(L) > 1) {
       if (!lua_istable(L,2)) {
-         NLUA_ERROR( L, "Second parameter to cinematics should be a table of options or omitted!" );
+         NLUA_ERROR( L, _("Second parameter to cinematics should be a table of options or omitted!") );
          return 0;
       }
 
@@ -621,7 +621,7 @@ static int playerL_takeoff( lua_State *L )
    NLUA_CHECKRW(L);
 
    if (!landed) {
-      NLUA_ERROR(L,"Player must be landed to force takeoff.");
+      NLUA_ERROR(L,_("Player must be landed to force takeoff."));
       return 0;
    }
 
@@ -697,7 +697,7 @@ static int playerL_landWindow( lua_State *L )
    NLUA_CHECKRW(L);
 
    if (!landed) {
-      NLUA_ERROR(L, "Must be landed to set the active land window.");
+      NLUA_ERROR(L, _("Must be landed to set the active land window."));
       return 0;
    }
 
@@ -804,7 +804,7 @@ static int playerL_shipOutfits( lua_State *L )
    }
 
    if (p == NULL) {
-      NLUA_ERROR( L, "Player does not own a ship named '%s'", str );
+      NLUA_ERROR( L, _("Player does not own a ship named '%s'"), str );
       return 0;
    }
 
@@ -912,7 +912,7 @@ static int playerL_addOutfit( lua_State *L  )
    /* Get outfit. */
    o = outfit_get( str );
    if (o==NULL) {
-      NLUA_ERROR(L, "Outfit '%s' not found.", str);
+      NLUA_ERROR(L, _("Outfit '%s' not found."), str);
       return 0;
    }
 
@@ -975,7 +975,7 @@ static int playerL_rmOutfit( lua_State *L )
       /* Get outfit. */
       o = outfit_get( str );
       if (o==NULL) {
-         NLUA_ERROR(L, "Outfit '%s' not found.", str);
+         NLUA_ERROR(L, _("Outfit '%s' not found."), str);
          return 0;
       }
 
@@ -1014,7 +1014,7 @@ static Pilot* playerL_newShip( lua_State *L )
       pntname = luaL_checkstring (L,3);
    else {
       if (!landed)
-         NLUA_ERROR(L,"Must be landed to add a new ship to the player without specifying planet to add to!");
+         NLUA_ERROR(L,_("Must be landed to add a new ship to the player without specifying planet to add to!"));
       pntname = NULL;
    }
    noname = lua_toboolean(L,4);
@@ -1023,7 +1023,7 @@ static Pilot* playerL_newShip( lua_State *L )
    if (pntname != NULL) {
       pnt = planet_get( pntname );
       if (pnt == NULL) {
-         NLUA_ERROR(L, "Planet '%s' not found!", pntname);
+         NLUA_ERROR(L, _("Planet '%s' not found!"), pntname);
          return 0;
       }
       /* Horrible hack to swap variables. */
@@ -1035,14 +1035,14 @@ static Pilot* playerL_newShip( lua_State *L )
 
    /* Must be landed if pnt is NULL. */
    if ((pnt == NULL) && (land_planet==NULL)) {
-      NLUA_ERROR(L, "Player must be landed to add a ship without location parameter.");
+      NLUA_ERROR(L, _("Player must be landed to add a ship without location parameter."));
       return 0;
    }
 
    /* Get ship. */
    s = ship_get(str);
    if (s==NULL) {
-      NLUA_ERROR(L, "Ship '%s' not found.", str);
+      NLUA_ERROR(L, _("Ship '%s' not found."), str);
       return 0;
    }
 
@@ -1125,7 +1125,7 @@ static int playerL_misnActive( lua_State *L )
    str  = luaL_checkstring(L,1);
    misn = mission_getFromName( str );
    if (misn == NULL) {
-      NLUA_ERROR(L, "Mission '%s' not found in stack", str);
+      NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
       return 0;
    }
 
@@ -1154,7 +1154,7 @@ static int playerL_misnDone( lua_State *L )
    /* Get mission ID. */
    id = mission_getID( str );
    if (id == -1) {
-      NLUA_ERROR(L, "Mission '%s' not found in stack", str);
+      NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
       return 0;
    }
 
@@ -1180,7 +1180,7 @@ static int playerL_evtActive( lua_State *L )
    str  = luaL_checkstring(L,1);
    evtid = event_dataID( str );
    if (evtid < 0) {
-      NLUA_ERROR(L, "Event '%s' not found in stack", str);
+      NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
       return 0;
    }
 
@@ -1210,7 +1210,7 @@ static int playerL_evtDone( lua_State *L )
    /* Get event ID. */
    id = event_dataID( str );
    if (id == -1) {
-      NLUA_ERROR(L, "Event '%s' not found in stack", str);
+      NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
       return 0;
    }
 
@@ -1242,11 +1242,11 @@ static int playerL_teleport( lua_State *L )
 
    /* Must not be landed. */
    if (landed)
-      NLUA_ERROR(L,"Can not teleport the player while landed!");
+      NLUA_ERROR(L,_("Can not teleport the player while landed!"));
    if (comm_isOpen())
-      NLUA_ERROR(L,"Can not teleport the player while the comm is open!");
+      NLUA_ERROR(L,_("Can not teleport the player while the comm is open!"));
    if (player_isBoarded())
-      NLUA_ERROR(L,"Can not teleport the player while they are boarded!");
+      NLUA_ERROR(L,_("Can not teleport the player while they are boarded!"));
 
    pnt = NULL;
 
@@ -1260,7 +1260,7 @@ static int playerL_teleport( lua_State *L )
       pnt   = luaL_validplanet(L,1);
       name  = planet_getSystem( pnt->name );
       if (name == NULL) {
-         NLUA_ERROR( L, "Planet '%s' does not belong to a system..", pnt->name );
+         NLUA_ERROR( L, _("Planet '%s' does not belong to a system.."), pnt->name );
          return 0;
       }
    }
@@ -1269,7 +1269,7 @@ static int playerL_teleport( lua_State *L )
       name = lua_tostring(L,1);
       if (!system_exists( name )) {
          if (!planet_exists( name )) {
-            NLUA_ERROR( L, "'%s' is not a valid teleportation target.", name );
+            NLUA_ERROR( L, _("'%s' is not a valid teleportation target."), name );
             return 0;
          }
 
@@ -1278,7 +1278,7 @@ static int playerL_teleport( lua_State *L )
          name = planet_getSystem( name );
          pnt  = planet_get( pntname );
          if (name == NULL) {
-            NLUA_ERROR( L, "Planet '%s' does not belong to a system..", pntname );
+            NLUA_ERROR( L, _("Planet '%s' does not belong to a system.."), pntname );
             return 0;
          }
       }
@@ -1288,7 +1288,7 @@ static int playerL_teleport( lua_State *L )
 
    /* Check if system exists. */
    if (!system_exists( name )) {
-      NLUA_ERROR( L, "System '%s' does not exist.", name );
+      NLUA_ERROR( L, _("System '%s' does not exist."), name );
       return 0;
    }
 

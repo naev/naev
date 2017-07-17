@@ -174,7 +174,7 @@ int var_load( xmlNodePtr parent )
                   var.d.str = xml_getStrd(cur);
                }
                else { /* super error checking */
-                  WARN("Unknown var type '%s'", str);
+                  WARN(_("Unknown var type '%s'"), str);
                   free(var.name);
                   continue;
                }

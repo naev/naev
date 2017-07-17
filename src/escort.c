@@ -176,7 +176,7 @@ int escorts_attack( Pilot *parent )
       lua_pop(naevL, 1);
    }
    if ((ret == 0) && (parent == player.p))
-      player_message("\egEscorts: \e0Attacking %s.", t->name);
+      player_message(_("\agEscorts: \a0Attacking %s."), t->name);
    return ret;
 }
 /**
@@ -189,7 +189,7 @@ int escorts_hold( Pilot *parent )
    int ret;
    ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
-         player_message("\egEscorts: \e0Holding position.");
+         player_message(_("\agEscorts: \a0Holding position."));
    return ret;
 }
 /**
@@ -202,7 +202,7 @@ int escorts_return( Pilot *parent )
    int ret;
    ret = escort_command( parent, "e_return", 0 );
    if ((ret == 0) && (parent == player.p))
-      player_message("\egEscorts: \e0Returning to ship.");
+      player_message(_("\agEscorts: \a0Returning to ship."));
    return ret;
 }
 /**
@@ -215,7 +215,7 @@ int escorts_clear( Pilot *parent )
    int ret;
    ret = escort_command( parent, "e_clear", 0 );
    if ((ret == 0) && (parent == player.p))
-      player_message("\egEscorts: \e0Clearing orders.");
+      player_message(_("\agEscorts: \a0Clearing orders."));
    return ret;
 }
 
@@ -230,6 +230,6 @@ int escorts_jump( Pilot *parent )
    int ret;
    ret = escort_command( parent, "hyperspace", 0 );
    if ((ret == 0) && (parent == player.p))
-      player_message("\egEscorts: \e0Jumping.");
+      player_message(_("\agEscorts: \a0Jumping."));
    return ret;
 }

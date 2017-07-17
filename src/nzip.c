@@ -50,7 +50,7 @@ struct zip* nzip_open ( const char* filename )
    arc = zip_open ( filename, flags, &err );
 
    if ( err != 0 || arc == NULL ) {
-      WARN ( "Error opening zip file %s", filename );
+      WARN ( _("Error opening zip file %s"), filename );
       nzip_printError ( err );
    }
 
@@ -65,7 +65,7 @@ struct zip* nzip_open ( const char* filename )
 void nzip_close ( struct zip* arc )
 {
    if ( zip_close ( arc ) ) {
-      WARN ( "Error closing zip file" );
+      WARN ( _("Error closing zip file") );
       WARN ( "%s", zip_strerror ( arc ) );
    }
 }
@@ -105,7 +105,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, size_t* size )
    err = zip_stat ( arc, filename, flags, &stats );
 
    if ( err ) {
-      WARN ( "Error reading %s from archive", filename );
+      WARN ( _("Error reading %s from archive"), filename );
       WARN ( "%s", zip_strerror ( arc ) );
       return NULL;
    }
@@ -114,7 +114,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, size_t* size )
    file = zip_fopen_index ( arc, stats.index, flags );
 
    if ( file == NULL ) {
-      WARN ( "Error reading %s from archive", filename );
+      WARN ( _("Error reading %s from archive"), filename );
       WARN ( "%s", zip_strerror ( arc ) );
       return NULL;
    }
@@ -127,7 +127,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, size_t* size )
 
    // If we read less than the reported file size, something probably went wrong
    if ( read < stats.size ) {
-      WARN ( "Error reading %s from archive", filename );
+      WARN ( _("Error reading %s from archive"), filename );
       WARN ( "%s", zip_strerror ( arc ) );
       free ( data );
       zip_fclose ( file );
@@ -168,7 +168,7 @@ char** nzip_listFiles ( struct zip* arc, size_t* nfiles )
       err = zip_stat_index ( arc, i, flags, &stats );
 
       if ( err ) {
-         WARN ( "Error getting file list from archive" );
+         WARN ( _("Error getting file list from archive") );
          WARN ( "%s", zip_strerror ( arc ) );
          free ( filelist );
          return NULL;

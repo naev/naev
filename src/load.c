@@ -316,7 +316,7 @@ void load_loadGameMenu (void)
          ns       = &nslist[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            nsnprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
+            nsnprintf( buf, sizeof(buf), "%s \ar(Backup)\a0", ns->name );
             names[i] = strdup(buf);
          }
          else
@@ -326,7 +326,7 @@ void load_loadGameMenu (void)
    /* case there are no files */
    else {
       names = malloc(sizeof(char*));
-      names[0] = strdup("None");
+      names[0] = strdup(_("None"));
       n     = 1;
    }
 
@@ -372,7 +372,7 @@ static void load_menu_update( unsigned int wid, char *str )
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
-   if (strcmp(save,"None") == 0)
+   if (strcmp(save,_("None")) == 0)
       return;
 
    /* Get position. */
@@ -385,20 +385,20 @@ static void load_menu_update( unsigned int wid, char *str )
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
    nsnprintf( buf, sizeof(buf),
-         _("\eDName:\n"
-         "\e0   %s\n"
-         "\eDVersion:\n"
-         "\e0   %s\n"
-         "\eDDate:\n"
-         "\e0   %s\n"
-         "\eDPlanet:\n"
-         "\e0   %s\n"
-         "\eDCredits:\n"
-         "\e0   %s\n"
-         "\eDShip Name:\n"
-         "\e0   %s\n"
-         "\eDShip Model:\n"
-         "\e0   %s"),
+         _("\aDName:\n"
+         "\a0   %s\n"
+         "\aDVersion:\n"
+         "\a0   %s\n"
+         "\aDDate:\n"
+         "\a0   %s\n"
+         "\aDPlanet:\n"
+         "\a0   %s\n"
+         "\aDCredits:\n"
+         "\a0   %s\n"
+         "\aDShip Name:\n"
+         "\a0   %s\n"
+         "\aDShip Model:\n"
+         "\a0   %s"),
          ns->name, version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
@@ -421,7 +421,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    wid = window_get( "Load Game" );
    save = toolkit_getList( wid, "lstSaves" );
 
-   if (strcmp(save,"None") == 0)
+   if (strcmp(save,_("None")) == 0)
       return;
 
    pos = toolkit_getListPos( wid, "lstSaves" );
@@ -434,8 +434,8 @@ static void load_menu_load( unsigned int wdw, char *str )
             ns[pos].version[1], ns[pos].version[2] );
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
-            "   Save version: \er%s\e0\n"
-            "   Naev version: \eD%s\e0\n"
+            "   Save version: \ar%s\a0\n"
+            "   Naev version: \aD%s\a0\n"
             "Are you sure you want to load this game? It may lose data."),
             save, version, naev_version(0) ))
          return;
@@ -560,8 +560,8 @@ int load_game( const char* file, int version_diff )
    player_cleanup();
 
    /* Welcome message - must be before space_init. */
-   player_message( _("\egWelcome to %s!"), APPNAME );
-   player_message( "\eg v%s", naev_version(0) );
+   player_message( _("\agWelcome to %s!"), APPNAME );
+   player_message( "\ag v%s", naev_version(0) );
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */

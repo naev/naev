@@ -89,7 +89,7 @@ int dsys_saveSystem( StarSystem *sys )
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
+      WARN(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 
@@ -241,7 +241,7 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
+      WARN(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 

@@ -64,7 +64,7 @@ int nlua_loadTut( nlua_env env )
 static int tut_mainMenu( lua_State *L )
 {
    if (landed) {
-      NLUA_ERROR(L,"Can not go to main menu while landed.");
+      NLUA_ERROR(L,_("Can not go to main menu while landed."));
       return 0;
    }
    menu_main();

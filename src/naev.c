@@ -199,9 +199,9 @@ int main( int argc, char** argv )
    binary_path = strdup(argv[0]);
 
    /* Print the version */
-   LOG( " "APPNAME" v%s", naev_version(0) );
+   LOG( " %s v%s", APPNAME, naev_version(0) );
 #ifdef GIT_COMMIT
-   DEBUG( " git HEAD at " GIT_COMMIT );
+   DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
 #endif /* GIT_COMMIT */
 
    /* Initializes SDL for possible warnings. */
@@ -421,9 +421,9 @@ int main( int argc, char** argv )
       nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
       home = SDL_getenv("HOME");
       ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
-            "   \er%s\e0\n\n"
+            "   \ar%s\a0\n\n"
             "The update script can likely be found in your Naev data directory:\n"
-            "   \er%s\e0\n\n"
+            "   \ar%s\a0\n\n"
             "Would you like to run it automatically?"), oldconfig, path );
 
       /* Try to run the script. */
@@ -445,7 +445,7 @@ int main( int argc, char** argv )
 
          /* We couldn't find the script. */
          if (ret == -1) {
-            dialogue_alert( _("The update script was not found at:\n\er%s\e0\n\n"
+            dialogue_alert( _("The update script was not found at:\n\ar%s\a0\n\n"
                   "Please locate and run it manually."), path );
          }
          /* Restart, as the script succeeded. */
@@ -456,9 +456,9 @@ int main( int argc, char** argv )
          }
          else { /* I sincerely hope this else is never hit. */
             dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n"),
+                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \aD%snebula/\a0\n\n"),
                   home, ".naev/conf.lua", nfile_configPath(),
                   home, ".naev/{saves,screenshots}/", nfile_dataPath(),
                   home, ".naev/gen/*.png", nfile_cachePath() );
@@ -469,7 +469,7 @@ int main( int argc, char** argv )
                _("To manually migrate your configuration files "
                "please exit Naev and run the update script, "
                "likely found in your Naev data directory:\n"
-               "   \er%s/naev-confupdate.sh\e0"), home, path );
+               "   \ar%s/naev-confupdate.sh\a0"), home, path );
       }
    }
 #endif /* HAS_MACOS */
@@ -1214,7 +1214,7 @@ char *naev_version( int long_version )
          nsnprintf( human_version, sizeof(human_version),
                " "APPNAME" v%s%s - %s", short_version,
 #ifdef DEBUGGING
-               " debug",
+               _(" debug"),
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
@@ -1349,28 +1349,28 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
 {
    if (sig == SIGFPE)
       switch (sig_code) {
-         case SI_USER: return "SIGFPE (raised by program)";
-         case FPE_INTDIV: return "SIGFPE (integer divide by zero)";
-         case FPE_INTOVF: return "SIGFPE (integer overflow)";
-         case FPE_FLTDIV: return "SIGFPE (floating-point divide by zero)";
-         case FPE_FLTOVF: return "SIGFPE (floating-point overflow)";
-         case FPE_FLTUND: return "SIGFPE (floating-point underflow)";
-         case FPE_FLTRES: return "SIGFPE (floating-point inexact result)";
-         case FPE_FLTINV: return "SIGFPE (floating-point invalid operation)";
-         case FPE_FLTSUB: return "SIGFPE (subscript out of range)";
-         default: return "SIGFPE";
+         case SI_USER: return _("SIGFPE (raised by program)");
+         case FPE_INTDIV: return _("SIGFPE (integer divide by zero)");
+         case FPE_INTOVF: return _("SIGFPE (integer overflow)");
+         case FPE_FLTDIV: return _("SIGFPE (floating-point divide by zero)");
+         case FPE_FLTOVF: return _("SIGFPE (floating-point overflow)");
+         case FPE_FLTUND: return _("SIGFPE (floating-point underflow)");
+         case FPE_FLTRES: return _("SIGFPE (floating-point inexact result)");
+         case FPE_FLTINV: return _("SIGFPE (floating-point invalid operation)");
+         case FPE_FLTSUB: return _("SIGFPE (subscript out of range)");
+         default: return _("SIGFPE");
       }
    else if (sig == SIGSEGV)
       switch (sig_code) {
-         case SI_USER: return "SIGSEGV (raised by program)";
-         case SEGV_MAPERR: return "SIGSEGV (address not mapped to object)";
-         case SEGV_ACCERR: return "SIGSEGV (invalid permissions for mapped object)";
-         default: return "SIGSEGV";
+         case SI_USER: return _("SIGSEGV (raised by program)");
+         case SEGV_MAPERR: return _("SIGSEGV (address not mapped to object)");
+         case SEGV_ACCERR: return _("SIGSEGV (invalid permissions for mapped object)");
+         default: return _("SIGSEGV");
       }
    else if (sig == SIGABRT)
       switch (sig_code) {
-         case SI_USER: return "SIGABRT (raised by program)";
-         default: return "SIGABRT";
+         case SI_USER: return _("SIGABRT (raised by program)");
+         default: return _("SIGABRT");
       }
 
    /* No suitable code found. */

@@ -151,7 +151,7 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
    }
 
    if (s == NULL)
-      NLUA_ERROR(L, "System is invalid");
+      NLUA_ERROR(L, _("System is invalid"));
 
    return s;
 }
@@ -244,7 +244,7 @@ static int systemL_get( lua_State *L )
 
    /* Error checking. */
    if (ss == NULL) {
-      NLUA_ERROR(L, "No matching systems found.");
+      NLUA_ERROR(L, _("No matching systems found."));
       return 0;
    }
 

@@ -56,7 +56,7 @@ function lead_fleet ()
 
       local form = formation[mem.formation]
       if form == nil then
-         warn(string.format("Formation '%s' not found", mem.formation))
+         warn(string.format(_("Formation '%s' not found"), mem.formation))
       else
          form(ai.pilot())
       end

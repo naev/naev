@@ -364,7 +364,7 @@ static int bar_genList( unsigned int wid )
       portraits    = malloc(sizeof(glTexture*));
       portraits[0] = mission_portrait;
       names        = malloc(sizeof(char*));
-      names[0]     = strdup("News");
+      names[0]     = strdup(_("News"));
    }
    else {
       n            = n+1;
@@ -372,7 +372,7 @@ static int bar_genList( unsigned int wid )
       portraits[0] = mission_portrait;
       npc_getTextureArray( &portraits[1], n-1 );
       names        = malloc( sizeof(char*) * n );
-      names[0]     = strdup("News");
+      names[0]     = strdup(_("News"));
       npc_getNameArray( &names[1], n-1 );
    }
    window_addImageArray( wid, 20, -40,
@@ -711,13 +711,13 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
+   nsnprintf( txt, sizeof(txt), _("%s\n%d Tons"), buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", "None" );
+      window_modifyText( wid, "txtReward", _("None") );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -1164,7 +1164,7 @@ static void land_createMainTab( unsigned int wid )
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
       window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
                200, gl_defFont.h, 1, "txtRefuel",
-               &gl_defFont, &cBlack, "No refueling services." );
+               &gl_defFont, &cBlack, _("No refueling services.") );
    }
 }
 
@@ -1334,7 +1334,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\epTaking off from %s on %s."), land_planet->name, nt);
+   player_message( _("\apTaking off from %s on %s."), land_planet->name, nt);
    free(nt);
 
    /* Hooks and stuff. */

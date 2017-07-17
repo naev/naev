@@ -173,7 +173,7 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG("Loaded %d tech group%s", s, (s == 1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
    free(data);

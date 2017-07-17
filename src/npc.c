@@ -413,7 +413,7 @@ static void npc_free( NPC_t *npc )
          break;
 
       default:
-         WARN("Freeing NPC of invalid type.");
+         WARN(_("Freeing NPC of invalid type."));
          return;
    }
 }
@@ -562,7 +562,7 @@ static int npc_approach_giver( NPC_t *npc )
       if (player_missions[i]->data == NULL)
          break;
    if (i >= MISSION_MAX) {
-      dialogue_alert("You have too many active missions.");
+      dialogue_alert(_("You have too many active missions."));
       return -1;
    }
 
@@ -617,7 +617,7 @@ int npc_approach( int i )
          break;
 
       default:
-         WARN("Unknown NPC type!");
+         WARN(_("Unknown NPC type!"));
          return -1;
    }
 

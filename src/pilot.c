@@ -860,7 +860,7 @@ void pilot_cooldown( Pilot *p )
    }
 
    if (p->id == PLAYER_ID)
-      player_message("\epActive cooldown engaged.");
+      player_message(_("\apActive cooldown engaged."));
 
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
@@ -915,12 +915,12 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
-         player_message("\epActive cooldown completed.");
+         player_message(_("\apActive cooldown completed."));
       else {
          if (reason != NULL)
-            player_message("\erActive cooldown aborted: %s!", reason);
+            player_message(_("\arActive cooldown aborted: %s!"), reason);
          else
-            player_message("\erActive cooldown aborted!");
+            player_message(_("\arActive cooldown aborted!"));
       }
    }
 
@@ -1012,7 +1012,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    /* Only really affects player.p atm. */
    if (target == PLAYER_ID) {
       c = pilot_getFactionColourChar( p );
-      player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
+      player_message( _("\a%cComm %s>\a0 \"%s\""), c, p->name, msg );
 
       /* Set comm message. */
       pilot_setCommMsg( p, msg );
@@ -1040,7 +1040,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
       return;
 
    c = pilot_getFactionColourChar( p );
-   player_message( "\e%cBroadcast %s>\e0 \"%s\"", c, p->name, msg );
+   player_message( _("\a%cBroadcast %s>\a0 \"%s\""), c, p->name, msg );
 
    /* Set comm message. */
    pilot_setCommMsg( p, msg );
@@ -2125,14 +2125,14 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( "\erStrayed too far from jump point: jump aborted." );
+               player_message( _("\arStrayed too far from jump point: jump aborted.") );
       }
       else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
          pilot_hyperspaceAbort( p );
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( "\erAfterburner active: jump aborted." );
+               player_message( _("\arAfterburner active: jump aborted.") );
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
@@ -2152,7 +2152,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( "\erStrayed too far from jump point: jump aborted." );
+               player_message( _("\arStrayed too far from jump point: jump aborted.") );
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
@@ -2172,7 +2172,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
                if (jp_isFlag( &cur_system->jumps[p->nav_hyperspace], JP_EXITONLY )) {
-                  WARN( "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'",
+                  WARN( _("Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"),
                         p->name, cur_system->name, sys->name );
                }
                else {
@@ -2469,7 +2469,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 #ifdef DEBUGGING
    const char *str = pilot_checkSpaceworthy( pilot );
    if (str != NULL)
-      DEBUG( "Pilot '%s' failed sanity check: %s", pilot->name, str );
+      DEBUG( _("Pilot '%s' failed sanity check: %s"), pilot->name, str );
 #endif /* DEBUGGING */
 
    /* set flags and functions */
@@ -2536,7 +2536,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Allocate pilot memory. */
    dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
-      WARN("Unable to allocate memory");
+      WARN(_("Unable to allocate memory"));
       return 0;
    }
 
@@ -2576,7 +2576,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
    Pilot* dyn;
    dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
-      WARN("Unable to allocate memory");
+      WARN(_("Unable to allocate memory"));
       return 0;
    }
    pilot_setFlagRaw( flags, PILOT_EMPTY );

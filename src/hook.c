@@ -280,7 +280,7 @@ static int hook_parseParam( lua_State *L, HookParam *param )
             break;
 
          default:
-            WARN( "Unknown Lua parameter type." );
+            WARN( _("Unknown Lua parameter type.") );
             lua_pushnil( L );
             break;
       }
@@ -308,7 +308,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 
    /* Make sure it's valid. */
    if (hook->u.misn.parent == 0) {
-      WARN("Trying to run hook with inexistant parent: deleting");
+      WARN(_("Trying to run hook with inexistant parent: deleting"));
       hook->delete = 1; /* so we delete it */
       return -1;
    }
@@ -316,7 +316,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    /* Locate the mission */
    misn = hook_getMission( hook );
    if (misn == NULL) {
-      WARN("Trying to run hook with parent not in player mission stack: deleting");
+      WARN(_("Trying to run hook with parent not in player mission stack: deleting"));
       hook->delete = 1; /* so we delete it */
       return -1;
    }
@@ -340,7 +340,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    /* Run mission code. */
    hook->ran_once = 1;
    if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occurred */
-      WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
+      WARN(_("Hook [%s] '%d' -> '%s' failed"), hook->stack,
             hook->id, hook->u.misn.func);
       return -1;
    }
@@ -369,7 +369,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 
    /* Set up hook parameters. */
    if (event_get(hook->u.event.parent) == NULL) {
-      WARN("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook.", hook->stack,
+      WARN(_("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."), hook->stack,
             hook->id, hook->u.event.func);
       hook->delete = 1; /* Set for deletion. */
       return -1;
@@ -388,7 +388,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    hook->ran_once = 1;
    if (ret < 0) {
       hook_rmRaw( hook );
-      WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
+      WARN(_("Hook [%s] '%d' -> '%s' failed"), hook->stack,
             hook->id, hook->u.event.func);
       return -1;
    }
@@ -424,7 +424,7 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
          break;
 
       default:
-         WARN("Invalid hook type '%d', deleting.", hook->type);
+         WARN(_("Invalid hook type '%d', deleting."), hook->type);
          hook->delete = 1;
          return -1;
    }
@@ -961,7 +961,7 @@ int hooks_runParam( const char* stack, HookParam *param )
          hq->hparam[i] = param[i];
 #ifdef DEBUGGING
       if (i >= HOOK_MAX_PARAM)
-         WARN( "HOOK_MAX_PARAM is set too low (%d), need at least %d!", HOOK_MAX_PARAM, i );
+         WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
 #endif /* DEBUGGING */
       hq->hparam[i].type = HOOK_PARAM_SENTINEL;
       hq_add( hq );
@@ -1047,7 +1047,7 @@ int hook_runIDparam( unsigned int id, HookParam *param )
    /* Try to find the hook and run it. */
    h = hook_get( id );
    if (h == NULL) {
-      WARN("Attempting to run hook of id '%d' which is not in the stack", id);
+      WARN(_("Attempting to run hook of id '%d' which is not in the stack"), id);
       return -1;
    }
    hook_run( h, param, -1 );
@@ -1110,7 +1110,7 @@ void hook_cleanup (void)
    Hook *h, *hn;
 
    if (hook_runningstack)
-      WARN("Running hook_cleanup while hook stack is being run!");
+      WARN(_("Running hook_cleanup while hook stack is being run!"));
 
    /* Clear queued hooks. */
    hq_clear();
@@ -1192,7 +1192,7 @@ int hook_save( xmlTextWriterPtr writer )
             break;
 
          default:
-            WARN("Something has gone screwy here...");
+            WARN(_("Something has gone screwy here..."));
             break;
       }
 
@@ -1289,7 +1289,7 @@ static int hook_parse( xmlNodePtr base )
          }
          /* Unknown. */
          else {
-            WARN("Hook of unknown type '%s' found, skipping.", stype);
+            WARN(_("Hook of unknown type '%s' found, skipping."), stype);
             free(stype);
             continue;
          }
@@ -1318,12 +1318,12 @@ static int hook_parse( xmlNodePtr base )
                continue;
             }
 
-            WARN("Save has unknown hook node '%s'.", cur->name);
+            WARN(_("Save has unknown hook node '%s'."), cur->name);
          } while (xml_nextNode(cur));
 
          /* Check for validity. */
          if ((parent == 0) || (func == NULL) || (stack == NULL)) {
-            WARN("Invalid hook.");
+            WARN(_("Invalid hook."));
             continue;
          }
 

@@ -137,13 +137,13 @@ const char* nfile_dataPath (void)
         }
 #if HAS_MACOS
         if (macos_dataPath( naev_dataPath, PATH_MAX ) != 0) {
-           WARN("Cannot determine data path, using current directory.");
+           WARN(_("Cannot determine data path, using current directory."));
            nsnprintf( naev_dataPath, PATH_MAX, "./naev/" );
         }
 #elif HAS_UNIX
         char *path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
         if (path == NULL) {
-            WARN("$XDG_DATA_HOME isn't set, using current directory.");
+            WARN(_("$XDG_DATA_HOME isn't set, using current directory."));
             path = strdup(".");
         }
 
@@ -155,12 +155,12 @@ const char* nfile_dataPath (void)
 #elif HAS_WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
-         WARN("%%APPDATA%% isn't set, using current directory.");
+         WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
       nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
-#error "Feature needs implementation on this Operating System for Naev to work."
+#error _("Feature needs implementation on this Operating System for Naev to work.")
 #endif
     }
 
@@ -184,13 +184,13 @@ const char* nfile_configPath (void)
         }
 #if HAS_MACOS
         if (macos_configPath( naev_configPath, PATH_MAX ) != 0) {
-           WARN("Cannot determine config path, using current directory.");
+           WARN(_("Cannot determine config path, using current directory."));
            nsnprintf( naev_configPath, PATH_MAX, "./naev/" );
         }
 #elif HAS_UNIX
         char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
         if (path == NULL) {
-            WARN("$XDG_CONFIG_HOME isn't set, using current directory.");
+            WARN(_("$XDG_CONFIG_HOME isn't set, using current directory."));
             path = strdup(".");
         }
 
@@ -202,7 +202,7 @@ const char* nfile_configPath (void)
 #elif HAS_WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
-         WARN("%%APPDATA%% isn't set, using current directory.");
+         WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
       nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
@@ -231,13 +231,13 @@ const char* nfile_cachePath (void)
         }
 #if HAS_MACOS
         if (macos_cachePath( naev_cachePath, PATH_MAX ) != 0) {
-           WARN("Cannot determine cache path, using current directory.");
+           WARN(_("Cannot determine cache path, using current directory."));
            nsnprintf( naev_cachePath, PATH_MAX, "./naev/" );
         }
 #elif HAS_UNIX
         char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
         if (path == NULL) {
-            WARN("$XDG_CACHE_HOME isn't set, using current directory.");
+            WARN(_("$XDG_CACHE_HOME isn't set, using current directory."));
             path = strdup(".");
         }
 
@@ -249,7 +249,7 @@ const char* nfile_cachePath (void)
 #elif HAS_WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
-         WARN("%%APPDATA%% isn't set, using current directory.");
+         WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
       nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
@@ -387,7 +387,7 @@ int nfile_dirMakeExist( const char* path, ... )
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
+      WARN(_("Dir '%s' does not exist and unable to create: %s"), file, strerror(errno));
       return -1;
    }
 
@@ -505,7 +505,7 @@ int nfile_copyIfExists( const char* file1, const char* file2 )
    f_in  = fopen( file1, "rb" );
    f_out = fopen( file2, "wb" );
    if ((f_in==NULL) || (f_out==NULL)) {
-      WARN( "Failure to copy '%s' to '%s': %s", file1, file2, strerror(errno) );
+      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
       if (f_in!=NULL)
          fclose(f_in);
       return -1;
@@ -534,7 +534,7 @@ int nfile_copyIfExists( const char* file1, const char* file2 )
    return 0;
 
 err:
-   WARN( "Failure to copy '%s' to '%s': %s", file1, file2, strerror(errno) );
+   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
    fclose( f_in );
    fclose( f_out );
 
@@ -721,21 +721,21 @@ char* nfile_readFile( size_t* filesize, const char* path, ... )
    /* Open file. */
    file = fopen( base, "rb" );
    if (file == NULL) {
-      WARN("Error occurred while opening '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while opening '%s': %s"), base, strerror(errno));
       *filesize = 0;
       return NULL;
    }
 
    /* Get file size. */
    if (fseek( file, 0L, SEEK_END ) == -1) {
-      WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while seeking '%s': %s"), base, strerror(errno));
       fclose(file);
       *filesize = 0;
       return NULL;
    }
    len = ftell(file);
    if (fseek( file, 0L, SEEK_SET ) == -1) {
-      WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while seeking '%s': %s"), base, strerror(errno));
       fclose(file);
       *filesize = 0;
       return NULL;
@@ -744,7 +744,7 @@ char* nfile_readFile( size_t* filesize, const char* path, ... )
    /* Allocate buffer. */
    buf = malloc( len+1 );
    if (buf == NULL) {
-      WARN("Out of Memory!");
+      WARN(_("Out of Memory"));
       fclose(file);
       *filesize = 0;
       return NULL;
@@ -756,7 +756,7 @@ char* nfile_readFile( size_t* filesize, const char* path, ... )
    while (n < len) {
       pos = fread( &buf[n], 1, len-n, file );
       if (pos <= 0) {
-         WARN("Error occurred while reading '%s': %s", base, strerror(errno));
+         WARN(_("Error occurred while reading '%s': %s"), base, strerror(errno));
          fclose(file);
          *filesize = 0;
          free(buf);
@@ -795,7 +795,7 @@ int nfile_touch( const char* path, ... )
    /* Try to open the file, C89 compliant, but not as precise as stat. */
    f = fopen(file, "a+b");
    if (f == NULL) {
-      WARN("Unable to touch file '%s': %s", file, strerror(errno));
+      WARN(_("Unable to touch file '%s': %s"), file, strerror(errno));
       return -1;
    }
 
@@ -831,7 +831,7 @@ int nfile_writeFile( const char* data, size_t len, const char* path, ... )
    /* Open file. */
    file = fopen( base, "wb" );
    if (file == NULL) {
-      WARN("Error occurred while opening '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while opening '%s': %s"), base, strerror(errno));
       return -1;
    }
 
@@ -840,7 +840,7 @@ int nfile_writeFile( const char* data, size_t len, const char* path, ... )
    while (n < len) {
       pos = fwrite( &data[n], 1, len-n, file );
       if (pos <= 0) {
-         WARN("Error occurred while writing '%s': %s", base, strerror(errno));
+         WARN(_("Error occurred while writing '%s': %s"), base, strerror(errno));
          fclose(file);  /* don't care about further errors */
          return -1;
       }
@@ -849,7 +849,7 @@ int nfile_writeFile( const char* data, size_t len, const char* path, ... )
 
    /* Close the file. */
    if (fclose(file) == EOF) {
-      WARN("Error occurred while closing '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while closing '%s': %s"), base, strerror(errno));
       return -1;
    }
 
@@ -866,7 +866,7 @@ int nfile_writeFile( const char* data, size_t len, const char* path, ... )
 int nfile_delete( const char* file )
 {
    if (unlink(file)) {
-      WARN( "Error deleting file %s",file );
+      WARN( _("Error deleting file %s"),file );
       return -1;
    }
    return 0;
@@ -882,19 +882,19 @@ int nfile_delete( const char* file )
 int nfile_rename( const char* oldname, const char* newname )
 {
    if (!nfile_fileExists(oldname)) {
-      WARN("Can not rename non existant file %s",oldname);
+      WARN(_("Can not rename non existant file %s"),oldname);
       return -1;
    }
    if (newname == NULL) {
-      WARN("Can not rename to NULL file name");
+      WARN(_("Can not rename to NULL file name"));
       return -1;
    }
    if (nfile_fileExists( newname )) {
-      WARN("Error renaming %s to %s. %s already exists",oldname,newname,newname);
+      WARN(_("Error renaming %s to %s. %s already exists"),oldname,newname,newname);
       return -1;
    }
    if (rename(oldname,newname))
-      WARN("Error renaming %s to %s",oldname,newname);
+      WARN(_("Error renaming %s to %s"),oldname,newname);
    return 0;
 }
 

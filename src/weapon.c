@@ -363,7 +363,7 @@ static void think_seeker( Weapon* w, const double dt )
          break;
 
       default:
-         WARN("Unknown weapon status for '%s'", w->outfit->name);
+         WARN(_("Unknown weapon status for '%s'"), w->outfit->name);
          break;
    }
 
@@ -479,7 +479,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
@@ -618,7 +618,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             }
             break;
          default:
-            WARN("Weapon of type '%s' has no update implemented yet!",
+            WARN(_("Weapon of type '%s' has no update implemented yet!"),
                   w->outfit->name);
             break;
       }
@@ -660,7 +660,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
@@ -800,7 +800,7 @@ static void weapon_render( Weapon* w, const double dt )
          break;
 
       default:
-         WARN("Weapon of type '%s' has no render implemented yet!",
+         WARN(_("Weapon of type '%s' has no render implemented yet!"),
                w->outfit->name);
          break;
    }
@@ -1433,7 +1433,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 
       /* just dump it where the player is */
       default:
-         WARN("Weapon of type '%s' has no create implemented yet!",
+         WARN(_("Weapon of type '%s' has no create implemented yet!"),
                w->outfit->name);
          w->solid = solid_create( 1., dir, pos, vel, SOLID_UPDATE_EULER );
          break;
@@ -1470,7 +1470,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 
    if (!outfit_isBolt(outfit) &&
          !outfit_isLauncher(outfit)) {
-      ERR("Trying to create a Weapon from a non-Weapon type Outfit");
+      ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
       return;
    }
 
@@ -1491,7 +1491,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
    }
 
    if (*mLayer > *nLayer) /* more memory alloced than needed */
@@ -1549,7 +1549,7 @@ unsigned int beam_start( const Outfit* outfit,
    GLsizei size;
 
    if (!outfit_isBeam(outfit)) {
-      ERR("Trying to create a Beam Weapon from a non-beam outfit.");
+      ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
       return -1;
    }
 
@@ -1573,7 +1573,7 @@ unsigned int beam_start( const Outfit* outfit,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return -1;
    }
 
@@ -1635,7 +1635,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return;
    }
 
@@ -1673,13 +1673,13 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
    for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the current position */
    if (i >= *nlayer) {
-      WARN("Trying to destroy weapon not found in stack!");
+      WARN(_("Trying to destroy weapon not found in stack!"));
       return;
    }
 
@@ -1817,7 +1817,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return;
    }
 

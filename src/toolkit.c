@@ -216,7 +216,7 @@ Widget* window_newWidget( Window* w, const char *name )
 
       /* Should be destroyed. */
       if (!wgt_isFlag( wgt, WGT_FLAG_KILL )) {
-         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed",
+         WARN(_("Trying to create widget '%s' over existing one that hasn't been destroyed"),
                name );
          return NULL;
       }
@@ -302,7 +302,7 @@ Widget* window_getwgt( const unsigned int wid, const char* name )
       if (strcmp(wgt->name, name)==0)
          return wgt;
 
-   WARN("Widget '%s' not found in window '%u'!", name, wid );
+   WARN(_("Widget '%s' not found in window '%u'!"), name, wid );
    return NULL;
 }
 
@@ -554,7 +554,7 @@ unsigned int window_createFlags( const char* name,
       for (wcur = windows; wcur != NULL; wcur = wcur->next) {
          if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
                !window_isFlag(wcur, WINDOW_NOFOCUS))
-            WARN("Window with name '%s' already exists!",wcur->name);
+            WARN(_("Window with name '%s' already exists!"),wcur->name);
          wlast = wcur;
       }
 
@@ -907,7 +907,7 @@ int widget_exists( const unsigned int wid, const char* wgtname )
 
    /* Get window. */
    if (w==NULL) {
-      WARN("window '%d' does not exist", wid);
+      WARN(_("window '%d' does not exist"), wid);
       return 0;
    }
 
@@ -942,7 +942,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
          break;
 
    if (wgt == NULL) {
-      WARN("Widget '%s' not found in window '%s'", wgtname, wdw->name );
+      WARN(_("Widget '%s' not found in window '%s'"), wgtname, wdw->name );
       return;
    }
 
@@ -1956,8 +1956,8 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             if ((wgt->type==WIDGET_BUTTON) && ((wgt->dat.btn.disabled==0) ||
                      (wgt->dat.btn.softdisable))) {
                if (wgt->dat.btn.fptr==NULL)
-                  DEBUG("Toolkit: Button '%s' of Window '%s' "
-                        "doesn't have a function trigger",
+                  DEBUG(_("Toolkit: Button '%s' of Window '%s' "
+                        "doesn't have a function trigger"),
                         wgt->name, w->name );
                else {
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);

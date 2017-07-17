@@ -435,7 +435,7 @@ static void map_update( unsigned int wid )
       if (faction_isKnown( sys->presence[i].faction )) {
          t           = faction_getColourChar(sys->presence[i].faction);
          /* Use map grey instead of default neutral colour */
-         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
                         (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                         (t=='N')?'M':t, sys->presence[i].value);
       }
@@ -445,7 +445,7 @@ static void map_update( unsigned int wid )
          break;
    }
    if (unknownPresence != 0)
-      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
                      (l==0)?"":"\n", _("Unknown"), 'M', unknownPresence);
    if (hasPresence == 0)
       nsnprintf(buf, PATH_MAX, "N/A");
@@ -475,17 +475,17 @@ static void map_update( unsigned int wid )
          t = 'S';
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
+         p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s\an",
                t, sys->planets[i]->name );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s\an",
                t, sys->planets[i]->name );
       hasPlanets = 1;
       if (p > PATH_MAX)
          break;
    }
    if(hasPlanets == 0)
-      strncpy( buf, "None", PATH_MAX );
+      strncpy( buf, _("None"), PATH_MAX );
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", x, y );
@@ -1078,7 +1078,7 @@ void map_renderNames( double bx, double by, double x, double y,
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            nsnprintf( buf, sizeof(buf), "\egH: %.2f", n );
+            nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_print( &gl_smallFont,

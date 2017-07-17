@@ -128,7 +128,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
       return;
 
    buf = strdup(str);
-   nsnprintf(str, ECON_CRED_STRLEN, "\er%s\e0", buf);
+   nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
    free(buf);
 }
 
@@ -145,7 +145,7 @@ Commodity* commodity_get( const char* name )
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
 
-   WARN("Commodity '%s' not found in stack", name);
+   WARN(_("Commodity '%s' not found in stack"), name);
    return NULL;
 }
 
@@ -225,15 +225,11 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
 
-   /* Get name. */
-   xmlr_attr( parent, "name", temp->name );
-   if (temp->name == NULL)
-      WARN("Commodity from "COMMODITY_DATA_PATH" has invalid or no name");
-
    /* Parse body. */
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
+      xmlr_strd(node, "name", temp->name);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
       if (xml_isNode(node,"gfx_store")) {
@@ -246,8 +242,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
    } while (xml_nextNode(node));
+   if (temp->name == NULL)
+      WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
    if ((temp->gfx_store == NULL) && (temp->price>0)) {
-      WARN("No <gfx_store> node found, using default texture for commodity \"%s\"", temp->name);
+      WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
       temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
    }
 
@@ -321,19 +319,19 @@ int commodity_load (void)
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", COMMODITY_DATA_PATH);
+      WARN(_("'%s' is not valid XML."), COMMODITY_DATA_PATH);
       return -1;
    }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-      ERR("Malformed "COMMODITY_DATA_PATH" file: missing root element '"XML_COMMODITY_ID"'");
+      ERR(_("Malformed %s file: missing root element '%s'"), COMMODITY_DATA_PATH, XML_COMMODITY_ID);
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first faction node */
    if (node == NULL) {
-      ERR("Malformed "COMMODITY_DATA_PATH" file: does not contain elements");
+      ERR(_("Malformed %s file: does not contain elements"), COMMODITY_DATA_PATH);
       return -1;
    }
 
@@ -356,13 +354,13 @@ int commodity_load (void)
          }
       }
       else
-         WARN("'"COMMODITY_DATA_PATH"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), COMMODITY_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
+   DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 
    return 0;
 
@@ -412,7 +410,7 @@ credits_t economy_getPrice( const Commodity *com,
 
    /* Check if found. */
    if (i >= econ_nprices) {
-      WARN("Price for commodity '%s' not known.", com->name);
+      WARN(_("Price for commodity '%s' not known."), com->name);
       return 0;
    }
 
@@ -521,7 +519,7 @@ static int econ_createGMatrix (void)
    /* Create the matrix. */
    M = cs_spalloc( systems_nstack, systems_nstack, 1, 1, 1 );
    if (M == NULL)
-      ERR("Unable to create CSparse Matrix.");
+      ERR(_("Unable to create CSparse Matrix."));
 
    /* Fill the matrix. */
    for (i=0; i < systems_nstack; i++) {
@@ -539,10 +537,10 @@ static int econ_createGMatrix (void)
          /* Matrix is symmetrical and non-diagonal is negative. */
          ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
-            WARN("Unable to enter CSparse Matrix Cell.");
+            WARN(_("Unable to enter CSparse Matrix Cell."));
          ret = cs_entry( M, sys->jumps[j].target->id, i, -R );
          if (ret != 1)
-            WARN("Unable to enter CSparse Matrix Cell.");
+            WARN(_("Unable to enter CSparse Matrix Cell."));
       }
 
       /* Set the diagonal. */
@@ -555,7 +553,7 @@ static int econ_createGMatrix (void)
       cs_spfree( econ_G );
    econ_G = cs_compress( M );
    if (econ_G == NULL)
-      ERR("Unable to create economy G Matrix.");
+      ERR(_("Unable to create economy G Matrix."));
 
    /* Clean up. */
    cs_spfree(M);
@@ -658,7 +656,7 @@ int economy_update( unsigned int dt )
    /* Create the vector to solve the system. */
    X = malloc(sizeof(double)*systems_nstack);
    if (X == NULL) {
-      WARN("Out of Memory!");
+      WARN(_("Out of Memory"));
       return -1;
    }
 
@@ -679,7 +677,7 @@ int economy_update( unsigned int dt )
        * enforce that condition). */
       ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
-         WARN("Failed to solve the Economy System.");
+         WARN(_("Failed to solve the Economy System."));
 
       /*
        * Get the minimum and maximum to scale.
