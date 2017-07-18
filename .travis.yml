@@ -36,6 +36,7 @@ addons:
       - luarocks
       - gettext
       - autopoint
+      - intltool
 
 before_install:
   - |
@@ -52,7 +53,11 @@ before_install:
         libpng \
         libvorbis \
         libzip \
-        luajit
+        luajit \
+        gettext \
+        intltool
+
+      brew link --force gettext
     fi
 
   - |
