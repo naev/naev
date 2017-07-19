@@ -13,43 +13,38 @@ include "proximity.lua"
 include "fleethelper.lua"
 include "dat/missions/empire/common.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them."
-   misn_title = "Operation Cold Metal"
-   misn_reward = "Fame and Glory"
-   misn_desc = {}
-   misn_desc[1] = "Neutralize enemy forces in %s."
-   misn_desc[2] = "Destroy the Starfire and hostiles in %s."
-   misn_desc[3] = "Return to %s in the %s system."
-   title = {}
-   title[1] = "Bar"
-   title[2] = "Operation Cold Metal"
-   title[3] = "Mission Success"
-   title[4] = "Cowardly Behaviour"
-   text = {}
-   text[1] = [[You join Commodore Keer at her table.
-    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]]
-   text[2] = [["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]
-   text[3] = [[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
-    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]
-   text[4] = [[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
-    And so ends the Collective threat...]]
-   text[5] = [[You recieve a message signed by Commodore Keer as soon as you enter Empire space:
+bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
+misn_title = _("Operation Cold Metal")
+misn_reward = _("Fame and Glory")
+misn_desc = {}
+misn_desc[1] = _("Neutralize enemy forces in %s.")
+misn_desc[2] = _("Destroy the Starfire and hostiles in %s.")
+misn_desc[3] = _("Return to %s in the %s system.")
+title = {}
+title[1] = _("Bar")
+title[2] = _("Operation Cold Metal")
+title[3] = _("Mission Success")
+title[4] = _("Cowardly Behaviour")
+text = {}
+text[1] = _([[You join Commodore Keer at her table.
+    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]])
+text[2] = _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]])
+text[3] = _([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
+    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]])
+text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
+    And so ends the Collective threat...]])
+text[5] = _([[You recieve a message signed by Commodore Keer as soon as you enter Empire space:
     "There is no room for cowards in the Empire's fleet."
-    The signature does seem valid.]]
+    The signature does seem valid.]])
     
-    start_comm = "To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"
+start_comm = _("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!")
    
-   osd_msg = {}
-   osd_msg[1] = "Fly to %s via %s and meet up with the Imperial fleet"
-   osd_msg[2] = "Defeat the Starfire"
-   osd_msg2alt = "Defeat the Starfire and the Trinity"
-   osd_msg[3] = "Report back"
-   osd_msg["__save"] = true
-end
+osd_msg = {}
+osd_msg[1] = _("Fly to %s via %s and meet up with the Imperial fleet")
+osd_msg[2] = _("Defeat the Starfire")
+osd_msg2alt = _("Defeat the Starfire and the Trinity")
+osd_msg[3] = _("Report back")
+osd_msg["__save"] = true
 
 
 function create ()
@@ -58,7 +53,7 @@ function create ()
         abort()
     end
 
-   misn.setNPC( "Keer", "empire/unique/keer" )
+   misn.setNPC( _("Keer"), "empire/unique/keer" )
    misn.setDesc( bar_desc )
 end
 
@@ -184,7 +179,7 @@ end
 
 function refuelBroadcast ()
    if refship:exists() then
-      refship:broadcast("Tanker in system, contact if in need of fuel.")
+      refship:broadcast(_("Tanker in system, contact if in need of fuel."))
       hook.timer(10000, "refuelBroadcast")
    end
 end
@@ -193,7 +188,7 @@ end
 function addRefuelShip ()
    -- Create the pilot
    refship = pilot.add( "Trader Mule", "empire_refuel", last_sys )[1]
-   refship:rename("Fuel Tanker")
+   refship:rename(_("Fuel Tanker"))
    refship:setFaction("Empire")
    refship:setFriendly()
    refship:setVisplayer()
