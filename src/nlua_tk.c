@@ -86,7 +86,7 @@ static int tk_msg( lua_State *L )
 {
    const char *title, *str, *img;
    int width, height;
-   NLUA_MIN_ARGS(3);
+   NLUA_MIN_ARGS(2);
 
    // Get fixed arguments : title, string to display and image filename
    title = luaL_checkstring(L,1);
