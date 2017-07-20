@@ -2952,7 +2952,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                /* Remove some nodes to the old subset */
                memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j) );
                sub->ncorners = sub->ncorners-(j-n)+1;
-               sub->corners = realloc(sub->corners, sizeof(AsteroidSubset) * sub->ncorners);
+               sub->corners = realloc(sub->corners, sizeof(Vector2d) * sub->ncorners);
 
                a->nsubsets++;
 
@@ -3049,7 +3049,7 @@ int space_load (void)
 
    /* Load asteroid graphics. */
    asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
-   asteroid_gfx = malloc( sizeof(StarSystem) * systems_mstack );
+   asteroid_gfx = malloc( sizeof(glTexture*) * systems_mstack );
 
    for (i=0; i<(int)nasterogfx; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
@@ -3147,7 +3147,7 @@ static int asteroidTypes_load (void)
          i = 0;
          do {
             if (xml_isNode(cur,"gfx")) {
-               at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
+               at->gfxs = realloc( at->gfxs, sizeof(glTexture*)*(i+1) );
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
