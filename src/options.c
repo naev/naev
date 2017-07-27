@@ -1134,6 +1134,7 @@ static void opt_video( unsigned int wid )
    y -= 30;
 #if SDL_VERSION_ATLEAST(2,0,0)
    SDL_DisplayMode mode;
+   int k;
    int n = SDL_GetNumDisplayModes( 0 );
    j = 1;
    for (i=0; i<n; i++) {
@@ -1153,6 +1154,15 @@ static void opt_video( unsigned int wid )
       SDL_GetDisplayMode( 0, i, &mode  );
       res[ nres ] = malloc(16);
       nsnprintf( res[ nres ], 16, "%dx%d", mode.w, mode.h );
+
+      /* Make sure doesn't already exist. */
+      for (k=0; k<nres; k++)
+         if (strcmp( res[k], res[nres] )==0)
+            break;
+      if (k<nres)
+         continue;
+
+      /* Add as defaul and increment. */
       if ((mode.w == conf.width) && (mode.h == conf.height))
          res_def = i;
       nres++;
