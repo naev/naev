@@ -16,6 +16,7 @@
 #include "nlua.h"
 
 #include "log.h"
+#include "utf8.h"
 #include "player.h"
 #include "input.h"
 #include "opengl.h"
@@ -714,9 +715,9 @@ void conf_parseCLI( int argc, char** argv )
  */
 static size_t quoteLuaString(char *str, size_t size, const char *text)
 {
-   const unsigned char *in;
    char slashescape;
-   size_t count;
+   size_t count, i;
+   uint32_t ch;
 
    if (size == 0)
       return 0;
@@ -733,9 +734,10 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
       return count;
 
    /* Iterate over the characters in text */
-   for (in = (const unsigned char *)text; *in != '\0'; in++) {
+   i = 0;
+   while ((ch = u8_nextchar( text, &i ))) {
       /* Check if we can print this as a friendly backslash-escape */
-      switch (*in) {
+      switch (ch) {
          case '\a':  slashescape = 'a';   break;
          case '\b':  slashescape = 'b';   break;
          case '\f':  slashescape = 'f';   break;
@@ -749,8 +751,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
          /* Technically, Lua can also represent \0, but we can't in our input */
          default:    slashescape = 0;     break;
       }
-      if (slashescape != 0)
-      {
+      if (slashescape != 0) {
          /* Yes, we can use a backslash-escape! */
          str[count++] = '\\';
          if (count == size)
@@ -763,24 +764,9 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
          continue;
       }
 
-      /* Check if this is an otherwise printable ASCII character */
-      if (*in >= 0x20 && *in <= 0x7E)
-      {
-         /* Write it straight to the output if so */
-         str[count++] = *in;
-         if (count == size)
-            return count;
-
-         continue;
-      }
-
-      /* Otherwise, escape the character using a \ddd sequence */
-      str[count++] = '\\';
-      if (count == size)
-         return count;
-
-      count += nsnprintf(&str[count], size-count, "%03u", *in);
-      if (count == size)
+      /* Render UTF8. */
+      count += u8_toutf8( &str[count], size-count, &ch, 1 );
+      if (count >= size)
          return count;
    }
 
