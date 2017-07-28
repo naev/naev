@@ -1162,7 +1162,7 @@ static void opt_video( unsigned int wid )
       if (k<nres)
          continue;
 
-      /* Add as defaul and increment. */
+      /* Add as default if necessary and increment. */
       if ((mode.w == conf.width) && (mode.h == conf.height))
          res_def = i;
       nres++;

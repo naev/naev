@@ -8,6 +8,7 @@
 
 
 #include <stddef.h>
+#include <stdint.h>
 
 
 const char* nfile_dataPath (void);
@@ -26,6 +27,7 @@ int nfile_touch( const char* path, ... );
 int nfile_writeFile( const char* data, size_t len, const char* path, ... );
 int nfile_delete( const char* file );
 int nfile_rename( const char* oldname, const char* newname );
+int nfile_isSeparator( uint32_t c );
 
 
 #endif /* NFILE_H */

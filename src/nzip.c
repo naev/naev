@@ -5,14 +5,14 @@
 #include <zip.h>
 
 #include "log.h"
+#include "nfile.h"
+
 
 /**
  * Private function prototypes
  */
 void nzip_printError ( int err );
 int nzip_rwopsClose ( struct SDL_RWops* context );
-
-
 
 
 /**
@@ -175,7 +175,7 @@ char** nzip_listFiles ( struct zip* arc, size_t* nfiles )
       }
 
       // If the name ends with a forward slash, it's a directory
-      if (stats.name[strlen(stats.name) - 1] != '/')
+      if (!nfile_isSeparator( stats.name[strlen(stats.name) - 1] ))
          filelist[j++] = strdup(stats.name);
    }
 
