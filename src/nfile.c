@@ -275,7 +275,7 @@ char* nfile_dirname( char *path )
 #elif HAS_WIN32
    int i;
    for (i=strlen(path)-1; i>=0; i--)
-      if ((path[i]=='\\') || (path[i]=='/'))
+      if (nfile_isSeparator( path[i] ))
          break;
 
    /* Nothing found. */
@@ -314,14 +314,14 @@ static int mkpath( const char *path )
    len = strlen(opath);
 
    p = &opath[len-1];
-   if (p[0] == '/') {
+   if (nfile_isSeparator(p[0])) {
       p[0] = '\0';
       p--;
    }
 
    // Traverse up until we find a directory that exists.
    for (; p >= opath; p--) {
-      if (p[0] == '/') {
+      if (nfile_isSeparator(p[0])) {
          p[0] = '\0';
          if (nfile_dirExists(opath)) {
             p[0] = '/';
@@ -336,7 +336,7 @@ static int mkpath( const char *path )
 
    // Traverse down, creating directories.
    for (; p[0] != '\0'; p++) {
-      if (p[0] == '/') {
+      if (nfile_isSeparator(p[0])) {
          p[0] = '\0';
          ret = MKDIR;
          if (ret)
@@ -916,3 +916,23 @@ static int nfile_sortCompare( const void *p1, const void *p2 )
 
    return strcmp( f1->name, f2->name );
 }
+
+/**
+ * @brief Checks to see if a character is used to separate files in a path.
+ *
+ *    @param c Character to check.
+ *    @return 1 if is a separator, 0 otherwise.
+ */
+int nfile_isSeparator( uint32_t c )
+{
+   if (c == '/')
+      return 1;
+#if HAS_WIN32
+   else if (c == '\\')
+      return 1;
+#endif /* HAS_WIN32 */
+   return 0;
+}
+
+
+

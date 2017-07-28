@@ -134,7 +134,7 @@ int ndata_setPath( const char* path )
    else if (nfile_dirExists(path)) {
       len = strlen(path);
       ndata_dirname = strdup(path);
-      if (ndata_dirname[len - 1] == '/')
+      if (nfile_isSeparator(ndata_dirname[len - 1]))
          ndata_dirname[len - 1] = '\0';
    }
    else if (nfile_fileExists(path)) {
@@ -906,9 +906,9 @@ static char** filterList( const char** list, int nlist,
       if (strncmp(list[i], path, len)!=0)
          continue;
 
-      /* Make sure there are no stray '/'. */
+      /* Make sure there are no stray file delimitors. */
       for (k=len; list[i][k] != '\0'; k++)
-         if (list[i][k] == '/')
+         if (nfile_isSeparator(list[i][k]))
             if (!recursive)
                break;
 
