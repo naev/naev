@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 20:36+0900\n"
+"POT-Creation-Date: 2017-07-28 09:19+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -183,9 +183,9 @@ msgid "\apYou recover \ag%s\ap into your fighter bay."
 msgstr ""
 
 #: ../src/board.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "\apBoarding ship \a%c%s\a0."
-msgstr "宇宙船読み込み中…"
+msgstr ""
 
 #: ../src/board.c:162
 msgid ""
@@ -478,417 +478,417 @@ msgstr ""
 msgid "Lua Conditional didn't return a boolean"
 msgstr ""
 
-#: ../src/conf.c:86
+#: ../src/conf.c:87
 #, c-format
 msgid "Usage: %s [OPTIONS] [DATA]"
 msgstr ""
 
-#: ../src/conf.c:87
+#: ../src/conf.c:88
 msgid "Options are:"
 msgstr ""
 
-#: ../src/conf.c:88
+#: ../src/conf.c:89
 msgid "   -f, --fullscreen      activate fullscreen"
 msgstr ""
 
-#: ../src/conf.c:89
+#: ../src/conf.c:90
 msgid "   -F n, --fps n         limit frames per second to n"
 msgstr ""
 
-#: ../src/conf.c:90
+#: ../src/conf.c:91
 msgid "   -V, --vsync           enable vsync"
 msgstr ""
 
-#: ../src/conf.c:91
+#: ../src/conf.c:92
 msgid "   -W n                  set width to n"
 msgstr ""
 
-#: ../src/conf.c:92
+#: ../src/conf.c:93
 msgid "   -H n                  set height to n"
 msgstr ""
 
-#: ../src/conf.c:93
+#: ../src/conf.c:94
 msgid "   -j n, --joystick n    use joystick n"
 msgstr ""
 
-#: ../src/conf.c:94
+#: ../src/conf.c:95
 msgid "   -J s, --Joystick s    use joystick whose name contains s"
 msgstr ""
 
-#: ../src/conf.c:95
+#: ../src/conf.c:96
 msgid "   -M, --mute            disables sound"
 msgstr ""
 
-#: ../src/conf.c:96
+#: ../src/conf.c:97
 msgid "   -S, --sound           forces sound"
 msgstr ""
 
-#: ../src/conf.c:97
+#: ../src/conf.c:98
 msgid "   -m f, --mvol f        sets the music volume to f"
 msgstr ""
 
-#: ../src/conf.c:98
+#: ../src/conf.c:99
 msgid "   -s f, --svol f        sets the sound volume to f"
 msgstr ""
 
-#: ../src/conf.c:99
+#: ../src/conf.c:100
 msgid "   -G, --generate        regenerates the nebula (slow)"
 msgstr ""
 
-#: ../src/conf.c:100
+#: ../src/conf.c:101
 msgid "   -N, --nondata         do not use ndata and try to use laid out files"
 msgstr ""
 
-#: ../src/conf.c:101
+#: ../src/conf.c:102
 msgid ""
 "   -d, --datapath        specifies a custom path for all user data (saves, "
 "screenshots, etc.)"
 msgstr ""
 
-#: ../src/conf.c:102
+#: ../src/conf.c:103
 msgid "   -X, --scale           defines the scale factor"
 msgstr ""
 
-#: ../src/conf.c:104
+#: ../src/conf.c:105
 msgid "   --devmode             enables dev mode perks like the editors"
 msgstr ""
 
-#: ../src/conf.c:105
+#: ../src/conf.c:106
 msgid ""
 "   --devcsv              generates csv output from the ndata for development "
 "purposes"
 msgstr ""
 
-#: ../src/conf.c:107
+#: ../src/conf.c:108
 msgid "   -h, --help            display this message and exit"
 msgstr ""
 
-#: ../src/conf.c:108
+#: ../src/conf.c:109
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: ../src/conf.c:465
+#: ../src/conf.c:466
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: ../src/conf.c:469
+#: ../src/conf.c:470
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: ../src/conf.c:483
+#: ../src/conf.c:484
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: ../src/conf.c:487
+#: ../src/conf.c:488
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: ../src/conf.c:503
+#: ../src/conf.c:504
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: ../src/conf.c:514
+#: ../src/conf.c:515
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: ../src/conf.c:536
+#: ../src/conf.c:537
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: ../src/conf.c:547
+#: ../src/conf.c:548
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: ../src/conf.c:554
+#: ../src/conf.c:555
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: ../src/conf.c:683
+#: ../src/conf.c:684
 msgid "Enabling developer mode."
 msgstr ""
 
-#: ../src/conf.c:688
+#: ../src/conf.c:689
 msgid "Will generate CSV output."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: ../src/conf.c:882
+#: ../src/conf.c:868
 msgid "Naev configuration file"
 msgstr ""
 
-#: ../src/conf.c:888
+#: ../src/conf.c:874
 msgid "Not saving configuration."
 msgstr ""
 
-#: ../src/conf.c:894
+#: ../src/conf.c:880
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: ../src/conf.c:898
+#: ../src/conf.c:884
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. OpenGL.
-#: ../src/conf.c:903
+#: ../src/conf.c:889
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: ../src/conf.c:904
+#: ../src/conf.c:890
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: ../src/conf.c:908
+#: ../src/conf.c:894
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
-#: ../src/conf.c:912
+#: ../src/conf.c:898
 msgid "Use OpenGL Vertex Buffer Objects extensions"
 msgstr ""
 
-#: ../src/conf.c:916
+#: ../src/conf.c:902
 msgid "Use OpenGL MipMaps"
 msgstr ""
 
-#: ../src/conf.c:920
+#: ../src/conf.c:906
 msgid "Use OpenGL Texture Compression"
 msgstr ""
 
-#: ../src/conf.c:924
+#: ../src/conf.c:910
 msgid "Use OpenGL Texture Interpolation"
 msgstr ""
 
-#: ../src/conf.c:928
+#: ../src/conf.c:914
 msgid "Use OpenGL Non-\"Power of Two\" textures if available"
 msgstr ""
 
-#: ../src/conf.c:929
+#: ../src/conf.c:915
 msgid "Lowers memory usage by a lot, but may cause slow downs on some systems"
 msgstr ""
 
 #. Memory.
-#: ../src/conf.c:934
+#: ../src/conf.c:920
 msgid "If true enables engine glow"
 msgstr ""
 
 #. Window.
-#: ../src/conf.c:939
+#: ../src/conf.c:925
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: ../src/conf.c:940
+#: ../src/conf.c:926
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: ../src/conf.c:950
+#: ../src/conf.c:936
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: ../src/conf.c:951
+#: ../src/conf.c:937
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: ../src/conf.c:955
+#: ../src/conf.c:941
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: ../src/conf.c:959
+#: ../src/conf.c:945
 msgid "Use video modesetting when fullscreen is enabled (SDL2-only)"
 msgstr ""
 
-#: ../src/conf.c:963
+#: ../src/conf.c:949
 msgid "Minimize on focus loss (SDL2-only)"
 msgstr ""
 
 #. FPS
-#: ../src/conf.c:968
+#: ../src/conf.c:954
 msgid "Display a framerate counter"
 msgstr ""
 
-#: ../src/conf.c:972
+#: ../src/conf.c:958
 msgid "Limit the rendering framerate"
 msgstr ""
 
 #. Pause
-#: ../src/conf.c:977
+#: ../src/conf.c:963
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: ../src/conf.c:982
+#: ../src/conf.c:968
 msgid "Sound backend (can be \"openal\" or \"sdlmix\")"
 msgstr ""
 
-#: ../src/conf.c:986
+#: ../src/conf.c:972
 msgid "Maxmimum number of simultaneous sounds to play, must be at least 16."
 msgstr ""
 
-#: ../src/conf.c:990
+#: ../src/conf.c:976
 msgid ""
 "Sets sound to be relative to pilot when camera is following a pilot instead "
 "of referenced to camera."
 msgstr ""
 
-#: ../src/conf.c:994
+#: ../src/conf.c:980
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: ../src/conf.c:998
+#: ../src/conf.c:984
 msgid "Size of the OpenAL music buffer (in kilobytes)."
 msgstr ""
 
-#: ../src/conf.c:1002
+#: ../src/conf.c:988
 msgid "Disable all sound"
 msgstr ""
 
-#: ../src/conf.c:1006
+#: ../src/conf.c:992
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: ../src/conf.c:1012
+#: ../src/conf.c:998
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: ../src/conf.c:1013
+#: ../src/conf.c:999
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: ../src/conf.c:1026
+#: ../src/conf.c:1012
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
 #. Key repeat.
-#: ../src/conf.c:1031
+#: ../src/conf.c:1017
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: ../src/conf.c:1033
+#: ../src/conf.c:1019
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: ../src/conf.c:1038
+#: ../src/conf.c:1024
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: ../src/conf.c:1039
+#: ../src/conf.c:1025
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: ../src/conf.c:1040
+#: ../src/conf.c:1026
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: ../src/conf.c:1046
+#: ../src/conf.c:1032
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
-#: ../src/conf.c:1050
+#: ../src/conf.c:1036
 msgid "Zooming modulation factor for the starry background"
 msgstr ""
 
 #. Fonts.
-#: ../src/conf.c:1055
+#: ../src/conf.c:1041
 msgid "Font sizes (in pixels) for NAEV"
 msgstr ""
 
-#: ../src/conf.c:1056
+#: ../src/conf.c:1042
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
 
-#: ../src/conf.c:1057
+#: ../src/conf.c:1043
 msgid "Console default: 10"
 msgstr ""
 
-#: ../src/conf.c:1059
+#: ../src/conf.c:1045
 msgid "Intro default: 18"
 msgstr ""
 
-#: ../src/conf.c:1061
+#: ../src/conf.c:1047
 msgid "Default size: 12"
 msgstr ""
 
-#: ../src/conf.c:1063
+#: ../src/conf.c:1049
 msgid "Small size: 10"
 msgstr ""
 
-#: ../src/conf.c:1065
+#: ../src/conf.c:1051
 msgid "Default font to use: unset"
 msgstr ""
 
-#: ../src/conf.c:1070
+#: ../src/conf.c:1056
 msgid "font_name_default = \"/path/to/file.ttf\""
 msgstr ""
 
 #. Misc.
-#: ../src/conf.c:1082
+#: ../src/conf.c:1068
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
 
-#: ../src/conf.c:1086
+#: ../src/conf.c:1072
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
 
-#: ../src/conf.c:1090
+#: ../src/conf.c:1076
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: ../src/conf.c:1094
+#: ../src/conf.c:1080
 msgid "Enables compression on savegames"
 msgstr ""
 
-#: ../src/conf.c:1098
+#: ../src/conf.c:1084
 msgid "Afterburner sensitivity"
 msgstr ""
 
-#: ../src/conf.c:1102
+#: ../src/conf.c:1088
 msgid "Mouse-flying thrust control"
 msgstr ""
 
-#: ../src/conf.c:1106
+#: ../src/conf.c:1092
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: ../src/conf.c:1110
+#: ../src/conf.c:1096
 msgid "Condition under which the autonav aborts."
 msgstr ""
 
-#: ../src/conf.c:1114
+#: ../src/conf.c:1100
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: ../src/conf.c:1118
+#: ../src/conf.c:1104
 msgid "Automatic saving for developer mode"
 msgstr ""
 
-#: ../src/conf.c:1122
+#: ../src/conf.c:1108
 msgid "Save the config everytime game exits (rewriting this bit)"
 msgstr ""
 
 #. Debugging.
-#: ../src/conf.c:1127
+#: ../src/conf.c:1113
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: ../src/conf.c:1132
+#: ../src/conf.c:1118
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
-#: ../src/conf.c:1142
+#: ../src/conf.c:1128
 msgid "Keybindings"
 msgstr ""
 
-#: ../src/conf.c:1207
+#: ../src/conf.c:1193
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -1081,6 +1081,8 @@ msgstr ""
 #: ../dat/missions/empire/collective/ec03.lua:17
 #: ../dat/missions/empire/collective/ec04.lua:19
 #: ../dat/missions/empire/collective/ec05.lua:32
+#: ../dat/missions/neutral/cargo.lua:37
+#: ../dat/missions/neutral/cargo_rush.lua:44
 msgid "None"
 msgstr "なし"
 
@@ -1453,10 +1455,10 @@ msgid "'%s' has unknown node '%s'."
 msgstr ""
 
 #: ../src/economy.c:363
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
-msgstr[0] "商売"
+msgstr[0] "商品を%d個読み込んだ"
 
 #: ../src/economy.c:413
 #, c-format
@@ -1865,10 +1867,10 @@ msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
 
 #: ../src/event.c:618
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
-msgstr[0] "ミッション読み込み中…"
+msgstr[0] "%dのイベントを読み込んだ"
 
 #: ../src/event.c:692
 #, c-format
@@ -2091,10 +2093,10 @@ msgid "Faction: %s and %s aren't completely mutual enemies!"
 msgstr ""
 
 #: ../src/faction.c:1538
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
-msgstr[0] "ミッション読み込み中…"
+msgstr[0] "%dの党派を読み込んだ"
 
 #: ../src/fleet.c:117
 #, c-format
@@ -2147,10 +2149,10 @@ msgid "Malformed %s file: does not contain elements."
 msgstr ""
 
 #: ../src/fleet.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Fleet"
 msgid_plural "Loaded %d Fleets"
-msgstr[0] "フリーと読み込み中…"
+msgstr[0] ""
 
 #: ../src/font.c:966
 msgid "FT_Load_Glyph failed."
@@ -2970,9 +2972,8 @@ msgid "Initializes the autonavigation system."
 msgstr ""
 
 #: ../src/input.c:100
-#, fuzzy
 msgid "Target Planet"
-msgstr "新惑星"
+msgstr "目的惑星"
 
 #: ../src/input.c:100
 msgid "Cycles through planet targets."
@@ -3135,9 +3136,8 @@ msgid "Lua Console"
 msgstr ""
 
 #: ../src/input.c:122
-#, fuzzy
 msgid "Opens the Lua console."
-msgstr "eg%sへようこそ！"
+msgstr ""
 
 #: ../src/input.c:123
 msgid "Switch Tab 1"
@@ -3799,9 +3799,9 @@ msgstr ""
 
 #. Welcome message - must be before space_init.
 #: ../src/load.c:563 ../src/player.c:390
-#, fuzzy, c-format
+#, c-format
 msgid "\agWelcome to %s!"
-msgstr "eg%sへようこそ！"
+msgstr "\ag%sへようこそ！"
 
 #: ../src/load.c:573
 msgid "Old version detected. Sanitizing ships for slots"
@@ -3924,18 +3924,16 @@ msgid "System"
 msgstr ""
 
 #: ../src/map_find.c:1032
-#, fuzzy
 msgid "Planet"
-msgstr "惑星："
+msgstr "惑星"
 
 #: ../src/map_find.c:1036
 msgid "Outfit"
 msgstr ""
 
 #: ../src/map_find.c:1040
-#, fuzzy
 msgid "Ship"
-msgstr "造船所"
+msgstr "宇宙船"
 
 #: ../src/map_find.c:1046
 #, c-format
@@ -3951,14 +3949,12 @@ msgid "Systems"
 msgstr ""
 
 #: ../src/map_find.c:1095
-#, fuzzy
 msgid "Planets"
-msgstr "惑星："
+msgstr "惑星"
 
 #: ../src/map_find.c:1101
-#, fuzzy
 msgid "Ships"
-msgstr "宇宙船検索"
+msgstr "宇宙船"
 
 #: ../src/map_overlay.c:246
 msgid "GOTO"
@@ -4097,10 +4093,10 @@ msgid "Unknown node '%s' in mission '%s'"
 msgstr ""
 
 #: ../src/mission.c:941
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
-msgstr[0] "ミッション読み込み中…"
+msgstr[0] "%dのミッションを読み込んだ"
 
 #: ../src/mission.c:1118
 #, c-format
@@ -4145,10 +4141,10 @@ msgid "Music has invalid value, clamping to [0:1]."
 msgstr ""
 
 #: ../src/music.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Song"
 msgid_plural "Loaded %d Songs"
-msgstr[0] "ミッション読み込み中…"
+msgstr[0] "%dの曲を読み込んだ"
 
 #: ../src/music.c:406
 #, c-format
@@ -4520,9 +4516,8 @@ msgid "BFD backtrace catching enabled."
 msgstr ""
 
 #: ../src/ndata.c:163
-#, fuzzy
 msgid "Missing Data"
-msgstr "ミッション"
+msgstr "データが見つからない"
 
 #: ../src/ndata.c:164
 msgid ""
@@ -4782,9 +4777,8 @@ msgid "Colour '%s' does not exist!"
 msgstr ""
 
 #: ../src/nlua_commodity.c:115
-#, fuzzy
 msgid "Commodity is invalid."
-msgstr "商売"
+msgstr ""
 
 #: ../src/nlua_commodity.c:204
 #, c-format
@@ -5399,7 +5393,7 @@ msgstr ""
 msgid "OpenGL Window Created: %dx%d@%dbpp %s"
 msgstr ""
 
-#: ../src/opengl.c:603 ../src/options.c:1391 ../src/options.c:1423
+#: ../src/opengl.c:603 ../src/options.c:1401 ../src/options.c:1433
 msgid "fullscreen"
 msgstr "フルスクリーン"
 
@@ -5414,13 +5408,11 @@ msgstr "赤：%d、緑：%d、青：%d、透：%d、DB：%s、FSAA：%d、TEX：
 
 #: ../src/opengl.c:606 ../src/opengl.c:609 ../src/opengl.c:610
 #: ../src/opengl.c:611 ../src/opengl.c:612 ../src/opengl.c:613
-#, fuzzy
 msgid "yes"
 msgstr "有"
 
 #: ../src/opengl.c:606 ../src/opengl.c:609 ../src/opengl.c:610
 #: ../src/opengl.c:611 ../src/opengl.c:612 ../src/opengl.c:613
-#, fuzzy
 msgid "no"
 msgstr "無"
 
@@ -5680,9 +5672,8 @@ msgid "Disable all sound/music"
 msgstr ""
 
 #: ../src/options.c:782
-#, fuzzy
 msgid "Backends"
-msgstr "戻る"
+msgstr ""
 
 #: ../src/options.c:793
 msgid "openal"
@@ -5737,94 +5728,94 @@ msgstr "解像度"
 msgid "Fullscreen"
 msgstr ""
 
-#: ../src/options.c:1194
+#: ../src/options.c:1204
 msgid "FPS Control"
 msgstr ""
 
-#: ../src/options.c:1196
+#: ../src/options.c:1206
 msgid "FPS Limit"
 msgstr ""
 
-#: ../src/options.c:1208
+#: ../src/options.c:1218
 msgid "Show FPS"
 msgstr ""
 
-#: ../src/options.c:1217
+#: ../src/options.c:1227
 msgid "OpenGL"
 msgstr "OpenGL"
 
-#: ../src/options.c:1220
+#: ../src/options.c:1230
 msgid "Vertical Sync"
 msgstr ""
 
-#: ../src/options.c:1223
+#: ../src/options.c:1233
 msgid "Vertex Buffer Objects*"
 msgstr ""
 
-#: ../src/options.c:1226
+#: ../src/options.c:1236
 msgid "Mipmaps*"
 msgstr ""
 
-#: ../src/options.c:1229
+#: ../src/options.c:1239
 msgid "Interpolation*"
 msgstr ""
 
-#: ../src/options.c:1232
+#: ../src/options.c:1242
 msgid "NPOT Textures*"
 msgstr ""
 
-#: ../src/options.c:1235
+#: ../src/options.c:1245
 msgid "*Disable for compatibility."
 msgstr ""
 
-#: ../src/options.c:1240
+#: ../src/options.c:1250
 msgid "Features"
 msgstr ""
 
-#: ../src/options.c:1243
+#: ../src/options.c:1253
 msgid "Engine Glow (More RAM)"
 msgstr ""
 
-#: ../src/options.c:1248
+#: ../src/options.c:1258
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: ../src/options.c:1265
+#: ../src/options.c:1275
 msgid "Restart Naev for changes to take effect."
 msgstr ""
 
-#: ../src/options.c:1316
+#: ../src/options.c:1326
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: ../src/options.c:1364
+#: ../src/options.c:1374
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
 #. Settings have changed, switch and offer to reset.
-#: ../src/options.c:1389
+#: ../src/options.c:1399
 msgid "Keep Video Settings"
 msgstr ""
 
-#: ../src/options.c:1390
+#: ../src/options.c:1400
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: ../src/options.c:1391 ../src/options.c:1423
+#: ../src/options.c:1401 ../src/options.c:1433
 msgid "windowed"
 msgstr ""
 
-#: ../src/options.c:1421
+#: ../src/options.c:1431
 msgid "Video Settings Restored"
 msgstr ""
 
-#: ../src/options.c:1422
+#: ../src/options.c:1432
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: ../src/options.c:1541
+#: ../src/options.c:1551
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
@@ -6153,10 +6144,10 @@ msgid "Name collision! %d outfits are named '%s'"
 msgstr ""
 
 #: ../src/outfit.c:2310
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
-msgstr[0] "モド読み込み中…"
+msgstr[0] ""
 
 #: ../src/outfit.c:2409
 #, c-format
@@ -6171,9 +6162,9 @@ msgid ""
 msgstr ""
 
 #: ../src/perlin.c:669
-#, fuzzy, c-format
+#, c-format
 msgid "Generating Nebula of size %dx%dx%d"
-msgstr "星雲の欠片生成中…"
+msgstr "%dx%dx%dの星雲を生成中"
 
 #. Results
 #: ../src/perlin.c:715
@@ -6388,9 +6379,8 @@ msgstr ""
 
 #. string is empty so no errors encountered
 #: ../src/pilot_outfit.c:614
-#, fuzzy
 msgid "Spaceworthy"
-msgstr "バー"
+msgstr ""
 
 #: ../src/pilot_outfit.c:657
 msgid "Nothing selected."
@@ -6683,9 +6673,8 @@ msgid "\apAutonav continuing until destination (%d jump%s left)."
 msgstr ""
 
 #: ../src/player.c:1981
-#, fuzzy
 msgid "Aborting screenshot"
-msgstr "イベント読み込み中"
+msgstr ""
 
 #. in case the crap system breaks :)
 #: ../src/player.c:1994
@@ -6930,9 +6919,8 @@ msgid "Failed to create save directory '%ssaves'."
 msgstr ""
 
 #: ../src/save.c:144
-#, fuzzy
 msgid "Aborting save..."
-msgstr "イベント読み込み中"
+msgstr ""
 
 #: ../src/save.c:154
 msgid ""
@@ -7050,10 +7038,10 @@ msgid "%s file is invalid xml!"
 msgstr ""
 
 #: ../src/ship.c:966
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
-msgstr[0] "ミッション読み込み中…"
+msgstr[0] "%dの宇宙船を読み込んだ"
 
 #: ../src/shipstats.c:83
 msgid "Speed"
@@ -7192,9 +7180,8 @@ msgid "Crew"
 msgstr ""
 
 #: ../src/shipstats.c:124
-#, fuzzy
 msgid "Ship Mass"
-msgstr "宇宙船検索"
+msgstr ""
 
 #: ../src/shipstats.c:125 ../src/shipstats.c:131
 msgid "Engine Mass Limit"
@@ -7275,10 +7262,10 @@ msgid "Sound '%s' not found in sound list"
 msgstr ""
 
 #: ../src/sound.c:758
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %d Sound"
 msgid_plural "Loaded %d Sounds"
-msgstr[0] "ミッション読み込み中…"
+msgstr[0] "%dの音を読み込んだ"
 
 #: ../src/sound_openal.c:224
 msgid "Unable to open default sound device"
@@ -7611,9 +7598,9 @@ msgstr ""
 
 #. error has occurred
 #: ../src/space.c:1697
-#, fuzzy, c-format
+#, c-format
 msgid "Landing: '%s' : %s"
-msgstr "注意: [%s] "
+msgstr ""
 
 #: ../src/space.c:1707
 #, c-format
@@ -7772,13 +7759,13 @@ msgstr ""
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
-msgstr[0] ""
+msgstr[0] "%dの恒星系を読み込んだ"
 
 #: ../src/space.c:3276
-#, fuzzy, c-format
+#, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
-msgstr[0] "新惑星"
+msgstr[0] "　　　%dの惑星あり"
 
 #: ../src/space.c:3648 ../src/space.c:3692
 msgid "Unknown marker type."
@@ -8543,9 +8530,8 @@ msgstr ""
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #: ../dat/ai/empire_refuel.lua:24
-#, fuzzy
 msgid "I'm out of here."
-msgstr "GL メモリ不足"
+msgstr ""
 
 #. include("dat/ai/personality/patrol.lua") -- Messes up the ai
 #. Do not distress
@@ -9667,9 +9653,8 @@ msgid "What? Were you expecting prince charming?"
 msgstr ""
 
 #: ../dat/ai/pirate.lua:111
-#, fuzzy
 msgid "Long time no see."
-msgstr "宇宙読み込み中…"
+msgstr ""
 
 #: ../dat/ai/pirate.lua:112
 msgid "Nothing personal, just business."
@@ -11152,9 +11137,8 @@ msgid ""
 msgstr ""
 
 #: ../dat/events/neutral/news.lua:212
-#, fuzzy
 msgid "The Best Spaceport Bars"
-msgstr "バー"
+msgstr ""
 
 #: ../dat/events/neutral/news.lua:213
 msgid ""
@@ -12783,9 +12767,8 @@ msgid "Heart of Lead"
 msgstr ""
 
 #: ../dat/events/start.lua:53
-#, fuzzy
 msgid "Exitprise"
-msgstr "終了"
+msgstr ""
 
 #: ../dat/events/start.lua:54
 msgid "Commuter"
@@ -12805,9 +12788,8 @@ msgid "Titanic MLXVII"
 msgstr ""
 
 #: ../dat/events/start.lua:58
-#, fuzzy
 msgid "Planet Jumper"
-msgstr "惑星："
+msgstr ""
 
 #: ../dat/events/start.lua:59
 msgid "Outward Bound"
@@ -13078,9 +13060,8 @@ msgstr ""
 #. localization stuff, translators would work here
 #: ../dat/events/tutorial/tutorial-combat1.lua:6
 #: ../dat/events/tutorial/tutorial.lua:13
-#, fuzzy
 msgid "Tutorial: Basic Combat"
-msgstr "チュートリアル：操作の基礎"
+msgstr "チュートリアル：戦いの基礎"
 
 #: ../dat/events/tutorial/tutorial-combat1.lua:7
 msgid ""
@@ -13501,9 +13482,8 @@ msgstr ""
 #. localization stuff, translators would work here
 #: ../dat/events/tutorial/tutorial-combat2.lua:6
 #: ../dat/events/tutorial/tutorial.lua:14
-#, fuzzy
 msgid "Tutorial: Missile Combat"
-msgstr "チュートリアル：操作の基礎"
+msgstr ""
 
 #: ../dat/events/tutorial/tutorial-combat2.lua:20
 msgid ""
@@ -13533,9 +13513,8 @@ msgstr ""
 #. To prevent NPCs from getting targeted for now.
 #. Hooked function, initiates drone target practice.
 #: ../dat/events/tutorial/tutorial-combat2.lua:121
-#, fuzzy
 msgid "Target drone"
-msgstr "新惑星"
+msgstr ""
 
 #. Make Captain T. Practice circle the player, sort of.
 #. Hook for Captain T. Practice's death.
@@ -13550,9 +13529,8 @@ msgstr "新惑星"
 #. localization stuff, translators would work here
 #: ../dat/events/tutorial/tutorial-comms.lua:6
 #: ../dat/events/tutorial/tutorial.lua:21
-#, fuzzy
 msgid "Tutorial: Communications"
-msgstr "チュートリアル：操作の基礎"
+msgstr ""
 
 #: ../dat/events/tutorial/tutorial-comms.lua:7
 msgid ""
@@ -13646,9 +13624,8 @@ msgstr ""
 #. localization stuff, translators would work here
 #: ../dat/events/tutorial/tutorial-disabling.lua:7
 #: ../dat/events/tutorial/tutorial.lua:17
-#, fuzzy
 msgid "Tutorial: Disabling"
-msgstr "チュートリアル：操作の基礎"
+msgstr ""
 
 #: ../dat/events/tutorial/tutorial-disabling.lua:8
 msgid ""
@@ -13854,9 +13831,8 @@ msgstr ""
 #. localization stuff, translators would work here
 #: ../dat/events/tutorial/tutorial-heat.lua:7
 #: ../dat/events/tutorial/tutorial.lua:15
-#, fuzzy
 msgid "Tutorial: Heat"
-msgstr "チュートリアルのメニュー"
+msgstr ""
 
 #: ../dat/events/tutorial/tutorial-heat.lua:8
 msgid ""
@@ -14231,9 +14207,8 @@ msgstr ""
 #. All input available for now.
 #. Land hook.
 #: ../dat/events/tutorial/tutorial-missions.lua:52
-#, fuzzy
 msgid "Tutorial employee"
-msgstr "チュートリアルのメニュー"
+msgstr "チュートリアルの職人"
 
 #: ../dat/events/tutorial/tutorial-missions.lua:52
 msgid "This person has a mission for you!"
@@ -14397,14 +14372,12 @@ msgid "Play All"
 msgstr ""
 
 #: ../dat/events/tutorial/tutorial.lua:19
-#, fuzzy
 msgid "Tutorial: Trade"
-msgstr "チュートリアルのメニュー"
+msgstr ""
 
 #: ../dat/events/tutorial/tutorial.lua:22
-#, fuzzy
 msgid "Quit to Main Menu"
-msgstr "チュートリアルのメニュー"
+msgstr ""
 
 #. Set defaults just in case.
 #. List of all tutorial modules, in order of appearance.
@@ -15566,9 +15539,8 @@ msgid "Small time pirates have no business on our clanworld!"
 msgstr ""
 
 #: ../dat/landing.lua:167
-#, fuzzy
 msgid "Get out of here!"
-msgstr "GL メモリ不足"
+msgstr ""
 
 #. Calculate bribe price. Custom for pirates.
 #. 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
@@ -15866,6 +15838,7 @@ msgid ""
 msgstr ""
 
 #: ../dat/missions/baron/baron_baron.lua:78
+#: ../dat/missions/neutral/animaltransport.lua:30
 #, lua-format
 msgid "Fly to the %s system and land on planet %s"
 msgstr ""
@@ -18024,9 +17997,9 @@ msgid "Check for survivors on %s in %s."
 msgstr ""
 
 #: ../dat/missions/empire/collective/ec04.lua:25
-#, fuzzy, lua-format
+#, lua-format
 msgid "Planet %s"
-msgstr "惑星："
+msgstr "%s惑星"
 
 #: ../dat/missions/empire/collective/ec04.lua:28
 msgid ""
@@ -18177,6 +18150,7 @@ msgstr ""
 
 #: ../dat/missions/empire/collective/ec05.lua:37
 #: ../dat/missions/empire/collective/ec06.lua:24
+#: ../dat/missions/neutral/nebu_satellite.lua:22
 msgid "Bar"
 msgstr ""
 
@@ -18186,9 +18160,8 @@ msgstr ""
 
 #: ../dat/missions/empire/collective/ec05.lua:41
 #: ../dat/missions/empire/shipping/es02.lua:34
-#, fuzzy
 msgid "Mission Failure"
-msgstr "ミッション"
+msgstr "ミッション失敗"
 
 #: ../dat/missions/empire/collective/ec05.lua:43
 msgid ""
@@ -18391,9 +18364,8 @@ msgstr ""
 
 #: ../dat/missions/empire/collective/ec06.lua:17
 #: ../dat/missions/empire/collective/ec06.lua:25
-#, fuzzy
 msgid "Operation Cold Metal"
-msgstr "生成完了！"
+msgstr ""
 
 #: ../dat/missions/empire/collective/ec06.lua:18
 msgid "Fame and Glory"
@@ -18418,9 +18390,9 @@ msgstr ""
 #: ../dat/missions/empire/collective/ec06.lua:26
 #: ../dat/missions/empire/shipping/es01.lua:25
 #: ../dat/missions/empire/shipping/es02.lua:33
-#, fuzzy
+#: ../dat/missions/neutral/nebu_satellite.lua:24
 msgid "Mission Success"
-msgstr "ミッション"
+msgstr "ミッション完了"
 
 #: ../dat/missions/empire/collective/ec06.lua:27
 msgid "Cowardly Behaviour"
@@ -18821,9 +18793,12 @@ msgstr ""
 #: ../dat/missions/empire/shipping/es00.lua:14
 #: ../dat/missions/empire/shipping/es01.lua:15
 #: ../dat/missions/empire/shipping/es02.lua:25
-#, fuzzy, lua-format
+#: ../dat/missions/neutral/cargo.lua:10
+#: ../dat/missions/neutral/cargo_rush.lua:10
+#: ../dat/missions/neutral/nebu_satellite.lua:17
+#, lua-format
 msgid "%s credits"
-msgstr "クレジット"
+msgstr "%sクレジット"
 
 #: ../dat/missions/empire/shipping/es00.lua:16
 #, lua-format
@@ -18836,9 +18811,8 @@ msgid "Return to %s in the %s system to report what happened."
 msgstr ""
 
 #: ../dat/missions/empire/shipping/es00.lua:21
-#, fuzzy
 msgid "Mission Report"
-msgstr "ミッション"
+msgstr ""
 
 #: ../dat/missions/empire/shipping/es00.lua:23
 #, lua-format
@@ -18973,9 +18947,8 @@ msgid "Commander Soldner"
 msgstr ""
 
 #: ../dat/missions/empire/shipping/es01.lua:23
-#, fuzzy
 msgid "Loading Cargo"
-msgstr "ロード完了"
+msgstr ""
 
 #: ../dat/missions/empire/shipping/es01.lua:24
 msgid "Cargo Delivery"
@@ -19119,9 +19092,8 @@ msgid "Return to %s in the %s system with the VIP."
 msgstr ""
 
 #: ../dat/missions/empire/shipping/es02.lua:32
-#, fuzzy
 msgid "Disabled Ship"
-msgstr "宇宙船検索"
+msgstr ""
 
 #: ../dat/missions/empire/shipping/es02.lua:36
 #, lua-format
@@ -19269,9 +19241,8 @@ msgstr ""
 
 #. Stage one, if the player insists to be paid up front
 #: ../dat/missions/empire/waste_dump.lua:38
-#, fuzzy
 msgid "Bargaining"
-msgstr "注意"
+msgstr ""
 
 #: ../dat/missions/empire/waste_dump.lua:39
 msgid ""
@@ -19444,10 +19415,13 @@ msgid ""
 msgstr ""
 
 #: ../dat/missions/empire/waste_dump.lua:110
+#: ../dat/missions/neutral/cargo.lua:33
+#: ../dat/missions/neutral/cargo_rush.lua:34
 msgid "No room in ship"
 msgstr ""
 
 #: ../dat/missions/empire/waste_dump.lua:111
+#: ../dat/missions/neutral/cargo.lua:34
 #, lua-format
 msgid ""
 "You don't have enough cargo space to accept this mission. You need %d tons "
@@ -19548,7 +19522,84 @@ msgstr ""
 #.
 #. --
 #. localization stuff
-#. default English
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:27
+msgid "Taking One for the Team"
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:28
+#, lua-format
+msgid ""
+"The FLF officer smiles as he sees you approaching him.\n"
+"    \"Ah, if it isn't %s!\" he says. \"I think you might be perfect for this "
+"job. See, my team and I are going to be conducting an important covert "
+"operation in Raelid. I won't bore you with the details of that operation, "
+"but I need someone to distract the Dvaered forces while we do this. You'll "
+"basically need to travel to the %s system and wreak havoc there so that the "
+"Dvaereds go after you.\"\n"
+"    His expression suddenly becomes serious. \"This will be a highly "
+"dangerous mission, and I can't guarantee any backup for you. However, you "
+"will be paid substantially, and I can guarantee you that doing this mission "
+"will earn you a great amount of respect. Would you be interested?\""
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:32
+msgid ""
+"\"Great! I and my team will be hiding out around Raelid until we get a "
+"chance to conduct the operation. I will message you when we succeed. Good "
+"luck, and try not to get yourself killed!\" With that, he smiles and walks "
+"off, presumably to prepare his team for takeoff."
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:34
+msgid "Maybe Another Time"
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:35
+msgid "\"OK, then. Feel free to come back later if you change your mind.\""
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:38
+msgid ""
+"You receive a transmission. It's from the leading officer. \"Operation "
+"successful, soldier!\" he says. \"You should get back to the base now before "
+"you get killed! I'll be waiting for you there.\""
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:41
+msgid ""
+"As you dock the station, the leading officer approaches you with a smile. "
+"\"Thank you for your help,\" he says. \"The mission was a rousing success! "
+"What we've accomplished will greatly help our efforts against the Dvaereds "
+"in the future.\" He hands you a credit chip. \"That's your payment. I hope "
+"to work with you again, soldier!\" And with that, you shake hands and part "
+"ways. It occurs to you that you never learned what the mission actually was. "
+"Perhaps you will find out some other time."
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:43
+msgid "Diversion from Raelid"
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:44
+#, lua-format
+msgid ""
+"A covert operation is being conducted in Raelid. You are to create a "
+"diversion from this operation by wreaking havoc in the nearby %s system."
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:45
+msgid "Substantial pay and a great amount of respect"
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:47
+msgid "FLF officer"
+msgstr ""
+
+#: ../dat/missions/flf/dvk/flf_dvk01.lua:48
+msgid ""
+"An FLF officer leading an operation seems to be in search of another pilot."
+msgstr ""
+
 #.
 #.
 #. FLF-Empire Negotiations
@@ -19882,8 +19933,58 @@ msgstr ""
 #. -- but doing this mission infests the player's current ship with the creatures.
 #. --
 #. --
-#. Localization, choosing a language if naev is translated for non-english-speaking locales.
-#. Default to English
+#: ../dat/missions/neutral/animaltransport.lua:15
+#: ../dat/missions/neutral/animaltransport.lua:28
+msgid "Animal transport"
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:16
+#, lua-format
+msgid ""
+"\"Good day to you, captain,\" the man greets you. \"I'm looking for someone "
+"with a ship who can take this crate here to planet %s in the %s system. The "
+"crate contains a colony of rodents I've bred myself, and my in-law has a pet "
+"shop on %s where I hope to sell them. Upon delivery, you will be paid 20,000 "
+"credits. Are you interested in the job?"
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:18
+msgid ""
+"\"Excellent! My in-law will send someone to meet you at the spaceport to "
+"take the crate off your hands, and you'll be paid immediately on delivery. "
+"Thanks again!\""
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:20
+msgid ""
+"As promised, there's someone at the spaceport who accepts the crate. In "
+"return, you receive a number of credit chips worth 20,000 credits, as per "
+"the arrangement. You go back into your ship to put the chips away before "
+"heading off to check in with the local authorities. But did you just hear "
+"something squeak...?"
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:22
+msgid "A Fyrra civilian"
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:23
+msgid ""
+"There's a civilian here, from the Fyrra echelon by the looks of him. He's "
+"got some kind of crate with him."
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:25
+#, lua-format
+msgid ""
+"You've been hired to transport a crate of specially engineered rodents to %s "
+"(%s system)."
+msgstr ""
+
+#: ../dat/missions/neutral/animaltransport.lua:26
+msgid "You will be paid 20,000 credits on arrival."
+msgstr ""
+
 #. Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.
 #. 20K
 #.
@@ -19924,10 +20025,144 @@ msgstr ""
 #. -- These are regular cargo delivery missions. Pay is low, but so is difficulty.
 #. -- Most of these missions require BULK ships. Not for small ships!
 #. --
-#. default english
+#: ../dat/missions/neutral/cargo.lua:9
+#, lua-format
+msgid "%s in the %s system needs a delivery of %d tons of %s."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:13
+msgid "Small"
+msgstr ""
+
 #. Note: indexed from 0, to match mission tiers.
+#: ../dat/missions/neutral/cargo.lua:14 ../dat/missions/neutral/cargo.lua:39
+#: ../dat/missions/neutral/cargo_rush.lua:46
+msgid "Medium"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:15
+msgid "Sizeable"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:16
+msgid "Large"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:17 ../dat/scripts/pilot/pirate.lua:280
+msgid "Bulk"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:20
+#: ../dat/missions/neutral/cargo_rush.lua:20
+#, lua-format
+msgid " cargo delivery to %s in the %s system"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:21
+#: ../dat/missions/neutral/cargo_rush.lua:21
+#, lua-format
+msgid " freight delivery to %s in the %s system"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:22
+#: ../dat/missions/neutral/cargo_rush.lua:22
+#, lua-format
+msgid " transport to %s in the %s system"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:23
+#: ../dat/missions/neutral/cargo_rush.lua:23
+#, lua-format
+msgid " delivery to %s in the %s system"
+msgstr ""
+
 #. Note: please leave the trailing space on the line below! Needed to make the newline show up.
+#: ../dat/missions/neutral/cargo.lua:26
+#, lua-format
+msgid ""
+" \n"
+"Cargo: %s (%d tons)\n"
+"Jumps: %d\n"
+"Travel distance: %d\n"
+"Piracy Risk: %s"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:38
+#: ../dat/missions/neutral/cargo_rush.lua:45
+msgid "Low"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:40
+#: ../dat/missions/neutral/cargo_rush.lua:47
+msgid "High"
+msgstr ""
+
 #. =Landing=--
+#: ../dat/missions/neutral/cargo.lua:43
+#: ../dat/missions/neutral/cargo_rush.lua:51
+#: ../dat/missions/neutral/commodity_run.lua:24
+msgid "Delivery success!"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:46
+#: ../dat/missions/neutral/cargo_rush.lua:54
+#: ../dat/missions/neutral/commodity_run.lua:27
+msgid "The crates of "
+msgstr ""
+
+#. <<-- paired with cargo_accept_p2, don't mix this up!!
+#: ../dat/missions/neutral/cargo.lua:47
+#: ../dat/missions/neutral/cargo_rush.lua:55
+#: ../dat/missions/neutral/commodity_run.lua:28
+msgid "The drums of "
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:48
+#: ../dat/missions/neutral/cargo_rush.lua:56
+#: ../dat/missions/neutral/commodity_run.lua:29
+msgid "The containers of "
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:51
+msgid ""
+" are carried out of your ship by a sullen group of workers. The job takes "
+"inordinately long to complete, and the leader pays you without speaking a "
+"word."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:52
+msgid ""
+" are rushed out of your vessel by a team shortly after you land. Before you "
+"can even collect your thoughts, one of them presses a credit chip in your "
+"hand and departs."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:53
+msgid ""
+" are unloaded by an exhausted-looking bunch of dockworkers. Still, they make "
+"fairly good time, delivering your pay upon completion of the job."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:54
+msgid ""
+" are unloaded by a team of robotic drones supervised by a human overseer, "
+"who hands you your pay when they finish."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:56
+#: ../dat/missions/neutral/cargo_rush.lua:68
+msgid "Mission Accepted"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:58
+msgid "Cargo mission"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo.lua:59
+#, lua-format
+msgid "Fly to %s in the %s system."
+msgstr ""
+
 #. Create the mission
 #. Note: this mission does not make any system claims.
 #. Calculate the route, distance, jumps, risk of piracy, and cargo to take
@@ -19943,11 +20178,138 @@ msgstr ""
 #. -- These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
 #. -- These missions require fast ships, but higher tiers may also require increased cargo space.
 #. --
-#. default english
+#: ../dat/missions/neutral/cargo_rush.lua:9
+#, lua-format
+msgid "%s in the %s system needs a delivery of %d tonnes of %s."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:13
+msgid "Courier"
+msgstr ""
+
 #. Note: indexed from 0, to match mission tiers.
-#. Note: please leave the trailing space on the line below! Needed to make the newline show up.
-#. =Landing=--
-#. <<-- paired with cargo_accept_p2, don't mix this up!!
+#: ../dat/missions/neutral/cargo_rush.lua:14
+msgid "Priority"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:15
+msgid "Pressing"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:16
+msgid "Urgent"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:17
+msgid "Emergency"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:25
+#, lua-format
+msgid ""
+" \n"
+"      Cargo: %s (%d tonnes)\n"
+"      Jumps: %d\n"
+"      Travel distance: %d\n"
+"      Piracy Risk: %s\n"
+"      Time limit: %s\n"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:35
+#, lua-format
+msgid ""
+"You don't have enough cargo space to accept this mission. It requires %d "
+"tonnes of free space (you need %d more)."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:38
+msgid "Too slow"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:39
+#, lua-format
+msgid ""
+"This shipment must arrive within %s, but it will take at least %s for your "
+"ship to reach %s, missing the deadline.\n"
+"   \n"
+"Accept the mission anyway?"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:59
+#, lua-format
+msgid ""
+"%s%s are carried out of your ship by a sullen group of workers. The job "
+"takes inordinately long to complete, and the leader pays you without "
+"speaking a word."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:60
+#, lua-format
+msgid ""
+"%s%s are rushed out of your vessel by a team shortly after you land. Before "
+"you can even collect your thoughts, one of them presses a credit chip in "
+"your hand and departs."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:61
+#, lua-format
+msgid ""
+"%s%s are unloaded by an exhausted-looking bunch of dockworkers. Still, they "
+"make fairly good time, delivering your pay upon completion of the job."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:64
+#, lua-format
+msgid ""
+"%s%s are carried out of your ship by a sullen group of workers. They are not "
+"happy that they have to work overtime because you were late. You are paid "
+"only %d of the %d you were promised."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:65
+#, lua-format
+msgid ""
+"%s%s are rushed out of your vessel by a team shortly after you land. Your "
+"late arrival is stretching quite a few schedules! Your pay is only %d "
+"instead of %d because of that."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:66
+#, lua-format
+msgid ""
+"%s%s are unloaded by an exhausted-looking bunch of dockworkers. You missed "
+"the deadline, so your reward is only %d instead of the %d you were hoping "
+"for."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:70
+#, lua-format
+msgid ""
+"You've missed the deadline for the delivery to %s! But you can still make a "
+"late delivery if you hurry."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:71
+#, lua-format
+msgid "The delivery to %s has been canceled! You were too late."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:73
+msgid "Rush cargo mission"
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:75
+#: ../dat/missions/neutral/cargo_rush.lua:77
+#, lua-format
+msgid "Fly to %s in the %s system before %s."
+msgstr ""
+
+#: ../dat/missions/neutral/cargo_rush.lua:76
+#: ../dat/missions/neutral/cargo_rush.lua:78
+#, lua-format
+msgid "You have %s remaining."
+msgstr ""
+
 #. Need to reuse.
 #. Create the mission
 #. Note: this mission does not make any system claims.
@@ -19984,8 +20346,70 @@ msgstr ""
 #.
 #. Commodity delivery missions.
 #. --
-#. default english
 #. Mission Details
+#: ../dat/missions/neutral/commodity_run.lua:20
+#, lua-format
+msgid "%s Delivery"
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:21
+#, lua-format
+msgid "%s credits per ton"
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:22
+#, lua-format
+msgid ""
+"There is an insufficient supply %s on this planet to satisfy the current "
+"demand. Go to any planet which sells this commodity and bring as much of it "
+"back as possible."
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:32
+#, lua-format
+msgid ""
+"%s%s are carried out of your ship and tallied. After several different men "
+"double-check the register to confirm the amount, you are paid %s credits and "
+"summarily dismissed."
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:33
+#, lua-format
+msgid ""
+"%s%s are quickly and efficiently unloaded, labeled, and readied for "
+"distribution. The delivery manager thanks you with a credit chip worth %s "
+"credits."
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:34
+#, lua-format
+msgid ""
+"%s%s are unloaded from your vessel by a team of dockworkers who are in no "
+"rush to finish, eventually delivering %s credits after the number of tons is "
+"determined."
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:35
+#, lua-format
+msgid ""
+"%s%s are unloaded by robotic drones that scan and tally the contents. The "
+"human overseerer hands you %s credits when they finish."
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:37
+msgid "Commodity Delivery"
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:39
+#, lua-format
+msgid "Buy as much %s as possible"
+msgstr ""
+
+#: ../dat/missions/neutral/commodity_run.lua:40
+#, lua-format
+msgid "Take the %s to %s in the %s system"
+msgstr ""
+
 #. TODO: find a better way to index all available commodities
 #. Note: this mission does not make any system claims.
 #. Set Mission Details
@@ -20391,11 +20815,104 @@ msgstr ""
 #.
 #.
 #. localization stuff, translators would work here
-#. default english
+#: ../dat/missions/neutral/nebu_satellite.lua:14
+msgid ""
+"A bunch of scientists seem to be chattering nervously amongst themselves."
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:16
+msgid "Nebula Satellite"
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:19
+#, lua-format
+msgid "Go to the %s system to launch the probe."
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:20
+#, lua-format
+msgid "Drop off the scientists at %s in the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:23
+msgid "Scientific Exploration"
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:26
+msgid ""
+"You approach the scientists. They seem a bit nervous and one mutters "
+"something about whether it's a good idea or not. Eventually one of them "
+"comes up to you.\n"
+"    \"Hello Captain, we're looking for a ship to take us into the Sol "
+"Nebula. Would you be willing to take us there?\""
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:28
+#, lua-format
+msgid ""
+"\"We had a trip scheduled with a space trader ship, but they backed out at "
+"the last minute. So we were stuck here until you came. We've got a probe "
+"satellite that we have to release in the %s system to monitor the nebula's "
+"growth rate. The probe launch procedure is pretty straightforward and "
+"shouldn't have any complications.\"\n"
+"    He takes a deep breath, \"We hope to be able to find out more secrets of "
+"the Sol Nebula so mankind can once again regain its lost patrimony. So far "
+"the radiation and volatility of the deeper areas haven't been very kind to "
+"our instruments. That's why we designed this satellite we're going to launch."
+"\""
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:30
+#, lua-format
+msgid ""
+"\"The plan is for you to take us to %s so we can launch the probe, and then "
+"return us to our home at %s in the %s system. The probe will automatically "
+"send us the data we need if all goes well. You'll be paid %d credits when we "
+"arrive.\""
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:31
+msgid ""
+"The scientists thank you for your help before going back to their home to "
+"continue their nebula research."
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:32
+msgid "\"You do not have enough free cargo space to accept this mission!\""
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:34
+msgid "Preparing to launch satellite probe..."
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:35
+msgid "Launch in 5..."
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:36
+msgid "Satellite launch successful!"
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:43
+msgid "Scientists launch science probe into the nebula"
+msgstr ""
+
+#: ../dat/missions/neutral/nebu_satellite.lua:44
+msgid ""
+"A group of scientists have succesfully launched a science probe in the "
+"nebula. The probe was specifically designed to be resistant to the corrosive "
+"environment of the nebula, and is supposed to bring new clues about the "
+"nature of the gas and where it's from"
+msgstr ""
+
 #. Note: this mission does not make any system claims.
 #. Set up mission variables
 #. Not too unstable
 #. Set stuff up for the spaceport bar
+#: ../dat/missions/neutral/nebu_satellite.lua:61
+msgid "Scientists"
+msgstr ""
+
 #. See if rejects mission
 #. Check for cargo space
 #. Add cargo
@@ -20408,6 +20925,11 @@ msgstr ""
 #.
 #. Launch process
 #. --
+#: ../dat/missions/neutral/nebu_satellite.lua:140
+#, lua-format
+msgid "%d..."
+msgstr ""
+
 #.
 #. --
 #. -- MISSION: The complaining grandma
@@ -23403,14 +23925,12 @@ msgid "Invincible"
 msgstr ""
 
 #: ../dat/scripts/pilot/empire.lua:335
-#, fuzzy
 msgid "Enterprise"
-msgstr "終了"
+msgstr ""
 
 #: ../dat/scripts/pilot/empire.lua:336
-#, fuzzy
 msgid "Rising Star"
-msgstr "ミッション"
+msgstr ""
 
 #: ../dat/scripts/pilot/empire.lua:337
 msgid "Vanguard"
@@ -23868,9 +24388,8 @@ msgid "Night's"
 msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:246
-#, fuzzy
 msgid "Space"
-msgstr "バー"
+msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:247
 msgid "Astro"
@@ -23897,9 +24416,8 @@ msgid "Red"
 msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:255
-#, fuzzy
 msgid "Green"
-msgstr "挨拶"
+msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:256
 msgid "Blue"
@@ -23979,10 +24497,6 @@ msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:279
 msgid "Serpent"
-msgstr ""
-
-#: ../dat/scripts/pilot/pirate.lua:280
-msgid "Bulk"
 msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:281
