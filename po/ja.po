@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-28 09:19+0900\n"
+"POT-Creation-Date: 2017-07-30 07:31+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3390,7 +3390,11 @@ msgstr ""
 msgid "Landing Main"
 msgstr "メイン"
 
+#. Cargo Details
+#. stage titles
+#. mission text
 #: ../src/land.c:936 ../dat/missions/empire/shipping/es00.lua:19
+#: ../dat/missions/neutral/drunkard.lua:35
 msgid "Spaceport Bar"
 msgstr "バー"
 
@@ -17010,6 +17014,7 @@ msgstr ""
 #: ../dat/missions/empire/collective/ec00.lua:39
 #: ../dat/missions/empire/collective/ec03.lua:36
 #: ../dat/missions/empire/collective/ec05.lua:70
+#: ../dat/missions/neutral/patrol.lua:57
 #, lua-format
 msgid "Fly to the %s system"
 msgstr ""
@@ -18796,6 +18801,7 @@ msgstr ""
 #: ../dat/missions/neutral/cargo.lua:10
 #: ../dat/missions/neutral/cargo_rush.lua:10
 #: ../dat/missions/neutral/nebu_satellite.lua:17
+#: ../dat/missions/neutral/patrol.lua:43
 #, lua-format
 msgid "%s credits"
 msgstr "%sクレジット"
@@ -20306,6 +20312,7 @@ msgstr ""
 
 #: ../dat/missions/neutral/cargo_rush.lua:76
 #: ../dat/missions/neutral/cargo_rush.lua:78
+#: ../dat/missions/neutral/diy-nerds.lua:116
 #, lua-format
 msgid "You have %s remaining."
 msgstr ""
@@ -20470,28 +20477,162 @@ msgstr ""
 #. AUTHOR: thilo <thilo@thiloernst.de>
 #. --
 #. Bar information, describes how the NPC appears in the bar
+#: ../dat/missions/neutral/diy-nerds.lua:13
+msgid ""
+"You see a bunch of guys and gals, excitedly whispering over some papers, "
+"which seem to contain column after column of raw numbers. Two of them don't "
+"participate in the babbling, but look at you expectantly."
+msgstr ""
+
 #. Mission details.
+#: ../dat/missions/neutral/diy-nerds.lua:16
+msgid "DIY Nerds"
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:17
+#, fuzzy
+msgid "20000 credits"
+msgstr "%sクレジット"
+
+#: ../dat/missions/neutral/diy-nerds.lua:18
+msgid "Cart some nerds to their contest, and back."
+msgstr ""
+
 #. The nerd's job proposal
+#: ../dat/missions/neutral/diy-nerds.lua:24
+msgid "A group of excited nerds"
+msgstr ""
+
 #. you accept
+#: ../dat/missions/neutral/diy-nerds.lua:32
+msgid "We have a deal!"
+msgstr ""
+
 #. right planet, in time
-#. right planet, late
-#. wrong planet, late
-#. you are hailed to pick them up again
 #. you pick up the nerds in time, they won
+#: ../dat/missions/neutral/diy-nerds.lua:38
+#: ../dat/missions/neutral/diy-nerds.lua:60
+msgid "Happy nerds"
+msgstr ""
+
+#. right planet, late
+#: ../dat/missions/neutral/diy-nerds.lua:43
+msgid "Angry nerds"
+msgstr ""
+
+#. wrong planet, late
+#: ../dat/missions/neutral/diy-nerds.lua:48
+msgid "Furious nerds"
+msgstr ""
+
+#. you are hailed to pick them up again
+#: ../dat/missions/neutral/diy-nerds.lua:53
+#: ../dat/missions/neutral/diy-nerds.lua:56
+msgid "In-system communication"
+msgstr ""
+
 #. you pick up the nerds in time, they didn't win
+#: ../dat/missions/neutral/diy-nerds.lua:64
+msgid "Sad nerds"
+msgstr ""
+
 #. you do not pickup the nerds in time
+#: ../dat/missions/neutral/diy-nerds.lua:70
+msgid "No more nerds"
+msgstr ""
+
 #. you do not pickup the nerds in time, and don't even land on the right planet
+#: ../dat/missions/neutral/diy-nerds.lua:75
+msgid "You forgot the nerds"
+msgstr ""
+
 #. you return the nerds, who have won the contest
+#: ../dat/missions/neutral/diy-nerds.lua:79
+#: ../dat/missions/neutral/diy-nerds.lua:91
+msgid "The End"
+msgstr ""
+
 #. you return the nerds, who did not win the contest
+#: ../dat/missions/neutral/diy-nerds.lua:83
+msgid "Minor Complications"
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:88
+msgid "So what?"
+msgstr ""
+
 #. for use in accept(), if any of the mission's preconditions are not met
-#. additional text for stage 2 cargo space test
-#. OSD texts
-#. stage 1
-#. stage 2
-#. stage 3
-#. displayed if you leave without the nerd's authorization
+#: ../dat/missions/neutral/diy-nerds.lua:97
+msgid "Not enough cargo space"
+msgstr ""
+
 #. the mission cargo (names as in commodity.xml)
 #. the outfit name as in outfit.xml
+#: ../dat/missions/neutral/diy-nerds.lua:99
+#: ../dat/missions/neutral/diy-nerds.lua:141
+msgid "Young People"
+msgstr ""
+
+#. additional text for stage 2 cargo space test
+#: ../dat/missions/neutral/diy-nerds.lua:103
+msgid "Room for the box"
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:106
+msgid "Departure"
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:109
+msgid "No room, no job"
+msgstr ""
+
+#. OSD texts
+#. stage 1
+#: ../dat/missions/neutral/diy-nerds.lua:115
+#, lua-format
+msgid "Bring the nerds and their box to %s before %s"
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:117
+msgid ""
+"You're late. Mia has started verbally abusing you and your ship. Better land "
+"to get rid of the nerds and their box."
+msgstr ""
+
+#. stage 2
+#: ../dat/missions/neutral/diy-nerds.lua:119
+msgid ""
+"You are to wait several STP until hailed by the nerds for their return trip."
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:120
+#, lua-format
+msgid "Pick up the nerds on %s for their return trip to %s."
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:121
+msgid "The nerds are getting impatient."
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:122
+msgid "You didn't pick up the nerds in time."
+msgstr ""
+
+#. stage 3
+#: ../dat/missions/neutral/diy-nerds.lua:124
+#, lua-format
+msgid "Return the nerds to %s."
+msgstr ""
+
+#. displayed if you leave without the nerd's authorization
+#: ../dat/missions/neutral/diy-nerds.lua:128
+msgid "Have the nerds not told you to stay in the system? Mission failed!"
+msgstr ""
+
+#: ../dat/missions/neutral/diy-nerds.lua:129
+msgid "Have the nerds not told you to pick them up at the bar? Mission failed!"
+msgstr ""
+
 #. atm, just take the first landable planet which is not the current one
 #. the mission cannot be started with less than two landable assets in the system
 #. from cargo_common.lua
@@ -20527,12 +20668,181 @@ msgstr ""
 #.
 #.
 #. Bar Description
+#: ../dat/missions/neutral/drunkard.lua:13
+msgid ""
+"You see a drunkard at the bar mumbling about how he was so close to getting "
+"his break."
+msgstr ""
+
 #. Mission Details
-#. OSD
-#. Cargo Details
-#. stage titles
-#. mission text
 #. Note: this mission does not make any system claims.
+#: ../dat/missions/neutral/drunkard.lua:16
+#: ../dat/missions/neutral/drunkard.lua:67
+msgid "Drunkard"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:17
+msgid "More than it's worth!"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:18
+msgid ""
+"You've decided to help some drunkard at the bar by picking up some goods for "
+"some countess. Though you're not sure why you accepted."
+msgstr ""
+
+#. OSD
+#: ../dat/missions/neutral/drunkard.lua:21
+msgid "Help the Drunkard"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:23
+#, lua-format
+msgid "Go pickup some goods at %s in the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:24
+#, lua-format
+msgid "Drop off the goods at %s in the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:36
+msgid ""
+"You sit next to the drunk man at the bar and listen to him almost sob into "
+"his drink. \"I was so close! I almost had it! I could feel it in my grasp! "
+"And then I messed it all up! Why did I do it? Hey, wait! You! You can help "
+"me!\" The man grabs your collar. \"How'd you like to make a bit of money and "
+"help me out? You can help me! It'll be good for you, it'll be good for me, "
+"it'll be good for everyone! Will you help me?\""
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:38
+msgid "Pick Up the Countess' Goods"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:39
+#, lua-format
+msgid ""
+"\"Oh, thank the ancestors! I knew you were the man to help me!\" The man "
+"relaxes considerably and puts his arm around you. \"Have a drink while I "
+"explain it to you.\", he motions to the bartender to bring two drinks over. "
+"\"You see, I know this countess, she's like...whoa...you know what I mean?"
+"\", he nudges you. \"But she's rich, like personal escort fleet rich, golden "
+"shuttles, diamond laser turrets rich.\n"
+"    Well, occasionally she needs some things shipped that she can't just ask "
+"her driver to go get for her. So, she asks me to go get this package. I "
+"don't know what it is; I don't ask; she doesn't tell me; that's the way she "
+"likes it. I had just got off this 72 hour run through pirate infested space "
+"though, and I was all hopped up on grasshoppers without a hatch to jump. So "
+"I decided to get a drink or two and hit the hay. Turned out those drinks er "
+"two got a little procreatin goin on and turned into three or twelve. Maybe "
+"twenty. I don't know, but they didn't seem too liking to my gamblin, as next "
+"thing I knew, I was wakin up with water splashed on my face, bein tellered I "
+"gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do "
+"is go pick up whatever it is she wants at %s in the %s system. I doubt it's "
+"anything too hot, but I also doubt it's kittens and rainbows. All I ask is "
+"25 percent. So just go get it, deliver it to %s in the %s system, and don't "
+"ask any questions. And if she's there when you drop it off, just tell her I "
+"sent you. And don't you be lookin at her too untoforward, or um, uh, you "
+"know what I mean.\" You figure you better take off before the drinks he's "
+"had take any more hold on him, and the bottle sucks you in."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:42
+msgid "Deliver the Goods"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:43
+msgid ""
+"You land on the planet and hand the manager of the docks the crumpled claim "
+"slip that the drunkard gave you, realizing now that you don't think he even "
+"told you his name. The man looks at the slip, and then gives you an odd look "
+"before motioning for the dockworkers to load up the cargo that's brought out "
+"after he punches in a code on his electronic pad."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:45
+#, fuzzy
+msgid "Success"
+msgstr "ミッション完了"
+
+#: ../dat/missions/neutral/drunkard.lua:46
+msgid ""
+"You finally arrive at your destination, bringing your ship down to land "
+"right beside a beautiful woman with long blonde locks in a long extravagant "
+"gown. You know this must be the countess, but you're unsure how she knew you "
+"were going to arrive, to be waiting for you. When you get out of your ship, "
+"you notice there are no dock workers anywhere in sight, only a group of "
+"heavily armed private militia that weren't there when you landed.\n"
+"    You gulp as she motions to them without showing a hint of emotion. In "
+"formation, they all raise their weapons. As you think your life is about to "
+"end, every other row turns and hands off their weapon, and then marches "
+"forward and quickly unloads your cargo onto a small transport carrier, and "
+"march off. The countess smirks at you and winks before walking off. You "
+"breath a sigh of relief, only to realize you haven't been paid. As you walk "
+"back onto your ship, you see a card laying on the floor with simply her "
+"name, Countess Amelia Vollana."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:49
+#, fuzzy
+msgid "Takeoff"
+msgstr "出発"
+
+#: ../dat/missions/neutral/drunkard.lua:50
+msgid ""
+"As you finish your takeoff procedures and once again enter the cold black of "
+"space, you can't help but feel relieved. You might not have gotten paid, but "
+"you're just glad to still be alive. Just as you're about to punch it to the "
+"jump gate to get as far away from whatever you just dropped off, you see the "
+"flashing light of an incoming hail."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:52
+msgid "Drunkard's Call"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:53
+msgid ""
+"\"Hello again. It's Willie. I'm just here to inform you that the countess "
+"has taken care of your payment and transfered it to your account. And don't "
+"worry about me, the countess has covered my portion just fine. I'm just glad "
+"to have Ol' Bessy here back.\""
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:55
+msgid "Bonus"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:56
+#, lua-format
+msgid ""
+"\"Oh, and she put in a nice bonus for you of %d credits for such a speedy "
+"delivery.\""
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:58
+msgid "Check Account"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:59
+#, lua-format
+msgid ""
+"You check your account balance as he closes the comm channel to find "
+"yourself %s credits richer. Just being alive felt good, but this feels "
+"better. You can't help but think that she might have given him more than "
+"just the 25 percent he was asking for, judging by his sunny disposition. At "
+"least you have your life though."
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:61
+msgid "No Room"
+msgstr ""
+
+#: ../dat/missions/neutral/drunkard.lua:62
+msgid "You don't have enough cargo space to accept this mission."
+msgstr ""
+
 #. creates the drunkard at the bar
 #. drunkard's description
 #. Planets
@@ -20547,6 +20857,10 @@ msgstr ""
 #. adds cargo
 #. destination
 #. OSD
+#: ../dat/missions/neutral/drunkard.lua:145
+msgid "Ol Bess"
+msgstr ""
+
 #. eventually I'll implement a bonus
 #. tk.msg( title[7], text[7]:format( bonus ) )
 #.
@@ -20716,13 +21030,127 @@ msgstr ""
 #. Plot: on Zhiru you meet the same girl who received the love letters,her name is Paddy. Asks if you'd be willing to run another delivery and work with Michal on food biz. she says the man is an entrepreneur, and is trying to build a Food business
 #. on Zeo where he will sell her baked goodies etc. asks if you can take recipes and plans to him on Zeo. Fills you cargo hold with cake which you don’t like. You can sell cake or bring to Michal who will pay a lot of $ for the cake, player doesn’t know that he will get payed for cake he brings.
 #. --
-#. Spanish version of the texts would follow
-#. German version of the texts would follow
-#. default English text
 #. Dialogue
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:10
+msgid "Recipes"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:11
+msgid "A Tasty Job"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:12
+msgid "Regrets.."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:13
+msgid "Familiar Face"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:14
+msgid "A Familiar looking young woman is looking at you"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:15
+#, lua-format
+msgid ""
+"The woman smiles and says \"Are you not the pilot that delivered those sweet "
+"love letters to me? Yes you are! My name is Paddy, sorry I didn't introduce "
+"myself before. I was caught up in the moment.. Michal's letters are always "
+"very exciting\" she blushes.\n"
+"  \"Anyway Michal is trying to start a restaurant on %s. Would you be "
+"interested in giving him a hand?\""
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:17
+msgid ""
+"\"Oh, that's too bad. I really think he will be successful in his endeavors. "
+"Maybe next time you will be ready to help out\" she says and goes to get "
+"herself a drink."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:18
+msgid "A lot of cake"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:19
+#, lua-format
+msgid ""
+"\"Great!\" Paddy yells. \"here are my recipes, bring them over to Michal on "
+"%s. I'll also have my friends load some cake for your journey\"\n"
+"\n"
+"  You begin to think of home made cake, and your stomach grumbles. Its been "
+"a while since you had some good cake."
+msgstr ""
+
 #. take off messages
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:24
+msgid ""
+"You really regret having a full cargo hold. Some cake would be excellent "
+"right about now"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:25
+msgid ""
+"As you finish your exit procedures you go back to your cargo hold and grab a "
+"slice of cake. You take a bite and spit it out immediately. It is beyond "
+"foul. The worst cake you have ever had, and your cargo hold is full of it. "
+"You sit back down and decide you could always sell it off at one of the "
+"commodity markets.."
+msgstr ""
+
 #. Mission Computer text
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:28
+#, lua-format
+msgid "Deliver %s to Michal on %s in the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:29
+msgid "Hopefully something other then cake!"
+msgstr ""
+
 #. Mission Ending
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:32
+#, lua-format
+msgid ""
+"Michal meets you as you are getting off the ship. \"Ah! Paddy told me you "
+"would be coming!\"\n"
+"  you hand off the recipes and are about to wonder if you will be offered "
+"any payment. \"I guess Paddy told you I'm starting a new venture..\n"
+"  Anyway Im a little short on credits but heres %s for the troubles. I know "
+"it's not a lot, so I will also give you a 5 percent share in my new venture"
+"\".\n"
+"  He says. You accept the credits and begin to wonder what these shares "
+"could be worth. probably nothing but oh well. As Michal walks off he turns "
+"around and yells\n"
+"  \"Meet me in the bar in a few days if you want to talk more business!\""
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:38
+#, lua-format
+msgid ""
+"Michal meets you by your cargo hold. \"Ah! Paddy told me you would be "
+"coming! and I see you brought some cake with you! Its my favourite!\"\n"
+"  You hand off the recipes and watch as workers begin to unload the cake, "
+"wondering how anybody could eat such vile cake, and why they are unloading "
+"your cake.\n"
+"  \"This stuff sells like crazy if you know where to sell it, I'll take care "
+"of it for you though. It sells for about 1000 a ton, I'll credit it to your "
+"account.\"\n"
+"  As Michal walks off leaving you wondering why anyone would pay for such "
+"bad cake. Michal turns around and yells \"Oh yea, You are also a 5 percent "
+"shareholder in\n"
+"  my new venture now. Meet me in the bar in a few days if you want to talk "
+"more business!\". As you check your account you notice you are %s credits "
+"richer."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/delivercake.lua:44
+msgid ""
+"You jettison the vile cake and that wicked recipe. Vowing to never agree to "
+"take food as payment again"
+msgstr ""
+
 #. Start Functions
 #. No system shall be claimed by mission
 #. set up hooks
@@ -20732,10 +21160,89 @@ msgstr ""
 #. Author: iwaschosen
 #. Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 #. --
-#. Spanish version of the texts would follow
-#. German version of the texts would follow
-#. default English text
 #. Dialogue section
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:9
+msgid "Well Dressed Man"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:10
+msgid "A man sits in the corner of the bar, writing a letter."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:11
+msgid "The longer the distance the longer the love lasts"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:12
+msgid "Love Letters"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:13
+#, lua-format
+msgid ""
+"You can't stop wondering why the man in the corner is writing on paper "
+"instead of a datapad. As you approach the table he motions you to sit. \"You "
+"must be wondering why I am using such an old fashion way of recording "
+"information\" he remarks, while looking at you with a grin. You take a sip "
+"of your drink as he continues \"I am writing a poem of love to my beloved. "
+"She lives on %s.\"you glance at the flowing hand writing, back at the man, "
+"and back at the paper. \"You wouldn't happen to be heading to %s would you?"
+"\" he asks."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:14
+#, lua-format
+msgid ""
+"\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
+"been writing a fair bit of these letters now, you wouldn't be able to drop "
+"them off on your way would you?\" Some how you knew that question was "
+"coming. \"There would be a few credits in it for you... say %s credits?\" "
+"The man adds quickly with a hopeful expression. It seems like a low reward "
+"for a long journey..."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:15
+#, lua-format
+msgid ""
+"As you begin to get up the man grabs your arm. \"Alright how about %s "
+"credits. look I wouldn't want The Empire reading these... The Emperor "
+"himself would blush...\". you sigh and give the man a long pause before "
+"answering."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:16
+msgid ""
+"You run a check of your cargo hold and notice it is packed to the brim. "
+"\"Did I not mention I wrote a ton of these letters? anyway I will be in the "
+"bar if you free some space up\" the man replies. You didn't expect him to "
+"literally have a TONNE of letters.."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:17
+#, lua-format
+msgid "%s credit transfer on delivery"
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:18
+#, lua-format
+msgid "Deliver the %s to %s in the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:19
+#, lua-format
+msgid ""
+"Upon landing you receive a credit transfer of %s. As you exit your ship you "
+"see a young woman waving to you. \"I heard you had a message for me!\" she "
+"yells excitedly. You grin and point towards the cargo hold in your ship  "
+"\"There are a couple in there for you!\". She runs over to the dockworkers "
+"who are busy unloading her crate. You get a warm and fuzzy feeling on the "
+"inside. You have made someones day."
+msgstr ""
+
+#: ../dat/missions/neutral/foodbiz/deliverlove.lua:20
+msgid "Deliver Love"
+msgstr ""
+
 #. Start Functions
 #. No system shall be claimed by mission
 #. introductions and a bit of bargaining
@@ -20938,7 +21445,136 @@ msgstr ""
 #. --
 #. --
 #. Localization, choosing a language if naev is translated for non-english-speaking locales.
-#. Default to English
+#: ../dat/missions/neutral/oldwoman.lua:12
+msgid "An elderly lady"
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:13
+#, lua-format
+msgid ""
+"You decide to ask the old woman if there's something you can help her with.\n"
+"    \"As a matter of fact, there is,\" she creaks. \"I want to visit my "
+"cousin, she lives on %s, you know, in the %s system, it's a Sirian place. "
+"But I don't have a ship and those blasted passenger lines around here don't "
+"fly on Sirius space! I tell you, customer service really has gone down the "
+"gutter over the years. In my space faring days, there would always be some "
+"transport ready to take you anywhere! But now look at me, I'm forced to get "
+"to the spaceport bar to see if there's a captain willing to take me! It's a "
+"disgrace, that's what it is. What a galaxy we live in! But I ramble. You "
+"seem like you've got time on your hands. Fancy making a trip down to %s? "
+"I'll pay you a decent fare, of course.\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:15
+msgid ""
+"\"Oh, that's good of you.\" The old woman gives you a wrinkly smile. \"I "
+"haven't seen my cousin in such a long time, it'll be great to see how she's "
+"doing, and we can talk about old times. Ah, old times. It was all so "
+"different then. The space ways were much safer, for one. And people were "
+"politer to each other too, oh yes!\"\n"
+"    You escort the old lady to your ship, trying not to listen to her "
+"rambling. Perhaps it would be a good idea to get her to her destination as "
+"quickly as you can."
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:18
+#, fuzzy
+msgid "Delivery complete"
+msgstr "生成完了！"
+
+#: ../dat/missions/neutral/oldwoman.lua:19
+msgid ""
+"You help the old lady to the spacedock elevator. She keeps grumbling about "
+"how spaceports these days are so inconvenient and how advertisement "
+"holograms are getting quite cheeky of late, they wouldn't allow that sort of "
+"thing in her day. But once you deliver her to the exit terminal, she smiles "
+"at you.\n"
+"    \"Thank you, young captain, I don't know what I would have done without "
+"you. It seems there are still decent folk out there even now. Take this, as "
+"a token of my appreciation.\"\n"
+"    The lady hands you a credit chip. Then she disappears through the "
+"terminal. Well, that was quite a passenger!"
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:23
+msgid "Grumblings from the old lady"
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:25
+msgid ""
+"\"You youngsters and your newfangled triple redundancy plasma feedback "
+"shunts. In my day, we had to use simple monopole instaconductors to keep our "
+"hyperdrives running!\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:26
+msgid ""
+"\"Tell me, youngster, why is everyone so preoccupied with Soromid "
+"enhancements these days? Cybernetic implants were good enough for us, why "
+"can't they be for you?\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:27
+msgid ""
+"\"My mother was from Earth, you know. She even took me there once, when I "
+"was a little girl. I still remember it like it happened yesterday. They "
+"don't make planets like that anymore these days, oh no.\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:28
+msgid ""
+"\"What did you say this thing was? A microblink reinforced packet "
+"transmitter? No, no, don't try to explain how it works. I'm too old for "
+"this. Anything more complex than a subspace pseudo-echo projector is beyond "
+"my understanding.\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:29
+msgid ""
+"\"You don't know how good you have it these days. When I was young, we "
+"needed to reprogram our own electronic countermeasures to deal with custom "
+"pirate tracking systems.\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:30
+msgid "\"Time passes by so quickly. I remember when this was all space.\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:31
+msgid ""
+"\"All this automation is making people lax, I tell you. My uncle ran a tight "
+"ship. If he caught you cutting corners, you'd be defragmenting the sub-ion "
+"matrix filters for a week!\""
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:33
+msgid "The old woman"
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:35
+#, lua-format
+msgid "Take the old woman to %s (%s system)"
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:37
+msgid "An old woman"
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:38
+msgid ""
+"You see a wrinkled old lady, a somewhat unusual sight in a spaceport bar. "
+"She's purposefully looking around."
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:39
+#, lua-format
+msgid "An aging lady has asked you to ferry her to %s in the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/oldwoman.lua:40
+msgid "Fair monetary compensation"
+msgstr ""
+
 #. Sanity in case no suitable planets are in range.
 #. Date hook.
 #. Uh... yeah.
@@ -20969,9 +21605,108 @@ msgstr ""
 #. faction.
 #.
 #. --
-#. Default to English
+#: ../dat/missions/neutral/patrol.lua:29
+#, fuzzy
+msgid "Mission Completed"
+msgstr "ロード完了"
+
+#: ../dat/missions/neutral/patrol.lua:31
+msgid ""
+"After going through some paperwork, an officer hands you your pay and sends "
+"you off."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:32
+msgid ""
+"A tired-looking officer verifies your mission log and hands you your pay."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:33
+msgid ""
+"The officer you deal with thanks you for your work, hands you your pay, and "
+"sends you off."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:34
+msgid ""
+"An officer goes through the necessary paperwork, looking bored the entire "
+"time, and hands you your fee."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:36
+#, fuzzy
+msgid "Mission Abandoned"
+msgstr "ミッション失敗"
+
+#: ../dat/missions/neutral/patrol.lua:38
+msgid ""
+"You are sent a message informing you that landing in the middle of a patrol "
+"mission is considered to be abandonment. As such, your contract is void and "
+"you will not recieve payment."
+msgstr ""
+
 #. Mission details
+#: ../dat/missions/neutral/patrol.lua:42
+#, lua-format
+msgid "Patrol of the %s System"
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:44
+#, lua-format
+msgid ""
+"Patrol specified points in the %s system, eliminating any hostiles you "
+"encounter."
+msgstr ""
+
 #. Messages
+#: ../dat/missions/neutral/patrol.lua:48
+msgid "Point secure."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:49
+msgid "Hostiles detected. Engage hostiles."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:50
+msgid "Hostiles eliminated."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:51
+msgid "Patrol complete. You can now collect your pay."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:52
+msgid "MISSION FAILURE! You showed up too late."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:53
+#, lua-format
+msgid "MISSION FAILURE! You have left the %s system."
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:55
+#, lua-format
+msgid "Patrol of %s"
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:58
+#, lua-format
+msgid "Go to indicated point (%d remaining)"
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:60
+msgid "Eliminate hostiles"
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:61
+#, lua-format
+msgid "Land on the nearest %s planet and collect your pay"
+msgstr ""
+
+#: ../dat/missions/neutral/patrol.lua:64
+msgid "Patrol Point"
+msgstr ""
+
 #. Get the number of enemies in a particular system
 #. Set mission details
 #. Fail the mission, showing message to the player.
