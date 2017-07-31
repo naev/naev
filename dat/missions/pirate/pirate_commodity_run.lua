@@ -19,17 +19,13 @@
 
 include "dat/missions/neutral/commodity_run.lua"
 
-lang = naev.lang()
-if lang == "notreal" then
-else -- default english
-   misn_title = "Exploit the Demand for %s"
-   misn_desc = "Pirates have been demanding a lot of %s lately, and that's driving the price up. If you find some of it and bring it back, you can make some good money off of them."
+misn_title = _("Exploit the Demand for %s")
+misn_desc = _("Pirates have been demanding a lot of %s lately, and that's driving the price up. If you find some of it and bring it back, you can make some good money off of them.")
 
-   cargo_land_p2 = {}
-   cargo_land_p2[1] = " are bought by the boatload, eventually earning you %s credits."
-   cargo_land_p2[2] = " are quickly sold out, earning you %s credits."
-   cargo_land_p2[3] = " are eventually all sold to the pirates, though it takes some time. Your total earnings in the end amount to %s credits."
+cargo_land_p2 = {}
+cargo_land_p2[1] = _("%s%s are bought by the boatload, eventually earning you %s credits.")
+cargo_land_p2[2] = _("%s%s are quickly sold out, earning you %s credits.")
+cargo_land_p2[3] = _("%s%s are eventually all sold to the pirates, though it takes some time. Your total earnings in the end amount to %s credits.")
 
-   osd_title = "Pirate Sales"
-end
+osd_title = _("Pirate Sales")
 
