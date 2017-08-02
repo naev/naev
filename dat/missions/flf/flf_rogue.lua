@@ -21,39 +21,34 @@ include "numstring.lua"
 include "fleethelper.lua"
 include "dat/missions/flf/flf_common.lua"
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "utau koto suki hae" then
-else -- default english
-   misn_title  = "FLF: Rogue %s in %s"
-   misn_reward = "%s credits"
+misn_title  = _("FLF: Rogue %s in %s")
+misn_reward = _("%s credits")
 
-   text = {}
-   text[1] = "The officer is clearly not happy with the loss, but mumbles a thank-you and hands you your pay."
-   text[2] = "As you enter the station, you detect a feeling of dread. You silently collect your pay, avoiding eye contact with the other soldiers."
-   text[3] = "A soldier gives you a dirty look as you move to collect your pay."
-   text[4] = "An FLF soldier, while upset about the infighting, thanks you for your service and buys you a drink."
-   text[5] = "You are silently handed your pay by an officer who looks utterly depressed."
-   text[6] = "An FLF officer forces out a smile as you collect your pay. It's unfortunate, but the job had to be done."
+text = {}
+text[1] = _("The officer is clearly not happy with the loss, but mumbles a thank-you and hands you your pay.")
+text[2] = _("As you enter the station, you detect a feeling of dread. You silently collect your pay, avoiding eye contact with the other soldiers.")
+text[3] = _("A soldier gives you a dirty look as you move to collect your pay.")
+text[4] = _("An FLF soldier, while upset about the infighting, thanks you for your service and buys you a drink.")
+text[5] = _("You are silently handed your pay by an officer who looks utterly depressed.")
+text[6] = _("An FLF officer forces out a smile as you collect your pay. It's unfortunate, but the job had to be done.")
 
-   misn_desc = {}
-   misn_desc[1] = "There is a squadron of rogue FLF ships with %d ships in the %s system. Eliminate this squadron."
-   misn_desc[2] = "There is a rogue FLF ship in the %s system. Eliminate this ship."
-   misn_desc[3] = " You will be accompanied by %d other FLF pilots for this mission."
+misn_desc = {}
+misn_desc[1] = _("There is a squadron of rogue FLF ships with %d ships in the %s system. Eliminate this squadron.")
+misn_desc[2] = _("There is a rogue FLF ship in the %s system. Eliminate this ship.")
+misn_desc[3] = _(" You will be accompanied by %d other FLF pilots for this mission.")
 
-   misn_level = {}
-   misn_level[1] = "Pilot"
-   misn_level[2] = "Squadron"
-   misn_level[3] = "Squadron"
-   misn_level[4] = "Fleet"
+misn_level = {}
+misn_level[1] = _("Pilot")
+misn_level[2] = _("Squadron")
+misn_level[3] = _("Squadron")
+misn_level[4] = _("Fleet")
 
-   osd_title   = "Rogue FLF"
-   osd_desc    = {}
-   osd_desc[1] = "Fly to the %s system"
-   osd_desc[2] = "Eliminate the rogue FLF %s"
-   osd_desc[3] = "Return to FLF base"
-   osd_desc["__save"] = true
-end
+osd_title   = _("Rogue FLF")
+osd_desc    = {}
+osd_desc[1] = _("Fly to the %s system")
+osd_desc[2] = _("Eliminate the rogue FLF %s")
+osd_desc[3] = _("Return to FLF base")
+osd_desc["__save"] = true
 
 
 function create ()
