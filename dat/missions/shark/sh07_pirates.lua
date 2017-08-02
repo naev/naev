@@ -13,54 +13,50 @@ include "dat/scripts/pilot/pirate.lua"
 include "dat/scripts/numstring.lua"
 include "dat/scripts/jumpdist.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
-   
-   title[1] = "The mission"
-   text[1] = [["Hello again," says Smith. "As you know, I've agreed with the FLF on a contract that will make it possible for Nexus to sell them hundreds of "Shark" light fighters. This income will easily make up for the losses due to the partial replacement of the "Shark" by drones in the Imperial fleet.
+title = {}
+text = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
+
+title[1] = _("The mission")
+text[1] = _([["Hello again," says Smith. "As you know, I've agreed with the FLF on a contract that will make it possible for Nexus to sell them hundreds of "Shark" light fighters. This income will easily make up for the losses due to the partial replacement of the "Shark" by drones in the Imperial fleet.
    Of course, this transaction must remain a secret. Even the head of the FLF thinks that we are working for an outlaw organization instead of a multi-stellar company. We are going to create a sales subsidiary on a pirate world so nobody will find out who really is behind this deal.
    But, as you know, the pirate worlds are the territory of the "Skulls & Bones", the outlaw shipyard that makes copies of legal ships and sells them to pirates. If they discover our project, they will do everything to destroy us. That's why we need to make the first move: Skulls & Bones use four major hitmen, who are also pirates. I want you to kill these four pirates in order to show the Skulls & Bones that they can't win against us. I think it's the safest way to do what we have to do. Of course, there is a bounty on each of their heads.
-   Are you in?"]]
+   Are you in?"]])
    
-   refusetitle = "Sorry, not interested"
-   refusetext = [["Ok, too bad, you are the only one I can trust for this job. Don't hesitate to come back if you change your mind."]]
+refusetitle = _("Sorry, not interested")
+refusetext = _([["Ok, too bad, you are the only one I can trust for this job. Don't hesitate to come back if you change your mind."]])
    
-   title[2] = "Very good"
-   text[2] = [["So, here are the details: %s is around %s, flying his Gawain: he is taking an undercover holiday, spending all the money he has stolen from traders. %s is in %s and %s is around %s with his Kestrel. Be careful, they have escorts. %s is in %s with his fearsome stolen Goddard and his escort.
-   Come back when you have finished; I will give you your bounties."]]
+title[2] = _("Very good")
+text[2] = _([["So, here are the details: %s is around %s, flying his Gawain: he is taking an undercover holiday, spending all the money he has stolen from traders. %s is in %s and %s is around %s with his Kestrel. Be careful, they have escorts. %s is in %s with his fearsome stolen Goddard and his escort.
+   Come back when you have finished; I will give you your bounties."]])
    
-   title[3] = "Well done!"
-   text[3] = [[This one will never get in our way again.]]
+title[3] = _("Well done!")
+text[3] = _([[This one will never get in our way again.]])
    
-   title[4] = "Mission accomplished"
-   text[4] = "You have killed the four pirates: Adam Smith is probably waiting for you in %s with lots of money."
-   
-   title[5] = "That was impressive"
-   text[5] = [[As you land, Smith is already there. "Thanks to your actions I managed to create the sales subsidiary and I think nobody will prevent us from selling Sharks anymore. It was very nice working with you. Here is your bounty. Good luck in the future."]]
+title[4] = _("Mission accomplished")
+text[4] = _("You have killed the four pirates: Adam Smith is probably waiting for you in %s with lots of money.")
 
-   title[6] = "Target is gone!"
-   text[6] = [[It seems the pirate went away. Don't worry: I bet you that if you come back in some time, he will still be there."]]
+title[5] = _("That was impressive")
+text[5] = _([[As you land, Smith is already there. "Thanks to your actions I managed to create the sales subsidiary and I think nobody will prevent us from selling Sharks anymore. It was very nice working with you. Here is your bounty. Good luck in the future."]])
 
-   -- Mission details
-   misn_title = "The Last Detail"
-   misn_reward = "%s credits"
-   misn_desc = "Nexus Shipyard asked you to kill four pirates"
-   
-   -- NPC
-   npc_desc[1] = "Arnold Smith"
-   bar_desc[1] = [[Smith probably has a mission for you that involves "fixing a detail", as he says.]]
-   
-   -- OSD
-   osd_title = "The Last Detail"
-   osd_msg[1] = "Kill the four pirates"
-   osd_msg[2] = "Report back to %s in %s"
-end
+title[6] = _("Target is gone!")
+text[6] = _([[It seems the pirate went away. Don't worry: I bet you that if you come back in some time, he will still be there."]])
+
+-- Mission details
+misn_title = _("The Last Detail")
+misn_reward = _("%s credits")
+misn_desc = _("Nexus Shipyard asked you to kill four pirates")
+
+-- NPC
+npc_desc[1] = _("Arnold Smith")
+bar_desc[1] = _([[Smith probably has a mission for you that involves "fixing a detail", as he says.]])
+
+-- OSD
+osd_title = _("The Last Detail")
+osd_msg[1] = _("Kill the four pirates")
+osd_msg[2] = _("Report back to %s in %s")
 
 function create ()
    
@@ -71,7 +67,7 @@ function create ()
    if #systems == 0 then
       local systems = getsysatdistance(system.cur(), 1, 15)
       if #systems == 0 then
-         osd_title = "Houston, we have a problem!"
+         osd_title = _("Houston, we have a problem!")
          gawsys = system.get("Alteris")
          kersys1 = system.get("Alteris")
          kersys2 = system.get("Alteris")
@@ -113,9 +109,9 @@ function accept()
    
    --set the names of the pirates (and make sure they aren't duplicates)
    gawname = pirate_name()
-   kername1 = pirate_name() .. " III"
-   kername2 = pirate_name() .. " Jr."
-   godname = pirate_name() .. " II"
+   kername1 = string.format( _("%s III"), pirate_name() )
+   kername2 = string.format( _("%s Jr." ), pirate_name() )
+   godname = string.format( _("%s II"), pirate_name() )
    
    if tk.yesno(title[1], text[1]) then
       misn.accept()
