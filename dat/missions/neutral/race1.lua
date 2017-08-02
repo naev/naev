@@ -7,69 +7,64 @@
 
 include "numstring.lua"
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
+
+text = {}
+title = {}
+ftitle = {}
+ftext = {}
+
+title[1] = _("Looking for a 4th")
+text[1] = _([["Hey man, we are planning on having a race around this system. We need a 4th person to participate. You have to bring a Yacht class ship. There's a prize of %s credits if you win. Interested?"]])
+
+title[2] = _("Awesome")
+text[2] = _([["Thats great man. Here is how it works. We will all be in a yacht class ship. Once we take off from %s, there will be a countdown. At the end of the countdown, we will proceed to the various checkpoints in order, boarding them before proceeding to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
+
+title[3] = _("Checkpoint %s reached")
+text[3] = _("Proceed to Checkpoint %s")
+
+text[4] = _("Land on %s")
+refusetitle = _("Refusal")
+refusetext = _([["I guess we'll need to find another pilot."]])
+
+wintitle = _("You Won!")
+wintext = _([[The laid back man comes up to you and hands you a credit chip. 
+   "Congratulations, man! Here's your prize money. Let's race again sometime soon!"]])
    
-   text = {}
-   title = {}
-   ftitle = {}
-   ftext = {}
+ftitle[1] = _("Illegal ship!")
+ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
+
+ftitle[2] = _("You left the race!")
+ftext[2] = _([["Because you left the race, you have been disqualified."]])
+
+ftitle[3] = _("You failed to win the race.")
+ftext[3] = _([[As you congratulate the winner on a great race, the laid back man comes up to you.
+   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
    
-   title[1] = "Looking for a 4th"
-   text[1] = [["Hey man, we are planning on having a race around this system. We need a 4th person to participate. You have to bring a Yacht class ship. There's a prize of %s credits if you win. Interested?"]]
-   
-   title[2] = "Awesome"
-   text[2] = [["Thats great man. Here is how it works. We will all be in a yacht class ship. Once we take off from %s, there will be a countdown. At the end of the countdown, we will proceed to the various checkpoints in order, boarding them before proceeding to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]]
-   
-   title[3] = "Checkpoint %s reached"
-   text[3] = "Proceed to Checkpoint %s"
-   
-   text[4] = "Land on %s"
-   refusetitle = "Refusal"
-   refusetext = [["I guess we'll need to find another pilot."]]
-   
-   wintitle = "You Won!"
-   wintext = [[The laid back man comes up to you and hands you a credit chip. 
-   "Congratulations, man! Here's your prize money. Let's race again sometime soon!"]]
-   
-   ftitle[1] = "Illegal ship!"
-   ftext[1] = [["You have switched to a ship that's not allowed in this race. Mission failed."]]
-   
-   ftitle[2] = "You left the race!"
-   ftext[2] = [["Because you left the race, you have been disqualified."]]
-   
-   ftitle[3] = "You failed to win the race."
-   ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
-   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]]
-   
-   NPCname = "A laid back man"
-   NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar."
-   
-   misndesc = "You're participating in a race!"
-   misnreward = "%s credits"
-   
-   OSDtitle = "Racing Skills 1"
-   OSD = {}
-   OSD[1] = "Board checkpoint 1"
-   OSD[2] = "Board checkpoint 2"
-   OSD[3] = "Board checkpoint 3"
-   OSD[4] = "Land at %s"
-   
-   chatter = {}
-   chatter[1] = "Let's do this!"
-   chatter[2] = "Wooo!"
-   chatter[3] = "Time to Shake 'n Bake"
-   chatter[4] = "Checkpoint %s baby!"
-   chatter[5] = "Hooyah"
-   chatter[6] = "Next!"
-   timermsg = "%s"
-   target = {1,1,1,1}
-   
-   positionmsg = "%s just reached checkpoint %s"
-   landmsg = "%s just landed at %s and finished the race"
-end
+NPCname = _("A laid back man")
+NPCdesc = _("You see a laid back man, who appears to be one of the locals, looking around the bar.")
+
+misndesc = _("You're participating in a race!")
+misnreward = _("%s credits")
+
+OSDtitle = _("Racing Skills 1")
+OSD = {}
+OSD[1] = _("Board checkpoint 1")
+OSD[2] = _("Board checkpoint 2")
+OSD[3] = _("Board checkpoint 3")
+OSD[4] = _("Land at %s")
+
+chatter = {}
+chatter[1] = _("Let's do this!")
+chatter[2] = _("Wooo!")
+chatter[3] = _("Time to Shake 'n Bake")
+chatter[4] = _("Checkpoint %s baby!")
+chatter[5] = _("Hooyah")
+chatter[6] = _("Next!")
+timermsg = "%s"
+target = {1,1,1,1}
+
+positionmsg = _("%s just reached checkpoint %s")
+landmsg = _("%s just landed at %s and finished the race")
 
 
 function create ()
@@ -125,7 +120,7 @@ function takeoff()
    checkpoint[2] = pilot.addRaw("Goddard", "stationary", location2, "Trader")
    checkpoint[3] = pilot.addRaw("Goddard", "stationary", location3, "Trader")
    for i, j in ipairs(checkpoint) do
-      j:rename(string.format("Checkpoint %s", i))
+      j:rename( string.format(_("Checkpoint %s"), i) )
       j:control()
       j:setHilight(true)
       j:setInvincible(true)
@@ -139,7 +134,7 @@ function takeoff()
    racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")
    racers[3]:addOutfit("Improved Stabilizer")
    for i, j in ipairs(racers) do
-      j:rename(string.format("Racer %s", i))
+      j:rename(string.format(_("Racer %s"), i))
       j:setHilight(true)
       j:setInvincible(true)
       j:setVisible(true)
@@ -162,7 +157,7 @@ end
 function counter()
    countdown = countdown - 1
    if countdown == 0 then
-      player.omsgChange(omsg, "Go!", 1000)
+      player.omsgChange(omsg, _("Go!"), 1000)
       hook.timer(1000, "stopcount")
       player.pilot():control(false)
       counting = false
