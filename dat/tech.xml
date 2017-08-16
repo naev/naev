@@ -95,17 +95,23 @@
   <item>Reactor Class II</item>
   <item>Reactor Class III</item>
   <item>Shield Capacitor</item>
+  <item>Thurion Reactor Class I</item>
+  <item>Thurion Reactor Class II</item>
+  <item>Thurion Reactor Class III</item>
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
   <item>Small Shield Booster</item>
   <item>Medium Shield Booster</item>
   <item>Large Shield Booster</item>
+  <item>Adaptive Stealth Plating</item>
   <item>Plasteel Plating</item>
+  <item>Active Plating</item>
   <item>Nanobond Plating</item>
   <item>Biometal Armour</item>
   <item>Droid Repair Crew</item>
   <item>Engine Reroute</item>
+  <item>Thurion Engine Reroute</item>
   <item>Improved Stabilizer</item>
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
@@ -144,6 +150,7 @@
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
+  <item>Sensor Array</item>
   <item>GUI - Brushed</item>
   <item>GUI - Legacy</item>
   <item>GUI - Slimv2</item>
@@ -282,6 +289,7 @@
   <item>Shark</item>
   <item>Pirate Shark</item>
   <item>Empire Shark</item>
+  <item>Thurion Perspicacity</item>
   <item>Soromid Reaver</item>
   <item>Lancelot</item>
   <item>Empire Lancelot</item>
@@ -293,6 +301,7 @@
   <item>Ancestor</item>
   <item>Dvaered Ancestor</item>
   <item>Pirate Ancestor</item>
+  <item>Thurion Scintillation</item>
   <item>Phalanx</item>
   <item>Dvaered Phalanx</item>
   <item>Pirate Phalanx</item>
@@ -757,7 +766,9 @@
   <item>Soromid Arx</item>
  </tech>
  <tech name="Thurion Military Ships">
+  <item>Thurion Perspicacity</item>
   <item>Thurion Ingenuity</item>
+  <item>Thurion Scintillation</item>
  </tech>
  <tech name="Za'lek Military Ships">
   <item>Za'lek Sting</item>
@@ -768,6 +779,12 @@
  <tech name="Thurion Outfits">
   <item>Nebular Shielding Prototype</item>
   <item>Thurion Reactor Class I</item>
+  <item>Thurion Reactor Class II</item>
+  <item>Thurion Reactor Class III</item>
+  <item>Sensor Array</item>
+  <item>Thurion Engine Reroute</item>
+  <item>Adaptive Stealth Plating</item>
+  <item>Active Plating</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>

@@ -919,6 +919,7 @@
  * Author: Unnamed, License: CC-by-sa 3.0
    * outfit
      * store
+       * active_plating.png
        * core_system01.png
        * core_system02.png
        * core_system03.png
@@ -945,8 +946,14 @@
        * misc05.png
        * plating01.png
        * reactor01.png
+       * stealth_plating.png
        * weapon01.png
        * weapon02.png
+   * ship
+     * perspicacity
+       * *
+     * scintillation
+       * *
 
  * Author: antilope, License: CC-by-sa 3.0
    * planet

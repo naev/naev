@@ -9,10 +9,12 @@ function spawn_patrol ()
    if r < 0.5 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    else
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    end
 
    return pilots
@@ -25,16 +27,18 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
    else
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
    end
 
    return pilots
@@ -57,15 +61,19 @@ function spawn_capship ()
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    elseif r < 0.8 then
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
    else
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    end
 
    return pilots
