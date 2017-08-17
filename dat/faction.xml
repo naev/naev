@@ -141,7 +141,7 @@
   <player>1</player>
   <spawn>thurion</spawn>
   <standing>thurion</standing>
-  <equip>empire</equip>
+  <equip>thurion</equip>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
