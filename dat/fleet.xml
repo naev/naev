@@ -1019,6 +1019,13 @@
    <pilot name="Thurion Scintillation" ship="Thurion Scintillation"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Thurion Virtuosity">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Virtuosity" ship="Thurion Virtuosity"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Sirius Recon Force">
   <ai>sirius</ai>
   <faction>Sirius</faction>
