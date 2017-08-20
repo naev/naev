@@ -12,9 +12,7 @@ function spawn_patrol ()
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    else
-      scom.addPilot( pilots, "Thurion Scintillation", 30 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    end
 
    return pilots
@@ -29,11 +27,10 @@ function spawn_squad ()
    if r < 0.5 then
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Scintillation", 30 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    elseif r < 0.8 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Scintillation", 30 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    else
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
@@ -66,9 +63,8 @@ function spawn_capship ()
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Scintillation", 30 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    else
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );

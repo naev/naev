@@ -5,13 +5,13 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
- <price>1100000</price>
+ <price>950000</price>
  <fabricator>Thurion shipyards</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of compareable size, but has still a lower ammount of weapon hard points than other bomber class ships.</description>
  <health>
-  <absorb>7</absorb>
-  <armour>150</armour>
+  <absorb>6</absorb>
+  <armour>125</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
