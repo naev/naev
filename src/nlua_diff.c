@@ -30,7 +30,7 @@
 static int diff_applyL( lua_State *L );
 static int diff_removeL( lua_State *L );
 static int diff_isappliedL( lua_State *L );
-static const luaL_reg diff_methods[] = {
+static const luaL_Reg diff_methods[] = {
    { "apply", diff_applyL },
    { "remove", diff_removeL },
    { "isApplied", diff_isappliedL },

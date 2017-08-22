@@ -71,7 +71,7 @@ int var_load( xmlNodePtr parent );
 static int var_peek( lua_State *L );
 static int var_pop( lua_State *L );
 static int var_push( lua_State *L );
-static const luaL_reg var_methods[] = {
+static const luaL_Reg var_methods[] = {
    { "peek", var_peek },
    { "pop", var_pop },
    { "push", var_push },

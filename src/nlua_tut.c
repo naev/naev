@@ -23,7 +23,7 @@
 
 /* Tutorial methods. */
 static int tut_mainMenu( lua_State *L );
-static const luaL_reg tut_methods[] = {
+static const luaL_Reg tut_methods[] = {
    { "main_menu", tut_mainMenu },
    {0,0}
 }; /**< Tutorial Lua methods. */

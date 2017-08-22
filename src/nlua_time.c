@@ -35,7 +35,7 @@ static int time_str( lua_State *L );
 static int time_inc( lua_State *L );
 static int time_tonumber( lua_State *L );
 static int time_fromnumber( lua_State *L );
-static const luaL_reg time_methods[] = {
+static const luaL_Reg time_methods[] = {
    { "create", time_create },
    { "add", time_add__ },
    { "__add", time_add },

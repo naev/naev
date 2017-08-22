@@ -37,7 +37,7 @@ int newsL_desc( lua_State *L );
 int newsL_faction( lua_State *L );
 int newsL_date( lua_State *L );
 int newsL_bind( lua_State *L );
-static const luaL_reg news_methods[] = {
+static const luaL_Reg news_methods[] = {
    {"add", newsL_add},
    {"rm", newsL_rm},
    {"get", newsL_get},

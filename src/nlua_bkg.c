@@ -24,7 +24,7 @@
 /* Background methods. */
 static int bkgL_clear( lua_State *L );
 static int bkgL_image( lua_State *L );
-static const luaL_reg bkgL_methods[] = {
+static const luaL_Reg bkgL_methods[] = {
    { "clear", bkgL_clear },
    { "image", bkgL_image },
    {0,0}
