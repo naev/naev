@@ -38,7 +38,7 @@ static int vectorL_setP( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
-static const luaL_reg vector_methods[] = {
+static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
    { "__add", vectorL_add },

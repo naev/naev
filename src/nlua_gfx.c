@@ -32,7 +32,7 @@ static int gfxL_fontSize( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
-static const luaL_reg gfxL_methods[] = {
+static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
    /* Render stuff. */

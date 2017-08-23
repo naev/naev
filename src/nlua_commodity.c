@@ -26,7 +26,7 @@ static int commodityL_get( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
-static const luaL_reg commodityL_methods[] = {
+static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },

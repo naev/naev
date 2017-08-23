@@ -20,7 +20,7 @@
 
 
 /* CLI */
-static const luaL_reg cli_methods[] = {
+static const luaL_Reg cli_methods[] = {
    {0,0}
 }; /**< CLI Lua methods. */
 

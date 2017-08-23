@@ -54,7 +54,7 @@ static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
 static int evt_save( lua_State *L );
 static int evt_claim( lua_State *L );
-static const luaL_reg evt_methods[] = {
+static const luaL_Reg evt_methods[] = {
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
    { "save", evt_save },

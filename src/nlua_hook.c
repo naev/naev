@@ -53,7 +53,7 @@ static int hook_safe( lua_State *L );
 static int hook_standing( lua_State *L );
 static int hook_discover( lua_State *L );
 static int hook_pilot( lua_State *L );
-static const luaL_reg hook_methods[] = {
+static const luaL_Reg hook_methods[] = {
    { "rm", hookL_rm },
    { "load", hook_load },
    { "land", hook_land },
