@@ -56,6 +56,12 @@
   <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
   <item>Heavy Neutron Disruptor</item>
+  <item>Energy Dart</item>
+  <item>Energy Missile</item>
+  <item>Energy Torpedo</item>
+  <item>Thurion Energy Cell I</item>
+  <item>Thurion Energy Cell II</item>
+  <item>Thurion Energy Cell III</item>
   <item>Electron Burst Cannon</item>
   <item>Electron Energy Cell</item>
   <item>Unicorp Fury Launcher</item>
@@ -87,6 +93,9 @@
   <item>Medusa Missile</item>
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Spearhead Missile</item>
+  <item>Convulsion Launcher</item>
+  <item>Turreted Convulsion Launcher</item>
+  <item>Convulsion Missile</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -322,6 +331,7 @@
   <item>Rhino</item>
   <item>Pirate Rhino</item>
   <item>Mule</item>
+  <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
   <item>Proteron Archimedes</item>
@@ -771,6 +781,7 @@
   <item>Thurion Ingenuity</item>
   <item>Thurion Scintillation</item>
   <item>Thurion Virtuosity</item>
+  <item>Thurion Taciturnity</item>
  </tech>
  <tech name="Za'lek Military Ships">
   <item>Za'lek Sting</item>
@@ -779,6 +790,15 @@
   <item>Za'lek Diablo</item>
  </tech>
  <tech name="Thurion Outfits">
+  <item>Energy Dart</item>
+  <item>Energy Missile</item>
+  <item>Energy Torpedo</item>
+  <item>Thurion Energy Cell I</item>
+  <item>Thurion Energy Cell II</item>
+  <item>Thurion Energy Cell III</item>
+  <item>Convulsion Launcher</item>
+  <item>Turreted Convulsion Launcher</item>
+  <item>Convulsion Missile</item>
   <item>Nebular Shielding Prototype</item>
   <item>Thurion Reactor Class I</item>
   <item>Thurion Reactor Class II</item>

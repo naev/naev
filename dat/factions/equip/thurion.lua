@@ -32,10 +32,10 @@ function equip_forwardThrMed ()
 end
 -- TURRETS
 function equip_turretThrLow ()
-   return { "Laser Turret MK2" }
+   return { "Laser Turret MK2", "Turreted Convulsion Launcher" }
 end
 function equip_turretThrMed ()
-   return { "Laser Turret MK3", "Heavy Ion Turret" }
+   return { "Laser Turret MK3", "Heavy Ion Turret", "Turreted Convulsion Launcher" }
 end
 function equip_turretThrMedHig ()
    return { "Heavy Ripper Turret" }
@@ -45,10 +45,10 @@ function equip_turretThrHig ()
 end
 -- RANGED
 function equip_rangedThr ()
-   return { "Electron Burst Cannon", "Enygma Systems Spearhead Launcher" }
+   return { "Electron Burst Cannon", "Convulsion Launcher", "Enygma Systems Spearhead Launcher" }
 end
 function equip_secondaryThr ()
-   return { "Unicorp Headhunter Launcher", "Enygma Systems Spearhead Launcher" }
+   return { "Convulsion Launcher", "Enygma Systems Spearhead Launcher" }
 end
 -- NON-COMBAT
 --[[

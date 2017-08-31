@@ -6,11 +6,13 @@ function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
+   if r < 0.3 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-   elseif r < 0.8 then
+   elseif r < 0.6 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Thurion Taciturnity", 40 );
    else
       scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    end
@@ -24,13 +26,17 @@ function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
+   if r < 0.4 then
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Virtuosity", 45 );
-   elseif r < 0.8 then
+   elseif r < 0.6 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Virtuosity", 45 );
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Taciturnity", 40 );
    else
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
