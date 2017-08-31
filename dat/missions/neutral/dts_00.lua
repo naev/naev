@@ -22,70 +22,64 @@ Add some consequences if the player aborts the mission
 
 include "dat/scripts/numstring.lua"
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
 
 -- This section stores the strings (text) for the mission.
 
 -- Mission details
-   misn_title = "Defend the System"
-   misn_reward = "%s credits and the pleasure of serving the Empire."
-   misn_desc = "Defend the system against a pirate fleet."
+misn_title = _("Defend the System")
+misn_reward = _("%s credits and the pleasure of serving the Empire.")
+misn_desc = _("Defend the system against a pirate fleet.")
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
-   title = {}
-   text = {}
-   title[1] = "In the bar"
-   text[1] = [[The bar is buzzing when you walk in. All the pilots are talking at once. Every screen in sight carries the same news feed: live footage of a space battle in orbit around %s.
+title = {}
+text = {}
+title[1] = _("In the bar")
+text[1] = _([[The bar is buzzing when you walk in. All the pilots are talking at once. Every screen in sight carries the same news feed: live footage of a space battle in orbit around %s.
     "A big fleet of pirates have just invaded the system," a woman wearing Nexus insignia explains. "They swarm any ship that tries to take off. Shipping is at a standstill. It's a disaster."
     There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
-    "Are you brave enough?"]]
-   title[11] = "Volunteers"
-   text[11] = [[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]]
+    "Are you brave enough?"]])
+title[11] = _("Volunteers")
+text[11] = _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]])
 
 -- Stage two: Vicious comm chatter
-   comm = {}
-   comm[1] = "Eat vacuum, scum!"
-   comm[2] = "Die, pirate, die."
-   comm[3] = "Eat cannon fire"
-   comm[4] = "Thieving parasites"
-   comm[5] = "I've got one on me!"
+comm = {}
+comm[1] = _("Eat vacuum, scum!")
+comm[2] = _("Die, pirate, die.")
+comm[3] = _("Eat cannon fire")
+comm[4] = _("Thieving parasites")
+comm[5] = _("I've got one on me!")
 
 -- Stage three: Victorious comm chatter
-   comm[6] = "That's right, run away you cowards."
-   comm[7] = "Good job, everyone. Let's get back planetside and get our reward."
+comm[6] = _("That's right, run away you cowards.")
+comm[7] = _("Good job, everyone. Let's get back planetside and get our reward.")
 
 -- Stage four: the portmaster greets you when you return to the planet
-   title[2] = "Welcome back"
-   text[2] = [[The portmaster greets the crowd of volunteers on the spaceport causeway.
+title[2] = _("Welcome back")
+text[2] = _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
     "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
-    Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]
+    Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]])
 
 -- Stage five: talking afterward in the bar
-   title[3] = "Over drinks"
-   text[3] = [[Many hours later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
-    "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]
+title[3] = _("Over drinks")
+text[3] = _([[Many hours later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
+    "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]])
 
 -- Other text for the mission
-   comm[8] = "You fled from the battle. The Empire won't forget."
-   comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
-   comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
-   title[4] = "Good job!"
-   text[4] = [[You jump out of %s with the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show that it too comes from combat with the pirates. Your comm beeps.
+comm[8] = _("You fled from the battle. The Empire won't forget.")
+comm[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you again.")
+comm[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
+title[4] = _("Good job!")
+text[4] = _([[You jump out of %s with the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show that it too comes from combat with the pirates. Your comm beeps.
     "Good flying, mate. We got those pirates on the run!" the pilot exclaims. "You didn't want to go back for the cash either, eh? I don't blame you. I hate pirates, but I don't want the Empire's money!" He smiles grimly. "It's strange, though. I've never seen pirates swarm that way before."
-]]
-   title[5] = "Left behind"
-   text[5] = [[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
-    "Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]]
-   bounce_title = "Not done yet."
-   bounce_text = "The system isn't safe yet. Get back out there!"
-   noReward = "No reward for you."
-   noDesc = "Watch others defend the system."
-   noTitle = "Watch the action."
-
-end 
+]])
+title[5] = _("Left behind")
+text[5] = _([[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
+    "Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]])
+bounce_title = _("Not done yet.")
+bounce_text = _("The system isn't safe yet. Get back out there!")
+noReward = _("No reward for you.")
+noDesc = _("Watch others defend the system.")
+noTitle = _("Watch the action.")
 
 
 -- Create the mission on the current planet, and present the first Bar text.

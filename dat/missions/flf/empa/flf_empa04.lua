@@ -19,35 +19,30 @@
 
 include "dat/missions/flf/flf_rogue.lua"
 
--- localization stuff
-lang = naev.lang()
-if lang == "raishuu" then
-else -- default English
-   title = {}
-   text = {}
+title = {}
+text = {}
 
-   title[1] = "The Coup"
-   text[1] = [[Cheryl wastes no time. "%s, I'm glad I found you. We have a serious situation, and we need your help.
+title[1] = _("The Coup")
+text[1] = _([[Cheryl wastes no time. "%s, I'm glad I found you. We have a serious situation, and we need your help.
     "See, as I sort of mentioned when you were assigned your last mission, some people are quite upset about our cooperation with the Empire. However, it has come to my attention that it's worse than I thought. A fleet of FLF ships has gone rogue and is trying to initiate a coup. It's not that big of a coup, but I'm having trouble riling support against it.
-    "Don't worry. It's not that they support the coup. They don't. But they're just not willing to fight against our former comrades. It just doesn't feel right to them."]]
+    "Don't worry. It's not that they support the coup. They don't. But they're just not willing to fight against our former comrades. It just doesn't feel right to them."]])
 
-   text[2] = [[She continues. "I'm so sorry to put you in such a horrible position. I never wanted it to be this way. But if this coup succeeds, all of our operations will be thrown into chaos and our dealings with the Empire will be completely ruined. This coup must be stopped, and since the fleet refuses to respond to our hails, they have to be..." She stops mid-sentence to regain her composure. "They have to be taken out, by any means necessary." Of course, she means that they have to be killed, and this realization makes it clear why she is having so much trouble finding support. After all, FLF soldiers kill Dvaered pilots on a daily basis. But to kill fellow comrades in the FLF? It just feels... wrong.
-    Cheryl clearly sees what you are thinking in your eyes. "Again, I'm so sorry to put you in this position, %s, but I need your help. Can you join the defense against this coup?"]]
+text[2] = _([[She continues. "I'm so sorry to put you in such a horrible position. I never wanted it to be this way. But if this coup succeeds, all of our operations will be thrown into chaos and our dealings with the Empire will be completely ruined. This coup must be stopped, and since the fleet refuses to respond to our hails, they have to be..." She stops mid-sentence to regain her composure. "They have to be taken out, by any means necessary." Of course, she means that they have to be killed, and this realization makes it clear why she is having so much trouble finding support. After all, FLF soldiers kill Dvaered pilots on a daily basis. But to kill fellow comrades in the FLF? It just feels... wrong.
+    Cheryl clearly sees what you are thinking in your eyes. "Again, I'm so sorry to put you in this position, %s, but I need your help. Can you join the defense against this coup?"]])
 
-   text[3] = [["Thank you, %s. I will continue to look around for more people willing to mount a defense. The rogue fleet has probably already entered the system. Good luck." She wanders off, presumably to find some more help. Well, there's no time to lose.]]
+text[3] = _([["Thank you, %s. I will continue to look around for more people willing to mount a defense. The rogue fleet has probably already entered the system. Good luck." She wanders off, presumably to find some more help. Well, there's no time to lose.]])
 
-   text[4] = [["I understand. I will continue looking for supporters. Hopefully we can mount some kind of defense."]]
+text[4] = _([["I understand. I will continue looking for supporters. Hopefully we can mount some kind of defense."]])
 
-   pay_text = {}
-   pay_text[1] = [[As you return from your dreadful mission, you sense a familiar coldness, mixed in with a great deal of sadness. Cheryl looks at you apologetically, quietly hands you your pay, and leaves.]]
+pay_text = {}
+pay_text[1] = _([[As you return from your dreadful mission, you sense a familiar coldness, mixed in with a great deal of sadness. Cheryl looks at you apologetically, quietly hands you your pay, and leaves.]])
 
-   misn_title = "The Coup"
-   misn_desc = "A fleet of FLF soldiers has initiated a coup. For the safety and stability of the FLF, it must be destroyed."
-   misn_reward = "Securing the stability and future of the FLF"
+misn_title = _("The Coup")
+misn_desc = _("A fleet of FLF soldiers has initiated a coup. For the safety and stability of the FLF, it must be destroyed.")
+misn_reward = _("Securing the stability and future of the FLF")
 
-   npc_name = "Cheryl"
-   npc_desc = "Cheryl looks unusually distraught as she looks for pilots. Perhaps you should see what is the matter."
-end
+npc_name = _("Cheryl")
+npc_desc = _("Cheryl looks unusually distraught as she looks for pilots. Perhaps you should see what is the matter.")
 
 
 function create ()

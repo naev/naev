@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: bobbens@gmail.com\n"
-"POT-Creation-Date: 2017-07-16 16:47+0900\n"
+"POT-Creation-Date: 2017-07-17 08:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -360,18 +360,20 @@ msgid "\"Money won't save your hide now!\""
 msgstr ""
 
 #: src/comm.c:442
+#, c-format
 msgid ""
-"\"I'm gonna need at least %PRIu64 credits to not leave you as a hunk of "
+"\"I'm gonna need at least %<PRIu64> credits to not leave you as a hunk of "
 "floating debris.\"\n"
 "\n"
-"Pay %PRIu64 credits?"
+"Pay %<PRIu64> credits?"
 msgstr ""
 
-#: src/comm.c:444 src/comm.c:589
+#: src/comm.c:444
+#, c-format
 msgid ""
 "%s\n"
 "\n"
-"Pay %PRIu64 credits?"
+"Pay %<PRIu64> credits?"
 msgstr ""
 
 #: src/comm.c:448 src/comm.c:514 src/comm.c:591
@@ -415,8 +417,16 @@ msgstr ""
 msgid "Pilot is already refueling you."
 msgstr ""
 
+#: src/comm.c:589
+msgid ""
+"%s\n"
+"\n"
+"Pay %PRIu64 credits?"
+msgstr ""
+
 #: src/comm.c:600
-msgid "You need %PRIu64 more credits!"
+#, c-format
+msgid "You need %<PRIu64> more credits!"
 msgstr ""
 
 #: src/comm.c:618
@@ -3339,12 +3349,13 @@ msgid ""
 msgstr ""
 
 #: src/land_trade.c:139
+#, c-format
 msgid ""
 "NA Tons\n"
 "NA Cr./Ton\n"
 "\n"
 "%d Tons\n"
-"%PRIu64 Cr.\n"
+"%<PRIu64> Cr.\n"
 msgstr ""
 
 #: src/land_trade.c:147
@@ -3352,12 +3363,13 @@ msgid "No commodities available."
 msgstr ""
 
 #: src/land_trade.c:159
+#, c-format
 msgid ""
 "%d Tons\n"
-"%PRIu64 Cr./Ton\n"
+"%<PRIu64> Cr./Ton\n"
 "\n"
 "%d Tons\n"
-"%PRIu64 Cr.\n"
+"%<PRIu64> Cr.\n"
 msgstr ""
 
 #: src/land_trade.c:208
@@ -5041,16 +5053,16 @@ msgstr ""
 msgid "Screen size too small, upscaling..."
 msgstr ""
 
-#: src/opengl.c:916
+#: src/opengl.c:926
 #, c-format
 msgid "Unable to open '%s' for writing."
 msgstr ""
 
-#: src/opengl.c:922
+#: src/opengl.c:932
 msgid "Unable to create png write struct."
 msgstr ""
 
-#: src/opengl.c:926
+#: src/opengl.c:936
 msgid "Unable to create PNG info struct."
 msgstr ""
 
@@ -8549,6 +8561,2058 @@ msgstr ""
 msgid "You wanna do this? Have it your way."
 msgstr ""
 
+#: dat/events/cinematic/DvdFLFbattle.lua:19
+msgid "Dvaered forces engaged in combat with small terrorist group"
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:20
+msgid ""
+"In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked "
+"and damaged by a small group of underequipped and unorganized FLF, in the "
+"Tuoladis system. The Dvaered managed to lose many tens of millions of "
+"credits worth in ships and crew to the small gang worth of ships and "
+"equipment, and the relative victory of the FLF will only embolden them, "
+"leading to more internal strife and violence."
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:26
+msgid "FLF terrorists blasted by joint Dvaered military forces"
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:27
+msgid ""
+"A Dvaered patrol in Tuoladis was ambushed by a large gang of FLF terrorists. "
+"The Dvaered patrol held  under the assault, until the mighty hammer that is "
+"the Dvaered forces came down and crushed the FLF terrorists in a mighty "
+"victory. This incident shows the willigness of the terrorists to attack us "
+"and kill whomever they please. The Dvaered military is always ready to "
+"protect its citizens and kill and conqeur those who would harm them."
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:33
+msgid "Dvaered forces engage FLF freedom fighters in open combat"
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:34
+msgid ""
+"A small group of FLF freedom fighters was beset by a Dvaered patrol in "
+"Tuoladis, who immediately called backup. The situation escalated, and a "
+"large scale battle occured, where the Dvaered forces lost tens of millions "
+"of credits worth in ships. This marks the first time FLF freedom fighters "
+"have had the ships and weapons to stand toe to toe against the Dvaered, and "
+"shall server as an example for all who dare to stand for freedom, in life or "
+"death."
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:40
+msgid "Dvaered, FLF clash in Tuoladis"
+msgstr ""
+
+#: dat/events/cinematic/DvdFLFbattle.lua:41
+msgid ""
+"In a chance encounter, a Dvaered patrol encountered a group of FLF. The "
+"small skirmish quickly escalated to a large scale battle many dozens large, "
+"in which the Dvaered proclaimed to have won. The Dvaered High Command used "
+"the event as an excuse to call for military action against the frontier "
+"worlds."
+msgstr ""
+
+#: dat/events/dvaered/warlords_battle.lua:15
+msgid "A battle is about to begin"
+msgstr ""
+
+#: dat/events/dvaered/warlords_battle.lua:16
+#, lua-format
+msgid ""
+"\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
+"going to happen here: a mighty warlord from %s is going to attack %s. You "
+"shouldn't stay there, unless you are a mercenary. Do you know how it works? "
+"If you attack a warlord's ship, and he loses the battle, the other warlord "
+"will reward you. But if he wins, you will be hunted down.\""
+msgstr ""
+
+#: dat/events/dvaered/warlords_battle.lua:18
+msgid "Here comes your reward"
+msgstr ""
+
+#: dat/events/dvaered/warlords_battle.lua:19
+#, lua-format
+msgid ""
+"\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
+"am authorized to give you %s credits as a reward.\""
+msgstr ""
+
+#: dat/events/flf/derelict.lua:14
+#, lua-format
+msgid "SOS. This is %s. Primary systems down. Requesting assistance."
+msgstr ""
+
+#: dat/events/flf/derelict.lua:15
+#, lua-format
+msgid "Calling all ships. This is %s. Engines down, ship damaged. Please help."
+msgstr ""
+
+#: dat/events/flf/derelict.lua:16
+msgid "Dvaered Patrol"
+msgstr ""
+
+#: dat/events/flf/derelict.lua:17
+msgid "Frontier Patrol"
+msgstr ""
+
+#: dat/events/naev_needs_YOU.lua:19
+msgid "Naev received SIGSEGV (address not mapped to object)!"
+msgstr ""
+
+#: dat/events/naev_needs_YOU.lua:20
+msgid ""
+"As you step out of your ship, suddenly the sunlight flickers. In the sky, "
+"the local star turns blue, then a deep purple, and then goes dark. The whole "
+"planet plunges into darkness.\n"
+"\n"
+"Then a voice speaks, louder than an earthquake. It seems to sound inside "
+"your bones and from the very centre of the earth. \"Oh crap...\" it says.\n"
+"\n"
+"Another voice laughs, musically, as if world itself were singing. \"bobbens, "
+"did you just destroy the universe, again?\"\n"
+"\n"
+"\"Mmmm, hold on,\" first voice rumbles. \"...SIGSEGV... libc start main"
+"+0xe5... ah ha!  There's the problem.\"  You feel something fundamental in "
+"the fabric of reality change. The sensation is like sneezing and hiccuping "
+"at the same time. \"There that should fix it.\"\n"
+"\n"
+"A window opens in the darkness, infinitely far away and infinitely large. A "
+"face peeps down at you from the height of eternity.\n"
+"\n"
+"\"Everything all right in there?\""
+msgstr ""
+
+#: dat/events/naev_needs_YOU.lua:33 dat/events/naev_needs_YOU.lua:45
+msgid "The voice of the creator"
+msgstr ""
+
+#: dat/events/naev_needs_YOU.lua:34
+msgid ""
+"\"Good. Sorry for the inconvenience. Please don't worry, I'll have reality "
+"reloaded again in just a sec.\"\n"
+"\n"
+"The creator turns to go, then pauses.\n"
+"\n"
+"\"By the way, we're working hard on improving life, the universe, and all "
+"that, but we're a bit short handed. If you like this existence but think the "
+"details could be improved, the universe creation team could use your help. "
+"We'd be especially happy to see you if you have any special skill in drawing "
+"planets, designing ships, scripting the underlying laws of nature, or "
+"composing the music of the spheres. For information on how to contribute, "
+"just point your web-of-reality browser to http://naev.org/.\"\n"
+"\n"
+"The watchmaker lifts his eyes up beyond your frame of reference and smiles.\n"
+"\n"
+"\"OK then. Pushed. And we're back in 3... 2... 1...\""
+msgstr ""
+
+#: dat/events/naev_needs_YOU.lua:46
+msgid ""
+"\"Oh sorry about that. We're working hard on improving life, the universe, "
+"and all that, but the team is a bit short handed. Don't worry, I'll have "
+"reality reloaded again in just a sec.\"\n"
+"\n"
+"The creator turns to go, then pauses.\n"
+"\n"
+"\"I tell you what: the universe creation team could really use your help. If "
+"you have any special skill in drawing planets, designing ships, scripting "
+"the underlying laws of nature, or composing the music of the spheres we'd be "
+"especially happy to see you. For information on how to contribute, just "
+"point your web-of-reality browser to http://blog.naev.org/.\"\n"
+"\n"
+"The watchmaker lifts his eyes up beyond your frame of reference and smiles.\n"
+"\n"
+"\"OK then. Pushed. And we're back in 3... 2... 1...\""
+msgstr ""
+
+#: dat/events/neutral/animaltrouble.lua:9
+msgid ""
+"Suddenly, your instruments go haywire, and your ship careens out of control. "
+"The controls aren't responding! Something is wrong with your systems!"
+msgstr ""
+
+#: dat/events/neutral/animaltrouble.lua:10
+msgid ""
+"You've found the cause of the problem. One of the little rodents you "
+"transported for that Sirian apparently got out of the crate on the way, and "
+"gnawed through some of your ship's circuitry. The creature died in the "
+"ensuing short-circuit. You've fixed the damage, and your ship is under "
+"control again."
+msgstr ""
+
+#: dat/events/neutral/animaltrouble.lua:13
+msgid "Panic!"
+msgstr ""
+
+#: dat/events/neutral/animaltrouble.lua:14
+msgid "Calm"
+msgstr ""
+
+#: dat/events/neutral/baron_flintley.lua:6
+msgid ""
+"Flintley is here. He nervously sips from his drink, clearly uncomfortable in "
+"this environment."
+msgstr ""
+
+#: dat/events/neutral/baron_flintley.lua:7
+msgid "Flintley"
+msgstr ""
+
+#: dat/events/neutral/baron_flintley.lua:8
+#, lua-format
+msgid ""
+"    Flintley greets you, relieved to see a friendly face. \"Hello again, %s. "
+"What brings you here today? As you can see, I'm here on business again. "
+"Nothing too interesting, I'm afraid, just everyday stuff.\"\n"
+"    You spend some time chatting with Flintley, then you get back to work."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:10
+msgid "Empty derelict"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:12
+msgid ""
+"You spend some time searching the derelict, but it doesn't appear there are "
+"any remaining passengers, nor is there anything of interest to you. You "
+"decide to return to your ship."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:13
+msgid ""
+"This ship has clearly been abandoned a long time ago. Looters have been here "
+"many times, and all of the primary and backup systems are down. However, "
+"there is one console that is still operational. It appears to be running an "
+"ancient computer game about space exploration, trade and combat. Intrigued, "
+"you decide to give the game a try, and before long you find yourself hooked "
+"on it. You spend many fun hours hauling cargo, upgrading your ship, fighting "
+"enemies and exploring the universe. But of course you can't stay here "
+"forever. You regretfully leave the game behind and return to the reality of "
+"your everyday life."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:14
+msgid ""
+"You are exploring the derelict ship when you hear a strange creaking noise. "
+"You decide to follow it to see what is causing it, but you never seem to be "
+"able to pinpoint the source. After about an hour of fruitlessly opening up "
+"panels, pressing your ear against the deck and running hull scans from your "
+"own ship, you decide to give up and leave the derelict to its creepy "
+"creaking."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:15
+msgid ""
+"While exploring the cockpit of this derelict, you come across the captain's "
+"logs. Hoping to find some information that could be of use to you, you "
+"decide to play back the most recent entries. Unfortunately, it turns out the "
+"captain's logs are little more than recordings of the captain having heated "
+"arguments with her co-pilot. After about ten minutes, you decide you "
+"probably aren't going to find anything worthwhile here, so you return to "
+"your ship."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:16
+msgid ""
+"This derelict is not deserted. The crew are still onboard. Unfortunately for "
+"them, they didn't survive whatever wrecked their ship. You decide to give "
+"them a decent space burial before moving on."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:17
+msgid ""
+"This derelict seems to have been visited by looters already. You find a "
+"message carved into the wall near the airlock. It reads: \"I WUS HEAR\". "
+"Below it is another carved message that says \"NO U WASNT\". Otherwise, "
+"there is nothing of interest left on this ship."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:18
+msgid ""
+"This derelict seems to have at one time been used as an illegal casino. "
+"There are roulette tables and slot machines set up in the cargo hold. "
+"However, it seems the local authorities caught wind of the operation, "
+"because there are also scorch marks on the furniture and the walls, and "
+"there are assault rifle shells underfoot. You don't reckon you're going to "
+"find anything here, so you leave."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:19
+msgid ""
+"When the airlock opens, you are hammered in the face by an ungodly smell "
+"that almost makes you pass out on the spot. You hurriedly close the airlock "
+"again and flee back into your own ship. Whatever is on that derelict, you "
+"don't want to find out!"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:20
+msgid ""
+"This derelict has really been beaten up badly. Most of the corridors are "
+"blocked by mangled metal, and your scans read depressurized compartments all "
+"over the ship. There's not much you can do here, so you decide to leave the "
+"derelict alone."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:21
+msgid ""
+"The interior of this ship is decorated in a gaudy fashion. There are cute "
+"plushies hanging from the doorways, drapes on every viewport, colored "
+"pillows in the corners of most compartments and cheerful graffiti on almost "
+"all the walls. A scan of the ship's computer shows that this ship belonged "
+"to a trio of adventurous young ladies who decided to have a wonderful trip "
+"through space. Sadly, it turned out none of them really knew how to fly a "
+"space ship, and so they ended up stranded and had to be rescued. Shaking "
+"your head, you return to your own ship."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:22
+msgid ""
+"The artificial gravity on this ship has bizarrely failed, managing to "
+"somehow reverse itself. As soon as you step aboard you fall upwards and onto "
+"the ceiling, getting some nasty bruises in the process. Annoyed, you search "
+"the ship, but without result. You return to your ship - but forget about the "
+"polarized gravity at the airlock, so you again smack against the deck plates."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:23
+msgid ""
+"The cargo hold of this ship contains several heavy, metal chests. You pry "
+"them open, but they are empty. Whatever was in them must have been pilfered "
+"by other looters already. You decide not to waste any time on this ship, and "
+"return to your own."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:24
+msgid ""
+"You have attached your docking clamp to the derelict's airlock, but the door "
+"refuses to open. A few diagnostics reveal that the other side isn't "
+"pressurized. The derelict must have suffered hull breaches over the years. "
+"It doesn't seem like there's much you can do here."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:25
+msgid ""
+"As you walk through the corridors of the derelict, you can't help but notice "
+"the large scratch marks on the walls, the floor and even the ceiling. It's "
+"as if something went on a rampage throughout this ship - something big, with "
+"a lot of very sharp claws and teeth... You feel it might be best to leave as "
+"soon as possible, so you abandon the search of the derelict and disengage "
+"your docking clamp."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:28
+msgid "Lucky find!"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:30
+msgid ""
+"The derelict appears deserted, its passengers long gone. However, they seem "
+"to have left behind a small amount of credit chips in their hurry to leave! "
+"You decide to help yourself to them, and leave the derelict."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:31
+#, lua-format
+msgid ""
+"The derelict is empty, and seems to have been thoroughly picked over by "
+"other space bucceneers. However, the ship's computer contains a map of the "
+"%s! You download it into your own computer."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:32
+#, lua-format
+msgid ""
+"This ship looks like any old piece of scrap at a glance, but it is actually "
+"an antique, one of the very first of its kind ever produced! Museums all "
+"over the galaxy would love to have a ship like this. You plant a beacon on "
+"the derelict to mark it for salvaging, and contact the %s authorities. Your "
+"reputation with them has slightly improved."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:35
+msgid "Oh no!"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:37
+msgid ""
+"The moment you affix your boarding clamp to the derelect ship, it triggers a "
+"boobytrap! The derelict explodes, severely damaging your ship. You escaped "
+"death this time, but it was a close call!"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:38
+msgid ""
+"You board the derelict ship and search its interior, but you find nothing. "
+"When you return to your ship, however, it turns out there were Space Leeches "
+"onboard the derelict - and they've now attached themselves to your ship! You "
+"scorch them off with a plasma torch, but it's too late. The little buggers "
+"have already drunk all of your fuel. You're not jumping anywhere until you "
+"find some more!"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:39
+msgid ""
+"You affix your boarding clamp and walk aboard the derelict ship. You've only "
+"spent a couple of minutes searching the interior when there is a proximity "
+"alarm from your ship! Pirates are closing on your position! Clearly this "
+"derelict was a trap! You run back onto your ship and prepare to unboard, but "
+"you've lost precious time. The pirates are already in firing range..."
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:102
+msgid "Dvaered-Soromid trade route"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:103
+msgid "Sirian border systems"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:104
+msgid "Dvaered core systems"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:105
+msgid "Empire core systems"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:106
+msgid "Sol nebula edge"
+msgstr ""
+
+#: dat/events/neutral/derelict.lua:107
+msgid "Frontier systems"
+msgstr ""
+
+#: dat/events/neutral/news.lua:10
+msgid "We bring you the latest news in the galaxy."
+msgstr ""
+
+#: dat/events/neutral/news.lua:12
+msgid "Welcome to Universal News Feed. All the headlines all the time."
+msgstr ""
+
+#: dat/events/neutral/news.lua:14
+msgid "Welcome to the Empire News Centre."
+msgstr ""
+
+#: dat/events/neutral/news.lua:16
+msgid ""
+"Welcome to the Dvaered News Centre. All that happens. In simple words. So "
+"you can understand."
+msgstr ""
+
+#: dat/events/neutral/news.lua:18
+msgid ""
+"Welcome to Goddard News Centre. We bring you the news from around the Empire."
+msgstr ""
+
+#: dat/events/neutral/news.lua:20
+msgid "Pirate News. News that matters."
+msgstr ""
+
+#: dat/events/neutral/news.lua:22
+msgid "Sirius News Reel. Words of the Sirichana for all."
+msgstr ""
+
+#: dat/events/neutral/news.lua:24
+msgid "The word of the Free Resistance."
+msgstr ""
+
+#: dat/events/neutral/news.lua:26
+msgid "News from the Frontier Alliance."
+msgstr ""
+
+#: dat/events/neutral/news.lua:28
+msgid "Word from the Proteron state."
+msgstr ""
+
+#: dat/events/neutral/news.lua:30
+msgid "Scientific, Socioeconomic, and Sundry Events"
+msgstr ""
+
+#: dat/events/neutral/news.lua:32
+msgid "The voice of the future."
+msgstr ""
+
+#: dat/events/neutral/news.lua:34
+msgid "Data Relay Network"
+msgstr ""
+
+#: dat/events/neutral/news.lua:43
+msgid "Fresh news from around the Empire."
+msgstr ""
+
+#: dat/events/neutral/news.lua:44
+msgid "Remembering the Incident."
+msgstr ""
+
+#: dat/events/neutral/news.lua:45
+msgid "Keeping you informed."
+msgstr ""
+
+#: dat/events/neutral/news.lua:50
+msgid "News that matters."
+msgstr ""
+
+#: dat/events/neutral/news.lua:51
+msgid "Adopt a cat today!"
+msgstr ""
+
+#: dat/events/neutral/news.lua:52
+msgid "Laughing at the Emperor."
+msgstr ""
+
+#: dat/events/neutral/news.lua:53
+msgid "On top of the world."
+msgstr ""
+
+#: dat/events/neutral/news.lua:54
+msgid "Piracy has never been better."
+msgstr ""
+
+#: dat/events/neutral/news.lua:58
+msgid "News you can trust."
+msgstr ""
+
+#: dat/events/neutral/news.lua:60
+msgid "Stay faithful."
+msgstr ""
+
+#: dat/events/neutral/news.lua:61
+msgid "Sirichana watches and guides you."
+msgstr ""
+
+#: dat/events/neutral/news.lua:67
+msgid "Genetically tailoured for you."
+msgstr ""
+
+#: dat/events/neutral/news.lua:79
+msgid "Techs Probe for Sol"
+msgstr ""
+
+#: dat/events/neutral/news.lua:80
+msgid ""
+"Technicians at the Omega Station recently returned from a new effort to "
+"understand the Sol Incident. They expect the first data to arrive in two "
+"months' time."
+msgstr ""
+
+#: dat/events/neutral/news.lua:83
+msgid "Sand Monster Caught On Tape"
+msgstr ""
+
+#: dat/events/neutral/news.lua:84
+msgid ""
+"Local residents claim footage from an Arrakis security camera shows elusive "
+"beast walking through a desert storm. Exobiologists suspect a hoax."
+msgstr ""
+
+#: dat/events/neutral/news.lua:87
+msgid "New Handheld AI Debuts"
+msgstr ""
+
+#: dat/events/neutral/news.lua:88
+msgid ""
+"Braeburn, the home division of Wellington, yesterday demonstrated their new "
+"PDAI. Developer Isaac Asimov assured us the new model is guaranteed not to "
+"develop a personality of its own."
+msgstr ""
+
+#: dat/events/neutral/news.lua:91
+msgid "Experiment Produces Cold Fusion"
+msgstr ""
+
+#: dat/events/neutral/news.lua:92
+msgid ""
+"In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at "
+"Eureka labs says he has produced a tabletop atomic reaction. He hopes to "
+"publish his results in a science journal later this year."
+msgstr ""
+
+#: dat/events/neutral/news.lua:95
+msgid "Bees Introduced to Emperor's Fist"
+msgstr ""
+
+#: dat/events/neutral/news.lua:96
+msgid ""
+"As they prepare the gardens of the future Imperial compound, entomologists "
+"have established the first colony of the Earth insects on the planet "
+"formerly known as G Scorpeii 5."
+msgstr ""
+
+#: dat/events/neutral/news.lua:99
+msgid "The Case for Sex"
+msgstr ""
+
+#: dat/events/neutral/news.lua:100
+msgid ""
+"Though cloning rates continue to rise, Vlad Taneev believes we can still "
+"benefit from genetic recombination. \"Lady chance is more creative than we,"
+"\" says the famous gene splicer."
+msgstr ""
+
+#: dat/events/neutral/news.lua:103
+msgid "Hyperspace is Hot"
+msgstr ""
+
+#: dat/events/neutral/news.lua:104
+msgid ""
+"Researchers have found traces of matter moving very quickly in hyperspace. "
+"They are not yet sure whether the minute particles originated there, or are "
+"human contaminants."
+msgstr ""
+
+#: dat/events/neutral/news.lua:107
+msgid "A Family Freezer"
+msgstr ""
+
+#: dat/events/neutral/news.lua:108
+msgid ""
+"Looking for a cryotube for your parents?  Our expert panel finds Glass Box "
+"Mark II will keep your family alive for nearly as long as the previous model."
+msgstr ""
+
+#: dat/events/neutral/news.lua:114
+msgid "Fullerton Reports Quarterly Loss"
+msgstr ""
+
+#: dat/events/neutral/news.lua:115
+msgid ""
+"Engine maker Fullerton Industries has posted a c47B loss over the past 250 "
+"STPs. A company spokeswoman attributed the loss to the high cost of "
+"deuterium fuel and falling sales."
+msgstr ""
+
+#: dat/events/neutral/news.lua:118
+msgid "Genetric Board Meets"
+msgstr ""
+
+#: dat/events/neutral/news.lua:119
+msgid ""
+"In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, "
+"the board of directors will meet today. The group is expected to appoint a "
+"new chief science officer."
+msgstr ""
+
+#: dat/events/neutral/news.lua:122
+msgid "Aerosys Earnings Drop"
+msgstr ""
+
+#: dat/events/neutral/news.lua:123
+msgid ""
+"The spaceways may swarm with Hyena-model craft, but today Aerosys recorded "
+"another quarterly loss. The company is investigating the discrepancy between "
+"the popularity of the craft and its sales figures."
+msgstr ""
+
+#: dat/events/neutral/news.lua:126
+msgid "Aerosys Victim of Pirate Manufacturing"
+msgstr ""
+
+#: dat/events/neutral/news.lua:127
+msgid ""
+"The ship manufacturer has released a study indicating its signature Hyena "
+"model is being produced by a hidden system of unlicensed manufacturers."
+msgstr ""
+
+#: dat/events/neutral/news.lua:130
+msgid "Melendez CEO on Strategy"
+msgstr ""
+
+#: dat/events/neutral/news.lua:131
+msgid ""
+"The Chief Executive Officer of ship maker Melendez Inc. thinks manufacturers "
+"should follow his company's lead in keeping costs down and producing for the "
+"mass market."
+msgstr ""
+
+#: dat/events/neutral/news.lua:134
+msgid "The Goddard Exception"
+msgstr ""
+
+#: dat/events/neutral/news.lua:135
+msgid ""
+"Why has a community with more expertise sailing than flying produced the "
+"Empire's elite civilian spacecraft?  Lord Warthon says the secret lies in "
+"his family's hands-on tradition of leadership."
+msgstr ""
+
+#: dat/events/neutral/news.lua:138
+msgid "Nexus Contract Finalised"
+msgstr ""
+
+#: dat/events/neutral/news.lua:139
+msgid ""
+"The Empire agreed terms with shipbuilder Nexus for a new generation of "
+"military craft. The deal extends the partnership with the government for "
+"another decade."
+msgstr ""
+
+#: dat/events/neutral/news.lua:142
+msgid "Sneak Peek: the Kestrel"
+msgstr ""
+
+#: dat/events/neutral/news.lua:143
+msgid ""
+"Our reporter took a tour through Krain's mysterious space craft. He says it "
+"poses a challenge to the Goddard."
+msgstr ""
+
+#: dat/events/neutral/news.lua:149
+msgid "FLF Responsible for Piracy"
+msgstr ""
+
+#: dat/events/neutral/news.lua:150
+msgid ""
+"Law enforcement expert Paet Dohmer's upcoming essay describes the group as "
+"\"more criminal gang than independence movement\", according to his "
+"publicist."
+msgstr ""
+
+#: dat/events/neutral/news.lua:153
+msgid "Front Responsible for Shipping Woes"
+msgstr ""
+
+#: dat/events/neutral/news.lua:154
+msgid ""
+"A spokeswoman for the separatist group says they were behind the recent "
+"series of attacks on cargo ships operating between Dakron and Theras. "
+"Dvaered officials condemned the actions."
+msgstr ""
+
+#: dat/events/neutral/news.lua:157
+msgid "Election on Caladan Marred by Fraud"
+msgstr ""
+
+#: dat/events/neutral/news.lua:158
+msgid ""
+"As many as two of every hundred votes counted after the recent polling day "
+"may be falsified, an ombudsman reports. The opposition party demanded the "
+"election be annulled."
+msgstr ""
+
+#: dat/events/neutral/news.lua:161
+msgid "Empire Relies on Prison Labour"
+msgstr ""
+
+#: dat/events/neutral/news.lua:162
+msgid ""
+"A recent report by the Soromid House Ways and Means Committee suggests "
+"infrastructure may be too dependent the on the incarcerated population."
+msgstr ""
+
+#: dat/events/neutral/news.lua:165
+msgid "Imperial Oversight Scandal"
+msgstr ""
+
+#: dat/events/neutral/news.lua:166
+msgid ""
+"Sources close to the Imperial Chancellor say they see the failure at the "
+"Department of Oversight, whose inspectors overlooked serious failings in "
+"other supervisory bodies, as a serious oversight."
+msgstr ""
+
+#: dat/events/neutral/news.lua:169
+msgid "Governor Helmer Jailed"
+msgstr ""
+
+#: dat/events/neutral/news.lua:170
+msgid ""
+"Imperial Auditors arrested governor Rex Helmer of Anecu on charges of "
+"corruption. He has been removed from office and transported to a holding "
+"facility awaiting trial."
+msgstr ""
+
+#: dat/events/neutral/news.lua:173
+msgid "Jouvanin Tapped as Interim Chief"
+msgstr ""
+
+#: dat/events/neutral/news.lua:174
+msgid ""
+"Following the arrest of Rex Helmer, former Anecu deputy governor Elene "
+"Jouvanin will be sworn in today. She will serve out the term as governor."
+msgstr ""
+
+#: dat/events/neutral/news.lua:177
+msgid "Imperial Council Opens Doors"
+msgstr ""
+
+#: dat/events/neutral/news.lua:178
+msgid ""
+"The supreme advisory body invited undergraduates from six top schools to sit "
+"in on a day's deliberations. Topics included biodiversity strategy."
+msgstr ""
+
+#: dat/events/neutral/news.lua:181
+msgid "FLF Terrorist Trial Ends"
+msgstr ""
+
+#: dat/events/neutral/news.lua:182
+msgid ""
+"FLF Terrorist Trial ended this SCU with an unsurprising death sentence for "
+"all five members of the Nor spaceport bombing. Execution is scheduled in 10 "
+"STP."
+msgstr ""
+
+#: dat/events/neutral/news.lua:185
+msgid "New Challenges for New Times"
+msgstr ""
+
+#: dat/events/neutral/news.lua:186
+msgid ""
+"The Dvaered council after a unanimous ruling decided to increase patrols in "
+"Dvaered space due to the recent uprising in FLF terrorism. The new measure "
+"is expected to start within the next SCU."
+msgstr ""
+
+#: dat/events/neutral/news.lua:192
+msgid "Emperor's Aid Gets Hitched"
+msgstr ""
+
+#: dat/events/neutral/news.lua:193
+msgid ""
+"On Saturday, Imperial secretary Karil Lorenze married long time fiancee "
+"Rachid Baouda in the future palace gardens on Emperor's Fist. His Eminence "
+"the Bishop of Bao performed the ceremony."
+msgstr ""
+
+#: dat/events/neutral/news.lua:196
+msgid "Eyeteeth Back in Fashion"
+msgstr ""
+
+#: dat/events/neutral/news.lua:197
+msgid ""
+"Despite the advice of dentists, eyetooth caps have come into vogue again. "
+"Young people throughout the inhabited worlds use home kits to strip a layer "
+"of enamel from their teeth in favour of a binding of quartz, granite, or "
+"even flint."
+msgstr ""
+
+#: dat/events/neutral/news.lua:200
+msgid "Everyone Loves a SuperChimp"
+msgstr ""
+
+#: dat/events/neutral/news.lua:201
+msgid ""
+"For decades used only as menial labourers, now SuperChimps are being widely "
+"adopted as domestic companions. Enhanced primates make an affectionate, "
+"intelligent pet, or low-cost servant."
+msgstr ""
+
+#: dat/events/neutral/news.lua:204
+msgid "Admiral's Ball a Triumph"
+msgstr ""
+
+#: dat/events/neutral/news.lua:205
+msgid ""
+"The glamorous season drew to a close with an underwater themed ball held in "
+"air bubbles deep under the oceans of Anecu. All the season's debutantes "
+"attended."
+msgstr ""
+
+#: dat/events/neutral/news.lua:208
+msgid "Amazing Survival Story"
+msgstr ""
+
+#: dat/events/neutral/news.lua:209
+msgid ""
+"An Xing Long was rescued after two days floating in space. \"I used "
+"meditation to slow my breathing,\" Xing Long told us. \"It was hard because "
+"I was scared.\""
+msgstr ""
+
+#: dat/events/neutral/news.lua:212
+msgid "The Best Spaceport Bars"
+msgstr ""
+
+#: dat/events/neutral/news.lua:213
+msgid ""
+"Where can you get the best gargleblaster?  The famous exotic drinks list at "
+"the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, "
+"don't miss the Goddard Bar."
+msgstr ""
+
+#: dat/events/neutral/news.lua:216
+msgid "RIP: The Floating Vagabond"
+msgstr ""
+
+#: dat/events/neutral/news.lua:217
+msgid ""
+"Only two years after the mysterious disappearance of its owner, the galaxy's "
+"only deep space bar shut down the generators and cycled the airlock one last "
+"time."
+msgstr ""
+
+#: dat/events/neutral/news.lua:220
+msgid "Games for Young Pilots"
+msgstr ""
+
+#: dat/events/neutral/news.lua:221
+msgid ""
+"Want your child to have a chance at a career as a space pilot?  Games like "
+"Super Julio Omniverse and SpaceFox help your child develop twitch muscles."
+msgstr ""
+
+#: dat/events/neutral/news.lua:224
+msgid "Remembering the Past"
+msgstr ""
+
+#: dat/events/neutral/news.lua:225
+msgid ""
+"The Emperor has scheduled a new monument to be constructed on Emperor's Fist "
+"in honour of all those dead in the Incident."
+msgstr ""
+
+#: dat/events/neutral/news.lua:234
+msgid "New Mace Rockets"
+msgstr ""
+
+#: dat/events/neutral/news.lua:235
+msgid ""
+"Dvaered Engineers are proud to present the new improved version of the "
+"Dvaered Mace rocket. \"We have proven the new rocket to be nearly twice as "
+"destructive as the previous versions,\" says Chief Dvaered Engineer "
+"Nordstrom."
+msgstr ""
+
+#: dat/events/neutral/news.lua:247
+msgid "Sirius Weaker Than Ever"
+msgstr ""
+
+#: dat/events/neutral/news.lua:248
+msgid ""
+"This SCU breaks the negative record for fewest pilgrims to Mutris since the "
+"formation of House Sirius. This weakness is yet another sign that House "
+"Dvaered must increase patrols on the border and into Sirius space."
+msgstr ""
+
+#: dat/events/neutral/news.lua:257
+msgid "Goddard: Raising the Bar"
+msgstr ""
+
+#: dat/events/neutral/news.lua:258
+msgid ""
+"Many new scientists are being contracted by House Goddard to investigate "
+"possible improvements. This new strategy will increase the gap with the "
+"competing ship fabricators."
+msgstr ""
+
+#: dat/events/neutral/news.lua:264
+msgid "Goddard Earnings on the Rise"
+msgstr ""
+
+#: dat/events/neutral/news.lua:265
+msgid ""
+"House Goddard has once again increased its earnings. \"Our investment in "
+"technology and quality has paid off,\" said Kari Baker of House Goddard's "
+"marketing bureau."
+msgstr ""
+
+#: dat/events/neutral/news.lua:268
+msgid "Goddard Awarded Best Ship"
+msgstr ""
+
+#: dat/events/neutral/news.lua:269
+msgid ""
+"Once again the Goddard Battlecruiser was awarded the Best Overall Ship prize "
+"by the Dvaered Armada's annual Ship Awards. \"Very few ships have "
+"reliability like the Goddard,\" said Lord Warthon upon receiving the award "
+"on behalf of House Goddard."
+msgstr ""
+
+#: dat/events/neutral/news.lua:287
+msgid "Trade Meeting at Lorelei"
+msgstr ""
+
+#: dat/events/neutral/news.lua:288
+msgid ""
+"Lorelei, in the Churchill system, is the latest world to host major trade "
+"negotiations between the Fyrra and the Space Traders Guild. The Fyrra Arch-"
+"Canter has indicated that opening up trade routes is a major goal."
+msgstr ""
+
+#: dat/events/neutral/news.lua:294
+msgid "Dvaered extorting pilgrims"
+msgstr ""
+
+#: dat/events/neutral/news.lua:295
+msgid ""
+"Recent pilgrims headed to Mutris have been telling stories of extortion and "
+"violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these "
+"are \"delusions of the touched\". Official complaints have been made to the "
+"Emperor."
+msgstr ""
+
+#: dat/events/neutral/news.lua:301
+msgid "Words of Tranquility"
+msgstr ""
+
+#: dat/events/neutral/news.lua:302
+msgid ""
+"We welcome many new Touched who have recently begun ministering to the "
+"Shaira echelon after their long pilgrimage on Mutris. House Sirius is still "
+"a refugee for the orphans lost in this Universe."
+msgstr ""
+
+#: dat/events/neutral/news.lua:311
+msgid "Skull and Bones Improving"
+msgstr ""
+
+#: dat/events/neutral/news.lua:312
+msgid ""
+"The technology behind Skull and Bones is advancing. Not only do they steal "
+"ships, but they improve on the original design. \"This gives us pirates an "
+"edge against the injustice of the Empire,\" says Millicent Felecia Black, "
+"lead Skull and Bones engineer."
+msgstr ""
+
+#: dat/events/neutral/news.lua:318
+msgid "Draconis Favorite Plundering Space"
+msgstr ""
+
+#: dat/events/neutral/news.lua:319
+msgid ""
+"Draconis has recently passed Delta Pavonis in the pirate polls as the most "
+"favored plundering space. The abundance of traders and high interference "
+"make it an excellent place to get some fast credits."
+msgstr ""
+
+#: dat/events/neutral/news.lua:322
+msgid "New Ships for Skull and Bones"
+msgstr ""
+
+#: dat/events/neutral/news.lua:323
+msgid ""
+"The Skull and Bones was able to extract a few dozen high quality vessels "
+"from Caladan warehouses under the nose of the Empire. These ships will help "
+"keep production high and booming."
+msgstr ""
+
+#: dat/events/neutral/news.lua:329
+msgid "Emperor Weaker Than Ever"
+msgstr ""
+
+#: dat/events/neutral/news.lua:330
+msgid ""
+"Recent actions demonstrate the inefficiency and weakness of the Emperor. One "
+"of the last irrational decisions left Eridani without a defense fleet to "
+"protect the traders. It's a great time to be a pirate."
+msgstr ""
+
+#: dat/events/neutral/news.lua:336
+msgid "Cats in New Haven"
+msgstr ""
+
+#: dat/events/neutral/news.lua:337
+msgid ""
+"An explosion in the cat population of New Haven has created an adoption "
+"campaign with the slogan, \"Pirate Cats, for those lonely space trips.\". Is "
+"your space vessel full of vermin? Adopt a cat today!"
+msgstr ""
+
+#: dat/events/neutral/news.lua:346
+msgid "Terraforming Emperor's Fist"
+msgstr ""
+
+#: dat/events/neutral/news.lua:347
+msgid ""
+"New bleeding-edge terraforming techniques to be tried on Emperor's Fist. "
+"Studies show that these techniques could speed up the terraforming process "
+"by as much as 40%."
+msgstr ""
+
+#: dat/events/neutral/news.lua:353
+msgid "Empire Keeping Traders Safe"
+msgstr ""
+
+#: dat/events/neutral/news.lua:354
+msgid ""
+"Recent studies show that reports of piracy on Trader vessels have gone down "
+"by up to 40% in some sectors. This is a demonstration of the Empire's "
+"commitment to eradicating piracy."
+msgstr ""
+
+#: dat/events/neutral/news.lua:360
+msgid "New Empire Recruits"
+msgstr ""
+
+#: dat/events/neutral/news.lua:361
+msgid ""
+"Emperor's recruiting strategy a success. Many new soldiers joining the "
+"Empire Armada. \"We haven't had such a successful campaign in ages!\" - Raid "
+"Steele, spokesman for recruiting campaign."
+msgstr ""
+
+#: dat/events/neutral/news.lua:367
+msgid "New Cat in the Imperial Family"
+msgstr ""
+
+#: dat/events/neutral/news.lua:368
+msgid ""
+"The Emperor's daughter was recently gifted a cat. Cat could be named "
+"\"Snuggles\" and seems to be all white."
+msgstr ""
+
+#: dat/events/neutral/news.lua:400
+#, lua-format
+msgid "News: Faction '%s' does not have entry in faction table!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:42
+msgid "This person seems to be here to relax."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:43
+msgid "There is a civilian sitting on one of the tables."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:44
+msgid "There is a civilian sitting there, looking somewhere else."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:45
+msgid ""
+"A worker sits at one of the tables, wearing a nametag saying \"Go away\"."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:46
+msgid ""
+"A civilian sits at the bar, seemingly serious about the cocktails on offer."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:47
+msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
+msgstr ""
+
+#: dat/events/neutral/npc.lua:48
+msgid "There is a civilian sitting in the corner."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:49
+msgid "A civilian feverishly concentrating on a fluorescing drink."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:50
+msgid "A civilian drinking alone."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:51
+msgid "This person seems friendly enough."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:52
+msgid "A civilian sitting at the bar."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:53
+msgid "This person is idly browsing a news terminal."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:54
+msgid "A worker sits drinks, but not working."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:55
+msgid "A worker slouched against the bar, nursing a drink."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:56
+msgid "This worker seems bored with everything but their drink."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:65
+msgid ""
+"I heard the nebula is haunted! My uncle Bobby told me he saw one of the "
+"ghost ships himself over in Arandon!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:66
+msgid ""
+"I don't believe in those nebula ghost stories. The people who talk about it "
+"are just trying to scare you."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:67
+msgid ""
+"I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse "
+"can still be found in Basel."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:68
+msgid ""
+"The Soromid fly organic ships! I heard their ships can even heal themselves "
+"in flight. That's so weird."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:69
+msgid ""
+"Have you seen that ship the Emperor lives on? It's huge! But if you ask me, "
+"it looks a bit like a... No, never mind."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:70
+msgid ""
+"I wonder why the Sirii are all so devout? I heard they have these special "
+"priesty people walking around. I wonder what's so special about them."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:71
+msgid ""
+"They say Eduard Manual Goddard is drifting in space somewhere, entombed "
+"amidst a cache of his inventions! What I wouldn't give to rummage through "
+"there..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:72
+msgid ""
+"Ah man, I lost all my money on Totoran. I love the fights they stage there, "
+"but the guys I bet on always lose. What am I doing wrong?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:73
+msgid ""
+"Don't try to fly into the inner nebula. I've known people who tried, and "
+"none of them came back."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:74
+msgid ""
+"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:75
+msgid ""
+"I wouldn't travel north from Alteris if I were you, unless you're a good "
+"fighter! That area of space has really gone down the drain since the "
+"Incident."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:76
+msgid ""
+"Sometimes I look at the stars and wonder... are we the only sentient species "
+"in the universe?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:77
+msgid ""
+"Hey, you ever wonder why we're here?\", you say, \"It's one of life's great "
+"mysteries isn't it?\", the citizen replies, \"Why are we here? Are we the "
+"product of some cosmic coincidence or is there some great cosmic plan for "
+"us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are "
+"we in here, in this bar?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:80
+msgid ""
+"We're not part of any of the galactic superpowers. We can take care of "
+"ourselves!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:81
+msgid ""
+"Sometimes I worry that our lack of a standing military leaves us vulnerable "
+"to attack. I hope nobody will get any ideas of conquering us!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:84
+msgid ""
+"Things are getting worse by the cycle. What happened to the Empire? We used "
+"to be the lords and masters over the whole galaxy!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:85
+msgid ""
+"Did you know that House Za'lek was originally a Great Project initiated by "
+"the Empire? Well, now you do! There was also a Project Proteron, but that "
+"didn't go so well."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:86
+msgid ""
+"The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be "
+"the biggest ship in the galaxy! I totally want one."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:87
+msgid ""
+"I'm still waiting for my pilot license application to get through. Oh well, "
+"it's only been half a cycle, I just have to be patient."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:88
+msgid ""
+"Between you and me, the laws the Council passes can get really ridiculous! "
+"Most planets find creative ways of ignoring them..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:89
+msgid ""
+"Don't pay attention to the naysayers. The Empire is still strong. Have you "
+"ever seen a Peacemaker up close? I doubt any ship fielded by any other power "
+"could stand up to one."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:92
+msgid ""
+"Our Warlord is currently fighting for control over another planet. We all "
+"support him unconditionally, of course! Of course..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:93
+msgid ""
+"My great-great-great-grandfather fought in the Dvaered Revolts! We still "
+"have the holovids he made. I'm proud to be a Dvaered!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:94
+msgid ""
+"I've got lots of civilian commendations! It's important to have "
+"commendations if you're a Dvaered."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:95
+msgid ""
+"You better not mess with House Dvaered. Our military is the largest and "
+"strongest in the galaxy. Nobody can stand up to us!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:96
+msgid ""
+"House Dvaered? House? The Empire is weak and useless, we don't need them "
+"anymore! I say we declare ourselves an independent faction today. What are "
+"they going to do, subjugate us? We all know how well that went last time! Ha!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:97
+msgid ""
+"I'm thinking about joining the military. Every time I see or hear news about "
+"those rotten FLF bastards, it makes my blood boil! They should all be "
+"pounded into space dust!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:98
+msgid ""
+"FLF terrorists? I'm not too worried about them. You'll see, High Command "
+"will have smoked them out of their den soon enough, and then the Frontier "
+"will be ours."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:99
+msgid ""
+"Did you know that House Dvaered was named after a hero of the revolt? At "
+"least that's what my grandparents told me."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:102
+msgid "Greetings, traveler. May Sirichana's wisdom guide you as it guides me."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:103
+msgid ""
+"I once met one of the Touched in person. Well, it wasn't really a meeting, "
+"our eyes simply met... But that instant alone was awe-inspiring."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:104
+msgid ""
+"They say Sirichana lives and dies like any other man, but each new Sirichana "
+"is the same as the last. How is that possible?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:105
+msgid ""
+"My cousin was called to Mutris a cycle ago... He must be in Crater City by "
+"now. And one day, he will become one of the Touched!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:106
+msgid ""
+"Some people say Sirius society is unfair because our echelons are determined "
+"by birth. But even though we are different, we are all followers of "
+"Sirichana. Spiritually, we are equal."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:107
+msgid ""
+"House Sirius is officially part of the Empire, but everyone knows that's "
+"only true on paper. The Emperor has nothing to say in these systems. We "
+"follow Sirichana, and no-one else."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:108
+msgid ""
+"You can easily tell the different echelons apart. Every Sirian citizen and "
+"soldier wears clothing appropriate to his or her echelon."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:109
+msgid "I hope to meet one of the Touched one day!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:112
+msgid ""
+"Hello. Can I interest you in one of our galaxy famous cosmetic gene "
+"treatments? You look like you could use them..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:113
+msgid ""
+"Can you believe it? I was going to visit Sorom to find my roots, and then "
+"boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
+"it."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:114
+msgid ""
+"Yes, it's true, our military ships are alive. Us normal folk don't get to "
+"own bioships though, we have to make do with synthetic constructs just like "
+"everyone else."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:115
+msgid ""
+"Everyone knows that we Soromid altered ourselves to survive the deadly "
+"conditions on Sorom during the Great Quarantine. What you don't hear so "
+"often is that billions of us died from the therapy itself. We paid a high "
+"price for survival."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:116
+msgid ""
+"Our cosmetic gene treatments are even safer now for non-Soromids, with a "
+"rate of survival of 99.4%!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:117
+msgid ""
+"We have been rebuilding and enhancing our bodies for so long, I say we've "
+"become a new species, one above human."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:120
+msgid ""
+"It's not easy, dancing to those scientists' tunes. They give you the most "
+"impossible tasks! Like, where am I supposed to get a triple redundant "
+"helitron converter? Honestly."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:121
+msgid ""
+"The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:122
+msgid ""
+"I don't understand why we bother sending our research results to the Empire. "
+"These simpletons can't understand the simplest formulas!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:125
+msgid ""
+"Hello, traveler. Welcome to Proteron space. We are an evil, power hungry "
+"dystopia on a quest for dominance over the galaxy. Would you like a brochure?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:128
+msgid ""
+"We value our autonomy. We don't want to be ruled by those megalomanic "
+"Dvaered Warlords! Can't they just shoot at each other instead of threatening "
+"us? If it wasn't for the Liberation Front..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:129
+msgid ""
+"Have you studied your galactic history? The Frontier worlds were the first "
+"to be colonized by humans. That makes our worlds the oldest human "
+"settlements in the galaxy, now that Earth is gone."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:130
+msgid ""
+"We have the Dvaered encroaching on our territory on one side, and the Sirius "
+"zealots on the other. Sometimes I worry that in a few decacycles, the "
+"Frontier will no longer exist."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:131
+msgid ""
+"Have you visited the Frontier Museum? They've got a scale model of a First "
+"Growth colony ship on display in one of the big rooms. Even scaled down like "
+"that, it's massive! Imagine how overwhelming the real ones must have been."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:132
+msgid ""
+"There are twelve true Frontier worlds, because twelve colony ships "
+"successfully completed their journey in the First Growth. But did you know "
+"that there were twenty colony ships to begin with? Eight of them never made "
+"it. Some are said to have mysteriously disappeared. I wonder what happened "
+"to them?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:133
+msgid ""
+"We don't have much here in the Frontier, other than our long history leading "
+"directly back to Earth. But I don't mind. I'm happy living here, and I "
+"wouldn't want to move anywhere else."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:134
+msgid ""
+"You know the Frontier Liberation Front? They're the guerilla movement that "
+"fights for the Frontier. Not to be confused with the Liberation Front of the "
+"Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:137
+msgid "Hi mate. Money or your life! Heh heh, just messing with you."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:138
+msgid "Hey, look at these new scars I got!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:139
+msgid ""
+"Have you heard of the Pirates' Code? They're more guidelines than rules..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:140
+msgid ""
+"My gran said 'Never trust a pirate', she was right too, I got a pretty "
+"credit chip for her with the slavers."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:143
+msgid "Just another link in the Great Chain, right?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:144
+msgid ""
+"You win some, you lose some, but if you don't try you're never going to win."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:145
+msgid ""
+"If you don't watch the markets then you'll be hopping between planets in a "
+"jury-rigged ship in no time."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:146
+msgid ""
+"Them blimming pirates, stopping honest folk from making an honest living - "
+"it's not like we're exploiting the needy!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:152
+msgid ""
+"I heard you can set your weapons to only fire when your target is in range, "
+"or just let them fire when you pull the trigger. Sounds handy!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:153
+msgid ""
+"Did you know that if a planet doesn't like you, you can often bribe the "
+"spaceport operators and land anyway? Just hail the planet with "
+msgstr ""
+
+#: dat/events/neutral/npc.lua:154
+msgid ""
+"Many factions offer rehabilitation programs to criminals through the mission "
+"computer, giving them a chance to get back into their good graces. It can "
+"get really expensive for serious offenders though!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:155
+msgid ""
+"These new-fangled missile systems! You can't even fire them unless you get a "
+"target lock first! But the same thing goes for your opponents. You can "
+"actually make it harder for them to lock on to your ship by equipping "
+"scramblers or jammers. Scout class ships are also harder to target."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:156
+msgid ""
+"Your equipment travels with you from planet to planet, but your ships don't! "
+"Nobody knows why, it's just life, I guess."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:157
+msgid ""
+"You know how you can't change your ship or your equipment on some planets? "
+"Well, it seems you need an outfitter to change equipment, and a shipyard to "
+"change ships! Bet you didn't know that."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:158
+msgid ""
+"Are you buying missiles? You can hold down \abctrl\a0 to buy 5 of them at a "
+"time, and \abshift\a0 to buy 10. And if you press them both at once, you can "
+"buy 50 at a time! It actually works for everything, but why would you want "
+"to buy 50 laser cannons?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:159
+msgid ""
+"If you're on a mission you just can't beat, you can open the information "
+"panel and abort the mission. There's no penalty for doing it, so don't "
+"hesitate to try the mission again later."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:160
+msgid ""
+"Don't forget that you can revisit the tutorial modules at any time from the "
+"main menu. I know I do."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:161
+msgid ""
+"Some weapons have a different effect on shields than they do on armour. Keep "
+"that in mind when equipping your ship."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:162
+msgid ""
+"Afterburners can speed you up a lot, but when they get hot they don't work "
+"as well anymore. Don't use them carelessly!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:163
+msgid ""
+"There are passive outfits and active outfits. The passive ones modify your "
+"ship continuously, but the active ones only work if you turn them on. You "
+"usually can't keep an active outfit on all the time, so you need to be "
+"careful only to use it when you need it."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:164
+msgid ""
+"If you're new to the galaxy, I recommend you buy a map or two. It can make "
+"exploration a bit easier."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:165
+msgid ""
+"Missile jammers slow down missiles close to your ship. If your enemies are "
+"using missiles, it can be very helpful to have one on board."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:166
+msgid ""
+"If you're having trouble with overheating weapons or outfits, you can press "
+msgstr ""
+
+#: dat/events/neutral/npc.lua:167
+msgid ""
+"If you're having trouble shooting other ships face on, try outfitting with "
+"turrets or use an afterburner to avoid them entirely!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:168
+msgid ""
+"You know how time speeds up when Autonav is on, but then goes back to normal "
+"when enemies are around? Turns out you can't disable the return to normal "
+"speed entirely, but you can control what amount of danger triggers it. "
+"Really handy if you want to ignore enemies that aren't actually hitting you."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:176
+#, lua-format
+msgid ""
+"Hi there, traveler. Is your system map up to date? Just in case you didn't "
+"know already, let me give you the location of the jump from here to %s. I "
+"hope that helps."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:177
+#, lua-format
+msgid ""
+"Quite a lot of people who come in here complain that they don't know how to "
+"get to %s. I travel there often, so I know exactly where the jump point is. "
+"Here, let me show you."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:178
+#, lua-format
+msgid ""
+"So you're still getting to know about this area, huh? Tell you what, I'll "
+"give you the coordinates of the jump to %s. Check your map next time you "
+"take off!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:179
+#, lua-format
+msgid ""
+"True fact, there's a direct jump from here to %s. Want to know where it is? "
+"It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:180
+#, lua-format
+msgid ""
+"There's a system just one jump away by the name of %s. I can tell you where "
+"the jump point is. There, I've updated your map. Don't mention it."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:186
+msgid ""
+"Apparently there's a woman who regularly turns up on planets in and around "
+"the Klantar system. I wonder what she's looking for?"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:187
+msgid ""
+"The Empire is trying to really do something about the Collective, I hear. "
+"Who knows, maybe you can even help them out if you make it to Omega Station."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:188
+msgid ""
+"There are often shady characters hanging out in the Alteris system. I'd stay "
+"away from there if I were you, someone might offer you a dirty kind of job!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:189
+msgid ""
+"So there's some Za'lek scientist looking for a cargo monkey out on Niflheim "
+"in the Dohriabi system. I hear it's pretty good money."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:190
+msgid ""
+"Rich folk will pay extra to go on an offworld sightseeing tour in a luxury "
+"yacht. Look like you can put a price on luxury!"
+msgstr ""
+
+#: dat/events/neutral/npc.lua:195
+msgid ""
+"The FLF and the Dvaered sometimes clash in Surano. If you go there, you "
+"might find something of interest... Or not."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:201
+msgid ""
+"Heard some crazy scientists got someone to put a satellite inside the nebula "
+"for them. I thought everyone with half a brain knew to stay out of there, "
+"but oh well."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:202
+msgid ""
+"Did you hear? There was some big incident during a diplomatic meeting "
+"between the Empire and the Dvaered. Nobody knows what exactly happened, but "
+"both diplomats died. Now both sides are accusing the other of foul play. "
+"Could get ugly."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:203
+msgid ""
+"Hey, remember the Collective? They got wiped out! I feel so much better now "
+"that there aren't a bunch of robot ships out there to get me anymore."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:204
+msgid ""
+"Some thieves broke into a museum on Varia and stole a holopainting! Most of "
+"the thieves were caught, but the one who carried the holopainting offworld "
+"is still at large. No leads. Damn criminals..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:205
+msgid ""
+"The Dvaered scored a major victory against the FLF recently. They went into "
+"Sigur and blew the hidden base there to bits! I bet that was a serious "
+"setback for the FLF."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:211
+msgid ""
+"What? You had rodents sabotage your ship? Man, you're lucky to be alive. If "
+"it had hit the wrong power line..."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:212
+msgid ""
+"What do you mean, the world ended and then the creator of the universe came "
+"and fixed it? What kind of illegal substance are you on? Get away from me, "
+"you lunatic."
+msgstr ""
+
+#: dat/events/neutral/shadow_comm.lua:11
+msgid "An open invitation"
+msgstr ""
+
+#: dat/events/neutral/shadow_comm.lua:12
+#, lua-format
+msgid ""
+"\"Greetings, %s,\" the pilot of the Vendetta says to you as soon as you "
+"answer his hail. \"I have been looking for you on behalf of an acquaintance "
+"of yours. She wishes to meet with you at a place of her choosing, and a time "
+"of yours. It involves a proposition that you might find interesting - if you "
+"don't mind sticking your neck out.\"\n"
+"    You frown at that, but you ask the pilot where this acquaintance wishes "
+"you to go anyway.\n"
+"    \"Fly to the %s system,\" he replies. \"She will meet you there. There's "
+"no rush - but I suggest you go see her at the earliest opportunity.\"\n"
+"    The screen blinks out, and the Vendetta goes about its business, paying "
+"you no more attention. It seems there's someone out there who wants to see "
+"you, and there's only one way to find out what about. Perhaps you should "
+"make a note of the place you're supposed to meet her: the Pas system."
+msgstr ""
+
+#: dat/events/neutral/shipwreck.lua:11
+#, lua-format
+msgid "SOS. This is %s. We are shipwrecked. Requesting immediate assistance."
+msgstr ""
+
+#: dat/events/neutral/shipwreck.lua:12
+msgid "August"
+msgstr ""
+
+#: dat/events/reputation.lua:28
+#, lua-format
+msgid "Inconsistent reputation cap detected - updating '%s'"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:6
+msgid "The preaching begins..."
+msgstr ""
+
+#: dat/events/sirius/preach.lua:7
+msgid ""
+"A Sirian appears on your viewscreen. He seems different than most Sirii "
+"you've met. He regards you with a neutral yet intense gaze.\n"
+"\"Man is cruel and deceptive,\" he says. \"You deserve more than you shall "
+"ever get from humanity. Your only hope is to follow the Holy One, Sirichana. "
+"He shall guide you to peace and wisdom. He is the sole refuge for humans "
+"like you and me. You MUST follow him!\"\n"
+"\n"
+"You feel a brief but overpowering urge to follow him, but it passes and your "
+"head clears. The Sirian ship makes no further attempt to communicate with "
+"you."
+msgstr ""
+
+#: dat/events/sirius/preach.lua:13
+#, lua-format
+msgid ""
+"%s, although you are an enemy of House Sirius, I shall not attack unless "
+"provoked, for I abhor violence!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:14
+#, lua-format
+msgid ""
+"%s, although you are an enemy of House Sirius, I shall not attack unless "
+"provoked, for I believe mercy is a great Truth!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:15
+#, lua-format
+msgid ""
+"%s, although you are an enemy of House Sirius, I shall not attack unless "
+"provoked, for you too are Sirichana's child!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:19
+#, lua-format
+msgid ""
+"%s, I foresee in you a great Sirian citizen, and I look forward to your "
+"friendship!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:20
+#, lua-format
+msgid ""
+"%s, I foresee a bright future for you, illuminated by Sirichana's light!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:21
+#, lua-format
+msgid "%s, may Sirichana's light illuminate your path!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:25
+msgid "You shall all follow Sirichana henceforth!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:26
+msgid "Sirichana shall lead you to peace and wisdom!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:27
+msgid "Sirichana is the Father of you all!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:28
+msgid "Sirichana's grace shall liberate you!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:29
+msgid "May Sirichana's light shine on you henceforth!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:33
+msgid "We shall all follow Sirichana now!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:34
+msgid "We have been liberated from our evil ways!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:35
+msgid "No more shall we tread the path of evil!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:36
+msgid "We see the True path now!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:37
+msgid "No more shall we commit sins!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:41
+msgid "Serves you right for attacking a Touched!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:42
+msgid "Fry in hell, demon!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:43
+msgid "May you suffer eternal torment!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:44
+msgid "Your doom is Sirichana's curse!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:48
+msgid "All the attackers are dead!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:49
+msgid "We can resume our Quest now!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:50
+msgid "The glory of Sirichana remains unblemished!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:51
+msgid "All heretics have been destroyed!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:55
+msgid "Do you think everyone can be brainwashed?"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:56
+msgid "You shall convert no more of us!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:57
+msgid "Some of us shall not be converted, fool!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:58
+msgid "You'll never convert me!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:59
+msgid "I shall never be converted!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:63
+msgid "You feel an overwhelming presence nearby!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:64
+msgid "Something compels you to stop"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:65
+msgid "You are jerked awake by a mysterious but compelling urge"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:66
+msgid "You feel... Touched... by a magical power"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:70
+msgid "Die, heretics!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:71
+msgid "Those who insult the Sirichana shall die!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:72
+msgid "You've commited an unpardonable sin!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:73
+msgid "Hell awaits, fools!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:77
+msgid "Oh no! The Touched One is dead!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:78
+msgid "Sirichana save our souls!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:79
+msgid "We shall never forget You, O Touched One!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:80
+msgid "We swear eternal revenge!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:84
+msgid "You feel an overwhelming urge to hear him out!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:85
+msgid "A mysterious force forces you to listen!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:86
+msgid "You feel compelled to listen!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:90
+msgid "With my dying breath, I curse you!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:91
+msgid "Sirichana speed you to hell!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:92
+msgid "Sirichana, I did my best!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:96
+msgid "The Reverence is dead!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:97
+msgid "Someone killed the preacher!"
+msgstr ""
+
+#: dat/events/sirius/preach.lua:166
+#, lua-format
+msgid "Converted %s"
+msgstr ""
+
 #: dat/events/start.lua:7
 msgid "Flying License Acquired!"
 msgstr ""
@@ -10192,4 +12256,770 @@ msgstr ""
 
 #: dat/events/tutorial/tutorial.lua:22
 msgid "Quit to Main Menu"
+msgstr ""
+
+#: dat/landing.lua:51 dat/landing.lua:66 dat/landing.lua:84 dat/landing.lua:102
+#: dat/landing.lua:120 dat/landing.lua:129 dat/landing.lua:225
+msgid "Permission to land granted."
+msgstr ""
+
+#: dat/landing.lua:52 dat/landing.lua:67
+msgid "You are not authorized to land here."
+msgstr ""
+
+#: dat/landing.lua:53 dat/landing.lua:68 dat/landing.lua:77 dat/landing.lua:86
+#: dat/landing.lua:95 dat/landing.lua:104 dat/landing.lua:113
+#: dat/landing.lua:122 dat/landing.lua:131 dat/landing.lua:227
+msgid "Landing request denied."
+msgstr ""
+
+#: dat/landing.lua:54 dat/landing.lua:69 dat/landing.lua:78
+msgid "\"Don't attempt to bribe an Empire official, pilot.\""
+msgstr ""
+
+#: dat/landing.lua:75
+msgid "The Emperor permits you to land."
+msgstr ""
+
+#: dat/landing.lua:76
+msgid "You may not approach the Emperor."
+msgstr ""
+
+#: dat/landing.lua:85
+msgid "Only the faithful may land here. Request denied."
+msgstr ""
+
+#: dat/landing.lua:87 dat/landing.lua:96
+msgid "\"The faithful will never be swayed by money.\""
+msgstr ""
+
+#: dat/landing.lua:93
+msgid "Welcome to Mutris, home of Sirichana."
+msgstr ""
+
+#: dat/landing.lua:94
+msgid "You may not approach the home of Sirichana yet."
+msgstr ""
+
+#: dat/landing.lua:103
+msgid "Your rank is too low, citizen. Access denied."
+msgstr ""
+
+#: dat/landing.lua:105 dat/landing.lua:114
+msgid "\"Money won't buy you access to our restricted facilities, citizen.\""
+msgstr ""
+
+#: dat/landing.lua:111
+msgid "Permission to land granted, captain."
+msgstr ""
+
+#: dat/landing.lua:112
+msgid "Only high ranking personnel allowed. Landing request denied."
+msgstr ""
+
+#: dat/landing.lua:121
+msgid "Permission denied. You're not truly one of us."
+msgstr ""
+
+#: dat/landing.lua:123 dat/landing.lua:132
+msgid "\"We don't need your money, outsider.\""
+msgstr ""
+
+#: dat/landing.lua:130
+msgid "Only friends of the Soromid may set foot on Kataka."
+msgstr ""
+
+#: dat/landing.lua:139 dat/landing.lua:149
+msgid "Docking sequence transmitted."
+msgstr ""
+
+#: dat/landing.lua:140
+msgid "Authorization level too low to grant access."
+msgstr ""
+
+#: dat/landing.lua:141 dat/landing.lua:151
+msgid "Authorization denied."
+msgstr ""
+
+#: dat/landing.lua:142
+msgid "Money is irrelevant."
+msgstr ""
+
+#: dat/landing.lua:150
+msgid "This is a restricted area. Your clearance is far too low. Go away."
+msgstr ""
+
+#: dat/landing.lua:152
+msgid "Bribery is a crime, and will not get you on this planet."
+msgstr ""
+
+#: dat/landing.lua:163
+msgid "Permission to land granted. Welcome, brother."
+msgstr ""
+
+#: dat/landing.lua:165
+msgid "Small time pirates have no business on our clanworld!"
+msgstr ""
+
+#: dat/landing.lua:167
+msgid "Get out of here!"
+msgstr ""
+
+#: dat/landing.lua:176
+#, lua-format
+msgid ""
+"\"Well, I think you're scum, but I'm willing to look the other way for %s "
+"credits. Deal?\""
+msgstr ""
+
+#: dat/landing.lua:178
+msgid "Heh heh, thanks. Now get off the comm, I'm busy!"
+msgstr ""
+
+#: dat/landing.lua:209
+msgid "\"I'm not dealing with dangerous criminals like you!\""
+msgstr ""
+
+#: dat/landing.lua:235
+#, lua-format
+msgid ""
+"\"I'll let you land for the modest price of %s credits.\"\n"
+"\n"
+"Pay %s credits?"
+msgstr ""
+
+#: dat/landing.lua:236
+msgid "Make it quick."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:11
+#, lua-format
+msgid ""
+"You walk up to a scrappy little man leaning against the bar. You sit next to "
+"him, and he eyes you up and down. You return the stare cooly. "
+"Lackadaisically, he strikes up a converrsation.\n"
+"    \"Good weather on %s these days, I hear.\" \n"
+"    \"I hear nothing but good things about %s.\" you reply, badly feigning "
+"interest. You order a drink, as he takes a gulp of his.\n"
+"    He looks at you, sizing you up. He probably has been waiting for someone "
+"to set next to him all day. \"You look like a man in need of a couple spare "
+"credits. I have a, uhh, shipment that needs getting to %s. Are you "
+"interested? Thing is, it's not exactly... legal. Pay is good though. All you "
+"need to know,\" he continues, \"is that someone will be at the starport in "
+"%s waiting for this shipment. And they got credits. %s credits. Just for "
+"you, kiddo, if you want.\"\n"
+"    You get your drink, a greenish slimy-looking thing called a \"tartar "
+"coobadu\", and decide you just have to ask. \"What exactly is this shipment?"
+"\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:16
+#, lua-format
+msgid ""
+"He almost looks suprised at the question. He motions you to a corner table "
+"as if to tell you to go there, but forcifully leads you. People seem to be "
+"avoiding this table, probably because of a peculiar vomit-odor that is "
+"wafting from somewhere underneath. He sits you down rather roughly, and then "
+"sits down himself.\n"
+"    \"Look, I really can't tell you the exact contents of the box. Let's "
+"just say it's \"small\" weaponry. My... employer... isn't fond of the "
+"government of %s. As such, he needs... \" he takes a drink \"a shipment "
+"delivered there ASAP. Thats all I can tell you, I'm afraid\"\n"
+"    You sip your slime, and answer him..."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:19
+#, lua-format
+msgid ""
+"You feel a very large hand slap you on the back. \"Thats a lad!\" he cries "
+"exuberantly. \"I'll have my boys load up the cargo, as quickly as you "
+"please. Remember, all you gotta do is fly to %s, and avoid the military, "
+"police, and civvies that like to stick their noses where they don't belong. "
+"I'll let my contacts know to expect you, and to pay you when you land.\"\n"
+"    You shake his sticky hand, and walk off, content that you've made an "
+"easy buck."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:24
+#, lua-format
+msgid ""
+"As you descend to the %s spaceport, you notice a severe lack of... well... "
+"anybody. The place seems deserted. You received an impersonal message saying "
+"*LAND IN BAY 71A4* on your way into the atmosphere, but that is the only "
+"communication you received. You don't even see any vessels flying around. As "
+"you steer your ship into the aforementioned bay, you finally see a small "
+"group of gruff and wary men waiting for you. Almost as soon as you land, "
+"they have the goods out, and as you walk out to say hello, you already see "
+"it disappearing on the far end of the bay."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:25
+msgid ""
+"You approach the man who appears to be the leader of the group. \"One box "
+"of... stuff, as requested.\" You say, motioning to the now-gone box. \n"
+"    The large, unshaven man looks you right in the eyes.\"Yes, thanks. I "
+"suppose you will be wanting payment now.\" He hands you a credit chip. \"You "
+"know, we need to get a message back to our... employers. Interested in "
+"taking one more trip? If you are, I'll be in the bar after I've verified the "
+"contents of our shipment. Meet me there.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:30
+#, lua-format
+msgid "Deliver the shipment to %s in the %s system."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:32
+msgid ""
+"\"You say you want this job, but you don't have enough cargo room for this "
+"assignment, little man!\" Ragnarok turns away, displeased at wasting a whole "
+"5 STU on you."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:33
+msgid ""
+"He looks at you, almost appearing confused.\n"
+"    \"Well, thats your choice boy. Be on your way now. I'm busy.\"\n"
+"    You walk away, wondering if you really missed out on an oppourtunity."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:36
+msgid "Ragnarok"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:37
+msgid ""
+"You see a rougher looking gent sitting at the bar, guzzling a brownish ale."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:38
+#, lua-format
+msgid "Deliver the shipment to %s in %s for the Nasin."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic0.lua:39
+msgid "The Gauntlet"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:10
+#, lua-format
+msgid ""
+"You approach the tall man who is sitting at a table with papers and maps "
+"spread out before him. He glances up at you as you approach. You eye the "
+"maps warily, as they discombobulate you. That is, until you realize that "
+"they are attack strategy on key points of the %s infrastructure. The man "
+"stands up gracefully, and motions for you to sit."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:11
+#, lua-format
+msgid ""
+"\"Hello there,\" he begins to speak, \"I'm sure you have quite a few "
+"questions. My name is Shaman and I am a proud  commander in what is known as "
+"the Nasin. We are currently terrorize the Sirius overlords that control %s, "
+"and as you can plainly see,\" he gusteres to the maps,\"I have my hands full "
+"at the moment. Would you like to know more about the Nasin, or just move on "
+"to the work I need you to do?\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:12
+#, lua-format
+msgid ""
+"\"The mission is simple. The Nasin have their main base operating on...\" "
+"Shaman looks around, realizing he might not want everyone to know where this "
+"place is. He reaches down and scratches something out on a piece of paper, "
+"and hands it to you. It simply reads \"%s in %s\". \"I need a message "
+"delivered there. Our work is almost done here. Of course, we will pay you "
+"for this service. How does %s sound? Will you do it?\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:13
+msgid ""
+"Shaman takes a deep breath. \"The Nasin were at one point all part of House "
+"Sirius, and believed solely in the teachings of Sirichana. We loved him, and "
+"our hearts were his. As all religions do at some point, however, the "
+"teachings of Sirichana became weighed down by the ideologies and agendas of "
+"man. Most people still accepted these teachings as straight from the mouth "
+"of Sirichana himself, but we, the Nasin, knew better.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:14
+msgid ""
+"\"We started a splinter religion, still trying to cooperate with the Sirii, "
+"but when the Serra felt threatened (as they well should have, I might add), "
+"they branded us as heretics and forced us out of Sirius space. At first, we "
+"didn't know what to do, but then, Jan Jusi pi Lawa came to lead us. He was "
+"the one who named us, the Nasin, which means \"The Way\" in an old earth "
+"language.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:15
+msgid ""
+"At this point, Shaman seems very excited, caught up in the moment. \"It was "
+"he! He who led us to join our hands! He who led us to work together! He who "
+"led us to fight back against the oppressors! It was he! The very, the only, "
+"the True Voice of Sirichana!\"\n"
+"    Shaman seems to realize just exactly where he is and what he is doing. "
+"All the patrons in the bar turn their heads to your table. A group of young "
+"fellows start clapping and then degrade into laughter."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:17
+msgid ""
+"Shaman coughs out an \"excuse me\" and looks at you, embarrassed. \"It is "
+"wrong for me to get so caught up in such things. I suppose you'll want to "
+"know about the mission now.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:21
+#, lua-format
+msgid ""
+"You receive your clearance to land on %s, and begin your computer-assisted "
+"entry into the specified bay. Your not sure exactly what to expect, but you "
+"think that they've been expecting you. You successfully dock, and proceed "
+"into the hangar, ready for someone to come greet you. No one does. The "
+"hangar is oddly... empty. And that is when you notice it."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:22
+#, lua-format
+msgid ""
+"There is an envelope, folded neatly, and laying squarely in the middle of "
+"the hangar. You go up to inspect it, and on the front, it simply says \"%s"
+"\". You snatch it up, and open it quickly."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:23
+#, lua-format
+msgid ""
+"\"Hello %s,\n"
+"    My sincerest apologies for being absent. I was... otherwise engaged. By "
+"the time you are reading this letter, our message will have already been "
+"moved from your ship. I appreciate the hard work, and have heard good things "
+"of you from both Ragnarok and Shaman. I do wish to speak with you in person, "
+"so please feel free to drop by the bar and have a drink. I'm sure you know "
+"the way. Your payment of %s was credited  to your account.\n"
+"    Sincerly,\n"
+"    Draga\n"
+"    Secretary of Jan Jusi pi Lawa"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:31
+msgid "Tell me about the mission."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:32
+msgid "Tell me about the Nasin."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:35
+msgid "The Return"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:36
+msgid "Shaman"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:37
+msgid "A tall man sitting at a table littered with papers."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:38
+#, lua-format
+msgid "Deliver the message to %s in %s for Shaman."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic1.lua:40
+#, lua-format
+msgid "Fly to %s in the %s system and deliver the message."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:10
+#, lua-format
+msgid ""
+"You walk up to an intimidating man dressed smartly in cool, dark black "
+"business attire. He has a large smile spread across his face. \n"
+"    \"Ahh, so your the %s everyone has been talking about. Naught but a "
+"glorified delivery boy if you ask me. Still, if you wish to help us out and "
+"prove yourself as more than a pirate, I'd be more than happy to oblige.\" He "
+"grins cooly, expecting an answer."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:12
+msgid "Draga snorts impatiently. \"Well, do you take the mission or what?\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:14
+msgid "Tell me more about the Nasin."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:15
+msgid "What's the job?"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:16
+msgid "I'm in. Where do I sign up?"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:17
+msgid "Sounds risky. Give me some time."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:19
+msgid ""
+"He looks at you, betraying a little emotion. \"The Nasin are a pure piece of "
+"glass. When light shines through glass, the light is only as pure as the "
+"glass itself. If the glass is dirty, then the light is distorted, and "
+"doesn't come through correctly. If the glass is mishappen or broken, the "
+"light may not filter through at all. We, the Nasin, are the purest glass "
+"there is, and House Sirius has become corrupt. We exist to see its downfall."
+"\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:20
+#, lua-format
+msgid ""
+"Draga motions you in closer. \"We have reason to believe that %s is about to "
+"be attacked. We are expecting Sirius to send in recon elements any STU now. "
+"We want you to handle that, as you see fit. Keep them away from the station. "
+"Better yet, kill them. We can pay you %s. We do ask that you stay in-system "
+"and off-planet until the mission is complete, otherwise you'll be considered "
+"AWOL, which means you're fired.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:21
+msgid ""
+"Draga looks triumphant, but only for an instant. \"Great. You should get "
+"going, we are expecting them at any second. Good luck, and godspeed.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:22
+msgid ""
+"You brace yourself, as Draga appears ready to attack. He waves his arms "
+"about in obvious anger. \"Great! I knew you were a waste of time. Well, if "
+"you decide to outgrow your diapers, I'll be right here waiting for you.\"\n"
+"   You walk away insulted, but strangely curious."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:25
+msgid ""
+"You land, having destroyed the small recon force. Draga is in the hangar, "
+"waiting for you.\n"
+"   \"Good job on proving yourself more than a delivery boy! That wasn't so "
+"bad, was it? Here's your payment, meet me in the bar soon.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:29
+msgid "Destroy the Sirius fighter element."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:30
+#, lua-format
+msgid "Element destroyed. Land on %s."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:32
+msgid "The Patrol"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:33
+#: dat/missions/sirius/heretic/heretic3.lua:47
+#: dat/missions/sirius/heretic/heretic4.lua:32
+msgid "Draga"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:34
+msgid "An imposing man leans against the bar easily, looking right at you."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:35
+msgid ""
+"Draga seems to swoop in out of nowhere as soon as you land. \"You are not "
+"finished! Get back up there quickly!\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:36
+msgid ""
+"Draga swoops in. His nostrils are flaring, and he is obviously annoyed.\n"
+"   \"Apparently you have better things to do. Get out of here. I don't want "
+"to see your face anymore.\"\n"
+"   You consider yourself fired."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:39
+msgid ""
+"A scratchy voice jumps in on your comms priority channel. \n"
+"   \"You jumped out of the system! We are being scanned by the enemy! We "
+"need you back to take care of this situation now, or you are AWOL and are "
+"not getting paid!!\" \n"
+"   The voice and the scratch cuts out."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:42
+#, lua-format
+msgid ""
+"Your comm station flares up with a scratchy, obviously-from-far-away noise. "
+"A voice is heard through it.\n"
+"   \"%s! We told you we needed you to stay in system! Apparently you have "
+"more important things to do. So get lost, kid! We'll take care of ourselves."
+"\" The static cuts out, and you consider yourself fired."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic2.lua:44
+#, lua-format
+msgid ""
+"Destroy the Sirius recon element that flew into %s. WARNING: DO NOT JUMP OUT-"
+"SYSTEM OR LAND ON THE PLANET PREMATURELY."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:12
+#, lua-format
+msgid ""
+"Draga is sitting at a table with a couple other people who appear to be "
+"official military types. They look at you as you approach. Draga stands and "
+"greets you.\n"
+"   \"Hello, %s. We have a situation, and we need your help.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:14
+msgid ""
+"Draga sits back down with the other officials.\n"
+"   \"Sirius is officially considering us a threat. As such, we need you to "
+"help us defend our system. Our goal here isn't to completely wipe out the "
+"Sirius threat, but rather just to drive them off and show them that we mean "
+"business. We want them to feel it.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:16
+msgid ""
+"Draga leans back and smiles ruefully. \n"
+"   \"So, you will be outnumbered, outgunned, and officially declared an "
+"enemy of the state. Want in? Please note, however, that if you abort the "
+"mission, or jump out-system, you will be dismissed. Permanently.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:20
+msgid ""
+"He snorts derisively at your question.\n"
+"   \"Why, I mean you will no longer be welcome amongst the Nasin. At least, "
+"as a pilot.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:22
+msgid ""
+"Sorrow fills Draga's eyes at the question.\n"
+"   \"Unfortunately, House Sirius and those claiming to represent Sirichana "
+"feel that we are a band of heretics out to destroy the Sirius way of life. "
+"We aren't out to destroy it, but rather to bring it to completion. They have "
+"decided that we need to be eliminated.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:24
+#, lua-format
+msgid ""
+"Draga eyes you. You can tell he doesn't like the question.\n"
+"   \"You really like the money, %s? You know, I'd much prefer it if you were "
+"just loyal enough to not worry about the money. We will always pay you well. "
+"We take care of our own. We can pay you %s. I hope its good enough\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:26
+msgid ""
+"Draga is quite excited at the news, and the surrounding officers mumble "
+"their approval. \"Great! You should hurry up and take off, we are expecting "
+"them any second now. We already have one defensive element in space.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:27
+msgid ""
+"Obviously annoyed beyod belief, Draga doesn't say a word. He makes a shooing "
+"guesture with his hand, and doesn't even look as you go."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:28
+msgid ""
+"Draga looks at you impatiently. \"Any more questions or can we get going?\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:30
+msgid "What do you mean, permanently?"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:31
+msgid "Why are they attacking?"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:32
+msgid "What are you paying?"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:33
+msgid "I'm in."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:34
+msgid "Gimme a minute. I'll be right back."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:38
+#, lua-format
+msgid ""
+"As you land, you see people running about frantically. Most look as though "
+"they've had some sort of military training, but there are a few scrambling "
+"civilians as well. You land, and as soon as your feet hit the deck the now "
+"familiar face of Draga comes up to you begins to speak.\n"
+"   \"Get your crap together, %s, and meet me in the bar as soon as you can. "
+"We need you. I've already transferred payment.\" At this, he runs off to "
+"helps a group of elderly citizens who are struggling against the tide of "
+"people."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:43
+#, lua-format
+msgid "Defend %s against the oncoming assault!"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:44
+#, lua-format
+msgid "Return to %s."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:46
+msgid "The Assault"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:48
+msgid ""
+"The familiar form of Draga is at a table with some officers. They look busy."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:49
+#, lua-format
+msgid ""
+"A clear voice booms in your ship through the comm system.\n"
+"   \"%s! We need you to return to %s immediately! We are being overwhelmed "
+"and are evacuating! Please hurry!\" The voice cuts out in a tumult of static."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:51
+msgid ""
+"Draga appears with three armed Nasin carrying some serious weaponry. \n"
+"   He points at you and says \"I have been more than accomadating with you. "
+"Now, you are dismissed. Take care of your business, and leave. And if you "
+"don't, my friends here are more than willing to collect that bounty.\"\n"
+"   Draga strides away, exuding annoyance and rage."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:54
+msgid ""
+"A voice comes into your comm system. \"We need you back in the system now! "
+"Hurry!\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:55
+msgid ""
+"A scratchy voice from what sounds like very far away cut in on your comms "
+"priority channel. \n"
+"   \"We needed you! We are being overrun by Sirius and we aren't gonna make "
+"it. Don't bother coming back to us. Ever.\" \n"
+"   The voice cuts out, and you feel like you've made a horrible mistake."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:58
+#, lua-format
+msgid ""
+"A Sirius assault fleet has just jumped into %s. Destroy this fleet. WARNING: "
+"DO NOT JUMP OUT-SYSTEM OR LAND ON ANY ASSETS."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:59
+#, lua-format
+msgid ""
+"Your comm squeaks as the voice of Draga comes onto the channel. \"%s! This "
+"is a lot larger of an assault than we thought. There is no way that we can "
+"handle this. We need you to get back to the station now! We are evacuating!"
+"\" The comm goes silent, and you start heading back."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic3.lua:111
+msgid "you been through one time, yo!"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:13
+#, lua-format
+msgid ""
+"You run up to Draga, who has a look of desperation on his face. He talks to "
+"you with more than a hint of urgency.\n"
+"   \"We need to go, now. The Sirius are overwhelming us, they're about to "
+"finish us off. Will you take me and as many Nasin as you can carry to %s in "
+"%s? I swear, if you abort this and jettison those people into space, I will "
+"hunt you down and destroy you.\""
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:15
+msgid ""
+"You lead Draga out of the bar and into your landing bay. Refugees are "
+"milling about, hoping to get aboard some ship or another. Draga asks you "
+"what your tonnage is, and begins directing people on board. Panic erupts "
+"when gunfire breaks out on the far end of the bay."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:16
+msgid ""
+"As the gunfire gets nearer, Draga yells at you to get the ship going and "
+"take off. As you get in the cabin and begin rising into the air you see "
+"Draga running back into the bay to help a woman run with her children to a "
+"small inter-planetary skiff. Some Sirius soldiers run and catch up with him, "
+"giving him three shots in the chest. The last thing you see as you take off "
+"was Draga in a pool of blood, and the woman being dragged off by the "
+"soldiers. You rocket out of there, and begin prepping to get those people to "
+"safety."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:20
+#, lua-format
+msgid ""
+"You land on %s, and open the bay doors. You are amazed at how many people "
+"Draga had helped get into the cargo hold. You help out the last few people, "
+"who are grateful to you, and walk down into the bay. A man walks up to you."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:21
+msgid ""
+"The man offers his hand, and begins to speak. \n"
+"   \"Hello, my name is Jimmy. Thank you for helping all these people.\" He "
+"gestures to the refugees, who are being helped by some officials. \"I am "
+"grateful. I've heard about you, from Draga, and I will be forever in your "
+"debt. All I can manage right now is this, so consider me in your debt.\"\n"
+"   He presses a credit chip in your hand, and walks away to help some "
+"refugees."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:27
+#, lua-format
+msgid "Fly the refugees to %s in the %s system."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:30
+#, lua-format
+msgid ""
+"You decide that this mission is just too much. You open up the cargo doors "
+"and jettison the %d people out into the cold emptiness of space. The Nasin, "
+"and the Sirius, will hate you forever, but you did what you had to do."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:31
+msgid "The Egress"
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:33
+msgid ""
+"Draga is running around, helping the few Nasin in the bar to get stuff "
+"together and get out."
+msgstr ""
+
+#: dat/missions/sirius/heretic/heretic4.lua:34
+#, lua-format
+msgid ""
+"Assist the Nasin refugees by flying to %s in %s, and unloading them there."
 msgstr ""

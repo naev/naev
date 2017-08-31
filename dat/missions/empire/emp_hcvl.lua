@@ -9,31 +9,26 @@
 
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   -- Bar stuff
-   bar_desc    = "You see an Empire Official."
+-- Bar stuff
+bar_desc    = _("You see an Empire Official.")
 
-   -- Mission details
-   misn_title  = "Kill %s"
-   misn_reward = "Authorization for Heavy Combat Vessel License"
-   misn_desc   = "There is a pirate known as %s who must be terminated. He was last seen near the %s system."
+-- Mission details
+misn_title  = _("Kill %s")
+misn_reward = _("Authorization for Heavy Combat Vessel License")
+misn_desc   = _("There is a pirate known as %s who must be terminated. He was last seen near the %s system.")
 
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "Spaceport Bar"
-   text[1]  = [[You are greeted by an Empire official while at the bar. "Hello %s, Commander Soldner has spoken well of you. He said you're a problem solver.
-    "Well, we have a problem with a pirate known as %s near the system %s. This mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]]
-   text[2]  = [["Good luck! The pirate has already killed his last contender, although I don't think he'll be a match for you."]]
+-- Text
+title    = {}
+text     = {}
+title[1] = _("Spaceport Bar")
+text[1]  = _([[You are greeted by an Empire official while at the bar. "Hello %s, Commander Soldner has spoken well of you. He said you're a problem solver.
+    "Well, we have a problem with a pirate known as %s near the system %s. This mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]])
+text[2]  = _([["Good luck! The pirate has already killed his last contender, although I don't think he'll be a match for you."]])
 
-   -- Messages
-   msg      = {}
-   msg[1]   = "MISSION SUCCESS! You are now authorized for the Heavy Combat Vessel License."
-   msg[2]   = "Pursue %s!"
-end
+-- Messages
+msg      = {}
+msg[1]   = _("MISSION SUCCESS! You are now authorized for the Heavy Combat Vessel License.")
+msg[2]   = _("Pursue %s!")
 
 
 -- Scripts we need
@@ -43,7 +38,7 @@ include("dat/missions/empire/common.lua")
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( "Official", emp_getOfficialRandomPortrait() )
+   misn.setNPC( _("Official"), emp_getOfficialRandomPortrait() )
    misn.setDesc( bar_desc )
 end
 

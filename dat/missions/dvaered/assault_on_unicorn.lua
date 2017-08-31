@@ -7,25 +7,20 @@
 
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-else 
-   misn_title = "DV: Assault on Unicorn" 
-   misn_reward = "Variable"
-   misn_desc = "It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s credits."
+misn_title = _("DV: Assault on Unicorn") 
+misn_reward = _("Variable")
+misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s credits.")
 
-   title = {}
-   text = {}
-   title[2] = "Mission accomplished"
-   text[2] = "As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s credits."
+title = {}
+text = {}
+title[2] = _("Mission accomplished")
+text[2] = _("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s credits.")
 
-   osd_msg = {}
-   osd_msg[1] = "Fly to the Unicorn system."
-   osd_msg[2] = ""
-   osd_msg2 = "Destroy some pirates! You have killed %d and have earned %s credits. If finished, return to %s."
-   osd_msg3 = "You have reached your maximum payment. Return to %s."
-
-end
+osd_msg = {}
+osd_msg[1] = _("Fly to the Unicorn system.")
+osd_msg[2] = _("")
+osd_msg2 = _("Destroy some pirates! You have killed %d and have earned %s credits. If finished, return to %s.")
+osd_msg3 = _("You have reached your maximum payment. Return to %s.")
 
 function create ()
    rep = faction.playerStanding("Dvaered")

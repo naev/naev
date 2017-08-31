@@ -8,33 +8,27 @@
 
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   -- Bar information
-   bar_desc = "A well-dressed young businessman. He looks out of place, contrasting sharply with most of the bar's clientele"
+-- Bar information
+bar_desc = _("A well-dressed young businessman. He looks out of place, contrasting sharply with most of the bar's clientele")
 
-   -- Mission details
-   misn_title  = "Pirate Hitman 3"
-   misn_reward = "More easy money."
-   misn_desc   = "The Empire patrol vessel known as %s must be terminated. It was last seen near the %s system."
-   misn_desc2  = "Return to %s to get your rewards."
+-- Mission details
+misn_title  = _("Pirate Hitman 3")
+misn_reward = _("More easy money.")
+misn_desc   = _("The Empire patrol vessel known as %s must be terminated. It was last seen near the %s system.")
+misn_desc2  = _("Return to %s to get your rewards.")
 
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "Spaceport Bar"
-   title[2] = "Mission Complete"
-   text[1]  = [[As you approach, the man merely glances at you before pushing out a chair for you. "Hello. A certain trader associate of mine has recommended your services." You nod knowingly, and he continues, "A certain Empire pilot has been... consistent in refusing our bribes. We'd like to be rid of him as soon as possible. Are you up for it?]]
-   text[2]  = [["Excellent. If you're successful in removing him, you will of course be rewarded." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]]
-   text[3] = [[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's your pay. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]]
+-- Text
+title    = {}
+text     = {}
+title[1] = _("Spaceport Bar")
+title[2] = _("Mission Complete")
+text[1]  = _([[As you approach, the man merely glances at you before pushing out a chair for you. "Hello. A certain trader associate of mine has recommended your services." You nod knowingly, and he continues, "A certain Empire pilot has been... consistent in refusing our bribes. We'd like to be rid of him as soon as possible. Are you up for it?]])
+text[2]  = _([["Excellent. If you're successful in removing him, you will of course be rewarded." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]])
+text[3] = _([[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's your pay. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]])
 
-   msg = {}
-   msg[1] = "Target destroyed. Mission objective updated"
-   msg[2] = "Target has jumped. Persue %s!"
-end
-
+msg = {}
+msg[1] = _("Target destroyed. Mission objective updated")
+msg[2] = _("Target has jumped. Persue %s!")
 
 
 include("dat/missions/pirate/common.lua")
@@ -54,7 +48,7 @@ function create ()
    near_sys = get_emp_system( system.cur() )
 
    -- Spaceport bar stuff
-   misn.setNPC( "Young Businessman", "neutral/unique/youngbusinessman")
+   misn.setNPC( _("Young Businessman"), "neutral/unique/youngbusinessman")
    misn.setDesc( bar_desc )
 
    --some other stuff
