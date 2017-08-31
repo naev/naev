@@ -25,7 +25,7 @@ static int texL_open( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
-static const luaL_reg texL_methods[] = {
+static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
    { "open", texL_open },
    { "dim", texL_dim },

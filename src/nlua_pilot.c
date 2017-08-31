@@ -150,7 +150,7 @@ static int pilotL_leader( lua_State *L );
 static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
-static const luaL_reg pilotL_methods[] = {
+static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "addRaw", pilotL_addFleetRaw },
    { "add", pilotL_addFleet },

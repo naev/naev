@@ -242,7 +242,7 @@ static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_messages( lua_State *L );
 
 
-static const luaL_reg aiL_methods[] = {
+static const luaL_Reg aiL_methods[] = {
    /* tasks */
    { "pushtask", aiL_pushtask },
    { "poptask", aiL_poptask },

@@ -88,7 +88,7 @@ static int playerL_misnDone( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_teleport( lua_State *L );
-static const luaL_reg playerL_methods[] = {
+static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
    { "pay", playerL_pay },

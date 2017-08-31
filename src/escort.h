@@ -10,6 +10,7 @@
 
 #include "physics.h"
 #include "pilot.h"
+#include "space.h"
 
 
 /* Creation. */
@@ -25,7 +26,7 @@ int escorts_attack( Pilot *parent );
 int escorts_hold( Pilot *parent );
 int escorts_return( Pilot *parent );
 int escorts_clear( Pilot *parent );
-int escorts_jump( Pilot *parent );
+int escorts_jump( Pilot *parent, JumpPoint *jp );
 
 
 #endif /* ESCORT_H */

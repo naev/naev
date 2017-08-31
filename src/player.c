@@ -1686,7 +1686,7 @@ int player_jump (void)
       pilot_shootStop( player.p, 1 );
 
       /* Order escorts to jump; just for aesthetics (for now) */
-      escorts_jump( player.p );
+      escorts_jump( player.p, &cur_system->jumps[player.p->nav_hyperspace] );
 
       return 1;
    }

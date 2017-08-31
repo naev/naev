@@ -33,7 +33,7 @@ static int naev_keyEnableAll( lua_State *L );
 static int naev_keyDisableAll( lua_State *L );
 static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
-static const luaL_reg naev_methods[] = {
+static const luaL_Reg naev_methods[] = {
    { "lang", naev_lang },
    { "ticks", naev_ticks },
    { "keyGet", naev_keyGet },

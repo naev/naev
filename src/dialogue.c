@@ -299,6 +299,8 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
    /* IMPORTANT : texture must not be freed here, it will be freed when the widget closes */
    nsnprintf( buf, sizeof(buf), "%s%s", GFX_PATH, img );
    gfx = gl_newImage( buf, 0 );
+   if (gfx == NULL)
+      return;
 
    /* Find the popup's dimensions from text and image */
    img_width  = (width < 0)  ? gfx->w : width;

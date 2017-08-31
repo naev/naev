@@ -225,10 +225,18 @@ int escorts_clear( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_jump( Pilot *parent )
+int escorts_jump( Pilot *parent, JumpPoint *jp )
 {
    int ret;
-   ret = escort_command( parent, "hyperspace", 0 );
+   LuaJump lj;
+
+   lj.destid = jp->targetid;
+   lj.srcid = cur_system->id;
+
+   lua_pushjump( naevL, lj );
+   ret = escort_command( parent, "hyperspace", -1 );
+   lua_pop(naevL, 1);
+
    if ((ret == 0) && (parent == player.p))
       player_message(_("\agEscorts: \a0Jumping."));
    return ret;

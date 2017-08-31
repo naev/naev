@@ -28,7 +28,7 @@ static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
 static int musicL_isPlaying( lua_State* L );
 static int musicL_current( lua_State* L );
-static const luaL_reg music_methods[] = {
+static const luaL_Reg music_methods[] = {
    { "delay", musicL_delay },
    { "load", musicL_load },
    { "play", musicL_play },

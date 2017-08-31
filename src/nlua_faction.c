@@ -42,7 +42,7 @@ static int factionL_logoTiny( lua_State *L );
 static int factionL_colour( lua_State *L );
 static int factionL_isknown( lua_State *L );
 static int factionL_setknown( lua_State *L );
-static const luaL_reg faction_methods[] = {
+static const luaL_Reg faction_methods[] = {
    { "get", factionL_get },
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },

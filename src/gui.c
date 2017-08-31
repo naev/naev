@@ -55,6 +55,7 @@
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
 #include "nlua_tex.h"
+#include "nlua_tk.h"
 #include "gui_omsg.h"
 #include "nstring.h"
 
@@ -2161,6 +2162,7 @@ int gui_load( const char* name )
    nlua_loadStandard( gui_env );
    nlua_loadGFX( gui_env );
    nlua_loadGUI( gui_env );
+   nlua_loadTk( gui_env );
 
    /* Run create function. */
    if (gui_doFunc( "create" )) {

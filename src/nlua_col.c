@@ -27,7 +27,7 @@ static int colL_hsv( lua_State *L );
 static int colL_setrgb( lua_State *L );
 static int colL_sethsv( lua_State *L );
 static int colL_setalpha( lua_State *L );
-static const luaL_reg colL_methods[] = {
+static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
    { "new", colL_new },
    { "alpha", colL_alpha },

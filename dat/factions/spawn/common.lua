@@ -77,6 +77,9 @@ function scom.spawn( pilots )
          local pos = nil
          if leader ~= nil then
             pos = leader:pos()
+            if pilots.__formation ~= nil then
+               leader:memory().formation = pilots.__formation
+            end
          end
          p = pilot.add( v["pilot"], nil, pos )
       else

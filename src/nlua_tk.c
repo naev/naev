@@ -27,7 +27,7 @@ static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
-static const luaL_reg tk_methods[] = {
+static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
    { "input", tk_input },
@@ -86,7 +86,7 @@ static int tk_msg( lua_State *L )
 {
    const char *title, *str, *img;
    int width, height;
-   NLUA_MIN_ARGS(3);
+   NLUA_MIN_ARGS(2);
 
    // Get fixed arguments : title, string to display and image filename
    title = luaL_checkstring(L,1);

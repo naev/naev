@@ -2,6 +2,8 @@
    The new "slim" GUI
 --]]
 
+playerform = include "dat/scripts/playerform.lua"
+
 function create()
 
    --Get player
@@ -295,6 +297,11 @@ function create()
    timers[3] = 0.5
    blinkcol = col_txt_enm
    gfxWarn = true
+
+   buttons = {}
+
+   gui.mouseClickEnable(true)
+   gui.mouseMoveEnable(true)
 
    update_target()
    update_ship()
@@ -720,6 +727,33 @@ function render( dt, dt_mod )
       end
    end
 
+   -- Formation selection button
+   if #pp:followers() ~= 0 then
+      local x = x_ammo
+      local y = y_ammo - #wset * 28 - 15
+      local width, height = bg_bar_weapon:dim()
+
+      if buttons["formation"] == nil then
+          buttons["formation"] = {}
+      end
+
+      local button = buttons["formation"]
+      button.x = x
+      button.y = y - height
+      button.w = width
+      button.h = height
+      button.action = playerform
+
+      local col = colour.new( .10, .10, .10 )
+      if button.state == "mouseover" then
+          col = colour.new( .25, .25, .25 )
+      end
+
+      gfx.renderRect( x, y, width, height, col)
+      gfx.renderTex( bg_bar_weapon, x, y )
+      gfx.print( true, "Set formation", x, y + 8, col_txt_bar, width, true )
+   end
+
    --Warning Light
    if lockons > 0 then
       timers[2] = timers[2] - dt / dt_mod
@@ -1073,4 +1107,63 @@ function round(num)
 end
 
 function destroy()
+end
+
+function mouse_click( button, x, y, state )
+   if button ~= 2 then
+      return false
+   else
+      lmouse = state
+      pressed = mouseInsideButton( x, y )
+      
+      if pressed == nil then
+         if not state then
+            for _,v in pairs(buttons) do
+               if v.state ~= "disabled" and v.state ~= "hilighted" then
+                  v.state = "default"
+               end
+            end
+         end
+         return false
+      else
+         if state then
+            if pressed.state ~= "disabled" then
+               pressed.state = "pressed"
+            end
+            return true
+         else
+            if pressed.state ~= "disabled" then
+               pressed.state = "default"
+               pressed.action()
+            end
+            return true
+         end
+      end
+   end
+end
+
+function mouse_move( x, y )
+   pressed = mouseInsideButton( x, y )
+   if pressed ~= nil then
+      if pressed.state ~= "disabled" and not lmouse then
+         pressed.state = "mouseover"
+      elseif pressed.state ~= "disabled" and lmouse then
+         pressed.state = "pressed"
+      end
+   else
+      for _,v in pairs(buttons) do
+         if v.state ~= "disabled" and v.state ~= "hilighted" then
+            v.state = "default"
+         end
+      end
+   end
+end
+
+function mouseInsideButton( x, y )
+   for _, v in pairs(buttons) do
+      if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
+         return v
+      end
+   end
+   return nil
 end
