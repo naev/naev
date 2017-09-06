@@ -39,7 +39,7 @@ libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng12-dev libopenal-dev \
 libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool
 ```
 
-### Other
+### Other \*nix 
 
 See http://wiki.naev.org/wiki/Compiling_Nix for package lists for several
 distributions.
@@ -63,6 +63,10 @@ is needed.
 
 If you wish to create a .desktop for your desktop environment, logos
 from 16x16 to 256x256 can be found in extras/logos
+
+## WINDOWS
+
+See http://wiki.naev.org/wiki/Compiling_Win for how to compile on windows.
 
 ## CRASHES & PROBLEMS
 
