@@ -1,5 +1,5 @@
 #!/bin/sh
-function autogen_error {
+autogen_error () {
    echo "Generating configuration files failed!"
    echo "Make sure you have the following packages installed:"
    echo ""
