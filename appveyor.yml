@@ -6,7 +6,11 @@ install:
 build_script:
 - cmd: >-
     SET MSYSTEM=MINGW64
+
     C:\msys64\usr\bin\bash -lc "env"
+
     C:\msys64\usr\bin\bash -lc "cd /c/naev; ./autogen.sh 2>&1"
+
     C:\msys64\usr\bin\bash -lc "cd /c/naev; ./configure"
+
     C:\msys64\usr\bin\bash -lc "cd /c/naev; make"
