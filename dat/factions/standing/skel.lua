@@ -23,26 +23,22 @@ _fstanding_friendly = 70
 _fstanding_neutral = 0
 
 
-lang = naev.lang()
 _ftext_standing = {}
-if lang == "es" then
-else -- Default English
-   _ftext_standing[100] = "Legend"
-   _ftext_standing[90]  = "Hero"
-   _ftext_standing[70]  = "Comrade"
-   _ftext_standing[50]  = "Ally"
-   _ftext_standing[30]  = "Partner"
-   _ftext_standing[10]  = "Associate"
-   _ftext_standing[0]   = "Neutral"
-   _ftext_standing[-1]  = "Outlaw"
-   _ftext_standing[-30] = "Criminal"
-   _ftext_standing[-50] = "Enemy"
+_ftext_standing[100] = _("Legend")
+_ftext_standing[90]  = _("Hero")
+_ftext_standing[70]  = _("Comrade")
+_ftext_standing[50]  = _("Ally")
+_ftext_standing[30]  = _("Partner")
+_ftext_standing[10]  = _("Associate")
+_ftext_standing[0]   = _("Neutral")
+_ftext_standing[-1]  = _("Outlaw")
+_ftext_standing[-30] = _("Criminal")
+_ftext_standing[-50] = _("Enemy")
 
-   _ftext_friendly = "Friendly"
-   _ftext_neutral  = "Neutral"
-   _ftext_hostile  = "Hostile"
-   _ftext_bribed   = "Bribed"
-end
+_ftext_friendly = _("Friendly")
+_ftext_neutral  = _("Neutral")
+_ftext_hostile  = _("Hostile")
+_ftext_bribed   = _("Bribed")
 
 
 --[[

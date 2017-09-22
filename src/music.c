@@ -150,7 +150,7 @@ static int music_runLua( const char *situation )
    else
       lua_pushnil( naevL );
    if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
-      WARN("Error while choosing music: %s", lua_tostring(naevL,-1));
+      WARN(_("Error while choosing music: %s"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 
@@ -192,7 +192,7 @@ int music_init (void)
       music_sys_setPos = music_mix_setPos;
       music_sys_isPlaying = music_mix_isPlaying;
 #else /* USE_SDLMIX */
-      WARN("SDL_mixer support not compiled in!");
+      WARN(_("SDL_mixer support not compiled in!"));
       return -1;
 #endif /* USE_SDLMIX */
    }
@@ -220,12 +220,12 @@ int music_init (void)
       music_sys_setPos = music_al_setPos;
       music_sys_isPlaying = music_al_isPlaying;
 #else /* USE_OPENAL */
-      WARN("OpenAL support not compiled in!");
+      WARN(_("OpenAL support not compiled in!"));
       return -1;
 #endif /* USE_OPENAL*/
    }
    else {
-      WARN("Unknown sound backend '%s'.", conf.sound_backend);
+      WARN(_("Unknown sound backend '%s'."), conf.sound_backend);
       return -1;
    }
 
@@ -243,7 +243,7 @@ int music_init (void)
 
    /* Set the volume. */
    if ((conf.music > 1.) || (conf.music < 0.))
-      WARN("Music has invalid value, clamping to [0:1].");
+      WARN(_("Music has invalid value, clamping to [0:1]."));
    music_volume(conf.music);
 
    /* Create the lock. */
@@ -304,7 +304,7 @@ static void music_free (void)
 static int music_find (void)
 {
    char** files;
-   uint32_t nfiles,i;
+   size_t nfiles,i;
    int suflen, flen;
    int nmusic;
 
@@ -330,7 +330,7 @@ static int music_find (void)
       free(files[i]);
    }
 
-   DEBUG("Loaded %d song%c", nmusic, (nmusic==1)?' ':'s');
+   DEBUG( ngettext("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
    free(files);
@@ -403,7 +403,7 @@ int music_load( const char* name )
    nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = ndata_rwops( filename );
    if (rw == NULL) {
-      WARN("Music '%s' not found.", filename);
+      WARN(_("Music '%s' not found."), filename);
       return -1;
    }
    music_sys_load( name, rw );
@@ -523,7 +523,7 @@ void music_setPos( double sec )
 static int music_luaInit (void)
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
 
    if (music_disabled)
       return 0;
@@ -538,9 +538,9 @@ static int music_luaInit (void)
    /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
    if (nlua_dobufenv(music_env, buf, bufsize, MUSIC_LUA_PATH) != 0) {
-      ERR("Error loading music file: %s\n"
+      ERR(_("Error loading music file: %s\n"
           "%s\n"
-          "Most likely Lua file has improper syntax, please check",
+          "Most likely Lua file has improper syntax, please check"),
             MUSIC_LUA_PATH, lua_tostring(naevL,-1) );
       return -1;
    }

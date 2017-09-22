@@ -29,8 +29,8 @@ function formations.buffer(leader)
    local pilots = leader:followers()
    local class_count = count_classes(pilots)
    local angle, radius
-   local radii = {Scout = 1200, Fighter = 900, Bomber = 850, Corvette = 700, Destroyer = 500, Cruiser = 350, Carrier = 250} -- Different radii for each class.
-   local count = {Scout = 1, Fighter = 1, Bomber = 1, Corvette = 1, Destroyer = 1, Cruiser = 1, Carrier = 1} -- Need to keep track of positions already iterated through.
+   local radii = {Scout = 1200, Drone = 1500, Fighter = 900, Bomber = 850, Corvette = 700, Destroyer = 500, Cruiser = 350, Carrier = 250} -- Different radii for each class.
+   local count = {Scout = 1, Drone = 1, Fighter = 1, Bomber = 1, Corvette = 1, Destroyer = 1, Cruiser = 1, Carrier = 1} -- Need to keep track of positions already iterated through.
    for i, p in ipairs(pilots) do
       ship_class = p:ship():class() -- For readability.
       if class_count[ship_class] == 1 then -- If there's only one ship in this specific class...

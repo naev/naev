@@ -12,55 +12,68 @@ accompanying everything from planets to equipment.
 
 ## DEPENDENCIES
 
-   Naev's dependencies are intended to be relatively common. In addition to
-   an OpenGL-capable graphics card and driver, Naev requires the following:
-      * SDL
-      * libxml2
-      * freetype2
-      * libpng
-      * OpenAL
-      * libvorbis (>= 1.2.1 necessary for Replaygain)
-      * binutils
-      * libzip
+Naev's dependencies are intended to be relatively common. In addition to
+an OpenGL-capable graphics card and driver, Naev requires the following:
+* SDL (version 2 is preferred)
+* libxml2
+* freetype2
+* libpng
+* OpenAL
+* libvorbis (>= 1.2.1 necessary for Replaygain)
+* binutils
+* libzip
 
-   Note that several distributions ship outdated versions of libvorbis, and
-   thus libvorbisfile is statically linked into the release binary.
+Note that several distributions ship outdated versions of libvorbis, and
+thus libvorbisfile is statically linked into the release binary.
 
-   Compiling your own binary on many distributions will result in Replaygain
-   being disabled.
+Compiling your own binary on many distributions will result in Replaygain
+being disabled.
 
-   See http://wiki.naev.org/wiki/Compiling_Nix for package lists for several
-   distributions.
+### Ubuntu
 
-   Mac Dependencies are different, see extras/macosx/COMPILE for details.
+Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
+
+```bash
+apt-get install build-essential automake libsdl2-dev libsdl2-image-dev \
+libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng12-dev libopenal-dev \
+libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool
+```
+
+### Other \*nix 
+
+See http://wiki.naev.org/wiki/Compiling_Nix for package lists for several
+distributions.
 
 ## COMPILING
 
-   Run: 
+Run: 
 
-   ./autogen.sh && ./configure
-   make
+```bash
+./autogen.sh && ./configure
+make
+```
 
-   If you need special settings you should pass flags to configure, using -h
-   will tell you what it supports.
-
-   On Mac OS X, see extras/macosx/COMPILE for details. Uses Xcode, not gcc.
-
+If you need special settings you should pass flags to configure, using -h
+will tell you what it supports.
 
 ## INSTALLATION
 
-   Naev currently supports make install which will install everything that
-   is needed.
+Naev currently supports make install which will install everything that
+is needed.
 
-   If you wish to create a .desktop for your desktop environment, logos
-   from 16x16 to 256x256 can be found in extras/logos
+If you wish to create a .desktop for your desktop environment, logos
+from 16x16 to 256x256 can be found in extras/logos
+
+## WINDOWS
+
+See http://wiki.naev.org/wiki/Compiling_Win for how to compile on windows.
 
 ## CRASHES & PROBLEMS
 
-   Please take a look at the FAQ (linked below) before submitting a new
-   bug report, as it covers a number of common gameplay questions and
-   common issues.
+Please take a look at the FAQ (linked below) before submitting a new
+bug report, as it covers a number of common gameplay questions and
+common issues.
 
-   If Naev is crashing during gameplay, please file a bug report after
-   reading http://wiki.naev.org/wiki/Bugs
+If Naev is crashing during gameplay, please file a bug report after
+reading http://wiki.naev.org/wiki/Bugs
 

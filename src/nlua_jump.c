@@ -35,7 +35,7 @@ static int jumpL_system( lua_State *L );
 static int jumpL_dest( lua_State *L );
 static int jumpL_isKnown( lua_State *L );
 static int jumpL_setKnown( lua_State *L );
-static const luaL_reg jump_methods[] = {
+static const luaL_Reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
@@ -157,7 +157,7 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, Star
          jp = jump_getTarget( b, a );
 
    if (jp == NULL)
-      NLUA_ERROR(L, "Jump is invalid");
+      NLUA_ERROR(L, _("Jump is invalid"));
 
    if (outsys != NULL)
       *outsys = a;
@@ -254,7 +254,7 @@ static int jumpL_get( lua_State *L )
          b = system_getIndex( lua_tosystem(L, 2) );
 
       if ((a == NULL) || (b == NULL)) {
-         NLUA_ERROR(L, "No matching jump points found.");
+         NLUA_ERROR(L, _("No matching jump points found."));
          return 0;
       }
 

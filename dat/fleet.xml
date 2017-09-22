@@ -998,11 +998,39 @@
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Thurion Perspicacity">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Perspicacity" ship="Thurion Perspicacity"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Thurion Ingenuity">
   <ai>thurion</ai>
   <faction>Thurion</faction>
   <pilots>
    <pilot name="Thurion Ingenuity" ship="Thurion Ingenuity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Thurion Scintillation">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Scintillation" ship="Thurion Scintillation"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Thurion Virtuosity">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Virtuosity" ship="Thurion Virtuosity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Thurion Taciturnity">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Taciturnity" ship="Thurion Taciturnity"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Recon Force">

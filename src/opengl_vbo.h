@@ -25,6 +25,7 @@ void gl_exitVBO (void);
  * Create.
  */
 gl_vbo* gl_vboCreateStream( GLsizei size, void* data );
+gl_vbo* gl_vboCreateDynamic( GLsizei size, void* data );
 gl_vbo* gl_vboCreateStatic( GLsizei size, void* data );
 
 

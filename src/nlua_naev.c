@@ -33,7 +33,7 @@ static int naev_keyEnableAll( lua_State *L );
 static int naev_keyDisableAll( lua_State *L );
 static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
-static const luaL_reg naev_methods[] = {
+static const luaL_Reg naev_methods[] = {
    { "lang", naev_lang },
    { "ticks", naev_ticks },
    { "keyGet", naev_keyGet },
@@ -126,7 +126,7 @@ static int naev_keyGet( lua_State *L )
    /* Handle type. */
    switch (type) {
       case KEYBIND_NULL:
-         lua_pushstring( L, "Not bound" );
+         lua_pushstring( L, gettext_noop("Not bound") );
          break;
 
       case KEYBIND_KEYBOARD:
@@ -143,17 +143,17 @@ static int naev_keyGet( lua_State *L )
          break;
 
       case KEYBIND_JBUTTON:
-         nsnprintf( buf, sizeof(buf), "joy button %d", key );
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy button %d"), key );
          lua_pushstring( L, buf );
          break;
 
       case KEYBIND_JAXISPOS:
-         nsnprintf( buf, sizeof(buf), "joy axis %d-", key );
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d-"), key );
          lua_pushstring( L, buf );
          break;
 
       case KEYBIND_JAXISNEG:
-         nsnprintf( buf, sizeof(buf), "joy axis %d+", key );
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d+"), key );
          lua_pushstring( L, buf );
          break;
    }
@@ -272,7 +272,6 @@ static int naev_missionStart( lua_State *L )
    lua_pushboolean( L, !ret );
    return 1;
 }
-
 
 
 

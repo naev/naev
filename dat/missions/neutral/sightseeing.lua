@@ -25,61 +25,57 @@
 include "numstring.lua"
 include "jumpdist.lua"
 
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   nolux_title = "Not Very Luxurious"
-   nolux_text  = "Since your ship is not a Luxury Yacht class ship, you will only be paid %s credits. Accept the mission anyway?"
+nolux_title = _("Not Very Luxurious")
+nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s credits. Accept the mission anyway?")
 
-   pay_title = "Mission Completed"
-   pay_text    = {}
-   pay_text[1] = "The passengers disembark with a new appreciation for the wonders of the universe."
-   pay_text[2] = "Going off-world has renewed your passengers sense of adventure."
-   pay_text[3] = "The passengers burst into cheers upon returning to the hanger. What a wonderful experience."
-   pay_text[4] = "The passengers enjoyed their time aboard your vessel."
+pay_title = _("Mission Completed")
+pay_text    = {}
+pay_text[1] = _("The passengers disembark with a new appreciation for the wonders of the universe.")
+pay_text[2] = _("Going off-world has renewed your passengers sense of adventure.")
+pay_text[3] = _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience.")
+pay_text[4] = _("The passengers enjoyed their time aboard your vessel.")
 
-   pay_s_lux_title = "Unexpected Bonus"
-   pay_s_lux_text    = {}
-   pay_s_lux_text[1] = "The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare."
-   pay_s_lux_text[2] = "Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation."
-   pay_s_lux_text[3] = "As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid."
-   pay_s_lux_text[4] = "When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all."
+pay_s_lux_title = _("Unexpected Bonus")
+pay_s_lux_text    = {}
+pay_s_lux_text[1] = _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare.")
+pay_s_lux_text[2] = _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation.")
+pay_s_lux_text[3] = _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid.")
+pay_s_lux_text[4] = _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all.")
 
-   pay_s_nolux_title = "Disappointment"
-   pay_s_nolux_text    = {}
-   pay_s_nolux_text[1] = "Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment."
-   pay_s_nolux_text[2] = "While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare."
-   pay_s_nolux_text[3] = "Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been."
+pay_s_nolux_title = _("Disappointment")
+pay_s_nolux_text    = {}
+pay_s_nolux_text[1] = _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment.")
+pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
+pay_s_nolux_text[3] = _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been.")
 
-   -- Mission details
-   misn_title  = "Sightseeing in the %s System"
-   misn_reward = "%s credits"
-   misn_desc   = "Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the %s system."
+-- Mission details
+misn_title  = _("Sightseeing in the %s System")
+misn_reward = _("%s credits")
+misn_desc   = _("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the %s system.")
 
-   -- Messages
-   msg    = {}
-   msg[1] = "All attractions visited. Return to %s and collect your pay."
+-- Messages
+msg    = {}
+msg[1] = _("All attractions visited. Return to %s and collect your pay.")
 
-   --Sightseeing Messages
-   ssmsg = {}
-   ssmsg[1] = "The passengers are loving it."
-   ssmsg[2] = "The wide-eyed passengers mutter with astonishment."
-   ssmsg[3] = "The passengers faces are pressed up against the windows of your ship."
-   ssmsg[4] = "Everyone seems like they're having a good time."
-   ssmsg[5] = "A collective gasp of wonder travels through the cabin."
-   ssmsg[6] = "A sense of terror and mystery engulfs the passengers as they contemplate their existance above the skies."
-   ssmsg[7] = "Truly a sight to behold for the passengers."
-   
-   osd_title  = "Sightseeing tour in %s"
-   osd_msg    = {}
-   osd_msg[1] = "Fly to the %s system"
-   osd_msg_2  = "Go to indicated point (%d remaining)"
-   osd_msg[2] = "(null)"
-   osd_msg[3] = "Return to %s in the %s system and collect your pay"
-   osd_msg["__save"] = true
+--Sightseeing Messages
+ssmsg = {}
+ssmsg[1] = _("The passengers are loving it.")
+ssmsg[2] = _("The wide-eyed passengers mutter with astonishment.")
+ssmsg[3] = _("The passengers faces are pressed up against the windows of your ship.")
+ssmsg[4] = _("Everyone seems like they're having a good time.")
+ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
+ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existance above the skies.")
+ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
-   mark_name = "Attraction"
-end
+osd_title  = _("Sightseeing tour in %s")
+osd_msg    = {}
+osd_msg[1] = _("Fly to the %s system")
+osd_msg_2  = _("Go to indicated point (%d remaining)")
+osd_msg[2] = "(null)"
+osd_msg[3] = _("Return to %s in the %s system and collect your pay")
+osd_msg["__save"] = true
+
+mark_name = _("Attraction")
 
 
 function create ()

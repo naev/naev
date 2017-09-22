@@ -10,31 +10,26 @@
 
 include "dat/scripts/numstring.lua"
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   -- Bar information
-   bar_desc = "You see a pirate lord raving about something. A significant crowd has gathered around."
+-- Bar information
+bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 
-   -- Mission details
-   misn_title  = "Empire Patrol bounty"
-   misn_reward = "%s credits"
-   misn_desc   = "There is a bounty on the head of the Empire Patrol known as %s who was last seen near the %s system."
+-- Mission details
+misn_title  = _("Empire Patrol bounty")
+misn_reward = _("%s credits")
+misn_desc   = _("There is a bounty on the head of the Empire Patrol known as %s who was last seen near the %s system.")
 
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "Spaceport Bar"
-   text[1]  = [[It seems like the bounty is on the head of an Empire Patrol working in the area known as %s for %d credits. It seems like he was last seen in the %s system. Quite a few other pirates seem interested and it looks like you'll have to outrace them.
-    Will you take up the bounty?]]
-   text[2] = [[You roll up your sleeve and head off to your ship.]]
+-- Text
+title    = {}
+text     = {}
+title[1] = _("Spaceport Bar")
+text[1]  = _([[It seems like the bounty is on the head of an Empire Patrol working in the area known as %s for %d credits. It seems like he was last seen in the %s system. Quite a few other pirates seem interested and it looks like you'll have to outrace them.
+    Will you take up the bounty?]])
+text[2] = _([[You roll up your sleeve and head off to your ship.]])
 
-   -- Messages
-   msg      = {}
-   msg[1]   = "MISSION SUCCESS! Payment received."
-   msg[2]   = "Pursue %s!"
-end
+-- Messages
+msg      = {}
+msg[1]   = _("MISSION SUCCESS! Payment received.")
+msg[2]   = _("Pursue %s!")
 
 
 include("dat/missions/pirate/common.lua")
@@ -57,7 +52,7 @@ function create ()
    credits  = rnd.rnd(2,4) * 100000
 
    -- Spaceport bar stuff
-   misn.setNPC( "Pirate Lord", pir_getLordRandomPortrait() )
+   misn.setNPC( _("Pirate Lord"), pir_getLordRandomPortrait() )
    misn.setDesc( bar_desc )
 end
 

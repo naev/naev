@@ -242,7 +242,7 @@ static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_messages( lua_State *L );
 
 
-static const luaL_reg aiL_methods[] = {
+static const luaL_Reg aiL_methods[] = {
    /* tasks */
    { "pushtask", aiL_pushtask },
    { "poptask", aiL_poptask },
@@ -429,7 +429,7 @@ static void ai_run( nlua_env env, const char *funcname )
 
 #ifdef DEBUGGING
    if (lua_isnil(naevL, -1)) {
-      WARN("Pilot '%s' ai -> '%s': attempting to run non-existant function",
+      WARN( _("Pilot '%s' ai -> '%s': attempting to run non-existant function"),
             cur_pilot->name, funcname );
       lua_pop(naevL,1);
       return;
@@ -437,7 +437,7 @@ static void ai_run( nlua_env env, const char *funcname )
 #endif /* DEBUGGING */
 
    if (nlua_pcall(env, 0, 0)) { /* error has occurred */
-      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(naevL,-1));
+      WARN( _("Pilot '%s' ai -> '%s': %s"), cur_pilot->name, funcname, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
@@ -462,7 +462,7 @@ int ai_pinit( Pilot *p, const char *ai )
    /* Set up the profile. */
    prof = ai_getProfile(buf);
    if (prof == NULL) {
-      WARN("AI Profile '%s' not found, using dummy fallback.", buf);
+      WARN( _("AI Profile '%s' not found, using dummy fallback."), buf);
       nsnprintf(buf, sizeof(buf), "dummy" );
       prof = ai_getProfile(buf);
    }
@@ -479,7 +479,7 @@ int ai_pinit( Pilot *p, const char *ai )
    lua_gettable(naevL, -3);          /* pm, nt, dt */
 #if DEBUGGING
    if (lua_isnil(naevL,-1))
-      WARN( "AI profile '%s' has no default memory for pilot '%s'.",
+      WARN( _("AI profile '%s' has no default memory for pilot '%s'."),
             buf, p->name );
 #endif
    lua_pushnil(naevL);               /* pm, nt, dt, nil */
@@ -550,7 +550,7 @@ void ai_destroy( Pilot* p )
 int ai_load (void)
 {
    char** files;
-   uint32_t nfiles, i;
+   size_t nfiles, i;
    char path[PATH_MAX];
    int flen, suflen;
    int n;
@@ -567,7 +567,7 @@ int ai_load (void)
 
          nsnprintf( path, PATH_MAX, AI_PATH"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
-            WARN("Error loading AI profile '%s'", path);
+            WARN( _("Error loading AI profile '%s'"), path);
       }
 
       /* Clean up. */
@@ -575,7 +575,7 @@ int ai_load (void)
    }
 
    n = array_size(profiles);
-   DEBUG("Loaded %d AI Profile%c", n, (n==1)?' ':'s');
+   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", n ), n );
 
    /* More clean up. */
    free(files);
@@ -591,7 +591,7 @@ int ai_load (void)
 static int ai_loadEquip (void)
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
    const char *filename = "dat/factions/equip/generic.lua";
 
    /* Make sure doesn't already exist. */
@@ -605,9 +605,9 @@ static int ai_loadEquip (void)
    /* Load the file. */
    buf = ndata_read( filename, &bufsize );
    if (nlua_dobufenv(equip_env, buf, bufsize, filename) != 0) {
-      WARN("Error loading file: %s\n"
+      WARN( _("Error loading file: %s\n"
           "%s\n"
-          "Most likely Lua file has improper syntax, please check",
+          "Most likely Lua file has improper syntax, please check"),
             filename, lua_tostring(naevL, -1));
       return -1;
    }
@@ -626,7 +626,7 @@ static int ai_loadEquip (void)
 static int ai_loadProfile( const char* filename )
 {
    char* buf = NULL;
-   uint32_t bufsize = 0;
+   size_t bufsize = 0;
    nlua_env env;
    AI_Profile *prof;
    size_t len;
@@ -667,9 +667,9 @@ static int ai_loadProfile( const char* filename )
    /* Now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
    if (nlua_dobufenv(env, buf, bufsize, filename) != 0) {
-      WARN("Error loading AI file: %s\n"
+      WARN( _("Error loading AI file: %s\n"
           "%s\n"
-          "Most likely Lua file has improper syntax, please check",
+          "Most likely Lua file has improper syntax, please check"),
             filename, lua_tostring(naevL,-1));
       array_erase( &profiles, prof, &prof[1] );
       free(prof->name);
@@ -700,7 +700,7 @@ AI_Profile* ai_getProfile( char* name )
       if (strcmp(name,profiles[i].name)==0)
          return &profiles[i];
 
-   WARN("AI Profile '%s' not found in AI stack", name);
+   WARN( _("AI Profile '%s' not found in AI stack"), name);
    return NULL;
 }
 
@@ -850,7 +850,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    lua_pushpilot(naevL, attacker);
    if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
-      WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(naevL, -1));
+      WARN( _("Pilot '%s' ai -> 'attacked': %s"), cur_pilot->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
 }
@@ -914,7 +914,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
       lua_pushpilot(naevL, distressed->target);
    
    if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
-      WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(naevL,-1));
+      WARN( _("Pilot '%s' ai -> 'distress': %s"), cur_pilot->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
@@ -951,7 +951,7 @@ static void ai_create( Pilot* pilot )
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
       if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
-         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(naevL, -1));
+         WARN( _("Pilot '%s' equip -> '%s': %s"), pilot->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
    }
@@ -971,7 +971,7 @@ static void ai_create( Pilot* pilot )
 
    /* Run function. */
    if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
-      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(naevL,-1));
+      WARN( _("Pilot '%s' ai -> '%s': %s"), cur_pilot->name, "create", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 
@@ -1009,7 +1009,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
       /* Must have valid task. */
       curtask = ai_curTask( p );
       if (curtask == NULL) {
-         WARN("Trying to add subtask '%s' to non-existant task.", func);
+         WARN( _("Trying to add subtask '%s' to non-existant task."), func);
          ai_freetask( t );
          return NULL;
       }
@@ -1129,7 +1129,7 @@ static int aiL_poptask( lua_State *L )
 
    /* Tasks must exist. */
    if (t == NULL) {
-      NLUA_ERROR(L, "Trying to pop task when there are no tasks on the stack.");
+      NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
       return 0;
    }
 
@@ -1200,11 +1200,11 @@ static int aiL_popsubtask( lua_State *L )
 
    /* Tasks must exist. */
    if (t == NULL) {
-      NLUA_ERROR(L, "Trying to pop task when there are no tasks on the stack.");
+      NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
       return 0;
    }
    if (t->subtask == NULL) {
-      NLUA_ERROR(L, "Trying to pop subtask when there are no subtasks for the task '%s'.", t->name);
+      NLUA_ERROR(L, _("Trying to pop subtask when there are no subtasks for the task '%s'."), t->name);
       return 0;
    }
 
@@ -2268,7 +2268,7 @@ static int aiL_land( lua_State *L )
    ret = 0;
 
    if (cur_pilot->nav_planet < 0) {
-      NLUA_ERROR( L, "Pilot '%s' has no land target", cur_pilot->name );
+      NLUA_ERROR( L, _("Pilot '%s' has no land target"), cur_pilot->name );
       return 0;
    }
 
@@ -2347,7 +2347,7 @@ static int aiL_sethyptarget( lua_State *L )
    jp = luaL_validjump( L, 1 );
 
    if ( lj->srcid != cur_system->id )
-      NLUA_ERROR(L, "Jump point must be in current system.");
+      NLUA_ERROR(L, _("Jump point must be in current system."));
 
    /* Copy vector. */
    vec = jp->pos;
@@ -2782,7 +2782,7 @@ static int aiL_getenemy_size( lua_State *L )
    UB = luaL_checklong(L,2);
 
    if (LB > UB) {
-      NLUA_ERROR(L, "Invalid Bounds");
+      NLUA_ERROR(L, _("Invalid Bounds"));
       return 0;
    }
 

@@ -287,7 +287,7 @@ int claim_xmlSave( xmlTextWriterPtr writer, Claim_t *claim )
             xmlw_elem( writer, "sys", "%s", sys->name );
          }
          else
-            WARN("System Claim has inexistent system.");
+            WARN(_("System Claim has inexistent system"));
       }
    }
 
@@ -324,7 +324,7 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
          if (sys != NULL)
             claim_addSys( claim, system_index(sys) );
          else
-            WARN("System Claim trying to load system '%s' which doesn't exist.", xml_get(node));
+            WARN(_("System Claim trying to load system '%s' which doesn't exist"), xml_get(node));
       }
       else if (xml_isNode(node,"str")) {
          str = xml_get(node);

@@ -26,7 +26,7 @@ static int commodityL_get( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
-static const luaL_reg commodityL_methods[] = {
+static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
@@ -112,7 +112,7 @@ Commodity* luaL_validcommodity( lua_State *L, int ind )
    }
 
    if (o == NULL)
-      NLUA_ERROR(L, "Commodity is invalid.");
+      NLUA_ERROR(L, _("Commodity is invalid."));
 
    return o;
 }
@@ -201,7 +201,7 @@ static int commodityL_get( lua_State *L )
    /* Get commodity. */
    commodity = commodity_get( name );
    if (commodity == NULL) {
-      NLUA_ERROR(L,"Commodity '%s' not found!", name);
+      NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
       return 0;
    }
 
@@ -269,12 +269,12 @@ static int commodityL_priceAt( lua_State *L )
    p = luaL_validplanet(L,2);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
-      NLUA_ERROR( L, "Planet '%s' does not belong to a system", p->name );
+      NLUA_ERROR( L, _("Planet '%s' does not belong to a system"), p->name );
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, "Planet '%s' can not find its system '%s'", p->name, sysname );
+      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'"), p->name, sysname );
       return 0;
    }
 

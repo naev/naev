@@ -368,11 +368,11 @@ const char *pilot_weapSetName( Pilot* p, int id )
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
    if ((ws->slots == NULL) || (array_size(ws->slots)==0))
-      return "Unused";
+      return _("Unused");
    switch (ws->type) {
-      case WEAPSET_TYPE_CHANGE: return "Weapons - Switched";  break;
-      case WEAPSET_TYPE_WEAPON: return "Weapons - Instant";   break;
-      case WEAPSET_TYPE_ACTIVE: return "Abilities - Toggled"; break;
+      case WEAPSET_TYPE_CHANGE: return _("Weapons - Switched");  break;
+      case WEAPSET_TYPE_WEAPON: return _("Weapons - Instant");   break;
+      case WEAPSET_TYPE_ACTIVE: return _("Abilities - Toggled"); break;
    }
    return NULL;
 }
@@ -1147,7 +1147,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       pilot_updateMass( p );
    }
    else
-      WARN("Shooting unknown weapon type: %s", w->outfit->name);
+      WARN(_("Shooting unknown weapon type: %s"), w->outfit->name);
 
 
    /* Reset timer. */

@@ -5,14 +5,14 @@ include("dat/ai/personality/civilian.lua")
 -- Sends a distress signal which causes faction loss
 function sos ()
    msg = {
-      "Mayday! We are under attack!",
-      "Requesting assistance. We are under attack!",
-      "Civilian vessel under attack! Requesting help!",
-      "Help! Ship under fire!",
-      "Taking hostile fire! Need assistance!",
-      "We are under attack, require support!",
-      "Mayday! Ship taking damage!",
-      string.format("Mayday! Civilian %s being assaulted!", string.lower( ai.pilot():ship():class() ))
+      _("Mayday! We are under attack!"),
+      _("Requesting assistance. We are under attack!"),
+      _("Civilian vessel under attack! Requesting help!"),
+      _("Help! Ship under fire!"),
+      _("Taking hostile fire! Need assistance!"),
+      _("We are under attack, require support!"),
+      _("Mayday! Ship taking damage!"),
+      string.format(_("Mayday! Civilian %s being assaulted!"), string.lower( ai.pilot():ship():class() ))
    }
    ai.settarget( ai.target() )
    ai.distress( msg[ rnd.int(1,#msg) ])
@@ -34,9 +34,9 @@ function create ()
 
    -- No bribe
    local bribe_msg = {
-      "\"Just leave me alone!\"",
-      "\"What do you want from me!?\"",
-      "\"Get away from me!\""
+      _("\"Just leave me alone!\""),
+      _("\"What do you want from me!?\""),
+      _("\"Get away from me!\"")
    }
    mem.bribe_no = bribe_msg[ rnd.int(1,#bribe_msg) ]
 
@@ -45,7 +45,7 @@ function create ()
    p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
-      mem.refuel_msg = string.format("\"I'll supply your ship with fuel for %d credits.\"",
+      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %d credits.\""),
             mem.refuel);
    end
 

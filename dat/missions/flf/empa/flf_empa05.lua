@@ -18,44 +18,39 @@
 
 --]]
 
--- localization stuff
-lang = naev.lang()
-if lang == "notreal" then
-else -- default English
-   title = {}
-   text = {}
+title = {}
+text = {}
 
-   title[1] = "An Explanation Is Needed"
-   text[1] = [[Cheryl has clearly been waiting for you. "Ah, hello, %s. I have another mission for you. See, some rogue FLF pilots have been attacking Dvaered and Empire ships lately. It's not many of them, but I need... oh, no, don't worry! This is not another mission to destroy rogue pilots. I just need you to go to Commander Petridis and explain the situation." You feel a sense of relief at the revelation. "Are you ready for this?"]]
+title[1] = _("An Explanation Is Needed")
+text[1] = _([[Cheryl has clearly been waiting for you. "Ah, hello, %s. I have another mission for you. See, some rogue FLF pilots have been attacking Dvaered and Empire ships lately. It's not many of them, but I need... oh, no, don't worry! This is not another mission to destroy rogue pilots. I just need you to go to Commander Petridis and explain the situation." You feel a sense of relief at the revelation. "Are you ready for this?"]])
 
-   text[2] = [[Thank you. Report back here when you're done.]]
+text[2] = _([[Thank you. Report back here when you're done.]])
 
-   title[3] = "The Situation"
-   text[3] = [[An unfamiliar look of anger and confusion is in Commander Petridis's eyes. "What is the meaning of these attacks?" he demands. "And why have I been seeing FLF pilots fighting each other?"
-    As you explain the situation, you see a look of relief on his face. "I see," he says. "That is quite troublesome, to say the least. But I'm relieved to hear that your organization itself has not turned traitor on us. By God, that would be a nightmare for me. I could get demoted, or even dishonorably discharged."]]
+title[3] = _("The Situation")
+text[3] = _([[An unfamiliar look of anger and confusion is in Commander Petridis's eyes. "What is the meaning of these attacks?" he demands. "And why have I been seeing FLF pilots fighting each other?"
+    As you explain the situation, you see a look of relief on his face. "I see," he says. "That is quite troublesome, to say the least. But I'm relieved to hear that your organization itself has not turned traitor on us. By God, that would be a nightmare for me. I could get demoted, or even dishonorably discharged."]])
 
-   text[4] = [[Quickly, the look on his face changes to one of concern. "But this is a serious situation. Dvaered pilots tend to be... hot-headed. This situation will make it much more difficult to convince them to play nice with those of you who are still on our side. And who knows how badly this will escalate?
-    "But we will just have to perservere. I will let my superiors know what is going on, and we will do our best to sort out this mess from our end. I suspect, from now on, the Empire will take notice when you take out a rogue FLF squadron in our territory." Petridis stands and offers you his hand, which you shake. "Thank you for working with us, %s." With that, he sees himself out. Now, to report back to Cheryl...]]
+text[4] = _([[Quickly, the look on his face changes to one of concern. "But this is a serious situation. Dvaered pilots tend to be... hot-headed. This situation will make it much more difficult to convince them to play nice with those of you who are still on our side. And who knows how badly this will escalate?
+    "But we will just have to perservere. I will let my superiors know what is going on, and we will do our best to sort out this mess from our end. I suspect, from now on, the Empire will take notice when you take out a rogue FLF squadron in our territory." Petridis stands and offers you his hand, which you shake. "Thank you for working with us, %s." With that, he sees himself out. Now, to report back to Cheryl...]])
 
-   title[5] = "Not So Bad"
-   text[5] = [[You approach Cheryl. "Ah, %s. Is that all sorted out?" You report that, yes, the message has been delivered, and with no hitches. "Perfect," she says. "I'm glad to hear there wasn't any bloodshed this time. Here is your pay. I have quite a lot of work to do now, so I'll see you when it's time for the next mission."]]
+title[5] = _("Not So Bad")
+text[5] = _([[You approach Cheryl. "Ah, %s. Is that all sorted out?" You report that, yes, the message has been delivered, and with no hitches. "Perfect," she says. "I'm glad to hear there wasn't any bloodshed this time. Here is your pay. I have quite a lot of work to do now, so I'll see you when it's time for the next mission."]])
 
-   misn_title = "Empire Meeting"
-   misn_desc = "You are to meet with Empire Commander Petridis and discuss the situation with rogue FLF pilots."
-   misn_reward = "Sorting out this mess"
+misn_title = _("Empire Meeting")
+misn_desc = _("You are to meet with Empire Commander Petridis and discuss the situation with rogue FLF pilots.")
+misn_reward = _("Sorting out this mess")
 
-   npc_name = "Cheryl"
-   npc_desc = "Cheryl seems to be waiting for you."
+npc_name = _("Cheryl")
+npc_desc = _("Cheryl seems to be waiting for you.")
 
-   emp_name = "Petridis"
-   emp_desc = "Commander Petridis seems to be expecting you. He seems somewhat anxious."
+emp_name = _("Petridis")
+emp_desc = _("Commander Petridis seems to be expecting you. He seems somewhat anxious.")
 
-   osd_title   = "Empire Meeting"
-   osd_desc    = {}
-   osd_desc[1] = "Go to %s in the %s system and talk to Commander Petridis"
-   osd_desc[2] = "Return to FLF base and report back to Cheryl"
-   osd_desc["__save"] = true
-end
+osd_title   = _("Empire Meeting")
+osd_desc    = {}
+osd_desc[1] = _("Go to %s in the %s system and talk to Commander Petridis")
+osd_desc[2] = _("Return to FLF base and report back to Cheryl")
+osd_desc["__save"] = true
 
 
 function create ()

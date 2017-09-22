@@ -39,7 +39,7 @@ int dpl_savePlanet( const Planet *p )
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
+      WARN(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 

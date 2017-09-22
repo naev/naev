@@ -194,7 +194,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
                nxml_saveData( writer, "planet",
                      name, pnt->name, keynum );
             else
-               WARN("Failed to save invalid planet.");
+               WARN(_("Failed to save invalid planet."));
             /* key, value */
             break;
          }
@@ -204,7 +204,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
                nxml_saveData( writer, "system",
                      name, ss->name, keynum );
             else
-               WARN("Failed to save invalid system.");
+               WARN(_("Failed to save invalid system."));
             /* key, value */
             break;
          }
@@ -240,7 +240,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             ss = system_getIndex( lj->srcid );
             dest = system_getIndex( lj->destid );
             if ((ss == NULL) || (dest == NULL))
-               WARN("Failed to save invalid jump.");
+               WARN(_("Failed to save invalid jump."));
             else
                nxml_saveJump( writer, name, ss->name, dest->name );
          }
@@ -341,14 +341,14 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                lua_pushplanet(L,planet_index(pnt));
             }
             else
-               WARN("Failed to load unexistent planet '%s'", xml_get(node));
+               WARN(_("Failed to load unexistent planet '%s'"), xml_get(node));
          }
          else if (strcmp(type,"system")==0) {
             ss = system_get(xml_get(node));
             if (ss != NULL)
                lua_pushsystem(L,system_index( ss ));
             else
-               WARN("Failed to load unexistent system '%s'", xml_get(node));
+               WARN(_("Failed to load unexistent system '%s'"), xml_get(node));
          }
          else if (strcmp(type,"faction")==0) {
             lua_pushfaction(L,faction_get(xml_get(node)));
@@ -368,10 +368,10 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                lua_pushjump(L,lj);
             }
             else
-               WARN("Failed to load unexistent jump from '%s' to '%s'", xml_get(node), buf);
+               WARN(_("Failed to load unexistent jump from '%s' to '%s'"), xml_get(node), buf);
          }
          else {
-            WARN("Unknown Lua data type!");
+            WARN(_("Unknown Lua data type!"));
             lua_pop(L,1);
             return -1;
          }

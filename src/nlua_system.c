@@ -49,7 +49,7 @@ static int systemL_setknown( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
-static const luaL_reg system_methods[] = {
+static const luaL_Reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
    { "getAll", systemL_getAll },
@@ -151,7 +151,7 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
    }
 
    if (s == NULL)
-      NLUA_ERROR(L, "System is invalid");
+      NLUA_ERROR(L, _("System is invalid"));
 
    return s;
 }
@@ -244,7 +244,7 @@ static int systemL_get( lua_State *L )
 
    /* Error checking. */
    if (ss == NULL) {
-      NLUA_ERROR(L, "No matching systems found.");
+      NLUA_ERROR(L, _("No matching systems found."));
       return 0;
    }
 

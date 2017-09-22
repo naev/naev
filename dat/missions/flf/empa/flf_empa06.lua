@@ -16,30 +16,25 @@
 include "fleethelper.lua"
 include "dat/missions/flf/flf_pirates.lua"
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-   title = {}
-   text = {}
+title = {}
+text = {}
 
-   title[1] = "A New Common Enemy"
-   text[1] = [[Cheryl seems pleased to see you. She motions for you to sit. "I have some good news, %s", she says. "As you know, having personally had to deal with this lately, we have had some... dissidents. Of course, this is a serious problem.
-    "However, we have come up with a solution. See, a large group of pirates has been terrorizing the %s system lately. It's come to the point where no one is willing to put a stop to them. So that's where we come in. This is a perfect opportunity to change our operations to suit the Empire's wishes. So I need you to lead the first of one of many missions protecting the Frontier from pirate terror. Are you ready?"]]
+title[1] = _("A New Common Enemy")
+text[1] = _([[Cheryl seems pleased to see you. She motions for you to sit. "I have some good news, %s", she says. "As you know, having personally had to deal with this lately, we have had some... dissidents. Of course, this is a serious problem.
+    "However, we have come up with a solution. See, a large group of pirates has been terrorizing the %s system lately. It's come to the point where no one is willing to put a stop to them. So that's where we come in. This is a perfect opportunity to change our operations to suit the Empire's wishes. So I need you to lead the first of one of many missions protecting the Frontier from pirate terror. Are you ready?"]])
 
-   text[2] = [[Perfect! After this mission, we will immediately cease assigning missions to attack the Dvaered forces, and begin assigning more missions such as this one. I am confident that the Dvaereds will begin to open up to us as we clean Frontier-Dvaered border systems of dangerous pirates, and that will enable you to negotiate a cease-fire deal with House Dvaered. Good luck!]]
+text[2] = _([[Perfect! After this mission, we will immediately cease assigning missions to attack the Dvaered forces, and begin assigning more missions such as this one. I am confident that the Dvaereds will begin to open up to us as we clean Frontier-Dvaered border systems of dangerous pirates, and that will enable you to negotiate a cease-fire deal with House Dvaered. Good luck!]])
 
-   title[3] = "A New Horizon"
-   text[3] = [[As you enter Sindbad after successfully completing your mission, you are warmly greeted by not only Cheryl, but several FLF soldiers. A few FLF personnel still seem dissatisfied, but you quickly brush them off. Considering how positive the reception to this mission has been, you are certain they will come around before long.
-    "Congratulations on your victory, %s!" Cheryl says, with the firm approval of many of your comrades. "This has definitely been the most important mission you will ever complete. Not only have you made the %s system safe from piracy again, I have received word that the Dvaereds have taken notice."]]
+title[3] = _("A New Horizon")
+text[3] = _([[As you enter Sindbad after successfully completing your mission, you are warmly greeted by not only Cheryl, but several FLF soldiers. A few FLF personnel still seem dissatisfied, but you quickly brush them off. Considering how positive the reception to this mission has been, you are certain they will come around before long.
+    "Congratulations on your victory, %s!" Cheryl says, with the firm approval of many of your comrades. "This has definitely been the most important mission you will ever complete. Not only have you made the %s system safe from piracy again, I have received word that the Dvaereds have taken notice."]])
 
-   text[4] = [["This is just the beginning! From now on, missions to eliminate pirate scum from all of FLF space will be offered in our mission computers. Everyone, fight the good fight! We will show everyone, including the Dvaereds, that we are not, as they say, a terrorist organization. We are the keepers of security for the Frontier, and we will not allow criminals to run rampant in our space! For the frontier!" That last sentence earns Cheryl a cheer from the audience. She hands you your pay, then excuses herself while your comrades continue to congratulate you for your success and express hope about the future of the FLF and the Frontier. Things are finally starting to look up!]]
+text[4] = _([["This is just the beginning! From now on, missions to eliminate pirate scum from all of FLF space will be offered in our mission computers. Everyone, fight the good fight! We will show everyone, including the Dvaereds, that we are not, as they say, a terrorist organization. We are the keepers of security for the Frontier, and we will not allow criminals to run rampant in our space! For the frontier!" That last sentence earns Cheryl a cheer from the audience. She hands you your pay, then excuses herself while your comrades continue to congratulate you for your success and express hope about the future of the FLF and the Frontier. Things are finally starting to look up!]])
 
-   misn_rwrd = "A new beginning for the FLF."
+misn_rwrd = _("A new beginning for the FLF.")
     
-   npc_name = "Cheryl"
-   npc_desc = "Cheryl appears to want to speak with you again. Another mission, perhaps?"
-end
+npc_name = _("Cheryl")
+npc_desc = _("Cheryl appears to want to speak with you again. Another mission, perhaps?")
 
 
 function create ()

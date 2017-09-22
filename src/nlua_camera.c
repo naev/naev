@@ -24,7 +24,7 @@
 
 /* Camera methods. */
 static int camL_set( lua_State *L );
-static const luaL_reg cameraL_methods[] = {
+static const luaL_Reg cameraL_methods[] = {
    { "set", camL_set },
    {0,0}
 }; /**< Camera Lua methods. */

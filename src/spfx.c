@@ -154,7 +154,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
                SPFX_GFX_PATH"%s"SPFX_GFX_SUF, 6, 5, 0 );
          continue;
       }
-      WARN("SPFX '%s' has unknown node '%s'.", temp->name, node->name);
+      WARN(_("SPFX '%s' has unknown node '%s'."), temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Convert from ms to s. */
@@ -164,7 +164,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
       temp->ttl = temp->anim;
 
 #define MELEMENT(o,s) \
-   if (o) WARN("SPFX '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   if (o) WARN( _("SPFX '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->anim==0.,"anim");
    MELEMENT(temp->ttl==0.,"ttl");
    MELEMENT(temp->gfx==NULL,"gfx");
@@ -218,7 +218,7 @@ int spfx_get( char* name )
 int spfx_load (void)
 {
    int mem;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
@@ -230,14 +230,14 @@ int spfx_load (void)
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,SPFX_XML_ID)) {
-      ERR("Malformed '"SPFX_DATA_PATH"' file: missing root element '"SPFX_XML_ID"'");
+      ERR( _("Malformed '%s' file: missing root element '%s'"), SPFX_DATA_PATH, SPFX_XML_ID);
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"SPFX_DATA_PATH"' file: does not contain elements");
+      ERR( _("Malformed '%s' file: does not contain elements"), SPFX_DATA_PATH);
       return -1;
    }
 
@@ -258,7 +258,7 @@ int spfx_load (void)
          spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
       }
       else
-         WARN("'"SPFX_DATA_PATH"' has unknown node '%s'.", node->name);
+         WARN( _("'%s' has unknown node '%s'."), SPFX_DATA_PATH, node->name);
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
@@ -328,7 +328,7 @@ void spfx_add( int effect,
    double ttl, anim;
 
    if ((effect < 0) || (effect > spfx_neffects)) {
-      WARN("Trying to add spfx with invalid effect!");
+      WARN(_("Trying to add spfx with invalid effect!"));
       return;
    }
 
@@ -358,7 +358,7 @@ void spfx_add( int effect,
       spfx_nstack_back++;
    }
    else {
-      WARN("Invalid SPFX layer.");
+      WARN(_("Invalid SPFX layer."));
       return;
    }
 
@@ -632,7 +632,7 @@ static int spfx_hapticInit (void)
 
    haptic_rumble = SDL_HapticNewEffect( haptic, efx );
    if (haptic_rumble < 0) {
-      WARN("Unable to upload haptic effect: %s.", SDL_GetError());
+      WARN(_("Unable to upload haptic effect: %s."), SDL_GetError());
       return -1;
    }
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
@@ -671,7 +671,7 @@ static void spfx_hapticRumble( double mod )
       efx->periodic.length       = (uint32_t)len;
       efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
       if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
-         WARN("Failed to update haptic effect: %s.", SDL_GetError());
+         WARN(_("Failed to update haptic effect: %s."), SDL_GetError());
          return;
       }
 
@@ -726,7 +726,7 @@ void spfx_render( const int layer )
          break;
 
       default:
-         WARN("Rendering invalid SPFX layer.");
+         WARN(_("Rendering invalid SPFX layer."));
          return;
    }
 

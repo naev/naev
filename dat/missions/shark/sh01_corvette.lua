@@ -11,44 +11,39 @@
 
 include "numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
-   
-   title[1] = "Nexus Shipyards needs you"
-   text[1] = [[As you approach Smith, he recognizes you. "I have an other job for you. Let me explain it: the baron isn't convinced yet that the Shark is the fighter he needs. He saw your fight against the Ancestor, but he would like to see a Shark beating a destroyer class ship. Of course, Nexus Shipyards don't want to take the risk to make you face a destroyer with a Shark.
+title = {}
+text = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
+
+title[1] = _("Nexus Shipyards needs you")
+text[1] = _([[As you approach Smith, he recognizes you. "I have an other job for you. Let me explain it: the baron isn't convinced yet that the Shark is the fighter he needs. He saw your fight against the Ancestor, but he would like to see a Shark beating a destroyer class ship. Of course, Nexus Shipyards don't want to take the risk to make you face a destroyer with a Shark.
    So, we have an other plan: we need somebody to pretend to be an outlaw destroyer pilot and to let one of our men disable his ship. If you are ready for it, all you have to do is to jump in %s with a destroyer class ship and to let the Shark disable you. As there isn't any Empire bounty this time, you will only be paid %s credits.
-   What do you say, are you in?" ]]
+   What do you say, are you in?" ]])
    
-   refusetitle = "Sorry, not interested"
-   refusetext = [["Ok, so never mind." Smith says.]]
-   
-   title[2] = "Wonderful"
-   text[2] = [["I had no doubts you would accept," Smith says. "Go and meet our pilot in %s. After the job is done, meet me on %s in %s"]]
-   
-   title[3] = "Reward"
-   text[3] = [[As you land, you see Arnold Smith who was waiting for you. He explains you that the baron was so impressed by the battle that he signed the contract. You made it possible for Nexus Shipyard to sell 20 Shark fighters. Of course, that's not a very big thing for a multi-stellar company like Nexus, but as a reward, they give you twice the sum of credits they promised to you.]]
-   
-   -- Mission details
-   misn_title = "Sharkman is back"
-   misn_reward = "%s credits"
-   misn_desc = "Nexus Shipyards needs you to demonstrate again to Baron Sauterfeldt that a Shark is able to defend his system against pirates."
-   
-   -- NPC
-   npc_desc[1] = "Arnold Smith"
-   bar_desc[1] = [[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]]
-   
-   -- OSD
-   osd_title = "Sharkman Is Back"
-   osd_msg[1] = "Jump in %s with a destroyer class ship and let the shark disable you"
-   osd_msg[2] = "Go to %s in %s to collect your pay"
-   
-end
+refusetitle = _("Sorry, not interested")
+refusetext = _([["Ok, so never mind." Smith says.]])
+
+title[2] = _("Wonderful")
+text[2] = _([["I had no doubts you would accept," Smith says. "Go and meet our pilot in %s. After the job is done, meet me on %s in %s"]])
+
+title[3] = _("Reward")
+text[3] = _([[As you land, you see Arnold Smith who was waiting for you. He explains you that the baron was so impressed by the battle that he signed the contract. You made it possible for Nexus Shipyard to sell 20 Shark fighters. Of course, that's not a very big thing for a multi-stellar company like Nexus, but as a reward, they give you twice the sum of credits they promised to you.]])
+
+-- Mission details
+misn_title = _("Sharkman is back")
+misn_reward = _("%s credits")
+misn_desc = _("Nexus Shipyards needs you to demonstrate again to Baron Sauterfeldt that a Shark is able to defend his system against pirates.")
+
+-- NPC
+npc_desc[1] = _("Arnold Smith")
+bar_desc[1] = _([[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]])
+
+-- OSD
+osd_title = _("Sharkman Is Back")
+osd_msg[1] = _("Jump in %s with a destroyer class ship and let the shark disable you")
+osd_msg[2] = _("Go to %s in %s to collect your pay")
 
 function create ()
    

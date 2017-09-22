@@ -114,7 +114,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
    if (temp->name == NULL)
-      WARN("Fleet in "FLEET_DATA_PATH" has invalid or no name");
+      WARN( _("Fleet in %s has invalid or no name"), FLEET_DATA_PATH );
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -128,14 +128,14 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
       if (ai_getProfile ( temp->ai ) == NULL)
-         WARN("Fleet '%s' has invalid AI '%s'.", temp->name, temp->ai );
+         WARN(_("Fleet '%s' has invalid AI '%s'."), temp->name, temp->ai );
 
       /* Set flags. */
       if (xml_isNode(node,"flags")) {
          cur = node->children;
          do {
             xml_onlyNodes(cur);
-            WARN("Fleet '%s' has unknown flag node '%s'.", temp->name, cur->name);
+            WARN(_("Fleet '%s' has unknown flag node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -170,16 +170,16 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                /* Load pilot's ship */
                xmlr_attr(cur,"ship",c);
                if (c==NULL)
-                  WARN("Pilot %s in Fleet %s has null ship", pilot->name, temp->name);
+                  WARN(_("Pilot %s in Fleet %s has null ship"), pilot->name, temp->name);
                pilot->ship = ship_get(c);
                if (pilot->ship == NULL)
-                  WARN("Pilot %s in Fleet %s has invalid ship", pilot->name, temp->name);
+                  WARN(_("Pilot %s in Fleet %s has invalid ship"), pilot->name, temp->name);
                if (c!=NULL)
                   free(c);
                continue;
             }
 
-            WARN("Fleet '%s' has unknown pilot node '%s'.", temp->name, cur->name);
+            WARN(_("Fleet '%s' has unknown pilot node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
 
          /* Resize to minimum. */
@@ -187,11 +187,11 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          continue;
       }
 
-      DEBUG("Unknown node '%s' in fleet '%s'",node->name,temp->name);
+      DEBUG(_("Unknown node '%s' in fleet '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
+if (o) WARN( _("Fleet '%s' missing '%s' element"), s,temp->name)
 /**< Hack to check for missing fields. */
    MELEMENT(temp->ai==NULL,"ai");
    MELEMENT(temp->faction==-1,"faction");
@@ -210,7 +210,7 @@ if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
 static int fleet_loadFleets (void)
 {
    int mem;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
@@ -221,13 +221,13 @@ static int fleet_loadFleets (void)
 
    node = doc->xmlChildrenNode; /* fleets node */
    if (strcmp((char*)node->name,"Fleets")) {
-      ERR("Malformed "FLEET_DATA_PATH" file: missing root element 'Fleets'.");
+      ERR( _("Malformed %s file: missing root element 'Fleets'."), FLEET_DATA_PATH);
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first fleet node */
    if (node == NULL) {
-      ERR("Malformed "FLEET_DATA_PATH" file: does not contain elements.");
+      ERR( _("Malformed %s file: does not contain elements."), FLEET_DATA_PATH );
       return -1;
    }
 
@@ -265,7 +265,7 @@ int fleet_load (void)
    if (fleet_loadFleets())
       return -1;
 
-   DEBUG("Loaded %d Fleet%s", nfleets, (nfleets==1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d Fleet", "Loaded %d Fleets", nfleets ), nfleets );
 
    return 0;
 }

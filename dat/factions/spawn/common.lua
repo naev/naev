@@ -40,7 +40,7 @@ function scom.createSpawnTable( weights )
 
    -- Sanity check
    if max == 0 then
-      error("No weight specified")
+      error(_("No weight specified"))
    end
 
    -- Normalize
@@ -61,7 +61,7 @@ function scom.choose( stable )
          return v["func"]()
       end
    end
-   error("No spawn function found")
+   error(_("No spawn function found"))
 end
 
 
@@ -77,13 +77,16 @@ function scom.spawn( pilots )
          local pos = nil
          if leader ~= nil then
             pos = leader:pos()
+            if pilots.__formation ~= nil then
+               leader:memory().formation = pilots.__formation
+            end
          end
          p = pilot.add( v["pilot"], nil, pos )
       else
          p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5])
       end
       if #p == 0 then
-         error("No pilots added")
+         error(_("No pilots added"))
       end
       local presence = v["presence"] / #p
       for _,vv in ipairs(p) do

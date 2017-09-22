@@ -72,7 +72,7 @@ Ship* ship_get( const char* name )
       if (strcmp(temp[i].name, name)==0)
          return &temp[i];
 
-   WARN("Ship %s does not exist", name);
+   WARN(_("Ship %s does not exist"), name);
    return NULL;
 }
 
@@ -276,7 +276,7 @@ credits_t ship_basePrice( const Ship* s )
    price = s->price;
 
    if (price < 0) {
-      WARN("Negative ship base price!");
+      WARN(_("Negative ship base price!"));
       price = 0;
    }
 
@@ -391,7 +391,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    if (gfx == NULL) {
-      WARN( "Unable to create ship '%s' targeting surface.", temp->name );
+      WARN( _("Unable to create ship '%s' targeting surface."), temp->name );
       return -1;
    }
 
@@ -487,7 +487,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
       base[i] = buf[i];
    }
    if (i>=PATH_MAX) {
-      WARN("Failed to get base path of '%s'.", buf);
+      WARN(_("Failed to get base path of '%s'."), buf);
       return -1;
    }
 
@@ -516,7 +516,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
       nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
       if (temp->gfx_engine == NULL)
-         WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
+         WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
 
    /* Calculate mount angle. */
@@ -570,7 +570,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
          typ       = "Small";
          base_size = OUTFIT_SLOT_SIZE_LIGHT;
       }
-      WARN("Ship '%s' has implicit slot size, setting to '%s'",temp->name, typ);
+      WARN(_("Ship '%s' has implicit slot size, setting to '%s'"),temp->name, typ);
    }
    free(buf);
 
@@ -582,7 +582,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
          free(buf);
       }
       else
-         WARN("Ship '%s' missing 'x' element of 'weapon' slot.",temp->name);
+         WARN(_("Ship '%s' missing 'x' element of 'weapon' slot."),temp->name);
       xmlr_attr(node,"y",buf);
       if (buf!=NULL) {
          slot->mount.y = atof(buf);
@@ -592,14 +592,14 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
          free(buf);
       }
       else
-         WARN("Ship '%s' missing 'y' element of 'weapon' slot.",temp->name);
+         WARN(_("Ship '%s' missing 'y' element of 'weapon' slot."),temp->name);
       xmlr_attr(node,"h",buf);
       if (buf!=NULL) {
          slot->mount.h = atof(buf);
          free(buf);
       }
       else
-         WARN("Ship '%s' missing 'h' element of 'weapon' slot.",temp->name);
+         WARN(_("Ship '%s' missing 'h' element of 'weapon' slot."),temp->name);
    }
 
    /* Parse property. */
@@ -634,7 +634,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    if (buf != NULL) {
       o = outfit_get( buf );
       if (o == NULL)
-         WARN( "Ship '%s' has default outfit '%s' which does not exist.", temp->name, buf );
+         WARN( _("Ship '%s' has default outfit '%s' which does not exist."), temp->name, buf );
       slot->data = o;
    }
 
@@ -644,7 +644,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Required slots need a default outfit. */
    if (slot->required && (slot->data == NULL))
-      WARN("Ship '%s' has required slot without a default outfit.", temp->name);
+      WARN(_("Ship '%s' has required slot without a default outfit."), temp->name);
 
    return 0;
 }
@@ -674,7 +674,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* Get name. */
    xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL)
-      WARN("Ship in "SHIP_DATA_PATH" has invalid or no name");
+      WARN( _("Ship in %s has invalid or no name"), SHIP_DATA_PATH );
 
    /* Datat that must be loaded first. */
    node = parent->xmlChildrenNode;
@@ -698,7 +698,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Get base graphic name. */
          buf = xml_get(node);
          if (buf==NULL) {
-            WARN("Ship '%s': GFX element is NULL", temp->name);
+            WARN(_("Ship '%s': GFX element is NULL"), temp->name);
             continue;
          }
 
@@ -754,7 +754,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             xmlr_float(cur,"turn",temp->turn);
             xmlr_float(cur,"speed",temp->speed);
             /* All the xmlr_ stuff have continue cases. */
-            WARN("Ship '%s' has unknown movement node '%s'.", temp->name, cur->name);
+            WARN(_("Ship '%s' has unknown movement node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -770,7 +770,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             xmlr_float(cur,"energy",temp->energy);
             xmlr_float(cur,"energy_regen",temp->energy_regen);
             /* All the xmlr_ stuff have continue cases. */
-            WARN("Ship '%s' has unknown health node '%s'.", temp->name, cur->name);
+            WARN(_("Ship '%s' has unknown health node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -785,7 +785,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             xmlr_float(cur,"fuel_consumption",temp->fuel_consumption);
             xmlr_float(cur,"cargo",temp->cap_cargo);
             /* All the xmlr_ stuff have continue cases. */
-            WARN("Ship '%s' has unknown characteristic node '%s'.", temp->name, cur->name);
+            WARN(_("Ship '%s' has unknown characteristic node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -801,7 +801,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             else if (xml_isNode(cur,"weapon"))
                temp->outfit_nweapon++;
             else
-               WARN("Ship '%s' has unknown slot node '%s'.", temp->name, cur->name);
+               WARN(_("Ship '%s' has unknown slot node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
 
          /* Allocate the space. */
@@ -840,7 +840,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                temp->stats = ll;
                continue;
             }
-            WARN("Ship '%s' has unknown stat '%s'.", temp->name, cur->name);
+            WARN(_("Ship '%s' has unknown stat '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
 
          /* Load array. */
@@ -864,7 +864,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       if (xml_isNode(node,"mission"))
          continue;
 
-      DEBUG("Ship '%s' has unknown node '%s'.", temp->name, node->name);
+      DEBUG(_("Ship '%s' has unknown node '%s'."), temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -872,7 +872,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    temp->turn         *= M_PI / 180.; /* Convert to rad. */
 
    /* ship validator */
-#define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
    MELEMENT(temp->gfx_space==NULL,"GFX");
@@ -908,7 +908,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   uint32_t bufsize, nfiles;
+   size_t bufsize, nfiles;
    char *buf, **ship_files, *file;
    int i, sl;
    xmlNodePtr node;
@@ -936,7 +936,7 @@ int ships_load (void)
 
       if (doc == NULL) {
          free(buf);
-         WARN("%s file is invalid xml!", file);
+         WARN(_("%s file is invalid xml!"), file);
          free(file);
          continue;
       }
@@ -945,7 +945,7 @@ int ships_load (void)
       if (node == NULL) {
          xmlFreeDoc(doc);
          free(buf);
-         WARN("Malformed %s file: does not contain elements", file);
+         WARN(_("Malformed %s file: does not contain elements"), file);
          free(file);
          continue;
       }
@@ -963,7 +963,7 @@ int ships_load (void)
 
    /* Shrink stack. */
    array_shrink(&ship_stack);
-   DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
    for (i=0; i<(int)nfiles; i++)

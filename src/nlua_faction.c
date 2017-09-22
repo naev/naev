@@ -42,7 +42,7 @@ static int factionL_logoTiny( lua_State *L );
 static int factionL_colour( lua_State *L );
 static int factionL_isknown( lua_State *L );
 static int factionL_setknown( lua_State *L );
-static const luaL_reg faction_methods[] = {
+static const luaL_Reg faction_methods[] = {
    { "get", factionL_get },
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
@@ -109,7 +109,7 @@ static int factionL_get( lua_State *L )
    name = luaL_checkstring(L,1);
    f = faction_get(name);
    if (f < 0) {
-      NLUA_ERROR(L,"Faction '%s' not found in stack.", name );
+      NLUA_ERROR(L,_("Faction '%s' not found in stack."), name );
       return 0;
    }
    lua_pushfaction(L,f);
@@ -151,7 +151,7 @@ LuaFaction luaL_validfaction( lua_State *L, int ind )
    }
 
    if (id == -1)
-      NLUA_ERROR(L,"Faction '%s' not found in stack.", lua_tostring(L,ind) );
+      NLUA_ERROR(L,_("Faction '%s' not found in stack."), lua_tostring(L,ind) );
 
    return id;
 }

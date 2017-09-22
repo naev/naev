@@ -2,12 +2,6 @@
 -- Prowl Event for the Crazy Baron mission string. Only used when NOT doing any Baron missions.
 --]]
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-end
-
 function create()
     -- TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
     shipname = "Pinnacle"

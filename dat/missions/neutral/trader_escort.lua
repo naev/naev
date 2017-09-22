@@ -4,74 +4,68 @@ include "dat/scripts/nextjump.lua"
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
+misn_title = _("Escort a %s convoy to %s in %s.")
+misn_reward = _("%s credits")
 
-   misn_title = "Escort a %s convoy to %s in %s."
-   misn_reward = "%s credits"
+convoysizestr = {}
+convoysizestr[1] = _("tiny")
+convoysizestr[2] = _("small") 
+convoysizestr[3] = _("medium")
+convoysizestr[4] = _("large")
+convoysizestr[5] = _("huge")
+
+title_p1 = _("A %s convoy of traders needs protection to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
    
-   convoysize = {}
-   convoysize[1] = "tiny"
-   convoysize[2] = "small" 
-   convoysize[3] = "medium"
-   convoysize[4] = "large"
-   convoysize[5] = "huge"
-   
-   title_p1 = "A %s convoy of traders needs protection to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."
-   
-   -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-   title_p2 = [[ 
-    
+-- Note: please leave the trailing space on the line below! Needed to make the newline show up.
+title_p2 = _([[
+
 Cargo: %s
 Jumps: %d
 Travel distance: %d
-Piracy Risk: %s]]
+Piracy Risk: %s]])
 
-   piracyrisk = {}
-   piracyrisk[1] = "None"
-   piracyrisk[2] = "Low"
-   piracyrisk[3] = "Medium"
-   piracyrisk[4] = "High"
-   
-   accept_title = "Mission Accepted"
-    
-   osd_title = "Convey Escort"
-   osd_msg = "Escort a convoy of traders to %s in the %s system."
-   
-   slow = {}
-   slow[1] = "Not enough fuel"
-   slow[2] = [[The destination is %s jumps away, but you only have enough fuel for %s jumps. You cannot stop to refuel.
+piracyrisk = {}
+piracyrisk[1] = _("None")
+piracyrisk[2] = _("Low")
+piracyrisk[3] = _("Medium")
+piracyrisk[4] = _("High")
 
-Accept the mission anyway?]]
+accept_title = _("Mission Accepted")
 
-   landsuccesstitle = "Success!"
-   landsuccesstext = "You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount."
-   
-   landcasualtytitle = "Success with Casualities"
-   landcasualtytext = {}
-   landcasualtytext[1] = "You've arrived with the trading convoy more or less intact. Your pay is docked slightly to provide compensation for the families of the lost crew members."
-   landcasualtytext[2] = "You arrive with what's left of the convoy. It's not much, but it's better than nothing. After a moment of silence of the lost crew members, you are paid a steeply discounted amount."
+osd_title = _("Convey Escort")
+osd_msg = _("Escort a convoy of traders to %s in the %s system.")
 
-   wrongsystitle = "You diverged!"
-   wrongsystext = [[You have jumped to the wrong system! You are no longer part of the mission to escort the traders.]]
-   
-   convoydeathtitle = "The convoy has been destroyed!"
-   convoydeathtext = [[All of the traders have been killed. You are a terrible escort.]]
-   
-   landfailtitle = "You abandoned your mission!"
-   landfailtext = "You have landed, but you were supposed to escort the trading convoy. Your mission is a failure!"
-   
-   
-   convoynoruntitle = "You have left your convoy behind!"
-   convoynoruntext = [[You jumped before the rest of your convoy and the remaining ships scatter to find cover. You have abandoned your duties, and failed your mission.]]
-   
-   convoynolandtitle = "You landed before the convoy!"
-   convoynolandtext = [[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]]
-    
-   traderdistress = "Convoy ships under attack! Requesting immediate assistance!"
-end
+slow = {}
+slow[1] = _("Not enough fuel")
+slow[2] = _([[The destination is %s jumps away, but you only have enough fuel for %s jumps. You cannot stop to refuel.
+
+Accept the mission anyway?]])
+
+landsuccesstitle = _("Success!")
+landsuccesstext = _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount.")
+
+landcasualtytitle = _("Success with Casualities")
+landcasualtytext = {}
+landcasualtytext[1] = _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly to provide compensation for the families of the lost crew members.")
+landcasualtytext[2] = _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. After a moment of silence of the lost crew members, you are paid a steeply discounted amount.")
+
+wrongsystitle = _("You diverged!")
+wrongsystext = _([[You have jumped to the wrong system! You are no longer part of the mission to escort the traders.]])
+
+convoydeathtitle = _("The convoy has been destroyed!")
+convoydeathtext = _([[All of the traders have been killed. You are a terrible escort.]])
+
+landfailtitle = _("You abandoned your mission!")
+landfailtext = _("You have landed, but you were supposed to escort the trading convoy. Your mission is a failure!")
+
+
+convoynoruntitle = _("You have left your convoy behind!")
+convoynoruntext = _([[You jumped before the rest of your convoy and the remaining ships scatter to find cover. You have abandoned your duties, and failed your mission.]])
+
+convoynolandtitle = _("You landed before the convoy!")
+convoynolandtext = _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]])
+
+traderdistress = _("Convoy ships under attack! Requesting immediate assistance!")
 
 
 function create()
@@ -96,45 +90,45 @@ function create()
     
     --Select size of convoy. Must have enough combat exp to get large convoys.
    if player.getRating() >= 5000 then
-      convoysize = convoysize[rnd.rnd(1,5)]
+      convoysize = rnd.rnd(1,5)
    elseif player.getRating() >= 2000 then
-      convoysize = convoysize[rnd.rnd(1,4)]
+      convoysize = rnd.rnd(1,4)
    elseif player.getRating() >= 1000 then
-      convoysize = convoysize[rnd.rnd(1,3)]
+      convoysize = rnd.rnd(1,3)
    elseif player.getRating() >= 500 then
-      convoysize = convoysize[rnd.rnd(1,2)]
+      convoysize = rnd.rnd(1,2)
    else
-      convoysize = convoysize[1]
+      convoysize = 1
    end
    
    -- Choose mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
-   if convoysize == "tiny" then
+   if convoysize == 1 then
       tier = 1
       jumpreward = commodity.price(cargo)
       distreward = math.log(100*commodity.price(cargo))/100
-   elseif convoysize == "small" then
+   elseif convoysize == 2 then
       tier = 2
       jumpreward = commodity.price(cargo)
       distreward = math.log(250*commodity.price(cargo))/100
-   elseif convoysize == "medium" then
+   elseif convoysize == 3 then
       tier = 3
       jumpreward = commodity.price(cargo)
       distreward = math.log(500*commodity.price(cargo))/100
-   elseif convoysize == "large" then
+   elseif convoysize == 4 then
       tier = 4
       jumpreward = commodity.price(cargo)
       distreward = math.log(1000*commodity.price(cargo))/100
-   elseif convoysize == "huge" then
+   elseif convoysize == 5 then
       tier = 5
       jumpreward = commodity.price(cargo)
       distreward = math.log(2000*commodity.price(cargo))/100
    end
    reward = 2.0^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
-   misn.setTitle( misn_title:format( convoysize, destplanet:name(), destsys:name() ) )
-   misn.setDesc(title_p1:format(convoysize, destplanet:name(), destsys:name()) .. title_p2:format(cargo, numjumps, traveldist, piracyrisk))
+   misn.setTitle( misn_title:format( convoysizestr[convoysize], destplanet:name(), destsys:name() ) )
+   misn.setDesc(title_p1:format(convoysizestr[convoysize], destplanet:name(), destsys:name()) .. title_p2:format(cargo, numjumps, traveldist, piracyrisk))
    misn.markerAdd(destsys, "computer")
    misn.setReward(misn_reward:format(numstring(reward)))
     
@@ -142,23 +136,23 @@ end
 
 function accept()
     
-   if convoysize == "tiny" then
+   if convoysize == 1 then
       convoyname = "Trader Convoy 3"
       alive = {true, true, true} -- Keep track of the traders. Update this when they die.
       alive["__save"] = true
-   elseif convoysize == "small" then
+   elseif convoysize == 2 then
       convoyname = "Trader Convoy 4"
       alive = {true, true, true, true}
       alive["__save"] = true
-   elseif convoysize == "medium" then
+   elseif convoysize == 3 then
       convoyname = "Trader Convoy 5"
       alive = {true, true, true, true, true}
       alive["__save"] = true
-   elseif convoysize == "large" then
+   elseif convoysize == 4 then
       convoyname = "Trader Convoy 6"
       alive = {true, true, true, true, true, true}
       alive["__save"] = true
-   elseif convoysize == "huge" then
+   elseif convoysize == 5 then
       convoyname = "Trader Convoy 8"
       alive = {true, true, true, true, true, true, true, true}
       alive["__save"] = true      
@@ -187,13 +181,13 @@ end
 
 function takeoff()
    --Make it interesting
-   if convoysize == "tiny" then
+   if convoysize == 1 then
       ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
-   elseif convoysize == "small" then
+   elseif convoysize == 2 then
       ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
-   elseif convoysize == "medium" then
+   elseif convoysize == 3 then
       ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
-   elseif convoysize == "large" then
+   elseif convoysize == 4 then
       ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
    else
       ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
@@ -224,13 +218,13 @@ function jumpin()
       abort()
    elseif system.cur() == destsys and misnfail == false then -- player has reached the destination system
       --Make it interesting
-      if convoysize == "tiny" then
+      if convoysize == 1 then
          ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == "small" then
+      elseif convoysize == 2 then
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == "medium" then
+      elseif convoysize == 3 then
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == "large" then
+      elseif convoysize == 4 then
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
       else
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
@@ -254,13 +248,13 @@ function jumpin()
       end
    elseif misnfail == false then -- Not yet at destination, so traders continue to next system.
       --Make it interesting
-      if convoysize == "tiny" then
+      if convoysize == 1 then
          ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == "small" then
+      elseif convoysize == 2 then
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == "medium" then
+      elseif convoysize == 3 then
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == "large" then
+      elseif convoysize == 4 then
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
       else
          ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
@@ -309,7 +303,7 @@ function land()
    elseif planet.cur() == destplanet and convoyLand == false then
       tk.msg(convoynolandtitle, convoynolandtext)
       misn.finish(false)
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == "tiny" then
+   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 1 then
       if dead == 0 then
          tk.msg(landsuccesstitle, landsuccesstext)
          player.pay(reward)
@@ -323,7 +317,7 @@ function land()
          player.pay(reward/4)
          misn.finish(true)
       end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == "small" then
+   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 2 then
       if dead == 0 then
          tk.msg(landsuccesstitle, landsuccesstext)
          player.pay(reward)
@@ -337,7 +331,7 @@ function land()
          player.pay(reward/4)
          misn.finish(true)
       end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == "medium" then
+   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 3 then
       if dead == 0 then
          tk.msg(landsuccesstitle, landsuccesstext)
          player.pay(reward)
@@ -351,7 +345,7 @@ function land()
          player.pay(reward/4)
          misn.finish(true)
       end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == "large" then
+   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 4 then
       if dead == 0 then
          tk.msg(landsuccesstitle, landsuccesstext)
          player.pay(reward)
@@ -365,7 +359,7 @@ function land()
          player.pay(reward/4)
          misn.finish(true)
       end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == "huge" then
+   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 5 then
       if dead == 0 then
          tk.msg(landsuccesstitle, landsuccesstext)
          player.pay(reward)
@@ -383,14 +377,14 @@ function land()
 end
 
 function traderDeath()
-   if convoysize == "tiny" then
+   if convoysize == 1 then
       if alive[3] then alive[3] = false
       elseif alive[2] then alive[2] = false
       else -- all convoy dead
          tk.msg(convoydeathtitle, convoydeathtext)
          abort()
       end
-   elseif convoysize == "small" then
+   elseif convoysize == 2 then
       if alive[4] then alive[4] = false
       elseif alive[3] then alive[3] = false
       elseif alive[2] then alive[2] = false
@@ -398,7 +392,7 @@ function traderDeath()
          tk.msg(convoydeathtitle, convoydeathtext)
          abort()
       end
-   elseif convoysize == "medium" then
+   elseif convoysize == 3 then
       if alive[5] then alive[5] = false
       elseif alive[4] then alive[4] = false
       elseif alive[3] then alive[3] = false
@@ -408,7 +402,7 @@ function traderDeath()
          tk.msg(convoydeathtitle, convoydeathtext)
          abort()
       end
-   elseif convoysize == "large" then
+   elseif convoysize == 4 then
       if alive[6] then alive[6] = false
       elseif alive[5] then alive[5] = false
       elseif alive[4] then alive[4] = false
@@ -418,7 +412,7 @@ function traderDeath()
          tk.msg(convoydeathtitle, convoydeathtext)
          abort()
       end
-   elseif convoysize == "huge" then
+   elseif convoysize == 5 then
       if alive[8] then alive[8] = false
       elseif alive[7] then alive[7] = false
       elseif alive[6] then alive[6] = false

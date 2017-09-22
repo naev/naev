@@ -7,55 +7,51 @@
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-   else -- default english
-   misn_desc = "The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left)."
-   misn_reward = "%s credits"
-   
-   title = [[ES: Long distance cargo transport to %s in the %s system
+misn_title = "ES: Long distance cargo transport (%d tonnes of %s)"
+misn_desc = _("The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left).")
+misn_reward = _("%s credits")
+
+title = _([[ES: Long distance cargo transport to %s in the %s system
    Cargo: %s (%d tonnes)
    Jumps: %d
    Travel distance: %d
    Piracy risk: %s
-   Time limit: %s]]
+   Time limit: %s]])
    
    
-   full = {}
-   full[1] = "Ship is full"
-   full[2] = "Your ship is too full. You need to make room for %d more tonnes if you want to be able to accept the mission."
-   
-   slow = {}
-   slow[1] = "Too slow"
-   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, and the Empire is not fond of delays. Accept the mission anyway?]]
-   
-   piracyrisk = {}
-   piracyrisk[1] = "None"
-   piracyrisk[2] = "Low"
-   piracyrisk[3] = "Medium"
-   piracyrisk[4] = "High"
-   
-   msg_title = {}
-   msg_title[1] = "Mission Accepted"
-   msg_title[2] = "Too many missions"
-   msg_title[3] = "Successful Delivery"
-   msg_msg = {}
-   msg_msg[1] = "The Empire workers load the %d tonnes of %s onto your ship."
-   msg_msg[2] = "You have too many active missions."
-   msg_msg[3] = "The Empire workers unload the %s at the docks."
-   miss = {}
-   miss[1]= "Cargo Missing"
-   miss[2] = "You are missing the %d tonnes of %s!."
-   miss[3] = "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
-   
-   osd_title = "Long Distance Empire Shipping"
-   osd_msg = {}
-   osd_msg[1] = "Fly to %s in the %s system before %s."
-   osd_msg[2] = "You have %s remaining."
-   osd_msg1 = "Fly to %s in the %s system before %s."
-   osd_msg2 = "You have %s remaining." -- Need to reuse.
-end
+full = {}
+full[1] = _("Ship is full")
+full[2] = _("Your ship is too full. You need to make room for %d more tonnes if you want to be able to accept the mission.")
+
+slow = {}
+slow[1] = _("Too slow")
+slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, and the Empire is not fond of delays. Accept the mission anyway?]])
+
+piracyrisk = {}
+piracyrisk[1] = _("None")
+piracyrisk[2] = _("Low")
+piracyrisk[3] = _("Medium")
+piracyrisk[4] = _("High")
+
+msg_title = {}
+msg_title[1] = _("Mission Accepted")
+msg_title[2] = _("Too many missions")
+msg_title[3] = _("Successful Delivery")
+msg_msg = {}
+msg_msg[1] = _("The Empire workers load the %d tonnes of %s onto your ship.")
+msg_msg[2] = _("You have too many active missions.")
+msg_msg[3] = _("The Empire workers unload the %s at the docks.")
+miss = {}
+miss[1]= _("Cargo Missing")
+miss[2] = _("You are missing the %d tonnes of %s!.")
+miss[3] = _("MISSION FAILED: You have failed to deliver the goods to the Empire on time!")
+
+osd_title = _("Long Distance Empire Shipping")
+osd_msg = {}
+osd_msg[1] = _("Fly to %s in the %s system before %s.")
+osd_msg[2] = _("You have %s remaining.")
+osd_msg1 = _("Fly to %s in the %s system before %s.")
+osd_msg2 = _("You have %s remaining.") -- Need to reuse.
 
 --[[
    -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -121,7 +117,7 @@ function create()
    distreward = math.log(300*commodity.price(cargo))/100
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
-   misn.setTitle("ES: Long distance cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
+   misn.setTitle( misn_title:format( amount, cargo ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(title:format(destplanet:name(), destsys:name(), cargo, amount, numjumps, traveldist, piracyrisk, (timelimit - time.get()):str()))
    misn.setReward(misn_reward:format(numstring(reward)))
