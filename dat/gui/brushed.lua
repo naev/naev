@@ -464,11 +464,7 @@ function render( dt )
    end
    right_side_w = (bar_w + 6)*wbars_right - 1
    gui_w = right_side_w + left_side_w - 10
-   if var.peek("gui_brushed_centered") then
-      mod_x = math.floor( (screen_w - gui_w)/2 )
-   else
-      mod_x = 0
-   end
+   mod_x = math.floor( (screen_w - gui_w)/2 )
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
    
