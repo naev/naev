@@ -15,71 +15,67 @@
 include("dat/scripts/pilot/pirate.lua")
 include("dat/scripts/numstring.lua")
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
-   
-   title[1] = "Nexus Shipyards needs you"
-   text[1] = [[You approach the man and he introduces himself: "Hello, my name is Arnold Smith, I work for the Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
+title = {}
+text = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
+
+title[1] = _("Nexus Shipyards needs you")
+text[1] = _([[You approach the man and he introduces himself: "Hello, my name is Arnold Smith, I work for the Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
    Actually, this is more than a demonstration: if you accept, you will have to destroy a pirate Ancestor with only a Shark." The man shortly stops talking to look at your reaction. He then goes ahead: 
-   "Of course, the pilot of the Ancestor has a bounty on his head, so it won't be a murder. The sum of the bounty will be paid to you and Nexus will add a little amount. Are you in?"]]
+   "Of course, the pilot of the Ancestor has a bounty on his head, so it won't be a murder. The sum of the bounty will be paid to you and Nexus will add a little amount. Are you in?"]])
    
-   refusetitle = "Sorry, not interested"
-   refusetext = [["That's your choice," the man says. "Of course, there are other talented pilots in this galaxy, but I was quite sure, you were the perfect one for this job. Don't hesitate if you change your mind."]]
+refusetitle = _("Sorry, not interested")
+refusetext = _([["That's your choice," the man says. "Of course, there are other talented pilots in this galaxy, but I was quite sure, you were the perfect one for this job. Don't hesitate if you change your mind."]])
    
-   title[2] = "Wonderful"
-   text[2] = [[As you says that you accept the task, the man seems to relax. "Great! I knew I could trust you. I meet you on %s in the %s system. I'll be with my boss and our customer, the Baron Sauterfeldt."]]
+title[2] = _("Wonderful")
+text[2] = _([[As you says that you accept the task, the man seems to relax. "Great! I knew I could trust you. I meet you on %s in the %s system. I'll be with my boss and our customer, the Baron Sauterfeldt."]])
    
-   title[3] = "Ready for action"
-   text[3] = [["Nice to see you again," the man says smiling. "I hope you are ready to kick some pirate's ass! Please follow me, I will introduce you to my boss, who is the sales manager of Nexus Shipyards and to the Baron."
+title[3] = _("Ready for action")
+text[3] = _([["Nice to see you again," the man says smiling. "I hope you are ready to kick some pirate's ass! Please follow me, I will introduce you to my boss, who is the sales manager of Nexus Shipyards and to the Baron."
    The man guides you out of the bar and to some kind of control room where you see some important-looking people. After being introduced to some of them, Arnold Smith takes you apart for a final briefing:
    "Remember that the Ancestor has much more firepower and sustainability than the Shark. You'll have to outmaneuver the foe and wait until he has launched his last rocket to become offensive."
-   He then follows you to the spaceport. After a short waiting, he receives an holocall saying that the pirate just jumped in %s. Looks like it's time to take off.]]
-   text[4] = [["Nice to see you again," the man says smiling. "I hope you are ready to kick some pirate's ass! Please follow me, I will introduce you to my boss, who is the sales manager of Nexus Shipyards and to the Baron."
+   He then follows you to the spaceport. After a short waiting, he receives an holocall saying that the pirate just jumped in %s. Looks like it's time to take off.]])
+text[4] = _([["Nice to see you again," the man says smiling. "I hope you are ready to kick some pirate's ass! Please follow me, I will introduce you to my boss, who is the sales manager of Nexus Shipyards and to the Baron."
    The man guides you out of the bar and to some kind of control room where you see some important-looking people. After being introduced to some of them, Arnold Smith takes you apart for a final briefing:
    "Remember that the Ancestor has much more firepower and sustainability than the Shark. You'll have to outmaneuver the foe and wait until he has launched his last rocket to become offensive."
-   He then follows you to the spaceport. After a short waiting, he receives an holocall saying that the pirate just jumped in %s. Looks like it's time to take off.]]
+   He then follows you to the spaceport. After a short waiting, he receives an holocall saying that the pirate just jumped in %s. Looks like it's time to take off.]])
    
-   title[4] = "He ran away"
-   text[5] = [[As you get out of your ship, Arnold Smith says you that as the pirate ran away, you didn't kill him. "Once we will have found another Pirate to kill, I will be back with my mission," he says.]]
+title[4] = _("He ran away")
+text[5] = _([[As you get out of your ship, Arnold Smith says you that as the pirate ran away, you didn't kill him. "Once we will have found another Pirate to kill, I will be back with my mission," he says.]])
    
-   title[5] = "Congratulations!"
-   text[6] = [[As you step on the ground, Arnold Smith comes to you: "Now that the Baron has seen how helpful a Shark can be in the hands of a good pilot, I have no doubts he will buy some to protect the %s-%s trade route".
-   He then hands you your pay. "If we are again in need of a pilot, we will try to contact you again."]]
+title[5] = _("Congratulations!")
+text[6] = _([[As you step on the ground, Arnold Smith comes to you: "Now that the Baron has seen how helpful a Shark can be in the hands of a good pilot, I have no doubts he will buy some to protect the %s-%s trade route".
+   He then hands you your pay. "If we are again in need of a pilot, we will try to contact you again."]])
    
-   title[6] = "You ran away!"
-   text[7] = [[Your mission failed.]]
+title[6] = _("You ran away!")
+text[7] = _([[Your mission failed.]])
    
-   title[7] = "It's time to take off"
-   text[8] = [[The pirate just jumped in from %s!]]
-   
-   title[8] = "You need a Shark"
-   text[9] = [[You receive a comm from %s: "You were supposed to use a Shark in this battle. You can't do this battle with an other ship." Your mission failed.]]
-   
-   -- Mission details
-   misn_title = "A Shark Bites"
-   misn_reward = "%s credits"
-   misn_desc = "Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt that a Shark is able to defend his system against pirates."
-   
-   -- NPC
-   npc_desc[1] = "A honest-looking man"
-   bar_desc[1] = "This man looks like a honest citizen and seems to try to draw your attention."
-   
-   npc_desc[2] = "Arnold Smith"
-   bar_desc[2] = [[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]
-   
-   -- OSD
-   osd_title = "A Shark Bites"
-   osd_msg[1] = "Buy a Shark, fly to the %s system and land on %s"
-   osd_msg[2] = "Go to %s and kill the pirate with your Shark (and not an Empire Shark)"
-   osd_msg[3] = "Land on %s and collect your fee"
-   piratejump_msg = "The pirate ran away: land on %s"
-end
+title[7] = _("It's time to take off")
+text[8] = _([[The pirate just jumped in from %s!]])
+
+title[8] = _("You need a Shark")
+text[9] = _([[You receive a comm from %s: "You were supposed to use a Shark in this battle. You can't do this battle with an other ship." Your mission failed.]])
+
+-- Mission details
+misn_title = _("A Shark Bites")
+misn_reward = _("%s credits")
+misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt that a Shark is able to defend his system against pirates.")
+
+-- NPC
+npc_desc[1] = _("A honest-looking man")
+bar_desc[1] = _("This man looks like a honest citizen and seems to try to draw your attention.")
+
+npc_desc[2] = _("Arnold Smith")
+bar_desc[2] = _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]])
+
+-- OSD
+osd_title = _("A Shark Bites")
+osd_msg[1] = _("Buy a Shark, fly to the %s system and land on %s")
+osd_msg[2] = _("Go to %s and kill the pirate with your Shark (and not an Empire Shark)")
+osd_msg[3] = _("Land on %s and collect your fee")
+piratejump_msg = _("The pirate ran away: land on %s")
 
 function create ()
    

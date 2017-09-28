@@ -216,7 +216,7 @@ Widget* window_newWidget( Window* w, const char *name )
 
       /* Should be destroyed. */
       if (!wgt_isFlag( wgt, WGT_FLAG_KILL )) {
-         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed",
+         WARN(_("Trying to create widget '%s' over existing one that hasn't been destroyed"),
                name );
          return NULL;
       }
@@ -302,7 +302,7 @@ Widget* window_getwgt( const unsigned int wid, const char* name )
       if (strcmp(wgt->name, name)==0)
          return wgt;
 
-   WARN("Widget '%s' not found in window '%u'!", name, wid );
+   WARN(_("Widget '%s' not found in window '%u'!"), name, wid );
    return NULL;
 }
 
@@ -554,7 +554,7 @@ unsigned int window_createFlags( const char* name,
       for (wcur = windows; wcur != NULL; wcur = wcur->next) {
          if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
                !window_isFlag(wcur, WINDOW_NOFOCUS))
-            WARN("Window with name '%s' already exists!",wcur->name);
+            WARN(_("Window with name '%s' already exists!"),wcur->name);
          wlast = wcur;
       }
 
@@ -907,7 +907,7 @@ int widget_exists( const unsigned int wid, const char* wgtname )
 
    /* Get window. */
    if (w==NULL) {
-      WARN("window '%d' does not exist", wid);
+      WARN(_("window '%d' does not exist"), wid);
       return 0;
    }
 
@@ -942,7 +942,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
          break;
 
    if (wgt == NULL) {
-      WARN("Widget '%s' not found in window '%s'", wgtname, wdw->name );
+      WARN(_("Widget '%s' not found in window '%s'"), wgtname, wdw->name );
       return;
    }
 
@@ -1956,8 +1956,8 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             if ((wgt->type==WIDGET_BUTTON) && ((wgt->dat.btn.disabled==0) ||
                      (wgt->dat.btn.softdisable))) {
                if (wgt->dat.btn.fptr==NULL)
-                  DEBUG("Toolkit: Button '%s' of Window '%s' "
-                        "doesn't have a function trigger",
+                  DEBUG(_("Toolkit: Button '%s' of Window '%s' "
+                        "doesn't have a function trigger"),
                         wgt->name, w->name );
                else {
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);
@@ -2074,6 +2074,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDLKey key;
    SDLMod mod;
+   int handled = 0;
 #if !SDL_VERSION_ATLEAST(2,0,0)
    char buf[2];
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -2128,13 +2129,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
-      case SDLK_TAB:
-         if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
-            toolkit_prevFocus( wdw );
-         else
-            toolkit_nextFocus( wdw );
-         break;
-
       case SDLK_RETURN:
       case SDLK_KP_ENTER:
          if (wdw->accept_fptr != NULL) {
@@ -2156,7 +2150,15 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
    if (wdw->keyevent != NULL)
-      (*wdw->keyevent)( wdw->id, input_key, input_mod );
+      handled = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+
+   /* Placed here so it can be overriden in console for tab completion. */
+   if (!handled && key == SDLK_TAB) {
+      if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
+         toolkit_prevFocus( wdw );
+      else
+         toolkit_nextFocus( wdw );
+   }
 
    return 0;
 }

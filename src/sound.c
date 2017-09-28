@@ -185,7 +185,7 @@ int sound_init (void)
       /* Env. */
       sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
-      WARN("OpenAL support not compiled in!");
+      WARN(_("OpenAL support not compiled in!"));
 #endif /* USE_OPENAL */
    }
    if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
@@ -229,13 +229,13 @@ int sound_init (void)
       /* Env. */
       sound_sys_env        = sound_mix_env;
 #else /* USE_SDLMIX */
-      WARN("SDL_mixer support not compiled in!");
+      WARN(_("SDL_mixer support not compiled in!"));
 #endif /* USE_SDLMIX */
    }
    if (sound_sys_init == NULL) {
-      WARN("Unknown/Unavailable sound backend '%s'.", conf.sound_backend);
+      WARN(_("Unknown/Unavailable sound backend '%s'."), conf.sound_backend);
       sound_disabled = 1;
-      WARN("Sound disabled.");
+      WARN(_("Sound disabled."));
       music_disabled = 1;
       return 0;
    }
@@ -245,14 +245,14 @@ int sound_init (void)
    if (ret != 0) {
       sound_disabled = 1;
       music_disabled = 1;
-      WARN("Sound disabled.");
+      WARN(_("Sound disabled."));
       return ret;
    }
 
    /* Create voice lock. */
    voice_mutex = SDL_CreateMutex();
    if (voice_mutex == NULL)
-      WARN("Unable to create voice mutex.");
+      WARN(_("Unable to create voice mutex."));
 
    /* Load available sounds. */
    ret = sound_makeList();
@@ -263,12 +263,12 @@ int sound_init (void)
    ret = music_init();
    if (ret != 0) {
       music_disabled = 1;
-      WARN("Music disabled.");
+      WARN(_("Music disabled."));
    }
 
    /* Set volume. */
    if ((conf.sound > 1.) || (conf.sound < 0.))
-      WARN("Sound has invalid value, clamping to [0:1].");
+      WARN(_("Sound has invalid value, clamping to [0:1]."));
    sound_volume(conf.sound);
 
    /* Initialized. */
@@ -353,7 +353,7 @@ int sound_get( char* name )
       if (strcmp(name, sound_list[i].name)==0)
          return i;
 
-   WARN("Sound '%s' not found in sound list", name);
+   WARN(_("Sound '%s' not found in sound list"), name);
    return -1;
 }
 
@@ -700,7 +700,7 @@ void sound_setSpeed( double s )
 static int sound_makeList (void)
 {
    char** files;
-   uint32_t nfiles,i;
+   size_t nfiles,i;
    char path[PATH_MAX];
    char tmp[64];
    int len, suflen, flen;
@@ -755,7 +755,7 @@ static int sound_makeList (void)
    /* shrink to minimum ram usage */
    sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
-   DEBUG("Loaded %d sound%s", sound_nlist, (sound_nlist==1)?"":"s");
+   DEBUG( ngettext("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
 
    /* More clean up. */
    free(files);

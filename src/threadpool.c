@@ -196,7 +196,7 @@ static void* tq_dequeue( ThreadQueue *q )
 
    /* Head not consistent. */
    if (newhead == NULL) {
-      WARN("Tried to dequeue while the queue was empty!");
+      WARN(_("Tried to dequeue while the queue was empty!"));
       /* Ugly fix :/ */
       /*
       SDL_mutexV(q->h_lock);
@@ -258,7 +258,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
    ThreadQueueData *node;
 
    if (global_queue == NULL) {
-      WARN("Threadpool has not been initialized yet!");
+      WARN(_("Threadpool has not been initialized yet!"));
       return -2;
    }
 
@@ -294,7 +294,7 @@ static int threadpool_worker( void *data )
       while (SDL_SemWait( work->semaphore ) == -1) {
           /* Putting this in a while-loop is probably a really bad idea, but I
            * don't have any better ideas. */
-          WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+          WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
       /* Break if received signal to stop */
       if (work->signal == THREADSIG_STOP)
@@ -400,7 +400,7 @@ static int threadpool_handler( void *data )
           * threadpool is just patiently waiting for work to arrive.
           */
          if (SDL_SemWait( global_queue->semaphore ) == -1) {
-             WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+             WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
              continue;
          }
 
@@ -431,7 +431,7 @@ static int threadpool_handler( void *data )
       else {
          while (SDL_SemWait(idle->semaphore) == -1) {
              /* Bad idea */
-             WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+             WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
          }
          threadarg         = tq_dequeue( idle );
       }
@@ -478,7 +478,7 @@ int threadpool_init (void)
 
    /* There's already a queue */
    if (global_queue != NULL) {
-      WARN("Threadpool has already been initialized!");
+      WARN(_("Threadpool has already been initialized!"));
       return -1;
    }
 
@@ -591,7 +591,7 @@ void vpool_wait( ThreadQueue *queue )
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
-          WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+          WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
       node = tq_dequeue( queue );
 

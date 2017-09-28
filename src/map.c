@@ -29,8 +29,6 @@
 #include "nmath.h"
 
 
-#define MAP_WDWNAME     "Star Map" /**< Map window name. */
-
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -214,47 +212,47 @@ void map_open (void)
 
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
-         &gl_smallFont, &cDConsole, "Faction:" );
+         &gl_smallFont, &cDConsole, _("Faction:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
-         &gl_smallFont, &cDConsole, "Standing:" );
+         &gl_smallFont, &cDConsole, _("Standing:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
-         &gl_smallFont, &cDConsole, "Presence:" );
+         &gl_smallFont, &cDConsole, _("Presence:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, &cDConsole, "Planets:" );
+         &gl_smallFont, &cDConsole, _("Planets:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
-         &gl_smallFont, &cDConsole, "Services:" );
+         &gl_smallFont, &cDConsole, _("Services:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnClose", "Close", window_close );
+            "btnClose", _("Close"), window_close );
    /* Find button */
    window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnFind", "Find", map_inputFind );
+            "btnFind", _("Find"), map_inputFind );
    /* Autonav button */
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnAutonav", "Autonav", player_autonavStartWindow );
+            "btnAutonav", _("Autonav"), player_autonavStartWindow );
 
    /*
     * Bottom stuff
@@ -332,37 +330,37 @@ static void map_update( unsigned int wid )
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
          window_modifyText( wid, "txtSysname", sys->name );
       else
-         window_modifyText( wid, "txtSysname", "Unknown" );;
+         window_modifyText( wid, "txtSysname", _("Unknown") );;
 
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", x, y);
       window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtFaction", "Unknown" );
+      window_modifyText( wid, "txtFaction", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Standing */
       window_moveWidget( wid, "txtSStanding", x, y );
       window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtStanding", "Unknown" );
+      window_modifyText( wid, "txtStanding", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Presence. */
       window_moveWidget( wid, "txtSPresence", x, y );
       window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtPresence", "Unknown" );
+      window_modifyText( wid, "txtPresence", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Planets */
       window_moveWidget( wid, "txtSPlanets", x, y );
       window_moveWidget( wid, "txtPlanets", x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtPlanets", "Unknown" );
+      window_modifyText( wid, "txtPlanets", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Services */
       window_moveWidget( wid, "txtSServices", x, y );
       window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtServices", "Unknown" );
+      window_modifyText( wid, "txtServices", _("Unknown") );
 
       /*
        * Bottom Text
@@ -386,14 +384,14 @@ static void map_update( unsigned int wid )
       }
       else if (f != sys->planets[i]->faction && /** @todo more verbosity */
                (sys->planets[i]->faction>0)) {
-         nsnprintf( buf, PATH_MAX, "Multiple" );
+         nsnprintf( buf, PATH_MAX, _("Multiple") );
          break;
       }
    }
    if (f == -1) {
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
-      window_modifyText( wid, "txtFaction", "N/A" );
-      window_modifyText( wid, "txtStanding", "N/A" );
+      window_modifyText( wid, "txtFaction", _("N/A") );
+      window_modifyText( wid, "txtStanding", _("N/A") );
       h = gl_smallFont.h;
    }
    else {
@@ -437,7 +435,7 @@ static void map_update( unsigned int wid )
       if (faction_isKnown( sys->presence[i].faction )) {
          t           = faction_getColourChar(sys->presence[i].faction);
          /* Use map grey instead of default neutral colour */
-         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
                         (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                         (t=='N')?'M':t, sys->presence[i].value);
       }
@@ -447,8 +445,8 @@ static void map_update( unsigned int wid )
          break;
    }
    if (unknownPresence != 0)
-      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                     (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
+      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
+                     (l==0)?"":"\n", _("Unknown"), 'M', unknownPresence);
    if (hasPresence == 0)
       nsnprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -477,17 +475,17 @@ static void map_update( unsigned int wid )
          t = 'S';
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
+         p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s\an",
                t, sys->planets[i]->name );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s\an",
                t, sys->planets[i]->name );
       hasPlanets = 1;
       if (p > PATH_MAX)
          break;
    }
    if(hasPlanets == 0)
-      strncpy( buf, "None", PATH_MAX );
+      strncpy( buf, _("None"), PATH_MAX );
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", x, y );
@@ -510,7 +508,7 @@ static void map_update( unsigned int wid )
       if (services & i)
          p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
    if (buf[0] == '\0')
-      p += nsnprintf( &buf[p], PATH_MAX-p, "None");
+      p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
    window_modifyText( wid, "txtServices", buf );
 
 
@@ -524,32 +522,32 @@ static void map_update( unsigned int wid )
 
       /* Volatility */
       if (sys->nebu_volatility > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Volatile");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Volatile"));
       else if (sys->nebu_volatility > 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Dangerous");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dangerous"));
       else if (sys->nebu_volatility > 0.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Unstable");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Unstable"));
 
       /* Density */
       if (sys->nebu_density > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Dense");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
       else if (sys->nebu_density < 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Light");
-      p += nsnprintf(&buf[p], PATH_MAX-p, " Nebula");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
+      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Nebula"));
    }
    /* Interference. */
    if (sys->interference > 0.) {
 
       if (buf[0] != '\0')
-         p += nsnprintf(&buf[p], PATH_MAX-p, ",");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
 
       /* Density. */
       if (sys->interference > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Dense");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
       else if (sys->interference < 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, " Light");
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
 
-      p += nsnprintf(&buf[p], PATH_MAX-p, " Interference");
+      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Interference"));
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
@@ -738,9 +736,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.g = cRed.g;
    col.b = cRed.b;
 
-   if (!gl_vendorIsIntel())
-      glEnable(GL_LINE_SMOOTH);
-   glEnable(GL_POINT_SMOOTH);
+   glDisable(GL_LINE_SMOOTH);
+   glDisable(GL_POINT_SMOOTH);
 
    /* Selected system. */
    if (map_selected != -1) {
@@ -832,8 +829,8 @@ void map_renderJumps( double x, double y, int editor)
 
    /* Generate smooth lines. */
    glShadeModel( GL_SMOOTH );
-   glEnable( GL_LINE_SMOOTH );
-   glLineWidth( CLAMP(1., 4., 2. * map_zoom) );
+   glDisable( GL_LINE_SMOOTH );
+   glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -911,11 +908,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    StarSystem *sys;
    double tx, ty;
 
-
    /* Smoother circles. */
-   if (!gl_vendorIsIntel())
-      glEnable(GL_LINE_SMOOTH);
-   glEnable(GL_POINT_SMOOTH);
+   glDisable(GL_LINE_SMOOTH);
+   glDisable(GL_POINT_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -978,11 +973,10 @@ static void map_renderPath( double x, double y, double a )
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
 
-
       /* Generate smooth lines. */
       glShadeModel( GL_SMOOTH );
-      glEnable( GL_LINE_SMOOTH );
-      glLineWidth( CLAMP(1., 4., 2. * map_zoom) );
+      glDisable( GL_LINE_SMOOTH );
+      glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
@@ -1084,7 +1078,7 @@ void map_renderNames( double bx, double by, double x, double y,
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            nsnprintf( buf, sizeof(buf), "\egH: %.2f", n );
+            nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_print( &gl_smallFont,

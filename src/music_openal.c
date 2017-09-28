@@ -419,8 +419,7 @@ static int music_thread( void* unused )
                   break;
                }
             }
-
-            /* Purpose fallthrough. */
+            /* fallthrough */
 
          /* Play the song if needed. */
          case MUSIC_STATE_PLAYING:
@@ -576,13 +575,13 @@ static int stream_loadBuffer( ALuint buffer )
       /* Hole error. */
       else if (result == OV_HOLE) {
          musicVorbisUnlock();
-         WARN("OGG: Vorbis hole detected in music!");
+         WARN(_("OGG: Vorbis hole detected in music!"));
          return 0;
       }
       /* Bad link error. */
       else if (result == OV_EBADLINK) {
          musicVorbisUnlock();
-         WARN("OGG: Invalid stream section or corrupt link in music!");
+         WARN(_("OGG: Invalid stream section or corrupt link in music!"));
          return -1;
       }
 
@@ -705,7 +704,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    music_vorbis.rw = rw;
    if (ov_open_callbacks( music_vorbis.rw, &music_vorbis.stream,
             NULL, 0, sound_al_ovcall ) < 0) {
-      WARN("Song '%s' does not appear to be a vorbis bitstream.", name);
+      WARN(_("Song '%s' does not appear to be a vorbis bitstream."), name);
       musicUnlock();
       return -1;
    }
@@ -727,7 +726,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    music_vorbis.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20);
    music_vorbis.rg_max_scale = 1.0 / track_peak;
    if (!rg)
-      DEBUG("Song '%s' has no replaygain information.", name );
+      DEBUG(_("Song '%s' has no replaygain information."), name );
 
    /* Set the format */
    if (music_vorbis.info->channels == 1)
@@ -908,7 +907,7 @@ void music_al_setPos( double sec )
    musicVorbisUnlock();
 
    if (ret != 0)
-      WARN("Unable to seek vorbis file.");
+      WARN(_("Unable to seek vorbis file."));
 }
 
 
@@ -953,9 +952,9 @@ static void music_kill (void)
       /* Timed out, just slaughter the thread. */
       if (ret == SDL_MUTEX_TIMEDOUT) {
 #if SDL_VERSION_ATLEAST(2,0,0)
-         WARN("Music thread did not exit when asked, ignoring...");
+         WARN(_("Music thread did not exit when asked, ignoring..."));
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
-         WARN("Music thread did not exit when asked, slaughtering...");
+         WARN(_("Music thread did not exit when asked, slaughtering..."));
          SDL_KillThread( music_player );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
          break;

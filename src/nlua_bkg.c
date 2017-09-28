@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "nlua_col.h"
@@ -25,7 +24,7 @@
 /* Background methods. */
 static int bkgL_clear( lua_State *L );
 static int bkgL_image( lua_State *L );
-static const luaL_reg bkgL_methods[] = {
+static const luaL_Reg bkgL_methods[] = {
    { "clear", bkgL_clear },
    { "image", bkgL_image },
    {0,0}
@@ -37,17 +36,12 @@ static const luaL_reg bkgL_methods[] = {
 /**
  * @brief Loads the graphics library.
  *
- *    @param L State to load graphics library into.
+ *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadBackground( lua_State *L, int readonly )
+int nlua_loadBackground( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   /* Register the values */
-   luaL_register(L, "bkg", bkgL_methods);
-
+   nlua_register(env, "bkg", bkgL_methods, 0);
    return 0;
 }
 
@@ -58,7 +52,7 @@ int nlua_loadBackground( lua_State *L, int readonly )
  * An example would be:
  * @code
  * @endcode
- *
+ *`
  * @luamod bkg
  */
 
@@ -71,7 +65,7 @@ int nlua_loadBackground( lua_State *L, int readonly )
  */
 static int bkgL_clear( lua_State *L )
 {
-   (void) L;
+   NLUA_CHECKRW(L);
    background_clear();
    return 0;
 }
@@ -87,14 +81,14 @@ static int bkgL_clear( lua_State *L )
  * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0) ) -- Now with colour
  * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0), true ) -- Now with colour and on the foreground
  *
- *    @luaparam image Image to use.
- *    @luaparam x X position.
- *    @luaparam y Y position.
- *    @luaparam move Fraction of a pixel to move when the player moves one pixel.
- *    @luaparam scale How much to scale the image.
- *    @luaparam col Colour to tint image (optional parameter).
- *    @luaparam foreground Whether or not it should be rendered above the stars (optional parameter ). Defaults to false.
- *    @luareturn ID of the background.
+ *    @luatparam Tex image Image to use.
+ *    @luatparam number x X position.
+ *    @luatparam number y Y position.
+ *    @luatparam number move Fraction of a pixel to move when the player moves one pixel.
+ *    @luatparam number scale How much to scale the image.
+ *    @luatparam[opt] Colour col Colour to tint image.
+ *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the stars.
+ *    @luatreturn number ID of the background.
  * @luafunc image( image, x, y, move, scale, col, foreground )
  */
 static int bkgL_image( lua_State *L )
@@ -104,6 +98,8 @@ static int bkgL_image( lua_State *L )
    const glColour *col;
    unsigned int id;
    int foreground;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    tex   = luaL_checktex(L,1);

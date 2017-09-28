@@ -62,7 +62,6 @@ void window_addFader( const unsigned int wid,
    wgt->keyevent        = fad_key;
    wgt->scrolldone      = fad_scrolldone;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.fad.value   = min;
    wgt->dat.fad.min     = min;
    wgt->dat.fad.max     = max;
    wgt->dat.fad.value   = CLAMP(min, max, def);
@@ -93,7 +92,7 @@ static void fad_render( Widget* fad, double bx, double by )
    double kx,ky, kw,kh;
 
    /* Some values. */
-   pos = fad->dat.fad.value / (fad->dat.fad.max - fad->dat.fad.min);
+   pos = (fad->dat.fad.value-fad->dat.fad.min) / (fad->dat.fad.max-fad->dat.fad.min);
    w = fad->w;
    h = fad->h;
 
@@ -153,7 +152,7 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
       return 0;
 
    /* Get position. */
-   pos = fad->dat.fad.value / (fad->dat.fad.max - fad->dat.fad.min);
+   pos = (fad->dat.fad.value-fad->dat.fad.min) / (fad->dat.fad.max-fad->dat.fad.min);
 
    /* Knob. */
    if (fad->h < fad->w) {

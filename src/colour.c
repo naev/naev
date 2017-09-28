@@ -325,8 +325,7 @@ const glColour* col_fromName( const char* name )
       CHECK_COLOUR(MidnightBlue);
    }
 
-
-   WARN("Unknown colour %s", name);
+   WARN(_("Unknown colour %"), name);
    return NULL;
 }
 #undef CHECK_COLOUR

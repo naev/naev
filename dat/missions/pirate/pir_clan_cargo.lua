@@ -13,25 +13,20 @@ include "dat/scripts/numstring.lua"
 include "dat/scripts/jumpdist.lua"
 include "dat/missions/pirate/common.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "You see a pirate lord raving about something. A significant crowd has gathered around."
-   misn_title = "Clans trade"
-   misn_reward = "%s credits"
-   misn_desc = "Deliver some boxes to the pirate clan of %s, in the %s system."
-   title = {}
-   title[1] = "Spaceport Bar"
-   title[2] = title[1]
-   title[3] = "Mission Accomplished"
-   text = {}
-   text[1]  = [[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
-   
-Will you accept the mission?]]
-   text[2] = [[You roll up your sleeve and head off to your ship.]]
-   text[3]   = "Your mission was a complete success! The clan you just gave the packages have already paid you."
-end
+bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
+misn_title = _("Clans trade")
+misn_reward = _("%s credits")
+misn_desc = _("Deliver some boxes to the pirate clan of %s, in the %s system.")
+title = {}
+title[1] = _("Spaceport Bar")
+title[2] = title[1]
+title[3] = _("Mission Accomplished")
+text = {}
+text[1]  = _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
+
+Will you accept the mission?]])
+text[2] = _([[You roll up your sleeve and head off to your ship.]])
+text[3]   = _("Your mission was a complete success! The clan you just gave the packages have already paid you.")
 
 
 function create ()
@@ -51,7 +46,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( "Pirate Lord", pir_getLordRandomPortrait() )
+   misn.setNPC( _("Pirate Lord"), pir_getLordRandomPortrait() )
    misn.setDesc( bar_desc )
 end
 

@@ -52,7 +52,7 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
@@ -65,14 +65,14 @@ int sp_load (void)
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,SP_XML_ID)) {
-      ERR("Malformed '"SP_DATA"' file: missing root element '"SP_XML_ID"'");
+      ERR(_("Malformed '%s' file: missing root element '%s'"), SP_DATA, SP_XML_ID);
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"SP_DATA"' file: does not contain elements");
+      ERR(_("Malformed '%s' file: does not contain elements"), SP_DATA);
       return -1;
    }
 
@@ -81,7 +81,7 @@ int sp_load (void)
    do {
       xml_onlyNodes(node);
       if (!xml_isNode(node,SP_XML_TAG)) {
-         WARN("'"SP_DATA"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), SP_DATA, node->name);
          continue;
       }
 
@@ -104,7 +104,7 @@ int sp_load (void)
             continue;
          }
 
-         WARN("Slot Property '%s' has unknown node '%s'.", cur->name);
+         WARN(_("Slot Property '%s' has unknown node '%s'."), cur->name);
       } while (xml_nextNode(cur));
 
    } while (xml_nextNode(node));
@@ -152,7 +152,7 @@ unsigned int sp_get( const char *name )
       if (strcmp( sp->name, name ) == 0)
          return i+1;
    }
-   WARN("Slot property '%s' not found in array.", name);
+   WARN(_("Slot property '%s' not found in array."), name);
    return 0;
 }
 

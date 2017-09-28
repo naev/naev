@@ -10,6 +10,7 @@
 #include <lua.h>
 
 #include "opengl.h"
+#include "nlua.h"
 
 
 #define TEX_METATABLE      "tex" /**< Texture metatable identifier. */
@@ -18,7 +19,7 @@
 /*
  * Library loading
  */
-int nlua_loadTex( lua_State *L, int readonly );
+int nlua_loadTex( nlua_env );
 
 /*
  * Texture operations

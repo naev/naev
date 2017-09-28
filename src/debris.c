@@ -54,7 +54,7 @@ static int debris_load (void)
 
    /* Check to make sure they exist. */
    if (debris_nspfx <= 0) {
-      WARN("No debris special effects found.");
+      WARN(_("No debris special effects found."));
       return -1;
    }
 

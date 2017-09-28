@@ -6,81 +6,76 @@
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   misn_desc = "%s in the %s system needs a delivery of %d tonnes of %s."
-   misn_reward = "%s credits"
-   
-   cargosize = {}
-   cargosize[0] = "Courier" -- Note: indexed from 0, to match mission tiers.
-   cargosize[1] = "Priority"
-   cargosize[2] = "Pressing"
-   cargosize[3] = "Urgent"
-   cargosize[4] = "Emergency"
-   
-   title_p1 = {}
-   title_p1[1] = " cargo delivery to %s in the %s system"
-   title_p1[2] = " freight delivery to %s in the %s system"
-   title_p1[3] = " transport to %s in the %s system"
-   title_p1[4] = " delivery to %s in the %s system"
-   
-   -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-   title_p2 = [[ 
+misn_desc = _("%s in the %s system needs a delivery of %d tonnes of %s.")
+misn_reward = _("%s credits")
+
+cargosize = {}
+cargosize[0] = _("Courier") -- Note: indexed from 0, to match mission tiers.
+cargosize[1] = _("Priority")
+cargosize[2] = _("Pressing")
+cargosize[3] = _("Urgent")
+cargosize[4] = _("Emergency")
+
+title_p1 = {}
+title_p1[1] = _(" cargo delivery to %s in the %s system")
+title_p1[2] = _(" freight delivery to %s in the %s system")
+title_p1[3] = _(" transport to %s in the %s system")
+title_p1[4] = _(" delivery to %s in the %s system")
+
+title_p2 = _([[ 
       Cargo: %s (%d tonnes)
       Jumps: %d
       Travel distance: %d
       Piracy Risk: %s
       Time limit: %s
-   ]]
+]])
    
-   full = {}
-   full[1] = "No room in ship"
-   full[2] = "You don't have enough cargo space to accept this mission. It requires %d tonnes of free space (you need %d more)."
+full = {}
+full[1] = _("No room in ship")
+full[2] = _("You don't have enough cargo space to accept this mission. It requires %d tonnes of free space (you need %d more).")
+
+slow = {}
+slow[1] = _("Too slow")
+slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
    
-   slow = {}
-   slow[1] = "Too slow"
-   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
-      
-   Accept the mission anyway?]]
-   
-   piracyrisk = {}
-   piracyrisk[1] = "None"
-   piracyrisk[2] = "Low"
-   piracyrisk[3] = "Medium"
-   piracyrisk[4] = "High"
-   
-   --=Landing=--
-   
-   cargo_land_title = "Delivery success!"
-   
-   cargo_land_p1 = {}
-   cargo_land_p1[1] = "The crates of "  --<<-- paired with cargo_accept_p2, don't mix this up!!
-   cargo_land_p1[2] = "The drums of "
-   cargo_land_p1[3] = "The containers of "
-   
-   cargo_land_p2 = {}
-   cargo_land_p2[1] = " are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
-   cargo_land_p2[2] = " are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
-   cargo_land_p2[3] = " are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job."
-   
-   cargo_land_p3 = {}
-   cargo_land_p3[1] = " are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only %d of the %d you were promised."
-   cargo_land_p3[2] = " are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %d instead of %d because of that."
-   cargo_land_p3[3] = " are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %d instead of the %d you were hoping for."
-   
-   accept_title = "Mission Accepted"
-   
-   timeup_1 = "You've missed the deadline for the delivery to %s! But you can still make a late delivery if you hurry."
-   timeup_2 = "The delivery to %s has been canceled! You were too late."
-   
-   osd_title = "Rush cargo mission"
-   osd_msg = {}
-   osd_msg[1] = "Fly to %s in the %s system before %s."
-   osd_msg[2] = "You have %s remaining."
-   osd_msg1 = "Fly to %s in the %s system before %s."
-   osd_msg2 = "You have %s remaining." -- Need to reuse.
-end
+Accept the mission anyway?]])
+
+piracyrisk = {}
+piracyrisk[1] = _("None")
+piracyrisk[2] = _("Low")
+piracyrisk[3] = _("Medium")
+piracyrisk[4] = _("High")
+
+--=Landing=--
+
+cargo_land_title = _("Delivery success!")
+
+cargo_land_p1 = {}
+cargo_land_p1[1] = _("The crates of ")  --<<-- paired with cargo_accept_p2, don't mix this up!!
+cargo_land_p1[2] = _("The drums of ")
+cargo_land_p1[3] = _("The containers of ")
+
+cargo_land_p2 = {}
+cargo_land_p2[1] = _("%s%s are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")
+cargo_land_p2[2] = _("%s%s are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs.")
+cargo_land_p2[3] = _("%s%s are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job.")
+
+cargo_land_p3 = {}
+cargo_land_p3[1] = _("%s%s are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only %d of the %d you were promised.")
+cargo_land_p3[2] = _("%s%s are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %d instead of %d because of that.")
+cargo_land_p3[3] = _("%s%s are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %d instead of the %d you were hoping for.")
+
+accept_title = _("Mission Accepted")
+
+timeup_1 = _("You've missed the deadline for the delivery to %s! But you can still make a late delivery if you hurry.")
+timeup_2 = _("The delivery to %s has been canceled! You were too late.")
+
+osd_title = _("Rush cargo mission")
+osd_msg = {}
+osd_msg[1] = _("Fly to %s in the %s system before %s.")
+osd_msg[2] = _("You have %s remaining.")
+osd_msg1 = _("Fly to %s in the %s system before %s.")
+osd_msg2 = _("You have %s remaining.") -- Need to reuse.
 
 -- Create the mission
 function create()
@@ -165,10 +160,10 @@ function land()
    if planet.cur() == destplanet then
       if intime then
       -- Semi-random message.
-      tk.msg(cargo_land_title, cargo_land_p1[rnd.rnd(1, #cargo_land_p1)] .. cargo .. cargo_land_p2[rnd.rnd(1, #cargo_land_p2)])
+      tk.msg(cargo_land_title, string.format( cargo.land_p2[rnd.rnd(1, #cargo_land_p2)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo) ))
    else
       -- Semi-random message for being late.
-      tk.msg(cargo_land_title, cargo_land_p1[rnd.rnd(1, #cargo_land_p1)] .. cargo .. cargo_land_p3[rnd.rnd(1, #cargo_land_p3)]:format(reward / 2, reward))
+      tk.msg(cargo_land_title, string.format( cargo.land_p3[rnd.rnd(1, #cargo_land_p3)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo), reward/2, reward ))
       reward = reward / 2
    end
       player.pay(reward)

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Convulsion Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>6</mass>
+  <price>60000</price>
+  <description>This missile launcher fires Convulsion class missiles used by the Thurion.</description>
+  <gfx_store>convulsion_launcher</gfx_store>
+  <cpu>-12</cpu>
+ </general>
+ <specific type="launcher" secondary="1">
+  <ammo>Convulsion Missile</ammo>
+  <delay>3</delay>
+  <amount>20</amount>
+  <lockon>4</lockon>
+  <arc>8</arc>
+  <ew_target>3</ew_target>
+ </specific>
+</outfit>

@@ -7,15 +7,9 @@
 -- 12/02/2010 - Added visibility/highlight options for use in bigsystems (Anatolis)
 --]]
 
-lang = naev.lang()
-if lang == "es" then
-    -- not translated atm
-else -- default english 
-
 -- Text
-    broadcastmsg = "SOS. This is %s. We are shipwrecked. Requesting immediate assistance."
-    shipname = "August" --The ship will have a unique name
-end
+broadcastmsg = _("SOS. This is %s. We are shipwrecked. Requesting immediate assistance.")
+shipname = _("August") --The ship will have a unique name
 
 function create ()
 

@@ -69,7 +69,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
 
       ret = hook_runIDparam( p->hooks[i].id, hparam );
       if (ret)
-         WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
+         WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
       else
          run++;
    }
@@ -82,7 +82,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
 
          ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
          if (ret)
-            WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
+            WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
          else
             run++;
       }

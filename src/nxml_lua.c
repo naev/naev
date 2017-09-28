@@ -16,7 +16,9 @@
 #include "log.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
+#include "nlua_system.h"
+#include "nlua_planet.h"
+#include "nlua_jump.h"
 #include "nlua_faction.h"
 #include "nlua_ship.h"
 #include "nlua_time.h"
@@ -192,7 +194,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
                nxml_saveData( writer, "planet",
                      name, pnt->name, keynum );
             else
-               WARN("Failed to save invalid planet.");
+               WARN(_("Failed to save invalid planet."));
             /* key, value */
             break;
          }
@@ -202,7 +204,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
                nxml_saveData( writer, "system",
                      name, ss->name, keynum );
             else
-               WARN("Failed to save invalid system.");
+               WARN(_("Failed to save invalid system."));
             /* key, value */
             break;
          }
@@ -238,7 +240,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             ss = system_getIndex( lj->srcid );
             dest = system_getIndex( lj->destid );
             if ((ss == NULL) || (dest == NULL))
-               WARN("Failed to save invalid jump.");
+               WARN(_("Failed to save invalid jump."));
             else
                nxml_saveJump( writer, name, ss->name, dest->name );
          }
@@ -262,21 +264,25 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
  *
  * Does not save anything in tables (unless .__save=true) nor functions of any type.
  *
- *    @param L Lua state to save.
+ *    @param env Lua environment to save.
  *    @param writer XML Writer to use.
  *    @return 0 on success.
  */
-int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
+int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
-   lua_pushnil(L);         /* nil */
+   nlua_pushenv(env);
+
+   lua_pushnil(naevL);         /* nil */
    /* str, nil */
-   while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
+   while (lua_next(naevL, -2) != 0) {
       /* key, value */
-      ret |= nxml_persistDataNode( L, writer, 0 );
+      ret |= nxml_persistDataNode( naevL, writer, 0 );
       /* key */
    }
+
+   lua_pop(naevL, 1);
 
    return ret;
 }
@@ -335,14 +341,14 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                lua_pushplanet(L,planet_index(pnt));
             }
             else
-               WARN("Failed to load unexistent planet '%s'", xml_get(node));
+               WARN(_("Failed to load unexistent planet '%s'"), xml_get(node));
          }
          else if (strcmp(type,"system")==0) {
             ss = system_get(xml_get(node));
             if (ss != NULL)
                lua_pushsystem(L,system_index( ss ));
             else
-               WARN("Failed to load unexistent system '%s'", xml_get(node));
+               WARN(_("Failed to load unexistent system '%s'"), xml_get(node));
          }
          else if (strcmp(type,"faction")==0) {
             lua_pushfaction(L,faction_get(xml_get(node)));
@@ -362,10 +368,10 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                lua_pushjump(L,lj);
             }
             else
-               WARN("Failed to load unexistent jump from '%s' to '%s'", xml_get(node), buf);
+               WARN(_("Failed to load unexistent jump from '%s' to '%s'"), xml_get(node), buf);
          }
          else {
-            WARN("Unknown Lua data type!");
+            WARN(_("Unknown Lua data type!"));
             lua_pop(L,1);
             return -1;
          }
@@ -386,17 +392,17 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 /**
  * @brief Unpersists Lua data.
  *
- *    @param L State to unpersist data into.
+ *    @param env Environment to unpersist data into.
  *    @param parent Node containing all the Lua persisted data.
  *    @return 0 on success.
  */
-int nxml_unpersistLua( lua_State *L, xmlNodePtr parent )
+int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
 {
    int ret;
 
-   lua_pushvalue(L,LUA_GLOBALSINDEX);
-   ret = nxml_unpersistDataNode(L,parent);
-   lua_pop(L,1);
+   nlua_pushenv(env);
+   ret = nxml_unpersistDataNode(naevL,parent);
+   lua_pop(naevL,1);
 
    return ret;
 }

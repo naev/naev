@@ -92,10 +92,11 @@
   </avail>
  </mission>
  <mission name="Commodity Run">
-  <lua>neutral/commodityRun</lua>
+  <lua>neutral/commodity_run</lua>
   <avail>
    <priority>5</priority>
-   <chance>60</chance>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
@@ -108,8 +109,28 @@
    <faction>Trader</faction>
   </avail>
  </mission>
+ <mission name="FLF Commodity Run">
+  <lua>flf/flf_commodity_run</lua>
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
+ <mission name="Pirate Commodity Run">
+  <lua>pirate/pirate_commodity_run</lua>
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
  <mission name="Trader Escort">
-  <lua>neutral/traderEscort</lua>
+  <lua>neutral/trader_escort</lua>
   <avail>
    <priority>5</priority>
    <cond>player.getRating() &gt; 200</cond>
@@ -465,7 +486,7 @@
  <mission name="Assault on Unicorn">
   <lua>dvaered/assault_on_unicorn</lua>
   <avail>
-    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
+    <cond>player.numOutfit("Mercenary License") &gt; 0 and faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
    <chance>36</chance>
    <location>Computer</location>
    <done>Empire Shipping 3</done>
@@ -660,6 +681,7 @@
    <done>Disrupt a Dvaered Patrol</done>
    <location>Computer</location>
    <faction>FLF</faction>
+   <cond>not player.misnDone("The FLF Common Enemy")</cond>
   </avail>
  </mission>
  <mission name="Diversion from Raelid">
@@ -683,6 +705,7 @@
    <done>Diversion from Raelid</done>
    <location>Computer</location>
    <faction>FLF</faction>
+   <cond>not player.misnDone("The FLF Common Enemy")</cond>
   </avail>
  </mission>
  <mission name="Empire Negotiations">
@@ -696,6 +719,91 @@
    <location>Bar</location>
    <faction>FLF</faction>
    <cond>diff.isApplied("collective_dead") and faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+  </avail>
+ </mission>
+ <mission name="FLF-Empire Negotiations 2">
+  <lua>flf/empa/flf_empa02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <done>Empire Negotiations</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+  </avail>
+ </mission>
+ <mission name="Raelid Outpost Rescue">
+  <lua>flf/empa/flf_empa03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <done>FLF-Empire Negotiations 2</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+  </avail>
+ </mission>
+ <mission name="The FLF Coup">
+  <lua>flf/empa/flf_empa04</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <done>Raelid Outpost Rescue</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>not diff.isApplied("flf_vs_empire")</cond>
+  </avail>
+ </mission>
+ <mission name="Rogue FLF">
+  <lua>flf/flf_rogue</lua>
+  <avail>
+   <priority>5</priority>
+   <chance>510</chance>
+   <done>The FLF Coup</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
+ <mission name="FLF Instability">
+  <lua>flf/empa/flf_empa05</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>60</chance>
+   <done>The FLF Coup</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("Empire") &gt;= 30</cond>
+  </avail>
+ </mission>
+ <mission name="The FLF Common Enemy">
+  <lua>flf/empa/flf_empa06</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>40</chance>
+   <done>FLF Instability</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
+ <mission name="FLF Pirates">
+  <lua>flf/flf_pirates</lua>
+  <avail>
+   <priority>6</priority>
+   <chance>860</chance>
+   <done>The FLF Common Enemy</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <faction>Frontier</faction>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
@@ -1171,7 +1279,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.getRating() &gt; 100 and player.misnDone("Operation Cold Metal") and planet.cur() ~= planet.get("Ulios")</cond>
+   <cond>player.getRating() &gt; 100 and planet.cur() ~= planet.get("Ulios")</cond>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
@@ -1211,7 +1319,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Sharkman Is Back")</cond>
+   <cond>player.misnDone("Sharkman Is Back") and player.misnDone("Operation Cold Metal")</cond>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>

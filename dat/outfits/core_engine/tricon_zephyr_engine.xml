@@ -8,7 +8,7 @@
   <mass>8</mass>
   <price>135000</price>
   <description>For light vessel pilots who demand unparalleled performance, Tricon's Zephyr is the engine of choice. Its best-in-class handling does come with the caveat of markedly increased power consumption, but those flying with Tricon engines can usually afford the requisite reactor upgrades.</description>
-  <gfx_store>engine04</gfx_store>
+  <gfx_store>engine10</gfx_store>
  </general>
  <specific type="modification">
   <thrust>195</thrust>

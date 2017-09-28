@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "log.h"
@@ -32,7 +31,7 @@ static int outfitL_cpu( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
-static const luaL_reg outfitL_methods[] = {
+static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
    { "get", outfitL_get },
@@ -51,26 +50,12 @@ static const luaL_reg outfitL_methods[] = {
 /**
  * @brief Loads the outfit library.
  *
- *    @param L State to load outfit library into.
+ *    @param env Environment to load outfit library into.
  *    @return 0 on success.
  */
-int nlua_loadOutfit( lua_State *L, int readonly )
+int nlua_loadOutfit( nlua_env env )
 {
-   (void) readonly; /* Everything is readonly. */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, OUTFIT_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, outfitL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, OUTFIT_METATABLE);
-
+   nlua_register(env, OUTFIT_METATABLE, outfitL_methods, 1);
    return 0;
 }
 
@@ -135,7 +120,7 @@ Outfit* luaL_validoutfit( lua_State *L, int ind )
    }
 
    if (o == NULL)
-      NLUA_ERROR(L, "Outfit is invalid.");
+      NLUA_ERROR(L, _("Outfit is invalid."));
 
    return o;
 }
@@ -184,9 +169,9 @@ int lua_isoutfit( lua_State *L, int ind )
  *
  * @usage if o1 == o2 then -- Checks to see if outfit o1 and o2 are the same
  *
- *    @luaparam o1 First outfit to compare.
- *    @luaparam o2 Second outfit to compare.
- *    @luareturn true if both outfits are the same.
+ *    @luatparam Outfit o1 First outfit to compare.
+ *    @luatparam Outfit o2 Second outfit to compare.
+ *    @luatreturn boolean true if both outfits are the same.
  * @luafunc __eq( o1, o2 )
  */
 static int outfitL_eq( lua_State *L )
@@ -210,8 +195,8 @@ static int outfitL_eq( lua_State *L )
  *
  * @usage s = outfit.get( "Heavy Laser" ) -- Gets the heavy laser
  *
- *    @luaparam s Name of the outfit to get.
- *    @luareturn The outfit matching name or nil if error.
+ *    @luatparam string s Name of the outfit to get.
+ *    @luatreturn Outfit|nil The outfit matching name or nil if error.
  * @luafunc get( s )
  */
 static int outfitL_get( lua_State *L )
@@ -225,7 +210,7 @@ static int outfitL_get( lua_State *L )
    /* Get outfit. */
    lo = outfit_get( name );
    if (lo == NULL) {
-      NLUA_ERROR(L,"Outfit '%s' not found!", name);
+      NLUA_ERROR(L,_("Outfit '%s' not found!"), name);
       return 0;
    }
 
@@ -238,8 +223,8 @@ static int outfitL_get( lua_State *L )
  *
  * @usage outfitname = s:name()
  *
- *    @luaparam s Outfit to get outfit name.
- *    @luareturn The name of the outfit's outfit.
+ *    @luatparam Outfit s Outfit to get outfit name.
+ *    @luatreturn string The name of the outfit's outfit.
  * @luafunc name( s )
  */
 static int outfitL_name( lua_State *L )
@@ -260,8 +245,8 @@ static int outfitL_name( lua_State *L )
  *
  * @usage print( o:type() ) -- Prints the type of the outfit
  *
- *    @luaparam o Outfit to get information of.
- *    @luareturn The name of the outfit type.
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string The name of the outfit type.
  * @luafunc type( o )
  */
 static int outfitL_type( lua_State *L )
@@ -279,8 +264,8 @@ static int outfitL_type( lua_State *L )
  *
  * @usage print( o:typeBroad() ) -- Prints the broad type of the outfit
  *
- *    @luaparam o Outfit to get information of.
- *    @luareturn The name of the outfit broad type.
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string The name of the outfit broad type.
  * @luafunc typeBroad( o )
  */
 static int outfitL_typeBroad( lua_State *L )
@@ -296,8 +281,8 @@ static int outfitL_typeBroad( lua_State *L )
  *
  * @usage print( o:cpu() ) -- Prints the cpu usage of an outfit
  *
- *    @luaparam o Outfit to get information of.
- *    @luareturn The amount of cpu the outfit uses.
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string The amount of cpu the outfit uses.
  * @luafunc cpu( o )
  */
 static int outfitL_cpu( lua_State *L )
@@ -313,8 +298,10 @@ static int outfitL_cpu( lua_State *L )
  *
  * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
  *
- *    @luaparam o Outfit to get information of.
- *    @luareturn The name, size and property in human readable strings.
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string Human readable name.
+ *    @luatreturn string Human readable size.
+ *    @luatreturn string Human readable property.
  * @luafunc slot( o )
  */
 static int outfitL_slot( lua_State *L )
@@ -333,8 +320,8 @@ static int outfitL_slot( lua_State *L )
  *
  * @usage ico = o:icon() -- Gets the shop icon for an outfit
  *
- *    @luaparam o Outfit to get information of.
- *    @luareturn The texture containing the icon of the outfit.
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn Tex The texture containing the icon of the outfit.
  * @luafunc icon( o )
  */
 static int outfitL_icon( lua_State *L )
@@ -350,8 +337,8 @@ static int outfitL_icon( lua_State *L )
  *
  * @usage price = o:price()
  *
- *    @luaparam o Outfit to get the price of.
- *    @luareturn The price, in credits.
+ *    @luatparam String o Outfit to get the price of.
+ *    @luatreturn number The price, in credits.
  * @luafunc price( o )
  */
 static int outfitL_price( lua_State *L )

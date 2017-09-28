@@ -36,7 +36,7 @@
 #define PILOT_TAKEOFF_DELAY      2. /**< Delay for takeoff animation. */
 /* Refueling. */
 #define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
-#define PILOT_REFUEL_QUANTITY    100. /**< Amount transferred per refuel. */
+#define PILOT_REFUEL_QUANTITY    101. /**< Amount transferred per refuel. */
 #define PILOT_REFUEL_RATE        PILOT_REFUEL_QUANTITY/PILOT_REFUEL_TIME /**< Fuel per second. */
 /* Misc. */
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
@@ -79,7 +79,6 @@ enum {
 enum {
    /* creation */
    PILOT_PLAYER,       /**< Pilot is a player. */
-   PILOT_ESCORT,       /**< Pilot is an escort. */
    PILOT_CARRIED,      /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,   /** Pilot has already created AI. */
    PILOT_EMPTY,        /**< Do not add pilot to stack. */
@@ -257,6 +256,8 @@ typedef struct Escort_s {
    char *ship;          /**< Type of the ship escort is flying. */
    EscortType_t type;   /**< Type of escort. */
    unsigned int id;     /**< ID of in-game pilot. */
+   /* TODO: something better than this */
+   int persist;         /**< True if escort should respawn on takeoff/landing */
 } Escort_t;
 
 
@@ -271,7 +272,6 @@ typedef struct Pilot_ {
 
    /* Fleet/faction management. */
    int faction;      /**< Pilot's faction. */
-   int systemFleet;  /**< The system fleet the pilot belongs to. */
    int presence;     /**< Presence being used by the pilot. */
 
    /* Object characteristics */
@@ -322,6 +322,7 @@ typedef struct Pilot_ {
    double ew_base_hide; /**< Base static hide factor. */
    double ew_mass;   /**< Mass factor. */
    double ew_heat;   /**< Heat factor, affects hide. */
+   double ew_asteroid;   /**< Asteroid field factor, affects hide. */
    double ew_hide;   /**< Static hide factor. */
    double ew_movement; /**< Movement factor. */
    double ew_evasion; /**< Dynamic evasion factor. */
@@ -422,6 +423,7 @@ typedef struct Pilot_ {
    double player_damage; /**< Accumulates damage done by player for hostileness.
                               In per one of max shield + armour. */
    double engine_glow; /**< Amount of engine glow to display. */
+   int messages;       /**< Queued messages (Lua ref). */
 } Pilot;
 
 
@@ -445,6 +447,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
 unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor);
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
+unsigned int pilot_getBoss( const Pilot* p );
 double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled );
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
@@ -488,10 +491,10 @@ ntime_t pilot_hyperspaceDelay( Pilot *p );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet );
+      const PilotFlags flags );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, const int systemFleet );
+      const PilotFlags flags );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );
@@ -524,7 +527,6 @@ void pilots_render( double dt );
 void pilots_renderOverlay( double dt );
 void pilot_render( Pilot* pilot, const double dt );
 void pilot_renderOverlay( Pilot* p, const double dt );
-void pilots_updateSystemFleet( const int deletedIndex );
 
 
 /*
@@ -552,6 +554,6 @@ char pilot_getFactionColourChar( const Pilot *p );
  * Misc details.
  */
 credits_t pilot_worth( const Pilot *p );
-
+void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int index);
 
 #endif /* PILOT_H */

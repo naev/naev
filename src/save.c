@@ -103,7 +103,7 @@ int save_all (void)
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, conf.save_compress);
    if (writer == NULL) {
-      ERR("testXmlwriterDoc: Error creating the xml writer");
+      ERR(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 
@@ -122,7 +122,7 @@ int save_all (void)
 
    /* Save the data. */
    if (save_data(writer) < 0) {
-      ERR("Trying to save game data");
+      ERR(_("Trying to save game data"));
       goto err_writer;
    }
 
@@ -133,7 +133,7 @@ int save_all (void)
    /* Write to file. */
    if ((nfile_dirMakeExist("%s", nfile_dataPath()) < 0) ||
          (nfile_dirMakeExist("%ssaves", nfile_dataPath()) < 0)) {
-      WARN("Failed to create save directory '%ssaves'.", nfile_dataPath());
+      WARN(_("Failed to create save directory '%ssaves'."), nfile_dataPath());
       goto err_writer;
    }
    nsnprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
@@ -141,7 +141,7 @@ int save_all (void)
    /* Back up old savegame. */
    if (!save_loaded) {
       if (nfile_backupIfExists(file) < 0) {
-         WARN("Aborting save...");
+         WARN(_("Aborting save..."));
          goto err_writer;
       }
    }
@@ -151,7 +151,7 @@ int save_all (void)
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
-      WARN("Failed to write savegame!  You'll most likely have to restore it by copying your backup savegame over your current savegame.");
+      WARN(_("Failed to write savegame!  You'll most likely have to restore it by copying your backup savegame over your current savegame."));
       goto err;
    }
    xmlFreeDoc(doc);
@@ -184,7 +184,7 @@ void save_reload (void)
 int save_hasSave (void)
 {
    char **files;
-   int nfiles, i, len;
+   size_t nfiles, i, len;
    int has_save;
 
    /* Look for saved games. */

@@ -8,7 +8,7 @@
   <mass>12</mass>
   <price>80000</price>
   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Prometheus 2203 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
-  <gfx_store>core_system01</gfx_store>
+  <gfx_store>core_system02</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>36</cpu_max>

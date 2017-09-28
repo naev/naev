@@ -10,119 +10,113 @@
 
 include "dat/scripts/cargo_common.lua"
 
-lang = naev.lang()
-if lang == "es" then
-else
-
-   misn_title = "Emergency atmospheric dump" 
-   misn_reward = 10000 -- To be updated when Naev gets an economy.
-   misn_desc = "Discreet pilot wanted for in-system shipment. Licensed haulers only."
+misn_title = _("Emergency atmospheric dump") 
+misn_reward = 10000 -- To be updated when Naev gets an economy.
+misn_desc = _("Discreet pilot wanted for in-system shipment. Licensed haulers only.")
 
 -- Create the tables
-   title = {}
-   text = {}
+title = {}
+text = {}
 
 -- Stage one, the player receives the cargo and has a choice
-   title["intro"] = "Loading toxic waste"
-   text["intro"] = [[A group of men begin loading the drums of toxic waste onto your ship. "Don't worry, the containers are sealed," explains the woman supervising the team, "but there are laws for the disposal of this kind of waste. Unfortunately, we've had a disagreement with our contractor and it's been building up."
+title["intro"] = _("Loading toxic waste")
+text["intro"] = _([[A group of men begin loading the drums of toxic waste onto your ship. "Don't worry, the containers are sealed," explains the woman supervising the team, "but there are laws for the disposal of this kind of waste. Unfortunately, we've had a disagreement with our contractor and it's been building up."
 
 She grimaces and rubs the bags under her eyes.
 
 "Please shuttle it over to %s. Empire regulations allow waste containers to be dumped into the atmosphere of a dead planet. The best way to dispose of it is to conduct a high atmosphere burn. Fly in hot, top speed, then spin around and jettison the drums as you decelerate.
 
-"I'll pay you half now. When you return, come find me at the prefecture, and I'll give you the rest."]]
+"I'll pay you half now. When you return, come find me at the prefecture, and I'll give you the rest."]])
 
 -- num, chosen = tk.choice( title["intro"], text["intro"], "Agreed", "No. Pay me up front." )
 
 -- Stage one, confirmation if the player agrees to terms
-   title["agreed"] = [[The Handshake]]
-   text["agreed"] = [["See you in a few days, captain."]]
+title["agreed"] = _([[The Handshake]])
+text["agreed"] = _([["See you in a few days, captain."]])
 
 -- Stage one, if the player insists to be paid up front
-   title["up_front"] = [[Bargaining]]
-   text["up_front"] = [[The woman throws up her hands. "Of course, up front. Everyone want to be paid up front." She glares at you for a moment, then slumps. "Fine, here. Just please do it right. The regulation says a high atmosphere burn. It's important."]]
+title["up_front"] = _([[Bargaining]])
+text["up_front"] = _([[The woman throws up her hands. "Of course, up front. Everyone want to be paid up front." She glares at you for a moment, then slumps. "Fine, here. Just please do it right. The regulation says a high atmosphere burn. It's important."]])
 
 -- Stage two, aborting the mission before dumping, while landed, and with money unpaid.
-   title["abort1"] = [[Unload the cargo]]
-   text["abort1"] = [[You locate an isolated part of %s where your toxic cargo will not attract attention. As you unload, one drum of waste slips on a patch of oil. It slides out of control and falls heavily from the ship. When it lands, the impact cracks the casing of the container. A viscous grey liquid oozes out.
+title["abort1"] = _([[Unload the cargo]])
+text["abort1"] = _([[You locate an isolated part of %s where your toxic cargo will not attract attention. As you unload, one drum of waste slips on a patch of oil. It slides out of control and falls heavily from the ship. When it lands, the impact cracks the casing of the container. A viscous grey liquid oozes out.
 
-All perfectly against regulation, no doubt, but the woman from the prefecture will never know. To rid yourself of this cargo, it is worth forgoing the second half of the modest fee.]]
+All perfectly against regulation, no doubt, but the woman from the prefecture will never know. To rid yourself of this cargo, it is worth forgoing the second half of the modest fee.]])
 
 -- Stage two, aborting the mission before dumping, while landed, paid up front.
-   title["abort2"] = [[Unload the cargo]]
-   text["abort2"] = [[You locate an isolated part of %s where your toxic cargo will not attract attention. As you unload, one drum of waste slips on a patch of oil. It slides out of control and falls heavily from the ship. When it lands, the impact cracks the casing of the container. A viscous grey liquid oozes out.
+title["abort2"] = _([[Unload the cargo]])
+text["abort2"] = _([[You locate an isolated part of %s where your toxic cargo will not attract attention. As you unload, one drum of waste slips on a patch of oil. It slides out of control and falls heavily from the ship. When it lands, the impact cracks the casing of the container. A viscous grey liquid oozes out.
 
-All perfectly against regulation, no doubt, but the woman from the prefecture will never know.]]
+All perfectly against regulation, no doubt, but the woman from the prefecture will never know.]])
 
 -- Stage two, completing the mission, with money waiting planetside
-   title["burn1"] = [[In a hard, high burn]]
-   text["burn1"] = [[The %s's forward sensors capture the image of the drums disintegrating in the high temperatures created by your manoeuvre.
+title["burn1"] = _([[In a hard, high burn]])
+text["burn1"] = _([[The %s's forward sensors capture the image of the drums disintegrating in the high temperatures created by your manoeuvre.
 
-The woman from the prefecture is waiting back on %s to pay you the balance of your fee.]]
+The woman from the prefecture is waiting back on %s to pay you the balance of your fee.]])
 
 -- Stage two, completing the mission after being paid up front
-   title["burn2"] = [[In a hard, high burn]]
-   text["burn2"] = [[The %s's forward sensors capture the image of the drums disintegrating in the high temperatures created by your manoeuvre.
+title["burn2"] = _([[In a hard, high burn]])
+text["burn2"] = _([[The %s's forward sensors capture the image of the drums disintegrating in the high temperatures created by your manoeuvre.
 
-The woman from the prefecture is waiting back on %s for the report of your success.]]
+The woman from the prefecture is waiting back on %s for the report of your success.]])
 
 -- Stage three, return for payment
-   title["touch-down"] = [[A windowless office, underground]]
-   text["touch-down"] = [[The prefecture operates out of an imposing historical building constructed in early imperial style.
+title["touch-down"] = _([[A windowless office, underground]])
+text["touch-down"] = _([[The prefecture operates out of an imposing historical building constructed in early imperial style.
 
 You find your employer, however, in an airless, undecorated office at the end of a long hallway in the second basement. She raises her head when you knock on the door frame.
 
-"All well, captain? You executed it by the book?"]]
+"All well, captain? You executed it by the book?"]])
 
 -- report = tk.yesno( title["touch-down"], text["touch-down"] )
 
 -- Stage three, get paid
-   title["paid"] = [[A windowless office, underground]]
-   text["paid"] = [["A reliable star pilot, imagine that. You're one of a rare breed, %s. Our regular service should return soon, but just in case, maybe check back at the mission center next month. Thank you, captain. Fly safe."
+title["paid"] = _([[A windowless office, underground]])
+text["paid"] = _([["A reliable star pilot, imagine that. You're one of a rare breed, %s. Our regular service should return soon, but just in case, maybe check back at the mission center next month. Thank you, captain. Fly safe."
 
-As you leave, the woman bows over her desk and with great satisfaction crosses one item off a long list.]]
+As you leave, the woman bows over her desk and with great satisfaction crosses one item off a long list.]])
 
 -- Stage three, don't get paid the whole fee because you say you didn't do the job
-   title["unpaid1"] = [[A windowless office, underground]]
-   text["unpaid1"] = [[The woman meets your gaze, unblinking, for several heartbeats. Then she shakes her head slowly and bends back over her work. "I don't have room in my budget to pay for services not rendered. Goodbye captain. You know the way out."]]
+title["unpaid1"] = _([[A windowless office, underground]])
+text["unpaid1"] = _([[The woman meets your gaze, unblinking, for several heartbeats. Then she shakes her head slowly and bends back over her work. "I don't have room in my budget to pay for services not rendered. Goodbye captain. You know the way out."]])
 
 -- Stage three, upset your employer by telling her you took her money and didn't do the job.
-   title["unpaid2"] = [[A windowless office, underground]]
-   text["unpaid2"] = [[The woman meets your gaze, unblinking, for several heartbeats. Her hand trembles as she picks up a palm display and bends back over her work. She barely gets the words out from behind clenched teeth. "And I trusted you. The government can't even buy loyalty these days. Not even from a nobody space rat. Waste of public funds. Get out of here, captain. You know the way."]]
+title["unpaid2"] = _([[A windowless office, underground]])
+text["unpaid2"] = _([[The woman meets your gaze, unblinking, for several heartbeats. Her hand trembles as she picks up a palm display and bends back over her work. She barely gets the words out from behind clenched teeth. "And I trusted you. The government can't even buy loyalty these days. Not even from a nobody space rat. Waste of public funds. Get out of here, captain. You know the way."]])
 
 -- Stage three, if you abort the job in space, before dumping, with money unpaid.
-   title["abort3"] = [[Jettison the cargo]]
-   text["abort3"] = [[The drums drift off into space, with no one the wiser. The waste joins many tons of space debris, natural and man-made, drifting through %s.
+title["abort3"] = _([[Jettison the cargo]])
+text["abort3"] = _([[The drums drift off into space, with no one the wiser. The waste joins many tons of space debris, natural and man-made, drifting through %s.
 
-All perfectly against regulation, no doubt, but the woman from the prefecture will never know. To rid yourself of this cargo, it is worth forgoing the second half of the modest fee.]]
+All perfectly against regulation, no doubt, but the woman from the prefecture will never know. To rid yourself of this cargo, it is worth forgoing the second half of the modest fee.]])
 
 -- Stage three, if you abort the job in space, before dumping, paid up front.
-   title["abort4"] = [[Jettison the cargo]]
-   text["abort4"] = [[The drums drift off into space, with no one the wiser. The waste joins many tons of space debris, natural and man-made, drifting through %s.
+title["abort4"] = _([[Jettison the cargo]])
+text["abort4"] = _([[The drums drift off into space, with no one the wiser. The waste joins many tons of space debris, natural and man-made, drifting through %s.
 
-All perfectly against regulation, no doubt, but the woman from the prefecture will never know.]]
+All perfectly against regulation, no doubt, but the woman from the prefecture will never know.]])
 
 -- Stage three, if you abort the job after dumping, with money unpaid.
-   title["abort5"] = [[Abort the mission]]
-   text["abort5"] = [[The woman from the prefecture may sit memorising regulations, and shuffling budgets as long as she wants. You forego the second half of your fee. As for her, she will have to resign herself to never knowing what became of her toxic sludge.]]
+title["abort5"] = _([[Abort the mission]])
+text["abort5"] = _([[The woman from the prefecture may sit memorising regulations, and shuffling budgets as long as she wants. You forego the second half of your fee. As for her, she will have to resign herself to never knowing what became of her toxic sludge.]])
 
 -- Stage three, if you abort the job after dumping, paid up front.
-   title["abort6"] = [[Abort the mission]]
-   text["abort6"] = [[The woman from the prefecture may sit memorising regulations, and shuffling budgets as long as she wants. She will have to resign herself to never knowing what became of her toxic sludge.]]
+title["abort6"] = _([[Abort the mission]])
+text["abort6"] = _([[The woman from the prefecture may sit memorising regulations, and shuffling budgets as long as she wants. She will have to resign herself to never knowing what became of her toxic sludge.]])
 
-   full = {}
-   full[1] = "No room in ship"
-   full[2] = "You don't have enough cargo space to accept this mission. You need %d tons of free space (you need %d more)."
+full = {}
+full[1] = _("No room in ship")
+full[2] = _("You don't have enough cargo space to accept this mission. You need %d tons of free space (you need %d more).")
 
-   osd = {}
-   osd["title"] = "Waste disposal"
-   osd["directions"] = "Fly to %s and dump the cargo into the atmosphere."
-   osd["directions1"] = "Fly to %s and in the %s system and dump the cargo into the atmosphere."
-   osd["protip"] = "Fly into %s at top speed. Spin around in atmo and throw on the brakes."
-   osd["done1"] = "Return to %s to collect the rest of your payment."
-   osd["done2"] = "Return to %s to report on your success."
-
-end
+osd = {}
+osd["title"] = _("Waste disposal")
+osd["directions"] = _("Fly to %s and dump the cargo into the atmosphere.")
+osd["directions1"] = _("Fly to %s and in the %s system and dump the cargo into the atmosphere.")
+osd["protip"] = _("Fly into %s at top speed. Spin around in atmo and throw on the brakes.")
+osd["done1"] = _("Return to %s to collect the rest of your payment.")
+osd["done2"] = _("Return to %s to report on your success.")
 
 
 function create ()
@@ -189,7 +183,7 @@ function accept ()
       misn.finish()
    end
    misn.accept()
-   num, chosen = tk.choice( title["intro"], string.format( text["intro"], dumping_planet:name()), "Agreed", "No. Pay me up front.")
+   num, chosen = tk.choice( title["intro"], string.format( text["intro"], dumping_planet:name()), _("Agreed"), _("No. Pay me up front."))
    if num == 1 then
       tk.msg( title["agreed"], text["agreed"])
       player.pay( misn_reward / 2)

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Electron Burst Cannon">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <mass>10</mass>
+  <price>30000</price>
+  <description>This powerful energy weapon is built to bombard a target from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively crippled. It is unclear who originally designed this weapon: Robosys or the Za'lek. Either way, the drones that use this weapon are rightly feared and respected.</description>
+  <gfx_store>weapon01</gfx_store>
+  <cpu>-10</cpu>
+ </general>
+ <specific type="launcher" secondary="1">
+  <ammo>Electron Energy Cell</ammo>
+  <delay>0.3</delay>
+  <amount>100</amount>
+ </specific>
+</outfit>

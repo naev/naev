@@ -12,23 +12,11 @@
 
 
 /**
- * @brief Represents a character in the font.
- */
-typedef struct glFontChar_s {
-   double adv_x; /**< X advancement. */
-   double adv_y; /**< Y advancement. */
-} glFontChar;
-
-
-/**
  * @brief Represents a font in memory.
  */
 typedef struct glFont_s {
+   int id; /**< Font stash id. */
    int h; /**< Font height. */
-   GLuint texture; /**< Font atlas. */
-   gl_vbo *vbo_tex; /**< VBO associated to texture coordinates. */
-   gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
-   glFontChar *chars; /**< Characters in the font. */
 } glFont;
 extern glFont gl_defFont; /**< Default font. */
 extern glFont gl_smallFont; /**< Small font. */
@@ -48,7 +36,7 @@ typedef struct glFontRestore_s {
  *
  * if font is NULL it uses the internal default font same with gl_print
  */
-void gl_fontInit( glFont* font, const char *fname, const unsigned int h );
+int gl_fontInit( glFont* font, const char *fname, const char *fallback, const unsigned int h );
 void gl_freeFont( glFont* font );
 
 
@@ -89,7 +77,6 @@ int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
       const glColour* c, const char *fmt, ... );
-
 
 /* Dimension stuff. */
 int gl_printWidthForText( const glFont *ft_font, const char *text,

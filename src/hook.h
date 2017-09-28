@@ -68,6 +68,8 @@ int hook_hasEventParent( unsigned int parent );
 /* pilot hook. */
 int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
 
+nlua_env hook_env( unsigned int hook );
+
 /*
  * run hooks
  *

@@ -10,6 +10,7 @@
 #include <lua.h>
 
 #include "ntime.h"
+#include "nlua.h"
 
 
 #define TIME_METATABLE   "time" /**< Planet metatable identifier. */
@@ -18,7 +19,7 @@
 /*
  * Library stuff.
  */
-int nlua_loadTime( lua_State *L, int readonly );
+int nlua_loadTime( nlua_env env );
 
 /*
  * Time operations.

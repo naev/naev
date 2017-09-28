@@ -39,7 +39,8 @@ void pilot_ewUpdateStatic( Pilot *p )
     */
    p->ew_mass     = pow2( pilot_ewMass( p->solid->mass ) );
    p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+   p->ew_asteroid = pilot_ewAsteroid( p );
+   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat * p->ew_asteroid;
    p->ew_evasion  = p->ew_hide * EVASION_SCALE;
 }
 
@@ -53,7 +54,8 @@ void pilot_ewUpdateDynamic( Pilot *p )
 {
    /* Update hide. */
    p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+   p->ew_asteroid = pilot_ewAsteroid( p );
+   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat * p->ew_asteroid;
 
    /* Update evasion. */
    p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
@@ -94,6 +96,24 @@ double pilot_ewHeat( double T )
 double pilot_ewMass( double mass )
 {
    return 1. / (.3 + sqrt(mass) / 30. );
+}
+
+
+/**
+ * @brief Gets the electronic warfare asteroid modifier.
+ *
+ *    @param pilot.
+ *    @return The electronic warfare asteroid modifier.
+ */
+double pilot_ewAsteroid( Pilot *p )
+{
+   int i;
+
+   i = space_isInField(&p->solid->pos);
+   if ( i>=0 )
+      return 1. + cur_system->asteroids[i].density;
+   else
+      return 1.;
 }
 
 

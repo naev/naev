@@ -17,7 +17,7 @@ function addShips( ship, ai, location, count )
    local out = {}
 
    if type(ship) ~= "table" and type(ship) ~= "string" then
-      print("addShips: Error, ship list is not a fleet or table of fleets!")
+      print(_("addShips: Error, ship list is not a fleet or table of fleets!"))
       return
    elseif type(ship) == "string" then -- Put lone fleet into table.
       ship = { ship }
@@ -61,7 +61,7 @@ function addRawShips( ship, ai, location, faction, count )
    local out = {}
 
    if type(ship) ~= "table" and type(ship) ~= "string" then
-      print("addRawShips: Error, ship list is not a ship or table of ships!")
+      print(_("addRawShips: Error, ship list is not a ship or table of ships!"))
       return
    elseif type(ship) == "string" then -- Put lone ship into table.
       ship = { ship }
@@ -70,7 +70,7 @@ function addRawShips( ship, ai, location, faction, count )
    locations = _buildDupeTable( location, #ship )
    factions  = _buildDupeTable( faction, #ship )
    if factions[1] == nil then
-      print("addRawShips: Error, raw ships must have factions!")
+      print(_("addRawShips: Error, raw ships must have factions!"))
       return
    end
 
@@ -79,7 +79,7 @@ function addRawShips( ship, ai, location, faction, count )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )[1]
+         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )
       end
    end
    if #out > 1 then
@@ -102,14 +102,14 @@ end
 --]]
 function renameShips( ship, match, replace, limit )
    if type(ship) ~= "table" and type(ship) ~= "userdata" then
-      print("renameShips: Error, ship list is not a pilot or table of pilots!")
+      print(_("renameShips: Error, ship list is not a pilot or table of pilots!"))
       return
    elseif type(ship) == "userdata" then -- Put lone pilot into table.
       ship = { ship }
    end
 
    if match == nil or replace == nil then
-      print("renameShips: Error, need a pattern to match and one to replace!")
+      print(_("renameShips: Error, need a pattern to match and one to replace!"))
       return
    end
 
@@ -122,7 +122,7 @@ function _buildDupeTable( input, count )
    local tmp = {}
    if type(input) == "table" then
       if #input ~= count then
-         print("Warning: Tables are different lengths.")
+         print(_("Warning: Tables are different lengths."))
       end
       return input
    else
@@ -136,7 +136,7 @@ end
 
 function _mergeTables( old, new )
    if type(old) ~= "table" or type(new) ~= "table" then
-      print("_mergeTables: Error, this function only accepts tables.")
+      print(_("_mergeTables: Error, this function only accepts tables."))
    end
 
    for k,v in ipairs(new) do
@@ -149,7 +149,7 @@ end
 -- Randomize the locations of ships in the same manner than pilot.add() does.
 function _randomizePositions( ship, override )
    if type(ship) ~= "table" and type(ship) ~= "userdata" then
-      print("_randomizePositions: Error, ship list is not a pilot or table of pilots!")
+      print(_("_randomizePositions: Error, ship list is not a pilot or table of pilots!"))
       return
    elseif type(ship) == "userdata" then -- Put lone pilot into table.
       ship = { ship }

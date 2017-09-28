@@ -7,7 +7,9 @@
  <class>Fighter</class>
  <price>400000</price>
  <fabricator>Nexus Shipyards</fabricator>
- <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability.</description>
+ <description>The Lancelot is commonly used by FLF pilots both because of its widespread availability and its general well-roundedness.
+ 
+These Lancelots available from the FLF have questionable core components pre-installed, but are otherwise identical to standard Lancelots.</description>
  <health>
   <absorb>7</absorb>
   <armour>60</armour>

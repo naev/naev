@@ -49,6 +49,7 @@ end
 
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
+    pilots.__fleet = true
     local pilots = {}
     local r = rnd.rnd()
 

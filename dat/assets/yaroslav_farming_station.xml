@@ -21,7 +21,6 @@
    <land/>
    <refuel/>
    <bar/>
-   <commodity/>
   </services>
   <commodities/>
   <description>This farming facility provides the nearby systems with food. Some of the produce is shipped to the nearby world of Boowoy, but the majority is traded out of system.</description>

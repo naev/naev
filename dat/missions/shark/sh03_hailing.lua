@@ -11,49 +11,44 @@
 
 include "numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
+title = {}
+text = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
    
-   title[1] = "A new job"
-   text[1] = [["Hello there, nice to meet you again!" Smith says. "According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are going very fast. We have to act now: I have noticed a member of the Frontier Council who, for political reasons, could help us.
+title[1] = _("A new job")
+text[1] = _([["Hello there, nice to meet you again!" Smith says. "According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are going very fast. We have to act now: I have noticed a member of the Frontier Council who, for political reasons, could help us.
    I can't send him a message without being spotted by the Sirii, so I need you to take contact with him: he must be flying in his Hawking in %s now. Go there, hail him, say him that I have to see him on %s in %s and he will understand. Oh, by the way, my new name is Donald Ulnish.
    And there is something else: I heard that the Sirii hired some henchmen to go after you, you maybe already have met them. The good news is that they don't know that Nexus is involved, but still, be careful.
-   Are you in?"]]
+   Are you in?"]])
    
-   refusetitle = "Sorry, not interested"
-   refusetext = [["Ok, so come back when you are interested," Smith says.]]
-   
-   title[2] = "Time to go"
-   text[2] = [["Good luck"]]
-   
-   title[3] = "Good job"
-   text[3] = [[Smith seems to relax as you says him that everything went according to plan. "Ok, so now, meet me in the bar when you are ready to bring me to %s in %s.]]
-   
-   title[4] = "Time to go back to %s"
-   text[4] = [[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers. After having delivered your message, you quit, hoping that the journey back will be as quiet as the trip from %s.]]
-   
-   
-   -- Mission details
-   misn_title = "Invitation"
-   misn_reward = "%s credits"
-   misn_desc = "Nexus Shipyard asks you to help in a secret meeting"
-   
-   -- NPC
-   npc_desc[1] = "Arnold Smith"
-   bar_desc[1] = [[Arnold Smith (aka James Neptune): this guy seems more and more shifty]]
-   
-   -- OSD
-   osd_title = "Invitation"
-   osd_msg[1] = "Go to %s, find and hail the Air Force One"
-   osd_msg[2] = "Report back to %s in %s"
-   
-end
+refusetitle = _("Sorry, not interested")
+refusetext = _([["Ok, so come back when you are interested," Smith says.]])
+
+title[2] = _("Time to go")
+text[2] = _([["Good luck"]])
+
+title[3] = _("Good job")
+text[3] = _([[Smith seems to relax as you says him that everything went according to plan. "Ok, so now, meet me in the bar when you are ready to bring me to %s in %s.]])
+
+title[4] = _("Time to go back to %s")
+text[4] = _([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers. After having delivered your message, you quit, hoping that the journey back will be as quiet as the trip from %s.]])
+
+
+-- Mission details
+misn_title = _("Invitation")
+misn_reward = _("%s credits")
+misn_desc = _("Nexus Shipyard asks you to help in a secret meeting")
+
+-- NPC
+npc_desc[1] = _("Arnold Smith")
+bar_desc[1] = _([[Arnold Smith (aka James Neptune): this guy seems more and more shifty]])
+
+-- OSD
+osd_title = _("Invitation")
+osd_msg[1] = _("Go to %s, find and hail the Air Force One")
+osd_msg[2] = _("Report back to %s in %s")
 
 function create ()
    
@@ -117,8 +112,8 @@ end
 function enter()
    --the system where the player must look for the Hawking
    if system.cur() == missys then
-      hawking = pilot.addRaw("Hawking", "trader", mispla:pos() + vec2.new(-400,-400), "Frontier" )[1]
-      hawking:rename("Air Force One")
+      hawking = pilot.addRaw("Hawking", "trader", mispla:pos() + vec2.new(-400,-400), "Frontier" )
+      hawking:rename(_("Air Force One"))
       hawking:setHilight(true)
       hailhook = hook.pilot(hawking, "hail", "hail")
    end

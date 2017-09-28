@@ -15,8 +15,8 @@ mem.armour_return  = 100
 mem.atk_board      = true
 mem.atk_kill       = true
 mem.atk_board      = false
-mem.bribe_no       = "You can't bribe me!"
-mem.refuel_no      = "I won't give you fuel!"
+mem.bribe_no       = _("You can't bribe me!")
+mem.refuel_no      = _("I won't give you fuel!")
 
 
 function create ()

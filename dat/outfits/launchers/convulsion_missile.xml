@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Convulsion Missile">
+ <general>
+  <mass>0.2</mass>
+  <price>1100</price>
+  <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.</description>
+  <gfx_store>convulsion</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>convulsion</gfx>
+  <sound>seeker</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <duration blowup="armour">4</duration>
+  <thrust>0</thrust>
+  <turn>55</turn>
+  <speed>850</speed>
+  <resist>10</resist>
+  <damage>
+   <type>shieldbreaker</type>
+   <penetrate>5</penetrate>
+   <physical>75</physical>
+   <disable>5</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

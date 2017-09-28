@@ -73,7 +73,7 @@ static void npng_warn( png_structp png_ptr, png_const_charp warning_message )
       if (strcmp(&ignore[i], warning_message) == 0)
          return;
 
-   logprintf(stderr, "%s\n", warning_message);
+   logprintf(stderr, 1, "%s", warning_message);
 }
 
 /**
@@ -90,7 +90,7 @@ npng_t *npng_open( SDL_RWops *rw )
    /* Allocate memory. */
    npng = malloc( sizeof(npng_t) );
    if (npng == NULL) {
-      WARN("Out of memory.");
+      WARN(_("Out of Memory"));
       return NULL;
    }
    memset( npng, 0, sizeof(npng_t) );
@@ -99,19 +99,19 @@ npng_t *npng_open( SDL_RWops *rw )
    npng->rw       = rw;
    npng->png_ptr  = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
    if (npng->png_ptr == NULL) {
-      WARN("png_create_read_struct failed");
+      WARN(_("png_create_read_struct failed"));
       goto ERR_FAIL;
    }
    npng->info_ptr = png_create_info_struct( npng->png_ptr );
    if (npng->info_ptr == NULL) {
-      WARN("png_create_info_struct failed");
+      WARN(_("png_create_info_struct failed"));
       goto ERR_FAIL;
    }
 
    /* Check header. */
    SDL_RWread( rw, header, 8, 1 );
    if (png_sig_cmp(header, 0, 8)) {
-      WARN("RWops not recognized as a PNG file.");
+      WARN(_("RWops not recognized as a PNG file."));
       goto ERR_FAIL;
    }
 
@@ -123,7 +123,7 @@ npng_t *npng_open( SDL_RWops *rw )
 
    /* Set up long jump for IO. */
    if (setjmp( png_jmpbuf( npng->png_ptr )) ) {
-      WARN("Error during setjmp");
+      WARN(_("Error during setjmp"));
       goto ERR_FAIL;
    }
 
@@ -291,10 +291,10 @@ png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pi
    /* Create the array of pointers to image data */
    image_data = malloc( rowbytes * height );
    if (image_data == NULL)
-      ERR( "Out of Memory" );
+      ERR( _("Out of Memory") );
    row_pointers = malloc( sizeof(png_bytep) * height );
    if (row_pointers == NULL)
-      ERR( "Out of Memory" );
+      ERR( _("Out of Memory") );
    for (i=0; i<height; i++)
       row_pointers[i] = image_data + i*rowbytes;
 
@@ -355,7 +355,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    surface = SDL_CreateRGBSurface( SDL_SWSURFACE, width, height,
          bit_depth*channels, Rmask, Gmask, Bmask, Amask );
    if (surface == NULL) {
-      ERR( "Out of Memory" );
+      ERR( _("Out of Memory") );
       return NULL;
    }
    /*if (bit_depth*channels < npng_pitch( npng )) DEBUG(" %d / %d ", bit_depth*channels, npng_pitch( npng ) );*/
@@ -363,7 +363,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    /* Create the array of pointers to image data */
    row_pointers = malloc( sizeof(png_bytep) * rheight );
    if (row_pointers == NULL) {
-      ERR( "Out of Memory" );
+      ERR( _("Out of Memory") );
       return NULL;
    }
    for (row=0; row<rheight; row++) { /* We only need to go to real height, not full height. */
