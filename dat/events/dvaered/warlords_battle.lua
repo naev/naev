@@ -12,11 +12,11 @@ if lang == "es" then
    title = {}
    text = {}
 
-   title[1] = "A battle is about to begin"
-   text[1] = [["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]]
+   title[1] = _("A battle is about to begin")
+   text[1] = _([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]])
 
-   title[2] = "Here comes your reward"
-   text[2] = [["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s credits as a reward."]]
+   title[2] = _("Here comes your reward")
+   text[2] = _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s credits as a reward."]])
 
 end
 
@@ -54,7 +54,7 @@ function begin ()
    end
 
    --If no planet matches the specs...
-   if cand == {} then
+   if #cand <= 0 then
       evt.finish(false)
    end
 
@@ -107,22 +107,22 @@ function attack ()
    attackers[2*n+1] = pilot.add("Dvaered Phalanx", nil, source_system)[1]
    attackers[2*n+2] = pilot.add("Dvaered Phalanx", nil, source_system)[1]
    attackers[2*n+3] = pilot.add("Dvaered Vigilance", nil, source_system)[1]
-   attackers[2*n+4] = pilot.addRaw("Rhino", "dvaered", source_system, "Thugs")[1] --some transport ships
-   attackers[2*n+5] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")[1]
-   attackers[2*n+6] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")[1]
-   attackers[2*n+7] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")[1]
+   attackers[2*n+4] = pilot.addRaw("Rhino", "dvaered", source_system, "Thugs") --some transport ships
+   attackers[2*n+5] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")
+   attackers[2*n+6] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")
+   attackers[2*n+7] = pilot.addRaw("Rhino", "dvaered",source_system, "Thugs")
    attackers[2*n+8] = pilot.add("Dvaered Goddard", nil, source_system)[1]
 
    -- The transport ships tend to run away
-   attackers[2*n+4]:memory("shield_run", 70)
-   attackers[2*n+5]:memory("shield_run", 70)
-   attackers[2*n+6]:memory("shield_run", 70)
-   attackers[2*n+7]:memory("shield_run", 70)
+   attackers[2*n+4]:memory().shield_run = 70
+   attackers[2*n+5]:memory().shield_run = 70
+   attackers[2*n+6]:memory().shield_run = 70
+   attackers[2*n+7]:memory().shield_run = 70
 
-   attackers[2*n+4]:memory("shield_return", 99)
-   attackers[2*n+5]:memory("shield_return", 99)
-   attackers[2*n+6]:memory("shield_return", 99)
-   attackers[2*n+7]:memory("shield_return", 99)
+   attackers[2*n+4]:memory().shield_return = 99
+   attackers[2*n+5]:memory().shield_return = 99
+   attackers[2*n+6]:memory().shield_return = 99
+   attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
 

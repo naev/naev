@@ -4,7 +4,7 @@
  <GFX>zalek_drone_heavy</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>
- <class>Fighter</class>
+ <class>Heavy Drone</class>
  <price>190000</price>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>

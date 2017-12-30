@@ -103,10 +103,6 @@ typedef struct Hook_ {
          unsigned int parent; /**< Event it's connected to. */
          char *func; /**< Function it runs. */
       } event; /**< Event Lua function. */
-      struct {
-         int (*func)( void *data ); /**< C function to run. */
-         void *data; /**< Data to pass to C function. */
-      } func; /**< Normal C function hook. */
    } u; /**< Type specific data. */
 } Hook;
 
@@ -135,7 +131,6 @@ static Hook* hook_new( HookType_t type, const char *stack );
 static int hook_parseParam( lua_State *L, HookParam *param );
 static int hook_runMisn( Hook *hook, HookParam *param, int claims );
 static int hook_runEvent( Hook *hook, HookParam *param, int claims );
-static int hook_runFunc( Hook *hook );
 static int hook_run( Hook *hook, HookParam *param, int claims );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
@@ -285,7 +280,7 @@ static int hook_parseParam( lua_State *L, HookParam *param )
             break;
 
          default:
-            WARN( "Unknown Lua parameter type." );
+            WARN( _("Unknown Lua parameter type.") );
             lua_pushnil( L );
             break;
       }
@@ -306,7 +301,6 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 {
    unsigned int id;
    Mission* misn;
-   lua_State *L;
    int n;
 
    /* Simplicity. */
@@ -314,7 +308,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 
    /* Make sure it's valid. */
    if (hook->u.misn.parent == 0) {
-      WARN("Trying to run hook with inexistant parent: deleting");
+      WARN(_("Trying to run hook with inexistant parent: deleting"));
       hook->delete = 1; /* so we delete it */
       return -1;
    }
@@ -322,7 +316,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    /* Locate the mission */
    misn = hook_getMission( hook );
    if (misn == NULL) {
-      WARN("Trying to run hook with parent not in player mission stack: deleting");
+      WARN(_("Trying to run hook with parent not in player mission stack: deleting"));
       hook->delete = 1; /* so we delete it */
       return -1;
    }
@@ -336,17 +330,17 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   L = misn_runStart( misn, hook->u.misn.func );
-   n = hook_parseParam( L, param );
+   misn_runStart( misn, hook->u.misn.func );
+   n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
-   hookL_getarg( L, id );
+   hookL_getarg( id );
    n++;
 
    /* Run mission code. */
    hook->ran_once = 1;
    if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occurred */
-      WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
+      WARN(_("Hook [%s] '%d' -> '%s' failed"), hook->stack,
             hook->id, hook->u.misn.func);
       return -1;
    }
@@ -363,7 +357,6 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 {
    int ret;
-   lua_State *L;
    int n;
 
    /* Must match claims. */
@@ -375,17 +368,19 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   L = event_runStart( hook->u.event.parent, hook->u.event.func );
-   if (L == NULL) {
-      WARN("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook.", hook->stack,
+   if (event_get(hook->u.event.parent) == NULL) {
+      WARN(_("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."), hook->stack,
             hook->id, hook->u.event.func);
       hook->delete = 1; /* Set for deletion. */
       return -1;
    }
-   n = hook_parseParam( L, param );
+
+   event_runStart( hook->u.event.parent, hook->u.event.func );
+
+   n = hook_parseParam( naevL, param );
 
    /* Add hook parameters. */
-   hookL_getarg( L, hook->id );
+   hookL_getarg( hook->id );
    n++;
 
    /* Run the hook. */
@@ -393,28 +388,8 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    hook->ran_once = 1;
    if (ret < 0) {
       hook_rmRaw( hook );
-      WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
+      WARN(_("Hook [%s] '%d' -> '%s' failed"), hook->stack,
             hook->id, hook->u.event.func);
-      return -1;
-   }
-   return 0;
-}
-
-
-/**
- * @brief Runs a C function hook.
- *
- *    @param hook Hook to run.
- *    @return 0 on success.
- */
-static int hook_runFunc( Hook *hook )
-{
-   int ret, id;
-   id = hook->id;
-   hook->ran_once = 1;
-   ret = hook->u.func.func( hook->u.func.data );
-   if (ret != 0) {
-      hook_rm( id );
       return -1;
    }
    return 0;
@@ -448,12 +423,8 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
          ret = hook_runEvent(hook, param, claims);
          break;
 
-      case HOOK_TYPE_FUNC:
-         ret = hook_runFunc(hook);
-         break;
-
       default:
-         WARN("Invalid hook type '%d', deleting.", hook->type);
+         WARN(_("Invalid hook type '%d', deleting."), hook->type);
          hook->delete = 1;
          return -1;
    }
@@ -807,30 +778,6 @@ void hooks_update( double dt )
 
 
 /**
- * @brief Adds a new C function type hook.
- *
- *    @param func Function to hook.  Parameter is the data passed.  Function
- *           should return 0 if hook should stay or 1 if it should be deleted.
- *    @param data Data to pass to the hooked function.
- *    @param stack Stack to which the hook belongs.
- *    @return The new hook identifier.
- */
-unsigned hook_addFunc( int (*func)(void*), void* data, const char *stack )
-{
-   Hook *new_hook;
-
-   /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_FUNC, stack );
-
-   /* Put mission specific details. */
-   new_hook->u.func.func = func;
-   new_hook->u.func.data = data;
-
-   return new_hook->id;
-}
-
-
-/**
  * @brief Gets the mission of a hook.
  */
 static Mission *hook_getMission( Hook *hook )
@@ -866,26 +813,8 @@ void hook_rm( unsigned int id )
  */
 static void hook_rmRaw( Hook *h )
 {
-   Mission *misn;
-   Event_t *evt;
-
    h->delete = 1;
-   switch (h->type) {
-      case HOOK_TYPE_MISN:
-         misn = hook_getMission( h );
-         if (misn != NULL)
-            hookL_unsetarg( misn->L, h->id );
-         break;
-
-      case HOOK_TYPE_EVENT:
-         evt = event_get( h->u.event.parent );
-         if (evt != NULL)
-            hookL_unsetarg( evt->L, h->id );
-         break;
-
-      default:
-         break;
-   }
+   hookL_unsetarg( h->id );
 }
 
 
@@ -1032,7 +961,7 @@ int hooks_runParam( const char* stack, HookParam *param )
          hq->hparam[i] = param[i];
 #ifdef DEBUGGING
       if (i >= HOOK_MAX_PARAM)
-         WARN( "HOOK_MAX_PARAM is set too low (%d), need at least %d!", HOOK_MAX_PARAM, i );
+         WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
 #endif /* DEBUGGING */
       hq->hparam[i].type = HOOK_PARAM_SENTINEL;
       hq_add( hq );
@@ -1071,6 +1000,37 @@ static Hook* hook_get( unsigned int id )
 
 
 /**
+ * @brief Gets the lua env for a hook.
+ */
+nlua_env hook_env( unsigned int hook )
+{
+   Mission *misn;
+   Event_t *evt;
+
+   Hook *h = hook_get(hook);
+   if (h == NULL)
+      return LUA_NOREF;
+
+   switch (h->type) {
+      case HOOK_TYPE_MISN:
+         misn = hook_getMission( h );
+         if (misn != NULL)
+             return misn->env;
+         break;
+      case HOOK_TYPE_EVENT:
+         evt = event_get( h->u.event.parent );
+         if (evt != NULL)
+            return evt->env;
+	 break;
+      default:
+	 break;
+   }
+
+   return LUA_NOREF;
+}
+
+
+/**
  * @brief Runs a single hook by id.
  *
  *    @param id Identifier of the hook to run.
@@ -1087,7 +1047,7 @@ int hook_runIDparam( unsigned int id, HookParam *param )
    /* Try to find the hook and run it. */
    h = hook_get( id );
    if (h == NULL) {
-      WARN("Attempting to run hook of id '%d' which is not in the stack", id);
+      WARN(_("Attempting to run hook of id '%d' which is not in the stack"), id);
       return -1;
    }
    hook_run( h, param, -1 );
@@ -1150,7 +1110,7 @@ void hook_cleanup (void)
    Hook *h, *hn;
 
    if (hook_runningstack)
-      WARN("Running hook_cleanup while hook stack is being run!");
+      WARN(_("Running hook_cleanup while hook stack is being run!"));
 
    /* Clear queued hooks. */
    hq_clear();
@@ -1232,7 +1192,7 @@ int hook_save( xmlTextWriterPtr writer )
             break;
 
          default:
-            WARN("Something has gone screwy here...");
+            WARN(_("Something has gone screwy here..."));
             break;
       }
 
@@ -1329,7 +1289,7 @@ static int hook_parse( xmlNodePtr base )
          }
          /* Unknown. */
          else {
-            WARN("Hook of unknown type '%s' found, skipping.", stype);
+            WARN(_("Hook of unknown type '%s' found, skipping."), stype);
             free(stype);
             continue;
          }
@@ -1358,12 +1318,12 @@ static int hook_parse( xmlNodePtr base )
                continue;
             }
 
-            WARN("Save has unknown hook node '%s'.", cur->name);
+            WARN(_("Save has unknown hook node '%s'."), cur->name);
          } while (xml_nextNode(cur));
 
          /* Check for validity. */
          if ((parent == 0) || (func == NULL) || (stack == NULL)) {
-            WARN("Invalid hook.");
+            WARN(_("Invalid hook."));
             continue;
          }
 

@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nstd.h"
@@ -24,7 +23,7 @@
 
 /* Tutorial methods. */
 static int tut_mainMenu( lua_State *L );
-static const luaL_reg tut_methods[] = {
+static const luaL_Reg tut_methods[] = {
    { "main_menu", tut_mainMenu },
    {0,0}
 }; /**< Tutorial Lua methods. */
@@ -36,9 +35,9 @@ static const luaL_reg tut_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int nlua_loadTut( lua_State *L )
+int nlua_loadTut( nlua_env env )
 {
-   luaL_register(L, "tut", tut_methods);
+   nlua_register(env, "tut", tut_methods, 0);
    return 0;
 }
 
@@ -65,7 +64,7 @@ int nlua_loadTut( lua_State *L )
 static int tut_mainMenu( lua_State *L )
 {
    if (landed) {
-      NLUA_ERROR(L,"Can not go to main menu while landed.");
+      NLUA_ERROR(L,_("Can not go to main menu while landed."));
       return 0;
    }
    menu_main();

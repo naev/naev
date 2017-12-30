@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_planet.h"
 #include "log.h"
@@ -27,7 +26,7 @@ static int commodityL_get( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
-static const luaL_reg commodityL_methods[] = {
+static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
@@ -42,26 +41,12 @@ static const luaL_reg commodityL_methods[] = {
 /**
  * @brief Loads the commodity library.
  *
- *    @param L State to load commodity library into.
+ *    @param env Environment to load commodity library into.
  *    @return 0 on success.
  */
-int nlua_loadCommodity( lua_State *L, int readonly )
+int nlua_loadCommodity( nlua_env env )
 {
-   (void) readonly; /* Everything is readonly. */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, COMMODITY_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, commodityL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, COMMODITY_METATABLE);
-
+   nlua_register(env, COMMODITY_METATABLE, commodityL_methods, 1);
    return 0;
 }
 
@@ -127,7 +112,7 @@ Commodity* luaL_validcommodity( lua_State *L, int ind )
    }
 
    if (o == NULL)
-      NLUA_ERROR(L, "Commodity is invalid.");
+      NLUA_ERROR(L, _("Commodity is invalid."));
 
    return o;
 }
@@ -176,9 +161,9 @@ int lua_iscommodity( lua_State *L, int ind )
  *
  * @usage if o1 == o2 then -- Checks to see if commodity o1 and o2 are the same
  *
- *    @luaparam o1 First commodity to compare.
- *    @luaparam o2 Second commodity to compare.
- *    @luareturn true if both commodities are the same.
+ *    @luatparam Commodity o1 First commodity to compare.
+ *    @luatparam Commodity o2 Second commodity to compare.
+ *    @luatreturn boolean true if both commodities are the same.
  * @luafunc __eq( o1, o2 )
  */
 static int commodityL_eq( lua_State *L )
@@ -201,8 +186,8 @@ static int commodityL_eq( lua_State *L )
  *
  * @usage s = commodity.get( "Food" ) -- Gets the food commodity
  *
- *    @luaparam s Name of the commodity to get.
- *    @luareturn The commodity matching name or nil if error.
+ *    @luatparam string s Name of the commodity to get.
+ *    @luatreturn Commodity|nil The commodity matching name or nil if error.
  * @luafunc get( s )
  */
 static int commodityL_get( lua_State *L )
@@ -216,7 +201,7 @@ static int commodityL_get( lua_State *L )
    /* Get commodity. */
    commodity = commodity_get( name );
    if (commodity == NULL) {
-      NLUA_ERROR(L,"Commodity '%s' not found!", name);
+      NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
       return 0;
    }
 
@@ -229,8 +214,8 @@ static int commodityL_get( lua_State *L )
  *
  * @usage commodityname = s:name()
  *
- *    @luaparam s Commodity to get commodity name.
- *    @luareturn The name of the commodity's commodity.
+ *    @luatparam Commodity s Commodity to get commodity name.
+ *    @luatreturn string The name of the commodity's commodity.
  * @luafunc name( s )
  */
 static int commodityL_name( lua_State *L )
@@ -251,8 +236,8 @@ static int commodityL_name( lua_State *L )
  *
  * @usage print( o:price() ) -- Prints the base price of the commodity
  *
- *    @luaparam o Commodity to get information of.
- *    @luareturn The base price of the commodity.
+ *    @luatparam Commodity o Commodity to get information of.
+ *    @luatreturn number The base price of the commodity.
  * @luafunc price( o )
  */
 static int commodityL_price( lua_State *L )
@@ -268,9 +253,9 @@ static int commodityL_price( lua_State *L )
  *
  * @usage if o:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of an outfit at polaris prime
  *
- *    @luaparam o Commodity to get information of.
- *    @luaparam p Planet to get price at.
- *    @luareturn The price of the commodity at the planet.
+ *    @luatparam Commodity o Commodity to get information of.
+ *    @luatparam Planet p Planet to get price at.
+ *    @luatreturn number The price of the commodity at the planet.
  * @luafunc priceAt( o, p )
  */
 static int commodityL_priceAt( lua_State *L )
@@ -284,12 +269,12 @@ static int commodityL_priceAt( lua_State *L )
    p = luaL_validplanet(L,2);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
-      NLUA_ERROR( L, "Planet '%s' does not belong to a system", p->name );
+      NLUA_ERROR( L, _("Planet '%s' does not belong to a system"), p->name );
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, "Planet '%s' can not find its system '%s'", p->name, sysname );
+      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'"), p->name, sysname );
       return 0;
    }
 

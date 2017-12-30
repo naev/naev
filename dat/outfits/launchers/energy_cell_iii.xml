@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Thurion Energy Cell III">
+ <general>
+  <license>Heavy Weapon License</license>
+  <mass>0.1</mass>
+  <price>350</price>
+  <description>This energy cell is required for the initialization of the self-contained energy cascades the Thurion use for their homing energy weapons.</description>
+  <gfx_store>cpu_iii</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>laser3L</gfx>
+  <sound>neutron</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpM</spfx_armour>
+  <duration blowup="shield">1.8</duration>
+  <thrust>0</thrust>
+  <turn>80</turn>
+  <speed>600</speed>
+  <resist>5</resist>
+  <energy>90</energy>
+  <damage>
+   <type>normal</type>
+   <penetrate>60</penetrate>
+   <physical>140</physical>
+   <disable>35</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

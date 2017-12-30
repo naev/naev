@@ -240,9 +240,9 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
 
    /* Buttons. */
    window_addButton( wid, 100, 20, 100, BUTTON_HEIGHT,
-         "btnSelect", "Select", map_findDisplayMark );
+         "btnSelect", _("Select"), map_findDisplayMark );
    window_addButton( wid, -100, 20, 100, BUTTON_HEIGHT,
-         "btnClose", "Cancel", window_close );
+         "btnClose", _("Cancel"), window_close );
 }
 
 
@@ -322,7 +322,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
       }
    }
    if (ve == NULL) {
-      WARN("Jump to first system not found!");
+      WARN(_("Jump to first system not found!"));
       d = 0.;
    }
    else
@@ -358,7 +358,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
 
 #ifdef DEBUGGING
       if ((vs==NULL) || (ve==NULL)) {
-         WARN( "Matching jumps not found, something is up..." );
+         WARN( _("Matching jumps not found, something is up...") );
          continue;
       }
 #endif /* DEBUGGING */
@@ -446,10 +446,10 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "%s (unknown route)", sys->name );
+               _("%s (unknown route)"), sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "%s (%d jumps, %.0fk distance)",
+               _("%s (%d jumps, %.0fk distance)"),
                sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -551,11 +551,11 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
                names[i], sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
                names[i], sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -666,7 +666,7 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, iw+20, -60-128-10,
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
-         "Owned:\n"
+         _("Owned:\n"
          "\n"
          "Slot:\n"
          "Size:\n"
@@ -674,7 +674,7 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          "\n"
          "Price:\n"
          "Money:\n"
-         "License:\n" );
+         "License:\n") );
    window_addText( wid, iw+20, -60-128-10,
          280, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, iw+20, -60-128-10-160,
@@ -713,7 +713,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
-         "%d\n"
+         _("%d\n"
          "\n"
          "%s\n"
          "%s\n"
@@ -721,14 +721,14 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "\n"
          "%s credits\n"
          "%s credits\n"
-         "%s\n",
+         "%s\n"),
          player_outfitOwned(outfit),
          outfit_slotName(outfit),
          outfit_slotSize(outfit),
          outfit->mass,
          buf2,
          buf3,
-         (outfit->license != NULL) ? outfit->license : "None" );
+         (outfit->license != NULL) ? outfit->license : _("None") );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
@@ -772,9 +772,9 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_listPanel( "Search Results", list, len, 452, 550,
+      i = dialogue_listPanel( _("Search Results"), list, len, 452, 550,
             map_addOutfitDetailFields, map_showOutfitDetail,
-            "Search results for outfits matching '%s':", name );
+            _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
          free(names);
          return 0;
@@ -827,11 +827,11 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
                pnt->name, sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -927,8 +927,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
-            "Search results for ships matching '%s':", name );
+      i = dialogue_list( _("Search Results"), list, len,
+            _("Search results for ships matching '%s':"), name );
       if (i < 0) {
          free(names);
          return 0;
@@ -981,11 +981,11 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
                pnt->name, sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -1025,25 +1025,25 @@ static void map_findSearch( unsigned int wid, char* str )
    /* Handle different search cases. */
    if (map_find_systems) {
       ret = map_findSearchSystems( wid, name );
-      searchname = "System";
+      searchname = _("System");
    }
    else if (map_find_planets) {
       ret = map_findSearchPlanets( wid, name );
-      searchname = "Planet";
+      searchname = _("Planet");
    }
    else if (map_find_outfits) {
       ret = map_findSearchOutfits( wid, name );
-      searchname = "Outfit";
+      searchname = _("Outfit");
    }
    else if (map_find_ships) {
       ret = map_findSearchShips( wid, name );
-      searchname = "Ship";
+      searchname = _("Ship");
    }
    else
       ret = 1;
 
    if (ret < 0)
-      dialogue_alert( "%s matching '%s' not found!", searchname, name );
+      dialogue_alert( _("%s matching '%s' not found!"), searchname, name );
 
    if (ret > 0)
       map_findClose( wid, str );
@@ -1072,7 +1072,7 @@ void map_inputFind( unsigned int parent, char* str )
    y = -40;
    window_addText( wid, 20, y, 300, gl_defFont.h+4, 0,
          "txtDescription", &gl_defFont, &cDConsole,
-         "Enter keyword to search for:" );
+         _("Enter keyword to search for:") );
    y -= 30;
 
    /* Create input. */
@@ -1082,22 +1082,22 @@ void map_inputFind( unsigned int parent, char* str )
 
    /* Create buttons. */
    window_addButton( wid,300-BUTTON_WIDTH-30, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSearch", "Find", map_findSearch );
+         "btnSearch", _("Find"), map_findSearch );
    window_addButton( wid,300-BUTTON_WIDTH-30, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", map_findClose );
+         "btnClose", _("Close"), map_findClose );
 
    /* Create check boxes. */
    x = 40;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkSystem", "Systems", map_find_check_update, map_find_systems );
+         "chkSystem", _("Systems"), map_find_check_update, map_find_systems );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkPlanet", "Planets", map_find_check_update, map_find_planets );
+         "chkPlanet", _("Planets"), map_find_check_update, map_find_planets );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkOutfit", "Outfits", map_find_check_update, map_find_outfits );
+         "chkOutfit", _("Outfits"), map_find_check_update, map_find_outfits );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkShip", "Ships", map_find_check_update, map_find_ships );
+         "chkShip", _("Ships"), map_find_check_update, map_find_ships );
 }
 

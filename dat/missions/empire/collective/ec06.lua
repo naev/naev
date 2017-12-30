@@ -13,43 +13,38 @@ include "proximity.lua"
 include "fleethelper.lua"
 include "dat/missions/empire/common.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them."
-   misn_title = "Operation Cold Metal"
-   misn_reward = "Fame and Glory"
-   misn_desc = {}
-   misn_desc[1] = "Neutralize enemy forces in %s."
-   misn_desc[2] = "Destroy the Starfire and hostiles in %s."
-   misn_desc[3] = "Return to %s in the %s system."
-   title = {}
-   title[1] = "Bar"
-   title[2] = "Operation Cold Metal"
-   title[3] = "Mission Success"
-   title[4] = "Cowardly Behaviour"
-   text = {}
-   text[1] = [[You join Commodore Keer at her table.
-    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]]
-   text[2] = [["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. You are to report to the Imperial fleet standing by near the jump point before engaging the enemy. See you in combat, pilot."]]
-   text[3] = [[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
-    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]
-   text[4] = [[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
-    And so ends the Collective threat...]]
-   text[5] = [[You recieve a message signed by Commodore Keer as soon as you enter Empire space:
+bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
+misn_title = _("Operation Cold Metal")
+misn_reward = _("Fame and Glory")
+misn_desc = {}
+misn_desc[1] = _("Neutralize enemy forces in %s.")
+misn_desc[2] = _("Destroy the Starfire and hostiles in %s.")
+misn_desc[3] = _("Return to %s in the %s system.")
+title = {}
+title[1] = _("Bar")
+title[2] = _("Operation Cold Metal")
+title[3] = _("Mission Success")
+title[4] = _("Cowardly Behaviour")
+text = {}
+text[1] = _([[You join Commodore Keer at her table.
+    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]])
+text[2] = _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]])
+text[3] = _([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
+    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]])
+text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
+    And so ends the Collective threat...]])
+text[5] = _([[You recieve a message signed by Commodore Keer as soon as you enter Empire space:
     "There is no room for cowards in the Empire's fleet."
-    The signature does seem valid.]]
+    The signature does seem valid.]])
     
-    start_comm = "To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"
+start_comm = _("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!")
    
-   osd_msg = {}
-   osd_msg[1] = "Fly to %s via %s and meet up with the Imperial fleet"
-   osd_msg[2] = "Defeat the Starfire"
-   osd_msg2alt = "Defeat the Starfire and the Trinity"
-   osd_msg[3] = "Report back"
-   osd_msg["__save"] = true
-end
+osd_msg = {}
+osd_msg[1] = _("Fly to %s via %s and meet up with the Imperial fleet")
+osd_msg[2] = _("Defeat the Starfire")
+osd_msg2alt = _("Defeat the Starfire and the Trinity")
+osd_msg[3] = _("Report back")
+osd_msg["__save"] = true
 
 
 function create ()
@@ -58,7 +53,7 @@ function create ()
         abort()
     end
 
-   misn.setNPC( "Keer", "empire/unique/keer" )
+   misn.setNPC( _("Keer"), "empire/unique/keer" )
    misn.setDesc( bar_desc )
 end
 
@@ -119,20 +114,17 @@ function jumpin ()
             fleetE = {}
             fleetC = {}
             droneC = {}
-            local fleetEpos = vec2.new(9500, 20000)
             local fleetCpos = vec2.new(0, 0)
             deathsC = 0
 
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetEpos)[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetE[1]:pos() + vec2.new(-500, 200))[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, fleetE[1]:pos() + vec2.new(500, -200))[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", nil, fleetE[1]:pos() + vec2.new(-200, 460))[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", nil, fleetE[1]:pos() + vec2.new(500, 180))[1]
-            for i = 1, 7 do
-                fleetE[#fleetE + 1] = pilot.add("Empire Pacifier", nil, fleetE[1]:pos() + vec2.new(-230, -275) + vec2.new(75*i - 260, -30*i + 105))[1]
+            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", nil, last_sys)[1]
+            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, last_sys)[1]
+            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", nil, last_sys)[1]
+            for i = 1, 6 do
+                fleetE[#fleetE + 1] = pilot.add("Empire Pacifier", nil, last_sys)[1]
             end
             for i = 1, 15 do
-                fleetE[#fleetE + 1] = pilot.add("Empire Lancelot", nil, fleetE[1]:pos() + vec2.new(-200, -200) + vec2.new(50*i - 350, -20*i + 140))[1]
+                fleetE[#fleetE + 1] = pilot.add("Empire Lancelot", nil, last_sys)[1]
             end
             
             fleetC[#fleetC + 1] = pilot.add("Starfire", nil, fleetCpos)[1]
@@ -145,37 +137,34 @@ function jumpin ()
                 fleetC[#fleetC]:setNodisable()
                 fleetC[#fleetC]:setFaction( "Collective" )
             end
-            droneC = addShips("Collective Drone", nil, fleetCpos, 60)
+            droneC = {}
+            for i = 1, 60 do
+                local pos = fleetCpos + vec2.new(rnd.rnd(-10000, 10000), rnd.rnd(-10000, 10000))
+                if i <= 10 then
+                    droneC[#droneC + 1] = pilot.add("Collective Heavy Drone", nil, pos)[1]
+                else
+                    droneC[#droneC + 1] = pilot.add("Collective Drone", nil, pos)[1]
+                end
+            end
             
             for _, j in ipairs(fleetE) do
-                j:control()
                 j:changeAI("empire_idle")
-                j:face(fleetCpos)
                 j:setVisible()
             end
             
             for _, j in ipairs(fleetC) do
-                j:control()
-                j:face(fleetEpos)
+                j:changeAI("collective_norun")
                 j:setVisible()
                 j:setHilight()
             end
             for _, j in ipairs(droneC) do
-                j:control()
-                j:face(fleetEpos)
+                j:changeAI("collective_norun")
                 j:setVisible()
             end
-            
-            hook.timer(500, "proximity", {location = fleetEpos, radius = 800, funcname = "prestartBattle"})
 
-            if last_sys ~= misn_target_sys2 then
-            -- Jumped in through the wrong jump point
-                alertCollective()
-                for _, j in ipairs(fleetC) do
-                    j:control()
-                    j:attack(player.pilot())
-                end
-            end
+            fleetE[1]:broadcast(start_comm)
+            misn.osdActive(2)
+            player.pilot():setVisible()
         elseif system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
             pilot.clear()
             pilot.toggleSpawn(false)
@@ -188,34 +177,9 @@ function jumpin ()
     end
 end
 
-function prestartBattle()
-    fleetE[1]:broadcast(start_comm)
-    hook.timer(6000, "startBattle")
-end
-
-function startBattle()
-    misn.osdActive(2)
-    alertCollective()
-    for _, j in ipairs(fleetE) do
-        j:control(false)
-    end
-    player.pilot():setVisible()
-end
-
-function alertCollective()
-    for _, j in ipairs(fleetC) do
-        j:changeAI("collective_norun")
-        j:control(false)
-    end
-    for _, j in ipairs(droneC) do
-        j:changeAI("collective_norun")
-        j:control(false)
-    end
-end
-
 function refuelBroadcast ()
    if refship:exists() then
-      refship:broadcast("Tanker in system, contact if in need of fuel.")
+      refship:broadcast(_("Tanker in system, contact if in need of fuel."))
       hook.timer(10000, "refuelBroadcast")
    end
 end
@@ -224,11 +188,12 @@ end
 function addRefuelShip ()
    -- Create the pilot
    refship = pilot.add( "Trader Mule", "empire_refuel", last_sys )[1]
-   refship:rename("Fuel Tanker")
+   refship:rename(_("Fuel Tanker"))
    refship:setFaction("Empire")
    refship:setFriendly()
    refship:setVisplayer()
    refship:setHilight()
+   refship:setNoJump()
 
    -- Maximize fuel
    refship:rmOutfit("all") -- Only will have fuel pods

@@ -17,6 +17,9 @@ function equip( p )
    -- Split by type
    if shiptype == "military" then
       equip_empireMilitary( p, shipsize )
+   elseif
+	  shiptype == "robotic" then
+      equip_empireMilitary( p, shipsize )
    else
       equip_generic( p )
    end
@@ -25,7 +28,10 @@ end
 
 -- CANNONS
 function equip_forwardZlkLow ()
-   return { "Orion Lance", "Laser Cannon MK3" }
+   return { "Particle Lance" }
+end
+function equip_forwardZlkMedLow ()
+   return { "Orion Lance" }
 end
 function equip_forwardZlkMed ()
    return { "Laser Cannon MK3", "Orion Lance", "Grave Lance", "Heavy Ripper Cannon" }
@@ -42,7 +48,7 @@ function equip_turretZlkHig ()
 end
 -- RANGED
 function equip_rangedZlk ()
-   return { "Unicorp Mace Launcher" }
+   return { "Electron Burst Cannon" }
 end
 function equip_secondaryZlk ()
    return { "Shattershield Lance", "Unicorp Headhunter Launcher" }
@@ -109,12 +115,20 @@ function equip_empireMilitary( p, shipsize )
          use_medium     = 2
          low            = { "Solar Panel" }
 
-      -- Fighter
-      elseif class == "Fighter" then
-         use_primary    = nhigh-1
-         use_secondary  = 1
-         addWeapons( equip_forwardZlkMed(), use_primary )
-         addWeapons( equip_secondaryZlk(), use_secondary )
+      -- Drone
+      elseif class == "Drone" then
+        -- equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Light Stealth Plating")
+         use_primary    = nhigh
+         addWeapons( equip_forwardZlkLow(), use_primary )
+         medium         = equip_mediumZlkLow()
+         low            = equip_lowZlkLow()
+		 
+      -- Heavy Drone
+      elseif class == "Heavy Drone" then
+         use_primary    = nhigh
+         addWeapons( equip_forwardZlkLow(), 2 )
+         addWeapons( equip_forwardZlkMedLow(), 1 )
+         addWeapons( equip_rangedZlk(), 1 )
          medium         = equip_mediumZlkLow()
          low            = equip_lowZlkLow()
 

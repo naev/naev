@@ -15,98 +15,94 @@ include "dat/scripts/numstring.lua"
 include "dat/scripts/proximity.lua"
 include "dat/factions/equip/generic.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   comptitle = {}
-   comptext = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
+title = {}
+text = {}
+comptitle = {}
+comptext = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
+
+title[1] = _("Do you want to take part to a challenge?")
+text[1] = _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill him or the security staff won't forgive it. It is forbidden to use missiles, so you won't be allowed to have some while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on an other planet or to jump away during the championship.
+   We are looking for pilots, are you in?"]])
    
-   title[1] = "Do you want to take part to a challenge?"
-   text[1] = [["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill him or the security staff won't forgive it. It is forbidden to use missiles, so you won't be allowed to have some while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on an other planet or to jump away during the championship.
-   We are looking for pilots, are you in?"]]
+refusetitle = _("Sorry, not interested")
+refusetext = _([["That's your choice, goodbye" the person says.]])
+
+dismisstitle = _("You are dismissed")
+missiletext = _("You aren't allowed to use missiles")
+fightertext = _("You had to use a fighter")
+fleetext = _("You weren't supposed to go away")
+
+title[2] = _("Let's go")
+text[2] = _([[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]])
+
+title[3] = _("You won this round")
+text[3] = _([["Congratulations", the staff says to you. Come back when you are ready for the next round!]])
+
+title[4] = _("You are the new champion")
+text[4] = _([[Congratulations! The staff pays you %s k credits.]])
+
+title[5] = _("You are the vice-champion")
+text[5] = _([[Congratulations! The staff pays you %s k credits.]])
+
+title[6] = _("Thanks for playing")
+text[6] = _([[The staff pays you %s k credits.]])
+
+comptitle[1] = _("I am here to win the championship")
+comptext[1] = _([["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
+   You know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who won this championship had one."]])
+
+comptitle[2] = _("Hello")
+comptext[2] = _([["Are you here for the Dvaered dogfight championship? I am a competitor. You know, I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to do electronical war, with guided missiles and stealth ships while Dvaered pilots only understand dogfight."]])
+
+comptitle[3] = _("Imperial Pilot")
+comptext[3] = _([["What a pity, in my squad, I am the best, I trained cycles to be able to take down these stupids Vendettas with my missiles before they only see my Lancelot on their radar. But in this championship, only armor and firepower are usefull."]])
+
+comptitle[4] = _("Dvaered Pilot")
+comptext[4] = _([["Nice to see you," the soldier says, "I am a Vendetta pilot. I hope I will win this time, because for us, being the champion here means that you become member of the senior staff, witch makes you closer to Dvaered High Command. Who knows, maybe one day I will become a Warlord..."]])
+
+comptitle[5] = _("Obvious Pirate")
+comptext[5] = _([["Hi, I'm... err... I'm an independant pilot. I'm here to take part to the challenge, and to see the best Dvaered Vendetta pilots in motion. In my job, it helps to know how they fly."]])
+
+comptitle[6] = _("I am here to win the championship")
+comptext[6] = _([["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
+   Do you know who I am? I am the famous independant pilot who helped Dvaered High Command to destroy the FLF base in the nebula. I managed to defeat lots of FLF fighters with my ship! An other day, I will tell you my adventures, but now, I need to concentrate myself."]])
    
-   refusetitle = "Sorry, not interested"
-   refusetext = [["That's your choice, goodbye" the person says.]]
+-- Mission details
+misn_title = _("The Dvaered Championship")
+misn_reward = _("From 5k to 160k credits, depending on your rank")
+misn_desc = _("You take part to a fight contest. Try to do your best!")
 
-   dismisstitle = "You are dismissed"
-   missiletext = "You aren't allowed to use missiles"
-   fightertext = "You had to use a fighter"
-   fleetext = "You weren't supposed to go away"
+-- NPC
+npc_desc[1] = _("An official")
+bar_desc[1] = _("This person seems to be looking for suitable combat pilots.")
 
-   title[2] = "Let's go"
-   text[2] = [[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]]
+npc_desc[2] = _("Pilot")
+bar_desc[2] = _("This pilot looks very self-confident")
 
-   title[3] = "You won this round"
-   text[3] = [["Congratulations", the staff says to you. Come back when you are ready for the next round!]]
+npc_desc[3] = _("Pilot")
+bar_desc[3] = _("This pilot seems to work as a private combat pilot")
 
-   title[4] = "You are the new champion"
-   text[4] = [[Congratulations! The staff pays you %s k credits.]]
+npc_desc[4] = _("Imperial pilot")
+bar_desc[4] = _([[This man is one of the few imperial pilots who are good enough to have the right to keep their uniform while taking part to piloting challenges.]])
 
-   title[5] = "You are the vice-champion"
-   text[5] = [[Congratulations! The staff pays you %s k credits.]]
+npc_desc[5] = _("Dvaered pilot")
+bar_desc[5] = _([[This woman surely works as a Vendetta pilot.]])
 
-   title[6] = "Thanks for playing"
-   text[6] = [[The staff pays you %s k credits.]]
+npc_desc[6] = _("Strange pilot")
+bar_desc[6] = _([[This man looks like a pirate, but strangely enough, the authorities seems not to worry about him.]])
 
-   comptitle[1] = "I am here to win the championship"
-   comptext[1] = [["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
-   You know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who won this championship had one."]]
+-- OSD
+osd_title = _("The Dvaered Championship, round %n")
+final_title = _("The Dvaered Championship, final")
+osd_msg[1] = _("Go to the starting point")
+osd_msg[2] = _("Disable your opponent, DON'T KILL HIM")
+osd_msg[3] = _("Land on %s")
 
-   comptitle[2] = "Hello"
-   comptext[2] = [["Are you here for the Dvaered dogfight championship? I am a competitor. You know, I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to do electronical war, with guided missiles and stealth ships while Dvaered pilots only understand dogfight."]]
-
-   comptitle[3] = "Imperial Pilot"
-   comptext[3] = [["What a pity, in my squad, I am the best, I trained cycles to be able to take down these stupids Vendettas with my missiles before they only see my Lancelot on their radar. But in this championship, only armor and firepower are usefull."]]
-
-   comptitle[4] = "Dvaered Pilot"
-   comptext[4] = [["Nice to see you," the soldier says, "I am a Vendetta pilot. I hope I will win this time, because for us, being the champion here means that you become member of the senior staff, witch makes you closer to Dvaered High Command. Who knows, maybe one day I will become a Warlord..."]]
-
-   comptitle[5] = "Obvious Pirate"
-   comptext[5] = [["Hi, I'm... err... I'm an independant pilot. I'm here to take part to the challenge, and to see the best Dvaered Vendetta pilots in motion. In my job, it helps to know how they fly."]]
-
-   comptitle[6] = "I am here to win the championship"
-   comptext[6] = [["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
-   Do you know who I am? I am the famous independant pilot who helped Dvaered High Command to destroy the FLF base in the nebula. I managed to defeat lots of FLF fighters with my ship! An other day, I will tell you my adventures, but now, I need to concentrate myself."]]
-   
-   -- Mission details
-   misn_title = "The Dvaered Championship"
-   misn_reward = "From 5k to 160k credits, depending on your rank"
-   misn_desc = "You take part to a fight contest. Try to do your best!"
-   
-   -- NPC
-   npc_desc[1] = "An official"
-   bar_desc[1] = "This person seems to be looking for suitable combat pilots."
-   
-   npc_desc[2] = "Pilot"
-   bar_desc[2] = "This pilot looks very self-confident"
-
-   npc_desc[3] = "Pilot"
-   bar_desc[3] = "This pilot seems to work as a private combat pilot"
-
-   npc_desc[4] = "Imperial pilot"
-   bar_desc[4] = [[This man is one of the few imperial pilots who are good enough to have the right to keep their uniform while taking part to piloting challenges.]]
-
-   npc_desc[5] = "Dvaered pilot"
-   bar_desc[5] = [[This woman surely works as a Vendetta pilot.]]
-
-   npc_desc[6] = "Strange pilot"
-   bar_desc[6] = [[This man looks like a pirate, but strangely enough, the authorities seems not to worry about him.]]
-   
-   -- OSD
-   osd_title = "The Dvaered Championship, round %n"
-   final_title = "The Dvaered Championship, final"
-   osd_msg[1] = "Go to the starting point"
-   osd_msg[2] = "Disable your opponent, DON'T KILL HIM"
-   osd_msg[3] = "Land on %s"
-
-   --mark
-   mark_name = "START"
-end
+--mark
+mark_name = _("START")
 
 function create ()
    
@@ -196,7 +192,16 @@ function beginbattle()
 
       stage = 0
       --Give a name to the competitor
-      names = {"The Nice Killer", "Longship Victory", "The Victim", "Old Fellow", "Angel of Grace", "Easy Killer", "The Unicorn", "The White Knight", "Spirit of St Jean", "Nec Mergitur"}
+      names = { _("The Nice Killer"),
+                _("Longship Victory"),
+                _("The Victim"),
+                _("Old Fellow"),
+                _("Angel of Grace"),
+                _("Easy Killer"),
+                _("The Unicorn"),
+                _("The White Knight"),
+                _("Spirit of St Jean"),
+                _("Nec Mergitur") }
       reTry = true
 
       if usedNames == nil then  --This avoids bug in case usedName table is lost
@@ -251,7 +256,7 @@ function enter()
 
       shiplist = ships[level+1]
       oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.addRaw( oppotype, "baddie", mispla, "Thugs" )[1]
+      opponent = pilot.addRaw( oppotype, "baddie", mispla, "Thugs" )
 
       opponent:rmOutfit("all")
       opponent:rmOutfit("cores")
@@ -294,12 +299,12 @@ function enter()
       opponent:goto(mispla:pos() + vec2.new( 1000,  1500))
 
       --The TV and the security
-      tv1 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )[1]
-      tv2 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )[1]
-      sec11 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
-      sec12 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
-      sec21 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
-      sec22 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )[1]
+      tv1 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )
+      tv2 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )
+      sec11 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      sec12 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      sec21 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      sec22 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
 
       hooks = {}
 
@@ -325,16 +330,16 @@ function enter()
          k:setHealth(100,100)
          k:setEnergy(100)
          k:control()
-         k:memory("radius", 300) --Set the radius for the follow function
+         k:memory().radius = 300 --Set the radius for the follow function
       end
 
       -- Set the angle for the follow function
-      tv1:memory("angle", 90)
-      sec11:memory("angle", 200)
-      sec12:memory("angle", 240)
-      tv2:memory("angle", 90)
-      sec21:memory("angle", 200)
-      sec22:memory("angle", 240)
+      tv1:memory().angle = 90
+      sec11:memory().angle = 200
+      sec12:memory().angle = 240
+      tv2:memory().angle = 90
+      sec21:memory().angle = 200
+      sec22:memory().angle = 240
 
       --The escort follows the competitors
       tv1:follow(player.pilot(), true)

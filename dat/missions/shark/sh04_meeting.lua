@@ -15,52 +15,47 @@ include "proximity.lua"
 include "numstring.lua"
 include "fleethelper.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
-   
-   title[1] = "Travel"
-   text[1] = [["Ok, are you ready for the travel to %s in %s?"]]
-   
-   refusetitle = "Sorry, not interested"
-   refusetext = [["Ok, so come back when you are ready," Smith says.]]
-   
-   title[2] = "Time to go"
-   text[2] = [["So let's go."]]
-   
-   title[3] = "End of mission"
-   text[3] = [[Smith gets out of your ship and looks at you, smiling: "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault.
-   Anyway, here is your pay, and goodbye."]]
-   
-   title[4] = "The meeting"
-   text[4] = [[As you land, you see a group of people that were waiting for your ship. Smith hails them and says you to wait in the ship while he goes to a private part of the bar.
+title = {}
+text = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
+
+title[1] = _("Travel")
+text[1] = _([["Ok, are you ready for the travel to %s in %s?"]])
+
+refusetitle = _("Sorry, not interested")
+refusetext = _([["Ok, so come back when you are ready," Smith says.]])
+
+title[2] = _("Time to go")
+text[2] = _([["So let's go."]])
+
+title[3] = _("End of mission")
+text[3] = _([[Smith gets out of your ship and looks at you, smiling: "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault.
+   Anyway, here is your pay, and goodbye."]])
+
+title[4] = _("The meeting")
+text[4] = _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and says you to wait in the ship while he goes to a private part of the bar.
    A few STP later, he comes back and explains you that he didn't manage to get the support of the councilor, which means that the Frontier will not buy the Sharks.
-   "Anyway," he says, "bring me back to %s in one piece and I will pay you."]]
+   "Anyway," he says, "bring me back to %s in one piece and I will pay you."]])
    
-   title[5] = "What is going on?"
-   text[5] = [[That drone was behaving strangely, and now it is attacking you. As you wonder what to do, you hear a comm from a remote Za'lek ship: "Attention please, it seems some of our drones has been hacked. If a drone is attacking you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."
-   "Incredible, "Smith says, "they have managed to hire a Za'lek military engineer who has hacked some drones in order to make them attack our ship! That's strong," he says, admiringly.]]
+title[5] = _("What is going on?")
+text[5] = _([[That drone was behaving strangely, and now it is attacking you. As you wonder what to do, you hear a comm from a remote Za'lek ship: "Attention please, it seems some of our drones has been hacked. If a drone is attacking you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."
+   "Incredible, "Smith says, "they have managed to hire a Za'lek military engineer who has hacked some drones in order to make them attack our ship! That's strong," he says, admiringly.]])
    
-   -- Mission details
-   misn_title = "The Meeting"
-   misn_reward = "%s credits"
-   misn_desc = "Nexus Shipyard asks you to take part in a secret meeting"
-   
-   -- NPC
-   npc_desc[1] = "Arnold Smith"
-   bar_desc[1] = [[What wouldn't this guy do to sell Sharks?]]
-   
-   -- OSD
-   osd_title = "The Meeting"
-   osd_msg[1] = "Go to %s and land on %s"
-   osd_msg[2] = "Bring Smith back to %s in %s"
-   
-end
+-- Mission details
+misn_title = _("The Meeting")
+misn_reward = _("%s credits")
+misn_desc = _("Nexus Shipyard asks you to take part in a secret meeting")
+
+-- NPC
+npc_desc[1] = _("Arnold Smith")
+bar_desc[1] = _([[What wouldn't this guy do to sell Sharks?]])
+
+-- OSD
+osd_title = _("The Meeting")
+osd_msg[1] = _("Go to %s and land on %s")
+osd_msg[2] = _("Bring Smith back to %s in %s")
 
 function create ()
    
@@ -172,7 +167,7 @@ end
 function reveal()  --transforms the spawn drones into baddies
    if enable == true then  --only if this happens a few time after the jumping/taking off
       for i, j in ipairs(badguy) do
-         j:rename("Hacked Drone")
+         j:rename(_("Hacked Drone"))
          j:setHostile()
          j:setFaction("Mercenary")
          j:control(false)

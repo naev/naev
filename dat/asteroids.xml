@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Asteroid_types>
+ <asteroid>
+  <id>default</id>
+  <gfx>asteroid-D00</gfx>
+  <gfx>asteroid-D07</gfx>
+  <gfx>asteroid-D08</gfx>
+  <gfx>asteroid-D09</gfx>
+  <gfx>asteroid-D10</gfx>
+  <gfx>asteroid-D11</gfx>
+  <gfx>asteroid-D12</gfx>
+  <gfx>asteroid-D13</gfx>
+ </asteroid>
+</Asteroid_types>

@@ -10,6 +10,7 @@
 
 #include "space.h"
 
+#define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
 /* init/exit */
 int map_init (void);

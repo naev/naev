@@ -25,122 +25,119 @@
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-    misn_desc = "%s in the %s system requests transport to %s."
-    misn_reward = "%s credits"
+misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
+misn_desc = _("%s in the %s system requests transport to %s.")
+misn_reward = _("%s credits")
 
-    dest_planet_name = "Mutris"
-    dest_sys_name = "Aesir"
+dest_planet_name = "Mutris"
+dest_sys_name = "Aesir"
 
-    -- passenger rank
-    prank = {}
-    prank[0] = "Shaira"
-    prank[1] = "Fyrra"
-    prank[2] = "Serra"
+-- passenger rank
+prank = {}
+prank[0] = _("Shaira")
+prank[1] = _("Fyrra")
+prank[2] = _("Serra")
 
-    ferrytime = {}
-    ferrytime[0] = "Economy" -- Note: indexed from 0, to match mission tiers.
-    ferrytime[1] = "Priority"
-    ferrytime[2] = "Express"
+ferrytime = {}
+ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
+ferrytime[1] = _("Priority")
+ferrytime[2] = _("Express")
 
-    title_p1 = " space transport to %s for %s-class citizen"
+title_p1 = _("%s space transport to %s for %s-class citizen")
 
-    -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-    title_p2 = [[ 
+-- Note: please leave the trailing space on the line below! Needed to make the newline show up.
+title_p2 = [[ 
 Jumps: %d
 Travel distance: %d
 Time limit: %s]]
 
-   slow = {}
-   slow[1] = "Too slow"
-   slow[2] = [[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
+slow = {}
+slow[1] = _("Too slow")
+slow[2] = [[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
 
 Accept the mission anyway?]]
 
-  --=Politics=--
-  no_clearace_t = "Deficient clearance"
+--=Politics=--
+no_clearace_t = _("Deficient clearance")
 
-  no_clearance_p1 = "The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. "
-  no_clearance_p2 = {}
-  no_clearance_p2[0] = "However, if you can take me as far as %s, I will be satisfied with that.\""
-  no_clearance_p2[1] = "However, I suppose if you can take me to %s, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than %s credits.\""
-  no_clearance_p2[2] = "However, if you're on the way to Aesir, I could be willing to pay %s credits for transportation to %s.\""
-  no_clearance_p2[3] = "Apparently you are not fit to be the pilot for my pilgrimage. It is the will of Sirichana to teach me patience...\""
+no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
+no_clearance_p2 = {}
+no_clearance_p2[0] = _("However, if you can take me as far as %s, I will be satisfied with that.\"")
+no_clearance_p2[1] = _("However, I suppose if you can take me to %s, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than %s credits.\"")
+no_clearance_p2[2] = _("However, if you're on the way to Aesir, I could be willing to pay %s credits for transportation to %s.\"")
+no_clearance_p2[3] = _("Apparently you are not fit to be the pilot for my pilgrimage. It is the will of Sirichana to teach me patience...\"")
 
-  -- Outcomes for each of the 4 options above:
-  -- We pick random number (1-4), then use this as our index into nc_probs[rank]
-  nc_probs = {}
-  nc_probs[0] = {0, 0, 0, 1}
-  nc_probs[1] = {0, 1, 1, 2}
-  nc_probs[2] = {2, 3, 3, 3}
+-- Outcomes for each of the 4 options above:
+-- We pick random number (1-4), then use this as our index into nc_probs[rank]
+nc_probs = {}
+nc_probs[0] = {0, 0, 0, 1}
+nc_probs[1] = {0, 1, 1, 2}
+nc_probs[2] = {2, 3, 3, 3}
 
-  altplanet = {}
-  altplanet[0] = "Urail"
-  altplanet[1] = "Gayathi"
+altplanet = {}
+altplanet[0] = "Urail"
+altplanet[1] = "Gayathi"
 
-  -- If you don't have a Sirian ship
-  no_ship_t = "Transportation details"
+-- If you don't have a Sirian ship
+no_ship_t = _("Transportation details")
 
-  no_ship_p1 = "As you arrive at the hangar, the Sirian looks at your ship"
+no_ship_p1 = _("As you arrive at the hangar, the Sirian looks at your ship")
 
-  no_ship_p2 = {}
-  no_ship_p2[0] = ", and you catch a hint of disappointment on their face, before they notice you and quickly hide it."
-  no_ship_p2[1] = " and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for %s?"
-  no_ship_p2[2] = " and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""
+no_ship_p2 = {}
+no_ship_p2[0] = _("%s, and you catch a hint of disappointment on their face, before they notice you and quickly hide it.")
+no_ship_p2[1] = _("%s and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for %s?")
+no_ship_p2[2] = _("%s and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\"")
 
-  no_ship_t3a = "Offer accepted"
-  no_ship_p3a = "\"Very well. For a price that reasonable, I will adjust my expectations.\""
+no_ship_t3a = _("Offer accepted")
+no_ship_p3a = _("\"Very well. For a price that reasonable, I will adjust my expectations.\"")
 
-  no_ship_t3b = "Offer denied"
-  no_ship_p3b = "\"I'm sorry. Your price is reasonable, but piety is of greater value.\""
+no_ship_t3b = _("Offer denied")
+no_ship_p3b = _("\"I'm sorry. Your price is reasonable, but piety is of greater value.\"")
 
-  -- If you change ships mid-journey
-  change_ship_t = "Altering the deal"
-  change_ship = {}
-  change_ship[1] = "On landing, the passenger gives you a brief glare and remarks, \n\"I had paid for transportation in a Sirian ship; this alternate arrangement is quite disappointing.\"\nThey hand you %d credits, but it's definitely less than you were expecting."
-  change_ship[2] = "Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"
+-- If you change ships mid-journey
+change_ship_t = _("Altering the deal")
+change_ship = {}
+change_ship[1] = _("On landing, the passenger gives you a brief glare and remarks, \n\"I had paid for transportation in a Sirian ship; this alternate arrangement is quite disappointing.\"\nThey hand you %d credits, but it's definitely less than you were expecting.")
+change_ship[2] = _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!")
 
-   --=Landing=--
+--=Landing=--
 
-  ferry_land_title = "Successful arrival!"
-  ferry_land_late = "Late arrival"
+ferry_land_title = _("Successful arrival!")
+ferry_land_late = _("Late arrival")
 
-  ferry_land_p1 = {}
-  ferry_land_p1[0] = "The Sirian Shaira"
-  ferry_land_p1[1] = "The Sirian Fyrra"
-  ferry_land_p1[2] = "The Sirian Serra"
+ferry_land_p1 = {}
+ferry_land_p1[0] = _("The Sirian Shaira")
+ferry_land_p1[1] = _("The Sirian Fyrra")
+ferry_land_p1[2] = _("The Sirian Serra")
 
-  ferry_land_p2 = {}
-  ferry_land_p2[0] = " thanks you profusely for your generosity, and carefully counts out your fare."
-  ferry_land_p2[1] = " bows briefly in gratitude, and silently places the agreed-upon fare in your hand."
-  ferry_land_p2[2] = " crisply counts out your credits, and nods a momentary farewell."
+ferry_land_p2 = {}
+ferry_land_p2[0] = _("%s thanks you profusely for your generosity, and carefully counts out your fare.")
+ferry_land_p2[1] = _("%s bows briefly in gratitude, and silently places the agreed-upon fare in your hand.")
+ferry_land_p2[2] = _("%s crisply counts out your credits, and nods a momentary farewell.")
 
-  ferry_land_p3 = {}
-  ferry_land_p3[0] = ", on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of %d credits."
-  ferry_land_p3[1] = " counts out %d credits with pursed lips, and walks off before you have time to say anything."
-  ferry_land_p3[2] = " tersely expresses their displeasure with the late arrival, and snaps %d credits down on the seat, with a look suggesting they hardly think you deserve that much."
+ferry_land_p3 = {}
+ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of %d credits.")
+ferry_land_p3[1] = _("%s counts out %d credits with pursed lips, and walks off before you have time to say anything.")
+ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %d credits down on the seat, with a look suggesting they hardly think you deserve that much.")
 
-  accept_title = "Mission Accepted"
+accept_title = _("Mission Accepted")
 
-  timeup_1 = "You've missed the scheduled arrival time! But better late than never..."
-  timeup_2 = "You're far too late ... best to drop your passengers off on the nearest planet before tempers run any higher."
+timeup_1 = _("You've missed the scheduled arrival time! But better late than never...")
+timeup_2 = _("You're far too late ... best to drop your passengers off on the nearest planet before tempers run any higher.")
 
-  fail_t = "Passenger transport failure"
-  toolate_msg = "Well, you arrived, but with this late of an arrival, you can't hope for any payment."
-  wrongplanet_msg = "You drop the upset pilgrim off at the nearest spaceport."
+fail_t = _("Passenger transport failure")
+toolate_msg = _("Well, you arrived, but with this late of an arrival, you can't hope for any payment.")
+wrongplanet_msg = _("You drop the upset pilgrim off at the nearest spaceport.")
 
-  osd_title = "Pilgrimage transport"
-  osd_msg = {}
-  osd_msg[1] = "Fly to %s in the %s system before %s."
-  osd_msg[2] = "You have %s remaining."
-  osd_msg1 = "Fly to %s in the %s system before %s."
-  osd_msg2 = "You have %s remaining."
+osd_title = _("Pilgrimage transport")
+osd_msg = {}
+osd_msg[1] = _("Fly to %s in the %s system before %s.")
+osd_msg[2] = _("You have %s remaining.")
+osd_msg1 = _("Fly to %s in the %s system before %s.")
+osd_msg2 = _("You have %s remaining.")
 
-  abort_t = "Passenger transport aborted"
-  abort_p = "Informing the pilgrim that their flight to %s has been canceled, you promise to drop them off at the nearest planet."
-end
+abort_t = _("Passenger transport aborted")
+abort_p = _("Informing the pilgrim that their flight to %s has been canceled, you promise to drop them off at the nearest planet.")
 
 
 function ferry_calculateRoute (dplanet, dsys)
@@ -230,8 +227,8 @@ function create()
     distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
     misn.markerAdd(destsys, "computer")
-    misn.setTitle("SR: "..ferrytime[print_speed].." pilgrimage transport for " .. prank[rank] .. "-class citizen")
-    misn.setDesc(ferrytime[print_speed] .. title_p1:format(destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
+    misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
     misn.setReward(misn_reward:format(numstring(reward)))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
@@ -279,7 +276,7 @@ function accept()
 
         if counter == 0 then
             -- Something has changed with the system map, and this mission is no longer valid
-            print("Error: no landable planets in the Aesir system. This mission is broken.\n")
+            print( _("Error: no landable planets in the Aesir system. This mission is broken.\n") )
             misn.finish()
         end
 
@@ -310,7 +307,7 @@ function accept()
         end
 
         destplanet = altplanets[altdest]
-        misn.setDesc(ferrytime[print_speed] .. title_p1:format(destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
+        misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
         --wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 
@@ -322,12 +319,12 @@ function accept()
 
         if picky > 2 then
             -- Demands to be delivered in a Sirian ship
-            tk.msg(no_ship_t, no_ship_p1 .. no_ship_p2[2])
+            tk.msg(no_ship_t, no_ship_p2[2]:format( no_ship_p1 ))
             misn.finish()
         elseif picky > 0 then
             -- Could be persuaded, for a discount
             reward = reward*0.6666
-            if not tk.yesno(no_ship_t, no_ship_p1 .. no_ship_p2[1]:format(numstring(reward))) then
+            if not tk.yesno(no_ship_t, no_ship_p2[1]:format(no_ship_p1, numstring(reward))) then
                 misn.finish() -- Player won't offer a discount
             end
             if picky > 1 then
@@ -337,7 +334,7 @@ function accept()
                 tk.msg(no_ship_t3a, no_ship_p3a)  -- discount is ok
             end
         elseif picky <= 0 then
-            tk.msg(no_ship_t, no_ship_p1 .. no_ship_p2[0]) -- ok with the arrangments
+            tk.msg(no_ship_t, no_ship_p2[0]:format(no_ship_p1)) -- ok with the arrangments
         end
 
         wants_sirian = false  -- Will not expect to arrive in a Sirian ship
@@ -378,14 +375,14 @@ function land()
             local distbonus = math.max(math.min(numjumps,distbonus_maxjumps)-distbonus_minjumps+1, 0) / 2  -- ranges from 0 (<distbonus_minjumps jumps) to 4 (>=distbonus_maxjumps jumps)
             faction.modPlayerSingle("Sirius", rnd.rnd(distbonus, distbonus+rank+1))
 
-            tk.msg(ferry_land_title, ferry_land_p1[rank] .. ferry_land_p2[rank])
+            tk.msg(ferry_land_title, ferry_land_p2[rank]:format( ferry_land_p1[rank]) )
         elseif overtime then
             tk.msg(fail_t, toolate_msg)
             misn.finish(false)
         else
             -- You were late
             reward = reward / (rank + 1)
-            tk.msg(ferry_land_late, ferry_land_p1[rank] .. ferry_land_p3[rank]:format(reward))
+            tk.msg(ferry_land_late, ferry_land_p3[rank]:format( ferry_land_p1[rank], reward))
         end
 
         if change == 2 then
@@ -413,7 +410,8 @@ function tick()
     elseif timelimit2 <= time.get() and not overtime then
         -- Case missed second deadline
         player.msg(timeup_2)
-        misn.osdCreate("Pilgrim drop-off", {"Drop off the pilgrims at the nearest planet"})
+        misn.osdCreate( _("Pilgrim drop-off"), 
+            {_("Drop off the pilgrims at the nearest planet")})
         overtime = true
     elseif intime then
         -- Case missed first deadline

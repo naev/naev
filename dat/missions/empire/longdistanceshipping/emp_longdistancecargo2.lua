@@ -9,23 +9,18 @@
 include "dat/scripts/numstring.lua"
 include "dat/scripts/jumpdist.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar."
-   misn_title = "Dvaered Long Distance Recruitment"
-   misn_reward = "50000 credits"
-   misn_desc = "Deliver a shipping diplomat for the Empire to Praxis in the Ogat system."
-   title = {}
-   title[1] = "Spaceport Bar"
-   title[2] = "Dvaered Long Distance Recruitment"
-   title[3] = "Mission Accomplished"
-   text = {}
-   text[1] = [[Lieutenant Czesc waves you over when he notices you enter the bar. "I knew we would run into each other soon enough. Great job delivering that bureaucrat. We should be up and running in Soromid space in no time!" He presses a button on his wrist computer. "We're hoping to expand to Dvaered territory next. Can I count on your help?"]]
-   text[2] = [["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on Praxis in the Ogat system. He will take it from there and report back to me when the shipping contract has been confirmed. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]]
-   text[3] = [[You drop the bureaucrat off on Praxis, and he hands you a credit chip. You remember Lieutenant Czesc told you to look for him on Empire controlled planets after you finish.]]
-end
+bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
+misn_title = _("Dvaered Long Distance Recruitment")
+misn_reward = _("50000 credits")
+misn_desc = _("Deliver a shipping diplomat for the Empire to Praxis in the Ogat system.")
+title = {}
+title[1] = _("Spaceport Bar")
+title[2] = _("Dvaered Long Distance Recruitment")
+title[3] = _("Mission Accomplished")
+text = {}
+text[1] = _([[Lieutenant Czesc waves you over when he notices you enter the bar. "I knew we would run into each other soon enough. Great job delivering that bureaucrat. We should be up and running in Soromid space in no time!" He presses a button on his wrist computer. "We're hoping to expand to Dvaered territory next. Can I count on your help?"]])
+text[2] = _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on Praxis in the Ogat system. He will take it from there and report back to me when the shipping contract has been confirmed. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]])
+text[3] = _([[You drop the bureaucrat off on Praxis, and he hands you a credit chip. You remember Lieutenant Czesc told you to look for him on Empire controlled planets after you finish.]])
 
 
 function create ()
@@ -39,7 +34,7 @@ function create ()
    targetworld = planet.get("Praxis")
 
 
-   misn.setNPC( "Lieutenant", "empire/unique/czesc" )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc" )
    misn.setDesc( bar_desc )
 end
 

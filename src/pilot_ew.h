@@ -38,6 +38,7 @@ void pilot_ewUpdateDynamic( Pilot *p );
 double pilot_ewMovement( double vmod );
 double pilot_ewHeat( double T );
 double pilot_ewMass( double mass );
+double pilot_ewAsteroid( Pilot *p );
 
 
 #endif /* PILOT_EW_H */

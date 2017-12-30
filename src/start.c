@@ -15,7 +15,6 @@
 #include "naev.h"
 
 #include "log.h"
-#include "md5.h"
 #include "nxml.h"
 #include "ndata.h"
 
@@ -55,7 +54,7 @@ static ndata_start_t start_data; /**< The actual starting data. */
  */
 int start_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc;
@@ -76,13 +75,13 @@ int start_load (void)
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_START_ID)) {
-      ERR("Malformed '"START_DATA_PATH"' file: missing root element '"XML_START_ID"'");
+      ERR( _("Malformed '%s' file: missing root element '%s'"), START_DATA_PATH, XML_START_ID );
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"START_DATA_PATH"' file: does not contain elements");
+      ERR( _("Malformed '%s' file: does not contain elements"), START_DATA_PATH );
       return -1;
    }
    do {
@@ -112,11 +111,11 @@ int start_load (void)
                   /* position */
                   xmlr_float( tmp, "x", start_data.x );
                   xmlr_float( tmp, "y", start_data.y );
-                  WARN("'"START_DATA_PATH"' has unknown system node '%s'.", tmp->name);
+                  WARN(_("'%s' has unknown system node '%s'."), START_DATA_PATH, tmp->name);
                } while (xml_nextNode(tmp));
                continue;
             }
-            WARN("'"START_DATA_PATH"' has unknown player node '%s'.", cur->name);
+            WARN(_("'%s' has unknown player node '%s'."), START_DATA_PATH, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -129,7 +128,7 @@ int start_load (void)
             xmlr_int( cur, "scu", scu );
             xmlr_int( cur, "stp", stp );
             xmlr_int( cur, "stu", stu );
-            WARN("'"START_DATA_PATH"' has unknown date node '%s'.", cur->name);
+            WARN(_("'%s' has unknown date node '%s'."), START_DATA_PATH, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -151,17 +150,17 @@ int start_load (void)
                   /* position */
                   xmlr_float( tmp, "x", start_data.tutx );
                   xmlr_float( tmp, "y", start_data.tuty );
-                  WARN("'"START_DATA_PATH"' has unknown system node '%s'.", tmp->name);
+                  WARN(_("'%s' has unknown system node '%s'."), START_DATA_PATH, tmp->name);
                } while (xml_nextNode(tmp));
                continue;
             }
 
-            WARN("'"START_DATA_PATH"' has unknown tutorial node '%s'.", cur->name);
+            WARN(_("'%s' has unknown tutorial node '%s'."), START_DATA_PATH, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
 
-      WARN("'"START_DATA_PATH"' has unknown node '%s'.", node->name);
+      WARN(_("'%s' has unknown node '%s'."), START_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    /* Clean up. */
@@ -170,7 +169,7 @@ int start_load (void)
 
    /* Sanity checking. */
 #define MELEMENT(o,s) \
-   if (o) WARN("Module start data missing/invalid '"s"' element") /**< Define to help check for data errors. */
+   if (o) WARN(_("Module start data missing/invalid '%s' element"), s) /**< Define to help check for data errors. */
    MELEMENT( start_data.name==NULL, "name" );
    MELEMENT( start_data.credits==0, "credits" );
    MELEMENT( start_data.ship==NULL, "ship" );

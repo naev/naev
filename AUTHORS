@@ -17,6 +17,10 @@ Core Development Team
       * Story Writer and Misc. Development
 
 
+   Ian Douglas Scott "ids1024" <ian@iandouglasscott.com>
+      * Misc. Development
+
+
 Major Contributors
 ---------------------------------------
 
@@ -116,7 +120,7 @@ Contributions
       * Threading code to speed up nebula generation (and in the future who knows?)
       * Hot dog mission
 
-   Ludovic Belliere "xrogaan"
+   Ludovic Bellière "xrogaan"
       * Python programmer extraordinaire
    His utilities save gray hairs for everyone.
 

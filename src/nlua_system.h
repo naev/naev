@@ -10,6 +10,7 @@
 #include <lua.h>
 
 #include "space.h"
+#include "nlua.h"
 
 
 #define SYSTEM_METATABLE   "system" /**< System metatable identifier. */
@@ -24,7 +25,7 @@ typedef int LuaSystem;
 /*
  * Load the system library.
  */
-int nlua_loadSystem( lua_State *L, int readonly );
+int nlua_loadSystem( nlua_env env );
 
 /*
  * System operations.

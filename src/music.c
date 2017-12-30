@@ -52,7 +52,7 @@ static char music_situation[PATH_MAX]; /**< What situation music is in. */
 /*
  * global music lua
  */
-static lua_State *music_lua = NULL; /**< The Lua music control state. */
+static nlua_env music_env = LUA_NOREF; /**< The Lua music control env. */
 /* functions */
 static int music_runLua( const char *situation );
 
@@ -140,34 +140,19 @@ void music_update( double dt )
  */
 static int music_runLua( const char *situation )
 {
-   int errf;
-   lua_State *L;
-
    if (music_disabled)
       return 0;
 
-   L = music_lua;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -3;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
    /* Run the choose function in Lua. */
-   lua_getglobal( L, "choose" );
+   nlua_getenv( music_env, "choose" );
    if (situation != NULL)
-      lua_pushstring( L, situation );
+      lua_pushstring( naevL, situation );
    else
-      lua_pushnil( L );
-   if (lua_pcall(L, 1, 0, errf)) { /* error has occurred */
-      WARN("Error while choosing music: %s", lua_tostring(L,-1));
-      lua_pop(L,1);
+      lua_pushnil( naevL );
+   if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
+      WARN(_("Error while choosing music: %s"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif /* DEBUGGING */
 
    return 0;
 }
@@ -207,7 +192,7 @@ int music_init (void)
       music_sys_setPos = music_mix_setPos;
       music_sys_isPlaying = music_mix_isPlaying;
 #else /* USE_SDLMIX */
-      WARN("SDL_mixer support not compiled in!");
+      WARN(_("SDL_mixer support not compiled in!"));
       return -1;
 #endif /* USE_SDLMIX */
    }
@@ -235,12 +220,12 @@ int music_init (void)
       music_sys_setPos = music_al_setPos;
       music_sys_isPlaying = music_al_isPlaying;
 #else /* USE_OPENAL */
-      WARN("OpenAL support not compiled in!");
+      WARN(_("OpenAL support not compiled in!"));
       return -1;
 #endif /* USE_OPENAL*/
    }
    else {
-      WARN("Unknown sound backend '%s'.", conf.sound_backend);
+      WARN(_("Unknown sound backend '%s'."), conf.sound_backend);
       return -1;
    }
 
@@ -258,7 +243,7 @@ int music_init (void)
 
    /* Set the volume. */
    if ((conf.music > 1.) || (conf.music < 0.))
-      WARN("Music has invalid value, clamping to [0:1].");
+      WARN(_("Music has invalid value, clamping to [0:1]."));
    music_volume(conf.music);
 
    /* Create the lock. */
@@ -319,7 +304,7 @@ static void music_free (void)
 static int music_find (void)
 {
    char** files;
-   uint32_t nfiles,i;
+   size_t nfiles,i;
    int suflen, flen;
    int nmusic;
 
@@ -345,7 +330,7 @@ static int music_find (void)
       free(files[i]);
    }
 
-   DEBUG("Loaded %d song%c", nmusic, (nmusic==1)?' ':'s');
+   DEBUG( ngettext("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
    free(files);
@@ -418,7 +403,7 @@ int music_load( const char* name )
    nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = ndata_rwops( filename );
    if (rw == NULL) {
-      WARN("Music '%s' not found.", filename);
+      WARN(_("Music '%s' not found."), filename);
       return -1;
    }
    music_sys_load( name, rw );
@@ -538,26 +523,25 @@ void music_setPos( double sec )
 static int music_luaInit (void)
 {
    char *buf;
-   uint32_t bufsize;
+   size_t bufsize;
 
    if (music_disabled)
       return 0;
 
-   if (music_lua != NULL)
+   if (music_env != LUA_NOREF)
       music_luaQuit();
 
-   music_lua = nlua_newState();
-   nlua_loadBasic(music_lua);
-   nlua_loadStandard(music_lua,1);
-   nlua_loadMusic(music_lua,0); /* write it */
+   music_env = nlua_newEnv(1);
+   nlua_loadStandard(music_env);
+   nlua_loadMusic(music_env); /* write it */
 
    /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
-   if (luaL_dobuffer(music_lua, buf, bufsize, MUSIC_LUA_PATH) != 0) {
-      ERR("Error loading music file: %s\n"
+   if (nlua_dobufenv(music_env, buf, bufsize, MUSIC_LUA_PATH) != 0) {
+      ERR(_("Error loading music file: %s\n"
           "%s\n"
-          "Most likely Lua file has improper syntax, please check",
-            MUSIC_LUA_PATH, lua_tostring(music_lua,-1) );
+          "Most likely Lua file has improper syntax, please check"),
+            MUSIC_LUA_PATH, lua_tostring(naevL,-1) );
       return -1;
    }
    free(buf);
@@ -574,11 +558,11 @@ static void music_luaQuit (void)
    if (music_disabled)
       return;
 
-   if (music_lua == NULL)
+   if (music_env == LUA_NOREF)
       return;
 
-   lua_close(music_lua);
-   music_lua = NULL;
+   nlua_freeEnv(music_env);
+   music_env = LUA_NOREF;
 }
 
 

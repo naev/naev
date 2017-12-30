@@ -36,6 +36,8 @@
       luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
+
+   
 #else /* DEBUGGING */
 #define NLUA_DEBUG(str, args...) do {;} while(0)
 #define NLUA_MIN_ARGS(n)         do {;} while(0)
@@ -48,12 +50,16 @@
  */
 #define NLUA_ERROR(L,str, args...)  (luaL_error(L,str, ## args))
 
-
-/*
- * comfortability macros
- */
-#define luaL_dobuffer(L, b, n, s) \
-   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+#define NLUA_CHECKRW(L) \
+{ \
+   nlua_getenv(__NLUA_CURENV, "__RW"); \
+   if (!lua_toboolean(L, -1)) { \
+      DEBUG( "Cannot call %s in read-only environment.", __func__ ); \
+      luaL_error( L, "Cannot call %s in read-only environment.", __func__ ); \
+      return 0; \
+   } \
+   lua_pop(L, 1); \
+}
 
 
 #endif /* NLUADEF_H */

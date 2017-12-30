@@ -12,75 +12,71 @@
 include "proximity.lua"
 include "fleethelper.lua"
 include "dat/missions/empire/common.lua"
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-  -- set mission variables
-   t_sys = {}
-   t_pla = {}
-   t_sys[1] = "Daravon"
-   t_pla[1] = "Vilati Vilata"
-   t_sys[2] = "Waterhole"
-   t_pla[2] = "Waterhole's Moon"
--- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
-   t_sys[3] = "Seiben"
-   t_pla[3] = "Gastan"
-   -- player makes maximum 49k+, minimum 30k
-   pho_mny = 50000
-   reward = pho_mny+30000+rnd.rnd(3,4)*10000+rnd.rnd(10)*1000 
-   title = {}
-   text = {}
-   osd_msg = {}
--- set text variables
-   -- Mission details
-   misn_title = "The one with the Shopping"
-   misn_reward = "A the gratitude of science and a bit of compensation"
-   misn_desc = "You've been hired by Dr. Geller to collect some materials he urgently needs to build his prototype."
-   bar_desc = "You see this scientist talking to various pilots. He looks at you with a measuring look."
-   trd1_desc = "This seems to be a regular trader with some bodyguards. Business is dangerous nowadays..."
-   trd2_desc = "This trader appears to be a bit shifty... no doubt it is the person you are looking for"
 
-   title[1] = [[In the bar]]
-   text[1]  = [["Hey you! You are a pilot right? I've got a job for you. You see I am on the brink of revolutionizing science! I basically already did it, there is just some minor fiddling to do. According to the Za'lek council our theories have to be tested. No faith in my abilities... but I will show them! They will learn not to question Dr. Geller. Hah! Anyways. I have some minor errands that I need you to run for me, just some shopping, are you in?]]
-   text[2] = [["Excellent, here is the list" he hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping... Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]]
-   text[3] = [["With what can I help you, my friend?" says the shifty figure, and you hand him the chip the scientist handed you.]]
-   -- dialogue with first trader
-   text[4] = [["Of course I have what you need, but do you have what I need?"]]
-   text[5] = [["No? Well then come back if you can offer me 3t Phosphine you can find it on %s" Phosphine? You ponder... you once knew the reason why that was hard to come by.]]
-   text[6] = [["Ah yes, indeed" he says inspecting a sample in front of him. That will do. And here you get, what was promised: A piece of a ghost ship from the nebula. 100% authentic my supplier claims!" he says, handing you one single chip.]]
-   text[7] = [["What are you still doing here? No Phosphine, no trade...."]]
-   -- dialogue with 2nd trader
-   -- %s for pho_mny
-   text[8] = [["It seems like I have found myself a customer... 
-well, let me see what you need and I will tell you how much it costs you." he says. "Oh." he says while lowering his voice. "Yes we do have that, but for a corresponding price, as you might understand. It will be %s credits. If anything happens: I have never seen you." You are a bit flabbergasted. Are you willing to pay?]]
-   mnytitle = [[In the bar]]
-   mnytext = [["You don't have enough money... I don't mean to be rude, but until you show up with some good old bling bling I have nothing to talk about with you..."]]
-   text[9] = [["Very well, always a pleasure to make a business."]]
-   text[10] = [["Then we have nothing to talk about. Come back if you made up your mind and have enough credits with you"]]
-   -- call of the police
-   title[2] = [[On the intercom]]
-   text[11] = [["You are suspected to be transporting highly toxic materials without a license, please stop your ship and prepare to be boarded."]]
-   text[12] = [["Stand down for inspection."]]
-   title[3] = [[On your ship]]
-   text[13] = [["Freeze! You are in accused of violating the toxic materials regulation. Your ship will be searched and any suspicious elements confiscated!"]]
-   text[14] = [[The inspectors search through your ship and cargo department. Once they find the containers they confiscate the Phosphine and charge you with a fine of 100 000 credits for violating the transportation regulation on toxic materials.]]
-   text[15] = [[Dr Geller looks at you. "Have you got it?" You present the chip and he begins to glow. "Yes that is it!! Now I can continue my research." You ask him about the ghost ship remark by the trader. "Some people believe this nonsense. There is no scientific explanation of the ghost ships. I think it is some technology related to sol that got blasted off during the incident. They must have done some advanced research on neuronal computing."]]
-   text[16] = [[He turns away and after you clear your throat with a pretty audible "Uh uhm" turns back to you. "Oh, yes, of course you want some payment for your service, right? Well, here you go. I might need you again in the future." He hands you a payment slip and walks away.]]
-   trd_disc = [[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]]
-   -- osd_msg
-   osd_msg[1] = "Go to the %s system and talk to the trader on %s."
-   osd_msg[2] = "Go to the %s system and talk to the contact person on %s."
-   osd_msg[3] = "Return to the %s system to the trader on %s."
-   osd_msg[4] = "Return to the %s system and deliver to Dr.Geller on %s."
-  -- refusetext 
-   refusetitle = "No Science Today"
-   refusetext = "I guess you don't care that much about science..."
-end
+-- set mission variables
+t_sys = {}
+t_pla = {}
+t_sys[1] = "Daravon"
+t_pla[1] = "Vilati Vilata"
+t_sys[2] = "Waterhole"
+t_pla[2] = "Waterhole's Moon"
+-- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
+t_sys[3] = "Seiben"
+t_pla[3] = "Gastan"
+-- player makes maximum 49k+, minimum 30k
+pho_mny = 50000
+reward = pho_mny+30000+rnd.rnd(3,4)*10000+rnd.rnd(10)*1000 
+title = {}
+text = {}
+osd_msg = {}
+-- set text variables
+-- Mission details
+misn_title = _("The one with the Shopping")
+misn_reward = _("A the gratitude of science and a bit of compensation")
+misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs to build his prototype.")
+bar_desc = _("You see this scientist talking to various pilots. He looks at you with a measuring look.")
+trd1_desc = _("This seems to be a regular trader with some bodyguards. Business is dangerous nowadays...")
+trd2_desc = _("This trader appears to be a bit shifty... no doubt it is the person you are looking for")
+
+title[1] = _([[In the bar]])
+text[1]  = _([["Hey you! You are a pilot right? I've got a job for you. You see I am on the brink of revolutionizing science! I basically already did it, there is just some minor fiddling to do. According to the Za'lek council our theories have to be tested. No faith in my abilities... but I will show them! They will learn not to question Dr. Geller. Hah! Anyways. I have some minor errands that I need you to run for me, just some shopping, are you in?]])
+text[2] = _([["Excellent, here is the list" he hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping... Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]])
+text[3] = _([["With what can I help you, my friend?" says the shifty figure, and you hand him the chip the scientist handed you.]])
+-- dialogue with first trader
+text[4] = _([["Of course I have what you need, but do you have what I need?"]])
+text[5] = _([["No? Well then come back if you can offer me 3t Phosphine you can find it on %s" Phosphine? You ponder... you once knew the reason why that was hard to come by.]])
+text[6] = _([["Ah yes, indeed" he says inspecting a sample in front of him. That will do. And here you get, what was promised: A piece of a ghost ship from the nebula. 100% authentic my supplier claims!" he says, handing you one single chip.]])
+text[7] = _([["What are you still doing here? No Phosphine, no trade...."]])
+-- dialogue with 2nd trader
+-- %s for pho_mny
+text[8] = _([["It seems like I have found myself a customer... 
+well, let me see what you need and I will tell you how much it costs you." he says. "Oh." he says while lowering his voice. "Yes we do have that, but for a corresponding price, as you might understand. It will be %s credits. If anything happens: I have never seen you." You are a bit flabbergasted. Are you willing to pay?]])
+mnytitle = _([[In the bar]])
+mnytext = _([["You don't have enough money... I don't mean to be rude, but until you show up with some good old bling bling I have nothing to talk about with you..."]])
+text[9] = _([["Very well, always a pleasure to make a business."]])
+text[10] = _([["Then we have nothing to talk about. Come back if you made up your mind and have enough credits with you"]])
+-- call of the police
+title[2] = _([[On the intercom]])
+text[11] = _([["You are suspected to be transporting highly toxic materials without a license, please stop your ship and prepare to be boarded."]])
+text[12] = _([["Stand down for inspection."]])
+title[3] = _([[On your ship]])
+text[13] = _([["Freeze! You are in accused of violating the toxic materials regulation. Your ship will be searched and any suspicious elements confiscated!"]])
+text[14] = _([[The inspectors search through your ship and cargo department. Once they find the containers they confiscate the Phosphine and charge you with a fine of 100 000 credits for violating the transportation regulation on toxic materials.]])
+text[15] = _([[Dr Geller looks at you. "Have you got it?" You present the chip and he begins to glow. "Yes that is it!! Now I can continue my research." You ask him about the ghost ship remark by the trader. "Some people believe this nonsense. There is no scientific explanation of the ghost ships. I think it is some technology related to sol that got blasted off during the incident. They must have done some advanced research on neuronal computing."]])
+text[16] = _([[He turns away and after you clear your throat with a pretty audible "Uh uhm" turns back to you. "Oh, yes, of course you want some payment for your service, right? Well, here you go. I might need you again in the future." He hands you a payment slip and walks away.]])
+trd_disc = _([[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]])
+-- osd_msg
+osd_msg[1] = _("Go to the %s system and talk to the trader on %s.")
+osd_msg[2] = _("Go to the %s system and talk to the contact person on %s.")
+osd_msg[3] = _("Return to the %s system to the trader on %s.")
+osd_msg[4] = _("Return to the %s system and deliver to Dr.Geller on %s.")
+-- refusetext 
+refusetitle = _("No Science Today")
+refusetext = _("I guess you don't care that much about science...")
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( "A scientist",  "zalek_scientist_placeholder")
+   misn.setNPC( _("A scientist"),  "zalek_scientist_placeholder")
    misn.setDesc( bar_desc )
 end
 function accept()
@@ -267,7 +263,7 @@ function fine_vanish ()
       lance2:hyperspace()
    end
    player.msgClear()
-   player.msg("Mission failed!")
+   player.msg(_("Mission failed!"))
    hook.rm(l1ho)
    hook.rm(l2ho)
    hook.rm(admho)

@@ -9,34 +9,29 @@
 
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "You see an Empire Commander. He seems to have noticed you."
-   misn_title = "Prisoner Exchange"
-   misn_reward = "%s credits"
-   misn_desc = {}
-   misn_desc[1] = "Go to %s in the %s system to exchange prisoners with the FLF."
-   misn_desc[2] = "Return to %s in the %s system to report what happened."
-   title = {}
-   title[1] = "Spaceport Bar"
-   title[2] = "Prisoner Exchange"
-   title[3] = "Mission Report"
-   text = {}
-   text[1] = [[You approach the Empire Commander.
-    "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]
-   text[2] = [["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors."
-    "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]]
-   text[3] = [[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]
-   text[4] = [[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
-    From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]
-   text[5] = [[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
-    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]
-   text[6] = [[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
+bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
+misn_title = _("Prisoner Exchange")
+misn_reward = _("%s credits")
+misn_desc = {}
+misn_desc[1] = _("Go to %s in the %s system to exchange prisoners with the FLF.")
+misn_desc[2] = _("Return to %s in the %s system to report what happened.")
+title = {}
+title[1] = _("Spaceport Bar")
+title[2] = _("Prisoner Exchange")
+title[3] = _("Mission Report")
+text = {}
+text[1] = _([[You approach the Empire Commander.
+    "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]])
+text[2] = _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors."
+    "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]])
+text[3] = _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]])
+text[4] = _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
+    From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]])
+text[5] = _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
+    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]])
+text[6] = _([[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
     "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
-    He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transfered to your bank account."]]
-end
+    He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transfered to your bank account."]])
 
 
 function create ()
@@ -49,7 +44,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( "Commander", "empire/unique/soldner" )
+   misn.setNPC( _("Commander"), "empire/unique/soldner" )
    misn.setDesc( bar_desc )
 end
 
@@ -153,7 +148,7 @@ function enter ()
       pilot.add( "Dvaered Med Force", nil, enter_vect )
 
       -- Player should not be able to reland
-      player.allowLand(false,"The docking stabilizers have been damaged by weapons fire!")
+      player.allowLand(false,_("The docking stabilizers have been damaged by weapons fire!"))
    end
 end
 

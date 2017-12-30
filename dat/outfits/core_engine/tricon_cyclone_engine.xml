@@ -8,7 +8,7 @@
   <mass>20</mass>
   <price>360000</price>
   <description>Tricon's Cyclone engine upholds the corporation's reputation for premium engines with superb performance. Many large navies and wealthier mercenaries employ the Cyclone in their corvettes.</description>
-  <gfx_store>engine03</gfx_store>
+  <gfx_store>engine06</gfx_store>
  </general>
  <specific type="modification">
   <thrust>130</thrust>

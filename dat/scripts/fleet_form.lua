@@ -54,7 +54,7 @@ Forma = {
 function Forma:new(fleet, formation, combat_dist, lead_ship)
    -- Sanity: we want to make sure a fleet was specified. The formation can be nil.
    if not fleet then
-      error "Forma must have a fleet."
+      error( _("Forma must have a fleet.") )
       return
    end
 
@@ -64,7 +64,7 @@ function Forma:new(fleet, formation, combat_dist, lead_ship)
    
    -- Fleets need at least two ships.
    if #fleet <= 1 then
-      error "Fleets need at least 2 ships"
+      error( _("Fleets need at least 2 ships") )
       return
    end
 
@@ -536,7 +536,7 @@ function Forma:manageTask()
       elseif self.task[1] == "brake" then
          self.fleader:brake()
       else
-         error "task unknown"
+         error( _("task unknown") )
       end
    end
 end

@@ -259,7 +259,7 @@ static void btn_updateHotkey( Widget *btn )
    display[match] = '\0'; /* Cuts the string into two. */
 
    /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\eb%c\e0%s", display, target, &display[match+1] );
+   nsnprintf( buf, sizeof(buf), "%s\ab%c\a0%s", display, target, &display[match+1] );
 
    /* Should never be NULL. */
    free(btn->dat.btn.display);

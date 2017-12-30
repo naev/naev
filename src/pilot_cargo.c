@@ -73,7 +73,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 
    /* Check if it fits. */
    if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
-      WARN("Unable to copy cargo over from pilot '%s' to '%s'", src->name, dest->name );
+      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'"), src->name, dest->name );
       return -1;
    }
 
@@ -163,12 +163,12 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
 int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int free;
+   int freespace;
 
    /* Check to see how much to add. */
-   free = pilot_cargoFree(pilot);
-   if (free < quantity)
-      quantity = free;
+   freespace = pilot_cargoFree(pilot);
+   if (freespace < quantity)
+      quantity = freespace;
 
    return pilot_cargoAddRaw( pilot, cargo, quantity, id );
 }

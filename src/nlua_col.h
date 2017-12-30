@@ -9,6 +9,7 @@
 
 #include <lua.h>
 
+#include "nlua.h"
 #include "colour.h"
 
 
@@ -18,7 +19,7 @@
 /*
  * Library loading
  */
-int nlua_loadCol( lua_State *L, int readonly );
+int nlua_loadCol( nlua_env env );
 
 /*
  * Colour operations

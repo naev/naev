@@ -37,6 +37,7 @@ end
 -- @brief Spawns a large swarm.
 function spawn_capship ()
     local pilots = {}
+    -- pilots.__fleet = true -- Need mothership for this
     local r = rnd.rnd()
 
     if r < 0.5 then

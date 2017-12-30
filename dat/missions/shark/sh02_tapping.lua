@@ -12,54 +12,49 @@
 
 include "numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   else -- default english
-   title = {}
-   text = {}
-   osd_msg = {}
-   npc_desc = {}
-   bar_desc = {}
-   
-   title[1] = "Nexus Shipyards needs you (again)"
-   text[1] = [[You sit at Smith's table and ask him if he has a job for you. "Of course I have," he answers. "But this time, it's a quite special job." As you start to wonder what could be more special than the last mission, he goes further: "It implies to take part in a... quite not so legal action...
+title = {}
+text = {}
+osd_msg = {}
+npc_desc = {}
+bar_desc = {}
+
+title[1] = _("Nexus Shipyards needs you (again)")
+text[1] = _([[You sit at Smith's table and ask him if he has a job for you. "Of course I have," he answers. "But this time, it's a quite special job." As you start to wonder what could be more special than the last mission, he goes further: "It implies to take part in a... quite not so legal action...
    Listen, I'll explain you the situation: the Empire, who was the first customer for the Shark, tend to use more and more drones from Robosys in its fleet, and less and less Sharks. That means for us that we will lose billions of credits if we can't find a big customer. Ingot bought 20 Sharks, but now, we need some major faction to use our fighter.
    As you surely know, the Frontier ships are mostly obsolete and old. We have clues that let us think that the Frontier is looking for a modern light fighter to equip it's pilots. The problem is that we suspect that a major imperial house is already in contact with frontier officials in order to sell them their light fighter.
-   We need you to transport a... parcel on your ship, and bring it to me on %s in %s. Are you in?"]]
+   We need you to transport a... parcel on your ship, and bring it to me on %s in %s. Are you in?"]])
    
-   refusetitle = "Sorry, not interested"
-   refusetext = [["Ok, so never mind." Smith says. "See you again."]]
+refusetitle = _("Sorry, not interested")
+refusetext = _([["Ok, so never mind." Smith says. "See you again."]])
    
-   title[2] = "The job"
-   text[2] = [["Very good, so, go to %s in %s. There, our agent will be waiting for you and will load the special parcel in your ship. Listen, I trust you enough to tell you that it is a recording of a holophone conversation between a member of the Frontier council and a sales manager of house Sirius.
-   Oh, yes, and, if you has to say my name to our contact, he knows me as James Neptune. So, good luck out there."]]
+title[2] = _("The job")
+text[2] = _([["Very good, so, go to %s in %s. There, our agent will be waiting for you and will load the special parcel in your ship. Listen, I trust you enough to tell you that it is a recording of a holophone conversation between a member of the Frontier council and a sales manager of house Sirius.
+   Oh, yes, and, if you has to say my name to our contact, he knows me as James Neptune. So, good luck out there."]])
    
-   title[3] = "Good job"
-   text[3] = [[The Nexus employee greets you as you reach the ground and ask you if everything went well. He takes the parcel and gives you your pay. "We will analyze this, meet me in the bar, I will be there if I have an other job for you."]]
+title[3] = _("Good job")
+text[3] = _([[The Nexus employee greets you as you reach the ground and ask you if everything went well. He takes the parcel and gives you your pay. "We will analyze this, meet me in the bar, I will be there if I have an other job for you."]])
    
-   title[4] = "Time to go back to Alteris"
-   text[4] = [[You approach the agent, wondering why Nexus's henchmen always manage to look honest. It seems he knew who was supposed to pick his parcel. After asking the name of your contact, he gives you a little battery-looking tool. "Everything is in there," he just says. "By the way, stay vigilant, someone may be on our tracks."]]
+title[4] = _("Time to go back to Alteris")
+text[4] = _([[You approach the agent, wondering why Nexus's henchmen always manage to look honest. It seems he knew who was supposed to pick his parcel. After asking the name of your contact, he gives you a little battery-looking tool. "Everything is in there," he just says. "By the way, stay vigilant, someone may be on our tracks."]])
    
-   
-   -- Mission details
-   misn_title = "Unfair Competition"
-   misn_reward = "%s credits"
-   misn_desc = "Nexus Shipyard is in competition with House Sirius on a major contract."
-   
-   -- NPC
-   npc_desc[1] = "Arnold Smith"
-   bar_desc[1] = [[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]]
-   npc_desc[2] = "Nexus's spy"
-   bar_desc[2] = [[This guy matches exactly the description that was made to you.]]
-   npc_desc[3] = "Arnold Smith"
-   bar_desc[3] = [[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]]
-   
-   -- OSD
-   osd_title = "Unfair Competition"
-   osd_msg[1] = "Land on %s in %s and meet the Nexus agent"
-   osd_msg[2] = "Bring the recording back to %s in %s"
-   
-end
+
+-- Mission details
+misn_title = _("Unfair Competition")
+misn_reward = _("%s credits")
+misn_desc = _("Nexus Shipyard is in competition with House Sirius on a major contract.")
+
+-- NPC
+npc_desc[1] = _("Arnold Smith")
+bar_desc[1] = _([[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]])
+npc_desc[2] = _("Nexus's spy")
+bar_desc[2] = _([[This guy matches exactly the description that was made to you.]])
+npc_desc[3] = _("Arnold Smith")
+bar_desc[3] = _([[Arnold Smith is in the place. That means he has a mission that implies tricking a customer of Nexus.]])
+
+-- OSD
+osd_title = _("Unfair Competition")
+osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
+osd_msg[2] = _("Bring the recording back to %s in %s")
 
 function create ()
    
@@ -218,10 +213,10 @@ function interceptors()
    --spawning high speed Hyenas
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Hyena","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Hyena","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
       
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -243,10 +238,10 @@ function hvy_intercept()
    --spawning Lancelots
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Lancelot","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Lancelot","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
       
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -269,9 +264,9 @@ function corvette()
    --spawning Admonishers
    number = {1,2}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Admonisher","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Admonisher","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -290,9 +285,9 @@ end
 
 function cruiser()
    --spawning a Krestel with massive missile weaponry
-   badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )[1]
+   badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )
    badguy:setHostile()
-   badguy:rename("Mercenary")
+   badguy:rename(_("Mercenary"))
    
    badguy:rmOutfit("all")
    badguy:rmOutfit("cores")
@@ -316,9 +311,9 @@ function bombers()
    --spawning Ancestors
    number = {1,2,3}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Ancestor","mercenary", nil, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Ancestor","mercenary", nil, "Mercenary" )
       badguys[i]:setHostile()
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -341,9 +336,9 @@ end
 
 function add_llama()
    --adding an useless Llama
-   useless = pilot.addRaw( "Llama","mercenary", nil, "Mercenary" )[1]
+   useless = pilot.addRaw( "Llama","mercenary", nil, "Mercenary" )
    useless:setHostile()
-   useless:rename("Amateur Mercenary")
+   useless:rename(_("Amateur Mercenary"))
    
    useless:rmOutfit("all")
    useless:addOutfit("Laser Cannon MK1",2)

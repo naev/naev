@@ -15,57 +15,54 @@
 targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
 misn_marker = {}
 reward = rnd.rnd(40,60)*1000
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   -- Bar information
-   bar_desc = "This woman is looking at you. She then, a bit hecticly and desperately, waves at you."
+-- Bar information
+bar_desc = _("This woman is looking at you. She then, a bit hecticly and desperately, waves at you.")
 
-   -- Mission details
-   misn_title  = "The lost Brother"
-   misn_reward = "Some money and a happy sister." -- Possibly some hard to get contraband once it is introduced
-   misn_desc   = {}
-   misn_desc[1] = "Locate the brother. He has to be in the %s system."
-   misn_desc[2] = "Locate the brother. He is either in the %s or %s system."
-   misn_desc[3] = "Locate the brother. He is either in the %s, %s or %s system."
-   misn_desc[4] = "Hail the Poppy Seed and board it to reunite the siblings."
+-- Mission details
+misn_title  = _("The lost Brother")
+misn_reward = _("Some money and a happy sister.") -- Possibly some hard to get contraband once it is introduced
+misn_desc   = {}
+misn_desc[1] = _("Locate the brother. He has to be in the %s system.")
+misn_desc[2] = _("Locate the brother. He is either in the %s or %s system.")
+misn_desc[3] = _("Locate the brother. He is either in the %s, %s or %s system.")
+misn_desc[4] = _("Hail the Poppy Seed and board it to reunite the siblings.")
 
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "In the Bar"
-   title[2] = "Wrong system"
-   title[3] = "Right system"
-   title[4] = "Com Channel"
-   title[5] = "The Deception"
-   title[6] = "Mission Complete"
-   text[1]  = [[After you give her attention the woman immediately starts to prattle. "Oh my dear brother, I must find him. 
-   Please! Please help me. I think he is in danger. Please! Please help me! I don't have a ship and he is the only family I have left!"]]
-   text[2] = [[After you signal your willingness to help the woman calms down. "Oh thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
-   And please hurry. I was told someone was sent to assassinate him. I don't have much to give, but whatever I have saved you can have.]]
-   text[3] = [["I don't thnk he is here, probably he is in one of the other systems. Please, hurry!"]]
-   text[4] = [["I think this is it! We found him!" says the woman full excitement. 
-   "I just need to get something from my stuff." she says disappearing into another compartment.]]
-   text[5] = [["Calling the Poppy Seed. I have your sister on board that wants to see you and told me she has urgent information for you."]]
-   text[6] = [["My sister? What the heck could she want from me? Prepare for docking."]]
-   text[7] = [[The woman is standing next to you while the airlock opens. You see the man. The grin on his face changes to a baffled expression. You hear the sound of a blaster. A dark spot on chest of the man. The lady rushes past you and closes the airdock before you entirely realize what happens. While the airdock mechanism locks in you see the Poppy Seed depart.]]
-   text[8] = [[You find some of the stuff she left in your ship that you can turn to cash and a note saying:"Sorry"]]
-   text[9] = [[Your com starts beeping: "We received confirmation that you were invovled in the killing of our associate. Prepare to be boarded."]]
-   text[10] = [[What do you do: Chase the Poppy Seed or run away from the mercenaries closing in on you]]
-   refusetitle = "Sorry, I can't"
-   refusetext = [["How can you be such a heartless person?" asks you the woman half weepingly. " What has this universe become..."]]
+-- Text
+title    = {}
+text     = {}
+title[1] = _("In the Bar")
+title[2] = _("Wrong system")
+title[3] = _("Right system")
+title[4] = _("Com Channel")
+title[5] = _("The Deception")
+title[6] = _("Mission Complete")
+text[1]  = _([[After you give her attention the woman immediately starts to prattle. "Oh my dear brother, I must find him. 
+Please! Please help me. I think he is in danger. Please! Please help me! I don't have a ship and he is the only family I have left!"]])
+text[2] = _([[After you signal your willingness to help the woman calms down. "Oh thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
+   And please hurry. I was told someone was sent to assassinate him. I don't have much to give, but whatever I have saved you can have.]])
+text[3] = _([["I don't thnk he is here, probably he is in one of the other systems. Please, hurry!"]])
+text[4] = _([["I think this is it! We found him!" says the woman full excitement. 
+"I just need to get something from my stuff." she says disappearing into another compartment.]])
+text[5] = _([["Calling the Poppy Seed. I have your sister on board that wants to see you and told me she has urgent information for you."]])
+text[6] = _([["My sister? What the heck could she want from me? Prepare for docking."]])
+text[7] = _([[The woman is standing next to you while the airlock opens. You see the man. The grin on his face changes to a baffled expression. You hear the sound of a blaster. A dark spot on chest of the man. The lady rushes past you and closes the airdock before you entirely realize what happens. While the airdock mechanism locks in you see the Poppy Seed depart.]])
+text[8] = _([[You find some of the stuff she left in your ship that you can turn to cash and a note saying:"Sorry"]])
+text[9] = _([[Your com starts beeping: "We received confirmation that you were invovled in the killing of our associate. Prepare to be boarded."]])
+text[10] = _([[What do you do: Chase the Poppy Seed or run away from the mercenaries closing in on you]])
+refusetitle = _("Sorry, I can't")
+refusetext = _([["How can you be such a heartless person?" asks you the woman half weepingly. " What has this universe become..."]])
 
-   -- Messages
-   msg      = {}
-   msg[1]   = "MISSION SUCCESS!"
-end
+-- Messages
+msg      = {}
+msg[1]   = _("MISSION SUCCESS!")
 
 function create ()
    -- Note: this mission does not make any system claims. 
 
    -- Spaceport bar stuff
-   misn.setNPC( "Ordinary Woman",  "zalek_scientist_placeholder")
+   misn.setNPC( _("Ordinary Woman"),  "zalek_scientist_placeholder")
    misn.setDesc( bar_desc )
 end
 
@@ -140,7 +137,7 @@ function sys_enter ()
       broship = pilot.add("Civilian Gawain", "trader", bropla:pos() + vec2.new(-200,-200))[1] -- fast Gawain
       broship:addOutfit("Tricon Zephyr II Engine")
       broship:setFaction("Civilian")
-      broship:rename("Poppy Seed")
+      broship:rename(_("Poppy Seed"))
       broship:setInvincible(true)
       broship:control()
       broship:setHilight(true)
@@ -218,10 +215,10 @@ function spawn_baddies(sp)
    badguys = {}
    --hyenas
    for i=1,2 do
-      badguys[i] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
       badguys[i]:setHostile(false)
       
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -238,10 +235,10 @@ function spawn_baddies(sp)
       badguys[i]:setEnergy(100)
    end
    for i=3,4 do
-      badguys[i] = pilot.addRaw( "Lancelot","mercenary", sp, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Lancelot","mercenary", sp, "Mercenary" )
       badguys[i]:setHostile(false)
       
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -260,9 +257,9 @@ function spawn_baddies(sp)
    end
 
    for i=5,6 do
-      badguys[i] = pilot.addRaw( "Admonisher","mercenary", sp, "Mercenary" )[1]
+      badguys[i] = pilot.addRaw( "Admonisher","mercenary", sp, "Mercenary" )
       badguys[i]:setHostile(false)
-      badguys[i]:rename("Mercenary")
+      badguys[i]:rename(_("Mercenary"))
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")

@@ -47,11 +47,11 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 #if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
    if (at->trans == NULL) {
-      WARN("Texture '%s' has no transparency map.", at->name);
+      WARN(_("Texture '%s' has no transparency map"), at->name);
       return 0;
    }
    if (bt->trans == NULL) {
-      WARN("Texture '%s' has no transparency map.", bt->name);
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
       return 0;
    }
 #endif /* DEBUGGING */
@@ -184,7 +184,7 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
 
    /* Make sure texture has transparency map. */
    if (bt->trans == NULL) {
-      WARN("Texture '%s' has no transparency map.", bt->name);
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
       return 0;
    }
 
