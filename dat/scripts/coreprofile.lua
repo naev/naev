@@ -40,7 +40,7 @@ function pilot.coreProfile(p, profile)
    
    -- Before doing anything drastic, make sure the profile passed is valid.
    if profiles[profile] == nil then
-      warn("pilot.coreProfile: " .. profile .. " is not a valid profile")
+      warn( string.format( _("pilot.coreProfile: %s is not a valid profile"), profile ) )
       return
    end
    
@@ -73,7 +73,7 @@ function pilot.coreProfile(p, profile)
    -- Now we must make sure all core types got at least one core outfit, and if not, warn.
    for _, ctype in ipairs(ctypes) do
       if equipped[ctype] == 0 then
-         warn("pilot.coreProfile: failed to equip " .. ctype .. " core on pilot " .. p:name() .. ".")
+         warn( string.format(_("pilot.coreProfile: failed to equip %s core on pilot %s."), ctype, p:name() ) )
       end
    end
 end

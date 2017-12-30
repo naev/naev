@@ -155,7 +155,7 @@ function follow ()
       ai.poptask()
       return
    end
-   
+
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
  
@@ -189,6 +189,32 @@ function follow_accurate ()
 
 end
 
+-- Default action for non-leader pilot in fleet
+function follow_fleet ()
+   local leader = ai.pilot():leader()
+ 
+   if leader == nil or not leader:exists() then
+      ai.poptask()
+      return
+   end
+
+   local goal = leader
+   if mem.form_pos ~= nil then
+      local angle, radius, method = unpack(mem.form_pos)
+      goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method)
+   end
+
+   
+   local dir   = ai.face(goal)
+   local dist  = ai.dist(goal)
+ 
+   -- Must approach
+   if dir < 10 and dist > 300 then
+      ai.accel()
+ 
+   end
+end
+
 --[[
 -- Tries to runaway and jump asap.
 --]]
@@ -218,7 +244,8 @@ function __hyperspace_shoot ()
          return
       end
    end
-   ai.pushsubtask( "__hyp_approach_shoot", target )
+   local pos = ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach_shoot", pos )
 end
 function __hyp_approach_shoot ()
    -- Shoot
@@ -304,6 +331,7 @@ function __landstop ()
       if not ai.land() then
          ai.popsubtask()
       else
+         ai.pilot():msg(ai.pilot():followers(), "land")
          ai.poptask() -- Done, pop task
       end
    end
@@ -314,14 +342,38 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway ()
-   if __run_target() then return end
+
+   -- Target must exist
+   local target = ai.target()
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
 
    -- See if there's a target to use when running
    local t = ai.nearhyptarget()
-   if t == nil then
+   local p = ai.nearestplanet()
+
+   if p == nil and t == nil then
       ai.pushsubtask( "__run_target" )
-   else
-      ai.pushsubtask( "__run_hyp", t )
+   elseif p == nil then
+      local pos = ai.sethyptarget(t)
+      ai.pushsubtask( "__run_hyp", pos )
+   elseif t == nil then
+      mem.land = p:pos()
+      ai.pushsubtask( "__landgo" )
+   else 
+      -- find which one is the closest
+      local pilpos = ai.pilot():pos()
+      local modt = vec2.mod(t:pos()-pilpos) 
+      local modp = vec2.mod(p:pos()-pilpos)
+      if modt < modp then
+         local pos = ai.sethyptarget(t)
+         ai.pushsubtask( "__run_hyp", pos )
+      else
+         mem.land = p:pos()
+         ai.pushsubtask( "__run_landgo" )
+      end
    end
 end
 function runaway_nojump ()
@@ -407,6 +459,42 @@ function __run_hypbrake ()
    end
 end
 
+function __run_landgo ()
+   -- Shoot the target
+   __run_turret()
+
+   local target   = mem.land
+   local dist     = ai.dist( target )
+   local bdist    = ai.minbrakedist()
+
+   -- 2 methods depending on mem.careful
+   local dir
+   if not mem.careful or dist < 3*bdist then
+      dir = ai.face( target )
+   else
+      dir = ai.careful_face( target )
+   end
+
+   --Afterburner
+   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+      if dist > 3 * bdist then
+         ai.weapset( 8, true )
+      else
+         ai.weapset( 8, false )
+      end
+   end
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
+      ai.accel()
+
+   -- Need to start braking
+   elseif dist < bdist then
+      ai.pushsubtask( "__landstop" )
+   end
+
+end
+
 
 --[[
 -- Starts heading away to try to hyperspace.
@@ -419,7 +507,8 @@ function hyperspace ()
          return
       end
    end
-   ai.pushsubtask( "__hyp_approach", target )
+   local pos = ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach", pos )
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
@@ -452,6 +541,7 @@ function __hyp_brake ()
 end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
+      ai.pilot():msg(ai.pilot():followers(), "hyperspace", ai.nearhyptarget())
       ai.poptask()
    else
       ai.popsubtask()

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Thurion Energy Cell I">
+ <general>
+  <license>Medium Weapon License</license>
+  <mass>0.1</mass>
+  <price>40</price>
+  <description>This energy cell is required for the initialization of the self-contained energy cascades the Thurion use for their homing energy weapons.</description>
+  <gfx_store>cpu_i</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>laser3S</gfx>
+  <sound>neutron</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpM</spfx_armour>
+  <duration blowup="shield">1.2</duration>
+  <thrust>0</thrust>
+  <turn>120</turn>
+  <speed>800</speed>
+  <resist>5</resist>
+  <energy>12.5</energy>
+  <damage>
+   <type>normal</type>
+   <penetrate>13</penetrate>
+   <physical>20</physical>
+   <disable>5</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

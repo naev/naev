@@ -6,7 +6,7 @@ control_rate   = 5
 
 
 function create ()
-   mem.comm_no = "No response."
+   mem.comm_no = _("No response.")
 end
 
 

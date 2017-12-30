@@ -918,12 +918,20 @@
 
  * Author: Unnamed, License: CC-by-sa 3.0
    * outfit
+     * space
+       * convulsion.png
      * store
+       * active_plating.png
+       * convulsion.png
+       * convulsion_launcher.png
        * core_system01.png
        * core_system02.png
        * core_system03.png
        * core_system04.png
        * core_system05.png
+       * energy_dart.png
+       * energy_missile.png
+       * energy_torpedo.png
        * engine01.png
        * engine02.png
        * engine03.png
@@ -945,8 +953,19 @@
        * misc05.png
        * plating01.png
        * reactor01.png
+       * stealth_plating.png
+       * turreted_convulsion_launcher.png
        * weapon01.png
        * weapon02.png
+   * ship
+     * perspicacity
+       * *
+     * scintillation
+       * *
+     * virtuosity
+       * *
+     * taciturnity
+       * *
 
  * Author: antilope, License: CC-by-sa 3.0
    * planet
@@ -1123,7 +1142,9 @@
        * uninhabited-rocky-magenta-03.png
        * uninhabited-rocky-magenta-04.png
 
- * Author: Fernando L. Copercini "Bisc88" <fernandoluis1732@yahoo.com.br>, License: GPLv3
+ * Author: Fernando L. Copercini "Bisc88" <fernandoluis1732@yahoo.com.br>, License: GPLv3+
    * planet
      * exterior
        * snowy_cliffs.png
+       * rocky_small.png
+       * uninhabited-jungle.png

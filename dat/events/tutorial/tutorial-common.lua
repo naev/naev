@@ -30,5 +30,5 @@ end
 
 -- Capsule function for naev.keyGet() that adds a color code to the return string.
 function tutGetKey(command)
-    return "\027b" .. naev.keyGet(command) .. "\0270"
+    return "\ab" .. _(naev.keyGet(command)) .. "\a0"
 end

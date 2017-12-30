@@ -2,6 +2,8 @@
    The new "slim" GUI
 --]]
 
+playerform = include "dat/scripts/playerform.lua"
+
 function create()
 
    --Get player
@@ -183,11 +185,11 @@ function create()
    y_ammo = pl_pane_y - 27
 
    -- Missile lock warning
-   missile_lock_text = "Warning - Missile Lockon Detected"
+   missile_lock_text = _("Warning - Missile Lockon Detected")
    missile_lock_length = gfx.printDim( false, missile_lock_text )
 
    -- Active cooldown display
-   cooldown_text = "Cooling down..."
+   cooldown_text = _("Cooling down...")
    cooldown_length = gfx.printDim( false, cooldown_text )
 
    --Target Pane
@@ -296,6 +298,11 @@ function create()
    blinkcol = col_txt_enm
    gfxWarn = true
 
+   buttons = {}
+
+   gui.mouseClickEnable(true)
+   gui.mouseMoveEnable(true)
+
    update_target()
    update_ship()
    update_system()
@@ -372,15 +379,15 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:known() then
-         navstring = nav_hyp:name()
+         navstring = _(nav_hyp:name())
       else
-         navstring = "Unknown"
+         navstring = _("Unknown")
       end
       if autonav_hyp then
          navstring = (navstring .. " (%s)"):format( jumps )
       end
    else
-      navstring = "none"
+      navstring = _("none")
    end
 end
 
@@ -392,7 +399,7 @@ end
 
 function update_cargo()
    cargol = pp:cargoList()
-   cargofree = " (" .. pp:cargoFree() .. "t free)"
+   cargofree = string.format( _(" (%st free)"), pp:cargoFree() )
    cargofreel = gfx.printDim( true, cargofree )
    cargoterml = gfx.printDim( true, ", [...]" )
    cargo = {}
@@ -400,7 +407,7 @@ function update_cargo()
       if v.q == 0 then
          cargo[k] = v.name
       else
-         cargo[k] = string.format( "%d"  .. "t %s", v.q, v.name )
+         cargo[k] = string.format( _("%dt %s"), v.q, _(v.name) )
       end
       if v.m then
          cargo[k] = cargo[k] .. "*"
@@ -445,7 +452,7 @@ function render_cooldown( percent, seconds )
    gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, col_temperature )
    gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
    gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
-   gfx.print(false, "Cooling down...", cooldown_frame_x,
+   gfx.print(false, _("Cooling down..."), cooldown_frame_x,
          cooldown_bg_y + cooldown_bg_h + 8, col_txt_bar, cooldown_frame_w, true )
 end
 
@@ -488,7 +495,7 @@ function render_bar( data, value, txt, txtcol, size, col, bgc )
       end
       gfx.print( small, txt, data.x + offsets[1], data.y + offsets[4], txtcol, data.w, true)
    else
-      gfx.print( true, "UNAVAILABLE", data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
+      gfx.print( true, _("UNAVAILABLE"), data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
    end
 end
 
@@ -533,7 +540,7 @@ function render_armourBar( data, value, stress_value, txt, txtcol, size, col, bg
       end
       gfx.print( small, txt, data.x + offsets[1], data.y + offsets[4], txtcol, data.w, true)
    else
-      gfx.print( true, "UNAVAILABLE", data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
+      gfx.print( true, _("UNAVAILABLE"), data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
    end
 end
 
@@ -720,6 +727,33 @@ function render( dt, dt_mod )
       end
    end
 
+   -- Formation selection button
+   if #pp:followers() ~= 0 then
+      local x = x_ammo
+      local y = y_ammo - #wset * 28 - 15
+      local width, height = bg_bar_weapon:dim()
+
+      if buttons["formation"] == nil then
+          buttons["formation"] = {}
+      end
+
+      local button = buttons["formation"]
+      button.x = x
+      button.y = y - height
+      button.w = width
+      button.h = height
+      button.action = playerform
+
+      local col = colour.new( .10, .10, .10 )
+      if button.state == "mouseover" then
+          col = colour.new( .25, .25, .25 )
+      end
+
+      gfx.renderRect( x, y, width, height, col)
+      gfx.renderTex( bg_bar_weapon, x, y )
+      gfx.print( true, "Set formation", x, y + 8, col_txt_bar, width, true )
+   end
+
    --Warning Light
    if lockons > 0 then
       timers[2] = timers[2] - dt / dt_mod
@@ -826,7 +860,7 @@ function render( dt, dt_mod )
          ta_speed = ptarget:vel():mod()
 
          --Title
-         gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 190, col_txt_top )
+         gfx.print( false, _("TARGETED"), ta_pane_x + 14, ta_pane_y + 190, col_txt_top )
 
          --Text, warning light & other texts
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
@@ -876,11 +910,11 @@ function render( dt, dt_mod )
             -- Status information
             local status
             if ta_disabled then
-               status = "Disabled"
+               status = _("Disabled")
             elseif tflags["boardable"] then
-               status = "Boardable"
+               status = _("Boardable")
             elseif ptarget:cooldown() then
-               status = "Cooling Down"
+               status = _("Cooling Down")
             end
 
             if status then
@@ -912,7 +946,7 @@ function render( dt, dt_mod )
             gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
 
             --Pilot name
-            gfx.print( true, "Unknown", ta_pane_x + 14, ta_pane_y + 176, col_txt_una )
+            gfx.print( true, _("Unknown"), ta_pane_x + 14, ta_pane_y + 176, col_txt_una )
          end
 
          -- Render bars.
@@ -922,14 +956,14 @@ function render( dt, dt_mod )
          render_bar( bardata['speed_sm'], htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
 
          --Dist
-         gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
+         gfx.print( true, _("DIST"), ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
          if ta_dist then
             local str = largeNumber( ta_dist, 1 )
             gfx.print( false, str, ta_pane_x + ta_pane_w - 15 - gfx.printDim(false, str), ta_pane_y +142, col_txt_std, 60, false )
          end
 
          --Dir
-         gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 160, col_txt_top )
+         gfx.print(true, _("DIR"), ta_pane_x + 86, ta_pane_y + 160, col_txt_top )
 
          -- Render dir sprite.
          local x, y = target_dir:spriteFromDir( ta_dir )
@@ -959,9 +993,9 @@ function render( dt, dt_mod )
       else
          gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
       end
-      gfx.print( true, "TARGETED", ta_pnt_pane_x + 14, ta_pnt_pane_y + 164, col_txt_top )
-      gfx.print( true, "DISTANCE:", ta_pnt_pane_x + 35, ta_pnt_pane_y - 14, col_txt_top )
-      gfx.print( true, "CLASS:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
+      gfx.print( true, _("TARGETED"), ta_pnt_pane_x + 14, ta_pnt_pane_y + 164, col_txt_top )
+      gfx.print( true, _("DISTANCE:"), ta_pnt_pane_x + 35, ta_pnt_pane_y - 14, col_txt_top )
+      gfx.print( true, _("CLASS:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
 
       if ta_pnt_faction_gfx then
          gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
@@ -976,7 +1010,7 @@ function render( dt, dt_mod )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
 
       gfx.print( true, planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
-      gfx.print( true, "SERVICES:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
+      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
 
       -- Space out the text.
       services_h = 60
@@ -987,7 +1021,7 @@ function render( dt, dt_mod )
             services_h = services_h + 14
          end
       else
-         gfx.print( true, "none", ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
+         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
@@ -1000,17 +1034,16 @@ function render( dt, dt_mod )
 
    local jumps = player.jumps()
    local fuel = player.fuel()
-   if jumps == 1 then
-      fuelstring = fuel .. " (" .. jumps .. " jump)"
-   elseif fuel > 0 then
-      fuelstring = fuel .. " (" .. jumps .. " jumps)"
+
+   if fuel > 0 then
+      fuelstring = string.format( gettext.ngettext("%d (%d jump)", "%d (%d jumps)", jumps), fuel, jumps)
    else
-      fuelstring = "none"
+      fuelstring = _("none")
    end
 
-   local bartext = { "Pilot: ", pname, "System: ", sysname, "Time: ", time.str(), "Credits: ",
-         largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
-         "WSet: ", wset_name, "Cargo: " }
+   local bartext = { _("Pilot: "), pname, _("System: "), sysname, _("Time: "), time.str(), _("Credits: "),
+         largeNumber( credits, 2 ), _("Nav: "), navstring, _("Fuel: "), fuelstring,
+         _("WSet: "), wset_name, _("Cargo: ") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( true, v, length, 5, col_txt_top )
@@ -1044,8 +1077,8 @@ function render( dt, dt_mod )
 
       length = length + gfx.printDim( true, cargstring )
    else
-      gfx.print( true, "none", length, 6, col_txt_una )
-      length = length + gfx.printDim( true, "none" ) + 6
+      gfx.print( true, _("none"), length, 6, col_txt_una )
+      length = length + gfx.printDim( true, _("none") ) + 6
    end
    gfx.print( true, cargofree, length, 6, col_txt_std )
 end
@@ -1059,7 +1092,7 @@ function largeNumber( number, idp )
       len = math.floor(math.log10(number))
       formatted = roundto( number / 10^math.floor(len-len%3), idp) .. units[(math.floor(len/3))]
    else
-      formatted = "Too big!"
+      formatted = _("Too big!")
    end
    return formatted
 end
@@ -1073,4 +1106,63 @@ function round(num)
 end
 
 function destroy()
+end
+
+function mouse_click( button, x, y, state )
+   if button ~= 2 then
+      return false
+   else
+      lmouse = state
+      pressed = mouseInsideButton( x, y )
+      
+      if pressed == nil then
+         if not state then
+            for _,v in pairs(buttons) do
+               if v.state ~= "disabled" and v.state ~= "hilighted" then
+                  v.state = "default"
+               end
+            end
+         end
+         return false
+      else
+         if state then
+            if pressed.state ~= "disabled" then
+               pressed.state = "pressed"
+            end
+            return true
+         else
+            if pressed.state ~= "disabled" then
+               pressed.state = "default"
+               pressed.action()
+            end
+            return true
+         end
+      end
+   end
+end
+
+function mouse_move( x, y )
+   pressed = mouseInsideButton( x, y )
+   if pressed ~= nil then
+      if pressed.state ~= "disabled" and not lmouse then
+         pressed.state = "mouseover"
+      elseif pressed.state ~= "disabled" and lmouse then
+         pressed.state = "pressed"
+      end
+   else
+      for _,v in pairs(buttons) do
+         if v.state ~= "disabled" and v.state ~= "hilighted" then
+            v.state = "default"
+         end
+      end
+   end
+end
+
+function mouseInsideButton( x, y )
+   for _, v in pairs(buttons) do
+      if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
+         return v
+      end
+   end
+   return nil
 end

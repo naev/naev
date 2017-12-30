@@ -221,7 +221,7 @@ int sound_al_init (void)
    /* opening the default device */
    al_device = alcOpenDevice(NULL);
    if (al_device == NULL) {
-      WARN("Unable to open default sound device");
+      WARN(_("Unable to open default sound device"));
       ret = -1;
       goto snderr_dev;
    }
@@ -240,7 +240,7 @@ int sound_al_init (void)
    /* Create the OpenAL context */
    al_context = alcCreateContext( al_device, attribs );
    if (al_context == NULL) {
-      WARN("Unable to create OpenAL context");
+      WARN(_("Unable to create OpenAL context"));
       ret = -2;
       goto snderr_ctx;
    }
@@ -250,7 +250,7 @@ int sound_al_init (void)
 
    /* Set active context */
    if (alcMakeContextCurrent( al_context )==AL_FALSE) {
-      WARN("Failure to set default context");
+      WARN(_("Failure to set default context"));
       ret = -4;
       goto snderr_act;
    }
@@ -354,14 +354,14 @@ int sound_al_init (void)
    soundUnlock();
 
    /* debug magic */
-   DEBUG("OpenAL started: %d Hz", freq);
-   DEBUG("Renderer: %s", alGetString(AL_RENDERER));
+   DEBUG(_("OpenAL started: %d Hz"), freq);
+   DEBUG(_("Renderer: %s"), alGetString(AL_RENDERER));
    if (al_info.efx == AL_FALSE)
-      DEBUG("Version: %s without EFX", alGetString(AL_VERSION));
+      DEBUG(_("Version: %s without EFX"), alGetString(AL_VERSION));
    else
-      DEBUG("Version: %s with EFX %d.%d", alGetString(AL_VERSION),
+      DEBUG(_("Version: %s with EFX %d.%d"), alGetString(AL_VERSION),
             al_info.efx_major, al_info.efx_minor);
-   DEBUG();
+   DEBUG("");
 
    return ret;
 
@@ -428,7 +428,7 @@ static int al_enableEFX (void)
          !nalFilteri || !nalFilteriv || !nalFilterf || !nalFilterfv ||
          !nalGenEffects || !nalDeleteEffects ||
          !nalEffecti || !nalEffectiv || !nalEffectf || !nalEffectfv) {
-      DEBUG("OpenAL EFX functions not found, disabling EFX.");
+      DEBUG(_("OpenAL EFX functions not found, disabling EFX."));
       al_info.efx = AL_FALSE;
       return -1;
    }
@@ -440,7 +440,7 @@ static int al_enableEFX (void)
    nalGenEffects( 1, &efx_reverb );
    nalEffecti( efx_reverb, AL_EFFECT_TYPE, AL_EFFECT_REVERB );
    if(alGetError() != AL_NO_ERROR) {
-      DEBUG("OpenAL Reverb not found, disabling.");
+      DEBUG(_("OpenAL Reverb not found, disabling."));
       al_info.efx_reverb = AL_FALSE;
       nalDeleteEffects( 1, &efx_reverb );
    }
@@ -455,7 +455,7 @@ static int al_enableEFX (void)
    nalGenEffects( 1, &efx_echo );
    nalEffecti( efx_echo, AL_EFFECT_TYPE, AL_EFFECT_ECHO );
    if(alGetError() != AL_NO_ERROR) {
-      DEBUG("OpenAL Echo not found, disabling.");
+      DEBUG(_("OpenAL Echo not found, disabling."));
       al_info.efx_echo = AL_FALSE;
       nalDeleteEffects( 1, &efx_echo );
    }
@@ -556,7 +556,7 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
 
    /* Load WAV. */
    if (SDL_LoadWAV_RW( rw, 0, &wav_spec, &wav_buffer, &wav_length) == NULL) {
-      WARN("SDL_LoadWav_RW failed: %s", SDL_GetError());
+      WARN(_("SDL_LoadWav_RW failed: %s"), SDL_GetError());
       return -1;
    }
 
@@ -572,10 +572,10 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
          break;
       case AUDIO_U16MSB:
       case AUDIO_S16MSB:
-         WARN( "Big endian WAVs unsupported!" );
+         WARN( _("Big endian WAVs unsupported!") );
          return -1;
       default:
-         WARN( "Invalid WAV format!" );
+         WARN( _("Invalid WAV format!") );
          return -1;
    }
 
@@ -599,17 +599,17 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
 static const char* vorbis_getErr( int err )
 {
    switch (err) {
-      case OV_EREAD:       return "A read from media returned an error.";
-      case OV_EFAULT:      return "Internal logic fault; indicates a bug or heap/stack corruption.";
-      case OV_EIMPL:       return "Feature not implemented.";
-      case OV_EINVAL:      return "Either an invalid argument, or incompletely initialized argument passed to libvorbisfile call";
-      case OV_ENOTVORBIS:  return "Bitstream is not Vorbis data.";
-      case OV_EBADHEADER:  return "Invalid Vorbis bitstream header.";
-      case OV_EVERSION:    return "Vorbis version mismatch.";
-      case OV_EBADLINK:    return "The given link exists in the Vorbis data stream, but is not decipherable due to garbacge or corruption.";
-      case OV_ENOSEEK:     return "The given stream is not seekable.";
+      case OV_EREAD:       return _("A read from media returned an error.");
+      case OV_EFAULT:      return _("Internal logic fault; indicates a bug or heap/stack corruption.");
+      case OV_EIMPL:       return _("Feature not implemented.");
+      case OV_EINVAL:      return _("Either an invalid argument, or incompletely initialized argument passed to libvorbisfile call");
+      case OV_ENOTVORBIS:  return _("Bitstream is not Vorbis data.");
+      case OV_EBADHEADER:  return _("Invalid Vorbis bitstream header.");
+      case OV_EVERSION:    return _("Vorbis version mismatch.");
+      case OV_EBADLINK:    return _("The given link exists in the Vorbis data stream, but is not decipherable due to garbacge or corruption.");
+      case OV_ENOSEEK:     return _("The given stream is not seekable.");
 
-      default: return "Unknown vorbisfile error.";
+      default: return _("Unknown vorbisfile error.");
    }
 }
 
@@ -633,7 +633,7 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    /* Finish opening the file. */
    ret = ov_test_open(vf);
    if (ret) {
-      WARN("Failed to finish loading Ogg file: %s", vorbis_getErr(ret) );
+      WARN(_("Failed to finish loading Ogg file: %s"), vorbis_getErr(ret) );
       return -1;
    }
 
@@ -701,7 +701,7 @@ int sound_al_load( alSound *snd, const char *filename )
 
    /* Failed to load. */
    if (ret != 0) {
-      WARN("Failed to load sound file '%s'.", filename);
+      WARN(_("Failed to load sound file '%s'."), filename);
       return ret;
    }
 
@@ -713,7 +713,7 @@ int sound_al_load( alSound *snd, const char *filename )
    alGetBufferi( snd->u.al.buf, AL_CHANNELS, &channels );
    alGetBufferi( snd->u.al.buf, AL_SIZE, &size );
    if ((freq==0) || (bits==0) || (channels==0)) {
-      WARN("Something went wrong when loading sound file '%s'.", filename);
+      WARN(_("Something went wrong when loading sound file '%s'."), filename);
       snd->length = 0;
    }
    else
@@ -1234,7 +1234,7 @@ static alGroup_t *sound_al_getGroup( int group )
          continue;
       return &al_groups[i];
    }
-   WARN("Group '%d' not found.", group);
+   WARN(_("Group '%d' not found."), group);
    return NULL;
 }
 
@@ -1296,14 +1296,14 @@ int sound_al_playGroup( int group, alSound *s, int once )
       }
       soundUnlock();
 
-      WARN("Group '%d' has no free sounds.", group );
+      WARN(_("Group '%d' has no free sounds."), group );
 
       /* Group matched but not found. */
       break;
    }
 
    if (i>=al_ngroups)
-      WARN("Group '%d' not found.", group);
+      WARN(_("Group '%d' not found."), group);
 
    return -1;
 }
@@ -1492,26 +1492,26 @@ void al_checkHandleError( const char *func )
    /* Get the message. */
    switch (err) {
       case AL_INVALID_NAME:
-         errstr = "a bad name (ID) was passed to an OpenAL function";
+         errstr = _("a bad name (ID) was passed to an OpenAL function");
          break;
       case AL_INVALID_ENUM:
-         errstr = "an invalid enum value was passed to an OpenAL function";
+         errstr = _("an invalid enum value was passed to an OpenAL function");
          break;
       case AL_INVALID_VALUE:
-         errstr = "an invalid value was passed to an OpenAL function";
+         errstr = _("an invalid value was passed to an OpenAL function");
          break;
       case AL_INVALID_OPERATION:
-         errstr = "the requested operation is not valid";
+         errstr = _("the requested operation is not valid");
          break;
       case AL_OUT_OF_MEMORY:
-         errstr = "the requested operation resulted in OpenAL running out of memory";
+         errstr = _("the requested operation resulted in OpenAL running out of memory");
          break;
 
       default:
-         errstr = "unknown error";
+         errstr = _("unknown error");
          break;
    }
-   WARN("OpenAL error [%s]: %s", func, errstr);
+   WARN(_("OpenAL error [%s]: %s"), func, errstr);
 }
 #endif /* DEBUGGING */
 

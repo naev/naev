@@ -245,7 +245,7 @@ end
 function abort ()
    -- Remove cargo.
    misn.cargoRm( cargoID )
-   -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
+   -- Finish the mission, but don't mark it as completed. The mission will appear again if the conditions are met.
    misn.finish( false )
 end
 

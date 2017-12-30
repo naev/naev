@@ -368,11 +368,11 @@ const char *pilot_weapSetName( Pilot* p, int id )
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
    if ((ws->slots == NULL) || (array_size(ws->slots)==0))
-      return "Unused";
+      return _("Unused");
    switch (ws->type) {
-      case WEAPSET_TYPE_CHANGE: return "Weapons - Switched";  break;
-      case WEAPSET_TYPE_WEAPON: return "Weapons - Instant";   break;
-      case WEAPSET_TYPE_ACTIVE: return "Abilities - Toggled"; break;
+      case WEAPSET_TYPE_CHANGE: return _("Weapons - Switched");  break;
+      case WEAPSET_TYPE_WEAPON: return _("Weapons - Instant");   break;
+      case WEAPSET_TYPE_ACTIVE: return _("Abilities - Toggled"); break;
    }
    return NULL;
 }
@@ -1150,7 +1150,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       pilot_updateMass( p );
    }
    else
-      WARN("Shooting unknown weapon type: %s", w->outfit->name);
+      WARN(_("Shooting unknown weapon type: %s"), w->outfit->name);
 
 
    /* Reset timer. */
@@ -1315,7 +1315,7 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_CHANGE) {
+   if (p->weapon_sets[ p->active_set ].type != WEAPSET_TYPE_CHANGE) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
@@ -1323,7 +1323,7 @@ void pilot_weaponSetDefault( Pilot *p )
 
    /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!p->weapon_sets[i].type != WEAPSET_TYPE_CHANGE)
+      if (p->weapon_sets[i].type == WEAPSET_TYPE_CHANGE)
          break;
 
    /* Set active set to first if all fire groups or first non-fire group. */
@@ -1386,8 +1386,6 @@ void pilot_weaponSane( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
-   double c;
-
    /* Must not be disabled or cooling down. */
    if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
       return 0;
@@ -1399,11 +1397,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       o->stimer = -1;
    }
    else {
-      c = outfit_cooldown( o->outfit );
-      if (o->stimer != INFINITY)
-         o->stimer = c - (c * o->stimer / outfit_duration( o->outfit ));
-      else
-         o->stimer = c;
+      o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
    }
 

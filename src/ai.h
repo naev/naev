@@ -12,6 +12,7 @@
 #include <lua.h>
 
 #include "physics.h"
+#include "nlua.h"
 
 /* Forward declaration to avoid cyclical import. */
 struct Pilot_;
@@ -31,24 +32,6 @@ typedef struct Pilot_ Pilot;
 
 
 /**
- * @enum TaskData
- *
- * When task is created from Lua side, we can use TASKDATA_REF to directly
- * reference the Lua object. This allows the passing of arbitrary data types.
- * However, when created from C side, the data lives in C and such we have to use
- * the different provided TASKDATA types.
- *
- * @brief Task data types.
- */
-typedef enum TaskData_ {
-   TASKDATA_NULL,
-   TASKDATA_INT,
-   TASKDATA_VEC2,
-   TASKDATA_PILOT,
-   TASKDATA_REF
-} TaskData;
-
-/**
  * @struct Task
  *
  * @brief Basic AI task.
@@ -60,12 +43,7 @@ typedef struct Task_ {
 
    struct Task_* subtask; /**< Subtasks of the current task. */
 
-   TaskData dtype; /**< Data type. */
-   union {
-      unsigned int num; /**< Pilot ID, etc... */
-      Vector2d vec; /**< Vector. */
-   } dat; /**< Stores the data. */
-   lua_State *L;
+   int dat; /**< Lua reference to the data (index in registry). */
 } Task;
 
 
@@ -76,7 +54,7 @@ typedef struct Task_ {
  */
 typedef struct AI_Profile_ {
    char* name; /**< Name of the profile. */
-   lua_State *L; /**< Assosciated Lua State. */
+   nlua_env env; /**< Assosciated Lua Environment. */
 } AI_Profile;
 
 

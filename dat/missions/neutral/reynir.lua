@@ -13,56 +13,51 @@
 
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
 
 -- This section stores the strings (text) for the mission.
 
 -- Bar information, describes how he appears in the bar
-   bar_desc = "You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted."
+bar_desc = _("You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted.")
 
 -- Mission details. We store some text for the mission with specific variables.
-   misn_title = "Rich reward from space!"
-   misn_reward = "Lots of cash"
-   misn_desc = "Reynir wants to travel to space and will reward you richly."
+misn_title = _("Rich reward from space!")
+misn_reward = _("Lots of cash")
+misn_desc = _("Reynir wants to travel to space and will reward you richly.")
 
-   cargoname = "Food"
+cargoname = "Food"
 
 -- Stage one
-   title = {}    --Each dialog box has a title.
-   text = {}      --We store mission text in tables.  As we need them, we create them.
-   title[1] = "Spaceport Bar"    --Each chunk of text is stored by index in the table.
-   text[1] = [["Do you like money?"]]     --Use double brackets [[]] for block quotes over several lines.
+title = {}    --Each dialog box has a title.
+text = {}      --We store mission text in tables.  As we need them, we create them.
+title[1] = _("Spaceport Bar")    --Each chunk of text is stored by index in the table.
+text[1] = _([["Do you like money?"]])     --Use double brackets _([[]]) for block quotes over several lines.
 
-   text[2] = [["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
-    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]
-   text[3] = [["Thank you so much! Just fly me around in the system, preferably near %s."]]
+text[2] = _([["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
+    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]])
+text[3] = _([["Thank you so much! Just fly me around in the system, preferably near %s."]])
 
-   title[4] = "Reynir"
-   text[4] = [[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]]
-   text[5] = [["Thank you so much! Here's %s tons of hot dogs. They're worth more than their weight in gold, aren't they?"]]
-   text[6] = [[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]]
-   text[7] = [[Reynir doesn't look happy when you meet him outside the ship.
-    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %d tons of hot dogs..."]]
+title[4] = _("Reynir")
+text[4] = _([[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]])
+text[5] = _([["Thank you so much! Here's %s tons of hot dogs. They're worth more than their weight in gold, aren't they?"]])
+text[6] = _([[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]])
+text[7] = _([[Reynir doesn't look happy when you meet him outside the ship.
+    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %d tons of hot dogs..."]])
 
 -- Comm chatter -- ??
-   talk = {}
-   talk[1] = ""
+talk = {}
+talk[1] = ""
 
 -- Other text for the mission -- ??
-   osd_msg = {}
-   osd_msg[1] = "Fly around in the system, preferably near %s."
-   osd_msg[2] = "Take Reynir home to %s."
-   msg_abortTitle = "" 
-   msg_abort = [[]]
-end
+osd_msg = {}
+osd_msg[1] = _("Fly around in the system, preferably near %s.")
+osd_msg[2] = _("Take Reynir home to %s.")
+msg_abortTitle = "" 
+msg_abort = [[]]
 
 
 function create ()
    -- Note: this mission does not make any system claims. 
-   misn.setNPC( "Reynir", "neutral/unique/reynir" )
+   misn.setNPC( _("Reynir"), "neutral/unique/reynir" )
    misn.setDesc( bar_desc )
 
    -- Mission variables

@@ -8,40 +8,37 @@
 
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   -- Bar information
-   bar_desc = "You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss."
+include "dat/missions/pirate/common.lua"
 
-   -- Mission details
-   misn_title  = "Pirate Hitman 2"
-   misn_reward = "Some easy money." -- Possibly some hard to get contraband once it is introduced
-   misn_desc   = {}
-   misn_desc[1] = "Take out some merchant competition in the %s system."
-   misn_desc[2] = "Return to %s in the %s system for payment."
+-- Bar information
+bar_desc = _("You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss.")
 
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "Spaceport Bar"
-   text[1]  = [[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]
-   text[2] = [[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]
-   title[3] = "Mission Complete"
-   text[3] = [[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]]
+-- Mission details
+misn_title  = _("Pirate Hitman 2")
+misn_reward = _("Some easy money.") -- Possibly some hard to get contraband once it is introduced
+misn_desc   = {}
+misn_desc[1] = _("Take out some merchant competition in the %s system.")
+misn_desc[2] = _("Return to %s in the %s system for payment.")
 
-   -- Messages
-   msg      = {}
-   msg[1]   = "MISSION SUCCESS! Return for payment."
-end
+-- Text
+title    = {}
+text     = {}
+title[1] = _("Spaceport Bar")
+text[1]  = _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]])
+text[2] = _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]])
+title[3] = _("Mission Complete")
+text[3] = _([[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]])
+
+-- Messages
+msg      = {}
+msg[1]   = _("MISSION SUCCESS! Return for payment.")
 
 function create ()
    -- Note: this mission does not make any system claims. 
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
-   misn.setNPC( "Shifty Trader",  "neutral/unique/shifty_merchant")
+   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant")
    misn.setDesc( bar_desc )
 end
 
@@ -117,6 +114,7 @@ function landed()
       tk.msg(title[3], text[3])
       player.pay(100000) -- 100k
       faction.modPlayerSingle("Pirate",5)
+      pir_modDecayFloor( 3 )
       misn.finish(true)
    end
 end

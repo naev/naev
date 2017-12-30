@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "unidiff.h"
@@ -31,30 +30,22 @@
 static int diff_applyL( lua_State *L );
 static int diff_removeL( lua_State *L );
 static int diff_isappliedL( lua_State *L );
-static const luaL_reg diff_methods[] = {
+static const luaL_Reg diff_methods[] = {
    { "apply", diff_applyL },
    { "remove", diff_removeL },
    { "isApplied", diff_isappliedL },
    {0,0}
 }; /**< Unidiff Lua methods. */
-static const luaL_reg diff_cond_methods[] = {
-   { "isApplied", diff_isappliedL },
-   {0,0}
-}; /**< Unidiff Lua read only methods. */
 
 
 /**
  * @brief Loads the diff Lua library.
- *    @param L Lua state.
- *    @param readonly Load read only functions?
+ *    @param env Lua enviornment.
  *    @return 0 on success.
  */
-int nlua_loadDiff( lua_State *L, int readonly )
+int nlua_loadDiff( nlua_env env )
 {
-   if (readonly == 0)
-      luaL_register(L, "diff", diff_methods);
-   else
-      luaL_register(L, "diff", diff_cond_methods);
+   nlua_register(env, "diff", diff_methods, 0);
    return 0;
 }
 
@@ -75,12 +66,14 @@ int nlua_loadDiff( lua_State *L, int readonly )
 /**
  * @brief Applies a diff by name.
  *
- *    @luaparam name Name of the diff to apply.
+ *    @luatparam string name Name of the diff to apply.
  * @luafunc apply( name )
  */
 static int diff_applyL( lua_State *L )
 {
    const char *name;
+
+   NLUA_CHECKRW(L);
 
    name = luaL_checkstring(L,1);
 
@@ -90,12 +83,14 @@ static int diff_applyL( lua_State *L )
 /**
  * @brief Removes a diff by name.
  *
- *    @luaparam name Name of the diff to remove.
+ *    @luatparam string name Name of the diff to remove.
  * @luafunc remove( name )
  */
 static int diff_removeL( lua_State *L )
 {
    const char *name;
+
+   NLUA_CHECKRW(L);
 
    name = luaL_checkstring(L,1);
 
@@ -105,8 +100,8 @@ static int diff_removeL( lua_State *L )
 /**
  * @brief Checks to see if a diff is currently applied.
  *
- *    @luaparam name Name of the diff to check.
- *    @luareturn true if diff is applied, false if it isn't.
+ *    @luatparam string name Name of the diff to check.
+ *    @luatreturn boolean true if diff is applied, false if it isn't.
  * @luafunc isApplied( name )
  */
 static int diff_isappliedL( lua_State *L )

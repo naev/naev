@@ -14,14 +14,13 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "mission.h"
 
 
 /* CLI */
-static const luaL_reg cli_methods[] = {
+static const luaL_Reg cli_methods[] = {
    {0,0}
 }; /**< CLI Lua methods. */
 
@@ -29,12 +28,12 @@ static const luaL_reg cli_methods[] = {
 /**
  * @brief Loads the CLI Lua library.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadCLI( lua_State *L )
+int nlua_loadCLI( nlua_env env )
 {
-   luaL_register(L, "cli", cli_methods);
+   nlua_register(env, "cli", cli_methods, 0);
    return 0;
 }
 

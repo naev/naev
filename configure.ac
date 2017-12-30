@@ -2,11 +2,19 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.6.1], [bobbens@gmail.com])
+AC_INIT([naev], [0.7.0], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
+
+AM_PO_SUBDIRS
+
+AM_GNU_GETTEXT([external])
+#AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT_VERSION([0.18])
+
+IT_PROG_INTLTOOL
 
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 
@@ -62,6 +70,7 @@ AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
 # Checks for programs.
 #
 AC_PROG_CC
+AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
 PKG_PROG_PKG_CONFIG
@@ -72,7 +81,7 @@ AS_IF([test -z "$CUT"],[
 ])
 
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
-AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
+AC_CHECK_PROG([LDOC], [ldoc], [ldoc])
 AC_CHECK_PROG([GIT], [git], [git])
 
 #
@@ -209,6 +218,21 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
+# --with-libzip
+AC_MSG_CHECKING([whether to use libzip])
+AC_ARG_WITH([libzip],
+  AC_HELP_STRING([--with-libzip],
+     [use libzip for ndata (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_libzip=yes
+    ], [
+      with_libzip=no
+    ])
+  ], [
+    with_libzip=yes
+  ])
+AC_MSG_RESULT([$with_libzip])
+
 # --enable-lua
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
@@ -267,6 +291,9 @@ PKG_CHECK_MODULES([XML], [libxml-2.0])
 # FreeType
 PKG_CHECK_MODULES([FREETYPE], [freetype2])
 
+# FontConfig
+PKG_CHECK_MODULES([FONTCONFIG], [fontconfig])
+
 # vorbis
 PKG_CHECK_MODULES([VORBIS], [vorbis])
 
@@ -277,7 +304,9 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 PKG_CHECK_MODULES([PNG], [libpng])
 
 # libzip
-PKG_CHECK_MODULES([ZIP], [libzip])
+AS_IF([test "$with_libzip" = "yes"], [
+  PKG_CHECK_MODULES([ZIP], [libzip])
+])
 
 # lua
 case "$used_lua" in
@@ -345,7 +374,7 @@ AS_IF([test "$with_openal" = "yes"], [
 AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
 AS_IF([test "$with_sdlmixer" = "yes"], [
   PKG_CHECK_MODULES([SDLMIXER], [$SDLMIXER_NAME], [have_sdlmixer=yes], [have_sdlmixer=no])
-])
+], [have_sdlmixer=no])
 
 # SDL_image
 VAR_SAVE([LIBS])
@@ -426,11 +455,11 @@ AS_IF([test "$enable_debug" = "paranoid"], [
 ])
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
-    $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
+    $FREETYPE_CFLAGS $FONTCONFIG_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
     $PNG_CFLAGS $ZIP_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
-    $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
+    $FREETYPE_LIBS $FONTCONFIG_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
     $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
@@ -446,6 +475,9 @@ AS_IF([test "$have_sdlmixer" = "yes"], [
 case "$host" in
   *-mingw*)
     NAEV_LIBS="$NAEV_LIBS -mwindows"
+    ;;
+  *-darwin*)
+    NAEV_LIBS="$NAEV_LIBS -framework Foundation"
     ;;
 esac
 
@@ -503,6 +535,8 @@ AC_TYPE_UINT8_T
 #
 # Checks for functions
 #
+AC_CHECK_FUNCS([setlocale])
+
 VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])
 VAR_RESTORE([LIBS])
@@ -525,7 +559,7 @@ VAR_RESTORE([LIBS])
 #
 AC_MSG_CHECKING([for the current Git commit identifier])
 AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
-  GIT_COMMIT=$(cd "$srcdir" && "$GIT" describe --always --tags)
+  GIT_COMMIT=$(cd "$srcdir" && "$GIT" rev-parse --short HEAD)
   AC_MSG_RESULT([$GIT_COMMIT])
 ], [
   GIT_COMMIT=
@@ -545,6 +579,10 @@ AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
 AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
 AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
 
+AC_SUBST([VMAJOR])
+AC_SUBST([VMINOR])
+AC_SUBST([VREV])
+
 # USE_OPENAL
 AS_IF([test "x$have_openal" = "xyes"], [
   AC_DEFINE([USE_OPENAL], 1, [Define to 1 if using OpenAL])
@@ -553,6 +591,11 @@ AS_IF([test "x$have_openal" = "xyes"], [
 # USE_SDLMIX
 AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
+])
+
+# USE_LIBZIP
+AS_IF([test "x$with_libzip" = "xyes"], [
+  AC_DEFINE([USE_LIBZIP], 1, [Define to 1 if using libzip])
 ])
 
 # Operating system
@@ -568,7 +611,8 @@ case "$host" in
     AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
     ;;
   *-darwin*)
-    AC_DEFINE([MACOSX], 1, [Define to 1 if running on Mac OS X])
+    AC_DEFINE([MACOS], 1, [Define to 1 if running on macOS])
+    have_macos=yes
     ;;
 esac
 
@@ -580,6 +624,7 @@ AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
 AS_IF([test -n "$GIT_COMMIT"], [
   AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
      [Define to the current Git commit identifier])
+  AC_SUBST([GIT_COMMIT])
 ])
 
 #
@@ -587,8 +632,9 @@ AS_IF([test -n "$GIT_COMMIT"], [
 #
 
 AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
+AM_CONDITIONAL([HAVE_MACOS], [test "x$have_macos" = "xyes"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
-AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
+AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
@@ -600,6 +646,7 @@ AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 #
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
+      po/Makefile.in
       lib/Makefile
       src/Makefile
       src/tk/Makefile
@@ -634,6 +681,7 @@ echo
 AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:   $used_csparse])
 AC_MSG_NOTICE([  lua:       $used_lua])
+AC_MSG_NOTICE([  libzip:    $with_libzip])
 echo
 AC_MSG_NOTICE([utils:       $have_utils])
 AC_MSG_NOTICE([  mkspr:     $have_mkspr])

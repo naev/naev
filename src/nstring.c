@@ -106,4 +106,20 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 }
 #endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
 
+/**
+ * @brief nstrndup wrapper.
+ *
+ * Taken frob glibc.
+ */
+#if !(HAS_POSIX && defined(_GNU_SOURCE))
+char* nstrndup( const char *s, size_t n )
+{
+   size_t len = MIN( strlen(s), n );
+   char *new = (char *) malloc (len + 1);
+   if (new == NULL)
+      return NULL;
+   new[len] = '\0';
+   return (char *) memcpy (new, s, len);
+}
+#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
 

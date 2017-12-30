@@ -2,28 +2,24 @@
 -- This script allows the player to choose a tutorial module to run, or return to the main menu.
 
 -- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-    menutitle = "Tutorial Menu"
-    menutext = "Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:"
-    
-    menuall = "Play All"
+menutitle = _("Tutorial Menu")
+menutext = _("Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:")
 
-    menubasic = "Tutorial: Basic Operation"
-    menudiscover = "Tutorial: Exploration and Discovery"
-    menuinterstellar = "Tutorial: Interstellar Flight"
-    menubasiccombat = "Tutorial: Basic Combat"
-    menumisscombat = "Tutorial: Missile Combat"
-    menuheat = "Tutorial: Heat"
-    menuaoutfits = "Tutorial: Activated Outfits"
-    menudisable = "Tutorial: Disabling"
-    menuplanet = "Tutorial: The Planetary Screen"
-    menutrade = "Tutorial: Trade"
-    menumissions = "Tutorial: Missions and Events"
-    menucomms = "Tutorial: Communications"
-    menux = "Quit to Main Menu"
-end
+menuall = _("Play All")
+
+menubasic      = _("Tutorial: Basic Operation")
+menudiscover   = _("Tutorial: Exploration and Discovery")
+menuinterstellar = _("Tutorial: Interstellar Flight")
+menubasiccombat = _("Tutorial: Basic Combat")
+menumisscombat = _("Tutorial: Missile Combat")
+menuheat       = _("Tutorial: Heat")
+menuaoutfits   = _("Tutorial: Activated Outfits")
+menudisable    = _("Tutorial: Disabling")
+menuplanet     = _("Tutorial: The Planetary Screen")
+menutrade      = _("Tutorial: Trade")
+menumissions   = _("Tutorial: Missions and Events")
+menucomms      = _("Tutorial: Communications")
+menux          = _("Quit to Main Menu")
 
 function create()
     -- Set defaults just in case.
@@ -81,6 +77,18 @@ function startModule(module)
     elseif selection == menuall then
         var.push("tut_next", 1)
         module = menubasic
+    elseif selection == menubasic then module = "Tutorial: Basic Operation"
+    elseif selection == menudiscover then module = "Tutorial: Exploration and Discovery"
+    elseif selection == menuinterstellar then module = "Tutorial: Interstellar Flight"
+    elseif selection == menubasiccombat then module = "Tutorial: Basic Combat"
+    elseif selection == menumisscombat then module = "Tutorial: Missile Combat"
+    elseif selection == menuheat then module = "Tutorial: Heat"
+    elseif selection == menuaoutfits then module = "Tutorial: Activated Outfits"
+    elseif selection == menudisable then module = "Tutorial: Disabling"
+    elseif selection == menuplanet then  module = "Tutorial: The Planetary Screen"
+    elseif selection == menutrade then module = "Tutorial: Trade"
+    elseif selection == menumissions then module = "Tutorial: Missions and Events"
+    elseif selection ==  menucomms then module = "Tutorial: Communications"
     end
     player.cinematics(false)
     naev.eventStart(module)

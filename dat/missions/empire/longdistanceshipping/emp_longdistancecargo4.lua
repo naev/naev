@@ -9,23 +9,18 @@
 include "dat/scripts/numstring.lua"
 include "dat/scripts/jumpdist.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar."
-   misn_title = "Frontier Long Distance Recruitment"
-   misn_reward = "50000 credits"
-   misn_desc = "Deliver a shipping diplomat for the Empire to The Frontier Council in Gilligan's Light system."
-   title = {}
-   title[1] = "Spaceport Bar"
-   title[2] = "Frontier Alliance Long Distance Recruitment"
-   title[3] = "Mission Accomplished"
-   text = {}
-   text[1] = [["We have to stop running into each other like this." Lieutenant Czesc laughs at his joke. "Just kidding, you know I owe you for helping set up these contracts. So far, everything has been moving smoothly on our end. We're hoping to extend our relations to the Frontier Alliance. You know the drill by this point. Ready to help?"]]
-   text[2] = [["I applaud your commitment," Lieutenant Czesc says, "and I know these aren't the most exciting missions, but they're most useful. The frontier can be a bit dangerous, so make sure you're prepared. You need to drop the bureaucrat off at The Frontier Council in Gilligan's Light system. After this, there should only be one more faction to bring into the fold. I expect to see you again soon."]]
-   text[3] = [[You deliver the diplomat to The Frontier Council, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]
-end
+bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
+misn_title = _("Frontier Long Distance Recruitment")
+misn_reward = _("50000 credits")
+misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier Council in Gilligan's Light system.")
+title = {}
+title[1] = _("Spaceport Bar")
+title[2] = _("Frontier Alliance Long Distance Recruitment")
+title[3] = _("Mission Accomplished")
+text = {}
+text[1] = _([["We have to stop running into each other like this." Lieutenant Czesc laughs at his joke. "Just kidding, you know I owe you for helping set up these contracts. So far, everything has been moving smoothly on our end. We're hoping to extend our relations to the Frontier Alliance. You know the drill by this point. Ready to help?"]])
+text[2] = _([["I applaud your commitment," Lieutenant Czesc says, "and I know these aren't the most exciting missions, but they're most useful. The frontier can be a bit dangerous, so make sure you're prepared. You need to drop the bureaucrat off at The Frontier Council in Gilligan's Light system. After this, there should only be one more faction to bring into the fold. I expect to see you again soon."]])
+text[3] = _([[You deliver the diplomat to The Frontier Council, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]])
 
 
 function create ()
@@ -39,7 +34,7 @@ function create ()
    targetworld = planet.get("The Frontier Council")
 
 
-   misn.setNPC( "Lieutenant", "empire/unique/czesc" )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc" )
    misn.setDesc( bar_desc )
 end
 

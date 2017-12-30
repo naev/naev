@@ -9,8 +9,10 @@
 
 #include <lua.h>
 
+#include "nlua.h"
 
-int nlua_loadTut( lua_State *L ); /* always non-read only */
+
+int nlua_loadTut( nlua_env env ); /* always non-read only */
 
 
 #endif /* NLUA_TUT_H */

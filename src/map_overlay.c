@@ -187,6 +187,7 @@ void ovr_render( double dt )
    (void) dt;
    int i, j;
    Pilot **pstk;
+   AsteroidAnchor *ast;
    int n;
    double w, h, res;
    double x,y;
@@ -242,7 +243,14 @@ void ovr_render( double dt )
       x = player.autonav_pos.x / res + w / 2.;
       y = player.autonav_pos.y / res + h / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
-      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, "GOTO" );
+      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("GOTO") );
+   }
+
+   /* render the asteroids */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+      for (j=0; j<ast->nb; j++)
+         gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
    }
 
    /* Render the player. */

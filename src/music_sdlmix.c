@@ -121,7 +121,7 @@ int music_mix_load( const char* name, SDL_RWops *rw )
    music_music = Mix_LoadMUS_RW(music_rw);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    if (music_music == NULL) {
-      WARN("SDL_Mixer: %s", Mix_GetError());
+      WARN(_("SDL_Mixer: %s"), Mix_GetError());
       Mix_HookMusicFinished(music_rechoose);
       return -1;
    }
@@ -141,7 +141,7 @@ void music_mix_play (void)
    if (music_music == NULL) return;
 
    if (Mix_FadeInMusic( music_music, 0, MUSIC_FADEIN_DELAY ) < 0)
-      WARN("SDL_Mixer: %s", Mix_GetError());
+      WARN(_("SDL_Mixer: %s"), Mix_GetError());
 }
 
 
@@ -153,7 +153,7 @@ void music_mix_stop (void)
    if (music_music == NULL) return;
 
    if (Mix_FadeOutMusic( MUSIC_FADEOUT_DELAY ) < 0)
-      WARN("SDL_Mixer: %s", Mix_GetError());
+      WARN(_("SDL_Mixer: %s"), Mix_GetError());
 }
 
 

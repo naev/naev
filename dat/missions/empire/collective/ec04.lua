@@ -15,41 +15,36 @@
 include "dat/scripts/nextjump.lua"
 include "proximity.lua"
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   misn_title = "Collective Extraction"
-   misn_reward = "None"
-   misn_desc = {}
-   misn_desc[1] = "Check for survivors on %s in %s."
-   misn_desc[2] = "Travel back to %s in %s."
-   title = {}
-   title[1] = "Collective Extraction"
-   title[2] = "Planet %s"
-   title[3] = "Mission Accomplished"
-   text = {}
-   text[1] = [[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
-    "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]
-   text[2] = [["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]
-   text[3] = [[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
-   text[4] = [[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]
-   text[5] = [[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
-   You've got one, right?]]
-   text[6] = [[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
-    "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]
+misn_title = _("Collective Extraction")
+misn_reward = _("None")
+misn_desc = {}
+misn_desc[1] = _("Check for survivors on %s in %s.")
+misn_desc[2] = _("Travel back to %s in %s.")
+title = {}
+title[1] = _("Collective Extraction")
+title[2] = _("Planet %s")
+title[3] = _("Mission Accomplished")
+text = {}
+text[1] = _([[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+    "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]])
+text[2] = _([["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]])
+text[3] = _([[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]])
+text[4] = _([[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]])
+text[5] = _([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
+   You've got one, right?]])
+text[6] = _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
+    "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]])
 
-    escort_msg1 = "Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"
-    escort_msg2 = "There's too many of them! Fall back! Everyone to the jump point!"
-    land_msg = "You can't land now! Get to the jump point!"
-    markername = "Empire flanking maneuver"
+escort_msg1 = _("Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!")
+escort_msg2 = _("There's too many of them! Fall back! Everyone to the jump point!")
+land_msg = _("You can't land now! Get to the jump point!")
+markername = _("Empire flanking maneuver")
 
-    osd_msg = {}
-    osd_msg[1] = "Fly to %s"
-    osd_msg[2] = "Land on %s"
-    osd_msg[3] = "Return to %s"
-    osd_msg["__save"] = true 
-end
+osd_msg = {}
+osd_msg[1] = _("Fly to %s")
+osd_msg[2] = _("Land on %s")
+osd_msg[3] = _("Return to %s")
+osd_msg["__save"] = true 
 
 
 function create ()

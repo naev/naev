@@ -25,19 +25,19 @@ function create ()
 
    -- Handle bribes.
    if standing < -30 then
-      mem.bribe_no = "\"The only way to deal with scum like you is with cannons!\""
+      mem.bribe_no = _("\"The only way to deal with scum like you is with cannons!\"")
    else
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.int() + 850.)
-      mem.bribe_prompt = string.format("\"It'll cost you %d credits for me to ignore your dirty presence.\"", mem.bribe)
-      mem.bribe_paid = "\"Begone before I change my mind.\""
+      mem.bribe_prompt = string.format(_("\"It'll cost you %d credits for me to ignore your dirty presence.\""), mem.bribe)
+      mem.bribe_paid = _("\"Begone before I change my mind.\"")
    end
 
    -- Handle refueling.
    if standing > 70 then
       mem.refuel = rnd.rnd( 1000, 2000 )
-      mem.refuel_msg = string.format("\"I should be able to spare some fuel for %d credits.\"", mem.refuel)
+      mem.refuel_msg = string.format(_("\"I should be able to spare some fuel for %d credits.\""), mem.refuel)
    else
-      mem.refuel_no = "\"I can't spare fuel for you.\""
+      mem.refuel_no = _("\"I can't spare fuel for you.\"")
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
@@ -57,16 +57,16 @@ function taunt ( target, offense )
    -- some taunts
    if offense then
       taunts = {
-            "For the Frontier!",
-            "You'll make great target practice!",
-            "Purge the oppressors!"
+            _("For the Frontier!"),
+            _("You'll make great target practice!"),
+            _("Purge the oppressors!")
       }
    else
       taunts = {
-            "You are no match for the FLF.",
-            "I've killed scum far more dangerous than you.",
-            "You'll regret that!",
-            "Death to the enemies of the Frontier!"
+            _("You are no match for the FLF."),
+            _("I've killed scum far more dangerous than you."),
+            _("You'll regret that!"),
+            _("Death to the enemies of the Frontier!")
       }
    end
 

@@ -1,16 +1,18 @@
+#ifdef USE_LIBZIP
+
 #include "nzip.h"
 
 #include <zip.h>
 
 #include "log.h"
+#include "nfile.h"
+
 
 /**
  * Private function prototypes
  */
 void nzip_printError ( int err );
 int nzip_rwopsClose ( struct SDL_RWops* context );
-
-
 
 
 /**
@@ -48,7 +50,7 @@ struct zip* nzip_open ( const char* filename )
    arc = zip_open ( filename, flags, &err );
 
    if ( err != 0 || arc == NULL ) {
-      WARN ( "Error opening zip file %s", filename );
+      WARN ( _("Error opening zip file %s"), filename );
       nzip_printError ( err );
    }
 
@@ -63,7 +65,7 @@ struct zip* nzip_open ( const char* filename )
 void nzip_close ( struct zip* arc )
 {
    if ( zip_close ( arc ) ) {
-      WARN ( "Error closing zip file" );
+      WARN ( _("Error closing zip file") );
       WARN ( "%s", zip_strerror ( arc ) );
    }
 }
@@ -89,13 +91,13 @@ int nzip_hasFile ( struct zip* arc, const char* filename )
  *    @param[out] size Size of returned buffer
  *    @return A pointer to the file contents in memory
  */
-void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
+void* nzip_readFile ( struct zip* arc, const char* filename, size_t* size )
 {
    struct zip_file* file;
    struct zip_stat stats;
    void* data;
    int err;
-   uint32_t read;
+   size_t read;
    int flags = 0;
 
    // Get info about file
@@ -103,7 +105,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
    err = zip_stat ( arc, filename, flags, &stats );
 
    if ( err ) {
-      WARN ( "Error reading %s from archive", filename );
+      WARN ( _("Error reading %s from archive"), filename );
       WARN ( "%s", zip_strerror ( arc ) );
       return NULL;
    }
@@ -112,7 +114,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
    file = zip_fopen_index ( arc, stats.index, flags );
 
    if ( file == NULL ) {
-      WARN ( "Error reading %s from archive", filename );
+      WARN ( _("Error reading %s from archive"), filename );
       WARN ( "%s", zip_strerror ( arc ) );
       return NULL;
    }
@@ -125,7 +127,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
 
    // If we read less than the reported file size, something probably went wrong
    if ( read < stats.size ) {
-      WARN ( "Error reading %s from archive", filename );
+      WARN ( _("Error reading %s from archive"), filename );
       WARN ( "%s", zip_strerror ( arc ) );
       free ( data );
       zip_fclose ( file );
@@ -147,11 +149,11 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
  *    @param[out] nfiles Number of files found
  *    @return List of file names found
  */
-char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles )
+char** nzip_listFiles ( struct zip* arc, size_t* nfiles )
 {
    struct zip_stat stats;
    char **filelist, **shrunk;
-   uint32_t i, j;
+   size_t i, j;
    int err;
    int flags = 0;
 
@@ -166,14 +168,14 @@ char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles )
       err = zip_stat_index ( arc, i, flags, &stats );
 
       if ( err ) {
-         WARN ( "Error getting file list from archive" );
+         WARN ( _("Error getting file list from archive") );
          WARN ( "%s", zip_strerror ( arc ) );
          free ( filelist );
          return NULL;
       }
 
       // If the name ends with a forward slash, it's a directory
-      if (stats.name[strlen(stats.name) - 1] != '/')
+      if (!nfile_isSeparator( stats.name[strlen(stats.name) - 1] ))
          filelist[j++] = strdup(stats.name);
    }
 
@@ -229,7 +231,7 @@ int nzip_rwopsClose ( struct SDL_RWops* context )
 SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
 {
    void* data;
-   uint32_t size;
+   size_t size;
    SDL_RWops* rwops;
 
    data = nzip_readFile ( arc, filename, &size );
@@ -238,3 +240,5 @@ SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
    rwops->hidden.unknown.data1 = data;
    return rwops;
 }
+
+#endif /* USE_LIBZIP */

@@ -16,7 +16,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "dialogue.h"
@@ -24,14 +23,12 @@
 
 /* Toolkit methods. */
 static int tk_msg( lua_State *L );
-static int tk_msgImg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
-static const luaL_reg tk_methods[] = {
+static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
-   { "msgImg", tk_msgImg },
    { "yesno", tk_yesno },
    { "input", tk_input },
    { "choice", tk_choice },
@@ -44,12 +41,12 @@ static const luaL_reg tk_methods[] = {
 /**
  * @brief Loads the Toolkit Lua library.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadTk( lua_State *L )
+int nlua_loadTk( nlua_env env )
 {
-   luaL_register(L, "tk", tk_methods);
+   nlua_register(env, "tk", tk_methods, 0);
    return 0;
 }
 
@@ -73,53 +70,39 @@ int nlua_loadTk( lua_State *L )
  *  @luamod tk
  */
 /**
- * @brief Creates a window with an ok button.
+ * @brief Creates a window with an ok button, and optionally an image.
  *
  * @usage tk.msg( "Title", "This is a message." )
+ * @usage tk.msg( "Title", "This is a message.", "character.png" )
  *
- *    @luaparam title Title of the window.
- *    @luaparam message Message to display in the window.
+ *    @luatparam string title Title of the window.
+ *    @luatparam string message Message to display in the window.
+ *    @luatparam[opt=-1] string image Image file (*.png) to display in the window.
+ *    @luatparam[opt=-1] number width width of the image to display. Negative values use image width.
+ *    @luatparam[opt=-1] number height height of the image to display. Negative values use image height.
  * @luafunc msg( title, message )
  */
 static int tk_msg( lua_State *L )
 {
-   const char *title, *str;
-   NLUA_MIN_ARGS(2);
-
-   title = luaL_checkstring(L,1);
-   str   = luaL_checkstring(L,2);
-
-   dialogue_msgRaw( title, str );
-   return 0;
-}
-/**
- * @brief Creates a window with an ok button, text and an image.
- *
- * @usage tk.msgImg( "Title", "This is a message.", "character.png" )
- *
- *    @luaparam title Title of the window.
- *    @luaparam message Message to display in the window.
- *    @luaparam image Image file (*.png) to display in the window.
- *    @luaparam width (opt) width of the image to display. Negative values use image width. defaults to -1.
- *    @luaparam height (opt) height of the image to display. Negative values use image height. defaults to -1.
- * @luafunc msgImg( title, message, image )
- */
-static int tk_msgImg( lua_State *L )
-{
    const char *title, *str, *img;
    int width, height;
-   NLUA_MIN_ARGS(3);
+   NLUA_MIN_ARGS(2);
 
    // Get fixed arguments : title, string to display and image filename
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
-   img   = luaL_checkstring(L,3);
 
-   // Get optional arguments : width and height
-   width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
-   height = (lua_gettop(L) < 5) ? -1 : luaL_checkinteger(L,5);
+   if (lua_gettop(L) > 2) {
+      img   = luaL_checkstring(L,3);
 
-   dialogue_msgImgRaw( title, str, img, width, height );
+      // Get optional arguments : width and height
+      width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
+      height = (lua_gettop(L) < 5) ? -1 : luaL_checkinteger(L,5);
+
+      dialogue_msgImgRaw( title, str, img, width, height );
+      return 0;
+   }
+   dialogue_msgRaw( title, str );
    return 0;
 }
 /**
@@ -127,9 +110,9 @@ static int tk_msgImg( lua_State *L )
  *
  * @usage if tk.yesno( "YesNo popup box", "Click yes to do something." ) then -- Clicked yes
  *
- *    @luaparam title Title of the window.
- *    @luaparam message Message to display in the window.
- *    @luareturn true if yes was clicked, false if no was clicked.
+ *    @luatparam string title Title of the window.
+ *    @luatparam string message Message to display in the window.
+ *    @luatreturn boolean true if yes was clicked, false if no was clicked.
  * @luafunc yesno( title, message )
  */
 static int tk_yesno( lua_State *L )
@@ -150,11 +133,11 @@ static int tk_yesno( lua_State *L )
  *
  * @usage name = tk.input( "Name", 3, 20, "Enter your name:" )
  *
- *    @luaparam title Title of the window.
- *    @luaparam min Minimum characters to accept (must be greater than 0).
- *    @luaparam max Maximum characters to accept.
- *    @luaparam str Text to display in the window.
- *    @luareturn nil if input was canceled or a string with the text written.
+ *    @luatparam string title Title of the window.
+ *    @luatparam number min Minimum characters to accept (must be greater than 0).
+ *    @luatparam number max Maximum characters to accept.
+ *    @luatparam string str Text to display in the window.
+ *    @luatreturn string|nil nil if input was canceled or a string with the text written.
  * @luafunc input( title, min, max, str )
  */
 static int tk_input( lua_State *L )
@@ -185,10 +168,11 @@ static int tk_input( lua_State *L )
  *
  * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return 2, "No"
  *
- *    @luaparam title Title of the window.
- *    @luaparam msg Message to display.
- *    @luaparam choices Option choices.
- *    @luareturn Returns the number of the choice and the name of the choice chosen.
+ *    @luatparam string title Title of the window.
+ *    @luatparam string msg Message to display.
+ *    @luatparam string choices Option choices.
+ *    @luatreturn number The number of the choice chosen.
+ *    @luatreturn string The name of the choice chosen.
  * @luafunc choice( title, msg, ... )
  */
 static int tk_choice( lua_State *L )
@@ -238,10 +222,11 @@ static int tk_choice( lua_State *L )
  *
  * @usage num, chosen = tk.list( "Title", "Foo or bar?", "Foo", "Bar" ) -- If "Bar" is clicked, it would return 2, "Bar"
  *
- *    @luaparam title Title of the window.
- *    @luaparam msg Message to display.
- *    @luaparam choices Option choices.
- *    @luareturn Returns the number of the choice and the name of the choice chosen.
+ *    @luatparam string title Title of the window.
+ *    @luatparam string msg Message to display.
+ *    @luatparam string choices Option choices.
+ *    @luatreturn number The number of the choice chosen.
+ *    @luatreturn string The name of the choice chosen.
  * @luafunc list( title, msg, ... )
  */
 static int tk_list( lua_State *L )

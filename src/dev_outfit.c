@@ -34,7 +34,7 @@ void dout_csvBolt( const char *path )
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
    if (rw == NULL) {
-      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      WARN(_("Unable to open '%s' for writing: %s"), path, SDL_GetError());
       return;
    }
 
@@ -94,7 +94,7 @@ void dout_csvBeam( const char *path )
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
    if (rw == NULL) {
-      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      WARN(_("Unable to open '%s' for writing: %s"), path, SDL_GetError());
       return;
    }
 
@@ -150,7 +150,7 @@ void dout_csvLauncher( const char *path )
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
    if (rw == NULL) {
-      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      WARN(_("Unable to open '%s' for writing: %s"), path, SDL_GetError());
       return;
    }
 
@@ -204,7 +204,7 @@ void dout_csvAmmo( const char *path )
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
    if (rw == NULL) {
-      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      WARN(_("Unable to open '%s' for writing: %s"), path, SDL_GetError());
       return;
    }
 
@@ -274,7 +274,7 @@ void dout_csvMod( const char *path )
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
    if (rw == NULL) {
-      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      WARN(_("Unable to open '%s' for writing: %s"), path, SDL_GetError());
       return;
    }
 

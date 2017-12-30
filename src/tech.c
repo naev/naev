@@ -97,7 +97,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 int tech_load (void)
 {
    int i, ret, s;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, *data;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
@@ -173,7 +173,7 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG("Loaded %d tech group%s", s, (s == 1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
    free(data);
