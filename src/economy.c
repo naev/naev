@@ -253,7 +253,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
    } while (xml_nextNode(node));
-<<<<<<< HEAD
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
    if ((temp->price>0)) {
