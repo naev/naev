@@ -18,44 +18,39 @@
 
 --]]
 
--- localization stuff
-lang = naev.lang()
-if lang == "notreal" then
-else -- default English
-   title = {}
-   text = {}
+title = {}
+text = {}
 
-   title[1] = "More Negotiations"
-   text[1] = [[Cheryl notices you and starts to speak. "Ah, %s! Just the person I was looking for. Are you ready for your next mission?"]]
+title[1] = _("More Negotiations")
+text[1] = _([[Cheryl notices you and starts to speak. "Ah, %s! Just the person I was looking for. Are you ready for your next mission?"]])
 
-   text[2] = [[Splendid! We just need you to meet with Commander Petridis again and work out the details of our cooperation. Report back here when you're done.]]
+text[2] = _([[Splendid! We just need you to meet with Commander Petridis again and work out the details of our cooperation. Report back here when you're done.]])
 
-   title[3] = "The Condition"
-   text[3] = [[As you approach Commander Petridis, he looks up at you and smiles. "Ah, %s. I was just thinking about you. I have good news! The Emperor himself has agreed to your proposal." He sits up straight and looks you dead in the eye. "However, there is one condition." You pause for a moment, then ask what that condition is.
+title[3] = _("The Condition")
+text[3] = _([[As you approach Commander Petridis, he looks up at you and smiles. "Ah, %s. I was just thinking about you. I have good news! The Emperor himself has agreed to your proposal." He sits up straight and looks you dead in the eye. "However, there is one condition." You pause for a moment, then ask what that condition is.
     "Pretty simple, at least in the abstract," he answers. "Here's the deal: we will do what we can to peacefully put an end to Dvaered influence on the Frontier systems. We will also work to establish the FLF as a legitimate police organization to keep the Frontier safe from future threats of invasion.
-    "However, there's going to need to be some serious effort on the part of the FLF. You are going to need to prove that you are after what you say you're after. That means putting an end to all terrorist activities and re-establishing yourselves as a purely defensive militia."]]
+    "However, there's going to need to be some serious effort on the part of the FLF. You are going to need to prove that you are after what you say you're after. That means putting an end to all terrorist activities and re-establishing yourselves as a purely defensive militia."]])
 
-   text[4] = [[Petridis searches his coat for something for a short while, then finally pulls out a data chip. "Here, take this to your superiors at the FLF. The full details of the agreement are here." You take the chip, and Petridis stands up. "Alright, I have some work I have to do. I'll see you later, %s."]]
+text[4] = _([[Petridis searches his coat for something for a short while, then finally pulls out a data chip. "Here, take this to your superiors at the FLF. The full details of the agreement are here." You take the chip, and Petridis stands up. "Alright, I have some work I have to do. I'll see you later, %s."]])
 
-   title[5] = "The Review"
-   text[5] = [[You are approached by Cheryl. "Welcome back, %s. I trust the mission went well?" You explain your results and hand her the chip. "Great to hear! I and the other higher-ups will review this agreement. I'll see you again when we reach our decision on what to do next. In any case, here is your payment for the mission. Thank you for your service." She hands you a credit chip and walks off.]]
+title[5] = _("The Review")
+text[5] = _([[You are approached by Cheryl. "Welcome back, %s. I trust the mission went well?" You explain your results and hand her the chip. "Great to hear! I and the other higher-ups will review this agreement. I'll see you again when we reach our decision on what to do next. In any case, here is your payment for the mission. Thank you for your service." She hands you a credit chip and walks off.]])
 
-   misn_title = "Empire Negotiations"
-   misn_desc = "You are to meet with Empire Commander Petridis and discuss the cooperation that is to ensue between the FLF and the Empire."
-   misn_reward = "The beginning of a beautiful friendship"
+misn_title = _("Empire Negotiations")
+misn_desc = _("You are to meet with Empire Commander Petridis and discuss the cooperation that is to ensue between the FLF and the Empire.")
+misn_reward = _("The beginning of a beautiful friendship")
 
-   npc_name = "Cheryl"
-   npc_desc = "Cheryl sits by herself, just as she did last time. She must be waiting for you."
+npc_name = _("Cheryl")
+npc_desc = _("Cheryl sits by herself, just as she did last time. She must be waiting for you.")
 
-   emp_name = "Petridis"
-   emp_desc = "Commander Petridis sits alone, idly reading the news terminal."
+emp_name = _("Petridis")
+emp_desc = _("Commander Petridis sits alone, idly reading the news terminal.")
 
-   osd_title   = "Empire Negotiations"
-   osd_desc    = {}
-   osd_desc[1] = "Go to %s in the %s system and talk to Commander Petridis"
-   osd_desc[2] = "Return to FLF base and report back to Cheryl"
-   osd_desc["__save"] = true
-end
+osd_title   = _("Empire Negotiations")
+osd_desc    = {}
+osd_desc[1] = _("Go to %s in the %s system and talk to Commander Petridis")
+osd_desc[2] = _("Return to FLF base and report back to Cheryl")
+osd_desc["__save"] = true
 
 
 function create ()

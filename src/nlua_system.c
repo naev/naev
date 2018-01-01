@@ -49,7 +49,7 @@ static int systemL_setknown( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
-static const luaL_reg system_methods[] = {
+static const luaL_Reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
    { "getAll", systemL_getAll },
@@ -151,7 +151,7 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
    }
 
    if (s == NULL)
-      NLUA_ERROR(L, "System is invalid");
+      NLUA_ERROR(L, _("System is invalid"));
 
    return s;
 }
@@ -244,7 +244,7 @@ static int systemL_get( lua_State *L )
 
    /* Error checking. */
    if (ss == NULL) {
-      NLUA_ERROR(L, "No matching systems found.");
+      NLUA_ERROR(L, _("No matching systems found."));
       return 0;
    }
 
@@ -278,7 +278,7 @@ static int systemL_getAll( lua_State *L )
 /**
  * @brief Check systems for equality.
  *
- * Allows you to use the '=' operator in Lua with systems.
+ * Allows you to use the '==' operator in Lua with systems.
  *
  * @usage if sys == system.get( "Draygar" ) then -- Do something
  *
@@ -377,8 +377,9 @@ static int systemL_nebula( lua_State *L )
  *    @luatparam System s System to get distance from.
  *    @luatparam nil|string|System param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
+ *    @luatparam[opt=false] boolean known Whether or not to consider only jumps known by the player.
  *    @luatreturn number Number of jumps to system.
- * @luafunc jumpDist( s, param, hidden )
+ * @luafunc jumpDist( s, param, hidden, known )
  */
 static int systemL_jumpdistance( lua_State *L )
 {
@@ -386,11 +387,12 @@ static int systemL_jumpdistance( lua_State *L )
    StarSystem **s;
    int jumps;
    const char *start, *goal;
-   int h;
+   int h, k;
 
    sys = luaL_validsystem(L,1);
    start = sys->name;
    h   = lua_toboolean(L,3);
+   k   = !lua_toboolean(L,4);
 
    if (lua_gettop(L) > 1) {
       if (lua_isstring(L,2))
@@ -404,7 +406,7 @@ static int systemL_jumpdistance( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
+   s = map_getJumpPath( &jumps, start, goal, k, h, NULL );
    free(s);
 
    lua_pushnumber(L,jumps);

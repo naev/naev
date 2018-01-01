@@ -11,71 +11,71 @@
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-   misn_desc = "A Za'lek research team need you to travel to %s in %s using an engine in order to test it."
-   misn_reward = "%s credits"
+misn_title = _("ZT test of an engine %s")
+misn_desc = _("A Za'lek research team need you to travel to %s in %s using an engine in order to test it.")
+misn_reward = _("%s credits")
 
-   title = [[ZT: go to %s in the %s system
+title = _([[ZT: go to %s in the %s system
 Jumps: %d
-Travel distance: %d]]
+Travel distance: %d]])
 
-   msg_title = {}
-   msg_title[1] = "Mission Accepted"
-   msg_title[2] = "Too many missions"
-   msg_title[3] = "Successful Landing"
-   msg_title[4] = "Didn't you forget something?"
+msg_title = {}
+msg_title[1] = _("Mission Accepted")
+msg_title[2] = _("Too many missions")
+msg_title[3] = _("Successful Landing")
+msg_title[4] = _("Didn't you forget something?")
 
-   engines = {"with phase-change material cooling", 
-              "controlled with the Zermatt-Henry theory",   --Some random scientists names
-              "using a new electron propelling system",
-              "using the fifth law of thermodynamics",      --In these times, there will maybe exist more thermo laws...
-              "for a system identification using the fe-method",
-              "with uncontrolled geometrical singularities",
-              "a 10 years-old child invented himself",
-              "using the ancestral propellant technology",
-              "built of UHP-nanobond",
-              }
+engines = {_("with phase-change material cooling"), 
+           _("controlled with the Zermatt-Henry theory"),   --Some random scientists names
+           _("using a new electron propelling system"),
+           _("using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
+           _("for a system identification using the fe-method"),
+           _("with uncontrolled geometrical singularities"),
+           _("a 10 years-old child invented himself"),
+           _("using the ancestral propellant technology"),
+           _("built of UHP-nanobond"),
+           }
 
-   znpcs = {}
-   znpcs[1] = [[A group of university students greet you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]]
-   znpcs[2] = [[A very old Za'lek researcher needs you to fly with his instrumented device in order to take measurements.]]
-   znpcs[3] = [[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]]
-   znpcs[4] = [[A Za'lek researcher needs you to test the new propelling system he has implemented in this engine.]]
+znpcs = {}
+znpcs[1] = _([[A group of university students greet you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
+znpcs[2] = _([[A very old Za'lek researcher needs you to fly with his instrumented device in order to take measurements.]])
+znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
+znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system he has implemented in this engine.]])
 
-   msg_msg = {}
-   msg_msg[1] = "Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."
-   msg_msg[2] = "You have too many active missions."
-   msg_msg[3] = "Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you. You ask them why they aren't using drones for such missions and they answer that they don't want to risk damaging a drone."
-   msg_msg[4] = "It seems, you forgot the engine you are supposed to test... Land again and put it in your ship"
-   misst = "Mission failed"
-   miss = "You traveled without the engine."
+msg_msg = {}
+msg_msg[1] = _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine.")
+msg_msg[2] = _("You have too many active missions.")
+msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you. You ask them why they aren't using drones for such missions and they answer that they don't want to risk damaging a drone.")
+msg_msg[4] = _("It seems, you forgot the engine you are supposed to test... Land again and put it in your ship")
+misst = _("Mission failed")
+miss = _("You traveled without the engine.")
 
-   teleport_title = "What the hell happens there?"
-   teleport_text = "You suddenly feel a huge acceleration, as if your ship was going to hyperspace. Then a shock makes you pass out. As you wake up, your ship is damaged and your compass indicates that you are in the %s system!"
+teleport_title = _("What the hell happens there?")
+teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going to hyperspace. Then a shock makes you pass out. As you wake up, your ship is damaged and your compass indicates that you are in the %s system!")
 
-   slow_title = "Where is the power gone?"
-   slow_text = "The engine doesn't seem to want to propel your ship anymore..."
-   speed_title = "Power is back."
-   speed_text = "It seems, the engine decided to work properly again."
+slow_title = _("Where is the power gone?")
+slow_text = _("The engine doesn't seem to want to propel your ship anymore...")
+speed_title = _("Power is back.")
+speed_text = _("It seems, the engine decided to work properly again.")
 
-   outOf_title = "This wasn't supposed to happened"
-   outOf_text = "Your ship is totally out of control. Apparently, the experimental engine seems to have some defects."
-   noAn_title = "Engine is dead"
-   noAn_text = "It seems, the engine doesn't work anymore..."
-   baTo_title = "Back to normal"
-   baTo_text = "The engine works again."
+outOf_title = _("This wasn't supposed to happened")
+outOf_text = _("Your ship is totally out of control. Apparently, the experimental engine seems to have some defects.")
+noAn_title = _("Engine is dead")
+noAn_text = _("It seems, the engine doesn't work anymore...")
+baTo_title = _("Back to normal")
+baTo_text = _("The engine works again.")
 
-   cannot_title = "You can not accept this mission"
-   cannot_text = "You are already testing another engine."
+cannot_title = _("You can not accept this mission")
+cannot_text = _("You are already testing another engine.")
 
-   osd_title = "Za'lek Test"
-   osd_msg = {"Fly to %s in the %s system."}
-end
+osd_title = _("Za'lek Test")
+osd_msg = {_("Fly to %s in the %s system.")}
 
 function create()
-   -- Note: this mission does not make any system claims.
+   -- Claim core engine slot
+   if not misn.claim( 'outfit_engine_core' ) then
+      misn.finish( false )
+   end
 
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
@@ -105,7 +105,7 @@ function create()
     
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
-   misn.setTitle("ZT: test of an engine " .. typeOfEng)
+   misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
    misn.setDesc(title:format(destplanet:name(), destsys:name(), numjumps, traveldist ))
    misn.setReward(misn_reward:format(numstring(reward)))
@@ -176,6 +176,11 @@ end
 
 function land()
 
+   if isSlow then   --The player is still slow and will recover normal velocity
+      player.pilot():setSpeedLimit(0)
+      isSlow = false
+   end
+
    if planet.cur() == destplanet and stage == 0 then
       tk.msg( msg_title[3], msg_msg[3])
       player.pay(reward)
@@ -190,10 +195,6 @@ function land()
    if planet.cur() ~= curplanet and stage == 1 then  --Lands elsewhere without the engine
       tk.msg( misst, miss)
       abort()
-   end
-
-   if isSlow then   --The player is still slow and will recover normal velocity
-      player.pilot():setSpeedLimit(0)
    end
 
    curplanet = planet.cur()

@@ -57,7 +57,7 @@ static int planetL_commoditiesSold( lua_State *L );
 static int planetL_isBlackMarket( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
-static const luaL_reg planet_methods[] = {
+static const luaL_Reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
    { "getLandable", planetL_getLandable },
@@ -164,7 +164,7 @@ Planet* luaL_validplanet( lua_State *L, int ind )
    }
 
    if (p == NULL)
-      NLUA_ERROR(L, "Planet is invalid");
+      NLUA_ERROR(L, _("Planet is invalid"));
 
    return p;
 }
@@ -221,7 +221,7 @@ static int planetL_cur( lua_State *L )
 {
    LuaSystem sys;
    if (land_planet == NULL) {
-      NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
+      NLUA_ERROR(L,_("Attempting to get landed planet when player not landed."));
       return 0; /* Not landed. */
    }
    lua_pushplanet(L,planet_index(land_planet));
@@ -271,7 +271,7 @@ static int planetL_getBackend( lua_State *L, int landable )
       if (landable) {
          pnt = planet_get( rndplanet );
          if (pnt == NULL) {
-            NLUA_ERROR(L, "Planet '%s' not found in stack", rndplanet);
+            NLUA_ERROR(L, _("Planet '%s' not found in stack"), rndplanet);
             return 0;
          }
 
@@ -331,17 +331,17 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Push the planet */
    pnt = planet_get(rndplanet); /* The real planet */
    if (pnt == NULL) {
-      NLUA_ERROR(L, "Planet '%s' not found in stack", rndplanet);
+      NLUA_ERROR(L, _("Planet '%s' not found in stack"), rndplanet);
       return 0;
    }
    sysname = planet_getSystem(rndplanet);
    if (sysname == NULL) {
-      NLUA_ERROR(L, "Planet '%s' is not placed in a system", rndplanet);
+      NLUA_ERROR(L, _("Planet '%s' is not placed in a system"), rndplanet);
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR(L, "Planet '%s' can't find system '%s'", rndplanet, sysname);
+      NLUA_ERROR(L, _("Planet '%s' can't find system '%s'"), rndplanet, sysname);
       return 0;
    }
    lua_pushplanet(L,planet_index( pnt ));
@@ -439,7 +439,7 @@ static int planetL_system( lua_State *L )
 }
 
 /**
- * @brief You can use the '=' operator within Lua to compare planets with this.
+ * @brief You can use the '==' operator within Lua to compare planets with this.
  *
  * @usage if p.__eq( planet.get( "Anecu" ) ) then -- Do something
  * @usage if p == planet.get( "Anecu" ) then -- Do something
@@ -563,6 +563,7 @@ static int planetL_class(lua_State *L )
  *  - "commodity"<br />
  *  - "outfits"<br />
  *  - "shipyard"<br />
+ *  - "blackmarket"<br />
  *
  * @usage if p:services()["refuel"] then -- Planet has refuel service.
  * @usage if p:services()["shipyard"] then -- Planet has shipyard service.
@@ -812,7 +813,7 @@ static int planetL_commoditiesSold( lua_State *L )
 static int planetL_isBlackMarket( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-   lua_pushboolean(L, planet_isBlackMarket(p));
+   lua_pushboolean(L, planet_hasService(p, PLANET_SERVICE_BLACKMARKET));
    return 1;
 }
 

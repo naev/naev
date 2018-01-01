@@ -8,40 +8,37 @@
 
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   -- Bar information
-   bar_desc = "You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos."
+include "dat/missions/pirate/common.lua"
 
-   -- Mission details
-   misn_title  = "Pirate Hitman"
-   misn_reward = "Some easy money." -- Possibly some hard to get contraband once it is introduced
-   misn_desc   = {}
-   misn_desc[1] = "Chase away merchant competition in the %s system."
-   misn_desc[2] = "Return to %s in the %s system for payment."
+-- Bar information
+bar_desc = _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos.")
 
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "Spaceport Bar"
-   text[1]  = [[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]
-   title[3] = "Mission Complete"
-   text[2] = [[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in %s. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]
-   text[3] = [[As you inform your acquaintance that you successfully scared off the traders, he grins. After transferring the payment, he comments, "That should teach them to stay out of my space."]]
+-- Mission details
+misn_title  = _("Pirate Hitman")
+misn_reward = _("Some easy money.") -- Possibly some hard to get contraband once it is introduced
+misn_desc   = {}
+misn_desc[1] = _("Chase away merchant competition in the %s system.")
+misn_desc[2] = _("Return to %s in the %s system for payment.")
 
-   -- Messages
-   msg      = {}
-   msg[1]   = "MISSION SUCCESS! Return for payment."
-end
+-- Text
+title    = {}
+text     = {}
+title[1] = _("Spaceport Bar")
+text[1]  = _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]])
+title[3] = _("Mission Complete")
+text[2] = _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in %s. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]])
+text[3] = _([[As you inform your acquaintance that you successfully scared off the traders, he grins. After transferring the payment, he comments, "That should teach them to stay out of my space."]])
+
+-- Messages
+msg      = {}
+msg[1]   = _("MISSION SUCCESS! Return for payment.")
 
 function create ()
    -- Note: this mission does not make any system claims. 
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
-   misn.setNPC( "Shifty Trader",  "neutral/unique/shifty_merchant")
+   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant")
    misn.setDesc( bar_desc )
 end
 
@@ -136,6 +133,7 @@ function landed()
       tk.msg(title[3], text[3])
       player.pay(45000)
       faction.modPlayerSingle("Pirate",5)
+      pir_modDecayFloor( 2 )
       misn.finish(true)
    end
 end

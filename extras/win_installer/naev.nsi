@@ -2,7 +2,7 @@
 ;SetCompress Off
 
 ;Version, Arch, Icon and URL
-!define VERSION "0.6.1"
+!define VERSION "0.7.0"
 !define VERSION_SUFFIX "" ; This string can be used for betas and release candidates.
 !define ARCH "32"
 !define URL "http://naev.org"

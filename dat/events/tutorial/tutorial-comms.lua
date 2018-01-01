@@ -3,32 +3,28 @@
 include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-    title1 = "Tutorial: Communications"
-    message1 = [[Welcome to the communications tutorial.
-    
-This tutorial will show you how you can contact other ships, as well as planets and stations.]]
-    message2 = [[Your ship comes with a built-in communications array. To use it, target whatever you want to contact (be it a ship or a planet) and press %s. But be careful, if you have both a planet and a ship targeted, you will contact the ship rather than the planet. If you want to speak to a planet, you should first clear your target with %s.
+title1 = _("Tutorial: Communications")
+message1 = _([[Welcome to the communications tutorial.
 
-To proceed to the next step, target the nearby ship and contact it. You may contact the planet first if you wish, to see what options are available when you do so.]]
-    message3 = [[Well done. Normally, when hailing a ship, you may ask it to sell you fuel or bribe it if it's attacking you, but that's about all you can do. However, sometimes a mission requires you to contact a ship in order to proceed. Since this is a drone, there's not much you can say to it.
-    You may also try to bribe planets by contacting them. This is a good way to get to planets that would otherwise deny you access. Note that you can't bribe planets that will let you land in the first place.]]
-    message4 = [[You now know how to use the communications system, so I suppose that's it for this tutorial...
+This tutorial will show you how you can contact other ships, as well as planets and stations.]])
+message2 = _([[Your ship comes with a built-in communications array. To use it, target whatever you want to contact (be it a ship or a planet) and press %s. But be careful, if you have both a planet and a ship targeted, you will contact the ship rather than the planet. If you want to speak to a planet, you should first clear your target with %s.
 
-But wait, what's this? A ship is taking off from the planet below, and it seems it's interested in talking to you!]]
-    message5 = [[As you just witnessed, ships that are trying to contact you will have an animated icon next to them. You will also be notified in the message log, and a sound will alert you that someone's hailing you.
+To proceed to the next step, target the nearby ship and contact it. You may contact the planet first if you wish, to see what options are available when you do so.]])
+message3 = _([[Well done. Normally, when hailing a ship, you may ask it to sell you fuel or bribe it if it's attacking you, but that's about all you can do. However, sometimes a mission requires you to contact a ship in order to proceed. Since this is a drone, there's not much you can say to it.
+You may also try to bribe planets by contacting them. This is a good way to get to planets that would otherwise deny you access. Note that you can't bribe planets that will let you land in the first place.]])
+message4 = _([[You now know how to use the communications system, so I suppose that's it for this tutorial...
 
-Let's respond to the ship. You could do this in the same way you just learned, by targeting the ship and pressing %s, but that can be inconvenient when there are many ships around. An easy way to respond to the incoming call is by using the auto-respond shortcut, which is %s. Try answering the ship now.]]
-    message6 = [[Excellent. Ships won't often hail you, but when they do it's highly likely they have something important to say. Keep a look out for ships trying to contact you!]]
-    message7 = [[You now know how to talk to ships and planets, and you know what to do when ships want to talk to you. As a final tip, remember that auto-responding to a ship will automatically target it, so be sure not to accidentally attack it!
+But wait, what's this? A ship is taking off from the planet below, and it seems it's interested in talking to you!]])
+message5 = _([[As you just witnessed, ships that are trying to contact you will have an animated icon next to them. You will also be notified in the message log, and a sound will alert you that someone's hailing you.
 
-Congratulations! This concludes the communications tutorial.]]
+Let's respond to the ship. You could do this in the same way you just learned, by targeting the ship and pressing %s, but that can be inconvenient when there are many ships around. An easy way to respond to the incoming call is by using the auto-respond shortcut, which is %s. Try answering the ship now.]])
+message6 = _([[Excellent. Ships won't often hail you, but when they do it's highly likely they have something important to say. Keep a look out for ships trying to contact you!]])
+message7 = _([[You now know how to talk to ships and planets, and you know what to do when ships want to talk to you. As a final tip, remember that auto-responding to a ship will automatically target it, so be sure not to accidentally attack it!
 
-    hailomsg = "Target the drone and use %s to contact it"
-    autohailomsg = "Use %s to respond to the hail "
-end
+Congratulations! This concludes the communications tutorial.]])
+
+hailomsg = _("Target the drone and use %s to contact it")
+autohailomsg = _("Use %s to respond to the hail ")
 
 
 function create()

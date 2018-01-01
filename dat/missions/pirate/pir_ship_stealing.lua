@@ -20,34 +20,30 @@ local refusal
 local approval
 local success
 
-local title = "Stealing a %s"
-local reward = "A brand new %s"
-local description = "Land on %s, in the %s system, and escape with your new %s."
+local title = _("Stealing a %s")
+local reward = _("A brand new %s")
+local description = _("Land on %s, in the %s system, and escape with your new %s.")
 
 -- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-   informer = {
-      description = "A pirate informer is looking at you. Maybe he has some useful information to sell?";
-      title = "Ship to steal";
-      message = [["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
+informer = {
+   description = _("A pirate informer is looking at you. Maybe he has some useful information to sell?"),
+   title = _("Ship to steal"),
+   message = _([["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
-   Do you really want to pay to know where that ship is?]];
-   }
+   Do you really want to pay to know where that ship is?]])
+}
 
-   approval = {
-      title = "Of course";
-      message = [[You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
-   Hopefully, the pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]];
-   }
+approval = {
+   title = _("Of course"),
+   message = _([[You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
+   Hopefully, the pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]])
+}
 
-   success = {
-      title = "Ship successfully stolen!";
-      message = [[   It took you several hours to escape patrols, and a few more ours to get in the ship to steal and manage to access it, but you finally take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
-   Enemy ships will probably be after you as soon as you'll leave the atmosphere, so you should get ready and use wisely the little time you have on this planet.]];
-   }
-end
+success = {
+   title = _("Ship successfully stolen!"),
+   message = _([[   It took you several hours to escape patrols, and a few more ours to get in the ship to steal and manage to access it, but you finally take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
+   Enemy ships will probably be after you as soon as you'll leave the atmosphere, so you should get ready and use wisely the little time you have on this planet.]])
+}
 
 local base_price = 100000
 
@@ -55,64 +51,64 @@ local guards = {
    -- FIXME: Too much empire_idles is bad.
    Empire = {
       -- Not too big, we may have to fight our way through.
-      ship = "Empire Admonisher";
-      AI = "empire_idle";
-   };
+      ship = "Empire Admonisher",
+      AI = "empire_idle"
+   },
    Dvaered = {
-      ship = "Dvaered Phalanx";
-      AI = "empire_idle";
-   };
+      ship = "Dvaered Phalanx",
+      AI = "empire_idle"
+   },
    Sirius = {
-      ship = "Sirius Preacher";
-      AI = "empire_idle";
-   };
+      ship = "Sirius Preacher",
+      AI = "empire_idle"
+   },
    Soromid = {
-      ship = "Soromid Odium";
-      AI = "empire_idle";
-   };
+      ship = "Soromid Odium",
+      AI = "empire_idle"
+   },
    Independent = {
-      ship = "Phalanx";
-      AI = "empire_idle";
-   };
+      ship = "Phalanx",
+      AI = "empire_idle"
+   }
 }
 
 local ships = {
    Empire = {
-      fighter   = { "Empire Shark", "Empire Lancelot" };
-      corvette  = { "Empire Admonisher" };
-      destroyer = { "Empire Pacifier" };
-      cruiser   = { "Empire Hawking" };
-      carrier   = { "Empire Peacemaker" };
-   };
+      fighter   = { "Empire Shark", "Empire Lancelot" },
+      corvette  = { "Empire Admonisher" },
+      destroyer = { "Empire Pacifier" },
+      cruiser   = { "Empire Hawking" },
+      carrier   = { "Empire Peacemaker" }
+   },
    Dvaered = {
-      fighter   = { "Dvaered Vendetta" };
-      bomber    = { "Dvaered Ancestor" };
-      corvette  = { "Dvaered Phalanx" };
-      destroyer = { "Dvaered Vigilance" };
-      cruiser   = { "Dvaered Goddard" };
-   };
+      fighter   = { "Dvaered Vendetta" },
+      bomber    = { "Dvaered Ancestor" },
+      corvette  = { "Dvaered Phalanx" },
+      destroyer = { "Dvaered Vigilance" },
+      cruiser   = { "Dvaered Goddard" }
+   },
    Sirius = {
-      fighter   = { "Sirius Fidelity" };
-      bomber    = { "Sirius Shaman" };
-      corvette  = { "Sirius Preacher" };
-      cruiser   = { "Sirius Dogma" };
-      carrier   = { "Sirius Divinity" };
-   };
+      fighter   = { "Sirius Fidelity" },
+      bomber    = { "Sirius Shaman" },
+      corvette  = { "Sirius Preacher" },
+      cruiser   = { "Sirius Dogma" },
+      carrier   = { "Sirius Divinity" }
+   },
    Soromid = {
-      fighter   = { "Soromid Brigand", "Soromid Reaver" };
-      bomber    = { "Soromid Marauder" };
-      corvette  = { "Soromid Odium" };
-      destroyer = { "Soromid Nyx" };
-      cruiser   = { "Soromid Ira" };
-      carrier   = { "Soromid Arx" };
-   };
+      fighter   = { "Soromid Brigand", "Soromid Reaver" },
+      bomber    = { "Soromid Marauder" },
+      corvette  = { "Soromid Odium" },
+      destroyer = { "Soromid Nyx" },
+      cruiser   = { "Soromid Ira" },
+      carrier   = { "Soromid Arx" }
+   },
    Independent = {
-      fighter   = { "Lancelot", "Vendetta", "Hyena", "Shark" };
-      bomber    = { "Ancestor" };
-      corvette  = { "Phalanx", "Admonisher" };
-      destroyer = { "Vigilance", "Pacifier" };
-      cruiser   = { "Kestrel", "Hawking" };
-   };
+      fighter   = { "Lancelot", "Vendetta", "Hyena", "Shark" },
+      bomber    = { "Ancestor" },
+      corvette  = { "Phalanx", "Admonisher" },
+      destroyer = { "Vigilance", "Pacifier" },
+      cruiser   = { "Kestrel", "Hawking" }
+   }
 }
 
 local classes = {}
@@ -268,7 +264,7 @@ function create ()
    ship.system = ship.planet:system()
 
    -- FIXME: Portrait
-   misn.setNPC( "A Pirate informer", "pirate/pirate4" )
+   misn.setNPC( _("A Pirate informer"), "pirate/pirate4" )
    misn.setDesc( informer.description )
 end
 

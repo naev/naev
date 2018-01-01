@@ -60,76 +60,76 @@ static int input_numbinds; /**< Number of keybindings. */
 /* name of each keybinding */
 const char *keybind_info[][3] = {
    /* Movement */
-   { "accel", "Accelerate", "Makes your ship accelerate forward." },
-   { "left", "Turn Left", "Makes your ship turn left." },
-   { "right", "Turn Right", "Makes your ship turn right." },
-   { "reverse", "Reverse", "Makes your ship face the direction you're moving from. Useful for braking." },
+   { "accel", gettext_noop("Accelerate"), gettext_noop("Makes your ship accelerate forward.") },
+   { "left", gettext_noop("Turn Left"), gettext_noop("Makes your ship turn left.") },
+   { "right", gettext_noop("Turn Right"), gettext_noop("Makes your ship turn right.") },
+   { "reverse", gettext_noop("Reverse"), gettext_noop("Makes your ship face the direction you're moving from. Useful for braking.") },
    /* Targeting */
-   { "target_next", "Target Next", "Cycles through ship targets." },
-   { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
-   { "target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
-   { "target_nextHostile", "Target Next Hostile", "Cycles through hostile ship targets." },
-   { "target_prevHostile", "Target Previous Hostile", "Cycles backwards through hostile ship targets." },
-   { "target_hostile", "Target Nearest Hostile", "Targets the nearest hostile ship." },
-   { "target_clear", "Clear Target", "Clears the currently-targeted ship, planet or jump point." },
+   { "target_next", gettext_noop("Target Next"), gettext_noop("Cycles through ship targets.") },
+   { "target_prev", gettext_noop("Target Previous"), gettext_noop("Cycles backwards through ship targets.") },
+   { "target_nearest", gettext_noop("Target Nearest"), gettext_noop("Targets the nearest non-disabled ship.") },
+   { "target_nextHostile", gettext_noop("Target Next Hostile"), gettext_noop("Cycles through hostile ship targets.") },
+   { "target_prevHostile", gettext_noop("Target Previous Hostile"), gettext_noop("Cycles backwards through hostile ship targets.") },
+   { "target_hostile", gettext_noop("Target Nearest Hostile"), gettext_noop("Targets the nearest hostile ship.") },
+   { "target_clear", gettext_noop("Clear Target"), gettext_noop("Clears the currently-targeted ship, planet or jump point.") },
    /* Fighting */
-   { "primary", "Fire Primary Weapon", "Fires primary weapons." },
-   { "face", "Face Target", "Faces the targeted ship if one is targeted, otherwise faces targeted planet or jump point." },
-   { "board", "Board Target", "Attempts to board the targeted ship." },
+   { "primary", gettext_noop("Fire Primary Weapon"), gettext_noop("Fires primary weapons.") },
+   { "face", gettext_noop("Face Target"), gettext_noop("Faces the targeted ship if one is targeted, otherwise faces targeted planet or jump point.") },
+   { "board", gettext_noop("Board Target"), gettext_noop("Attempts to board the targeted ship.") },
    /* Secondary Weapons */
-   { "secondary", "Fire Secondary Weapon", "Fires secondary weapons." },
-   { "weapset1", "Weapon Set 1", "Activates weapon set 1." },
-   { "weapset2", "Weapon Set 2", "Activates weapon set 2." },
-   { "weapset3", "Weapon Set 3", "Activates weapon set 3." },
-   { "weapset4", "Weapon Set 4", "Activates weapon set 4." },
-   { "weapset5", "Weapon Set 5", "Activates weapon set 5." },
-   { "weapset6", "Weapon Set 6", "Activates weapon set 6." },
-   { "weapset7", "Weapon Set 7", "Activates weapon set 7." },
-   { "weapset8", "Weapon Set 8", "Activates weapon set 8." },
-   { "weapset9", "Weapon Set 9", "Activates weapon set 9." },
-   { "weapset0", "Weapon Set 0", "Activates weapon set 0." },
+   { "secondary", gettext_noop("Fire Secondary Weapon"), gettext_noop("Fires secondary weapons.") },
+   { "weapset1", gettext_noop("Weapon Set 1"), gettext_noop("Activates weapon set 1.") },
+   { "weapset2", gettext_noop("Weapon Set 2"), gettext_noop("Activates weapon set 2.") },
+   { "weapset3", gettext_noop("Weapon Set 3"), gettext_noop("Activates weapon set 3.") },
+   { "weapset4", gettext_noop("Weapon Set 4"), gettext_noop("Activates weapon set 4.") },
+   { "weapset5", gettext_noop("Weapon Set 5"), gettext_noop("Activates weapon set 5.") },
+   { "weapset6", gettext_noop("Weapon Set 6"), gettext_noop("Activates weapon set 6.") },
+   { "weapset7", gettext_noop("Weapon Set 7"), gettext_noop("Activates weapon set 7.") },
+   { "weapset8", gettext_noop("Weapon Set 8"), gettext_noop("Activates weapon set 8.") },
+   { "weapset9", gettext_noop("Weapon Set 9"), gettext_noop("Activates weapon set 9.") },
+   { "weapset0", gettext_noop("Weapon Set 0"), gettext_noop("Activates weapon set 0.") },
    /* Escorts */
-   { "e_targetNext", "Target Next Escort", "Cycles through your escorts." },
-   { "e_targetPrev", "Target Previous Escort", "Cycles backwards through your escorts." },
-   { "e_attack", "Escort Attack Command", "Orders escorts to attack your target." },
-   { "e_hold", "Escort Hold Command", "Orders escorts to hold their positions." },
-   { "e_return", "Escort Return Command", "Orders escorts to return to your ship hangars." },
-   { "e_clear", "Escort Clear Commands", "Clears your escorts of commands." },
+   { "e_targetNext", gettext_noop("Target Next Escort"), gettext_noop("Cycles through your escorts.") },
+   { "e_targetPrev", gettext_noop("Target Previous Escort"), gettext_noop("Cycles backwards through your escorts.") },
+   { "e_attack", gettext_noop("Escort Attack Command"), gettext_noop("Orders escorts to attack your target.") },
+   { "e_hold", gettext_noop("Escort Hold Command"), gettext_noop("Orders escorts to hold their positions.") },
+   { "e_return", gettext_noop("Escort Return Command"), gettext_noop("Orders escorts to return to your ship hangars.") },
+   { "e_clear", gettext_noop("Escort Clear Commands"), gettext_noop("Clears your escorts of commands.") },
    /* Space Navigation */
-   { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
-   { "target_planet", "Target Planet", "Cycles through planet targets." },
-   { "land", "Land", "Attempts to land on the targeted planet or targets the nearest landable planet. Requests permission if necessary." },
-   { "thyperspace", "Target Jumpgate", "Cycles through jump points." },
-   { "starmap", "Star Map", "Opens the star map." },
-   { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
-   { "overlay", "Overlay Map", "Opens the in-system overlay map." },
-   { "mousefly", "Mouse Flight", "Toggles mouse flying." },
-   { "autobrake", "Autobrake", "Begins automatic braking or active cooldown, if stopped." },
+   { "autonav", gettext_noop("Autonavigation On"), gettext_noop("Initializes the autonavigation system.") },
+   { "target_planet", gettext_noop("Target Planet"), gettext_noop("Cycles through planet targets.") },
+   { "land", gettext_noop("Land"), gettext_noop("Attempts to land on the targeted planet or targets the nearest landable planet. Requests permission if necessary.") },
+   { "thyperspace", gettext_noop("Target Jumpgate"), gettext_noop("Cycles through jump points.") },
+   { "starmap", gettext_noop("Star Map"), gettext_noop("Opens the star map.") },
+   { "jump", gettext_noop("Initiate Jump"), gettext_noop("Attempts to jump via a jump point.") },
+   { "overlay", gettext_noop("Overlay Map"), gettext_noop("Opens the in-system overlay map.") },
+   { "mousefly", gettext_noop("Mouse Flight"), gettext_noop("Toggles mouse flying.") },
+   { "autobrake", gettext_noop("Autobrake"), gettext_noop("Begins automatic braking or active cooldown, if stopped.") },
    /* Communication */
-   { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
-   { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
-   { "hail", "Hail Target", "Attempts to initialize communication with the targeted ship." },
-   { "autohail", "Autohail", "Automatically initialize communication with a ship that is hailing you." },
+   { "log_up", gettext_noop("Log Scroll Up"), gettext_noop("Scrolls the log upwards.") },
+   { "log_down", gettext_noop("Log Scroll Down"), gettext_noop("Scrolls the log downwards.") },
+   { "hail", gettext_noop("Hail Target"), gettext_noop("Attempts to initialize communication with the targeted ship.") },
+   { "autohail", gettext_noop("Autohail"), gettext_noop("Automatically initialize communication with a ship that is hailing you.") },
    /* Misc. */
-   { "mapzoomin", "Radar Zoom In", "Zooms in on the radar." },
-   { "mapzoomout", "Radar Zoom Out", "Zooms out on the radar." },
-   { "screenshot", "Screenshot", "Takes a screenshot." },
-   { "togglefullscreen", "Toggle Fullscreen", "Toggles between windowed and fullscreen mode." },
-   { "pause", "Pause", "Pauses the game." },
-   { "speed", "Toggle 2x Speed", "Toggles 2x speed modifier." },
-   { "menu", "Small Menu", "Opens the small in-game menu." },
-   { "info", "Information Menu", "Opens the information menu." },
-   { "console", "Lua Console", "Opens the Lua console." },
-   { "switchtab1", "Switch Tab 1", "Switches to tab 1." },
-   { "switchtab2", "Switch Tab 2", "Switches to tab 2." },
-   { "switchtab3", "Switch Tab 3", "Switches to tab 3." },
-   { "switchtab4", "Switch Tab 4", "Switches to tab 4." },
-   { "switchtab5", "Switch Tab 5", "Switches to tab 5." },
-   { "switchtab6", "Switch Tab 6", "Switches to tab 6." },
-   { "switchtab7", "Switch Tab 7", "Switches to tab 7." },
-   { "switchtab8", "Switch Tab 8", "Switches to tab 8." },
-   { "switchtab9", "Switch Tab 9", "Switches to tab 9." },
-   { "switchtab0", "Switch Tab 0", "Switches to tab 0." },
+   { "mapzoomin", gettext_noop("Radar Zoom In"), gettext_noop("Zooms in on the radar.") },
+   { "mapzoomout", gettext_noop("Radar Zoom Out"), gettext_noop("Zooms out on the radar.") },
+   { "screenshot", gettext_noop("Screenshot"), gettext_noop("Takes a screenshot.") },
+   { "togglefullscreen", gettext_noop("Toggle Fullscreen"), gettext_noop("Toggles between windowed and fullscreen mode.") },
+   { "pause", gettext_noop("Pause"), gettext_noop("Pauses the game.") },
+   { "speed", gettext_noop("Toggle 2x Speed"), gettext_noop("Toggles 2x speed modifier.") },
+   { "menu", gettext_noop("Small Menu"), gettext_noop("Opens the small in-game menu.") },
+   { "info", gettext_noop("Information Menu"), gettext_noop("Opens the information menu.") },
+   { "console", gettext_noop("Lua Console"), gettext_noop("Opens the Lua console.") },
+   { "switchtab1", gettext_noop("Switch Tab 1"), gettext_noop("Switches to tab 1.") },
+   { "switchtab2", gettext_noop("Switch Tab 2"), gettext_noop("Switches to tab 2.") },
+   { "switchtab3", gettext_noop("Switch Tab 3"), gettext_noop("Switches to tab 3.") },
+   { "switchtab4", gettext_noop("Switch Tab 4"), gettext_noop("Switches to tab 4.") },
+   { "switchtab5", gettext_noop("Switch Tab 5"), gettext_noop("Switches to tab 5.") },
+   { "switchtab6", gettext_noop("Switch Tab 6"), gettext_noop("Switches to tab 6.") },
+   { "switchtab7", gettext_noop("Switch Tab 7"), gettext_noop("Switches to tab 7.") },
+   { "switchtab8", gettext_noop("Switch Tab 8"), gettext_noop("Switches to tab 8.") },
+   { "switchtab9", gettext_noop("Switch Tab 9"), gettext_noop("Switches to tab 9.") },
+   { "switchtab0", gettext_noop("Switch Tab 0"), gettext_noop("Switches to tab 0.") },
    /* Must terminate in "end". */
    { "end", "end", "end" }
 }; /**< Names of possible keybindings. */
@@ -338,7 +338,7 @@ void input_init (void)
    SDL_EventState( SDL_WINDOWEVENT,     SDL_ENABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_ENABLE );
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
@@ -478,7 +478,7 @@ SDLKey input_keyConv( const char *name )
    k = SDL_GetKeyFromName( name );
 
    if (k == SDLK_UNKNOWN)
-      WARN("Keyname '%s' doesn't match any key.", name);
+      WARN(_("Keyname '%s' doesn't match any key."), name);
 
    return k;
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -515,7 +515,7 @@ SDLKey input_keyConv( const char *name )
       }
    }
 
-   WARN("Keyname '%s' doesn't match any key.", name);
+   WARN(_("Keyname '%s' doesn't match any key."), name);
    return SDLK_UNKNOWN;
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
@@ -541,7 +541,7 @@ void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod
          return;
       }
    }
-   WARN("Unable to set keybinding '%s', that command doesn't exist", keybind);
+   WARN(_("Unable to set keybinding '%s', that command doesn't exist"), keybind);
 }
 
 
@@ -565,7 +565,7 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
          return input_keybinds[i].key;
       }
    }
-   WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
+   WARN(_("Unable to get keybinding '%s', that command doesn't exist"), keybind);
    return (SDLKey)-1;
 }
 
@@ -579,13 +579,13 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 const char* input_modToText( SDLMod mod )
 {
    switch ((int)mod) {
-      case NMOD_NONE:   return "None";
-      case NMOD_CTRL:   return "Ctrl";
-      case NMOD_SHIFT:  return "Shift";
-      case NMOD_ALT:    return "Alt";
-      case NMOD_META:   return "Meta";
-      case NMOD_ALL:    return "Any";
-      default:          return "unknown";
+      case NMOD_NONE:   return _("None");
+      case NMOD_CTRL:   return _("Ctrl");
+      case NMOD_SHIFT:  return _("Shift");
+      case NMOD_ALT:    return _("Alt");
+      case NMOD_META:   return _("Meta");
+      case NMOD_ALL:    return _("Any");
+      default:          return _("unknown");
    }
 }
 
@@ -647,8 +647,8 @@ const char* input_getKeybindDescription( const char *keybind )
    int i;
    for (i=0; strcmp(keybind_info[i][0],"end"); i++)
       if (strcmp(keybind, input_keybinds[i].name)==0)
-         return keybind_info[i][2];
-   WARN("Unable to get keybinding description '%s', that command doesn't exist", keybind);
+         return _(keybind_info[i][2]);
+   WARN(_("Unable to get keybinding description '%s', that command doesn't exist"), keybind);
    return NULL;
 }
 
@@ -930,8 +930,16 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /*
     * space
     */
-   } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
-      if (value==KEY_PRESS) player_autonavStart();
+   } else if (KEY("autonav") && NOHYP() && NODEAD()) {
+      if (value==KEY_PRESS) {
+         if (map_isOpen()) {
+            unsigned int wid = window_get( MAP_WDWNAME );
+            player_autonavStartWindow( wid, NULL );
+         }
+         else if INGAME() {
+            player_autonavStart();
+         }
+      }
    /* target planet (cycles like target) */
    } else if (KEY("target_planet") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetPlanet();
@@ -979,7 +987,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) {
          player_autohail();
       }
-
 
    /*
     * misc

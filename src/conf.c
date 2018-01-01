@@ -16,6 +16,7 @@
 #include "nlua.h"
 
 #include "log.h"
+#include "utf8.h"
 #include "player.h"
 #include "input.h"
 #include "opengl.h"
@@ -83,28 +84,29 @@ static void print_usage( char **argv );
  */
 static void print_usage( char **argv )
 {
-   LOG("Usage: %s [OPTIONS] [DATA]", argv[0]);
-   LOG("Options are:");
-   LOG("   -f, --fullscreen      activate fullscreen");
-   LOG("   -F n, --fps n         limit frames per second to n");
-   LOG("   -V, --vsync           enable vsync");
-   LOG("   -W n                  set width to n");
-   LOG("   -H n                  set height to n");
-   LOG("   -j n, --joystick n    use joystick n");
-   LOG("   -J s, --Joystick s    use joystick whose name contains s");
-   LOG("   -M, --mute            disables sound");
-   LOG("   -S, --sound           forces sound");
-   LOG("   -m f, --mvol f        sets the music volume to f");
-   LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G, --generate        regenerates the nebula (slow)");
-   LOG("   -N, --nondata         do not use ndata and try to use laid out files");
-   LOG("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)");
+   LOG(_("Usage: %s [OPTIONS] [DATA]"), argv[0]);
+   LOG(_("Options are:"));
+   LOG(_("   -f, --fullscreen      activate fullscreen"));
+   LOG(_("   -F n, --fps n         limit frames per second to n"));
+   LOG(_("   -V, --vsync           enable vsync"));
+   LOG(_("   -W n                  set width to n"));
+   LOG(_("   -H n                  set height to n"));
+   LOG(_("   -j n, --joystick n    use joystick n"));
+   LOG(_("   -J s, --Joystick s    use joystick whose name contains s"));
+   LOG(_("   -M, --mute            disables sound"));
+   LOG(_("   -S, --sound           forces sound"));
+   LOG(_("   -m f, --mvol f        sets the music volume to f"));
+   LOG(_("   -s f, --svol f        sets the sound volume to f"));
+   LOG(_("   -G, --generate        regenerates the nebula (slow)"));
+   LOG(_("   -N, --nondata         do not use ndata and try to use laid out files"));
+   LOG(_("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)"));
+   LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
-   LOG("   --devmode             enables dev mode perks like the editors");
-   LOG("   --devcsv              generates csv output from the ndata for development purposes");
+   LOG(_("   --devmode             enables dev mode perks like the editors"));
+   LOG(_("   --devcsv              generates csv output from the ndata for development purposes"));
 #endif /* DEBUGGING */
-   LOG("   -h, --help            display this message and exit");
-   LOG("   -v, --version         print the version and exit");
+   LOG(_("   -h, --help            display this message and exit"));
+   LOG(_("   -v, --version         print the version and exit"));
 }
 
 
@@ -145,6 +147,8 @@ void conf_setDefaults (void)
    conf.font_size_intro   = 18;
    conf.font_size_def     = 12;
    conf.font_size_small   = 10;
+   conf.font_name_default = NULL;
+   conf.font_name_monospace = NULL;
 
    /* Misc. */
    conf.redirect_file = 1;
@@ -415,6 +419,8 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("font_size_intro",conf.font_size_intro);
       conf_loadInt("font_size_def",conf.font_size_def);
       conf_loadInt("font_size_small",conf.font_size_small);
+      conf_loadString("font_name_default",conf.font_name_default);
+      conf_loadString("font_name_monospace",conf.font_name_monospace);
 
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
@@ -457,11 +463,11 @@ int conf_loadConfig ( const char* file )
             if (lua_isstring(naevL, -1))
                str = lua_tostring(naevL, -1);
             else if (lua_isnil(naevL, -1)) {
-               WARN("Found keybind with no type field!");
+               WARN(_("Found keybind with no type field!"));
                str = "null";
             }
             else {
-               WARN("Found keybind with invalid type field!");
+               WARN(_("Found keybind with invalid type field!"));
                str = "null";
             }
             lua_pop(naevL,1);
@@ -475,11 +481,11 @@ int conf_loadConfig ( const char* file )
             else if (t == LUA_TSTRING)
                key = input_keyConv( lua_tostring(naevL, -1));
             else if (t == LUA_TNIL) {
-               WARN("Found keybind with no key field!");
+               WARN(_("Found keybind with no key field!"));
                key = SDLK_UNKNOWN;
             }
             else {
-               WARN("Found keybind with invalid key field!");
+               WARN(_("Found keybind with invalid key field!"));
                key = SDLK_UNKNOWN;
             }
             lua_pop(naevL,1);
@@ -495,7 +501,7 @@ int conf_loadConfig ( const char* file )
 
             if (str != NULL) { /* keybind is valid */
                if (key == SDLK_UNKNOWN) {
-                  WARN("Keybind for '%s' is invalid", keybind_info[i][0]);
+                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
                   continue;
                }
 
@@ -506,7 +512,7 @@ int conf_loadConfig ( const char* file )
                else if (strcmp(str,"jaxisneg")==0) type = KEYBIND_JAXISNEG;
                else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
                else {
-                  WARN("Unknown keybinding of type %s", str);
+                  WARN(_("Unknown keybinding of type %s"), str);
                   continue;
                }
 
@@ -528,7 +534,7 @@ int conf_loadConfig ( const char* file )
                   else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
                   else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
-                     WARN("Unknown keybinding mod of type %s", mod);
+                     WARN(_("Unknown keybinding mod of type %s"), mod);
                      m = NMOD_NONE;
                   }
                }
@@ -539,14 +545,14 @@ int conf_loadConfig ( const char* file )
                input_setKeybind( keybind_info[i][0], type, key, m );
             }
             else
-               WARN("Malformed keybind for '%s' in '%s'.", keybind_info[i][0], file);
+               WARN(_("Malformed keybind for '%s' in '%s'."), keybind_info[i][0], file);
          }
          /* clean up after table stuff */
          lua_pop(naevL,1);
       }
    }
    else { /* failed to load the config file */
-      WARN("Config file '%s' has invalid syntax:", file );
+      WARN(_("Config file '%s' has invalid syntax:"), file );
       WARN("   %s", lua_tostring(naevL,-1));
       nlua_freeEnv(env);
       return 1;
@@ -603,6 +609,7 @@ void conf_parseCLI( int argc, char** argv )
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
       { "nondata", no_argument, 0, 'N' },
+      { "scale", required_argument, 0, 'X' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
       { "devcsv", no_argument, 0, 'C' },
@@ -619,7 +626,7 @@ void conf_parseCLI( int argc, char** argv )
     */
    optind = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:Vd:j:J:W:H:MSm:s:GNhv",
+         "fF:Vd:j:J:W:H:MSm:s:X:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'd':
@@ -668,15 +675,18 @@ void conf_parseCLI( int argc, char** argv )
                free(conf.ndata);
             conf.ndata = NULL;
             break;
+         case 'X':
+            conf.scalefactor = atof(optarg);
+            break;
 #ifdef DEBUGGING
          case 'D':
             conf.devmode = 1;
-            LOG("Enabling developer mode.");
+            LOG(_("Enabling developer mode."));
             break;
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CSV output.");
+            LOG(_("Will generate CSV output."));
             break;
 #endif /* DEBUGGING */
 
@@ -705,9 +715,9 @@ void conf_parseCLI( int argc, char** argv )
  */
 static size_t quoteLuaString(char *str, size_t size, const char *text)
 {
-   const unsigned char *in;
    char slashescape;
-   size_t count;
+   size_t count, i;
+   uint32_t ch;
 
    if (size == 0)
       return 0;
@@ -724,9 +734,10 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
       return count;
 
    /* Iterate over the characters in text */
-   for (in = (const unsigned char *)text; *in != '\0'; in++) {
+   i = 0;
+   while ((ch = u8_nextchar( text, &i ))) {
       /* Check if we can print this as a friendly backslash-escape */
-      switch (*in) {
+      switch (ch) {
          case '\a':  slashescape = 'a';   break;
          case '\b':  slashescape = 'b';   break;
          case '\f':  slashescape = 'f';   break;
@@ -740,8 +751,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
          /* Technically, Lua can also represent \0, but we can't in our input */
          default:    slashescape = 0;     break;
       }
-      if (slashescape != 0)
-      {
+      if (slashescape != 0) {
          /* Yes, we can use a backslash-escape! */
          str[count++] = '\\';
          if (count == size)
@@ -754,24 +764,9 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
          continue;
       }
 
-      /* Check if this is an otherwise printable ASCII character */
-      if (*in >= 0x20 && *in <= 0x7E)
-      {
-         /* Write it straight to the output if so */
-         str[count++] = *in;
-         if (count == size)
-            return count;
-
-         continue;
-      }
-
-      /* Otherwise, escape the character using a \ddd sequence */
-      str[count++] = '\\';
-      if (count == size)
-         return count;
-
-      count += nsnprintf(&str[count], size-count, "%03u", *in);
-      if (count == size)
+      /* Render UTF8. */
+      count += u8_toutf8( &str[count], size-count, &ch, 1 );
+      if (count >= size)
          return count;
    }
 
@@ -826,7 +821,7 @@ int conf_saveConfig ( const char* file )
    int i;
    char *old;
    const char *oldfooter;
-   int oldsize;
+   size_t oldsize;
    char buf[32*1024];
    size_t pos;
    SDLKey key;
@@ -870,65 +865,65 @@ int conf_saveConfig ( const char* file )
       old = NULL;
 
       /* Write a nice header for new configuration files */
-      conf_saveComment(APPNAME " configuration file");
+      conf_saveComment(_("Naev configuration file"));
       conf_saveEmptyLine();
    }
 
    /* Back up old configuration. */
    if (nfile_backupIfExists(file) < 0) {
-      WARN("Not saving configuration.");
+      WARN(_("Not saving configuration."));
       return -1;
    }
 
    /* Header. */
    conf_saveComment(GENERATED_START_COMMENT);
-   conf_saveComment("The contents of this section will be rewritten by "APPNAME"!");
+   conf_saveComment(_("The contents of this section will be rewritten by Naev!"));
    conf_saveEmptyLine();
 
    /* ndata. */
-   conf_saveComment("The location of "APPNAME"'s data pack, usually called 'ndata'");
+   conf_saveComment(_("The location of Naev's data pack, usually called 'ndata'"));
    conf_saveString("data",conf.ndata);
    conf_saveEmptyLine();
 
    /* OpenGL. */
-   conf_saveComment("The factor to use in Full-Scene Anti-Aliasing");
-   conf_saveComment("Anything lower than 2 will simply disable FSAA");
+   conf_saveComment(_("The factor to use in Full-Scene Anti-Aliasing"));
+   conf_saveComment(_("Anything lower than 2 will simply disable FSAA"));
    conf_saveInt("fsaa",conf.fsaa);
    conf_saveEmptyLine();
 
-   conf_saveComment("Synchronize framebuffer updates with the vertical blanking interval");
+   conf_saveComment(_("Synchronize framebuffer updates with the vertical blanking interval"));
    conf_saveBool("vsync",conf.vsync);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use OpenGL Vertex Buffer Objects extensions");
+   conf_saveComment(_("Use OpenGL Vertex Buffer Objects extensions"));
    conf_saveBool("vbo",conf.vbo);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use OpenGL MipMaps");
+   conf_saveComment(_("Use OpenGL MipMaps"));
    conf_saveBool("mipmaps",conf.mipmaps);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use OpenGL Texture Compression");
+   conf_saveComment(_("Use OpenGL Texture Compression"));
    conf_saveBool("compress",conf.compress);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use OpenGL Texture Interpolation");
+   conf_saveComment(_("Use OpenGL Texture Interpolation"));
    conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use OpenGL Non-\"Power of Two\" textures if available");
-   conf_saveComment("Lowers memory usage by a lot, but may cause slow downs on some systems");
+   conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
+   conf_saveComment(_("Lowers memory usage by a lot, but may cause slow downs on some systems"));
    conf_saveBool("npot",conf.npot);
    conf_saveEmptyLine();
 
    /* Memory. */
-   conf_saveComment("If true enables engine glow");
+   conf_saveComment(_("If true enables engine glow"));
    conf_saveBool("engineglow",conf.engineglow);
    conf_saveEmptyLine();
 
    /* Window. */
-   conf_saveComment("The window size or screen resolution");
-   conf_saveComment("Set both of these to 0 to make "APPNAME" try the desktop resolution");
+   conf_saveComment(_("The window size or screen resolution"));
+   conf_saveComment(_("Set both of these to 0 to make Naev try the desktop resolution"));
    if (conf.explicit_dim) {
       conf_saveInt("width",conf.width);
       conf_saveInt("height",conf.height);
@@ -938,70 +933,70 @@ int conf_saveConfig ( const char* file )
    }
    conf_saveEmptyLine();
 
-   conf_saveComment("Factor used to divide the above resolution with");
-   conf_saveComment("This is used to lower the rendering resolution, and scale to the above");
+   conf_saveComment(_("Factor used to divide the above resolution with"));
+   conf_saveComment(_("This is used to lower the rendering resolution, and scale to the above"));
    conf_saveFloat("scalefactor",conf.scalefactor);
    conf_saveEmptyLine();
 
-   conf_saveComment("Run "APPNAME" in full-screen mode");
+   conf_saveComment(_("Run Naev in full-screen mode"));
    conf_saveBool("fullscreen",conf.fullscreen);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use video modesetting when fullscreen is enabled (SDL2-only)");
+   conf_saveComment(_("Use video modesetting when fullscreen is enabled (SDL2-only)"));
    conf_saveBool("modesetting",conf.modesetting);
    conf_saveEmptyLine();
 
-   conf_saveComment("Minimize on focus loss (SDL2-only)");
+   conf_saveComment(_("Minimize on focus loss (SDL2-only)"));
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
    /* FPS */
-   conf_saveComment("Display a framerate counter");
+   conf_saveComment(_("Display a framerate counter"));
    conf_saveBool("showfps",conf.fps_show);
    conf_saveEmptyLine();
 
-   conf_saveComment("Limit the rendering framerate");
+   conf_saveComment(_("Limit the rendering framerate"));
    conf_saveInt("maxfps",conf.fps_max);
    conf_saveEmptyLine();
 
    /* Pause */
-   conf_saveComment("Show 'PAUSED' on screen while paused");
+   conf_saveComment(_("Show 'PAUSED' on screen while paused"));
    conf_saveBool("showpause",conf.pause_show);
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment("Sound backend (can be \"openal\" or \"sdlmix\")");
+   conf_saveComment(_("Sound backend (can be \"openal\" or \"sdlmix\")"));
    conf_saveString("sound_backend",conf.sound_backend);
    conf_saveEmptyLine();
 
-   conf_saveComment("Maxmimum number of simultaneous sounds to play, must be at least 16.");
+   conf_saveComment(_("Maxmimum number of simultaneous sounds to play, must be at least 16."));
    conf_saveInt("snd_voices",conf.snd_voices);
    conf_saveEmptyLine();
 
-   conf_saveComment("Sets sound to be relative to pilot when camera is following a pilot instead of referenced to camera.");
+   conf_saveComment(_("Sets sound to be relative to pilot when camera is following a pilot instead of referenced to camera."));
    conf_saveBool("snd_pilotrel",conf.snd_pilotrel);
    conf_saveEmptyLine();
 
-   conf_saveComment("Enables EFX extension for OpenAL backend.");
+   conf_saveComment(_("Enables EFX extension for OpenAL backend."));
    conf_saveBool("al_efx",conf.al_efx);
    conf_saveEmptyLine();
 
-   conf_saveComment("Size of the OpenAL music buffer (in kilobytes).");
+   conf_saveComment(_("Size of the OpenAL music buffer (in kilobytes)."));
    conf_saveInt("al_bufsize",conf.al_bufsize);
    conf_saveEmptyLine();
 
-   conf_saveComment("Disable all sound");
+   conf_saveComment(_("Disable all sound"));
    conf_saveBool("nosound",conf.nosound);
    conf_saveEmptyLine();
 
-   conf_saveComment("Volume of sound effects and music, between 0.0 and 1.0");
+   conf_saveComment(_("Volume of sound effects and music, between 0.0 and 1.0"));
    conf_saveFloat("sound",(sound_disabled) ? conf.sound : sound_getVolume());
    conf_saveFloat("music",(music_disabled) ? conf.music : music_getVolume());
    conf_saveEmptyLine();
 
    /* Joystick. */
-   conf_saveComment("The name or numeric index of the joystick to use");
-   conf_saveComment("Setting this to nil disables the joystick support");
+   conf_saveComment(_("The name or numeric index of the joystick to use"));
+   conf_saveComment(_("Setting this to nil disables the joystick support"));
    if (conf.joystick_nam != NULL) {
       conf_saveString("joystick",conf.joystick_nam);
    }
@@ -1014,99 +1009,113 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* GUI. */
-   conf_saveComment("Number of lines visible in the comm window.");
+   conf_saveComment(_("Number of lines visible in the comm window."));
    conf_saveInt("mesg_visible",conf.mesg_visible);
    conf_saveEmptyLine();
 
    /* Key repeat. */
-   conf_saveComment("Delay in ms before starting to repeat (0 disables)");
+   conf_saveComment(_("Delay in ms before starting to repeat (0 disables)"));
    conf_saveInt("repeat_delay",conf.repeat_delay);
-   conf_saveComment("Delay in ms between repeats once it starts to repeat");
+   conf_saveComment(_("Delay in ms between repeats once it starts to repeat"));
    conf_saveInt("repeat_freq",conf.repeat_freq);
    conf_saveEmptyLine();
 
    /* Zoom. */
-   conf_saveComment("Minimum and maximum zoom factor to use in-game");
-   conf_saveComment("At 1.0, no sprites are scaled");
-   conf_saveComment("zoom_far should be less then zoom_near");
+   conf_saveComment(_("Minimum and maximum zoom factor to use in-game"));
+   conf_saveComment(_("At 1.0, no sprites are scaled"));
+   conf_saveComment(_("zoom_far should be less then zoom_near"));
    conf_saveBool("zoom_manual",conf.zoom_manual);
    conf_saveFloat("zoom_far",conf.zoom_far);
    conf_saveFloat("zoom_near",conf.zoom_near);
    conf_saveEmptyLine();
 
-   conf_saveComment("Zooming speed in factor increments per second");
+   conf_saveComment(_("Zooming speed in factor increments per second"));
    conf_saveFloat("zoom_speed",conf.zoom_speed);
    conf_saveEmptyLine();
 
-   conf_saveComment("Zooming modulation factor for the starry background");
+   conf_saveComment(_("Zooming modulation factor for the starry background"));
    conf_saveFloat("zoom_stars",conf.zoom_stars);
    conf_saveEmptyLine();
 
    /* Fonts. */
-   conf_saveComment("Font sizes (in pixels) for NAEV");
-   conf_saveComment("Warning, setting to other than the default can cause visual glitches!");
-   conf_saveComment("Console default: 10");
+   conf_saveComment(_("Font sizes (in pixels) for NAEV"));
+   conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
+   conf_saveComment(_("Console default: 10"));
    conf_saveInt("font_size_console",conf.font_size_console);
-   conf_saveComment("Intro default: 18");
+   conf_saveComment(_("Intro default: 18"));
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   conf_saveComment("Default size: 12");
+   conf_saveComment(_("Default size: 12"));
    conf_saveInt("font_size_def",conf.font_size_def);
-   conf_saveComment("Small size: 10");
+   conf_saveComment(_("Small size: 10"));
    conf_saveInt("font_size_small",conf.font_size_small);
+   conf_saveComment(_("Default font to use: unset"));
+   if (conf.font_name_default) {
+      conf_saveString("font_name_default",conf.font_name_default);
+   }
+   else {
+      conf_saveComment(_("font_name_default = \"/path/to/file.ttf\""));
+   }
+   conf_saveComment("Default monospace font to use: unset");
+   if (conf.font_name_monospace) {
+      conf_saveString("font_name_monospace",conf.font_name_monospace);
+   }
+   else {
+      conf_saveComment("font_name_monospace = \"/path/to/file.ttf\"");
+   }
    conf_saveEmptyLine();
 
    /* Misc. */
-   conf_saveComment("Sets the velocity (px/s) to compress up to when time compression is enabled.");
+   conf_saveComment(_("Sets the velocity (px/s) to compress up to when time compression is enabled."));
    conf_saveFloat("compression_velocity",conf.compression_velocity);
    conf_saveEmptyLine();
 
-   conf_saveComment("Sets the multiplier to compress up to when time compression is enabled.");
+   conf_saveComment(_("Sets the multiplier to compress up to when time compression is enabled."));
    conf_saveFloat("compression_mult",conf.compression_mult);
    conf_saveEmptyLine();
 
-   conf_saveComment("Redirects log and error output to files");
+   conf_saveComment(_("Redirects log and error output to files"));
    conf_saveBool("redirect_file",conf.redirect_file);
    conf_saveEmptyLine();
 
-   conf_saveComment("Enables compression on savegames");
+   conf_saveComment(_("Enables compression on savegames"));
    conf_saveBool("save_compress",conf.save_compress);
    conf_saveEmptyLine();
 
-   conf_saveComment("Afterburner sensitivity");
+   conf_saveComment(_("Afterburner sensitivity"));
    conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
    conf_saveEmptyLine();
 
-   conf_saveComment("Mouse-flying thrust control");
+   conf_saveComment(_("Mouse-flying thrust control"));
    conf_saveInt("mouse_thrust",conf.mouse_thrust);
    conf_saveEmptyLine();
 
-   conf_saveComment("Maximum interval to count as a double-click (0 disables).");
+   conf_saveComment(_("Maximum interval to count as a double-click (0 disables)."));
    conf_saveFloat("mouse_doubleclick",conf.mouse_doubleclick);
    conf_saveEmptyLine();
 
-   conf_saveComment("Condition under which the autonav aborts.");
+   conf_saveComment(_("Condition under which the autonav aborts."));
    conf_saveFloat("autonav_abort",conf.autonav_reset_speed);
    conf_saveEmptyLine();
 
-   conf_saveComment("Enables developer mode (universe editor and the likes)");
+   conf_saveComment(_("Enables developer mode (universe editor and the likes)"));
    conf_saveBool("devmode",conf.devmode);
    conf_saveEmptyLine();
 
-   conf_saveComment("Automatic saving for developer mode");
+   conf_saveComment(_("Automatic saving for developer mode"));
    conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
-   conf_saveComment("Save the config everytime game exits (rewriting this bit)");
+   conf_saveComment(_("Save the config everytime game exits (rewriting this bit)"));
    conf_saveInt("conf_nosave",conf.nosave);
    conf_saveEmptyLine();
 
    /* Debugging. */
-   conf_saveComment("Enables FPU exceptions - only works on DEBUG builds");
+   conf_saveComment(_("Enables FPU exceptions - only works on DEBUG builds"));
    conf_saveBool("fpu_except",conf.fpu_except);
    conf_saveEmptyLine();
 
    /* Editor. */
-   conf_saveComment("Paths for saving different files from the editor");
+   conf_saveComment(_("Paths for saving different files from the editor"));
    conf_saveString("dev_save_sys",conf.dev_save_sys);
    conf_saveString("dev_save_map",conf.dev_save_map);
    conf_saveString("dev_save_asset",conf.dev_save_asset);
@@ -1116,7 +1125,7 @@ int conf_saveConfig ( const char* file )
     * Keybindings.
     */
    conf_saveEmptyLine();
-   conf_saveComment("Keybindings");
+   conf_saveComment(_("Keybindings"));
    conf_saveEmptyLine();
 
    /* Use an extra character in keyname to make sure it's always zero-terminated */
@@ -1181,7 +1190,7 @@ int conf_saveConfig ( const char* file )
    }
 
    if (nfile_writeFile(buf, pos, file) < 0) {
-      WARN("Failed to write configuration!  You'll most likely have to restore it by copying your backup configuration over your current configuration.");
+      WARN(_("Failed to write configuration!  You'll most likely have to restore it by copying your backup configuration over your current configuration."));
       return -1;
    }
 

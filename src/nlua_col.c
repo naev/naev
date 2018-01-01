@@ -27,7 +27,7 @@ static int colL_hsv( lua_State *L );
 static int colL_setrgb( lua_State *L );
 static int colL_sethsv( lua_State *L );
 static int colL_setalpha( lua_State *L );
-static const luaL_reg colL_methods[] = {
+static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
    { "new", colL_new },
    { "alpha", colL_alpha },
@@ -189,7 +189,7 @@ static int colL_new( lua_State *L )
    else if (lua_isstring(L,1)) {
       col2 = col_fromName( lua_tostring(L,1) );
       if (col2 == NULL) {
-         NLUA_ERROR( L, "Colour '%s' does not exist!", lua_tostring(L,1) );
+         NLUA_ERROR( L, _("Colour '%s' does not exist!"), lua_tostring(L,1) );
          return 0;
       }
       col = *col2;

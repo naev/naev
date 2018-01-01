@@ -38,7 +38,7 @@ static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
 static int guiL_menuInfo( lua_State *L );
 static int guiL_menuSmall( lua_State *L );
-static const luaL_reg guiL_methods[] = {
+static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
    { "osdInit", guiL_osdInit },
@@ -395,7 +395,7 @@ static int guiL_menuInfo( lua_State *L )
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
    else {
-      NLUA_ERROR(L,"Invalid window info name '%s'.", str);
+      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
       return 0;
    }
 

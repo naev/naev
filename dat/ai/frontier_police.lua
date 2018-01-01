@@ -13,14 +13,14 @@ function create ()
 
    -- Handle bribing
    if rnd.int() > 0.4 then
-      mem.bribe_no = "\"I shall especially enjoy your death.\""
+      mem.bribe_no = _("\"I shall especially enjoy your death.\"")
    else
       bribe_no = {
-            "\"You insult my honour.\"",
-            "\"I find your lack of honour disturbing.\"",
-            "\"You disgust me.\"",
-            "\"Bribery carries a harsh penalty.\"",
-            "\"The Frontier does not lower itself to common scum.\""
+            _("\"You insult my honour.\""),
+            _("\"I find your lack of honour disturbing.\""),
+            _("\"You disgust me.\""),
+            _("\"Bribery carries a harsh penalty.\""),
+            _("\"The Frontier does not lower itself to common scum.\"")
      }
      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end
@@ -31,9 +31,9 @@ function create ()
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 3000 )
       if standing < 50 then
-         mem.refuel_no = "\"Mare magno turbantibus. That means that I don't care about your problems.\""
+         mem.refuel_no = _("\"Mare magno turbantibus. That means that I don't care about your problems.\"")
       else
-         mem.refuel_msg = string.format("\"For you I could make an exception for %d credits.\"", mem.refuel)
+         mem.refuel_msg = string.format(_("\"For you I could make an exception for %d credits.\""), mem.refuel)
       end
    end
 
@@ -53,11 +53,11 @@ function taunt ( target, offense )
 
    -- Offense is not actually used
    taunts = {
-       "Alea iacta est!",
-       "Morituri te salutant!",
-       "Your head will make a great trophy!",
-       "Cave canem!",
-       "Death awaits you!"
+       _("Alea iacta est!"),
+       _("Morituri te salutant!"),
+       _("Your head will make a great trophy!"),
+       _("Cave canem!"),
+       _("Death awaits you!")
    }
    ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end

@@ -1,75 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Commodities>
- <commodity name="Food">
+ <commodity>
+  <name>Food</name>
   <description>Evolving from the military rations of centuries past, modern packaged meals are rich in nutrients and able to last decades in their vacuum-sealed packaging.</description>
   <price>140</price>
   <gfx_store>standard_mealpacks</gfx_store>
  </commodity>
- <commodity name="Ore">
+ <commodity>
+  <name>Ore</name>
   <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
   <price>210</price>
   <gfx_store>base</gfx_store>
  </commodity>
- <commodity name="Gold">
+ <commodity>
+  <name>Gold</name>
   <description>Despite its limited use in industry, gold has a relative high value due to its role as an universal currency.</description>
   <price>450</price>
   <gfx_store>gold</gfx_store>
   <gfx_space>gold</gfx_space>
  </commodity>
- <commodity name="Industrial Goods">
+ <commodity>
+  <name>Industrial Goods</name>
   <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
   <price>340</price>
   <gfx_store>recycled_electronics</gfx_store>
  </commodity>
- <commodity name="Medicine">
+ <commodity>
+  <name>Medicine</name>
   <description>An assortment of medicines suitable for curing all sorts of ailments.</description>
   <price>750</price>
   <gfx_store>vaccines</gfx_store>
  </commodity>
- <commodity name="Luxury Goods">
+ <commodity>
+  <name>Luxury Goods</name>
   <description>All sorts of high quality luxury goods.</description>
   <price>630</price>
   <gfx_store>first_class_passenger</gfx_store>
  </commodity>
- <commodity name="Ancient Artefact"/>
- <commodity name="Artefact? A"/>
- <commodity name="Artefact? B"/>
- <commodity name="Artefact? C"/>
- <commodity name="Box"/>
- <commodity name="Colonists"/>
- <commodity name="Civilians"/>
- <commodity name="Datapad"/>
- <commodity name="Drugs"/>
- <commodity name="Dvaered ship crew"/>
- <commodity name="Equipment"/>
- <commodity name="Exotic Animals"/>
- <commodity name="FLF IFF Transponder"/>
- <commodity name="Four Winds Informant"/>
- <commodity name="Gregar"/>
- <commodity name="Jorek"/>
- <commodity name="Goods"/>
- <commodity name="Group of Nerds"/>
- <commodity name="Love Letters"/>
- <commodity name="Message"/>
- <commodity name="Packages"/>
- <commodity name="Parcels"/>
- <commodity name="Person"/>
- <commodity name="Phosphine"/>
- <commodity name="Pilgrims"/>
- <commodity name="Prisoners"/>
- <commodity name="Prototype"/>
- <commodity name="Radioactive Materials"/>
- <commodity name="Recipes"/>
- <commodity name="Refugees"/>
- <commodity name="Satellite"/>
- <commodity name="Secret Technology"/>
- <commodity name="Small Arms"/>
- <commodity name="Teenagers"/>
- <commodity name="The Baron's holopainting"/>
- <commodity name="The Rescued Children"/>
- <commodity name="Tourists"/>
- <commodity name="Unmarked Boxes"/>
- <commodity name="VIP"/>
- <commodity name="Waste Containers"/>
- <commodity name="Weapons"/>
+ <commodity>
+  <name>Ancient Artefact</name>
+ </commodity>
+ <commodity>
+  <name>Artefact? A</name>
+ </commodity>
+ <commodity>
+  <name>Artefact? B</name>
+ </commodity>
+ <commodity>
+  <name>Artefact? C</name>
+ </commodity>
+ <commodity>
+  <name>Box</name>
+ </commodity>
+ <commodity>
+  <name>Colonists</name>
+ </commodity>
+ <commodity>
+  <name>Civilians</name>
+ </commodity>
+ <commodity>
+  <name>Datapad</name>
+ </commodity>
+ <commodity>
+  <name>Drugs</name>
+ </commodity>
+ <commodity>
+  <name>Dvaered ship crew</name>
+ </commodity>
+ <commodity>
+  <name>Equipment</name>
+ </commodity>
+ <commodity>
+  <name>Exotic Animals</name>
+ </commodity>
+ <commodity>
+  <name>FLF IFF Transponder</name>
+ </commodity>
+ <commodity>
+  <name>Four Winds Informant</name>
+ </commodity>
+ <commodity>
+  <name>Gregar</name>
+ </commodity>
+ <commodity>
+  <name>Jorek</name>
+ </commodity>
+ <commodity>
+  <name>Goods</name>
+ </commodity>
+ <commodity>
+  <name>Group of Nerds</name>
+ </commodity>
+ <commodity>
+  <name>Love Letters</name>
+ </commodity>
+ <commodity>
+  <name>Message</name>
+ </commodity>
+ <commodity>
+  <name>Packages</name>
+ </commodity>
+ <commodity>
+  <name>Parcels</name>
+ </commodity>
+ <commodity>
+  <name>Person</name>
+ </commodity>
+ <commodity>
+  <name>Phosphine</name>
+ </commodity>
+ <commodity>
+  <name>Pilgrims</name>
+ </commodity>
+ <commodity>
+  <name>Prisoners</name>
+ </commodity>
+ <commodity>
+  <name>Prototype</name>
+ </commodity>
+ <commodity>
+  <name>Radioactive Materials</name>
+ </commodity>
+ <commodity>
+  <name>Recipes</name>
+ </commodity>
+ <commodity>
+  <name>Refugees</name>
+ </commodity>
+ <commodity>
+  <name>Satellite</name>
+ </commodity>
+ <commodity>
+  <name>Secret Technology</name>
+ </commodity>
+ <commodity>
+  <name>Small Arms</name>
+ </commodity>
+ <commodity>
+  <name>Teenagers</name>
+ </commodity>
+ <commodity>
+  <name>The Baron's holopainting</name>
+ </commodity>
+ <commodity>
+  <name>The Rescued Children</name>
+ </commodity>
+ <commodity>
+  <name>Tourists</name>
+ </commodity>
+ <commodity>
+  <name>Unmarked Boxes</name>
+ </commodity>
+ <commodity>
+  <name>VIP</name>
+ </commodity>
+ <commodity>
+  <name>Waste Containers</name>
+ </commodity>
+ <commodity>
+  <name>Weapons</name>
+ </commodity>
 </Commodities>

@@ -37,8 +37,11 @@
 #define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
 #define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
 #define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
-#define PLANET_SERVICES_MAX         (PLANET_SERVICE_SHIPYARD<<1)
+#define PLANET_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
+#define PLANET_SERVICES_MAX         (PLANET_SERVICE_BLACKMARKET<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
+#define planet_addService(p,s)      ((p)->services |= (s)) /**< Adds a planet service. */
+#define planet_rmService(p,s)       ((p)->services &= ~(s)) /**< Removes a planet service. */
 
 
 /*
@@ -50,7 +53,6 @@
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
-#define planet_isBlackMarket(p) planet_isFlag(p,PLANET_BLACKMARKET) /**< Checks if planet is a black market. */
 
 
 /**
@@ -316,7 +318,6 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
-void planet_setBlackMarket( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );

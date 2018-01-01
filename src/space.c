@@ -83,6 +83,7 @@ static int spacename_mstack = 0; /**< Size of memory in planet<->system stack. *
 
 /*
  * Star system stack.
+ * TODO should be removed in favour of our array framework (array.h)
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 int systems_nstack = 0; /**< Number of star systems. */
@@ -90,6 +91,7 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
 
 /*
  * Planet stack.
+ * TODO should be removed in favour of our array framework (array.h)
  */
 static Planet *planet_stack = NULL; /**< Planet stack. */
 static int planet_nstack = 0; /**< Planet stack size. */
@@ -112,7 +114,7 @@ static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
-uint32_t nasterogfx = 0; /**< Nb of asteroid gfx. */
+static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 
 
 /*
@@ -174,14 +176,15 @@ extern credits_t economy_getPrice( const Commodity *com,
 char* planet_getServiceName( int service )
 {
    switch (service) {
-      case PLANET_SERVICE_LAND:      return "Land";
-      case PLANET_SERVICE_INHABITED: return "Inhabited";
-      case PLANET_SERVICE_REFUEL:    return "Refuel";
-      case PLANET_SERVICE_BAR:       return "Bar";
-      case PLANET_SERVICE_MISSIONS:  return "Missions";
-      case PLANET_SERVICE_COMMODITY: return "Commodity";
-      case PLANET_SERVICE_OUTFITS:   return "Outfits";
-      case PLANET_SERVICE_SHIPYARD:  return "Shipyard";
+      case PLANET_SERVICE_LAND:        return "Land";
+      case PLANET_SERVICE_INHABITED:   return "Inhabited";
+      case PLANET_SERVICE_REFUEL:      return "Refuel";
+      case PLANET_SERVICE_BAR:         return "Bar";
+      case PLANET_SERVICE_MISSIONS:    return "Missions";
+      case PLANET_SERVICE_COMMODITY:   return "Commodity";
+      case PLANET_SERVICE_OUTFITS:     return "Outfits";
+      case PLANET_SERVICE_SHIPYARD:    return "Shipyard";
+      case PLANET_SERVICE_BLACKMARKET: return "Blackmarket";
    }
    return NULL;
 }
@@ -204,6 +207,8 @@ int planet_getService( char *name )
       return PLANET_SERVICE_OUTFITS;
    else if (strcmp(name,"Shipyard")==0)
       return PLANET_SERVICE_SHIPYARD;
+   else if (strcmp(name,"Blackmarket")==0)
+      return PLANET_SERVICE_BLACKMARKET;
    return -1;
 }
 
@@ -319,7 +324,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 
    /* Must have found the jump. */
    if (jp == NULL) {
-      WARN("Unable to find jump in point for '%s' in '%s': not connected", out->name, in->name);
+      WARN(_("Unable to find jump in point for '%s' in '%s': not connected"), out->name, in->name);
       return -1;
    }
 
@@ -735,7 +740,7 @@ StarSystem* system_get( const char* sysname )
       if (strcmp(sysname, systems_stack[i].name)==0)
          return &systems_stack[i];
 
-   WARN("System '%s' not found in stack", sysname);
+   WARN(_("System '%s' not found in stack"), sysname);
    return NULL;
 }
 
@@ -778,7 +783,7 @@ char* planet_getSystem( const char* planetname )
       if (strcmp(planetname_stack[i],planetname)==0)
          return systemname_stack[i];
 
-   DEBUG("Planet '%s' not found in planetname stack", planetname);
+   DEBUG(_("Planet '%s' not found in planetname stack"), planetname);
    return NULL;
 }
 
@@ -794,7 +799,7 @@ Planet* planet_get( const char* planetname )
    int i;
 
    if (planetname==NULL) {
-      WARN("Trying to find NULL planet...");
+      WARN(_("Trying to find NULL planet..."));
       return NULL;
    }
 
@@ -802,7 +807,7 @@ Planet* planet_get( const char* planetname )
       if (strcmp(planet_stack[i].name,planetname)==0)
          return &planet_stack[i];
 
-   WARN("Planet '%s' not found in the universe", planetname);
+   WARN(_("Planet '%s' not found in the universe"), planetname);
    return NULL;
 }
 
@@ -817,7 +822,7 @@ Planet* planet_getIndex( int ind )
 {
    /* Sanity check. */
    if ((ind < 0) || (ind >= planet_nstack)) {
-      WARN("Planet index '%d' out of range (max %d)", ind, planet_nstack);
+      WARN(_("Planet index '%d' out of range (max %d)"), ind, planet_nstack);
       return NULL;
    }
 
@@ -857,16 +862,6 @@ void planet_setKnown( Planet *p )
 {
    if (p->real == ASSET_REAL)
       planet_setFlag(p, PLANET_KNOWN);
-}
-
-
-/**
- * @brief Sets a planet as a black market, if it's real.
- */
-void planet_setBlackMarket( Planet *p )
-{
-   if (p->real == ASSET_REAL)
-      planet_setFlag(p, PLANET_BLACKMARKET);
 }
 
 
@@ -945,7 +940,7 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
    JumpPoint *jp;
 
    if (jumpname==NULL) {
-      WARN("Trying to find NULL jump point...");
+      WARN(_("Trying to find NULL jump point..."));
       return NULL;
    }
 
@@ -955,7 +950,7 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
          return jp;
    }
 
-   WARN("Jump point '%s' not found in %s", jumpname, sys->name);
+   WARN(_("Jump point '%s' not found in %s"), jumpname, sys->name);
    return NULL;
 }
 
@@ -976,7 +971,7 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
       if (jp->target == target)
          return jp;
    }
-   WARN("Jump point to '%s' not found in %s", target->name, sys->name);
+   WARN(_("Jump point to '%s' not found in %s"), target->name, sys->name);
    return NULL;
 }
 
@@ -1011,7 +1006,7 @@ static void system_scheduler( double dt, int init )
       if (init) {
          nlua_getenv( env, "create" ); /* f */
          if (lua_isnil(naevL,-1)) {
-            WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
+            WARN(_("Lua Spawn script for faction '%s' missing obligatory entry point 'create'."),
                   faction_name( p->faction ) );
             lua_pop(naevL,1);
             continue;
@@ -1026,7 +1021,7 @@ static void system_scheduler( double dt, int init )
 
          nlua_getenv( env, "spawn" ); /* f */
          if (lua_isnil(naevL,-1)) {
-            WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
+            WARN(_("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."),
                   faction_name( p->faction ) );
             lua_pop(naevL,1);
             continue;
@@ -1038,7 +1033,7 @@ static void system_scheduler( double dt, int init )
 
       /* Actually run the function. */
       if (nlua_pcall(env, n+1, 2)) { /* error has occurred */
-         WARN("Lua Spawn script for faction '%s' : %s",
+         WARN(_("Lua Spawn script for faction '%s' : %s"),
                faction_name( p->faction ), lua_tostring(naevL,-1));
          lua_pop(naevL,1);
          continue;
@@ -1046,7 +1041,7 @@ static void system_scheduler( double dt, int init )
 
       /* Output is handled the same way. */
       if (!lua_isnumber(naevL,-2)) {
-         WARN("Lua spawn script for faction '%s' failed to return timer value.",
+         WARN(_("Lua spawn script for faction '%s' failed to return timer value."),
                faction_name( p->faction ) );
          lua_pop(naevL,2);
          continue;
@@ -1058,7 +1053,7 @@ static void system_scheduler( double dt, int init )
          while (lua_next(naevL,-2) != 0) { /* tk, k, v */
             /* Must be table. */
             if (!lua_istable(naevL,-1)) {
-               WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
+               WARN(_("Lua spawn script for faction '%s' returns invalid data (not a table)."),
                      faction_name( p->faction ) );
                lua_pop(naevL,2); /* tk, k */
                continue;
@@ -1066,7 +1061,7 @@ static void system_scheduler( double dt, int init )
 
             lua_getfield( naevL, -1, "pilot" ); /* tk, k, v, p */
             if (!lua_ispilot(naevL,-1)) {
-               WARN("Lua spawn script for faction '%s' returns invalid data (not a pilot).",
+               WARN(_("Lua spawn script for faction '%s' returns invalid data (not a pilot)."),
                      faction_name( p->faction ) );
                lua_pop(naevL,2); /* tk, k */
                continue;
@@ -1079,7 +1074,7 @@ static void system_scheduler( double dt, int init )
             lua_pop(naevL,1); /* tk, k, v */
             lua_getfield( naevL, -1, "presence" ); /* tk, k, v, p */
             if (!lua_isnumber(naevL,-1)) {
-               WARN("Lua spawn script for faction '%s' returns invalid data (not a number).",
+               WARN(_("Lua spawn script for faction '%s' returns invalid data (not a number)."),
                      faction_name( p->faction ) );
                lua_pop(naevL,2); /* tk, k */
                continue;
@@ -1206,7 +1201,7 @@ void space_update( const double dt )
       for (i=0; i<cur_system->nplanets; i++)
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
-            player_message( "You discovered \e%c%s\e\0.",
+            player_message( _("You discovered \a%c%s\a\0."),
                   planet_getColourChar( cur_system->planets[i] ),
                   cur_system->planets[i]->name );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1221,7 +1216,7 @@ void space_update( const double dt )
       for (i=0; i<cur_system->njumps; i++)
          if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
-            player_message( "You discovered a Jump Point." );
+            player_message( _("You discovered a Jump Point.") );
             hparam[0].type  = HOOK_PARAM_STRING;
             hparam[0].u.str = "jump";
             hparam[1].type  = HOOK_PARAM_JUMP;
@@ -1341,18 +1336,18 @@ void space_init( const char* sysname )
    }
 
    if ((sysname==NULL) && (cur_system==NULL))
-      ERR("Cannot reinit system if there is no system previously loaded");
+      ERR(_("Cannot reinit system if there is no system previously loaded"));
    else if (sysname!=NULL) {
       for (i=0; i < systems_nstack; i++)
          if (strcmp(sysname, systems_stack[i].name)==0)
             break;
 
       if (i>=systems_nstack)
-         ERR("System %s not found in stack", sysname);
+         ERR(_("System %s not found in stack"), sysname);
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message("\epEntering System %s on %s.", sysname, nt);
+      player_message(_("\apEntering System %s on %s."), sysname, nt);
       free(nt);
 
       /* Handle background */
@@ -1573,22 +1568,22 @@ Planet *planet_new (void)
  */
 static int planets_load ( void )
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, **planet_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   uint32_t nfiles;
-   int i, len;
+   size_t nfiles;
+   size_t i, len;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
    nlua_loadStandard(landing_env);
    buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
    if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
-      WARN( "Failed to load landing file: %s\n"
+      WARN( _("Failed to load landing file: %s\n"
             "%s\n"
-            "Most likely Lua file has improper syntax, please check",
+            "Most likely Lua file has improper syntax, please check"),
             LANDING_DATA_PATH, lua_tostring(naevL,-1));
    }
    free(buf);
@@ -1602,14 +1597,14 @@ static int planets_load ( void )
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
       buf  = ndata_read( file, &bufsize );
       doc  = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
-         WARN("%s file is invalid xml!",file);
+         WARN(_("%s file is invalid xml!"),file);
          free(file);
          free(buf);
          continue;
@@ -1617,7 +1612,7 @@ static int planets_load ( void )
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
-         WARN("Malformed %s file: does not contain elements",file);
+         WARN(_("Malformed %s file: does not contain elements"),file);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1636,7 +1631,7 @@ static int planets_load ( void )
    }
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<nfiles; i++)
       free( planet_files[i] );
    free( planet_files );
 
@@ -1716,7 +1711,7 @@ void planet_updateLand( Planet *p )
    nlua_getenv( landing_env, str );
    lua_pushplanet( naevL, p->id );
    if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
-      WARN("Landing: '%s' : %s", str, lua_tostring(naevL,-1));
+      WARN(_("Landing: '%s' : %s"), str, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       return;
    }
@@ -1726,8 +1721,8 @@ void planet_updateLand( Planet *p )
    if (lua_isstring(naevL,-4))
       p->land_msg = strdup( lua_tostring(naevL,-4) );
    else {
-      WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 2 is not a string!", str, p->name );
-      p->land_msg = strdup( "Invalid land message" );
+      WARN( _("%s: %s (%s) -> return parameter 2 is not a string!"), LANDING_DATA_PATH, str, p->name );
+      p->land_msg = strdup( _("Invalid land message") );
    }
    /* Parse bribing. */
    if (!p->can_land && lua_isnumber(naevL,-3)) {
@@ -1736,21 +1731,21 @@ void planet_updateLand( Planet *p )
       if (lua_isstring(naevL,-2))
          p->bribe_msg = strdup( lua_tostring(naevL,-2) );
       else {
-         WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 4 is not a string!", str, p->name );
-         p->bribe_msg = strdup( "Invalid bribe message" );
+         WARN( "%s: %s (%s) -> return parameter 4 is not a string!", LANDING_DATA_PATH, str, p->name );
+         p->bribe_msg = strdup( _("Invalid bribe message") );
       }
       /* We also need the bribe ACK message. */
       if (lua_isstring(naevL,-1))
          p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
       else {
-         WARN( LANDING_DATA_PATH": %s -> return parameter 5 is not a string!", str, p->name );
-         p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
+         WARN( _("%s: %s -> return parameter 5 is not a string!"), LANDING_DATA_PATH, str, p->name );
+         p->bribe_ack_msg = strdup( _("Invalid bribe ack message") );
       }
    }
    else if (lua_isstring(naevL,-3))
       p->bribe_msg = strdup( lua_tostring(naevL,-3) );
    else if (!lua_isnil(naevL,-3))
-      WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
+      WARN( _("%s: %s (%s) -> return parameter 3 is not a number or string or nil!"), LANDING_DATA_PATH, str, p->name );
 
    lua_pop(naevL,5);
 
@@ -1902,7 +1897,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                         if (landing_env != LUA_NOREF) {
                            nlua_getenv( landing_env, tmp );
                            if (lua_isnil(naevL,-1))
-                              WARN("Planet '%s' has landing function '%s' which is not found in '%s'.",
+                              WARN(_("Planet '%s' has landing function '%s' which is not found in '%s'."),
                                     planet->name, tmp, LANDING_DATA_PATH);
                            lua_pop(naevL,1);
                         }
@@ -1921,8 +1916,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "shipyard"))
                      planet->services |= PLANET_SERVICE_SHIPYARD | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "blackmarket"))
+                     planet->services |= PLANET_SERVICE_BLACKMARKET;
                   else
-                     WARN("Planet '%s' has unknown services tag '%s'", planet->name, ccur->name);
+                     WARN(_("Planet '%s' has unknown services tag '%s'"), planet->name, ccur->name);
 
                } while (xml_nextNode(ccur));
             }
@@ -1952,7 +1949,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             }
 
             else if (xml_isNode(cur, "blackmarket")) {
-               planet_setBlackMarket(planet);
+               planet_addService(planet, PLANET_SERVICE_BLACKMARKET);
             }
          } while (xml_nextNode(cur));
          continue;
@@ -1962,13 +1959,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
 
-      DEBUG("Unknown node '%s' in planet '%s'",node->name,planet->name);
+      DEBUG(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
    } while (xml_nextNode(node));
 
 /*
  * verification
  */
-#define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
+#define MELEMENT(o,s)   if (o) WARN(_("Planet '%s' missing '%s' element"), planet->name, s)
    /* Issue warnings on missing items only it the asset is real. */
    if (planet->real == ASSET_REAL) {
       MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
@@ -2022,7 +2019,7 @@ int planet_setRadiusFromGFX(Planet* planet)
 
    rw = ndata_rwops( path );
    if (rw == NULL) {
-      WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spacePath );
+      WARN(_("Planet '%s' has inexisting graphic '%s'!"), planet->name, planet->gfx_spacePath );
       return -1;
    }
    else {
@@ -2122,7 +2119,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    Planet *planet ;
 
    if (sys == NULL) {
-      WARN("Unable to remove planet '%s' from NULL system.", planetname);
+      WARN(_("Unable to remove planet '%s' from NULL system."), planetname);
       return -1;
    }
 
@@ -2134,7 +2131,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    /* Planet not found. */
    if (i>=sys->nplanets) {
-      WARN("Planet '%s' not found in system '%s' for removal.", planetname, sys->name);
+      WARN(_("Planet '%s' not found in system '%s' for removal."), planetname, sys->name);
       return -1;
    }
 
@@ -2159,7 +2156,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
          break;
       }
    if (found == 0)
-      WARN("Unable to find planet '%s' and system '%s' in planet<->system stack.",
+      WARN(_("Unable to find planet '%s' and system '%s' in planet<->system stack."),
             planetname, sys->name );
 
    system_setFaction(sys);
@@ -2224,7 +2221,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
    JumpPoint *jump;
 
    if (sys == NULL) {
-      WARN("Unable to remove jump point '%s' from NULL system.", jumpname);
+      WARN(_("Unable to remove jump point '%s' from NULL system."), jumpname);
       return -1;
    }
 
@@ -2236,7 +2233,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
    /* Planet not found. */
    if (i>=sys->njumps) {
-      WARN("Jump point '%s' not found in system '%s' for removal.", jumpname, sys->name);
+      WARN(_("Jump point '%s' not found in system '%s' for removal."), jumpname, sys->name);
       return -1;
    }
 
@@ -2502,11 +2499,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       if (xml_isNode(node,"asteroids"))
          continue;
 
-      DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
+      DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
    } while (xml_nextNode(node));
 
-#define MELEMENT(o,s)      if (o) WARN("Star System '%s' missing '"s"' element", sys->name)
-   if (sys->name == NULL) WARN("Star System '%s' missing 'name' tag", sys->name);
+#define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
+   if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(sys->stars==0,"stars");
@@ -2592,12 +2589,12 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    /* Get target. */
    xmlr_attr( node, "target", buf );
    if (buf == NULL) {
-      WARN("JumpPoint node for system '%s' has no target attribute.", sys->name);
+      WARN(_("JumpPoint node for system '%s' has no target attribute."), sys->name);
       return -1;
    }
    target = system_get(buf);
    if (target == NULL) {
-      WARN("JumpPoint node for system '%s' has invalid target '%s'.", sys->name, buf );
+      WARN(_("JumpPoint node for system '%s' has invalid target '%s'."), sys->name, buf );
       free(buf);
       return -1;
    }
@@ -2609,7 +2606,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
       if (j->targetid != target->id)
          continue;
 
-      WARN("Star System '%s' has duplicate jump point to '%s'.",
+      WARN(_("Star System '%s' has duplicate jump point to '%s'."),
             sys->name, target->name );
       break;
    }
@@ -2685,12 +2682,12 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    /* Get target. */
    xmlr_attr( node, "target", buf );
    if (buf == NULL) {
-      WARN("JumpPoint node for system '%s' has no target attribute.", sys->name);
+      WARN(_("JumpPoint node for system '%s' has no target attribute."), sys->name);
       return -1;
    }
    target = system_get(buf);
    if (target == NULL) {
-      WARN("JumpPoint node for system '%s' has invalid target '%s'.", sys->name, buf );
+      WARN(_("JumpPoint node for system '%s' has invalid target '%s'."), sys->name, buf );
       free(buf);
       return -1;
    }
@@ -2702,7 +2699,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       if (j->targetid != target->id)
          continue;
 
-      WARN("Star System '%s' has duplicate jump point to '%s'.",
+      WARN(_("Star System '%s' has duplicate jump point to '%s'."),
             sys->name, target->name );
       break;
    }
@@ -2731,7 +2728,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          pos = 1;
          xmlr_attr( cur, "x", buf );
          if (buf==NULL) {
-            WARN("JumpPoint for system '%s' has position node missing 'x' position, using 0.", sys->name);
+            WARN(_("JumpPoint for system '%s' has position node missing 'x' position, using 0."), sys->name);
             x = 0.;
          }
          else {
@@ -2740,7 +2737,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          }
          xmlr_attr( cur, "y", buf );
          if (buf==NULL) {
-            WARN("JumpPoint for system '%s' has position node missing 'y' position, using 0.", sys->name);
+            WARN(_("JumpPoint for system '%s' has position node missing 'y' position, using 0."), sys->name);
             y = 0.;
          }
          else {
@@ -2763,7 +2760,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    } while (xml_nextNode(cur));
 
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)
-      WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
+      WARN(_("JumpPoint in system '%s' is missing pos element but does not have autopos flag."), sys->name);
 
    /* Square to allow for linear multiplication with squared distances. */
    j->hide = pow2(j->hide);
@@ -2796,7 +2793,7 @@ static void system_parseJumps( const xmlNodePtr parent )
       }
    }
    if (sys == NULL) {
-      WARN("System '%s' was not found in the stack for some reason",name);
+      WARN(_("System '%s' was not found in the stack for some reason"),name);
       return;
    }
    free(name); /* no more need for it */
@@ -2888,7 +2885,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    } while (xml_nextNode(cur));
 
    if (a->ncorners < 3)
-       WARN("asteroid field in %d has less than 3 corners.", sys->name);
+       WARN(_("asteroid field in %d has less than 3 corners."), sys->name);
 
    /* By default, take the first in the list. */
    if (a->type == NULL) {
@@ -2972,7 +2969,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                }
 
                if (pro>=0)
-                  WARN("Non-convex asteroid polygon seems to be self-intersecting in %d", sys->name);
+                  WARN(_("Non-convex asteroid polygon seems to be self-intersecting in %d"), sys->name);
 
                /* Split subset i into 2 subsets */
 
@@ -2998,7 +2995,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                /* Remove some nodes to the old subset */
                memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j) );
                sub->ncorners = sub->ncorners-(j-n)+1;
-               sub->corners = realloc(sub->corners, sizeof(AsteroidSubset) * sub->ncorners);
+               sub->corners = realloc(sub->corners, sizeof(Vector2d) * sub->ncorners);
 
                a->nsubsets++;
 
@@ -3099,7 +3096,7 @@ int space_load (void)
 
    /* Load asteroid graphics. */
    asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
-   asteroid_gfx = malloc( sizeof(StarSystem) * systems_mstack );
+   asteroid_gfx = malloc( sizeof(glTexture*) * systems_mstack );
 
    for (i=0; i<(int)nasterogfx; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
@@ -3145,7 +3142,7 @@ static int asteroidTypes_load (void)
 {
    int i, j, len, namdef, qttdef;
    AsteroidType *at;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
@@ -3157,28 +3154,28 @@ static int asteroidTypes_load (void)
    /* Load the data. */
    buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
    if (buf == NULL) {
-      WARN("Unable to read data from '%s'", ASTERO_DATA_PATH);
+      WARN(_("Unable to read data from '%s'"), ASTERO_DATA_PATH);
       return -1;
    }
 
    /* Load the document. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("Unable to parse document '%s'", ASTERO_DATA_PATH);
+      WARN(_("Unable to parse document '%s'"), ASTERO_DATA_PATH);
       return -1;
    }
 
    /* Get the root node. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,"Asteroid_types")) {
-      WARN("Malformed '"ASTERO_DATA_PATH"' file: missing root element 'Asteroid_types'");
+      WARN( _("Malformed '%s' file: missing root element 'Asteroid_types'"), ASTERO_DATA_PATH);
       return -1;
    }
 
    /* Get the first node. */
    node = node->xmlChildrenNode; /* first event node */
    if (node == NULL) {
-      WARN("Malformed '"ASTERO_DATA_PATH"' file: does not contain elements");
+      WARN( _("Malformed '%s' file: does not contain elements"), ASTERO_DATA_PATH);
       return -1;
    }
 
@@ -3198,7 +3195,7 @@ static int asteroidTypes_load (void)
          i = 0; j = 0;
          do {
             if (xml_isNode(cur,"gfx")) {
-               at->gfxs = realloc( at->gfxs, sizeof(glTexture)*(i+1) );
+               at->gfxs = realloc( at->gfxs, sizeof(glTexture*)*(i+1) );
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
@@ -3247,7 +3244,7 @@ static int asteroidTypes_load (void)
          } while (xml_nextNode(cur));
 
          if (i==0)
-            WARN("Asteroid type has no gfx associated.");
+            WARN(_("Asteroid type has no gfx associated."));
 
          at->ngfx = i;
          at->nmaterial = j;
@@ -3278,13 +3275,13 @@ static int asteroidTypes_load (void)
  */
 static int systems_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, **system_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   int i, len;
-   uint32_t nfiles;
+   size_t i, len;
+   size_t nfiles;
 
    /* Allocate if needed. */
    if (systems_stack == NULL) {
@@ -3298,7 +3295,7 @@ static int systems_load (void)
    /*
     * First pass - loads all the star systems_stack.
     */
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
@@ -3307,14 +3304,14 @@ static int systems_load (void)
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
-         WARN("%s file is invalid xml!",file);
+         WARN(_("%s file is invalid xml!"),file);
          free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
-         WARN("Malformed %s file: does not contain elements",file);
+         WARN(_("Malformed %s file: does not contain elements"),file);
          xmlFreeDoc(doc);
          free(buf);
          continue;
@@ -3333,7 +3330,7 @@ static int systems_load (void)
    /*
     * Second pass - loads all the jump routes.
     */
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
@@ -3361,12 +3358,11 @@ static int systems_load (void)
       free(buf);
    }
 
-   DEBUG("Loaded %d Star System%s with %d Planet%s",
-         systems_nstack, (systems_nstack==1) ? "" : "s",
-         planet_nstack, (planet_nstack==1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
+   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", planet_nstack ), planet_nstack );
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<nfiles; i++)
       free( system_files[i] );
    free( system_files );
 
@@ -3744,7 +3740,7 @@ int space_addMarker( int sys, SysMarker type )
          markers = &ssys->markers_plot;
          break;
       default:
-         WARN("Unknown marker type.");
+         WARN(_("Unknown marker type."));
          return -1;
    }
 
@@ -3788,7 +3784,7 @@ int space_rmMarker( int sys, SysMarker type )
          markers = &ssys->markers_plot;
          break;
       default:
-         WARN("Unknown marker type.");
+         WARN(_("Unknown marker type."));
          return -1;
    }
 
@@ -4362,7 +4358,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 
    /* Actually run the function. */
    if (nlua_pcall(env, 3, 1)) { /* error has occurred */
-      WARN("Lua decrease script for faction '%s' : %s",
+      WARN(_("Lua decrease script for faction '%s' : %s"),
             faction_name( faction ), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       return;
@@ -4370,7 +4366,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 
    /* Output is handled the same way. */
    if (!lua_isnumber(naevL,-1)) {
-      WARN("Lua spawn script for faction '%s' failed to return timer value.",
+      WARN(_("Lua spawn script for faction '%s' failed to return timer value."),
             faction_name( presence->faction ) );
       lua_pop(naevL,1);
       return;

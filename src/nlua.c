@@ -42,9 +42,54 @@ nlua_env __NLUA_CURENV = LUA_NOREF;
  * prototypes
  */
 static int nlua_packfileLoader( lua_State* L );
-lua_State *nlua_newState (void); /* creates a new state */
-int nlua_loadBasic( lua_State* L );
-int nlua_errTrace( lua_State *L );
+static lua_State *nlua_newState (void); /* creates a new state */
+static int nlua_loadBasic( lua_State* L );
+static int nlua_errTrace( lua_State *L );
+/* gettext */
+static int nlua_gettext( lua_State *L );
+static int nlua_ngettext( lua_State *L );
+static const luaL_Reg gettext_methods[] = {
+   { "gettext",  nlua_gettext },
+   { "ngettext", nlua_ngettext },
+   {0,0}
+}; /**< Vector metatable methods. */
+
+/**
+ * @brief gettext support.
+ * 
+ * @usage _( str )
+ *    @luatparam str String to gettext on.
+ *    @luatreturn The string converted to gettext.
+ * @luafunc gettext( str )
+ */
+static int nlua_gettext( lua_State *L )
+{
+   const char *str;
+   str = luaL_checkstring(L, 1);
+   lua_pushstring(L, _(str) );
+   return 1;
+}
+
+/**
+ * @brief gettext support.
+ * 
+ * @usage ngettext( str )
+ *    @luatparam msgid1 Singular form.
+ *    @luatparam msgid2 Plural form.
+ *    @luatparam n Number of elements.
+ *    @luatreturn The string converted to gettext.
+ * @luafunc gettext( msgid1, msgid2, n )
+ */
+static int nlua_ngettext( lua_State *L )
+{
+   const char *stra, *strb;
+   int n;
+   stra = luaL_checkstring(L, 1);
+   strb = luaL_checkstring(L, 2);
+   n    = luaL_checkinteger(L,3);
+   lua_pushstring(L, ngettext( stra, strb, n ) );
+   return 1;
+}
 
 
 /*
@@ -221,14 +266,14 @@ void nlua_register(nlua_env env, const char *libname,
  *
  *    @return A newly created lua_State.
  */
-lua_State *nlua_newState (void)
+static lua_State *nlua_newState (void)
 {
    lua_State *L;
 
    /* try to create the new state */
    L = luaL_newstate();
    if (L == NULL) {
-      WARN("Failed to create new Lua state.");
+      WARN(_("Failed to create new Lua state."));
       return NULL;
    }
 
@@ -242,7 +287,7 @@ lua_State *nlua_newState (void)
  *    @param L Lua State to load the basic stuff into.
  *    @return 0 on success.
  */
-int nlua_loadBasic( lua_State* L )
+static int nlua_loadBasic( lua_State* L )
 {
    int i;
    const char *override[] = { /* unsafe functions */
@@ -253,7 +298,7 @@ int nlua_loadBasic( lua_State* L )
          "loadfile",
          "loadstring",
          "setfenv",
-	 NULL
+         NULL
    };
 
 
@@ -269,7 +314,11 @@ int nlua_loadBasic( lua_State* L )
    lua_register(L, "print", cli_print);
    lua_register(L, "warn",  cli_warn);
 
-   /* add our own */
+   /* Gettext functionality. */
+   lua_register(L, "_", nlua_gettext);
+   luaL_register(L, "gettext", gettext_methods);
+
+   /* Add our own */
    lua_pushvalue(L, LUA_GLOBALSINDEX);
    lua_pushcclosure(L, nlua_packfileLoader, 1);
    lua_setglobal(L, "include");
@@ -292,7 +341,7 @@ static int nlua_packfileLoader( lua_State* L )
    char *path_filename;
    char *buf;
    int len;
-   uint32_t bufsize;
+   size_t bufsize;
    int envtab;
 
    /* Environment table to load module into */
@@ -335,8 +384,8 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      DEBUG("include(): %s not found in ndata.", filename);
-      luaL_error(L, "include(): %s not found in ndata.", filename);
+      DEBUG(_("include(): %s not found in ndata."), filename);
+      luaL_error(L, _("include(): %s not found in ndata."), filename);
       return 1;
    }
 
@@ -431,7 +480,7 @@ int nlua_loadStandard( nlua_env env )
 /**
  * @brief Gets a trace from Lua.
  */
-int nlua_errTrace( lua_State *L )
+static int nlua_errTrace( lua_State *L )
 {
    /* Handle special done case. */
    const char *str = luaL_checkstring(L,1);

@@ -1,7 +1,6 @@
 --[[
 
    FLF mission common functions.
-   Copyright (C) 2014, 2015 Julie Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,13 +18,39 @@
 --]]
 
 
+-- Get a random system with FLF presence.
+function flf_getSystem ()
+   local choices = {}
+   for i, j in ipairs( system.getAll() ) do
+      local p = j:presences()
+      if p[ "FLF" ] then
+         choices[ #choices + 1 ] = j:name()
+      end
+   end
+   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+end
+
+
 -- Get a system generally good for an FLF mission.
 -- These are systems which have both FLF and Dvaered presence.
 function flf_getTargetSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if p[ "FLF" ] and p[ "Dvaered" ]  then
+      if p[ "FLF" ] and p[ "Dvaered" ] then
+         choices[ #choices + 1 ] = j:name()
+      end
+   end
+   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+end
+
+
+-- Get a pirate-infested Frontier system.
+function flf_getPirateSystem ()
+   local choices = {}
+   for i, j in ipairs( system.getAll() ) do
+      local p = j:presences()
+      if j:faction() == faction.get("Frontier") and p[ "Pirate" ] then
          choices[ #choices + 1 ] = j:name()
       end
    end

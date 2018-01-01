@@ -88,7 +88,7 @@ static int misn_osdActive( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
-static const luaL_reg misn_methods[] = {
+static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
    { "setReward", misn_setReward },
@@ -245,8 +245,8 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
-         WARN("Mission '%s' -> '%s': %s",
-               cur_mission->data->name, func, (err) ? err : "unknown error");
+         WARN(_("Mission '%s' -> '%s': %s"),
+               cur_mission->data->name, func, (err) ? err : _("unknown error"));
          ret = -1;
       }
       else
@@ -377,7 +377,7 @@ static int misn_markerAdd( lua_State *L )
    else if (strcmp(stype, "plot")==0)
       type = SYSMARKER_PLOT;
    else {
-      NLUA_ERROR(L, "Unknown marker type: %s", stype);
+      NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
       return 0;
    }
 
@@ -419,7 +419,7 @@ static int misn_markerMove( lua_State *L )
 
    /* Mission must have markers. */
    if (cur_mission->markers == NULL) {
-      NLUA_ERROR( L, "Mission has no markers set!" );
+      NLUA_ERROR( L, _("Mission has no markers set!") );
       return 0;
    }
 
@@ -433,7 +433,7 @@ static int misn_markerMove( lua_State *L )
       }
    }
    if (marker == NULL) {
-      NLUA_ERROR( L, "Mission does not have a marker with id '%d'", id );
+      NLUA_ERROR( L, _("Mission does not have a marker with id '%d'"), id );
       return 0;
    }
 
@@ -596,7 +596,7 @@ static int misn_accept( lua_State *L )
 
    /* no missions left */
    if (cur_mission->accepted)
-      NLUA_ERROR(L, "Mission already accepted!");
+      NLUA_ERROR(L, _("Mission already accepted!"));
    else if (i>=MISSION_MAX)
       ret = 1;
    else { /* copy it over */
@@ -674,7 +674,7 @@ static int misn_cargoAdd( lua_State *L )
 
    /* Check if the cargo exists. */
    if(cargo == NULL) {
-      NLUA_ERROR(L, "Cargo '%s' not found.", cname);
+      NLUA_ERROR(L, _("Cargo '%s' not found."), cname);
       return 0;
    }
 
@@ -770,7 +770,7 @@ static int misn_osdCreate( lua_State *L )
 
    /* Must be accepted. */
    if (!cur_mission->accepted) {
-      WARN("Can't create an OSD on an unaccepted mission!");
+      WARN(_("Can't create an OSD on an unaccepted mission!"));
       return 0;
    }
 
@@ -930,30 +930,31 @@ static int misn_npcRm( lua_State *L )
    ret = npc_rm_mission( id, cur_mission );
 
    if (ret != 0)
-      NLUA_ERROR(L, "Invalid NPC ID!");
+      NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
 
 /**
- * @brief Tries to claim systems.
+ * @brief Tries to claim systems or strings.
  *
- * Claiming systems is a way to avoid mission collisions preemptively.
+ * Claiming systems and strings is a way to avoid mission collisions preemptively.
  *
- * Note it does not actually claim the systems if it fails to claim. It also
+ * Note it does not actually perform the claim if it fails to claim. It also
  *  does not work more than once.
  *
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
+ * @usage if not misn.claim( 'some_string' ) then misn.finish( false ) end
+ * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
  *
- *    @luatparam System|{System,...} systems Table of systems to claim or a single system.
+ *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
- * @luafunc claim( systems )
+ * @luafunc claim( params )
  */
 static int misn_claim( lua_State *L )
 {
-   int i, l;
-   SysClaim_t *claim;
+   Claim_t *claim;
    Mission *cur_mission;
 
    /* Get mission. */
@@ -961,7 +962,7 @@ static int misn_claim( lua_State *L )
 
    /* Check to see if already claimed. */
    if (cur_mission->claims != NULL) {
-      NLUA_ERROR(L, "Mission trying to claim but already has.");
+      NLUA_ERROR(L, _("Mission trying to claim but already has."));
       return 0;
    }
 
@@ -970,17 +971,19 @@ static int misn_claim( lua_State *L )
 
    if (lua_istable(L,1)) {
       /* Iterate over table. */
-      l = lua_objlen(L,1);
-      for (i=0; i<l; i++) {
-         lua_pushnumber(L,i+1);
-         lua_gettable(L,1);
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
          if (lua_issystem(L,-1))
-            claim_add( claim, lua_tosystem( L, -1 ) );
+            claim_addSys( claim, lua_tosystem( L, -1 ) );
+         else if (lua_isstring(L,-1))
+            claim_addStr( claim, lua_tostring( L, -1 ) );
          lua_pop(L,1);
       }
    }
    else if (lua_issystem(L, 1))
-      claim_add( claim, lua_tosystem( L, 1 ) );
+      claim_addSys( claim, lua_tosystem( L, 1 ) );
+   else if (lua_isstring(L, 1))
+      claim_addStr( claim, lua_tostring( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
 

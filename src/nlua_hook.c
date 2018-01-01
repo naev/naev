@@ -53,7 +53,7 @@ static int hook_safe( lua_State *L );
 static int hook_standing( lua_State *L );
 static int hook_discover( lua_State *L );
 static int hook_pilot( lua_State *L );
-static const luaL_reg hook_methods[] = {
+static const luaL_Reg hook_methods[] = {
    { "rm", hookL_rm },
    { "load", hook_load },
    { "land", hook_land },
@@ -263,7 +263,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
          if (player_missions[i]->id == running_mission->id)
             break;
       if (i>=MISSION_MAX) {
-         WARN("Mission not in stack trying to hook, forgot to run misn.accept()?");
+         WARN(_("Mission not in stack trying to hook, forgot to run misn.accept()?"));
          return 0;
       }
 
@@ -283,12 +283,12 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
          h = hook_addTimerEvt( running_event->id, func, ms );
    }
    else {
-      NLUA_ERROR(L,"Attempting to set a hook outside of a mission or event.");
+      NLUA_ERROR(L,_("Attempting to set a hook outside of a mission or event."));
       return 0;
    }
 
    if (h == 0) {
-      NLUA_ERROR(L,"No hook target was set.");
+      NLUA_ERROR(L,_("No hook target was set."));
       return 0;
    }
 
@@ -704,7 +704,7 @@ static int hook_pilot( lua_State *L )
    else if (lua_isnil(L,1))
       p           = 0;
    else {
-      NLUA_ERROR(L, "Invalid parameter #1 for hook.pilot, expecting pilot or nil.");
+      NLUA_ERROR(L, _("Invalid parameter #1 for hook.pilot, expecting pilot or nil."));
       return 0;
    }
    hook_type   = luaL_checkstring(L,2);
@@ -723,7 +723,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else { /* hook_type not valid */
-      NLUA_ERROR(L, "Invalid pilot hook type: '%s'", hook_type);
+      NLUA_ERROR(L, _("Invalid pilot hook type: '%s'"), hook_type);
       return 0;
    }
 

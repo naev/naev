@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Turreted Convulsion Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>25</mass>
+  <price>120000</price>
+  <description>The Thurion have developed a turret mounted Convulsion Launcher.</description>
+  <gfx_store>turreted_convulsion_launcher</gfx_store>
+  <cpu>-18</cpu>
+ </general>
+ <specific type="turret launcher" secondary="1">
+  <ammo>Convulsion Missile</ammo>
+  <delay>2.5</delay>
+  <amount>35</amount>
+  <lockon>5</lockon>
+  <ew_target>3</ew_target>
+ </specific>
+</outfit>

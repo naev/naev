@@ -121,14 +121,14 @@ end
 
 -- Construct the cargo mission description text
 function buildCargoMissionDescription( priority, amount, ctype, destplanet, destsys )
-   str = "Shipment to %s"
+   str = _("Shipment to %s")
    if priority ~= nil then
-      str = priority .. " transport to %s"
+      str = priority .. _(" transport to %s")
    end
    if system.cur() ~= destsys then
-      str = string.format( "%s in %s", str, destsys:name() )
+      str = string.format( _("%s in %s"), str, destsys:name() )
    end
-   return string.format( "%s (%s tonnes)", str:format( destplanet:name()), amount )
+   return string.format( _("%s (%s tonnes)"), str:format( destplanet:name()), amount )
 end
 
 

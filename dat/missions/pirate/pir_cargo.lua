@@ -22,48 +22,44 @@ function cargo_selectMissionDistance ()
    return missdist
 end
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   osd_title = "Pirate Shipping"
-   osd_msg = {}
-   osd_msg[1] = "Fly to %s in the %s system before %s."
-   osd_msg[2] = "You have %s remaining."
-   osd_msg1 = "Fly to %s in the %s system before %s."
-   osd_msg2 = "You have %s remaining." -- Need to reuse.
+osd_title = _("Pirate Shipping")
+osd_msg = {}
+osd_msg[1] = _("Fly to %s in the %s system before %s.")
+osd_msg[2] = _("You have %s remaining.")
+osd_msg1 = _("Fly to %s in the %s system before %s.")
+osd_msg2 = _("You have %s remaining.") -- Need to reuse.
 
-   misn_desc = "%d tons of %s needs to be shipped to %s in the %s system by %s (%s left)."
-   misn_reward = "%s credits"
-   title = {}
-   title_p1 = "Pirate: Cargo transport to %s in the %s system"
-   title_p2 = [[ 
+misn_title = _("Pirate cargo transport (%d tonnes of %s)")
+misn_desc = _("%d tons of %s needs to be shipped to %s in the %s system by %s (%s left).")
+misn_reward = _("%s credits")
+title = {}
+title_p1 = _("Pirate: Cargo transport to %s in the %s system")
+title_p2 = _([[ 
 Cargo: %s (%d tonnes)
 Jumps: %d
 Travel distance: %d
-Time limit: %s]]
-   full = {}
-   full[1] = "Ship is full"
-   full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
-   slow = {}
-   slow[1] = "Too slow"
-   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s.
+Time limit: %s]])
+full = {}
+full[1] = _("Ship is full")
+full[2] = _("Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission.")
+slow = {}
+slow[1] = _("Too slow")
+slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s.
 
-Accept the mission anyway?]]
-   msg_title = {}
-   msg_title[1] = "Mission Accepted"
-   msg_title[2] = "Too many missions"
-   msg_title[3] = "Successful Delivery"
-   msg_msg = {}
-   msg_msg[1] = "%d tons of %s are loaded onto your ship."
-   msg_msg[2] = "You have too many active missions."
-   msg_msg[3] = "The %s is unloaded at the docks."
-   msg_msg[4] = "The %s is passed through the airlock."
-   miss = {}
-   miss[1]= "Cargo Missing"
-   miss[2] = "You are missing the %d tons of %s!."
-   miss[3] = "MISSION FAILED: You have failed to deliver the goods on time!"
-end
+Accept the mission anyway?]])
+msg_title = {}
+msg_title[1] = _("Mission Accepted")
+msg_title[2] = _("Too many missions")
+msg_title[3] = _("Successful Delivery")
+msg_msg = {}
+msg_msg[1] = _("%d tons of %s are loaded onto your ship.")
+msg_msg[2] = _("You have too many active missions.")
+msg_msg[3] = _("The %s is unloaded at the docks.")
+msg_msg[4] = _("The %s is passed through the airlock.")
+miss = {}
+miss[1]= _("Cargo Missing")
+miss[2] = _("You are missing the %d tons of %s!.")
+miss[3] = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
@@ -120,7 +116,7 @@ function create()
    distreward = 0.30
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
-   misn.setTitle("Pirate cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
+   misn.setTitle( misn_title:format( amount, cargo ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(title_p1:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
    misn.setReward(misn_reward:format(numstring(reward)))
