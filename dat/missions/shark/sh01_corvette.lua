@@ -31,6 +31,11 @@ text[2] = _([["I had no doubts you would accept," Smith says. "Go and meet our p
 title[3] = _("Reward")
 text[3] = _([[As you land, you see Arnold Smith who was waiting for you. He explains you that the baron was so impressed by the battle that he signed the contract. You made it possible for Nexus Shipyard to sell 20 Shark fighters. Of course, that's not a very big thing for a multi-stellar company like Nexus, but as a reward, they give you twice the sum of credits they promised to you.]])
 
+title[4] = _("You ran away!")
+title[5] = _("The shark is destroyed!")
+title[6] = _("The shark ran away")
+text[4] = _([[Your mission failed.]])
+
 -- Mission details
 misn_title = _("Sharkman is back")
 misn_reward = _("%s credits")
@@ -51,9 +56,12 @@ function create ()
    bsyname = "Toaxis"
    psyname = "Alteris"
    pplname = "Darkshed"
+   --System neighbouring Toaxis with zero pirate presence due to a "Virtual Pirate Unpresence" asset
+   esyname = "Ingot"
    battlesys = system.get(bsyname)
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
+   escapesys = system.get(esyname)
    
    if not misn.claim(battlesys) then
       misn.finish(false)
@@ -86,7 +94,7 @@ function accept()
       jumpouthook = hook.jumpout("jumpout")
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
-      else
+   else
       tk.msg(refusetitle, refusetext)
       misn.finish(false)
    end
@@ -94,12 +102,14 @@ end
 
 function jumpout()
    if stage == 1 then --player trying to escape
+      tk.msg(title[4], text[4])
       misn.finish(false)
    end
 end
 
 function land()
    if stage == 1 then --player trying to escape
+      tk.msg(title[4], text[4])
       misn.finish(false)
    end
    if stage == 2 and planet.cur() == paypla then
@@ -137,9 +147,9 @@ function enter()
       
       sharkboy:addOutfit("Ion Cannon",3)-- The goal is to disable the player
       
-      --Giving him full shield and full energy
       sharkboy:setHealth(100,100)
       sharkboy:setEnergy(100)
+      sharkboy:setFuel(true)
       stage = 1
       
       hook.pilot( sharkboy, "death", "shark_dead" )
@@ -149,11 +159,13 @@ function enter()
 end
 
 function shark_dead()  --you killed the shark
+   tk.msg(title[5], text[4])
    misn.finish(false)
 end
 
 function shark_jump()  --the shark jumped away before having disabled the player
    if stage == 1 then
+      tk.msg(title[6], text[4])
       misn.finish(false)
    end
 end
@@ -166,5 +178,6 @@ function disabled(pilot, attacker)
       marker2 = misn.markerAdd(paysys, "low")
    end
    sharkboy:control()
-   sharkboy:runaway(player.pilot())  --otherwise, the shark will try to destroy the player's ship
+   --making sure the shark doesn't continue attacking the player and minimizing the chance of it being accidentally destroyed by pirates
+   sharkboy:hyperspace(escapesys)
 end
