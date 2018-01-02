@@ -2325,6 +2325,24 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
 
 
 /**
+ * @brief Loops over pilot stack to remove an asteroid as target.
+ *
+ *    @param anchor Asteroid anchor the asteroid belongs to.
+ *    @param asteroid Asteroid.
+ */
+void pilot_untargetAsteroid( int anchor, int asteroid )
+{
+   int i;
+   for (i=0; i < pilot_nstack; i++) {
+      if ((pilot_stack[i]->nav_asteroid == asteroid) && (pilot_stack[i]->nav_anchor == anchor)) {
+         pilot_stack[i]->nav_asteroid = -1;
+         pilot_stack[i]->nav_anchor   = -1;
+      }
+   }
+}
+
+
+/**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
  *    @param p Pilot to check to see if they have enough credits.
@@ -2506,6 +2524,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot_setTarget( pilot, pilot->id ); /* No target. */
    pilot->nav_planet       = -1;
    pilot->nav_hyperspace   = -1;
+   pilot->nav_anchor       = -1;
+   pilot->nav_asteroid     = -1;
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {

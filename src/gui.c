@@ -391,6 +391,9 @@ static void gui_renderPlanetTarget( double dt )
    const glColour *c;
    Planet *planet;
    JumpPoint *jp;
+   AsteroidAnchor *field;
+   Asteroid *ast;
+   AsteroidType *at;
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -398,7 +401,8 @@ static void gui_renderPlanetTarget( double dt )
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0))
+   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0) 
+       && (player.p->nav_asteroid < 0))
       return;
 
    /* Make sure targets are still in range. */
@@ -429,6 +433,22 @@ static void gui_renderPlanetTarget( double dt )
       y = planet->pos.y + planet->gfx_space->h / 2.;
       w = planet->gfx_space->w;
       h = planet->gfx_space->h;
+      gui_renderTargetReticles( x, y, w, h, c );
+   }
+   if (player.p->nav_asteroid >= 0) {
+      field = &cur_system->asteroids[player.p->nav_anchor];
+      ast   = &field->asteroids[player.p->nav_asteroid];
+      c = &cWhite;
+
+      /* Recover the right gfx */
+      at = space_getType( ast->type );
+      if (ast->gfxID > at->ngfx+1)
+         WARN(_("Gfx index out of range"));
+
+      x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;
+      y = ast->pos.y + at->gfxs[ast->gfxID]->h / 2.;
+      w = at->gfxs[ast->gfxID]->w;
+      h = at->gfxs[ast->gfxID]->h;
       gui_renderTargetReticles( x, y, w, h, c );
    }
 }

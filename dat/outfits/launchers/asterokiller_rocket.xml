@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Asterokiller Rocket">
  <general>
-  <license>Medium Weapon License</license>
   <mass>0.5</mass>
   <price>1000</price>
   <description>As asteroid miners understood that the easiest way to gather ore from asteroids was to blow them up, one of them adapted a mace rocket of his time. The principle of this ammo is to perforate the asteroid and explode from the inside of it.</description>

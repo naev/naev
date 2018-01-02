@@ -200,6 +200,8 @@ typedef struct Debris_ {
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
+   int id; /**< ID of the asteroid, for targeting. */
+   int parent; /**< ID of the anchor parent. */
    Vector2d pos; /**< Position. */
    Vector2d vel; /**< Velocity. */
    int gfxID; /**< ID of the asteroid gfx. */
@@ -225,6 +227,7 @@ typedef struct AsteroidSubset_ {
  * @brief Represents an asteroid field anchor.
  */
 typedef struct AsteroidAnchor_ {
+   int id; /**< ID of the anchor, for targeting. */
    Vector2d pos; /**< Position in the system. */
    double density; /**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
@@ -399,8 +402,8 @@ int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
 char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p));
-double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
-double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang );
+double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
+double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
 
 
 /*

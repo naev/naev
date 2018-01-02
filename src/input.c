@@ -1175,7 +1175,7 @@ static void input_mouseMove( SDL_Event* event )
 static void input_clickevent( SDL_Event* event )
 {
    unsigned int pid;
-   int mx, my, mxr, myr, pntid, jpid;
+   int mx, my, mxr, myr, pntid, jpid, astid, fieid;
    int rx, ry, rh, rw, res;
    int autonav;
    double x, y, zoom, px, py;
@@ -1232,13 +1232,13 @@ static void input_clickevent( SDL_Event* event )
       y = (my - (gl_screen.h / 2.)) + py;
       mouseang = atan2(py - y, px -  x);
       angp = pilot_getNearestAng( player.p, &pid, mouseang, 1 );
-      ang  = system_getClosestAng( cur_system, &pntid, &jpid, x, y, mouseang );
+      ang  = system_getClosestAng( cur_system, &pntid, &jpid, &astid, &fieid, x, y, mouseang );
 
       if  ((ABS(angle_diff(mouseang, angp)) > M_PI / 64) ||
             ABS(angle_diff(mouseang, ang)) < ABS(angle_diff(mouseang, angp)))
          pid = PLAYER_ID; /* Pilot angle is too great, or planet/jump is closer. */
       if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
-         jpid = pntid = -1; /* Asset angle difference is too great. */
+         jpid = pntid = astid = fieid = -1; /* Asset angle difference is too great. */
 
       if (!autonav && pid != PLAYER_ID) {
          if (input_clickedPilot(pid))
@@ -1250,6 +1250,10 @@ static void input_clickevent( SDL_Event* event )
       }
       else if (jpid >= 0) { /* Jump point is closest. */
          if (input_clickedJump(jpid, autonav))
+            return;
+      }
+      else if (astid >= 0) { /* Asteroid is closest. */
+         if (input_clickedAsteroid(fieid, astid))
             return;
       }
 
@@ -1299,12 +1303,15 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    double d, dp;
    Planet *pnt;
    JumpPoint *jp;
-   int pntid, jpid;
+   Asteroid *ast;
+   AsteroidAnchor *field;
+   AsteroidType *at;
+   int pntid, jpid, astid, fieid;
 
    dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
    p  = pilot_get(pid);
 
-   d  = system_getClosest( cur_system, &pntid, &jpid, x, y );
+   d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
    rp = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
 
    if (pntid >=0) { /* Planet is closer. */
@@ -1315,6 +1322,17 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       jp = &cur_system->jumps[ jpid ];
       r  = MAX( 1.5 * jp->radius * zoom, minr );
    }
+   else if (astid >= 0) {
+      field = &cur_system->asteroids[fieid];
+      ast   = &field->asteroids[astid];
+
+      /* Recover the right gfx */
+      at = space_getType( ast->type );
+      if (ast->gfxID > at->ngfx+1)
+         WARN(_("Gfx index out of range"));
+      r  = MAX( MAX( at->gfxs[ast->gfxID]->w * zoom, minr ),
+                at->gfxs[ast->gfxID]->h * zoom );
+   }
    else
       r  = 0.;
 
@@ -1323,7 +1341,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       pid = PLAYER_ID;
 
    if (d > pow2(r)) /* Planet or jump point is too far. */
-      jpid = pntid = -1;
+      jpid = pntid = astid = fieid =  -1;
 
    /* Target a pilot, planet or jump, and/or perform an appropriate action. */
    if (event->button.button == SDL_BUTTON_LEFT) {
@@ -1335,6 +1353,9 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       }
       else if (jpid >= 0) { /* Jump point is closest. */
          return input_clickedJump(jpid, 0);
+      }
+      else if (astid >= 0) { /* Asteroid is closest. */
+         return input_clickedAsteroid(fieid, astid);
       }
    }
    /* Right click only controls autonav. */
@@ -1426,6 +1447,27 @@ int input_clickedPlanet( int planet, int autonav )
       player_targetPlanetSet( planet );
 
    input_clicked( (void*)pnt );
+   return 1;
+}
+
+/**
+ * @brief Performs an appropriate action when an asteroid is clicked.
+ *
+ *    @param field Index of the parent field of the asteoid.
+ *    @param asteroid Index of the oasteoid in the field.
+ *    @return Whether the click was used.
+ */
+int input_clickedAsteroid( int field, int asteroid )
+{
+   Asteroid *ast;
+   AsteroidAnchor *anchor;
+
+   anchor = &cur_system->asteroids[ field ];
+   ast = &anchor->asteroids[ asteroid ];
+
+   player_targetAsteroidSet( field, asteroid );
+
+   input_clicked( (void*)ast );
    return 1;
 }
 

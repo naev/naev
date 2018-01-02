@@ -405,14 +405,14 @@ void gatherable_gather( int pilot )
    for (i=0; i < gatherable_nstack; i++) {
       gat = &gatherable_stack[i];
 
-      if ( .1*vect_dist( &p->solid->pos, &gat->pos ) +
+      if ( .03*vect_dist( &p->solid->pos, &gat->pos ) +
            .03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
          /* Add cargo to pilot. */
          q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
 
          if ( q>0 ) {
             if (pilot_isPlayer(p))
-               player_message( "%i tons gathered", q );
+               player_message( _("%i tons gathered"), q );
 
             /* Remove the object from space. */
             gatherable_nstack--;
@@ -420,6 +420,10 @@ void gatherable_gather( int pilot )
                     sizeof(Gatherable)*(gatherable_nstack-i) );
             gatherable_stack = realloc(gatherable_stack,
                                        sizeof(Gatherable) * gatherable_nstack);
+
+            /* Test if there is still cargo space */
+            if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
+               player_message( _("No more cargo space available") );
          }
       }
    }

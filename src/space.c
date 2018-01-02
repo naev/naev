@@ -501,18 +501,22 @@ char* space_getRndPlanet( int landable, unsigned int services,
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  */
-double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y )
+double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y )
 {
-   int i;
+   int i, k;
    double d, td;
    Planet *p;
    JumpPoint *j;
+   Asteroid *as;
+   AsteroidAnchor *f;
 
    /* Default output. */
    *pnt = -1;
    *jp  = -1;
+   *ast = -1;
+   *fie = -1;
    d    = INFINITY;
-
+   
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
       p  = sys->planets[i];
@@ -525,12 +529,29 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, do
       }
    }
 
+   /* Asteroids. */
+   for (i=0; i<sys->nasteroids; i++) {
+      f = &sys->asteroids[i];
+      for (k=0; k<f->nb; k++) {
+         as = &f->asteroids[k];
+         td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
+         if (td < d) {
+            *pnt  = -1; /* We must clear planet target as asteroid is closer. */
+            *ast  = k;
+            *fie  = i;
+            d     = td;
+         }
+      }
+   }
+
    /* Jump points. */
    for (i=0; i<sys->njumps; i++) {
       j  = &sys->jumps[i];
       td = pow2(x-j->pos.x) + pow2(y-j->pos.y);
       if (td < d) {
          *pnt  = -1; /* We must clear planet target as jump point is closer. */
+         *ast  = -1;
+         *fie  = -1;
          *jp   = i;
          d     = td;
       }
@@ -543,17 +564,21 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, do
  * @brief Gets the closest feature to a position in the system.
  *
  *    @param sys System to get closest feature from a position.
- *    @param[out] pnt ID of closest planet or -1 if a jump point is closer (or none is close).
- *    @param[out] jp ID of closest jump point or -1 if a planet is closer (or none is close).
+ *    @param[out] pnt ID of closest planet or -1 if something else is closer (or none is close).
+ *    @param[out] jp ID of closest jump point or -1 if something else is closer (or none is close).
+ *    @param[out] ast ID of closest asteroid or -1 if something else is closer (or none is close).
+ *    @param[out] fie ID of the asteroid anchor the asteroid belongs to.
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  */
-double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang )
+double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang )
 {
-   int i;
+   int i, k;
    double a, ta;
    Planet *p;
    JumpPoint *j;
+   AsteroidAnchor *f;
+   Asteroid *as;
 
    /* Default output. */
    *pnt = -1;
@@ -572,12 +597,29 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x,
       }
    }
 
+   /* Asteroids. */
+   for (i=0; i<sys->nasteroids; i++) {
+      f  = &sys->asteroids[i];
+      for (k=0; k<f->nb; k++) {
+         as = &f->asteroids[k];
+         ta = atan2( y - as->pos.y, x - as->pos.x);
+         if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
+            *pnt  = -1; /* We must clear planet target as asteroid is closer. */
+            *ast  = k;
+            *fie  = i;
+            a     = ta;
+         }
+      }
+   }
+
    /* Jump points. */
    for (i=0; i<sys->njumps; i++) {
       j  = &sys->jumps[i];
       ta = atan2( y - j->pos.y, x - j->pos.x);
       if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
-         *pnt  = -1; /* We must clear planet target as jump point is closer. */
+         *ast  = -1;
+         *fie  = -1;
+         *pnt  = -1; /* We must clear the rest as jump point is closer. */
          *jp   = i;
          a     = ta;
       }
@@ -1260,7 +1302,7 @@ void space_update( const double dt )
          /* Exploding asteroid */
          if (a->appearing == 3) {
             a->timer += dt;
-            if (a->timer >= 1.) {
+            if (a->timer >= .5) {
                /* Make it explode */
                asteroid_explode( a, ast );
             }
@@ -1378,11 +1420,13 @@ void space_init( const char* sysname )
    /* Set up asteroids. */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
+      ast->id = i;
 
       /* Add the asteroids to the anchor */
       ast->asteroids = malloc( (ast->nb) * sizeof(Asteroid) );
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
+         a->id = j;
          asteroid_init(a, ast);
       }
       /* Add the debris to the anchor */
@@ -1463,6 +1507,8 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    double mod, theta, x, y;
    AsteroidSubset *sub;
    AsteroidType *at;
+
+   ast->parent = field->id;
 
    /* Get a random position:
        * choose a convex subset
@@ -4265,7 +4311,7 @@ void asteroid_hit( Asteroid *a )
  */
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
 {
-   int i, j, nb;
+   int i, j, nb;//, id, fieldid;
    Damage dmg;
    AsteroidType *at;
    Commodity *com;
@@ -4295,6 +4341,11 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
          gatherable_init( com, pos, vel );
       }
    }
+
+   /* Loop over pilots to remove target */
+   //id = a->id;
+   //fieldid = a->parent;
+   pilot_untargetAsteroid( a->parent, a->id );
 
    /* Make it respawn elsewhere */
    asteroid_init( a, field );

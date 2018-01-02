@@ -12,6 +12,6 @@
  <specific type="launcher" secondary="1">
   <ammo>Asterokiller Rocket</ammo>
   <delay>2</delay>
-  <amount>5</amount>
+  <amount>10</amount>
  </specific>
 </outfit>
