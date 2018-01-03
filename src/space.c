@@ -1294,6 +1294,8 @@ void space_update( const double dt )
          if (a->appearing == 2) {
             a->timer += dt;
             if (a->timer >= 2.) {
+               /* Remove the asteroid target to any pilot. */
+               pilot_untargetAsteroid( a->parent, a->id );
                /* reinit any disappeared asteroid */
                asteroid_init( a, ast );
             }
@@ -4311,7 +4313,7 @@ void asteroid_hit( Asteroid *a )
  */
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
 {
-   int i, j, nb;//, id, fieldid;
+   int i, j, nb;
    Damage dmg;
    AsteroidType *at;
    Commodity *com;
@@ -4325,7 +4327,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
    expl_explode( a->pos.x, a->pos.y, a->vel.x, a->vel.y,
                  50., &dmg, NULL, EXPL_MODE_SHIP );
 
-   /* Release commodity */
+   /* Release commodity. */
    at = &asteroid_types[a->type];
 
    for (i=0; i < at->nmaterial; i++) {
@@ -4342,9 +4344,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
       }
    }
 
-   /* Loop over pilots to remove target */
-   //id = a->id;
-   //fieldid = a->parent;
+   /* Remove the asteroid target to any pilot. */
    pilot_untargetAsteroid( a->parent, a->id );
 
    /* Make it respawn elsewhere */

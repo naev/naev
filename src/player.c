@@ -1337,16 +1337,21 @@ void player_targetAsteroidSet( int field, int id )
       if (id >= 0)
          player_soundPlayGUI(snd_nav, 1);
 
-         /* Recover and display some info about the asteroid */
-         anchor = &cur_system->asteroids[field];
-         ast = &anchor->asteroids[id];
-         at = space_getType( ast->type );
+         /* See if the player has the asteroid sanner. */
+         if (player.p->stats.misc_asteroid_scan) {
+            /* Recover and display some info about the asteroid. */
+            anchor = &cur_system->asteroids[field];
+            ast = &anchor->asteroids[id];
+            at = space_getType( ast->type );
 
-         player_message( _("Asteroid targeted, composition: ") );
-         for (i=0; i<at->nmaterial; i++) {
-           com = at->material[i];
-           player_message( _("%s, quantity: %i"), com->name, at->quantity[i] );
+            player_message( _("Asteroid targeted, composition: ") );
+            for (i=0; i<at->nmaterial; i++) {
+              com = at->material[i];
+              player_message( _("%s, quantity: %i"), com->name, at->quantity[i] );
+            }
          }
+         else
+            player_message( _("Asteroid targeted") );
    }
 
    player.p->nav_anchor = field;

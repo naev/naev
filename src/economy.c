@@ -64,7 +64,8 @@ extern int systems_nstack; /**< Number of star systems. */
 
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
-static int gatherable_nstack       = 0; /**< Number of gatherables in the stack. */
+static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
+float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
 
 
 /*
@@ -345,6 +346,9 @@ void gatherable_update( double dt )
 {
    int i;
 
+   /* Update the timer for "full cargo" message. */
+   noscoop_timer += dt;
+
    for (i=0; i < gatherable_nstack; i++) {
       gatherable_stack[i].timer += dt;
       gatherable_stack[i].pos.x += dt*gatherable_stack[i].vel.x;
@@ -412,7 +416,7 @@ void gatherable_gather( int pilot )
 
          if ( q>0 ) {
             if (pilot_isPlayer(p))
-               player_message( _("%i tons gathered"), q );
+               player_message( _("%i tons of %s gathered"), q, gat->type->name );
 
             /* Remove the object from space. */
             gatherable_nstack--;
@@ -424,6 +428,10 @@ void gatherable_gather( int pilot )
             /* Test if there is still cargo space */
             if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
                player_message( _("No more cargo space available") );
+         }
+         else if ((pilot_isPlayer(p)) && (noscoop_timer > 2.)) {
+            noscoop_timer = 0.;
+            player_message( _("Cannot gather material: no more space available") );
          }
       }
    }
