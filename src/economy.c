@@ -409,14 +409,14 @@ void gatherable_gather( int pilot )
    for (i=0; i < gatherable_nstack; i++) {
       gat = &gatherable_stack[i];
 
-      if ( .03*vect_dist( &p->solid->pos, &gat->pos ) +
-           .03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
+      if (0.03*vect_dist( &p->solid->pos, &gat->pos ) +
+          0.03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
          /* Add cargo to pilot. */
          q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
 
-         if ( q>0 ) {
+         if (q>0) {
             if (pilot_isPlayer(p))
-               player_message( _("%i tons of %s gathered"), q, gat->type->name );
+               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
 
             /* Remove the object from space. */
             gatherable_nstack--;
@@ -431,7 +431,7 @@ void gatherable_gather( int pilot )
          }
          else if ((pilot_isPlayer(p)) && (noscoop_timer > 2.)) {
             noscoop_timer = 0.;
-            player_message( _("Cannot gather material: no more space available") );
+            player_message( _("Cannot gather material: no more cargo space available") );
          }
       }
    }
