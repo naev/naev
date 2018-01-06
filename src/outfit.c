@@ -995,6 +995,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
    dmg->disable      = 0.;
+   dmg->asterokill   = 0;
 
    cur = node->xmlChildrenNode;
    do {
@@ -1013,9 +1014,11 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
             dmg->type = 0;
             WARN(_("Unknown damage type '%s'"), buf);
          }
-         continue;
       }
-      WARN(_("Damage has unknown node '%s'"), cur->name);
+      else if (xml_isNode(cur,"asterokiller"))
+         dmg->asterokill   = 1;
+      else WARN(_("Damage has unknown node '%s'"), cur->name);
+
    } while (xml_nextNode(cur));
 
    /* Normalize. */
