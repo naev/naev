@@ -284,7 +284,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
    <chance>30</chance>
    <done>Empire Recruitment</done>   
    <location>Bar</location>
@@ -298,7 +298,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>75</chance>
    <done>Soromid Long Distance Recruitment</done>   
    <location>Bar</location>
@@ -312,7 +312,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>75</chance>
    <done>Dvaered Long Distance Recruitment</done>   
    <location>Bar</location>
@@ -326,7 +326,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>75</chance>
    <done>Za’lek Long Distance Recruitment</done>   
    <location>Bar</location>
@@ -340,7 +340,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>75</chance>
    <done>Frontier Long Distance Recruitment</done>   
    <location>Bar</location>
@@ -354,7 +354,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>100</chance>
  <done>Sirius Long Distance Recruitment</done>   
  <location>Bar</location>
@@ -365,7 +365,7 @@
   <lua>empire/longdistanceshipping/es_longdistancecargo</lua>
   <avail>
    <priority>3</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>350</chance>
    <done>Empire Long Distance Recruitment</done>
    <location>Computer</location>

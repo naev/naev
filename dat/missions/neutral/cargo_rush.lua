@@ -160,10 +160,10 @@ function land()
    if planet.cur() == destplanet then
       if intime then
       -- Semi-random message.
-      tk.msg(cargo_land_title, string.format( cargo.land_p2[rnd.rnd(1, #cargo_land_p2)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo) ))
+      tk.msg(cargo_land_title, string.format( cargo_land_p2[rnd.rnd(1, #cargo_land_p2)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo) ))
    else
       -- Semi-random message for being late.
-      tk.msg(cargo_land_title, string.format( cargo.land_p3[rnd.rnd(1, #cargo_land_p3)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo), reward/2, reward ))
+      tk.msg(cargo_land_title, string.format( cargo_land_p3[rnd.rnd(1, #cargo_land_p3)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo), reward/2, reward ))
       reward = reward / 2
    end
       player.pay(reward)
