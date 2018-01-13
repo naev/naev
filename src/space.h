@@ -193,6 +193,7 @@ typedef struct Debris_ {
    Vector2d pos; /**< Position. */
    Vector2d vel; /**< Velocity. */
    int gfxID; /**< ID of the asteroid gfx. */
+   double height; /**< height vs player */
 } Debris;
 
 
@@ -208,6 +209,7 @@ typedef struct Asteroid_ {
    double timer; /**< Internal timer for animations. */
    int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
    int type; /**< The ID of the asteroid type */
+   int scanned; /**< Wether the player already scanned this asteroid. */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 

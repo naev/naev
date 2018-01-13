@@ -1511,6 +1511,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    AsteroidType *at;
 
    ast->parent = field->id;
+   ast->scanned = 0;
 
    /* Get a random position:
        * choose a convex subset
@@ -1573,8 +1574,11 @@ void debris_init( Debris *deb )
    mod = RNGF() * 20;
    vect_pset( &deb->vel, mod, theta );
 
-   /* randomly init the gfx ID */
+   /* Randomly init the gfx ID */
    deb->gfxID = RNG(0,(int)nasterogfx-1);
+
+   /* Random height vs player. */
+   deb->height = .8 + RNGF()*.4;
 }
 
 
@@ -3442,12 +3446,34 @@ void space_render( const double dt )
  */
 void space_renderOverlay( const double dt )
 {
+   int i, j;
+   double x, y;
+   AsteroidAnchor *ast;
+   Pilot *pplayer;
+   Solid *psolid;
+
    if (cur_system == NULL)
       return;
 
    if ((cur_system->nebu_density > 0.) &&
          !menu_isOpen( MENU_MAIN ))
       nebu_renderOverlay(dt);
+
+   /* Render the debris. */
+   pplayer = pilot_get( PLAYER_ID );
+   if (pplayer != NULL) {
+      psolid  = pplayer->solid;
+      for (i=0; i < cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         x = psolid->pos.x - SCREEN_W/2;
+         y = psolid->pos.y - SCREEN_H/2;
+         for (j=0; j < ast->ndebris; j++) {
+           if (ast->debris[j].height > 1.)
+              space_renderDebris( &ast->debris[j], x, y );
+         }
+      }
+   }
+
 }
 
 
@@ -3489,8 +3515,10 @@ void planets_render (void)
       if (pplayer != NULL) {
          x = psolid->pos.x - SCREEN_W/2;
          y = psolid->pos.y - SCREEN_H/2;
-         for (j=0; j < ast->ndebris; j++)
-           space_renderDebris( &ast->debris[j], x, y );
+         for (j=0; j < ast->ndebris; j++) {
+           if (ast->debris[j].height < 1.)
+              space_renderDebris( &ast->debris[j], x, y );
+         }
       }
    }
 
@@ -3542,8 +3570,11 @@ static void space_renderPlanet( Planet *p )
  */
 static void space_renderAsteroid( Asteroid *a )
 {
-   double scale;
+   int i, qtt;
+   double scale, nx, ny;
    AsteroidType *at;
+   Commodity *com;
+   char c[20];
 
    /* Check if needs scaling. */
    if (a->appearing == 1)
@@ -3557,6 +3588,16 @@ static void space_renderAsteroid( Asteroid *a )
 
    gl_blitSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
                                   a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
+
+   /* Add the commodities if scanned. */
+   if (!a->scanned) return;
+   gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
+   for (i=0; i<at->nmaterial; i++) {
+      com = at->material[i];
+      gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
+      sprintf(c, "x%i", at->quantity[i]);
+      gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontHostile, c );
+   }
 }
 
 
@@ -3576,7 +3617,7 @@ static void space_renderDebris( Debris *d, double x, double y )
 
    if ( space_isInField( testVect ) == 0 )
       gl_blitSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
-                                     d->pos.x + x, d->pos.y + y, scale, scale, 0, 0, NULL );
+                                     testVect->x, testVect->y, scale, scale, 0, 0, &cInert );
    free(testVect);
 }
 
