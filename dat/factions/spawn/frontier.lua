@@ -71,7 +71,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data )
+    pilots = scom.spawn( spawn_data, "Frontier" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

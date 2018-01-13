@@ -2661,6 +2661,84 @@ Pilot* pilot_copy( Pilot* src )
 
 
 /**
+ * @brief Finds a spawn point for a pilot
+ *
+ *
+ */
+void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules )
+{
+   int njumpind, nind, i, *jumpind, *ind;
+   double chance;
+   JumpPoint *target;
+
+      /* Check if we should ignore the strict rules. */
+      /*ignore_rules = 0;
+      if (lua_isboolean(L,3) && lua_toboolean(L,3))
+         ignore_rules = 1;*/
+
+   /* Build landable planet table. */
+   ind   = NULL;
+   nind  = 0;
+   if (cur_system->nplanets > 0) {
+      ind = malloc( sizeof(int) * cur_system->nplanets );
+      for (i=0; i<cur_system->nplanets; i++)
+         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
+               !areEnemies(lf,cur_system->planets[i]->faction))
+            ind[ nind++ ] = i;
+   }
+
+   /* Build jumpable jump table. */
+   jumpind  = NULL;
+   njumpind = 0;
+   if (cur_system->njumps > 0) {
+      jumpind = malloc( sizeof(int) * cur_system->njumps );
+      for (i=0; i<cur_system->njumps; i++) {
+         /* The jump into the system must not be exit-only, and unless
+          * ignore_rules is set, must also be non-hidden and have faction
+          * presence matching the pilot's on the remote side.
+          */
+         target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+         if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
+               (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
+               (system_getPresence( cur_system->jumps[i].target, lf ) > 0))))
+            jumpind[ njumpind++ ] = i;
+      }
+   }
+
+   /* Crazy case no landable nor presence, we'll just jump in randomly. */
+   if ((nind == 0) && (njumpind==0)) {
+      if (cur_system->njumps > 0) {
+         jumpind = malloc( sizeof(int) * cur_system->njumps );
+         for (i=0; i<cur_system->njumps; i++)
+            jumpind[ njumpind++ ] = i;
+      }
+      else {
+         WARN(_("Creating pilot in system with no jumps nor planets to take off from!"));
+         vectnull( vp );
+      }
+   }
+
+   /* Calculate jump chance. */
+   if ((ind != NULL) || (jumpind != NULL)) {
+      chance = njumpind;
+      chance = chance / (chance + nind);
+
+      /* Random jump in. */
+      if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL)))
+         *jump = jumpind[ RNG_SANE(0,njumpind-1) ];
+      /* Random take off. */
+      else if (ind !=NULL && nind != 0) {
+         *planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ]->id;
+      }
+   }
+
+   /* Free memory allocated. */
+   free( ind );
+   free( jumpind );
+}
+
+
+/**
  * @brief Frees and cleans up a pilot
  *
  *    @param p Pilot to free.
