@@ -1337,7 +1337,7 @@ void player_targetAsteroidSet( int field, int id )
       if (id >= 0)
          player_soundPlayGUI(snd_nav, 1);
 
-         /* See if the player has the asteroid sanner. */
+         /* See if the player has the asteroid scanner. */
          if (player.p->stats.misc_asteroid_scan) {
             /* Recover and display some info about the asteroid. */
             anchor = &cur_system->asteroids[field];
@@ -1349,6 +1349,7 @@ void player_targetAsteroidSet( int field, int id )
               com = at->material[i];
               player_message( _("%s, quantity: %i"), com->name, at->quantity[i] );
             }
+            ast->scanned = 1;
          }
          else
             player_message( _("Asteroid targeted") );
