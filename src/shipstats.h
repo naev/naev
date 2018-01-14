@@ -96,6 +96,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
    SS_TYPE_B_REVERSE_THRUST, /**< Ship slows down rather than turning on reverse. */
+   SS_TYPE_B_ASTEROID_SCAN, /**< Ship can gather informations from asteroids. */
 
    SS_TYPE_SENTINEL          /**< Sentinel for end of types. */
 } ShipStatsType;
@@ -210,6 +211,7 @@ typedef struct ShipStats_ {
    double nebu_absorb_armour; /**< Armour nebula resistance. */
    int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
+   int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
 } ShipStats;
 

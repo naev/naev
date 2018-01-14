@@ -31,6 +31,8 @@
  </jumps>
  <asteroids>
   <asteroid>
+   <type>default</type>
+   <type>golden</type>
    <corner>
     <x>5000.000000</x>
     <y>1000.000000</y>

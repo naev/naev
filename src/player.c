@@ -1020,6 +1020,8 @@ void player_think( Pilot* pplayer, const double dt )
 {
    (void) dt;
    Pilot *target;
+   AsteroidAnchor *field;
+   Asteroid *ast;
    double turn;
    int facing, fired;
 
@@ -1065,6 +1067,15 @@ void player_think( Pilot* pplayer, const double dt )
             /* Disable turning. */
             facing = 1;
          }
+      }
+      /* Try to face asteroid. */
+      else if (player.p->nav_asteroid != -1) {
+         field = &cur_system->asteroids[player.p->nav_anchor];
+         ast = &field->asteroids[player.p->nav_asteroid];
+         pilot_face( pplayer,
+               vect_angle( &player.p->solid->pos, &ast->pos ));
+         /* Disable turning. */
+         facing = 1;
       }
       /* If not try to face planet target. */
       else if ((player.p->nav_planet != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
@@ -1301,6 +1312,50 @@ void player_targetPlanetSet( int id )
    }
    gui_forceBlink();
    gui_setNav();
+}
+
+
+/**
+ * @brief Sets the player's target asteroid.
+ *
+ *    @param id Target planet or -1 if none should be selected.
+ */
+void player_targetAsteroidSet( int field, int id )
+{
+   int old, i;
+   AsteroidAnchor *anchor;
+   Asteroid *ast;
+   AsteroidType *at;
+   Commodity *com;
+
+   if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
+      return;
+
+   old = player.p->nav_asteroid;
+   player.p->nav_asteroid = id;
+   if (old != id) {
+      if (id >= 0)
+         player_soundPlayGUI(snd_nav, 1);
+
+         /* See if the player has the asteroid scanner. */
+         if (player.p->stats.misc_asteroid_scan) {
+            /* Recover and display some info about the asteroid. */
+            anchor = &cur_system->asteroids[field];
+            ast = &anchor->asteroids[id];
+            at = space_getType( ast->type );
+
+            player_message( _("Asteroid targeted, composition: ") );
+            for (i=0; i<at->nmaterial; i++) {
+              com = at->material[i];
+              player_message( _("%s, quantity: %i"), com->name, at->quantity[i] );
+            }
+            ast->scanned = 1;
+         }
+         else
+            player_message( _("Asteroid targeted") );
+   }
+
+   player.p->nav_anchor = field;
 }
 
 
@@ -1709,6 +1764,7 @@ void player_brokeHyperspace (void)
    gui_setNav();
    gui_setTarget();
    player_targetPlanetSet( -1 );
+   player_targetAsteroidSet( -1, -1 );
 
    /* calculates the time it takes, call before space_init */
    t  = pilot_hyperspaceDelay( player.p );
