@@ -398,6 +398,8 @@ typedef struct Pilot_ {
    unsigned int target; /**< AI pilot target. */
    int nav_planet;   /**< Planet land target. */
    int nav_hyperspace; /**< Hyperspace target. */
+   int nav_anchor; /**< Asteroid anchor target. */
+   int nav_asteroid; /**< Asteroid target. */
 
    /* AI */
    AI_Profile* ai;   /**< AI personality profile */
@@ -484,6 +486,7 @@ void pilot_clearTimers( Pilot *pilot );
 int pilot_hasDeployed( Pilot *p );
 int pilot_dock( Pilot *p, Pilot *target, int deployed );
 ntime_t pilot_hyperspaceDelay( Pilot *p );
+void pilot_untargetAsteroid( int anchor, int asteroid );
 
 
 /*

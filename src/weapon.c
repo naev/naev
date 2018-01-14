@@ -134,6 +134,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
 /* Hitting. */
 static int weapon_checkCanHit( Weapon* w, Pilot *p );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
 /* think */
@@ -893,10 +894,13 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, b, psx,psy;
+   int i, j, b, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
+   AsteroidAnchor *ast;
+   Asteroid *a;
+   AsteroidType *at;
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -952,6 +956,44 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
                      &crash[0] )) {
             weapon_hit( w, p, layer, &crash[0] );
             return; /* Weapon is destroyed. */
+         }
+      }
+   }
+
+   /* Asterokiller weapons collide with asteroids*/
+   if (outfit_isAmmo(w->outfit)) {
+      if ( w->outfit->u.amm.dmg.asterokill ) {
+         for (i=0; i<cur_system->nasteroids; i++) {
+            ast = &cur_system->asteroids[i];
+            for (j=0; j<ast->nb; j++) {
+               a = &ast->asteroids[j];
+               at = space_getType ( a->type );
+               if (a->appearing==0 &&
+                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
+                     weapon_hitAst( w, a, layer, &crash[0] );
+                     return; /* Weapon is destroyed. */
+               }
+            }
+         }
+      }
+   }
+   else if (outfit_isBolt(w->outfit)) {
+      if ( w->outfit->u.blt.dmg.asterokill ) {
+         for (i=0; i<cur_system->nasteroids; i++) {
+            ast = &cur_system->asteroids[i];
+            for (j=0; j<ast->nb; j++) {
+               a = &ast->asteroids[j];
+               at = space_getType ( a->type );
+               if (a->appearing==0 &&
+                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
+                     weapon_hitAst( w, a, layer, &crash[0] );
+                     return; /* Weapon is destroyed. */
+               }
+            }
          }
       }
    }
@@ -1086,6 +1128,35 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
+}
+
+/**
+ * @brief Weapon hit an asteroid.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param a Asteroid that got hit.
+ *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
+ */
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos )
+{
+   int s, spfx;
+
+   /* Play sound if they have it. */
+   s = outfit_soundHit(w->outfit);
+   if (s != -1)
+      w->voice = sound_playPos( s,
+            w->solid->pos.x,
+            w->solid->pos.y,
+            w->solid->vel.x,
+            w->solid->vel.y);
+
+   /* Add the spfx */
+   spfx = outfit_spfxShield(w->outfit);
+   spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
+
+   weapon_destroy(w,layer);
+   asteroid_hit( a );
 }
 
 

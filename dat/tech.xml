@@ -27,6 +27,7 @@
   <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Gauss Gun</item>
+  <item>Asterokiller Gauss Gun</item>
   <item>Vulcan Gun</item>
   <item>Shredder</item>
   <item>Turreted Gauss Gun</item>
@@ -78,7 +79,9 @@
   <item>Vengeance Missile</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
+  <item>Unicorp Asterokiller Launcher</item>
   <item>Mace Rocket</item>
+  <item>Asterokiller Rocket</item>
   <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>Banshee Rocket</item>
@@ -135,6 +138,7 @@
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Targeting Array</item>
+  <item>Asteroid Scanner</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
   <item>Improved Power Regulator</item>
