@@ -87,6 +87,7 @@ function empire_createPeacemaker( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Peacemaker gets some good stuff
    primary        = { "Turbolaser", "Railgun Turret" }
@@ -129,6 +130,7 @@ function empire_createHawking( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Hawking gets some good stuff
    primary        = { "Turbolaser", "Heavy Laser" }
@@ -171,6 +173,7 @@ function empire_createPacifier( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Pacifier isn't bad either
    primary        = { "Heavy Ripper Cannon", "Laser Turret MK3" }
@@ -212,6 +215,7 @@ function empire_createShark( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Shark gets some good stuff
    primary        = { "Laser Cannon MK3", "Ripper Cannon" }
@@ -253,6 +257,7 @@ function empire_createLancelot( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Lancelot gets some good stuff
    primary        = { "Laser Cannon MK3", "Ripper Cannon" }
@@ -294,6 +299,7 @@ function empire_createAdmonisher( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Admonisher gets some good stuff
    primary        = { "Heavy Ripper Cannon", "Ripper Cannon" }
