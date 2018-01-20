@@ -74,6 +74,7 @@ function pirate_createKestrel( pirate_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Kestrel gets some good stuff
    primary        = { "Heavy Ion Turret", "Razor Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun" }
