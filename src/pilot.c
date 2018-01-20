@@ -2750,7 +2750,7 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
    }
 
    /* Calculate jump chance. */
-   if ((ind != NULL) || (jumpind != NULL)) {
+   if ((nind != 0) || (njumpind != 0)) {
       chance = njumpind;
       chance = chance / (chance + nind);
 
