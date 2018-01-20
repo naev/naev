@@ -373,17 +373,18 @@ int lua_ispilot( lua_State *L, int ind )
 
 /**
  * @brief Returns a suitable jumpin spot for a given pilot.
- * @usage point = pilot.choosePoint( f, i )
+ * @usage point = pilot.choosePoint( f, i, g )
  *
  *    @luatparam Faction f Faction the pilot will belong to.
  *    @luatparam boolean i Wether to ignore rules.
+ *    @luatparam boolean g Wether to behave as guerilla (spawn in deep space)
  *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
  * @luafunc choosePoint( f, i )
  */
 static int pilotL_choosePoint( lua_State *L )
 {
    LuaFaction lf;
-   int ignore_rules, planetind, jump;
+   int ignore_rules, guerilla, planetind, jump;
    Vector2d vp;
 
    lf = faction_get( luaL_checkstring(L,1) );
@@ -392,8 +393,12 @@ static int pilotL_choosePoint( lua_State *L )
    if (lua_isboolean(L,2) && lua_toboolean(L,2))
       ignore_rules = 1;
 
+   guerilla = 0;
+   if (lua_isboolean(L,3) && lua_toboolean(L,3))
+      guerilla = 1;
+
    planetind = jump = -1;
-   pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules );
+   pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, guerilla );
 
    if (planetind >= 0)
       lua_pushplanet(L, planetind );
@@ -425,7 +430,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    int planetind;
    int jump;
    PilotFlags flags;
-   int ignore_rules;
+   int ignore_rules, guerilla;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -511,7 +516,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
       /* Choose the spawn point and act in consequence.*/
       planetind = -1;
-      pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules );
+      pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, 0 );
 
       if ( planetind >= 0 ) {
          planet = planet_getIndex( planetind );

@@ -501,7 +501,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );
-void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules );
+void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
 

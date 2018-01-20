@@ -66,11 +66,11 @@ end
 
 
 -- @brief Actually spawns the pilots
-function scom.spawn( pilots, faction )
+function scom.spawn( pilots, faction, guerilla )
    local spawned = {}
    local leader = nil
 
-   local origin = pilot.choosePoint( faction ) -- Find a suitable spawn point
+   local origin = pilot.choosePoint( faction, false, guerilla ) -- Find a suitable spawn point
    for k,v in ipairs(pilots) do
       local p
       if type(v["pilot"])=='function' then
