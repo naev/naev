@@ -2689,16 +2689,12 @@ Pilot* pilot_copy( Pilot* src )
  *
  *
  */
-void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules )
+void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules, int guerilla )
 {
-   int njumpind, nind, i, *jumpind, *ind;
-   double chance;
+   int njumpind, nind, i, j, *jumpind, *ind;
+   int nfact, *fact;
+   double chance, limit;
    JumpPoint *target;
-
-      /* Check if we should ignore the strict rules. */
-      /*ignore_rules = 0;
-      if (lua_isboolean(L,3) && lua_toboolean(L,3))
-         ignore_rules = 1;*/
 
    /* Build landable planet table. */
    ind   = NULL;
@@ -2718,20 +2714,31 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
       jumpind = malloc( sizeof(int) * cur_system->njumps );
       for (i=0; i<cur_system->njumps; i++) {
          /* The jump into the system must not be exit-only, and unless
-          * ignore_rules is set, must also be non-hidden and have faction
+          * ignore_rules is set, must also be non-hidden 
+          * (excepted if the pilot is guerilla) and have faction
           * presence matching the pilot's on the remote side.
           */
          target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+
+         limit = 0.;
+         if (guerilla) {/* Test enemy presence on the other side. */
+            fact = faction_getEnemies( lf, &nfact );
+            for (j=0; j<nfact ; j++)
+               limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
+         }
+
          if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
-               (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
-               (system_getPresence( cur_system->jumps[i].target, lf ) > 0))))
+               ( (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla ) &&
+               (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
             jumpind[ njumpind++ ] = i;
       }
    }
 
    /* Crazy case no landable nor presence, we'll just jump in randomly. */
    if ((nind == 0) && (njumpind==0)) {
-      if (cur_system->njumps > 0) {
+      if (guerilla) /* Guerilla ships are created far away in deep space. */
+         vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
+      else if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
             jumpind[ njumpind++ ] = i;
