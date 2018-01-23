@@ -85,6 +85,22 @@
   </enemies>
  </faction>
  <faction>
+  <name>Miner</name>
+  <known/>
+  <logo>miner</logo>
+  <longname>Space Miners</longname>
+  <player>3</player>
+  <spawn>miner</spawn>
+  <standing>trader</standing>
+  <equip>miner</equip>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Raider</enemy>
+  </enemies>
+ </faction>
+ <faction>
   <name>Pirate</name>
   <known/>
   <logo>pirate</logo>
@@ -104,6 +120,7 @@
    <enemy>Sirius</enemy>
    <enemy>Frontier</enemy>
    <enemy>Trader</enemy>
+   <enemy>Miner</enemy>
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
@@ -286,6 +303,7 @@
   <standing>static</standing>
   <enemies>
    <enemy>Trader</enemy>
+   <enemy>Miner</enemy>
   </enemies>
  </faction>
  <faction>

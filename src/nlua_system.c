@@ -40,6 +40,9 @@ static int systemL_jumpdistance( lua_State *L );
 static int systemL_jumpPath( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_jumps( lua_State *L );
+static int systemL_asteroid( lua_State *L );
+static int systemL_asteroidPos( lua_State *L );
+static int systemL_asteroidDestroyed( lua_State *L );
 static int systemL_presences( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
@@ -62,6 +65,9 @@ static const luaL_Reg system_methods[] = {
    { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
+   { "asteroid", systemL_asteroid },
+   { "asteroidpos", systemL_asteroidPos },
+   { "asteroiddestroyed", systemL_asteroidDestroyed },
    { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -568,6 +574,109 @@ static int systemL_jumps( lua_State *L )
       lua_rawset(L,-3);
    }
 
+   return 1;
+}
+
+
+/**
+ * @brief Gets a random asteroid in the current system
+ *
+ * @usage anchor, ast = system.asteroid()
+ *
+ *    @luatreturn int anchor Id of an asteroid anchor.
+ *    @luatreturn int asteroid Id of an asteroid of this anchor.
+ * @luafunc asteroid()
+ */
+static int systemL_asteroid( lua_State *L )
+{
+   int field, ast;
+
+   if (cur_system->nasteroids > 0) {
+      field = RNG(0,cur_system->nasteroids-1);
+      ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      lua_pushnumber(L,field);
+      lua_pushnumber(L,ast);
+      return 2;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets the position and velocity of an asteroid
+ *
+ * @usage pos = system.asteroidpos( anchor, ast )
+ *
+ *    @luatparam int anchor Id of the asteroid anchor.
+ *    @luatparam int asteroid Id of the asteroid of this anchor.
+ *    @luatreturn Vec2 pos position of the asteroid.
+ *    @luatreturn Vec2 vel velocity of the asteroid.
+ * @luafunc asteroidpos()
+ */
+static int systemL_asteroidPos( lua_State *L )
+{
+   int field, ast;
+
+   if (lua_gettop(L) < 2) {
+      WARN(_("Not enough imput argument for asteroidpos"));
+      return 0;
+   }
+
+   field = lua_tointeger(L,1);
+   ast   = lua_tointeger(L,2);
+
+   if ( field >= cur_system->nasteroids ) {
+      WARN(_("field index %d too high"), field);
+      return 0;
+   }
+
+   if ( ast >= cur_system->asteroids[field].nb ) {
+      WARN(_("asteroid index too high"));
+      return 0;
+   }
+
+   lua_pushvector(L, cur_system->asteroids[field].asteroids[ast].pos);
+   lua_pushvector(L, cur_system->asteroids[field].asteroids[ast].vel);
+   return 2;
+}
+
+
+/**
+ * @brief Gets the position and velocity of an asteroid
+ *
+ * @usage i = system.asteroiddestroyed( anchor, ast )
+ *
+ *    @luatparam int anchor Id of the asteroid anchor.
+ *    @luatparam int asteroid Id of the asteroid of this anchor.
+ *    @luatreturn bool i true if the asteroid was destroyed.
+ * @luafunc asteroidpos()
+ */
+static int systemL_asteroidDestroyed( lua_State *L )
+{
+   int field, ast, isdestroyed;
+
+   if (lua_gettop(L) < 2) {
+      WARN(_("Not enough imput argument for asteroidpos"));
+      return 0;
+   }
+
+   field = lua_tointeger(L,1);
+   ast   = lua_tointeger(L,2);
+
+   if ( field >= cur_system->nasteroids ) {
+      WARN(_("field index %d too high"), field);
+      return 0;
+   }
+
+   if ( ast >= cur_system->asteroids[field].nb ) {
+      WARN(_("asteroid index too high"));
+      return 0;
+   }
+
+   /* If the asteroid is re-appearing, it was destroyed recently. */
+   isdestroyed = (cur_system->asteroids[field].asteroids[ast].appearing == 1);
+   lua_pushboolean(L, isdestroyed);
    return 1;
 }
 
