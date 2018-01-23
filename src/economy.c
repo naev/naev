@@ -394,6 +394,55 @@ void gatherable_render( void )
 
 
 /**
+ * @brief Gets the closest gatherable from a given position, within a given radius
+ *
+ *    @param pos position.
+ *    @param rad radius.
+ */
+int gatherable_getClosest( Vector2d pos, double rad )
+{
+   int i, curg;
+   Gatherable *gat;
+   double mindist, curdist;
+
+   mindist = INFINITY;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+      curdist = vect_dist(&pos, &gat->pos);
+      if ( (curdist<mindist) && (curdist<rad) ) {
+         curg = i;
+         mindist = curdist;
+      }
+   }
+   return curg;
+}
+
+
+/**
+ * @brief Returns the position and velocity of a gatherable
+ *
+ *    @param pos pointer to the position.
+ *    @param vel pointer to the velocity.
+ *    @param id Id of the gatherable in the stack.
+ *    @return flag 1->there exists a gatherable 0->elsewere.
+ */
+int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
+{
+   Gatherable *gat;
+
+   if ( id > gatherable_nstack-1 )
+      return 0;
+
+   gat = &gatherable_stack[id];
+   *pos = gat->pos;
+   *vel = gat->vel;
+
+   return 1;
+}
+
+
+/**
  * @brief See if the pilot can gather anything
  *
  *    @param pilot ID of the pilot

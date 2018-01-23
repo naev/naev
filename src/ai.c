@@ -169,6 +169,7 @@ static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
+static int aiL_getGatherable( lua_State *L ); /* integer getgatherable( radius ) */
 
 /* boolean expressions */
 static int aiL_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
@@ -195,6 +196,7 @@ static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
+static int aiL_face_accurate( lua_State *L ); /* face_accurate() */
 
 /* Hyperspace. */
 static int aiL_sethyptarget( lua_State *L );
@@ -240,6 +242,8 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_messages( lua_State *L );
+static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( number, number ) */
+static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
 
 
 static const luaL_Reg aiL_methods[] = {
@@ -267,6 +271,7 @@ static const luaL_Reg aiL_methods[] = {
    { "minbrakedist", aiL_minbrakedist },
    { "isbribed", aiL_isbribed },
    { "getstanding", aiL_getstanding },
+   { "getgatherable", aiL_getGatherable },
    /* movement */
    { "nearestplanet", aiL_getnearestplanet },
    { "rndplanet", aiL_getrndplanet },
@@ -284,6 +289,7 @@ static const luaL_Reg aiL_methods[] = {
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
    { "follow_accurate", aiL_follow_accurate },
+   { "face_accurate", aiL_face_accurate },
    /* Hyperspace. */
    { "sethyptarget", aiL_sethyptarget },
    { "nearhyptarget", aiL_nearhyptarget },
@@ -322,6 +328,8 @@ static const luaL_Reg aiL_methods[] = {
    { "board", aiL_board },
    { "refuel", aiL_refuel },
    { "messages", aiL_messages },
+   { "setasterotarget", aiL_setasterotarget },
+   { "gatherablepos", aiL_gatherablePos },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -2553,6 +2561,54 @@ static int aiL_follow_accurate( lua_State *L )
 
 }
 
+
+/**
+ * @brief Computes the point to face in order to follow a moving object.
+ *
+ *    @luatparam vec2 pos The objective vector
+ *    @luatparam vec2 vel The objective velocity
+ *    @luatparam number radius The requested distance between p and target
+ *    @luatparam number angle The requested angle between p and target
+ *    @luatparam number Kp The first controller parameter
+ *    @luatparam number Kd The second controller parameter
+ *    @luareturn The point to go to as a vector2.
+ * @luafunc face_accurate( target, radius, angle, Kp, Kd, method )
+ */
+static int aiL_face_accurate( lua_State *L )
+{
+   Vector2d point, cons, goal, pv, *pos, *vel;
+   double radius, angle, Kp, Kd, angle2;
+   Pilot *p;
+
+   p = cur_pilot;
+   pos = lua_tovector(L,1);
+   vel = lua_tovector(L,2);
+   radius = luaL_checklong(L,3);
+   angle = luaL_checklong(L,4);
+   Kp = luaL_checklong(L,5);
+   Kd = luaL_checklong(L,6);
+
+   angle2 = angle * M_PI/180;
+
+   vect_cset( &point, pos->x + radius * cos(angle2),
+         pos->y + radius * sin(angle2) );
+
+   /*  Compute the direction using a pd controller */
+   vect_cset( &cons, (point.x - p->solid->pos.x) * Kp + 
+         (vel->x - p->solid->vel.x) *Kd,
+         (point.y - p->solid->pos.y) * Kp +
+         (vel->y - p->solid->vel.y) *Kd );
+
+   vect_cset( &goal, cons.x + p->solid->pos.x, cons.y + p->solid->pos.y);
+
+   /* Push info */
+   lua_pushvector( L, goal );
+
+   return 1;
+
+}
+
+
 /**
  * @brief Completely stops the pilot if it is below minimum vel error (no insta-stops).
  *
@@ -2619,6 +2675,79 @@ static int aiL_settarget( lua_State *L )
    p = luaL_validpilot(L,1);
    pilot_setTarget( cur_pilot, p->id );
    return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's asteroid target.
+ * 
+ *    @luaparam int field Id of the field to target.
+ *    @luaparam int ast Id of the asteroid to target.
+ *    @luafunc setasterotarget( field, ast )
+ */
+static int aiL_setasterotarget( lua_State *L )
+{
+   int field, ast;
+
+   field = lua_tointeger(L,1);
+   ast   = lua_tointeger(L,2);
+
+   cur_pilot->nav_anchor = field;
+   cur_pilot->nav_asteroid = ast;
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets the closest gatherable within a radius.
+ * 
+ *    @luaparam float rad Radius to search in.
+ *    @luareturn int i Id of the gatherable.
+ *    @luafunc setasterotarget( field, ast )
+ */
+static int aiL_getGatherable( lua_State *L )
+{
+   int i;
+   double rad;
+
+   if ((lua_gettop(L) < 1) || lua_isnil(L,1))
+      rad = INFINITY;
+   else
+      rad = lua_tonumber(L,1);
+
+   i = gatherable_getClosest( cur_pilot->solid->pos, rad );
+
+   lua_pushnumber(L,i);
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets the pos and vel of a given gatherable.
+ * 
+ *    @luaparam int id Id of the gatherable.
+ *    @luareturn vec2 pos position of the gatherable.
+ *    @luareturn vec2 vel velocity of the gatherable.
+ *    @luafunc setasterotarget( field, ast )
+ */
+static int aiL_gatherablePos( lua_State *L )
+{
+   int i, did;
+   Vector2d pos, vel;
+
+   i = lua_tointeger(L,1);
+
+   did = gatherable_getPos( &pos, &vel, i );
+
+   if (did == 0) /* No gatherable matching this ID. */
+      return 0;
+
+   lua_pushvector(L, pos);
+   lua_pushvector(L, vel);
+
+   return 2;
 }
 
 
