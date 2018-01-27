@@ -752,6 +752,7 @@ end
 function gather ()
    if ai.pilot():cargoFree() == 0 then --No more cargo
       ai.poptask()
+      return
    end
 
    local gat = ai.getgatherable( 500 );
