@@ -288,8 +288,8 @@ function spawnSquads(highlight)
     squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[4])
     squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[5])
 
-    for _, squad in ipairs(squads) do
-        for _, k in ipairs(squad) do
+    for i, squad in ipairs(squads) do
+        for j, k in ipairs(squad) do
             hook.pilot(k, "attacked", "attacked")
             k:rename(_("Four Winds Patrol"))
             k:control()
