@@ -48,7 +48,7 @@ static int nlua_errTrace( lua_State *L );
 /* gettext */
 static int nlua_gettext( lua_State *L );
 static int nlua_ngettext( lua_State *L );
-static const luaL_reg gettext_methods[] = {
+static const luaL_Reg gettext_methods[] = {
    { "gettext",  nlua_gettext },
    { "ngettext", nlua_ngettext },
    {0,0}

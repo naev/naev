@@ -2046,6 +2046,10 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
+
+   /* See if there is commodities to gather */
+   gatherable_gather( pilot->id );
+
 }
 
 /**
@@ -2321,6 +2325,24 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
 
 
 /**
+ * @brief Loops over pilot stack to remove an asteroid as target.
+ *
+ *    @param anchor Asteroid anchor the asteroid belongs to.
+ *    @param asteroid Asteroid.
+ */
+void pilot_untargetAsteroid( int anchor, int asteroid )
+{
+   int i;
+   for (i=0; i < pilot_nstack; i++) {
+      if ((pilot_stack[i]->nav_asteroid == asteroid) && (pilot_stack[i]->nav_anchor == anchor)) {
+         pilot_stack[i]->nav_asteroid = -1;
+         pilot_stack[i]->nav_anchor   = -1;
+      }
+   }
+}
+
+
+/**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
  *    @param p Pilot to check to see if they have enough credits.
@@ -2502,6 +2524,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot_setTarget( pilot, pilot->id ); /* No target. */
    pilot->nav_planet       = -1;
    pilot->nav_hyperspace   = -1;
+   pilot->nav_anchor       = -1;
+   pilot->nav_asteroid     = -1;
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
@@ -2657,6 +2681,91 @@ Pilot* pilot_copy( Pilot* src )
             src->commodities[i].quantity, src->commodities[i].id );
 
    return dest;
+}
+
+
+/**
+ * @brief Finds a spawn point for a pilot
+ *
+ *
+ */
+void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules, int guerilla )
+{
+   int njumpind, nind, i, j, *jumpind, *ind;
+   int nfact, *fact;
+   double chance, limit;
+   JumpPoint *target;
+
+   /* Build landable planet table. */
+   ind   = NULL;
+   nind  = 0;
+   if (cur_system->nplanets > 0) {
+      ind = malloc( sizeof(int) * cur_system->nplanets );
+      for (i=0; i<cur_system->nplanets; i++)
+         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
+               !areEnemies(lf,cur_system->planets[i]->faction))
+            ind[ nind++ ] = i;
+   }
+
+   /* Build jumpable jump table. */
+   jumpind  = NULL;
+   njumpind = 0;
+   if (cur_system->njumps > 0) {
+      jumpind = malloc( sizeof(int) * cur_system->njumps );
+      for (i=0; i<cur_system->njumps; i++) {
+         /* The jump into the system must not be exit-only, and unless
+          * ignore_rules is set, must also be non-hidden 
+          * (excepted if the pilot is guerilla) and have faction
+          * presence matching the pilot's on the remote side.
+          */
+         target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+
+         limit = 0.;
+         if (guerilla) {/* Test enemy presence on the other side. */
+            fact = faction_getEnemies( lf, &nfact );
+            for (j=0; j<nfact ; j++)
+               limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
+         }
+
+         if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
+               ( (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla ) &&
+               (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
+            jumpind[ njumpind++ ] = i;
+      }
+   }
+
+   /* Crazy case no landable nor presence, we'll just jump in randomly. */
+   if ((nind == 0) && (njumpind==0)) {
+      if (guerilla) /* Guerilla ships are created far away in deep space. */
+         vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
+      else if (cur_system->njumps > 0) {
+         jumpind = malloc( sizeof(int) * cur_system->njumps );
+         for (i=0; i<cur_system->njumps; i++)
+            jumpind[ njumpind++ ] = i;
+      }
+      else {
+         WARN(_("Creating pilot in system with no jumps nor planets to take off from!"));
+         vectnull( vp );
+      }
+   }
+
+   /* Calculate jump chance. */
+   if ((nind != 0) || (njumpind != 0)) {
+      chance = njumpind;
+      chance = chance / (chance + nind);
+
+      /* Random jump in. */
+      if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL)))
+         *jump = jumpind[ RNG_SANE(0,njumpind-1) ];
+      /* Random take off. */
+      else if (ind !=NULL && nind != 0) {
+         *planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ]->id;
+      }
+   }
+
+   /* Free memory allocated. */
+   free( ind );
+   free( jumpind );
 }
 
 

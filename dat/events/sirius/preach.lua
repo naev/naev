@@ -162,7 +162,7 @@ function theFunBegins()
    end
 
    followers = addRawShips(followers, "sirius_norun", curr, "Sirius") -- The table now contains pilots, not ship names.
-   for _,j in ipairs(followers) do
+   for k,j in ipairs(followers) do
       j:rename( string.format( _("Converted %s"), j:name() ))
    end
 

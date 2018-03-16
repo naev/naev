@@ -108,7 +108,7 @@ function accept()
    misn.setDesc(misn_desc)
     
    osd_msg[1] = osd_msg[1]:format(sysname1, planetname)
-   sd_msg[2] = osd_msg[2]:format(sysname2)
+   osd_msg[2] = osd_msg[2]:format(sysname2)
    misn.osdCreate(osd_title, osd_msg)
    
    misn_marker = misn.markerAdd( system.get(sysname1), "low" )

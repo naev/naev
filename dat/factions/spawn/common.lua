@@ -66,24 +66,24 @@ end
 
 
 -- @brief Actually spawns the pilots
-function scom.spawn( pilots )
+function scom.spawn( pilots, faction, guerilla )
    local spawned = {}
    local leader = nil
+
+   local origin = pilot.choosePoint( faction, false, guerilla ) -- Find a suitable spawn point
    for k,v in ipairs(pilots) do
       local p
       if type(v["pilot"])=='function' then
          p = v["pilot"]() -- Call function
       elseif not v["pilot"][1] then
-         local pos = nil
          if leader ~= nil then
-            pos = leader:pos()
             if pilots.__formation ~= nil then
                leader:memory().formation = pilots.__formation
             end
          end
-         p = pilot.add( v["pilot"], nil, pos )
+         p = pilot.add( v["pilot"], nil, origin )
       else
-         p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5])
+         p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5], origin )
       end
       if #p == 0 then
          error(_("No pilots added"))
@@ -105,8 +105,8 @@ end
 
 
 -- @brief spawn a pilot with addRaw
-function scom.spawnRaw( ship, name, ai, equip, faction)
-   local p = {pilot.addRaw( ship, ai, nil, equip )}
+function scom.spawnRaw( ship, name, ai, equip, faction, origin)
+   local p = {pilot.addRaw( ship, ai, origin, equip )}
    p[1]:rename(name)
    p[1]:setFaction(faction)
    return p

@@ -32,6 +32,7 @@
 #include "log.h"
 #include "spfx.h"
 #include "pilot.h"
+#include "player.h"
 #include "rng.h"
 #include "space.h"
 #include "ntime.h"
@@ -59,6 +60,12 @@ static int commodity_nstack       = 0; /**< Number of commodities in the stack. 
 /* systems stack. */
 extern StarSystem *systems_stack; /**< Star system stack. */
 extern int systems_nstack; /**< Number of star systems. */
+
+
+/* gatherables stack */
+static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
+static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
+float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
 
 
 /*
@@ -179,6 +186,8 @@ static void commodity_freeOne( Commodity* com )
       free(com->description);
    if (com->gfx_store)
       gl_freeTexture(com->gfx_store);
+   if (com->gfx_space)
+      gl_freeTexture(com->gfx_space);
 
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
@@ -232,6 +241,9 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xmlr_strd(node, "name", temp->name);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      if (xml_isNode(node,"gfx_space"))
+         temp->gfx_space = xml_parseTexture( node,
+               COMMODITY_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
       if (xml_isNode(node,"gfx_store")) {
          temp->gfx_store = xml_parseTexture( node,
                COMMODITY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -244,10 +256,16 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    } while (xml_nextNode(node));
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
-   if ((temp->gfx_store == NULL) && (temp->price>0)) {
-      WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
-      temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+   if ((temp->price>0)) {
+      if (temp->gfx_store == NULL) {
+         WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
+         temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+      }
+      if (temp->gfx_space == NULL)
+         temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.png", 0 );
    }
+
+   
 
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
@@ -295,6 +313,127 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
 
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
+   }
+}
+
+
+/**
+ * @brief Initializes a gatherable object
+ *
+ *    @param com Type of commodity.
+ *    @param pos Position.
+ *    @param vel Velocity.
+ */
+void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel )
+{
+   gatherable_stack = realloc(gatherable_stack,
+                              sizeof(Gatherable)*(++gatherable_nstack));
+
+   gatherable_stack[gatherable_nstack-1].type = com;
+   gatherable_stack[gatherable_nstack-1].pos = pos;
+   gatherable_stack[gatherable_nstack-1].vel = vel;
+   gatherable_stack[gatherable_nstack-1].timer = 0.;
+   gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+}
+
+
+/**
+ * @brief Updates all gatherable objects
+ *
+ *    @param dt Elapsed time.
+ */
+void gatherable_update( double dt )
+{
+   int i;
+
+   /* Update the timer for "full cargo" message. */
+   noscoop_timer += dt;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gatherable_stack[i].timer += dt;
+      gatherable_stack[i].pos.x += dt*gatherable_stack[i].vel.x;
+      gatherable_stack[i].pos.y += dt*gatherable_stack[i].vel.y;
+
+      /* Remove the gatherable */
+      if (gatherable_stack[i].timer > gatherable_stack[i].lifeleng) {
+         gatherable_nstack--;
+         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                 sizeof(Gatherable)*(gatherable_nstack-i) );
+         gatherable_stack = realloc(gatherable_stack,
+                                    sizeof(Gatherable) * gatherable_nstack);
+         i--;
+      }
+   }
+}
+
+
+/**
+ * @brief Frees all the gatherables
+ */
+void gatherable_free( void )
+{
+   free(gatherable_stack);
+   gatherable_stack = NULL;
+   gatherable_nstack = 0;
+}
+
+
+/**
+ * @brief Renders all the gatherables
+ */
+void gatherable_render( void )
+{
+   int i;
+   Gatherable *gat;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+      gl_blitSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
+   }
+}
+
+
+/**
+ * @brief See if the pilot can gather anything
+ *
+ *    @param pilot ID of the pilot
+ */
+void gatherable_gather( int pilot )
+{
+   int i, q;
+   Gatherable *gat;
+   Pilot* p;
+
+   p = pilot_get( pilot );
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+
+      if (0.03*vect_dist( &p->solid->pos, &gat->pos ) +
+          0.03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
+         /* Add cargo to pilot. */
+         q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
+
+         if (q>0) {
+            if (pilot_isPlayer(p))
+               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
+
+            /* Remove the object from space. */
+            gatherable_nstack--;
+            memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                    sizeof(Gatherable)*(gatherable_nstack-i) );
+            gatherable_stack = realloc(gatherable_stack,
+                                       sizeof(Gatherable) * gatherable_nstack);
+
+            /* Test if there is still cargo space */
+            if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
+               player_message( _("No more cargo space available") );
+         }
+         else if ((pilot_isPlayer(p)) && (noscoop_timer > 2.)) {
+            noscoop_timer = 0.;
+            player_message( _("Cannot gather material: no more cargo space available") );
+         }
+      }
    }
 }
 

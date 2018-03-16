@@ -150,6 +150,7 @@ static int pilotL_leader( lua_State *L );
 static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
+static int pilotL_choosePoint( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "addRaw", pilotL_addFleetRaw },
@@ -247,6 +248,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setLeader", pilotL_setLeader },
    { "followers", pilotL_followers },
    { "hookClear", pilotL_hookClear },
+   { "choosePoint", pilotL_choosePoint },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -370,6 +372,46 @@ int lua_ispilot( lua_State *L, int ind )
 
 
 /**
+ * @brief Returns a suitable jumpin spot for a given pilot.
+ * @usage point = pilot.choosePoint( f, i, g )
+ *
+ *    @luatparam Faction f Faction the pilot will belong to.
+ *    @luatparam boolean i Wether to ignore rules.
+ *    @luatparam boolean g Wether to behave as guerilla (spawn in deep space)
+ *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
+ * @luafunc choosePoint( f, i )
+ */
+static int pilotL_choosePoint( lua_State *L )
+{
+   LuaFaction lf;
+   int ignore_rules, guerilla, planetind, jump;
+   Vector2d vp;
+
+   lf = faction_get( luaL_checkstring(L,1) );
+
+   ignore_rules = 0;
+   if (lua_isboolean(L,2) && lua_toboolean(L,2))
+      ignore_rules = 1;
+
+   guerilla = 0;
+   if (lua_isboolean(L,3) && lua_toboolean(L,3))
+      guerilla = 1;
+
+   planetind = jump = -1;
+   pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, guerilla );
+
+   if (planetind >= 0)
+      lua_pushplanet(L, planetind );
+   else if (jump >= 0)
+      lua_pushsystem(L, cur_system->jumps[jump].target->id);
+   else
+      lua_pushvector(L, vp);
+
+   return 1;
+}
+
+
+/**
  * @brief Wrapper with common code for pilotL_addFleet and pilotL_addFleetRaw.
  */
 static int pilotL_addFleetFrom( lua_State *L, int from_ship )
@@ -380,18 +422,15 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    int i, first;
    unsigned int p;
    double a, r;
-   Vector2d vv,vp, vn;
+   Vector2d vv, vp, vn;
    FleetPilot *plt;
    LuaFaction lf;
    StarSystem *ss;
    Planet *planet;
-   JumpPoint *target;
+   int planetind;
    int jump;
    PilotFlags flags;
-   int *jumpind, njumpind;
-   int *ind, nind;
-   double chance;
-   int ignore_rules;
+   int ignore_rules, guerilla;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -475,75 +514,25 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       if (lua_isboolean(L,3) && lua_toboolean(L,3))
          ignore_rules = 1;
 
-      /* Build landable planet table. */
-      ind   = NULL;
-      nind  = 0;
-      if (cur_system->nplanets > 0) {
-         ind = malloc( sizeof(int) * cur_system->nplanets );
-         for (i=0; i<cur_system->nplanets; i++)
-            if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-                  !areEnemies(lf,cur_system->planets[i]->faction))
-               ind[ nind++ ] = i;
+      /* Choose the spawn point and act in consequence.*/
+      planetind = -1;
+      pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, 0 );
+
+      if ( planetind >= 0 ) {
+         planet = planet_getIndex( planetind );
+         pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+         a = RNGF() * 2. * M_PI;
+         r = RNGF() * planet->radius;
+         vect_cset( &vp,
+               planet->pos.x + r * cos(a),
+               planet->pos.y + r * sin(a) );
+         a = RNGF() * 2.*M_PI;
+         vectnull( &vv );
       }
-
-      /* Build jumpable jump table. */
-      jumpind  = NULL;
-      njumpind = 0;
-      if (cur_system->njumps > 0) {
-         jumpind = malloc( sizeof(int) * cur_system->njumps );
-         for (i=0; i<cur_system->njumps; i++) {
-            /* The jump into the system must not be exit-only, and unless
-             * ignore_rules is set, must also be non-hidden and have faction
-             * presence matching the pilot's on the remote side.
-             */
-            target = jump_getTarget( cur_system, cur_system->jumps[i].target );
-            if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
-                  (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) &&
-                  (system_getPresence( cur_system->jumps[i].target, lf ) > 0))))
-               jumpind[ njumpind++ ] = i;
-         }
+      else if ( &vp != NULL ) {
+         a = RNGF() * 2.*M_PI;
+         vectnull( &vv );
       }
-
-      /* Crazy case no landable nor presence, we'll just jump in randomly. */
-      if ((nind == 0) && (njumpind==0)) {
-         if (cur_system->njumps > 0) {
-            jumpind = malloc( sizeof(int) * cur_system->njumps );
-            for (i=0; i<cur_system->njumps; i++)
-               jumpind[ njumpind++ ] = i;
-         }
-         else {
-            WARN(_("Creating pilot in system with no jumps nor planets to take off from!"));
-            vectnull( &vp );
-            a = RNGF() * 2.*M_PI;
-            vectnull( &vv );
-         }
-      }
-
-      /* Calculate jump chance. */
-      if ((ind != NULL) || (jumpind != NULL)) {
-         chance = njumpind;
-         chance = chance / (chance + nind);
-
-         /* Random jump in. */
-         if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL)))
-            jump = jumpind[ RNG_SANE(0,njumpind-1) ];
-         /* Random take off. */
-         else if (ind !=NULL && nind != 0) {
-            planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
-            pilot_setFlagRaw( flags, PILOT_TAKEOFF );
-            a = RNGF() * 2. * M_PI;
-            r = RNGF() * planet->radius;
-            vect_cset( &vp,
-                  planet->pos.x + r * cos(a),
-                  planet->pos.y + r * sin(a) );
-            a = RNGF() * 2.*M_PI;
-            vectnull( &vv );
-         }
-      }
-
-      /* Free memory allocated. */
-      free( ind );
-      free( jumpind );
    }
 
    /* Set up velocities and such. */
