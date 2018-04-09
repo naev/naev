@@ -8,7 +8,7 @@ include "dat/scripts/numstring.lua"
 bmsg = {}
 --beginning messages
 bmsg[1] = _([[You walk up to an intimidating man dressed smartly in cool, dark black business attire. He has a large smile spread across his face. 
-    "Ahh, so your the %s everyone has been talking about. Naught but a glorified delivery boy if you ask me. Still, if you wish to help us out and prove yourself as more than a pirate, I'd be more than happy to oblige." He grins cooly, expecting an answer.]])
+    "Ahh, so you're the %s everyone has been talking about. Naught but a glorified delivery boy if you ask me. Still, if you wish to help us out and prove yourself as more than a pirate, I'd be more than happy to oblige." He grins cooly, expecting an answer.]])
 bmsg[2] = _([[Draga snorts impatiently. "Well, do you take the mission or what?"]])
 choice = {}
 choice[1] = _("Tell me more about the Nasin.")
