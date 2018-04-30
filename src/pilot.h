@@ -125,6 +125,7 @@ enum {
    PILOT_COOLDOWN_BRAKE, /**< Pilot is braking to enter active cooldown mode. */
    PILOT_BRAKING,      /**< Pilot is braking. */
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
+   PILOT_PERSIST, /**< Persist pilot on jump. */
    PILOT_FLAGS_MAX     /**< Maximum number of flags. */
 };
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
