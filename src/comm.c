@@ -586,7 +586,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* See if player really wants to pay. */
    if (price > 0) {
-      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %PRIu64 credits?"), msg, price );
+      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %"PRIu64" credits?"), msg, price );
       if (ret == 0) {
          dialogue_msg( _("Request Fuel"), _("You decide not to pay.") );
          return;
