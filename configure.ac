@@ -233,6 +233,21 @@ AC_ARG_WITH([libzip],
   ])
 AC_MSG_RESULT([$with_libzip])
 
+# --with-fontconfig
+AC_MSG_CHECKING([whether to use fontconfig])
+AC_ARG_WITH([fontconfig],
+  AC_HELP_STRING([--with-fontconfig],
+     [use fontconfig for ndata (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_fontconfig=yes
+    ], [
+      with_fontconfig=no
+    ])
+  ], [
+    with_fontconfig=yes
+  ])
+AC_MSG_RESULT([$with_fontconfig])
+
 # --enable-lua
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
@@ -292,7 +307,9 @@ PKG_CHECK_MODULES([XML], [libxml-2.0])
 PKG_CHECK_MODULES([FREETYPE], [freetype2])
 
 # FontConfig
-PKG_CHECK_MODULES([FONTCONFIG], [fontconfig])
+AS_IF([test "$with_fontconfig" = "yes"], [
+  PKG_CHECK_MODULES([FONTCONFIG], [fontconfig])
+])
 
 # vorbis
 PKG_CHECK_MODULES([VORBIS], [vorbis])
@@ -593,6 +610,11 @@ AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
+# USE_FONTCONFIG
+AS_IF([test "x$with_fontconfig" = "xyes"], [
+  AC_DEFINE([USE_FONTCONFIG], 1, [Define to 1 if using fontconfig])
+])
+
 # USE_LIBZIP
 AS_IF([test "x$with_libzip" = "xyes"], [
   AC_DEFINE([USE_LIBZIP], 1, [Define to 1 if using libzip])
@@ -669,24 +691,25 @@ AS_IF([test "x$used_csparse" = "xinternal"], [
 AC_OUTPUT
 
 echo
-AC_MSG_NOTICE([prefix:      $prefix])
-AC_MSG_NOTICE([ndata:       $ndata_path])
+AC_MSG_NOTICE([prefix:       $prefix])
+AC_MSG_NOTICE([ndata:        $ndata_path])
 echo
-AC_MSG_NOTICE([SDL2:        $have_sdl2])
+AC_MSG_NOTICE([SDL2:         $have_sdl2])
 echo
 AC_MSG_NOTICE([sound backends:])
-AC_MSG_NOTICE([  OpenAL:    $have_openal])
-AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
+AC_MSG_NOTICE([  OpenAL:     $have_openal])
+AC_MSG_NOTICE([  SDL_mixer:  $have_sdlmixer])
 echo
 AC_MSG_NOTICE([lib:])
-AC_MSG_NOTICE([  csparse:   $used_csparse])
-AC_MSG_NOTICE([  lua:       $used_lua])
-AC_MSG_NOTICE([  libzip:    $with_libzip])
+AC_MSG_NOTICE([  csparse:    $used_csparse])
+AC_MSG_NOTICE([  fontconfig: $with_fontconfig])
+AC_MSG_NOTICE([  lua:        $used_lua])
+AC_MSG_NOTICE([  libzip:     $with_libzip])
 echo
-AC_MSG_NOTICE([utils:       $have_utils])
-AC_MSG_NOTICE([  mkspr:     $have_mkspr])
+AC_MSG_NOTICE([utils:        $have_utils])
+AC_MSG_NOTICE([  mkspr:      $have_mkspr])
 echo
-AC_MSG_NOTICE([debug mode:  $enable_debug])
+AC_MSG_NOTICE([debug mode:   $enable_debug])
 AS_IF([test "x$enable_debug" != "xno"], [
    case "$host" in
      *-linux*)
