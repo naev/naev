@@ -461,7 +461,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
       i = 2;
       len = strlen(def_name)+10;
       ship_name = malloc( len );
-      strncpy( ship_name, def_name, len );
+      strcpy( ship_name, def_name );
       while (player_hasShip(ship_name)) {
          nsnprintf( ship_name, len, "%s %d", def_name, i );
          i++;
