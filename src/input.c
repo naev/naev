@@ -624,6 +624,10 @@ const char *input_keyAlreadyBound( KeybindType type, SDLKey key, SDLMod mod )
          case KEYBIND_JAXISPOS:
          case KEYBIND_JAXISNEG:
          case KEYBIND_JBUTTON:
+         case KEYBIND_JHAT_UP:
+         case KEYBIND_JHAT_DOWN:
+         case KEYBIND_JHAT_LEFT:
+         case KEYBIND_JHAT_RIGHT:
             return keybind_info[i][0];
 
          default:
@@ -1115,6 +1119,38 @@ static void input_joyevent( const int event, const SDLKey button )
    }
 }
 
+/**
+ * @brief Filters a joystick hat event.
+ *    @param value Direction on hat.
+ *    @param hat Hat generating the event.
+ */
+static void input_joyhatevent( const Uint8 value, const Uint8 hat )
+{
+   int i, event;
+   for (i=0; i<input_numbinds; i++) {
+      if (input_keybinds[i].key != hat)
+         continue;
+
+      if ((input_keybinds[i].type == KEYBIND_JHAT_UP)) {
+         event = (value & SDL_HAT_UP) ? KEY_PRESS : KEY_RELEASE;
+         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+            input_key(i, event, -1., 0);
+      } else if ((input_keybinds[i].type == KEYBIND_JHAT_DOWN)) {
+         event = (value & SDL_HAT_DOWN) ? KEY_PRESS : KEY_RELEASE;
+         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+            input_key(i, event, -1., 0);
+      } else if ((input_keybinds[i].type == KEYBIND_JHAT_LEFT)) {
+         event = (value & SDL_HAT_LEFT) ? KEY_PRESS : KEY_RELEASE;
+         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+            input_key(i, event, -1., 0);
+      } else if ((input_keybinds[i].type == KEYBIND_JHAT_RIGHT)) {
+         event = (value & SDL_HAT_RIGHT) ? KEY_PRESS : KEY_RELEASE;
+         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+            input_key(i, event, -1., 0);
+      }
+   }
+}
+
 
 /*
  * keyboard
@@ -1584,6 +1620,10 @@ void input_handle( SDL_Event* event )
 
       case SDL_JOYBUTTONUP:
          input_joyevent(KEY_RELEASE, event->jbutton.button);
+         break;
+
+      case SDL_JOYHATMOTION:
+         input_joyhatevent(event->jhat.value, event->jhat.hat);
          break;
 
       case SDL_KEYDOWN:
