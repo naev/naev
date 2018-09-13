@@ -147,6 +147,26 @@ static int naev_keyGet( lua_State *L )
          lua_pushstring( L, buf );
          break;
 
+      case KEYBIND_JHAT_UP:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d up"), key );
+         lua_pushstring( L, buf );
+         break;
+
+      case KEYBIND_JHAT_DOWN:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d down"), key );
+         lua_pushstring( L, buf );
+         break;
+
+      case KEYBIND_JHAT_LEFT:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d left"), key );
+         lua_pushstring( L, buf );
+         break;
+
+      case KEYBIND_JHAT_RIGHT:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d right"), key );
+         lua_pushstring( L, buf );
+         break;
+
       case KEYBIND_JAXISPOS:
          nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d-"), key );
          lua_pushstring( L, buf );

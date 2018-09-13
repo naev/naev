@@ -500,7 +500,7 @@ int conf_loadConfig ( const char* file )
             lua_pop(naevL,1);
 
             if (str != NULL) { /* keybind is valid */
-               if (key == SDLK_UNKNOWN) {
+               if (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD) {
                   WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
                   continue;
                }
@@ -511,6 +511,10 @@ int conf_loadConfig ( const char* file )
                else if (strcmp(str,"jaxispos")==0) type = KEYBIND_JAXISPOS;
                else if (strcmp(str,"jaxisneg")==0) type = KEYBIND_JAXISNEG;
                else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
+               else if (strcmp(str,"jhat_up")==0)  type = KEYBIND_JHAT_UP;
+               else if (strcmp(str,"jhat_down")==0)  type = KEYBIND_JHAT_DOWN;
+               else if (strcmp(str,"jhat_left")==0)  type = KEYBIND_JHAT_LEFT;
+               else if (strcmp(str,"jhat_right")==0)  type = KEYBIND_JHAT_RIGHT;
                else {
                   WARN(_("Unknown keybinding of type %s"), str);
                   continue;
@@ -1145,10 +1149,14 @@ int conf_saveConfig ( const char* file )
          case KEYBIND_JAXISPOS:  typename = "jaxispos";  break;
          case KEYBIND_JAXISNEG:  typename = "jaxisneg";  break;
          case KEYBIND_JBUTTON:   typename = "jbutton";   break;
+         case KEYBIND_JHAT_UP:   typename = "jhat_up";   break;
+         case KEYBIND_JHAT_DOWN: typename = "jhat_down"; break;
+         case KEYBIND_JHAT_LEFT: typename = "jhat_left"; break;
+         case KEYBIND_JHAT_RIGHT:typename = "jhat_right";break;
          default:                typename = NULL;        break;
       }
       /* Write a nil if an unknown type */
-      if ((typename == NULL) || (key == SDLK_UNKNOWN)) {
+      if ((typename == NULL) || (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD)) {
          conf_saveString( keybind_info[i][0],"none");
          continue;
       }

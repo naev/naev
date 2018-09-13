@@ -552,6 +552,18 @@ static void menuKeybinds_genList( unsigned int wid )
          case KEYBIND_JBUTTON:
             nsnprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
             break;
+         case KEYBIND_JHAT_UP:
+            nsnprintf(str[j], l, "%s <jh%d-up>", keybind_info[j][1], key);
+            break;
+         case KEYBIND_JHAT_DOWN:
+            nsnprintf(str[j], l, "%s <jh%d-down>", keybind_info[j][1], key);
+            break;
+         case KEYBIND_JHAT_LEFT:
+            nsnprintf(str[j], l, "%s <jh%d-left>", keybind_info[j][1], key);
+            break;
+         case KEYBIND_JHAT_RIGHT:
+            nsnprintf(str[j], l, "%s <jh%d-right>", keybind_info[j][1], key);
+            break;
          default:
             nsnprintf(str[j], l, "%s", keybind_info[j][1]);
             break;
@@ -631,6 +643,18 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          break;
       case KEYBIND_JBUTTON:
          nsnprintf(binding, sizeof(binding), _("joy button:   <%d>"), key);
+         break;
+      case KEYBIND_JHAT_UP:
+         nsnprintf(binding, sizeof(binding), _("joy hat up:   <%d>"), key);
+         break;
+      case KEYBIND_JHAT_DOWN:
+         nsnprintf(binding, sizeof(binding), _("joy hat down: <%d>"), key);
+         break;
+      case KEYBIND_JHAT_LEFT:
+         nsnprintf(binding, sizeof(binding), _("joy hat left: <%d>"), key);
+         break;
+      case KEYBIND_JHAT_RIGHT:
+         nsnprintf(binding, sizeof(binding), _("joy hat right:<%d>"), key);
          break;
    }
 
@@ -1003,6 +1027,27 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       case SDL_JOYBUTTONDOWN:
          type = KEYBIND_JBUTTON;
          key  = event->jbutton.button;
+         mod  = NMOD_ALL;
+         break;
+
+      case SDL_JOYHATMOTION:
+         switch (event->jhat.value) {
+            case SDL_HAT_UP:
+               type = KEYBIND_JHAT_UP;
+               break;
+            case SDL_HAT_DOWN:
+               type = KEYBIND_JHAT_DOWN;
+               break;
+            case SDL_HAT_LEFT:
+               type = KEYBIND_JHAT_LEFT;
+               break;
+            case SDL_HAT_RIGHT: 
+               type = KEYBIND_JHAT_RIGHT;
+               break;
+            default:
+               return 0; /* Not handled. */
+         }
+         key  = event->jhat.hat;
          mod  = NMOD_ALL;
          break;
 
