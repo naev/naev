@@ -461,7 +461,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
       i = 2;
       len = strlen(def_name)+10;
       ship_name = malloc( len );
-      strncpy( ship_name, def_name, len );
+      strcpy( ship_name, def_name );
       while (player_hasShip(ship_name)) {
          nsnprintf( ship_name, len, "%s %d", def_name, i );
          i++;
@@ -1756,6 +1756,7 @@ void player_brokeHyperspace (void)
    ntime_t t;
    StarSystem *sys;
    JumpPoint *jp;
+   int i;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1796,8 +1797,13 @@ void player_brokeHyperspace (void)
    /* Update the map */
    map_jump();
 
-   /* Add the escorts. */
-   player_addEscorts();
+   /* Add persisted pilots */
+   for (i=0; i<pilot_nstack; i++) {
+      if (pilot_stack[i] != player.p) {
+         space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
+         ai_cleartasks(pilot_stack[i]);
+      }
+   }
 
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {

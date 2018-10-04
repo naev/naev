@@ -2888,27 +2888,24 @@ void pilots_free (void)
 
 
 /**
- * @brief Cleans up the pilot stack - leaves the player.
+ * @brief Cleans up the pilot stack - leaves the player, and persisted pilots.
  */
 void pilots_clean (void)
 {
-   int i;
+   int i, persist_count=0;
    for (i=0; i < pilot_nstack; i++) {
-      /* we'll set player.p at privileged position */
-      if ((player.p != NULL) && (pilot_stack[i] == player.p)) {
-         pilot_stack[0] = player.p;
-         pilot_stack[0]->lockons = 0; /* Clear lockons. */
+      /* move player and persisted pilots to start */
+      if (pilot_stack[i] == player.p || pilot_isFlag(pilot_stack[i], PILOT_PERSIST)) {
+         pilot_stack[persist_count] = pilot_stack[i];
+         pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
+         pilot_clearTimers( player.p ); /* Reset timers. */
+	 persist_count++;
       }
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
    }
 
-   if (player.p != NULL) { /* set stack to 1 if pilot exists */
-      pilot_nstack = 1;
-      pilot_clearTimers( player.p ); /* Reset the player's timers. */
-   }
-   else
-      pilot_nstack = 0;
+   pilot_nstack = persist_count;
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();

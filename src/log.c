@@ -69,13 +69,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
       va_start( ap, fmt );
       n = vsnprintf( &buf[2], sizeof(buf)-3-n, fmt, ap )-1;
       va_end( ap );
-      /* Finally add newline if necessary. */
-      if (newline) {
-         buf[2+n+1] = '\n';
-         buf[2+n+2] = '\0';
-      }
-      else
-         buf[2+n+1] = '\0';
+
    }
 
 #ifndef NOLOGPRINTFCONSOLE
@@ -88,6 +82,14 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    else
       cli_addMessage( &buf[2] );
 #endif /* NOLOGPRINTFCONSOLE */
+
+   /* Finally add newline if necessary. */
+   if (newline) {
+      buf[2+n+1] = '\n';
+      buf[2+n+2] = '\0';
+   }
+   else
+      buf[2+n+1] = '\0';
 
    /* Append to buffer. */
    if (copying)

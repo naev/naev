@@ -1213,6 +1213,7 @@ static void gl_fontRenderEnd (void)
  */
 static char *gl_fontFind( const char *fname )
 {
+#ifdef USE_FONTCONFIG
    FcConfig* config;
    FcPattern *pat, *font;
    FcResult result;
@@ -1233,6 +1234,7 @@ static char *gl_fontFind( const char *fname )
       }
    }
    FcPatternDestroy(pat);
+#endif
    return NULL;
 }
 
