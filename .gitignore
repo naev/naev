@@ -49,6 +49,7 @@ core
 ABOUT-NLS                         
 po/POTFILES
 po/Makefile.in.in                 
+po/Makefile.in.in~
 po/Makevars.template              
 po/Rules-quot                     
 po/boldquot.sed                   
@@ -59,6 +60,7 @@ po/quot.sed
 po/remove-potcdate.sin  
 po/stamp-it
 po/@GETTEXT_PACKAGE@.pot
+po/*.gmo
 
 /.cproject
 /.project
