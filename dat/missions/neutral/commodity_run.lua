@@ -106,7 +106,7 @@ function land ()
    local reward = amount * price
 
    if planet.cur() == misplanet and amount > 0 then
-      local txt = string.format(  cargo_land_p2[ rnd.rnd( 1, #cargo_land_p2 ) ], cargo_land_p1[ rnd.rnd( 1, #cargo_land_p1 ) ], chosen_comm, reward )
+      local txt = string.format(  cargo_land_p2[ rnd.rnd( 1, #cargo_land_p2 ) ], cargo_land_p1[ rnd.rnd( 1, #cargo_land_p1 ) ], chosen_comm, numstring( reward ) )
       tk.msg( cargo_land_title, txt )
       pilot.cargoRm( player.pilot(), chosen_comm, amount )
       player.pay( reward )

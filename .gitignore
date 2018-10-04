@@ -59,6 +59,7 @@ po/quot.sed
 po/remove-potcdate.sin  
 po/stamp-it
 po/@GETTEXT_PACKAGE@.pot
+po/*.gmo
 
 /.cproject
 /.project
