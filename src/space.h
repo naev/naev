@@ -18,7 +18,7 @@
 #include "explosion.h"
 
 
-#define SYSTEM_SIMULATE_TIME  15. /**< Time to simulate system before player is added. */
+#define SYSTEM_SIMULATE_TIME  120. /**< Time to simulate system before player is added. */
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
