@@ -13,6 +13,9 @@
   <sys name="Arcanis">
    <jump>Sigur</jump>
   </sys>
+  <sys name="Myad">
+   <jump>Gilligan's Light</jump>
+  </sys>
   <sys name="Ingot">
    <jump>Tuoladis</jump>
    <jump>Gilligan's Light</jump>
@@ -21,6 +24,7 @@
    <jump>Ingot</jump>
   </sys>
   <sys name="Gilligan's Light">
+   <jump>Myad</jump>
    <jump>Ingot</jump>
   </sys>
   <sys name="Theras">
