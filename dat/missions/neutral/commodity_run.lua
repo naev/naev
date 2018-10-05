@@ -49,6 +49,11 @@ function update_active_runs( change )
    local current_runs = var.peek( "commodity_runs_active" )
    if current_runs == nil then current_runs = 0 end
    var.push( "commodity_runs_active", math.max( 0, current_runs + change ) )
+
+   -- Note: This causes a delay (defined in create()) after accepting,
+   -- completing, or aborting a commodity run mission.  This is
+   -- intentional.
+   var.push( "last_commodity_run", time.tonumber( time.get() ) )
 end
 
 
@@ -61,6 +66,14 @@ function create ()
    chosen_comm = commchoices[ rnd.rnd( 1, #commchoices ) ]
    local mult = rnd.rnd( 1, 3 ) + math.abs( rnd.threesigma() * 2 )
    price = commodity.price( chosen_comm ) * mult
+
+   local last_run = var.peek( "last_commodity_run" )
+   if last_run ~= nil then
+      local delay = time.create( 0, 7, 0 )
+      if time.get() < time.fromnumber( last_run ) + delay then
+         misn.finish(false)
+      end
+   end
 
    for i, j in ipairs( missys:planets() ) do
       for k, v in pairs( j:commoditiesSold() ) do
