@@ -1799,7 +1799,8 @@ void player_brokeHyperspace (void)
 
    /* Add persisted pilots */
    for (i=0; i<pilot_nstack; i++) {
-      if (pilot_stack[i] != player.p) {
+      if ((pilot_stack[i] != player.p) &&
+            (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
          ai_cleartasks(pilot_stack[i]);
       }
