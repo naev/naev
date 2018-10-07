@@ -252,3 +252,4 @@ function abort()
    misn.finish(false)
    var.push("achack04repeat", time.get():toNumber()) -- This is to ensure the mission won't repeat for a while.
 end
+

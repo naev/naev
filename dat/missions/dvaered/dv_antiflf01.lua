@@ -68,3 +68,4 @@ function abort()
     var.pop("flfbase_flfshipkilled")
     misn.finish(false)
 end
+

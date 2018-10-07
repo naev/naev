@@ -846,7 +846,7 @@ void pilot_shootStop( Pilot* p, int level )
  */
 void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
 {
-   double rate_mod, energy_mod;
+   double rate_mod, energy_mod, used;
 
    /* There's nothing to do if the beam isn't active. */
    if (w->u.beamid == 0)
@@ -861,7 +861,10 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
 
-   w->timer = outfit_delay( w->outfit );
+   /* Beam duration used. */
+   used = w->outfit->u.bem.duration - w->timer;
+
+   w->timer = rate_mod * (used / w->outfit->u.bem.duration) * outfit_delay( w->outfit );
    w->u.beamid = 0;
 }
 
