@@ -129,3 +129,4 @@ end
 function equip_lowHig ()
    return { "Shield Capacitor III", "Shield Capacitor IV", "Battery III" }
 end
+

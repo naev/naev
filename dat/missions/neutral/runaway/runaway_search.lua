@@ -151,3 +151,4 @@ function abort ()
    misn.osdDestroy()
    misn.finish(false)
 end
+
