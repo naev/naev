@@ -194,3 +194,4 @@ function abort()
    hook.rm(date_hook)
    misn.finish(false)
 end
+
