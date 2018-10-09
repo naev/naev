@@ -42,7 +42,7 @@ title[4] = _("...is still my enemy.")
 text[4] = _([["That's too bad. I understand where you're coming from, though. Please feel free to return if you are willing to take on this mission at a later date."]])
 
 title[5] = _("Who are you calling a weakling?")
-title[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the post pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why, that's the stupidest thing I've ever heard! Why would I want to talk to a weakling like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
+text[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why, that's the stupidest thing I've ever heard! Why would I want to talk to a weakling like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
     With that, the pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
 
 title[6] = _("Mission Failure")
@@ -57,6 +57,14 @@ text[8] = _([[The pirate comes on your view screen once again, but his expressio
 
 text[9] = _([[You begin to talk to the pirate about what you and the FLF are after. "Supplies, eh? Yeah, we've got supplies, alright. Heh, heh, heh... but it'll cost you!" You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tons of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
     "Oh yeah, I almost forgot; you don't know how to get to the Anger system, now, do you? Well, since you've proven yourself worthy, I suppose I'll let you in on our little secret." He transfers a file to your ship's computer. When you look at it, you see that it's a map showing a single hidden jump point. "Now, away with you! Meet me in the %s system when you have the loot."]])
+
+title[10] = _("I knew we could work something out")
+text[10] = _([["Ha, you came back after all! Wonderful. I'll just take that ore, then." You hesitate for a moment, but considering the number of pirates around, they'll probably take it from you by force if you refuse at this point. You jettison the cargo into space, which the Kestrel promptly picks up with a tractor beam. "Excellent! Well, it's been a pleasure doing business with you. Send your mates over to the new station whenever you're ready. It should be up and running in just a couple periods or so. And in the meantime, you can consider yourselves one of us! Bwa ha ha!"
+    You exchange what must for lack of a better word be called pleasantries with the pirate, with him telling a story about a pitifully armed Mule he recently plundered and you sharing stories of your victories against Dvaered scum. You seem to get along well. You then part ways. Now to report to Benito....]])
+
+title[11] = _("Just The Edge We Need")
+text[11] = _([[You greet Benito in a friendly manner as always, sharing your story and telling her the good news before handing her a chip with the map data on it. She seems pleased. "Excellent," she says. "We'll begin sending our trading convoys out right away. We'll need lots of supplies for our next mission! Thank you for your service, %s. Your pay has been deposited into your account. It will be a while before we'll be ready for your next big mission, so you can do some missions on the mission computer in the meantime. And don't forget to visit the Pirate worlds yourself and bring your own ship up to par!
+    "Oh, one last thing. Make sure you stay on good terms with the pirates, yeah? The next thing you should probably do is buy a Skull and Bones ship; pirates tend to respect those who use their ships more than those who don't. And make sure to destroy Dvaered scum with the pirates around! That should keep your reputation up." You make a mental note to do what she suggests as she excuses herself and heads off.]])
 
 comm_pirate = _("Har, har, har! You're hailing the wrong ship, buddy. Latest word from the boss is you're a weakling just waiting to be plundered!")
 comm_pirate_friendly = _("I guess you're not so bad after all!")
@@ -83,7 +91,7 @@ osd_desc["__save"] = true
 
 osd_apnd    = {}
 osd_apnd[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
-osd_apnd[4] = _("Bring %s tons of Ore to the pirates in the %s system")
+osd_apnd[4] = _("Bring %s tons of Ore to the Pirate Kestrel in the %s system")
 
 osd_final   = _("Return to FLF base")
 osd_desc[3] = osd_final
@@ -92,7 +100,7 @@ osd_desc[3] = osd_final
 function create ()
    missys = system.get( "Tormulex" )
    missys2 = system.get( "Anger" )
-   if not misn.claim( missys ) or not misn.claim( missys2 ) then
+   if not misn.claim( missys ) then
       misn.finish( false )
    end
 
@@ -108,7 +116,7 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = os._desc[1]:format( missys:name() )
+      osd_desc[1] = osd_desc[1]:format( missys:name() )
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
@@ -121,10 +129,13 @@ function accept ()
       boss_impressed = false
       boss = nil
       pirates = nil
+      boss_hook = nil
 
       ore_needed = 300
       credits = 300000
-      reputation = 20
+      reputation = 15
+      pir_reputation = 10
+      pir_starting_reputation = faction.get("Pirate"):playerStanding()
 
       hook.enter( "enter" )
    else
@@ -148,6 +159,11 @@ function pilot_hail_boss ()
    if stage <= 1 then
       if boss_impressed then
          stage = 2
+         local standing = faction.get("Pirate"):playerStanding()
+         if standing < 25 then
+            faction.get("Pirate"):setPlayerStanding( 25 )
+         end
+
          if boss ~= nil then
             boss:changeAI( "pirate" )
             boss:setHostile( false )
@@ -155,9 +171,11 @@ function pilot_hail_boss ()
          end
          if pirates ~= nil then
             for i, j in ipairs( pirates ) do
-               j:changeAI( "pirate" )
-               j:setHostile( false )
-               j:setFriendly()
+               if j:exists() then
+                  j:changeAI( "pirate" )
+                  j:setHostile( false )
+                  j:setFriendly()
+               end
             end
          end
 
@@ -166,11 +184,10 @@ function pilot_hail_boss ()
             missys2:name(), numstring( ore_needed ), missys2:name() ) )
 
          player.addOutfit( "Map: FLF-Pirate Route" )
-         if marker ~= nil then
-            misn.markerRm( marker )
+         if marker ~= nil then misn.markerRm( marker ) end
          marker = misn.markerAdd( missys2, "high" )
 
-         osd_desc[4] = osd_apnd[4]
+         osd_desc[4] = osd_apnd[4]:format( numstring( ore_needed ), missys2:name() )
          osd_desc[5] = osd_final
          misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 4 )
@@ -190,6 +207,13 @@ function pilot_hail_boss ()
             end
          end
       end
+   elseif player.pilot():cargoHas( "Ore" ) >= ore_needed then
+      tk.msg( title[10], text[10] )
+      stage = 3
+      player.pilot():cargoRm( "Ore", ore_needed )
+      hook.rm( boss_hook )
+      hook.land( "land" )
+      misn.osdActive( 5 )
    else
       player.msg( comm_boss_incomplete )
    end
@@ -198,10 +222,10 @@ end
 
 function pilot_death_pirate ()
    if stage <= 1 then
-      pirates_left -= 1
+      pirates_left = pirates_left - 1
       stage = 1
       boss_hailed = false
-      if pirates_left <= 0 or rnd.rnd() < 0.5 then
+      if pirates_left <= 0 or rnd.rnd() < 0.25 then
          boss_impressed = true
       end
    end
@@ -220,10 +244,10 @@ function enter ()
       if system.cur() == missys then
          pilot.clear()
          pilot.toggleSpawn( false )
-         local r = system.cur():radus()
+         local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.add( "Pirate Kestrel", "baddie_norun", vec )
+         local bstk = pilot.add( "Pirate Kestrel", "pirate_norun", vec )
          boss = bstk[1]
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
@@ -231,7 +255,7 @@ function enter ()
          boss:setHilight( true )
 
          pirates_left = 4
-         pirates = addShips( "Pirate Hyena", "baddie_norun", vec, pirates_left )
+         pirates = addShips( "Pirate Hyena", "pirate_norun", vec, pirates_left )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
@@ -247,10 +271,41 @@ function enter ()
       end
    elseif stage <= 2 then
       if system.cur() == missys2 then
-         pilot.clear()
-         pilot.toggleSpawn( false )
-         -- TODO
+         local r = system.cur():radius()
+         local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
+
+         local bstk = pilot.add( "Pirate Kestrel", "pirate_norun", vec )
+         boss = bstk[1]
+         hook.pilot( boss, "death", "pilot_death_boss" )
+         boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
+         boss:setFriendly()
+         boss:setHilight( true )
       end
    end
+end
+
+
+function land ()
+   if stage >= 3 and planet.cur():faction() == faction.get( "FLF" ) then
+      tk.msg( title[11], text[11]:format( player.name() ) )
+      diff.apply( "Fury_Station" )
+      diff.apply( "flf_pirate_ally" )
+      player.pay( credits )
+      flf_setReputation( 70 )
+      faction.get("FLF"):modPlayer( reputation )
+      faction.get("Pirate"):modPlayer( pir_reputation )
+      misn.finish( true )
+   end
+end
+
+
+function abort ()
+   faction.get("Pirate"):setPlayerStanding( pir_starting_reputation )
+   local hj1 = nil
+   local hj2 = nil
+   hj1, hj2 = jump.get( "Tormulex", "Anger" )
+   hj1:setKnown( false )
+   hj2:setKnown( false )
+   misn.finish( false )
 end
 

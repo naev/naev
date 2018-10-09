@@ -16,7 +16,7 @@ _fmod_distress_friend = 0 -- Distress of the faction's allies
 _fmod_kill_enemy      = 1 -- Kills of the faction's enemies
 _fmod_kill_friend     = 0 -- Kills of the faction's allies
 _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
-_fmod_misn_friend     = 0 -- Missions done for the faction's allies
+_fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
 
 function faction_hit( current, amount, source, secondary )

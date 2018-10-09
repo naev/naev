@@ -681,7 +681,6 @@
    <done>Disrupt a Dvaered Patrol</done>
    <location>Computer</location>
    <faction>FLF</faction>
-   <cond>not player.misnDone("The FLF Common Enemy")</cond>
   </avail>
  </mission>
  <mission name="Diversion from Raelid">
@@ -705,7 +704,19 @@
    <done>Diversion from Raelid</done>
    <location>Computer</location>
    <faction>FLF</faction>
-   <cond>not player.misnDone("The FLF Common Enemy")</cond>
+  </avail>
+ </mission>
+ <mission name="FLF Pirate Alliance">
+  <lua>flf/dvk/flf_dvk02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <done>Diversion from Raelid</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 30</cond>
   </avail>
  </mission>
  <mission name="Empire Negotiations">
@@ -781,29 +792,6 @@
    <location>Bar</location>
    <faction>FLF</faction>
    <cond>faction.playerStanding("Empire") &gt;= 30</cond>
-  </avail>
- </mission>
- <mission name="The FLF Common Enemy">
-  <lua>flf/empa/flf_empa06</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>40</chance>
-   <done>FLF Instability</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-  </avail>
- </mission>
- <mission name="FLF Pirates">
-  <lua>flf/flf_pirates</lua>
-  <avail>
-   <priority>6</priority>
-   <chance>860</chance>
-   <done>The FLF Common Enemy</done>
-   <location>Computer</location>
-   <faction>FLF</faction>
-   <faction>Frontier</faction>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
