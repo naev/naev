@@ -100,7 +100,7 @@ function create ()
    end
 
    credits = ships * 190000 - flfships * 1000
-   if has_vigilence then credits = credits + 310000 end
+   if has_phalanx then credits = credits + 310000 end
    if has_kestrel then credits = credits + 810000 end
    credits = credits + rnd.sigma() * 8000
 

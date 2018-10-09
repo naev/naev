@@ -18,6 +18,10 @@
 
 --]]
 
+include "numstring.lua"
+include "fleethelper.lua"
+include "dat/missions/flf/flf_common.lua"
+
 -- Localization
 title = {}
 text = {}
@@ -37,6 +41,33 @@ text[3] = _([["Excellent! I knew you would do it." Benito becomes visibly more r
 title[4] = _("...is still my enemy.")
 text[4] = _([["That's too bad. I understand where you're coming from, though. Please feel free to return if you are willing to take on this mission at a later date."]])
 
+title[5] = _("Who are you calling a weakling?")
+title[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the post pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why, that's the stupidest thing I've ever heard! Why would I want to talk to a weakling like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
+    With that, the pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
+
+title[6] = _("Mission Failure")
+text[6] = _([[As the Pirate Kestrel is blown out of the sky, it occurs to you that you have made a terrible mistake. Having killed off the leader of the pirate group, you have lost your opportunity to negotiate a trade deal with the pirates. You shamefully transmit your result to Benito via a coded message and abort the mission. Perhaps you will be given another opportunity later.]])
+
+title[7] = _("Still Not Impressed")
+text[7] = _([[The pirate leader comes on your screen once again. "Lucky shot, but you're still a pathetic weakling!" he says before promptly terminating the connection once again. Perhaps you need to destroy some more of his escorts so he can see who the real weakling is.]])
+
+title[8] = _("Not So Weak After All")
+text[8] = _([[The pirate comes on your view screen once again, but his expression has changed this time. You come to the realization that he is finally willing to talk and suppress a sigh of relief.
+    "Perhaps you're not so bad after all," he says. Funny how destroying his "mates" impresses him. Not the slightest hint of devotion to his comrades. Still, you hold back the urge to tell him off. He continues. "I've misjudged you lot. I guess FLF pilots can fight after all."]])
+
+text[9] = _([[You begin to talk to the pirate about what you and the FLF are after. "Supplies, eh? Yeah, we've got supplies, alright. Heh, heh, heh... but it'll cost you!" You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tons of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
+    "Oh yeah, I almost forgot; you don't know how to get to the Anger system, now, do you? Well, since you've proven yourself worthy, I suppose I'll let you in on our little secret." He transfers a file to your ship's computer. When you look at it, you see that it's a map showing a single hidden jump point. "Now, away with you! Meet me in the %s system when you have the loot."]])
+
+comm_pirate = _("Har, har, har! You're hailing the wrong ship, buddy. Latest word from the boss is you're a weakling just waiting to be plundered!")
+comm_pirate_friendly = _("I guess you're not so bad after all!")
+comm_boss_insults = {}
+comm_boss_insults[1] = _("You call those weapons? They look more like babies' toys to me!")
+comm_boss_insults[2] = _("What a hopeless weakling!")
+comm_boss_insults[3] = _("What, did you really think I would be impressed that easily?")
+comm_boss_insults[4] = _("Keep hailing all you want, but I don't listen to weaklings!")
+comm_boss_insults[5] = _("We'll have your ship plundered in no time at all!")
+comm_boss_incomplete = _("Don't be bothering me without the loot, you hear?")
+
 misn_title = _("Pirate Alliance")
 misn_desc = _("You are to seek out pirates in the %s system and try to convince them to become trading partners with the FLF.")
 misn_reward = _("Supplies for the FLF")
@@ -46,13 +77,24 @@ npc_desc = _("It seems Benito wants something from you again. Something about he
 
 osd_title   = _("Pirate Alliance")
 osd_desc    = {}
-osd_desc[1] = _("Fly to the %s system and look for pirates")
-osd_desc[2] = _("Convince pirates to begin trading with the FLF")
+osd_desc[1] = _("Fly to the %s system")
+osd_desc[2] = _("Find pirates and try to talk to (hail) them")
+osd_desc["__save"] = true
+
+osd_apnd    = {}
+osd_apnd[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
+osd_apnd[4] = _("Bring %s tons of Ore to the pirates in the %s system")
+
+osd_final   = _("Return to FLF base")
+osd_desc[3] = osd_final
 
 
 function create ()
    missys = system.get( "Tormulex" )
-   if not misn.claim( missys ) then misn.finish( false ) end
+   missys2 = system.get( "Anger" )
+   if not misn.claim( missys ) or not misn.claim( missys2 ) then
+      misn.finish( false )
+   end
 
    misn.setNPC( npc_name, "flf/unique/benito" )
    misn.setDesc( npc_desc )
@@ -73,7 +115,16 @@ function accept ()
       marker = misn.markerAdd( missys, "high" )
       misn.setReward( misn_reward )
 
-      job_done = false
+      stage = 0
+      pirates_left = 0
+      boss_hailed = false
+      boss_impressed = false
+      boss = nil
+      pirates = nil
+
+      ore_needed = 300
+      credits = 300000
+      reputation = 20
 
       hook.enter( "enter" )
    else
@@ -82,12 +133,120 @@ function accept ()
 end
 
 
-function enter ()
-   if not job_done then
-      if system.cur() == missys then
-         -- TODO: Spawn pirates
+function pilot_hail_pirate ()
+   player.commClose()
+   if stage <= 1 then
+      player.msg( comm_pirate )
+   else
+      player.msg( comm_pirate_friendly )
+   end
+end
+
+
+function pilot_hail_boss ()
+   player.commClose()
+   if stage <= 1 then
+      if boss_impressed then
+         stage = 2
+         if boss ~= nil then
+            boss:changeAI( "pirate" )
+            boss:setHostile( false )
+            boss:setFriendly()
+         end
+         if pirates ~= nil then
+            for i, j in ipairs( pirates ) do
+               j:changeAI( "pirate" )
+               j:setHostile( false )
+               j:setFriendly()
+            end
+         end
+
+         tk.msg( title[8], text[8] )
+         tk.msg( title[8], text[9]:format(
+            missys2:name(), numstring( ore_needed ), missys2:name() ) )
+
+         player.addOutfit( "Map: FLF-Pirate Route" )
+
+         osd_desc[4] = osd_apnd[4]
+         osd_desc[5] = osd_final
+         misn.osdCreate( osd_title, osd_desc )
+         misn.osdActive( 4 )
       else
+         if boss_hailed then
+            player.msg( comm_boss_insults[ rnd.rnd( 1, #comm_boss_insults ) ] )
+         else
+            boss_hailed = true
+            if stage <= 0 then
+               tk.msg( title[5], text[5] )
+               osd_desc[3] = osd_apnd[3]
+               osd_desc[4] = osd_final
+               misn.osdCreate( osd_title, osd_desc )
+               misn.osdActive( 3 )
+            else
+               tk.msg( title[7], text[7] )
+            end
+         end
+      end
+   else
+      player.msg( comm_boss_incomplete )
+   end
+end
+
+
+function pilot_death_pirate ()
+   if stage <= 1 then
+      pirates_left -= 1
+      stage = 1
+      boss_hailed = false
+      if pirates_left <= 0 or rnd.rnd() < 0.5 then
+         boss_impressed = true
+      end
+   end
+end
+
+
+function pilot_death_boss ()
+   tk.msg( title[6], text[6] )
+   misn.finish( false )
+end
+
+
+function enter ()
+   if stage <= 1 then
+      stage = 0
+      if system.cur() == missys then
+         pilot.clear()
+         pilot.toggleSpawn( false )
+         local r = system.cur():radus()
+         local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
+
+         local bstk = pilot.add( "Pirate Kestrel", "baddie_norun", vec )
+         boss = bstk[1]
+         hook.pilot( boss, "death", "pilot_death_boss" )
+         hook.pilot( boss, "hail", "pilot_hail_boss" )
+         boss:setHostile()
+         boss:setHilight( true )
+
+         pirates_left = 4
+         pirates = addShips( "Pirate Hyena", "baddie_norun", vec, pirates_left )
+         for i, j in ipairs( pirates ) do
+            hook.pilot( j, "death", "pilot_death_pirate" )
+            hook.pilot( j, "hail", "pilot_hail_pirate" )
+            j:setHostile()
+         end
+
+         misn.osdActive( 2 )
+      else
+         osd_desc[3] = osd_final
+         osd_desc[4] = nil
+         misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 1 )
+      end
+   elseif stage <= 2 then
+      if system.cur() == missys2 then
+         pilot.clear()
+         pilot.toggleSpawn( false )
+         -- TODO
       end
    end
 end
