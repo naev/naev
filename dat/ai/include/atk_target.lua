@@ -103,9 +103,9 @@ end
 function atk_heuristic_big_game_think ()
    local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
+   local target = ai.target()
    local dist = ai.dist(target)
 
-   local target = ai.target()
    -- Stop attacking if it doesn't exist
    if not target:exists() then
       ai.poptask()
