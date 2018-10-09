@@ -166,6 +166,9 @@ function pilot_hail_boss ()
             missys2:name(), numstring( ore_needed ), missys2:name() ) )
 
          player.addOutfit( "Map: FLF-Pirate Route" )
+         if marker ~= nil then
+            misn.markerRm( marker )
+         marker = misn.markerAdd( missys2, "high" )
 
          osd_desc[4] = osd_apnd[4]
          osd_desc[5] = osd_final
