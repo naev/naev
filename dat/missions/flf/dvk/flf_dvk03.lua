@@ -32,8 +32,12 @@ title[2] = _("Not This Time")
 text[2] = _([["Okay. Just let me know if you change your mind."]])
 
 title[3] = _("A Decisive Strike")
-text[3] = _([[You take a seat among the group. "Fantastic!" says Benito. "Let me get you caught up, then. Do you remember that mission in Raelid you helped with a while back?" You nod. You were wondering what you were actually creating a diversion from. "Yes, well, I never got around to telling you what we actually did there. See, we've been wanting to destroy Raelid Outpost for some time, mostly because it's often used as a front for trying to scout us out. So while you were getting the attention of those idiot Dvaered oppressors, we rigged a special bomb and covertly installed it onto the outpost!
-    "Now, the bomb is not perfect. The bombs can only be detonated by mechanical means, so we will need to attack the station directly. Unfortunately, we didn't have guns quite powerful enough to deal the kind of damage necessary. But thanks to your efforts, we now do. After much negotiation, we have succeeded in convincing a few pilots with Kestrels to help us out!"]])
+text[3] = _([[You take a seat among the group. "Fantastic!" says Benito. "Let me get you caught up, then. Do you remember that mission in Raelid you helped with a while back?" You nod. You were wondering what you were actually creating a diversion from. "Yes, well, I never got around to telling you what we actually did there. See, we've been wanting to destroy Raelid Outpost for some time, mostly because it's often used as a front for trying to scout us out. So while you were getting the attention of those idiot Dvaered oppressors, we rigged a special bomb and covertly installed it onto the outpost!"]])
+
+text[4] = _([["Now, the bomb is not perfect. Given how hastily we had to install the thing, we could not make it so that it could be detonated remotely. Instead, it has to be detonated manually, by blasting the station repeatedly. Shooting it down, in other words.
+    "So here's the plan. We have hired a large group of pirates to help us out by creating a massive disturbance far away from our target. You are to wait until the coast is clear, then swarm in and attack the outpost with all you've got. You, %s, will lead the charge. You have to determine the optimal time, when the Dvaereds are far enough away for you to initiate the attack, but before the pirates are inevitably overwhelmed. Simply hail one of the others when it's time to attack, then make a beeline for Raelid Outpost and shoot at it with all you've got!"]])
+
+text[5] = _([["You guys are some of our best pilots, so try not to get killed, eh? A moment of triumph is upon us! Down with the oppressors!" The last line earns Benito a cheer from the crowd. Well, time to get your ship ready for the battle.]])
 
 misn_title = _("Assault on Raelid")
 misn_desc = _("Join with the other FLF pilots for the assault on Raelid Outpost.")
@@ -61,6 +65,30 @@ end
 
 
 function accept ()
-   
+   if tk.yesno( title[1], text[2]:format( player.name() ) ) then
+      tk.msg( title[3], text[3] )
+      tk.msg( title[3], text[4]:format( player.name() ) )
+      tk.msg( title[3], text[5] )
+
+      misn.accept()
+
+      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      misn.osdCreate( osd_title, osd_desc )
+      misn.setTitle( misn_title )
+      misn.setDesc( misn_desc:format( missys:name() ) )
+      marker = misn.markerAdd( missys, "high" )
+      misn.setReward( misn_reward )
+
+      credits = 300000
+      reputation = 20
+
+      hook.enter( "enter" )
+   else
+      tk.msg( title[2], text[2] )
+   end
+end
+
+
+function enter ()
 end
 
