@@ -10,6 +10,7 @@
 #include <lua.h>
 
 #include "space.h"
+#include "nlua.h"
 
 
 #define PLANET_METATABLE   "planet" /**< Planet metatable identifier. */
@@ -18,15 +19,13 @@
 /**
  * @brief Lua Planet Wrapper.
  */
-typedef struct LuaPlanet_s {
-   int id; /**< ID to the planet. */
-} LuaPlanet;
+typedef int LuaPlanet;
 
 
 /*
  * Load the planet library.
  */
-int nlua_loadPlanet( lua_State *L, int readonly );
+int nlua_loadPlanet( nlua_env env );
 
 /*
  * Planet operations.

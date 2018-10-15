@@ -1,38 +1,46 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Factions>
- <faction name="Dummy">
+ <faction>
+  <name>Dummy</name>
   <static />
   <invisible />
   <player>0</player>
+  <standing>static</standing>
   <allies />
   <enemies />
  </faction>
- <faction name="Independent">
+ <faction>
+  <name>Independent</name>
+  <static />
+  <invisible />
   <known/>
   <player>3</player>
   <colour>blue</colour>
   <spawn>independent</spawn>
-  <standing>independent</standing>
+  <standing>static</standing>
   <allies>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Civilian">
-  <invisible />
+ <faction>
+  <name>Civilian</name>
   <static />
+  <invisible />
   <known/>
   <player>0</player>
   <colour>black</colour>
   <spawn>civilian</spawn>
+  <standing>static</standing>
   <allies>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Proteron">
+ <faction>
+  <name>Proteron</name>
   <logo>proteron</logo>
   <longname>Proteron</longname>
   <player>3</player>
@@ -46,21 +54,23 @@
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Frontier">
+ <faction>
+  <name>Frontier</name>
   <known/>
   <logo>frontier</logo>
   <longname>Frontier Alliance</longname>
   <player>3</player>
   <colour>yellow</colour>
   <spawn>frontier</spawn>
-  <standing>independent</standing>
+  <standing>frontier</standing>
   <allies>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Trader">
+ <faction>
+  <name>Trader</name>
   <known/>
   <logo>trader</logo>
   <longname>Space Traders Guild</longname>
@@ -74,7 +84,8 @@
    <enemy>Raider</enemy>
   </enemies>
  </faction>
- <faction name="Pirate">
+ <faction>
+  <name>Pirate</name>
   <known/>
   <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
@@ -100,7 +111,8 @@
    <enemy>Nasin</enemy>
   </enemies>
  </faction>
- <faction name="Empire">
+ <faction>
+  <name>Empire</name>
   <known/>
   <logo>empire</logo>
   <colour>green</colour>
@@ -115,58 +127,66 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
+   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
- <faction name="Soromid">
+ <faction>
+  <name>Soromid</name>
   <known/>
   <logo>soromid</logo>
   <colour>orange</colour>
   <player>0</player>
   <spawn>soromid</spawn>
   <standing>soromid</standing>
+  <equip>soromid</equip>
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Thurion">
+ <faction>
+  <name>Thurion</name>
   <logo>thurion</logo>
   <colour>grey50</colour>
   <player>1</player>
   <spawn>thurion</spawn>
   <standing>thurion</standing>
-  <equip>empire</equip>
+  <equip>thurion</equip>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Collective">
-  <static />
+ <faction>
+  <name>Collective</name>
   <known/>
   <logo>collective</logo>
   <player>-100</player>
   <colour>silver</colour>
   <spawn>collective</spawn>
+  <standing>collective</standing>
   <equip>collective</equip>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="FLF">
+ <faction>
+  <name>FLF</name>
   <known/>
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
   <player>0</player>
-  <colour>orange</colour>
+  <colour>yellow</colour>
   <spawn>flf</spawn>
   <standing>flf</standing>
   <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
+   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
- <faction name="Dvaered">
+ <faction>
+  <name>Dvaered</name>
   <known/>
   <logo>dvaered</logo>
   <colour>brown</colour>
@@ -181,9 +201,11 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
+   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
- <faction name="Za'lek">
+ <faction>
+  <name>Za'lek</name>
   <known/>
   <logo>zalek</logo>
   <colour>DarkRed</colour>
@@ -198,7 +220,8 @@
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Sirius">
+ <faction>
+  <name>Sirius</name>
   <known/>
   <logo>sirius</logo>
   <colour>aqua</colour>
@@ -214,14 +237,15 @@
    <enemy>Nasin</enemy>
   </enemies>
  </faction>
- <faction name="Goddard">
+ <faction>
+  <name>Goddard</name>
   <known/>
   <logo>goddard</logo>
   <colour>blue</colour>
   <longname>House Goddard</longname>
   <player>2</player>
   <spawn>goddard</spawn>
-  <standing>independent</standing>
+  <standing>goddard</standing>
   <equip>empire</equip>
   <allies>
    <ally>Empire</ally>
@@ -230,121 +254,159 @@
    <enemy>Pirate</enemy>
   </enemies>
  </faction>
- <faction name="Mercenary">
-  <invisible />
+ <faction>
+  <name>Rogue FLF</name>
   <static />
+  <invisible />
+  <player>-100</player>
+  <colour>red</colour>
+  <standing>static</standing>
+  <enemies>
+   <enemy>FLF</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Mercenary</name>
+  <static />
+  <invisible />
   <player>0</player>
+  <standing>static</standing>
   <allies />
   <enemies />
  </faction>
- <faction name="Raider">
-  <invisible />
+ <faction>
+  <name>Raider</name>
   <static />
+  <invisible />
   <longname>Galactic Pirates</longname>
   <player>-100</player>
   <colour>red</colour>
+  <standing>static</standing>
   <enemies>
    <enemy>Trader</enemy>
   </enemies>
  </faction>
- <faction name="Derelict">
-  <invisible />
+ <faction>
+  <name>Derelict</name>
   <static />
+  <invisible />
   <player>0</player>
+  <standing>static</standing>
   <allies />
   <enemies />
  </faction>
- <faction name="Four Winds">
-  <invisible />
+ <faction>
+  <name>Four Winds</name>
   <static />
+  <invisible />
   <player>0</player>
+  <standing>static</standing>
   <allies />
   <enemies>
    <enemy>Shadow_pirates</enemy>
    <enemy>Rogue Four Winds</enemy>
   </enemies>
  </faction>
- <faction name="Rogue Four Winds">
+ <faction>
+  <name>Rogue Four Winds</name>
   <display>Four Winds</display>
-  <invisible />
   <static />
+  <invisible />
   <player>0</player>
+  <standing>static</standing>
   <allies />
   <enemies>
    <enemy>Four Winds</enemy>
   </enemies>
  </faction>
- <faction name="Shadow_pirates">
+ <faction>
+  <name>Shadow_pirates</name>
   <display>Pirate</display>
-  <invisible />
   <static />
+  <invisible />
   <allies />
   <player>-100</player>
+  <standing>static</standing>
   <enemies>
    <enemy>Four Winds</enemy>
    <enemy>Diplomatic</enemy>
   </enemies>
  </faction>
- <faction name="Diplomatic">
-  <invisible />
+ <faction>
+  <name>Diplomatic</name>
   <static />
+  <invisible />
   <player>0</player>
   <colour>blue</colour>
+  <standing>static</standing>
   <allies>
   </allies>
   <enemies>
    <enemy>Shadow_pirates</enemy>
   </enemies>
  </faction>
- <faction name="Associates">
-  <invisible />
+ <faction>
+  <name>Associates</name>
   <static />
+  <invisible />
   <allies />
   <player>0</player>
+  <standing>static</standing>
   <enemies>
    <enemy>Thugs</enemy>
   </enemies>
  </faction>
- <faction name="Thugs">
-  <invisible />
+ <faction>
+  <name>Thugs</name>
   <static />
+  <invisible />
   <allies />
   <player>0</player>
+  <standing>static</standing>
   <enemies>
    <enemy>Associates</enemy>
   </enemies>
  </faction>
- <faction name="Achack_sirius">
+ <faction>
+  <name>Achack_sirius</name>
   <display>Sirius</display>
-  <invisible />
   <static />
+  <invisible />
   <allies />
   <player>0</player>
+  <standing>static</standing>
   <enemies>
    <enemy>Achack_thugs</enemy>
   </enemies>
  </faction>
- <faction name="Achack_thugs">
+ <faction>
+  <name>Achack_thugs</name>
   <display>Thugs</display>
-  <invisible />
   <static />
+  <invisible />
   <allies />
   <player>0</player>
+  <standing>static</standing>
   <enemies>
    <enemy>Achack_sirius</enemy>
   </enemies>
  </faction>
- <faction name="Kidnappers">
+ <faction>
+  <name>Kidnappers</name>
   <display>Pirate</display>
-  <invisible />
   <static />
+  <invisible />
   <logo>pirate</logo>
   <colour>red</colour>
   <allies />
   <player>0</player>
+  <standing>static</standing>
   <enemies />
  </faction>
- <faction name="Nasin">
+ <faction>
+  <name>Nasin</name>
   <invisible />
   <logo>sirius</logo>
   <standing>nasin</standing>

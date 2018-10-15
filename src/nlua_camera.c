@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nlua_vec2.h"
@@ -25,7 +24,7 @@
 
 /* Camera methods. */
 static int camL_set( lua_State *L );
-static const luaL_reg cameraL_methods[] = {
+static const luaL_Reg cameraL_methods[] = {
    { "set", camL_set },
    {0,0}
 }; /**< Camera Lua methods. */
@@ -39,14 +38,9 @@ static const luaL_reg cameraL_methods[] = {
  *    @param L State to load camera library into.
  *    @return 0 on success.
  */
-int nlua_loadCamera( lua_State *L, int readonly )
+int nlua_loadCamera( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   /* Register the values */
-   luaL_register(L, "camera", cameraL_methods);
-
+   nlua_register(env, "camera", cameraL_methods, 0);
    return 0;
 }
 
@@ -71,25 +65,27 @@ int nlua_loadCamera( lua_State *L, int readonly )
  * @usage camera.set( a_pilot, true ) -- Flies camera over to a_pilot.
  * @usage camera.set( vec2.new() ) -- Jumps camera to 0,0
  *
- *    @luaparam target Should be either a vec2 or a pilot to focus on. It will follow pilots around. If nil, it follows the player.
- *    @luaparam soft_over Defaults to false, indicates if the camera should fly over or instantly teleport.
- *    @luaparam speed Speed at which to fly over. Defaults to 2500 if omitted and soft_over is true.
- * @luafunc set( target, soft_over )
+ *    @luatparam Pilot|Vec2|nil target It will follow pilots around. If nil, it follows the player.
+ *    @luatparam[opt=false] boolean soft_over Indicates that the camera should fly over rather than instantly teleport.
+ *    @luaparam[opt=2500] speed Speed at which to fly over if soft_over is true.
+ * @luafunc set( target, soft_over, speed )
  */
 static int camL_set( lua_State *L )
 {
-   LuaPilot *lp;
-   LuaVector *lv;
+   LuaPilot lp;
+   Vector2d *vec;
    Pilot *p;
    int soft_over, speed;
 
+   NLUA_CHECKRW(L);
+
    /* Handle arguments. */
-   lp = NULL;
-   lv = NULL;
+   lp = 0;
+   vec = NULL;
    if (lua_ispilot(L,1))
       lp = lua_topilot(L,1);
    else if (lua_isvector(L,1))
-      lv = lua_tovector(L,1);
+      vec = lua_tovector(L,1);
    soft_over = lua_toboolean(L,2);
    if (lua_isnumber(L,3))
       speed = luaL_checkinteger(L,3);
@@ -97,13 +93,13 @@ static int camL_set( lua_State *L )
       speed = 2500;
 
    /* Set the camera. */
-   if (lp != NULL) {
-      p = pilot_get( lp->pilot );
+   if (lp != 0) {
+      p = pilot_get( lp );
       if (p != NULL)
          cam_setTargetPilot( p->id, soft_over*speed );
    }
-   else if (lv != NULL)
-      cam_setTargetPos( lv->vec.x, lv->vec.y, soft_over*speed );
+   else if (vec != NULL)
+      cam_setTargetPos( vec->x, vec->y, soft_over*speed );
    else {
       if (player.p != NULL)
          cam_setTargetPilot( player.p->id, soft_over*speed );

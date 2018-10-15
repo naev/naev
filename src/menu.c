@@ -18,6 +18,7 @@
 #include "SDL.h"
 
 #include "toolkit.h"
+#include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "dialogue.h"
 #include "log.h"
 #include "pilot.h"
@@ -50,7 +51,7 @@
 #define MAIN_WIDTH      130 /**< Main menu width. */
 
 #define MENU_WIDTH      130 /**< Escape menu width. */
-#define MENU_HEIGHT     200 /**< Escape menu height. */
+#define MENU_HEIGHT     250 /**< Escape menu height. */
 
 
 #define DEATH_WIDTH     130 /**< Death menu width. */
@@ -85,6 +86,7 @@ static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
 static void menu_small_close( unsigned int wid, char* str );
+static void menu_small_info( unsigned int wid, char *str );
 static void menu_small_exit( unsigned int wid, char* str );
 static void exit_game (void);
 /* death menu */
@@ -153,7 +155,7 @@ void menu_main (void)
    int h, y;
 
    if (menu_isOpen(MENU_MAIN)) {
-      WARN("Menu main is already open.");
+      WARN( _("Menu main is already open.") );
       return;
    }
 
@@ -183,12 +185,6 @@ void menu_main (void)
       offset_logo = SCREEN_W - tex->sh;
       offset_wdw  = 0;
    }
-   else if (freespace > 200.) {
-      /* We'll want a maximum separation of 30 between logo and text. */
-      /*freespace  -=  25;*/
-      offset_logo = -25;
-      offset_wdw  = -1.;
-   }
    /* Otherwise space evenly. */
    else {
       offset_logo = -freespace/4;
@@ -196,7 +192,7 @@ void menu_main (void)
    }
 
    /* create background image window */
-   bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
+   bwid = window_create( "BG", -1, -1, -1, -1 );
    window_onClose( bwid, menu_main_cleanBG );
    window_setBorder( bwid, 0 );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
@@ -208,28 +204,28 @@ void menu_main (void)
    window_setCancel( wid, main_menu_promptClose );
 
    /* Buttons. */
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load Game", menu_main_load );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLoad", _("Load Game"), menu_main_load, SDLK_l );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Game", menu_main_new );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnNew", _("New Game"), menu_main_new, SDLK_n );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnTutorial", "Tutorial", menu_main_tutorial );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnTutorial", _("Tutorial"), menu_main_tutorial, SDLK_t );
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
-      window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnEditor", "Editor", uniedit_open );
+      window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnEditor", _("Editor"), uniedit_open, SDLK_e );
       y -= BUTTON_HEIGHT+20;
    }
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", menu_options_button );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnOptions", _("Options"), menu_options_button, SDLK_o );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCredits", "Credits", menu_main_credits );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCredits", _("Credits"), menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
-   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_exit );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnExit", _("Exit"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
    if (!save_hasSave())
@@ -240,6 +236,57 @@ void menu_main (void)
 
    unpause_game();
    menu_Open(MENU_MAIN);
+}
+
+
+/**
+ * @brief Resizes the main menu and its background.
+ *
+ * This is a one-off function that ensures the main menu's appearance
+ * is consistent regardless of window resizing.
+ */
+void menu_main_resize (void)
+{
+   int w, h, bgw, bgh, tw, th;
+   int offset_logo, offset_wdw, freespace;
+   int menu_id, bg_id;
+   Widget *wgt;
+
+   if (!menu_isOpen(MENU_MAIN))
+      return;
+
+   menu_id = window_get("Main Menu");
+   bg_id   = window_get("BG");
+
+   window_dimWindow( menu_id, &w, &h );
+   window_dimWindow( bg_id, &bgw, &bgh );
+
+   freespace = SCREEN_H - main_naevLogo->sh - h;
+   if (freespace < 0) {
+      offset_logo = SCREEN_H - main_naevLogo->sh;
+      offset_wdw  = 0;
+   }
+   else {
+      offset_logo = -freespace/4;
+      offset_wdw  = freespace/2;
+   }
+
+   window_moveWidget( bg_id, "imgLogo",
+         (bgw - main_naevLogo->sw)/2., offset_logo );
+
+   window_dimWidget( bg_id, "txtBG", &tw, &th );
+
+   if (tw > SCREEN_W) {
+      /* RIP abstractions. X must be set manually because window_moveWidget
+       * transforms negative coordinates. */
+      wgt = window_getwgt( bg_id, "txtBG" );
+      if (wgt)
+         wgt->x = (SCREEN_W - tw) / 2;
+   }
+   else
+      window_moveWidget( bg_id, "txtBG", (SCREEN_W - tw)/2, 10. );
+
+   window_move( menu_id, -1, offset_wdw );
 }
 
 
@@ -262,7 +309,7 @@ void menu_main_close (void)
    if (window_exists("Main Menu"))
       window_destroy( window_get("Main Menu") );
    else
-      WARN("Main menu does not exist.");
+      WARN( _("Main menu does not exist.") );
 
    menu_Close(MENU_MAIN);
    pause_game();
@@ -379,17 +426,22 @@ void menu_small (void)
 
    window_setCancel( wid, menu_small_close );
 
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnResume", "Resume", menu_small_close );
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
+         "btnResume", _("Resume"), menu_small_close, SDLK_r );
+   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_small_exit );
+         "btnInfo", _("Info"), menu_small_info, SDLK_i );
+   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT + 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnOptions", _("Options"), menu_options_button, SDLK_o );
+   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnExit", _("Exit"), menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
 }
+
+
 /**
  * @brief Closes the small ingame menu.
  *    @param str Unused.
@@ -400,6 +452,21 @@ static void menu_small_close( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_SMALL);
 }
+
+
+/**
+ * @brief Opens the info window.
+ *    @param wid Unused.
+ *    @param str Unused.
+ */
+static void menu_small_info( unsigned int wid, char *str )
+{
+   (void) str;
+   (void) wid;
+
+   menu_info( INFO_MAIN );
+}
+
 /**
  * @brief Closes the small ingame menu and goes back to the main menu.
  *    @param str Unused.
@@ -429,7 +496,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    }
 
    /* Stop player sounds because sometimes they hang. */
-   player_autonavAbort( "Exited game." );
+   player_restoreControl( 0, _("Exited game.") );
    player_soundStop();
 
    /* Clean up. */
@@ -498,17 +565,17 @@ void menu_death (void)
    /* Allow the player to continue if the savegame exists, if not, propose to restart */
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    if (!player_isTut() && nfile_fileExists(path))
-      window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnContinue", "Continue", menu_death_continue );
+      window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else
-      window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRestart", "Restart", menu_death_restart );
+      window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRestart", _("Restart"), menu_death_restart, SDLK_r );
 
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+   window_addButtonKey( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnMain", "Main Menu", menu_death_main );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit Game", menu_exit );
+         "btnMain", _("Main Menu"), menu_death_main, SDLK_m );
+   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnExit", _("Exit Game"), menu_exit, SDLK_x );
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */
@@ -563,7 +630,7 @@ int menu_askQuit (void)
 
    /* Ask if should quit. */
    menu_Open( MENU_ASKQUIT );
-   if (dialogue_YesNoRaw( "Quit Naev", "Are you sure you want to quit Naev?" )) {
+   if (dialogue_YesNoRaw( _("Quit Naev"), _("Are you sure you want to quit Naev?") )) {
       exit_game();
       return 1;
    }

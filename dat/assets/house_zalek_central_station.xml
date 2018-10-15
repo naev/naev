@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>150.000000</value>
-  <range>9</range>
+  <value>300.000000</value>
+  <range>5</range>
  </presence>
  <general>
   <class>0</class>
   <population>25000</population>
-  <hide>0.600000</hide>
+  <hide>0.370000</hide>
   <services>
    <land>zlk_mil_restricted</land>
    <refuel/>
@@ -48,6 +48,8 @@
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
   <item>Star Maps</item>

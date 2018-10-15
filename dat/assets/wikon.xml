@@ -35,6 +35,7 @@
   <bar>A better name for the spaceport bar would be "spaceport lounge". The establishment is luxurious even by non-spaceport standards, offering various recreational facilities in addition to the standard ones. It is possible to dine here too, and the menu is far from modest. Of course all this comes with a considerable price tag, but the economic climate allows for that.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Low</item>
   <item>Laser 1</item>
   <item>Ion 1</item>

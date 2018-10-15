@@ -79,7 +79,7 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
  */
 static int intro_load( const char *text )
 {
-   uint32_t intro_size;
+   size_t intro_size;
    char *intro_buf;
    char img_src[128];     /* path to image to be displayed alongside text. */
    int length;
@@ -93,7 +93,7 @@ static int intro_load( const char *text )
    intro_length = intro_size; /* Length approximation. */
 
    /* Create intro font. */
-   gl_fontInit( &intro_font, "dat/mono.ttf", conf.font_size_intro );
+   gl_fontInit( &intro_font, "Mono", FONT_MONOSPACE_PATH, conf.font_size_intro );
 
    /* Load lines. */
    p = 0;
@@ -236,7 +236,7 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
        */
       if (NULL != transition->tex) {
          /* Scrolling is happening faster than fading... */
-         WARN( "Intro scrolling too fast!" );
+         WARN( _("Intro scrolling too fast!") );
          gl_freeTexture( transition->tex );
       }
       transition->tex = gl_newImage( img_file, 0 );
@@ -266,6 +266,14 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
    SDL_Event event;           /* user key-press, mouse-push, etc. */
 
    while (SDL_PollEvent(&event)) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+      if (event.type == SDL_WINDOWEVENT &&
+            event.window.event == SDL_WINDOWEVENT_RESIZED) {
+         naev_resize( event.window.data1, event.window.data2 );
+         continue;
+      }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
       if (event.type != SDL_KEYDOWN)
          continue;
 
@@ -293,6 +301,10 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
       else if ((event.key.keysym.sym == SDLK_SPACE) ||
             (event.key.keysym.sym == SDLK_RETURN))
          *offset += 100;
+
+      /* Jump up. */
+      else if (event.key.keysym.sym == SDLK_BACKSPACE)
+         *offset -= 100;
 
       /* User is clearly flailing on keyboard. */
       else
@@ -413,7 +425,7 @@ int intro_display( const char *text, const char *mus )
                break;
             case 'o': /* fade out image. */
                if (NULL == side_image.tex) {
-                  WARN("Tried to fade out without an image." );
+                  WARN(_("Tried to fade out without an image.") );
                   break;
                }
                side_image.fade_rate = -0.1;

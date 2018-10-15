@@ -7,9 +7,16 @@
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
+  <sys name="Zacron">
+   <jump>Raelid</jump>
+  </sys>
   <sys name="Raelid">
-   <asset>Marius Station</asset>
    <jump>Arcanis</jump>
+   <jump>Zacron</jump>
+   <asset>Marius Station</asset>
+   <asset>Raelid II</asset>
+   <asset>Raelid Outpost</asset>
+   <asset>Raelid Prime</asset>
   </sys>
   <sys name="Arcanis">
    <jump>Raelid</jump>
@@ -20,8 +27,9 @@
    <jump>Doeston</jump>
   </sys>
   <sys name="Doeston">
-   <asset>Cerberus</asset>
    <jump>Zylex</jump>
+   <asset>Cerberus</asset>
+   <asset>Doeston Prime</asset>
   </sys>
  </specific>
 </outfit>

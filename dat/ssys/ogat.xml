@@ -20,11 +20,15 @@
  <jumps>
   <jump target="Doranthex">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Draygar">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Goddard">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Vlexon">
    <autopos/>

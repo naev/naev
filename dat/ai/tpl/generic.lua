@@ -1,5 +1,6 @@
 include("dat/ai/include/basic.lua")
 include("dat/ai/include/attack.lua")
+local formation = include("dat/scripts/formation.lua")
 
 --[[
 -- Variables to adjust AI
@@ -24,20 +25,105 @@ mem.distressmsg    = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
+mem.norun = false -- Do not run away.
+mem.careful       = false -- Should the pilot try to avoid enemies?
+
+mem.formation     = "circle" -- Formation to use when commanding fleet
+mem.form_pos      = nil -- Position in formation (for follower)
+
+--[[Control parameters: mem.radius and mem.angle are the polar coordinates 
+of the point the pilot has to follow when using follow_accurate.
+The reference direction is the target's velocity direction.
+For example, radius = 100 and angle = 180 means that the pilot will stay
+behing his target at a distance of 100 units.
+angle = 90 will make the pilot try to be on the left of his target,
+angle = 0 means that the pilot tries to be in front of the target.]]
+mem.radius         = 100 --  Requested distance between follower and target
+mem.angle          = 180 --  Requested angle between follower and target's velocity
+mem.Kp             = 10 --  First control coefficient
+mem.Kd             = 20 -- Second control coefficient
 
 
 -- Required control rate
 control_rate   = 2
 
+function lead_fleet ()
+   if #ai.pilot():followers() ~= 0 then
+      if mem.formation == nil then
+         formation.clear(ai.pilot())
+         return
+      end
+
+      local form = formation[mem.formation]
+      if form == nil then
+         warn(string.format(_("Formation '%s' not found"), mem.formation))
+      else
+         form(ai.pilot())
+      end
+   end
+end
+
+-- Run instead of "control" when under manual control; use should be limited
+function control_manual ()
+   lead_fleet()
+end
+
+function handle_messages ()
+   for _, v in ipairs(ai.messages()) do
+      local sender, msgtype, data = unpack(v)
+      if sender == ai.pilot():leader() then
+         if msgtype == "form-pos" then
+            mem.form_pos = data
+         elseif msgtype == "hyperspace" then
+            ai.pushtask("hyperspace", data)
+         elseif msgtype == "land" then
+            -- TODO: Made sure planet is the same
+            mem.land = ai.landplanet():pos()
+            ai.pushtask("land")
+         -- Escort commands
+         -- Attack target
+         elseif msgtype == "e_attack" then
+            if data ~= nil and data:exists() then
+               ai.pushtask("attack", data)
+            end
+         -- Hold position
+         elseif msgtype == "e_hold" then
+            ai.pushtask("hold" )
+         -- Return to carrier
+         elseif msgtype == "e_return" then
+            if ai.pilot():flags().carried then
+               ai.pushtask("flyback" )
+            end
+         -- Clear orders
+         elseif msgtype == "e_clear" then
+            ai.pilot():taskClear()
+         end
+      end
+   end
+end
+
 -- Required "control" function
 function control ()
-   local task = ai.taskname()
    local enemy = ai.getenemy()
+
+   local parmour, pshield = ai.pilot():health()
+
+   lead_fleet()
+   handle_messages()
+
+   local task = ai.taskname()
+
+   -- TODO: Select new leader
+   if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
+      ai.pilot():setLeader(nil)
+   end
 
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
-      if not ai.getPilot():cooldown() then
+
+      cooldown, braking = ai.pilot():cooldown()
+      if not (cooldown or braking) then
          mem.cooldown = false
       end
    else
@@ -47,7 +133,7 @@ function control ()
    -- Reset distress if not fighting/running
    if task ~= "attack" and task ~= "runaway" then
       mem.attacked = nil
-      local p = ai.getPilot()
+      local p = ai.pilot()
 
       -- Cooldown shouldn't preempt boarding, either.
       if task ~= "board" then
@@ -55,7 +141,7 @@ function control ()
          if mem.cooldown then
             return
          -- If the ship is hot and shields are high, consider cooling down.
-         elseif ai.pshield() > 50 and p:temp() > 300 then
+         elseif pshield > 50 and p:temp() > 300 then
             -- Ship is quite hot, better cool down.
             if p:temp() > 400 then
                mem.cooldown = true
@@ -73,7 +159,7 @@ function control ()
    end
 
    -- Get new task
-   if task == "none" then
+   if task == nil then
       local attack = false
 
       -- We'll first check enemy.
@@ -94,6 +180,8 @@ function control ()
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
+      elseif ai.pilot():leader() and ai.pilot():leader():exists() then
+         ai.pushtask("follow_fleet")
       else
          idle()
       end
@@ -108,19 +196,21 @@ function control ()
       target = ai.target()
 
       -- Needs to have a target
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
+
+      local target_parmour, target_pshield = target:health()
 
       -- Pick an appropriate weapon set.
       choose_weapset()
 
       -- Runaway if needed
-      if (mem.shield_run > 0 and ai.pshield() < mem.shield_run
-               and ai.pshield() < ai.pshield(target) ) or
-            (mem.armour_run > 0 and ai.parmour() < mem.armour_run
-               and ai.parmour() < ai.parmour(target) ) then
+      if (mem.shield_run > 0 and pshield < mem.shield_run
+               and pshield < target_pshield ) or
+            (mem.armour_run > 0 and parmour < mem.armour_run
+               and parmour < target_parmour ) then
          ai.pushtask("runaway", target)
 
       -- Think like normal
@@ -138,10 +228,14 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
+      if mem.norun or ai.pilot():leader() ~= nil then
+         ai.poptask()
+         return
+      end
       target = ai.target()
 
       -- Needs to have a target
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
@@ -149,8 +243,8 @@ function control ()
       local dist = ai.dist( target )
 
       -- Should return to combat?
-      if mem.aggressive and ((mem.shield_return > 0 and ai.pshield() >= mem.shield_return) or
-            (mem.armour_return > 0 and ai.parmour() >= mem.armour_return)) then
+      if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
+            (mem.armour_return > 0 and parmour >= mem.armour_return)) then
          ai.poptask() -- "attack" should be above "runaway"
 
       -- Try to jump
@@ -163,6 +257,11 @@ function control ()
 
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
+      -- Don't start new attacks while refueling.
+      if task == "refuel" then
+         return
+      end
+
       local attack = false
 
       -- See if enemy is close enough to attack
@@ -193,12 +292,18 @@ function attacked ( attacker )
 
    -- Cooldown should be left running if not taking heavy damage.
    if mem.cooldown then
-      if ai.pshield() < 90 then
+      local _, pshield = ai.pilot():health()
+      if pshield < 90 then
          mem.cooldown = false
-         ai.getPilot():setCooldown( false )
+         ai.pilot():setCooldown( false )
       else
          return
       end
+   end
+
+   -- Ignore hits from dead pilots.
+   if not attacker:exists() then
+      return
    end
 
    if task ~= "attack" and task ~= "runaway" then
@@ -241,7 +346,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   mem.tookoff    = ai.takingoff()
+   mem.tookoff    = ai.pilot():flags().takingoff
    attack_choose()
 end
 
@@ -263,11 +368,9 @@ function distress ( pilot, attacker )
       return
    end
 
-   pid    = pilot:id()
-   aid    = attacker:id()
    pfact  = pilot:faction()
    afact  = attacker:faction()
-   aifact = ai.getPilot():faction()
+   aifact = ai.pilot():faction()
    p_ally  = aifact:areAllies(pfact)
    a_ally  = aifact:areAllies(afact)
    p_enemy = aifact:areEnemies(pfact)
@@ -279,12 +382,12 @@ function distress ( pilot, attacker )
       if afact == aifact then
          return
       else
-         t = aid
+         t = attacker
       end
    elseif mem.aggressive then
       -- Aggressive ships follow their brethren into battle!
       if afact == aifact then
-         t = pid
+         t = pilot
       elseif p_ally then
          -- When your allies are fighting, stay out of it.
          if a_ally then
@@ -292,47 +395,47 @@ function distress ( pilot, attacker )
          end
 
          -- Victim is an ally, but the attacker isn't.
-         t = aid
+         t = attacker
       -- Victim isn't an ally. Attack the victim if the attacker is our ally.
       elseif a_ally then
-         t = pid
+         t = pilot
       elseif p_enemy then
          -- If they're both enemies, may as well let them destroy each other.
          if a_enemy then
             return
          end
 
-         t = pid
+         t = pilot
       elseif a_enemy then
-         t = aid
+         t = attacker
       -- We'll be nice and go after the aggressor if the victim is peaceful.
-      elseif not pilot:memoryCheck("aggressive") then
-         t = aid
+      elseif not pilot:memory().aggressive then
+         t = attacker
       -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
       else
          return
       end
    -- Non-aggressive ships will flee if their enemies attack neutral or allied vessels.
    elseif a_enemy and not p_enemy then
-      t = aid
+      t = attacker
    else
       return
    end
 
    local task = ai.taskname()
-   -- If not attacking nor fleeing, begin attacking
-   if task ~= "attack" and task ~= "runaway" then
+   -- We're sort of busy
+   if task == "attack" then
+      local target = ai.target()
+
+      if not target:exists() or ai.dist(target) > ai.dist(t) then
+         ai.pushtask( "attack", t )
+      end
+   -- If not fleeing or refueling, begin attacking
+   elseif task ~= "runaway" and task ~= "refuel" then
       if mem.aggressive then
          ai.pushtask( "attack", t )
       else
          ai.pushtask( "runaway", t )
-      end
-   -- We're sort of busy
-   elseif task == "attack" then
-      local target = ai.target()
-
-      if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
-         ai.pushtask( "attack", t )
       end
    end
 end
@@ -340,7 +443,6 @@ end
 
 -- Handles generating distress messages
 function gen_distress ( target )
-
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
       return
@@ -351,12 +453,13 @@ function gen_distress ( target )
       return
    end
 
-   -- Update distres counter
+   -- Initialize if unset.
    if mem.distressed == nil then
       mem.distressed = 1
-   else
-      mem.distressed = mem.distressed + 1
    end
+
+   -- Update distress counter
+   mem.distressed = mem.distressed + 1
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
@@ -374,7 +477,7 @@ end
 -- Picks an appropriate weapon set for ships with mixed weaponry.
 function choose_weapset()
    if ai.hascannons() and ai.hasturrets() then
-      local p = ai.getPilot()
+      local p = ai.pilot()
       local meant, peakt = p:weapsetHeat( 3 )
       local meanc, peakc = p:weapsetHeat( 2 )
 
@@ -415,15 +518,53 @@ end
 -- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
-   local mean = ai.getPilot():weapsetHeat()
+   local mean = ai.pilot():weapsetHeat()
+   local _, pshield = ai.pilot():health()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
    if mem.tickssincecooldown < 15 then
       return
    -- The weapons are extremely hot and cooldown should be triggered.
-   elseif mean > mem.heatthreshold and ai.pshield() > 50 then
+   -- This did not work before. However now it causes ships to just stop dead and wait for energy regen.
+   -- Not sure this is better...
+   elseif mean > mem.heatthreshold and pshield > 50 then
       mem.cooldown = true
-      ai.getPilot():setCooldown(true)
+      ai.pilot():setCooldown(true)
+   end
+   if pshield == nil then
+      player.msg("pshield = nil")
+   end
+end
+
+
+-- Holds position
+function hold ()
+   if not ai.isstopped() then
+      ai.brake()
+   else
+      ai.stop()
+   end
+end
+
+
+-- Tries to fly back to carrier
+function flyback ()
+   local target = ai.pilot():leader()
+   local dir    = ai.face(target)
+   local dist   = ai.dist(target)
+   local bdist  = ai.minbrakedist()
+
+   -- Try to brake
+   if not ai.isstopped() and dist < bdist then
+      ai.pushtask("brake")
+
+   -- Try to dock
+   elseif ai.isstopped() and dist < 30 then
+      ai.dock(target)
+
+   -- Far away, must approach
+   elseif dir < 10 then
+      ai.accel()
    end
 end

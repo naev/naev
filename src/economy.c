@@ -32,6 +32,7 @@
 #include "log.h"
 #include "spfx.h"
 #include "pilot.h"
+#include "player.h"
 #include "rng.h"
 #include "space.h"
 #include "ntime.h"
@@ -61,10 +62,17 @@ extern StarSystem *systems_stack; /**< Star system stack. */
 extern int systems_nstack; /**< Number of star systems. */
 
 
+/* gatherables stack */
+static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
+static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
+float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
+
+
 /*
  * Nodal analysis simulation for dynamic economies.
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
+static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 static int econ_nprices       = 0; /**< Number of prices to calculate. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
@@ -109,6 +117,27 @@ void credits2str( char *str, credits_t credits, int decimals )
       nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
+/**
+ * @brief Given a price and on-hand credits, outputs a colourized string.
+ *
+ *    @param[out] str Output is stored here, must have at least a length of 32
+ *                     char.
+ *    @param price Price to display.
+ *    @param credits Credits available.
+ *    @param decimals Decimals to use.
+ */
+void price2str(char *str, credits_t price, credits_t credits, int decimals )
+{
+   char *buf;
+
+   credits2str(str, price, decimals);
+   if (price <= credits)
+      return;
+
+   buf = strdup(str);
+   nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
+   free(buf);
+}
 
 /**
  * @brief Gets a commodity by name.
@@ -123,7 +152,7 @@ Commodity* commodity_get( const char* name )
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
 
-   WARN("Commodity '%s' not found in stack", name);
+   WARN(_("Commodity '%s' not found in stack"), name);
    return NULL;
 }
 
@@ -155,6 +184,10 @@ static void commodity_freeOne( Commodity* com )
       free(com->name);
    if (com->description)
       free(com->description);
+   if (com->gfx_store)
+      gl_freeTexture(com->gfx_store);
+   if (com->gfx_space)
+      gl_freeTexture(com->gfx_space);
 
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
@@ -201,19 +234,38 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
 
-   /* Get name. */
-   xmlr_attr( parent, "name", temp->name );
-   if (temp->name == NULL)
-      WARN("Commodity from "COMMODITY_DATA_PATH" has invalid or no name");
-
    /* Parse body. */
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
+      xmlr_strd(node, "name", temp->name);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
-      WARN("Commodity '%s' has unknown node '%s'.", temp->name, node->name);
+      if (xml_isNode(node,"gfx_space"))
+         temp->gfx_space = xml_parseTexture( node,
+               COMMODITY_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+      if (xml_isNode(node,"gfx_store")) {
+         temp->gfx_store = xml_parseTexture( node,
+               COMMODITY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+         if (temp->gfx_store != NULL) {
+         } else {
+            temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+         }
+         continue;
+      }
    } while (xml_nextNode(node));
+   if (temp->name == NULL)
+      WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
+   if ((temp->price>0)) {
+      if (temp->gfx_store == NULL) {
+         WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
+         temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
+      }
+      if (temp->gfx_space == NULL)
+         temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.png", 0 );
+   }
+
+   
 
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
@@ -266,13 +318,134 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
 
 
 /**
+ * @brief Initializes a gatherable object
+ *
+ *    @param com Type of commodity.
+ *    @param pos Position.
+ *    @param vel Velocity.
+ */
+void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel )
+{
+   gatherable_stack = realloc(gatherable_stack,
+                              sizeof(Gatherable)*(++gatherable_nstack));
+
+   gatherable_stack[gatherable_nstack-1].type = com;
+   gatherable_stack[gatherable_nstack-1].pos = pos;
+   gatherable_stack[gatherable_nstack-1].vel = vel;
+   gatherable_stack[gatherable_nstack-1].timer = 0.;
+   gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+}
+
+
+/**
+ * @brief Updates all gatherable objects
+ *
+ *    @param dt Elapsed time.
+ */
+void gatherable_update( double dt )
+{
+   int i;
+
+   /* Update the timer for "full cargo" message. */
+   noscoop_timer += dt;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gatherable_stack[i].timer += dt;
+      gatherable_stack[i].pos.x += dt*gatherable_stack[i].vel.x;
+      gatherable_stack[i].pos.y += dt*gatherable_stack[i].vel.y;
+
+      /* Remove the gatherable */
+      if (gatherable_stack[i].timer > gatherable_stack[i].lifeleng) {
+         gatherable_nstack--;
+         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                 sizeof(Gatherable)*(gatherable_nstack-i) );
+         gatherable_stack = realloc(gatherable_stack,
+                                    sizeof(Gatherable) * gatherable_nstack);
+         i--;
+      }
+   }
+}
+
+
+/**
+ * @brief Frees all the gatherables
+ */
+void gatherable_free( void )
+{
+   free(gatherable_stack);
+   gatherable_stack = NULL;
+   gatherable_nstack = 0;
+}
+
+
+/**
+ * @brief Renders all the gatherables
+ */
+void gatherable_render( void )
+{
+   int i;
+   Gatherable *gat;
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+      gl_blitSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
+   }
+}
+
+
+/**
+ * @brief See if the pilot can gather anything
+ *
+ *    @param pilot ID of the pilot
+ */
+void gatherable_gather( int pilot )
+{
+   int i, q;
+   Gatherable *gat;
+   Pilot* p;
+
+   p = pilot_get( pilot );
+
+   for (i=0; i < gatherable_nstack; i++) {
+      gat = &gatherable_stack[i];
+
+      if (0.03*vect_dist( &p->solid->pos, &gat->pos ) +
+          0.03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
+         /* Add cargo to pilot. */
+         q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
+
+         if (q>0) {
+            if (pilot_isPlayer(p))
+               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
+
+            /* Remove the object from space. */
+            gatherable_nstack--;
+            memmove( &gatherable_stack[i], &gatherable_stack[i+1],
+                    sizeof(Gatherable)*(gatherable_nstack-i) );
+            gatherable_stack = realloc(gatherable_stack,
+                                       sizeof(Gatherable) * gatherable_nstack);
+
+            /* Test if there is still cargo space */
+            if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
+               player_message( _("No more cargo space available") );
+         }
+         else if ((pilot_isPlayer(p)) && (noscoop_timer > 2.)) {
+            noscoop_timer = 0.;
+            player_message( _("Cannot gather material: no more cargo space available") );
+         }
+      }
+   }
+}
+
+
+/**
  * @brief Loads all the commodity data.
  *
  *    @return 0 on success.
  */
 int commodity_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
@@ -285,19 +458,19 @@ int commodity_load (void)
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", COMMODITY_DATA_PATH);
+      WARN(_("'%s' is not valid XML."), COMMODITY_DATA_PATH);
       return -1;
    }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-      ERR("Malformed "COMMODITY_DATA_PATH" file: missing root element '"XML_COMMODITY_ID"'");
+      ERR(_("Malformed %s file: missing root element '%s'"), COMMODITY_DATA_PATH, XML_COMMODITY_ID);
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first faction node */
    if (node == NULL) {
-      ERR("Malformed "COMMODITY_DATA_PATH" file: does not contain elements");
+      ERR(_("Malformed %s file: does not contain elements"), COMMODITY_DATA_PATH);
       return -1;
    }
 
@@ -320,13 +493,13 @@ int commodity_load (void)
          }
       }
       else
-         WARN("'"COMMODITY_DATA_PATH"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), COMMODITY_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
+   DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 
    return 0;
 
@@ -376,7 +549,7 @@ credits_t economy_getPrice( const Commodity *com,
 
    /* Check if found. */
    if (i >= econ_nprices) {
-      WARN("Price for commodity '%s' not known.", com->name);
+      WARN(_("Price for commodity '%s' not known."), com->name);
       return 0;
    }
 
@@ -485,7 +658,7 @@ static int econ_createGMatrix (void)
    /* Create the matrix. */
    M = cs_spalloc( systems_nstack, systems_nstack, 1, 1, 1 );
    if (M == NULL)
-      ERR("Unable to create CSparse Matrix.");
+      ERR(_("Unable to create CSparse Matrix."));
 
    /* Fill the matrix. */
    for (i=0; i < systems_nstack; i++) {
@@ -503,10 +676,10 @@ static int econ_createGMatrix (void)
          /* Matrix is symmetrical and non-diagonal is negative. */
          ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
-            WARN("Unable to enter CSparse Matrix Cell.");
+            WARN(_("Unable to enter CSparse Matrix Cell."));
          ret = cs_entry( M, sys->jumps[j].target->id, i, -R );
          if (ret != 1)
-            WARN("Unable to enter CSparse Matrix Cell.");
+            WARN(_("Unable to enter CSparse Matrix Cell."));
       }
 
       /* Set the diagonal. */
@@ -519,7 +692,7 @@ static int econ_createGMatrix (void)
       cs_spfree( econ_G );
    econ_G = cs_compress( M );
    if (econ_G == NULL)
-      ERR("Unable to create economy G Matrix.");
+      ERR(_("Unable to create economy G Matrix."));
 
    /* Clean up. */
    cs_spfree(M);
@@ -553,6 +726,29 @@ int economy_init (void)
 
    /* Refresh economy. */
    economy_refresh();
+
+   return 0;
+}
+
+
+/**
+ * @brief Increments the queued update counter.
+ *
+ * @sa economy_execQueued
+ */
+void economy_addQueuedUpdate (void)
+{
+   econ_queued++;
+}
+
+
+/**
+ * @brief Calls economy_refresh if an economy update is queued.
+ */
+int economy_execQueued (void)
+{
+   if (econ_queued)
+      return economy_refresh();
 
    return 0;
 }
@@ -599,7 +795,7 @@ int economy_update( unsigned int dt )
    /* Create the vector to solve the system. */
    X = malloc(sizeof(double)*systems_nstack);
    if (X == NULL) {
-      WARN("Out of Memory!");
+      WARN(_("Out of Memory"));
       return -1;
    }
 
@@ -620,7 +816,7 @@ int economy_update( unsigned int dt )
        * enforce that condition). */
       ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
-         WARN("Failed to solve the Economy System.");
+         WARN(_("Failed to solve the Economy System."));
 
       /*
        * Get the minimum and maximum to scale.
@@ -652,6 +848,7 @@ int economy_update( unsigned int dt )
    /* Clean up. */
    free(X);
 
+   econ_queued = 0;
    return 0;
 }
 

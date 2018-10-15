@@ -104,21 +104,6 @@ void vect_pset( Vector2d* v, const double mod, const double angle )
 
 
 /**
- * @brief Copies vector src to dest.
- *
- *    @param dest Destination vector.
- *    @param src Vector to copy.
- */
-void vectcpy( Vector2d* dest, const Vector2d* src )
-{
-   dest->x     = src->x;
-   dest->y     = src->y;
-   dest->mod   = src->mod;
-   dest->angle = src->angle;
-}
-
-
-/**
  * @brief Sets a vector to NULL.
  *
  *    @param v Vector to set to NULL.
@@ -295,6 +280,10 @@ static void solid_update_euler (Solid *obj, const double dt)
    px += vx*dt + 0.5*ax * dt*dt;
    py += vy*dt + 0.5*ay * dt*dt;
 
+   /* v = a*dt */
+   vx += ax*dt;
+   vy += ay*dt;
+
    /* Update position and velocity. */
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
@@ -449,13 +438,13 @@ void solid_init( Solid* dest, const double mass, const double dir,
    if (vel == NULL)
       vectnull( &dest->vel );
    else
-      vectcpy( &dest->vel, vel );
+      dest->vel = *vel;
 
    /* Set position. */
    if (pos == NULL)
       vectnull( &dest->pos );
    else
-      vectcpy( &dest->pos, pos);
+      dest->pos = *pos;
 
    /* Misc. */
    dest->speed_max = -1.; /* Negative is invalid. */
@@ -471,7 +460,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
          break;
 
       default:
-         WARN("Solid initialization did not specify correct update function!");
+         WARN(_("Solid initialization did not specify correct update function!"));
          dest->update = solid_update_rk4;
          break;
    }
@@ -492,7 +481,7 @@ Solid* solid_create( const double mass, const double dir,
 {
    Solid* dyn = malloc(sizeof(Solid));
    if (dyn==NULL)
-      ERR("Out of Memory");
+      ERR(_("Out of Memory"));
    solid_init( dyn, mass, dir, pos, vel, update );
    return dyn;
 }

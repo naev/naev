@@ -130,6 +130,22 @@ function create()
    
    bar_speed_x = pl_pane_x + 529
    bar_speed_y = bar_shield_y
+
+   -- Cooldown pane.
+   cooldown_sheen = tex.open( "dat/gfx/gui/slim/cooldown-sheen.png" )
+   cooldown_bg = tex.open( "dat/gfx/gui/slim/cooldown-bg.png" )
+   cooldown_frame = tex.open( "dat/gfx/gui/slim/cooldown-frame.png" )
+   cooldown_panel = tex.open( "dat/gfx/gui/slim/cooldown-panel.png" )
+   cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
+   cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
+   cooldown_frame_y = (screen_h - cooldown_frame_h)/2.
+   cooldown_panel_x = cooldown_frame_x + 8
+   cooldown_panel_y = cooldown_frame_y + 8
+   cooldown_bg_x = cooldown_panel_x + 30
+   cooldown_bg_y = cooldown_panel_y + 2
+   cooldown_bg_w, cooldown_bg_h = cooldown_bg:dim()
+   cooldown_sheen_x = cooldown_bg_x
+   cooldown_sheen_y = cooldown_bg_y + 12
    
    -- Missile lock warning
    missile_lock_text = "Warning - Missile Lockon Detected"
@@ -229,6 +245,18 @@ function update_wset()
     end
 end
 
+
+function render_cooldown( percent, seconds )
+   gfx.renderTex( cooldown_frame, cooldown_frame_x, cooldown_frame_y )
+   gfx.renderTex( cooldown_bg, cooldown_bg_x, cooldown_bg_y )
+   gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, bar_heat_col )
+   gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
+   gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
+   gfx.print(false, "Cooling down...", cooldown_frame_x,
+         cooldown_bg_y + cooldown_bg_h + 8, col_txt_std, cooldown_frame_w, true )
+end
+
+
 function render_bar( left, name, value, text, txtcol, stress )
    --stress is only used for armour
    --Get values
@@ -318,7 +346,9 @@ function render( dt, dt_mod )
    energy = pp:energy()
    speed = pp:vel():dist()
    heat = pp:temp()
-   fuel = player.fuel()
+   fuel, consumption = player.fuel()
+   fuel_max = pp:stats().fuel_max
+   jumps = player.jumps()
    lockons = pp:lockon()
    autonav = player.autonav()
    credits = player.credits()
@@ -347,8 +377,12 @@ function render( dt, dt_mod )
          end
          
          --Cooldown
-         if wset[i].cooldown ~= nil and wset[i].cooldown < 1. then
-            local texnum = round((1-wset[i].cooldown)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
+         local coolinglevel = wset[i].cooldown
+         if wset[i].charge then
+            coolinglevel = wset[i].charge
+         end
+         if coolinglevel ~= nil and coolinglevel < 1. then
+            local texnum = round((1-coolinglevel)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
             
             --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
@@ -408,9 +442,14 @@ function render( dt, dt_mod )
       if i <= #aset then
          --There is something in this slot
          gfx.renderRect( slot_x, 0, slot_w, slot_h, col_slot_bg ) --Background
-         
+
+         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+         if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].temp, col_slot_heat ) -- Background (heat)
+         end
+
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
-         
+
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_img_offs_y )
          elseif aset[i].state == "cooldown" then
@@ -453,14 +492,14 @@ function render( dt, dt_mod )
 
    --Bars
    --Fuel
-   txt = tostring(round( fuel )) .. " (" .. tostring(math.floor( fuel / 100 )) .. " jumps)"
+   txt = tostring(round( fuel )) .. " (" .. tostring(jumps) .. " jumps)"
    col = col_txt_std
-   if math.floor( fuel / 100 ) == 1 then
+   if jumps == 1 then
       col = col_txt_wrn
    elseif fuel == 0. then
       col = col_txt_enm
    end
-   render_bar( true, "fuel", fuel/100, txt, col )
+   render_bar( true, "fuel", fuel/fuel_max, txt, col )
    
    --Armour
    txt = string.format( "%s%% (%s)", round( armour ), round( stats.armour * armour / 100 ) )
@@ -502,7 +541,9 @@ function render( dt, dt_mod )
    render_bar( false, "heat", heat/100, txt, col )
    
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100, 0)
+   local hspeed
+   if stats.speed_max <= 0 then hspeed = 0
+   else hspeed = round(speed / stats.speed_max * 100) end
    txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
    col = col_txt_std
    if hspeed >= 200. then

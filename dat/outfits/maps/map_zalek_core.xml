@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Za'lek Core">
+ <general>
+  <mass>0</mass>
+  <price>25000</price>
+  <description>This map contains the heart of Za'lek space, including its capital Ruadan and central hub, Za'lek.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Ruadan">
+   <jump>Damien</jump>
+   <jump>Vauban</jump>
+   <jump>Woreck</jump>
+   <asset>Ruadan Bastion</asset>
+   <asset>Ruadan Gamma</asset>
+   <asset>Ruadan II</asset>
+   <asset>Ruadan Prime</asset>
+   <asset>Ruadan Secundus</asset>
+   <asset>Ruadan Station</asset>
+  </sys>
+  <sys name="Damien">
+   <jump>Garten</jump>
+   <jump>Ruadan</jump>
+   <jump>Za'lek</jump>
+   <asset>Anker</asset>
+   <asset>Damien VII</asset>
+   <asset>Naga</asset>
+   <asset>Topkapi Station</asset>
+  </sys>
+  <sys name="Za'lek">
+   <jump>Damien</jump>
+   <jump>Hideyoshi's Star</jump>
+   <jump>Qulam</jump>
+   <jump>Seiben</jump>
+   <asset>Atryssa</asset>
+   <asset>House Za'lek Central Station</asset>
+   <asset>Ocata</asset>
+   <asset>PRP-1</asset>
+   <asset>PRP-2</asset>
+   <asset>PRP-3</asset>
+   <asset>PRP-4</asset>
+   <asset>Tu'halar</asset>
+   <asset>Za'lek II</asset>
+   <asset>Za'lek IV</asset>
+  </sys>
+  <sys name="Seiben">
+   <jump>Poltergeist</jump>
+   <jump>Za'lek</jump>
+   <asset>Arcadia</asset>
+   <asset>Gastan</asset>
+   <asset>Seiben IV</asset>
+   <asset>Seiben XI</asset>
+  </sys>
+  <sys name="Qulam">
+   <jump>Za'lek</jump>
+   <asset>Cantina Station</asset>
+   <asset>Katar</asset>
+   <asset>Qulam Primus</asset>
+  </sys>
+  <sys name="Garten">
+   <jump>Damien</jump>
+   <asset>Garten IV</asset>
+   <asset>Garten X</asset>
+   <asset>Kanel</asset>
+   <asset>Trinel</asset>
+  </sys>
+  <sys name="Hideyoshi's Star">
+   <jump>Vauban</jump>
+   <jump>Za'lek</jump>
+  </sys>
+  <sys name="Vauban">
+   <jump>Hideyoshi's Star</jump>
+   <jump>Ruadan</jump>
+  </sys>
+  <sys name="Woreck">
+   <jump>Ruadan</jump>
+  </sys>
+  <sys name="Poltergeist">
+   <jump>Seiben</jump>
+  </sys>
+ </specific>
+</outfit>

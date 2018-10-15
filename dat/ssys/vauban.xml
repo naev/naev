@@ -7,12 +7,16 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-657.865335</x>
-  <y>-1018.302738</y>
+  <x>-660.865335</x>
+  <y>-1019.302738</y>
  </pos>
  <assets/>
  <jumps>
   <jump target="Hideyoshi's Star">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Newmarch">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

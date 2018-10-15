@@ -55,6 +55,7 @@
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
 #include "nlua_tex.h"
+#include "nlua_tk.h"
 #include "gui_omsg.h"
 #include "nstring.h"
 
@@ -90,16 +91,14 @@ static int gui_getMessage     = 1; /**< Whether or not the player should receive
 extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
-/*
- * map stuff for autonav
- */
-extern int map_npath; /**< @todo remove. */
+
+extern int land_wid; /**< From land.c */
 
 
 /**
  * GUI Lua stuff.
  */
-static lua_State *gui_L; /**< Current GUI Lua State. */
+static nlua_env gui_env = LUA_NOREF; /**< Current GUI Lua environment. */
 static int gui_L_mclick = 0; /**< Use mouse click callback. */
 static int gui_L_mmove = 0; /**< Use mouse movement callback. */
 
@@ -392,6 +391,9 @@ static void gui_renderPlanetTarget( double dt )
    const glColour *c;
    Planet *planet;
    JumpPoint *jp;
+   AsteroidAnchor *field;
+   Asteroid *ast;
+   AsteroidType *at;
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -399,7 +401,8 @@ static void gui_renderPlanetTarget( double dt )
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0))
+   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0) 
+       && (player.p->nav_asteroid < 0))
       return;
 
    /* Make sure targets are still in range. */
@@ -426,10 +429,26 @@ static void gui_renderPlanetTarget( double dt )
       planet = cur_system->planets[player.p->nav_planet];
       c = planet_getColour( planet );
 
-      x = planet->pos.x - planet->radius * 1.2;
-      y = planet->pos.y + planet->radius * 1.2;
-      w = planet->radius * 2. * 1.2;
-      h = planet->radius * 2. * 1.2;
+      x = planet->pos.x - planet->gfx_space->w / 2.;
+      y = planet->pos.y + planet->gfx_space->h / 2.;
+      w = planet->gfx_space->w;
+      h = planet->gfx_space->h;
+      gui_renderTargetReticles( x, y, w, h, c );
+   }
+   if (player.p->nav_asteroid >= 0) {
+      field = &cur_system->asteroids[player.p->nav_anchor];
+      ast   = &field->asteroids[player.p->nav_asteroid];
+      c = &cWhite;
+
+      /* Recover the right gfx */
+      at = space_getType( ast->type );
+      if (ast->gfxID > at->ngfx+1)
+         WARN(_("Gfx index out of range"));
+
+      x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;
+      y = ast->pos.y + at->gfxs[ast->gfxID]->h / 2.;
+      w = at->gfxs[ast->gfxID]->w;
+      h = at->gfxs[ast->gfxID]->h;
       gui_renderTargetReticles( x, y, w, h, c );
    }
 }
@@ -890,15 +909,15 @@ void gui_render( double dt )
    gl_viewport( 0., 0., gl_screen.rw, gl_screen.rh );
 
    /* Run Lua. */
-   if (gui_L != NULL) {
+   if (gui_env != LUA_NOREF) {
       gui_prepFunc( "render" );
-      lua_pushnumber( gui_L, dt );
-      lua_pushnumber( gui_L, dt_mod );
+      lua_pushnumber( naevL, dt );
+      lua_pushnumber( naevL, dt_mod );
       gui_runFunc( "render", 2, 0 );
       if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
          gui_prepFunc( "render_cooldown" );
-         lua_pushnumber( gui_L, player.p->ctimer / player.p->cdelay  );
-         lua_pushnumber( gui_L, player.p->ctimer );
+         lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
+         lua_pushnumber( naevL, player.p->ctimer );
          gui_runFunc( "render_cooldown", 2, 0 );
       }
    }
@@ -966,6 +985,7 @@ void gui_radarRender( double x, double y )
 {
    int i, j;
    Radar *radar;
+   AsteroidAnchor *ast;
 
    /* The global radar. */
    radar = &gui_radar;
@@ -1016,6 +1036,13 @@ void gui_radarRender( double x, double y )
    /* render the targeted pilot */
    if (j!=0)
       gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
+
+   /* render the asteroids */
+   for (i=0; i<cur_system->nasteroids; i++) {
+      ast = &cur_system->asteroids[i];
+      for (j=0; j<ast->nb; j++)
+         gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
+   }
 
    /* Interference. */
    gui_renderInterference();
@@ -1275,6 +1302,14 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       return;
    }
 
+   /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
+   if (overlay) {
+      x += SCREEN_W / 2;
+      y += SCREEN_H / 2;
+      w *= 2.;
+      h *= 2.;
+   }
+
    if (shape==RADAR_RECT)
       rc = 0;
    else if (shape==RADAR_CIRCLE)
@@ -1357,6 +1392,60 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
 
 /**
+ * @brief Renders an asteroid in the GUI radar.
+ *
+ *    @param a Asteroid to render.
+ */
+void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
+{
+   int x, y, sx, sy;
+   double px, py;
+   const glColour *col;
+   glColour ccol;
+
+   /* Make sure is in range. TODO: real detection system for asteroids */
+   if ( MOD( a->pos.x - player.p->solid->pos.x,
+             a->pos.y - player.p->solid->pos.y ) > 4000. )
+      return;
+
+   /* Get position. */
+   if (overlay) {
+      x = (int)(a->pos.x / res);
+      y = (int)(a->pos.y / res);
+   }
+   else {
+      x = (int)((a->pos.x - player.p->solid->pos.x) / res);
+      y = (int)((a->pos.y - player.p->solid->pos.y) / res);
+   }
+   /* Get size. */
+   sx = 1.;
+   sy = 1.;
+
+   /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
+   if (overlay) {
+      x += SCREEN_W / 2;
+      y += SCREEN_H / 2;
+      w *= 2.;
+      h *= 2.;
+   }
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
+
+   /* Draw square. */
+   px     = MAX(x-sx,-w);
+   py     = MAX(y-sy, -h);
+
+   col = &cWhite;
+   ccol.r = col->r;
+   ccol.g = col->g;
+   ccol.b = col->b;
+   ccol.a = 1.-interference_alpha;
+   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+}
+
+
+/**
  * @brief Renders the player cross on the radar or whatever.
  */
 void gui_renderPlayer( double res, int overlay )
@@ -1364,8 +1453,8 @@ void gui_renderPlayer( double res, int overlay )
    double x, y, r;
 
    if (overlay) {
-      x = player.p->solid->pos.x / res;
-      y = player.p->solid->pos.y / res;
+      x = player.p->solid->pos.x / res + SCREEN_W / 2;
+      y = player.p->solid->pos.y / res + SCREEN_H / 2;
       r = 5.;
    }
    else {
@@ -1378,7 +1467,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, "You" );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
 }
 
 
@@ -1595,6 +1684,14 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       }
    }
 
+   if (overlay) {
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+      w  *= 2.;
+      h  *= 2.;
+   }
+
    /* Do the blink. */
    if (ind == player.p->nav_planet)
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
@@ -1699,6 +1796,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       }
    }
 
+   if (overlay) {
+      /* Transform coordinates. */
+      cx += SCREEN_W / 2;
+      cy += SCREEN_H / 2;
+      w  *= 2.;
+      h  *= 2.;
+   }
+
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
@@ -1708,6 +1813,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       col = &cRed;
    else
       col = &cWhite;
+
    if (overlay)
       a = 1.;
    else
@@ -1748,7 +1854,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, sys_isKnown(jp->target) ? jp->target->name : "Unknown" );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
 #undef CHECK_PIXEL
 
@@ -1781,7 +1887,7 @@ void gui_setViewport( double x, double y, double w, double h )
  */
 void gui_clearViewport (void)
 {
-   gl_setDefViewport( 0., 0., gl_screen.rw, gl_screen.rh );
+   gl_setDefViewport( 0., 0., gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 }
 
@@ -1836,7 +1942,7 @@ int gui_init (void)
    if (mesg_stack == NULL) {
       mesg_stack = calloc(mesg_max, sizeof(Mesg));
       if (mesg_stack == NULL) {
-         ERR("Out of memory!");
+         ERR(_("Out of Memory"));
          return -1;
       }
    }
@@ -1857,7 +1963,7 @@ int gui_init (void)
    /*
     * Set viewport.
     */
-   gui_setViewport( 0., 0., gl_screen.rw, gl_screen.rh );
+   gui_setViewport( 0., 0., gl_screen.w, gl_screen.h );
 
    /*
     * Icons.
@@ -1886,21 +1992,15 @@ static int gui_doFunc( const char* func )
  */
 static int gui_prepFunc( const char* func )
 {
-   lua_State *L;
-
-   /* For comfort. */
-   L = gui_L;
 #if DEBUGGING
-   if (L == NULL) {
-      WARN( "Trying to run GUI func '%s' but no GUI is loaded!", func );
+   if (gui_env == LUA_NOREF) {
+      WARN( _("Trying to run GUI func '%s' but no GUI is loaded!"), func );
       return -1;
    }
-
-   lua_pushcfunction(L, nlua_errTrace);
 #endif /* DEBUGGING */
 
    /* Set up function. */
-   lua_getglobal( L, func );
+   nlua_getenv( gui_env, func );
    return 0;
 }
 
@@ -1914,33 +2014,32 @@ static int gui_prepFunc( const char* func )
  */
 static int gui_runFunc( const char* func, int nargs, int nret )
 {
-   int ret, errf;
+   int ret;
    const char* err;
-   lua_State *L;
-
-   /* For comfort. */
-   L = gui_L;
-
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
 
    /* Run the function. */
-   ret = lua_pcall( L, nargs, nret, errf );
+   ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      WARN("GUI Lua -> '%s': %s",
-            func, (err) ? err : "unknown error");
-      lua_pop(L,2);
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
+      WARN(_("GUI Lua -> '%s': %s"),
+            func, (err) ? err : _("unknown error"));
+      lua_pop(naevL,2);
       return ret;
    }
-#if DEBUGGING
-   lua_remove(L,-(nret+1));
-#endif /* DEBUGGING */
 
    return ret;
+}
+
+
+/**
+ * @brief Reloads the GUI.
+ */
+void gui_reload (void)
+{
+   if (gui_env == LUA_NOREF)
+      return;
+
+   gui_load( gui_pick() );
 }
 
 
@@ -1949,17 +2048,17 @@ static int gui_runFunc( const char* func, int nargs, int nret )
  */
 void gui_setCargo (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_cargo" );
 }
 
 
 /**
- * @brief Player just changed their nav computer target.
+ * @brief PlNULLayer just changed their nav computer target.
  */
 void gui_setNav (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_nav" );
 }
 
@@ -1969,7 +2068,7 @@ void gui_setNav (void)
  */
 void gui_setTarget (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_target" );
 }
 
@@ -1979,7 +2078,7 @@ void gui_setTarget (void)
  */
 void gui_setShip (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_ship" );
 }
 
@@ -1989,7 +2088,7 @@ void gui_setShip (void)
  */
 void gui_setSystem (void)
 {
-   if (gui_L != NULL)
+   if (gui_env != LUA_NOREF)
       gui_doFunc( "update_system" );
 }
 
@@ -1999,7 +2098,7 @@ void gui_setSystem (void)
  */
 void gui_updateFaction (void)
 {
-   if (gui_L != NULL && player.p->nav_planet != -1)
+   if (gui_env != LUA_NOREF && player.p->nav_planet != -1)
       gui_doFunc( "update_faction" );
 }
 
@@ -2011,7 +2110,7 @@ void gui_updateFaction (void)
  */
 void gui_setGeneric( Pilot* pilot )
 {
-   if (gui_L == NULL)
+   if (gui_env == LUA_NOREF)
       return;
 
    if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
@@ -2048,7 +2147,7 @@ int gui_load( const char* name )
 {
    (void) name;
    char *buf, path[PATH_MAX];
-   uint32_t bufsize;
+   size_t bufsize;
 
    /* Set defaults. */
    gui_cleanup();
@@ -2057,42 +2156,45 @@ int gui_load( const char* name )
    nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
-      WARN("Unable to find GUI '%s'.", path );
+      WARN(_("Unable to find GUI '%s'."), path );
       return -1;
    }
 
    /* Clean up. */
-   if (gui_L != NULL) {
-      lua_close( gui_L );
-      gui_L = NULL;
+   if (gui_env != LUA_NOREF) {
+      nlua_freeEnv(gui_env);
+      gui_env = LUA_NOREF;
    }
 
    /* Create Lua state. */
-   gui_L = nlua_newState();
-   if (luaL_dobuffer( gui_L, buf, bufsize, path ) != 0) {
-      WARN("Failed to load GUI Lua: %s\n"
+   gui_env = nlua_newEnv(1);
+   if (nlua_dobufenv( gui_env, buf, bufsize, path ) != 0) {
+      WARN(_("Failed to load GUI Lua: %s\n"
             "%s\n"
-            "Most likely Lua file has improper syntax, please check",
-            path, lua_tostring(gui_L,-1));
-      lua_close( gui_L );
-      gui_L = NULL;
+            "Most likely Lua file has improper syntax, please check"),
+            path, lua_tostring(naevL,-1));
+      nlua_freeEnv( gui_env );
+      gui_env = LUA_NOREF;
       free(buf);
       return -1;
    }
    free(buf);
-   nlua_loadStandard( gui_L, 1 );
-   nlua_loadGFX( gui_L, 0 );
-   nlua_loadGUI( gui_L, 0 );
+   nlua_loadStandard( gui_env );
+   nlua_loadGFX( gui_env );
+   nlua_loadGUI( gui_env );
+   nlua_loadTk( gui_env );
 
    /* Run create function. */
    if (gui_doFunc( "create" )) {
-      lua_close( gui_L );
-      gui_L = NULL;
+      nlua_freeEnv( gui_env );
+      gui_env = LUA_NOREF;
    }
 
    /* Recreate land window if landed. */
-   if (landed)
+   if (landed) {
       land_genWindows( 0, 1 );
+      window_lower( land_wid );
+   }
 
    return 0;
 }
@@ -2122,7 +2224,7 @@ static void gui_createInterference( Radar *radar )
       h = radar->h*2.;
    }
    else {
-      WARN("Radar shape is invalid.");
+      WARN( _("Radar shape is invalid.") );
       return;
    }
 
@@ -2215,9 +2317,9 @@ void gui_cleanup (void)
    gui_yoff = 0.;
 
    /* Destroy lua. */
-   if (gui_L != NULL) {
-      lua_close( gui_L );
-      gui_L = NULL;
+   if (gui_env != LUA_NOREF) {
+      nlua_freeEnv( gui_env );
+      gui_env = LUA_NOREF;
    }
 
    /* OMSG */
@@ -2274,7 +2376,7 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( "\epRadar set to %dx.", (int)gui_radar.res );
+   player_message( _("\apRadar set to %dx."), (int)gui_radar.res );
 }
 
 
@@ -2346,8 +2448,8 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_move" );
          gl_windowToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
-         lua_pushnumber( gui_L, x );
-         lua_pushnumber( gui_L, y );
+         lua_pushnumber( naevL, x );
+         lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
          break;
 
@@ -2357,14 +2459,14 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mclick)
             break;
          gui_prepFunc( "mouse_click" );
-         lua_pushnumber( gui_L, evt->button.button+1 );
+         lua_pushnumber( naevL, evt->button.button+1 );
          gl_windowToScreenPos( &x, &y, evt->button.x, evt->button.y );
-         lua_pushnumber( gui_L, x );
-         lua_pushnumber( gui_L, y );
-         lua_pushboolean( gui_L, (evt->type==SDL_MOUSEBUTTONDOWN) );
+         lua_pushnumber( naevL, x );
+         lua_pushnumber( naevL, y );
+         lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );
          gui_runFunc( "mouse_click", 4, 1 );
-         ret = lua_toboolean( gui_L, -1 );
-         lua_pop( gui_L, 1 );
+         ret = lua_toboolean( naevL, -1 );
+         lua_pop( naevL, 1 );
          break;
 
       /* Not interested in the rest. */

@@ -3,9 +3,9 @@
  */
 
 /**
- * @file menu.h
+ * @file info.h
  *
- * @brief Handles the important game menus.
+ * @brief Handles the info menu.
  */
 
 
@@ -184,23 +184,23 @@ static void info_openMain( unsigned int wid )
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, &cDConsole,
-         "Pilot:\n"
+         _("Pilot:\n"
          "Date:\n"
          "Combat Rating:\n"
          "\n"
          "Money:\n"
          "Ship:\n"
-         "Fuel:"
+         "Fuel:")
          );
    credits2str( creds, player.p->credits, 2 );
    nsnprintf( str, 128,
-         "%s\n"
+         _("%s\n"
          "%s\n"
          "%s\n"
          "\n"
          "%s Credits\n"
          "%s\n"
-         "%.0f (%d Jumps)",
+         "%.0f (%d Jumps)"),
          player.name,
          nt,
          player_rating(),
@@ -215,10 +215,10 @@ static void info_openMain( unsigned int wid )
    /* menu */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", info_close );
+         "btnClose", _("Close"), info_close );
    window_addButton( wid, -20 - (15+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSetGUI", "Set GUI", info_setGui );
+         "btnSetGUI", _("Set GUI"), info_setGui );
 
    /* List. */
    buf = player_getLicenses( &nlicenses );
@@ -226,7 +226,7 @@ static void info_openMain( unsigned int wid )
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
    window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
-         NULL, &cDConsole, "Licenses" );
+         NULL, &cDConsole, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
 }
@@ -264,13 +264,13 @@ static void info_setGui( unsigned int wid, char* str )
 
    /* In case there are none. */
    if (guis == NULL) {
-      WARN("No GUI available.");
-      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer." );
+      WARN(_("No GUI available."));
+      dialogue_alert( _("There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer.") );
       return;
    }
 
    /* window */
-   wid = window_create( "Select GUI", -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
+   wid = window_create( _("Select GUI"), -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
    window_setCancel( wid, setgui_close );
 
    /* Copy GUI. */
@@ -286,13 +286,13 @@ static void info_setGui( unsigned int wid, char* str )
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", "Cancel", setgui_close );
+         "btnBack", _("Close"), setgui_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnLoad", "Load", setgui_load );
+         "btnLoad", _("Load"), setgui_load );
 
    /* Checkboxes */
    window_addCheckbox( wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", "Override GUI",
+         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", _("Override GUI"),
          info_toggleGuiOverride, player.guiOverride );
    info_toggleGuiOverride( wid, "chkOverride" );
 
@@ -313,13 +313,14 @@ static void setgui_load( unsigned int wdw, char *str )
    char *gui;
    int wid;
 
-   wid = window_get( "Select GUI" );
+   wid = window_get( _("Select GUI") );
    gui = toolkit_getList( wid, "lstGUI" );
-   if (strcmp(gui,"None") == 0)
+   if (strcmp(gui,_("None")) == 0)
       return;
 
    if (player.guiOverride == 0) {
-      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+      if (dialogue_YesNo( _("GUI Override is not set."),
+               _("Enable GUI Override and change GUI to '%s'?"), gui )) {
          player.guiOverride = 1;
          window_checkboxSet( wid, "chkOverride", player.guiOverride );
       }
@@ -371,12 +372,12 @@ static void info_openShip( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeOutfits", "Close", info_close );
+         "closeOutfits", _("Close"), info_close );
 
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          &cDConsole,
-         "Name:\n"
+         _("Name:\n"
          "Model:\n"
          "Class:\n"
          "Crew:\n"
@@ -388,13 +389,14 @@ static void info_openShip( unsigned int wid )
          "Speed:\n"
          "Turn:\n"
          "\n"
+         "Absorption:\n"
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
          "Cargo Space:\n"
          "Fuel:\n"
          "\n"
-         "Stats:\n"
+         "Stats:\n")
          );
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          &cBlack, NULL );
@@ -420,7 +422,7 @@ static void ship_update( unsigned int wid )
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
    len = nsnprintf( buf, sizeof(buf),
-         "%s\n"
+         _("%s\n"
          "%s\n"
          "%s\n"
          "%d\n"
@@ -432,12 +434,13 @@ static void ship_update( unsigned int wid )
          "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
          "\n"
+         "%.0f%%\n" /* Absorbption */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
          "%d / %d tonnes\n"
          "%.0f / %.0f units (%d jumps)\n"
-         "\n",
+         "\n"),
          /* Generic */
          player.p->name,
          player.p->ship->name,
@@ -451,6 +454,7 @@ static void ship_update( unsigned int wid )
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
          /* Health. */
+         player.p->dmg_absorb * 100.,
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,
          player.p->energy, player.p->energy_max, player.p->energy_regen,
@@ -474,17 +478,17 @@ static void info_openWeapons( unsigned int wid )
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeCargo", "Close", info_close );
+         "closeCargo", _("Close"), info_close );
 
    /* Checkboxes. */
    wlen = w - 220 - 20;
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, wlen, BUTTON_HEIGHT,
-         "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
+         "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, wlen, BUTTON_HEIGHT,
-         "chkFire", "Enable instant mode (only for weapons)", weapons_fire,
+         "chkFire", _("Enable instant mode (only for weapons)"), weapons_fire,
          (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
-         "chkInrange", "Only shoot weapons that are in range", weapons_inrange,
+         "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
 
    /* Custom widget. */
@@ -580,9 +584,9 @@ static void weapons_autoweap( unsigned int wid, char *str )
 
    /* Run autoweapons if needed. */
    if (state) {
-      sure = dialogue_YesNoRaw( "Enable autoweapons?",
-            "Are you sure you want to enable automatic weapon groups for the "
-            "ship?\n\nThis will overwrite all manually-tweaked weapons groups." );
+      sure = dialogue_YesNoRaw( ("Enable autoweapons?"),
+            _("Are you sure you want to enable automatic weapon groups for the "
+            "ship?\n\nThis will overwrite all manually-tweaked weapons groups.") );
       if (!sure) {
          window_checkboxSet( wid, str, 0 );
          return;
@@ -624,7 +628,7 @@ static void weapons_fire( unsigned int wid, char *str )
 
    /* Not able to set them all to fire groups. */
    if (i >= PILOT_WEAPON_SETS) {
-      dialogue_alert( "You can not set all your weapon sets to fire groups!" );
+      dialogue_alert( _("You can not set all your weapon sets to fire groups!") );
       pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
       window_checkboxSet( wid, str, 0 );
    }
@@ -661,19 +665,19 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    double y;
 
    y = by+bh-20;
-   gl_print( &gl_defFont, bx, y, &cBlack, "Legend" );
+   gl_print( &gl_defFont, bx, y, &cBlack, _("Legend") );
 
    y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Outfit that can be activated" );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Outfit that can be activated") );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Right click toggles)" );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Secondary Weapon (Right click toggles)") );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Primary Weapon (Left click toggles)" );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Primary Weapon (Left click toggles)") );
 }
 
 
@@ -691,9 +695,9 @@ static void info_openCargo( unsigned int wid )
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeCargo", "Close", info_close );
+         "closeCargo", _("Close"), info_close );
    window_addButton( wid, -40 - BUTTON_WIDTH, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", "Jettison",
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", _("Jettison"),
          cargo_jettison );
    window_disableButton( wid, "btnJettisonCargo" );
 
@@ -721,7 +725,7 @@ static void cargo_genList( unsigned int wid )
    if (player.p->ncommodities==0) {
       /* No cargo */
       buf = malloc(sizeof(char*));
-      buf[0] = strdup("None");
+      buf[0] = strdup(_("None"));
       nbuf = 1;
    }
    else {
@@ -774,15 +778,15 @@ static void cargo_jettison( unsigned int wid, char* str )
 
    /* Special case mission cargo. */
    if (player.p->commodities[pos].id != 0) {
-      if (!dialogue_YesNo( "Abort Mission",
-               "Are you sure you want to abort this mission?" ))
+      if (!dialogue_YesNo( _("Abort Mission"),
+               _("Are you sure you want to abort this mission?") ))
          return;
 
       /* Get the mission. */
       f = 0;
       for (i=0; i<MISSION_MAX; i++) {
-         for (j=0; j<player_missions[i].ncargo; j++) {
-            if (player_missions[i].cargo[j] == player.p->commodities[pos].id) {
+         for (j=0; j<player_missions[i]->ncargo; j++) {
+            if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
                f = 1;
                break;
             }
@@ -791,11 +795,11 @@ static void cargo_jettison( unsigned int wid, char* str )
             break;
       }
       if (!f) {
-         WARN("Cargo '%d' does not belong to any active mission.",
+         WARN(_("Cargo '%d' does not belong to any active mission."),
                player.p->commodities[pos].id);
          return;
       }
-      misn = &player_missions[i];
+      misn = player_missions[i];
 
       /* We run the "abort" function if it's found. */
       ret = misn_tryRun( misn, "abort" );
@@ -803,9 +807,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Now clean up mission. */
       if (ret != 2) {
          mission_cleanup( misn );
-         memmove( misn, &player_missions[i+1],
-               sizeof(Mission) * (MISSION_MAX-i-1) );
-         memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
+         mission_shift(pos);
       }
 
       /* Reset markers. */
@@ -873,7 +875,7 @@ static void info_openStandings( unsigned int wid )
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeMissions", "Close", info_close );
+         "closeMissions", _("Close"), info_close );
 
    /* Graphics. */
    window_addImage( wid, 0, 0, 0, 0, "imgLogo", NULL, 0 );
@@ -939,7 +941,8 @@ static void standings_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
    m = round( faction_getPlayer( info_factions[p] ) );
-   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
+   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
+      faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
 }
@@ -960,15 +963,15 @@ static void info_openMissions( unsigned int wid )
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeMissions", "Close", info_close );
+         "closeMissions", _("Close"), info_close );
    window_addButton( wid, -20, 40 + BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", "Abort",
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", _("Abort"),
          mission_menu_abort );
 
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
-         &gl_smallFont, &cDConsole, "Reward:" );
+         &gl_smallFont, &cDConsole, _("Reward:") );
    window_addText( wid, 300+100, -60,
          140, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 300+40, -100,
@@ -1001,10 +1004,12 @@ static void mission_menu_genList( unsigned int wid, int first )
    misn_names = malloc(sizeof(char*) * MISSION_MAX);
    j = 0;
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].id != 0)
-         misn_names[j++] = (player_missions[i].title!=NULL) ? strdup(player_missions[i].title) : NULL;
+      if (player_missions[i]->id != 0)
+         misn_names[j++] = (player_missions[i]->title != NULL) ?
+               strdup(player_missions[i]->title) : NULL;
+
    if (j==0) { /* no missions */
-      misn_names[0] = strdup("No Missions");
+      misn_names[0] = strdup(_("No Missions"));
       j = 1;
    }
    window_addList( wid, 20, -40,
@@ -1022,16 +1027,16 @@ static void mission_menu_update( unsigned int wid, char* str )
    Mission* misn;
 
    active_misn = toolkit_getList( wid, "lstMission" );
-   if ((active_misn==NULL) || (strcmp(active_misn,"No Missions")==0)) {
-      window_modifyText( wid, "txtReward", "None" );
+   if ((active_misn==NULL) || (strcmp(active_misn,_("No Missions"))==0)) {
+      window_modifyText( wid, "txtReward", _("None") );
       window_modifyText( wid, "txtDesc",
-            "You currently have no active missions." );
+            _("You currently have no active missions.") );
       window_disableButton( wid, "btnAbortMission" );
       return;
    }
 
    /* Modify the text. */
-   misn = &player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
+   misn = player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
    window_modifyText( wid, "txtReward", misn->reward );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAbortMission" );
@@ -1048,15 +1053,15 @@ static void mission_menu_abort( unsigned int wid, char* str )
 {
    (void)str;
    int pos;
-   Mission* misn;
+   Mission *misn;
    int ret;
 
-   if (dialogue_YesNo( "Abort Mission",
-            "Are you sure you want to abort this mission?" )) {
+   if (dialogue_YesNo( _("Abort Mission"),
+            _("Are you sure you want to abort this mission?") )) {
 
       /* Get the mission. */
       pos = toolkit_getListPos(wid, "lstMission" );
-      misn = &player_missions[pos];
+      misn = player_missions[pos];
 
       /* We run the "abort" function if it's found. */
       ret = misn_tryRun( misn, "abort" );
@@ -1064,9 +1069,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
       /* Now clean up mission. */
       if (ret != 2) {
          mission_cleanup( misn );
-         memmove( misn, &player_missions[pos+1],
-               sizeof(Mission) * (MISSION_MAX-pos-1) );
-         memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
+         mission_shift(pos);
       }
 
       /* Reset markers. */

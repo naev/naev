@@ -33,13 +33,15 @@
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #include <stdarg.h>
 
 #include "SDL.h"
 #include "SDL_mutex.h"
 
 #include "log.h"
-#include "md5.h"
 #include "nxml.h"
 #include "nzip.h"
 #include "nfile.h"
@@ -76,7 +78,7 @@ static int ndata_source             = 0;
  * File list.
  */
 static char **ndata_fileList  = NULL; /**< List of files in the archive. */
-static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
+static size_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
 
 
 /*
@@ -86,11 +88,14 @@ static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
 static int ndata_openFile (void);
 static int ndata_isndata( const char *path, ... );
-static void ndata_notfound (void);
-static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs );
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int ndata_prompt( void *data );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+static int ndata_notfound (void);
+static char** ndata_listBackend( const char* path, size_t* nfiles, int dirs );
 static char **stripPath( const char **list, int nlist, const char *path );
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles, int recursive );
+      const char* path, size_t* nfiles, int recursive );
 
 
 /**
@@ -121,12 +126,15 @@ int ndata_setPath( const char* path )
 
    free(ndata_filename);
    free(ndata_dirname);
+   ndata_filename = NULL;
+   ndata_dirname  = NULL;
+
    if (path == NULL)
       return 0;
    else if (nfile_dirExists(path)) {
       len = strlen(path);
       ndata_dirname = strdup(path);
-      if (ndata_dirname[len - 1] == '/')
+      if (nfile_isSeparator(ndata_dirname[len - 1]))
          ndata_dirname[len - 1] = '\0';
    }
    else if (nfile_fileExists(path)) {
@@ -147,24 +155,40 @@ const char* ndata_getPath (void)
 }
 
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int ndata_prompt( void *data )
+{
+   int ret;
+
+   ret = SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, _("Missing Data"),
+         _("Ndata could not be found. If you have the ndata file, drag\n"
+         "and drop it onto the 'NAEV - INSERT NDATA' window.\n\n"
+         "If you don't have the ndata, download it from naev.org"), (SDL_Window*)data );
+
+   return ret;
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+
 #define NONDATA
 #include "nondata.c"
 /**
  * @brief Displays an ndata not found message and dies.
  */
-static void ndata_notfound (void)
+static int ndata_notfound (void)
 {
    SDL_Surface *screen;
    SDL_Event event;
    SDL_Surface *sur;
    SDL_RWops *rw;
    npng_t *npng;
-   const char *title = "NAEV - INSERT NDATA";
+   const char *title = _("NAEV - INSERT NDATA");
+   int found;
 
    /* Make sure it's initialized. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
-      WARN("Unable to init SDL Video subsystem");
-      return;
+      WARN(_("Unable to init SDL Video subsystem"));
+      return 0;
    }
 
    /* Create the window. */
@@ -179,12 +203,12 @@ static void ndata_notfound (void)
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
    if (screen == NULL) {
-      WARN("Unable to set video mode");
-      return;
+      WARN(_("Unable to set video mode"));
+      return 0;
    }
 
    /* Set caption. */
-   SDL_WM_SetCaption( title, "NAEV" );
+   SDL_WM_SetCaption( title, APPNAME );
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Create the surface. */
@@ -197,11 +221,23 @@ static void ndata_notfound (void)
    /* Render. */
    SDL_BlitSurface( sur, NULL, screen, NULL );
 #if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_EventState( SDL_DROPFILE, SDL_ENABLE );
+#if SDL_VERSION_ATLEAST(2,0,2)
+   SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
+   SDL_DetachThread(thread);
+#else
+   /* Ignore return value because SDL_DetachThread is only present in
+    * SDL >= 2.0.2 */
+   SDL_CreateThread( &ndata_prompt, "Prompt", window );
+#endif /* SDL_VERSION_ATLEAST(2,0,2) */
+
    /* TODO substitute. */
    SDL_RenderPresent( renderer );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_Flip(screen);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+   found = 0;
 
    /* Infinite loop. */
    while (1) {
@@ -220,6 +256,21 @@ static void ndata_notfound (void)
                break;
          }
       }
+#if SDL_VERSION_ATLEAST(2,0,0)
+      else if (event.type == SDL_DROPFILE) {
+         found = ndata_isndata( event.drop.file );
+         if (found) {
+            ndata_setPath( event.drop.file );
+
+            /* Minor hack so ndata filename is saved in conf.lua */
+            conf.ndata = strdup( event.drop.file );
+            free( event.drop.file );
+            break;
+         }
+         else
+            free( event.drop.file );
+      }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       /* Render. */
       SDL_BlitSurface( sur, NULL, screen, NULL );
@@ -230,6 +281,13 @@ static void ndata_notfound (void)
       SDL_Flip(screen);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_EventState( SDL_DROPFILE, SDL_DISABLE );
+   SDL_DestroyWindow(window);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+
+   return found;
 }
 
 
@@ -240,6 +298,7 @@ static int ndata_isndata( const char *path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
+   struct zip *arc;
 
    if (path == NULL)
       return 0;
@@ -257,6 +316,18 @@ static int ndata_isndata( const char *path, ... )
    if (!nzip_isZip(file))
       return 0;
 
+   /* Verify that the zip contains dat/start.xml
+    * This is arbitrary, but it's one of the many hard-coded files that must
+    * be present for Naev to run.
+    */
+   arc = nzip_open(file);
+
+   if (!nzip_hasFile(arc, START_DATA_PATH)) {
+      nzip_close(arc);
+      return 0;
+   }
+
+   nzip_close(arc);
    return 1;
 }
 
@@ -268,9 +339,10 @@ static int ndata_isndata( const char *path, ... )
  */
 static char *ndata_findInDir( const char *path )
 {
-   int i, l;
+   size_t i;
+   int l;
    char **files;
-   int nfiles;
+   size_t nfiles;
    size_t len;
    char *ndata_file;
 
@@ -336,6 +408,15 @@ static int ndata_openFile (void)
    if ((ndata_filename == NULL) && (ndata_dirname != NULL))
       ndata_filename = ndata_findInDir( ndata_dirname );
 
+#if HAS_MACOS
+   /* Look in the bundle resources directory */
+   if ((ndata_filename == NULL) && macos_isBundle()) {
+      if (macos_resourcesPath( pathname, PATH_MAX ) == 0) {
+         ndata_filename = ndata_findInDir( pathname );
+      }
+   }
+#endif /* HAS_MACOS */
+
    /*
     * Try to find the ndata file.
     */
@@ -343,27 +424,25 @@ static int ndata_openFile (void)
 
       /* Check ndata with version appended. */
 #if VREV < 0
-      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
+      nsnprintf ( pathname, PATH_MAX, _("%s-%d.%d.0-beta%d"), NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
 #else /* VREV < 0 */
       nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
 
-      if ( ndata_isndata ( pathname ) ) {
-         ndata_filename = malloc ( PATH_MAX );
-         strcpy ( ndata_filename, pathname );
+      if (ndata_isndata(pathname)) {
+         ndata_filename = malloc(PATH_MAX);
+         strncpy(ndata_filename, pathname, PATH_MAX);
       }
-      else if ( ndata_isndata ( strcat(pathname, ".zip" )) ) {
-         ndata_filename = malloc ( PATH_MAX );
-         strcpy ( ndata_filename, pathname );
+      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX-1))) {
+         ndata_filename = malloc(PATH_MAX);
+         strncpy(ndata_filename, pathname, PATH_MAX);
       }
-
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
 
       /* Try to open any ndata in path. */
       else {
-
          /* Check in NDATA_DEF path. */
          buf = strdup(NDATA_DEF);
          nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
@@ -387,21 +466,20 @@ static int ndata_openFile (void)
    /* Open the archive. */
    if (ndata_isndata( ndata_filename ) != 1) {
       if (!ndata_loadedfile) {
-         WARN("Cannot find ndata file!");
-         WARN("Please run with ndata path suffix or specify in conf.lua.");
-         WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
+         WARN(_("Cannot find ndata file!"));
+         WARN(_("Please run with ndata path suffix or specify in conf.lua."));
+         WARN(_("E.g. naev ~/ndata or data = \"~/ndata\""));
 
          /* Display the not found message. */
-         ndata_notfound();
-
-         exit(1);
+         if (!ndata_notfound())
+            exit(1);
       }
       else
          return -1;
    }
    ndata_archive = nzip_open( ndata_filename );
    if (ndata_archive == NULL)
-      WARN("Unable to open ndata from '%s'.", ndata_filename );
+      WARN(_("Unable to open ndata from '%s'."), ndata_filename );
 
    /* Close lock. */
    SDL_mutexV(ndata_lock);
@@ -419,7 +497,7 @@ static int ndata_openFile (void)
 static void ndata_testVersion (void)
 {
    int ret;
-   uint32_t size;
+   size_t size;
    int version[3];
    char *buf;
    int diff;
@@ -429,21 +507,21 @@ static void ndata_testVersion (void)
    ret = naev_versionParse( version, buf, (int)size );
    free(buf);
    if (ret != 0) {
-      WARN("Problem reading VERSION file from ndata!");
+      WARN(_("Problem reading VERSION file from ndata!"));
       return;
    }
 
    diff = naev_versionCompare( version );
    if (diff != 0) {
-      WARN( "ndata version inconsistancy with this version of Naev!" );
-      WARN( "Expected ndata version %d.%d.%d got %d.%d.%d.",
+      WARN( _("ndata version inconsistancy with this version of Naev!") );
+      WARN( _("Expected ndata version %d.%d.%d got %d.%d.%d."),
             VMAJOR, VMINOR, VREV, version[0], version[1], version[2] );
 
       if (ABS(diff) > 2)
-         ERR( "Please get a compatible ndata version!" );
+         ERR( _("Please get a compatible ndata version!") );
 
       if (ABS(diff) > 1)
-         WARN( "Naev will probably crash now as the versions are probably not compatible." );
+         WARN( _("Naev will probably crash now as the versions are probably not compatible.") );
    }
 }
 
@@ -477,6 +555,8 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
+   unsigned int i;
+
    /* Destroy the name. */
    if (ndata_arcName != NULL) {
       free(ndata_arcName);
@@ -485,8 +565,11 @@ void ndata_close (void)
 
    /* Destroy the list. */
    if (ndata_fileList != NULL) {
+      for (i=0; i<ndata_fileNList; i++)
+         free(ndata_fileList[i]);
+
       free(ndata_fileList);
-      ndata_fileList = NULL;
+      ndata_fileList  = NULL;
       ndata_fileNList = 0;
    }
 
@@ -585,16 +668,8 @@ int ndata_exists( const char* filename )
             return 1;
       }
 
-      /* Load the ndata archive. */
-      ndata_openFile();
-   }
-
-   /* Wasn't able to open the file. */
-   if (ndata_archive == NULL)
       return 0;
-
-   /* Mark that we loaded a file. */
-   ndata_loadedfile = 1;
+   }
 
    /* Try to get it from the archive. */
    return nzip_hasFile( ndata_archive, filename );
@@ -608,10 +683,10 @@ int ndata_exists( const char* filename )
  *    @param[out] filesize Stores the size of the file.
  *    @return The file data or NULL on error.
  */
-void* ndata_read( const char* filename, uint32_t *filesize )
+void* ndata_read( const char* filename, size_t *filesize )
 {
    char *buf, path[PATH_MAX];
-   int nbuf;
+   size_t nbuf;
 
    /* See if needs to load ndata archive. */
    if (ndata_archive == NULL) {
@@ -679,7 +754,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
 
    /* Wasn't able to open the file. */
    if (ndata_archive == NULL) {
-      WARN("Unable to open file '%s': not found.", filename);
+      WARN(_("Unable to open file '%s': not found."), filename);
       *filesize = 0;
       return NULL;
    }
@@ -758,7 +833,7 @@ SDL_RWops *ndata_rwops( const char* filename )
 
    /* Wasn't able to open the file. */
    if (ndata_archive == NULL) {
-      WARN("Unable to open file '%s': not found.", filename);
+      WARN(_("Unable to open file '%s': not found."), filename);
       return NULL;
    }
 
@@ -815,7 +890,7 @@ static char **stripPath( const char **list, int nlist, const char *path )
  *    @param[out] nfiles Files that match.
  */
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles, int recursive )
+      const char* path, size_t* nfiles, int recursive )
 {
    char **filtered;
    int i, j, k, len;
@@ -831,9 +906,9 @@ static char** filterList( const char** list, int nlist,
       if (strncmp(list[i], path, len)!=0)
          continue;
 
-      /* Make sure there are no stray '/'. */
+      /* Make sure there are no stray file delimitors. */
       for (k=len; list[i][k] != '\0'; k++)
-         if (list[i][k] == '/')
+         if (nfile_isSeparator(list[i][k]))
             if (!recursive)
                break;
 
@@ -862,12 +937,12 @@ static char** filterList( const char** list, int nlist,
  *    @param nfiles Number of files found.
  *    @return List of files found.
  */
-static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursive )
+static char** ndata_listBackend( const char* path, size_t* nfiles, int recursive )
 {
    (void) path;
    char **files, **tfiles, buf[PATH_MAX], *tmp;
-   int n;
-   char** (*nfile_readFunc) ( int* nfiles, const char* path, ... ) = NULL;
+   size_t n;
+   char** (*nfile_readFunc) ( size_t* nfiles, const char* path, ... ) = NULL;
 
    if (recursive)
       nfile_readFunc = nfile_readDirRecursive;
@@ -952,7 +1027,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
  *
  *    @sa ndata_listBackend
  */
-char** ndata_list( const char* path, uint32_t* nfiles )
+char** ndata_list( const char* path, size_t* nfiles )
 {
    return ndata_listBackend( path, nfiles, 0 );
 }
@@ -963,7 +1038,7 @@ char** ndata_list( const char* path, uint32_t* nfiles )
  *
  *    @sa ndata_listBackend
  */
-char** ndata_listRecursive( const char* path, uint32_t* nfiles )
+char** ndata_listRecursive( const char* path, size_t* nfiles )
 {
    return ndata_listBackend( path, nfiles, 1 );
 }
@@ -989,7 +1064,7 @@ static int ndata_sortFunc( const void *name1, const void *name2 )
  *    @param files Filenames to sort.
  *    @param nfiles Number of files to sort.
  */
-void ndata_sortName( char **files, uint32_t nfiles )
+void ndata_sortName( char **files, size_t nfiles )
 {
    qsort( files, nfiles, sizeof(char*), ndata_sortFunc );
 }

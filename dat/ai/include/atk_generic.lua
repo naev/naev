@@ -20,7 +20,7 @@ function atk_generic_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
@@ -49,7 +49,7 @@ function atk_generic_attacked( attacker )
    end
 
    -- If no target automatically choose it
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.pushtask("attack", attacker)
       return
    end
@@ -99,20 +99,99 @@ end
 -- Enters ranged combat with the target
 --]]
 function _atk_g_ranged( target, dist )
-   local dir = ai.face(target) -- Normal face the target
 
-   -- Check if in range to shoot missiles
-   if dist < ai.getweaprange( 4 ) and dir < 30 then
-      ai.weapset( 4 )
+   -- Pilot thinks dogfight is the best
+   if ai.relhp(target)*ai.reldps(target) >= 0.25 
+         or ai.getweapspeed(4) < target:stats().speed_max*1.2 
+         or ai.getweaprange(4) < ai.getweaprange(1)*1.5 then
+
+      local dir
+      if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
+         dir = ai.face(target) -- Normal face the target
+      else
+         dir = ai.careful_face(target) -- Careful method
+      end
+
+      -- Check if in range to shoot missiles
+      if dist < ai.getweaprange( 4 ) and dir < 30 then
+         ai.weapset( 4 )
+      end
+
+      -- Approach for melee
+      if dir < 10 then
+         ai.accel()
+      end
+
+   else   --Pilot fears his enemy
+
+   --[[ The pilot tries first to place himself at range and at constant velocity.
+        When he is stabilized, he starts shooting until he has to correct his trajectory again
+
+        If he doesn't manage to shoot missiles after a few seconds 
+        (because the target dodges),
+        he gives up and just faces the target and shoot (provided he is in range)
+   ]]
+
+      local p = ai.pilot()
+
+      -- Estimate the range
+      local radial_vel = ai.relvel(target, true)
+      local range = ai.getweaprange( 4 )
+      range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 4 ) - radial_vel ), range )
+
+      local goal = ai.follow_accurate(target, range * 0.8, 0, 10, 20, "keepangle")
+      local mod = vec2.mod(goal - p:pos())
+
+      --Must approach or stabilize
+      if mod > 3000 then
+         -- mustapproach allows a hysteretic behaviour
+         mem.mustapproach = true
+      end
+      if dist > range*0.95 then
+         mem.outofrange = true
+      end
+
+      if (mem.mustapproach and not ai.timeup(1) ) or mem.outofrange then
+         local dir   = ai.face(goal)
+         if dir < 10 and mod > 300 then
+            ai.accel()
+            --mem.stabilized = false
+         -- ship must be stabilized since 2 secs
+         elseif ai.relvel(target) < 5 and not ai.timeup(1) then--[[if not mem.stabilized then
+            mem.stabilized = true
+            ai.settimer(0, 2000)
+         elseif not ai.timeup(1) and ai.timeup(0) then
+            -- If the ship manages to catch its mark, reset the timer]]
+            --ai.settimer(1, 10000)
+            mem.mustapproach = false
+         end
+         if dist < range*0.85 then
+            mem.outofrange = false
+         end
+
+      else -- In range
+         local dir  = ai.face(target)
+         if dir < 30 then
+            mem.totmass = p:stats().mass
+            ai.weapset( 4 )
+            -- If he managed to shoot, the mass decreased
+            if p:stats().mass < mem.totmass - 0.01 and not ai.timeup(1) then
+               ai.settimer(1, 13000)
+            end
+         end
+      end
+
+      --The pilot just arrived in the good zone : 
+      --From now, if ship doesn't manage to stabilize within a few seconds, shoot anyway
+      if dist < 1.5*range and not mem.inzone then
+         mem.inzone = true
+         ai.settimer(1, mod/p:stats().speed*700 )
+      end
+
    end
 
    -- Always launch fighters for now
    ai.weapset( 5 )
-
-   -- Approach for melee
-   if dir < 10 then
-      ai.accel()
-   end
 end
 
 

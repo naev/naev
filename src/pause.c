@@ -21,6 +21,7 @@
 
 
 int paused     = 0; /**< is paused? */
+int player_paused = 0; /**< Whether the player initiated the pause. */
 double dt_mod  = 1.; /**< dt modifier. */
 
 
@@ -39,6 +40,7 @@ void pause_game (void)
    }
 
    paused = 1; /* officially paused */
+   player_paused = 0;
 }
 
 
@@ -57,7 +59,9 @@ void unpause_game (void)
    }
 
    paused = 0; /* officially unpaused */
+   player_paused = 0;
 }
+
 
 /**
  * @brief Adjusts the game's dt modifier.
@@ -69,3 +73,14 @@ void pause_setSpeed( double mod )
 }
 
 
+/**
+ * @brief Pauses the game and marks the pause as player-initiated.
+ */
+void pause_player (void)
+{
+   if (paused)
+      return;
+
+   pause_game();
+   player_paused = 1;
+}

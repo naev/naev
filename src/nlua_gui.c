@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "gui.h"
@@ -39,7 +38,7 @@ static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
 static int guiL_menuInfo( lua_State *L );
 static int guiL_menuSmall( lua_State *L );
-static const luaL_reg guiL_methods[] = {
+static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
    { "osdInit", guiL_osdInit },
@@ -62,16 +61,13 @@ static const luaL_reg guiL_methods[] = {
 /**
  * @brief Loads the GUI library.
  *
- *    @param L State to load GUI library into.
+ *    @param env Environment to load GUI library into.
  *    @return 0 on success.
  */
-int nlua_loadGUI( lua_State *L, int readonly )
+int nlua_loadGUI( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
    /* Register the values */
-   luaL_register(L, "gui", guiL_methods);
+   nlua_register(env, "gui", guiL_methods, 0);
 
    return 0;
 }
@@ -100,15 +96,17 @@ int nlua_loadGUI( lua_State *L, int readonly )
  * @usage gui.viewport( 0, 0, screen_w, screen_h ) -- Resets viewport.
  * @usage gui.viewport( 0, 20, screen_w, screen_h-20 ) -- Gives 20 pixels for a bottom bar.
  *
- *    @luaparam x X position to start clipping (bottom left is 0.)
- *    @luaparam y Y position to start clipping (bottom left is 0.)
- *    @luaparam w Width of the clipping (width of the screen is default).
- *    @luaparam h Height of the clipping (height of the screen is default).
+ *    @luatparam number x X position to start clipping (bottom left is 0.)
+ *    @luatparam number y Y position to start clipping (bottom left is 0.)
+ *    @luatparam number w Width of the clipping (width of the screen is default).
+ *    @luatparam number h Height of the clipping (height of the screen is default).
  * @luafunc viewport( x, y, w, h )
  */
 static int guiL_viewport( lua_State *L )
 {
    double x,y, w,h;
+
+   NLUA_CHECKRW(L);
 
    /* Parameters. */
    x = luaL_checknumber(L,1);
@@ -134,6 +132,7 @@ static int guiL_viewport( lua_State *L )
 static int guiL_fpsPos( lua_State *L )
 {
    double x,y;
+   NLUA_CHECKRW(L);
    x = luaL_checknumber(L,1);
    y = luaL_checknumber(L,2);
    fps_setPos( x, y );
@@ -144,15 +143,17 @@ static int guiL_fpsPos( lua_State *L )
 /**
  * @brief Initializes the mission OSD (on-screen display).
  *
- *    @luaparam x X position of the OSD display.
- *    @luaparam y Y position of the OSD display.
- *    @luaparam w Width of the OSD display.
- *    @luaparam h Height of the OSD display.
+ *    @luatparam number x X position of the OSD display.
+ *    @luatparam number y Y position of the OSD display.
+ *    @luatparam number w Width of the OSD display.
+ *    @luatparam number h Height of the OSD display.
  * @luafunc osdInit( x, y, w, h )
  */
 static int guiL_osdInit( lua_State *L )
 {
    int x,y, w,h;
+
+   NLUA_CHECKRW(L);
 
    /* Parameters. */
    x = luaL_checkinteger(L,1);
@@ -169,14 +170,16 @@ static int guiL_osdInit( lua_State *L )
 /**
  * @brief Sets up the message box from which the player receives input.
  *
- *    @luaparam width Width of the message box.
- *    @luaparam x X position of message box.
- *    @luaparam y Y position of message box.
+ *    @luatparam number width Width of the message box.
+ *    @luatparam number x X position of message box.
+ *    @luatparam number y Y position of message box.
  * @luafunc mesgInit( width, x, y )
  */
 static int guiL_mesgInit( lua_State *L )
 {
    int w, x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    w = luaL_checkinteger( L, 1 );
@@ -192,14 +195,16 @@ static int guiL_mesgInit( lua_State *L )
 /**
  * @brief Sets the center of the omsg messages and width.
  *
- *    @luaparam width Width of the omsg messages.
- *    @luaparam x X center of the omsg messages.
- *    @luaparam y Y center of the omsg messages.
+ *    @luatparam number width Width of the omsg messages.
+ *    @luatparam number x X center of the omsg messages.
+ *    @luatparam number y Y center of the omsg messages.
  * @luafunc omsgInit( width, x, y )
  */
 static int guiL_omsgInit( lua_State *L )
 {
    double w, x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    w = luaL_checkinteger( L, 1 );
@@ -217,14 +222,16 @@ static int guiL_omsgInit( lua_State *L )
  *
  * @usage gui.radarInit( true, 82 ) -- Circular radar with 82 radius.
  *
- *    @luaparam circle Whether or not it should be a circle.
- *    @luaparam width Width if it's not a circle or radius if it is a circle.
- *    @luaparam height Only needed if not a circle.
+ *    @luatparam number circle Whether or not it should be a circle.
+ *    @luatparam number width Width if it's not a circle or radius if it is a circle.
+ *    @luatparam number height Only needed if not a circle.
  * @luafunc radarInit( circle, width, height )
  */
 static int guiL_radarInit( lua_State *L )
 {
    int id, circle, width, height;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    circle = lua_toboolean( L, 1 );
@@ -246,13 +253,15 @@ static int guiL_radarInit( lua_State *L )
  *
  * @usage gui.radarRender( 50, 50 )
  *
- *    @luaparam x X position to render at.
- *    @luaparam y Y position to render at.
+ *    @luatparam number x X position to render at.
+ *    @luatparam number y Y position to render at.
  * @luafunc radarRender( x, y )
  */
 static int guiL_radarRender( lua_State *L )
 {
    double x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -267,14 +276,13 @@ static int guiL_radarRender( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targeting.
+ *    @luatparam Tex tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPlanetGFX( lua_State *L )
 {
-   LuaTex *lt;
-   lt = luaL_checktex( L, 1 );
-   gui_targetPlanetGFX( lt->tex );
+   NLUA_CHECKRW(L);
+   gui_targetPlanetGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
 
@@ -282,14 +290,13 @@ static int guiL_targetPlanetGFX( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targeting.
+ *    @luatparam Tex tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {
-   LuaTex *lt;
-   lt = luaL_checktex( L, 1 );
-   gui_targetPilotGFX( lt->tex );
+   NLUA_CHECKRW(L);
+   gui_targetPilotGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
 
@@ -301,12 +308,13 @@ static int guiL_targetPilotGFX( lua_State *L )
  * function mouse_click( button, x, y, state ) <br />
  * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
  *
- *    @luaparam enable Whether or not to enable the mouse click callback.
+ *    @luatparam[opt=true] boolean enable Whether or not to enable the mouse click callback.
  * @luafunc mouseClickEnable()
  */
 static int guiL_mouseClickEnable( lua_State *L )
 {
    int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -323,12 +331,13 @@ static int guiL_mouseClickEnable( lua_State *L )
  * function mouse_move( x, y ) <br />
  * With x/y being the position of the mouse.
  *
- *    @luaparam enable Whether or not to enable the mouse movement callback.
+ *    @luatparam[opt] boolean enable Whether or not to enable the mouse movement callback.
  * @luafunc mouseMoveEnable()
  */
 static int guiL_mouseMoveEnable( lua_State *L )
 {
    int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -351,13 +360,15 @@ static int guiL_mouseMoveEnable( lua_State *L )
  *
  * @usage gui.menuInfo( "ship" ) -- Opens ship tab
  *
- *    @luaparam window Optional window parameter indicating the tab to open at.
+ *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
  * @luafunc menuInfo( window )
  */
 static int guiL_menuInfo( lua_State *L )
 {
    const char *str;
    int window;
+
+   NLUA_CHECKRW(L);
 
    if (menu_open)
       return 0;
@@ -384,7 +395,7 @@ static int guiL_menuInfo( lua_State *L )
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
    else {
-      NLUA_ERROR(L,"Invalid window info name '%s'.", str);
+      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
       return 0;
    }
 
@@ -405,6 +416,7 @@ static int guiL_menuInfo( lua_State *L )
 static int guiL_menuSmall( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    if (menu_open)
       return 0;
    menu_small();

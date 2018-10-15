@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "ndata.h"
@@ -26,7 +25,7 @@ static int texL_open( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
-static const luaL_reg texL_methods[] = {
+static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
    { "open", texL_open },
    { "dim", texL_dim },
@@ -41,27 +40,12 @@ static const luaL_reg texL_methods[] = {
 /**
  * @brief Loads the texture library.
  *
- *    @param L State to load texture library into.
+ *    @param env Environment to load texture library into.
  *    @return 0 on success.
  */
-int nlua_loadTex( lua_State *L, int readonly )
+int nlua_loadTex( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
-   /* Create the metatable */
-   luaL_newmetatable(L, TEX_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   luaL_register(L, NULL, texL_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, TEX_METATABLE);
-
+   nlua_register(env, TEX_METATABLE, texL_methods, 1);
    return 0;
 }
 
@@ -87,9 +71,9 @@ int nlua_loadTex( lua_State *L, int readonly )
  *    @param ind Index position to find the texture.
  *    @return Texture found at the index in the state.
  */
-LuaTex* lua_totex( lua_State *L, int ind )
+glTexture* lua_totex( lua_State *L, int ind )
 {
-   return (LuaTex*) lua_touserdata(L,ind);
+   return *((glTexture**) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets texture at index or raises error if there is no texture at index.
@@ -98,7 +82,7 @@ LuaTex* lua_totex( lua_State *L, int ind )
  *    @param ind Index position to find texture.
  *    @return Texture found at the index in the state.
  */
-LuaTex* luaL_checktex( lua_State *L, int ind )
+glTexture* luaL_checktex( lua_State *L, int ind )
 {
    if (lua_istex(L,ind))
       return lua_totex(L,ind);
@@ -112,10 +96,10 @@ LuaTex* luaL_checktex( lua_State *L, int ind )
  *    @param texture Texture to push.
  *    @return Newly pushed texture.
  */
-LuaTex* lua_pushtex( lua_State *L, LuaTex texture )
+glTexture** lua_pushtex( lua_State *L, glTexture *texture )
 {
-   LuaTex *t;
-   t = (LuaTex*) lua_newuserdata(L, sizeof(LuaTex));
+   glTexture **t;
+   t = (glTexture**) lua_newuserdata(L, sizeof(glTexture*));
    *t = texture;
    luaL_getmetatable(L, TEX_METATABLE);
    lua_setmetatable(L, -2);
@@ -148,19 +132,13 @@ int lua_istex( lua_State *L, int ind )
 /**
  * @brief Frees the texture.
  *
- *    @luaparam t Texture to free.
+ *    @luatparam Tex t Texture to free.
  * @luafunc __gc( t )
  */
 static int texL_close( lua_State *L )
 {
-   LuaTex *lt;
-
-   /* Get texture. */
-   lt = luaL_checktex( L, 1 );
-
    /* Free texture. */
-   gl_freeTexture( lt->tex );
-   lt->tex = NULL;
+   gl_freeTexture( luaL_checktex( L, 1 ) );
 
    return 0;
 }
@@ -172,17 +150,19 @@ static int texL_close( lua_State *L )
  * @usage t = tex.open( "no_sprites.png" )
  * @usage t = tex.open( "spritesheet.png", 6, 6 )
  *
- *    @luaparam path Path to open.
- *    @luaparam sx Optional number of x sprites (defaults 1).
- *    @luaparam sy Optional number of y sprites (defaults 1).
- *    @luareturn The opened texture or nil on error.
+ *    @luatparam string path Path to open.
+ *    @luatparam[opt=1] number sx Optional number of x sprites.
+ *    @luatparam[opt=1] number sy Optional number of y sprites.
+ *    @luatreturn Tex The opened texture or nil on error.
  * @luafunc open( path, sx, sy )
  */
 static int texL_open( lua_State *L )
 {
    const char *path;
-   LuaTex lt;
+   glTexture *tex;
    int sx, sy;
+
+   NLUA_CHECKRW(L);
 
    /* Defaults. */
    sx = 0;
@@ -194,17 +174,17 @@ static int texL_open( lua_State *L )
       sx = luaL_checkinteger(L,2);
       sy = luaL_checkinteger(L,3);
       if ((sx < 0 ) || (sy < 0))
-         NLUA_ERROR( L, "Spritesheet dimensions must be positive" );
+         NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
    }
 
    /* Push new texture. */
    if ((sx <=0 ) || (sy <= 0))
-      lt.tex = gl_newImage( path, 0 );
+      tex = gl_newImage( path, 0 );
    else
-      lt.tex = gl_newSprite( path, sx, sy, 0 );
-   if (lt.tex == NULL)
+      tex = gl_newSprite( path, sx, sy, 0 );
+   if (tex == NULL)
       return 0;
-   lua_pushtex( L, lt );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -214,22 +194,25 @@ static int texL_open( lua_State *L )
  *
  * @usage w,h, sw,sh = t:dim()
  *
- *    @luaparam t Texture to get dimensions of.
- *    @luareturn The width and height of the total image followed by the width and height of the sprites.
+ *    @luatparam Tex t Texture to get dimensions of.
+ *    @luatreturn number The width the total image.
+ *    @luatreturn number The height the total image.
+ *    @luatreturn number The width the sprites.
+ *    @luatreturn number The height the sprites.
  * @luafunc dim( t )
  */
 static int texL_dim( lua_State *L )
 {
-   LuaTex *lt;
+   glTexture *tex;
 
    /* Get texture. */
-   lt = luaL_checktex( L, 1 );
+   tex = luaL_checktex( L, 1 );
 
    /* Get all 4 values. */
-   lua_pushnumber( L, lt->tex->w  );
-   lua_pushnumber( L, lt->tex->h  );
-   lua_pushnumber( L, lt->tex->sw );
-   lua_pushnumber( L, lt->tex->sh );
+   lua_pushnumber( L, tex->w  );
+   lua_pushnumber( L, tex->h  );
+   lua_pushnumber( L, tex->sw );
+   lua_pushnumber( L, tex->sh );
    return 4;
 }
 
@@ -239,21 +222,23 @@ static int texL_dim( lua_State *L )
  *
  * @usage sprites, sx,sy = t:sprites()
  *
- *    @luaparam t Texture to get sprites of.
- *    @luareturn The total number of sprites followed by the number of X sprites and the number of Y sprites.
+ *    @luatparam Tex t Texture to get sprites of.
+ *    @luatreturn number The total number of sprites.
+ *    @luatreturn number The number of X sprites.
+ *    @luatreturn number The number of Y sprites.
  * @luafunc sprites( t )
  */
 static int texL_sprites( lua_State *L )
 {
-   LuaTex *lt;
+   glTexture *tex;
 
    /* Get texture. */
-   lt = luaL_checktex( L, 1 );
+   tex = luaL_checktex( L, 1 );
 
    /* Get sprites. */
-   lua_pushnumber( L, lt->tex->sx*lt->tex->sy );
-   lua_pushnumber( L, lt->tex->sx );
-   lua_pushnumber( L, lt->tex->sy );
+   lua_pushnumber( L, tex->sx * tex->sy );
+   lua_pushnumber( L, tex->sx );
+   lua_pushnumber( L, tex->sy );
    return 3;
 }
 
@@ -263,20 +248,29 @@ static int texL_sprites( lua_State *L )
  *
  * @usage sx, sy = t:spriteFromdir( math.pi )
  *
- *    @luaparam t Texture to get sprite of.
- *    @luaparam a Direction to have sprite facing (in radians).
- *    @luareturn x and y positions of the sprite.
- * @luafunc spriteFromDir( t, a )
+ *    @luatparam Tex t Texture to get sprite of.
+ *    @luatparam number a Direction to have sprite facing (in degrees).
+ *    @luatparam[opt=false] boolean b Whether radians should be used instead of degrees.
+ *    @luat return number The x position of the sprite.
+ *    @luat return number The y position of the sprite.
+ * @luafunc spriteFromDir( t, a, b )
  */
 static int texL_spriteFromDir( lua_State *L )
 {
    double a;
-   LuaTex *lt;
+   glTexture *tex;
    int sx, sy;
 
+   NLUA_CHECKRW(L);
+
    /* Params. */
-   lt = luaL_checktex( L, 1 );
-   a  = luaL_checknumber( L, 2 );
+   tex = luaL_checktex( L, 1 );
+
+   /* Use radians if requested, otherwise convert to degrees. */
+   if (lua_gettop(L) > 2 && (lua_toboolean(L, 3)))
+      a = luaL_checknumber( L, 2 );
+   else
+      a = luaL_checknumber( L, 2 ) / 180. * M_PI;
 
    /* Calculate with parameter sanity.. */
    if ((a >= 2.*M_PI) || (a < 0.)) {
@@ -284,7 +278,7 @@ static int texL_spriteFromDir( lua_State *L )
       if (a < 0.)
          a += 2.*M_PI;
    }
-   gl_getSpriteFromDir( &sx, &sy, lt->tex, a );
+   gl_getSpriteFromDir( &sx, &sy, tex, a );
 
    /* Return. */
    lua_pushinteger( L, sx+1 );

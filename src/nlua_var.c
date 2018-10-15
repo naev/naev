@@ -21,7 +21,6 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "nxml.h"
@@ -72,30 +71,22 @@ int var_load( xmlNodePtr parent );
 static int var_peek( lua_State *L );
 static int var_pop( lua_State *L );
 static int var_push( lua_State *L );
-static const luaL_reg var_methods[] = {
+static const luaL_Reg var_methods[] = {
    { "peek", var_peek },
    { "pop", var_pop },
    { "push", var_push },
    {0,0}
 }; /**< Mission variable Lua methods. */
-static const luaL_reg var_cond_methods[] = {
-   { "peek", var_peek },
-   {0,0}
-}; /**< Conditional mission variable Lua methods. */
 
 
 /**
  * @brief Loads the mission variable Lua library.
- *    @param L Lua state.
- *    @param readonly Whether to open in read-only form.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadVar( lua_State *L, int readonly )
+int nlua_loadVar( nlua_env env )
 {
-   if (readonly == 0)
-      luaL_register(L, "var", var_methods);
-   else
-      luaL_register(L, "var", var_cond_methods);
+   nlua_register(env, "var", var_methods, 0);
    return 0;
 }
 
@@ -183,7 +174,7 @@ int var_load( xmlNodePtr parent )
                   var.d.str = xml_getStrd(cur);
                }
                else { /* super error checking */
-                  WARN("Unknown var type '%s'", str);
+                  WARN(_("Unknown var type '%s'"), str);
                   free(var.name);
                   continue;
                }
@@ -217,11 +208,11 @@ static int var_add( misn_var *new_var )
    for (i=0; i<var_nstack; i++)
       if (strcmp(new_var->name,var_stack[i].name)==0) { /* overwrite */
          var_free( &var_stack[i] );
-         memcpy( &var_stack[i], new_var, sizeof(misn_var) );
+         var_stack[i] = *new_var;
          return 0;
       }
 
-   memcpy( &var_stack[var_nstack], new_var, sizeof(misn_var) );
+   var_stack[var_nstack] = *new_var;
    var_nstack++;
 
    return 0;
@@ -265,7 +256,7 @@ int var_checkflag( char* str )
 /**
  * @brief Gets the mission variable value of a certain name.
  *
- *    @luaparam name Name of the mission variable to get.
+ *    @luatparam string name Name of the mission variable to get.
  *    @luareturn The value of the mission variable which will depend on what type
  *             it is.
  * @luafunc peek( name )
@@ -304,13 +295,15 @@ static int var_peek( lua_State *L )
  *
  * This does not give you any value and destroys it permanently (or until recreated).
  *
- *    @luaparam name Name of the mission variable to pop.
+ *    @luatparam string name Name of the mission variable to pop.
  * @luafunc pop( name )
  */
 static int var_pop( lua_State *L )
 {
    int i;
    const char* str;
+
+   NLUA_CHECKRW(L);
 
    str = luaL_checkstring(L,1);
 
@@ -331,7 +324,7 @@ static int var_pop( lua_State *L )
  * This will overwrite existing vars, so it's a good way to update the values
  *  of different mission variables.
  *
- *    @luaparam name Name to use for the new mission variable.
+ *    @luatparam string name Name to use for the new mission variable.
  *    @luaparam value Value of the new mission variable.  Accepted types are:
  *                  nil, bool, string or number.
  * @luafunc push( name, value )
@@ -340,6 +333,8 @@ static int var_push( lua_State *L )
 {
    const char *str;
    misn_var var;
+
+   NLUA_CHECKRW(L);
 
    str = luaL_checkstring(L,1);
 

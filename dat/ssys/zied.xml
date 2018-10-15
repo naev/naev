@@ -7,25 +7,49 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-23.166667</x>
-  <y>-504.166667</y>
+  <x>-67.166667</x>
+  <y>-872.166667</y>
  </pos>
  <assets>
   <asset>Bon Sebb</asset>
   <asset>Sixbat Station</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
-  <jump target="Blunderbuss">
+  <jump target="Amaroq">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Gammacron">
+  <jump target="Pudas">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Hekaras">
+  <jump target="Sheffield">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>golden</type>
+   <corner>
+    <x>5000.000000</x>
+    <y>1000.000000</y>
+   </corner>
+   <corner>
+    <x>2000.000000</x>
+    <y>3000.000000</y>
+   </corner>
+   <corner>
+    <x>1000.000000</x>
+    <y>1000.000000</y>
+   </corner>
+   <corner>
+    <x>2000.000000</x>
+    <y>-500.000000</y>
+   </corner>
+   <density>1.000000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

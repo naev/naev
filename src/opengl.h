@@ -56,10 +56,13 @@ typedef struct glInfo_ {
    int desktop_h; /**< Desktop height. */
    int x; /**< X offset of window viewport. */
    int y; /**< Y offset of window viewport. */
+   /* Viewport considers x/y offset. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
+   /* Scaled window is the effective window resolution without considering offsets. */
    int nw; /**< Scaled window width. */
    int nh; /**< Scaled window height. */
+   /* Real window resolution is the real window resolution, unscaled and without offsets. */
    int rw; /**< Real window width. */
    int rh; /**< Real window height. */
    double scale; /**< Scale factor. */
@@ -101,6 +104,7 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
  */
 int gl_init (void);
 void gl_exit (void);
+void gl_resize( int w, int h );
 
 
 /*
@@ -108,12 +112,14 @@ void gl_exit (void);
  */
 GLboolean gl_hasExt( char *name );
 GLboolean gl_hasVersion( int major, int minor );
+int gl_vendorIsIntel (void);
 
 
 /*
  * Viewport.
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy );
+void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy );
 void gl_viewport( int x, int y, int w, int h );
 void gl_defViewport (void);
 void gl_setDefViewport( int x, int y, int w, int h );
@@ -122,7 +128,6 @@ void gl_setDefViewport( int x, int y, int w, int h );
 /*
  * misc
  */
-double gl_setScale( double scalefactor );
 void gl_screenshot( const char *filename );
 int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #ifdef DEBUGGING

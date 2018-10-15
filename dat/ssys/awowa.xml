@@ -15,15 +15,21 @@
   <asset>Awowa V</asset>
   <asset>Odonga</asset>
   <asset>Odonga m1</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Beeklo">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Ginger">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Maus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

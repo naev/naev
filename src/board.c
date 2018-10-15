@@ -71,6 +71,10 @@ void player_board (void)
    char c;
    HookParam hparam[2];
 
+   /* Not disabled. */
+   if (pilot_isDisabled(player.p))
+      return;
+
    if (player.p->target==PLAYER_ID) {
       /* We don't try to find far away targets, only nearest and see if it matches.
        * However, perhaps looking for first boardable target within a certain range
@@ -80,7 +84,7 @@ void player_board (void)
       if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
-         player_message("\erYou need a target to board first!");
+         player_message( _("\arYou need a target to board first!") );
          return;
       }
    }
@@ -90,26 +94,26 @@ void player_board (void)
 
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
-      player_message("\erTarget ship can not be boarded.");
+      player_message( _("\arTarget ship can not be boarded.") );
       return;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message("\erYour target cannot be boarded again.");
+      player_message( _("\arYour target cannot be boarded again.") );
       return;
    }
    else if (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) {
-      player_message("\erYou cannot board a ship that isn't disabled!");
+      player_message(_("\arYou cannot board a ship that isn't disabled!"));
       return;
    }
    else if (vect_dist(&player.p->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
-      player_message("\erYou are too far away to board your target.");
+      player_message(_("\arYou are too far away to board your target."));
       return;
    }
    else if ((pow2(VX(player.p->solid->vel)-VX(p->solid->vel)) +
             pow2(VY(player.p->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message("\erYou are going too fast to board the ship.");
+      player_message(_("\arYou are going too fast to board the ship."));
       return;
    }
    /* We'll recover it if it's the pilot's ex-escort. */
@@ -117,7 +121,7 @@ void player_board (void)
       /* Try to recover. */
       pilot_dock( p, player.p, 0 );
       if (pilot_isFlag(p, PILOT_DELETE )) { /* Hack to see if it boarded. */
-         player_message("\epYou recover \eg%s\ep into your fighter bay.", p->name);
+         player_message(_("\apYou recover \ag%s\ap into your fighter bay."), p->name);
          return;
       }
    }
@@ -127,7 +131,7 @@ void player_board (void)
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED);
-   player_message("\epBoarding ship \e%c%s\e0.", c, p->name);
+   player_message(_("\apBoarding ship \a%c%s\a0."), c, p->name);
 
    /* Don't unboard. */
    board_stopboard = 0;
@@ -136,10 +140,12 @@ void player_board (void)
     * run hook if needed
     */
    hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = p->id;
+   hparam[0].u.lp       = p->id;
    hparam[1].type       = HOOK_PARAM_SENTINEL;
    hooks_runParam( "board", hparam );
-   pilot_runHook(p, PILOT_HOOK_BOARD);
+   pilot_runHookParam(p, PILOT_HOOK_BOARD, hparam, 1);
+   hparam[0].u.lp       = PLAYER_ID;
+   pilot_runHookParam(p, PILOT_HOOK_BOARDING, hparam, 1);
 
    if (board_stopboard) {
       board_boarded = 0;
@@ -153,24 +159,24 @@ void player_board (void)
 
    window_addText( wdw, 20, -30, 120, 60,
          0, "txtCargo", &gl_smallFont, &cDConsole,
-         "Credits:\n"
+         _("Credits:\n"
          "Cargo:\n"
          "Fuel:\n"
-         "Ammo:\n"
+         "Ammo:\n")
          );
    window_addText( wdw, 80, -30, 120, 60,
          0, "txtData", &gl_smallFont, &cBlack, NULL );
 
    window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCredits", "Credits", board_stealCreds);
+         "btnStealCredits", _("Credits"), board_stealCreds);
    window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCargo", "Cargo", board_stealCargo);
+         "btnStealCargo", _("Cargo"), board_stealCargo);
    window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealFuel", "Fuel", board_stealFuel);
+         "btnStealFuel", _("Fuel"), board_stealFuel);
    window_addButton( wdw, 20+3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealAmmo", "Ammo", board_stealAmmo);
+         "btnStealAmmo", _("Ammo"), board_stealAmmo);
    window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBoardingClose", "Leave", board_exit );
+         "btnBoardingClose", _("Leave"), board_exit );
 
    board_update(wdw);
 }
@@ -215,7 +221,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
-      player_message("\epThe ship has no credits.");
+      player_message(_("\apThe ship has no credits."));
       return;
    }
 
@@ -224,7 +230,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    player_modCredits( p->credits );
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
-   player_message("\epYou manage to steal the ship's credits.");
+   player_message(_("\apYou manage to steal the ship's credits."));
 }
 
 
@@ -243,11 +249,11 @@ static void board_stealCargo( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->ncommodities==0) { /* no cargo */
-      player_message("\epThe ship has no cargo.");
+      player_message(_("\apThe ship has no cargo."));
       return;
    }
    else if (pilot_cargoFree(player.p) <= 0) {
-      player_message("\erYou have no room for the ship's cargo.");
+      player_message(_("\arYou have no room for the ship's cargo."));
       return;
    }
 
@@ -257,12 +263,12 @@ static void board_stealCargo( unsigned int wdw, char* str )
    q = 1;
    while ((p->ncommodities > 0) && (q!=0)) {
       q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
-            p->commodities[0].quantity );
+            p->commodities[0].quantity, 0 );
       pilot_cargoRm( p, p->commodities[0].commodity, q );
    }
 
    board_update( wdw );
-   player_message("\epYou manage to steal the ship's cargo.");
+   player_message(_("\apYou manage to steal the ship's cargo."));
 }
 
 
@@ -280,11 +286,11 @@ static void board_stealFuel( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->fuel <= 0.) { /* no fuel. */
-      player_message("\epThe ship has no fuel.");
+      player_message(_("\apThe ship has no fuel."));
       return;
    }
    else if (player.p->fuel == player.p->fuel_max) {
-      player_message("\erYour ship is at maximum fuel capacity.");
+      player_message(_("\arYour ship is at maximum fuel capacity."));
       return;
    }
 
@@ -302,7 +308,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message("\epYou manage to steal the ship's fuel.");
+   player_message(_("\apYou manage to steal the ship's fuel."));
 }
 
 
@@ -323,12 +329,12 @@ static void board_stealAmmo( unsigned int wdw, char* str )
      p = pilot_get(player.p->target);
      /* Target has no ammo */
      if (pilot_countAmmo(p) <= 0) {
-        player_message("\erThe ship has no ammo.");
-        return; 
+        player_message(_("\arThe ship has no ammo."));
+        return;
      }
      /* Player is already at max ammo */
      if (pilot_countAmmo(player.p) >= pilot_maxAmmo(player.p)) {
-        player_message("\erYou are already at max ammo.");
+        player_message(_("\arYou are already at max ammo."));
         return;
      }
      if (board_fail(wdw))
@@ -373,7 +379,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
            pilot_rmAmmo(p, target_outfit_slot, nadded);
            nreloaded += nadded;
            if (nadded > 0)
-              player_message("\epYou looted %d %s(s)", nadded, ammo->name);
+              player_message(_("\apYou looted %d %s(s)"), nadded, ammo->name);
            if (nammo <= 0) {
               break;
            }
@@ -383,7 +389,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
         }
      }
      if (nreloaded <= 0)
-        player_message("\erThere is no ammo compatible with your launchers on board.");
+        player_message(_("\arThere is no ammo compatible with your launchers on board."));
      pilot_updateMass(player.p);
      pilot_weaponSane(player.p);
      pilot_updateMass(p);
@@ -422,7 +428,7 @@ static int board_trySteal( Pilot *p )
       dmg.damage      = 100.;
       dmg.penetration = 1.;
       dmg.disable     = 0.;
-      pilot_hit( target, NULL, p->id, &dmg );
+      pilot_hit( target, NULL, p->id, &dmg, 1 );
       /* Return ship dead. */
       return -1;
    }
@@ -445,9 +451,9 @@ static int board_fail( unsigned int wdw )
    if (ret == 0)
       return 0;
    else if (ret < 0) /* killed ship. */
-      player_message("\epYou have tripped the ship's self-destruct mechanism!");
+      player_message(_("\apYou have tripped the ship's self-destruct mechanism!"));
    else /* you just got locked out */
-      player_message("\epThe ship's security system locks %s out.",
+      player_message(_("\apThe ship's security system locks %s out."),
             (player.p->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
@@ -476,7 +482,7 @@ static void board_update( unsigned int wdw )
 
    /* Commodities. */
    if ((p->ncommodities==0) && (j < PATH_MAX))
-      j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+      j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
    else {
      for (i=0; i<p->ncommodities; i++) {
          if (j > PATH_MAX)
@@ -491,22 +497,22 @@ static void board_update( unsigned int wdw )
    /* Fuel. */
    if (p->fuel <= 0.) {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+         j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
+         j += snprintf( &str[j], PATH_MAX-j, _("%.0f Units\n"), p->fuel );
    }
-   
+
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
    if (nmissiles <= 0) {
       if (j < PATH_MAX)
-        j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+        j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-        j += snprintf( &str[j], PATH_MAX-j, "%d missiles\n", nmissiles );
+        j += snprintf( &str[j], PATH_MAX-j, _("%d missiles\n"), nmissiles );
    }
 
    window_modifyText( wdw, "txtData", str );
@@ -522,6 +528,7 @@ static void board_update( unsigned int wdw )
 int pilot_board( Pilot *p )
 {
    Pilot *target;
+   HookParam hparam[2];
 
    /* Make sure target is sane. */
    target = pilot_get(p->target);
@@ -550,6 +557,14 @@ int pilot_board( Pilot *p )
    /* Set time it takes to board. */
    p->ptimer = 3.;
 
+   /* Run pilot board hook. */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp       = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINEL;
+   pilot_runHookParam(target, PILOT_HOOK_BOARDING, hparam, 1);
+   hparam[0].u.lp       = target->id;
+   pilot_runHookParam(target, PILOT_HOOK_BOARD, hparam, 1);
+
    return 1;
 }
 
@@ -577,7 +592,7 @@ void pilot_boardComplete( Pilot *p )
       p->credits       += worth;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
-      player_message( "\e%c%s\e0 has plundered %s credits from your ship!",
+      player_message( _("\a%c%s\a0 has plundered %s credits from your ship!"),
             pilot_getFactionColourChar(p), p->name, creds );
    }
    else {

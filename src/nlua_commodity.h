@@ -10,31 +10,24 @@
 #include <lua.h>
 
 #include "economy.h"
+#include "nlua.h"
 
 
 #define COMMODITY_METATABLE   "commodity" /**< Commodity metatable identifier. */
 
 
-/**
- * @brief Lua Commodity wrapper.
- */
-typedef struct LuaCommodity_s {
-   Commodity *commodity; /**< Commodity pointer. */
-} LuaCommodity; /**< Wrapper for a Commodity. */
-
-
 /*
  * Library loading
  */
-int nlua_loadCommodity( lua_State *L, int readonly );
+int nlua_loadCommodity( nlua_env env );
 
 /*
  * Commodity operations
  */
-LuaCommodity* lua_tocommodity( lua_State *L, int ind );
-LuaCommodity* luaL_checkcommodity( lua_State *L, int ind );
+Commodity* lua_tocommodity( lua_State *L, int ind );
+Commodity* luaL_checkcommodity( lua_State *L, int ind );
 Commodity* luaL_validcommodity( lua_State *L, int ind );
-LuaCommodity* lua_pushcommodity( lua_State *L, LuaCommodity commodity );
+Commodity** lua_pushcommodity( lua_State *L, Commodity* commodity );
 int lua_iscommodity( lua_State *L, int ind );
 
 

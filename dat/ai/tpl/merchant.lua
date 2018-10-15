@@ -14,7 +14,7 @@ function control ()
    -- Runaway if enemy is near
    if task ~= "runaway" and enemy ~= nil and
          (ai.dist(enemy) < mem.enemy_close or ai.haslockon()) then
-      if task ~= "none" then
+      if task ~= nil then
          ai.poptask()
       end
       ai.pushtask("runaway",enemy)
@@ -24,7 +24,7 @@ function control ()
       target = ai.target()
 
       -- Check if should still run.
-      if not ai.exists(target) then
+      if not target:exists() then
          ai.poptask()
          return
       end
@@ -58,14 +58,14 @@ function control ()
       end
 
    -- Find something to do
-   elseif task == "none" then
+   elseif task == nil then
       planet = ai.landplanet()
       -- planet must exist
       if planet == nil then
          ai.settimer(0, rnd.int(1000, 3000))
          ai.pushtask("enterdelay")
       else
-         mem.land = planet
+         mem.land = planet:pos()
          ai.pushtask("hyperspace")
          ai.pushtask("land")
       end

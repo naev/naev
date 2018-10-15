@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>0.010000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>
@@ -27,5 +27,6 @@
  </general>
  <tech>
   <item>Thurion Military Ships</item>
+  <item>Thurion Outfits</item>
  </tech>
 </asset>

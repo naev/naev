@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Electron Energy Cell">
+ <general>
+  <license>Medium Weapon License</license>
+  <mass>0.1</mass>
+  <price>200</price>
+  <description>These Energy Cells are used as a form of 'ammo' for a long-range discharge cannon used by the Za'lek and Collective Heavy Drones. They have a very long range and good damage, making them ideal for softening up a target for shorter-ranged weapons to finish the target off.</description>
+  <gfx_store>cpu_iii</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>electron</gfx>
+  <sound>neutron</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpM</spfx_armour>
+  <duration blowup="shield">5</duration>
+  <thrust>1500</thrust>
+  <speed>2000</speed>
+  <damage>
+   <type>ion</type>
+   <penetrate>20</penetrate>
+   <physical>20</physical>
+   <disable>5</disable>
+  </damage>
+  <ai>dumb</ai>
+ </specific>
+</outfit>

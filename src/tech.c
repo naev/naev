@@ -97,7 +97,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 int tech_load (void)
 {
    int i, ret, s;
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf, *data;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
@@ -173,7 +173,7 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG("Loaded %d tech group%s", s, (s == 1) ? "" : "s" );
+   DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
    free(data);
@@ -218,9 +218,16 @@ static void tech_freeGroup( tech_group_t *grp )
 tech_group_t *tech_groupCreateXML( xmlNodePtr node )
 {
    tech_group_t *tech;
+
    /* Load data. */
    tech  = tech_groupCreate();
    tech_parseNodeData( tech, node );
+
+   if (tech->items == NULL) {
+      tech_groupDestroy(tech);
+      tech = NULL;
+   }
+
    return tech;
 }
 
@@ -750,6 +757,17 @@ int tech_hasItem( tech_group_t *tech, char *item )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the number of techs within a given group.
+ *
+ *   @return Number of techs.
+ */
+int tech_getItemCount( tech_group_t *tech )
+{
+   return array_size( tech->items );
 }
 
 

@@ -4,24 +4,24 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>80</mass>
-  <price>265000</price>
+  <mass>22</mass>
+  <price>26000</price>
   <description>The Pulse Beam is an aptly named beam weapon designed to counter fighters with a rapid-firing, short-lived pulse. It doesn't do very much damage against larger targets, but fighters who get near ships equipped with this weapon will have a bad day.</description>
   <gfx_store>ragnarok</gfx_store>
-  <cpu>-8</cpu>
+  <cpu>-14</cpu>
  </general>
  <specific type="turret beam" >
-  <delay>0.35</delay>
-  <duration>0.25</duration>
+  <delay>0.2</delay>
+  <duration min="0.25">0.25</duration>
   <range>500</range>
-  <turn>100</turn>
-  <energy>25</energy>
+  <turn>120</turn>
+  <energy>55</energy>
   <heatup>30</heatup>
   <damage>
    <type>ion</type>
-   <penetrate>50</penetrate>
-   <physical>45</physical>
-   <disable>0</disable>
+   <penetrate>20</penetrate>
+   <physical>50</physical>
+   <disable>5</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

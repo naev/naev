@@ -61,6 +61,9 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
 
+   /* Mark as generated. */
+   land_tabGenerate(LAND_WINDOW_SHIPYARD);
+
    /* Init vars. */
    shipyard_selected = NULL;
 
@@ -81,16 +84,16 @@ void shipyard_open( unsigned int wid )
    /* buttons */
    window_addButtonKey( wid, off = -20, 20,
          bw, bh, "btnCloseShipyard",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnTradeShip",
-         "Trade-In", shipyard_trade, SDLK_r );
+         _("Trade-In"), shipyard_trade, SDLK_r );
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnBuyShip",
-         "Buy", shipyard_buy, SDLK_b );
+         _("Buy"), shipyard_buy, SDLK_b );
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnFindShips",
-         "Find Ships", shipyard_find, SDLK_f );
+         _("Find Ships"), shipyard_find, SDLK_f );
 
    /* target gfx */
    window_addRect( wid, -41, -50,
@@ -107,7 +110,7 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, &cBlack, NULL );
 
    /* text */
-   buf = "Model:\n"
+   buf = _("Model:\n"
          "Class:\n"
          "Fabricator:\n"
          "Crew:\n"
@@ -127,7 +130,7 @@ void shipyard_open( unsigned int wid )
          "Fuel Use:\n"
          "Price:\n"
          "Money:\n"
-         "License:\n";
+         "License:\n");
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
@@ -143,7 +146,7 @@ void shipyard_open( unsigned int wid )
    ships = tech_getShip( land_planet->tech, &nships );
    if (nships <= 0) {
       sships    = malloc(sizeof(char*));
-      sships[0] = strdup("None");
+      sships[0] = strdup(_("None"));
       tships    = malloc(sizeof(glTexture*));
       tships[0] = NULL;
       nships    = 1;
@@ -174,19 +177,20 @@ void shipyard_open( unsigned int wid )
 void shipyard_update( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname;
+   char *shipname, *license_text;
    Ship* ship;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   size_t len;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
    /* No ships */
-   if (strcmp(shipname,"None")==0) {
+   if (strcmp(shipname,_("None"))==0) {
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
       nsnprintf( buf, PATH_MAX,
-            "None\n"
+            _("None\n"
             "NA\n"
             "NA\n"
             "NA\n"
@@ -206,7 +210,7 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
-            "NA\n" );
+            "NA\n") );
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
       window_modifyText( wid, "txtDescription", NULL );
@@ -223,23 +227,23 @@ void shipyard_update( unsigned int wid, char* str )
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
-   credits2str( buf2, ship_buyPrice(ship), 2 );
+   price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
    /* Remove the word " License".  It's redundant and makes the text overflow
       into another text box */
-   char *license_text = ship->license;
+   license_text = ship->license;
    if (license_text) {
-	   size_t len = strlen(ship->license);
-	   if (0 == strcmp(" License", ship->license + len - 8)) {
-		  license_text = malloc(len - 7);
-		  assert(license_text);
-		  memcpy(license_text, ship->license, len - 8);
-		  license_text[len - 8] = '\0';
-	   }
+      len = strlen(ship->license);
+      if (strcmp(" License", ship->license + len - 8) == 0) {
+         license_text = malloc(len - 7);
+         assert(license_text);
+         memcpy(license_text, ship->license, len - 8);
+         license_text[len - 8] = '\0';
+      }
    }
    nsnprintf( buf, PATH_MAX,
-         "%s\n"
+         _("%s\n"
          "%s\n"
          "%s\n"
          "%d\n"
@@ -259,7 +263,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f units\n"
          "%s credits\n"
          "%s credits\n"
-         "%s\n",
+         "%s\n"),
          ship->name,
          ship_class(ship),
          ship->fabricator,
@@ -280,7 +284,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->fuel_consumption,
          buf2,
          buf3,
-         (license_text != NULL) ? license_text : "None" );
+         (license_text != NULL) ? license_text : _("None") );
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (license_text != ship->license)
@@ -334,6 +338,9 @@ static void shipyard_buy( unsigned int wid, char* str )
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   if (strcmp(shipname, _("None")) == 0)
+      return;
+
    ship = ship_get( shipname );
 
    credits_t targetprice = ship_buyPrice(ship);
@@ -342,8 +349,8 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
 
    credits2str( buf, targetprice, 2 );
-   if (dialogue_YesNo("Are you sure?", /* confirm */
-         "Do you really want to spend %s on a new ship?", buf )==0)
+   if (dialogue_YesNo(_("Are you sure?"), /* confirm */
+         _("Do you really want to spend %s on a new ship?"), buf )==0)
       return;
 
    /* player just got a new ship */
@@ -352,7 +359,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
    player_modCredits( -targetprice ); /* ouch, paying is hard */
-   land_checkAddRefuel();
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
@@ -373,14 +379,14 @@ int shipyard_canBuy ( char *shipname, Planet *planet )
 
    /* Must have enough credits and the necessary license. */
    if ((!player_hasLicense(ship->license)) &&
-         ((planet == NULL) || (!planet_isBlackMarket(planet)))) {
-      land_errDialogueBuild( "You lack the %s.", ship->license );
+         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
+      land_errDialogueBuild( _("You lack the %s."), ship->license );
       failure = 1;
    }
    if (!player_hasCredits( price )) {
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, price - player.p->credits, 2 );
-      land_errDialogueBuild( "You need %s more credits.", buf);
+      land_errDialogueBuild( _("You need %s more credits."), buf);
       failure = 1;
    }
    return !failure;
@@ -394,7 +400,7 @@ int can_sell( char* shipname )
 {
    int failure = 0;
    if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
-      land_errDialogueBuild( "You can't sell the ship you're piloting!", shipname );
+      land_errDialogueBuild( _("You can't sell the ship you're piloting!"), shipname );
       failure = 1;
    }
 
@@ -412,12 +418,12 @@ int can_swap( char* shipname )
    ship = ship_get( shipname );
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( "You have %g tons more cargo than the new ship can hold.",
+      land_errDialogueBuild( _("You have %g tons more cargo than the new ship can hold."),
             pilot_cargoUsed(player.p) - ship->cap_cargo, ship->name );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( "You can't strand your fighters in space.");
+      land_errDialogueBuild( _("You can't strand your fighters in space."));
       failure = 1;
    }
    return !failure;
@@ -439,14 +445,14 @@ int shipyard_canTrade( char* shipname )
 
    /* Must have the necessary license, enough credits, and be able to swap ships. */
    if (!player_hasLicense(ship->license)) {
-      land_errDialogueBuild( "You lack the %s.", ship->license );
+      land_errDialogueBuild( _("You lack the %s."), ship->license );
       failure = 1;
    }
    if (!player_hasCredits( price - player_shipPrice(player.p->name))) {
       credits_t creditdifference = price - (player_shipPrice(player.p->name) + player.p->credits);
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, creditdifference, 2 );
-      land_errDialogueBuild( "You need %s more credits.", buf);
+      land_errDialogueBuild( _("You need %s more credits."), buf);
       failure = 1;
    }
    if (!can_swap( shipname ))
@@ -468,6 +474,9 @@ static void shipyard_trade( unsigned int wid, char* str )
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   if (strcmp(shipname, _("None")) == 0)
+      return;
+
    ship = ship_get( shipname );
 
    credits_t targetprice = ship_buyPrice(ship);
@@ -483,20 +492,20 @@ static void shipyard_trade( unsigned int wid, char* str )
 
    /* Display the correct dialogue depending on the new ship's price versus the player's. */
    if ( targetprice == playerprice ) {
-      if (dialogue_YesNo("Are you sure?", /* confirm */
-         "Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?",
+      if (dialogue_YesNo(_("Are you sure?"), /* confirm */
+         _("Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?"),
                player.p->ship->name, buf2)==0)
          return;
    }
    else if ( targetprice < playerprice ) {
-      if (dialogue_YesNo("Are you sure?", /* confirm */
-         "Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?",
+      if (dialogue_YesNo(_("Are you sure?"), /* confirm */
+         _("Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?"),
                player.p->ship->name, buf2, ship->name, buf4)==0)
          return;
    }
    else if ( targetprice > playerprice ) {
-      if (dialogue_YesNo("Are you sure?", /* confirm */
-         "Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?",
+      if (dialogue_YesNo(_("Are you sure?"), /* confirm */
+         _("Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?"),
                player.p->ship->name, buf2, buf3)==0)
          return;
    }
@@ -507,7 +516,7 @@ static void shipyard_trade( unsigned int wid, char* str )
 
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
 
-   land_checkAddRefuel();
+   land_refuel();
 
    /* The newShip call will trigger a loadGUI that will recreate the land windows. Therefore the land ID will
     * be void. We must reload in in order to properly update it again.*/
@@ -536,22 +545,22 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Draw rotated text. */
    y -= 10;
-   gl_print( &gl_smallFont, bx, y, &cBlack, "Slots:" );
+   gl_print( &gl_smallFont, bx, y, &cBlack, _("Slots:") );
 
    x = bx + 10.;
    w = bw - 10.;
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
+   shipyard_renderSlotsRow( x, y, w, _("W"), ship->outfit_weapon, ship->outfit_nweapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "U", ship->outfit_utility, ship->outfit_nutility );
+   shipyard_renderSlotsRow( x, y, w, _("U"), ship->outfit_utility, ship->outfit_nutility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
+   shipyard_renderSlotsRow( x, y, w, _("S"), ship->outfit_structure, ship->outfit_nstructure );
 }
 
 

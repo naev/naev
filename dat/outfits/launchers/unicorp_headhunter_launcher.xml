@@ -12,10 +12,10 @@
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
-  <delay>5</delay>
+  <delay>3.5</delay>
   <amount>15</amount>
-  <lockon>12</lockon>
+  <lockon>8</lockon>
   <arc>6</arc>
-  <ew_target>1.8</ew_target>
+  <ew_target>1.5</ew_target>
  </specific>
 </outfit>

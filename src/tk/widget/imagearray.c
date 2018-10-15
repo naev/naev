@@ -24,6 +24,9 @@ static void iar_renderOverlay( Widget* iar, double bx, double by );
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
 /* Mouse. */
 static int iar_mclick( Widget* iar, int button, int x, int y );
+#if SDL_VERSION_ATLEAST(2,0,0)
+static int iar_mwheel( Widget* lst, SDL_MouseWheelEvent event );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
 /* Focus. */
 static int iar_focusImage( Widget* iar, double bx, double by );
@@ -31,6 +34,7 @@ static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
+static void iar_setAltTextPos( Widget *iar, double bx, double by );
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
 static char* toolkit_getNameById( Widget *wgt, int elem );
 /* Clean up. */
@@ -84,6 +88,9 @@ void window_addImageArray( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = iar_key;
    wgt->mclickevent        = iar_mclick;
+#if SDL_VERSION_ATLEAST(2,0,0)
+   wgt->mwheelevent        = iar_mwheel;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    wgt->mmoveevent         = iar_mmove;
    wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
    wgt->dat.iar.images     = tex;
@@ -92,6 +99,8 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.selected   = 0;
    wgt->dat.iar.pos        = 0;
    wgt->dat.iar.alt        = -1;
+   wgt->dat.iar.altx       = -1;
+   wgt->dat.iar.alty       = -1;
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
@@ -172,6 +181,13 @@ static void iar_render( Widget* iar, double bx, double by )
    ycurs = y + iar->h - h + iar->dat.iar.pos;
    for (j=0; j<yelem; j++) {
       xcurs = x + xspace;
+
+      /*  Skip rows that are wholly outside of the viewport. */
+      if ((ycurs > y + iar->h) || (ycurs + h < y)) {
+         ycurs -= h;
+         continue;
+      }
+
       for (i=0; i<xelem; i++) {
 
          /* Get position. */
@@ -302,8 +318,8 @@ static void iar_renderOverlay( Widget* iar, double bx, double by )
    /*
     * Draw Alt text if applicable.
     */
-   if ((iar->dat.iar.alts != NULL) &&
-         (iar->dat.iar.alt >= 0) &&
+   if ((iar->dat.iar.alts != NULL) && (iar->dat.iar.alt >= 0) &&
+         (iar->dat.iar.altx != -1) && (iar->dat.iar.alty != -1) &&
          (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
 
       /* Calculate position. */
@@ -388,6 +404,8 @@ static void iar_centerSelected( Widget *iar )
    if (ypos > iar->dat.iar.pos + iar->h - h)
       iar->dat.iar.pos = ypos - h*floor(iar->h/h) + 10.;
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
+
+   iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
 }
 
 
@@ -405,16 +423,21 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
       case SDL_BUTTON_LEFT:
          iar_focus( iar, x, y );
          return 1;
+#if !SDL_VERSION_ATLEAST(2,0,0)
       case SDL_BUTTON_WHEELUP:
          iar_scroll( iar, +1 );
          return 1;
       case SDL_BUTTON_WHEELDOWN:
          iar_scroll( iar, -1 );
          return 1;
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
       case SDL_BUTTON_RIGHT:
          iar_focus( iar, x, y );
          if (iar->dat.iar.rmptr != NULL)
             iar->dat.iar.rmptr( iar->wdw, iar->name );
+
+         iar_setAltTextPos( iar, x, y );
+
          return 1;
 
       default:
@@ -423,6 +446,25 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
    return 0;
 }
 
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+/**
+ * @brief Handler for mouse wheel events for an image array.
+ *
+ *    @param iar The widget handling the mouse wheel event.
+ *    @param event The event the widget should handle.
+ *    @return 1 if the widget uses the event.
+ */
+static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
+{
+   if (event.y > 0)
+      iar_scroll( iar, +1 );
+   else
+      iar_scroll( iar, -1 );
+
+   return 1;
+}
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**
@@ -461,11 +503,8 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
    else {
       if ((x < 0) || (x >= iar->w) || (y < 0) || (y >= iar->h))
          iar->dat.iar.alt  = -1;
-      else {
-         iar->dat.iar.alt  = iar_focusImage( iar, x, y );
-         iar->dat.iar.altx = x;
-         iar->dat.iar.alty = y;
-      }
+      else
+         iar_setAltTextPos( iar, x, y );
    }
 
    return 0;
@@ -550,6 +589,8 @@ static void iar_scroll( Widget* iar, int direction )
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
    if (iar->dat.iar.fptr)
       iar->dat.iar.fptr( iar->wdw, iar->name );
+
+   iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
 }
 
 
@@ -558,9 +599,9 @@ static void iar_scroll( Widget* iar, int direction )
  */
 static int iar_focusImage( Widget* iar, double bx, double by )
 {
-   int i,j;
-   double w,h, ycurs,xcurs;
-   int xelem, yelem;
+   int x, y;
+   double w, h;
+   int xelem;
    double xspace;
 
    /* element dimensions */
@@ -568,31 +609,21 @@ static int iar_focusImage( Widget* iar, double bx, double by )
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
-   yelem = iar->dat.iar.yelem;
    xspace = (double)(((int)iar->w - 10) % (int)w) / (double)(xelem + 1);
-   if (bx < iar->w - 10.) {
 
-      /* Loop through elements until finding collision. */
-      ycurs = iar->h - h + iar->dat.iar.pos;
-      for (j=0; j<yelem; j++) {
-         xcurs = xspace;
-         for (i=0; i<xelem; i++) {
-            /* Out of elements. */
-            if ((j*xelem + i) >= iar->dat.iar.nelements)
-               break;
+   x = bx / (xspace + w);
+   y = (iar->h - by + iar->dat.iar.pos) / h;
 
-            /* Check for collision. */
-            if ((bx > xcurs) && (bx < xcurs+w-4.) &&
-                  (by > ycurs) && (by < ycurs+h-4.))
-               return j*xelem + i;
+   /* Reject anything too close to the scroll bar or exceeding nelements. */
+   if (y * xelem + x >= iar->dat.iar.nelements || bx >= iar->w - 10.)
+      return -1;
 
-            xcurs += xspace + w;
-         }
-         ycurs -= h;
-      }
-   }
+   /* Verify that the mouse is on an icon. */
+   if ((bx < (x+1) * xspace + x * w) || (bx > (x+1) * (xspace + w) - 4.) ||
+         (by > iar->h + iar->dat.iar.pos - y * h - 4.))
+      return -1;
 
-   return -1;
+   return y * xelem + x;
 }
 
 
@@ -644,6 +675,18 @@ static void iar_focus( Widget* iar, double bx, double by )
       else
          iar->status = WIDGET_STATUS_SCROLLING;
    }
+}
+
+
+/**
+ * @brief Chooses correct alt text for the given coordinates
+ *
+ */
+static void iar_setAltTextPos( Widget *iar, double bx, double by )
+{
+   iar->dat.iar.alt  = iar_focusImage( iar, bx, by );
+   iar->dat.iar.altx = bx;
+   iar->dat.iar.alty = by;
 }
 
 
@@ -792,6 +835,8 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
    hmax = h * (wgt->dat.iar.yelem - (int)(wgt->h / h));
    wgt->dat.iar.pos = CLAMP( 0., hmax, off );
 
+   iar_setAltTextPos( wgt, wgt->dat.iar.altx, wgt->dat.iar.alty );
+
    return 0;
 }
 
@@ -937,3 +982,23 @@ int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
 }
 
 
+/**
+ * @brief Stores several image array attributes.
+ *
+ *    @param wid Window containing the image array.
+ *    @param name Name of the image array widget.
+ *    @param iar_data Pointer to an iar_data_t struct.
+ *    @return 0 on success.
+ */
+int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
+      iar_data_t *iar_data )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   iar_data->pos    = wgt->dat.iar.selected;
+   iar_data->offset = wgt->dat.iar.pos;
+
+   return 0;
+}

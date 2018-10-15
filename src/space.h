@@ -15,9 +15,10 @@
 #include "fleet.h"
 #include "mission.h"
 #include "tech.h"
+#include "explosion.h"
 
 
-#define SYSTEM_SIMULATE_TIME  15. /**< Time to simulate system before player is added. */
+#define SYSTEM_SIMULATE_TIME  120. /**< Time to simulate system before player is added. */
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
@@ -36,8 +37,11 @@
 #define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
 #define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
 #define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
-#define PLANET_SERVICES_MAX         (PLANET_SERVICE_SHIPYARD<<1)
+#define PLANET_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
+#define PLANET_SERVICES_MAX         (PLANET_SERVICE_BLACKMARKET<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
+#define planet_addService(p,s)      ((p)->services |= (s)) /**< Adds a planet service. */
+#define planet_rmService(p,s)       ((p)->services &= ~(s)) /**< Removes a planet service. */
 
 
 /*
@@ -49,7 +53,6 @@
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
-#define planet_isBlackMarket(p) planet_isFlag(p,PLANET_BLACKMARKET) /**< Checks if planet is a black market. */
 
 
 /**
@@ -125,18 +128,6 @@ typedef struct StarSystem_ StarSystem;
 
 
 /**
- * @struct SystemFleet
- *
- * @brief Used for freeing presence when fleets in the system get destroyed.
- */
-typedef struct SystemFleet_ {
-   int npilots; /**< The number of pilots. */
-   int faction; /**< The faction of the fleet. */
-	double presenceUsed; /**< The amount of presence used by this fleet. */
-} SystemFleet;
-
-
-/**
  * @brief Represents presence in a system
  */
 typedef struct SystemPresence_ {
@@ -183,6 +174,79 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
+ * @brief Represents a type of asteroid.
+ */
+typedef struct AsteroidType_ {
+   char *ID; /**< ID of the asteroid type. */
+   glTexture **gfxs; /**< asteroid possible gfxs. */
+   int ngfx; /**< nb of gfx. */
+   Commodity **material; /**< Materials contained in the asteroid. */
+   int *quantity; /**< Quantities of materials. */
+   int nmaterial; /**< size of both material stacks. */
+} AsteroidType;
+
+
+/**
+ * @brief Represents a small player-rendered debris.
+ */
+typedef struct Debris_ {
+   Vector2d pos; /**< Position. */
+   Vector2d vel; /**< Velocity. */
+   int gfxID; /**< ID of the asteroid gfx. */
+   double height; /**< height vs player */
+} Debris;
+
+
+/**
+ * @brief Represents a single asteroid.
+ */
+typedef struct Asteroid_ {
+   int id; /**< ID of the asteroid, for targeting. */
+   int parent; /**< ID of the anchor parent. */
+   Vector2d pos; /**< Position. */
+   Vector2d vel; /**< Velocity. */
+   int gfxID; /**< ID of the asteroid gfx. */
+   double timer; /**< Internal timer for animations. */
+   int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
+   int type; /**< The ID of the asteroid type */
+   int scanned; /**< Wether the player already scanned this asteroid. */
+} Asteroid;
+extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
+
+
+/**
+ * @brief Represents a convex subset of an asteroid field.
+ */
+typedef struct AsteroidSubset_ {
+   Vector2d *corners; /**< Set of corners of the polygon. */
+   int ncorners; /**< Number of corners. */
+   Vector2d pos; /**< Center. */
+   double aera; /**< Subset's aera. */
+} AsteroidSubset;
+
+
+/**
+ * @brief Represents an asteroid field anchor.
+ */
+typedef struct AsteroidAnchor_ {
+   int id; /**< ID of the anchor, for targeting. */
+   Vector2d pos; /**< Position in the system. */
+   double density; /**< Density of the field. */
+   Asteroid *asteroids; /**< Asteroids belonging to the field. */
+   int nb; /**< Number of asteroids. */
+   Debris *debris; /**< Debris belonging to the field. */
+   int ndebris; /**< Number of debris. */
+   Vector2d *corners; /**< Set of corners of the polygon. */
+   int ncorners; /**< Number of corners. */
+   double aera; /**< Field's aera. */
+   AsteroidSubset *subsets; /**< Convex subsets. */
+   int nsubsets; /**< Number of convex subsets. */
+   int *type; /**< Types of asteroids. */
+   int ntype; /**< Number of types. */
+} AsteroidAnchor;
+
+
+/**
  * @brief Represents a star system.
  *
  * The star system is the basic setting in Naev.
@@ -210,6 +274,10 @@ struct StarSystem_ {
    JumpPoint *jumps; /**< Jump points in the system */
    int njumps; /**< number of adjacent jumps */
 
+   /* Asteroids. */
+   AsteroidAnchor *asteroids; /**< Asteroids fields in the system */
+   int nasteroids; /**< number of asteroids fields */
+
    /* Fleets. */
    Fleet** fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
@@ -222,8 +290,6 @@ struct StarSystem_ {
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */
    int npresence; /**< Number of elements in the presence array. */
    int spilled; /**< If the system has been spilled to yet. */
-   int nsystemFleets; /**< The number of fleets in the system. */
-   SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
    double ownerpresence; /**< Amount of presence the owning faction has in a system. */
 
    /* Markers. */
@@ -257,7 +323,6 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
-void planet_setBlackMarket( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
@@ -337,9 +402,10 @@ int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
 int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
-char* space_getRndPlanet( int landable );
-double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
-double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang );
+char* space_getRndPlanet( int landable, unsigned int services,
+      int (*filter)(Planet *p));
+double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
+double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
 
 
 /*
@@ -359,6 +425,14 @@ int system_hasPlanet( const StarSystem *sys );
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
+
+
+/*
+ * Asteroids
+ */
+void asteroid_hit( Asteroid *a);
+int space_isInField ( Vector2d *p );
+AsteroidType *space_getType ( int ID );
 
 
 /*

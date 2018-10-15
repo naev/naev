@@ -7,7 +7,7 @@
  *
  * @brief Handles read/write abstractions to the users directory.
  *
- * @todo Add support for Windows and Mac OS X.
+ * @todo Add support for Windows and macOS.
  */
 
 
@@ -28,6 +28,9 @@
 #include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
@@ -39,7 +42,19 @@
 #define BLOCK_SIZE      128*1024 /**< 128 kilobytes. */
 
 
-#if HAS_UNIX
+/**
+ * @brief Struct containing a file's name and stat structure.
+ */
+typedef struct filedata {
+   char *name;
+   struct stat stat;
+} filedata_t;
+
+
+static int nfile_sortCompare( const void *p1, const void *p2 );
+
+
+#if HAS_UNIX && !HAS_MACOS
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -58,7 +73,7 @@ static char* xdgGetEnv(const char *name)
     return NULL;
 }
 
-/** 
+/**
  * Duplicate an environment variable.
  * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
  * Sets @c errno to @c EINVAL if variable is not set or empty.
@@ -73,7 +88,7 @@ static char* xdgEnvDup(const char *name)
      return NULL;
 }
 
-/** 
+/**
  * Get a home directory from the environment or a fallback relative to @c \$HOME.
  * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
  * Sets @c errno to @c EINVAL if variable is not set or empty.
@@ -114,18 +129,21 @@ static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
  */
 const char* nfile_dataPath (void)
 {
-    char *path;
-
     if (naev_dataPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
            nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
            return naev_dataPath;
         }
-#if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
+#if HAS_MACOS
+        if (macos_dataPath( naev_dataPath, PATH_MAX ) != 0) {
+           WARN(_("Cannot determine data path, using current directory."));
+           nsnprintf( naev_dataPath, PATH_MAX, "./naev/" );
+        }
+#elif HAS_UNIX
+        char *path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
         if (path == NULL) {
-            WARN("$XDG_DATA_HOME isn't set, using current directory.");
+            WARN(_("$XDG_DATA_HOME isn't set, using current directory."));
             path = strdup(".");
         }
 
@@ -135,14 +153,14 @@ const char* nfile_dataPath (void)
             free (path);
         }
 #elif HAS_WIN32
-      path = SDL_getenv("APPDATA");
+      char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
-         WARN("%%APPDATA%% isn't set, using current directory.");
+         WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
       nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
-#error "Feature needs implementation on this Operating System for Naev to work."
+#error _("Feature needs implementation on this Operating System for Naev to work.")
 #endif
     }
 
@@ -158,18 +176,21 @@ static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
  */
 const char* nfile_configPath (void)
 {
-    char *path;
-
     if (naev_configPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
            nsnprintf( naev_configPath, PATH_MAX, "%s/", conf.datapath );
            return naev_configPath;
         }
-#if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
+#if HAS_MACOS
+        if (macos_configPath( naev_configPath, PATH_MAX ) != 0) {
+           WARN(_("Cannot determine config path, using current directory."));
+           nsnprintf( naev_configPath, PATH_MAX, "./naev/" );
+        }
+#elif HAS_UNIX
+        char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
         if (path == NULL) {
-            WARN("$XDG_CONFIG_HOME isn't set, using current directory.");
+            WARN(_("$XDG_CONFIG_HOME isn't set, using current directory."));
             path = strdup(".");
         }
 
@@ -179,9 +200,9 @@ const char* nfile_configPath (void)
             free (path);
         }
 #elif HAS_WIN32
-      path = SDL_getenv("APPDATA");
+      char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
-         WARN("%%APPDATA%% isn't set, using current directory.");
+         WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
       nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
@@ -202,18 +223,21 @@ static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
  */
 const char* nfile_cachePath (void)
 {
-    char *path;
-
     if (naev_cachePath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
            nsnprintf( naev_cachePath, PATH_MAX, "%s/", conf.datapath );
            return naev_cachePath;
         }
-#if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
+#if HAS_MACOS
+        if (macos_cachePath( naev_cachePath, PATH_MAX ) != 0) {
+           WARN(_("Cannot determine cache path, using current directory."));
+           nsnprintf( naev_cachePath, PATH_MAX, "./naev/" );
+        }
+#elif HAS_UNIX
+        char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
         if (path == NULL) {
-            WARN("$XDG_CACHE_HOME isn't set, using current directory.");
+            WARN(_("$XDG_CACHE_HOME isn't set, using current directory."));
             path = strdup(".");
         }
 
@@ -223,9 +247,9 @@ const char* nfile_cachePath (void)
             free (path);
         }
 #elif HAS_WIN32
-      path = SDL_getenv("APPDATA");
+      char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
-         WARN("%%APPDATA%% isn't set, using current directory.");
+         WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
       nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
@@ -251,7 +275,7 @@ char* nfile_dirname( char *path )
 #elif HAS_WIN32
    int i;
    for (i=strlen(path)-1; i>=0; i--)
-      if ((path[i]=='\\') || (path[i]=='/'))
+      if (nfile_isSeparator( path[i] ))
          break;
 
    /* Nothing found. */
@@ -288,20 +312,41 @@ static int mkpath( const char *path )
    strncpy( opath, path, sizeof(opath) );
    opath[ PATH_MAX-1 ] = '\0';
    len = strlen(opath);
-   if (opath[len - 1] == '/')
-      opath[len - 1] = '\0';
-   for (p=&opath[1]; p[0]!='\0'; p++) {
-      if (p[0] == '/') {
+
+   p = &opath[len-1];
+   if (nfile_isSeparator(p[0])) {
+      p[0] = '\0';
+      p--;
+   }
+
+   // Traverse up until we find a directory that exists.
+   for (; p >= opath; p--) {
+      if (nfile_isSeparator(p[0])) {
          p[0] = '\0';
-         if (!nfile_dirExists(opath)) {
-            ret = MKDIR;
-            if (ret)
-               return ret;
+         if (nfile_dirExists(opath)) {
+            p[0] = '/';
+            break;
          }
          p[0] = '/';
       }
    }
-   if (!nfile_dirExists(opath)) { /* if path is not terminated with / */
+   // This skips the directory that exists, or puts us
+   // back at the start if the loop fell through.
+   p++;
+
+   // Traverse down, creating directories.
+   for (; p[0] != '\0'; p++) {
+      if (nfile_isSeparator(p[0])) {
+         p[0] = '\0';
+         ret = MKDIR;
+         if (ret)
+            return ret;
+         p[0] = '/';
+      }
+   }
+
+   // Create the final directory.
+   if (!nfile_dirExists(opath)) {
       ret = MKDIR;
       if (ret)
          return ret;
@@ -342,7 +387,7 @@ int nfile_dirMakeExist( const char* path, ... )
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
+      WARN(_("Dir '%s' does not exist and unable to create: %s"), file, strerror(errno));
       return -1;
    }
 
@@ -417,51 +462,83 @@ int nfile_fileExists( const char* path, ... )
 int nfile_backupIfExists( const char* path, ... )
 {
    char file[PATH_MAX];
-   va_list ap;
    char backup[PATH_MAX];
+   va_list ap;
+
+   if (path == NULL)
+      return -1;
+
+   va_start(ap, path);
+   vsnprintf(file, PATH_MAX, path, ap);
+   va_end(ap);
+
+   if (!nfile_fileExists(file))
+      return 0;
+
+   nsnprintf(backup, PATH_MAX, "%s.backup", file);
+
+   return nfile_copyIfExists( path, backup );
+}
+
+
+/**
+ * @brief Copy a file, if it exists.
+ *
+ *    @param file1 Filename to copy from.
+ *    @param file2 Filename to copy to.
+ *    @return 0 on success, or if file1 does not exist, -1 on error.
+ */
+int nfile_copyIfExists( const char* file1, const char* file2 )
+{
    FILE *f_in, *f_out;
    char buf[ 8*1024 ];
    size_t lr, lw;
 
-   if (path == NULL)
+   if (file1 == NULL)
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
+
+   /* Check if input file exists */
+   if (!nfile_fileExists(file1))
+      return 0;
+
+   /* Open files. */
+   f_in  = fopen( file1, "rb" );
+   f_out = fopen( file2, "wb" );
+   if ((f_in==NULL) || (f_out==NULL)) {
+      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
+      if (f_in!=NULL)
+         fclose(f_in);
+      return -1;
    }
 
-   if (nfile_fileExists(file)) {
-      nsnprintf(backup, PATH_MAX, "%s.backup", file);
-
-      /* Open files. */
-      f_in  = fopen( file, "r" );
-      f_out = fopen( backup, "w" );
-      if ((f_in==NULL) || (f_out==NULL)) {
-         WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
-         if (f_in!=NULL)
-            fclose(f_in);
-         return -1;
+   /* Copy data over. */
+   do {
+      lr = fread( buf, 1, sizeof(buf), f_in );
+      if (ferror(f_in))
+         goto err;
+      else if (!lr) {
+         if (feof(f_in))
+            break;
+         goto err;
       }
 
-      /* Copy data over. */
-      do {
-         lr = fread( buf, 1, sizeof(buf), f_in );
-         lw = fwrite( buf, 1, lr, f_out );
-         if (lr != lw) {
-            WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
-            fclose( f_in );
-            fclose( f_out );
-            return -1;
-         }
-      } while (lr > 0);
+      lw = fwrite( buf, 1, lr, f_out );
+      if (ferror(f_out) || (lr != lw))
+         goto err;
+   } while (lr > 0);
 
-      /* Close files. */
-      fclose( f_in );
-      fclose( f_out );
+   /* Close files. */
+   fclose( f_in );
+   fclose( f_out );
 
-   }
    return 0;
+
+err:
+   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
+   fclose( f_in );
+   fclose( f_out );
+
+   return -1;
 }
 
 
@@ -474,10 +551,11 @@ int nfile_backupIfExists( const char* path, ... )
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDir( int* nfiles, const char* path, ... )
+char** nfile_readDir( size_t* nfiles, const char* path, ... )
 {
    char file[PATH_MAX], base[PATH_MAX];
    char **files;
+   filedata_t *filedata;
    va_list ap;
 
    (*nfiles) = 0;
@@ -489,22 +567,19 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-   int i,j,k, n;
+   size_t i;
    DIR *d;
    struct dirent *dir;
    char *name;
-   int mfiles;
+   size_t mfiles;
    struct stat sb;
-   time_t *tt, *ft;
-   char **tfiles;
 
    d = opendir(base);
    if (d == NULL)
       return NULL;
 
    mfiles      = 128;
-   tfiles      = malloc(sizeof(char*)*mfiles);
-   tt          = malloc(sizeof(time_t)*mfiles);
+   filedata    = malloc(sizeof(filedata_t) * mfiles);
 
    /* Get the file list */
    while ((dir = readdir(d)) != NULL) {
@@ -522,13 +597,12 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       /* Enough memory? */
       if ((*nfiles)+1 > mfiles) {
          mfiles *= 2;
-         tfiles = realloc( tfiles, sizeof(char*) * mfiles );
-         tt     = realloc( tt, sizeof(time_t) * mfiles );
+         filedata = realloc( filedata, sizeof(filedata_t) * mfiles );
       }
 
       /* Write the information */
-      tfiles[(*nfiles)] = strdup(name);
-      tt[(*nfiles)]     = sb.st_mtime;
+      filedata[(*nfiles)].name = strdup(name);
+      filedata[(*nfiles)].stat = sb;
       (*nfiles)++;
    }
 
@@ -536,49 +610,19 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
 
    /* Sort by last changed date */
    if ((*nfiles) > 0) {
+      qsort(filedata, *nfiles, sizeof(filedata_t), nfile_sortCompare);
 
-      /* Need to allocate some stuff */
-      files = malloc( sizeof(char*)  * (*nfiles) );
-      ft    = malloc( sizeof(time_t) * (*nfiles) );
-
-      /* Fill the list */
+      files = malloc(sizeof(char*) * (*nfiles));
       for (i=0; i<(*nfiles); i++) {
-         n = -1;
-
-         /* Get next lowest */
-         for (j=0; j<(*nfiles); j++) {
-
-            /* Is lower? */
-            if ((n == -1) || (tt[j] > tt[n])) {
-
-               /* Check if it's already there */
-               for (k=0; k<i; k++)
-                  if (strcmp(files[k],tfiles[j])==0)
-                     break;
-
-               /* New lowest */
-               if (k>=i)
-                  n = j;
-            }
-         }
-
-         files[i] = tfiles[n];
-         ft[i]    = tt[n];
+         files[i] = strdup(filedata[i].name);
+         free(filedata[i].name);
       }
-      free(ft);
    }
    else
       files = NULL;
 
-   /* Free temporary stuff */
-   free(tfiles);
-   free(tt);
-
-   /* found nothing */
-   if ((*nfiles) == 0) {
-      free(files);
-      files = NULL;
-   }
+   free(filedata);
+   filedata = NULL;
 
    return files;
 }
@@ -593,10 +637,10 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
+char** nfile_readDirRecursive( size_t* nfiles, const char* path, ... )
 {
    char **tfiles, **out, **cfiles, *buf, base[PATH_MAX];
-   int i, j, ls, mfiles, tmp, cn;
+   size_t i, j, ls, mfiles, tmp, cn;
    va_list ap;
 
    va_start(ap, path);
@@ -654,7 +698,7 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
  *    @param path Path of the file.
  *    @return The file data.
  */
-char* nfile_readFile( int* filesize, const char* path, ... )
+char* nfile_readFile( size_t* filesize, const char* path, ... )
 {
    int n;
    char base[PATH_MAX];
@@ -677,21 +721,21 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    /* Open file. */
    file = fopen( base, "rb" );
    if (file == NULL) {
-      WARN("Error occurred while opening '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while opening '%s': %s"), base, strerror(errno));
       *filesize = 0;
       return NULL;
    }
 
    /* Get file size. */
    if (fseek( file, 0L, SEEK_END ) == -1) {
-      WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while seeking '%s': %s"), base, strerror(errno));
       fclose(file);
       *filesize = 0;
       return NULL;
    }
    len = ftell(file);
    if (fseek( file, 0L, SEEK_SET ) == -1) {
-      WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while seeking '%s': %s"), base, strerror(errno));
       fclose(file);
       *filesize = 0;
       return NULL;
@@ -700,7 +744,7 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    /* Allocate buffer. */
    buf = malloc( len+1 );
    if (buf == NULL) {
-      WARN("Out of Memory!");
+      WARN(_("Out of Memory"));
       fclose(file);
       *filesize = 0;
       return NULL;
@@ -712,9 +756,10 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    while (n < len) {
       pos = fread( &buf[n], 1, len-n, file );
       if (pos <= 0) {
-         WARN("Error occurred while reading '%s': %s", base, strerror(errno));
+         WARN(_("Error occurred while reading '%s': %s"), base, strerror(errno));
          fclose(file);
          *filesize = 0;
+         free(buf);
          return NULL;
       }
       n += pos;
@@ -750,7 +795,7 @@ int nfile_touch( const char* path, ... )
    /* Try to open the file, C89 compliant, but not as precise as stat. */
    f = fopen(file, "a+b");
    if (f == NULL) {
-      WARN("Unable to touch file '%s': %s", file, strerror(errno));
+      WARN(_("Unable to touch file '%s': %s"), file, strerror(errno));
       return -1;
    }
 
@@ -767,9 +812,9 @@ int nfile_touch( const char* path, ... )
  *    @param path Path of the file.
  *    @return 0 on success, -1 on error.
  */
-int nfile_writeFile( const char* data, int len, const char* path, ... )
+int nfile_writeFile( const char* data, size_t len, const char* path, ... )
 {
-   int n;
+   size_t n;
    char base[PATH_MAX];
    FILE *file;
    size_t pos;
@@ -786,7 +831,7 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
    /* Open file. */
    file = fopen( base, "wb" );
    if (file == NULL) {
-      WARN("Error occurred while opening '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while opening '%s': %s"), base, strerror(errno));
       return -1;
    }
 
@@ -795,7 +840,7 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
    while (n < len) {
       pos = fwrite( &data[n], 1, len-n, file );
       if (pos <= 0) {
-         WARN("Error occurred while writing '%s': %s", base, strerror(errno));
+         WARN(_("Error occurred while writing '%s': %s"), base, strerror(errno));
          fclose(file);  /* don't care about further errors */
          return -1;
       }
@@ -804,7 +849,7 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
 
    /* Close the file. */
    if (fclose(file) == EOF) {
-      WARN("Error occurred while closing '%s': %s", base, strerror(errno));
+      WARN(_("Error occurred while closing '%s': %s"), base, strerror(errno));
       return -1;
    }
 
@@ -821,7 +866,7 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
 int nfile_delete( const char* file )
 {
    if (unlink(file)) {
-      WARN( "Error deleting file %s",file );
+      WARN( _("Error deleting file %s"),file );
       return -1;
    }
    return 0;
@@ -837,18 +882,57 @@ int nfile_delete( const char* file )
 int nfile_rename( const char* oldname, const char* newname )
 {
    if (!nfile_fileExists(oldname)) {
-      WARN("Can not rename non existant file %s",oldname);
+      WARN(_("Can not rename non existant file %s"),oldname);
       return -1;
    }
    if (newname == NULL) {
-      WARN("Can not rename to NULL file name");
+      WARN(_("Can not rename to NULL file name"));
       return -1;
    }
    if (nfile_fileExists( newname )) {
-      WARN("Error renaming %s to %s. %s already exists",oldname,newname,newname);
+      WARN(_("Error renaming %s to %s. %s already exists"),oldname,newname,newname);
       return -1;
    }
    if (rename(oldname,newname))
-      WARN("Error renaming %s to %s",oldname,newname);
+      WARN(_("Error renaming %s to %s"),oldname,newname);
    return 0;
 }
+
+
+/**
+ * @brief qsort compare function for files.
+ */
+static int nfile_sortCompare( const void *p1, const void *p2 )
+{
+   filedata_t *f1, *f2;
+
+   f1 = (filedata_t*) p1;
+   f2 = (filedata_t*) p2;
+
+   if (f1->stat.st_mtime > f2->stat.st_mtime)
+      return -1;
+   else if (f1->stat.st_mtime < f2->stat.st_mtime)
+      return +1;
+
+   return strcmp( f1->name, f2->name );
+}
+
+/**
+ * @brief Checks to see if a character is used to separate files in a path.
+ *
+ *    @param c Character to check.
+ *    @return 1 if is a separator, 0 otherwise.
+ */
+int nfile_isSeparator( uint32_t c )
+{
+   if (c == '/')
+      return 1;
+#if HAS_WIN32
+   else if (c == '\\')
+      return 1;
+#endif /* HAS_WIN32 */
+   return 0;
+}
+
+
+

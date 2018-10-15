@@ -10,7 +10,7 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>1000.000000</value>
+  <value>500.000000</value>
   <range>1</range>
  </presence>
  <general>
@@ -22,7 +22,6 @@
    <refuel/>
    <bar/>
    <missions/>
-   <commodity/>
    <outfits/>
    <shipyard/>
   </services>
@@ -38,7 +37,6 @@
   <item>Engines Low</item>
   <item>Engines Medium</item>
   <item>Engines High</item>
-  <item>Engines Elite</item>
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
   <item>Hulls High</item>
@@ -53,6 +51,8 @@
   <item>Heavy Weapons 2</item>
   <item>Laser 1</item>
   <item>Ion 1</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
   <item>Star Maps</item>
  </tech>
 </asset>

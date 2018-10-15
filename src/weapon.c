@@ -31,7 +31,6 @@
 #include "gui.h"
 #include "camera.h"
 #include "ai.h"
-#include "ai_extra.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -75,7 +74,7 @@ typedef struct Weapon_ {
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
-   const PilotOutfitSlot *mount; /**< Used for beam weapons. */
+   PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
@@ -112,16 +111,16 @@ static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
  * Prototypes
  */
 /* Creation. */
-static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
+static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
-      double swivel );
+      double swivel, double time );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
 static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const Pilot *parent, const unsigned int target );
+      const Pilot *parent, const unsigned int target, double time );
 /* Updating. */
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
@@ -135,6 +134,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
 /* Hitting. */
 static int weapon_checkCanHit( Weapon* w, Pilot *p );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
 /* think */
@@ -333,7 +333,7 @@ static void think_seeker( Weapon* w, const double dt )
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
          /* Smart seekers take into account ship velocity. */
-         if (w->outfit->u.amm.ai == 2) {
+         if (w->outfit->u.amm.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
             vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
@@ -364,7 +364,7 @@ static void think_seeker( Weapon* w, const double dt )
          break;
 
       default:
-         WARN("Unknown weapon status for '%s'", w->outfit->name);
+         WARN(_("Unknown weapon status for '%s'"), w->outfit->name);
          break;
    }
 
@@ -480,7 +480,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
@@ -601,7 +601,11 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_BEAM:
          case OUTFIT_TYPE_TURRET_BEAM:
             w->timer -= dt;
-            if (w->timer < 0.) {
+            if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
+                  w->mount->stimer < 0.)) {
+               p = pilot_get(w->parent);
+               if (p != NULL)
+                  pilot_stopBeam(p, w->mount);
                weapon_destroy(w,layer);
                break;
             }
@@ -615,7 +619,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             }
             break;
          default:
-            WARN("Weapon of type '%s' has no update implemented yet!",
+            WARN(_("Weapon of type '%s' has no update implemented yet!"),
                   w->outfit->name);
             break;
       }
@@ -657,7 +661,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
@@ -797,7 +801,7 @@ static void weapon_render( Weapon* w, const double dt )
          break;
 
       default:
-         WARN("Weapon of type '%s' has no render implemented yet!",
+         WARN(_("Weapon of type '%s' has no render implemented yet!"),
                w->outfit->name);
          break;
    }
@@ -890,10 +894,13 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, b, psx,psy;
+   int i, j, b, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
+   AsteroidAnchor *ast;
+   Asteroid *a;
+   AsteroidType *at;
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -953,6 +960,44 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
+   /* Asterokiller weapons collide with asteroids*/
+   if (outfit_isAmmo(w->outfit)) {
+      if ( w->outfit->u.amm.dmg.asterokill ) {
+         for (i=0; i<cur_system->nasteroids; i++) {
+            ast = &cur_system->asteroids[i];
+            for (j=0; j<ast->nb; j++) {
+               a = &ast->asteroids[j];
+               at = space_getType ( a->type );
+               if (a->appearing==0 &&
+                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
+                     weapon_hitAst( w, a, layer, &crash[0] );
+                     return; /* Weapon is destroyed. */
+               }
+            }
+         }
+      }
+   }
+   else if (outfit_isBolt(w->outfit)) {
+      if ( w->outfit->u.blt.dmg.asterokill ) {
+         for (i=0; i<cur_system->nasteroids; i++) {
+            ast = &cur_system->asteroids[i];
+            for (j=0; j<ast->nb; j++) {
+               a = &ast->asteroids[j];
+               at = space_getType ( a->type );
+               if (a->appearing==0 &&
+                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
+                     weapon_hitAst( w, a, layer, &crash[0] );
+                     return; /* Weapon is destroyed. */
+               }
+            }
+         }
+      }
+   }
+
    /* smart weapons also get to think their next move */
    if (weapon_isSmart(w))
       (*w->think)(w,dt);
@@ -975,6 +1020,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
  */
 static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
+   int i;
+   double d;
+
    /* Must be a valid shooter. */
    if (shooter == NULL)
       return;
@@ -993,7 +1041,27 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
       if ((p->player_damage > PILOT_HOSTILE_THRESHOLD) ||
             (shooter->target==p->id)) {
          /* Inform attacked. */
-         ai_attacked( p, shooter->id );
+         ai_attacked( p, shooter->id, dmg );
+
+         /* Trigger a pseudo-distress that incurs no faction loss. */
+         for (i=0; i<pilot_nstack; i++) {
+            /* Skip if unsuitable. */
+            if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
+                  (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
+                  (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
+               continue;
+
+            /*
+             * Pilots within a radius of 1500 (in a zero-interference system)
+             * will immediately notice hostile actions.
+             */
+            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            if (d > (pilot_sensorRange() * 0.04 )) /* 0.2^2 */
+               continue;
+
+            /* Send AI the distress signal. */
+            ai_getDistress( pilot_stack[i], p, shooter );
+         }
 
          /* Set as hostile. */
          pilot_setHostile(p);
@@ -1003,7 +1071,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
    }
    /* Otherwise just inform of being attacked. */
    else
-      ai_attacked( p, shooter->id );
+      ai_attacked( p, shooter->id, dmg );
 }
 
 
@@ -1042,7 +1110,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1060,6 +1128,35 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
+}
+
+/**
+ * @brief Weapon hit an asteroid.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param a Asteroid that got hit.
+ *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
+ */
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos )
+{
+   int s, spfx;
+
+   /* Play sound if they have it. */
+   s = outfit_soundHit(w->outfit);
+   if (s != -1)
+      w->voice = sound_playPos( s,
+            w->solid->pos.x,
+            w->solid->pos.y,
+            w->solid->vel.x,
+            w->solid->vel.y);
+
+   /* Add the spfx */
+   spfx = outfit_spfxShield(w->outfit);
+   spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
+
+   weapon_destroy(w,layer);
+   asteroid_hit( a );
 }
 
 
@@ -1092,7 +1189,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.disable       = odmg->disable * dt;
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
@@ -1121,61 +1218,40 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 /**
  * @brief Gets the aim position of a turret weapon.
  *
- *    @param w Weapon aiming.
  *    @param outfit Weapon outfit.
  *    @param parent Parent of the weapon.
  *    @param pilot_target Target of the weapon.
  *    @param pos Position of the turret.
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
+ *    @param time Expected flight time.
  */
-static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
+static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
-      double swivel )
+      double swivel, double time )
 {
-   Vector2d approach_vector, relative_location;
+   Vector2d relative_location;
    double rdir, lead_angle;
-   double speed, radial_speed;
-   double x, y, t, dist;
+   double x, y, t;
    double off;
 
    if (pilot_target == NULL)
       rdir        = dir;
    else {
-      /* Get the distance */
-      dist = vect_dist( pos, &pilot_target->solid->pos );
+      /* Get the vector : shooter -> target*/
       vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
             VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
 
-      /* Aim. */
-      if (dist > outfit->u.blt.range*1.2) {
-         x = pilot_target->solid->pos.x - pos->x;
-         y = pilot_target->solid->pos.y - pos->y;
-      }
-      else {
          /* Try to predict where the enemy will be. */
-         /* determine the radial, or approach speed */
-         vect_cset( &approach_vector, VX(parent->solid->vel) - VX(pilot_target->solid->vel),
-               VY(parent->solid->vel) - VY(pilot_target->solid->vel) );
+      t = time;
+      if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
+         t = 0.;
 
-         radial_speed = vect_dot( &approach_vector, &relative_location );
-         radial_speed = radial_speed / VMOD(relative_location);
-
-         speed = w->outfit->u.blt.speed;
-
-         /* Time for shots to reach that distance */
-         /* if the target is not hittable (ie, fleeing faster than our shots can fly), just face the target */
-         if((speed+radial_speed) > 0)
-            t = dist / (speed + radial_speed);
-         else
-            t = 0;
-
-         /* Position is calculated on where it should be */
-         x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-            - (pos->x + vel->x*t);
-         y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-            - (pos->y + vel->y*t);
-      }
+      /* Position is calculated on where it should be */
+      x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+         - (pos->x + vel->x*t);
+      y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+         - (pos->y + vel->y*t);
 
       /* Set angle to face. */
       rdir = ANGLE(x, y);
@@ -1217,9 +1293,10 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
+ *    @param time Expected flight time.
  */
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    Vector2d v;
    double mass, rdir;
@@ -1230,7 +1307,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) { /* Must have valid target */
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel );
+      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
    }
    else /* fire straight */
       rdir = dir;
@@ -1252,7 +1329,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       rdir -= 2.*M_PI;
 
    mass = 1; /* Lasers are presumed to have unitary mass */
-   vectcpy( &v, vel );
+   v = *vel;
    vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
@@ -1279,9 +1356,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
+ *    @param time Expected flight time.
  */
 static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    (void) T;
    Vector2d v;
@@ -1295,7 +1373,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    if (w->outfit->type == OUTFIT_TYPE_AMMO &&
             launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, ammo, parent, pilot_target, pos, vel, dir, M_PI );
+      rdir = weapon_aimTurret( ammo, parent, pilot_target, pos, vel, dir, M_PI, time );
    }
    else
       rdir = dir;
@@ -1311,7 +1389,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       rdir -= 2.*M_PI;
 
    /* If thrust is 0. we assume it starts out at speed. */
-   vectcpy( &v, vel );
+   v = *vel;
    if (ammo->u.amm.thrust == 0.)
       vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
             sin(rdir) * w->outfit->u.amm.speed );
@@ -1327,7 +1405,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    }
 
    /* Handle seekers. */
-   if (w->outfit->u.amm.ai > 0) {
+   if (w->outfit->u.amm.ai != AMMO_AI_DUMB) {
       w->think = think_seeker; /* AI is the same atm. */
 
       /* If they are seeking a pilot, increment lockon counter. */
@@ -1360,11 +1438,12 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
  *    @param target Target ID of the shooter.
+ *    @param time Expected flight time.
  *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const Pilot* parent, const unsigned int target )
+      const Pilot* parent, const unsigned int target, double time )
 {
    double mass, rdir;
    Pilot *pilot_target;
@@ -1389,7 +1468,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Bolts treated together */
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
-         weapon_createBolt( w, outfit, T, dir, pos, vel, parent );
+         weapon_createBolt( w, outfit, T, dir, pos, vel, parent, time );
          break;
 
       /* Beam weapons are treated together. */
@@ -1420,12 +1499,12 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Treat seekers together. */
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
-         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent );
+         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent, time );
          break;
 
       /* just dump it where the player is */
       default:
-         WARN("Weapon of type '%s' has no create implemented yet!",
+         WARN(_("Weapon of type '%s' has no create implemented yet!"),
                w->outfit->name);
          w->solid = solid_create( 1., dir, pos, vel, SOLID_UPDATE_EULER );
          break;
@@ -1448,10 +1527,11 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
+ *    @param time Expected flight time.
  */
 void weapon_add( const Outfit* outfit, const double T, const double dir,
       const Vector2d* pos, const Vector2d* vel,
-      const Pilot *parent, unsigned int target )
+      const Pilot *parent, unsigned int target, double time )
 {
    WeaponLayer layer;
    Weapon *w;
@@ -1461,12 +1541,12 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 
    if (!outfit_isBolt(outfit) &&
          !outfit_isLauncher(outfit)) {
-      ERR("Trying to create a Weapon from a non-Weapon type Outfit");
+      ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
       return;
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w     = weapon_create( outfit, T, dir, pos, vel, parent, target );
+   w     = weapon_create( outfit, T, dir, pos, vel, parent, target, time );
 
    /* set the proper layer */
    switch (layer) {
@@ -1482,7 +1562,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
    }
 
    if (*mLayer > *nLayer) /* more memory alloced than needed */
@@ -1531,7 +1611,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 unsigned int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target,
-      const PilotOutfitSlot *mount )
+      PilotOutfitSlot *mount )
 {
    WeaponLayer layer;
    Weapon *w;
@@ -1540,12 +1620,12 @@ unsigned int beam_start( const Outfit* outfit,
    GLsizei size;
 
    if (!outfit_isBeam(outfit)) {
-      ERR("Trying to create a Beam Weapon from a non-beam outfit.");
+      ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
       return -1;
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, 0., dir, pos, vel, parent, target );
+   w = weapon_create( outfit, 0., dir, pos, vel, parent, target, 0. );
    w->ID = ++beam_idgen;
    w->mount = mount;
    w->exp_timer = 0.;
@@ -1564,7 +1644,7 @@ unsigned int beam_start( const Outfit* outfit,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return -1;
    }
 
@@ -1626,7 +1706,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return;
    }
 
@@ -1664,13 +1744,13 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
    for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the current position */
    if (i >= *nlayer) {
-      WARN("Trying to destroy weapon not found in stack!");
+      WARN(_("Trying to destroy weapon not found in stack!"));
       return;
    }
 
@@ -1808,7 +1888,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return;
    }
 

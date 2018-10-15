@@ -15,6 +15,7 @@
   <asset>New Haven</asset>
   <asset>Old Man Jack</asset>
   <asset>Red Eye</asset>
+  <asset>Virtual Soromid Unpresence</asset>
  </assets>
  <jumps>
   <jump target="Daled">
@@ -33,7 +34,7 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Haven">
-   <pos x="-57311.462690" y="-31358.261551"/>
+   <pos x="-26890.577150" y="-29850.315954"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>

@@ -20,9 +20,11 @@
 
 #include "log.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "gui.h"
 #include "conf.h"
 #include "npng.h"
+#include "md5.h"
 
 
 /*
@@ -52,6 +54,7 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
 /*static int SDL_VFlipSurface( SDL_Surface* surface );*/
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
+static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
@@ -170,7 +173,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
 {
    int i,j;
-   int size;
+   size_t size;
    uint8_t *t;
 
    /* Get limit.s */
@@ -180,10 +183,10 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
       h = s->h;
 
    /* alloc memory for just enough bits to hold all the data we need */
-   size = w*h/8 + ((w*h%8)?1:0);
+   size = gl_transSize(w, h);
    t = malloc(size);
    if (t==NULL) {
-      WARN("Out of Memory");
+      WARN(_("Out of Memory"));
       return NULL;
    }
    memset(t, 0, size); /* important, must be set to zero */
@@ -194,6 +197,20 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
          t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
 
    return t;
+}
+
+
+/*
+ * @brief Gets the size needed for a transparency map.
+ *
+ *    @param w Width of the image.
+ *    @param h Height of the image.
+ *    @return The size in bytes.
+ */
+static size_t gl_transSize( const int w, const int h )
+{
+   /* One bit per pixel, plus remainder. */
+   return w*h/8 + ((w*h%8)?1:0);
 }
 
 
@@ -242,12 +259,12 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
       if (temp == NULL) {
-         WARN("Unable to create POT surface: %s", SDL_GetError());
+         WARN(_("Unable to create POT surface: %s"), SDL_GetError());
          return 0;
       }
       if (SDL_FillRect( temp, NULL,
                SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-         WARN("Unable to fill rect: %s", SDL_GetError());
+         WARN(_("Unable to fill rect: %s"), SDL_GetError());
          return 0;
       }
 
@@ -329,12 +346,12 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    /* now lead the texture data up */
    SDL_LockSurface( surface );
    if (gl_texHasCompress()) {
-      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
-            surface->w, surface->h, 0, GL_COMPRESSED_RGBA,
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
+            surface->w, surface->h, 0, GL_RGBA,
             GL_UNSIGNED_BYTE, surface->pixels );
    }
    else {
-      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
             surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
    }
    SDL_UnlockSurface( surface );
@@ -363,6 +380,114 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
 
 
 /**
+ * @brief Wrapper for gl_loadImagePad that includes transparency mapping.
+ *
+ *    @param name Name to load with.
+ *    @param surface Surface to load.
+ *    @param rw RWops containing data to hash.
+ *    @param flags Flags to use.
+ *    @param w Non-padded width.
+ *    @param h Non-padded height.
+ *    @param sx X sprites.
+ *    @param sy Y sprites.
+ *    @param freesur Whether or not to free the surface.
+ *    @return The glTexture for surface.
+ */
+glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
+      unsigned int flags, int w, int h, int sx, int sy, int freesur )
+{
+   glTexture *texture;
+   size_t i, filesize;
+   size_t cachesize, pngsize;
+   uint8_t *trans;
+   char *cachefile, *data;
+   char digest[33];
+   md5_state_t md5;
+   md5_byte_t *md5val;
+
+   if (name != NULL) {
+      texture = gl_texExists( name );
+      if (texture != NULL)
+         return texture;
+   }
+
+   if (flags & OPENGL_TEX_MAPTRANS)
+      flags ^= OPENGL_TEX_MAPTRANS;
+
+   /* Appropriate size for the transparency map, see SDL_MapTrans */
+   cachesize = gl_transSize(w, h);
+
+   cachefile = NULL;
+   trans     = NULL;
+
+   if (rw != NULL) {
+      md5val = malloc(16);
+      md5_init(&md5);
+
+      pngsize = SDL_RWseek( rw, 0, SEEK_END );
+      SDL_RWseek( rw, 0, SEEK_SET );
+
+      data = malloc(pngsize);
+      if (data == NULL)
+         WARN(_("Out of Memory"));
+      else {
+         SDL_RWread( rw, data, pngsize, 1 );
+         md5_append( &md5, (md5_byte_t*)data, pngsize );
+         free(data);
+      }
+      md5_finish( &md5, md5val );
+
+      for (i=0; i<16; i++)
+         nsnprintf( &digest[i * 2], 3, "%02x", md5val[i] );
+      free(md5val);
+
+      cachefile = malloc( PATH_MAX );
+      nsnprintf( cachefile, PATH_MAX, "%scollisions/%s",
+         nfile_cachePath(), digest );
+
+      /* Attempt to find a cached transparency map. */
+      if (nfile_fileExists(cachefile)) {
+         trans = (uint8_t*)nfile_readFile( &filesize, cachefile );
+
+         /* Consider cached data invalid if the length doesn't match. */
+         if (trans != NULL && cachesize != (unsigned int)filesize) {
+            free(trans);
+            trans = NULL;
+         }
+         /* Cached data matches, no need to overwrite. */
+         else {
+            free(cachefile);
+            cachefile = NULL;
+         }
+      }
+   }
+   else {
+      /* We could hash raw pixel data here, but that's slower than just
+       * generating the map from scratch.
+       */
+      WARN(_("Texture '%s' has no RWops"), name);
+   }
+
+   if (trans == NULL) {
+      SDL_LockSurface(surface);
+      trans = SDL_MapTrans( surface, w, h );
+      SDL_UnlockSurface(surface);
+
+      if (cachefile != NULL) {
+         /* Cache newly-generated transparency map. */
+         nfile_dirMakeExist( "%s/collisions/", nfile_cachePath() );
+         nfile_writeFile( (char*)trans, cachesize, cachefile );
+         free(cachefile);
+      }
+   }
+
+   texture = gl_loadImagePad( name, surface, flags, w, h, sx, sy, freesur );
+   texture->trans = trans;
+   return texture;
+}
+
+
+/**
  * @brief Loads the already padded SDL_Surface to a glTexture.
  *
  *    @param name Name to load with.
@@ -380,7 +505,6 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
 {
    glTexture *texture;
    int rw, rh;
-   uint8_t *trans;
 
    /* Make sure doesn't already exist. */
    if (name != NULL) {
@@ -389,17 +513,12 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
          return texture;
    }
 
+   if (flags & OPENGL_TEX_MAPTRANS)
+      return gl_loadImagePadTrans( name, surface, NULL, flags, w, h,
+            sx, sy, freesur );
+
    /* set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
-
-   /* Map transparency if needed .*/
-   if (flags & OPENGL_TEX_MAPTRANS) {
-      SDL_LockSurface(surface);
-      trans = SDL_MapTrans( surface, w, h );
-      SDL_UnlockSurface(surface);
-   }
-   else
-      trans = NULL;
 
    texture->w     = (double) w;
    texture->h     = (double) h;
@@ -415,7 +534,6 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    texture->srw   = texture->sw / texture->rw;
    texture->srh   = texture->sh / texture->rh;
 
-   texture->trans = trans;
    if (name != NULL) {
       texture->name = strdup(name);
       gl_texAdd( texture );
@@ -442,6 +560,9 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 
 /**
  * @brief Check to see if a texture matching a path already exists.
+ *
+ *    @param path Path to the texture.
+ *    @return The texture, or NULL if none was found.
  */
 static glTexture* gl_texExists( const char* path )
 {
@@ -519,6 +640,7 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
  */
 static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
+   glTexture *texture;
    SDL_Surface *surface;
    SDL_RWops *rw;
    npng_t *npng;
@@ -530,12 +652,12 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* load from packfile */
    rw = ndata_rwops( path );
    if (rw == NULL) {
-      WARN("Failed to load surface '%s' from ndata.", path);
+      WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;
    }
    npng     = npng_open( rw );
    if (npng == NULL) {
-      WARN("File '%s' is not a png.", path );
+      WARN(_("File '%s' is not a png."), path );
       return NULL;
    }
    npng_dim( npng, &w, &h );
@@ -549,14 +671,20 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* Load surface. */
    surface  = npng_readSurface( npng, gl_needPOT(), 1 );
    npng_close( npng );
-   SDL_RWclose( rw );
+
    if (surface == NULL) {
-      WARN("'%s' could not be opened", path );
+      WARN(_("'%s' could not be opened"), path );
+      SDL_RWclose( rw );
       return NULL;
    }
 
-   /* set the texture */
-   return gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
+   if (flags & OPENGL_TEX_MAPTRANS)
+      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, sx, sy, 1 );
+   else
+      texture = gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
+
+   SDL_RWclose( rw );
+   return texture;
 }
 
 
@@ -600,7 +728,7 @@ void gl_freeTexture( glTexture* texture )
 
    /* Shouldn't be NULL (won't segfault though) */
    if (texture == NULL) {
-      WARN("Attempting to free NULL texture!");
+      WARN(_("Attempting to free NULL texture!"));
       return;
    }
 
@@ -636,7 +764,7 @@ void gl_freeTexture( glTexture* texture )
 
    /* Not found */
    if (texture->name != NULL) /* Surfaces will have NULL names */
-      WARN("Attempting to free texture '%s' not found in stack!", texture->name);
+      WARN(_("Attempting to free texture '%s' not found in stack!"), texture->name);
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
@@ -675,7 +803,7 @@ glTexture* gl_dupTexture( glTexture *texture )
    }
 
    /* Invalid texture. */
-   WARN("Unable to duplicate texture '%s'.", texture->name);
+   WARN(_("Unable to duplicate texture '%s'."), texture->name);
    return NULL;
 }
 
@@ -717,7 +845,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
 #ifdef DEBUGGING
    if ((dir > 2.*M_PI) || (dir < 0.)) {
-      WARN("Angle not between 0 and 2.*M_PI [%f].", dir);
+      WARN(_("Angle not between 0 and 2.*M_PI [%f]."), dir);
       return;
    }
 #endif /* DEBUGGING */
@@ -779,9 +907,9 @@ void gl_exitTextures (void)
 
    /* Make sure there's no texture leak */
    if (texture_list != NULL) {
-      DEBUG("Texture leak detected!");
+      DEBUG(_("Texture leak detected!"));
       for (tex=texture_list; tex!=NULL; tex=tex->next)
-         DEBUG("   '%s' opened %d times", tex->tex->name, tex->used );
+         DEBUG(_("   '%s' opened %d times"), tex->tex->name, tex->used );
    }
 }
 

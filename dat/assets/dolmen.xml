@@ -11,7 +11,7 @@
  <presence>
   <faction>Empire</faction>
   <value>250.000000</value>
-  <range>5</range>
+  <range>3</range>
  </presence>
  <general>
   <class>M</class>
@@ -22,7 +22,6 @@
    <refuel/>
    <bar/>
    <missions/>
-   <commodity/>
    <outfits/>
    <shipyard/>
   </services>
@@ -33,7 +32,6 @@
  <tech>
   <item>Missiles 2</item>
   <item>Star Maps</item>
-  <item>Empire Military Ships</item>
   <item>Engines High</item>
  </tech>
 </asset>

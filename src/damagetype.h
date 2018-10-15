@@ -12,8 +12,8 @@
 /*
  * stack manipulation
  */
-int dtype_get( char* name ); 
-char* dtype_damageTypeToStr( int type ); 
+int dtype_get( char* name );
+char* dtype_damageTypeToStr( int type );
 
 /*
  * dtype effect loading and freeing
@@ -24,7 +24,8 @@ void dtype_free (void);
 /*
  * misc
  */
-void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg );
+void dtype_calcDamage( double *dshield, double *darmour, double absorb,
+      double *knockback, const Damage *dmg, ShipStats *s );
 
 
 #endif /* _DTYPE_H */

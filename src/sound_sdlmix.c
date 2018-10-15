@@ -33,7 +33,8 @@
 /*
  * Global sound properties.
  */
-static double sound_curVolume = 1.; /**< Current sound volume. */
+static double sound_curVolumeLin = 1.; /**< Current sound volume (linear). */
+static double sound_curVolume = 1.; /**< Current sound volume (logarithmic). */
 static double sound_speedVolume = 1.; /**< Speed volume. */
 static unsigned char sound_mixVolume = 0; /**< Actual in-game used volume. */
 static double sound_pos[3]; /**< Position of listener. */
@@ -76,8 +77,8 @@ int sound_mix_init (void)
 {
    SDL_InitSubSystem(SDL_INIT_AUDIO);
    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
-      WARN("Opening Audio: %s", Mix_GetError());
-      DEBUG();
+      WARN(_("Opening Audio: %s"), Mix_GetError());
+      DEBUG("");
       return -1;
    }
    Mix_AllocateChannels( conf.snd_voices );
@@ -118,19 +119,19 @@ static void print_MixerVersion (void)
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Version itself. */
-   DEBUG("SDL_Mixer Started: %d Hz %s", frequency,
-         (channels == 2) ? "Stereo" : "Mono" );
+   DEBUG(_("SDL_Mixer Started: %d Hz %s"), frequency,
+         (channels == 2) ? _("Stereo") : _("Mono") );
    /* Check if major/minor version differ. */
    if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
-      WARN("SDL_Mixer is newer than compiled version");
+      WARN(_("SDL_Mixer is newer than compiled version"));
    if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
-      WARN("SDL_Mixer is older than compiled version.");
+      WARN(_("SDL_Mixer is older than compiled version."));
    /* Print other debug info. */
-   DEBUG("Renderer: %s",device);
-   DEBUG("Version: %d.%d.%d [compiled: %d.%d.%d]",
+   DEBUG(_("Renderer: %s"),device);
+   DEBUG(_("Version: %d.%d.%d [compiled: %d.%d.%d]"),
          compiled.major, compiled.minor, compiled.patch,
          linked->major, linked->minor, linked->patch);
-   DEBUG();
+   DEBUG("");
 }
 
 
@@ -212,7 +213,7 @@ static int sound_mix_updatePosVoice( alVoice *v, double x, double y )
 
    /* Try to play the song. */
    if (Mix_SetPosition( v->u.mix.channel, (Sint16)angle, (Uint8)idist) < 0) {
-      WARN("Unable to set sound position: %s", Mix_GetError());
+      WARN(_("Unable to set sound position: %s"), Mix_GetError());
       return -1;
    }
 
@@ -375,7 +376,12 @@ static void sound_mix_volumeUpdate (void)
 int sound_mix_volume( const double vol )
 {
    /* Calculate volume. */
-   sound_curVolume = CLAMP(0., 1., vol);
+   sound_curVolumeLin = CLAMP(0., 1., vol);
+   if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
+      sound_curVolume = 1. / pow(2, (1 - vol) * 8);
+   else
+      sound_curVolume = 0.;
+
    sound_mixVolume = (unsigned char) (MIX_MAX_VOLUME * CLAMP(0., 1., sound_speedVolume*sound_curVolume));
    /* Update volume. */
    sound_mix_volumeUpdate();
@@ -384,11 +390,22 @@ int sound_mix_volume( const double vol )
 
 
 /**
- * @brief Gets the current sound volume.
+ * @brief Gets the current sound volume (linear).
  *
  *    @return The current sound volume level.
  */
 double sound_mix_getVolume (void)
+{
+   return sound_curVolumeLin;
+}
+
+
+/**
+ * @brief Gets the current sound volume (logarithmic).
+ *
+ *    @return The current sound volume level.
+ */
+double sound_mix_getVolumeLog (void)
 {
    return sound_curVolume;
 }
@@ -414,7 +431,7 @@ int sound_mix_load( alSound *s, const char *filename )
    /* bind to buffer */
    s->u.mix.buf = Mix_LoadWAV_RW( rw, 1 );
    if (s->u.mix.buf == NULL) {
-      DEBUG("Unable to load sound '%s': %s", filename, Mix_GetError());
+      DEBUG(_("Unable to load sound '%s': %s"), filename, Mix_GetError());
       return -1;
    }
 
@@ -472,7 +489,7 @@ int sound_mix_createGroup( int size )
    /* Reserve channels. */
    ret = Mix_ReserveChannels( group_pos + size );
    if (ret != group_pos + size) {
-      WARN("Unable to reserve sound channels: %s", Mix_GetError());
+      WARN(_("Unable to reserve sound channels: %s"), Mix_GetError());
       return -1;
    }
 
@@ -486,7 +503,7 @@ int sound_mix_createGroup( int size )
    /* Create group. */
    ret = Mix_GroupChannels( g->start, g->end, g->id );
    if (ret != size) {
-      WARN("Unable to create sound group: %s", Mix_GetError());
+      WARN(_("Unable to create sound group: %s"), Mix_GetError());
       ngroups--;
       return -1;
    }
@@ -507,7 +524,7 @@ static mixGroup_t* sound_mix_getGroup( int group )
    for (i=0; i<ngroups; i++)
       if (groups[i].id == group)
          return &groups[i];
-   WARN("Group '%d' not found.", group);
+   WARN(_("Group '%d' not found."), group);
    return NULL;
 }
 
@@ -532,7 +549,7 @@ int sound_mix_playGroup( int group, alSound *s, int once )
    if (channel == -1) {
       channel = Mix_GroupOldest(group);
       if (channel == -1) {
-         WARN("Group '%d' has no free channels!", group);
+         WARN(_("Group '%d' has no free channels!"), group);
          return -1;
       }
    }
@@ -540,14 +557,14 @@ int sound_mix_playGroup( int group, alSound *s, int once )
    /* Play the sound. */
    ret = Mix_PlayChannel( channel, s->u.mix.buf, (once == 0) ? -1 : 0 );
    if (ret < 0) {
-      WARN("Unable to play sound %s for group %d: %s",
+      WARN(_("Unable to play sound %s for group %d: %s"),
             s->name, group, Mix_GetError());
       return -1;
    }
 
    g = sound_mix_getGroup( group );
    if (g == NULL) {
-      WARN("Group '%d' does not exist!", group);
+      WARN(_("Group '%d' does not exist!"), group);
       return 0;
    }
    v = sound_curVolume * g->volume;

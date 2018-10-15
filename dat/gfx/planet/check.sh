@@ -26,6 +26,6 @@ for dir in space exterior; do
       if [[ $count > 1 ]]; then
          echo "      $img => $count times"
       fi
-   done
+   done | sort -k3 -n -r
    cd ..
 done

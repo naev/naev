@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
@@ -27,6 +26,7 @@
 #include "log.h"
 #include "rng.h"
 #include "land.h"
+#include "land_outfits.h"
 #include "map.h"
 #include "nmath.h"
 #include "nstring.h"
@@ -40,6 +40,7 @@ static int planetL_getAll( lua_State *L );
 static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
+static int planetL_radius( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_colour( lua_State *L );
 static int planetL_class( lua_State *L );
@@ -47,6 +48,7 @@ static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
 static int planetL_canland( lua_State *L );
 static int planetL_landOverride( lua_State *L );
+static int planetL_getLandOverride( lua_State *L );
 static int planetL_gfxSpace( lua_State *L );
 static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
@@ -55,7 +57,7 @@ static int planetL_commoditiesSold( lua_State *L );
 static int planetL_isBlackMarket( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
-static const luaL_reg planet_methods[] = {
+static const luaL_Reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
    { "getLandable", planetL_getLandable },
@@ -64,6 +66,7 @@ static const luaL_reg planet_methods[] = {
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
+   { "radius", planetL_radius },
    { "faction", planetL_faction },
    { "colour", planetL_colour },
    { "class", planetL_class },
@@ -71,6 +74,7 @@ static const luaL_reg planet_methods[] = {
    { "services", planetL_services },
    { "canLand", planetL_canland },
    { "landOverride", planetL_landOverride },
+   { "getLandOverride", planetL_getLandOverride },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
@@ -81,58 +85,17 @@ static const luaL_reg planet_methods[] = {
    { "setKnown", planetL_setKnown },
    {0,0}
 }; /**< Planet metatable methods. */
-static const luaL_reg planet_cond_methods[] = {
-   { "cur", planetL_cur },
-   { "get", planetL_get },
-   { "getLandable", planetL_getLandable },
-   { "getAll", planetL_getAll },
-   { "system", planetL_system },
-   { "__eq", planetL_eq },
-   { "__tostring", planetL_name },
-   { "name", planetL_name },
-   { "faction", planetL_faction },
-   { "colour", planetL_colour },
-   { "class", planetL_class },
-   { "pos", planetL_position },
-   { "services", planetL_services },
-   { "canLand", planetL_canland },
-   { "landOverride", planetL_landOverride },
-   { "gfxSpace", planetL_gfxSpace },
-   { "gfxExterior", planetL_gfxExterior },
-   { "shipsSold", planetL_shipsSold },
-   { "outfitsSold", planetL_outfitsSold },
-   { "commoditiesSold", planetL_commoditiesSold },
-   { "blackmarket", planetL_isBlackMarket },
-   { "known", planetL_isKnown },
-   {0,0}
-}; /**< Read only planet metatable methods. */
 
 
 /**
  * @brief Loads the planet library.
  *
- *    @param L State to load planet library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load planet library into.
  *    @return 0 on success.
  */
-int nlua_loadPlanet( lua_State *L, int readonly )
+int nlua_loadPlanet( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, PLANET_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, planet_cond_methods);
-   else
-      luaL_register(L, NULL, planet_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, PLANET_METATABLE);
-
+   nlua_register(env, PLANET_METATABLE, planet_methods, 1);
    return 0; /* No error */
 }
 
@@ -191,7 +154,7 @@ Planet* luaL_validplanet( lua_State *L, int ind )
 
    if (lua_isplanet(L, ind)) {
       lp = luaL_checkplanet(L, ind);
-      p  = planet_getIndex(lp->id);
+      p  = planet_getIndex(*lp);
    }
    else if (lua_isstring(L, ind))
       p = planet_get( lua_tostring(L, ind) );
@@ -201,7 +164,7 @@ Planet* luaL_validplanet( lua_State *L, int ind )
    }
 
    if (p == NULL)
-      NLUA_ERROR(L, "Planet is invalid");
+      NLUA_ERROR(L, _("Planet is invalid"));
 
    return p;
 }
@@ -250,20 +213,19 @@ int lua_isplanet( lua_State *L, int ind )
  *
  * @usage p,s = planet.cur() -- Gets current planet (assuming landed)
  *
- *    @luareturn The planet and system in belongs to.
+ *    @luatreturn Planet The planet the player is landed on.
+ *    @luatreturn System The system it is in.
  * @luafunc cur()
  */
 static int planetL_cur( lua_State *L )
 {
-   LuaPlanet planet;
    LuaSystem sys;
    if (land_planet == NULL) {
-      NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
+      NLUA_ERROR(L,_("Attempting to get landed planet when player not landed."));
       return 0; /* Not landed. */
    }
-   planet.id = planet_index(land_planet);
-   lua_pushplanet(L,planet);
-   sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
+   lua_pushplanet(L,planet_index(land_planet));
+   sys = system_index( system_get( planet_getSystem(land_planet->name) ) );
    lua_pushsystem(L,sys);
    return 2;
 }
@@ -277,9 +239,8 @@ static int planetL_getBackend( lua_State *L, int landable )
    char **planets;
    int nplanets;
    const char *rndplanet;
-   LuaPlanet planet;
    LuaSystem luasys;
-   LuaFaction *f;
+   LuaFaction f;
    Planet *pnt;
    StarSystem *sys;
    char *sysname;
@@ -290,10 +251,9 @@ static int planetL_getBackend( lua_State *L, int landable )
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
-      pnt            = planet_get( space_getRndPlanet(landable) );
-      planet.id      = planet_index( pnt );
-      lua_pushplanet(L,planet);
-      luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
+      pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
+      lua_pushplanet(L,planet_index( pnt ));
+      luasys         = system_index( system_get( planet_getSystem(pnt->name) ) );
       lua_pushsystem(L,luasys);
       return 2;
    }
@@ -301,7 +261,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
       f        = lua_tofaction(L,1);
-      planets  = space_getFactionPlanet( &nplanets, &f->f, 1, landable );
+      planets  = space_getFactionPlanet( &nplanets, &f, 1, landable );
    }
 
    /* Get a planet by name */
@@ -311,7 +271,7 @@ static int planetL_getBackend( lua_State *L, int landable )
       if (landable) {
          pnt = planet_get( rndplanet );
          if (pnt == NULL) {
-            NLUA_ERROR(L, "Planet '%s' not found in stack", rndplanet);
+            NLUA_ERROR(L, _("Planet '%s' not found in stack"), rndplanet);
             return 0;
          }
 
@@ -331,10 +291,8 @@ static int planetL_getBackend( lua_State *L, int landable )
       lua_pushnil(L);
       i = 0;
       while (lua_next(L, -2) != 0) {
-         if (lua_isfaction(L, -1)) {
-            f = lua_tofaction(L, -1);
-            factions[i++] = f->f;
-         }
+         if (lua_isfaction(L, -1))
+            factions[i++] = lua_tofaction(L, -1);
          lua_pop(L,1);
       }
 
@@ -373,22 +331,21 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Push the planet */
    pnt = planet_get(rndplanet); /* The real planet */
    if (pnt == NULL) {
-      NLUA_ERROR(L, "Planet '%s' not found in stack", rndplanet);
+      NLUA_ERROR(L, _("Planet '%s' not found in stack"), rndplanet);
       return 0;
    }
    sysname = planet_getSystem(rndplanet);
    if (sysname == NULL) {
-      NLUA_ERROR(L, "Planet '%s' is not placed in a system", rndplanet);
+      NLUA_ERROR(L, _("Planet '%s' is not placed in a system"), rndplanet);
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR(L, "Planet '%s' can't find system '%s'", rndplanet, sysname);
+      NLUA_ERROR(L, _("Planet '%s' can't find system '%s'"), rndplanet, sysname);
       return 0;
    }
-   planet.id = planet_index( pnt );
-   lua_pushplanet(L,planet);
-   luasys.id = system_index( sys );
+   lua_pushplanet(L,planet_index( pnt ));
+   luasys = system_index( sys );
    lua_pushsystem(L,luasys);
    return 2;
 }
@@ -407,8 +364,9 @@ static int planetL_getBackend( lua_State *L, int landable )
  * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
  * @usage p,s = planet.get(true) -- Gets completely random planet
  * @usage p,s = planet.get( { faction.get("Empire"), faction.get("Dvaered") } ) -- Random planet belonging to Empire or Dvaered
- *    @luaparam param See description.
- *    @luareturn Returns the planet and the system it belongs to.
+ *    @luatparam boolean|Faction|string|table param See description.
+ *    @luatreturn Planet The matching planet.
+ *    @luatreturn System The system it is in.
  * @luafunc get( param )
  */
 static int planetL_get( lua_State *L )
@@ -423,8 +381,9 @@ static int planetL_get( lua_State *L )
  * It works exactly the same as planet.get(), but it can only return landable
  * planets. So if the target is not landable it returns nil.
  *
- *    @luaparam param See planet.get() description.
- *    @luareturn Returns the planet and sytem it belongs to or nil and nil if it is not landable.
+ *    @luatparam boolean|Faction|string|table param See planet.get() description.
+ *    @luatreturn Planet The matching planet, if it is landable.
+ *    @luatreturn System The system it is in.
  * @luafunc getLandable( param )
  */
 static int planetL_getLandable( lua_State *L )
@@ -435,12 +394,11 @@ static int planetL_getLandable( lua_State *L )
 
 /**
  * @brief Gets all the planets.
- *    @luareturn An ordered list of all the planets.
+ *    @luatreturn {Planet,...} An ordered list of all the planets.
  * @luafunc getAll()
  */
 static int planetL_getAll( lua_State *L )
 {
-   LuaPlanet lp;
    Planet *p;
    int i, ind, n;
 
@@ -451,9 +409,8 @@ static int planetL_getAll( lua_State *L )
       /* Ignore virtual assets. */
       if (p[i].real == ASSET_VIRTUAL)
          continue;
-      lp.id = planet_index( &p[i] );
       lua_pushnumber( L, ind++ );
-      lua_pushplanet( L, lp );
+      lua_pushplanet( L, planet_index( &p[i] ) );
       lua_settable(   L, -3 );
    }
    return 1;
@@ -462,8 +419,8 @@ static int planetL_getAll( lua_State *L )
 
 /**
  * @brief Gets the system corresponding to a planet.
- *    @luaparam p Planet to get system of.
- *    @luareturn The system to which the planet belongs or nil if it has none.
+ *    @luatparam Planet p Planet to get system of.
+ *    @luatreturn System|nil The system to which the planet belongs or nil if it has none.
  * @luafunc system( p )
  */
 static int planetL_system( lua_State *L )
@@ -476,19 +433,19 @@ static int planetL_system( lua_State *L )
    sysname = planet_getSystem( p->name );
    if (sysname == NULL)
       return 0;
-   sys.id = system_index( system_get( sysname ) );
+   sys = system_index( system_get( sysname ) );
    lua_pushsystem( L, sys );
    return 1;
 }
 
 /**
- * @brief You can use the '=' operator within Lua to compare planets with this.
+ * @brief You can use the '==' operator within Lua to compare planets with this.
  *
  * @usage if p.__eq( planet.get( "Anecu" ) ) then -- Do something
  * @usage if p == planet.get( "Anecu" ) then -- Do something
- *    @luaparam p Planet comparing.
- *    @luaparam comp planet to compare against.
- *    @luareturn true if both planets are the same.
+ *    @luatparam Planet p Planet comparing.
+ *    @luatparam Planet comp planet to compare against.
+ *    @luatreturn boolean true if both planets are the same.
  * @luafunc __eq( p, comp )
  */
 static int planetL_eq( lua_State *L )
@@ -496,7 +453,7 @@ static int planetL_eq( lua_State *L )
    LuaPlanet *a, *b;
    a = luaL_checkplanet(L,1);
    b = luaL_checkplanet(L,2);
-   lua_pushboolean(L,(a->id == b->id));
+   lua_pushboolean(L,(*a == *b));
    return 1;
 }
 
@@ -504,8 +461,8 @@ static int planetL_eq( lua_State *L )
  * @brief Gets the planet's name.
  *
  * @usage name = p:name()
- *    @luaparam p Planet to get the name of.
- *    @luareturn The name of the planet.
+ *    @luatparam Planet p Planet to get the name of.
+ *    @luatreturn string The name of the planet.
  * @luafunc name( p )
  */
 static int planetL_name( lua_State *L )
@@ -517,22 +474,36 @@ static int planetL_name( lua_State *L )
 }
 
 /**
+ * @brief Gets the planet's radius.
+ *
+ * @usage radius = p:radius()
+ *    @luatparam Planet p Planet to get the radius of.
+ *    @luatreturn number The planet's graphics radius.
+ * @luafunc name( p )
+ */
+static int planetL_radius( lua_State *L )
+{
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   lua_pushnumber(L,p->radius);
+   return 1;
+}
+
+/**
  * @brief Gets the planet's faction.
  *
  * @usage f = p:faction()
- *    @luaparam p Planet to get the faction of.
- *    @luareturn The planet's faction.
+ *    @luatparam Planet p Planet to get the faction of.
+ *    @luatreturn Faction The planet's faction.
  * @luafunc faction( p )
  */
 static int planetL_faction( lua_State *L )
 {
    Planet *p;
-   LuaFaction f;
    p = luaL_validplanet(L,1);
    if (p->faction < 0)
       return 0;
-   f.f = p->faction;
-   lua_pushfaction(L, f);
+   lua_pushfaction(L, p->faction);
    return 1;
 }
 
@@ -542,21 +513,19 @@ static int planetL_faction( lua_State *L )
  *
  * @usage col = p:colour()
  *
- *    @luaparam p Planet to get the colour of.
- *    @luareturn The planet's colour.
+ *    @luatparam Pilot p Planet to get the colour of.
+ *    @luatreturn Colour The planet's colour.
  * @luafunc colour( p )
  */
 static int planetL_colour( lua_State *L )
 {
    Planet *p;
    const glColour *col;
-   LuaColour lc;
 
    p = luaL_validplanet(L,1);
    col = planet_getColour( p );
 
-   memcpy( &lc.col, col, sizeof(glColour) );
-   lua_pushcolour( L, lc );
+   lua_pushcolour( L, *col );
 
    return 1;
 }
@@ -569,8 +538,8 @@ static int planetL_colour( lua_State *L )
  * for stations.
  *
  * @usage c = p:class()
- *    @luaparam p Planet to get the class of.
- *    @luareturn The class of the planet in a one char identifier.
+ *    @luatparam Planet p Planet to get the class of.
+ *    @luatreturn string The class of the planet in a one char identifier.
  * @luafunc class( p )
  */
 static int planetL_class(lua_State *L )
@@ -594,11 +563,12 @@ static int planetL_class(lua_State *L )
  *  - "commodity"<br />
  *  - "outfits"<br />
  *  - "shipyard"<br />
+ *  - "blackmarket"<br />
  *
  * @usage if p:services()["refuel"] then -- Planet has refuel service.
  * @usage if p:services()["shipyard"] then -- Planet has shipyard service.
- *    @luaparam p Planet to get the services of.
- *    @luareturn Table containing all the services.
+ *    @luatparam Planet p Planet to get the services of.
+ *    @luatreturn table Table containing all the services.
  * @luafunc services( p )
  */
 static int planetL_services( lua_State *L )
@@ -631,8 +601,9 @@ static int planetL_services( lua_State *L )
  * @brief Gets whether or not the player can land on the planet (or bribe it).
  *
  * @usage can_land, can_bribe = p:canLand()
- *    @luaparam p Planet to get land and bribe status of.
- *    @luareturn The land and bribability status of the planet.
+ *    @luatparam Planet p Planet to get land and bribe status of.
+ *    @luatreturn boolean The land status of the planet.
+ *    @luatreturn boolean The bribability status of the planet.
  * @luafunc canLand( p )
  */
 static int planetL_canland( lua_State *L )
@@ -650,15 +621,43 @@ static int planetL_canland( lua_State *L )
  * @brief Lets player land on a planet no matter what. The override lasts until the player jumps or lands.
  *
  * @usage p:landOverride( true ) -- Planet can land on p now.
- *    @luaparam p Planet to forcibly allow the player to land on.
- *    @luaparam b Whether or not the player should be allowed to land, true enables, false disables override.
+ *    @luatparam Planet p Planet to forcibly allow the player to land on.
+ *    @luatparam[opt=false] boolean b Whether or not the player should be allowed to land, true enables, false disables override.
  * @luafunc landOverride( p, b )
  */
 static int planetL_landOverride( lua_State *L )
 {
-   Planet *p = luaL_validplanet(L,1);
+   Planet *p;
+   int old;
+
+   NLUA_CHECKRW(L);
+
+   p   = luaL_validplanet(L,1);
+   old = p->land_override;
+
    p->land_override = !!lua_toboolean(L,2);
+
+   /* If the value has changed, re-run the landing Lua next frame. */
+   if (p->land_override != old)
+      space_factionChange();
+
    return 0;
+}
+
+
+/**
+ * @brief Gets the land override status for a planet.
+ *
+ * @usage if p:getLandOverride() then -- Player can definitely land.
+ *    @luatparam Planet p Planet to check.
+ *    @luatreturn b Whether or not the player is always allowed to land.
+ * @luafunc getLandOverride( p )
+ */
+static int planetL_getLandOverride( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, p->land_override);
+   return 1;
 }
 
 
@@ -666,17 +665,15 @@ static int planetL_landOverride( lua_State *L )
  * @brief Gets the position of the planet in the system.
  *
  * @usage v = p:pos()
- *    @luaparam p Planet to get the position of.
- *    @luareturn The position of the planet in the system as a vec2.
+ *    @luatparam Planet p Planet to get the position of.
+ *    @luatreturn Vec2 The position of the planet in the system.
  * @luafunc pos( p )
  */
 static int planetL_position( lua_State *L )
 {
    Planet *p;
-   LuaVector v;
    p = luaL_validplanet(L,1);
-   vectcpy(&v.vec, &p->pos);
-   lua_pushvector(L, v);
+   lua_pushvector(L, p->pos);
    return 1;
 }
 
@@ -685,20 +682,20 @@ static int planetL_position( lua_State *L )
  * @brief Gets the texture of the planet in space.
  *
  * @uasge gfx = p:gfxSpace()
- *    @luaparam p Planet to get texture of.
- *    @luareturn The space texture of the planet.
+ *    @luatparam Planet p Planet to get texture of.
+ *    @luatreturn Tex The space texture of the planet.
  * @luafunc gfxSpace( p )
  */
 static int planetL_gfxSpace( lua_State *L )
 {
    Planet *p;
-   LuaTex lt;
+   glTexture *tex;
    p        = luaL_validplanet(L,1);
    if (p->gfx_space == NULL) /* Not loaded. */
-      lt.tex   = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+      tex = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
    else
-      lt.tex   = gl_dupTexture( p->gfx_space );
-   lua_pushtex( L, lt );
+      tex = gl_dupTexture( p->gfx_space );
+   lua_pushtex( L, tex );
    return 1;
 }
 
@@ -707,17 +704,15 @@ static int planetL_gfxSpace( lua_State *L )
  * @brief Gets the texture of the planet in exterior.
  *
  * @uasge gfx = p:gfxExterior()
- *    @luaparam p Planet to get texture of.
- *    @luareturn The exterior texture of the planet.
+ *    @luatparam Planet p Planet Planet to get texture of.
+ *    @luatreturn Tex The exterior texture of the planet.
  * @luafunc gfxExterior( p )
  */
 static int planetL_gfxExterior( lua_State *L )
 {
    Planet *p;
-   LuaTex lt;
-   p        = luaL_validplanet(L,1);
-   lt.tex   = gl_newImage( p->gfx_exterior, 0 );
-   lua_pushtex( L, lt );
+   p = luaL_validplanet(L,1);
+   lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
    return 1;
 }
 
@@ -725,15 +720,14 @@ static int planetL_gfxExterior( lua_State *L )
 /**
  * @brief Gets the ships sold at a planet.
  *
- *    @luaparam p Planet to get ships sold at.
- *    @luareturn An ordered table containing all the ships sold (empty if none sold).
+ *    @luatparam Planet p Planet to get ships sold at.
+ *    @luatreturn {Ship,...} An ordered table containing all the ships sold (empty if none sold).
  * @luafunc shipsSold( p )
  */
 static int planetL_shipsSold( lua_State *L )
 {
    Planet *p;
    int i, n;
-   LuaShip ls;
    Ship **s;
 
    /* Get result and tech. */
@@ -744,8 +738,7 @@ static int planetL_shipsSold( lua_State *L )
    lua_newtable(L);
    for (i=0; i<n; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      ls.ship = s[i];
-      lua_pushship(L,ls); /* value = LuaShip */
+      lua_pushship(L,s[i]); /* value = LuaShip */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
@@ -756,15 +749,14 @@ static int planetL_shipsSold( lua_State *L )
 /**
  * @brief Gets the outfits sold at a planet.
  *
- *    @luaparam p Planet to get outfits sold at.
- *    @luareturn An ordered table containing all the outfits sold (empty if none sold).
+ *    @luatparam Planet p Planet to get outfits sold at.
+ *    @luatreturn {Outfit,...} An ordered table containing all the outfits sold (empty if none sold).
  * @luafunc outfitsSold( p )
  */
 static int planetL_outfitsSold( lua_State *L )
 {
    Planet *p;
    int i, n;
-   LuaOutfit lo;
    Outfit **o;
 
    /* Get result and tech. */
@@ -775,8 +767,7 @@ static int planetL_outfitsSold( lua_State *L )
    lua_newtable(L);
    for (i=0; i<n; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lo.outfit = o[i];
-      lua_pushoutfit(L,lo); /* value = LuaOutfit */
+      lua_pushoutfit(L,o[i]); /* value = LuaOutfit */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
@@ -787,27 +778,23 @@ static int planetL_outfitsSold( lua_State *L )
 /**
  * @brief Gets the commodities sold at a planet.
  *
- *    @luaparam p Planet to get commodities sold at.
- *    @luareturn An ordered table containing all the commodities sold (empty if none sold).
+ *    @luatparam Pilot p Planet to get commodities sold at.
+ *    @luatreturn {Commodity,...} An ordered table containing all the commodities sold (empty if none sold).
  * @luafunc commoditiesSold( p )
  */
 static int planetL_commoditiesSold( lua_State *L )
 {
    Planet *p;
-   int i, n;
-   LuaCommodity lc;
-   Commodity **c;
+   int i;
 
    /* Get result and tech. */
    p = luaL_validplanet(L,1);
-   c = tech_getCommodity( p->tech, &n );
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<n; i++) {
+   for (i=0; i<p->ncommodities; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lc.commodity = c[i];
-      lua_pushcommodity(L,lc); /* value = LuaCommodity */
+      lua_pushcommodity(L,p->commodities[i]); /* value = LuaCommodity */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
@@ -819,14 +806,14 @@ static int planetL_commoditiesSold( lua_State *L )
  *
  * @usage b = p:blackmarket()
  *
- *    @luaparam p Planet to check if it's a black market.
- *    @luareturn true if the planet is a black market.
+ *    @luatparam Planet p Planet to check if it's a black market.
+ *    @luatreturn boolean true if the planet is a black market.
  * @luafunc blackmarket( p )
  */
 static int planetL_isBlackMarket( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-   lua_pushboolean(L, planet_isBlackMarket(p));
+   lua_pushboolean(L, planet_hasService(p, PLANET_SERVICE_BLACKMARKET));
    return 1;
 }
 
@@ -835,8 +822,8 @@ static int planetL_isBlackMarket( lua_State *L )
  *
  * @usage b = p:known()
  *
- *    @luaparam s Planet to check if the player knows.
- *    @luareturn true if the player knows the planet.
+ *    @luatparam Planet p Planet to check if the player knows.
+ *    @luatreturn boolean true if the player knows the planet.
  * @luafunc known( p )
  */
 static int planetL_isKnown( lua_State *L )
@@ -850,21 +837,30 @@ static int planetL_isKnown( lua_State *L )
  * @brief Sets a planets's known state.
  *
  * @usage p:setKnown( false ) -- Makes planet unknown.
- *    @luaparam p Planet to set known.
- *    @luaparam b Whether or not to set as known (defaults to false).
+ *    @luatparam Planet p Planet to set known.
+ *    @luatparam[opt=false] boolean b Whether or not to set as known.
  * @luafunc setKnown( p, b )
  */
 static int planetL_setKnown( lua_State *L )
 {
-   int b;
+   int b, changed;
    Planet *p;
+
+   NLUA_CHECKRW(L);
 
    p = luaL_validplanet(L,1);
    b = lua_toboolean(L, 2);
+
+   changed = (b != (int)planet_isKnown(p));
 
    if (b)
       planet_setKnown( p );
    else
       planet_rmFlag( p, PLANET_KNOWN );
+
+   /* Update outfits image array. */
+   if (changed)
+      outfits_updateEquipmentOutfits();
+
    return 0;
 }

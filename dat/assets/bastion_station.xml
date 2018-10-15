@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>2500</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>
@@ -27,7 +27,7 @@
    <commodity>Food</commodity>
    <commodity>Medicine</commodity>
   </commodities>
-  <description>Bastion Station is one of the two primary defense, border guard, and patrol base stations leading into Za'lek space. As such, it is one of the few military expendatures that goes (largely) unchallenged even by the notorious Za'lek political scene. The House Za'lek Defense Force conducts most of their foreign contact here, where they can keep an eye on affairs.</description>
+  <description>Bastion Station is one of the two primary defense, border guard, and patrol base stations leading into Za'lek space. As such, it is one of the few military expenditures that goes (largely) unchallenged even by the notorious Za'lek political scene. The House Za'lek Defense Force conducts most of their foreign contact here, where they can keep an eye on affairs.</description>
  </general>
  <tech>
   <item>Laser 1</item>

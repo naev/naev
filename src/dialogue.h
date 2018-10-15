@@ -14,6 +14,8 @@
 void dialogue_alert( const char *fmt, ... ); /* does not pause execution */
 void dialogue_msg( const char *caption, const char *fmt, ... );
 void dialogue_msgRaw( const char *caption, const char *msg );
+void dialogue_msgImg( const char *caption, const char *img, const char *fmt, ... );
+void dialogue_msgImgRaw( const char *caption, const char *msg, const char *img, int width, int height );
 int dialogue_YesNo( const char *caption, const char *fmt, ... ); /* Yes = 1, No = 0 */
 int dialogue_YesNoRaw( const char *caption, const char *msg );
 void dialogue_makeChoice( const char *caption, const char *msg, int opts );
@@ -24,13 +26,13 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg  )
 int dialogue_list( const char* title, char **items, int nitems, const char *fmt, ... );
 int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg );
 int dialogue_listPanel ( const char* title, char **items, int nitems, int extrawidth,
-        int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
-        void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
-	const char *fmt, ... );
+      int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
+      void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
+      const char *fmt, ... );
 int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extrawidth,
-        int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
-        void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
-	const char *msg );
+      int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
+      void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
+      const char *msg );
 
 /*
  * misc

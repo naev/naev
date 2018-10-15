@@ -3,7 +3,7 @@
  <general>
   <radius>22575.000000</radius>
   <stars>500</stars>
-  <interference>100.000000</interference>
+  <interference>50.000000</interference>
   <nebula volatility="0.000000">100.000000</nebula>
  </general>
  <pos>
@@ -15,7 +15,8 @@
   <asset>Mizar III</asset>
   <asset>Mizar IV</asset>
   <asset>Mizar VI</asset>
-  <asset>Virtual Pirate Small</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
   <asset>Westeros Station</asset>
  </assets>
  <jumps>

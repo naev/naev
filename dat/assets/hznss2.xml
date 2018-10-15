@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>20.000000</value>
-  <range>5</range>
+  <value>50.000000</value>
+  <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>10000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>
@@ -28,5 +28,4 @@
   </commodities>
   <description>Another entry in the House Zalek Nutrition Space Station program. Nothing of note really exists here; it is solely an extension of the House's economy.</description>
  </general>
- <tech/>
 </asset>

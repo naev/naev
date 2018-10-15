@@ -11,10 +11,10 @@ else -- default english
     text = {}
     title = {}
     
-    broadcastmsgDV = "SOS. This is %s. Primary systems down. Requesting assistance."
-    broadcastmsgFLF = "Calling all ships. This is %s. Engines down, ship damaged. Please help."
-    shipnameDV = "Dvaered Patrol"
-    shipnameFLF = "Frontier Patrol"
+    broadcastmsgDV = _("SOS. This is %s. Primary systems down. Requesting assistance.")
+    broadcastmsgFLF = _("Calling all ships. This is %s. Engines down, ship damaged. Please help.")
+    shipnameDV = _("Dvaered Patrol")
+    shipnameFLF = _("Frontier Patrol")
 end 
 
 function create()

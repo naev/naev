@@ -1,11 +1,7 @@
+SUBDIRS =
 if LUA_INTERNAL
-if CSPARSE_INTERNAL
-SUBDIRS = csparse lua
-else
-SUBDIRS = lua
+SUBDIRS += lua
 endif
-else
 if CSPARSE_INTERNAL
-SUBDIRS = csparse
-endif
+SUBDIRS += csparse
 endif

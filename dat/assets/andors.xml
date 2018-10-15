@@ -30,8 +30,8 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <description>This icy world has many valuable minerlas and materials locked underneath the kilometers of ice, so the Za'lek have set up a lare minin industry here. Unusually for a Za'lek world, there isn't as much of a scholarly presence here as thetre are on more densely populated worlds.</description>
-  <bar>This bar serves hot drinks and warm food, primarily soup to tired and cold workers. There is little else of note.</bar>
+  <description>This barren world has a wealth of minerals buried beneath kilometres of ice, and the Za'lek have deployed considerable resources in order to tap its resources. Unlike more developed Za'lek settlements, there is little in the way of scholarly presence here.</description>
+  <bar>This bar serves as a welcome respite from the biting winds and frigid temperatures that pervade the planet. The menu largely consists of hot beverages and hearty food, and the patrons are almost exclusively off-duty Za'lek workers.</bar>
  </general>
  <tech>
   <item>Laser 1</item>

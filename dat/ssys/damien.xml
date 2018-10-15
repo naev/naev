@@ -18,13 +18,21 @@
   <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Garten">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Ruadan">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Severus">
    <pos x="25200.916889" y="-17334.000223"/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Za'lek">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

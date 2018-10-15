@@ -9,31 +9,31 @@ mem.aggressive = true
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/100) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
    -- Handle bribing
    if rnd.int() > 0.4 then
-      mem.bribe_no = "\"I shall especially enjoy your death.\""
+      mem.bribe_no = _("\"I shall especially enjoy your death.\"")
    else
       bribe_no = {
-            "\"You insult my honour.\"",
-            "\"I find your lack of honour disturbing.\"",
-            "\"You disgust me.\"",
-            "\"Bribery carries a harsh penalty.\"",
-            "\"House Dvaered does not lower itself to common scum.\""
+            _("\"You insult my honour.\""),
+            _("\"I find your lack of honour disturbing.\""),
+            _("\"You disgust me.\""),
+            _("\"Bribery carries a harsh penalty.\""),
+            _("\"House Dvaered does not lower itself to common scum.\"")
      }
      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end
 
    -- Handle refueling
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 3000 )
       if standing < 50 then
-         mem.refuel_no = "\"You are not worthy of my attention.\""
+         mem.refuel_no = _("\"You are not worthy of my attention.\"")
       else
-         mem.refuel_msg = string.format("\"For you I could make an exception for %d credits.\"", mem.refuel)
+         mem.refuel_msg = string.format(_("\"For you I could make an exception for %d credits.\""), mem.refuel)
       end
    end
 
@@ -53,12 +53,12 @@ function taunt ( target, offense )
 
    -- Offense is not actually used
    taunts = {
-       "Prepare to face annihilation!",
-       "I shall wash my hull in your blood!",
-       "Your head will make a great trophy!",
-       "You're no match for the Dvaered!",
-       "Death awaits you!"
+       _("Prepare to face annihilation!"),
+       _("I shall wash my hull in your blood!"),
+       _("Your head will make a great trophy!"),
+       _("You're no match for the Dvaered!"),
+       _("Death awaits you!")
    }
-   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

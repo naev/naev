@@ -75,11 +75,12 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i;
+   int i, j;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
+   const AsteroidAnchor *ast;
    char file[PATH_MAX], *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
@@ -88,7 +89,7 @@ int dsys_saveSystem( StarSystem *sys )
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
+      WARN(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 
@@ -164,6 +165,28 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
 
+   /* Asteroids. */
+   if (sys->nasteroids > 0) {
+      xmlw_startElem( writer, "asteroids" );
+      for (i=0; i<sys->nasteroids; i++) {
+         ast = &sys->asteroids[i];
+         xmlw_startElem( writer, "asteroid" );
+
+         /* Corners */
+         for (j=0; j<ast->ncorners; j++) {
+            xmlw_startElem( writer, "corner" );
+            xmlw_elem( writer, "x", "%f", ast->corners[j].x );
+            xmlw_elem( writer, "y", "%f", ast->corners[j].y );
+            xmlw_endElem( writer ); /* "corner" */
+         }
+
+         /* Misc. properties. */
+         xmlw_elem( writer, "density", "%f", ast->density );
+         xmlw_endElem( writer ); /* "asteroid" */
+      }
+      xmlw_endElem( writer ); /* "asteroids" */
+   }
+
    xmlw_endElem( writer ); /** "ssys" */
    xmlw_done(writer);
 
@@ -218,7 +241,7 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
+      WARN(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 
@@ -247,7 +270,7 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
    for (i = 0; i < uniedit_nsys; i++) {
       s = uniedit_sys[i];
       xmlw_startElem( writer, "sys" );
-      xmlw_attr( writer, "name", s->name );
+      xmlw_attr( writer, "name", "%s", s->name );
 
       /* Iterate jumps and see if they lead to any other systems in our array. */
       for (j = 0; j < s->njumps; j++) {

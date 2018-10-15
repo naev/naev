@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>5500</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>zlk_mil_restricted</land>
    <refuel/>
@@ -34,6 +34,7 @@
   <item>Laser 2</item>
   <item>Ion 1</item>
   <item>Plasma 1</item>
+  <item>Beam 1</item>
   <item>Basic Outfits 1</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>

@@ -38,7 +38,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_ENERGY_MOD,       /**< Energy multiplier. */
    SS_TYPE_D_ENERGY_REGEN_MOD, /**< Energy regeneration multiplier. */
    SS_TYPE_D_CPU_MOD,          /**< CPU multiplier. */
-   
+
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
@@ -73,8 +73,10 @@ typedef enum ShipStatsType_ {
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
+   SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
+   SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -94,6 +96,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
    SS_TYPE_B_REVERSE_THRUST, /**< Ship slows down rather than turning on reverse. */
+   SS_TYPE_B_ASTEROID_SCAN, /**< Ship can gather informations from asteroids. */
 
    SS_TYPE_SENTINEL          /**< Sentinel for end of types. */
 } ShipStatsType;
@@ -125,7 +128,7 @@ typedef struct ShipStatList_ {
 /**
  * @brief Represents ship statistics, properties ship can use.
  *
- * Doubles: 
+ * Doubles:
  *  These are normalized and centered around 1 so they are in the [0:2]
  *  range, with 1. being default. This value then modulates the stat's base
  *  value.
@@ -176,6 +179,7 @@ typedef struct ShipStats_ {
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
+   double stress_dissipation; /**< Global stress dissipation. */
    double crew_mod;        /**< Relative crew modification. */
    double mass_mod;        /**< Relative mass modification. */
 
@@ -199,6 +203,7 @@ typedef struct ShipStats_ {
    double tur_energy;      /**< Consumption rate of turrets. */
 
    /* Engine limits. */
+   double engine_limit_rel; /**< Engine limit modifier. */
    double engine_limit;     /**< Engine limit. */
 
    /* Misc. */
@@ -206,6 +211,7 @@ typedef struct ShipStats_ {
    double nebu_absorb_armour; /**< Armour nebula resistance. */
    int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
+   int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
 } ShipStats;
 
@@ -232,9 +238,11 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipS
  * Lookup.
  */
 const char* ss_nameFromType( ShipStatsType type );
+size_t ss_offsetFromType( ShipStatsType type );
 ShipStatsType ss_typeFromName( const char *name );
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline );
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
+int ss_csv( const ShipStats *s, char *buf, int len );
 
 
 #endif /* SHIPSTATS_H */

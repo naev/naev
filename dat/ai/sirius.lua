@@ -10,25 +10,25 @@ mem.aggressive = true
 function create ()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.shipprice()/200, ai.shipprice()/50) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/200, ai.pilot():ship():price()/50) )
 
    -- Get refuel chance
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
       if standing < 70 then
-         mem.refuel_no = "\"I do not have fuel to spare.\""
+         mem.refuel_no = _("\"I do not have fuel to spare.\"")
       else
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( "\"I would be able to refuel your ship for %d credits.\"", mem.refuel )
+      mem.refuel_msg = string.format( _("\"I would be able to refuel your ship for %d credits.\""), mem.refuel )
    end
 
    -- Can't be bribed
    bribe_no = {
-          "\"Your money is of no interest to me.\""
+          _("\"Your money is of no interest to me.\"")
    }
    mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 
@@ -49,17 +49,17 @@ function taunt ( target, offense )
    -- some taunts
    if offense then
       taunts = {
-            "The universe shall be cleansed of your presence!"
+            _("The universe shall be cleansed of your presence!")
       }
    else
       taunts = {
-            "Sirichana protect me!",
-            "You have made a grave error!",
-            "You do wrong in your provocations!"
+            _("Sirichana protect me!"),
+            _("You have made a grave error!"),
+            _("You do wrong in your provocations!")
       }
    end
 
-   ai.comm(target, taunts[ rnd.rnd(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

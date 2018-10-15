@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Particle Lance">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <mass>6</mass>
+  <price>9800</price>
+  <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones.</description>
+  <gfx_store>orion</gfx_store>
+  <cpu>-5</cpu>
+ </general>
+ <specific type="beam">
+  <delay>1.5</delay>
+  <duration>2</duration>
+  <range>320</range>
+  <energy>25</energy>
+  <heatup>20</heatup>
+  <damage>
+   <type>normal</type>
+   <penetrate>18</penetrate>
+   <physical>22</physical>
+   <disable>5</disable>
+  </damage>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <gfx>beam_particle</gfx>
+  <sound>beam0</sound>
+  <sound_off>beam_off0</sound_off>
+ </specific>
+</outfit>

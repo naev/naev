@@ -28,11 +28,11 @@
   </jump>
   <jump target="Poltergeist">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Stone Table">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

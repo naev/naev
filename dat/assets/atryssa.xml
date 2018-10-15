@@ -11,7 +11,7 @@
  <presence>
   <faction>Za'lek</faction>
   <value>150.000000</value>
-  <range>5</range>
+  <range>3</range>
  </presence>
  <general>
   <class>O</class>
@@ -37,6 +37,8 @@
   <bar>The archetype of a Za'lek bar, although a very crowded one. The crowd seems to be divided up into groups of people discussing things in hushed tones. There are also one or two people wandering about with notepads, though everyone goes quiet when they approach.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
+  <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>
   <item>Plasma 1</item>
@@ -44,6 +46,8 @@
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>
   <item>Heavy Weapons 2</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>
@@ -52,6 +56,5 @@
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
-  <item>Laser 1</item>
  </tech>
 </asset>

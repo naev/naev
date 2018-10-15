@@ -154,7 +154,7 @@ static int omsg_getFontID( int size )
 
    /* Create font. */
    font = &array_grow( &omsg_font_array );
-   gl_fontInit( &font->font, OMSG_FONT_DEFAULT_PATH, size );
+   gl_fontInit( &font->font, "Mono", FONT_MONOSPACE_PATH, size );
    font->size = size;
    return array_size(omsg_font_array) - 1;
 }
@@ -246,7 +246,7 @@ void omsg_render( double dt )
 
       /* Render. */
       font = omsg_getFont( omsg->font );
-      memcpy( &col, omsg->col, sizeof(glColour) );
+      col = *omsg->col;
       if (omsg->duration < 1.)
          col.a = omsg->duration;
       gl_printRestoreClear();

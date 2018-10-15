@@ -49,7 +49,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
    OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
-   OUTFIT_TYPE_MODIFCATION, /**< Modifies the ship base features. */
+   OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
    OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
@@ -86,6 +86,15 @@ typedef enum OutfitSlotSize_ {
 
 
 /**
+ * @brief Ammo AI types.
+ */
+typedef enum OutfitAmmoAI_ {
+   AMMO_AI_DUMB, /**< No AI. */
+   AMMO_AI_SEEK, /**< Aims at the target. */
+   AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
+} OutfitAmmoAI;
+
+/**
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
@@ -104,6 +113,7 @@ typedef struct Damage_ {
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
    double damage;       /**< Amount of damage, this counts towards killing the ship. */
    double disable;      /**< Amount of disable damage, this counts towards disabling the ship. */
+   int asterokill;      /**< Whether it is possible to destroy asteroids. */
 } Damage;
 
 
@@ -117,7 +127,6 @@ typedef struct OutfitBoltData_ {
    double falloff;   /**< Point at which damage falls off. */
    double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy;    /**< Energy usage */
-   double cpu;       /**< CPU usage. */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
@@ -142,6 +151,7 @@ typedef struct OutfitBeamData_ {
    double delay;     /**< Delay between usage. */
    double warmup;    /**< How long beam takes to warm up. */
    double duration;  /**< How long the beam lasts active. */
+   double min_duration; /**< Minimum duration the beam can be fired for. */
 
    /* Beam properties. */
    double range;     /**< how far it goes */
@@ -174,6 +184,7 @@ typedef struct OutfitLauncherData_ {
    /* Lockon information. */
    double lockon;    /**< Time it takes to lock on the target */
    double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
+   double ew_target2; /**< Target ewarfare squared for quicker comparisons. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
 } OutfitLauncherData;
 
@@ -183,7 +194,7 @@ typedef struct OutfitLauncherData_ {
 typedef struct OutfitAmmoData_ {
    double duration;  /**< How long the ammo lives. */
    double resist;    /**< Lowers chance of jamming by this amount */
-   int ai;           /**< Smartness of ammo. */
+   OutfitAmmoAI ai;  /**< Smartness of ammo. */
 
    double speed;     /**< Maximum speed */
    double turn;      /**< Turn velocity in rad/s. */
@@ -230,14 +241,12 @@ typedef struct OutfitModificationData_ {
    double energy_regen; /**< Energy regeneration modifier. */
    double energy_loss;  /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
-   double nebu_absorb_shield;  /**< Reduces nebula penetration. */
 
    /* Misc. */
    double cargo;     /**< Cargo space modifier. */
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
-   double hide_rel;  /**< Relative hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
@@ -327,10 +336,13 @@ typedef struct Outfit_ {
    credits_t price;  /**< Base sell price. */
    char *description; /**< Store description. */
    char *desc_short; /**< Short outfit description. */
+   int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
 
    unsigned int properties; /**< Properties stored bitwise. */
+
+   unsigned int group; /**< Weapon group to use when autoweap is enabled. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
@@ -379,6 +391,7 @@ int outfit_isLicense( const Outfit* o );
 int outfit_isSecondary( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
+const char* outfit_getAmmoAI( const Outfit *o );
 
 /*
  * Search.

@@ -1,9 +1,10 @@
 /*
- * Copyright 2006-2012 Edgar Simo Serra
+ * Copyright 2006-2017 Naev DevTeam
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -93,7 +94,12 @@
  */
 extern const double fps_min;
 void fps_setPos( double x, double y );
+#if SDL_VERSION_ATLEAST(2,0,0)
+void naev_resize( int w, int h );
+void naev_toggleFullscreen (void);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 void update_routine( double dt, int enter_sys );
+int naev_versionString( char *str, size_t slen, int major, int minor, int rev );
 char *naev_version( int long_version );
 int naev_versionParse( int version[3], char *buf, int nbuf );
 int naev_versionCompare( int version[3] );

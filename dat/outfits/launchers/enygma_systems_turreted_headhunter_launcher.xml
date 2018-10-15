@@ -3,7 +3,8 @@
  <general>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>45</mass>
+  <license>Medium Weapon License</license>
+  <mass>40</mass>
   <price>140000</price>
   <description>These launchers are sometimes employed by cruiser captains whose ships aren't manoeuvrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
   <gfx_store>headhunterlauncher</gfx_store>
@@ -11,9 +12,9 @@
  </general>
  <specific type="turret launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
-  <delay>5</delay>
-  <amount>20</amount>
-  <lockon>10</lockon>
-  <ew_target>1</ew_target>
+  <delay>2.5</delay>
+  <amount>25</amount>
+  <lockon>7</lockon>
+  <ew_target>1.5</ew_target>
  </specific>
 </outfit>

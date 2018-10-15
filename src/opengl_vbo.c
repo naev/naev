@@ -25,6 +25,7 @@
 typedef enum gl_vboType_e {
    NGL_VBO_NULL, /**< No VBO type. */
    NGL_VBO_STREAM, /**< VBO streaming type. */
+   NGL_VBO_DYNAMIC, /**< VBO dynamic type. */
    NGL_VBO_STATIC /**< VBO static type. */
 } gl_vboType;
 
@@ -119,7 +120,7 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
 /**
  * @brief Reloads new data or grows the size of the vbo.
  *
- *    @param vbo VBO to get new data of.
+ *    @param vbo VBO to set new data of.
  *    @param size Size of new data.
  *    @param data New data.
  */
@@ -133,6 +134,8 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
       /* Get usage. */
       if (vbo->type == NGL_VBO_STREAM)
          usage = GL_STREAM_DRAW;
+      else if (vbo->type == NGL_VBO_DYNAMIC)
+         usage = GL_DYNAMIC_DRAW;
       else if (vbo->type == NGL_VBO_STATIC)
          usage = GL_STATIC_DRAW;
       else
@@ -190,6 +193,25 @@ gl_vbo* gl_vboCreateStream( GLsizei size, void* data )
 
    vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW );
    vbo->type = NGL_VBO_STREAM;
+
+   /* Check for errors. */
+   gl_checkErr();
+
+   return vbo;
+}
+
+/**
+ * @brief Creates a dynamic vbo.
+ *
+ *    @param size Size of the dynamic vbo (multiply by sizeof(type)).
+ *    @param data Data for the VBO.
+ */
+gl_vbo* gl_vboCreateDynamic( GLsizei size, void* data )
+{
+   gl_vbo *vbo;
+
+   vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW );
+   vbo->type = NGL_VBO_DYNAMIC;
 
    /* Check for errors. */
    gl_checkErr();
@@ -320,7 +342,7 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
          break;
 
       default:
-         WARN("Unknown VBO class.");
+         WARN(_("Unknown VBO class."));
          break;
    }
 

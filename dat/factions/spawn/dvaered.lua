@@ -1,12 +1,14 @@
 include("dat/factions/spawn/common.lua")
-
+include("dat/factions/spawn/mercenary_helper.lua")
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.5 then
+    if r < pbm then
+        pilots = spawnLtMerc("Dvaered")
+    elseif r < 0.5 then
         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
         scom.addPilot( pilots, "Dvaered Ancestor", 20 );
     elseif r < 0.8 then
@@ -28,7 +30,9 @@ function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < 0.5 then
+    if r < pbm then
+        pilots = spawnMdMerc("Dvaered")
+    elseif r < 0.5 then
         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
         scom.addPilot( pilots, "Dvaered Ancestor", 20 );
         scom.addPilot( pilots, "Dvaered Vigilance", 70 );
@@ -50,24 +54,29 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
     local pilots = {}
+    pilots.__fleet = true
 
-    -- Generate the capship
-    scom.addPilot( pilots, "Dvaered Goddard", 120 )
-
-    -- Generate the escorts
-    r = rnd.rnd()
-    if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
-    elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
-        scom.addPilot( pilots, "Dvaered Phalanx", 45 );
+    if rnd.rnd() < pbm then
+        pilots = spawnBgMerc("Dvaered")
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 70 );
+        -- Generate the capship
+        scom.addPilot( pilots, "Dvaered Goddard", 120 )
+
+        -- Generate the escorts
+        r = rnd.rnd()
+        if r < 0.5 then
+            scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+            scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+            scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+        elseif r < 0.8 then
+            scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+            scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+            scom.addPilot( pilots, "Dvaered Phalanx", 45 );
+        else
+            scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+            scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+            scom.addPilot( pilots, "Dvaered Vigilance", 70 );
+        end
     end
 
     return pilots
@@ -103,7 +112,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data )
+    pilots = scom.spawn( spawn_data, "Dvaered" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

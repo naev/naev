@@ -23,7 +23,6 @@
 #include "player.h"
 #include "opengl.h"
 #include "ai.h"
-#include "ai_extra.h"
 #include "hook.h"
 
 #define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
@@ -109,7 +108,7 @@ int comm_openPilot( unsigned int pilot )
    /* Make sure pilot in range. */
    if (!pilot_isFlag(p, PILOT_HAILING) &&
          pilot_inRangePilot( player.p, comm_pilot ) <= 0) {
-      player_message("\erTarget is out of communications range.");
+      player_message(_("\arTarget is out of communications range"));
       comm_pilot = NULL;
       return -1;
    }
@@ -123,13 +122,13 @@ int comm_openPilot( unsigned int pilot )
 
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
-      player_message("\e%c%s\er is jumping and can't respond.", c, comm_pilot->name);
+      player_message(_("\a%c%s\ar is jumping and can't respond"), c, comm_pilot->name);
       return 0;
    }
 
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
-      player_message("\e%c%s\er does not respond.", c, comm_pilot->name);
+      player_message(_("\a%c%s\ar does not respond"), c, comm_pilot->name);
       return 0;
    }
 
@@ -151,7 +150,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Run generic hail hooks. */
    hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = p->id;
+   hparam[0].u.lp       = p->id;
    hparam[1].type       = HOOK_PARAM_SENTINEL;
    run = 0;
    run += hooks_runParam( "hail", hparam );
@@ -166,7 +165,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Create the pilot window. */
-   wid = comm_openPilotWindow();
+   comm_openPilotWindow();
 
    return 0;
 }
@@ -201,16 +200,16 @@ static unsigned int comm_openPilotWindow (void)
 static void comm_addPilotSpecialButtons( unsigned int wid )
 {
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", _("Greet"), NULL );
    if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
          ((faction_getPlayer( comm_pilot->faction ) < 0) || /* Hostile. */
             pilot_isHostile(comm_pilot)))
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePilot );
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribePilot );
    else
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
-            "Refuel", comm_requestFuel );
+            _("Refuel"), comm_requestFuel );
 }
 
 
@@ -233,14 +232,14 @@ int comm_openPlanet( Planet *planet )
 
    /* Must not be disabled. */
    if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
-      player_message("%s does not respond.", planet->name);
+      player_message(_("%s does not respond."), planet->name);
       return 0;
    }
 
    /* Make sure planet in range. */
    /* Function uses planet index in local system, so I moved this to player.c.
    if ( pilot_inRangePlanet( player.p, planet->id ) <= 0 ) {
-      player_message("\erTarget is out of communications range.");
+      player_message("\arTarget is out of communications range.");
       comm_planet = NULL;
       return 0;
    }
@@ -255,7 +254,7 @@ int comm_openPlanet( Planet *planet )
    /* Add special buttons. */
    if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
       window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribePlanet );
 
    return 0;
 }
@@ -277,7 +276,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    int namex, standx, logox, y;
    int namew, standw, logow, width;
    glTexture *logo;
-   char *stand;
+   const char *stand;
    unsigned int wid;
    const glColour *c;
    glFont *font;
@@ -296,22 +295,15 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    logo           = faction_logoSmall(faction);
 
    /* Get standing colour / text. */
-   if (bribed) {
-      stand = "Neutral";
-      c     = &cNeutral;
-   }
-   else if (override < 0) {
-      stand = "Hostile";
-      c     = &cHostile;
-   }
-   else if (override > 0) {
-      stand = "Friendly";
-      c     = &cFriend;
-   }
-   else {
-      stand = faction_getStandingBroad(faction_getPlayer(faction));
-      c     = faction_getColour( faction );
-   }
+   stand = faction_getStandingBroad( faction, bribed, override );
+   if (bribed)
+      c = &cNeutral;
+   else if (override < 0)
+      c = &cHostile;
+   else if (override > 0)
+      c = &cFriend;
+   else
+      c = faction_getColour( faction );
 
    namew  = gl_printWidthRaw( NULL, name );
    standw = gl_printWidthRaw( NULL, stand );
@@ -354,7 +346,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       aspect = comm_graphic->w / comm_graphic->h;
       gw = MIN( GRAPHIC_WIDTH,  comm_graphic->w );
       gh = MIN( GRAPHIC_HEIGHT, comm_graphic->h );
-   
+
       if (comm_graphic->w > GRAPHIC_WIDTH || comm_graphic->h > GRAPHIC_HEIGHT) {
          gh = MIN( GRAPHIC_HEIGHT, GRAPHIC_HEIGHT / aspect );
          gw = MIN( GRAPHIC_WIDTH, GRAPHIC_WIDTH * aspect );
@@ -384,7 +376,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", comm_close );
+         "btnClose", _("Close"), comm_close );
 
    return wid;
 }
@@ -423,53 +415,52 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    double d;
    credits_t price;
    const char *str;
-   lua_State *L;
 
    /* Unbribable. */
    str = comm_getString( "bribe_no" );
    if (str != NULL) {
-      dialogue_msg("Bribe Pilot", "%s", str );
+      dialogue_msg(_("Bribe Pilot"), "%s", str );
       return;
    }
 
    /* Get amount pilot wants. */
    if (comm_getNumber( &d, "bribe" )) {
-      WARN("Pilot '%s' accepts bribes but doesn't give price!", comm_pilot->name );
+      WARN(_("Pilot '%s' accepts bribes but doesn't give price!"), comm_pilot->name );
       d = 0.;
    }
    price = (credits_t) d;
 
    /* Check to see if already bribed. */
    if (price == 0) {
-      dialogue_msg("Bribe Pilot", "\"Money won't save your hide now!\"");
+      dialogue_msg("Bribe Pilot", _("\"Money won't save your hide now!\""));
       return;
    }
 
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
    if (str == NULL)
-      answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %"CREDITS_PRI" credits to not leave you as a hunk of floating debris.\"\n\nPay %"CREDITS_PRI" credits?", price, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %"PRIu64" credits to not leave you as a hunk of floating debris.\"\n\nPay %"PRIu64" credits?"), price, price );
    else
-      answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %"CREDITS_PRI" credits?", str, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %"PRIu64" credits?"), str, price );
 
    /* Said no. */
    if (answer == 0) {
-      dialogue_msg("Bribe Pilot", "You decide not to pay.");
+      dialogue_msg(_("Bribe Pilot"), _("You decide not to pay."));
       return;
    }
 
    /* Check if has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
+      dialogue_msg(_("Bribe Pilot"), _("You don't have enough credits for the bribery."));
       return;
    }
 
    player_modCredits( -price );
    str = comm_getString( "bribe_paid" );
    if (str == NULL)
-      dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
+      dialogue_msg(_("Bribe Pilot"), _("\"Pleasure to do business with you.\""));
    else
-      dialogue_msg("Bribe Pilot", "%s", str);
+      dialogue_msg(_("Bribe Pilot"), "%s", str);
 
    /* Mark as bribed and don't allow bribing again. */
    pilot_setFlag( comm_pilot, PILOT_BRIBED );
@@ -482,11 +473,10 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Don't allow rebribe. */
    if (comm_pilot->ai != NULL) {
-      L = comm_pilot->ai->L;
-      lua_getglobal(L, "mem");
-      lua_pushnumber(L, 0);
-      lua_setfield(L, -2, "bribe");
-      lua_pop(L,1);
+      nlua_getenv(comm_pilot->ai->env, "mem");
+      lua_pushnumber(naevL, 0);
+      lua_setfield(naevL, -2, "bribe");
+      lua_pop(naevL,1);
    }
 
    /* Reopen window. */
@@ -512,28 +502,28 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
 
    /* No bribing. */
    if (comm_planet->bribe_price <= 0.) {
-      dialogue_msg( "Bribe Starport", comm_planet->bribe_msg );
+      dialogue_msg( _("Bribe Starport"), comm_planet->bribe_msg );
       return;
    }
 
    /* Yes/No input. */
-   answer = dialogue_YesNo( "Bribe Starport", comm_planet->bribe_msg );
+   answer = dialogue_YesNo( _("Bribe Starport"), comm_planet->bribe_msg );
 
    /* Said no. */
    if (answer == 0) {
-      dialogue_msg("Bribe Starport", "You decide not to pay.");
+      dialogue_msg(_("Bribe Starport"), _("You decide not to pay."));
       return;
    }
 
    /* Check if has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg("Bribe Starport", "You don't have enough credits for the bribery.");
+      dialogue_msg(_("Bribe Starport"), _("You don't have enough credits for the bribery."));
       return;
    }
 
    /* Pay the money. */
    player_modCredits( -price );
-   dialogue_msg("Bribe Starport", "You have permission to dock.");
+   dialogue_msg(_("Bribe Starport"), _("You have permission to dock."));
 
    /* Mark as bribed and don't allow bribing again. */
    comm_planet->bribed = 1;
@@ -562,20 +552,20 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* Check to see if ship has a no refuel message. */
    msg = comm_getString( "refuel_no" );
    if (msg != NULL) {
-      dialogue_msg( "Request Fuel", msg );
+      dialogue_msg( _("Request Fuel"), msg );
       return;
    }
 
    /* Must need refueling. */
    if (player.p->fuel >= player.p->fuel_max) {
-      dialogue_msg( "Request Fuel", "Your fuel deposits are already full." );
+      dialogue_msg( _("Request Fuel"), _("Your fuel deposits are already full.") );
       return;
    }
 
    /* See if pilot has enough fuel. */
    if (comm_pilot->fuel < 200.) {
-      dialogue_msg( "Request Fuel",
-            "\"Sorry, I don't have enough fuel to spare at the moment.\"" );
+      dialogue_msg( _("Request Fuel"),
+            _("\"Sorry, I don't have enough fuel to spare at the moment.\"") );
       return;
    }
 
@@ -583,31 +573,31 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    ret = comm_getNumber( &val, "refuel" );
    msg = comm_getString( "refuel_msg" );
    if ((ret != 0) || (msg == NULL) || pilot_isFlag(comm_pilot, PILOT_MANUAL_CONTROL)) {
-      dialogue_msg( "Request Fuel", "\"Sorry, I'm busy now.\"" );
+      dialogue_msg( _("Request Fuel"), _("\"Sorry, I'm busy now.\"") );
       return;
    }
    price = (credits_t) val;
 
    /* Check to see if is already refueling. */
    if (pilot_isFlag(comm_pilot, PILOT_REFUELING)) {
-      dialogue_msg( "Request Fuel", "Pilot is already refueling you." );
+      dialogue_msg( _("Request Fuel"), _("Pilot is already refueling you.") );
       return;
    }
 
    /* See if player really wants to pay. */
    if (price > 0) {
-      ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %"CREDITS_PRI" credits?", msg, price );
+      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %"PRIu64" credits?"), msg, price );
       if (ret == 0) {
-         dialogue_msg( "Request Fuel", "You decide not to pay." );
+         dialogue_msg( _("Request Fuel"), _("You decide not to pay.") );
          return;
       }
    }
    else
-      dialogue_msg( "Request Fuel", "%s", msg );
+      dialogue_msg( _("Request Fuel"), "%s", msg );
 
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg( "Request Fuel", "You need %"CREDITS_PRI" more credits!",
+      dialogue_msg( _("Request Fuel"), _("You need %"PRIu64" more credits!"),
             price - player.p->credits);
       return;
    }
@@ -625,7 +615,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* Last message. */
    if (price > 0)
-      dialogue_msg( "Request Fuel", "\"On my way.\"" );
+      dialogue_msg( _("Request Fuel"), _("\"On my way.\"") );
 }
 
 
@@ -643,26 +633,24 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 static int comm_getNumber( double *val, char* str )
 {
    int ret;
-   lua_State *L;
 
    if (comm_pilot->ai == NULL)
       return 1;
 
    /* Set up the state. */
-   L = comm_pilot->ai->L;
-   lua_getglobal( L, "mem" );
+   nlua_getenv(comm_pilot->ai->env, "mem");
 
    /* Get number amount. */
-   lua_getfield( L, -1, str );
+   lua_getfield(naevL, -1, str);
    /* Check to see if it's a number. */
-   if (!lua_isnumber(L, -1))
+   if (!lua_isnumber(naevL, -1))
       ret = 1;
    else {
-      *val = lua_tonumber(L, -1);
+      *val = lua_tonumber(naevL, -1);
       ret = 0;
    }
    /* Clean up. */
-   lua_pop(L, 2);
+   lua_pop(naevL, 2);
    return ret;
 }
 
@@ -681,23 +669,21 @@ static int comm_getNumber( double *val, char* str )
  */
 static const char* comm_getString( char *str )
 {
-   lua_State *L;
    const char *ret;
 
    if (comm_pilot->ai == NULL)
       return NULL;
 
    /* Get memory table. */
-   L = comm_pilot->ai->L;
-   lua_getglobal( L, "mem" );
+   nlua_getenv(comm_pilot->ai->env, "mem");
 
    /* Get str message. */
-   lua_getfield(L, -1, str );
-   if (!lua_isstring(L, -1))
+   lua_getfield(naevL, -1, str );
+   if (!lua_isstring(naevL, -1))
       ret = NULL;
    else
-      ret = lua_tostring(L, -1);
-   lua_pop(L, 2);
+      ret = lua_tostring(naevL, -1);
+   lua_pop(naevL, 2);
 
    return ret;
 }

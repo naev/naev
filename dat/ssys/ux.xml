@@ -17,11 +17,12 @@
   <asset>UX I</asset>
   <asset>UX IIX</asset>
   <asset>UX VII</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Valerie">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Vega">
    <autopos/>

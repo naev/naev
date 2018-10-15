@@ -2,6 +2,8 @@
    The new "slim" GUI
 --]]
 
+playerform = include "dat/scripts/playerform.lua"
+
 function create()
 
    --Get player
@@ -75,7 +77,7 @@ function create()
    bg_armour = tex.open( base .. "bg_armour.png" )
    bg_energy = tex.open( base .. "bg_energy.png" )
    bg_speed = tex.open( base .. "bg_speed.png" )
-   bg_temperature = tex.open( base .. "bg_speed.png" )
+   bg_temperature = bg_speed
    bg_ammo = tex.open( base .. "bg_ammo.png" )
    bg_heat = tex.open( base .. "bg_heat.png" )
    bg_ready = tex.open( base .. "bg_ready.png" )
@@ -156,14 +158,26 @@ function create()
    x_shield = pl_pane_x + 46
    y_shield = pl_pane_y + 137
 
-   bars = { "armour", "energy", "speed", "temperature" }
-   for k,v in ipairs(bars) do
-      _G["x_" .. v] = x_shield
-      _G["y_" .. v] = y_shield - k * 28
-   end
-   bars[#bars] = "shield" -- Used later.
+   bardata = {}
 
-   --Ammo, heat and ready bars bars
+   -- Initialize bar data
+   local types = { "shield", "armour", "energy", "speed", "temperature" }
+   for k,v in ipairs(types) do
+      local bgw, bgh = _G["bg_" .. v]:dim()
+      bardata[v] = {
+         icon = _G["icon_" .. v],
+         col  = _G["col_"  .. v],
+         bg   = _G["bg_" .. v],
+         x = x_shield,
+         y = y_shield - (k-1) * 28,
+         w = bgw,
+         h = bgh
+      }
+   end
+
+   bars = { "armour", "energy", "speed", "shield" }
+
+   --Ammo, heat and ready bars
    bar_weapon_w, bar_weapon_h = bg_ammo:dim()
    bar_ready_w, bar_ready_h = bg_ready:dim()
    track_w, track_h = tracking_light:dim()
@@ -171,11 +185,11 @@ function create()
    y_ammo = pl_pane_y - 27
 
    -- Missile lock warning
-   missile_lock_text = "Warning - Missile Lockon Detected"
+   missile_lock_text = _("Warning - Missile Lockon Detected")
    missile_lock_length = gfx.printDim( false, missile_lock_text )
 
    -- Active cooldown display
-   cooldown_text = "Cooling down..."
+   cooldown_text = _("Cooling down...")
    cooldown_length = gfx.printDim( false, cooldown_text )
 
    --Target Pane
@@ -206,11 +220,42 @@ function create()
    x_shield_sm = ta_pane_x + 13
    y_shield_sm = ta_pane_y + 71
 
-   bars_sm = { "armour_sm", "energy_sm", "speed_sm" }
-   for k,v in ipairs(bars_sm) do
-      _G["x_" .. v] = x_shield_sm
-      _G["y_" .. v] = y_shield_sm - k * 20
+   -- Initialize small bar data
+   local types = { "shield", "armour", "energy", "speed" }
+   for k,v in ipairs(types) do
+      local bgw, bgh = _G["bg_" .. v .. "_sm"]:dim()
+      bardata[v .. "_sm"] = {
+         icon = _G["icon_" .. v .. "_sm"],
+         col  = _G["col_"  .. v],
+         bg   = _G["bg_" .. v .. "_sm"],
+         x = x_shield_sm,
+         y = y_shield_sm - (k-1) * 20,
+         w = bgw,
+         h = bgh
+      }
    end
+
+   bars_sm = { "armour_sm", "energy_sm", "speed_sm" }
+
+   bar_offsets = {
+      normal = {
+         30, -- Bar X, relative to frame
+          7, -- Icon X
+         15, -- Sheen Y
+          6  -- Text Y
+      },
+      small = { 22, 5, 9, 3 }, -- See above.
+      ammo = {
+          2, -- Bar
+         20, -- Refire indicator Y
+          3, -- Sheen
+         13, -- Sheen Y
+         22, -- Refire sheen Y
+          6, -- Text Y
+          2, -- Tracking icon X
+          5  -- Tracking icon Y
+      }
+   }
 
    --Targeted warning light
    ta_warning_x = ta_pane_x + 82
@@ -253,6 +298,11 @@ function create()
    blinkcol = col_txt_enm
    gfxWarn = true
 
+   buttons = {}
+
+   gui.mouseClickEnable(true)
+   gui.mouseMoveEnable(true)
+
    update_target()
    update_ship()
    update_system()
@@ -284,7 +334,7 @@ end
 function update_nav()
    planet = {}
    nav_pnt, nav_hyp = pp:nav()
-   autonav_hyp = player.autonavDest()
+   autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
       gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
@@ -329,15 +379,15 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:known() then
-         navstring = nav_hyp:name()
+         navstring = _(nav_hyp:name())
       else
-         navstring = "Unknown"
+         navstring = _("Unknown")
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
+         navstring = (navstring .. " (%s)"):format( jumps )
       end
    else
-      navstring = "none"
+      navstring = _("none")
    end
 end
 
@@ -348,8 +398,8 @@ function update_faction()
 end
 
 function update_cargo()
-   cargol = pilot.cargoList(pp)
-   cargofree = " (" .. pp:cargoFree() .. "t free)"
+   cargol = pp:cargoList()
+   cargofree = string.format( _(" (%st free)"), pp:cargoFree() )
    cargofreel = gfx.printDim( true, cargofree )
    cargoterml = gfx.printDim( true, ", [...]" )
    cargo = {}
@@ -357,7 +407,7 @@ function update_cargo()
       if v.q == 0 then
          cargo[k] = v.name
       else
-         cargo[k] = string.format( "%d"  .. "t %s", v.q, v.name )
+         cargo[k] = string.format( _("%dt %s"), v.q, _(v.name) )
       end
       if v.m then
          cargo[k] = cargo[k] .. "*"
@@ -376,13 +426,17 @@ end
 
 function update_wset()
    wset_name, wset  = pp:weapset()
+
+-- Currently unused.
+--[[
    weap_icons = {}
 
    for k, v in ipairs( wset ) do
       weap_icons[k] = outfit.get( v.name ):icon()
    end
+--]]
 
-   aset = pp:actives()
+   aset = pp:actives(true)
    active_icons = {}
 
    for k, v in ipairs( aset ) do
@@ -398,131 +452,135 @@ function render_cooldown( percent, seconds )
    gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, col_temperature )
    gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
    gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
-   gfx.print(false, "Cooling down...", cooldown_frame_x,
+   gfx.print(false, _("Cooling down..."), cooldown_frame_x,
          cooldown_bg_y + cooldown_bg_h + 8, col_txt_bar, cooldown_frame_w, true )
 end
 
 
-function render_bar( name, value, txt, txtcol, size, col, bgc )
+function render_bar( data, value, txt, txtcol, size, col, bgc )
+   local offsets
    if size then
-      offsets = { 22, 5, 9, 3 }
+      offsets = bar_offsets['small']
       l_bg_bar = bg_bar_sm
       l_sheen = sheen_sm
-      postfix = "_sm"
    else
-      offsets = { 30, 7, 15, 6 }
+      offsets = bar_offsets['normal']
       l_bg_bar = bg_bar
       l_sheen = sheen
-      postfix = nil
    end
-   local vars = { "icon", "bg", "x", "y", "col" }
-   for k,var in ipairs(vars) do
-      if postfix and var ~= "col" then
-         _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
-      else
-         _G["l_" .. var] = _G[var .. "_" .. name]
-      end
+
+   if not col then
+      col = data.col
    end
-   if col then
-      l_col = col
+
+   if data.bg then
+      gfx.renderTex( data.bg, data.x + offsets[1], data.y + 2)
    end
-   if l_bg then
-      l_bar_w, l_bar_h = l_bg:dim()
-      gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
-   end
+
    if not value then value = 100 end
-   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
-   gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
-   gfx.renderTex( l_bg_bar, l_x, l_y )
-   gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
-   gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
+   if bgc then gfx.renderRect( data.x + offsets[1], data.y + 2, data.w, data.h, bgc ) end
+
+   if value > 0 then
+      gfx.renderRect( data.x + offsets[1], data.y + 2, value/100. * data.w, data.h, col )
+   end
+
+   gfx.renderTex( l_bg_bar, data.x, data.y )
+   gfx.renderTex( data.icon, data.x + offsets[2], data.y + offsets[2] - 3)
+   gfx.renderTex( l_sheen, data.x + offsets[1] + 1, data.y + offsets[3])
 
    if txt then
       small = false
-      if gfx.printDim( false, txt ) > l_bar_w then
+      if gfx.printDim( false, txt ) > data.w then
          small = true
       end
-      gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
+      gfx.print( small, txt, data.x + offsets[1], data.y + offsets[4], txtcol, data.w, true)
    else
-      gfx.print( true, "UNAVAILABLE", l_x + offsets[1], l_y + offsets[4], col_txt_una, l_bar_w, true )
+      gfx.print( true, _("UNAVAILABLE"), data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
    end
 end
 
-function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bgc )
+function render_armourBar( data, value, stress_value, txt, txtcol, size, col, bgc )
+   local offsets
    if size then
-      offsets = { 22, 5, 9, 3 }
+      offsets = bar_offsets['small']
       l_bg_bar = bg_bar_sm
       l_sheen = sheen_sm
-      postfix = "_sm"
    else
-      offsets = { 30, 7, 15, 6 }
+      offsets = bar_offsets['normal']
       l_bg_bar = bg_bar
       l_sheen = sheen
-      postfix = nil
    end
-   local vars = { "icon", "bg", "x", "y", "col" }
-   for k,var in ipairs(vars) do
-      if postfix and var ~= "col" then
-         _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
-      else
-         _G["l_" .. var] = _G[var .. "_" .. name]
-      end
+
+   if not col then
+      col = data.col
    end
-   if col then
-      l_col = col
+
+   if data.bg then
+      gfx.renderTex( data.bg, data.x + offsets[1], data.y + 2)
    end
-   if l_bg then
-      l_bar_w, l_bar_h = l_bg:dim()
-      gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
-   end
+
    if not value then value = 100 end
    if not stress_value then stress_value = 0 end
-   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
-   gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
-   gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
-   gfx.renderTex( l_bg_bar, l_x, l_y )
-   gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
-   gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
+
+   if bgc then gfx.renderRect( data.x + offsets[1], data.y + 2, data.w, data.h, bgc ) end
+   gfx.renderRect( data.x + offsets[1], data.y + 2, value/100. * data.w, data.h, col )
+
+   if stress_value > 0 then
+      gfx.renderRect( data.x + offsets[1], data.y + 2, (stress_value/100) * (value/100) * data.w, data.h, col_stress )
+   end
+
+   gfx.renderTex( l_bg_bar, data.x, data.y )
+   gfx.renderTex( data.icon, data.x + offsets[2], data.y + offsets[2] - 3)
+   gfx.renderTex( l_sheen, data.x + offsets[1] + 1, data.y + offsets[3])
 
    if txt then
       small = false
-      if gfx.printDim( false, txt ) > l_bar_w then
+      if gfx.printDim( false, txt ) > data.w then
          small = true
       end
-      gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
+      gfx.print( small, txt, data.x + offsets[1], data.y + offsets[4], txtcol, data.w, true)
    else
-      gfx.print( true, "UNAVAILABLE", l_x + offsets[1], l_y + offsets[4], col_txt_una, l_bar_w, true )
+      gfx.print( true, _("UNAVAILABLE"), data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
    end
 end
 
 function render_ammoBar( name, x, y, value, txt, txtcol )
-   offsets = { 2, 20, 3, 13, 22, 6, 2, 5 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
+   local offsets = bar_offsets['ammo']
    l_bg = _G["bg_" .. name]
-   if name == "heat" then
-      value[1] = value[1] / 2.
-      if value[1] > .5 then
-         l_col = col_heat2
+   gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
+   gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
+
+   -- Overheat or ammo capacity
+   if value[1] > 0 then
+      if name == "heat" then
+         value[1] = value[1] / 2.
+         if value[1] > .5 then
+            l_col = col_heat2
+         else
+            l_col = col_heat
+         end
       else
          l_col = _G["col_" .. name]
       end
-   else
-      l_col = _G["col_" .. name]
+
+      gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    end
-   gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
-   gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
-   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
-   if value[3] == 2 then
-      gfx.renderTex( bg_bar_weapon_sec, x, y )
-   elseif value[3] == 1 then
+
+   -- Refire indicator
+   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, value[6])
+
+   if value[3] == 1 then
       gfx.renderTex( bg_bar_weapon_prim, x, y )
+   elseif value[3] == 2 then
+      gfx.renderTex( bg_bar_weapon_sec, x, y )
    else
       gfx.renderTex( bg_bar_weapon, x, y )
    end
+
    local textoffset = 0
    local trackcol
    if value[4] then
-      if value[4] == -1 or pilot.player():target() == nil then
+      if value[4] == -1 or ptarget == nil then
          trackcol = col_txt_una
       elseif value[5] then -- Handling missile lock-on.
          if value[4] < 1. then
@@ -545,15 +603,13 @@ end
 
 
 function render( dt, dt_mod )
-
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
-   speed = pp:vel():dist()
+   speed = pp:vel():mod()
    temperature = pp:temp()
    lockons = pp:lockon()
    autonav = player.autonav()
-   wset_name, wset  = pp:weapset(true)
    credits = player.credits()
    update_wset() -- Ugly.
 
@@ -571,7 +627,7 @@ function render( dt, dt_mod )
 
    local txt = {}
    for k,v in ipairs(bars) do
-      txt[v] = string.format( "%s%% (%s)", round(_G[v]), round( stats[v] * _G[v] / 100 ) )
+      txt[v] = round(_G[v]) .. "% (" .. round( stats[v] * _G[v] / 100 ) .. ")"
    end
 
    --Shield
@@ -582,7 +638,7 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_bar( "shield", shield, txt["shield"], col )
+   render_bar( bardata['shield'], shield, txt["shield"], col )
 
    --Armour
    if armour <= 20. then
@@ -590,7 +646,7 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_armourBar( "armour", armour, stress, txt["armour"], col )
+   render_armourBar( bardata['armour'], armour, stress, txt["armour"], col )
 
    --Energy
    if energy == 0. then
@@ -600,15 +656,17 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_bar( "energy", energy, txt["energy"], col )
+   render_bar( bardata['energy'], energy, txt["energy"], col )
 
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100,0)
-   txt = string.format( "%d%% (%d)", hspeed, round(speed) )
+   local hspeed
+   if stats.speed_max <= 0 then hspeed = 0
+   else hspeed = round(speed / stats.speed_max * 100) end
+   txt = hspeed .. "% (" .. round(speed) .. ")"
    if hspeed <= 100. then
-      render_bar( "speed", hspeed, txt, col_txt_bar )
+      render_bar( bardata['speed'], hspeed, txt, col_txt_bar )
    elseif hspeed <= 200. then
-      render_bar( "speed", hspeed - 100, txt, col_txt_wrn, nil, col_speed2, col_speed )
+      render_bar( bardata['speed'], hspeed - 100, txt, col_txt_wrn, nil, col_speed2, col_speed )
    else
       timers[1] = timers[1] - dt / dt_mod
       if timers[1] <=0. then
@@ -620,13 +678,13 @@ function render( dt, dt_mod )
          end
       end
       col = blinkcol
-      render_bar( "speed", 100, txt, col, nil, col_speed2)
+      render_bar( bardata['speed'], 100, txt, col, nil, col_speed2)
    end
 
    -- Temperature
    txt = round(temperature) .. "K"
    temperature = math.max( math.min( (temperature - 250)/1.75, 100 ), 0 )
-   render_bar( "temperature", temperature, txt, col_txt_bar )
+   render_bar( bardata['temperature'], temperature, txt, col_txt_bar )
 
    --Weapon bars
    for num, weapon in ipairs(wset) do
@@ -640,22 +698,60 @@ function render( dt, dt_mod )
             txt = string.gsub(txt,"Launcher", "L.")
          end
 
-         txt = txt .. " (" .. tostring( weapon.left) .. ")"
+         txt = txt .. " (" .. weapon.left .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
          else
             col = col_txt_bar
          end
-         if not weapon.in_arc and pilot.player():target() ~= nil then
+         if not weapon.in_arc and ptarget ~= nil then
             col = col_txt_una
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon, weapon.lockon }
-         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col, 2, col_ammo )
+         values = {weapon.left_p, weapon.cooldown, weapon.level,
+               weapon.track or weapon.lockon, weapon.lockon, col_ready }
+         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col)
       else
          col = col_txt_bar
-         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track}
-         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col, 2, col_heat )
+         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track, nil, col_ready}
+
+         if weapon.charge then
+            values[2] = weapon.charge
+            if weapon.charge == 1 or weapon.cooldown == 0 then
+               values[6] = col_energy
+            else
+               values[6] = col_txt_wrn
+            end
+         end
+
+         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col )
       end
+   end
+
+   -- Formation selection button
+   if #pp:followers() ~= 0 then
+      local x = x_ammo
+      local y = y_ammo - #wset * 28 - 15
+      local width, height = bg_bar_weapon:dim()
+
+      if buttons["formation"] == nil then
+          buttons["formation"] = {}
+      end
+
+      local button = buttons["formation"]
+      button.x = x
+      button.y = y - height
+      button.w = width
+      button.h = height
+      button.action = playerform
+
+      local col = colour.new( .10, .10, .10 )
+      if button.state == "mouseover" then
+          col = colour.new( .25, .25, .25 )
+      end
+
+      gfx.renderRect( x, y, width, height, col)
+      gfx.renderTex( bg_bar_weapon, x, y )
+      gfx.print( true, "Set formation", x, y + 8, col_txt_bar, width, true )
    end
 
    --Warning Light
@@ -672,7 +768,7 @@ function render( dt, dt_mod )
          end
       end
       if gfxWarn then
-         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
+         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 7 )
       end
       if timers[3] <= -0.5 then
          timers[3] = 0.5
@@ -683,9 +779,7 @@ function render( dt, dt_mod )
 
    if armour <= 20 then
       gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
-   elseif armour <= 50 then
-      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
-   elseif shield <= 50 then
+   elseif shield <= 50 or armour <= 50 then
       gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
    else
       gfx.renderTex( warnlight5, pl_pane_x + 6, pl_pane_y + 148 )
@@ -722,6 +816,11 @@ function render( dt, dt_mod )
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
          end
 
+         if aset[i].weapset then
+            gfx.print( true, aset[i].weapset, slot_x + slot_img_offs_x + 5,
+                  slot_y + slot_img_offs_y + 5, col_txt_bar, slot_w, false )
+         end
+
          gfx.renderTex( slot, slot_x, slot_y ) -- Frame
       end
 
@@ -742,7 +841,6 @@ function render( dt, dt_mod )
             ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
             ta_energy = ptarget:energy()
-            ta_speed = ptarget:vel():dist()
 
             --Render target graphic
             if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
@@ -759,24 +857,24 @@ function render( dt, dt_mod )
          ta_pos = ptarget:pos()
          ta_dist = pp:pos():dist( ta_pos )
          ta_dir = ptarget:dir()
-         ta_speed = ptarget:vel():dist()
+         ta_speed = ptarget:vel():mod()
 
          --Title
-         gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 190, col_txt_top )
+         gfx.print( false, _("TARGETED"), ta_pane_x + 14, ta_pane_y + 190, col_txt_top )
 
          --Text, warning light & other texts
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
          if ta_scanned then
             --Bar Texts
-            shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
-            arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
-            ene = tostring( round(ta_energy) ) .. "%"
+            shi = round(ta_shield) .. "% (" .. round(ta_stats.shield  * ta_shield / 100) .. ")"
+            arm = round(ta_armour) .. "% (" .. round(ta_stats.armour  * ta_armour / 100) .. ")"
+            ene = round(ta_energy) .. "%"
             if ta_stats.speed_max < 1 then
                spe = round(ta_speed)
                colspe, colspe2 = nil
                spetxtcol = col_txt_bar
             else
-               spe = tostring( htspeed ) .. "% (" .. tostring(round(ta_speed)) .. ")"
+               spe = htspeed .. "% (" .. round(ta_speed) .. ")"
                   if htspeed <= 100. then
                   spetxtcol = col_txt_bar
                   colspe = col_speed
@@ -812,11 +910,11 @@ function render( dt, dt_mod )
             -- Status information
             local status
             if ta_disabled then
-               status = "Disabled"
+               status = _("Disabled")
             elseif tflags["boardable"] then
-               status = "Boardable"
+               status = _("Boardable")
             elseif ptarget:cooldown() then
-               status = "Cooling Down"
+               status = _("Cooling Down")
             end
 
             if status then
@@ -829,7 +927,7 @@ function render( dt, dt_mod )
             else
                col = ptarget:colour()
             end
-            gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 176, col )
+            gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 176, col, ta_pane_w - 28 )
          else
             -- Unset stats.
             shi, ene, arm = nil
@@ -848,24 +946,24 @@ function render( dt, dt_mod )
             gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
 
             --Pilot name
-            gfx.print( true, "Unknown", ta_pane_x + 14, ta_pane_y + 176, col_txt_una )
+            gfx.print( true, _("Unknown"), ta_pane_x + 14, ta_pane_y + 176, col_txt_una )
          end
 
          -- Render bars.
-         render_bar( "shield", ta_shield, shi, col_txt_bar, "sm")
-         render_armourBar( "armour", ta_armour, ta_stress, arm, col_txt_bar, "sm")
-         render_bar( "energy", ta_energy, ene, col_txt_bar, "sm")
-         render_bar( "speed", htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
+         render_bar( bardata['shield_sm'], ta_shield, shi, col_txt_bar, "sm")
+         render_armourBar( bardata['armour_sm'], ta_armour, ta_stress, arm, col_txt_bar, "sm")
+         render_bar( bardata['energy_sm'], ta_energy, ene, col_txt_bar, "sm")
+         render_bar( bardata['speed_sm'], htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
 
          --Dist
-         gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
+         gfx.print( true, _("DIST"), ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
          if ta_dist then
             local str = largeNumber( ta_dist, 1 )
             gfx.print( false, str, ta_pane_x + ta_pane_w - 15 - gfx.printDim(false, str), ta_pane_y +142, col_txt_std, 60, false )
          end
 
          --Dir
-         gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 160, col_txt_top )
+         gfx.print(true, _("DIR"), ta_pane_x + 86, ta_pane_y + 160, col_txt_top )
 
          -- Render dir sprite.
          local x, y = target_dir:spriteFromDir( ta_dir )
@@ -875,7 +973,6 @@ function render( dt, dt_mod )
 
    -- Planet pane
    if nav_pnt then
-      local col = col_txt_std
       ta_pnt_dist = pp:pos():dist( planet.pos )
 
       -- Extend the pane depending on the services available.
@@ -896,9 +993,9 @@ function render( dt, dt_mod )
       else
          gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
       end
-      gfx.print( true, "TARGETED", ta_pnt_pane_x + 14, ta_pnt_pane_y + 164, col_txt_top )
-      gfx.print( true, "DISTANCE:", ta_pnt_pane_x + 35, ta_pnt_pane_y - 14, col_txt_top )
-      gfx.print( true, "CLASS:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
+      gfx.print( true, _("TARGETED"), ta_pnt_pane_x + 14, ta_pnt_pane_y + 164, col_txt_top )
+      gfx.print( true, _("DISTANCE:"), ta_pnt_pane_x + 35, ta_pnt_pane_y - 14, col_txt_top )
+      gfx.print( true, _("CLASS:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
 
       if ta_pnt_faction_gfx then
          gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
@@ -909,11 +1006,11 @@ function render( dt, dt_mod )
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.
-      local x, y = target_dir:spriteFromDir( ta_pnt_dir )
+      local x, y = target_dir:spriteFromDir( ta_pnt_dir, true )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
 
       gfx.print( true, planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
-      gfx.print( true, "SERVICES:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
+      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
 
       -- Space out the text.
       services_h = 60
@@ -924,7 +1021,7 @@ function render( dt, dt_mod )
             services_h = services_h + 14
          end
       else
-         gfx.print( true, "none", ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
+         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
@@ -932,22 +1029,21 @@ function render( dt, dt_mod )
    end
 
    --Bottom bar
-   local length = 5, navstring, fuel, fuelstring, consume
+   local length = 5, navstring, fuelstring
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
-   fuel, consume = player.fuel()
-   local jumps = math.floor(fuel/consume)
-   if jumps == 1 then
-      fuelstring = jumps .. " Jump"
-   elseif jumps > 1 then
-      fuelstring = jumps .. " Jumps"
+   local jumps = player.jumps()
+   local fuel = player.fuel()
+
+   if fuel > 0 then
+      fuelstring = string.format( gettext.ngettext("%d (%d jump)", "%d (%d jumps)", jumps), fuel, jumps)
    else
-      fuelstring = "none"
+      fuelstring = _("none")
    end
 
-   local bartext = { "Pilot: ", pname, "System: ", sysname, "Time: ", time.str(), "Credits: ",
-         largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
-         "WSet: ", wset_name, "Cargo: " }
+   local bartext = { _("Pilot: "), pname, _("System: "), sysname, _("Time: "), time.str(), _("Credits: "),
+         largeNumber( credits, 2 ), _("Nav: "), navstring, _("Fuel: "), fuelstring,
+         _("WSet: "), wset_name, _("Cargo: ") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( true, v, length, 5, col_txt_top )
@@ -981,8 +1077,8 @@ function render( dt, dt_mod )
 
       length = length + gfx.printDim( true, cargstring )
    else
-      gfx.print( true, "none", length, 6, col_txt_una )
-      length = length + gfx.printDim( true, "none" ) + 6
+      gfx.print( true, _("none"), length, 6, col_txt_una )
+      length = length + gfx.printDim( true, _("none") ) + 6
    end
    gfx.print( true, cargofree, length, 6, col_txt_std )
 end
@@ -996,7 +1092,7 @@ function largeNumber( number, idp )
       len = math.floor(math.log10(number))
       formatted = roundto( number / 10^math.floor(len-len%3), idp) .. units[(math.floor(len/3))]
    else
-      formatted = "Too big!"
+      formatted = _("Too big!")
    end
    return formatted
 end
@@ -1010,4 +1106,63 @@ function round(num)
 end
 
 function destroy()
+end
+
+function mouse_click( button, x, y, state )
+   if button ~= 2 then
+      return false
+   else
+      lmouse = state
+      pressed = mouseInsideButton( x, y )
+      
+      if pressed == nil then
+         if not state then
+            for _,v in pairs(buttons) do
+               if v.state ~= "disabled" and v.state ~= "hilighted" then
+                  v.state = "default"
+               end
+            end
+         end
+         return false
+      else
+         if state then
+            if pressed.state ~= "disabled" then
+               pressed.state = "pressed"
+            end
+            return true
+         else
+            if pressed.state ~= "disabled" then
+               pressed.state = "default"
+               pressed.action()
+            end
+            return true
+         end
+      end
+   end
+end
+
+function mouse_move( x, y )
+   pressed = mouseInsideButton( x, y )
+   if pressed ~= nil then
+      if pressed.state ~= "disabled" and not lmouse then
+         pressed.state = "mouseover"
+      elseif pressed.state ~= "disabled" and lmouse then
+         pressed.state = "pressed"
+      end
+   else
+      for _,v in pairs(buttons) do
+         if v.state ~= "disabled" and v.state ~= "hilighted" then
+            v.state = "default"
+         end
+      end
+   end
+end
+
+function mouseInsideButton( x, y )
+   for _, v in pairs(buttons) do
+      if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
+         return v
+      end
+   end
+   return nil
 end

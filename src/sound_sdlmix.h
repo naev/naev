@@ -32,6 +32,7 @@ void sound_mix_free( alSound *snd );
  */
 int sound_mix_volume( const double vol );
 double sound_mix_getVolume (void);
+double sound_mix_getVolumeLog (void);
 
 
 /*

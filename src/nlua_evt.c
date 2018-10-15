@@ -54,7 +54,7 @@ static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
 static int evt_save( lua_State *L );
 static int evt_claim( lua_State *L );
-static const luaL_reg evt_methods[] = {
+static const luaL_Reg evt_methods[] = {
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
    { "save", evt_save },
@@ -71,9 +71,9 @@ static const luaL_reg evt_methods[] = {
  * @brief Loads the event Lua library.
  *    @param L Lua state.
  */
-int nlua_loadEvt( lua_State *L )
+int nlua_loadEvt( nlua_env env )
 {
-   luaL_register(L, "evt", evt_methods);
+   nlua_register(env, "evt", evt_methods, 0);
    return 0;
 }
 
@@ -81,25 +81,14 @@ int nlua_loadEvt( lua_State *L )
 /**
  * @brief Sets up the Lua environment to run a function.
  */
-lua_State *event_setupLua( Event_t *ev, const char *func )
+void event_setupLua( Event_t *ev, const char *func )
 {
-   lua_State *L;
-
-   /* Load event. */
-   L = ev->L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-#endif /* DEBUGGING */
-
    /* Set up event pointer. */
-   lua_pushlightuserdata( L, ev );
-   lua_setglobal( L, "__evt" );
+   lua_pushlightuserdata( naevL, ev );
+   nlua_setenv( ev->env, "__evt" );
 
    /* Get function. */
-   lua_getglobal(L, func );
-
-   return L;
+   nlua_getenv(ev->env, func );
 }
 
 
@@ -108,19 +97,23 @@ lua_State *event_setupLua( Event_t *ev, const char *func )
  */
 int event_runLua( Event_t *ev, const char *func )
 {
+   int ret;
    event_setupLua( ev, func );
-   return event_runLuaFunc( ev, func, 0 );
+   ret = event_runLuaFunc( ev, func, 0 );
+   return ret;
 }
 
 
 /**
  * @brief Gets the current running event from user data.
+ *
+ * This should ONLY be called below an nlua_pcall, so __NLUA_CURENV is set
  */
 Event_t *event_getFromLua( lua_State *L )
 {
    Event_t *ev;
 
-   lua_getglobal( L, "__evt" );
+   nlua_getenv(__NLUA_CURENV, "__evt");
    ev = (Event_t*) lua_touserdata( L, -1 );
    lua_pop( L, 1 );
    return ev;
@@ -135,40 +128,27 @@ Event_t *event_getFromLua( lua_State *L )
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 {
-   int ret, errf;
+   int ret;
    const char* err;
-   lua_State *L;
    int evt_delete;
 
-   /* Comfortability. */
-   L = ev->L;
-
-#if DEBUGGING
-   errf = -2-nargs;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
-   ret = lua_pcall(L, nargs, 0, errf);
+   ret = nlua_pcall(ev->env, nargs, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
-         WARN("Event '%s' -> '%s': %s",
-               event_getData(ev->id), func, (err) ? err : "unknown error");
+         WARN(_("Event '%s' -> '%s': %s"),
+               event_getData(ev->id), func, (err) ? err : _("unknown error"));
          ret = -1;
       }
       else
          ret = 1;
-      lua_pop(L, 1);
+      lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(L, 1);
-#endif /* DEBUGGING */
 
    /* Time to remove the event. */
-   lua_getglobal( L, "__evt_delete" );
-   evt_delete = lua_toboolean(L,-1);
-   lua_pop(L,1);
+   nlua_getenv(ev->env, "__evt_delete");
+   evt_delete = lua_toboolean(naevL,-1);
+   lua_pop(naevL,1);
    if (evt_delete) {
       ret = 2;
       event_remove( ev->id );
@@ -183,12 +163,12 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *
  * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
- *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
- *    @luaparam desc Description associated to the NPC.
- *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
- *    @luareturn The ID of the NPC to pass to npcRm.
+ *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
+ *    @luatparam string name Name of the NPC
+ *    @luatparam string portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
+ *    @luatparam string desc Description associated to the NPC.
+ *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
+ *    @luatreturn number The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd( func, name, portrait, desc, priority )
  */
 static int evt_npcAdd( lua_State *L )
@@ -233,7 +213,7 @@ static int evt_npcAdd( lua_State *L )
  *
  * @usage evt.npcRm( npc_id )
  *
- *    @luaparam id ID of the NPC to remove.
+ *    @luatparam number id ID of the NPC to remove.
  * @luafunc npcRm( id )
  */
 static int evt_npcRm( lua_State *L )
@@ -248,7 +228,7 @@ static int evt_npcRm( lua_State *L )
    ret = npc_rm_event( id, cur_event->id );
 
    if (ret != 0)
-      NLUA_ERROR(L, "Invalid NPC ID!");
+      NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
@@ -256,8 +236,8 @@ static int evt_npcRm( lua_State *L )
 /**
  * @brief Finishes the event.
  *
- *    @luaparam properly If true and the event is unique it marks the event
- *                     as completed.  If false or nil it deletes the event but
+ *    @luatparam[opt=false] boolean properly If true and the event is unique it marks the event
+ *                     as completed. If false it deletes the event but
  *                     doesn't mark it as completed.
  * @luafunc finish( properly )
  */
@@ -266,11 +246,12 @@ static int evt_finish( lua_State *L )
    int b;
    Event_t *cur_event;
 
+   cur_event = event_getFromLua(L);
+
    b = lua_toboolean(L,1);
    lua_pushboolean( L, 1 );
-   lua_setglobal( L, "__evt_delete" );
+   nlua_setenv(cur_event->env, "__evt_delete");
 
-   cur_event = event_getFromLua(L);
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );
 
@@ -286,7 +267,7 @@ static int evt_finish( lua_State *L )
  *
  * @usage evt.save() -- Saves an event, which is by default disabled.
  *
- *    @luaparam enable If true or nil sets the event to save, otherwise tells the event to not save.
+ *    @luatparam[opt=true] boolean enable If true sets the event to save, otherwise tells the event to not save.
  * @luafunc save( enable )
  */
 static int evt_save( lua_State *L )
@@ -304,24 +285,25 @@ static int evt_save( lua_State *L )
 
 
 /**
- * @brief Tries to claim systems.
+ * @brief Tries to claim systems or strings.
  *
- * Claiming systems is a way to avoid mission/event collisions preemptively.
+ * Claiming systems and strings is a way to avoid mission collisions preemptively.
  *
- * Note it does not actually claim the systems if it fails to claim. It also
- *  does not work more then once.
+ * Note it does not actually perform the claim if it fails to claim. It also
+ *  does not work more than once.
  *
  * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
  * @usage if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
+ * @usage if not evt.claim( 'some_string' ) then evt.finish( false ) end
+ * @usage if not evt.claim( { system.get("Gamma Polaris"), 'some_string' } ) then evt.finish( false ) end
  *
- *    @luaparam systems Table of systems to claim or a single system.
- *    @luareturn true if was able to claim, false otherwise.
- * @luafunc claim( systems )
+ *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
+ *    @luatreturn boolean true if was able to claim, false otherwise.
+ * @luafunc claim( params )
  */
 static int evt_claim( lua_State *L )
 {
-   LuaSystem *ls;
-   SysClaim_t *claim;
+   Claim_t *claim;
    Event_t *cur_event;
 
    /* Get current event. */
@@ -329,7 +311,7 @@ static int evt_claim( lua_State *L )
 
    /* Check to see if already claimed. */
    if (cur_event->claims != NULL) {
-      NLUA_ERROR(L, "Event trying to claim but already has.");
+      NLUA_ERROR(L, _("Event trying to claim but already has."));
       return 0;
    }
 
@@ -341,17 +323,17 @@ static int evt_claim( lua_State *L )
       /* Iterate over table. */
       lua_pushnil(L);
       while (lua_next(L, 1) != 0) {
-         if (lua_issystem(L,-1)) {
-            ls = lua_tosystem( L, -1 );
-            claim_add( claim, ls->id );
-         }
+         if (lua_issystem(L,-1))
+            claim_addSys( claim, lua_tosystem( L, -1 ) );
+         else if (lua_isstring(L,-1))
+            claim_addStr( claim, lua_tostring( L, -1 ) );
          lua_pop(L,1);
       }
    }
-   else if (lua_issystem(L, 1)) {
-      ls = lua_tosystem( L, 1 );
-      claim_add( claim, ls->id );
-   }
+   else if (lua_issystem(L, 1))
+      claim_addSys( claim, lua_tosystem( L, 1 ) );
+   else if (lua_isstring(L, 1))
+      claim_addStr( claim, lua_tostring( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
 

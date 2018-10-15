@@ -39,7 +39,7 @@
 #include "nstring.h"
 #include <stdarg.h> /* va_list for gl_print */
 
-#include <zlib.h> /* Z_DEFAULT_COMPRESSION */ 
+#include <zlib.h> /* Z_DEFAULT_COMPRESSION */
 #include <png.h>
 
 #include "SDL.h"
@@ -69,6 +69,10 @@ static int gl_view_x = 0; /* X viewport offset. */
 static int gl_view_y = 0; /* Y viewport offset. */
 static int gl_view_w = 0; /* Viewport width. */
 static int gl_view_h = 0; /* Viewport height. */
+
+
+/* Whether Intel is the OpenGL vendor. */
+static int intel_vendor = 0;
 
 
 /*
@@ -175,12 +179,12 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    ss_surface = SDL_CreateRGBSurface( SDL_SRCCOLORKEY, ss_w, ss_h, 32, RGBAMASK );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
    if (ss_surface == NULL) {
-      WARN("Unable to create RGB surface.");
+      WARN(_("Unable to create RGB surface."));
       return -1;
    }
    if (SDL_FillRect( ss_surface, NULL,
             SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-      WARN("Unable to fill rect: %s", SDL_GetError());
+      WARN(_("Unable to fill rect: %s"), SDL_GetError());
       return 0;
    }
 
@@ -290,6 +294,20 @@ GLboolean gl_hasExt( char *name )
 }
 
 
+/**
+ * @brief Returns whether the OpenGL vendor is Intel.
+ *
+ * This is a bit ugly, but it seems that Intel integrated graphics tend to lie
+ * about their capabilities with regards to smooth points and lines.
+ *
+ *    @return 1 if Intel is the vendor, 0 otherwise.
+ */
+int gl_vendorIsIntel (void)
+{
+   return intel_vendor;
+}
+
+
 #ifdef DEBUGGING
 /**
  * @brief Checks and reports if there's been an error.
@@ -307,32 +325,32 @@ void gl_checkHandleError( const char *func, int line )
 
    switch (err) {
       case GL_INVALID_ENUM:
-         errstr = "GL invalid enum";
+         errstr = _("GL invalid enum");
          break;
       case GL_INVALID_VALUE:
-         errstr = "GL invalid value";
+         errstr = _("GL invalid value");
          break;
       case GL_INVALID_OPERATION:
-         errstr = "GL invalid operation";
+         errstr = _("GL invalid operation");
          break;
       case GL_STACK_OVERFLOW:
-         errstr = "GL stack overflow";
+         errstr = _("GL stack overflow");
          break;
       case GL_STACK_UNDERFLOW:
-         errstr = "GL stack underflow";
+         errstr = _("GL stack underflow");
          break;
       case GL_OUT_OF_MEMORY:
-         errstr = "GL out of memory";
+         errstr = _("GL out of memory");
          break;
       case GL_TABLE_TOO_LARGE:
-         errstr = "GL table too large";
+         errstr = _("GL table too large");
          break;
 
       default:
-         errstr = "GL unknown error";
+         errstr = _("GL unknown error");
          break;
    }
-   WARN("OpenGL error [%s:%d]: %s", func, line, errstr);
+   WARN(_("OpenGL error [%s:%d]: %s"), func, line, errstr);
 }
 #endif /* DEBUGGING */
 
@@ -356,7 +374,7 @@ static int gl_setupAttributes (void)
 #if SDL_VERSION_ATLEAST(1,2,10)
       SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 #else /* SDL_VERSION_ATLEAST(1,2,10) */
-      DEBUG("VSync unsupported on old SDL versions (before 1.2.10).");
+      DEBUG(_("VSync unsupported on old SDL versions (before 1.2.10)."));
 #endif /* SDL_VERSION_ATLEAST(1,2,10) */
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
@@ -411,13 +429,13 @@ static int gl_setupFullscreen( unsigned int *flags )
    /* Failed to find. */
    if (!supported) {
       if (j<0) {
-         ERR("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!",
+         ERR(_("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!"),
                SCREEN_W, SCREEN_H);
       }
 
       SDL_GetDisplayMode( 0, j, &mode );
-      WARN("Fullscreen mode %dx%d is not supported by your setup\n"
-            "   switching to %dx%d",
+      WARN(_("Fullscreen mode %dx%d is not supported by your setup\n"
+            "   switching to %dx%d"),
             SCREEN_W, SCREEN_H,
             mode.w, mode.h );
       gl_screen.w = mode.w;
@@ -427,18 +445,18 @@ static int gl_setupFullscreen( unsigned int *flags )
    /* Get available modes and see what we can use. */
    SDL_Rect** modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
    if (modes == NULL) { /* rare case, but could happen */
-      WARN("No fullscreen modes available");
+      WARN(_("No fullscreen modes available"));
       if ((*flags) & SDL_FULLSCREEN) {
-         WARN("Disabling fullscreen mode");
+         WARN(_("Disabling fullscreen mode"));
          (*flags) &= ~SDL_FULLSCREEN;
       }
    }
    else if (modes == (SDL_Rect **)-1)
-      DEBUG("All fullscreen modes available");
+      DEBUG(_("All fullscreen modes available"));
    else {
-      DEBUG("Available fullscreen modes:");
+      DEBUG(_("Available fullscreen modes:"));
       for (i=0; modes[i]; i++) {
-         DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
+         DEBUG(_("  %d x %d"), modes[i]->w, modes[i]->h);
          if (((*flags) & SDL_FULLSCREEN) && (modes[i]->w == SCREEN_W) &&
                (modes[i]->h == SCREEN_H))
             supported = 1; /* mode we asked for is supported */
@@ -458,12 +476,12 @@ static int gl_setupFullscreen( unsigned int *flags )
          }
       }
       if (j<0) {
-         ERR("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!",
+         ERR(_("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!"),
                SCREEN_W, SCREEN_H);
       }
 
-      WARN("Fullscreen mode %dx%d is not supported by your setup\n"
-            "   switching to %dx%d",
+      WARN(_("Fullscreen mode %dx%d is not supported by your setup\n"
+            "   switching to %dx%d"),
             SCREEN_W, SCREEN_H,
             modes[j]->w, modes[j]->h );
       gl_screen.w = modes[j]->w;
@@ -484,18 +502,27 @@ static int gl_createWindow( unsigned int flags )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
    int ret;
+   int w, h;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
+         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
-      ERR("Unable to create window!");
+      ERR(_("Unable to create window!"));
+
+   /* Reinitialize resolution parameters. */
+   if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
+      SDL_GetWindowSize( gl_screen.window, &w, &h );
+
+   /* Set focus loss behaviour. */
+   SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
+         conf.minimize ? "1" : "0" );
 
    /* Create the OpenGL context, note we don't need an actual renderer. */
    gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
    if (!gl_screen.context)
-      ERR("Unable to create OpenGL context!");
+      ERR(_("Unable to create OpenGL context!"));
 
    /* Set Vsync. */
    if (conf.vsync) {
@@ -513,23 +540,23 @@ static int gl_createWindow( unsigned int flags )
    gl_screen.depth = 32;
    depth = SDL_VideoModeOK( SCREEN_W, SCREEN_H, gl_screen.depth, flags);
    if (depth == 0)
-      WARN("Video Mode %dx%d @ %d bpp not supported"
-           "   going to try to create it anyways...",
+      WARN(_("Video Mode %dx%d @ %d bpp not supported"
+           "   going to try to create it anyways..."),
             SCREEN_W, SCREEN_H, gl_screen.depth );
    if (depth != gl_screen.depth)
-      DEBUG("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
+      DEBUG(_("Depth %d bpp unavailable, will use %d bpp"), gl_screen.depth, depth);
    gl_screen.depth = depth;
 
    /* Actually creating the screen. */
-   if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
+   if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags )==NULL) {
       /* Try again possibly disabling FSAA. */
       if (conf.fsaa > 1) {
-         LOG("Unable to create OpenGL window: Trying without FSAA.");
+         LOG(_("Unable to create OpenGL window: Trying without FSAA."));
          SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
          SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
       }
       if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
-         ERR("Unable to create OpenGL window: %s", SDL_GetError());
+         ERR(_("Unable to create OpenGL window: %s"), SDL_GetError());
          return -1;
       }
    }
@@ -550,6 +577,7 @@ static int gl_createWindow( unsigned int flags )
 static int gl_getGLInfo (void)
 {
    int doublebuf;
+   char *vendor;
 
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
@@ -566,28 +594,32 @@ static int gl_getGLInfo (void)
    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &gl_screen.multitex_max);
 
+   /* Ugly, but Intel hardware seems to be uniquely problematic. */
+   vendor = (char*)glGetString(GL_VENDOR);
+   intel_vendor = !!(nstrcasestr(vendor, "Intel") != NULL);
+
    /* Debug happiness */
-   DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", SCREEN_W, SCREEN_H, gl_screen.depth,
-         gl_has(OPENGL_FULLSCREEN)?"fullscreen":"window");
-   DEBUG("r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d",
+   DEBUG(_("OpenGL Window Created: %dx%d@%dbpp %s"), SCREEN_W, SCREEN_H, gl_screen.depth,
+         gl_has(OPENGL_FULLSCREEN)?_("fullscreen"):_("window"));
+   DEBUG(_("r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"),
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
-         gl_has(OPENGL_DOUBLEBUF) ? "yes" : "no",
+         gl_has(OPENGL_DOUBLEBUF) ? _("yes") : _("no"),
          gl_screen.fsaa, gl_screen.tex_max);
-   DEBUG("vsync: %s, vbo: %s, mm: %s, compress: %s, npot: %s",
-         gl_has(OPENGL_VSYNC) ? "yes" : "no",
-         gl_vboIsHW() ? "yes" : "no",
-         gl_texHasMipmaps() ? "yes" : "no",
-         gl_texHasCompress() ? "yes" : "no",
-         gl_needPOT() ? "no" : "yes" );
-   DEBUG("Renderer: %s", glGetString(GL_RENDERER));
-   DEBUG("Version: %s", glGetString(GL_VERSION));
+   DEBUG(_("vsync: %s, vbo: %s, mm: %s, compress: %s, npot: %s"),
+         gl_has(OPENGL_VSYNC) ? _("yes") : _("no"),
+         gl_vboIsHW() ? _("yes") : _("no"),
+         gl_texHasMipmaps() ? _("yes") : _("no"),
+         gl_texHasCompress() ? _("yes") : _("no"),
+         gl_needPOT() ? _("no") : _("yes") );
+   DEBUG(_("Renderer: %s"), glGetString(GL_RENDERER));
+   DEBUG(_("Version: %s"), glGetString(GL_VERSION));
 
    /* Now check for things that can be bad. */
    if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
-      WARN("Missing texture units (%d required, %d found)",
+      WARN(_("Missing texture units (%d required, %d found)"),
             OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
    if ((conf.fsaa > 1) && (gl_screen.fsaa != conf.fsaa))
-      WARN("Unable to get requested FSAA level (%d requested, got %d)",
+      WARN(_("Unable to get requested FSAA level (%d requested, got %d)"),
             conf.fsaa, gl_screen.fsaa );
 
    return 0;
@@ -621,31 +653,23 @@ static int gl_defState (void)
  */
 static int gl_setupScaling (void)
 {
+   int minwh;
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
+   /* Small windows get handled here. */
+   minwh = MIN(gl_screen.nw, gl_screen.nh);
+   if (minwh < 600) {
+      if (gl_screen.scale != 1.)
+         DEBUG(_("Screen size too small, upscaling..."));
+      gl_screen.scale = (double)minwh / 600.;
+      /* Rescale. */
+      gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
+      gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
+   }
    /* Viewport matches new window size. */
    gl_screen.w  = gl_screen.nw;
    gl_screen.h  = gl_screen.nh;
-   /* Small windows get handled here. */
-   if ((SCREEN_W < 600) && (SCREEN_W <= SCREEN_H)) {
-      if (gl_screen.scale != 1.)
-         DEBUG("Screen size too small, upscaling...");
-      gl_screen.scale = (double)gl_screen.w / 600.;
-      /* Must keep the proportion the same for the screen. */
-      gl_screen.h  = (gl_screen.h * 600) / SCREEN_W;
-      gl_screen.nh = (gl_screen.rh * SCREEN_W) / 600;
-      gl_screen.w  = 600;
-   }
-   else if ((SCREEN_H < 600) && (SCREEN_W >= SCREEN_H)) {
-      if (gl_screen.scale != 1.)
-         DEBUG("Screen size too small, upscaling...");
-      gl_screen.scale = (double)gl_screen.h / 600.;
-      /* Must keep the proportion the same for the screen. */
-      gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
-      gl_screen.nw = (gl_screen.rw * SCREEN_H) / 600;
-      gl_screen.h  = 600;
-   }
    /* Set scale factors. */
    gl_screen.wscale  = (double)gl_screen.nw / (double)gl_screen.w;
    gl_screen.hscale  = (double)gl_screen.nh / (double)gl_screen.h;
@@ -687,6 +711,7 @@ int gl_init (void)
    int dw, dh;
 
    /* Defaults. */
+   /* desktop_w and desktop_h get set in naev.c when initializing. */
    dw = gl_screen.desktop_w;
    dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
@@ -703,13 +728,16 @@ int gl_init (void)
    if (conf.vsync)
       gl_screen.flags |= OPENGL_VSYNC;
 #endif /* !SDL_VERSION_ATLEAST(2,0,0) */
+
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
-   gl_setScale( conf.scalefactor );
    if (conf.fullscreen) {
       gl_screen.flags |= OPENGL_FULLSCREEN;
 #if SDL_VERSION_ATLEAST(2,0,0)
-      flags |= SDL_WINDOW_FULLSCREEN;
+      if (conf.modesetting)
+         flags |= SDL_WINDOW_FULLSCREEN;
+      else
+         flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
       flags |= SDL_FULLSCREEN;
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -717,7 +745,7 @@ int gl_init (void)
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
+      WARN(_("Unable to initialize SDL Video: %s"), SDL_GetError());
       return -1;
    }
 
@@ -737,12 +765,8 @@ int gl_init (void)
    /* Set default opengl state. */
    gl_defState();
 
-   /* Set up possible scaling. */
-   gl_setupScaling();
-
-   /* Handle setting the default viewport. */
-   gl_setDefViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-   gl_defViewport();
+   /* Handles resetting the viewport and scaling, rw/rh are set in createWindow. */
+   gl_resize( gl_screen.rw, gl_screen.rh );
 
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
@@ -769,20 +793,28 @@ int gl_init (void)
    return 0;
 }
 
-
 /**
- * @brief Sets the scale factor.
+ * @brief Handles a window resize and resets gl_screen parametes.
  *
- *    @param scalefactor Factor to scale by.
+ *    @param w New width.
+ *    @param h New height.
  */
-double gl_setScale( double scalefactor )
+void gl_resize( int w, int h )
 {
-   gl_screen.scale = 1./scalefactor;
+   glViewport( 0, 0, w, h );
 
-   /* Return actual used scalefactor. */
-   return gl_screen.scale;
+   gl_screen.rw = w;
+   gl_screen.rh = h;
+
+   /* Reset scaling. */
+   gl_screen.scale = 1./conf.scalefactor;
+
+   gl_setupScaling();
+   gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
+   gl_defViewport();
+
+   gl_checkErr();
 }
-
 
 /**
  * @brief Sets the opengl viewport.
@@ -839,8 +871,18 @@ void gl_defViewport (void)
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 {
-   *sx = gl_screen.mxscale * (double)(wx - gl_screen.x);
-   *sy = gl_screen.myscale * (double)(gl_screen.rh - wy - gl_screen.y);
+   *sx = gl_screen.mxscale * (double)wx - (double)gl_screen.x;
+   *sy = gl_screen.myscale * (double)(gl_screen.rh - wy) - (double)gl_screen.y;
+}
+
+
+/**
+ * @Brief Translates the screen position to windos position.
+ */
+void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
+{
+   *wx = (sx + (double)gl_screen.x) / gl_screen.mxscale;
+   *wy = (double)gl_screen.rh - (sy + (double)gl_screen.y) / gl_screen.myscale;
 }
 
 
@@ -881,17 +923,17 @@ static int write_png( const char *file_name, png_bytep *rows,
 
    /* Open file for writing. */
    if (!(fp = fopen(file_name, "wb"))) {
-      WARN("Unable to open '%s' for writing.", file_name);
+      WARN(_("Unable to open '%s' for writing."), file_name);
       return -1;
    }
 
    /* Create working structs. */
    if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
-      WARN("Unable to create png write struct.");
+      WARN(_("Unable to create png write struct."));
       goto ERR_FAIL;
    }
    if (!(info_ptr = png_create_info_struct(png_ptr))) {
-      WARN("Unable to create PNG info struct.");
+      WARN(_("Unable to create PNG info struct."));
       goto ERR_FAIL;
    }
 

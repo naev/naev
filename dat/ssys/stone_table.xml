@@ -16,13 +16,13 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Pultatis">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Seelie">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Sollav">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

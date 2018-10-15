@@ -60,6 +60,9 @@ static double nebu_dt   = 0.; /**< How fast nebula changes. */
 /* puff textures */
 static glTexture *nebu_pufftexs[NEBULA_PUFFS]; /**< Nebula puffs. */
 
+/* Misc. */
+static int nebu_loaded = 0; /**< Whether the nebula has been loaded. */
+
 /* VBOs */
 static gl_vbo *nebu_vboOverlay   = NULL; /**< Overlay VBO. */
 static gl_vbo *nebu_vboBG        = NULL; /**< BG VBO. */
@@ -121,12 +124,10 @@ static int nebu_init_recursive( int iter )
    char nebu_file[PATH_MAX];
    SDL_Surface* nebu_sur;
    int ret;
-   GLfloat vertex[4*3*2];
-   GLfloat tw, th;
 
    /* Avoid too much recursivity. */
    if (iter > 3) {
-      WARN("Unable to generate nebula after 3 attempts, something has really gone wrong!");
+      WARN(_("Unable to generate nebula after 3 attempts, something has really gone wrong!"));
       return -1;
    }
 
@@ -160,7 +161,7 @@ static int nebu_init_recursive( int iter )
       if (nebu_sur == NULL)
          goto no_nebula;
       if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
-         WARN("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)",
+         WARN(_("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)"),
                nebu_sur->w, nebu_sur->h, nebu_w, nebu_h );
 
       /* Load the texture */
@@ -173,9 +174,38 @@ static int nebu_init_recursive( int iter )
    nebu_generatePuffs();
 
    /* Display loaded nebulas. */
-   DEBUG("Loaded %d Nebula Layers", NEBULA_Z);
+   DEBUG(_("Loaded %d Nebula Layers"), NEBULA_Z);
 
-   /* Create the VBO. */
+   nebu_vbo_init();
+   nebu_loaded = 1;
+
+   return 0;
+no_nebula:
+   LOG(_("No nebula found, generating (this may take a while)."));
+
+   /* So we generate and reload */
+   ret = nebu_generate();
+   if (ret != 0) /* An error has happened - break recursivity*/
+      return ret;
+
+   return nebu_init_recursive( iter+1 );
+}
+
+
+/**
+ * @brief Initializes the nebula VBO.
+ */
+void nebu_vbo_init (void)
+{
+   GLfloat vertex[4*3*2];
+   GLfloat tw, th;
+
+   /* Free the VBO if it exists. */
+   if (nebu_vboBG != NULL) {
+      gl_vboDestroy( nebu_vboBG );
+      nebu_vboBG = NULL;
+   }
+
    /* Vertex. */
    vertex[0] = 0;
    vertex[1] = 0;
@@ -206,17 +236,12 @@ static int nebu_init_recursive( int iter )
    vertex[22] = tw;
    vertex[23] = th;
    nebu_vboBG = gl_vboCreateStatic( sizeof(GLfloat) * (4*2*3), vertex );
+}
 
-   return 0;
-no_nebula:
-   LOG("No nebula found, generating (this may take a while).");
 
-   /* So we generate and reload */
-   ret = nebu_generate();
-   if (ret != 0) /* An error has happened - break recursivity*/
-      return ret;
-
-   return nebu_init_recursive( iter+1 );
+int nebu_isLoaded (void)
+{
+   return nebu_loaded;
 }
 
 
@@ -247,7 +272,7 @@ static int nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
    nebu_sur = gl_prepareSurface( sur );
    if ((w!=0) && (h!=0) &&
          ((nebu_sur->w != w) || (nebu_sur->h != h))) {
-      WARN("Nebula size doesn't match expected! (%dx%d instead of %dx%d)",
+      WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
             nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
       return -1;
    }
@@ -733,7 +758,7 @@ static int nebu_generate (void)
    int ret;
 
    /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebula (slow, run once)..." );
+   loadscreen_render( 0.05, _("Generating Nebula (slow, run once)...") );
 
    /* Get resolution to create at. */
    w = SCREEN_W;
@@ -748,7 +773,7 @@ static int nebu_generate (void)
    nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
 
    /* Start saving - compression can take a bit. */
-   loadscreen_render( 0.05, "Compressing Nebula layers..." );
+   loadscreen_render( 0.05, _("Compressing Nebula layers...") );
 
    /* Save each nebula as an image */
    for (i=0; i<NEBULA_Z; i++) {
@@ -775,7 +800,7 @@ static void nebu_generatePuffs (void)
    float *nebu;
 
    /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebula Puffs..." );
+   loadscreen_render( 0.05, _("Generating Nebula Puffs...") );
 
    /* Generate the nebula puffs */
    for (i=0; i<NEBULA_PUFFS; i++) {
@@ -853,12 +878,12 @@ static SDL_Surface* loadNebula( const char* file )
    nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
    rw    = SDL_RWFromFile( file_path, "rb" );;
    if (rw == NULL) {
-      WARN("Unable to create rwops from Nebula image: %s", file);
+      WARN(_("Unable to create rwops from Nebula image: %s"), file);
       return NULL;
    }
    npng  = npng_open( rw );
    if (npng == NULL) {
-      WARN("Unable to open Nebula image: %s", file);
+      WARN(_("Unable to open Nebula image: %s"), file);
       SDL_RWclose( rw );
       return NULL;
    }
@@ -866,7 +891,7 @@ static SDL_Surface* loadNebula( const char* file )
    npng_close( npng );
    SDL_RWclose( rw );
    if (sur == NULL) {
-      WARN("Unable to load Nebula image: %s", file);
+      WARN(_("Unable to load Nebula image: %s"), file);
       return NULL;
    }
 

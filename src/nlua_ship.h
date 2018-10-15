@@ -10,31 +10,24 @@
 #include <lua.h>
 
 #include "ship.h"
+#include "nlua.h"
 
 
 #define SHIP_METATABLE   "ship" /**< Ship metatable identifier. */
 
 
-/**
- * @brief Lua Ship wrapper.
- */
-typedef struct LuaShip_s {
-   Ship *ship; /**< Ship pointer. */
-} LuaShip; /**< Wrapper for a Ship. */
-
-
 /*
  * Library loading
  */
-int nlua_loadShip( lua_State *L, int readonly );
+int nlua_loadShip( nlua_env env );
 
 /*
  * Ship operations
  */
-LuaShip* lua_toship( lua_State *L, int ind );
-LuaShip* luaL_checkship( lua_State *L, int ind );
+Ship* lua_toship( lua_State *L, int ind );
+Ship* luaL_checkship( lua_State *L, int ind );
 Ship* luaL_validship( lua_State *L, int ind );
-LuaShip* lua_pushship( lua_State *L, LuaShip ship );
+Ship** lua_pushship( lua_State *L, Ship *ship );
 int lua_isship( lua_State *L, int ind );
 
 

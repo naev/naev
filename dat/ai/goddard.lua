@@ -9,25 +9,25 @@ mem.aggressive = true
 function create ()
 
    -- Credits
-   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
+   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Bribing
    bribe_no = {
-         "\"You insult my honour.\"",
-         "\"I find your lack of honour disturbing.\"",
-         "\"You disgust me.\"",
-         "\"Bribery carries a harsh penalty.\"",
-         "\"House Goddard does not lower itself to common scum.\""
+         _("\"You insult my honour.\""),
+         _("\"I find your lack of honour disturbing.\""),
+         _("\"You disgust me.\""),
+         _("\"Bribery carries a harsh penalty.\""),
+         _("\"House Goddard does not lower itself to common scum.\"")
    }
    mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 
    -- Refueling
-   p = ai.getPlayer()
-   if ai.exists(p) then
+   p = player.pilot()
+   if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then mem.refuel = mem.refuel * 0.7 end
-      mem.refuel_msg = string.format( "\"I could do you the favour of refueling for the price of %d credits.\"",
+      mem.refuel_msg = string.format( _("\"I could do you the favour of refueling for the price of %d credits.\""),
             mem.refuel )
    end
 
@@ -41,12 +41,12 @@ end
 function taunt ( target, offense )
    -- Offense is not actually used
    taunts = {
-         "Prepare to face annihilation!",
-         "I shall wash my hull in your blood!",
-         "Your head will make a great trophy!",
-         "These moments will be your last!",
-         "You are a parasite!"
+         _("Prepare to face annihilation!"),
+         _("I shall wash my hull in your blood!"),
+         _("Your head will make a great trophy!"),
+         _("These moments will be your last!"),
+         _("You are a parasite!")
    }
-   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 

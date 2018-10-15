@@ -1,7 +1,7 @@
 ACLOCAL_AMFLAGS = --install -I m4
 
-SUBDIRS = lib src
-DIST_SUBDIRS = lib src
+SUBDIRS = po lib src
+DIST_SUBDIRS = po lib src
 
 if HAVE_UTILS
 SUBDIRS += utils
@@ -24,7 +24,7 @@ MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
 NAEV	     = naev$(EXEEXT)
 
-EXTRA_DIST = LICENSE extras naev.desktop naev.appdata.xml
+EXTRA_DIST = build/config.rpath  LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 .PHONY: docs utils help install-ndata
@@ -83,7 +83,7 @@ docs:
 help:
 	@echo "Possible targets are:"
 	@echo "        all - builds everything"
-	@echo "      ndata - creates the ndata file"
+	@echo "  ndata.zip - creates the ndata file"
 	@echo "       docs - creates the doxygen documentation"
 	@echo "      clean - removes binaries and object files"
 	@echo "    install - installs naev"

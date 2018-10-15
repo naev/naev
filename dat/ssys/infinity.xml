@@ -7,7 +7,7 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>405.645567</x>
+  <x>428.645567</x>
   <y>-706.178283</y>
  </pos>
  <assets>
@@ -16,6 +16,8 @@
   <asset>Infinity VII</asset>
   <asset>Ramen</asset>
   <asset>Timu</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Gruz">
@@ -23,6 +25,10 @@
    <hide>1.250000</hide>
   </jump>
   <jump target="Maus">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Millstone">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

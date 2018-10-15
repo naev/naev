@@ -20,6 +20,7 @@
 #include "player.h"
 #include "space.h"
 #include "gui.h"
+#include "slots.h"
 #include "nstring.h"
 
 
@@ -95,12 +96,12 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
       /* Compensate for enemy hide factor. */
-      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_hide);
+      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide);
 
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
          o->u.ammo.lockon_timer = max;
-  
+
       /* Trigger lockon hook. */
       if (!locked && (o->u.ammo.lockon_timer < 0.))
          pilot_runHook( p, PILOT_HOOK_LOCKON );
@@ -124,7 +125,7 @@ void pilot_lockClear( Pilot *p )
          continue;
       if (!outfit_isSeeker(o->outfit))
          continue;
- 
+
       /* Clear timer. */
       o->u.ammo.lockon_timer = o->outfit->u.lau.lockon;
 
@@ -315,9 +316,13 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->nturrets++;
    else if (outfit_isBolt(outfit))
       pilot->ncannons++;
+   else if (outfit_isJammer(outfit))
+      pilot->njammers++;
+   else if (outfit_isAfterburner(outfit))
+      pilot->nafterburners++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
-      s->u.beamid = -1;
+      s->u.beamid = 0;
       pilot->nbeams++;
    }
    if (outfit_isLauncher(outfit)) {
@@ -353,20 +358,20 @@ int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int w
    /* See if slot has space. */
    if (s->outfit != NULL) {
       if (warn)
-         WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
+         WARN( _("Pilot '%s': trying to add outfit '%s' to slot that already has an outfit"),
                pilot->name, outfit->name );
       return -1;
    }
-   else if ((outfit_cpu(outfit) > 0) &&
-         (pilot->cpu < outfit_cpu(outfit))) {
+   else if ((outfit_cpu(outfit) < 0) &&
+         (pilot->cpu < ABS( outfit_cpu(outfit) ))) {
       if (warn)
-         WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
+         WARN( _("Pilot '%s': Not enough CPU to add outfit '%s'"),
                pilot->name, outfit->name );
       return -1;
    }
    else if ((str = pilot_canEquip( pilot, s, outfit)) != NULL) {
       if (warn)
-         WARN( "Pilot '%s': Trying to add outfit but %s",
+         WARN( _("Pilot '%s': Trying to add outfit but %s"),
                pilot->name, str );
       return -1;
    }
@@ -451,7 +456,7 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 
    str = pilot_canEquip( pilot, s, NULL );
    if (str != NULL) {
-      WARN("Pilot '%s': Trying to remove outfit but %s",
+      WARN(_("Pilot '%s': Trying to remove outfit but %s"),
             pilot->name, str );
       return -1;
    }
@@ -514,45 +519,45 @@ int pilot_slotsCheckRequired( Pilot *p )
 const char* pilot_checkSpaceworthy( Pilot *p )
 {
    if (!pilot_slotsCheckSanity(p))
-      return "Doesn't fit slot";
+      return _("Doesn't fit slot");
 
    /* CPU. */
    if (p->cpu < 0)
-      return "Insufficient CPU";
+      return _("Insufficient CPU");
 
    /* Movement. */
    if (p->thrust < 0.)
-      return "Insufficient Thrust";
+      return _("Insufficient Thrust");
    if (p->speed < 0.)
-      return "Insufficient Speed";
+      return _("Insufficient Speed");
    if (p->turn < 0.)
-      return "Insufficient Turn";
+      return _("Insufficient Turn");
 
    /* Health. */
    if (p->armour_max < 0.)
-      return "Insufficient Armour";
+      return _("Insufficient Armour");
    if (p->armour_regen < 0.)
-      return "Insufficient Armour Regeneration";
+      return _("Insufficient Armour Regeneration");
    if (p->shield_max < 0.)
-      return "Insufficient Shield";
+      return _("Insufficient Shield");
    if (p->shield_regen < 0.)
-      return "Insufficient Shield Regeneration";
+      return _("Insufficient Shield Regeneration");
    if (p->energy_max < 0.)
-      return "Insufficient Energy";
+      return _("Insufficient Energy");
    if (p->energy_regen < 0.)
-      return "Insufficient Energy Regeneration";
+      return _("Insufficient Energy Regeneration");
 
    /* Misc. */
    if (p->fuel_max < 0.)
-      return "Insufficient Fuel Maximum";
+      return _("Insufficient Fuel Maximum");
    if (p->fuel_consumption < 0.)
-      return "Insufficient Fuel Consumption";
+      return _("Insufficient Fuel Consumption");
    if (p->cargo_free < 0)
-      return "Insufficient Free Cargo Space";
-   
+      return _("Insufficient Free Cargo Space");
+
    /* Core Slots */
    if (!pilot_slotsCheckRequired(p))
-      return "Not All Core Slots are equipped";
+      return _("Not All Core Slots are equipped");
 
    /* All OK. */
    return NULL;
@@ -574,28 +579,28 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    int ret = 0;
 
    /* Core Slots */
-   SPACEWORTHY_CHECK( !pilot_slotsCheckRequired(p), "Not All Core Slots are equipped\n" );
+   SPACEWORTHY_CHECK( !pilot_slotsCheckRequired(p), _("Not All Core Slots are equipped\n") );
    /* CPU. */
-   SPACEWORTHY_CHECK( p->cpu < 0, "Insufficient CPU\n" );
+   SPACEWORTHY_CHECK( p->cpu < 0, _("Insufficient CPU\n") );
 
    /* Movement. */
-   SPACEWORTHY_CHECK( p->thrust < 0, "Insufficient Thrust\n" );
-   SPACEWORTHY_CHECK( p->speed < 0,  "Insufficient Speed\n" );
-   SPACEWORTHY_CHECK( p->turn < 0,   "Insufficient Turn\n" );
+   SPACEWORTHY_CHECK( p->thrust < 0, _("Insufficient Thrust\n") );
+   SPACEWORTHY_CHECK( p->speed < 0,  _("Insufficient Speed\n") );
+   SPACEWORTHY_CHECK( p->turn < 0,   _("Insufficient Turn\n") );
 
    /* Health. */
-   SPACEWORTHY_CHECK( p->armour < 0.,       "Insufficient Armour\n" );
-   SPACEWORTHY_CHECK( p->armour_regen < 0., "Insufficient Armour Regeneration\n" );
-   SPACEWORTHY_CHECK( p->shield < 0.,       "Insufficient Shield\n" );
-   SPACEWORTHY_CHECK( p->shield_regen < 0., "Insufficient Shield Regeneration\n" );
-   SPACEWORTHY_CHECK( p->energy_max < 0.,   "Insufficient Energy\n" );
-   SPACEWORTHY_CHECK( p->energy_regen < 0., "Insufficient Energy Regeneration\n" );
+   SPACEWORTHY_CHECK( p->armour < 0.,       _("Insufficient Armour\n") );
+   SPACEWORTHY_CHECK( p->armour_regen < 0., _("Insufficient Armour Regeneration\n") );
+   SPACEWORTHY_CHECK( p->shield < 0.,       _("Insufficient Shield\n") );
+   SPACEWORTHY_CHECK( p->shield_regen < 0., _("Insufficient Shield Regeneration\n") );
+   SPACEWORTHY_CHECK( p->energy_max < 0.,   _("Insufficient Energy\n") );
+   SPACEWORTHY_CHECK( p->energy_regen < 0., _("Insufficient Energy Regeneration\n") );
 
    /* Misc. */
-   SPACEWORTHY_CHECK( p->fuel_max < 0.,         "Insufficient Fuel Maximum\n" );
-   SPACEWORTHY_CHECK( p->fuel_consumption < 0., "Insufficient Fuel Consumption\n" );
-   SPACEWORTHY_CHECK( p->cargo_free < 0,        "Insufficient Free Cargo Space\n" );
-   
+   SPACEWORTHY_CHECK( p->fuel_max < 0.,         _("Insufficient Fuel Maximum\n") );
+   SPACEWORTHY_CHECK( p->fuel_consumption < 0., _("Insufficient Fuel Consumption\n") );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,        _("Insufficient Free Cargo Space\n") );
+
    /*buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
       buf[bufSize-4]='.';
@@ -606,7 +611,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    else {
       if (pos == 0)
          /*string is empty so no errors encountered */
-         nsnprintf( buf, bufSize, "Spaceworthy");
+         nsnprintf( buf, bufSize, _("Spaceworthy"));
       else
          /*string is not empty, so trunc the last newline */
          buf[pos-1]='\0';
@@ -649,20 +654,20 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 {
    /* Just in case. */
    if ((p==NULL) || (s==NULL))
-      return "Nothing selected.";
+      return _("Nothing selected.");
 
    if (o!=NULL) {
       /* Check slot type. */
       if (!outfit_fitsSlot( o, &s->sslot->slot ))
-         return "Does not fit slot.";
+         return _("Does not fit slot.");
       /* Check outfit limit. */
       if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
-         return "Already have an outfit of this type installed";
+         return _("Already have an outfit of this type installed");
    }
    else {
       /* Check fighter bay. */
       if ((o==NULL) && (s!=NULL) && (s->u.ammo.deployed > 0))
-         return "Recall the fighters first";
+         return _("Recall the fighters first");
    }
 
    return NULL;
@@ -685,32 +690,32 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
 
    /* Failure cases. */
    if (s->outfit == NULL) {
-      WARN("Pilot '%s': Trying to add ammo to unequiped slot.", pilot->name );
+      WARN(_("Pilot '%s': Trying to add ammo to unequiped slot."), pilot->name );
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
-      WARN("Pilot '%s': Trying to add ammo to non-launcher/fighterbay type outfit '%s'",
+      WARN(_("Pilot '%s': Trying to add ammo to non-launcher/fighterbay type outfit '%s'"),
             pilot->name, s->outfit->name);
       return 0;
    }
    else if (!outfit_isAmmo(ammo) && !outfit_isFighter(ammo)) {
-      WARN( "Pilot '%s': Trying to add non-ammo/fighter type outfit '%s' as ammo.",
+      WARN( _("Pilot '%s': Trying to add non-ammo/fighter type outfit '%s' as ammo."),
             pilot->name, ammo->name );
       return 0;
    }
    else if (outfit_isLauncher(s->outfit) && outfit_isFighter(ammo)) {
-      WARN("Pilot '%s': Trying to add fighter '%s' as launcher '%s' ammo",
+      WARN(_("Pilot '%s': Trying to add fighter '%s' as launcher '%s' ammo"),
             pilot->name, ammo->name, s->outfit->name );
       return 0;
    }
    else if (outfit_isFighterBay(s->outfit) && outfit_isAmmo(ammo)) {
-      WARN("Pilot '%s': Trying to add ammo '%s' as fighter bay '%s' ammo",
+      WARN(_("Pilot '%s': Trying to add ammo '%s' as fighter bay '%s' ammo"),
             pilot->name, ammo->name, s->outfit->name );
       return 0;
    }
    else if ((s->u.ammo.outfit != NULL) && (s->u.ammo.quantity > 0) &&
          (s->u.ammo.outfit != ammo)) {
-      WARN("Pilot '%s': Trying to add ammo to outfit that already has ammo.",
+      WARN(_("Pilot '%s': Trying to add ammo to outfit that already has ammo."),
             pilot->name );
       return 0;
    }
@@ -746,11 +751,11 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 
    /* Failure cases. */
    if (s->outfit == NULL) {
-      WARN("Pilot '%s': Trying to remove ammo from unequiped slot.", pilot->name );
+      WARN(_("Pilot '%s': Trying to remove ammo from unequiped slot."), pilot->name );
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
-      WARN("Pilot '%s': Trying to remove ammo from non-launcher/fighter bay type outfit '%s'",
+      WARN(_("Pilot '%s': Trying to remove ammo from non-launcher/fighter bay type outfit '%s'"),
             pilot->name, s->outfit->name);
       return 0;
    }
@@ -847,7 +852,7 @@ char* pilot_getOutfits( const Pilot* pilot )
    }
 
    if (p==0)
-      p += nsnprintf( &buf[p], len-p, "None" );
+      p += nsnprintf( &buf[p], len-p, _("None") );
 
    return buf;
 }
@@ -864,13 +869,14 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
-   ShipStats amount, *s;
+   ShipStats amount, *s, *default_s;
 
    /*
     * set up the basic stuff
     */
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
+   pilot->base_mass     = pilot->solid->mass;
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
@@ -898,11 +904,10 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
-   pilot->nebu_absorb_shield   = 0;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
-   /* Stats. */ 
+   /* Stats. */
    s = &pilot->stats;
-   memcpy( s, &pilot->ship->stats_array, sizeof(ShipStats) );
+   *s = pilot->ship->stats_array;
    memset( &amount, 0, sizeof(ShipStats) );
 
    /*
@@ -924,6 +929,15 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
+      /* Keep a separate counter for required (core) outfits. */
+      if (sp_required( o->slot.spid ))
+         pilot->base_mass += o->mass;
+
+      /* Add ammo mass. */
+      if (outfit_ammo(o) != NULL)
+         if (slot->u.ammo.outfit != NULL)
+            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+
       if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
 
@@ -937,13 +951,13 @@ void pilot_calcStats( Pilot* pilot )
          pilot->turn_base     += o->u.mod.turn;
          pilot->speed_base    += o->u.mod.speed;
          /* Health. */
+         pilot->dmg_absorb    += o->u.mod.absorb;
          pilot->armour_max    += o->u.mod.armour;
          pilot->armour_regen  += o->u.mod.armour_regen;
          pilot->shield_max    += o->u.mod.shield;
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         pilot->nebu_absorb_shield += o->u.mod.nebu_absorb_shield;
          pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
@@ -955,7 +969,7 @@ void pilot_calcStats( Pilot* pilot )
           * Stats.
           */
          ss_statsModFromList( s, o->u.mod.stats, &amount );
-     
+
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
@@ -965,31 +979,15 @@ void pilot_calcStats( Pilot* pilot )
          pilot->jamming        = 1;
          pilot->energy_loss   += o->u.jam.energy;
       }
-
-      /* Add ammo mass. */
-      if (outfit_ammo(o) != NULL) {
-         if (slot->u.ammo.outfit != NULL)
-            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
-      }
    }
 
    if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
       pilot->solid->speed_max = pilot->speed;
 
-   /* Set final energy tau. */
-   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-
    /* Slot voodoo. */
    s = &pilot->stats;
-   /*
-    * Electronic warfare setting base parameters.
-    */
-   s->ew_hide            = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect          = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jump_detect     = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1,0)) );
-   pilot->ew_base_hide   = s->ew_hide;
-   pilot->ew_detect      = s->ew_detect;
-   pilot->ew_jump_detect = s->ew_jump_detect;
+   default_s = &pilot->ship->stats_array;
+
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -998,22 +996,23 @@ void pilot_calcStats( Pilot* pilot )
     *  6x 15% -> 42.51%
     */
    if (amount.fwd_firerate > 0) {
-      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
+      s->fwd_firerate = default_s->fwd_firerate + (s->fwd_firerate-default_s->fwd_firerate) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
    }
    /* Cruiser. */
    if (amount.tur_firerate > 0) {
-      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
+      s->tur_firerate = default_s->tur_firerate + (s->tur_firerate-default_s->tur_firerate) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
    }
    /*
     * Electronic warfare setting base parameters.
-    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
     */
-   s->ew_hide           = 1. + (s->ew_hide-1.)        * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.)      * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
-   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
-   pilot->ew_base_hide  = s->ew_hide;
-   pilot->ew_detect     = s->ew_detect;
-   pilot->ew_jump_detect = pow2(s->ew_jump_detect);
+   s->ew_hide           = default_s->ew_hide + (s->ew_hide-default_s->ew_hide)                      * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
+   s->ew_detect         = default_s->ew_detect + (s->ew_detect-default_s->ew_detect)                * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
+   s->ew_jump_detect    = default_s->ew_jump_detect + (s->ew_jump_detect-default_s->ew_jump_detect) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
+
+   /* Square the internal values to speed up comparisons. */
+   pilot->ew_base_hide   = pow2( s->ew_hide );
+   pilot->ew_detect      = pow2( s->ew_detect );
+   pilot->ew_jump_detect = pow2( s->ew_jump_detect );
 
    /*
     * Relative increases.
@@ -1036,6 +1035,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
    pilot->cap_cargo    *= s->cargo_mod;
+   s->engine_limit     *= s->engine_limit_rel;
 
    /*
     * Flat increases.
@@ -1049,6 +1049,9 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
    pilot->fuel   = fc * pilot->fuel_max;
+
+   /* Set final energy tau. */
+   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Cargo has to be reset. */
    pilot_cargoCalc(pilot);
@@ -1075,6 +1078,10 @@ void pilot_healLanded( Pilot *pilot )
    pilot->armour = pilot->armour_max;
    pilot->shield = pilot->shield_max;
    pilot->energy = pilot->energy_max;
+
+   pilot->stress = 0.;
+   pilot->stimer = 0.;
+   pilot->sbonus = 0.;
 }
 
 

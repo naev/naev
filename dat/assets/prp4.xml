@@ -11,12 +11,12 @@
  <presence>
   <faction>Za'lek</faction>
   <value>10.000000</value>
-  <range>7</range>
+  <range>0</range>
  </presence>
  <general>
   <class>3</class>
   <population>25000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>
@@ -29,9 +29,7 @@
    <commodity>Medicine</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
-  <description>One of four stations devoted to houses much of the research and knowledge that House Za'lek has accumilated and continues to accumilate. Many of the the most prestegious scinetific organizations make its main headquarters on these stations.</description>
+  <description>One of four stations devoted to houses much of the research and knowledge that House Za'lek has accumulated and continues to accumilate. Many of the the most prestigious scientific organizations make its main headquarters on these stations.</description>
   <bar>A rather eclectic bar with various 'enhancements' and upgrades that make it into a mad scientist's dream and a neat freak's nightmare.</bar>
  </general>
- <tech>
- </tech>
 </asset>

@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>14000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>emp_mil_omega</land>
    <refuel/>
@@ -31,7 +31,7 @@
    <commodity>Medicine</commodity>
   </commodities>
   <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space.</description>
-  <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
+  <bar>The Omega Canteen is a dark place that seems calm, although every time a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
  </general>
  <tech>
   <item>Hulls Medium</item>

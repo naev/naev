@@ -25,6 +25,7 @@
 #define SPFX_GFX_PATH            "dat/gfx/spfx/" /**< location of the graphic */
 #define FACTION_LOGO_PATH        "dat/gfx/logo/" /**< Path to logo gfx. */
 #define SOUND_PATH               "dat/snd/sounds/" /**< Location of the sounds. */
+#define COMMODITY_GFX_PATH          "dat/gfx/commodity/" /**< Path to commodities graphics. */
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "dat/mission.xml" /**< Path to missions XML. */
@@ -35,6 +36,7 @@
 #define FLEET_DATA_PATH          "dat/fleet.xml" /**< Where to find fleet data. */
 #define TECH_DATA_PATH           "dat/tech.xml"   /**< XML file containing techs. */
 #define DIFF_DATA_PATH           "dat/unidiff.xml" /**< Unidiff XML file. */
+#define ASTERO_DATA_PATH         "dat/asteroids.xml" /**< Asteroid types XML file. */
 
 #define MISSION_LUA_PATH         "dat/missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "dat/events/" /**< Path to Lua files. */
@@ -54,7 +56,7 @@
 #define START_DATA_PATH          "dat/start.xml" /**< Path to module start file. */
 
 #define FONT_DEFAULT_PATH        "dat/font.ttf" /**< Default font path. */
-#define OMSG_FONT_DEFAULT_PATH   "dat/mono.ttf" /**< Default font path. */
+#define FONT_MONOSPACE_PATH      "dat/mono.ttf" /**< Default monospace font path. */
 
 #define LUA_INCLUDE_PATH         "dat/scripts/" /**< Path for Lua includes. */
 #define AI_PATH                  "dat/ai/" /**< Location of the AI files. */
@@ -78,10 +80,10 @@ const char* ndata_name (void);
  * Individual file functions.
  */
 int ndata_exists( const char* filename );
-void* ndata_read( const char* filename, uint32_t *filesize );
-char** ndata_list( const char *path, uint32_t* nfiles );
-char** ndata_listRecursive( const char *path, uint32_t* nfiles );
-void ndata_sortName( char **files, uint32_t nfiles );
+void* ndata_read( const char* filename, size_t *filesize );
+char** ndata_list( const char *path, size_t* nfiles );
+char** ndata_listRecursive( const char *path, size_t* nfiles );
+void ndata_sortName( char **files, size_t nfiles );
 
 
 /*
