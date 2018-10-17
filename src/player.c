@@ -1786,7 +1786,7 @@ void player_brokeHyperspace (void)
    cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
-   player.p->fuel -= player.p->fuel_consumption;
+   player.p->DELETETHIS_fuel -= player.p->DELETETHIS_fuel_consumption;
 
    /* stop hyperspace */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );
@@ -3058,7 +3058,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
       xmlw_elem(writer,"location","%s",loc);
 
    /* save the fuel */
-   xmlw_elem(writer,"fuel","%f",ship->fuel);
+   xmlw_elem(writer,"fuel","%f",ship->DELETETHIS_fuel);
 
    /* save the outfits */
    xmlw_startElem(writer,"outfits_structure");
@@ -3777,7 +3777,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* Test for sanity. */
    if (fuel >= 0)
-      ship->fuel = MIN(ship->fuel_max, fuel);
+      ship->DELETETHIS_fuel = MIN(ship->DELETETHIS_fuel_max, fuel);
    if ((is_player == 0) && (planet_get(loc)==NULL))
       loc = planet;
    /* ships can now be non-spaceworthy on save

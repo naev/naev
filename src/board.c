@@ -285,11 +285,11 @@ static void board_stealFuel( unsigned int wdw, char* str )
 
    p = pilot_get(player.p->target);
 
-   if (p->fuel <= 0.) { /* no fuel. */
+   if (p->DELETETHIS_fuel <= 0) { /* no fuel. */
       player_message(_("\apThe ship has no fuel."));
       return;
    }
-   else if (player.p->fuel == player.p->fuel_max) {
+   else if (player.p->DELETETHIS_fuel == player.p->DELETETHIS_fuel_max) {
       player_message(_("\arYour ship is at maximum fuel capacity."));
       return;
    }
@@ -298,13 +298,13 @@ static void board_stealFuel( unsigned int wdw, char* str )
       return;
 
    /* Steal fuel. */
-   player.p->fuel += p->fuel;
-   p->fuel = 0.;
+   player.p->DELETETHIS_fuel += p->DELETETHIS_fuel;
+   p->DELETETHIS_fuel = 0.;
 
    /* Make sure doesn't overflow. */
-   if (player.p->fuel > player.p->fuel_max) {
-      p->fuel      = player.p->fuel - player.p->fuel_max;
-      player.p->fuel = player.p->fuel_max;
+   if (player.p->DELETETHIS_fuel > player.p->DELETETHIS_fuel_max) {
+      p->DELETETHIS_fuel      = player.p->DELETETHIS_fuel - player.p->DELETETHIS_fuel_max;
+      player.p->DELETETHIS_fuel = player.p->DELETETHIS_fuel_max;
    }
 
    board_update( wdw );
@@ -495,13 +495,13 @@ static void board_update( unsigned int wdw )
    }
 
    /* Fuel. */
-   if (p->fuel <= 0.) {
+   if (p->DELETETHIS_fuel <= 0.) {
       if (j < PATH_MAX)
          j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, _("%.0f Units\n"), p->fuel );
+         j += snprintf( &str[j], PATH_MAX-j, _("%.0f Units\n"), p->DELETETHIS_fuel );
    }
 
    /* Missiles */

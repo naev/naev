@@ -2703,18 +2703,18 @@ static int pilotL_setFuel( lua_State *L )
    /* Get the parameter. */
    if (lua_isboolean(L,2)) {
       if (lua_toboolean(L,2))
-         p->fuel = p->fuel_max;
+         p->DELETETHIS_fuel = p->DELETETHIS_fuel_max;
       else
-         p->fuel = 0.;
+         p->DELETETHIS_fuel = 0.;
    }
    else if (lua_isnumber(L,2)) {
-      p->fuel = CLAMP( 0., p->fuel_max, lua_tonumber(L,2) );
+      p->DELETETHIS_fuel = CLAMP( 0., p->DELETETHIS_fuel_max, lua_tonumber(L,2) );
    }
    else
       NLUA_INVALID_PARAMETER(L);
 
    /* Return amount of fuel. */
-   lua_pushnumber(L, p->fuel);
+   lua_pushnumber(L, p->DELETETHIS_fuel);
    return 1;
 }
 
@@ -3107,9 +3107,9 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "cpu", p->cpu );
    PUSH_INT( L, "cpu_max", p->cpu_max );
    PUSH_INT( L, "crew", (int)round( p->crew ) );
-   PUSH_DOUBLE( L, "fuel", p->fuel );
-   PUSH_DOUBLE( L, "fuel_max", p->fuel_max );
-   PUSH_DOUBLE( L, "fuel_consumption", p->fuel_consumption );
+   PUSH_DOUBLE( L, "fuel", p->DELETETHIS_fuel );
+   PUSH_DOUBLE( L, "fuel_max", p->DELETETHIS_fuel_max );
+   PUSH_DOUBLE( L, "fuel_consumption", p->DELETETHIS_fuel_consumption );
    PUSH_DOUBLE( L, "mass", p->solid->mass );
    /* Movement. */
    PUSH_DOUBLE( L, "thrust", p->thrust / p->solid->mass );

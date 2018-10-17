@@ -75,7 +75,7 @@ void player_autonavStart (void)
       return;
    }
 
-   if (player.p->fuel < player.p->fuel_consumption) {
+   if (player.p->DELETETHIS_fuel < player.p->DELETETHIS_fuel_consumption) {
       player_message(_("\arNot enough fuel to jump for autonav."));
       return;
    }
@@ -513,7 +513,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
          player_autonavAbort(_("Target changed to current system"));
 
       /* Need fuel. */
-      else if (pplayer->fuel < pplayer->fuel_consumption)
+      else if (pplayer->DELETETHIS_fuel < pplayer->DELETETHIS_fuel_consumption)
          player_autonavAbort(_("Not enough fuel for autonav to continue"));
 
       else

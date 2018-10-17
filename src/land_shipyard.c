@@ -281,7 +281,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->energy, ship->energy_regen,
          ship->cap_cargo,
          ship->fuel,
-         ship->fuel_consumption,
+         ship->DELETETHIS_fuel_consumption,
          buf2,
          buf3,
          (license_text != NULL) ? license_text : _("None") );

@@ -1732,7 +1732,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
+      ship->DELETETHIS_fuel, EQ_COMP( ship->DELETETHIS_fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
       /* Transportation. */
       buf2,
       loc, sysname,

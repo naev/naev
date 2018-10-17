@@ -557,13 +557,13 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* Must need refueling. */
-   if (player.p->fuel >= player.p->fuel_max) {
+   if (player.p->DELETETHIS_fuel >= player.p->DELETETHIS_fuel_max) {
       dialogue_msg( _("Request Fuel"), _("Your fuel deposits are already full.") );
       return;
    }
 
    /* See if pilot has enough fuel. */
-   if (comm_pilot->fuel < 200.) {
+   if (comm_pilot->DELETETHIS_fuel < 200.) {
       dialogue_msg( _("Request Fuel"),
             _("\"Sorry, I don't have enough fuel to spare at the moment.\"") );
       return;
