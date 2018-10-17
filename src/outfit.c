@@ -1555,7 +1555,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"armour",temp->u.mod.armour);
       xmlr_float(node,"shield",temp->u.mod.shield);
       xmlr_float(node,"energy",temp->u.mod.energy);
-      xmlr_float(node,"fuel",temp->u.mod.fuel);
+      xmlr_int(node,"fuel",temp->u.mod.fuel);
       xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
       xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
       xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
