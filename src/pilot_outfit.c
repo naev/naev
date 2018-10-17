@@ -548,9 +548,9 @@ const char* pilot_checkSpaceworthy( Pilot *p )
       return _("Insufficient Energy Regeneration");
 
    /* Misc. */
-   if (p->DELETETHIS_fuel_max < 0.)
+   if (p->fuel_max < 0)
       return _("Insufficient Fuel Maximum");
-   if (p->DELETETHIS_fuel_consumption < 0.)
+   if (p->fuel_consumption < 0)
       return _("Insufficient Fuel Consumption");
    if (p->cargo_free < 0)
       return _("Insufficient Free Cargo Space");
@@ -597,8 +597,8 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    SPACEWORTHY_CHECK( p->energy_regen < 0., _("Insufficient Energy Regeneration\n") );
 
    /* Misc. */
-   SPACEWORTHY_CHECK( p->DELETETHIS_fuel_max < 0.,         _("Insufficient Fuel Maximum\n") );
-   SPACEWORTHY_CHECK( p->DELETETHIS_fuel_consumption < 0., _("Insufficient Fuel Consumption\n") );
+   SPACEWORTHY_CHECK( p->fuel_max < 0,         _("Insufficient Fuel Maximum\n") );
+   SPACEWORTHY_CHECK( p->fuel_consumption < 0, _("Insufficient Fuel Consumption\n") );
    SPACEWORTHY_CHECK( p->cargo_free < 0,        _("Insufficient Free Cargo Space\n") );
 
    /*buffer is full, lets write that there is more then what's copied */
@@ -888,15 +888,15 @@ void pilot_calcStats( Pilot* pilot )
    /* cargo */
    pilot->cap_cargo     = pilot->ship->cap_cargo;
    /* fuel_consumption. */
-   pilot->DELETETHIS_fuel_consumption = pilot->ship->DELETETHIS_fuel_consumption;
+   pilot->fuel_consumption = pilot->ship->fuel_consumption;
    /* health */
    ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
    sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
    ec = (pilot->energy_max > 0.) ? pilot->energy / pilot->energy_max : 0.;
-   fc = (pilot->DELETETHIS_fuel_max   > 0.) ? pilot->DELETETHIS_fuel   / pilot->DELETETHIS_fuel_max   : 0.;
+   fc = (pilot->fuel_max   > 0) ? pilot->fuel   / pilot->fuel_max   : 0.;
    pilot->armour_max    = pilot->ship->armour;
    pilot->shield_max    = pilot->ship->shield;
-   pilot->DELETETHIS_fuel_max      = pilot->ship->fuel;
+   pilot->fuel_max      = pilot->ship->fuel;
    pilot->armour_regen  = pilot->ship->armour_regen;
    pilot->shield_regen  = pilot->ship->shield_regen;
    /* Absorption. */
@@ -960,7 +960,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->energy_regen  += o->u.mod.energy_regen;
          pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
-         pilot->DELETETHIS_fuel_max      += o->u.mod.DELETETHIS_fuel;
+         pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
          pilot->cap_cargo     += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
@@ -1048,7 +1048,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
-   pilot->DELETETHIS_fuel   = fc * pilot->DELETETHIS_fuel_max;
+   pilot->fuel   = fc * pilot->fuel_max;
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;

@@ -276,7 +276,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
-   if ((player.p->DELETETHIS_fuel < player.p->DELETETHIS_fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
          || map_selected == cur_system - systems_stack || map_npath == 0)
       window_disableButton( wid, "btnAutonav" );
 }

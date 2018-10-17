@@ -742,14 +742,14 @@ void land_refuel (void)
    unsigned int w;
 
    /* Full fuel. */
-   if (player.p->DELETETHIS_fuel >= player.p->DELETETHIS_fuel_max)
+   if (player.p->fuel >= player.p->fuel_max)
       return;
 
    /* No refuel service. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
       return;
 
-   player.p->DELETETHIS_fuel = player.p->DELETETHIS_fuel_max;
+   player.p->fuel = player.p->fuel_max;
 
    w = land_getWid( LAND_WINDOW_EQUIPMENT );
    if (w > 0)

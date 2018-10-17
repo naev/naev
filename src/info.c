@@ -200,13 +200,13 @@ static void info_openMain( unsigned int wid )
          "\n"
          "%s Credits\n"
          "%s\n"
-         "%.0f (%d Jumps)"),
+         "%d (%d Jumps)"),
          player.name,
          nt,
          player_rating(),
          creds,
          player.p->name,
-         player.p->DELETETHIS_fuel, pilot_getJumps(player.p) );
+         player.p->fuel, pilot_getJumps(player.p) );
    window_addText( wid, 140, 20,
          200, h-80,
          0, "txtPilot", &gl_smallFont, &cBlack, str );
@@ -439,7 +439,7 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
          "%d / %d tonnes\n"
-         "%.0f / %.0f units (%d jumps)\n"
+         "%d / %d units (%d jumps)\n"
          "\n"),
          /* Generic */
          player.p->name,
@@ -459,7 +459,7 @@ static void ship_update( unsigned int wid )
          player.p->armour, player.p->armour_max, player.p->armour_regen,
          player.p->energy, player.p->energy_max, player.p->energy_regen,
          pilot_cargoUsed( player.p ), cargo,
-         player.p->DELETETHIS_fuel, player.p->DELETETHIS_fuel_max, pilot_getJumps(player.p));
+         player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
    equipment_shipStats( &buf[len], sizeof(buf)-len, player.p, 1 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );

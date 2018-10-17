@@ -1704,7 +1704,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
          "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
          "%d / \a%c%d\a0 tonnes\n"
-         "%.0f / \a%c%.0f\a0 units (%d jumps)\n"
+         "%d / \a%c%d\a0 units (%d jumps)\n"
          "\n"
          "%s credits\n"
          "%s%s\n"
@@ -1732,7 +1732,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->DELETETHIS_fuel, EQ_COMP( ship->DELETETHIS_fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
+      ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
       /* Transportation. */
       buf2,
       loc, sysname,

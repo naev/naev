@@ -435,8 +435,8 @@ static int playerL_jumps( lua_State *L )
  */
 static int playerL_fuel( lua_State *L )
 {
-   lua_pushnumber(L,player.p->DELETETHIS_fuel);
-   lua_pushnumber(L,player.p->DELETETHIS_fuel_consumption);
+   lua_pushnumber(L,player.p->fuel);
+   lua_pushnumber(L,player.p->fuel_consumption);
    return 2;
 }
 
@@ -458,13 +458,13 @@ static int playerL_refuel( lua_State *L )
 
    if (lua_gettop(L) > 0) {
       f = luaL_checknumber(L,1);
-      player.p->DELETETHIS_fuel += f;
+      player.p->fuel += f;
    }
    else
-      player.p->DELETETHIS_fuel = player.p->DELETETHIS_fuel_max;
+      player.p->fuel = player.p->fuel_max;
 
    /* Make sure value is sane. */
-   player.p->DELETETHIS_fuel = CLAMP(0, player.p->DELETETHIS_fuel_max, player.p->DELETETHIS_fuel);
+   player.p->fuel = CLAMP(0, player.p->fuel_max, player.p->fuel);
 
    return 0;
 }

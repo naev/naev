@@ -260,7 +260,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f MJ (%.1f MW)\n"
          "%.0f tons\n"
          "%d units\n"
-         "%.0f units\n"
+         "%d units\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n"),
@@ -281,7 +281,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->energy, ship->energy_regen,
          ship->cap_cargo,
          ship->fuel,
-         ship->DELETETHIS_fuel_consumption,
+         ship->fuel_consumption,
          buf2,
          buf3,
          (license_text != NULL) ? license_text : _("None") );

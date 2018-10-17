@@ -782,7 +782,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_int(cur,"fuel",temp->fuel);
-            xmlr_float(cur,"fuel_consumption",temp->DELETETHIS_fuel_consumption);
+            xmlr_int(cur,"fuel_consumption",temp->fuel_consumption);
             xmlr_float(cur,"cargo",temp->cap_cargo);
             /* All the xmlr_ stuff have continue cases. */
             WARN(_("Ship '%s' has unknown characteristic node '%s'."), temp->name, cur->name);
@@ -892,7 +892,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->fuel==0.,"fuel");*/
    MELEMENT(temp->crew==0,"crew");
    MELEMENT(temp->mass==0.,"mass");
-   MELEMENT(temp->DELETETHIS_fuel_consumption==0,"fuel_consumption");
+   MELEMENT(temp->fuel_consumption==0,"fuel_consumption");
    /*MELEMENT(temp->cap_cargo==0,"cargo");
    MELEMENT(temp->cpu==0.,"cpu");*/
 #undef MELEMENT

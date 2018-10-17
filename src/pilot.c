@@ -1182,7 +1182,7 @@ void pilot_rmFriendly( Pilot* p )
  */
 int pilot_getJumps( const Pilot* p )
 {
-   return (int)floor(p->DELETETHIS_fuel / p->DELETETHIS_fuel_consumption);
+   return p->fuel / p->fuel_consumption;
 }
 
 
@@ -1833,7 +1833,7 @@ void pilot_update( Pilot* pilot, const double dt )
          /* Damage from explosion. */
          a                 = sqrt(pilot->solid->mass);
          dmg.type          = dtype_get("explosion_splash");
-         dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->DELETETHIS_fuel + 1.) / 28.)));
+         dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
          dmg.penetration   = 1.; /* Full penetration. */
          dmg.disable       = 0.;
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
@@ -2282,12 +2282,12 @@ static void pilot_refuel( Pilot *p, double dt )
    p->pdata -= amount;
 
    /* Move fuel. */
-   p->DELETETHIS_fuel        -= amount;
-   target->DELETETHIS_fuel   += amount;
+   p->fuel        -= amount;
+   target->fuel   += amount;
    /* Stop refueling at max. */
-   if (target->DELETETHIS_fuel > target->DELETETHIS_fuel_max) {
+   if (target->fuel > target->fuel_max) {
       p->ptimer      = -1.;
-      target->DELETETHIS_fuel   = target->DELETETHIS_fuel_max;
+      target->fuel   = target->fuel_max;
    }
 
    /* Check to see if done. */
@@ -2297,12 +2297,12 @@ static void pilot_refuel( Pilot *p, double dt )
        */
 
       jumps = pilot_getJumps(p);
-      if ((p->DELETETHIS_fuel / p->DELETETHIS_fuel_consumption - jumps) > 0.9999)
-         p->DELETETHIS_fuel = p->DELETETHIS_fuel_consumption * (jumps + 1);
+      if ((p->fuel / p->fuel_consumption - jumps) > 0.9999)
+         p->fuel = p->fuel_consumption * (jumps + 1);
 
       jumps = pilot_getJumps(target);
-      if ((target->DELETETHIS_fuel / target->DELETETHIS_fuel_consumption - jumps) > 0.9999)
-         target->DELETETHIS_fuel = target->DELETETHIS_fuel_consumption * (jumps + 1);
+      if ((target->fuel / target->fuel_consumption - jumps) > 0.9999)
+         target->fuel = target->fuel_consumption * (jumps + 1);
 
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);
@@ -2430,7 +2430,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
-   pilot->DELETETHIS_fuel   = pilot->DELETETHIS_fuel_max   = 1; /* ditto fuel */
+   pilot->fuel   = pilot->fuel_max   = 1; /* ditto fuel */
    pilot_calcStats(pilot);
    pilot->stress = 0.; /* No stress. */
 
@@ -2485,7 +2485,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->armour = pilot->armour_max;
    pilot->shield = pilot->shield_max;
    pilot->energy = pilot->energy_max;
-   pilot->DELETETHIS_fuel   = pilot->DELETETHIS_fuel_max;
+   pilot->fuel   = pilot->fuel_max;
 
    /* Sanity check. */
 #ifdef DEBUGGING
