@@ -1704,7 +1704,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
          "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
          "%d / \a%c%d\a0 tonnes\n"
-         "%.0f / \a%c%.0f\a0 units (%d jumps)\n"
+         "%d / \a%c%d\a0 units (%d jumps)\n"
          "\n"
          "%s credits\n"
          "%s%s\n"

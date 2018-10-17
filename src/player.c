@@ -3058,7 +3058,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
       xmlw_elem(writer,"location","%s",loc);
 
    /* save the fuel */
-   xmlw_elem(writer,"fuel","%f",ship->fuel);
+   xmlw_elem(writer,"fuel","%d",ship->fuel);
 
    /* save the outfits */
    xmlw_startElem(writer,"outfits_structure");

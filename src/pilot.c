@@ -1182,7 +1182,7 @@ void pilot_rmFriendly( Pilot* p )
  */
 int pilot_getJumps( const Pilot* p )
 {
-   return (int)floor(p->fuel / p->fuel_consumption);
+   return p->fuel / p->fuel_consumption;
 }
 
 
@@ -2430,7 +2430,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
-   pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
+   pilot->fuel   = pilot->fuel_max   = 1; /* ditto fuel */
    pilot_calcStats(pilot);
    pilot->stress = 0.; /* No stress. */
 

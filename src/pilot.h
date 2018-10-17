@@ -303,11 +303,11 @@ typedef struct Pilot_ {
    double armour;    /**< Current armour. */
    double stress;    /**< Current disable damage level. */
    double shield;    /**< Current shield. */
-   double fuel;      /**< Current fuel. */
-   double fuel_consumption; /**< Fuel consumed per jump. */
+   int fuel;      /**< Current fuel. */
+   int fuel_consumption; /**< Fuel consumed per jump. */
    double armour_max; /**< Maximum armour. */
    double shield_max; /**< Maximum shield. */
-   double fuel_max;  /**< Maximum fuel. */
+   int fuel_max;  /**< Maximum fuel. */
    double armour_regen; /**< Armour regeneration rate (per second). */
    double shield_regen; /**< Shield regeneration rate (per second). */
    double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
