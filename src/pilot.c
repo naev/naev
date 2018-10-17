@@ -2265,7 +2265,6 @@ static void pilot_refuel( Pilot *p, double dt )
 {
    Pilot *target;
    double amount;
-   int jumps;
 
    /* Check to see if target exists, remove flag if not. */
    target = pilot_get(p->target);
@@ -2292,18 +2291,6 @@ static void pilot_refuel( Pilot *p, double dt )
 
    /* Check to see if done. */
    if (p->ptimer < 0.) {
-      /* Counteract accumulated floating point error by rounding up
-       * if pilots have > 99.99% of a jump worth of fuel.
-       */
-
-      jumps = pilot_getJumps(p);
-      if ((p->fuel / p->fuel_consumption - jumps) > 0.9999)
-         p->fuel = p->fuel_consumption * (jumps + 1);
-
-      jumps = pilot_getJumps(target);
-      if ((target->fuel / target->fuel_consumption - jumps) > 0.9999)
-         target->fuel = target->fuel_consumption * (jumps + 1);
-
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);
    }
