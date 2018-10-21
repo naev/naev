@@ -293,7 +293,7 @@ function land ()
       player.pay( credits )
       flf_setReputation( 70 )
       faction.get("FLF"):modPlayer( reputation )
-      faction.get("Pirate"):modPlayer( pir_reputation )
+      faction.get("Pirate"):modPlayerSingle( pir_reputation )
       misn.finish( true )
    end
 end
