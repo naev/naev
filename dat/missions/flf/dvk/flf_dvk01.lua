@@ -70,7 +70,7 @@ function accept ()
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      marker = misn.markerAdd( missys, "high" )
+      marker = misn.markerAdd( missys, "plot" )
       misn.setReward( misn_reward )
 
       dv_attention = 0

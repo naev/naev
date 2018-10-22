@@ -120,7 +120,7 @@ function accept ()
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      marker = misn.markerAdd( missys, "high" )
+      marker = misn.markerAdd( missys, "plot" )
       misn.setReward( misn_reward )
 
       stage = 0
@@ -185,7 +185,7 @@ function pilot_hail_boss ()
 
          player.addOutfit( "Map: FLF-Pirate Route" )
          if marker ~= nil then misn.markerRm( marker ) end
-         marker = misn.markerAdd( missys2, "high" )
+         marker = misn.markerAdd( missys2, "plot" )
 
          osd_desc[4] = osd_apnd[4]:format( numstring( ore_needed ), missys2:name() )
          osd_desc[5] = osd_final

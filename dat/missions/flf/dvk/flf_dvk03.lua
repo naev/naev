@@ -49,8 +49,10 @@ npc_desc = _("Benito is seated at a table with several other FLF soldiers. She m
 osd_title   = _("Assault on Raelid")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
-osd_desc[2] = _("Protect the Pirate Kestrel while it launches its attack on %s")
-osd_desc[3] = _("Return to FLF base")
+osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
+osd_desc[3] = _("Attack Raelid Outpost until it is destroyed")
+osd_desc[4] = _("Return to FLF base")
+osd_desc["__save"] = true
 
 
 function create ()
@@ -76,7 +78,7 @@ function accept ()
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      marker = misn.markerAdd( missys, "high" )
+      marker = misn.markerAdd( missys, "plot" )
       misn.setReward( misn_reward )
 
       credits = 300000
