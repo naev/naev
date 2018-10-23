@@ -75,7 +75,7 @@ function create()
    local routepos = origin_p:pos()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, _, tier = cargo_calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
