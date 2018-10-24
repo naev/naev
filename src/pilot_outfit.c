@@ -868,7 +868,7 @@ void pilot_calcStats( Pilot* pilot )
    int i;
    Outfit* o;
    PilotOutfitSlot *slot;
-   double ac, sc, ec, fc; /* temporary health coefficients to set */
+   double ac, sc, ec; /* temporary health coefficients to set */
    ShipStats amount, *s, *default_s;
 
    /*
@@ -893,7 +893,6 @@ void pilot_calcStats( Pilot* pilot )
    ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
    sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
    ec = (pilot->energy_max > 0.) ? pilot->energy / pilot->energy_max : 0.;
-   fc = (pilot->fuel_max   > 0) ? pilot->fuel   / pilot->fuel_max   : 0.;
    pilot->armour_max    = pilot->ship->armour;
    pilot->shield_max    = pilot->ship->shield;
    pilot->fuel_max      = pilot->ship->fuel;
@@ -1048,7 +1047,9 @@ void pilot_calcStats( Pilot* pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
-   pilot->fuel   = fc * pilot->fuel_max;
+
+   /* Dump excess fuel */
+   pilot->fuel   = (pilot->fuel_max >= pilot->fuel) ? pilot->fuel : pilot->fuel_max;
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
