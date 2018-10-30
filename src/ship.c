@@ -836,6 +836,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          }
          nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
          temp->gfx_comm = strdup(str);
+         continue;
       }
 
       xmlr_strd(node,"GUI",temp->gui);
