@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ship name="Base">
+<ship name="Sindbad">
  <base_type>Sindbad</base_type>
  <gfx_space sx="1" sy="1">planet/space/000.png</gfx_space>
  <gfx_comm>planet/exterior/station00.png</gfx_comm>
