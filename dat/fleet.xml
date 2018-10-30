@@ -725,11 +725,11 @@
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
- <fleet name="FLF Base">
+ <fleet name="Sindbad">
   <ai>base</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot name="Sindbad" ship="Base"></pilot>
+   <pilot name="Sindbad" ship="Sindbad"></pilot>
   </pilots>
  </fleet>
  <fleet name="Vendetta Quartet">

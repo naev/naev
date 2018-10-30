@@ -197,7 +197,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("FLF Base", "flf_norun", basepos)[1]
+    base = pilot.add("Sindbad", "flf_norun", basepos)[1]
     base:rmOutfit("all")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
