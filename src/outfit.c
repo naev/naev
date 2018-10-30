@@ -1555,7 +1555,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"armour",temp->u.mod.armour);
       xmlr_float(node,"shield",temp->u.mod.shield);
       xmlr_float(node,"energy",temp->u.mod.energy);
-      xmlr_float(node,"fuel",temp->u.mod.fuel);
+      xmlr_int(node,"fuel",temp->u.mod.fuel);
       xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
       xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
       xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
@@ -1592,8 +1592,13 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 if ((x) != 0.) \
    i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
          "\n\a%c%+."n"f "s"\a0", c, x )
+#define DESC_ADD_INT(x, s) \
+if ((x) != 0) \
+   i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
+         "\n\a%c%+.d "s"\a0", ((x)>0)?'D':'r', x )
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'D':'r' )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
+#define DESC_ADDI(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
    DESC_ADD0( temp->cpu, "CPU" );
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
@@ -1601,7 +1606,7 @@ if ((x) != 0.) \
    DESC_ADD0( temp->u.mod.armour, "Armour" );
    DESC_ADD0( temp->u.mod.shield, "Shield" );
    DESC_ADD0( temp->u.mod.energy, "Energy" );
-   DESC_ADD0( temp->u.mod.fuel, "Fuel" );
+   DESC_ADD_INT( temp->u.mod.fuel, "Fuel" );
    DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
@@ -1611,6 +1616,7 @@ if ((x) != 0.) \
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
 #undef DESC_ADD1
 #undef DESC_ADD0
+#undef DESC_ADD_INT
 #undef DESC_ADD
    /*i +=*/ ss_statsListDesc( temp->u.mod.stats,
          &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1 );

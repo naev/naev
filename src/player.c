@@ -3058,7 +3058,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
       xmlw_elem(writer,"location","%s",loc);
 
    /* save the fuel */
-   xmlw_elem(writer,"fuel","%f",ship->fuel);
+   xmlw_elem(writer,"fuel","%d",ship->fuel);
 
    /* save the outfits */
    xmlw_startElem(writer,"outfits_structure");
@@ -3619,7 +3619,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 {
    char *name, *model, *loc, *q, *id;
    int i, n;
-   double fuel;
+   int fuel;
    Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node, cur, ccur;
@@ -3685,7 +3685,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          xmlr_str(node,"location",loc);
 
       /* get fuel */
-      xmlr_float(node,"fuel",fuel);
+      xmlr_int(node,"fuel",fuel);
 
       /* New outfit loading. */
       if (xml_isNode(node,"outfits_structure") || xml_isNode(node,"outfits_low")) { /** @todo remove legacy layer for 0.6.0 */

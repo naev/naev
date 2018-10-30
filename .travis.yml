@@ -101,6 +101,7 @@ before_deploy:
 deploy:
   - provider: bintray
     file: .travis/bintray.json
+    skip_cleanup: true
     user: stephank
     key:
       secure: "GWamsTqHNn0sb+ON+OOESSOwmxBeCyYGyId83IWluHtbvb0kZjVWVoZ2ZiGwo7uFwaPM25SpFneGLlXwsEe2KMEs/pLUDzucfGWErIp1Y0MYh6VXrzyFZa2Vsa7nNDZhAP2u1bvrG6Er3gxLGqfSy6X4YnGTg67Frt823nbdKAs="

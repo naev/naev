@@ -306,7 +306,7 @@ void dout_csvMod( const char *path )
       l = nsnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
             "%s,%f,%"CREDITS_PRI",%f,%f,"
-            "%f,%f,%f,%f,%f,"
+            "%f,%f,%f,%d,%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,"

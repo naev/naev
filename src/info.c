@@ -200,7 +200,7 @@ static void info_openMain( unsigned int wid )
          "\n"
          "%s Credits\n"
          "%s\n"
-         "%.0f (%d Jumps)"),
+         "%d (%d Jumps)"),
          player.name,
          nt,
          player_rating(),
@@ -439,7 +439,7 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
          "%d / %d tonnes\n"
-         "%.0f / %.0f units (%d jumps)\n"
+         "%d / %d units (%d jumps)\n"
          "\n"),
          /* Generic */
          player.p->name,
