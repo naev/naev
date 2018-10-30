@@ -691,6 +691,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    xmlNodePtr cur, node;
    int sx, sy;
    char *stmp, *buf;
+   char str[PATH_MAX];
    int l, m, h, engine;
    ShipStatList *ll;
 
@@ -759,6 +760,82 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          ship_loadGFX( temp, buf, sx, sy, engine );
 
          continue;
+      }
+
+      if (xml_isNode(node,"gfx_space")) {
+
+         /* Get path */
+         buf = xml_get(node);
+         if (buf==NULL) {
+            WARN(_("Ship '%s': gfx_space element is NULL"), temp->name);
+            continue;
+         }
+         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+
+         /* Get sprite size. */
+         xmlr_attr(node, "sx", stmp );
+         if (stmp != NULL) {
+            sx = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sx = 8;
+         xmlr_attr(node, "sy", stmp );
+         if (stmp != NULL) {
+            sy = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sy = 8;
+
+         /* Load the graphics. */
+         ship_loadSpaceImage( temp, str, sx, sy );
+
+         continue;
+      }
+
+      if (xml_isNode(node,"gfx_engine")) {
+
+         /* Get path */
+         buf = xml_get(node);
+         if (buf==NULL) {
+            WARN(_("Ship '%s': gfx_engine element is NULL"), temp->name);
+            continue;
+         }
+         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+
+         /* Get sprite size. */
+         xmlr_attr(node, "sx", stmp );
+         if (stmp != NULL) {
+            sx = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sx = 8;
+         xmlr_attr(node, "sy", stmp );
+         if (stmp != NULL) {
+            sy = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sy = 8;
+
+         /* Load the graphics. */
+         ship_loadEngineImage( temp, str, sx, sy );
+
+         continue;
+      }
+
+      if (xml_isNode(node,"gfx_comm")) {
+
+         /* Get path */
+         buf = xml_get(node);
+         if (buf==NULL) {
+            WARN(_("Ship '%s': gfx_comm element is NULL"), temp->name);
+            continue;
+         }
+         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         temp->gfx_comm = strdup(str);
       }
 
       xmlr_strd(node,"GUI",temp->gui);
@@ -904,7 +981,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
-   MELEMENT(temp->gfx_space==NULL,"GFX");
+   MELEMENT((temp->gfx_space==NULL) || (temp->gfx_comm==NULL),"GFX");
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
