@@ -699,7 +699,7 @@
  <mission name="Divert the Dvaered Forces">
   <lua>flf/flf_diversion</lua>
   <avail>
-   <priority>4</priority>
+   <priority>5</priority>
    <chance>550</chance>
    <done>Diversion from Raelid</done>
    <location>Computer</location>
@@ -730,6 +730,16 @@
    <location>Bar</location>
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 70</cond>
+  </avail>
+ </mission>
+ <mission name="Eliminate an Empire Patrol">
+  <lua>flf/flf_empatrol</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>550</chance>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <cond>diff.isApplied("flf_vs_empire")</cond>
   </avail>
  </mission>
  <mission name="Empire Negotiations">
