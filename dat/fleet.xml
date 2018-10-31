@@ -732,6 +732,13 @@
    <pilot name="Sindbad" ship="Sindbad"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Raelid Outpost">
+  <ai>dvaered_norun</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Raelid Outpost" ship="Raelid Outpost"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Vendetta Quartet">
   <ai>flf</ai>
   <faction>Independent</faction>

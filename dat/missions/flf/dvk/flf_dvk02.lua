@@ -214,6 +214,7 @@ function pilot_hail_boss ()
       hook.rm( boss_hook )
       hook.land( "land" )
       misn.osdActive( 5 )
+      if marker ~= nil then misn.markerRm( marker ) end
    else
       player.msg( comm_boss_incomplete )
    end

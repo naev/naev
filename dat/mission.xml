@@ -719,6 +719,19 @@
    <cond>faction.playerStanding("FLF") &gt;= 30</cond>
   </avail>
  </mission>
+ <mission name="Assault on Raelid">
+  <lua>flf/dvk/flf_dvk03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <done>FLF Pirate Alliance</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 70</cond>
+  </avail>
+ </mission>
  <mission name="Empire Negotiations">
   <lua>flf/empa/flf_empa01</lua>
   <flags>

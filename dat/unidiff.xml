@@ -70,6 +70,11 @@
    <faction name="Pirate">ally</faction>
   </faction>
  </unidiff>
+ <unidiff name="raelid_outpost_death">
+  <system name="Raelid">
+   <asset name="Raelid Outpost">remove</asset>
+  </system>
+ </unidiff>
  <unidiff name="flf_vs_empire">
   <faction name="FLF">
    <faction name="Empire">enemy</faction>
