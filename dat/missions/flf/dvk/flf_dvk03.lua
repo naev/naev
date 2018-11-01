@@ -357,7 +357,7 @@ function timer_station ()
 
    completed = true
    pilot.toggleSpawn( true )
-   faction.get("Empire"):modPlayer( -200 )
+   faction.get("Empire"):setPlayerStanding( -100 )
    diff.apply( "flf_vs_empire" )
    misn.osdActive( 4 )
    if marker ~= nil then misn.markerRm( marker ) end
