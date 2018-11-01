@@ -133,7 +133,7 @@ function accept ()
 
       ore_needed = 300
       credits = 300000
-      reputation = 15
+      reputation = 10
       pir_reputation = 10
       pir_starting_reputation = faction.get("Pirate"):playerStanding()
 
@@ -292,7 +292,7 @@ function land ()
       diff.apply( "Fury_Station" )
       diff.apply( "flf_pirate_ally" )
       player.pay( credits )
-      flf_setReputation( 70 )
+      flf_setReputation( 55 )
       faction.get("FLF"):modPlayer( reputation )
       faction.get("Pirate"):modPlayerSingle( pir_reputation )
       misn.finish( true )

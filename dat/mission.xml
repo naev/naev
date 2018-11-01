@@ -729,7 +729,7 @@
    <done>FLF Pirate Alliance</done>
    <location>Bar</location>
    <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 70</cond>
+   <cond>faction.playerStanding("FLF") &gt;= 50</cond>
   </avail>
  </mission>
  <mission name="Eliminate an Empire Patrol">
@@ -740,6 +740,19 @@
    <location>Computer</location>
    <faction>FLF</faction>
    <cond>diff.isApplied("flf_vs_empire")</cond>
+  </avail>
+ </mission>
+ <mission name="Diversion from Haleb">
+  <lua>flf/dvk/flf_dvk04</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>40</chance>
+   <done>Assault on Raelid</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 70</cond>
   </avail>
  </mission>
  <mission name="Empire Negotiations">

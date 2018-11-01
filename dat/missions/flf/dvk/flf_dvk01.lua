@@ -53,7 +53,7 @@ function create ()
 
    dv_attention_target = 20
    credits = 250000
-   reputation = 20
+   reputation = 10
 
    misn.setNPC( npc_name, "flf/unique/benito" )
    misn.setDesc( npc_desc )
@@ -89,7 +89,7 @@ function land ()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
-      flf_setReputation( 40 )
+      flf_setReputation( 35 )
       faction.get("FLF"):modPlayer( reputation )
       misn.finish( true )
    end

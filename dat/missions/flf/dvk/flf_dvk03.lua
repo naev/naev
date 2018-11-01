@@ -375,7 +375,7 @@ end
 
 function finish ()
    player.pay( credits )
-   flf_setReputation( 90 )
+   flf_setReputation( 75 )
    faction.get("FLF"):modPlayer( reputation )
    misn.finish( true )
 end
