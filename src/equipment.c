@@ -2114,7 +2114,7 @@ static credits_t equipment_transportPrice( char* shipname )
 
    /* Here we also use hidden jump points, which may not be the best idea but ensures
     * that things can be reached. */
-   if ( planet_getSystem( loc ) == NULL )
+   if ( !planet_hasSystem( loc ) )
       /* Planet doesn't exist; assume a huge number of jumps. */
       jumps = 200;
    else if ( strcmp( planet_getSystem( loc ), cur_system->name ) != 0 )

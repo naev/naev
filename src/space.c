@@ -812,6 +812,24 @@ int system_index( StarSystem *sys )
 
 
 /**
+ * @brief Get whether or not a planet has a system (i.e. is on the map).
+ *
+ *    @param planetname Planet name to match.
+ *    @return 1 if the planet has a system, 0 otherwise.
+ */
+int planet_hasSystem( const char* planetname )
+{
+   int i;
+
+   for (i=0; i<spacename_nstack; i++)
+      if (strcmp(planetname_stack[i],planetname)==0)
+         return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Get the name of a system from a planetname.
  *
  *    @param planetname Planet name to match.
