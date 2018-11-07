@@ -58,12 +58,12 @@ function flf_getEmpireSystem ()
 end
 
 
--- Get a pirate-infested Frontier system.
+-- Get a system with both FLF and Pirate presence.
 function flf_getPirateSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if j:faction() == faction.get("Frontier") and p[ "Pirate" ] then
+      if p[ "FLF" ] and p[ "Pirate" ] then
          choices[ #choices + 1 ] = j:name()
       end
    end

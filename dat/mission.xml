@@ -755,6 +755,28 @@
    <cond>faction.playerStanding("FLF") &gt;= 70</cond>
   </avail>
  </mission>
+ <mission name="Alliance of Inconvenience">
+  <lua>flf/dvk/flf_dvk05</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <done>Diversion from Haleb</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
+ <mission name="FLF Pirate Disturbance">
+  <lua>flf/flf_pirates</lua>
+  <avail>
+   <priority>6</priority>
+   <chance>330</chance>
+   <done>Alliance of Inconvenience</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
  <mission name="Empire Negotiations">
   <lua>flf/empa/flf_empa01</lua>
   <flags>
