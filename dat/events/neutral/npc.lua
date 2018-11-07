@@ -143,7 +143,7 @@ msg_lore["FLF"] =          {_("I can't stand Dvaereds. I just want to wipe them 
                               _("Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."),
                               _("No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."),
                               _("Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the stupidest thing I ever heard."),
-                              _("Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there if not to oppress us?"),
+                              _("Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to oppress us?"),
                            }
 
 msg_lore["Pirate"] =       {_("Hi mate. Money or your life! Heh heh, just messing with you."),
