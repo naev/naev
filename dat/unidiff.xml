@@ -75,6 +75,11 @@
    <asset name="Raelid Outpost">remove</asset>
   </system>
  </unidiff>
+ <unidiff name="raglan_outpost_death">
+  <system name="Haleb">
+   <asset name="Raglan Outpost">remove</asset>
+  </system>
+ </unidiff>
  <unidiff name="flf_vs_empire">
   <faction name="FLF">
    <faction name="Empire">enemy</faction>

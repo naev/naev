@@ -739,6 +739,13 @@
    <pilot name="Raelid Outpost" ship="Raelid Outpost"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Raglan Outpost">
+  <ai>dvaered_norun</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Raglan Outpost" ship="Raglan Outpost"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Vendetta Quartet">
   <ai>flf</ai>
   <faction>Independent</faction>

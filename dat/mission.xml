@@ -777,6 +777,19 @@
    <faction>FLF</faction>
   </avail>
  </mission>
+ <mission name="Assault on Haleb">
+  <lua>flf/dvk/flf_dvk06</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <done>Alliance of Inconvenience</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 80</cond>
+  </avail>
+ </mission>
  <mission name="Take the Dvaered crew home">
   <lua>dvaered/dv_antiflf01</lua>
   <flags>
