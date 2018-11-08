@@ -21,7 +21,7 @@ include "numstring.lua"
 include "fleethelper.lua"
 include "dat/missions/flf/flf_common.lua"
 
-misn_title  = _("FLF: %s Pirate Disturbance")
+misn_title  = _("FLF: %s Pirate Disturbance in %s")
 misn_reward = _("%s credits")
 
 pay_text = {}

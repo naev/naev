@@ -668,6 +668,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
@@ -689,6 +690,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>60</chance>
    <done>Disrupt a Dvaered Patrol</done>
    <location>Bar</location>
@@ -712,6 +714,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>30</chance>
    <done>Diversion from Raelid</done>
    <location>Bar</location>
@@ -725,6 +728,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>30</chance>
    <done>FLF Pirate Alliance</done>
    <location>Bar</location>
@@ -748,6 +752,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>40</chance>
    <done>Assault on Raelid</done>
    <location>Bar</location>
@@ -761,6 +766,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>30</chance>
    <done>Diversion from Haleb</done>
    <location>Bar</location>
@@ -783,11 +789,36 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>30</chance>
    <done>Alliance of Inconvenience</done>
    <location>Bar</location>
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 80</cond>
+  </avail>
+ </mission>
+ <mission name="The FLF Split">
+  <lua>flf/dvk/flf_dvk07</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>1</priority>
+   <chance>30</chance>
+   <done>Assault on Haleb</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 90</cond>
+  </avail>
+ </mission>
+ <mission name="Rogue FLF">
+  <lua>flf/flf_rogue</lua>
+  <avail>
+   <priority>7</priority>
+   <chance>550</chance>
+   <done>The FLF Split</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">

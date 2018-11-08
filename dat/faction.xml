@@ -127,7 +127,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
-   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction>
@@ -202,7 +201,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
-   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction>
@@ -264,8 +262,6 @@
   <standing>static</standing>
   <enemies>
    <enemy>FLF</enemy>
-   <enemy>Dvaered</enemy>
-   <enemy>Empire</enemy>
   </enemies>
  </faction>
  <faction>
