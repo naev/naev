@@ -188,7 +188,7 @@ function rogue_spawnRogue( n )
       local shipname
       local shipnames = { "Rogue FLF Vendetta", "Rogue FLF Lancelot" }
       shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
-      local pstk = pilot.add( shipname, "flf_norun", vec2.new( x, y ) )
+      local pstk = pilot.add( shipname, "flf_rogue_norun", vec2.new( x, y ) )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_rogue" )
       p:setHostile()
