@@ -47,7 +47,6 @@ function create ()
 
    level = 3
    ships = 4
-   flfships = 0
    flfships = 2
 
    credits = 100000
@@ -55,7 +54,7 @@ function create ()
    late_arrival = true
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
-   misn.setNPC( npc_name, "neutral/miner2" )
+   misn.setNPC( npc_name, "flf/unique/benito" )
    misn.setDesc( npc_desc )
 end
 
