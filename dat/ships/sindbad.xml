@@ -11,9 +11,9 @@
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
  <mission/>
  <movement>
-  <thrust>0</thrust>
+  <thrust>0.01</thrust>
   <turn>100</turn>
-  <speed>0</speed>
+  <speed>0.01</speed>
  </movement>
  <health>
   <absorb>80</absorb>
@@ -41,17 +41,8 @@
   <weapon size="large" x="0" y="-40" h="5"/>
   <weapon size="large" x="0" y="0" h="30"/>
   <weapon size="large" x="0" y="0" h="30"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <utility size="large" prop="systems" exclusive="1" required="1">Dummy Systems</utility>
+  <structure size="large" prop="engines" exclusive="1" required="1">Dummy Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Dummy Plating</structure>
  </slots>
 </ship>

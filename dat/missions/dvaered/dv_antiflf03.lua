@@ -199,6 +199,10 @@ end
 function spawnbase()
     base = pilot.add("Sindbad", "flf_norun", basepos)[1]
     base:rmOutfit("all")
+    base:rmOutfit("cores")
+    base:addOutfit("Dummy Systems")
+    base:addOutfit("Dummy Plating")
+    base:addOutfit("Dummy Engine")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
     base:setNodisable(true)
