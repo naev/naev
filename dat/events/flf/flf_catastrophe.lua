@@ -19,6 +19,7 @@
 --]]
 
 include "fleethelper.lua"
+include "misnhelper.lua"
 include "dat/missions/flf/flf_common.lua"
 
 
@@ -43,7 +44,7 @@ text[6] = _([[As the last shot penetrates the hull of Sindbad, a sense of dread 
     Just as you think this, the now exploding station hails you. You immediately accept, and you see Benito on your screen once again. You hear sirens and explosions in the background, but you pay them no mind.]])
 
 text[7] = _([["Well, this is it, soldier. My last transmission to you. I can't say I wanted it to go this way, but...
-    "Listen. That chip I handed you before? It's a map. It shows the location of a hidden jump from Iris to an unknown system deep in the nebula. Go straight there, right now. Escape the Empire, find what lies beyond, and live on. Perhaps, in your future travels, you'll find a way to destroy the Dvaereds, and the Empire, once and for all." Benito smiles as equipment blows up around her. "Goodbye, %s. Stay vigilant." The transmission then cuts as you are forced to watch Sindbad finally erupt in a fiery explosion.]])
+    "Listen. That chip I handed you before? It's a map. It shows the location of a hidden jump from Iris to an unknown system deep in the nebula. Go straight there, right now. Escape the Empire, find what lies beyond, and live on. Perhaps, in your future travels, you'll find a way to destroy the Dvaereds, and the Empire, once and for all." Benito smiles as more and more of the station detonates around her. "Goodbye, %s. Stay vigilant." The transmission then cuts as you are forced to watch Sindbad finally erupt in a fiery explosion.]])
 
 portrait = "dat/gfx/portraits/flf/unique/benito.png"
 
@@ -57,15 +58,20 @@ function create ()
    emp_shptypes = {
       "Empire Lge Attack", "Empire Shark", "Empire Shark",
       "Empire Shark", "Empire Shark", "Empire Shark" }
-   emp_fleetsize = 18
+   emp_minsize = 10
 
    hook.land( "enter_bar", "bar" )
+   hook.enter( "takeoff_abort" )
    evt.save()
 end
 
 
 function enter_bar ()
-   if player.jumps() >= 5 then
+   local flf_missions = {
+      "FLF Commodity Run", "Eliminate a Dvaered Patrol",
+      "Divert the Dvaered Forces", "Eliminate an Empire Patrol",
+      "FLF Pirate Disturbance", "Rogue FLF" }
+   if player.jumps() >= 5 and not anyMissionActive( flf_missions ) then
       music.stop()
       music.load("tension")
       music.play()
@@ -78,6 +84,11 @@ function enter_bar ()
       hook.enter( "takeoff" )
       player.takeoff()
    end
+end
+
+
+function takeoff_abort ()
+   evt.finish( false )
 end
 
 
@@ -104,29 +115,57 @@ function takeoff ()
 
    -- Spawn Empire ships
    emp_ships = addShips( emp_shptypes, "empire_norun", emp_srcsys, 2 )
+   for i, j in ipairs( emp_ships ) do
+      j:setHostile()
+      j:setVisible()
+      hook.pilot( j, "death", "pilot_death_emp" )
+   end
+
+   -- Spawn Dvaered ships
+   shptypes = {
+      "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance",
+      "Dvaered Phalanx", "Dvaered Phalanx", "Dvaered Ancestor",
+      "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Ancestor",
+      "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
+      "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
+      "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta" }
+   dv_ships = addShips( shptypes, "dvaered_norun", emp_srcsys )
+   for i, j in ipairs( dv_ships ) do
+      j:setHostile()
+      j:setVisible()
+   end
+
+   diff.apply( "flf_dead" )
+   flf_setReputation( 100 )
+   player.pilot():setNoJump( true )
 end
 
 
 function pilot_death_emp( pilot, attacker, arg )
-   local dead = {}
+   local emp_alive = {}
    for i, j in ipairs( emp_ships ) do
-      if not j:exists() then
-         dead[ #dead + 1 ] = i
+      if j:exists() then
+         emp_alive[ #emp_alive + 1 ] = j
       end
    end
 
-   if #dead > emp_fleetsize then
+   if #emp_alive < emp_minsize or rnd.rnd() < 0.5 then
+      emp_ships = emp_alive
       local nf = addShips( emp_shptypes, "empire_norun", emp_srcsys )
-      for i, j in ipairs( dead ) do
-         if i <= #nf then
-            emp_ships[j] = nf[i]
-         else
-            break
-         end
+      for i, j in ipairs( nf ) do
+         j:setHostile()
+         j:setVisible()
+         hook.pilot( j, "death", "pilot_death_emp" )
+         emp_ships[ #emp_ships + 1 ] = j
       end
    end
 end
 
 
 function pilot_death_sindbad( pilot, attacker, arg )
+   tk.msg( title[6], text[6]:format( player.name() ) )
+   tk.msg( title[6], text[7]:format( player.name() ), portrait )
+   player.pilot():setNoJump( false )
+   player.addOutfit( "Map: Inner Nebula Secret Jump" )
+   evt.finish( true )
 end

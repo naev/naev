@@ -85,10 +85,25 @@
    <faction name="Empire">enemy</faction>
   </faction>
  </unidiff>
- <unidiff name="flf_vs_pirates">
-  <faction name="FLF">
-   <faction name="Pirate">enemy</faction>
-  </faction>
+ <unidiff name="flf_dead">
+  <system name="Sigur">
+   <asset name="Sindbad">remove</asset>
+  </system>
+  <system name="Raelid">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Tuoladis">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Dakron">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Tarsus">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Torg">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
  </unidiff>
  <unidiff name="test">
   <system name="Hakoi">
