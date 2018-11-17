@@ -65,14 +65,19 @@ end
 
 
 function enter_bar ()
-   tk.msg( title[1], text[1] )
-   tk.msg( title[1], text[2]:format( player.name() ), portrait )
-   tk.msg( title[1], text[3]:format( player.name() ), emp_srcsys:name(), portrait )
-   tk.msg( title[1], text[4], portrait )
-   tk.msg( title[1], text[5] )
+   if player.jumps() >= 5 then
+      music.stop()
+      music.load("tension")
+      music.play()
+      tk.msg( title[1], text[1] )
+      tk.msg( title[1], text[2]:format( player.name() ), portrait )
+      tk.msg( title[1], text[3]:format( player.name() ), emp_srcsys:name(), portrait )
+      tk.msg( title[1], text[4], portrait )
+      tk.msg( title[1], text[5] )
 
-   hook.enter( "takeoff" )
-   player.takeoff()
+      hook.enter( "takeoff" )
+      player.takeoff()
+   end
 end
 
 
