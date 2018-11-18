@@ -191,6 +191,8 @@ function land()
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
+        diff.apply("FLF_base")
+        diff.apply("flf_dead")
         misn.finish(true)
     end
 end
