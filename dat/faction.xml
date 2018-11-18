@@ -127,7 +127,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
-   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction>
@@ -183,6 +182,7 @@
   <enemies>
    <enemy>Dvaered</enemy>
    <enemy>Rogue FLF</enemy>
+   <enemy>Rogue Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -201,7 +201,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
-   <enemy>Rogue FLF</enemy>
   </enemies>
  </faction>
  <faction>
@@ -263,8 +262,18 @@
   <standing>static</standing>
   <enemies>
    <enemy>FLF</enemy>
-   <enemy>Dvaered</enemy>
-   <enemy>Empire</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Rogue Pirate</name>
+  <display>Pirate</display>
+  <static />
+  <invisible />
+  <player>-100</player>
+  <colour>red</colour>
+  <standing>static</standing>
+  <enemies>
+   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction>

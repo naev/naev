@@ -725,11 +725,25 @@
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
- <fleet name="FLF Base">
+ <fleet name="Sindbad">
   <ai>base</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot name="Sindbad" ship="Base"></pilot>
+   <pilot name="Sindbad" ship="Sindbad"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Raelid Outpost">
+  <ai>dvaered_norun</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Raelid Outpost" ship="Raelid Outpost"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Raglan Outpost">
+  <ai>dvaered_norun</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Raglan Outpost" ship="Raglan Outpost"></pilot>
   </pilots>
  </fleet>
  <fleet name="Vendetta Quartet">

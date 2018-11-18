@@ -134,6 +134,18 @@ msg_lore["Frontier"] =     {_("We value our autonomy. We don't want to be ruled 
                               _("You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"),
                            }
 
+msg_lore["FLF"] =          {_("I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"),
+                              _("One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"),
+                              _("Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."),
+                              _("I was in charge of a bombing run last week. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."),
+                              _("What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius lunatics to worry about. I don't think our job will ever end in our lifetimes."),
+                              _("Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."),
+                              _("Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."),
+                              _("No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."),
+                              _("Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the stupidest thing I ever heard."),
+                              _("Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to oppress us?"),
+                           }
+
 msg_lore["Pirate"] =       {_("Hi mate. Money or your life! Heh heh, just messing with you."),
                               _("Hey, look at these new scars I got!"),
                               _("Have you heard of the Pirates' Code? They're more guidelines than rules..."),

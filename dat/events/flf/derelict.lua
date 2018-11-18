@@ -2,20 +2,14 @@
 -- Derelict Event, spawning either the FLF prelude mission string or the Dvaered anti-FLF string.
 --]]
 
-lang = naev.lang()
-if lang == "es" then
-    -- not translated atm
-else -- default english 
-
 -- Text
-    text = {}
-    title = {}
-    
-    broadcastmsgDV = _("SOS. This is %s. Primary systems down. Requesting assistance.")
-    broadcastmsgFLF = _("Calling all ships. This is %s. Engines down, ship damaged. Please help.")
-    shipnameDV = _("Dvaered Patrol")
-    shipnameFLF = _("Frontier Patrol")
-end 
+text = {}
+title = {}
+
+broadcastmsgDV = _("SOS. This is %s. Primary systems down. Requesting assistance.")
+broadcastmsgFLF = _("Calling all ships. This is %s. Engines down, ship damaged. Please help.")
+shipnameDV = _("Dvaered Patrol")
+shipnameFLF = _("Frontier Patrol")
 
 function create()
     if not evt.claim(system.cur()) then

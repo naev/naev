@@ -157,6 +157,8 @@
   <item>Map: Qorel Expanse</item>
   <item>Map: New Haven's hidden jump points</item>
   <item>Map: FLF Hidden Jumps</item>
+  <item>Map: FLF-Pirate Route</item>
+  <item>Map: Inner Nebula Secret Jump</item>
   <item>Ultra Map</item>
   <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
@@ -740,6 +742,7 @@
  <tech name="FLF Ships">
   <item>FLF Lancelot</item>
   <item>FLF Vendetta</item>
+  <item>FLF Pacifier</item>
  </tech>
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>

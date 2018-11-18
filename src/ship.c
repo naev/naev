@@ -464,6 +464,56 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
 
 /**
+ * @brief Loads the space graphics for a ship from an image.
+ *
+ *    @param temp Ship to load into.
+ *    @param str Path of the image to use.
+ */
+static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
+{
+   png_uint_32 w, h;
+   SDL_RWops *rw;
+   npng_t *npng;
+   SDL_Surface *surface;
+
+   /* Load the space sprite. */
+   rw    = ndata_rwops( str );
+   npng  = npng_open( rw );
+   npng_dim( npng, &w, &h );
+   surface = npng_readSurface( npng, gl_needPOT(), 1 );
+
+   /* Load the texture. */
+   temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
+         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
+         w, h, sx, sy, 0 );
+
+   /* Create the target graphic. */
+   ship_genTargetGFX( temp, surface, sx, sy );
+
+   /* Free stuff. */
+   npng_close( npng );
+   SDL_RWclose( rw );
+   SDL_FreeSurface( surface );
+
+   /* Calculate mount angle. */
+   temp->mangle  = 2.*M_PI;
+   temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
+}
+
+
+/**
+ * @brief Loads the space graphics for a ship from an image.
+ *
+ *    @param temp Ship to load into.
+ *    @param str Path of the image to use.
+ */
+static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
+{
+   temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+}
+
+
+/**
  * @brief Loads the graphics for a ship.
  *
  *    @param temp Ship to load into.
@@ -491,37 +541,16 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
       return -1;
    }
 
-   /* Load the space sprite. */
    nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
-   rw    = ndata_rwops( str );
-   npng  = npng_open( rw );
-   npng_dim( npng, &w, &h );
-   surface = npng_readSurface( npng, gl_needPOT(), 1 );
-
-   /* Load the texture. */
-   temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
-         w, h, sx, sy, 0 );
-
-   /* Create the target graphic. */
-   ship_genTargetGFX( temp, surface, sx, sy );
-
-   /* Free stuff. */
-   npng_close( npng );
-   SDL_RWclose( rw );
-   SDL_FreeSurface( surface );
+   ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
    if (engine && conf.engineglow && conf.interpolate) {
       nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
-      temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+      ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
-
-   /* Calculate mount angle. */
-   temp->mangle  = 2.*M_PI;
-   temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
    /* Get the comm graphic for future loading. */
    nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
@@ -662,6 +691,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    xmlNodePtr cur, node;
    int sx, sy;
    char *stmp, *buf;
+   char str[PATH_MAX];
    int l, m, h, engine;
    ShipStatList *ll;
 
@@ -729,6 +759,83 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Load the graphics. */
          ship_loadGFX( temp, buf, sx, sy, engine );
 
+         continue;
+      }
+
+      if (xml_isNode(node,"gfx_space")) {
+
+         /* Get path */
+         buf = xml_get(node);
+         if (buf==NULL) {
+            WARN(_("Ship '%s': gfx_space element is NULL"), temp->name);
+            continue;
+         }
+         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+
+         /* Get sprite size. */
+         xmlr_attr(node, "sx", stmp );
+         if (stmp != NULL) {
+            sx = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sx = 8;
+         xmlr_attr(node, "sy", stmp );
+         if (stmp != NULL) {
+            sy = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sy = 8;
+
+         /* Load the graphics. */
+         ship_loadSpaceImage( temp, str, sx, sy );
+
+         continue;
+      }
+
+      if (xml_isNode(node,"gfx_engine")) {
+
+         /* Get path */
+         buf = xml_get(node);
+         if (buf==NULL) {
+            WARN(_("Ship '%s': gfx_engine element is NULL"), temp->name);
+            continue;
+         }
+         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+
+         /* Get sprite size. */
+         xmlr_attr(node, "sx", stmp );
+         if (stmp != NULL) {
+            sx = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sx = 8;
+         xmlr_attr(node, "sy", stmp );
+         if (stmp != NULL) {
+            sy = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sy = 8;
+
+         /* Load the graphics. */
+         ship_loadEngineImage( temp, str, sx, sy );
+
+         continue;
+      }
+
+      if (xml_isNode(node,"gfx_comm")) {
+
+         /* Get path */
+         buf = xml_get(node);
+         if (buf==NULL) {
+            WARN(_("Ship '%s': gfx_comm element is NULL"), temp->name);
+            continue;
+         }
+         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         temp->gfx_comm = strdup(str);
          continue;
       }
 
@@ -875,7 +982,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
-   MELEMENT(temp->gfx_space==NULL,"GFX");
+   MELEMENT((temp->gfx_space==NULL) || (temp->gfx_comm==NULL),"GFX");
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");

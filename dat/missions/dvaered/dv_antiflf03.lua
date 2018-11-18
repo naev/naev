@@ -191,14 +191,20 @@ function land()
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
+        diff.apply("FLF_base")
+        diff.apply("flf_dead")
         misn.finish(true)
     end
 end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("FLF Base", "flf_norun", basepos)[1]
+    base = pilot.add("Sindbad", "flf_norun", basepos)[1]
     base:rmOutfit("all")
+    base:rmOutfit("cores")
+    base:addOutfit("Dummy Systems")
+    base:addOutfit("Dummy Plating")
+    base:addOutfit("Dummy Engine")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
     base:setNodisable(true)

@@ -57,8 +57,13 @@ osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
 
 
+function patrol_getSystem ()
+   return flf_getTargetSystem()
+end
+
+
 function create ()
-   missys = flf_getTargetSystem()
+   missys = patrol_getSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    level = rnd.rnd( 1, #misn_level )

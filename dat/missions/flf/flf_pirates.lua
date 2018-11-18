@@ -21,22 +21,22 @@ include "numstring.lua"
 include "fleethelper.lua"
 include "dat/missions/flf/flf_common.lua"
 
-misn_title  = _("FLF: %s pirate terrorism in %s")
+misn_title  = _("FLF: %s Pirate Disturbance in %s")
 misn_reward = _("%s credits")
 
-text = {}
-text[1] = _("After you are handed your pay, an FLF soldier thanks you for your service protecting the Frontier and buys you a drink. You chat for a while before getting back to work.")
-text[2] = _("As you get your pay from the officer, FLF soldiers thank you for your service.")
-text[3] = _("You collect your pay from the officer, who then thanks you for protecting the Frontier.")
-text[4] = _("As you return to the FLF base and collect your pay, you are met with cheers for your success in defending the Frontier from pirate scum.")
+pay_text = {}
+pay_text[1] = _("The official mumbles something about the pirates being irritating as a credit chip is pressed into your hand.")
+pay_text[2] = _("While polite,  something seems off about the smile plastered on the official who hands you your pay.")
+pay_text[3] = _("The official thanks you dryly for your service and hands you a credit chip.")
+pay_text[4] = _("The offial takes an inordinate amount of time to do so, but eventually hands you your pay as promised.")
 
 flfcomm = {}
 flfcomm[1] = _("Alright, let's have at them!")
 flfcomm[2] = _("Sorry we're late! Did we miss anything?")
 
 misn_desc = {}
-misn_desc[1] = _("There is a pirate group with %d ships terrorizing the %s system. Eliminate this group.")
-misn_desc[2] = _("There is a pirate ship terrorizing the %s system. Eliminate this ship.")
+misn_desc[1] = _("There is a pirate group with %d ships disturbing FLF operations in the %s system. Eliminate this group.")
+misn_desc[2] = _("There is a pirate ship disturbing FLF operations in the %s system. Eliminate this ship.")
 misn_desc[3] = _(" There is a Phalanx among them, so you must proceed with caution.")
 misn_desc[4] = _(" There is a Kestrel among them, so you must be very careful.")
 misn_desc[5] = _(" You will be accompanied by %d other FLF pilots for this mission.")
@@ -49,7 +49,7 @@ misn_level[4] = _("Substantial")
 misn_level[5] = _("Dangerous")
 misn_level[6] = _("Highly Dangerous")
 
-osd_title   = _("Pirate Terrorism")
+osd_title   = _("Pirate Disturbance")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the pirates")
@@ -68,7 +68,6 @@ function create ()
    has_kestrel = false
    flfships = 0
    reputation = 0
-   other_reputation = 0
    if level == 1 then
       ships = 1
    elseif level == 2 then
@@ -78,29 +77,25 @@ function create ()
       ships = 5
       flfships = rnd.rnd( 0, 2 )
       reputation = 2
-      other_reputation = 1
    elseif level == 4 then
       ships = 6
       has_boss = true
       flfships = rnd.rnd( 4, 6 )
       reputation = 5
-      other_reputation = 2
    elseif level == 5 then
       ships = 6
       has_phalanx = true
       flfships = rnd.rnd( 4, 6 )
       reputation = 10
-      other_reputation = 4
    elseif level == 6 then
       ships = rnd.rnd( 6, 9 )
       has_kestrel = true
       flfships = rnd.rnd( 8, 10 )
       reputation = 20
-      other_reputation = 8
    end
 
    credits = ships * 190000 - flfships * 1000
-   if has_vigilence then credits = credits + 310000 end
+   if has_phalanx then credits = credits + 310000 end
    if has_kestrel then credits = credits + 810000 end
    credits = credits + rnd.sigma() * 8000
 
@@ -209,19 +204,9 @@ function land_flf ()
    leave()
    last_system = planet.cur()
    if planet.cur():faction():name() == "FLF" then
-      tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
+      tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
       faction.get("FLF"):modPlayerSingle( reputation )
-      faction.get("Frontier"):modPlayerSingle( other_reputation )
-      if missys:presences()[ "Dvaered" ] then
-         faction.get("Dvaered"):modPlayerSingle( other_reputation )
-      end
-      if missys:presences()[ "Sirius" ] then
-         faction.get("Sirius"):modPlayerSingle( other_reputation )
-      end
-      if missys:presences()[ "Empire" ] then
-         faction.get("Empire"):modPlayerSingle( other_reputation )
-      end
       misn.finish( true )
    end
 end
@@ -248,6 +233,7 @@ function patrol_spawnPirates( n, boss )
       local pstk = pilot.add( shipname, "baddie_norun", vec2.new( x, y ) )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_pirate" )
+      p:setFaction( "Rogue Pirate" )
       p:setHostile()
       p:setVisible( true )
       p:setHilight( true )

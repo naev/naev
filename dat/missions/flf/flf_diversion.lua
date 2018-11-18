@@ -34,6 +34,8 @@ pay_text[2] = _("You greet the FLF officer in charge of the primary operation, w
 
 misn_desc = _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system.")
 
+msg = _("%s has warped in!")
+
 osd_title   = _("FLF Diversion")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
@@ -134,7 +136,7 @@ end
 
 
 function pilot_attacked_dv( p, attacker )
-   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.01 then
+   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.1 then
       dv_coming = true
       hook.timer( 10000, "timer_spawn_dv" )
    end
@@ -142,7 +144,7 @@ end
 
 
 function pilot_death_dv( p, attacker )
-   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.25 then
+   if attacker == player.pilot() and not dv_coming then
       dv_coming = true
       hook.timer( 10000, "timer_spawn_dv" )
    end
@@ -154,6 +156,7 @@ function timer_spawn_dv ()
    if not job_done then
       local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Goddard", "Dvaered Small Patrol", "Dvaered Big Patrol" }
       local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
+      player.msg( msg:format( shipname ) )
       for i, j in ipairs( pilot.add( shipname ) ) do
          add_attention( j )
       end

@@ -1,7 +1,7 @@
 --[[
 
    Diversion from Raelid.
-   Copyright (C) 2014, 2015 Julie Marchant <onpon4@riseup.net>
+   Copyright (C) 2014, 2015, 2018 Julie Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,27 +25,26 @@ title = {}
 text = {}
 
 title[1] = _("Taking One for the Team")
-text[1] = _([[The FLF officer smiles as he sees you approaching him.
-    "Ah, if it isn't %s!" he says. "I think you might be perfect for this job. See, my team and I are going to be conducting an important covert operation in Raelid. I won't bore you with the details of that operation, but I need someone to distract the Dvaered forces while we do this. You'll basically need to travel to the %s system and wreak havoc there so that the Dvaereds go after you."
-    His expression suddenly becomes serious. "This will be a highly dangerous mission, and I can't guarantee any backup for you. However, you will be paid substantially, and I can guarantee you that doing this mission will earn you a great amount of respect. Would you be interested?"]])
+text[1] = _([[Benito smiles as you approach her. "Hello again, %s!" she says. "I have another mission for you, should you choose to accept it. See, we have... an important covert operation we need to launch in Raelid. I won't bore you with the details of that operation, but I need someone to distract the Dvaered forces while we do this. You'll basically need to travel to the %s system and wreak havoc there so that the Dvaereds go after you and not the soldiers conducting the operation.
+    "Of course, this will be a highly dangerous mission, and I can't guarantee any backup for you. You will be paid substantially, however, and this will surely earn you more respect among our ranks. Would you be interested?"]])
 
-text[2] = _([["Great! I and my team will be hiding out around Raelid until we get a chance to conduct the operation. I will message you when we succeed. Good luck, and try not to get yourself killed!" With that, he smiles and walks off, presumably to prepare his team for takeoff.]])
+text[2] = _([["Great! The team in charge of the operation will be hiding out around Raelid until they get an opening from your efforts. I will message you when they succeed. Good luck, and try not to get yourself killed!" She grins, and you grin back. Now to cause some mayhem...]])
 
 title[3] = _("Maybe Another Time")
 text[3] = _([["OK, then. Feel free to come back later if you change your mind."]])
 
 success_text = {}
-success_text[1] = _([[You receive a transmission. It's from the leading officer. "Operation successful, soldier!" he says. "You should get back to the base now before you get killed! I'll be waiting for you there."]])
+success_text[1] = _([[You receive a transmission. It's from Benito. "Operation successful!" she says. "You should get back to the base now before you get killed! I'll be waiting for you there."]])
 
 pay_text = {}
-pay_text[1] = _([[As you dock the station, the leading officer approaches you with a smile. "Thank you for your help," he says. "The mission was a rousing success! What we've accomplished will greatly help our efforts against the Dvaereds in the future." He hands you a credit chip. "That's your payment. I hope to work with you again, soldier!" And with that, you shake hands and part ways. It occurs to you that you never learned what the mission actually was. Perhaps you will find out some other time.]])
+pay_text[1] = _([[As you dock the station, Benito approaches you with a smile. "Thank you for your help," she says. "The mission was a rousing success! What we've accomplished will greatly help our efforts against the Dvaereds in the future." She hands you a credit chip. "That's your payment. Until next time!" And with that, she sees herself out as a number of additional FLF soldiers congratulate you. It occurs to you that you never learned what the mission actually was. Perhaps you will find out some other time.]])
 
 misn_title = _("Diversion from Raelid")
 misn_desc = _("A covert operation is being conducted in Raelid. You are to create a diversion from this operation by wreaking havoc in the nearby %s system.")
 misn_reward = _("Substantial pay and a great amount of respect")
 
-npc_name = _("FLF officer")
-npc_desc = _("An FLF officer leading an operation seems to be in search of another pilot.")
+npc_name = _("Benito")
+npc_desc = _("Benito seems to want to speak with you.")
 
 
 function create ()
@@ -54,9 +53,9 @@ function create ()
 
    dv_attention_target = 20
    credits = 250000
-   reputation = 20
+   reputation = 10
 
-   misn.setNPC( npc_name, "neutral/thief1" )
+   misn.setNPC( npc_name, "flf/unique/benito" )
    misn.setDesc( npc_desc )
 end
 
@@ -71,7 +70,7 @@ function accept ()
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      marker = misn.markerAdd( missys, "high" )
+      marker = misn.markerAdd( missys, "plot" )
       misn.setReward( misn_reward )
 
       dv_attention = 0
@@ -90,7 +89,7 @@ function land ()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
-      flf_setReputation( 40 )
+      flf_setReputation( 35 )
       faction.get("FLF"):modPlayer( reputation )
       misn.finish( true )
    end

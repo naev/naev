@@ -668,6 +668,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
@@ -676,12 +677,13 @@
  <mission name="Eliminate a Dvaered Patrol">
   <lua>flf/flf_patrol</lua>
   <avail>
-   <priority>3</priority>
+   <priority>2</priority>
    <chance>550</chance>
    <done>Disrupt a Dvaered Patrol</done>
    <location>Computer</location>
    <faction>FLF</faction>
-   <cond>not player.misnDone("The FLF Common Enemy")</cond>
+   <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Diversion from Raelid">
@@ -690,6 +692,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <chance>60</chance>
    <done>Disrupt a Dvaered Patrol</done>
    <location>Bar</location>
@@ -700,110 +703,131 @@
  <mission name="Divert the Dvaered Forces">
   <lua>flf/flf_diversion</lua>
   <avail>
-   <priority>4</priority>
+   <priority>2</priority>
    <chance>550</chance>
    <done>Diversion from Raelid</done>
    <location>Computer</location>
    <faction>FLF</faction>
-   <cond>not player.misnDone("The FLF Common Enemy")</cond>
+   <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
- <mission name="Empire Negotiations">
-  <lua>flf/empa/flf_empa01</lua>
+ <mission name="FLF Pirate Alliance">
+  <lua>flf/dvk/flf_dvk02</lua>
   <flags>
    <unique />
   </flags>
   <avail>
-   <chance>40</chance>
+   <priority>1</priority>
+   <chance>30</chance>
    <done>Diversion from Raelid</done>
    <location>Bar</location>
    <faction>FLF</faction>
-   <cond>diff.isApplied("collective_dead") and faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+   <cond>faction.playerStanding("FLF") &gt;= 30</cond>
   </avail>
  </mission>
- <mission name="FLF-Empire Negotiations 2">
-  <lua>flf/empa/flf_empa02</lua>
+ <mission name="Assault on Raelid">
+  <lua>flf/dvk/flf_dvk03</lua>
   <flags>
    <unique />
   </flags>
   <avail>
-   <chance>60</chance>
-   <done>Empire Negotiations</done>
+   <priority>1</priority>
+   <chance>30</chance>
+   <done>FLF Pirate Alliance</done>
    <location>Bar</location>
    <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+   <cond>faction.playerStanding("FLF") &gt;= 50</cond>
   </avail>
  </mission>
- <mission name="Raelid Outpost Rescue">
-  <lua>flf/empa/flf_empa03</lua>
+ <mission name="Eliminate an Empire Patrol">
+  <lua>flf/flf_empatrol</lua>
+  <avail>
+   <priority>2</priority>
+   <chance>550</chance>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <faction>Frontier</faction>
+   <cond>diff.isApplied("flf_vs_empire") and not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ <mission name="Diversion from Haleb">
+  <lua>flf/dvk/flf_dvk04</lua>
   <flags>
    <unique />
   </flags>
   <avail>
-   <chance>60</chance>
-   <done>FLF-Empire Negotiations 2</done>
+   <priority>1</priority>
+   <chance>40</chance>
+   <done>Assault on Raelid</done>
    <location>Bar</location>
    <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 30 and faction.playerStanding("Empire") &gt;= 30</cond>
+   <cond>faction.playerStanding("FLF") &gt;= 70</cond>
   </avail>
  </mission>
- <mission name="The FLF Coup">
-  <lua>flf/empa/flf_empa04</lua>
+ <mission name="Alliance of Inconvenience">
+  <lua>flf/dvk/flf_dvk05</lua>
   <flags>
    <unique />
   </flags>
   <avail>
-   <chance>60</chance>
-   <done>Raelid Outpost Rescue</done>
+   <priority>1</priority>
+   <chance>30</chance>
+   <done>Diversion from Haleb</done>
    <location>Bar</location>
    <faction>FLF</faction>
-   <cond>not diff.isApplied("flf_vs_empire")</cond>
+  </avail>
+ </mission>
+ <mission name="FLF Pirate Disturbance">
+  <lua>flf/flf_pirates</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>330</chance>
+   <done>Alliance of Inconvenience</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ <mission name="Assault on Haleb">
+  <lua>flf/dvk/flf_dvk06</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>1</priority>
+   <chance>30</chance>
+   <done>Alliance of Inconvenience</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 80</cond>
+  </avail>
+ </mission>
+ <mission name="The FLF Split">
+  <lua>flf/dvk/flf_dvk07</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>1</priority>
+   <chance>30</chance>
+   <done>Assault on Haleb</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 90</cond>
   </avail>
  </mission>
  <mission name="Rogue FLF">
   <lua>flf/flf_rogue</lua>
   <avail>
-   <priority>5</priority>
-   <chance>510</chance>
-   <done>The FLF Coup</done>
-   <location>Computer</location>
-   <faction>FLF</faction>
-  </avail>
- </mission>
- <mission name="FLF Instability">
-  <lua>flf/empa/flf_empa05</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>60</chance>
-   <done>The FLF Coup</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-   <cond>faction.playerStanding("Empire") &gt;= 30</cond>
-  </avail>
- </mission>
- <mission name="The FLF Common Enemy">
-  <lua>flf/empa/flf_empa06</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>40</chance>
-   <done>FLF Instability</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-  </avail>
- </mission>
- <mission name="FLF Pirates">
-  <lua>flf/flf_pirates</lua>
-  <avail>
-   <priority>6</priority>
-   <chance>860</chance>
-   <done>The FLF Common Enemy</done>
+   <priority>3</priority>
+   <chance>550</chance>
+   <done>The FLF Split</done>
    <location>Computer</location>
    <faction>FLF</faction>
    <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">

@@ -25,12 +25,9 @@ misn_title  = _("FLF: Rogue %s in %s")
 misn_reward = _("%s credits")
 
 text = {}
-text[1] = _("The officer is clearly not happy with the loss, but mumbles a thank-you and hands you your pay.")
-text[2] = _("As you enter the station, you detect a feeling of dread. You silently collect your pay, avoiding eye contact with the other soldiers.")
-text[3] = _("A soldier gives you a dirty look as you move to collect your pay.")
-text[4] = _("An FLF soldier, while upset about the infighting, thanks you for your service and buys you a drink.")
-text[5] = _("You are silently handed your pay by an officer who looks utterly depressed.")
-text[6] = _("An FLF officer forces out a smile as you collect your pay. It's unfortunate, but the job had to be done.")
+text[1] = _("You are thanked for eliminating the traitorous scum and handed a credit chip with the agreed-upon payment.")
+text[2] = _("The official who hands you your pay mumbles something about traitors and then summarily dismisses you.")
+text[3] = _("While it takes an inordinate amount of time, you are eventually handed the agreed-upon payment for dispatching the traitor.")
 
 misn_desc = {}
 misn_desc[1] = _("There is a squadron of rogue FLF ships with %d ships in the %s system. Eliminate this squadron.")
@@ -75,9 +72,6 @@ function create ()
    credits = ships * 30000 - flfships * 1000
    credits = credits * system.cur():jumpDist( missys ) / 3
    credits = credits + rnd.sigma() * 8000
-
-   emp_reputation = 5
-   dv_reputation = 5
 
    local desc
    if ships == 1 then
@@ -175,15 +169,6 @@ function land_flf ()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
-
-      if player.misnDone( "FLF Instability" ) and missys:presences()[ "Empire" ] then
-         faction.get("Empire"):modPlayerSingle( emp_reputation )
-      end
-
-      if false and missys:presences()[ "Dvaered" ] then
-         faction.get("Dvaered"):modPlayerSingle( dv_reputation )
-      end
-
       misn.finish( true )
    end
 end
@@ -203,7 +188,7 @@ function rogue_spawnRogue( n )
       local shipname
       local shipnames = { "Rogue FLF Vendetta", "Rogue FLF Lancelot" }
       shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
-      local pstk = pilot.add( shipname, "flf_norun", vec2.new( x, y ) )
+      local pstk = pilot.add( shipname, "flf_rogue_norun", vec2.new( x, y ) )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_rogue" )
       p:setHostile()

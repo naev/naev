@@ -7,9 +7,7 @@
  <class>Fighter</class>
  <price>400000</price>
  <fabricator>House Dvaered</fabricator>
- <description>It's something of an irony that one of the most popular ships in use by FLF pilots comes from House Dvaered. Still, the Vendetta has been proven to be a great choice for dealing a lot of damage in a short amount of time, which is vital when going up against ships more than twice your size.
- 
-These Vendettas available from the FLF have questionable core components pre-installed, but are otherwise identical to standard Vendettas.</description>
+ <description>It's something of an irony that one of the most popular ships in use by FLF pilots comes from House Dvaered. Still, the Vendetta has been proven to be a great choice for dealing a lot of damage in a short amount of time, which is vital when going up against ships more than twice your size.</description>
  <health>
   <absorb>6</absorb>
   <armour>100</armour>
