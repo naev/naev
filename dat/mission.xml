@@ -683,6 +683,7 @@
    <location>Computer</location>
    <faction>FLF</faction>
    <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Diversion from Raelid">
@@ -708,6 +709,7 @@
    <location>Computer</location>
    <faction>FLF</faction>
    <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="FLF Pirate Alliance">
@@ -746,7 +748,7 @@
    <location>Computer</location>
    <faction>FLF</faction>
    <faction>Frontier</faction>
-   <cond>diff.isApplied("flf_vs_empire")</cond>
+   <cond>diff.isApplied("flf_vs_empire") and not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Diversion from Haleb">
@@ -785,6 +787,7 @@
    <location>Computer</location>
    <faction>FLF</faction>
    <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Assault on Haleb">
@@ -824,6 +827,7 @@
    <location>Computer</location>
    <faction>FLF</faction>
    <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
