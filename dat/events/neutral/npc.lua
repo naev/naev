@@ -128,7 +128,28 @@ msg_lore["Za'lek"] =       {_("It's not easy, dancing to those scientists' tunes
                               _("I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!"),
                               }
 
-msg_lore["Proteron"] =     {_("Hello, traveler. Welcome to Proteron space. We are an evil, power hungry dystopia on a quest for dominance over the galaxy. Would you like a brochure?"),
+msg_lore["Thurion"] =      {_("Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."),
+                              _("My father unfortunately hit his head when he was young, so he couldn't be safely uploaded. It's okay, though; he had a long and fulfilling life, for a non-uploaded human, that is."),
+                              _("One great thing once you're uploaded is that you can choose to forget things you don't want to remember. My great-grandfather had a movie spoiled for him before he could watch it, so once he got uploaded, he deleted that memory and watched it with a fresh perspective. Cool, huh?"),
+                              _("The best part of our lives is after we're uploaded, but that doesn't mean we lead boring lives before then. We have quite easy and satisfying biological lives before uploading."),
+                              _("Being uploaded allows you to live forever, but that doesn't mean you're forced to. Any uploaded Thurion can choose to end their own life if they want, though few have chosen to do so."),
+                              _("Uploading is a choice in our society. No one is forced to do it. It's just that, well, what kind of person would turn down the chance to live a second life on the network?"),
+                              _("We were lucky to not get touched by the Incident. In fact, we kind of benefited from it. The nebula that resulted gave us a great cover and sealed off the Empire from us. It also got rid of those lunatics, the Proterons."),
+                              _("We don't desire galactic dominance. That being said, we do want to spread our way of life to the rest of the galaxy, so that everyone can experience the joy of being uploaded."),
+                              _("I think you're from the outside, aren't you? That's awesome! I've never met a foreigner before. What's it like outside the nebula?"),
+                              _("We actually make occasional trips outside of the nebula, though only rarely, and we always make sure to not get discovered by the Empire."),
+                              _("The Soromid have a rough history. Have you read up on it? First the Empire confined them to a deadly planet and doomed them to extinction. Then, when they overcame those odds, the Incident blew up their homeworld. The fact that they're still thriving now despite that is phenomenal, I must say."),
+                           }
+
+msg_lore["Proteron"] =     {_("Our system of government is clearly superior to all others. Nothing could be more obvious."),
+                              _("The Incident really set back our plan for galactic dominance, but that was only temporary."),
+                              _("We don't have time for fun and games. The whole reason we're so great is because we're more productive than any other society."),
+                              _("We are superior, so of course we deserve control over the galaxy. It's our destiny."),
+                              _("The Empire is weak, obsolete. That is why we must replace them."),
+                              _("Slaves? Of course we're not slaves. Slaves are beaten and starved. We are in top shape so we can serve our country better."),
+                              _("I can't believe the Empire continues to allow families. So primitive. Obviously, all this does is make them less productive."),
+                              _("The exact cause of the Incident is a tightly-kept secret, but the government says it was caused by the Empire's stupidity. I would expect nothing less."),
+                              _("I came across some heathen a few months back who claimed, get this, that we Proterons were the cause of the Incident! What slanderous nonsense. Being the perfect society we are, of course we would never cause such a massive catastrophe."),
                            }
 
 msg_lore["Frontier"] =     {_("We value our autonomy. We don't want to be ruled by those megalomanic Dvaered Warlords! Can't they just shoot at each other instead of threatening us? If it wasn't for the Liberation Front..."),
@@ -292,14 +313,14 @@ function spawnNPC()
       msg = getLoreMessage(fac)
    elseif select <= 0.55 then
       -- Jump point message.
-      msg, func = getJmpMessage()
+      msg, func = getJmpMessage(fac)
    elseif select <= 0.8 then
       -- Gameplay tip message.
-      msg = getTipMessage()
+      msg = getTipMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then
-         msg = getMissionLikeMessage()
+         msg = getMissionLikeMessage(fac)
       else
          msg = getLoreMessage(fac)
       end
@@ -330,7 +351,7 @@ function getLoreMessage(fac)
 end
 
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
-function getJmpMessage()
+function getJmpMessage(fac)
    -- Collect a table of jump points in the system the player does NOT know.
    local mytargets = {}
    seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
@@ -341,12 +362,12 @@ function getJmpMessage()
    end
    
    if #mytargets == 0 then -- The player already knows all jumps in this system.
-      return getLoreMessage(), nil
+      return getLoreMessage(fac), nil
    end
 
    -- All jump messages are valid always.
    if #msg_jmp == 0 then
-      return getLoreMessage(), nil
+      return getLoreMessage(fac), nil
    end
    local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
    local sel = rnd.rnd(1, #mytargets)
@@ -361,10 +382,10 @@ function getJmpMessage()
 end
 
 -- Returns a tip message.
-function getTipMessage()
+function getTipMessage(fac)
    -- All tip messages are valid always.
    if #msg_tip == 0 then
-      return getLoreMessage()
+      return getLoreMessage(fac)
    end
    local sel = rnd.rnd(1, #msg_tip)
    local pick = msg_tip[sel]
@@ -373,7 +394,7 @@ function getTipMessage()
 end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-function getMissionLikeMessage()
+function getMissionLikeMessage(fac)
    if not msg_combined then
       msg_combined = {}
 
@@ -405,7 +426,7 @@ function getMissionLikeMessage()
    end
 
    if #msg_combined == 0 then
-      return getLoreMessage()
+      return getLoreMessage(fac)
    else
       -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
       local sel = rnd.rnd(1, #msg_combined)

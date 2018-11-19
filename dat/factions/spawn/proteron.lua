@@ -49,9 +49,9 @@ end
 
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
-    pilots.__fleet = true
     local pilots = {}
     local r = rnd.rnd()
+    pilots.__fleet = true
 
     -- Generate the capship
     scom.addPilot( pilots, "Proteron Archimedes", 140 )
