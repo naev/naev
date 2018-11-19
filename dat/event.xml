@@ -146,9 +146,9 @@
  </event>
  <event name="FLF Catastrophe">
   <lua>flf/flf_catastrophe</lua>
-  <trigger>land</trigger>
+  <trigger>enter</trigger>
   <chance>70</chance>
-  <cond>planet.cur():name() == "Sindbad" and faction.get("FLF"):playerStanding() &gt;= 95 and player.misnDone("The FLF Split")</cond>
+  <cond>system.cur():name() == "Sigur" and faction.get("FLF"):playerStanding() &gt;= 95 and player.misnDone("The FLF Split")</cond>
  </event>
  <event name="Animal trouble">
   <lua>neutral/animaltrouble</lua>
