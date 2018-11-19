@@ -1047,6 +1047,13 @@
    <pilot name="Thurion Taciturnity" ship="Thurion Taciturnity"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Thurion Goddard">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Goddard" ship="Goddard"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Sirius Recon Force">
   <ai>sirius</ai>
   <faction>Sirius</faction>

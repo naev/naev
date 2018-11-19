@@ -19,7 +19,7 @@ include "dat/scripts/numstring.lua"
 --Mission Details
 misn_title = _("%s Delivery")
 misn_reward = _("%s credits per ton")
-misn_desc = _("There is an insufficient supply %s on this planet to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
+misn_desc = _("There is an insufficient supply of %s on this planet to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land_title = _("Delivery success!")
 

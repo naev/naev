@@ -20,11 +20,14 @@
   <services>
    <land/>
    <refuel/>
+   <bar/>
+   <missions/>
    <commodity/>
   </services>
   <commodities>
    <commodity>Food</commodity>
   </commodities>
   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+  <bar>The Thurion "bar" is really not so much of a bar, considering that no alcohol is sold. Still, this is a place where biological Thurions socialize and enjoy foods and drinks safe for the brain.</bar>
  </general>
 </asset>

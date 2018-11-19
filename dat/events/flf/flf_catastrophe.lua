@@ -197,6 +197,10 @@ function pilot_death_sindbad( pilot, attacker, arg )
    faction.get("FLF"):setPlayerStanding( 100 )
    player.addOutfit( "Map: Inner Nebula Secret Jump" )
 
+   if diff.isApplied( "flf_pirate_ally" ) then
+      diff.remove( "flf_pirate_ally" )
+   end
+
    for i, j in ipairs( emp_ships ) do
       if j:exists() then
          j:control( false )
