@@ -107,8 +107,9 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Za'lek</faction>
+   <faction>Thurion</faction>
    <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="FLF Commodity Run">
