@@ -104,6 +104,10 @@
   <system name="Torg">
    <asset name="Virtual FLF Small">remove</asset>
   </system>
+  <system name="Sigur">
+   <asset name="Virtual Empire Unpresence">remove</asset>
+   <asset name="Virtual Soromid Unpresence">remove</asset>
+  </system>
  </unidiff>
  <unidiff name="test">
   <system name="Hakoi">

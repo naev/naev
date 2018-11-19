@@ -60,8 +60,6 @@ function create ()
 
    bar_hook = hook.land( "enter_bar", "bar" )
    abort_hook = hook.enter( "takeoff_abort" )
-
-   player.allowSave( false )
 end
 
 
@@ -74,7 +72,7 @@ function enter_bar ()
       if bar_hook ~= nil then hook.rm( bar_hook ) end
       if abort_hook ~= nil then hook.rm( abort_hook ) end
       music.stop()
-      music.load("tension")
+      music.load( "tension" )
       music.play()
       tk.msg( title[1], text[1] )
       tk.msg( title[1], text[2]:format( player.name() ) )
@@ -89,7 +87,6 @@ end
 
 
 function takeoff_abort ()
-   player.allowSave( true )
    evt.finish( false )
 end
 
@@ -152,7 +149,6 @@ function takeoff ()
 
    diff.apply( "flf_dead" )
    player.pilot():setNoJump( true )
-   player.allowSave( true )
 end
 
 
@@ -184,6 +180,16 @@ end
 
 
 function pilot_death_sindbad( pilot, attacker, arg )
+   music.stop()
+   music.load( "machina" )
+   music.play()
+   music.delay( "ambient", 270 )
+   music.delay( "combat", 270 )
+
+   player.pilot():setInvincible()
+   player.cinematics()
+   camera.set( flf_base )
+
    tk.msg( title[6], text[6] )
    tk.msg( title[6], text[7]:format( player.name() ) )
    player.pilot():setNoJump( false )
@@ -194,8 +200,30 @@ function pilot_death_sindbad( pilot, attacker, arg )
    for i, j in ipairs( emp_ships ) do
       if j:exists() then
          j:control( false )
+         j:changeAI( "empire" )
+         j:setVisible( false )
+      end
+   end
+   for i, j in ipairs( dv_ships ) do
+      if j:exists() then
+         j:changeAI( "dvaered" )
+         j:setVisible( false )
       end
    end
 
+   pilot.toggleSpawn( true )
+   hook.timer( 8000, "timer_plcontrol" )
+end
+
+
+function timer_plcontrol ()
+   camera.set( player.pilot() )
+   player.cinematics( false )
+   hook.timer( 2000, "timer_end" )
+end
+
+
+function timer_end ()
+   player.pilot():setInvincible( false )
    evt.finish( true )
 end
