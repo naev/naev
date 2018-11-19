@@ -22,8 +22,9 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Za'lek</faction>
+   <faction>Thurion</faction>
    <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
@@ -87,8 +88,9 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Za'lek</faction>
+   <faction>Thurion</faction>
    <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Commodity Run">
@@ -143,8 +145,9 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Za'lek</faction>
+   <faction>Thurion</faction>
    <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Dead Or Alive Bounty">
@@ -194,6 +197,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Thurion</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>

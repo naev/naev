@@ -55,11 +55,9 @@ function spawn_capship ()
    local r = rnd.rnd()
 
    -- Generate the capship
-   if r < 0.7 then
-      scom.addPilot( pilots, "Empire Hawking", 140 )
-   else
-      scom.addPilot( pilots, "Empire Peacemaker", 165 )
-   end
+   -- XXX: "Thurion Goddard" ship is a placeholder until proper Thurion
+   -- capships are made. (Used to be Empire Peacemaker or Empire Hawking.)
+   scom.addPilot( pilots, "Thurion Goddard", 140 )
 
    -- Generate the escorts
    r = rnd.rnd()
