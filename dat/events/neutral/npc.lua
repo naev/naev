@@ -6,6 +6,12 @@
 
 include "dat/events/tutorial/tutorial-common.lua"
 
+-- Factions which will NOT get generic texts if possible.  Factions
+-- listed here not spawn generic civilian NPCs or get aftercare texts.
+-- Meant for factions which are either criminal (FLF, Pirate) or unaware
+-- of the main universe (Thurion, Proteron).
+nongeneric_factions = { "Pirate", "FLF", "Thurion", "Proteron" }
+
 -- Portraits.
 -- When adding portraits, make sure to add them to the table of the faction they belong to.
 -- Does your faction not have a table? Then just add it. The script will find and use it if it exists.
@@ -249,10 +255,22 @@ function spawnNPC()
       factions[#factions + 1] = i
    end
 
+   local nongeneric = false
+
+   local planfaction = planet.cur():faction():name()
    local fac = "general"
    local select = rnd.rnd()
-   if select >= (0.5) and planet.cur():faction() ~= nil then
-      fac = planet.cur():faction():name()
+   if planfaction ~= nil then
+      for i, j in ipairs(nongeneric_factions) do
+         if j == planfaction then
+            nongeneric = true
+            break
+         end
+      end
+
+      if nongeneric or select >= (0.5) then
+         fac = planfaction
+      end
    end
 
    -- Append the faction to the civilian name, unless there is no faction.
@@ -280,7 +298,11 @@ function spawnNPC()
       msg = getTipMessage()
    else
       -- Mission hint message.
-      msg = getMissionLikeMessage()
+      if not nongeneric then
+         msg = getMissionLikeMessage()
+      else
+         msg = getLoreMessage(fac)
+      end
    end
 
    local npcdata = {name = npcname, msg = msg, func = func}
