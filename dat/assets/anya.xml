@@ -20,8 +20,14 @@
   <services>
    <land/>
    <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Ore</commodity>
+  </commodities>
   <description>Anya is the twin planet to Sabe, orbiting around their shared center of gravity in tandem. Anya is shrouded in a permanent cloud cover of ash and snow however, as a result of geological activity. A small number of Thurions live on the surface of Anya but no large scale colonization effort has commenced as of yet, despite the planet's proximity to Sabe, the Thurian capital world. This is due, at least in part, to the geological instabilities of the planet.</description>
+  <bar>The bar on Anya is small and quaint, populated by locals who live here. As is usual for Thurion bars, no alcohol or other substances deemed to be damaging to the brain are served.</bar>
  </general>
 </asset>
