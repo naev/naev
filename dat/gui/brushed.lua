@@ -279,7 +279,7 @@ end
 function update_system()
 end
 
-function renderBar( name, value, light, locked, prefix, mod_x )
+function renderBar( name, value, light, locked, prefix, mod_x, heat )
    local offsets = { 2, 2, 4, 54, 12, -2 } --Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
    
    local vars = { "col", "col_top", "x", "y", "icon" }
@@ -298,6 +298,22 @@ function renderBar( name, value, light, locked, prefix, mod_x )
    else
       gfx.renderTex( bar_bg, l_x + offsets[1], l_y + offsets[2] ) --Background
       gfx.renderRect( l_x + offsets[1], l_y + offsets[2], bar_w, value/100. * bar_h, l_col ) --Bar
+
+      -- Heat bar (only if heat is specified)
+      if heat ~= nil then
+         if heat <= 1 then
+            heatcol = col_heat
+            heatcol_top = col_top_heat
+         else
+            heatcol = col_heat2
+            heatcol_top = col_top_heat2
+         end
+         gfx.renderRect( l_x + offsets[1], l_y + offsets[2], bar_w, heat/2 * bar_h, heatcol ) --Heat bar
+         if heat < 2 then
+            gfx.renderRect( l_x + offsets[1], l_y + offsets[2] + heat/2 * bar_h, bar_w, 1, heatcol_top ) --top bit
+         end
+      end
+
       if value < 100 then
          gfx.renderRect( l_x + offsets[1], l_y + offsets[2] + value/100. * bar_h, bar_w, 1, l_col_top ) --lighter area
       end
@@ -350,7 +366,7 @@ function renderWeapBar( weapon, x, y )
       gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
       gfx.renderRect( x + offsets[1], y + offsets[2], width, weapon.temp/2 *bar_h, heatcol ) --Heat bar, mandatory
       if weapon.temp < 2 then
-      gfx.renderRect( x + offsets[1], y + offsets[2] + weapon.temp/2 * bar_h, width, 1, heatcol_top ) --top bit
+         gfx.renderRect( x + offsets[1], y + offsets[2] + weapon.temp/2 * bar_h, width, 1, heatcol_top ) --top bit
       end
       local col = nil
       if weapon.ammo ~= nil then
@@ -451,6 +467,7 @@ function render( dt )
    armour, shield = pp:health()
    energy = pp:energy()
    fuel = stats.fuel / stats.fuel_max * 100
+   heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    wset_name, wset = pp:weapset( true )
    credits, credits_h = player.credits(2)
    autonav = player.autonav()
@@ -464,11 +481,7 @@ function render( dt )
    end
    right_side_w = (bar_w + 6)*wbars_right - 1
    gui_w = right_side_w + left_side_w - 10
-   if var.peek("gui_brushed_centered") then
-      mod_x = math.floor( (screen_w - gui_w)/2 )
-   else
-      mod_x = 0
-   end
+   mod_x = math.floor( (screen_w - gui_w)/2 )
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
    
@@ -511,7 +524,9 @@ function render( dt )
    end
    
    for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
-      renderBar( v, _G[v], nil, nil, nil, mod_x )
+      local ht = nil
+      if v == "armour" then ht = heat end
+      renderBar( v, _G[v], nil, nil, nil, mod_x, ht )
    end
    
    
@@ -527,11 +542,12 @@ function render( dt )
          ta_dist = pp:pos():dist(ptarget:pos())
          if ta_scanned then
             ta_armour, ta_shield = ptarget:health()
+            ta_heat = math.max( math.min( (ptarget:temp() - 250)/87.5, 2 ), 0 )
             ta_energy = ptarget:energy()
             ta_name = ptarget:name()
             gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, 1 )
             renderBar( "shield", ta_shield, false, false, "target", mod_x )
-            renderBar( "armour", ta_armour, false, false, "target", mod_x )
+            renderBar( "armour", ta_armour, false, false, "target", mod_x, ta_heat )
             renderBar( "energy", ta_energy, false, false, "target", mod_x )
             renderField( ta_name, x_name + mod_x, y_name, 86, col_text )
             renderField( tostring( math.floor(ta_dist) ), x_dist + mod_x, y_dist, 86,col_text )
@@ -669,4 +685,8 @@ end
 
 function action_weapons()
    gui.menuInfo( "weapons" )
+end
+
+function render_cooldown( percent, seconds )
+   gfx.print(false, "Cooling down...", 0, 0, col_text, 400, true )
 end
