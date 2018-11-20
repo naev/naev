@@ -2,8 +2,8 @@
 <outfit name="GUI - Brushed">
  <general>
   <mass>0</mass>
-  <price>75000</price>
-  <description>This is a new GUI which will become available to you by purchase. It has a brushed steel look.</description>
+  <price>0</price>
+  <description>Outfit corresponding with the "Brushed" GUI.</description>
   <gfx_store>brushedGUI</gfx_store>
  </general>
  <specific type="gui">
