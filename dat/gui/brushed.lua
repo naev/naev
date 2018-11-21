@@ -23,6 +23,7 @@ function create()
    col_fuel   = colour.new( 80/255, 24/255, 37/255 )
    col_heat   = colour.new( 80/255, 27/255, 24/255 )
    col_heat2  = colour.new(181/255, 34/255, 26/255 )
+   col_stress = colour.new( 24/255, 27/255, 80/255 )
    col_ammo   = colour.new(159/255, 93/255, 15/255 )
    col_top_shield = colour.new(  88/255,  96/255, 156/255 )
    col_top_armour = colour.new( 122/255, 122/255, 122/255 )
@@ -30,6 +31,7 @@ function create()
    col_top_fuel   = colour.new( 156/255,  88/255, 104/255 )
    col_top_heat   = colour.new( 188/255,  63/255,  56/255 )
    col_top_heat2  = colour.new( 238/255, 143/255, 138/255 )
+   col_top_stress = colour.new( 56/255, 88/255, 156/255 )
    col_top_ammo   = colour.new( 233/255, 131/255,  21/255 )
    col_text = colour.new( 203/255, 203/255, 203/255 )
    col_unkn = colour.new( 130/255, 130/255, 130/255 )
@@ -280,7 +282,7 @@ end
 function update_system()
 end
 
-function renderBar( name, value, light, locked, prefix, mod_x, heat )
+function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
    local offsets = { 2, 2, 4, 54, 12, -2 } --Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
    
    local vars = { "col", "col_top", "x", "y", "icon" }
@@ -309,9 +311,17 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat )
             heatcol = col_heat2
             heatcol_top = col_top_heat2
          end
-         gfx.renderRect( l_x + offsets[1], l_y + offsets[2], bar_w, heat/2 * bar_h, heatcol ) --Heat bar
+         gfx.renderRect( l_x + offsets[1], l_y + offsets[2], bar_w/2, heat/2 * bar_h * (value/100.), heatcol ) --Heat bar
          if heat < 2 then
-            gfx.renderRect( l_x + offsets[1], l_y + offsets[2] + heat/2 * bar_h, bar_w, 1, heatcol_top ) --top bit
+            gfx.renderRect( l_x + offsets[1], l_y + offsets[2] + heat/2 * bar_h * (value/100.), bar_w/2, 1, heatcol_top ) --top bit
+         end
+      end
+
+      -- Stress (disable) bar (only if stress is specified)
+      if stress ~= nil then
+         gfx.renderRect( l_x + offsets[1] + bar_w/2, l_y + offsets[2], bar_w/2, (stress/100.) * bar_h * (value/100.), col_stress ) --Stress bar
+         if stress < 100 then
+            gfx.renderRect( l_x + offsets[1] + bar_w/2, l_y + offsets[2] + (stress/100.) * bar_h * value/100., bar_w/2, 1, col_top_stress ) --top bit
          end
       end
 
@@ -465,7 +475,7 @@ end
 function render( dt )
    
    --Values
-   armour, shield = pp:health()
+   armour, shield, stress = pp:health()
    energy = pp:energy()
    fuel = stats.fuel / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
@@ -526,8 +536,12 @@ function render( dt )
    
    for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
       local ht = nil
-      if v == "armour" then ht = heat end
-      renderBar( v, _G[v], nil, nil, nil, mod_x, ht )
+      local st = nil
+      if v == "armour" then
+         ht = heat
+         st = stress
+      end
+      renderBar( v, _G[v], nil, nil, nil, mod_x, ht, st )
    end
    
    
@@ -542,13 +556,13 @@ function render( dt )
          gfx.renderTex( target_bg, target_image_x + mod_x, target_image_y )
          ta_dist = pp:pos():dist(ptarget:pos())
          if ta_scanned then
-            ta_armour, ta_shield = ptarget:health()
+            ta_armour, ta_shield, ta_stress = ptarget:health()
             ta_heat = math.max( math.min( (ptarget:temp() - 250)/87.5, 2 ), 0 )
             ta_energy = ptarget:energy()
             ta_name = ptarget:name()
             gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, 1 )
             renderBar( "shield", ta_shield, false, false, "target", mod_x )
-            renderBar( "armour", ta_armour, false, false, "target", mod_x, ta_heat )
+            renderBar( "armour", ta_armour, false, false, "target", mod_x, ta_heat, ta_stress )
             renderBar( "energy", ta_energy, false, false, "target", mod_x )
             renderField( ta_name, x_name + mod_x, y_name, 86, col_text )
             renderField( tostring( math.floor(ta_dist) ), x_dist + mod_x, y_dist, 86,col_text )
