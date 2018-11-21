@@ -17,21 +17,23 @@ function create()
    smallfont_h = gfx.fontSize(true)
    
    --Colors
-   col_shield = colour.new( 24/255, 31/255, 80/255 )
-   col_armour = colour.new( 52/255, 52/255, 52/255 )
-   col_energy = colour.new( 23/255, 80/255, 33/255 )
-   col_fuel   = colour.new( 80/255, 24/255, 37/255 )
-   col_heat   = colour.new( 80/255, 27/255, 24/255 )
-   col_heat2  = colour.new(181/255, 34/255, 26/255 )
-   col_stress = colour.new( 24/255, 27/255, 80/255 )
-   col_ammo   = colour.new(159/255, 93/255, 15/255 )
+   col_shield = colour.new(  24/255,  31/255,  80/255 )
+   col_armour = colour.new(  52/255,  52/255,  52/255 )
+   col_energy = colour.new(  23/255,  80/255,  33/255 )
+   col_fuel   = colour.new(  80/255,  24/255,  37/255 )
+   col_heat   = colour.new(  80/255,  27/255,  24/255 )
+   col_heat2  = colour.new( 181/255,  34/255,  26/255 )
+   col_stress = colour.new(  24/255,  27/255,  80/255 )
+   col_velocity = colour.new(  77/255,  80/255,  21/255 )
+   col_ammo   = colour.new( 159/255,  93/255,  15/255 )
    col_top_shield = colour.new(  88/255,  96/255, 156/255 )
    col_top_armour = colour.new( 122/255, 122/255, 122/255 )
    col_top_energy = colour.new(  52/255, 172/255,  71/255 )
    col_top_fuel   = colour.new( 156/255,  88/255, 104/255 )
    col_top_heat   = colour.new( 188/255,  63/255,  56/255 )
    col_top_heat2  = colour.new( 238/255, 143/255, 138/255 )
-   col_top_stress = colour.new( 56/255, 88/255, 156/255 )
+   col_top_stress = colour.new(  56/255,  88/255, 156/255 )
+   col_top_velocity = colour.new( 180/255, 172/255,  28/255 )
    col_top_ammo   = colour.new( 233/255, 131/255,  21/255 )
    col_text = colour.new( 203/255, 203/255, 203/255 )
    col_unkn = colour.new( 130/255, 130/255, 130/255 )
@@ -59,6 +61,7 @@ function create()
    icon_shield = tex.open( base .. "iconShield.png" )
    icon_armour = tex.open( base .. "iconArmour.png" )
    icon_energy = tex.open( base .. "iconEnergy.png" )
+   icon_velocity = tex.open( base .. "iconSpeed.png" )
    icon_fuel = tex.open( base .. "iconFuel.png" )
    icon_Kinetic = tex.open( base .. "kinetic.png" )
    icon_Radiation = tex.open( base .. "nuclear.png" )
@@ -121,9 +124,9 @@ function create()
    gui.radarInit( false, radar_w, radar_h )
    
    bar_y = 2
-   bar_x = 46
+   bar_x = 2
    bar_w, bar_h = bar_bg:dim()
-   bars = { "shield", "armour", "energy", "fuel" }
+   bars = { "shield", "armour", "energy", "velocity", "fuel" }
    for k,v in ipairs( bars ) do
       _G[ "x_" .. v ] = bar_x + (k-1)*(bar_w + 6)
       _G[ "y_" .. v ] = bar_y
@@ -332,7 +335,17 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
    gfx.renderTex( l_icon, l_x + offsets[1], l_y + offsets[2] + bar_h/2 - icon_h/2 ) --Icon
    if light ~= false then
       gfx.renderTex( bar_frame_light, l_x, l_y ) --Frame
-      if value < 20 then
+      local show_light = false
+      if name == "velocity" then
+         show_light = value > 50
+      elseif name == "fuel" then
+         if autonav_hyp ~= nil then
+            show_light = stats.fuel / stats.fuel_consumption < autonav_hyp:jumpDist()
+         end
+      else
+         show_light = value < 20
+      end
+      if show_light then
          gfx.renderTex( bar_light, l_x + offsets[5], l_y + offsets[6] ) --Warning light
       end
    else
@@ -477,12 +490,20 @@ function render( dt )
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
+   velocity = pp:vel():mod()
    fuel = stats.fuel / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    wset_name, wset = pp:weapset( true )
    credits, credits_h = player.credits(2)
    autonav = player.autonav()
    lockons = pp:lockon()
+
+   --Speed
+   if stats.speed_max <= 0 then
+      velocity = 0
+   else
+      velocity = math.min( 50 * velocity / stats.speed_max, 100 )
+   end
    
    --Main window right
    if #wset > weapbars then
@@ -534,14 +555,14 @@ function render( dt )
       gfx.renderTex( icon_autonav, 246 + mod_x, 52 )
    end
    
-   for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
+   for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "velocity", "fuel" }, remember?
       local ht = nil
       local st = nil
       if v == "armour" then
          ht = heat
          st = stress
       end
-      renderBar( v, _G[v], nil, nil, nil, mod_x, ht, st )
+      renderBar( v, _G[v], _G[v .. "_light"], nil, nil, mod_x, ht, st )
    end
    
    
@@ -571,7 +592,7 @@ function render( dt )
             renderBar( "shield", 0, false, true, "target", mod_x )
             renderBar( "armour", 0, false, true, "target", mod_x )
             renderBar( "energy", 0, false, true, "target", mod_x )
-            renderField( "Unknown", x_name + mod_x, y_name, 86, col_unkn )
+            renderField( _("Unknown"), x_name + mod_x, y_name, 86, col_unkn )
             renderField( tostring( math.floor(ta_dist) ), x_dist + mod_x, y_dist, 86, col_text )
          end
          
@@ -608,7 +629,7 @@ function render( dt )
    if autonav_hyp ~= nil then
       renderField( autonav_hyp:name() .. " (" .. tostring(autonav_hyp:jumpDist()) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
    else
-      renderField( "None", fields_x + fields_w + 12, fields_y, fields_w, col_unkn, icon_nav_target )
+      renderField( _("None"), fields_x + fields_w + 12, fields_y, fields_w, col_unkn, icon_nav_target )
    end
    renderField( credits_h, tbar_center_x + tbar_center_w/2 + 4, fields_y, fields_w, col_text, icon_money )
    renderField( tostring(cargo) .. "t", tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
