@@ -98,6 +98,7 @@ function create()
    top_bar = tex.open( base .. "topbar.png" )
    top_bar_center = tex.open( base .. "topbarCenter.png" )
    top_bar_center_sheen = tex.open( base .. "topbarSheen.png" )
+   top_bar_center_sheen2 = tex.open( base .. "topbarSheen2.png" )
    button_normal = tex.open( base .. "button.png" )
    button_hilighted = tex.open( base .. "buttonHil2.png" )
    button_mouseover = tex.open( base .. "buttonHil.png" )
@@ -604,8 +605,14 @@ function render( dt )
    --Time
    local time_str = time.str(time.get())
    local time_str_w = gfx.printDim(false, time_str)
-   gfx.print( false, time_str, screen_w/2 - 78, screen_h - tbar_center_h + 19, col_text, 156, true )
+   gfx.print( false, time_str, screen_w/2 - 78, screen_h - tbar_center_h + 55, col_text, 156, true )
    gfx.renderTex( top_bar_center_sheen, screen_w/2 - 77, screen_h - 56 )
+
+   --System name
+   local sysname = system.cur():name()
+   local sysname_w = gfx.printDim(false, sysname)
+   gfx.print( false, sysname, screen_w/2 - 67, screen_h - tbar_center_h + 19, col_text, 132, true )
+   gfx.renderTex( top_bar_center_sheen2, screen_w/2 - 66, screen_h - 92 )
    
    for k, v in ipairs(buttontypes) do
       renderButton( v )
