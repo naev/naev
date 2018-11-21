@@ -142,7 +142,7 @@ function create()
    x_name = 102
    y_name = 197
    
-   _, field_h = field_bg_left:dim()
+   field_w, field_h = field_bg_left:dim()
    
    x_dist = 102
    y_dist = 172
@@ -164,7 +164,7 @@ function create()
 
    tbar_center_x = screen_w/2
    tbar_center_w, tbar_center_h = top_bar_center:dim()
-   _, tbar_h = top_bar:dim()
+   tbar_w, tbar_h = top_bar:dim()
    tbar_y = screen_h - tbar_h
    
    gui.viewport( 0, 0, screen_w, tbar_y + 10 )
@@ -283,7 +283,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat )
    local offsets = { 2, 2, 4, 54, 12, -2 } --Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
    
    local vars = { "col", "col_top", "x", "y", "icon" }
-   for _,v in ipairs( vars ) do 
+   for k, v in ipairs( vars ) do 
       if (v == "x" or v == "y") and prefix ~= nil then
          _G[ "l_" .. v ] = _G[ v .. "_" .. prefix .. "_" .. name ]
       else
@@ -607,7 +607,7 @@ function render( dt )
    gfx.print( false, time_str, screen_w/2 - 78, screen_h - tbar_center_h + 19, col_text, 156, true )
    gfx.renderTex( top_bar_center_sheen, screen_w/2 - 77, screen_h - 56 )
    
-   for _,v in ipairs(buttontypes) do
+   for k, v in ipairs(buttontypes) do
       renderButton( v )
    end
 end
@@ -621,7 +621,7 @@ function mouse_click( button, x, y, state )
       
       if pressed == nil then
          if not state then
-            for _,v in pairs(buttons) do
+            for k, v in pairs(buttons) do
                if v.state ~= "disabled" and v.state ~= "hilighted" then
                   v.state = "default"
                end
@@ -654,7 +654,7 @@ function mouse_move( x, y )
          pressed.state = "pressed"
       end
    else
-      for _,v in pairs(buttons) do
+      for k, v in pairs(buttons) do
          if v.state ~= "disabled" and v.state ~= "hilighted" then
             v.state = "default"
          end
@@ -663,7 +663,7 @@ function mouse_move( x, y )
 end
 
 function mouseInsideButton( x, y )
-   for _, v in pairs(buttons) do
+   for k, v in pairs(buttons) do
       if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
          return v
       end
