@@ -24,7 +24,6 @@ function create()
    col_heat   = colour.new(  80/255,  27/255,  24/255 )
    col_heat2  = colour.new( 181/255,  34/255,  26/255 )
    col_stress = colour.new(  24/255,  27/255,  80/255 )
-   col_velocity = colour.new(  77/255,  80/255,  21/255 )
    col_ammo   = colour.new( 159/255,  93/255,  15/255 )
    col_top_shield = colour.new(  88/255,  96/255, 156/255 )
    col_top_armour = colour.new( 122/255, 122/255, 122/255 )
@@ -33,7 +32,6 @@ function create()
    col_top_heat   = colour.new( 188/255,  63/255,  56/255 )
    col_top_heat2  = colour.new( 238/255, 143/255, 138/255 )
    col_top_stress = colour.new(  56/255,  88/255, 156/255 )
-   col_top_velocity = colour.new( 180/255, 172/255,  28/255 )
    col_top_ammo   = colour.new( 233/255, 131/255,  21/255 )
    col_text = colour.new( 203/255, 203/255, 203/255 )
    col_unkn = colour.new( 130/255, 130/255, 130/255 )
@@ -61,7 +59,6 @@ function create()
    icon_shield = tex.open( base .. "iconShield.png" )
    icon_armour = tex.open( base .. "iconArmour.png" )
    icon_energy = tex.open( base .. "iconEnergy.png" )
-   icon_velocity = tex.open( base .. "iconSpeed.png" )
    icon_fuel = tex.open( base .. "iconFuel.png" )
    icon_Kinetic = tex.open( base .. "kinetic.png" )
    icon_Radiation = tex.open( base .. "nuclear.png" )
@@ -99,6 +96,7 @@ function create()
    target_sheen = tex.open( base .. "targetSheen.png" )
    question = tex.open( base .. "question.png" )
    speed_light = tex.open( base .. "speedOn.png" )
+   speed_light_double = tex.open( base .. "speedDouble.png" )
    speed_light_off = tex.open( base .. "speedOff.png" )
    top_bar = tex.open( base .. "topbar.png" )
    top_bar_center = tex.open( base .. "topbarCenter.png" )
@@ -124,13 +122,16 @@ function create()
    gui.radarInit( false, radar_w, radar_h )
    
    bar_y = 2
-   bar_x = 2
+   bar_x = 46
    bar_w, bar_h = bar_bg:dim()
-   bars = { "shield", "armour", "energy", "velocity", "fuel" }
+   bars = { "shield", "armour", "energy", "fuel" }
    for k,v in ipairs( bars ) do
       _G[ "x_" .. v ] = bar_x + (k-1)*(bar_w + 6)
       _G[ "y_" .. v ] = bar_y
    end
+
+   pl_speed_x = 38
+   pl_speed_y = 2
    
    target_bar_x = 57
    target_bar_y = 92
@@ -173,7 +174,7 @@ function create()
    tbar_w, tbar_h = top_bar:dim()
    tbar_y = screen_h - tbar_h
    
-   gui.viewport( 0, 0, screen_w, tbar_y + 10 )
+   gui.viewport( 0, 0, screen_w, screen_h )
    
    fields_y = tbar_y + 15
    if screen_w <=1024 then
@@ -336,9 +337,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
    if light ~= false then
       gfx.renderTex( bar_frame_light, l_x, l_y ) --Frame
       local show_light = false
-      if name == "velocity" then
-         show_light = value > 50
-      elseif name == "fuel" then
+      if name == "fuel" then
          if autonav_hyp ~= nil then
             show_light = stats.fuel / stats.fuel_consumption < autonav_hyp:jumpDist()
          end
@@ -490,20 +489,12 @@ function render( dt )
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
-   velocity = pp:vel():mod()
    fuel = stats.fuel / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    wset_name, wset = pp:weapset( true )
    credits, credits_h = player.credits(2)
    autonav = player.autonav()
    lockons = pp:lockon()
-
-   --Speed
-   if stats.speed_max <= 0 then
-      velocity = 0
-   else
-      velocity = math.min( 50 * velocity / stats.speed_max, 100 )
-   end
    
    --Main window right
    if #wset > weapbars then
@@ -513,7 +504,7 @@ function render( dt )
    end
    right_side_w = (bar_w + 6)*wbars_right - 1
    gui_w = right_side_w + left_side_w - 10
-   mod_x = math.floor( (screen_w - gui_w)/2 )
+   mod_x = 0 --math.floor( (screen_w - gui_w)/2 )
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
    
@@ -555,7 +546,7 @@ function render( dt )
       gfx.renderTex( icon_autonav, 246 + mod_x, 52 )
    end
    
-   for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "velocity", "fuel" }, remember?
+   for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
       local ht = nil
       local st = nil
       if v == "armour" then
@@ -563,6 +554,24 @@ function render( dt )
          st = stress
       end
       renderBar( v, _G[v], _G[v .. "_light"], nil, nil, mod_x, ht, st )
+   end
+
+   --Speed Lights
+   local nlights = 11
+   local value = math.ceil( pp:vel():mod() * nlights / stats.speed_max )
+   if value > nlights * 2 then value = nlights * 2 end
+   for i=1, value do
+      if i <= nlights then
+         gfx.renderTex( speed_light, pl_speed_x - 5 + mod_x, pl_speed_y - 3 + (i-1)*6 )
+      else
+         local imod = i % nlights
+         gfx.renderTex( speed_light_double, pl_speed_x - 5 + mod_x, pl_speed_y - 3 + (imod-1)*6 )
+      end
+   end
+   if value < nlights then
+      for i=value+1, nlights do
+      gfx.renderTex( speed_light_off, pl_speed_x + mod_x, pl_speed_y + (i-1)*6 )
+      end
    end
    
    
@@ -600,14 +609,20 @@ function render( dt )
          gfx.renderTex( target_sheen, target_image_x + 3 + mod_x, target_image_y + 32 )
          
          --Speed Lights
-         local value = math.floor( ptarget:vel():mod() * 7 / ta_stats.speed )
-         if value > 7 then value=7 end
+         local nlights = 7
+         local value = math.ceil( ptarget:vel():mod() * nlights / ta_stats.speed_max )
+         if value > nlights * 2 then value = nlights * 2 end
          for i=1, value do
-            gfx.renderTex( speed_light, x_speed - 5 + mod_x, y_speed - 3 + (i-1)*6 )
+            if i <= nlights then
+               gfx.renderTex( speed_light, x_speed - 5 + mod_x, y_speed - 3 + (i-1)*6 )
+            else
+               local imod = i % nlights
+               gfx.renderTex( speed_light_double, pl_speed_x - 5 + mod_x, pl_speed_y - 3 + (imod-1)*6 )
+            end
          end
-         if value < 7 then
-            for i=value+1, 7 do
-            gfx.renderTex( speed_light_off, x_speed + mod_x, y_speed + (i-1)*6 )
+         if value < nlights then
+            for i=value+1, nlights do
+               gfx.renderTex( speed_light_off, x_speed + mod_x, y_speed + (i-1)*6 )
             end
          end
       else
