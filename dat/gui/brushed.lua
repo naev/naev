@@ -215,6 +215,10 @@ function create()
    update_cargo()
 end
 
+function round(num)
+   return math.floor( num + 0.5 )
+end
+
 function update_target()
    ptarget = pp:target()
    if ptarget ~= nil then
@@ -560,7 +564,7 @@ function render( dt )
 
    --Speed Lights
    local nlights = 11
-   local value = math.ceil( pp:vel():mod() * nlights / stats.speed_max )
+   local value = round( pp:vel():mod() * nlights / stats.speed_max )
    if value > nlights * 2 then value = nlights * 2 end
    for i=1, value do
       if i <= nlights then
@@ -615,7 +619,7 @@ function render( dt )
          
          --Speed Lights
          local nlights = 7
-         local value = math.ceil( ptarget:vel():mod() * nlights / ta_stats.speed_max )
+         local value = round( ptarget:vel():mod() * nlights / ta_stats.speed_max )
          if value > nlights * 2 then value = nlights * 2 end
          for i=1, value do
             if i <= nlights then
