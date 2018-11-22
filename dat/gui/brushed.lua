@@ -193,10 +193,10 @@ function create()
       buttons[v] = { x=tbar_center_x-116+(k-1)*60, y=buttons_y, w=buttons_w, h=buttons_h, state="default", icon=_G[ "icon_" .. v ], action=_G["action_" .. v ] }
       buttons[v]["icon_w"], buttons[v]["icon_h"] = _G[ "icon_" .. v]:dim()
    end
-   
-   --Messages
-   gui.mesgInit( screen_w - 400, 20, 230 )
-   
+
+   -- Messages
+   gui.mesgInit( screen_w - left_side_w - 10, left_side_w, end_right_h + 10 )
+
     -- Set FPS
    gui.fpsPos( screen_w - 50, screen_h - 40 - deffont_h )
 
@@ -507,7 +507,7 @@ function render( dt )
    mod_x = 0 --math.floor( (screen_w - gui_w)/2 )
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
-   
+
    for k=1,wbars_right do
       renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6) + mod_x, bar_y )
    end
