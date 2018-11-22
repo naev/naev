@@ -1487,6 +1487,7 @@ void player_land (void)
       if (!silent)
          player_soundPlayGUI(snd_nav, 1);
 
+      player_land();
       return;
    }
    else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
