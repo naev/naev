@@ -2,6 +2,7 @@
    The new "brushed" UI.
 --]]
 
+
 function create()
    
    --Get Player
@@ -754,5 +755,14 @@ function action_weapons()
 end
 
 function render_cooldown( percent, seconds )
-   gfx.print(false, "Cooling down...", 0, 0, col_text, 400, true )
+   local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
+   local fail = true
+   if cooldown_omsg ~= nil then
+      if player.omsgChange( cooldown_omsg, msg, 1 ) then
+         fail = false
+      end
+   end
+   if fail then
+      cooldown_omsg = player.omsgAdd( msg, 1 )
+   end
 end
