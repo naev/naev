@@ -218,28 +218,30 @@ end
 function update_target()
    ptarget = pp:target()
    if ptarget ~= nil then
-      ta_gfx = ptarget:ship():gfxTarget()
-      ta_gfx_w, ta_gfx_h = ta_gfx:dim()
+      ta_dir = ptarget:dir()
+      ta_gfx = ptarget:ship():gfx()
+      ta_sx, ta_sy = ta_gfx:spriteFromDir( ta_dir )
+      ta_gfx_w, ta_gfx_h, ta_gfx_sw, ta_gfx_sh = ta_gfx:dim()
       ta_fact = ptarget:faction()
       ta_stats = ptarget:stats()
       
-      ta_gfx_aspect = ta_gfx_w / ta_gfx_h
+      ta_gfx_aspect = ta_gfx_sw / ta_gfx_sh
       
       if ta_gfx_aspect >= 1 then
-         if ta_gfx_w > target_image_w then
+         if ta_gfx_sw > target_image_w then
             ta_gfx_draw_w = target_image_w
-            ta_gfx_draw_h = target_image_w / ta_gfx_w * ta_gfx_h
+            ta_gfx_draw_h = target_image_w / ta_gfx_sw * ta_gfx_sh
          else
-            ta_gfx_draw_w = ta_gfx_w
-            ta_gfx_draw_h = ta_gfx_h
+            ta_gfx_draw_w = ta_gfx_sw
+            ta_gfx_draw_h = ta_gfx_sh
          end
       else
-         if ta_gfx_h > target_h then
+         if ta_gfx_sh > target_h then
             ta_gfx_draw_h = target_image_w
-            ta_gfx_draw_w = target_image_w / ta_gfx_h * ta_gfx_w
+            ta_gfx_draw_w = target_image_w / ta_gfx_sh * ta_gfx_sw
          else
-            ta_gfx_draw_w = ta_gfx_w
-            ta_gfx_draw_h = ta_gfx_h
+            ta_gfx_draw_w = ta_gfx_sw
+            ta_gfx_draw_h = ta_gfx_sh
          end
       end
    end
@@ -586,11 +588,14 @@ function render( dt )
          gfx.renderTex( target_bg, target_image_x + mod_x, target_image_y )
          ta_dist = pp:pos():dist(ptarget:pos())
          if ta_scanned then
+            if ta_dir ~= ptarget:dir() then
+               update_target()
+            end
             ta_armour, ta_shield, ta_stress = ptarget:health()
             ta_heat = math.max( math.min( (ptarget:temp() - 250)/87.5, 2 ), 0 )
             ta_energy = ptarget:energy()
             ta_name = ptarget:name()
-            gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, 1 )
+            gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2, ta_gfx_draw_w, ta_gfx_draw_h, ta_sx, ta_sy, 0, 0, 1, 1 )
             renderBar( "shield", ta_shield, false, false, "target", mod_x )
             renderBar( "armour", ta_armour, false, false, "target", mod_x, ta_heat, ta_stress )
             renderBar( "energy", ta_energy, false, false, "target", mod_x )
