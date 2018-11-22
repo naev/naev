@@ -241,6 +241,14 @@ function create()
    update_cargo()
 end
 
+function roundto(num, idp)
+   return string.format("%.0" .. (idp or 0) .. "f", num)
+end
+
+function round(num)
+   return math.floor( num + 0.5 )
+end
+
 function largeNumber( number, idp )
    local formatted
    local units = { "k", "M", "B", "T", "Q" }
@@ -253,10 +261,6 @@ function largeNumber( number, idp )
       formatted = _("Too big!")
    end
    return formatted
-end
-
-function round(num)
-   return math.floor( num + 0.5 )
 end
 
 function update_target()
