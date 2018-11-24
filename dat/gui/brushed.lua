@@ -630,7 +630,7 @@ function render( dt )
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
-   fuel = stats.fuel / stats.fuel_max * 100
+   fuel = player.fuel() / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    wset_name, wset = pp:weapset( true )
    aset = pp:actives(true)
