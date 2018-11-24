@@ -340,6 +340,7 @@ function update_nav()
       end
    end
    if nav_hyp then
+      local jumps = player.jumps()
       if nav_hyp:known() then
          navstring = _(nav_hyp:name())
       else
@@ -442,7 +443,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
       local show_light = false
       if name == "fuel" then
          if autonav_hyp ~= nil then
-            show_light = stats.fuel / stats.fuel_consumption < autonav_hyp:jumpDist()
+            show_light = player.jumps() < autonav_hyp:jumpDist()
          end
       else
          show_light = value < 20
