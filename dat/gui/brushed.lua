@@ -172,7 +172,7 @@ function create()
    popup_right_x = 432
    popup_right_y = 88
    
-   weapbars = math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) --number of weapon bars that can fit on the screen
+   weapbars = math.max( 3, math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) ) --number of weapon bars that can fit on the screen (minimum 3)
    
    circle_w, circle_h = icon_refire:dim()
 
@@ -549,18 +549,19 @@ function renderWeapBar( weapon, x, y )
          gfx.renderTex( top_icon, x + offsets[1] + bar_w/2 - top_icon_w/2, y + offsets[2] + offsets[7] - top_icon_h/2 )
          gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2, col )
       end
-   else
-      gfx.renderTex( bar_lock, x + offsets[1], y + offsets[2] )
-   end
-
-   if weapon.is_outfit then
-      gfx.renderTex( bar_frame_light, x, y ) -- Frame with light
-      if weapon.state == "on" then
-         gfx.renderTex( bar_light, x + 12, y - 2 ) -- Active light
+      if weapon.is_outfit then
+         gfx.renderTex( bar_frame_light, x, y ) -- Frame with light
+         if weapon.state == "on" then
+            gfx.renderTex( bar_light, x + 12, y - 2 ) -- Active light
+         end
+      else
+         gfx.renderTex( bar_frame, x, y ) --Frame
       end
    else
+      gfx.renderTex( bar_lock, x + offsets[1], y + offsets[2] )
       gfx.renderTex( bar_frame, x, y ) --Frame
    end
+
    gfx.renderTex( bar_sheen, x + offsets[3], y + offsets[4] )
 end
 
