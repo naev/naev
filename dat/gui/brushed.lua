@@ -232,6 +232,7 @@ function create()
    gui.osdInit( 30, screen_h - 50, 150, 300 )
    
    first_time = { true, 2 }
+   navstring = _("none")
    
    gui.mouseClickEnable(true)
    gui.mouseMoveEnable(true)
