@@ -2,7 +2,7 @@
 <ship name="Admonisher">
  <base_type>Admonisher</base_type>
  <GFX>admonisher</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>600000</price>

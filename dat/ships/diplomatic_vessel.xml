@@ -2,7 +2,7 @@
 <ship name="Diplomatic Vessel">
  <base_type>Gawain</base_type>
  <GFX>gawain</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Scout</class>
  <price>180000</price>

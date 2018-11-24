@@ -2,7 +2,7 @@
 <ship name="FLF Vendetta">
  <base_type>Vendetta</base_type>
  <GFX>vendetta</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>400000</price>

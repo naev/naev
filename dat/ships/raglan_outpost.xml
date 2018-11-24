@@ -3,7 +3,7 @@
  <base_type>Raglan Outpost</base_type>
  <gfx_space sx="1" sy="1">planet/space/station-battlestation.png</gfx_space>
  <gfx_comm>planet/exterior/station05.png</gfx_comm>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>1</price>

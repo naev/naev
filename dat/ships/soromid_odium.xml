@@ -2,7 +2,7 @@
 <ship name="Soromid Odium">
  <base_type>Odium</base_type>
  <GFX>odium</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>600000</price>

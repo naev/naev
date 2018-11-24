@@ -2,7 +2,7 @@
 <ship name="Phalanx">
  <base_type>Phalanx</base_type>
  <GFX sx="10" sy="10">phalanx</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>450000</price>

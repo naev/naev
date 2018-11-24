@@ -2,7 +2,7 @@
 <ship name="Za'lek Light Drone">
  <base_type>Za'lek Drone</base_type>
  <GFX>zalek_drone_light</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Drone</class>
  <price>120000</price>

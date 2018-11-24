@@ -2,7 +2,7 @@
 <ship name="Soromid Nyx">
  <base_type>Nyx</base_type>
  <GFX sx="10" sy="10">nyx</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1000000</price>

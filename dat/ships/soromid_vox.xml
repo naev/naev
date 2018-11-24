@@ -2,7 +2,7 @@
 <ship name="Soromid Vox">
  <base_type>Vox</base_type>
  <GFX sx="12" sy="12">vox</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>9000000</price>

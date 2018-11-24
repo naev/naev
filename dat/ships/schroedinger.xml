@@ -2,7 +2,7 @@
 <ship name="Schroedinger">
  <base_type>Schroedinger</base_type>
  <GFX>schroedinger</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Scout</class>
  <price>180000</price>

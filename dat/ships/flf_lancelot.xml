@@ -2,7 +2,7 @@
 <ship name="FLF Lancelot">
  <base_type>Lancelot</base_type>
  <GFX>lancelot</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>400000</price>

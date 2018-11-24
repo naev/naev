@@ -2,7 +2,7 @@
 <ship name="Sirius Fidelity">
  <base_type>Fidelity</base_type>
  <GFX>fidelity</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>350000</price>

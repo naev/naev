@@ -2,7 +2,7 @@
 <ship name="Empire Peacemaker">
  <base_type>Peacemaker</base_type>
  <GFX sx="12" sy="12">peacemaker</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>8000000</price>
