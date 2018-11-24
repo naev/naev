@@ -57,11 +57,10 @@ function create()
    bar_sheen = tex.open( base .. "barSheen.png" )
    bar_light = tex.open( base .. "light.png" )
    bar_lock = tex.open( base .. "lock.png" )
-   planet_pane_t = tex.open( "dat/gfx/gui/slim/frame_planet_top.png" )
-   planet_pane_m = tex.open( "dat/gfx/gui/slim/frame_planet_middle.png" )
-   planet_pane_b = tex.open( "dat/gfx/gui/slim/frame_planet_bottom.png" )
-   radar_gfx = tex.open( "dat/gfx/gui/slim/radar.png" )
-   planet_bg = tex.open( "dat/gfx/gui/slim/planet_image.png" )
+   planet_pane_t = tex.open( base .. "frame_planet_top.png" )
+   planet_pane_m = tex.open( base .. "frame_planet_middle.png" )
+   planet_pane_b = tex.open( base .. "frame_planet_bottom.png" )
+   planet_bg = tex.open( base .. "planet_image.png" )
    icon_shield = tex.open( base .. "iconShield.png" )
    icon_armour = tex.open( base .. "iconArmour.png" )
    icon_energy = tex.open( base .. "iconEnergy.png" )
@@ -210,8 +209,8 @@ function create()
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
-   ta_pnt_pane_x = screen_w - ta_pnt_pane_w - 26
-   ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 42
+   ta_pnt_pane_x = math.max( screen_w - ta_pnt_pane_w - 16, tbar_center_x + tbar_center_w/2 - 10 )
+   ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 32
 
    -- Planet faction icon
    ta_pnt_fact_x = ta_pnt_pane_x + 140
@@ -886,6 +885,8 @@ function render( dt )
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_text, 63, false )
       gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
+
+      gfx.renderTex( top_bar_center_sheen, ta_pnt_pane_x + 11, ta_pnt_pane_y + ta_pnt_pane_h - 15 )
    end
 end
 
