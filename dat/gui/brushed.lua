@@ -202,7 +202,9 @@ function create()
 
    -- Messages
    mesg_x = left_side_w
-   gui.mesgInit( screen_w - mesg_x - 10, mesg_x, end_right_h + 10 )
+   mesg_y = end_right_h + 10
+   mesg_w = screen_w - mesg_x - 10
+   gui.mesgInit( mesg_w, mesg_x, mesg_y )
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
@@ -608,12 +610,7 @@ function render( dt )
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
 
-   -- Messages
-   if mesg_x ~= left_side_w + mod_x then
-      mesg_x = left_side_w + mod_x
-      gui.mesgInit( screen_w - mesg_x - 10, mesg_x, end_right_h + 10 )
-   end
-
+   right_side_h = end_right_h
    for k=1,wbars_right do
       renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6) + mod_x, bar_y )
    end
@@ -621,6 +618,7 @@ function render( dt )
       --Draw a popup of (theoretically) arbitrary size.
       amount = #wset - wbars_right
       height = math.ceil(amount/3. ) * (bar_h+6) - 3
+      right_side_h = right_side_h + height
       gfx.renderTex( popup_bottom2, popup_right_x + mod_x, popup_right_y )
       gfx.renderTex( popup_top, popup_right_x + mod_x, popup_right_y + 6 + height )
       gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6, 165, height, 1, 1, 0, 0, 1, 1 )
@@ -639,6 +637,17 @@ function render( dt )
          renderWeapBar( nil, x + mod_x, y )
       end
       gfx.renderTex( popup_bottom, popup_right_x + mod_x, popup_right_y - 5 )
+   end
+
+   -- Messages
+   local new_mesg_x = left_side_w + mod_x
+   local new_mesg_y = right_side_h + 10
+   local new_mesg_w = screen_w - new_mesg_x - 10
+   if mesg_x ~= new_mesg_x or mesg_y ~= new_mesg_y or mesg_w ~= new_mesg_w then
+      mesg_x = new_mesg_x
+      mesg_y = new_mesg_y
+      mesg_w = new_mesg_w
+      gui.mesgInit( mesg_w, mesg_x, mesg_y )
    end
    
    --Main window left
