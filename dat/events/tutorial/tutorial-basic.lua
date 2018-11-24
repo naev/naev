@@ -25,7 +25,7 @@ message7 = _([[As you can see, there is another ship here. We're going to board 
 - Then, come to a (near) stop right on top of the ship. You learned how to do this earlier.
 - Finally, use %s to board the ship.]])
 message8 = _([[You have successfully boarded the ship. Boarding is useful in a number of situations, for example when you want to steal cargo or credits from a ship you've disabled in combat, or if a ship is asking for help.]])
-message9 = _([[The final step in this tutorial is landing. Landing works the same way as boarding, but with planets and stations. Target a planet with %s or the mouse, then use %s to request landing permission. If permission is granted, slow to a stop over the planet or station, then press %s again to land.
+message9 = _([[The final step in this tutorial is landing. Landing works the same way as boarding, but with planets and stations. Target a planet with %s or the mouse, slow to a stop over the planet or station, then press %s or double-click on the planet to land.
 
 Land on Paul 2 now. Remember, you can use the overlay map to get there quicker!]])
 message10 = _([[Good job, you have landed on Paul 2. Your game will automatically be saved whenever you land. As a final tip, you can press %s even if you haven't targeted a planet or station - you will automatically target the nearest landable one.
