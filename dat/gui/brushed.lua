@@ -340,14 +340,13 @@ function update_nav()
       end
    end
    if nav_hyp then
-      local jumps = player.jumps()
       if nav_hyp:known() then
-         navstring = _(nav_hyp:name())
+         navstring = nav_hyp:name()
       else
          navstring = _("Unknown")
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( jumps )
+         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
       end
    else
       navstring = _("none")
