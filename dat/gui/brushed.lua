@@ -76,6 +76,7 @@ function create()
    icon_beam = tex.open( base .. "beam.png" )
    icon_weapon2 = tex.open( base .. "weapon2.png" )
    icon_weapon1 = tex.open( base .. "weapon1.png" )
+   icon_outfit = tex.open( base .. "outfit.png" )
    icon_pnt_target = tex.open( base .. "iconPntTarg.png" )
    icon_nav_target = tex.open( base .. "iconNavTarg.png" )
    icon_money = tex.open( base .. "iconMoney.png" )
@@ -115,8 +116,8 @@ function create()
    button_disabled = tex.open( base .. "buttonDis.png" )
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
-   
-   
+
+
    --Positions
    --Main is at 0,0
    
@@ -457,6 +458,8 @@ end
 
 function renderWeapBar( weapon, x, y )
    local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centers of the two weapon icons
+   local outfit_yoffset = 31
+   local name_offset = 17
    if weapon ~= nil then
       if weapon.ammo ~= nil then
          width = bar_w/2
@@ -471,58 +474,93 @@ function renderWeapBar( weapon, x, y )
          heatcol_top = col_top_heat2
       end
       
-      if weapon.dtype ~= nil and weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
-         top_icon = _G[ "icon_" .. weapon.dtype ]
-      else
-         top_icon = icon_Kinetic
-      end
-      
-      if weapon.type == "Bolt Cannon" or weapon.type == "Bolt Turret" then
-         bottom_icon = icon_projectile
-      elseif weapon.type == "Beam Cannon" or weapon.type == "Beam Turret" then
-         bottom_icon = icon_beam
-      elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
-         bottom_icon = icon_missile
-      elseif weapon.type == "Fighter Bay" then
-         bottom_icon = icon_ship
-      end
-      top_icon_w, top_icon_h = top_icon:dim()
-      bottom_icon_w, bottom_icon_h = bottom_icon:dim()
-      gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
-      gfx.renderRect( x + offsets[1], y + offsets[2], width, weapon.temp/2 *bar_h, heatcol ) --Heat bar, mandatory
-      if weapon.temp < 2 then
-         gfx.renderRect( x + offsets[1], y + offsets[2] + weapon.temp/2 * bar_h, width, 1, heatcol_top ) --top bit
-      end
-      local col = nil
-      if weapon.ammo ~= nil then
-         gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
-         if weapon.left_p < 1 then
-            gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
+      if weapon.is_outfit then
+         icon = outfit.get( weapon.name ):icon()
+         icon_w, icon_h = icon:dim()
+
+         if weapon.type == "Afterburner" then
+            weap_heat = weapon.temp * 2
+         elseif weapon.duration ~= nil then
+            weap_heat = (1 - weapon.duration) * 2
+         elseif weapon.cooldown ~= nil then
+            weap_heat = weapon.cooldown * 2
+         else
+            weap_heat = 0
          end
-         if not weapon.in_arc and player.pilot():target() ~= nil then
-            col = col_lgray
+      else
+         if weapon.dtype ~= nil and weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
+            top_icon = _G[ "icon_" .. weapon.dtype ]
+         else
+            top_icon = icon_Kinetic
          end
          
-      if weapon.lockon ~= nil then
-            gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lockon indicator
+         if weapon.type == "Bolt Cannon" or weapon.type == "Bolt Turret" then
+            bottom_icon = icon_projectile
+         elseif weapon.type == "Beam Cannon" or weapon.type == "Beam Turret" then
+            bottom_icon = icon_beam
+         elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
+            bottom_icon = icon_missile
+         elseif weapon.type == "Fighter Bay" then
+            bottom_icon = icon_ship
          end
-         gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
-         --Icon
-         gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )
-      else
-         --Icon
-         gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
-         gfx.renderTex( icon_weapon1, x + offsets[1], y + offsets[5] )
+
+         top_icon_w, top_icon_h = top_icon:dim()
+         bottom_icon_w, bottom_icon_h = bottom_icon:dim()
+
+         weap_heat = weapon.temp
       end
-      
-      --Weapon-specific Icon
-      gfx.renderTex( top_icon, x + offsets[1] + bar_w/2 - top_icon_w/2, y + offsets[2] + offsets[7] - top_icon_h/2 )
-      gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2, col )
+
+      gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
+      gfx.renderRect( x + offsets[1], y + offsets[2], width, weap_heat/2 *bar_h, heatcol ) --Heat bar, mandatory
+      if weap_heat < 2 then
+         gfx.renderRect( x + offsets[1], y + offsets[2] + weap_heat/2 * bar_h, width, 1, heatcol_top ) --top bit
+      end
+
+      if weapon.is_outfit then
+         gfx.renderTex( icon_outfit, x + offsets[1], y + offsets[5] )
+         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 20, y + offsets[2] + outfit_yoffset, 40, 40, 1, 1, 0, 0, 1, 1 )
+         if weapon.weapset then
+            gfx.print( false, weapon.weapset, x + offsets[1], y + offsets[2] + name_offset, col_text, 40, true )
+         end
+      else
+         local col = nil
+         if weapon.ammo ~= nil then
+            gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
+            if weapon.left_p < 1 then
+               gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
+            end
+            if not weapon.in_arc and player.pilot():target() ~= nil then
+               col = col_lgray
+            end
+            
+            if weapon.lockon ~= nil then
+               gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lockon indicator
+            end
+            gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
+            --Icon
+            gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )
+         else
+            --Icon
+            gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
+            gfx.renderTex( icon_weapon1, x + offsets[1], y + offsets[5] )
+         end
+
+         --Weapon-specific Icon
+         gfx.renderTex( top_icon, x + offsets[1] + bar_w/2 - top_icon_w/2, y + offsets[2] + offsets[7] - top_icon_h/2 )
+         gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2, col )
+      end
    else
       gfx.renderTex( bar_lock, x + offsets[1], y + offsets[2] )
    end
 
-   gfx.renderTex( bar_frame, x, y ) --Frame
+   if weapon.is_outfit then
+      gfx.renderTex( bar_frame_light, x, y ) -- Frame with light
+      if weapon.state == "on" then
+         gfx.renderTex( bar_light, x + 12, y - 2 ) -- Active light
+      end
+   else
+      gfx.renderTex( bar_frame, x, y ) --Frame
+   end
    gfx.renderTex( bar_sheen, x + offsets[3], y + offsets[4] )
 end
 
@@ -594,6 +632,16 @@ function render( dt )
    fuel = stats.fuel / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    wset_name, wset = pp:weapset( true )
+   aset = pp:actives(true)
+
+   for k, v in ipairs( wset ) do
+      v.is_outfit = false
+   end
+   for k, v in ipairs( aset ) do
+      v.is_outfit = true
+      wset[ #wset + 1 ] = v
+   end
+
    credits, credits_h = player.credits(2)
    autonav = player.autonav()
    lockons = pp:lockon()
