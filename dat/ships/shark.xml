@@ -2,7 +2,7 @@
 <ship name="Shark">
  <base_type>Shark</base_type>
  <GFX>shark</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>280000</price>

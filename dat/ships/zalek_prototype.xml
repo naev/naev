@@ -2,7 +2,7 @@
 <ship name="Za'lek Prototype Cruiser">
  <base_type>Prototype</base_type>
  <GFX sx="12" sy="12">prototype</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>8000000</price>

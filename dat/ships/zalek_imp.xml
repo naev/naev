@@ -2,7 +2,7 @@
 <ship name="Za'lek Imp">
  <base_type>Imp</base_type>
  <GFX sx="12" sy="12">imp</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>650000</price>

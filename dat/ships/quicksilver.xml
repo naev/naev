@@ -2,7 +2,7 @@
 <ship name="Quicksilver">
  <base_type>Quicksilver</base_type>
  <GFX sx="10" sy="10">quicksilver</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Courier</class>
  <price>400000</price>

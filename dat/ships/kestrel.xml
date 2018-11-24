@@ -2,7 +2,7 @@
 <ship name="Kestrel">
  <base_type>Kestrel</base_type>
  <GFX sx="10" sy="10">kestrel</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>3000000</price>

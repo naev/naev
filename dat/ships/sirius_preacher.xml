@@ -2,7 +2,7 @@
 <ship name="Sirius Preacher">
  <base_type>Preacher</base_type>
  <GFX sx="10" sy="10">preacher</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>550000</price>
