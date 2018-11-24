@@ -61,7 +61,6 @@ function create()
    planet_pane_m = tex.open( "dat/gfx/gui/slim/frame_planet_middle.png" )
    planet_pane_b = tex.open( "dat/gfx/gui/slim/frame_planet_bottom.png" )
    radar_gfx = tex.open( "dat/gfx/gui/slim/radar.png" )
-   target_bg = tex.open( "dat/gfx/gui/slim/target_image.png" )
    planet_bg = tex.open( "dat/gfx/gui/slim/planet_image.png" )
    icon_shield = tex.open( base .. "iconShield.png" )
    icon_armour = tex.open( base .. "iconArmour.png" )
@@ -202,7 +201,8 @@ function create()
    end
 
    -- Messages
-   gui.mesgInit( screen_w - left_side_w - 10, left_side_w, end_right_h + 10 )
+   mesg_x = left_side_w
+   gui.mesgInit( screen_w - mesg_x - 10, mesg_x, end_right_h + 10 )
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
@@ -604,9 +604,15 @@ function render( dt )
    end
    right_side_w = (bar_w + 6)*wbars_right - 1
    gui_w = right_side_w + left_side_w - 10
-   mod_x = 0 --math.floor( (screen_w - gui_w)/2 )
+   mod_x = math.max( 0, math.min( screen_w - math.max( gui_w, 1024 ), math.floor( (screen_w - gui_w)/3 ) ) )
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
+
+   -- Messages
+   if mesg_x ~= left_side_w + mod_x then
+      mesg_x = left_side_w + mod_x
+      gui.mesgInit( screen_w - mesg_x - 10, mesg_x, end_right_h + 10 )
+   end
 
    for k=1,wbars_right do
       renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6) + mod_x, bar_y )
