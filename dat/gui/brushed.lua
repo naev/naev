@@ -226,12 +226,13 @@ function create()
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
 
     -- Set FPS
-   gui.fpsPos( screen_w - 50, screen_h - 40 - deffont_h )
+   gui.fpsPos( 10, left_side_h )
 
    -- Set OSD
    gui.osdInit( 30, screen_h - 50, 150, 300 )
    
    first_time = { true, 2 }
+   navstring = _("none")
    
    gui.mouseClickEnable(true)
    gui.mouseMoveEnable(true)
@@ -340,12 +341,12 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:known() then
-         navstring = _(nav_hyp:name())
+         navstring = nav_hyp:name()
       else
          navstring = _("Unknown")
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( jumps )
+         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
       end
    else
       navstring = _("none")
@@ -441,7 +442,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
       local show_light = false
       if name == "fuel" then
          if autonav_hyp ~= nil then
-            show_light = stats.fuel / stats.fuel_consumption < autonav_hyp:jumpDist()
+            show_light = player.jumps() < autonav_hyp:jumpDist()
          end
       else
          show_light = value < 20
