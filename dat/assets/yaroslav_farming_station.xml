@@ -24,6 +24,6 @@
   </services>
   <commodities/>
   <description>This farming facility provides the nearby systems with food. Some of the produce is shipped to the nearby world of Boowoy, but the majority is traded out of system.</description>
-  <bar>Most visitors in this spaceport bar are here for the same reason. They want to buy food so they can sell it at a planet that imports it for a profit. Some merchants time their purchase right after one of the harvests that happen once every dozen STP or so, to get the lowest prices possible.</bar>
+  <bar>Most visitors in this spaceport bar are here for the same reason. They want to buy food so they can sell it at a planet that imports it for a profit. Some merchants time their purchase right after one of the harvests that happen once every dozen decaperiods or so, to get the lowest prices possible.</bar>
  </general>
 </asset>

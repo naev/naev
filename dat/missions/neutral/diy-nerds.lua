@@ -36,7 +36,7 @@ text[2] = [[Upon accepting the task, you see the entire group relax visibly, and
   
 -- right planet, in time
 title[3] = _("Happy nerds")
-text[3] = [["Good job, %s," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 STP, so you can pick us up an' bring us back to %s."
+text[3] = [["Good job, %s," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to %s."
     That said, the nerds shoulder the box and rushes towards a banner which reads "Admissions".]]
 
 -- right planet, late
@@ -54,7 +54,7 @@ title[6] = _("In-system communication")
 text[6] = [[A beep from your communications equipment tells you that someone wants to talk to you. You realize it is the nerds, and return the hail. "Yo! This is Mia," comes a familiar voice from the speaker. "We're done here. Time to come back and pick us up, we have things to do on %s."]]
 
 title[7] = _("In-system communication")
-text[7] = [[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? Better be here within one STP, or we'll get another pilot and pay them, not you!"]]
+text[7] = [[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]
 
 -- you pick up the nerds in time, they won
 title[8] = _("Happy nerds")
@@ -89,7 +89,7 @@ title[14] = _("So what?")
 text[14] = [["Honestly, there is nothing you can do about it," Mia says impatiently, as if you were a small child complaining about the finiteness of an ice cream cone. "Just stand by while we rig the thing up."]]
 
 title[15] = _("The End")
-text[15] = [["You can wait for it, won't take longer than half a STP," Mia informs you. You stand by as the nerds start to mod their box. As they are going for it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
+text[15] = [["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going for it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
     Finally, the modified box is set before you. "Here you are. Now you're the proud owner of the system's only home-made coprocessing unit. It's gotten a bit bulkier than we thought, with all this rigging for energy and coolant supply, but it should work just fine. We must go now and think about something more advanced for the next competition. Have a nice day."
     With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the box may actually be of any use.]]
 
