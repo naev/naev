@@ -4,8 +4,8 @@ autogen_error () {
    echo "Make sure you have the following packages installed:"
    echo ""
    echo "   automake"
-   echo "   autopoint"
-   echo "   inttool"
+   echo "   autopoint (gettext tool)"
+   echo "   intltool"
    exit 1
 }
 autoreconf -vif || autogen_error
