@@ -112,7 +112,7 @@ articles["Generic"] = {
    --]]
    {
       title = _("Fullerton Reports Quarterly Loss"),
-      desc = _("Engine maker Fullerton Industries has posted a c47B loss over the past 250 STPs. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales.")
+      desc = _("Engine maker Fullerton Industries has posted a c47B loss over the past 25 decaperiods. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales.")
    },
    {
       title = _("Genetric Board Meets"),
@@ -179,11 +179,11 @@ articles["Generic"] = {
    },
    {
       title = _("FLF Terrorist Trial Ends"),
-      desc = _("FLF Terrorist Trial ended this SCU with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 STP.")
+      desc = _("FLF Terrorist Trial ended this cycle with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 periods.")
    },
    {
       title = _("New Challenges for New Times"),
-      desc = _("The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next SCU.")
+      desc = _("The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next cycle.")
    },
    --[[
       Human interest.
@@ -245,7 +245,7 @@ articles["Dvaered"]={
    --]]
    {
       title = _("Sirius Weaker Than Ever"),
-      desc = _("This SCU breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space.") 
+      desc = _("This cycle breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space.") 
    }
 }
 

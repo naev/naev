@@ -36,7 +36,7 @@ text[3] = _([[Smith gets out of your ship and looks at you, smiling: "You know, 
 
 title[4] = _("The meeting")
 text[4] = _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and says you to wait in the ship while he goes to a private part of the bar.
-   A few STP later, he comes back and explains you that he didn't manage to get the support of the councilor, which means that the Frontier will not buy the Sharks.
+   A few periods later, he comes back and explains you that he didn't manage to get the support of the councilor, which means that the Frontier will not buy the Sharks.
    "Anyway," he says, "bring me back to %s in one piece and I will pay you."]])
    
 title[5] = _("What is going on?")

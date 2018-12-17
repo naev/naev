@@ -27,7 +27,7 @@
   </services>
   <commodities/>
   <description>Though a fairly pleasant planet, Janko is a little too backwater to really flourish. The local population is largely self-sufficient and doesn't export much. As a result the amount of inhabitants is quite a bit lower than what a world of this size and quality could support in a busier area of space.</description>
-  <bar>Thanks to its somewhat sparse population density, Janko can afford to have its spaceport well away from the bigger residential centers. The spaceport bar has exits leading directly to the hypermag transport system. A ten-STU trip will take you to the capital city.</bar>
+  <bar>Thanks to its somewhat sparse population density, Janko can afford to have its spaceport well away from the bigger residential centers. The spaceport bar has exits leading directly to the hypermag transport system. A ten-second trip will take you to the capital city.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>

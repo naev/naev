@@ -10,8 +10,8 @@
 #include <stdint.h>
 
 
-#define NT_SCU_STP   (5000)      /**< STP in an SCU */
-#define NT_STP_STU   (10000)     /**< STU in an STP */
+#define NT_SCU_STP   (5000)      /**< periods (STP) in a cycle (SCU) */
+#define NT_STP_STU   (10000)     /**< seconds (STU) in a period (STP) */
 
 
 typedef int64_t ntime_t;         /**< Core time type. */

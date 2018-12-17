@@ -29,7 +29,7 @@ emsg[2] = _([[You approach the man who appears to be the leader of the group. "O
 osd = {}
 osd[1] = _("Deliver the shipment to %s in the %s system.")
 --random odds and ends
-notenoughcargo = _([["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 STU on you.]])
+notenoughcargo = _([["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 seconds on you.]])
 rejected = _([[He looks at you, almost appearing confused.
     "Well, thats your choice boy. Be on your way now. I'm busy."
     You walk away, wondering if you really missed out on an oppourtunity.]])

@@ -165,9 +165,9 @@ int lua_istime( lua_State *L, int ind )
  *
  * @usage t = time.create( 591, 3271, 12801 ) -- Gets a time near when the incident happened.
  *
- *    @luatparam number scu SCU for the new time.
- *    @luatparam number stp STP for the new time.
- *    @luatparam number stu STU for the new time.
+ *    @luatparam number scu SCU (cycles) for the new time.
+ *    @luatparam number stp STP (periods) for the new time.
+ *    @luatparam number stu STU (seconds) for the new time.
  *    @luatreturn Time A newly created time metatable.
  * @luafunc create( scu, stp, stu )
  */
@@ -189,7 +189,7 @@ static int time_create( lua_State *L )
  *
  * Overrides the addition operator.
  *
- * @usage new_time = time.get() + time.create( 0, 5, 0 ) -- Adds 5 STP to the current date
+ * @usage new_time = time.get() + time.create( 0, 5, 0 ) -- Adds 5 periods to the current date
  *
  *    @luatparam Time t1 Time metatable to add to.
  *    @luatparam Time t2 Time metatable added.
@@ -232,7 +232,7 @@ static int time_add__( lua_State *L )
  *
  * Overrides the subtraction operator.
  *
- * @usage new_time = time.get() - time.create( 0, 3, 0 ) -- Subtracts 3 STP to the current date
+ * @usage new_time = time.get() - time.create( 0, 3, 0 ) -- Subtracts 3 periods from the current date
  *
  *    @luatparam Time t1 Time metatable to subtract from.
  *    @luatparam Time t2 Time metatable subtracted.
@@ -344,11 +344,11 @@ static int time_get( lua_State *L )
  *
  * @usage strt = time.str() -- Gets current time
  * @uasge strt = time.str( nil, 5 ) -- Gets current time with full decimals
- * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 STP
+ * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 periods
  * @usage strt = t:str() -- Gets the string of t
  *
  *    @luatparam Time t Time to convert to pretty format.  If omitted, current time is used.
- *    @luatparam[opt=2] number d Decimals to use for displaying STU (should be between 0 and 5).
+ *    @luatparam[opt=2] number d Decimals to use for displaying seconds (should be between 0 and 5).
  *    @luatreturn string The time in human readable format.
  * @luafunc str( t, d )
  */
@@ -381,7 +381,7 @@ static int time_str( lua_State *L )
 /**
  * @brief Increases or decreases the time.
  *
- * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 STU.
+ * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 seconds.
  *
  *    @luatparam Time t Amount to increment or decrement the time by.
  * @luafunc inc( t )
