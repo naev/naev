@@ -5,10 +5,10 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
- <price>280000</price>
+ <price>380000</price>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel License</license>
- <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
+ <description>The Empire military grade version of the Shark is mostly identical in function to a standard Shark, but with slightly better armour, shields, and heat dissipation. The military-grade materials used also result in the ship being slightly lighter than its generic counterpart.</description>
  <health>
   <absorb>5</absorb>
   <armour>40</armour>

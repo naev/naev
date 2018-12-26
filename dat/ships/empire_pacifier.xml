@@ -8,7 +8,7 @@
  <price>1100000</price>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>An Empire Pacifier.</description>
+ <description>This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <absorb>22</absorb>
   <armour>550</armour>
