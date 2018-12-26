@@ -8,7 +8,7 @@
  <price>500000</price>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel License</license>
- <description>An Empire Lancelot.</description>
+ <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <absorb>8</absorb>
   <armour>70</armour>
