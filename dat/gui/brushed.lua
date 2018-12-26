@@ -229,7 +229,9 @@ function create()
    gui.fpsPos( 10, left_side_h )
 
    -- Set OSD
-   gui.osdInit( 30, screen_h - 50, 150, 300 )
+   local osd_w = 225
+   local osd_h = screen_h - 275
+   gui.osdInit( 30, screen_h - 50, osd_w, osd_h )
    
    first_time = { true, 2 }
    navstring = _("none")
