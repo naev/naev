@@ -143,6 +143,7 @@ function enter()
         DVbombers = 5 -- Amount of initial Dvaered bombers
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
+        deathsFLFneeded = 0
         time = 0
         stage = 0
         standoff = 5000 -- The distance between the DV fleet and the base
@@ -178,7 +179,7 @@ function operationStart()
     hook.timer(13000, "spawnFLFfighters")
     hook.timer(15000, "spawnFLFbombers")
     hook.timer(17000, "spawnFLFfighters")
-    tim_sec = hook.timer(100000, "nextStage")
+    deathsFLFneeded = 11
     controller = hook.timer(1000, "control")
 end
 
@@ -244,9 +245,6 @@ function deathBase()
     obstinate:control()
     obstinate:hyperspace()
     obstinate:setHilight(false)
-    
-    hook.timer(12000, "zoomTo")
-    hook.timer(12000, "playerControl", false)
 
     missionstarted = false
     victorious = true
@@ -283,7 +281,6 @@ function spawnDV()
         vigilance:control()
         vigilance:setVisible(true)
         hook.pilot(vigilance, "attacked", "attacked")
-        hook.pilot(vigilance, "death", "deathDV")
         fleetDV[#fleetDV + 1] = vigilance
         i = i + 1
     end
@@ -296,30 +293,9 @@ function spawnDV()
         vendetta:setVisible(true)
         vendetta:control()
         hook.pilot(vendetta, "attacked", "attacked")
-        hook.pilot(vendetta, "death", "deathDV")
         fightersDV[#fightersDV + 1] = vendetta
         i = i + 1
     end
-end
-
--- Gets an array of possible Dvaered targets for the FLF to attack
-function possibleDVtargets()
-    targets = {}
-    -- Bias towards escorts, twice as likely as obstinate or player
-    for i, j in ipairs(fleetDV) do
-        if j:exists() then
-            targets[#targets + 1] = j
-        end
-    end
-    for i, j in ipairs(fleetDV) do
-        if j:exists() then
-            targets[#targets + 1] = j
-        end
-    end
-    -- Player and obstinate get added seperately
-    targets[#targets + 1] = player.pilot()
-    targets[#targets + 1] = obstinate
-    return targets
 end
 
 
@@ -329,7 +305,6 @@ function setFLF( j )
   j:setNodisable(true)
   j:setHostile()
   j:setVisible(true)
-  j:control()
 end
 
 
@@ -337,37 +312,29 @@ end
 function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
-    local targets = possibleDVtargets()
-    local wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
+    local wingFLF = addShips( "FLF Lancelot", "flf_norun", base:pos(), 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
-        j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
 -- Spawns FLF bombers
 function spawnFLFbombers()
-    local targets = possibleDVtargets()
-    local wingFLF = addRawShips( "Ancestor", "flf_norun", base:pos(), "FLF", 3 )
+    local wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
-        hook.pilot(j, "death", "deathFLF")
-        j:rename("FLF Ancestor")
-        j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
 -- Spawns FLF destroyers
 function spawnFLFdestroyers()
-    local targets = possibleDVtargets()
     local wingFLF = addShips( "FLF Pacifier", "flf_norun", base:pos(), 2 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         setFLF( j )
-        j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
@@ -389,7 +356,7 @@ function deathFLF()
     pruneFLF()
 
     -- Keep track of deaths
-    if #fleetFLF <= 0 then
+    if deathsFLF >= deathsFLFneeded then
         nextStage()
     end
 end
@@ -403,62 +370,42 @@ function nextStage()
     time = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
     deathsFLF = 0
-    hook.rm( tim_sec ) -- Stop security timer
-    if stage == 1 then
+    deathsFLFneeded = 0
+    if stage <= 1 then
         --player.msg("Starting stage 2.")
         hook.timer(1000, "spawnFLFfighters")
         hook.timer(3000, "spawnFLFbombers")
         hook.timer(5000, "spawnFLFdestroyers")
         hook.timer(7000, "spawnFLFbombers")
-        tim_sec = hook.timer(90000, "nextStage")
-    elseif stage == 2 then
+        deathsFLFneeded = 10
+    elseif stage <= 2 then
         --player.msg("Starting stage 3.")
         hook.timer(1000, "spawnFLFfighters")
         hook.timer(3000, "spawnFLFdestroyers")
         hook.timer(5000, "spawnFLFbombers")
         hook.timer(7000, "spawnFLFbombers")
         hook.timer(9000, "spawnFLFdestroyers")
-        tim_sec = hook.timer(120000, "nextStage")
-    else
+        deathsFLFneeded = 12
+    elseif stage <= 3 then
         --player.msg("Starting stage 4.")
         local delay = 0
-        hook.timer(delay, "playerControl", true)
-        hook.timer(delay, "zoomTo", obstinate)
         delay = delay + 3000
         hook.timer(delay, "broadcast", {caster = obstinate, text = phasetwo})
         hook.timer(delay, "spawnDVbomber")
-        delay = delay + 7000
-        hook.timer(delay, "zoomTo", base)
         delay = delay + 38000
         hook.timer(delay, "engageBase")
         delay = delay + 45000
         hook.timer(delay, "destroyBase")
         misn.osdActive(3)
+    else
+        print(_("WARNING: dv_antiflf03: going to next stage, but next stage doesn't exist!"))
     end
-end
-
--- Capsule function for camera.set, for timer use
-function zoomTo(target)
-    camera.set(target, true, zoomspeed)
 end
 
 -- Capsule function for pilot.broadcast, for timer use
 function broadcast(args)
     args.caster:broadcast(args.text, true)
 end
-
--- Capsule function for player.pilot():control(), for timer use
--- Also saves the player's velocity.
-function playerControl(status)
-    player.pilot():control(status)
-    player.cinematics(status)
-    if status then
-        pvel = player.pilot():vel()
-        player.pilot():setVel(vec2.new(0, 0))
-    else
-        player.pilot():setVel(pvel)
-    end
-end 
  
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
@@ -634,17 +581,6 @@ function attacked()
     for i, j in ipairs(fightersDV) do
         if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
-        end
-    end
-end
-
--- Re-target the FLF units when a Dvaered ship dies
-function deathDV()
-    local targets = possibleDVtargets()
-
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() then
-            j:attack(targets[rnd.rnd(#targets - 1) + 1])
         end
     end
 end
