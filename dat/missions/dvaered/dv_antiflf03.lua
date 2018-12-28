@@ -215,6 +215,11 @@ function spawnbase()
 end
 
 function deathBase()
+    player.pilot():setInvincible()
+    player.cinematics()
+    camera.set( base, true, 5000 )
+    hook.timer( 8000, "timer_plcontrol" )
+
     misn.osdActive(4)
     misn.markerMove( mission_marker, system.get(DVsys) )
 
@@ -245,9 +250,15 @@ function deathBase()
     obstinate:control()
     obstinate:hyperspace()
     obstinate:setHilight(false)
+    obstinate:setNoDeath()
 
     missionstarted = false
     victorious = true
+end
+
+function timer_plcontrol ()
+    camera.set( player.pilot(), true, 5000 )
+    player.cinematics( false )
 end
 
 -- Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
@@ -261,7 +272,7 @@ function spawnDV()
     obstinate:setNodisable(true)
     obstinate:control()
     obstinate:setHilight(true)
-    obstinate:setVisible()
+    obstinate:setVisplayer()
     obstinate:rmOutfit("all")
     obstinate:addOutfit("Engine Reroute")
     obstinate:addOutfit("Small Shield Booster")
@@ -279,7 +290,7 @@ function spawnDV()
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
-        vigilance:setVisible(true)
+        vigilance:setVisplayer(true)
         hook.pilot(vigilance, "attacked", "attacked")
         fleetDV[#fleetDV + 1] = vigilance
         i = i + 1
@@ -290,7 +301,7 @@ function spawnDV()
         vendetta = pilot.add("Dvaered Vendetta", "dvaered_norun", fighterpos[i])[1]
         vendetta:setDir(90)
         vendetta:setFriendly()
-        vendetta:setVisible(true)
+        vendetta:setVisplayer(true)
         vendetta:control()
         hook.pilot(vendetta, "attacked", "attacked")
         fightersDV[#fightersDV + 1] = vendetta
@@ -573,13 +584,13 @@ function attacked()
     time = 3000
     
     for i, j in ipairs(fleetDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
     
     for i, j in ipairs(fightersDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
