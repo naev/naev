@@ -8,6 +8,11 @@
   <space>Z00.png</space>
   <exterior>methane.png</exterior>
  </GFX>
+ <presence>
+  <faction>Neutral</faction>
+  <value>0</value>
+  <range>0</range>
+ </presence>
  <general>
   <class>Z</class>
   <population>0</population>
