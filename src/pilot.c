@@ -2250,7 +2250,6 @@ int pilot_refuelStart( Pilot *p )
    /* Now start the boarding to refuel. */
    pilot_setFlag(p, PILOT_REFUELBOARDING);
    p->ptimer  = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
-   p->pdata   = PILOT_REFUEL_QUANTITY;
    return 1;
 }
 
@@ -2264,7 +2263,6 @@ int pilot_refuelStart( Pilot *p )
 static void pilot_refuel( Pilot *p, double dt )
 {
    Pilot *target;
-   double amount;
 
    /* Check to see if target exists, remove flag if not. */
    target = pilot_get(p->target);
@@ -2277,20 +2275,16 @@ static void pilot_refuel( Pilot *p, double dt )
    /* Match speeds. */
    p->solid->vel = target->solid->vel;
 
-   amount = CLAMP( 0., p->pdata, PILOT_REFUEL_RATE * dt);
-   p->pdata -= amount;
-
-   /* Move fuel. */
-   p->fuel        -= amount;
-   target->fuel   += amount;
-   /* Stop refueling at max. */
-   if (target->fuel > target->fuel_max) {
-      p->ptimer      = -1.;
-      target->fuel   = target->fuel_max;
-   }
-
    /* Check to see if done. */
    if (p->ptimer < 0.) {
+      /* Move fuel. */
+      p->fuel       -= PILOT_REFUEL_QUANTITY;
+      target-> fuel += PILOT_REFUEL_QUANTITY;
+
+	  if (target->fuel > target->fuel_max) {
+	     target->fuel   = target->fuel_max;
+	  }
+
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);
    }

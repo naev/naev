@@ -24,6 +24,9 @@ end
 function equip_CollectiveDrone ()
    return { "Neutron Disruptor" }
 end
+function equip_CollectiveDroneHvy ()
+   return { "Heavy Neutron Disruptor" }
+end
 function equip_CollectiveDroneHvyRanged ()
    return { "Electron Burst Cannon" }
 end
@@ -59,7 +62,7 @@ function equip_collectiveMilitary( p, shipsize )
          equip_cores(p, "Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
 
          -- TODO: Remove assumptions about slot sizes.
-         addWeapons( equip_CollectiveDrone(), 2 )
+         addWeapons( equip_CollectiveDroneHvy(), 2 )
          addWeapons( equip_CollectiveDroneHvyRanged(), 2 )
       end
    else
