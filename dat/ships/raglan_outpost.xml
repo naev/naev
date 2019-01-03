@@ -7,6 +7,7 @@
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>1</price>
+ <time_mod>1</time_mod>
  <fabricator>N/A</fabricator>
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
  <mission/>

@@ -6,6 +6,7 @@
  <sound>engine</sound>
  <class>Yacht</class>
  <price>120000</price>
+ <time_mod>1</time_mod>
  <fabricator>Melendez Corp.</fabricator>
  <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
  <characteristics>
