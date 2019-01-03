@@ -13,6 +13,6 @@
  <specific type="launcher" secondary="1">
   <ammo>Electron Energy Cell</ammo>
   <delay>0.3</delay>
-  <amount>100</amount>
+  <amount>50</amount>
  </specific>
 </outfit>
