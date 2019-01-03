@@ -1478,7 +1478,9 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* This is sort of a hack to make sure it gets reset... */
       if (p->id==PLAYER_ID)
-         pause_setSpeed( player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1. );
+         pause_setSpeed(
+            player.p->ship->dt_default *
+            (player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.) );
    }
 }
 

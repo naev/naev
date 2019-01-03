@@ -26,6 +26,7 @@
 #include "toolkit.h"
 #include "dialogue.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "rng.h"
 #include "music.h"
 #include "economy.h"
@@ -1355,6 +1356,9 @@ void takeoff( int delay )
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
+
+   /* Reset speed */
+   player_autonavResetSpeed();
    }
 
 

@@ -48,11 +48,11 @@ static int player_autonavBrake (void);
 void player_autonavResetSpeed (void)
 {
    if (player_isFlag(PLAYER_DOUBLESPEED)) {
-     tc_mod         = 2.;
-     pause_setSpeed( 2. );
+      tc_mod         = 2. * player.p->ship->dt_default;
+      pause_setSpeed( tc_mod );
    } else {
-     tc_mod         = 1.;
-     pause_setSpeed( 1. );
+      tc_mod         = player.p->ship->dt_default;
+      pause_setSpeed( tc_mod );
    }
    tc_rampdown = 0;
 }
@@ -110,7 +110,7 @@ static int player_autonavSetup (void)
    player_message(_("\apAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
-      tc_base   = player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.;
+      tc_base   = player.p->ship->dt_default * (player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.);
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
