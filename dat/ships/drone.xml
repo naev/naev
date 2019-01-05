@@ -2,7 +2,7 @@
 <ship name="Drone">
  <base_type>Drone</base_type>
  <GFX>drone</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Drone</class>
  <price>300000</price>

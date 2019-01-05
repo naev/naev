@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="GUI - Slim">
+ <general>
+  <mass>0</mass>
+  <price>0</price>
+  <description>Outfit corresponding with the "Slim" GUI.</description>
+  <gfx_store>brushedGUI</gfx_store>
+ </general>
+ <specific type="gui">
+  <gui>slim</gui>
+ </specific>
+</outfit>

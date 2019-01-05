@@ -74,6 +74,7 @@ function pirate_createKestrel( pirate_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Kestrel gets some good stuff
    primary        = { "Heavy Ion Turret", "Razor Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun" }
@@ -116,6 +117,7 @@ function pirate_createAdmonisher( pirate_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Admonisher specializes in forward-firing weapons.
    primary        = { "Mass Driver MK2", "Plasma Blaster MK2", "Vulcan Gun" }
@@ -158,6 +160,7 @@ function pirate_createAncestor( pirate_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Ancestor specializes in ranged combat.
    primary        = { "Laser Cannon MK1", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2", "Razor MK1", "Razor MK2" }
@@ -200,6 +203,7 @@ function pirate_createVendetta( pirate_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Vendettas are all about close-range firepower.
    primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon MK1", "Razor MK2" }
@@ -223,90 +227,91 @@ end
 -- @brief Generates pilot names
 --]]
 function pirate_name ()
+   -- TODO this needs some work to be translatable...
    local articles = {
-      "The",
+      _("The"),
    }
    local descriptors = {
-      "Lustful",
-      "Bloody",
-      "Morbid",
-      "Horrible",
-      "Terrible",
-      "Very Bad",
-      "No Good",
-      "Dark",
-      "Evil",
-      "Murderous",
-      "Fearsome",
-      "Defiant",
-      "Unsightly",
-      "Pirate's",
-      "Night's",
-      "Space",
-      "Astro",
-      "Delicious",
-      "Fearless",
-      "Eternal",
-      "Mighty"
+      _("Lustful"),
+      _("Bloody"),
+      _("Morbid"),
+      _("Horrible"),
+      _("Terrible"),
+      _("Very Bad"),
+      _("No Good"),
+      _("Dark"),
+      _("Evil"),
+      _("Murderous"),
+      _("Fearsome"),
+      _("Defiant"),
+      _("Unsightly"),
+      _("Pirate's"),
+      _("Night's"),
+      _("Space"),
+      _("Astro"),
+      _("Delicious"),
+      _("Fearless"),
+      _("Eternal"),
+      _("Mighty")
    }
    local colours = {
-      "Red",
-      "Green",
-      "Blue",
-      "Cyan",
-      "Black",
-      "Brown",
-      "Mauve",
-      "Crimson",
-      "Yellow",
-      "Purple"
+      _("Red"),
+      _("Green"),
+      _("Blue"),
+      _("Cyan"),
+      _("Black"),
+      _("Brown"),
+      _("Mauve"),
+      _("Crimson"),
+      _("Yellow"),
+      _("Purple")
    }
    local actors = {
-      "Beard",
-      "Moustache",
-      "Neckbeard",
-      "Demon",
-      "Vengeance",
-      "Corsair",
-      "Pride",
-      "Insanity",
-      "Peril",
-      "Death",
-      "Doom",
-      "Raider",
-      "Devil",
-      "Serpent",
-      "Bulk",
-      "Killer",
-      "Thunder",
-      "Tyrant",
-      "Lance",
-      "Destroyer",
-      "Horror",
-      "Dread",
-      "Blargh",
-      "Terror"
+      _("Beard"),
+      _("Moustache"),
+      _("Neckbeard"),
+      _("Demon"),
+      _("Vengeance"),
+      _("Corsair"),
+      _("Pride"),
+      _("Insanity"),
+      _("Peril"),
+      _("Death"),
+      _("Doom"),
+      _("Raider"),
+      _("Devil"),
+      _("Serpent"),
+      _("Bulk"),
+      _("Killer"),
+      _("Thunder"),
+      _("Tyrant"),
+      _("Lance"),
+      _("Destroyer"),
+      _("Horror"),
+      _("Dread"),
+      _("Blargh"),
+      _("Terror")
    }
    local actorspecials = {
-      "Angle Grinder",
-      "Belt Sander",
-      "Chainsaw",
-      "Impact Wrench",
-      "Band Saw",
-      "Table Saw",
-      "Drill Press",
-      "Jigsaw",
-      "Turret Lathe",
-      "Claw Hammer",
-      "Rubber Mallet",
-      "Squeegee",
-      "Pipe Wrench",
-      "Bolt Cutter",
-      "Staple Gun",
-      "Crowbar",
-      "Pickaxe",
-      "Bench Grinder",
-      "Scythe"
+      _("Angle Grinder"),
+      _("Belt Sander"),
+      _("Chainsaw"),
+      _("Impact Wrench"),
+      _("Band Saw"),
+      _("Table Saw"),
+      _("Drill Press"),
+      _("Jigsaw"),
+      _("Turret Lathe"),
+      _("Claw Hammer"),
+      _("Rubber Mallet"),
+      _("Squeegee"),
+      _("Pipe Wrench"),
+      _("Bolt Cutter"),
+      _("Staple Gun"),
+      _("Crowbar"),
+      _("Pickaxe"),
+      _("Bench Grinder"),
+      _("Scythe")
    }
    local article = articles[ rnd.rnd(1,#articles) ]
    local descriptor = descriptors[ rnd.rnd(1,#descriptors) ]

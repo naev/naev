@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fury Station">
+ <pos>
+  <x>-2393.959211</x>
+  <y>-3154.043015</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>station02.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>100.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+   <blackmarket/>
+  </services>
+  <commodities/>
+  <description>While Fury Station is not the most well-built of stations, it gets the job done with both a shipyard with all the standard pirate ships and an outfitter with a substantial lineup of goods. It even has some merchendise not offered at the nearby clanworld Sanchez.</description>
+ </general>
+ <tech>
+  <item>Pirate Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Beam 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Hulls High</item>
+  <item>Hulls Elite</item>
+  <item>Systems Low</item>
+  <item>Systems Medium</item>
+  <item>Systems High</item>
+  <item>Systems Elite</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Engines High</item>
+  <item>Star Maps</item>
+  <item>Pirate Maps</item>
+ </tech>
+</asset>

@@ -2,7 +2,7 @@
 <ship name="Proteron Derivative">
  <base_type>Derivative</base_type>
  <GFX>derivative</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>290000</price>

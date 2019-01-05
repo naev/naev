@@ -6,13 +6,15 @@ function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
+   if r < 0.3 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+   elseif r < 0.6 then
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Taciturnity", 40 );
    else
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    end
 
    return pilots
@@ -24,17 +26,22 @@ function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
+   if r < 0.4 then
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
+   elseif r < 0.6 then
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Taciturnity", 40 );
    else
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
+      scom.addPilot( pilots, "Thurion Scintillation", 30 );
    end
 
    return pilots
@@ -44,27 +51,29 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
+   pilots.__fleet = true
    local r = rnd.rnd()
 
    -- Generate the capship
-   if r < 0.7 then
-      scom.addPilot( pilots, "Empire Hawking", 140 )
-   else
-      scom.addPilot( pilots, "Empire Peacemaker", 165 )
-   end
+   -- XXX: "Thurion Goddard" ship is a placeholder until proper Thurion
+   -- capships are made. (Used to be Empire Peacemaker or Empire Hawking.)
+   scom.addPilot( pilots, "Thurion Goddard", 140 )
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    elseif r < 0.8 then
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
    else
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    end
 
    return pilots
@@ -100,7 +109,7 @@ function spawn ( presence, max )
    end
   
    -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data )
+   pilots = scom.spawn( spawn_data, "Thurion" )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

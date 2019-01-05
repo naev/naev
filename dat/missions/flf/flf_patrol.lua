@@ -1,7 +1,7 @@
 --[[
 
    FLF patrol elimination mission.
-   Copyright (C) 2014, 2015 Julian Marchant <onpon4@riseup.net>
+   Copyright (C) 2014, 2015 Julie Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,48 +22,48 @@ include "numstring.lua"
 include "fleethelper.lua"
 include "dat/missions/flf/flf_common.lua"
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-   misn_title  = "FLF: %s Dvaered patrol in %s"
-   misn_reward = "%s credits"
+misn_title  = _("FLF: %s Dvaered patrol in %s")
+misn_reward = _("%s credits")
 
-   text = {}
-   text[1] = "After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work."
-   text[2] = "As you get your pay from the officer, FLF soldiers congratulate you for your victory."
-   text[3] = "You collect your pay from the officer, who then congratulates you for your victory."
+text = {}
+text[1] = _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work.")
+text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you for your victory.")
+text[3] = _("You collect your pay from the officer, who then congratulates you for your victory.")
 
-   flfcomm = {}
-   flfcomm[1] = "Alright, let's have at them!"
-   flfcomm[2] = "Sorry we're late! Did we miss anything?"
+flfcomm = {}
+flfcomm[1] = _("Alright, let's have at them!")
+flfcomm[2] = _("Sorry we're late! Did we miss anything?")
 
-   misn_desc = {}
-   misn_desc[1] = "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol."
-   misn_desc[2] = "There is a Dvaered ship patrolling the %s system. Eliminate this ship."
-   misn_desc[3] = " There is a Vigilance among them, so you must proceed with caution."
-   misn_desc[4] = " There is a Goddard among them, so you must be very careful."
-   misn_desc[5] = " You will be accompanied by %d other FLF pilots for this mission."
+misn_desc = {}
+misn_desc[1] = _("There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol.")
+misn_desc[2] = _("There is a Dvaered ship patrolling the %s system. Eliminate this ship.")
+misn_desc[3] = _(" There is a Vigilance among them, so you must proceed with caution.")
+misn_desc[4] = _(" There is a Goddard among them, so you must be very careful.")
+misn_desc[5] = _(" You will be accompanied by %d other FLF pilots for this mission.")
 
-   misn_level = {}
-   misn_level[1] = "Single"
-   misn_level[2] = "Small"
-   misn_level[3] = "Medium"
-   misn_level[4] = "Large"
-   misn_level[5] = "Dangerous"
-   misn_level[6] = "Highly Dangerous"
+misn_level = {}
+misn_level[1] = _("Single")
+misn_level[2] = _("Small")
+misn_level[3] = _("Medium")
+misn_level[4] = _("Large")
+misn_level[5] = _("Dangerous")
+misn_level[6] = _("Highly Dangerous")
 
-   osd_title   = "Dvaered Patrol"
-   osd_desc    = {}
-   osd_desc[1] = "Fly to the %s system"
-   osd_desc[2] = "Eliminate the Dvaered patrol"
-   osd_desc[3] = "Return to FLF base"
-   osd_desc["__save"] = true
+osd_title   = _("Dvaered Patrol")
+osd_desc    = {}
+osd_desc[1] = _("Fly to the %s system")
+osd_desc[2] = _("Eliminate the Dvaered patrol")
+osd_desc[3] = _("Return to FLF base")
+osd_desc["__save"] = true
+
+
+function patrol_getSystem ()
+   return flf_getTargetSystem()
 end
 
 
 function create ()
-   missys = flf_getTargetSystem()
+   missys = patrol_getSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    level = rnd.rnd( 1, #misn_level )
@@ -136,6 +136,7 @@ function accept ()
 
    dv_ships_left = 0
    job_done = false
+   last_system = planet.cur()
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -204,6 +205,7 @@ end
 
 function land_flf ()
    leave()
+   last_system = planet.cur()
    if planet.cur():faction():name() == "FLF" then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )

@@ -186,7 +186,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
    size = gl_transSize(w, h);
    t = malloc(size);
    if (t==NULL) {
-      WARN("Out of Memory");
+      WARN(_("Out of Memory"));
       return NULL;
    }
    memset(t, 0, size); /* important, must be set to zero */
@@ -259,12 +259,12 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
       if (temp == NULL) {
-         WARN("Unable to create POT surface: %s", SDL_GetError());
+         WARN(_("Unable to create POT surface: %s"), SDL_GetError());
          return 0;
       }
       if (SDL_FillRect( temp, NULL,
                SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-         WARN("Unable to fill rect: %s", SDL_GetError());
+         WARN(_("Unable to fill rect: %s"), SDL_GetError());
          return 0;
       }
 
@@ -346,12 +346,12 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    /* now lead the texture data up */
    SDL_LockSurface( surface );
    if (gl_texHasCompress()) {
-      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
-            surface->w, surface->h, 0, GL_COMPRESSED_RGBA,
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
+            surface->w, surface->h, 0, GL_RGBA,
             GL_UNSIGNED_BYTE, surface->pixels );
    }
    else {
-      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
             surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
    }
    SDL_UnlockSurface( surface );
@@ -397,7 +397,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
    glTexture *texture;
-   int i, filesize;
+   size_t i, filesize;
    size_t cachesize, pngsize;
    uint8_t *trans;
    char *cachefile, *data;
@@ -429,7 +429,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
       data = malloc(pngsize);
       if (data == NULL)
-         WARN("Out of memory!");
+         WARN(_("Out of Memory"));
       else {
          SDL_RWread( rw, data, pngsize, 1 );
          md5_append( &md5, (md5_byte_t*)data, pngsize );
@@ -465,7 +465,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       /* We could hash raw pixel data here, but that's slower than just
        * generating the map from scratch.
        */
-      WARN("Texture '%s' has no RWops", name);
+      WARN(_("Texture '%s' has no RWops"), name);
    }
 
    if (trans == NULL) {
@@ -652,12 +652,12 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* load from packfile */
    rw = ndata_rwops( path );
    if (rw == NULL) {
-      WARN("Failed to load surface '%s' from ndata.", path);
+      WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;
    }
    npng     = npng_open( rw );
    if (npng == NULL) {
-      WARN("File '%s' is not a png.", path );
+      WARN(_("File '%s' is not a png."), path );
       return NULL;
    }
    npng_dim( npng, &w, &h );
@@ -673,7 +673,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    npng_close( npng );
 
    if (surface == NULL) {
-      WARN("'%s' could not be opened", path );
+      WARN(_("'%s' could not be opened"), path );
       SDL_RWclose( rw );
       return NULL;
    }
@@ -728,7 +728,7 @@ void gl_freeTexture( glTexture* texture )
 
    /* Shouldn't be NULL (won't segfault though) */
    if (texture == NULL) {
-      WARN("Attempting to free NULL texture!");
+      WARN(_("Attempting to free NULL texture!"));
       return;
    }
 
@@ -764,7 +764,7 @@ void gl_freeTexture( glTexture* texture )
 
    /* Not found */
    if (texture->name != NULL) /* Surfaces will have NULL names */
-      WARN("Attempting to free texture '%s' not found in stack!", texture->name);
+      WARN(_("Attempting to free texture '%s' not found in stack!"), texture->name);
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
@@ -803,7 +803,7 @@ glTexture* gl_dupTexture( glTexture *texture )
    }
 
    /* Invalid texture. */
-   WARN("Unable to duplicate texture '%s'.", texture->name);
+   WARN(_("Unable to duplicate texture '%s'."), texture->name);
    return NULL;
 }
 
@@ -845,7 +845,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
 #ifdef DEBUGGING
    if ((dir > 2.*M_PI) || (dir < 0.)) {
-      WARN("Angle not between 0 and 2.*M_PI [%f].", dir);
+      WARN(_("Angle not between 0 and 2.*M_PI [%f]."), dir);
       return;
    }
 #endif /* DEBUGGING */
@@ -907,9 +907,9 @@ void gl_exitTextures (void)
 
    /* Make sure there's no texture leak */
    if (texture_list != NULL) {
-      DEBUG("Texture leak detected!");
+      DEBUG(_("Texture leak detected!"));
       for (tex=texture_list; tex!=NULL; tex=tex->next)
-         DEBUG("   '%s' opened %d times", tex->tex->name, tex->used );
+         DEBUG(_("   '%s' opened %d times"), tex->tex->name, tex->used );
    }
 }
 

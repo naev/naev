@@ -74,7 +74,7 @@ typedef struct Weapon_ {
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
-   const PilotOutfitSlot *mount; /**< Used for beam weapons. */
+   PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
@@ -134,6 +134,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
 /* Hitting. */
 static int weapon_checkCanHit( Weapon* w, Pilot *p );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
 /* think */
@@ -363,7 +364,7 @@ static void think_seeker( Weapon* w, const double dt )
          break;
 
       default:
-         WARN("Unknown weapon status for '%s'", w->outfit->name);
+         WARN(_("Unknown weapon status for '%s'"), w->outfit->name);
          break;
    }
 
@@ -479,7 +480,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
@@ -602,7 +603,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             w->timer -= dt;
             if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
                   w->mount->stimer < 0.)) {
-               pilot_stopBeam(p, (PilotOutfitSlot*) w->mount);
+               p = pilot_get(w->parent);
+               if (p != NULL)
+                  pilot_stopBeam(p, w->mount);
                weapon_destroy(w,layer);
                break;
             }
@@ -616,7 +619,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             }
             break;
          default:
-            WARN("Weapon of type '%s' has no update implemented yet!",
+            WARN(_("Weapon of type '%s' has no update implemented yet!"),
                   w->outfit->name);
             break;
       }
@@ -658,7 +661,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
@@ -798,7 +801,7 @@ static void weapon_render( Weapon* w, const double dt )
          break;
 
       default:
-         WARN("Weapon of type '%s' has no render implemented yet!",
+         WARN(_("Weapon of type '%s' has no render implemented yet!"),
                w->outfit->name);
          break;
    }
@@ -891,10 +894,13 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, b, psx,psy;
+   int i, j, b, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
+   AsteroidAnchor *ast;
+   Asteroid *a;
+   AsteroidType *at;
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -950,6 +956,44 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
                      &crash[0] )) {
             weapon_hit( w, p, layer, &crash[0] );
             return; /* Weapon is destroyed. */
+         }
+      }
+   }
+
+   /* Asterokiller weapons collide with asteroids*/
+   if (outfit_isAmmo(w->outfit)) {
+      if ( w->outfit->u.amm.dmg.asterokill ) {
+         for (i=0; i<cur_system->nasteroids; i++) {
+            ast = &cur_system->asteroids[i];
+            for (j=0; j<ast->nb; j++) {
+               a = &ast->asteroids[j];
+               at = space_getType ( a->type );
+               if (a->appearing==0 &&
+                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
+                     weapon_hitAst( w, a, layer, &crash[0] );
+                     return; /* Weapon is destroyed. */
+               }
+            }
+         }
+      }
+   }
+   else if (outfit_isBolt(w->outfit)) {
+      if ( w->outfit->u.blt.dmg.asterokill ) {
+         for (i=0; i<cur_system->nasteroids; i++) {
+            ast = &cur_system->asteroids[i];
+            for (j=0; j<ast->nb; j++) {
+               a = &ast->asteroids[j];
+               at = space_getType ( a->type );
+               if (a->appearing==0 &&
+                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
+                     weapon_hitAst( w, a, layer, &crash[0] );
+                     return; /* Weapon is destroyed. */
+               }
+            }
          }
       }
    }
@@ -1084,6 +1128,35 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
+}
+
+/**
+ * @brief Weapon hit an asteroid.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param a Asteroid that got hit.
+ *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
+ */
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos )
+{
+   int s, spfx;
+
+   /* Play sound if they have it. */
+   s = outfit_soundHit(w->outfit);
+   if (s != -1)
+      w->voice = sound_playPos( s,
+            w->solid->pos.x,
+            w->solid->pos.y,
+            w->solid->vel.x,
+            w->solid->vel.y);
+
+   /* Add the spfx */
+   spfx = outfit_spfxShield(w->outfit);
+   spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
+
+   weapon_destroy(w,layer);
+   asteroid_hit( a );
 }
 
 
@@ -1431,7 +1504,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 
       /* just dump it where the player is */
       default:
-         WARN("Weapon of type '%s' has no create implemented yet!",
+         WARN(_("Weapon of type '%s' has no create implemented yet!"),
                w->outfit->name);
          w->solid = solid_create( 1., dir, pos, vel, SOLID_UPDATE_EULER );
          break;
@@ -1468,7 +1541,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 
    if (!outfit_isBolt(outfit) &&
          !outfit_isLauncher(outfit)) {
-      ERR("Trying to create a Weapon from a non-Weapon type Outfit");
+      ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
       return;
    }
 
@@ -1489,7 +1562,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
    }
 
    if (*mLayer > *nLayer) /* more memory alloced than needed */
@@ -1538,7 +1611,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 unsigned int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target,
-      const PilotOutfitSlot *mount )
+      PilotOutfitSlot *mount )
 {
    WeaponLayer layer;
    Weapon *w;
@@ -1547,7 +1620,7 @@ unsigned int beam_start( const Outfit* outfit,
    GLsizei size;
 
    if (!outfit_isBeam(outfit)) {
-      ERR("Trying to create a Beam Weapon from a non-beam outfit.");
+      ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
       return -1;
    }
 
@@ -1571,7 +1644,7 @@ unsigned int beam_start( const Outfit* outfit,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return -1;
    }
 
@@ -1633,7 +1706,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return;
    }
 
@@ -1671,13 +1744,13 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          break;
 
       default:
-         WARN("Unknown weapon layer!");
+         WARN(_("Unknown weapon layer!"));
          return;
    }
 
    for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the current position */
    if (i >= *nlayer) {
-      WARN("Trying to destroy weapon not found in stack!");
+      WARN(_("Trying to destroy weapon not found in stack!"));
       return;
    }
 
@@ -1815,7 +1888,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
+         ERR(_("Invalid WEAPON_LAYER specified"));
          return;
    }
 

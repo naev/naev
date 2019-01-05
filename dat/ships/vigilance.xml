@@ -2,7 +2,7 @@
 <ship name="Vigilance">
  <base_type>Vigilance</base_type>
  <GFX sx="10" sy="10">vigilance</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>900000</price>

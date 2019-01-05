@@ -61,6 +61,7 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
     local pilots = {}
+    pilots.__fleet = true
     local r = rnd.rnd()
 
     -- Generate the capship
@@ -119,7 +120,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data )
+    pilots = scom.spawn( spawn_data, "Pirate", true )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

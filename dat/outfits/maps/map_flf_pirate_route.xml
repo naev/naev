@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: FLF-Pirate Route">
+ <general>
+  <mass>0</mass>
+  <price>10000000</price>
+  <description>This map contains the location of the two-way hidden jump point between the FLF base and the nearest Pirate stronghold.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Tormulex">
+   <jump>Anger</jump>
+  </sys>
+  <sys name="Anger">
+   <jump>Tormulex</jump>
+  </sys>
+ </specific>
+</outfit>

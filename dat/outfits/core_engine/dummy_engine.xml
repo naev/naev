@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Dummy Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>small</size>
+  <mass>15</mass>
+  <price>0</price>
+  <description>This is a dummy engine for use in missions only, which does nothing. DO NOT BUY.</description>
+  <gfx_store>engine04</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>0</thrust>
+  <turn>0</turn>
+  <speed>0</speed>
+  <fuel>0</fuel>
+  <energy_usage>0</energy_usage>
+  <engine_limit>100</engine_limit>
+ </specific>
+</outfit>

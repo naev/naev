@@ -25,6 +25,11 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Myad">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Theras">
    <autopos/>
    <hide>1.250000</hide>

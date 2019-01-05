@@ -25,7 +25,7 @@ function create ()
       local new = 30+v
       local cur = var.peek( k )
       if new ~= cur then
-         print( "Inconsistent reputation cap detected - updating '"..k.."'" )
+         print( string.format( _("Inconsistent reputation cap detected - updating '%s'"), k ) )
          var.push( k, new )
       end
    end

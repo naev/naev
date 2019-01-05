@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Thurion Virtuosity">
+ <base_type>Virtuosity</base_type>
+ <GFX>virtuosity</GFX>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>1100000</price>
+ <fabricator>Thurion shipyards</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>For a ship of its size the Thurion Virtuosity has an impressive ammount of utility slots. Offensive capabilities are neglected though.</description>
+ <health>
+  <absorb>16</absorb>
+  <armour>300</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>9</crew>
+  <mass>130</mass>
+  <fuel>600</fuel>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="16" y="0" h="-2"/>
+  <weapon size="small" x="24" y="0" h="-2"/>
+  <weapon size="small" x="-5" y="11" h="0"/>
+  <weapon size="small" x="-5" y="-11" h="0"/>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <cpu_mod>15</cpu_mod>
+  <ew_hide>30</ew_hide>
+  <nebu_absorb_shield>80</nebu_absorb_shield>
+  <nebu_absorb_armour>97</nebu_absorb_armour>
+ </stats>
+</ship>

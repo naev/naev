@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Sindbad">
+ <base_type>Sindbad</base_type>
+ <gfx_space sx="1" sy="1">planet/space/000.png</gfx_space>
+ <gfx_comm>planet/exterior/station00.png</gfx_comm>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>1</price>
+ <fabricator>N/A</fabricator>
+ <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
+ <mission/>
+ <movement>
+  <thrust>0.01</thrust>
+  <turn>100</turn>
+  <speed>0.01</speed>
+ </movement>
+ <health>
+  <absorb>80</absorb>
+  <shield>8000</shield>
+  <armour>5000</armour>
+  <energy>10000</energy>
+  <shield_regen>3.3</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>166.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>500</cpu>
+  <crew>500</crew>
+  <mass>100000</mass>
+  <fuel>1</fuel>
+  <fuel_consumption>1</fuel_consumption>
+  <cargo>5000</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="0" y="0" h="0"/>
+  <weapon size="large" x="0" y="0" h="0"/>
+  <weapon size="large" x="50" y="0" h="5"/>
+  <weapon size="large" x="-50" y="0" h="5"/>
+  <weapon size="large" x="0" y="50" h="5"/>
+  <weapon size="large" x="0" y="-40" h="5"/>
+  <weapon size="large" x="0" y="0" h="30"/>
+  <weapon size="large" x="0" y="0" h="30"/>
+  <utility size="large" prop="systems" exclusive="1" required="1">Dummy Systems</utility>
+  <structure size="large" prop="engines" exclusive="1" required="1">Dummy Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Dummy Plating</structure>
+ </slots>
+</ship>

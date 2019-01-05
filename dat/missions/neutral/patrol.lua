@@ -1,7 +1,7 @@
 --[[
 
    Patrol
-   Copyright 2014, 2015 Julian Marchant
+   Copyright 2014-2016 Julie Marchant
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,46 +26,42 @@
 include "numstring.lua"
 include "jumpdist.lua"
 
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   pay_title = "Mission Completed"
-   pay_text    = {}
-   pay_text[1] = "After going through some paperwork, an officer hands you your pay and sends you off."
-   pay_text[2] = "A tired-looking officer verifies your mission log and hands you your pay."
-   pay_text[3] = "The officer you deal with thanks you for your work, hands you your pay, and sends you off."
-   pay_text[4] = "An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee."
+pay_title = _("Mission Completed")
+pay_text    = {}
+pay_text[1] = _("After going through some paperwork, an officer hands you your pay and sends you off.")
+pay_text[2] = _("A tired-looking officer verifies your mission log and hands you your pay.")
+pay_text[3] = _("The officer you deal with thanks you for your work, hands you your pay, and sends you off.")
+pay_text[4] = _("An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee.")
 
-   abandon_title = "Mission Abandoned"
-   abandon_text    = {}
-   abandon_text[1] = "You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not recieve payment."
+abandon_title = _("Mission Abandoned")
+abandon_text    = {}
+abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not recieve payment.")
 
 
-   -- Mission details
-   misn_title  = "Patrol of the %s System"
-   misn_reward = "%s credits"
-   misn_desc   = "Patrol specified points in the %s system, eliminating any hostiles you encounter."
+-- Mission details
+misn_title  = _("Patrol of the %s System")
+misn_reward = _("%s credits")
+misn_desc   = _("Patrol specified points in the %s system, eliminating any hostiles you encounter.")
 
-   -- Messages
-   msg    = {}
-   msg[1] = "Point secure."
-   msg[2] = "Hostiles detected. Engage hostiles."
-   msg[3] = "Hostiles eliminated."
-   msg[4] = "Patrol complete. You can now collect your pay."
-   msg[5] = "MISSION FAILURE! You showed up too late."
-   msg[6] = "MISSION FAILURE! You have left the %s system."
+-- Messages
+msg    = {}
+msg[1] = _("Point secure.")
+msg[2] = _("Hostiles detected. Engage hostiles.")
+msg[3] = _("Hostiles eliminated.")
+msg[4] = _("Patrol complete. You can now collect your pay.")
+msg[5] = _("MISSION FAILURE! You showed up too late.")
+msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
-   osd_title  = "Patrol of %s"
-   osd_msg    = {}
-   osd_msg[1] = "Fly to the %s system"
-   osd_msg_2  = "Go to indicated point (%d remaining)"
-   osd_msg[2] = "(null)"
-   osd_msg[3] = "Eliminate hostiles"
-   osd_msg[4] = "Land on the nearest %s planet and collect your pay"
-   osd_msg["__save"] = true
+osd_title  = _("Patrol of %s")
+osd_msg    = {}
+osd_msg[1] = _("Fly to the %s system")
+osd_msg_2  = _("Go to indicated point (%d remaining)")
+osd_msg[2] = "(null)"
+osd_msg[3] = _("Eliminate hostiles")
+osd_msg[4] = _("Land on the nearest %s planet and collect your pay")
+osd_msg["__save"] = true
 
-   mark_name = "Patrol Point"
-end
+mark_name = _("Patrol Point")
 
 
 -- Get the number of enemies in a particular system
@@ -167,6 +163,11 @@ end
 
 
 function jumpout ()
+   if mark ~= nil then
+      system.mrkRm( mark )
+      mark = nil
+   end
+
    jumps_permitted = jumps_permitted - 1
    local last_sys = system.cur()
    if not job_done then
@@ -180,6 +181,11 @@ end
 
 
 function land ()
+   if mark ~= nil then
+      system.mrkRm( mark )
+      mark = nil
+   end
+
    jumps_permitted = jumps_permitted - 1
    if job_done and planet.cur():faction() == paying_faction then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
@@ -260,6 +266,7 @@ function timer ()
             new_points[ #new_points + 1 ] = points[i]
          end
          points = new_points
+         points["__save"] = true
 
          player.msg( msg[1] )
          osd_msg[2] = osd_msg_2:format( #points )
@@ -280,7 +287,7 @@ function timer ()
    end
 
    if not job_done then
-      hook.timer( 50, "timer" )
+      timer_hook = hook.timer( 50, "timer" )
    end
 end
 
@@ -289,11 +296,11 @@ end
 function fail( message )
    if message ~= nil then
       -- Pre-colourized, do nothing.
-      if message:find("\027") then
+      if message:find("\a") then
          player.msg( message )
       -- Colourize in red.
       else
-         player.msg( "\027r" .. message .. "\0270" )
+         player.msg( "\ar" .. message .. "\a0" )
       end
    end
    misn.finish( false )

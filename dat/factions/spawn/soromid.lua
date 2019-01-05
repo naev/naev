@@ -49,6 +49,7 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
+   pilots.__fleet = true
 
    if rnd.rnd() < pbm then
       pilots = spawnBgMerc("Soromid")
@@ -110,7 +111,7 @@ function spawn ( presence, max )
    end
   
    -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data )
+   pilots = scom.spawn( spawn_data, "Soromid" )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

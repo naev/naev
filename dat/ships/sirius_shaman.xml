@@ -2,7 +2,7 @@
 <ship name="Sirius Shaman">
  <base_type>Shaman</base_type>
  <GFX>shaman</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>525000</price>

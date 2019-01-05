@@ -37,6 +37,7 @@ end
 -- @brief Spawns a large swarm.
 function spawn_capship ()
     local pilots = {}
+    -- pilots.__fleet = true -- Need mothership for this
     local r = rnd.rnd()
 
     if r < 0.5 then
@@ -92,7 +93,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data )
+    pilots = scom.spawn( spawn_data, "Collective" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

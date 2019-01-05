@@ -87,6 +87,7 @@ function empire_createPeacemaker( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Peacemaker gets some good stuff
    primary        = { "Turbolaser", "Railgun Turret" }
@@ -129,6 +130,7 @@ function empire_createHawking( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Hawking gets some good stuff
    primary        = { "Turbolaser", "Heavy Laser" }
@@ -171,6 +173,7 @@ function empire_createPacifier( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Pacifier isn't bad either
    primary        = { "Heavy Ripper Cannon", "Laser Turret MK3" }
@@ -212,6 +215,7 @@ function empire_createShark( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Shark gets some good stuff
    primary        = { "Laser Cannon MK3", "Ripper Cannon" }
@@ -253,6 +257,7 @@ function empire_createLancelot( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Lancelot gets some good stuff
    primary        = { "Laser Cannon MK3", "Ripper Cannon" }
@@ -294,6 +299,7 @@ function empire_createAdmonisher( empire_create )
    local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
+   weapons = {}
 
    -- Admonisher gets some good stuff
    primary        = { "Heavy Ripper Cannon", "Ripper Cannon" }
@@ -319,7 +325,7 @@ function empire_namePlanet ()
    local plt = planet.get( faction.get( "Empire" ) )
    local k   = plt:class()
    if k == "M" or k == "P" or k == "H" or k == "D" then
-      return "ESS " .. plt:name()
+      return string.format(_("ESS %s"), _(plt:name()))
    end
    return nil
 end
@@ -330,98 +336,98 @@ end
 --]]
 function empire_name ()
    local actors = {
-      "Warrior",
-      "Invincible",
-      "Enterprise",
-      "Rising Star",
-      "Vanguard",
-      "Defender",
-      "Pride",
-      "Glory",
-      "Ardent", -- Thanks, British Navy.
-      "Argonaut",
-      "Ardent",
-      "Atlas",
-      "Bellerophon",
-      "Centurion",
-      "Centaur",
-      "Colossus",
-      "Conqueror",
-      "Conquest",
-      "Defiance",
-      "Defiant",
-      "Diligence",
-      "Dragon",
-      "Dreadnought",
-      "Expedition",
-      "Foresight",
-      "Gladiator",
-      "Goliath",
-      "Hecate",
-      "Hope",
-      "Impregnable",
-      "Intrepid",
-      "Leviathan",
-      "Loyalty",
-      "Magnificence",
-      "Majestic",
-      "Minotaur",
-      "Orion",
-      "Panther",
-      "Pegasus",
-      "Resolution",
-      "Revenge",
-      "Robust",
-      "Sceptre",
-      "Sovereign",
-      "Sterling",
-      "Tempest",
-      "Theseus",
-      "Thunderer",
-      "Tremendous",
-      "Trident",
-      "Triumph",
-      "Union",
-      "Unity",
-      "Valiant",
-      "Vengeance",
-      "Victorious",
-      "Victory",
-      "Vigilant",
-      "Zealous",
-      "Cougar", -- Animals
-      "Ocelot",
-      "Lynx",
-      "Bobcat",
-      "Serval",
-      "Leopard",
-      "Lion",
-      "Jaguar",
-      "Leopard",
-      "Tiger",
-      "Cheetah",
-      "Jackal",
-      "Wolf",
-      "Coyote",
-      "Kodiak",
-      "Osprey",
-      "Harrier",
-      "Falcon",
-      "Owl",
-      "Hawk",
-      "Eagle",
-      "Heron",
-      "Ham Sandwich", -- Silliness
-      "Platypus",
-      "Dodo",
-      "Turducken",
-      "Ridiculous",
-      "Rustbucket",
-      "Mediocrity",
-      "Segfault",
-      "Juice Box"
+      _("Warrior"),
+      _("Invincible"),
+      _("Enterprise"),
+      _("Rising Star"),
+      _("Vanguard"),
+      _("Defender"),
+      _("Pride"),
+      _("Glory"),
+      _("Ardent"), -- Thanks, British Navy.
+      _("Argonaut"),
+      _("Ardent"),
+      _("Atlas"),
+      _("Bellerophon"),
+      _("Centurion"),
+      _("Centaur"),
+      _("Colossus"),
+      _("Conqueror"),
+      _("Conquest"),
+      _("Defiance"),
+      _("Defiant"),
+      _("Diligence"),
+      _("Dragon"),
+      _("Dreadnought"),
+      _("Expedition"),
+      _("Foresight"),
+      _("Gladiator"),
+      _("Goliath"),
+      _("Hecate"),
+      _("Hope"),
+      _("Impregnable"),
+      _("Intrepid"),
+      _("Leviathan"),
+      _("Loyalty"),
+      _("Magnificence"),
+      _("Majestic"),
+      _("Minotaur"),
+      _("Orion"),
+      _("Panther"),
+      _("Pegasus"),
+      _("Resolution"),
+      _("Revenge"),
+      _("Robust"),
+      _("Sceptre"),
+      _("Sovereign"),
+      _("Sterling"),
+      _("Tempest"),
+      _("Theseus"),
+      _("Thunderer"),
+      _("Tremendous"),
+      _("Trident"),
+      _("Triumph"),
+      _("Union"),
+      _("Unity"),
+      _("Valiant"),
+      _("Vengeance"),
+      _("Victorious"),
+      _("Victory"),
+      _("Vigilant"),
+      _("Zealous"),
+      _("Cougar"), -- Animals
+      _("Ocelot"),
+      _("Lynx"),
+      _("Bobcat"),
+      _("Serval"),
+      _("Leopard"),
+      _("Lion"),
+      _("Jaguar"),
+      _("Leopard"),
+      _("Tiger"),
+      _("Cheetah"),
+      _("Jackal"),
+      _("Wolf"),
+      _("Coyote"),
+      _("Kodiak"),
+      _("Osprey"),
+      _("Harrier"),
+      _("Falcon"),
+      _("Owl"),
+      _("Hawk"),
+      _("Eagle"),
+      _("Heron"),
+      _("Ham Sandwich"), -- Silliness
+      _("Platypus"),
+      _("Dodo"),
+      _("Turducken"),
+      _("Ridiculous"),
+      _("Rustbucket"),
+      _("Mediocrity"),
+      _("Segfault"),
+      _("Juice Box")
    }
    local actor = actors[ rnd.rnd(1,#actors) ]
 
-   return "ESS " .. actor
+   return string.format( _("ESS %s"), actor )
 end

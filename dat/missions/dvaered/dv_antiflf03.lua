@@ -11,80 +11,76 @@ include "proximity.lua"
 include "dat/missions/dvaered/common.lua"
 
 -- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-    title = {}
-    text = {}
-    failtitle = {}
-    failtext = {}
-    osd_desc = {}
-    
-    title[1] = "One swift stroke"
-    introfirst = [[The Dvaered liaison spots you, and stands up to shake your hand.
+title = {}
+text = {}
+failtitle = {}
+failtext = {}
+osd_desc = {}
+
+title[1] = _("One swift stroke")
+introfirst = _([[The Dvaered liaison spots you, and stands up to shake your hand.
     "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
-    ]]
+    ]])
     
-    introrepeat = [[The Dvaered liaison greets you.
+introrepeat = _([[The Dvaered liaison greets you.
     "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
-    ]]
+    ]])
     
-    text[1] = [[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
+text[1] = _([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
     "In the near future, the Dvaered fleet will move against enemies of the state in the %s system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theater, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
-    The liaison blinks awake. "These are the parameters and conditions of the mission. Will you be accepting this assignment?"]]
+    The liaison blinks awake. "These are the parameters and conditions of the mission. Will you be accepting this assignment?"]])
     
-    title[2] = "The battlefield awaits"
-    text[2] = [["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
+title[2] = _("The battlefield awaits")
+text[2] = _([["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
     The liaison hands you a small access card. It bears the emblem of the Dvaered military. It seems you've been granted a level of clearance that goes beyond that of a civilian volunteer.
     The liaison stands up, offers a curt greeting and walks out of the bar. You remain for a while, since you're not due for your briefing for some time yet. You reflect on your recent achievements. Your actions have drastically dipped the balance of power between the Dvaered and the FLF insurgents, and soon you will be able to see the results of your decisions with your own two eyes. You feel a sense of accomplishment to know you're making a difference in this galaxy.
-    Several hours later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]]
+    Several hours later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]])
     
-    text[3] = [["Gentlemen," a stern-looking but otherwise nondescript Dvaered officer addresses the room, "If I may have your attention please. I am here to brief you on the upcoming operation, which as you all know revolves around the destruction of the terrorist base known as Sindbad."
+text[3] = _([["Gentlemen," a stern-looking but otherwise nondescript Dvaered officer addresses the room, "If I may have your attention please. I am here to brief you on the upcoming operation, which as you all know revolves around the destruction of the terrorist base known as Sindbad."
     The wall behind the officer lights up, showing a schematic representation of the %s system. In the middle sits a red glowing disc with the FLF logo superimposed over it.
     "We're dealing with a fully operational, heavily armed military installation. The FLF may be terrorists, but they're well organized. Since this is their biggest stronghold, we must assume this base is heavily armed, and has a large complement of defensive spacecraft to defend it from attack. We will therefore conduct our assault in two phases."
     The system schematic on the wall updates with a cluster of white Dvaered logos, positioned some distance away from the glowing disc. There are also several white dots which apparently represent the fighter escorts.
-    "Our strike force will consist out of the HDSF Obstinate, several destroyer escorts and two wings of fighter escorts. In addition, our forces will be joined by citizen %s, who has volunteered to fight on behalf of House Dvaered on this occasion." The officer nods at you, then continues his briefing. "Our forces and formation will be such that it appears we are preparing for a standard strafing run, and indeed this is what will happen if the FLF decide to sit and cower. However, we expect them to put up a fight."]]
+    "Our strike force will consist out of the HDSF Obstinate, several destroyer escorts and two wings of fighter escorts. In addition, our forces will be joined by citizen %s, who has volunteered to fight on behalf of House Dvaered on this occasion." The officer nods at you, then continues his briefing. "Our forces and formation will be such that it appears we are preparing for a standard strafing run, and indeed this is what will happen if the FLF decide to sit and cower. However, we expect them to put up a fight."]])
     
-    text[4] = [[The schematic updates again, this time showing several small clusters of red dots between the glowing disc and the Dvaered formation.
-    "The FLF will send out wings of fighters and bombers to engage our strike force. At this time the number and composition of ships is unknown, but it seems prudent to assume they will outnumber us by a fair margin. Your task as auxiliary escorts is to protect the strike force's flanks and intercept any FLF ships attempting to target the Obstinate. Be advised that the Obstinate will have limited anti-fighter armaments available, as most of its hull is dedicated to fighter bays. The Obstinate must not be destroyed! This is your paradigm objective!"
+text[4] = _([[The schematic updates again, this time showing several small clusters of red dots between the glowing disc and the Dvaered formation.
+   "The FLF will send out wings of fighters and bombers to engage our strike force. At this time the number and composition of ships is unknown, but it seems prudent to assume they will outnumber us by a fair margin. Your task as auxiliary escorts is to protect the strike force's flanks and intercept any FLF ships attempting to target the Obstinate. Be advised that the Obstinate will have limited anti-fighter armaments available, as most of its hull is dedicated to fighter bays. The Obstinate must not be destroyed! This is your paradigm objective!"
     On the wall, the red dots are intercepted by the white dots, and blink out of existence. Then a second group of white dots appears near the Dvaered logos, and moves towards the glowing disc.
     "As soon as the FLF have exhausted their forces trying to counterattack, the HDSF Obstinate will begin launching bombers. It is our belief that the bombers alone will be able to take out the enemy base, but in the event that resistance is heavier than expected, the Obstinate herself will move in to provide fire support."
     The glowing disc on the wall fades out, leaving the Dvaered fleet alone and victorious.
     "That will be all. You have your orders. Report to your stations as per your timetables. I will see you all in %s. Good luck."
-    Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]]
+    Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]])
     
-    title[3] = "FLF base? What FLF base?"
-    text[5] = [[When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
+title[3] = _("FLF base? What FLF base?")
+text[5] = _([[When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
     "Well met, citizen %s," Urnus tells you. "Cigar? Oh. Well, suit yourself. Anyway, I wanted to personally thank you for your role in the recent victory against the FLF. If it hadn't been for the information you provided we might have never smoked out their nest! In addition, your efforts on the battlefield have helped to secure our victory. House Dvaered recognizes accomplishments like that, citizen."
     The Colonel walks to a cabinet in his office and takes out a small box. From the box, he produces a couple of credit chips as well as a small metal pin in the shape of a star.
-    "This is a reward for your services. The money speaks for itself, of course. As for the pin, it's a civilian commendation, the Star of Valor. Think of it as a badge of honor. It isn't a medal, but it's considered a mark of prestige among the Dvaered citizenry nonetheless. You will certainly enjoy greater respect when you wear this on your lapel, at least as long as you're in Dvaered space."]]
+    "This is a reward for your services. The money speaks for itself, of course. As for the pin, it's a civilian commendation, the Star of Valor. Think of it as a badge of honor. It isn't a medal, but it's considered a mark of prestige among the Dvaered citizenry nonetheless. You will certainly enjoy greater respect when you wear this on your lapel, at least as long as you're in Dvaered space."]])
     
-    text[6] = [[Colonel Urnus returns to his seat.
+text[6] = _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
-    As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]]
+    As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]])
     
-    refusetitle = "Refusal"
-    refusetext = [["Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]]
-    
-    failtitle[1] = "You ran away!"
-    failtext[1] = "You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!"
-    
-    failtitle[2] = "The flagship is dead!"
-    failtext[2] = "The HDSF Obstinate has been destroyed by the FLF defending forces! This mission can no longer be completed."
-    
-    flagattack = "This is Obstinate, we're under fire!"
-    phasetwo = "This is Obstinate. Launching bombers."
-    
-    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."
-    
-    misn_title = "Destroy the FLF base!"
-    osd_desc[1] = "Fly to the %s system"
-    osd_desc[2] = "Defend the HDSF Obstinate and its escorts"
-    osd_desc[3] = "Destroy the FLF base"
-    osd_desc[4] = "Return to %s in the %s system"
-    
-    misn_desc = "The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory."
-end
+refusetitle = _("Refusal")
+refusetext = _([["Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]])
+
+failtitle[1] = _("You ran away!")
+failtext[1] = _("You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!")
+
+failtitle[2] = _("The flagship is dead!")
+failtext[2] = _("The HDSF Obstinate has been destroyed by the FLF defending forces! This mission can no longer be completed.")
+
+flagattack = _("This is Obstinate, we're under fire!")
+phasetwo = _("This is Obstinate. Launching bombers.")
+
+npc_desc = _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front.")
+
+misn_title = _("Destroy the FLF base!")
+osd_desc[1] = _("Fly to the %s system")
+osd_desc[2] = _("Defend the HDSF Obstinate and its escorts")
+osd_desc[3] = _("Destroy the FLF base")
+osd_desc[4] = _("Return to %s in the %s system")
+
+misn_desc = _("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory.")
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -147,6 +143,7 @@ function enter()
         DVbombers = 5 -- Amount of initial Dvaered bombers
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
+        deathsFLFneeded = 0
         time = 0
         stage = 0
         standoff = 5000 -- The distance between the DV fleet and the base
@@ -156,7 +153,7 @@ function enter()
     
         spawnbase()
         spawnDV()
-        obstinate:comm( "All Dvaered vessels in position. Citizen, join the fleet and commence the attack!", true )
+        obstinate:comm( _("All Dvaered vessels in position. Citizen, join the fleet and commence the attack!"), true )
         -- Wait for the player to fly to the Obstinate before commencing the mission
 
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
@@ -182,7 +179,7 @@ function operationStart()
     hook.timer(13000, "spawnFLFfighters")
     hook.timer(15000, "spawnFLFbombers")
     hook.timer(17000, "spawnFLFfighters")
-    tim_sec = hook.timer(100000, "nextStage")
+    deathsFLFneeded = 11
     controller = hook.timer(1000, "control")
 end
 
@@ -195,14 +192,20 @@ function land()
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
+        diff.apply("FLF_base")
+        diff.apply("flf_dead")
         misn.finish(true)
     end
 end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("FLF Base", "flf_norun", basepos)[1]
+    base = pilot.add("Sindbad", "flf_norun", basepos)[1]
     base:rmOutfit("all")
+    base:rmOutfit("cores")
+    base:addOutfit("Dummy Systems")
+    base:addOutfit("Dummy Plating")
+    base:addOutfit("Dummy Engine")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
     base:setNodisable(true)
@@ -212,6 +215,11 @@ function spawnbase()
 end
 
 function deathBase()
+    player.pilot():setInvincible()
+    player.cinematics()
+    camera.set( base, true, 5000 )
+    hook.timer( 8000, "timer_plcontrol" )
+
     misn.osdActive(4)
     misn.markerMove( mission_marker, system.get(DVsys) )
 
@@ -238,16 +246,19 @@ function deathBase()
     
     hook.rm(controller)
 
-    obstinate:comm( "Terrorist station eliminated! All units, return to base.", true )
+    obstinate:comm( _("Terrorist station eliminated! All units, return to base."), true )
     obstinate:control()
     obstinate:hyperspace()
     obstinate:setHilight(false)
-    
-    hook.timer(12000, "zoomTo")
-    hook.timer(12000, "playerControl", false)
+    obstinate:setNoDeath()
 
     missionstarted = false
     victorious = true
+end
+
+function timer_plcontrol ()
+    camera.set( player.pilot(), true, 5000 )
+    player.cinematics( false )
 end
 
 -- Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
@@ -255,13 +266,13 @@ function spawnDV()
     updatepos()
 
     obstinate = pilot.add("Dvaered Goddard", "dvaered_norun", fleetpos[1])[1]
-    obstinate:rename("Obstinate")
+    obstinate:rename(_("Obstinate"))
     obstinate:setDir(90)
     obstinate:setFriendly()
     obstinate:setNodisable(true)
     obstinate:control()
     obstinate:setHilight(true)
-    obstinate:setVisible()
+    obstinate:setVisplayer()
     obstinate:rmOutfit("all")
     obstinate:addOutfit("Engine Reroute")
     obstinate:addOutfit("Small Shield Booster")
@@ -279,9 +290,8 @@ function spawnDV()
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
-        vigilance:setVisible(true)
+        vigilance:setVisplayer(true)
         hook.pilot(vigilance, "attacked", "attacked")
-        hook.pilot(vigilance, "death", "deathDV")
         fleetDV[#fleetDV + 1] = vigilance
         i = i + 1
     end
@@ -291,33 +301,12 @@ function spawnDV()
         vendetta = pilot.add("Dvaered Vendetta", "dvaered_norun", fighterpos[i])[1]
         vendetta:setDir(90)
         vendetta:setFriendly()
-        vendetta:setVisible(true)
+        vendetta:setVisplayer(true)
         vendetta:control()
         hook.pilot(vendetta, "attacked", "attacked")
-        hook.pilot(vendetta, "death", "deathDV")
         fightersDV[#fightersDV + 1] = vendetta
         i = i + 1
     end
-end
-
--- Gets an array of possible Dvaered targets for the FLF to attack
-function possibleDVtargets()
-    targets = {}
-    -- Bias towards escorts, twice as likely as obstinate or player
-    for i, j in ipairs(fleetDV) do
-        if j:exists() then
-            targets[#targets + 1] = j
-        end
-    end
-    for i, j in ipairs(fleetDV) do
-        if j:exists() then
-            targets[#targets + 1] = j
-        end
-    end
-    -- Player and obstinate get added seperately
-    targets[#targets + 1] = player.pilot()
-    targets[#targets + 1] = obstinate
-    return targets
 end
 
 
@@ -327,7 +316,6 @@ function setFLF( j )
   j:setNodisable(true)
   j:setHostile()
   j:setVisible(true)
-  j:control()
 end
 
 
@@ -335,37 +323,29 @@ end
 function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
-    local targets = possibleDVtargets()
-    local wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
+    local wingFLF = addShips( "FLF Lancelot", "flf_norun", base:pos(), 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
-        j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
 -- Spawns FLF bombers
 function spawnFLFbombers()
-    local targets = possibleDVtargets()
-    local wingFLF = addRawShips( "Ancestor", "flf_norun", base:pos(), "FLF", 3 )
+    local wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
-        hook.pilot(j, "death", "deathFLF")
-        j:rename("FLF Ancestor")
-        j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
 -- Spawns FLF destroyers
 function spawnFLFdestroyers()
-    local targets = possibleDVtargets()
     local wingFLF = addShips( "FLF Pacifier", "flf_norun", base:pos(), 2 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         setFLF( j )
-        j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
@@ -387,7 +367,7 @@ function deathFLF()
     pruneFLF()
 
     -- Keep track of deaths
-    if #fleetFLF <= 0 then
+    if deathsFLF >= deathsFLFneeded then
         nextStage()
     end
 end
@@ -401,62 +381,42 @@ function nextStage()
     time = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
     deathsFLF = 0
-    hook.rm( tim_sec ) -- Stop security timer
-    if stage == 1 then
+    deathsFLFneeded = 0
+    if stage <= 1 then
         --player.msg("Starting stage 2.")
         hook.timer(1000, "spawnFLFfighters")
         hook.timer(3000, "spawnFLFbombers")
         hook.timer(5000, "spawnFLFdestroyers")
         hook.timer(7000, "spawnFLFbombers")
-        tim_sec = hook.timer(90000, "nextStage")
-    elseif stage == 2 then
+        deathsFLFneeded = 10
+    elseif stage <= 2 then
         --player.msg("Starting stage 3.")
         hook.timer(1000, "spawnFLFfighters")
         hook.timer(3000, "spawnFLFdestroyers")
         hook.timer(5000, "spawnFLFbombers")
         hook.timer(7000, "spawnFLFbombers")
         hook.timer(9000, "spawnFLFdestroyers")
-        tim_sec = hook.timer(120000, "nextStage")
-    else
+        deathsFLFneeded = 12
+    elseif stage <= 3 then
         --player.msg("Starting stage 4.")
         local delay = 0
-        hook.timer(delay, "playerControl", true)
-        hook.timer(delay, "zoomTo", obstinate)
         delay = delay + 3000
         hook.timer(delay, "broadcast", {caster = obstinate, text = phasetwo})
         hook.timer(delay, "spawnDVbomber")
-        delay = delay + 7000
-        hook.timer(delay, "zoomTo", base)
         delay = delay + 38000
         hook.timer(delay, "engageBase")
         delay = delay + 45000
         hook.timer(delay, "destroyBase")
         misn.osdActive(3)
+    else
+        print(_("WARNING: dv_antiflf03: going to next stage, but next stage doesn't exist!"))
     end
-end
-
--- Capsule function for camera.set, for timer use
-function zoomTo(target)
-    camera.set(target, true, zoomspeed)
 end
 
 -- Capsule function for pilot.broadcast, for timer use
 function broadcast(args)
     args.caster:broadcast(args.text, true)
 end
-
--- Capsule function for player.pilot():control(), for timer use
--- Also saves the player's velocity.
-function playerControl(status)
-    player.pilot():control(status)
-    player.cinematics(status)
-    if status then
-        pvel = player.pilot():vel()
-        player.pilot():setVel(vec2.new(0, 0))
-    else
-        player.pilot():setVel(pvel)
-    end
-end 
  
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
@@ -624,25 +584,14 @@ function attacked()
     time = 3000
     
     for i, j in ipairs(fleetDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
     
     for i, j in ipairs(fightersDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
-        end
-    end
-end
-
--- Re-target the FLF units when a Dvaered ship dies
-function deathDV()
-    local targets = possibleDVtargets()
-
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() then
-            j:attack(targets[rnd.rnd(#targets - 1) + 1])
         end
     end
 end

@@ -5,45 +5,43 @@
 
 include "dat/scripts/numstring.lua"
 
-lang = naev.lang()
-
 bmsg = {}
 --beginning messages
-bmsg[1] = [[You walk up to an intimidating man dressed smartly in cool, dark black business attire. He has a large smile spread across his face. 
-    "Ahh, so your the %s everyone has been talking about. Naught but a glorified delivery boy if you ask me. Still, if you wish to help us out and prove yourself as more than a pirate, I'd be more than happy to oblige." He grins cooly, expecting an answer.]]
-bmsg[2] = [[Draga snorts impatiently. "Well, do you take the mission or what?"]]
+bmsg[1] = _([[You walk up to an intimidating man dressed smartly in cool, dark black business attire. He has a large smile spread across his face. 
+    "Ahh, so you're the %s everyone has been talking about. Naught but a glorified delivery boy if you ask me. Still, if you wish to help us out and prove yourself as more than a pirate, I'd be more than happy to oblige." He grins cooly, expecting an answer.]])
+bmsg[2] = _([[Draga snorts impatiently. "Well, do you take the mission or what?"]])
 choice = {}
-choice[1] = "Tell me more about the Nasin."
-choice[2] = "What's the job?"
-choice[3] = "I'm in. Where do I sign up?"
-choice[4] = "Sounds risky. Give me some time."
+choice[1] = _("Tell me more about the Nasin.")
+choice[2] = _("What's the job?")
+choice[3] = _("I'm in. Where do I sign up?")
+choice[4] = _("Sounds risky. Give me some time.")
 chooser = {}
-chooser[1] = [[He looks at you, betraying a little emotion. "The Nasin are a pure piece of glass. When light shines through glass, the light is only as pure as the glass itself. If the glass is dirty, then the light is distorted, and doesn't come through correctly. If the glass is mishappen or broken, the light may not filter through at all. We, the Nasin, are the purest glass there is, and House Sirius has become corrupt. We exist to see its downfall."]]
-chooser[2] = [[Draga motions you in closer. "We have reason to believe that %s is about to be attacked. We are expecting Sirius to send in recon elements any STU now. We want you to handle that, as you see fit. Keep them away from the station. Better yet, kill them. We can pay you %s. We do ask that you stay in-system and off-planet until the mission is complete, otherwise you'll be considered AWOL, which means you're fired."]]
-chooser[3] = [[Draga looks triumphant, but only for an instant. "Great. You should get going, we are expecting them at any second. Good luck, and godspeed."]]
-chooser[4] = [[You brace yourself, as Draga appears ready to attack. He waves his arms about in obvious anger. "Great! I knew you were a waste of time. Well, if you decide to outgrow your diapers, I'll be right here waiting for you."
-   You walk away insulted, but strangely curious.]]
+chooser[1] = _([[He looks at you, betraying a little emotion. "The Nasin are a pure piece of glass. When light shines through glass, the light is only as pure as the glass itself. If the glass is dirty, then the light is distorted, and doesn't come through correctly. If the glass is mishappen or broken, the light may not filter through at all. We, the Nasin, are the purest glass there is, and House Sirius has become corrupt. We exist to see its downfall."]])
+chooser[2] = _([[Draga motions you in closer. "We have reason to believe that %s is about to be attacked. We are expecting Sirius to send in recon elements any hectosecond now. We want you to handle that, as you see fit. Keep them away from the station. Better yet, kill them. We can pay you %s. We do ask that you stay in-system and off-planet until the mission is complete, otherwise you'll be considered AWOL, which means you're fired."]])
+chooser[3] = _([[Draga looks triumphant, but only for an instant. "Great. You should get going, we are expecting them at any second. Good luck, and godspeed."]])
+chooser[4] = _([[You brace yourself, as Draga appears ready to attack. He waves his arms about in obvious anger. "Great! I knew you were a waste of time. Well, if you decide to outgrow your diapers, I'll be right here waiting for you."
+   You walk away insulted, but strangely curious.]])
 --message at the end
-emsg_1 = [[You land, having destroyed the small recon force. Draga is in the hangar, waiting for you.
-   "Good job on proving yourself more than a delivery boy! That wasn't so bad, was it? Here's your payment, meet me in the bar soon."]]
+emsg_1 = _([[You land, having destroyed the small recon force. Draga is in the hangar, waiting for you.
+   "Good job on proving yourself more than a delivery boy! That wasn't so bad, was it? Here's your payment, meet me in the bar soon."]])
 --mission osd
 osd = {}
-osd[1] = "Destroy the Sirius fighter element."
-osd[2] = "Element destroyed. Land on %s."
+osd[1] = _("Destroy the Sirius fighter element.")
+osd[2] = _("Element destroyed. Land on %s.")
 --random odds and ends
-misn_title = "The Patrol"
-npc_name = "Draga"
-bar_desc = "An imposing man leans against the bar easily, looking right at you."
-not_finished = "Draga seems to swoop in out of nowhere as soon as you land. \"You are not finished! Get back up there quickly!\""
-chronic_failure = [[Draga swoops in. His nostrils are flaring, and he is obviously annoyed.
+misn_title = _("The Patrol")
+npc_name = _("Draga")
+bar_desc = _("An imposing man leans against the bar easily, looking right at you.")
+not_finished = _("Draga seems to swoop in out of nowhere as soon as you land. \"You are not finished! Get back up there quickly!\"")
+chronic_failure = _([[Draga swoops in. His nostrils are flaring, and he is obviously annoyed.
    "Apparently you have better things to do. Get out of here. I don't want to see your face anymore."
-   You consider yourself fired.]]
-doom_clock_msg = [[A scratchy voice jumps in on your comms priority channel. 
+   You consider yourself fired.]])
+doom_clock_msg = _([[A scratchy voice jumps in on your comms priority channel. 
    "You jumped out of the system! We are being scanned by the enemy! We need you back to take care of this situation now, or you are AWOL and are not getting paid!!" 
-   The voice and the scratch cuts out.]]
-out_sys_failure_msg = [[Your comm station flares up with a scratchy, obviously-from-far-away noise. A voice is heard through it.
-   "%s! We told you we needed you to stay in system! Apparently you have more important things to do. So get lost, kid! We'll take care of ourselves." The static cuts out, and you consider yourself fired.]]
-misn_desc = "Destroy the Sirius recon element that flew into %s. WARNING: DO NOT JUMP OUT-SYSTEM OR LAND ON THE PLANET PREMATURELY."
+   The voice and the scratch cuts out.]])
+out_sys_failure_msg = _([[Your comm station flares up with a scratchy, obviously-from-far-away noise. A voice is heard through it.
+   "%s! We told you we needed you to stay in system! Apparently you have more important things to do. So get lost, kid! We'll take care of ourselves." The static cuts out, and you consider yourself fired.]])
+misn_desc = _("Destroy the Sirius recon element that flew into %s. WARNING: DO NOT JUMP OUT-SYSTEM OR LAND ON THE PLANET PREMATURELY.")
 
 function create()
    --this mission does make one system claim, in suna.

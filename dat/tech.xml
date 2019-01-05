@@ -27,6 +27,7 @@
   <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Gauss Gun</item>
+  <item>Asterokiller Gauss Gun</item>
   <item>Vulcan Gun</item>
   <item>Shredder</item>
   <item>Turreted Gauss Gun</item>
@@ -56,6 +57,14 @@
   <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
   <item>Heavy Neutron Disruptor</item>
+  <item>Energy Dart</item>
+  <item>Energy Missile</item>
+  <item>Energy Torpedo</item>
+  <item>Thurion Energy Cell I</item>
+  <item>Thurion Energy Cell II</item>
+  <item>Thurion Energy Cell III</item>
+  <item>Electron Burst Cannon</item>
+  <item>Electron Energy Cell</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
@@ -70,7 +79,9 @@
   <item>Vengeance Missile</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
+  <item>Unicorp Asterokiller Launcher</item>
   <item>Mace Rocket</item>
+  <item>Asterokiller Rocket</item>
   <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>Banshee Rocket</item>
@@ -85,6 +96,9 @@
   <item>Medusa Missile</item>
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Spearhead Missile</item>
+  <item>Convulsion Launcher</item>
+  <item>Turreted Convulsion Launcher</item>
+  <item>Convulsion Missile</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -93,17 +107,23 @@
   <item>Reactor Class II</item>
   <item>Reactor Class III</item>
   <item>Shield Capacitor</item>
+  <item>Thurion Reactor Class I</item>
+  <item>Thurion Reactor Class II</item>
+  <item>Thurion Reactor Class III</item>
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
   <item>Small Shield Booster</item>
   <item>Medium Shield Booster</item>
   <item>Large Shield Booster</item>
+  <item>Adaptive Stealth Plating</item>
   <item>Plasteel Plating</item>
+  <item>Active Plating</item>
   <item>Nanobond Plating</item>
   <item>Biometal Armour</item>
   <item>Droid Repair Crew</item>
   <item>Engine Reroute</item>
+  <item>Thurion Engine Reroute</item>
   <item>Improved Stabilizer</item>
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
@@ -118,6 +138,7 @@
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Targeting Array</item>
+  <item>Asteroid Scanner</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
   <item>Improved Power Regulator</item>
@@ -136,12 +157,16 @@
   <item>Map: Qorel Expanse</item>
   <item>Map: New Haven's hidden jump points</item>
   <item>Map: FLF Hidden Jumps</item>
+  <item>Map: FLF-Pirate Route</item>
+  <item>Map: Inner Nebula Secret Jump</item>
   <item>Ultra Map</item>
   <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
+  <item>Sensor Array</item>
+  <item>GUI - Slim</item>
   <item>GUI - Brushed</item>
   <item>GUI - Legacy</item>
   <item>GUI - Slimv2</item>
@@ -280,6 +305,7 @@
   <item>Shark</item>
   <item>Pirate Shark</item>
   <item>Empire Shark</item>
+  <item>Thurion Perspicacity</item>
   <item>Soromid Reaver</item>
   <item>Lancelot</item>
   <item>Empire Lancelot</item>
@@ -291,6 +317,7 @@
   <item>Ancestor</item>
   <item>Dvaered Ancestor</item>
   <item>Pirate Ancestor</item>
+  <item>Thurion Scintillation</item>
   <item>Phalanx</item>
   <item>Dvaered Phalanx</item>
   <item>Pirate Phalanx</item>
@@ -300,6 +327,7 @@
   <item>Pirate Admonisher</item>
   <item>Empire Admonisher</item>
   <item>Za'lek Sting</item>
+  <item>Thurion Virtuosity</item>
   <item>Vigilance</item>
   <item>Dvaered Vigilance</item>
   <item>Proteron Kahan</item>
@@ -310,6 +338,7 @@
   <item>Rhino</item>
   <item>Pirate Rhino</item>
   <item>Mule</item>
+  <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
   <item>Proteron Archimedes</item>
@@ -441,7 +470,6 @@
   <item>Fuel Pod</item>
   <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
-  <item>GUI - Brushed</item>
   <item>Local System Map</item>
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
@@ -486,9 +514,6 @@
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
-  <item>GUI - Brushed</item>
-  <item>GUI - Legacy</item>
-  <item>GUI - Slimv2</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Jump Scanner</item>
   <item>Medusa Missile</item>
@@ -714,6 +739,7 @@
  <tech name="FLF Ships">
   <item>FLF Lancelot</item>
   <item>FLF Vendetta</item>
+  <item>FLF Pacifier</item>
  </tech>
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>
@@ -755,13 +781,36 @@
   <item>Soromid Arx</item>
  </tech>
  <tech name="Thurion Military Ships">
+  <item>Thurion Perspicacity</item>
   <item>Thurion Ingenuity</item>
+  <item>Thurion Scintillation</item>
+  <item>Thurion Virtuosity</item>
+  <item>Thurion Taciturnity</item>
  </tech>
  <tech name="Za'lek Military Ships">
   <item>Za'lek Sting</item>
   <item>Za'lek Demon</item>
   <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
+ </tech>
+ <tech name="Thurion Outfits">
+  <item>Energy Dart</item>
+  <item>Energy Missile</item>
+  <item>Energy Torpedo</item>
+  <item>Thurion Energy Cell I</item>
+  <item>Thurion Energy Cell II</item>
+  <item>Thurion Energy Cell III</item>
+  <item>Convulsion Launcher</item>
+  <item>Turreted Convulsion Launcher</item>
+  <item>Convulsion Missile</item>
+  <item>Nebular Shielding Prototype</item>
+  <item>Thurion Reactor Class I</item>
+  <item>Thurion Reactor Class II</item>
+  <item>Thurion Reactor Class III</item>
+  <item>Sensor Array</item>
+  <item>Thurion Engine Reroute</item>
+  <item>Adaptive Stealth Plating</item>
+  <item>Active Plating</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
@@ -771,7 +820,8 @@
  </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
-  <item>Heavy Neutron Disruptor</item>
+  <item>Electron Burst Cannon</item>
+  <item>Electron Energy Cell</item>
   <item>Drone Fighter Bay</item>
   <item>Drone Fighter</item>
   <item>Drone</item>

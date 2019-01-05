@@ -10,6 +10,7 @@
 #include <lua.h>
 
 #include "outfit.h"
+#include "nlua.h"
 
 
 #define OUTFIT_METATABLE   "outfit" /**< Outfit metatable identifier. */
@@ -18,7 +19,7 @@
 /*
  * Library loading
  */
-int nlua_loadOutfit( lua_State *L, int readonly );
+int nlua_loadOutfit( nlua_env env );
 
 /*
  * Outfit operations

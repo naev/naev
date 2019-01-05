@@ -77,6 +77,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
    int i, j, ret, s;
    Pilot *pt;
+   AsteroidAnchor *field;
+   Asteroid *ast;
    double time;
    Outfit *o;
 
@@ -122,8 +124,14 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if (p->target != p->id){
          pt = pilot_get( p->target );
          if (pt != NULL)
-            time = pilot_weapFlyTime( o, p, pt);
+            time = pilot_weapFlyTime( o, p, &pt->solid->pos, &pt->solid->vel);
          }
+      /* Looking for a closer targeted asteroid */
+      if (p->nav_asteroid != -1){
+         field = &cur_system->asteroids[p->nav_anchor];
+         ast = &field->asteroids[p->nav_asteroid];
+         time = MIN( time, pilot_weapFlyTime( o, p, &ast->pos, &ast->vel) );
+      }
 
       /* Only "inrange" outfits. */
       if ( ws->inrange && outfit_duration(o) < time)
@@ -368,11 +376,11 @@ const char *pilot_weapSetName( Pilot* p, int id )
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
    if ((ws->slots == NULL) || (array_size(ws->slots)==0))
-      return "Unused";
+      return _("Unused");
    switch (ws->type) {
-      case WEAPSET_TYPE_CHANGE: return "Weapons - Switched";  break;
-      case WEAPSET_TYPE_WEAPON: return "Weapons - Instant";   break;
-      case WEAPSET_TYPE_ACTIVE: return "Abilities - Toggled"; break;
+      case WEAPSET_TYPE_CHANGE: return _("Weapons - Switched");  break;
+      case WEAPSET_TYPE_WEAPON: return _("Weapons - Instant");   break;
+      case WEAPSET_TYPE_ACTIVE: return _("Abilities - Toggled"); break;
    }
    return NULL;
 }
@@ -868,12 +876,12 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
  *    @param parent Parent of the weapon
  *    @param target Target of the weapon
  */
-double pilot_weapFlyTime( Outfit *o, Pilot *parent, Pilot *target)
+double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel)
 {
    Vector2d approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
 
-   dist = vect_dist( &parent->solid->pos, &target->solid->pos );
+   dist = vect_dist( &parent->solid->pos, pos );
 
    /* Beam weapons */
    if (outfit_isBeam(o))
@@ -889,20 +897,20 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Pilot *target)
 
    /* Rockets use absolute velocity while bolt use relative vel */
    if (outfit_isLauncher(o))
-         vect_cset( &approach_vector, - VX(target->solid->vel), - VY(target->solid->vel) );
+         vect_cset( &approach_vector, - vel->x, - vel->y );
    else
-         vect_cset( &approach_vector, VX(parent->solid->vel) - VX(target->solid->vel),
-               VY(parent->solid->vel) - VY(target->solid->vel) );
+         vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
+               VY(parent->solid->vel) - vel->y );
 
    speed = outfit_speed(o);
 
-   /* Get the vector : shooter -> target*/
-   vect_cset( &relative_location, VX(target->solid->pos) - VX(parent->solid->pos),
-         VY(target->solid->pos) - VY(parent->solid->pos) );
+   /* Get the vector : shooter -> target */
+   vect_cset( &relative_location, pos->x - VX(parent->solid->pos),
+         pos->y - VY(parent->solid->pos) );
 
-   /* Get the orthogonal vector*/
-   vect_cset(&orthoradial_vector, VY(parent->solid->pos) - VY(target->solid->pos),
-         VX(target->solid->pos) -  VX(parent->solid->pos) );
+   /* Get the orthogonal vector */
+   vect_cset(&orthoradial_vector, VY(parent->solid->pos) - pos->y,
+         pos->x -  VX(parent->solid->pos) );
 
    radial_speed = vect_dot( &approach_vector, &relative_location );
    radial_speed = radial_speed / VMOD(relative_location);
@@ -916,12 +924,12 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Pilot *target)
    else
       return INFINITY;
 
-   /* if t < 0, try the other solution*/
+   /* if t < 0, try the other solution */
    if (t < 0)
       t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
 
-   /* if t still < 0, no solution*/
+   /* if t still < 0, no solution */
    if (t < 0)
       return INFINITY;
 
@@ -1150,7 +1158,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       pilot_updateMass( p );
    }
    else
-      WARN("Shooting unknown weapon type: %s", w->outfit->name);
+      WARN(_("Shooting unknown weapon type: %s"), w->outfit->name);
 
 
    /* Reset timer. */
@@ -1315,7 +1323,7 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_CHANGE) {
+   if (p->weapon_sets[ p->active_set ].type != WEAPSET_TYPE_CHANGE) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
@@ -1323,7 +1331,7 @@ void pilot_weaponSetDefault( Pilot *p )
 
    /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!p->weapon_sets[i].type != WEAPSET_TYPE_CHANGE)
+      if (p->weapon_sets[i].type == WEAPSET_TYPE_CHANGE)
          break;
 
    /* Set active set to first if all fire groups or first non-fire group. */
@@ -1386,8 +1394,6 @@ void pilot_weaponSane( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
-   double c;
-
    /* Must not be disabled or cooling down. */
    if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
       return 0;
@@ -1399,11 +1405,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       o->stimer = -1;
    }
    else {
-      c = outfit_cooldown( o->outfit );
-      if (o->stimer != INFINITY)
-         o->stimer = c - (c * o->stimer / outfit_duration( o->outfit ));
-      else
-         o->stimer = c;
+      o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
    }
 

@@ -556,7 +556,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    map         = malloc(sizeof(float)*w*h);
    if (map == NULL) {
       noise_delete( noise );
-      WARN("Out of memory!");
+      WARN(_("Out of Memory"));
       return NULL;
    }
 
@@ -660,13 +660,13 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    nebula     = malloc(sizeof(float)*w*h*n);
    if (nebula == NULL) {
       noise_delete( noise );
-      WARN("Out of memory!");
+      WARN(_("Out of Memory"));
       return NULL;
    }
 
    /* Some debug information and time setting */
    s = SDL_GetTicks();
-   DEBUG("Generating Nebula of size %dx%dx%d", w, h, n);
+   DEBUG(_("Generating Nebula of size %dx%dx%d"), w, h, n);
 
    /* Prepare for generation. */
    _max        = malloc( sizeof(float) * n );
@@ -712,7 +712,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    free(_max);
 
    /* Results */
-   DEBUG("Nebula Generated in %d ms", SDL_GetTicks() - s );
+   DEBUG(_("Nebula Generated in %d ms"), SDL_GetTicks() - s );
    return nebula;
 }
 
@@ -750,7 +750,7 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
    nebula      = malloc(sizeof(float)*w*h);
    if (nebula == NULL) {
       noise_delete( noise );
-      WARN("Out of memory!");
+      WARN(_("Out of Memory"));
       return NULL;
    }
 

@@ -20,6 +20,7 @@
   <services>
    <land/>
    <refuel/>
+   <missions/>
   </services>
   <commodities/>
   <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>

@@ -2,13 +2,13 @@
 <ship name="Dvaered Ancestor">
  <base_type>Ancestor</base_type>
  <GFX>ancestor_dvaered</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>600000</price>
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
- <description>A Dvaered Ancestor.</description>
+ <description>This military grade version of the Ancestor is equipped with slightly more armour than its standard counterpart, which improves the integrity of its hull at the cost of slightly increased base mass.</description>
  <health>
   <absorb>5</absorb>
   <armour>85</armour>

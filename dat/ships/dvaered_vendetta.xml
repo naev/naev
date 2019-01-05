@@ -2,13 +2,13 @@
 <ship name="Dvaered Vendetta">
  <base_type>Vendetta</base_type>
  <GFX>vendetta_dvaered</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>400000</price>
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
- <description>A Dvaered Vendetta.</description>
+ <description>This military grade version of the Vendetta has stronger armour and better weapon cooling facilities than the standard Vendetta, but its turning thrusters are less optimally placed than its standard counterpart to make space for the improved weapon cooling facilities, reducing the ship's turning rate slightly.</description>
  <health>
   <absorb>7</absorb>
   <armour>110</armour>

@@ -43,6 +43,9 @@
 #include <bfd.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
+/* Locale setting. */
+#include <locale.h>
+
 /* local */
 #include "conf.h"
 #include "physics.h"
@@ -174,7 +177,6 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
 
-
    if (!log_isTerminal())
       log_copy(1);
 #if HAS_WIN32
@@ -187,13 +189,19 @@ int main( int argc, char** argv )
    }
 #endif
 
+   /* Set up locales. */
+   setlocale(LC_ALL|~LC_NUMERIC, "");
+   //bindtextdomain("naev", LOCALEDIR);
+   bindtextdomain("naev", "po/");
+   textdomain("naev");
+
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
 
    /* Print the version */
-   LOG( " "APPNAME" v%s", naev_version(0) );
+   LOG( " %s v%s", APPNAME, naev_version(0) );
 #ifdef GIT_COMMIT
-   DEBUG( " git HEAD at " GIT_COMMIT );
+   DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
 #endif /* GIT_COMMIT */
 
    /* Initializes SDL for possible warnings. */
@@ -212,7 +220,7 @@ int main( int argc, char** argv )
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
+      WARN( _("Unable to initialize SDL Video: %s"), SDL_GetError());
       return -1;
    }
 
@@ -238,6 +246,8 @@ int main( int argc, char** argv )
    /* Input must be initialized for config to work. */
    input_init();
 
+   lua_init(); /* initializes lua */
+
    conf_setDefaults(); /* set the default config values */
 
    /*
@@ -252,24 +262,23 @@ int main( int argc, char** argv )
 
    /* Create the home directory if needed. */
    if (nfile_dirMakeExist("%s", nfile_configPath()))
-      WARN("Unable to create config directory '%s'", nfile_configPath());
+      WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
-#if HAS_UNIX
+#if HAS_MACOS
    /* TODO get rid of this cruft ASAP. */
-   int oldconfig = 0;
+   char oldconfig[PATH_MAX] = "";
    if (!nfile_fileExists( buf )) {
-      char *home, buf2[PATH_MAX];
-      home = SDL_getenv( "HOME" );
+      char *home = SDL_getenv( "HOME" );
       if (home != NULL) {
-         nsnprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
-         if (nfile_fileExists( buf2 ))
-            oldconfig = 1;
+         nsnprintf( oldconfig, PATH_MAX, "%s/.config/naev/"CONF_FILE, home );
+         if (!nfile_fileExists( oldconfig ))
+            oldconfig[0] = '\0';
       }
    }
-#endif /* HAS_UNIX */
+#endif /* HAS_MACOS */
 
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -281,7 +290,6 @@ int main( int argc, char** argv )
    else
       log_purge();
 
-
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
@@ -290,19 +298,19 @@ int main( int argc, char** argv )
 
    /* Open data. */
    if (ndata_open() != 0)
-      ERR("Failed to open ndata.");
+      ERR( _("Failed to open ndata.") );
 
    /* Load the start info. */
    if (start_load())
-      ERR("Failed to load module start data.");
+      ERR( _("Failed to load module start data.") );
 
    /* Load the data basics. */
    LOG(" %s", ndata_name());
-   DEBUG();
+   DEBUG("");
 
    /* Display the SDL Version. */
    print_SDLversion();
-   DEBUG();
+   DEBUG("");
 
    /* random numbers */
    rng_init();
@@ -311,14 +319,16 @@ int main( int argc, char** argv )
     * OpenGL
     */
    if (gl_init()) { /* initializes video output */
-      ERR("Initializing video output failed, exiting...");
+      ERR( _("Initializing video output failed, exiting...") );
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
    window_caption();
-   gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
-   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
+
+   /* Have to set up fonts before rendering anything. */
+   gl_fontInit( NULL, "Arial", FONT_DEFAULT_PATH, conf.font_size_def ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, "Arial", FONT_DEFAULT_PATH, conf.font_size_small ); /* small font */
+   gl_fontInit( &gl_defFontMono, "Monospace", FONT_MONOSPACE_PATH, conf.font_size_def );
 
 #if SDL_VERSION_ATLEAST(2,0,0)
    /* Detect size changes that occurred after window creation. */
@@ -327,39 +337,39 @@ int main( int argc, char** argv )
 
    /* Display the load screen. */
    loadscreen_load();
-   loadscreen_render( 0., "Initializing subsystems..." );
+   loadscreen_render( 0., _("Initializing subsystems...") );
    time_ms = SDL_GetTicks();
-
 
    /*
     * Input
     */
    if ((conf.joystick_ind >= 0) || (conf.joystick_nam != NULL)) {
-      if (joystick_init()) WARN("Error initializing joystick input");
+      if (joystick_init())
+         WARN( _("Error initializing joystick input") );
       if (conf.joystick_nam != NULL) { /* use the joystick name to find a joystick */
          if (joystick_use(joystick_get(conf.joystick_nam))) {
-            WARN("Failure to open any joystick, falling back to default keybinds");
+            WARN( _("Failure to open any joystick, falling back to default keybinds") );
             input_setDefault(1);
          }
          free(conf.joystick_nam);
       }
       else if (conf.joystick_ind >= 0) /* use a joystick id instead */
          if (joystick_use(conf.joystick_ind)) {
-            WARN("Failure to open any joystick, falling back to default keybinds");
+            WARN( _("Failure to open any joystick, falling back to default keybinds") );
             input_setDefault(1);
          }
    }
-
 
    /*
     * OpenAL - Sound
     */
    if (conf.nosound) {
-      LOG("Sound is disabled!");
+      LOG( _("Sound is disabled!") );
       sound_disabled = 1;
       music_disabled = 1;
    }
-   if (sound_init()) WARN("Problem setting up sound!");
+   if (sound_init())
+      WARN( _("Problem setting up sound!") );
    music_choose("load");
 
    /* FPS stuff. */
@@ -368,7 +378,7 @@ int main( int argc, char** argv )
    /* Misc graphics init */
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
-      ERR("Unable to initialize the Nebula subsystem!");
+      ERR( _("Unable to initialize the Nebula subsystem!") );
       /* Weirdness will occur... */
    }
    gui_init(); /* initializes the GUI graphics */
@@ -400,21 +410,21 @@ int main( int argc, char** argv )
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
 
-#if HAS_UNIX
-   /* Tell the player to migrate their configuration files out of ~/.naev */
+#if HAS_MACOS
+   /* Tell the player to migrate their configuration files */
    /* TODO get rid of this cruft ASAP. */
-   if ((oldconfig) && (!conf.datapath)) {
+   if ((oldconfig[0] != '\0') && (!conf.datapath)) {
       char path[PATH_MAX], *script, *home;
-      uint32_t scriptsize;
+      size_t scriptsize;
       int ret;
 
       nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
       home = SDL_getenv("HOME");
-      ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
-            "   \er%s/.naev/\e0\n\n"
+      ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
+            "   \ar%s\a0\n\n"
             "The update script can likely be found in your Naev data directory:\n"
-            "   \er%s\e0\n\n"
-            "Would you like to run it automatically?", home, path );
+            "   \ar%s\a0\n\n"
+            "Would you like to run it automatically?"), oldconfig, path );
 
       /* Try to run the script. */
       if (ret) {
@@ -428,27 +438,27 @@ int main( int argc, char** argv )
 
          /* Running from laid-out files or ndata_read failed. */
          if ((nfile_fileExists(path)) && (ret == -1)) {
-            script = nfile_readFile( (int*)&scriptsize, path );
+            script = nfile_readFile( &scriptsize, path );
             if (script != NULL)
                ret = system(script);
          }
 
          /* We couldn't find the script. */
          if (ret == -1) {
-            dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
-                  "Please locate and run it manually.", path );
+            dialogue_alert( _("The update script was not found at:\n\ar%s\a0\n\n"
+                  "Please locate and run it manually."), path );
          }
          /* Restart, as the script succeeded. */
          else if (!ret) {
-            dialogue_msg( "Update Completed",
-                  "Configuration files were successfully migrated. Naev will now restart." );
+            dialogue_msg( _("Update Completed"),
+                  _("Configuration files were successfully migrated. Naev will now restart.") );
             execv(argv[0], argv);
          }
          else { /* I sincerely hope this else is never hit. */
-            dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n",
+            dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
+                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \aD%snebula/\a0\n\n"),
                   home, ".naev/conf.lua", nfile_configPath(),
                   home, ".naev/{saves,screenshots}/", nfile_dataPath(),
                   home, ".naev/gen/*.png", nfile_cachePath() );
@@ -456,13 +466,13 @@ int main( int argc, char** argv )
       }
       else {
          dialogue_alert(
-               "To manually migrate your configuration files "
+               _("To manually migrate your configuration files "
                "please exit Naev and run the update script, "
                "likely found in your Naev data directory:\n"
-               "   \er%s/naev-confupdate.sh\e0", home, path );
+               "   \ar%s/naev-confupdate.sh\a0"), home, path );
       }
    }
-#endif
+#endif /* HAS_MACOS */
 
    /*
     * main loop
@@ -493,7 +503,6 @@ int main( int argc, char** argv )
       main_loop( 1 );
    }
 
-
    /* Save configuration. */
    conf_saveConfig(buf);
 
@@ -521,6 +530,7 @@ int main( int argc, char** argv )
    joystick_exit(); /* Releases joystick */
    input_exit(); /* Cleans up keybindings */
    nebu_exit(); /* Destroys the nebula */
+   lua_exit(); /* Closes Lua state. */
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
@@ -556,14 +566,14 @@ void loadscreen_load (void)
    unsigned int i;
    char file_path[PATH_MAX];
    char **loadscreens;
-   uint32_t nload;
+   size_t nload;
 
    /* Count the loading screens */
    loadscreens = ndata_list( GFX_PATH"loading/", &nload );
 
    /* Must have loading screens */
    if (nload==0) {
-      WARN("No loading screens found!");
+      WARN( _("No loading screens found!") );
       loading = NULL;
       return;
    }
@@ -682,35 +692,35 @@ void load_all (void)
    sp_load();
 
    /* order is very important as they're interdependent */
-   loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
+   loadscreen_render( 1./LOADING_STAGES, _("Loading Commodities...") );
    commodity_load(); /* dep for space */
-   loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
+   loadscreen_render( 2./LOADING_STAGES, _("Loading Factions...") );
    factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 3./LOADING_STAGES, "Loading AI..." );
+   loadscreen_render( 3./LOADING_STAGES, _("Loading AI...") );
    ai_load(); /* dep for fleets */
-   loadscreen_render( 4./LOADING_STAGES, "Loading Missions..." );
+   loadscreen_render( 4./LOADING_STAGES, _("Loading Missions...") );
    missions_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, "Loading Events..." );
+   loadscreen_render( 5./LOADING_STAGES, _("Loading Events...") );
    events_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
+   loadscreen_render( 6./LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Damage Types..." );
+   loadscreen_render( 6./LOADING_STAGES, _("Loading Damage Types...") );
    dtype_load(); /* no dep */
-   loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
+   loadscreen_render( 7./LOADING_STAGES, _("Loading Outfits...") );
    outfit_load(); /* dep for ships */
-   loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
+   loadscreen_render( 8./LOADING_STAGES, _("Loading Ships...") );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 9./LOADING_STAGES, "Loading Fleets..." );
+   loadscreen_render( 9./LOADING_STAGES, _("Loading Fleets...") );
    fleet_load(); /* dep for space */
-   loadscreen_render( 10./LOADING_STAGES, "Loading Techs..." );
+   loadscreen_render( 10./LOADING_STAGES, _("Loading Techs...") );
    tech_load(); /* dep for space */
-   loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
+   loadscreen_render( 11./LOADING_STAGES, _("Loading the Universe...") );
    space_load();
-   loadscreen_render( 12./LOADING_STAGES, "Populating Maps..." );
+   loadscreen_render( 12./LOADING_STAGES, _("Populating Maps...") );
    outfit_mapParse();
    background_init();
    player_init(); /* Initialize player stuff. */
-   loadscreen_render( 1., "Loading Completed!" );
+   loadscreen_render( 1., _("Loading Completed!") );
 }
 /**
  * @brief Unloads all data, simplifies main().
@@ -893,7 +903,7 @@ static void fps_init (void)
     * could skew up the dt calculations. */
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
-   WARN("clock_gettime failed, disabling posix time.");
+   WARN( _("clock_gettime failed, disabling posix time.") );
    use_posix_time = 0;
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
@@ -918,7 +928,7 @@ static double fps_elapsed (void)
          global_time = ts;
          return dt;
       }
-      WARN( "clock_gettime failed!" );
+      WARN( _("clock_gettime failed!") );
    }
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 
@@ -1116,7 +1126,7 @@ static void display_fps( const double dt )
 
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, "PAUSED" );
+         NULL, _("PAUSED") );
 }
 
 
@@ -1142,7 +1152,7 @@ static void window_caption (void)
    /* Load icon. */
    rw = ndata_rwops( GFX_PATH"icon.png" );
    if (rw == NULL) {
-      WARN("Icon (icon.png) not found!");
+      WARN( _("Icon (icon.png) not found!") );
       return;
    }
    npng        = npng_open( rw );
@@ -1150,7 +1160,7 @@ static void window_caption (void)
    npng_close( npng );
    SDL_RWclose( rw );
    if (naev_icon == NULL) {
-      WARN("Unable to load icon.png!");
+      WARN( _("Unable to load icon.png!") );
       return;
    }
 
@@ -1204,7 +1214,7 @@ char *naev_version( int long_version )
          nsnprintf( human_version, sizeof(human_version),
                " "APPNAME" v%s%s - %s", short_version,
 #ifdef DEBUGGING
-               " debug",
+               _(" debug"),
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
@@ -1231,7 +1241,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
 
    /* Check length. */
    if (nbuf > (int)sizeof(cbuf)) {
-      WARN("Version format is too long!");
+      WARN( _("Version format is too long!") );
       return -1;
    }
 
@@ -1243,7 +1253,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
          cbuf[j] = '\0';
          version[s++] = atoi(cbuf);
          if (s >= 3) {
-            WARN("Version has too many '.'.");
+            WARN( _("Version has too many '.'.") );
             return -1;
          }
          j = 0;
@@ -1311,7 +1321,7 @@ static void print_SDLversion (void)
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    linked = SDL_Linked_Version();
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
-   DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
+   DEBUG( _("SDL: %d.%d.%d [compiled: %d.%d.%d]"),
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
 
@@ -1321,9 +1331,9 @@ static void print_SDLversion (void)
 
    /* Check if major/minor version differ. */
    if (version_linked > version_compiled)
-      WARN("SDL is newer than compiled version");
+      WARN( _("SDL is newer than compiled version") );
    if (version_linked < version_compiled)
-      WARN("SDL is older than compiled version.");
+      WARN( _("SDL is older than compiled version.") );
 }
 
 
@@ -1339,28 +1349,28 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
 {
    if (sig == SIGFPE)
       switch (sig_code) {
-         case SI_USER: return "SIGFPE (raised by program)";
-         case FPE_INTDIV: return "SIGFPE (integer divide by zero)";
-         case FPE_INTOVF: return "SIGFPE (integer overflow)";
-         case FPE_FLTDIV: return "SIGFPE (floating-point divide by zero)";
-         case FPE_FLTOVF: return "SIGFPE (floating-point overflow)";
-         case FPE_FLTUND: return "SIGFPE (floating-point underflow)";
-         case FPE_FLTRES: return "SIGFPE (floating-point inexact result)";
-         case FPE_FLTINV: return "SIGFPE (floating-point invalid operation)";
-         case FPE_FLTSUB: return "SIGFPE (subscript out of range)";
-         default: return "SIGFPE";
+         case SI_USER: return _("SIGFPE (raised by program)");
+         case FPE_INTDIV: return _("SIGFPE (integer divide by zero)");
+         case FPE_INTOVF: return _("SIGFPE (integer overflow)");
+         case FPE_FLTDIV: return _("SIGFPE (floating-point divide by zero)");
+         case FPE_FLTOVF: return _("SIGFPE (floating-point overflow)");
+         case FPE_FLTUND: return _("SIGFPE (floating-point underflow)");
+         case FPE_FLTRES: return _("SIGFPE (floating-point inexact result)");
+         case FPE_FLTINV: return _("SIGFPE (floating-point invalid operation)");
+         case FPE_FLTSUB: return _("SIGFPE (subscript out of range)");
+         default: return _("SIGFPE");
       }
    else if (sig == SIGSEGV)
       switch (sig_code) {
-         case SI_USER: return "SIGSEGV (raised by program)";
-         case SEGV_MAPERR: return "SIGSEGV (address not mapped to object)";
-         case SEGV_ACCERR: return "SIGSEGV (invalid permissions for mapped object)";
-         default: return "SIGSEGV";
+         case SI_USER: return _("SIGSEGV (raised by program)");
+         case SEGV_MAPERR: return _("SIGSEGV (address not mapped to object)");
+         case SEGV_ACCERR: return _("SIGSEGV (invalid permissions for mapped object)");
+         default: return _("SIGSEGV");
       }
    else if (sig == SIGABRT)
       switch (sig_code) {
-         case SI_USER: return "SIGABRT (raised by program)";
-         default: return "SIGABRT";
+         case SI_USER: return _("SIGABRT (raised by program)");
+         default: return _("SIGABRT");
       }
 
    /* No suitable code found. */
@@ -1422,7 +1432,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
 
-   DEBUG("Naev received %s!",
+   DEBUG( _("Naev received %s!"),
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++) {
       if (abfd != NULL)
@@ -1430,7 +1440,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
       else
          DEBUG("   %s", symbols[i]);
    }
-   DEBUG("Report this to project maintainer with the backtrace.");
+   DEBUG( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */
    exit(1);
@@ -1476,14 +1486,14 @@ static void debug_sigInit (void)
    /* Attach signals. */
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGSEGV signal handler.");
+      DEBUG( _("Unable to set up SIGSEGV signal handler.") );
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGFPE signal handler.");
+      DEBUG( _("Unable to set up SIGFPE signal handler.") );
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGABRT signal handler.");
-   DEBUG("BFD backtrace catching enabled.");
+      DEBUG( _("Unable to set up SIGABRT signal handler.") );
+   DEBUG( _("BFD backtrace catching enabled.") );
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 }
 

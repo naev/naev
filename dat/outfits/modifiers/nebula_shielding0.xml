@@ -5,8 +5,8 @@
   <slot>structure</slot>
   <size>small</size>
   <mass>15</mass>
-  <price>0</price>
-  <description>A modification to the ship's shields that allow them to resist nebular volatility.</description>
+  <price>10000</price>
+  <description>A modification to the ship's shields that allows them to resist nebular volatility.</description>
   <gfx_store>capacitor</gfx_store>
  </general>
  <specific type="modification">

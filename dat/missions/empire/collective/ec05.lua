@@ -27,69 +27,64 @@
 
 ]]--
 
-lang = naev.lang()
-if lang == "es" then
-   -- not translated atm
-else -- default english
-   bar_desc = "Dimitri should be around here, but you can't see him. You should probably look for him."
-   misn_title = "Operation Black Trinity"
-   misn_reward = "None"
-   misn_desc = {}
-   misn_desc[1] = "Arrest the ESS Trinity in %s."
-   misn_desc[2] = "Return to base at %s in %s."
-   title = {}
-   title[1] = "Bar"
-   title[2] = "Interrogation Room"
-   title[3] = "Operation Black Trinity"
-   title[4] = "Mission Accomplished"
-   title[5] = "Mission Failure"
-   text = {}
-   text[1] = [[You enter the bar, but you can't seem to find Lt. Commander Dimitri. As you look around for him, you feel a heavy hand fall on your shoulder. It seems like two armed soldiers are here to escort you somewhere, and from the looks of their weapons, they mean business. You have no choice other then to comply.
+bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
+misn_title = _("Operation Black Trinity")
+misn_reward = _("None")
+misn_desc = {}
+misn_desc[1] = _("Arrest the ESS Trinity in %s.")
+misn_desc[2] = _("Return to base at %s in %s.")
+title = {}
+title[1] = _("Bar")
+title[2] = _("Interrogation Room")
+title[3] = _("Operation Black Trinity")
+title[4] = _("Mission Accomplished")
+title[5] = _("Mission Failure")
+text = {}
+text[1] = _([[You enter the bar, but you can't seem to find Lt. Commander Dimitri. As you look around for him, you feel a heavy hand fall on your shoulder. It seems like two armed soldiers are here to escort you somewhere, and from the looks of their weapons, they mean business. You have no choice other then to comply.
     They start leading you away from the bar through some hallways you've never been through before. Must be all those 'Authorised Personnel Only' signs and the armed guards that didn't make them too appealing.
-    Finally they toss you into what seems to be an interrogation room, simply telling you to wait.]]
-   text[2] = [[After what seems to be an STP, you hear the door open. You see a highly decorated woman walk in, with two soldiers standing guard at the door. She seems to be a Commodore, from the insignia on her uniform.
-    "Hello, I'm Commodore Keer, I've taken over the Collective issue. I have heard about your success in the previous missions and would like to offer you more work. However, further proceedings must be kept in strict confidentiality for the interest of the Empire. You willing to go all the way with this?"]]
-   text[3] = [[You accept and she dismisses both of the soldiers, who proceed to wait outside.
-    "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]
-   text[4] = [["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on %s. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
-    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]
-   text[5] = [[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape."
-    "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in %s. You will have to find him there. The other ships will follow your lead to %s. Good luck."]]
-   text[6] = [[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-    "Congratulations on the success, %s. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]]
-   text[7] = [[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-    "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]]
+    Finally they toss you into what seems to be an interrogation room, simply telling you to wait.]])
+text[2] = _([[After what seems to be the whole period, you hear the door open. You see a highly decorated woman walk in, with two soldiers standing guard at the door. She seems to be a Commodore, from the insignia on her uniform.
+    "Hello, I'm Commodore Keer, I've taken over the Collective issue. I have heard about your success in the previous missions and would like to offer you more work. However, further proceedings must be kept in strict confidentiality for the interest of the Empire. You willing to go all the way with this?"]])
+text[3] = _([[You accept and she dismisses both of the soldiers, who proceed to wait outside.
+    "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]])
+text[4] = _([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on %s. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
+    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]])
+text[5] = _([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape."
+    "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in %s. You will have to find him there. The other ships will follow your lead to %s. Good luck."]])
+text[6] = _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
+    "Congratulations on the success, %s. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]])
+text[7] = _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
+    "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]])
 
-   -- Conversation between pilots
-   talk = {}
-   talk[1] = "ESS Trinity: Please turn off your engines and prepare to be boarded."
-   talk[2] = "You will never take me alive!"
-   talk[3] = "Very well then. All units engage ESS Trinity."
-   talk[4] = "The Trinity has launched Collective drones!"
-   talk[5] = "Mission Success: Return to base."
-   talk[6] = "Mission Failure: Return to base."
-   talk[7] = "Incoming drones from hyperspace detected!"
-   
-   osd_msg = {}
-   osd_msg[1] = "Fly to the %s system"
-   osd_msg[2] = "Apprehend or kill Zakred"
-   osd_msg[3] = "Report back to %s"
-   osd_msg["__save"] = true
+-- Conversation between pilots
+talk = {}
+talk[1] = _("ESS Trinity: Please turn off your engines and prepare to be boarded.")
+talk[2] = _("You will never take me alive!")
+talk[3] = _("Very well then. All units engage ESS Trinity.")
+talk[4] = _("The Trinity has launched Collective drones!")
+talk[5] = _("Mission Success: Return to base.")
+talk[6] = _("Mission Failure: Return to base.")
+talk[7] = _("Incoming drones from hyperspace detected!")
 
-   taunts = {}
-   taunts[1] = "It is too late! The plan is being put into movement!"
-   taunts[2] = "You have no idea who you're messing with!"
-   taunts[3] = "My drones will make mincemeat of you!"
-end
+osd_msg = {}
+osd_msg[1] = _("Fly to the %s system")
+osd_msg[2] = _("Apprehend or kill Zakred")
+osd_msg[3] = _("Report back to %s")
+osd_msg["__save"] = true
+
+taunts = {}
+taunts[1] = _("It is too late! The plan is being put into movement!")
+taunts[2] = _("You have no idea who you're messing with!")
+taunts[3] = _("My drones will make mincemeat of you!")
 
 
 function create ()
    missys = {system.get("Rockbed")}
    if not misn.claim(missys) then
-      abort()
+      misn.finish(false)
    end
  
-   misn.setNPC( "Dimitri?", "unknown" )
+   misn.setNPC( _("Dimitri?"), "unknown" )
    misn.setDesc( bar_desc )
 end
 
@@ -127,9 +122,7 @@ function accept ()
    tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
    -- Escorts
-   esc_pacifier  = true
-   esc_lancelot1 = true
-   esc_lancelot2 = true
+   escorts = {}
 
    hook.jumpout("jumpout")
    hook.jumpin("jumpin")
@@ -158,16 +151,16 @@ function enter ( from_sys )
    if misn_stage == 0 then
       local sys = system.cur()
 
-      -- Escorts enter a while back
-      enter_vect = player.pos()
-      if from_sys == nil then
-         add_escorts( true )
-      else -- Just jumped
-         hook.timer( rnd.int(2000, 5000), "add_escorts" )
-      end
-
       -- Create some havoc
       if sys == misn_target_sys then
+         -- Escorts enter a while back
+         enter_vect = player.pos()
+         if from_sys == nil then
+            add_escorts( true )
+         else -- Just jumped
+            hook.timer( rnd.int(2000, 5000), "add_escorts" )
+         end
+
          -- Disable spawning and clear pilots -> makes it more epic
          pilot.clear()
          pilot.toggleSpawn(false)
@@ -200,28 +193,11 @@ function enter ( from_sys )
 end
 
 
--- Gets the empire talker
-function emp_talker ()
-   if esc_pacifier then
-      talker = paci
-   elseif esc_lancelot1 then
-      talker = lance1
-   elseif esc_lancelot2 then
-      talker = lance2
-   else
-      -- I don't like the idea of player talking, but we need the conversation
-      talker = player.pilot()
-   end
-
-   return talker
-end
-
-
 -- Little talk when ESS Trinity is encountered.
 function final_talk ()
    -- Empire talks about arresting
    if final_fight == 0 then
-      talker = emp_talker()
+      talker = paci
       talker:broadcast( talk[1] )
 
       final_fight = 1
@@ -234,7 +210,7 @@ function final_talk ()
       hook.timer(rnd.int( 3000, 4000 ), "final_talk")
    elseif final_fight == 2 then
       -- Talk
-      talker = emp_talker()
+      talker = paci
       talker:broadcast( talk[3] )
 
       -- ESS Trinity becomes collective now.
@@ -249,14 +225,10 @@ function final_talk ()
       hook.timer(rnd.int( 3000, 5000 ) , "call_drones")
       hook.timer( 3000, "trinity_check" )
       tri_checked = 0
-      if esc_pacifier then
-         paci:control(false)
-      end
-      if esc_lancelot1 then
-         lance1:control(false)
-      end
-      if esc_lancelot2 then
-         lance2:control(false)
+      for i, j in ipairs( escorts ) do
+         if j:exists() then
+            j:control(false)
+         end
       end
    end
 end
@@ -339,7 +311,7 @@ function drone_dead ()
 end
 
 
--- Adds escorts that weren't killed sometime.
+-- Adds escorts
 function add_escorts( landed )
    local param
    if landed then
@@ -347,46 +319,25 @@ function add_escorts( landed )
    else
       param = last_sys
    end
-   if esc_pacifier then
-      enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
-      paci = pilot.add("Empire Pacifier", "escort_player", param)
-      paci = paci[1]
-      paci:setFriendly()
-      hook.pilot(paci, "death", "paci_dead")
-      if trinity ~= nil then
-         paci:control()
-         paci:goto( trinity:pos():add( 100, 0 ) )
-      end
+   
+   if escorts == nil then escorts = {} end
+   paci = pilot.add("Empire Pacifier", "escort_player", param)[1]
+   escorts[#escorts + 1] = paci
+   paci:setFriendly()
+   if trinity ~= nil then
+      paci:control()
+      paci:goto( trinity:pos() )
    end
-   if esc_lancelot1 then
-      enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
-      lance1 = pilot.add("Empire Lancelot", "escort_player", param)
-      lance1 = lance1[1]
-      lance1:setFriendly()
-      hook.pilot(lance1, "death", "lance1_dead")
+   for i=1, 6 do
+      local lance = pilot.add("Empire Lancelot", "escort_player", param)[1]
+      escorts[#escorts + 1] = lance
+      lance:setFriendly()
       if trinity ~= nil then
-         lance1:control()
-         lance1:goto( trinity:pos():add( -100, -100 ) )
-      end
-   end
-   if esc_lancelot2 then
-      enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
-      lance2 = pilot.add("Empire Lancelot", "escort_player", param)
-      lance2 = lance2[1]
-      lance2:setFriendly()
-      hook.pilot(lance2, "death", "lance2_dead")
-      if trinity ~= nil then
-         lance2:control()
-         lance2:goto( trinity:pos():add( 300, -100 ) )
+         lance:control()
+         lance:goto( trinity:pos() )
       end
    end
 end
-
-
--- Escort death functions -> will stop spawning
-function paci_dead () esc_pacifier = false end
-function lance1_dead () esc_lancelot1 = false end
-function lance2_dead () esc_lancelot2 = false end
 
 
 -- Handles arrival back to base

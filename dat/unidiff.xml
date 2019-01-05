@@ -35,6 +35,9 @@
   <tech name="Heavy Civilian Combat Ships">
    <add>__Collective</add>
   </tech>
+  <faction name="Collective">
+   <invisible />
+  </faction>
  </unidiff>
  <unidiff name="heavy_weapons_license">
   <tech name="Basic Outfits 1">
@@ -55,6 +58,55 @@
  <unidiff name="FLF_base">
   <system name="Sigur">
    <asset name="Sindbad">add</asset>
+  </system>
+ </unidiff>
+ <unidiff name="Fury_Station">
+  <system name="Anger">
+   <asset name="Fury Station">add</asset>
+  </system>
+ </unidiff>
+ <unidiff name="flf_pirate_ally">
+  <faction name="FLF">
+   <faction name="Pirate">ally</faction>
+  </faction>
+ </unidiff>
+ <unidiff name="raelid_outpost_death">
+  <system name="Raelid">
+   <asset name="Raelid Outpost">remove</asset>
+  </system>
+ </unidiff>
+ <unidiff name="raglan_outpost_death">
+  <system name="Haleb">
+   <asset name="Raglan Outpost">remove</asset>
+  </system>
+ </unidiff>
+ <unidiff name="flf_vs_empire">
+  <faction name="FLF">
+   <faction name="Empire">enemy</faction>
+  </faction>
+ </unidiff>
+ <unidiff name="flf_dead">
+  <system name="Sigur">
+   <asset name="Sindbad">remove</asset>
+  </system>
+  <system name="Raelid">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Tuoladis">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Dakron">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Tarsus">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Torg">
+   <asset name="Virtual FLF Small">remove</asset>
+  </system>
+  <system name="Sigur">
+   <asset name="Virtual Empire Unpresence">remove</asset>
+   <asset name="Virtual Soromid Unpresence">remove</asset>
   </system>
  </unidiff>
  <unidiff name="test">

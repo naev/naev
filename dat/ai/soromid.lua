@@ -18,28 +18,28 @@ function create ()
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 20 then
-         mem.refuel_no = "\"The warriors of Sorom are not your personal refueller.\""
+         mem.refuel_no = _("\"The warriors of Sorom are not your personal refueller.\"")
       elseif standing < 70 then
          if rnd.rnd() > 0.2 then
-            mem.refuel_no = "\"The warriors of Sorom are not your personal refueller.\""
+            mem.refuel_no = _("\"The warriors of Sorom are not your personal refueller.\"")
          end
       else
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( "\"I suppose I could spare some fuel for %d credits.\"", mem.refuel )
+      mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %d credits.\""), mem.refuel )
    end
 
    -- Handle bribing
    if rnd.int() > 0.4 then
-      mem.bribe_no = "\"I shall especially enjoy your death.\""
+      mem.bribe_no = _("\"I shall especially enjoy your death.\"")
    else
       bribe_no = {
-         "\"Snivelling waste of carbon.\"",
-         "\"Money won't save you from being purged from the gene pool.\"",
-         "\"Culling you will be doing humanity a service.\"",
-         "\"We do not consort with vermin.\"",
-         "\"Who do you take us for, the Empire?\""
+         _("\"Snivelling waste of carbon.\""),
+         _("\"Money won't save you from being purged from the gene pool.\""),
+         _("\"Culling you will be doing humanity a service.\""),
+         _("\"We do not consort with vermin.\""),
+         _("\"Who do you take us for, the Empire?\"")
       }
       mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end
@@ -61,20 +61,20 @@ function taunt ( target, offense )
    -- some taunts
    if offense then
       taunts = {
-         "There is no room in this universe for scum like you!",
-         "Culling you will be doing humanity a service.",
-         "Enjoy your last moments, worm!",
-         "Time for a little natural selection!",
-         "Might makes right!",
-         "Embrace your weakness!"
+         _("There is no room in this universe for scum like you!"),
+         _("Culling you will be doing humanity a service."),
+         _("Enjoy your last moments, worm!"),
+         _("Time for a little natural selection!"),
+         _("Might makes right!"),
+         _("Embrace your weakness!")
       }
    else
       taunts = {
-         "Cunning, but foolish.",
-         "Ambush! Defend yourselves!",
-         "You should have picked easier prey!",
-         "You'll regret that!",
-         "That was a fatal mistake!"
+         _("Cunning, but foolish."),
+         _("Ambush! Defend yourselves!"),
+         _("You should have picked easier prey!"),
+         _("You'll regret that!"),
+         _("That was a fatal mistake!")
       }
    end
 

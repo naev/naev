@@ -51,6 +51,7 @@ end
 function spawn_capship ()
     local pilots = {}
     local r = rnd.rnd()
+    pilots.__fleet = true
 
     -- Generate the capship
     scom.addPilot( pilots, "Proteron Archimedes", 140 )
@@ -107,7 +108,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data )
+    pilots = scom.spawn( spawn_data, "Proteron" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

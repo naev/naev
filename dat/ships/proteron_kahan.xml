@@ -2,7 +2,7 @@
 <ship name="Proteron Kahan">
  <base_type>Kahan</base_type>
  <GFX sx="10" sy="10">kahan</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1400000</price>

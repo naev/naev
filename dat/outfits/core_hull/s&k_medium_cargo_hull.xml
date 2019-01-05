@@ -5,15 +5,15 @@
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
-  <mass>220</mass>
+  <mass>140</mass>
   <price>320000</price>
   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
   <gfx_store>plating_cargo</gfx_store>
  </general>
  <specific type="modification">
   <cargo>120</cargo>
-  <absorb>19</absorb>
-  <armour>500</armour>
+  <absorb>12</absorb>
+  <armour>170</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

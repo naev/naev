@@ -57,6 +57,7 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
     local pilots = {}
+    pilots.__fleet = true
     local r = rnd.rnd()
 
     if rnd.rnd() < pbm then
@@ -120,7 +121,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data )
+    pilots = scom.spawn( spawn_data, "Za'lek" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

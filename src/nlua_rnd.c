@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-#include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
 #include "rng.h"
@@ -27,7 +26,7 @@ static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
 static int rnd_twosigma( lua_State *L );
 static int rnd_threesigma( lua_State *L );
-static const luaL_reg rnd_methods[] = {
+static const luaL_Reg rnd_methods[] = {
    { "int", rnd_int }, /* obsolete, rnd.rnd is preferred. */
    { "rnd", rnd_int },
    { "sigma", rnd_sigma },
@@ -40,12 +39,12 @@ static const luaL_reg rnd_methods[] = {
 /**
  * @brief Loads the Random Number Lua library.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadRnd( lua_State *L )
+int nlua_loadRnd( nlua_env env )
 {
-   luaL_register(L, "rnd", rnd_methods);
+   nlua_register(env, "rnd", rnd_methods, 0);
    return 0;
 }
 
@@ -79,9 +78,9 @@ int nlua_loadRnd( lua_State *L )
  * @usage n = rnd(5) -- Number in range [0:5].
  * @usage n = rnd(3,5) -- Number in range [3,5].
  *
- *    @luaparam x First parameter, read description for details.
- *    @luaparam y Second parameter, read description for details.
- *    @luareturn A randomly generated number, read description for details.
+ *    @luatparam number x First parameter, read description for details.
+ *    @luatparam number y Second parameter, read description for details.
+ *    @luatreturn number A randomly generated number, read description for details.
  * @luafunc rnd( x, y )
  */
 static int rnd_int( lua_State *L )
@@ -114,7 +113,7 @@ static int rnd_int( lua_State *L )
  *  but can become either 1 or -1.  It's a fancier way of generating random numbers.
  *
  * @usage n = 5.5 + rnd.sigma()/2. -- Creates a number from 5 to 6 slightly biased to 5.5.
- *    @luareturn Returns a number from [-1:1] biased slightly towards 0.
+ *    @luatreturn number A number from [-1:1] biased slightly towards 0.
  * @luafunc sigma()
  */
 static int rnd_sigma( lua_State *L )
@@ -132,7 +131,7 @@ static int rnd_sigma( lua_State *L )
  *
  * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily biased to 5.5.
  *
- *    @luareturn Returns a number from [-2:2] biased heavily towards 0.
+ *    @luatreturn number A number from [-2:2] biased heavily towards 0.
  * @luafunc twosigma()
  */
 static int rnd_twosigma( lua_State *L )
@@ -151,7 +150,7 @@ static int rnd_twosigma( lua_State *L )
  *
  * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally biased to 5.5.
  *
- *    @luareturn Returns a number from [-3:3] biased totally towards 0.
+ *    @luatreturn number A number from [-3:3] biased totally towards 0.
  * @luafunc threesigma()
  */
 static int rnd_threesigma( lua_State *L )

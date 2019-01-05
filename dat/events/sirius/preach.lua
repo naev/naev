@@ -3,98 +3,98 @@
 
 include("fleethelper.lua")
 
-commtitle="The preaching begins..."
-commtext=[[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
+commtitle=_("The preaching begins...")
+commtext=_([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
 "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
 
-You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]
+You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]])
 
 althoughEnemy={
-"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!",
-"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!",
-"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!"
+_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
+_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!"),
+_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!")
 }
 
 friend={
-"%s, I foresee in you a great Sirian citizen, and I look forward to your friendship!",
-"%s, I foresee a bright future for you, illuminated by Sirichana's light!",
-"%s, may Sirichana's light illuminate your path!"
+_("%s, I foresee in you a great Sirian citizen, and I look forward to your friendship!"),
+_("%s, I foresee a bright future for you, illuminated by Sirichana's light!"),
+_("%s, may Sirichana's light illuminate your path!")
 }
 
 followSirichana={
-"You shall all follow Sirichana henceforth!",
-"Sirichana shall lead you to peace and wisdom!",
-"Sirichana is the Father of you all!",
-"Sirichana's grace shall liberate you!",
-"May Sirichana's light shine on you henceforth!"
+_("You shall all follow Sirichana henceforth!"),
+_("Sirichana shall lead you to peace and wisdom!"),
+_("Sirichana is the Father of you all!"),
+_("Sirichana's grace shall liberate you!"),
+_("May Sirichana's light shine on you henceforth!")
 }
 
 praiseSirichana={
-"We shall all follow Sirichana now!",
-"We have been liberated from our evil ways!",
-"No more shall we tread the path of evil!",
-"We see the True path now!",
-"No more shall we commit sins!"
+_("We shall all follow Sirichana now!"),
+_("We have been liberated from our evil ways!"),
+_("No more shall we tread the path of evil!"),
+_("We see the True path now!"),
+_("No more shall we commit sins!")
 }
 
 attackerPunished={
-"Serves you right for attacking a Touched!",
-"Fry in hell, demon!",
-"May you suffer eternal torment!",
-"Your doom is Sirichana's curse!"
+_("Serves you right for attacking a Touched!"),
+_("Fry in hell, demon!"),
+_("May you suffer eternal torment!"),
+_("Your doom is Sirichana's curse!")
 }
 
 attackersDead={
-"All the attackers are dead!",
-"We can resume our Quest now!",
-"The glory of Sirichana remains unblemished!",
-"All heretics have been destroyed!"
+_("All the attackers are dead!"),
+_("We can resume our Quest now!"),
+_("The glory of Sirichana remains unblemished!"),
+_("All heretics have been destroyed!")
 }
 
 whatHappened={
-"Do you think everyone can be brainwashed?",
-"You shall convert no more of us!",
-"Some of us shall not be converted, fool!",
-"You'll never convert me!",
-"I shall never be converted!"
+_("Do you think everyone can be brainwashed?"),
+_("You shall convert no more of us!"),
+_("Some of us shall not be converted, fool!"),
+_("You'll never convert me!"),
+_("I shall never be converted!")
 }
 
 presence={
-"You feel an overwhelming presence nearby!",
-"Something compels you to stop",
-"You are jerked awake by a mysterious but compelling urge",
-"You feel... Touched... by a magical power"
+_("You feel an overwhelming presence nearby!"),
+_("Something compels you to stop"),
+_("You are jerked awake by a mysterious but compelling urge"),
+_("You feel... Touched... by a magical power")
 }
 
 startCombat={
-"Die, heretics!",
-"Those who insult the Sirichana shall die!",
-"You've commited an unpardonable sin!",
-"Hell awaits, fools!"
+_("Die, heretics!"),
+_("Those who insult the Sirichana shall die!"),
+_("You've commited an unpardonable sin!"),
+_("Hell awaits, fools!")
 }
 
 preacherDead={
-"Oh no! The Touched One is dead!",
-"Sirichana save our souls!",
-"We shall never forget You, O Touched One!",
-"We swear eternal revenge!"
+_("Oh no! The Touched One is dead!"),
+_("Sirichana save our souls!"),
+_("We shall never forget You, O Touched One!"),
+_("We swear eternal revenge!")
 }
 
 urge={
-"You feel an overwhelming urge to hear him out!",
-"A mysterious force forces you to listen!",
-"You feel compelled to listen!"
+_("You feel an overwhelming urge to hear him out!"),
+_("A mysterious force forces you to listen!"),
+_("You feel compelled to listen!")
 }
 
 dyingMessage={
-"With my dying breath, I curse you!",
-"Sirichana speed you to hell!",
-"Sirichana, I did my best!"
+_("With my dying breath, I curse you!"),
+_("Sirichana speed you to hell!"),
+_("Sirichana, I did my best!")
 }
 
 dead={
-"The Reverence is dead!",
-"Someone killed the preacher!"
+_("The Reverence is dead!"),
+_("Someone killed the preacher!")
 }
 
 --initialize the event
@@ -130,7 +130,7 @@ function theFunBegins()
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")[1]
+   preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()
@@ -162,8 +162,8 @@ function theFunBegins()
    end
 
    followers = addRawShips(followers, "sirius_norun", curr, "Sirius") -- The table now contains pilots, not ship names.
-   for _,j in ipairs(followers) do
-      j:rename("Converted "..j:name())
+   for k,j in ipairs(followers) do
+      j:rename( string.format( _("Converted %s"), j:name() ))
    end
 
    --pick a random converted pirate and have him praise the Sirichana

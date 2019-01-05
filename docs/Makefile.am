@@ -13,7 +13,7 @@ doxy:
 	@echo "***"
 endif
 
-if HAVE_LUADOC
+if HAVE_LDOC
 lua:
 	@echo "   DOC  docs/lua"
 	@sh luadoc.sh

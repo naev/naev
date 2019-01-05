@@ -7,79 +7,74 @@
 
 include "numstring.lua"
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
-lang = naev.lang()
-if lang == "es" then
-   else -- Default to English
    
-   text = {}
-   title = {}
-   ftitle = {}
-   ftext = {}
+text = {}
+title = {}
+ftitle = {}
+ftext = {}
+
+title[1] = _("Another race")
+text[1] = _([["Hey man, great to see you back. You want to have another race?"]])   
+
+title[5] = _("Choose difficulty")
+text[5] = _([["There are two races you can participate in: an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  The prize easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]])
+title[6] = _("Hard Mode")
+text[6] = _([["You want a challenge huh? Remember, no outfits are allowed on your Llama or you will not be allowed to race. Let's go have some fun then."]])
+
+choice1 = _("Easy")
+choice2 = _("Hard")
+
+title[2] = _("Easy Mode ")
+text[2] = _([["Let's go have some fun then."]])
+
+title[3] = _("Checkpoint %s reached")
+text[3] = _("Proceed to Checkpoint %s")
+
+text[4] = _("Proceed to land at %s")
+refusetitle = _("Refusal")
+refusetext = _([["I guess we'll need to find another pilot."]])
+
+wintitle = _("You Won!")
+wintext = _([[A man in a suit and tie takes you up onto a stage. A large nametag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]])
+
+ftitle[1] = _("Illegal ship!")
+ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
+
+ftitle[2] = _("You left the race!")
+ftext[2] = _([["Because you left the race, you have been disqualified."]])
+
+ftitle[3] = _("You failed to win the race.")
+ftext[3] = _([[As you congratulate the winner on a great race, the laid back man comes up to you.
+   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
    
-   title[1] = "Another race"
-   text[1] = [["Hey man, great to see you back. You want to have another race?"]]   
-   
-   title[5] = "Choose difficulty"
-   text[5] = [["There are two races you can participate in: an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  The prize easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]]
-   title[6] = "Hard Mode"
-   text[6] = [["You want a challenge huh? Remember, no outfits are allowed on your Llama or you will not be allowed to race. Let's go have some fun then."]]
-   
-   choice1 = "Easy"
-   choice2 = "Hard"
-   
-   title[2] = "Easy Mode "
-   text[2] = [["Let's go have some fun then."]]
-   
-   title[3] = "Checkpoint %s reached"
-   text[3] = "Proceed to Checkpoint %s"
-   
-   text[4] = "Proceed to land at %s"
-   refusetitle = "Refusal"
-   refusetext = [["I guess we'll need to find another pilot."]]
-   
-   wintitle = "You Won!"
-   wintext = [[A man in a suit and tie takes you up onto a stage. A large nametag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]]
-   
-   ftitle[1] = "Illegal ship!"
-   ftext[1] = [["You have switched to a ship that's not allowed in this race. Mission failed."]]
-   
-   ftitle[2] = "You left the race!"
-   ftext[2] = [["Because you left the race, you have been disqualified."]]
-   
-   ftitle[3] = "You failed to win the race."
-   ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
-   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]]
-   
-   ftitle[4] = "Illegal ship!"
-   ftext[4] = [["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]]
-   
-   NPCname = "A laid back man"
-   NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."
-   
-   misndesc = "You're participating in another race!"
-   misnreward = "%s credits"
-   
-   OSDtitle = "Racing Skills 2"
-   OSD = {}
-   OSD[1] = "Board checkpoint 1"
-   OSD[2] = "Board checkpoint 2"
-   OSD[3] = "Board checkpoint 3"
-   OSD[4] = "Land at %s"
-   
-   chatter = {}
-   chatter[1] = "Let's do this!"
-   chatter[2] = "Wooo!"
-   chatter[3] = "Time to Shake 'n Bake"
-   chatter[4] = "Checkpoint %s baby!"
-   chatter[5] = "Hooyah"
-   chatter[6] = "Next!"
-   timermsg = "%s"
-   target = {1,1,1,1}
-   marketing = "This race sponsored by Melendez Corporation.  Have you piloted a Melendez lately?"
-   positionmsg = "%s just reached checkpoint %s"
-   landmsg = "%s just landed at %s and finished the race"
-end
+ftitle[4] = _("Illegal ship!")
+ftext[4] = _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]])
+
+NPCname = _("A laid back man")
+NPCdesc = _("You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
+
+misndesc = _("You're participating in another race!")
+misnreward = _("%s credits")
+
+OSDtitle = _("Racing Skills 2")
+OSD = {}
+OSD[1] = _("Board checkpoint 1")
+OSD[2] = _("Board checkpoint 2")
+OSD[3] = _("Board checkpoint 3")
+OSD[4] = _("Land at %s")
+
+chatter = {}
+chatter[1] = _("Let's do this!")
+chatter[2] = _("Wooo!")
+chatter[3] = _("Time to Shake 'n Bake")
+chatter[4] = _("Checkpoint %s baby!")
+chatter[5] = _("Hooyah")
+chatter[6] = _("Next!")
+timermsg = "%s"
+target = {1,1,1,1}
+marketing = _("This race sponsored by Melendez Corporation.  Have you piloted a Melendez lately?")
+positionmsg = _("%s just reached checkpoint %s")
+landmsg = _("%s just landed at %s and finished the race")
 
 
 function create ()
@@ -155,20 +150,20 @@ function takeoff()
    else
       shiptype = "Koala"
    end
-   checkpoint[1] = pilot.addRaw(shiptype, "stationary", location1, "Trader")[1]
-   checkpoint[2] = pilot.addRaw(shiptype, "stationary", location2, "Trader")[1]
-   checkpoint[3] = pilot.addRaw(shiptype, "stationary", location3, "Trader")[1]
+   checkpoint[1] = pilot.addRaw(shiptype, "stationary", location1, "Trader")
+   checkpoint[2] = pilot.addRaw(shiptype, "stationary", location2, "Trader")
+   checkpoint[3] = pilot.addRaw(shiptype, "stationary", location3, "Trader")
    for i, j in ipairs(checkpoint) do
-      j:rename(string.format("Checkpoint %s", i))
+      j:rename(string.format(_("Checkpoint %s"), i))
       j:control()
       j:setHilight(true)
       j:setInvincible(true)
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")[1]
-   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")[1]
-   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")[1]
+   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")
+   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")
+   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
       racers[2]:addOutfit("Steering Thrusters")
@@ -185,7 +180,7 @@ function takeoff()
       end
    end
    for i, j in ipairs(racers) do
-      j:rename(string.format("Racer %s", i))
+      j:rename(string.format(_("Racer %s"), i))
       j:setHilight(true)
       j:setInvincible(true)
       j:setVisible(true)
@@ -207,7 +202,7 @@ end
 function counter()
    countdown = countdown - 1
    if countdown == 0 then
-      player.omsgChange(omsg, "Go!", 1000)
+      player.omsgChange(omsg, _("Go!"), 1000)
       hook.timer(1000, "stopcount")
       player.pilot():control(false)
       counting = false

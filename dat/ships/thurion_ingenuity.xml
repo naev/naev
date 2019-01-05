@@ -2,7 +2,7 @@
 <ship name="Thurion Ingenuity">
  <base_type>Ingenuity</base_type>
  <GFX>ingenuity</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>650000</price>
@@ -25,7 +25,7 @@
   <weapon size="small" x="8" y="-5" h="-2"/>
   <weapon size="small" x="8" y="5" h="-2"/>
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
-  <utility size="small"/>
+  <utility size="medium"/>
   <utility size="small"/>
   <utility size="small"/>
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
@@ -34,6 +34,7 @@
   <structure size="small"/>
  </slots>
  <stats>
+  <cpu_mod>10</cpu_mod>
   <ew_hide>30</ew_hide>
   <nebu_absorb_shield>80</nebu_absorb_shield>
   <nebu_absorb_armour>97</nebu_absorb_armour>

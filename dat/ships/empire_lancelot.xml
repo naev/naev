@@ -2,13 +2,13 @@
 <ship name="Empire Lancelot">
  <base_type>Lancelot</base_type>
  <GFX>lancelot_empire</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>500000</price>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel License</license>
- <description>An Empire Lancelot.</description>
+ <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <absorb>8</absorb>
   <armour>70</armour>

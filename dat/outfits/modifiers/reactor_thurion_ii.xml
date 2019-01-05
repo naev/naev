@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Thurion Reactor Class II">
+ <general>
+  <typename>Energy Modifier</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <mass>30</mass>
+  <price>970000</price>
+  <gfx_store>reactor_ii</gfx_store>
+  <description>Thurion-designed reactor that uses Positrons for a superior energy output.</description>
+  <cpu>-20</cpu>
+ </general>
+ <specific type="modification">
+  <energy>120</energy>
+  <energy_regen>20</energy_regen>
+ </specific>
+</outfit>

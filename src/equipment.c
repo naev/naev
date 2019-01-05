@@ -130,7 +130,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       return;
 
    /* Can't do anything with None. */
-   if (strcmp(clicked_outfit,"None")==0)
+   if (strcmp(clicked_outfit,_("None"))==0)
       return;
 
    /* Try to get the outfit. */
@@ -279,22 +279,22 @@ void equipment_open( unsigned int wid )
    /* buttons */
    window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20 - (15+bw), 20,
          bw, bh, "btnRenameShip",
-         "Rename", equipment_renameShip, SDLK_r );
+         _("Rename"), equipment_renameShip, SDLK_r );
    window_addButtonKey( wid, -20 - (15+bw)*2, 20,
          bw, bh, "btnSellShip",
-         "Sell Ship", equipment_sellShip, SDLK_s );
+         _("Sell Ship"), equipment_sellShip, SDLK_s );
    window_addButtonKey( wid, -20 - (15+bw)*3, 20,
          bw, bh, "btnChangeShip",
-         "Swap Ship", equipment_transChangeShip, SDLK_p );
+         _("Swap Ship"), equipment_transChangeShip, SDLK_p );
    window_addButtonKey( wid, -20 - (15+bw)*4, 20,
          bw, bh, "btnUnequipShip",
-         "Unequip", equipment_unequipShip, SDLK_u );
+         _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = "Name:\n"
+   buf = _("Name:\n"
       "Model:\n"
       "Class:\n"
       "Value:\n"
@@ -314,7 +314,7 @@ void equipment_open( unsigned int wid )
       "\n"
       "Transportation:\n"
       "Location:\n"
-      "Ship Status:";
+      "Ship Status:");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
@@ -325,9 +325,9 @@ void equipment_open( unsigned int wid )
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_defFont, &cBlack, "Available Ships" );
+         130, 200, 0, "txtShipTitle", &gl_defFont, &cBlack, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_defFont, &cBlack, "Available Outfits" );
+         130, 200, 0, "txtOutfitTitle", &gl_defFont, &cBlack, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -520,7 +520,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nweapon, p->outfit_weapon, "Weapon",
+         p->outfit_nweapon, p->outfit_weapon, _("Weapon"),
          selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw systems outfits. */
@@ -528,7 +528,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nutility, p->outfit_utility, "Utility",
+         p->outfit_nutility, p->outfit_utility, _("Utility"),
          selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw structure outfits. */
@@ -536,7 +536,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nstructure, p->outfit_structure, "Structure",
+         p->outfit_nstructure, p->outfit_structure, _("Structure"),
          selected, wgt->outfit, wgt->selected, wgt );
 }
 /**
@@ -573,7 +573,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cBlack, "CPU Free" );
+      x, y + h + 10., &cBlack, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
@@ -587,7 +587,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cBlack, "Mass Limit Left" );
+      x, y, &cBlack, _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
@@ -604,7 +604,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
       y -= h;
       gl_printMid( &gl_smallFont, w,
-         x, y, &cFontRed, "%.0f%% Slower",
+         x, y, &cFontRed, _("%.0f%% Slower"),
          (1. - p->speed / p->speed_base) * 100);
    }
 
@@ -658,7 +658,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                if (display != NULL)
                   c = &cRed;
                else {
-                  display = "Right click to remove";
+                  display = _("Right click to remove");
                   c = &cDConsole;
                }
             }
@@ -669,7 +669,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                if (display != NULL)
                   c = &cRed;
                else {
-                  display = "Right click to add";
+                  display = _("Right click to add");
                   c = &cDConsole;
                }
             }
@@ -681,17 +681,17 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                if ((lst[i].u.ammo.outfit == NULL) ||
                      (lst[i].u.ammo.quantity == 0)) {
                   if (outfit_isFighterBay(lst[i].outfit))
-                     display = "Bay empty";
+                     display = _("Bay empty");
                   else
-                     display = "Out of ammo";
+                     display = _("Out of ammo");
                   c = &cRed;
                }
                else if (lst[i].u.ammo.quantity + lst[i].u.ammo.deployed <
                      outfit_amount(lst[i].outfit)) {
                   if (outfit_isFighterBay(lst[i].outfit))
-                     display = "Bay low";
+                     display = _("Bay low");
                   else
-                     display = "Low ammo";
+                     display = _("Low ammo");
                   c = &cYellow;
                }
             }
@@ -798,10 +798,10 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\eS%s", sp_display( slot->sslot->slot.spid ) );
+            "\aS%s", sp_display( slot->sslot->slot.spid ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
-               " [exclusive]" );
+               _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
          snprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", sp_description( slot->sslot->slot.spid ) );
@@ -816,13 +816,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          o->name );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\eSSlot %s\e0",
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aSSlot %s\a0"),
             sp_display( o->slot.spid ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
-            "\n%.0f Tons",
+            _("\n%.0f Tons"),
             o->mass );
 
    /* Draw the text. */
@@ -1229,7 +1229,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
       /* Try to maintain same ship selected. */
       s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-      if ((s != NULL) && (selship != NULL) && (strcmp(s,selship)!=0)) {
+      if ((s != NULL) && (strcmp(s,selship)!=0)) {
          ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
          if (ret != 0) /* Failed to maintain. */
             toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
@@ -1359,7 +1359,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    l = 0;
    if (dps > 0.)
       l += nsnprintf( &buf[l], (max_len-l),
-            "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
+            _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
    return l;
 }
@@ -1426,7 +1426,7 @@ static void equipment_genShipList( unsigned int wid )
       for (i=0; i<nships; i++) {
          s        = player_getShip( sships[i] );
          alt[i]   = malloc( SHIP_ALT_MAX );
-         l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
+         l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, _("Ship Stats\n") );
          l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
          if (l == 0) {
             free( alt[i] );
@@ -1468,7 +1468,7 @@ static void equipment_genOutfitList( unsigned int wid )
       equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      "All", "\eb W ", "\eg U ", "\ep S ", "\eRCore"
+      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore")
    };
 
    int active, i, l, p, noutfits;
@@ -1536,7 +1536,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    if (noutfits == 0) {
       noutfits = 1;
-      soutfits[0] = strdup( "None" );
+      soutfits[0] = strdup( _("None") );
       toutfits[0] = NULL;
 
       /* Clean up. */
@@ -1554,7 +1554,7 @@ static void equipment_genOutfitList( unsigned int wid )
          equipment_rightClickOutfits );
 
    /* Case there are none we don't need to do more. */
-   if (strcmp( soutfits[0], "None" )==0)
+   if (strcmp( soutfits[0], _("None") )==0)
       return;
 
    /* Set alt text. */
@@ -1582,13 +1582,13 @@ static void equipment_genOutfitList( unsigned int wid )
          alt[i] = malloc( l );
          p  = snprintf( &alt[i][0], l, "%s\n", o->name );
          if ((o->slot.spid!=0) && (p < l))
-            p += snprintf( &alt[i][p], l-p, "\eSSlot %s\e0\n",
+            p += snprintf( &alt[i][p], l-p, _("\aSSlot %s\a0\n"),
                   sp_display( o->slot.spid ) );
          if (p < l)
             p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
          if ((o->mass > 0.) && (p < l))
             snprintf( &alt[i][p], l-p,
-                  "\n%.0f Tons",
+                  _("\n%.0f Tons"),
                   o->mass );
       }
 
@@ -1599,7 +1599,7 @@ static void equipment_genOutfitList( unsigned int wid )
       snprintf( quantity[i], l, "%d", p );
 
       /* Slot type. */
-      if ((strcmp(outfit_slotName(o),"NA") != 0) &&
+      if ((strcmp(outfit_slotName(o),_("NA")) != 0) &&
             (strcmp(outfit_slotName(o),"NULL") != 0)) {
          typename       = outfit_slotName(o);
          slottype[i]    = malloc( 2 );
@@ -1662,7 +1662,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
       ship    = player.p;
-      loc     = "Onboard";
+      loc     = _("Onboard");
       price   = 0;
       onboard = 1;
       sysname[0] = '\0';
@@ -1672,7 +1672,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       loc    = player_getLoc(ship->name);
       price  = equipment_transportPrice( shipname );
       onboard = 0;
-      nsnprintf( sysname, sizeof(sysname), " in the %s system",
+      nsnprintf( sysname, sizeof(sysname), _(" in the %s system"),
             planet_getSystem(loc) );
    }
    eq_wgt.selected = ship;
@@ -1688,27 +1688,27 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    /* Fill the buffer. */
    nsnprintf( buf, sizeof(buf),
-         "%s\n"
+         _("%s\n"
          "%s\n"
          "%s\n"
          "%s credits\n"
          "\n"
-         "%.0f\e0 tonnes\n"
-         "\e%c%s\e0 average\n"
-         "\e%c%.0f\e0 kN/tonne\n"
-         "\e%c%.0f\e0 m/s (max \e%c%.0f\e0 m/s)\n"
-         "\e%c%.0f\e0 deg/s\n"
+         "%.0f\a0 tonnes\n"
+         "\a%c%s\a0 average\n"
+         "\a%c%.0f\a0 kN/tonne\n"
+         "\a%c%.0f\a0 m/s (max \a%c%.0f\a0 m/s)\n"
+         "\a%c%.0f\a0 deg/s\n"
          "\n"
-         "\e%c%.0f%%\n"
-         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
-         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
-         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
-         "%d / \e%c%d\e0 tonnes\n"
-         "%.0f / \e%c%.0f\e0 units (%d jumps)\n"
+         "\a%c%.0f%%\n"
+         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
+         "%d / \a%c%d\a0 tonnes\n"
+         "%d / \a%c%d\a0 units (%d jumps)\n"
          "\n"
          "%s credits\n"
          "%s%s\n"
-         "\e%c%s\e0",
+         "\a%c%s\a0"),
          /* Generic. */
       ship->name,
       ship->ship->name,
@@ -1749,14 +1749,14 @@ void equipment_updateShips( unsigned int wid, char* str )
    }
    else {
       if (strcmp(land_planet->name,loc)) { /* ship not here */
-         window_buttonCaption( wid, "btnChangeShip", "Transport" );
+         window_buttonCaption( wid, "btnChangeShip", _("Transport") );
          if (!player_hasCredits( price ))
             window_disableButton( wid, "btnChangeShip" );
          else
             window_enableButton( wid, "btnChangeShip" );
       }
       else { /* ship is here */
-         window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
+         window_buttonCaption( wid, "btnChangeShip", _("Swap Ship") );
          window_enableButton( wid, "btnChangeShip" );
       }
       /* If ship is there you can always sell. */
@@ -1777,7 +1777,7 @@ void equipment_updateOutfits( unsigned int wid, char* str )
 
    /* Must have outfit. */
    oname = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
-   if (strcmp(oname,"None")==0) {
+   if (strcmp(oname,_("None"))==0) {
       eq_wgt.outfit = NULL;
       return;
    }
@@ -1911,20 +1911,20 @@ static void equipment_transportShip( unsigned int wid )
 
    price = equipment_transportPrice( shipname );
    if (price==0) { /* already here */
-      dialogue_alert( "Your ship '%s' is already here.", shipname );
+      dialogue_alert( _("Your ship '%s' is already here."), shipname );
       return;
    }
    else if (!player_hasCredits( price )) { /* not enough money. */
       credits2str( buf, price-player.p->credits, 2 );
-      dialogue_alert( "You need %s more credits to transport '%s' here.",
+      dialogue_alert( _("You need %s more credits to transport '%s' here."),
             buf, shipname );
       return;
    }
 
    /* Obligatory annoying dialogue. */
    credits2str( buf, price, 2 );
-   if (dialogue_YesNo("Are you sure?", /* confirm */
-            "Do you really want to spend %s transporting your ship %s here?",
+   if (dialogue_YesNo(_("Are you sure?"), /* confirm */
+            _("Do you really want to spend %s transporting your ship %s here?"),
             buf, shipname )==0)
       return;
 
@@ -1966,17 +1966,17 @@ static void equipment_unequipShip( unsigned int wid, char* str )
          continue;
       /* Must not have deployed fighters. */
       if (ship->outfits[i]->u.ammo.deployed > 0) {
-         dialogue_alert( "You can not unequip your ship while you have deployed fighters!" );
+         dialogue_alert( _("You can not unequip your ship while you have deployed fighters!") );
          return;
       }
    }
    if (pilot_cargoUsed( ship ) > ship->ship->cap_cargo) {
-      dialogue_alert( "You can not unequip your ship when you have more cargo than it can hold without modifications!" );
+      dialogue_alert( _("You can not unequip your ship when you have more cargo than it can hold without modifications!") );
       return;
    }
 
-   if (dialogue_YesNo("Unequip Ship", /* confirm */
-         "Are you sure you want to remove all equipment from your ship?")==0)
+   if (dialogue_YesNo(_("Unequip Ship"), /* confirm */
+         _("Are you sure you want to remove all equipment from your ship?"))==0)
       return;
 
    /* Remove all outfits. */
@@ -2039,8 +2039,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
    credits2str( buf, price, 2 );
 
    /* Check if player really wants to sell. */
-   if (!dialogue_YesNo( "Sell Ship",
-         "Are you sure you want to sell your ship %s for %s credits?", shipname, buf))
+   if (!dialogue_YesNo( _("Sell Ship"),
+         _("Are you sure you want to sell your ship %s for %s credits?"), shipname, buf))
       return;
 
    /* Sold. */
@@ -2052,7 +2052,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
-   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.", name, buf );
+   dialogue_msg( _("Ship Sold"), _("You have sold your ship %s for %s credits."), name, buf );
    free(name);
 }
 
@@ -2070,8 +2070,8 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);
-   newname = dialogue_input( "Ship Name", 3, 20,
-         "Please enter a new name for your %s:", ship->ship->name );
+   newname = dialogue_input( _("Ship Name"), 3, 20,
+         _("Please enter a new name for your %s:"), ship->ship->name );
 
    /* Player cancelled the dialogue. */
    if (newname == NULL)
@@ -2079,8 +2079,8 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    /* Must not have same name. */
    if (player_hasShip(newname)) {
-      dialogue_msg( "Name Collision",
-            "Please do not give the ship the same name as another of your ships.");
+      dialogue_msg( _("Name Collision"),
+            _("Please do not give the ship the same name as another of your ships."));
       return;
    }
 
@@ -2114,7 +2114,7 @@ static credits_t equipment_transportPrice( char* shipname )
 
    /* Here we also use hidden jump points, which may not be the best idea but ensures
     * that things can be reached. */
-   if ( planet_getSystem( loc ) == NULL )
+   if ( !planet_hasSystem( loc ) )
       /* Planet doesn't exist; assume a huge number of jumps. */
       jumps = 200;
    else if ( strcmp( planet_getSystem( loc ), cur_system->name ) != 0 )

@@ -80,60 +80,61 @@ static const ShipStatsLookup ss_lookup[] = {
    /* Null element. */
    N__ELEM( SS_TYPE_NIL ),
 
-   D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,           "Speed" ),
-   D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            "Turn" ),
-   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          "Thrust" ),
-   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           "Cargo space" ),
-   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          "Armour strength" ),
-   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    "Armour regeneration" ),
-   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          "Shield strength" ),
-   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,    "Shield regeneration" ),
-   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          "Energy capacity" ),
-   D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    "Energy regeneration" ),
-   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             "CPU capacity" ),
+   D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,           gettext_noop("Speed") ),
+   D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            gettext_noop("Turn") ),
+   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          gettext_noop("Thrust") ),
+   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           gettext_noop("Cargo space") ),
+   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          gettext_noop("Armour strength") ),
+   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    gettext_noop("Armour regeneration") ),
+   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          gettext_noop("Shield strength") ),
+   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,    gettext_noop("Shield regeneration") ),
+   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          gettext_noop("Energy capacity") ),
+   D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    gettext_noop("Energy regeneration") ),
+   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             gettext_noop("CPU capacity") ),
 
-   DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          "Jump Time" ),
-   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       "Cargo Inertia" ),
+   DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          gettext_noop("Jump Time") ),
+   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       gettext_noop("Cargo Inertia") ),
 
-   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             "Cloaking" ),
-   D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           "Detection" ),
-   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,       "Jump Detection" ),
+   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),
+   D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           gettext_noop("Detection") ),
+   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,       gettext_noop("Jump Detection") ),
 
-   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         "Launch Rate" ),
-   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        "Launch Range" ),
-   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       "Ammo Capacity" ),
-   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       "Launch Lockon" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Launch Rate") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        gettext_noop("Launch Range") ),
+   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lockon") ),
 
-   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            "Heat (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          "Damage (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate,        "Fire Rate (Cannon)" ),
-   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,     fwd_energy,          "Energy Usage (Cannon)" ),
+   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            gettext_noop("Heat (Cannon)") ),
+   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          gettext_noop("Damage (Cannon)") ),
+   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate,        gettext_noop("Fire Rate (Cannon)") ),
+   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,     fwd_energy,          gettext_noop("Energy Usage (Cannon)") ),
 
-   DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,            "Heat (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,      tur_damage,          "Damage (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_TRACKING,    tur_tracking,        "Tracking (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,        "Fire Rate (Turret)" ),
-   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          "Energy Usage (Turret)" ),
+   DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,            gettext_noop("Heat (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,      tur_damage,          gettext_noop("Damage (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_TRACKING,    tur_tracking,        gettext_noop("Tracking (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,        gettext_noop("Fire Rate (Turret)") ),
+   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          gettext_noop("Energy Usage (Turret)") ),
 
-   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   "Nebula Resistance (Shield)" ),
-   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   "Nebula Resistance (Armour)" ),
+   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
+   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
 
-   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    "Heat Dissipation" ),
-   D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  "Stress Dissipation" ),
-   D__ELEM( SS_TYPE_D_CREW,               crew_mod,            "Crew" ),
-   D__ELEM( SS_TYPE_D_MASS,               mass_mod,            "Mass" ),
-   D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    "Engine Mass Limit" ),
+   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    gettext_noop("Heat Dissipation") ),
+   D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  gettext_noop("Stress Dissipation") ),
+   D__ELEM( SS_TYPE_D_CREW,               crew_mod,            gettext_noop("Crew") ),
+   DI_ELEM( SS_TYPE_D_MASS,               mass_mod,            gettext_noop("Ship Mass") ),
+   D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    gettext_noop("Engine Mass Limit") ),
 
-   A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         "Energy Capacity" ),
-   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        "Energy Usage" ),
-   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             "CPU Capacity" ),
+   A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
+   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
+   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
 
-   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        "Engine Mass Limit" ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),
 
-   I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, "Hidden Jump Detection" ),
+   I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, gettext_noop("Hidden Jump Detection") ),
 
-   B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   "Instant Jump" ),
-   B__ELEM( SS_TYPE_B_REVERSE_THRUST,     misc_reverse_thrust, "Reverse Thrusters" ),
+   B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   gettext_noop("Instant Jump") ),
+   B__ELEM( SS_TYPE_B_REVERSE_THRUST,     misc_reverse_thrust, gettext_noop("Reverse Thrusters") ),
+   B__ELEM( SS_TYPE_B_ASTEROID_SCAN,      misc_asteroid_scan,  gettext_noop("Asteroid Scanner") ),
 
    /* Sentinel. */
    N__ELEM( SS_TYPE_SENTINEL )
@@ -207,7 +208,7 @@ int ss_check (void)
 
    for (i=0; i<=SS_TYPE_SENTINEL; i++) {
       if (ss_lookup[i].type != i) {
-         WARN("ss_lookup: %s should have id %d but has %d",
+         WARN(_("ss_lookup: %s should have id %d but has %d"),
                ss_lookup[i].name, i, ss_lookup[i].type );
          return -1;
       }
@@ -374,7 +375,7 @@ ShipStatsType ss_typeFromName( const char *name )
       if ((ss_lookup[i].name != NULL) && (strcmp(name,ss_lookup[i].name)==0))
          return ss_lookup[i].type;
 
-   WARN("ss_typeFromName: No ship stat matching '%s'", name);
+   WARN(_("ss_typeFromName: No ship stat matching '%s'"), name);
    return SS_TYPE_NIL;
 }
 
@@ -418,10 +419,10 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%+.0f%% %s\e0",
+   return nsnprintf( buf, len, "%s\a%s%+.0f%% %s\a0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d*100., sl->display );
+         d*100., _(sl->display) );
 }
 
 
@@ -432,10 +433,10 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%+.0f %s\e0",
+   return nsnprintf( buf, len, "%s\a%s%+.0f %s\a0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d, sl->display );
+         d, _(sl->display) );
 }
 
 
@@ -446,10 +447,10 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%+d %s\e0",
+   return nsnprintf( buf, len, "%s\a%s%+d %s\a0",
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
-         i, sl->display );
+         i, _(sl->display) );
 }
 
 
@@ -460,10 +461,10 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%s\e0",
+   return nsnprintf( buf, len, "%s\a%s%s\a0",
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
-         sl->display );
+         _(sl->display) );
 }
 
 
@@ -600,7 +601,7 @@ int ss_csv( const ShipStats *s, char *buf, int len )
       /* Calculate offset left. */
       left = len - l;
       if (left < 0) {
-         WARN("Buffer out of space, CSV output truncated");
+         WARN(_("Buffer out of space, CSV output truncated"));
          break;
       }
 

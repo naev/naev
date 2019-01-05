@@ -2,13 +2,13 @@
 <ship name="Empire Admonisher">
  <base_type>Admonisher</base_type>
  <GFX>admonisher_empire</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>700000</price>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>An Empire Admonisher.</description>
+ <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <absorb>15</absorb>
   <armour>240</armour>

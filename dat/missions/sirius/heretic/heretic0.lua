@@ -6,39 +6,37 @@
 
 include "dat/scripts/numstring.lua"
     
-lang = naev.lang()
-
 --the intro messages
 bmsg = {}
-bmsg[1] = [[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare cooly. Lackadaisically, he strikes up a converrsation.
+bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare cooly. Lackadaisically, he strikes up a converrsation.
     "Good weather on %s these days, I hear." 
     "I hear nothing but good things about %s." you reply, badly feigning interest. You order a drink, as he takes a gulp of his.
     He looks at you, sizing you up. He probably has been waiting for someone to set next to him all day. "You look like a man in need of a couple spare credits. I have a, uhh, shipment that needs getting to %s. Are you interested? Thing is, it's not exactly... legal. Pay is good though. All you need to know," he continues, "is that someone will be at the starport in %s waiting for this shipment. And they got credits. %s credits. Just for you, kiddo, if you want."
-    You get your drink, a greenish slimy-looking thing called a "tartar coobadu", and decide you just have to ask. "What exactly is this shipment?"]]
-bmsg[2] = [[He almost looks suprised at the question. He motions you to a corner table as if to tell you to go there, but forcifully leads you. People seem to be avoiding this table, probably because of a peculiar vomit-odor that is wafting from somewhere underneath. He sits you down rather roughly, and then sits down himself.
+    You get your drink, a greenish slimy-looking thing called a "tartar coobadu", and decide you just have to ask. "What exactly is this shipment?"]])
+bmsg[2] = _([[He almost looks suprised at the question. He motions you to a corner table as if to tell you to go there, but forcifully leads you. People seem to be avoiding this table, probably because of a peculiar vomit-odor that is wafting from somewhere underneath. He sits you down rather roughly, and then sits down himself.
     "Look, I really can't tell you the exact contents of the box. Let's just say it's "small" weaponry. My... employer... isn't fond of the government of %s. As such, he needs... " he takes a drink "a shipment delivered there ASAP. Thats all I can tell you, I'm afraid"
-    You sip your slime, and answer him...]]
-bmsg[3] = [[You feel a very large hand slap you on the back. "Thats a lad!" he cries exuberantly. "I'll have my boys load up the cargo, as quickly as you please. Remember, all you gotta do is fly to %s, and avoid the military, police, and civvies that like to stick their noses where they don't belong. I'll let my contacts know to expect you, and to pay you when you land."
-    You shake his sticky hand, and walk off, content that you've made an easy buck.]]
+    You sip your slime, and answer him...]])
+bmsg[3] = _([[You feel a very large hand slap you on the back. "Thats a lad!" he cries exuberantly. "I'll have my boys load up the cargo, as quickly as you please. Remember, all you gotta do is fly to %s, and avoid the military, police, and civvies that like to stick their noses where they don't belong. I'll let my contacts know to expect you, and to pay you when you land."
+    You shake his sticky hand, and walk off, content that you've made an easy buck.]])
 
 --ending messages
 emsg = {}
-emsg[1] = [[As you descend to the %s spaceport, you notice a severe lack of... well... anybody. The place seems deserted. You received an impersonal message saying *LAND IN BAY 71A4* on your way into the atmosphere, but that is the only communication you received. You don't even see any vessels flying around. As you steer your ship into the aforementioned bay, you finally see a small group of gruff and wary men waiting for you. Almost as soon as you land, they have the goods out, and as you walk out to say hello, you already see it disappearing on the far end of the bay.]]
-emsg[2] = [[You approach the man who appears to be the leader of the group. "One box of... stuff, as requested." You say, motioning to the now-gone box. 
-    The large, unshaven man looks you right in the eyes."Yes, thanks. I suppose you will be wanting payment now." He hands you a credit chip. "You know, we need to get a message back to our... employers. Interested in taking one more trip? If you are, I'll be in the bar after I've verified the contents of our shipment. Meet me there."]]
+emsg[1] = _([[As you descend to the %s spaceport, you notice a severe lack of... well... anybody. The place seems deserted. You received an impersonal message saying *LAND IN BAY 71A4* on your way into the atmosphere, but that is the only communication you received. You don't even see any vessels flying around. As you steer your ship into the aforementioned bay, you finally see a small group of gruff and wary men waiting for you. Almost as soon as you land, they have the goods out, and as you walk out to say hello, you already see it disappearing on the far end of the bay.]])
+emsg[2] = _([[You approach the man who appears to be the leader of the group. "One box of... stuff, as requested." You say, motioning to the now-gone box. 
+    The large, unshaven man looks you right in the eyes."Yes, thanks. I suppose you will be wanting payment now." He hands you a credit chip. "You know, we need to get a message back to our... employers. Interested in taking one more trip? If you are, I'll be in the bar after I've verified the contents of our shipment. Meet me there."]])
 
 --misn osd stuffs
 osd = {}
-osd[1] = "Deliver the shipment to %s in the %s system."
+osd[1] = _("Deliver the shipment to %s in the %s system.")
 --random odds and ends
-notenoughcargo = [["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 STU on you.]]
-rejected = [[He looks at you, almost appearing confused.
+notenoughcargo = _([["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 seconds on you.]])
+rejected = _([[He looks at you, almost appearing confused.
     "Well, thats your choice boy. Be on your way now. I'm busy."
-    You walk away, wondering if you really missed out on an oppourtunity.]]
-npc_name = "Ragnarok"
-bar_desc = "You see a rougher looking gent sitting at the bar, guzzling a brownish ale."
-misn_desc = "Deliver the shipment to %s in %s for the Nasin."
-misn_title = "The Gauntlet"
+    You walk away, wondering if you really missed out on an oppourtunity.]])
+npc_name = _("Ragnarok")
+bar_desc = _("You see a rougher looking gent sitting at the bar, guzzling a brownish ale.")
+misn_desc = _("Deliver the shipment to %s in %s for the Nasin.")
+misn_title = _("The Gauntlet")
 
 function create()
    --this mission makes no mission claims

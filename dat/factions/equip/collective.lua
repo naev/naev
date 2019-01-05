@@ -27,7 +27,9 @@ end
 function equip_CollectiveDroneHvy ()
    return { "Heavy Neutron Disruptor" }
 end
-
+function equip_CollectiveDroneHvyRanged ()
+   return { "Electron Burst Cannon" }
+end
 
 --[[
 -- @Equips a Collective Drone
@@ -61,7 +63,7 @@ function equip_collectiveMilitary( p, shipsize )
 
          -- TODO: Remove assumptions about slot sizes.
          addWeapons( equip_CollectiveDroneHvy(), 2 )
-         addWeapons( equip_CollectiveDrone(), 2 )
+         addWeapons( equip_CollectiveDroneHvyRanged(), 2 )
       end
    else
       warn(string.format("Collective equipper doesn't support '%s' ships",

@@ -10,17 +10,14 @@ DESCRIPTION:
 ]]--
 
 -- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
 
 -- This section stores the strings (text) for the event.
 
 -- Stage one: something goes wrong in fabric of reality.
-   title = {}
-   text = {}
-   title[1] = "Naev received SIGSEGV (address not mapped to object)!"
-   text[1] = [[As you step out of your ship, suddenly the sunlight flickers. In the sky, the local star turns blue, then a deep purple, and then goes dark. The whole planet plunges into darkness.
+title = {}
+text = {}
+title[1] = _("Naev received SIGSEGV (address not mapped to object)!")
+text[1] = _([[As you step out of your ship, suddenly the sunlight flickers. In the sky, the local star turns blue, then a deep purple, and then goes dark. The whole planet plunges into darkness.
 
 Then a voice speaks, louder than an earthquake. It seems to sound inside your bones and from the very centre of the earth. "Oh crap..." it says.
 
@@ -30,11 +27,11 @@ Another voice laughs, musically, as if world itself were singing. "bobbens, did 
 
 A window opens in the darkness, infinitely far away and infinitely large. A face peeps down at you from the height of eternity.
 
-"Everything all right in there?"]] --yes/no choice
+"Everything all right in there?"]]) --yes/no choice
 
 -- If yes, the voice of the creator speaks to you:
-   title[2] = "The voice of the creator"
-   text[2] = [["Good. Sorry for the inconvenience. Please don't worry, I'll have reality reloaded again in just a sec."
+title[2] = _("The voice of the creator")
+text[2] = _([["Good. Sorry for the inconvenience. Please don't worry, I'll have reality reloaded again in just a sec."
 
 The creator turns to go, then pauses.
 
@@ -42,21 +39,19 @@ The creator turns to go, then pauses.
 
 The watchmaker lifts his eyes up beyond your frame of reference and smiles.
 
-"OK then. Pushed. And we're back in 3... 2... 1..."]]
+"OK then. Pushed. And we're back in 3... 2... 1..."]])
 
 -- If no, the voice of the creator speaks to you:
-   title[3] = "The voice of the creator"
-   text[3] = [["Oh sorry about that. We're working hard on improving life, the universe, and all that, but the team is a bit short handed. Don't worry, I'll have reality reloaded again in just a sec."
-   
+title[3] = _("The voice of the creator")
+text[3] = _([["Oh sorry about that. We're working hard on improving life, the universe, and all that, but the team is a bit short handed. Don't worry, I'll have reality reloaded again in just a sec."
+
 The creator turns to go, then pauses.
 
 "I tell you what: the universe creation team could really use your help. If you have any special skill in drawing planets, designing ships, scripting the underlying laws of nature, or composing the music of the spheres we'd be especially happy to see you. For information on how to contribute, just point your web-of-reality browser to http://blog.naev.org/."
 
 The watchmaker lifts his eyes up beyond your frame of reference and smiles.
 
-"OK then. Pushed. And we're back in 3... 2... 1..."]]
-
-end 
+"OK then. Pushed. And we're back in 3... 2... 1..."]])
 
 
 function create()

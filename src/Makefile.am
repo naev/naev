@@ -3,7 +3,7 @@ SUBDIRS = tk
 bin_PROGRAMS = naev
 
 AM_CFLAGS = $(NAEV_CFLAGS)
-naev_LDADD = $(NAEV_LIBS)
+naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 CODE_SOURCE = \
@@ -88,7 +88,6 @@ CODE_SOURCE = \
 	nlua_player.c \
 	nlua_rnd.c \
 	nlua_ship.c \
-	nlua_space.c \
 	nlua_system.c \
 	nlua_tex.c \
 	nlua_time.c \
@@ -143,6 +142,7 @@ CODE_SOURCE = \
 	threadpool.c \
 	toolkit.c \
 	unidiff.c \
+	utf8.c \
 	weapon.c \
 	ai.h \
 	array.h \
@@ -186,6 +186,8 @@ CODE_SOURCE = \
 	land.h \
 	land_outfits.h \
 	land_shipyard.h \
+	land_takeoff.h \
+	land_trade.h \
 	load.h \
 	log.h \
 	map.h \
@@ -227,7 +229,6 @@ CODE_SOURCE = \
 	nlua_player.h \
 	nlua_rnd.h \
 	nlua_ship.h \
-	nlua_space.h \
 	nlua_system.h \
 	nlua_tex.h \
 	nlua_time.h \
@@ -285,15 +286,21 @@ CODE_SOURCE = \
 	threadpool.h \
 	toolkit.h \
 	unidiff.h \
+	utf8.h \
 	weapon.h
 
 if HAVE_WINDRES
 WINDOWS_RESOURCE = ../extras/resource.rc
-naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE)
-
 .rc.o:
 	@WINDRES@ $< -O coff $@
 else
-naev_SOURCES = $(CODE_SOURCE)
+WINDOWS_RESOURCE =
 endif
 
+if HAVE_MACOS
+MACOS_SOURCE = glue_macos.m
+else
+MACOS_SOURCE =
+endif
+
+naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE) $(MACOS_SOURCE)

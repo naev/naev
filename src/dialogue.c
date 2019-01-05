@@ -96,7 +96,7 @@ static void dialogue_close( unsigned int wid, char* str )
    *loop_done = 1;
    dialogue_open--;
    if (dialogue_open < 0)
-      WARN("Dialogue counter not in sync!");
+      WARN(_("Dialogue counter not in sync!"));
 }
 
 
@@ -112,7 +112,7 @@ static void dialogue_cancel( unsigned int wid, char* str )
    *loop_done = -1;
    dialogue_open--;
    if (dialogue_open < 0)
-      WARN("Dialogue counter not in sync!");
+      WARN(_("Dialogue counter not in sync!"));
 }
 
 
@@ -138,11 +138,11 @@ void dialogue_alert( const char *fmt, ... )
    h = gl_printHeightRaw( &gl_smallFont, 260, msg );
 
    /* create the window */
-   wdw = window_create( "Warning", -1, -1, 300, 90 + h );
+   wdw = window_create( _("Warning"), -1, -1, 300, 90 + h );
    window_setData( wdw, &done );
    window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
          &gl_smallFont, &cBlack, msg );
-   window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
+   window_addButton( wdw, 135, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
    dialogue_open++;
@@ -270,7 +270,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    window_setData( msg_wid, &done );
    window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
          font, &cBlack, msg );
-   window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", "OK",
+   window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
    dialogue_open++;
@@ -299,6 +299,8 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
    /* IMPORTANT : texture must not be freed here, it will be freed when the widget closes */
    nsnprintf( buf, sizeof(buf), "%s%s", GFX_PATH, img );
    gfx = gl_newImage( buf, 0 );
+   if (gfx == NULL)
+      return;
 
    /* Find the popup's dimensions from text and image */
    img_width  = (width < 0)  ? gfx->w : width;
@@ -325,7 +327,7 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
          "ImgGFX", gfx, 0 );
 
    /* Add the OK button */
-   window_addButton( msg_wid, (img_width+w -50)/2, 20, 50, 30, "btnOK", "OK",
+   window_addButton( msg_wid, (img_width+w -50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
    dialogue_open++;
@@ -379,9 +381,9 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
          font, &cBlack, msg );
    /* buttons */
-   window_addButtonKey( wid, w/2-50-10, 20, 50, 30, "btnYes", "Yes",
+   window_addButtonKey( wid, w/2-50-10, 20, 50, 30, "btnYes", _("Yes"),
          dialogue_YesNoClose, SDLK_y );
-   window_addButtonKey( wid, w/2+10, 20, 50, 30, "btnNo", "No",
+   window_addButtonKey( wid, w/2+10, 20, 50, 30, "btnNo", _("No"),
          dialogue_YesNoClose, SDLK_n );
 
    /* tricky secondary loop */
@@ -410,7 +412,7 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
    else if (strcmp(str,"btnNo")==0)
       result = 0;
    else {
-      WARN("Unknown button clicked in YesNo dialogue!");
+      WARN(_("Unknown button clicked in YesNo dialogue!"));
       result = 1;
    }
 
@@ -482,7 +484,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
    /* button */
    window_addButton( input_dialogue.input_wid, -20, 20, 80, 30,
-         "btnClose", "Done", dialogue_inputClose );
+         "btnClose", _("Done"), dialogue_inputClose );
 
    /* tricky secondary loop */
    dialogue_open++;
@@ -492,7 +494,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
-         dialogue_alert( "Input must be at least %d character%s long!",
+         dialogue_alert( _("Input must be at least %d character%s long!"),
                min, (min==1) ? "" : "s" );
          free(input);
          input = NULL;
@@ -715,9 +717,9 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
 
    /* Create the buttons. */
    window_addButton( wid, -20, 20, 60, 30,
-         "btnOK", "OK", dialogue_listClose );
+         "btnOK", _("OK"), dialogue_listClose );
    window_addButton( wid, -20-60-20, 20, 60, 30,
-         "btnCancel", "Cancel", dialogue_listCancel );
+         "btnCancel", _("Cancel"), dialogue_listCancel );
 
    dialogue_open++;
    toolkit_loop( &done );

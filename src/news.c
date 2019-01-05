@@ -100,7 +100,7 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
    if ( !( (n_article->title = strdup(title)) &&
          (n_article->desc = strdup(content)) &&
          (n_article->faction = strdup(faction)))) {
-      ERR("Out of Memory.");
+      ERR(_("Out of Memory"));
       return NULL;
    }
 
@@ -144,7 +144,7 @@ int free_article(int id)
       news_list = news_list->next;
 
       if (article_to_rm->next == NULL) {
-         WARN("\nLast article, do not remove");
+         WARN(_("\nLast article, do not remove"));
          return -1;
       }
    }
@@ -154,7 +154,7 @@ int free_article(int id)
          article_ptr = article_ptr->next;
 
       if (article_ptr->next == NULL) {
-         WARN("\nArticle to remove not found");
+         WARN(_("\nArticle to remove not found"));
          return -1;
       }
 
@@ -284,13 +284,13 @@ int *generate_news( char* faction )
          if (article_ptr->date && article_ptr->date<40000000000000) {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s: %s\e0\n\n"
+               "%s: %s\a0\n\n"
                , article_ptr->title, ntime_pretty(article_ptr->date, 1), article_ptr->desc );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s\e0\n\n"
+               "%s\a0\n\n"
                , article_ptr->title, article_ptr->desc );
          }
       }
@@ -300,7 +300,7 @@ int *generate_news( char* faction )
    } while(article_ptr != NULL);
 
    if (p == 0)
-      nsnprintf(buf, NEWS_MAX_LENGTH, "\n\nSorry, no news today\n\n\n");
+      nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
 
    len = p;
 
@@ -655,7 +655,7 @@ static int news_parseArticle( xmlNodePtr parent )
 
 #define NEWS_READ(elem, s) \
 xmlr_attr(node, s, elem); \
-if (elem == NULL) { WARN("Event is missing '"s"', skipping."); goto cleanup; }
+if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup; }
 
    do {
 

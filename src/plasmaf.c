@@ -68,7 +68,7 @@ static double* pf_genFractalMap( const int w, const int h, double rug )
 
    map = malloc( w*h * sizeof(double) );
    if (map == NULL) {
-      WARN("Out of memory");
+      WARN(_("Out of Memory"));
       return NULL;
    }
 

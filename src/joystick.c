@@ -58,7 +58,7 @@ int joystick_get( const char* namjoystick )
          return i;
    }
 
-   WARN("Joystick '%s' not found, using default joystick '%s'",
+   WARN(_("Joystick '%s' not found, using default joystick '%s'"),
          namjoystick, SDL_JoystickName(0));
    return 0;
 }
@@ -76,7 +76,7 @@ int joystick_use( int indjoystick )
 
    /* Check to see if it exists. */
    if ((indjoystick < 0) || (indjoystick >= SDL_NumJoysticks())) {
-      WARN("Joystick of index number %d does not existing, switching to default 0",
+      WARN(_("Joystick of index number %d does not existing, switching to default 0"),
             indjoystick);
       indjoystick = 0;
    }
@@ -95,11 +95,11 @@ int joystick_use( int indjoystick )
    jname = SDL_JoystickName(indjoystick);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    if (joystick == NULL) {
-      WARN("Error opening joystick %d [%s]", indjoystick, jname);
+      WARN(_("Error opening joystick %d [%s]"), indjoystick, jname);
       return -1;
    }
-   LOG("Using joystick %d - %s", indjoystick, jname);
-   DEBUG("   with %d axes, %d buttons, %d balls and %d hats",
+   LOG(_("Using joystick %d - %s"), indjoystick, jname);
+   DEBUG(_("   with %d axes, %d buttons, %d balls and %d hats"),
          SDL_JoystickNumAxes(joystick), SDL_JoystickNumButtons(joystick),
          SDL_JoystickNumBalls(joystick), SDL_JoystickNumHats(joystick));
 
@@ -107,7 +107,7 @@ int joystick_use( int indjoystick )
    joystick_initHaptic();
 
    /* For style purposes. */
-   DEBUG();
+   DEBUG("");
 
    return 0;
 }
@@ -130,7 +130,7 @@ static void joystick_initHaptic (void)
       /* Try to create haptic device. */
       haptic = SDL_HapticOpenFromJoystick(joystick);
       if (haptic == NULL) {
-         WARN("Unable to initialize force feedback: %s", SDL_GetError());
+         WARN(_("Unable to initialize force feedback: %s"), SDL_GetError());
          return;
       }
 
@@ -142,7 +142,7 @@ static void joystick_initHaptic (void)
          return;
       }
 
-      DEBUG("   force feedback enabled");
+      DEBUG(_("   force feedback enabled"));
    }
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
@@ -159,7 +159,7 @@ int joystick_init (void)
 
    /* initialize the sdl subsystem */
    if (SDL_InitSubSystem(SDL_INIT_JOYSTICK)) {
-      WARN("Unable to initialize the joystick subsystem");
+      WARN(_("Unable to initialize the joystick subsystem"));
       return -1;
    }
 
@@ -170,7 +170,7 @@ int joystick_init (void)
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
-   DEBUG("%d joystick%s detected", numjoysticks, (numjoysticks==1)?"":"s" );
+   DEBUG( ngettext("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
    for (i=0; i < numjoysticks; i++) {
       const char *jname;
 #if SDL_VERSION_ATLEAST(2,0,0)

@@ -55,29 +55,41 @@ static void log_append( FILE *stream, char *str );
 /**
  * @brief Like fprintf but also prints to the naev console.
  */
-int logprintf( FILE *stream, const char *fmt, ... )
+int logprintf( FILE *stream, int newline, const char *fmt, ... )
 {
    va_list ap;
    char buf[2048];
+   size_t n;
 
    if (fmt == NULL)
       return 0;
    else { /* get the message */
+      /* Add header if necessary. */
+      /* Print variable text. */
       va_start( ap, fmt );
-      vsnprintf( &buf[2], sizeof(buf)-2, fmt, ap );
+      n = vsnprintf( &buf[2], sizeof(buf)-3-n, fmt, ap )-1;
       va_end( ap );
+
    }
 
 #ifndef NOLOGPRINTFCONSOLE
    /* Add to console. */
    if (stream == stderr) {
-      buf[0] = '\e';
+      buf[0] = '\a';
       buf[1] = 'r';
       cli_addMessage( buf );
    }
    else
       cli_addMessage( &buf[2] );
 #endif /* NOLOGPRINTFCONSOLE */
+
+   /* Finally add newline if necessary. */
+   if (newline) {
+      buf[2+n+1] = '\n';
+      buf[2+n+2] = '\0';
+   }
+   else
+      buf[2+n+1] = '\0';
 
    /* Append to buffer. */
    if (copying)
@@ -297,6 +309,6 @@ static void log_append( FILE *stream, char *str )
 
 copy_err:
    log_purge();
-   WARN("An error occurred while buffering %s!",
+   WARN(_("An error occurred while buffering %s!"),
       stream == stdout ? "stdout" : "stderr");
 }

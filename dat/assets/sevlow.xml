@@ -20,8 +20,16 @@
   <services>
    <land/>
    <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
   <description>Sevlow is one of the few truly inhabited Thurian worlds. Sevlow is an uneventful planet, as it serves primarily as an agricultural world producing algae, and as a living place for biological Thurions.</description>
+  <bar>This bar is crowded with biological Thurions socializing and drinking non-alcoholic beverages. Just like every other Thurion bar, no alcohol is sold as that is believed to damage the brain.</bar>
  </general>
 </asset>

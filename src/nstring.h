@@ -17,9 +17,11 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size );
 #if HAS_POSIX && defined(_GNU_SOURCE)
 #define nstrcasestr     strcasestr
 #define nsnprintf       snprintf
+#define nstrndup        strndup
 #else /* HAVE_POSIX && defined(_GNU_SOURCE) */
 const char *nstrcasestr( const char *haystack, const char *needle );
 int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
+char* nstrndup( const char *s, size_t n );
 #endif /* HAVE_POSIX */
 
 
