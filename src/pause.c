@@ -69,8 +69,6 @@ void unpause_game (void)
 void pause_setSpeed( double mod )
 {
    dt_mod = mod;
-   /* FIXME: sound_setSpeed causes sound to go silent above 2. Capped for now */
-   sound_setSpeed( MIN(mod, 2) );
 }
 
 
