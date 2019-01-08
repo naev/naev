@@ -1104,6 +1104,7 @@ static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
 static void display_fps( const double dt )
 {
    double x,y;
+   double dt_mod_base = 1.;
 
    fps_dt  += dt;
    fps_cur += 1.;
@@ -1118,8 +1119,13 @@ static void display_fps( const double dt )
       gl_print( NULL, x, y, NULL, "%3.2f", fps );
       y -= gl_defFont.h + 5.;
    }
-   if (dt_mod != 1.)
-      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod);
+
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING)) {
+      dt_mod_base = player.p->ship->dt_default;
+   }
+   if (dt_mod != dt_mod_base)
+      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod / dt_mod_base);
 
    if (!paused || !player_paused || !conf.pause_show)
       return;
