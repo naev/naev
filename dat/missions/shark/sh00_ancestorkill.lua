@@ -37,25 +37,24 @@ text[3] = _([["Nice to see you again," the man says with a smile. "I hope you ar
     The man gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at %s. Now go show them what your ship can do!" Time to head back to the ship, then.]])
 
 title[4] = _("Congratulations!")
-text[4] = _([[As you step on the ground, Arnold Smith comes to you: "Now that the Baron has seen how helpful a Shark can be in the hands of a good pilot, I have no doubts he will buy some to protect the %s-%s trade route".
-   He then hands you your pay. "If we are again in need of a pilot, we will try to contact you again."]])
+text[4] = _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]])
 
 -- Mission details
 misn_title = _("A Shark Bites")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt that a Shark is able to defend his system against pirates.")
+misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs.")
 
 -- NPC
 npc_desc[1] = _("A honest-looking man")
-bar_desc[1] = _("This man looks like a honest citizen and seems to try to draw your attention.")
+bar_desc[1] = _("This man looks like a honest citizen. He glances in your direction.")
 
 npc_desc[2] = _("Arnold Smith")
 bar_desc[2] = _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]])
 
 -- OSD
 osd_title = _("A Shark Bites")
-osd_msg[1] = _("Buy a Shark, fly to the %s system and land on %s")
-osd_msg[2] = _("Go to %s and kill the pirate with your Shark (and not an Empire Shark)")
+osd_msg[1] = _("Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s")
+osd_msg[2] = _("Go to %s and kill the pirate with your Shark")
 osd_msg[3] = _("Land on %s and collect your fee")
 
 leave_msg = _("MISSION FAILED: You left the pirate.")
@@ -121,7 +120,7 @@ function land()
 
    -- Did the player land again on Ulios after having killed the pirate
    if planet.cur() == mispla and stage == 4 then
-      tk.msg(title[4], text[4]:format(battlesys:name(), missys:name()))
+      tk.msg(title[4], text[4])
       player.pay(reward)
       misn.osdDestroy(osd)
       hook.rm(enterhook)
@@ -147,7 +146,7 @@ function enter()
       playership = player.pilot():ship()
       playershipname = playership:name()
 
-      if playershipname ~= "Shark" then
+      if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
          player.msg( "\ar" .. noshark_msg .. "\a0" )
          misn.finish(false)
       end
@@ -182,7 +181,7 @@ function beginbattle()
 end
 
 function pirate_jump()  --he went away
-   player.msg( "\ar" .. piratejump_msg "\a0" )
+   player.msg( "\ar" .. piratejump_msg .. "\a0" )
    misn.finish( false )
 end
 
