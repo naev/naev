@@ -19,7 +19,7 @@ bar_desc = {}
 
 title[1] = _("A new job")
 text[1] = _([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us.
-    "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the %s system. Go there, hail him, and let him know that I have to see him on %s in the %s system. He will understand. Oh, by the way, my new name is Donald Ulnish.
+    "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the %s system. Go there, hail him, and let him know that I have to see him on %s in the %s system. He will understand.
     "Can I count on you to do this for me?"]])
 
 refusetitle = _("Sorry, not interested")
@@ -38,16 +38,16 @@ text[4] = _([[The captain of the Hawking answers you. When you say that you have
 -- Mission details
 misn_title = _("Invitation")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard asks you to help in a secret meeting")
+misn_desc = _("Nexus Shipyard asks you to help initiate a secret meeting")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[Arnold Smith (aka James Neptune): this guy seems more and more shifty]])
+bar_desc[1] = _([[This guy is looking more and more shifty.]])
 
 -- OSD
 osd_title = _("Invitation")
 osd_msg[1] = _("Go to %s, find and hail the Air Force One")
-osd_msg[2] = _("Report back to %s in %s")
+osd_msg[2] = _("Report back to %s in the %s system")
 
 function create ()
 

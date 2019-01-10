@@ -52,7 +52,7 @@ bar_desc[2] = _([[This guy matches exactly the description that was made to you.
 -- OSD
 osd_title = _("Unfair Competition")
 osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
-osd_msg[2] = _("Bring the recording back to %s in %s")
+osd_msg[2] = _("Bring the recording back to %s in the %s system")
 
 function create ()
 
