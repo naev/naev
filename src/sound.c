@@ -668,9 +668,6 @@ void sound_setSpeed( double s )
    if (sound_disabled)
       return;
 
-   /* FIXME: Sound goes silent above speed of 2. Capped for now. */
-   s = MIN(s, 2);
-
    /* We implement the brown noise here. */
    playing = (snd_compression_gain > 0.);
    if (player.tc_max > 2.)
