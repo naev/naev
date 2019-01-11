@@ -120,6 +120,7 @@ void shipyard_open( unsigned int wid )
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
+         "Time Rate:\n"
          "\n"
          "Absorption:\n"
          "Shield:\n"
@@ -200,6 +201,7 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
+            "NA\n"
             "\n"
             "NA\n"
             "NA\n"
@@ -253,6 +255,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f kN/ton\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
+         "%.0f%%\n"
          "\n"
          "%.0f%% damage\n"
          "%.0f MJ (%.1f MW)\n"
@@ -274,6 +277,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->thrust,
          ship->speed,
          ship->turn*180/M_PI,
+         ship->dt_default*100.,
          /* Misc */
          ship->dmg_absorb*100.,
          ship->shield, ship->shield_regen,
