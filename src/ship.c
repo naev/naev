@@ -987,6 +987,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
+   MELEMENT(temp->dt_default==0.,"time_mod");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->armour==0.,"armour");
@@ -1004,17 +1005,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /*MELEMENT(temp->cap_cargo==0,"cargo");
    MELEMENT(temp->cpu==0.,"cpu");*/
 #undef MELEMENT
-
-   /* Set default time_mod (dt_default) value. */
-   if (temp->dt_default == 0.) {
-      if (temp->crew != 0) {
-         temp->dt_default = cbrt(temp->crew) * 0.75;
-      } else {
-         WARN( _("Ship '%s' missing both 'time_mod' and 'crew' element; cannot calculate 'time_mod', defaulting to 1"), temp->name );
-         temp->dt_default = 1.;
-      }
-         
-   }
 
    return 0;
 }
