@@ -120,7 +120,7 @@ void shipyard_open( unsigned int wid )
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
-         "Time Rate:\n"
+         "Time Dilation:\n"
          "\n"
          "Absorption:\n"
          "Shield:\n"
