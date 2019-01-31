@@ -171,8 +171,8 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_wid = wid;
 
    /* Close button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("Close"), uniedit_close );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Exit"), uniedit_close, SDLK_x );
    buttonPos++;
 
    /* Autosave toggle. */
