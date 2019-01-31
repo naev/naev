@@ -22,6 +22,7 @@
 #include "map.h"
 #include "equipment.h"
 #include "outfit.h"
+#include "hook.h"
 #include "player.h"
 #include "player_gui.h"
 #include "slots.h"
@@ -29,6 +30,7 @@
 #include "toolkit.h"
 #include "dialogue.h"
 #include "map_find.h"
+#include "land_takeoff.h"
 
 
 #define  OUTFITS_IAR    "iarOutfits"
@@ -647,9 +649,10 @@ static void outfits_buy( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    int q;
+   HookParam hparam[3];
 
-   outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
-   if (strcmp(outfitname, _("None")) == 0)
+   outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
+   if (strcmp(outfitname, "None") == 0)
       return;
 
    outfit = outfit_get( outfitname );
@@ -663,6 +666,15 @@ static void outfits_buy( unsigned int wid, char* str )
    /* Actually buy the outfit. */
    player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    outfits_updateEquipmentOutfits();
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = outfitname;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = q;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "outfit_buy", hparam );
+   if (land_takeoff)
+      takeoff(1);
+   free(outfitname);
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -713,9 +725,10 @@ static void outfits_sell( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    int q;
+   HookParam hparam[3];
 
-   outfitname  = toolkit_getImageArray( wid, OUTFITS_IAR );
-   if (strcmp(outfitname, _("None")) == 0)
+   outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
+   if (strcmp(outfitname, "None") == 0)
       return;
 
    outfit      = outfit_get( outfitname );
@@ -728,6 +741,15 @@ static void outfits_sell( unsigned int wid, char* str )
 
    player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
    outfits_updateEquipmentOutfits();
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = outfitname;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = q;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "outfit_sell", hparam );
+   if (land_takeoff)
+      takeoff(1);
+  free(outfitname);
 }
 /**
  * @brief Gets the current modifier status.
