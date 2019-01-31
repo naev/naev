@@ -230,13 +230,13 @@ int dsys_saveAll (void)
  *
  *    @return 0 on success.
  */
-int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
+int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys, char *fileName, char *mapName, char *mapDescription)
 {
-   int i, j, k;
+   int i, j, k, len;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    StarSystem *s;
-   char file[PATH_MAX], *cleanName;
+   char *file, *cleanName;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -253,13 +253,13 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
    xmlw_startElem( writer, "outfit" );
 
    /* Attributes. */
-   xmlw_attr( writer, "name", "Editor-generated Map" );
+   xmlw_attr( writer, "name", "%s", mapName );
 
    /* General. */
    xmlw_startElem( writer, "general" );
    xmlw_elem( writer, "mass", "%d", 0 );
    xmlw_elem( writer, "price", "%d", 1000 );
-   xmlw_elem( writer, "description", "%s", "This map has been created by the universe editor." );
+   xmlw_elem( writer, "description", "%s", mapDescription );
    xmlw_elem( writer, "gfx_store", "%s", "map" );
    xmlw_endElem( writer ); /* "general" */
 
@@ -305,9 +305,18 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
    xmlFreeTextWriter(writer);
 
    /* Write data. */
-   cleanName = uniedit_nameFilter( "saved map" );
-   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_map, cleanName );
+   cleanName = uniedit_nameFilter( fileName );
+
+   /* DEBUG */
+   WARN("\tcleanName       : \"%s\"", cleanName);
+
+   len       = (strlen(cleanName)+22);
+   file      = malloc( len );
+   nsnprintf( file, len, "dat/outfits/maps/%s.xml", cleanName );
+
+   /* Actually write data */
    xmlSaveFileEnc( file, doc, "UTF-8" );
+   free( file );
 
    /* Clean up. */
    xmlFreeDoc(doc);
