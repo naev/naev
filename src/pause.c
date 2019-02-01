@@ -69,7 +69,6 @@ void unpause_game (void)
 void pause_setSpeed( double mod )
 {
    dt_mod = mod;
-   sound_setSpeed( mod );
 }
 
 

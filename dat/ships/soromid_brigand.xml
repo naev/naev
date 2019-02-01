@@ -6,6 +6,7 @@
  <sound>engine</sound>
  <class>Fighter</class>
  <price>280000</price>
+ <time_mod>1</time_mod>
  <fabricator>Soromid</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lighly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>

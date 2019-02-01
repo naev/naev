@@ -31,6 +31,7 @@
 #include "escort.h"
 #include "music.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "gui.h"
 #include "board.h"
 #include "debris.h"
@@ -1478,7 +1479,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* This is sort of a hack to make sure it gets reset... */
       if (p->id==PLAYER_ID)
-         pause_setSpeed( player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1. );
+         player_autonavResetSpeed();
    }
 }
 

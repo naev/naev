@@ -304,6 +304,7 @@ void equipment_open( unsigned int wid )
       "Thrust:\n"
       "Speed:\n"
       "Turn:\n"
+      "Time Dilation:\n"
       "\n"
       "Absorption:\n"
       "Shield:\n"
@@ -1698,6 +1699,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%.0f\a0 kN/tonne\n"
          "\a%c%.0f\a0 m/s (max \a%c%.0f\a0 m/s)\n"
          "\a%c%.0f\a0 deg/s\n"
+         "\a%c%.0f%%\n"
          "\n"
          "\a%c%.0f%%\n"
          "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
@@ -1722,6 +1724,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
+      EQ_COMP( ship->ship->dt_default * 100, ship->ship->dt_default * 100, 0 ),
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),

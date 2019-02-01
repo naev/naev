@@ -565,7 +565,8 @@ static int playerL_cinematics( lua_State *L )
    /* Remove doublespeed. */
    if (player_isFlag( PLAYER_DOUBLESPEED )) {
       player_rmFlag( PLAYER_DOUBLESPEED );
-      pause_setSpeed(1.);
+      pause_setSpeed( player.p->ship->dt_default );
+      sound_setSpeed( 1. );
    }
 
    if (b) {
@@ -573,7 +574,8 @@ static int playerL_cinematics( lua_State *L )
       player_autonavAbort( abort_msg );
       player_rmFlag( PLAYER_DOUBLESPEED );
       ovr_setOpen(0);
-      pause_setSpeed(1.);
+      pause_setSpeed( player.p->ship->dt_default );
+      sound_setSpeed( 1. );
 
       if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );

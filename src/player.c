@@ -802,6 +802,7 @@ void player_cleanup (void)
 
    /* Reset time compression. */
    pause_setSpeed( 1.0 );
+   sound_setSpeed( 1.0 );
 
    /* Clean up. */
    memset( &player, 0, sizeof(Player_t) );
@@ -2267,6 +2268,7 @@ void player_dead (void)
 {
    /* Explode at normal speed. */
    pause_setSpeed(1.);
+   sound_setSpeed(1.);
 
    gui_cleanup();
 
@@ -2297,6 +2299,7 @@ void player_destroyed (void)
 
    /* Reset time compression when player dies. */
    pause_setSpeed( 1. );
+   sound_setSpeed( 1. );
 }
 
 

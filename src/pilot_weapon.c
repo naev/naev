@@ -121,6 +121,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* If inrange is set we only fire at targets in range. */
       time = INFINITY;  /* With no target we just set time to infinity. */
+
       if (p->target != p->id){
          pt = pilot_get( p->target );
          if (pt != NULL)
@@ -170,7 +171,6 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 {
    int i, l, on, n;
    PilotWeaponSet *ws;
-
    ws = pilot_weapSet(p,id);
    /* Case no outfits. */
    if (ws->slots == NULL)

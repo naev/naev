@@ -6,6 +6,7 @@
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1000000</price>
+ <time_mod>2</time_mod>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>While not especially popular among their ranks, some FLF pilots use the Pacifier as a heavy assault ship.</description>

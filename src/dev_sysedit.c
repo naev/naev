@@ -183,8 +183,8 @@ void sysedit_open( StarSystem *sys )
    window_setAccept( wid, sysedit_close );
 
    /* Close button. */
-   window_addButton( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("Close"), sysedit_close );
+   window_addButtonKey( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Exit"), sysedit_close, SDLK_x );
    i = 1;
 
    /* Autosave toggle. */

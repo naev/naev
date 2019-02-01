@@ -696,3 +696,85 @@ function __refuelstop ()
    end
 end
 
+--[[
+-- Mines an asteroid
+--]]
+function mine ()
+   local fieldNast = ai.target()
+   local field     = fieldNast[1]
+   local ast       = fieldNast[2]
+   local p         = ai.pilot()
+
+   ai.setasterotarget( field, ast )
+
+   local target, vel = system.asteroidpos( field, ast )
+   local target2 = vec2.add(target,200,0)
+
+   -- First task : place the ship close to the asteroid
+   local goal = ai.face_accurate( target2, vel, 0, 0, mem.Kp, mem.Kd )
+
+   local dir  = ai.face(goal)
+   local mod  = ai.dist(goal)
+
+   if dir < 10 and mod > 300 then
+      ai.accel()
+   end
+   local relpos = vec2.add( p:pos(), vec2.mul(target2,-1) ):mod()
+   local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
+   -- TODO : make 30 and 2 parameters dependent to Kp and Kd
+   if relpos < 30 and relvel < 2 then
+      ai.pushsubtask("__killasteroid")
+   end
+end
+function __killasteroid ()
+   local fieldNast = ai.target()
+   local field     = fieldNast[1]
+   local ast       = fieldNast[2]
+
+   local target = system.asteroidpos( field, ast )
+   local dir  = ai.face(target)
+
+   -- Second task : destroy it
+   if dir < 8 then
+      ai.weapset( 3 )
+      ai.shoot()
+   end
+   if system.asteroiddestroyed( field, ast ) then
+      ai.poptask()
+      -- Last task : gather
+      ai.pushtask("gather")
+   end
+end
+
+--[[
+-- Attepts to seek and gather gatherables
+--]]
+function gather ()
+   if ai.pilot():cargoFree() == 0 then --No more cargo
+      ai.poptask()
+      return
+   end
+
+   local gat = ai.getgatherable( 500 );
+
+   if gat == nil then -- Nothing to gather
+      ai.poptask()
+      return
+   end
+
+   local target, vel = ai.gatherablepos( gat )
+   if target == nil then -- gatherable disappeared
+      ai.poptask()
+      return
+   end
+
+   local goal = ai.face_accurate( target, vel, 0, 0, mem.Kp, mem.Kd )
+
+   local dir  = ai.face(goal)
+   local mod  = ai.dist(goal)
+
+   if dir < 10 and mod > 300 then
+      ai.accel()
+   end
+end
+

@@ -47,6 +47,8 @@ static int hook_timer( lua_State *L );
 static int hook_date( lua_State *L );
 static int hook_commbuy( lua_State *L );
 static int hook_commsell( lua_State *L );
+static int hook_outfitbuy( lua_State *L );
+static int hook_outfitsell( lua_State *L );
 static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
@@ -68,6 +70,8 @@ static const luaL_Reg hook_methods[] = {
    { "date", hook_date },
    { "comm_buy", hook_commbuy },
    { "comm_sell", hook_commsell },
+   { "outfit_buy", hook_outfitbuy },
+   { "outfit_sell", hook_outfitsell },
    { "input", hook_input },
    { "mouse", hook_mouse },
    { "safe", hook_safe },
@@ -537,6 +541,40 @@ static int hook_commsell( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "comm_sell", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player buying any sort of outfit.
+ *
+ * The hook receives the name of the outfit and the quantity being bought.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc outfit_buy( funcname, arg )
+ */
+static int hook_outfitbuy( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "outfit_buy", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player selling any sort of outfit.
+ *
+ * The hook receives the name of the outfit and the quantity being bought.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc outfit_sell( funcname, arg )
+ */
+static int hook_outfitsell( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "outfit_sell", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

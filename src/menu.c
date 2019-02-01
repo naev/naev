@@ -41,6 +41,7 @@
 #include "comm.h"
 #include "conf.h"
 #include "dev_uniedit.h"
+#include "dev_mapedit.h"
 #include "gui.h"
 #include "start.h"
 #include "camera.h"
@@ -62,6 +63,8 @@
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
+
+#define EDITORS_EXTRA_WIDTH  60 /**< Editors menu extra width. */
 
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
@@ -94,6 +97,11 @@ static void menu_death_continue( unsigned int wid, char* str );
 static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
 static void menu_death_close( unsigned int wid, char* str );
+/* editors menu */
+/* - Universe Editor */
+/* - Back to Main Menu */
+static void menu_editors_open( unsigned int wid_unused, char *unused );
+static void menu_editors_close( unsigned int wid, char* str );
 /* options button. */
 static void menu_options_button( unsigned int wid, char *str );
 
@@ -139,6 +147,7 @@ static int menu_main_bkg_system (void)
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
    pause_setSpeed( 1. );
+   sound_setSpeed( 1. );
 
    return 0;
 }
@@ -215,7 +224,7 @@ void menu_main (void)
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
       window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnEditor", _("Editor"), uniedit_open, SDLK_e );
+            "btnEditor", _("Editors"), menu_editors_open, SDLK_e );
       y -= BUTTON_HEIGHT+20;
    }
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -639,3 +648,67 @@ int menu_askQuit (void)
    return 0;
 }
 
+/**
+ * @brief Provisional Menu for when there will be multiple editors
+ */
+static void menu_editors_open( unsigned int wid, char *unused )
+{
+   (void) unused;
+   int h, y;
+
+   /*WARN("Entering function.");*/
+
+   /* Menu already open, quit. */
+   if (menu_isOpen( MENU_EDITORS )) {
+      return;
+   }
+
+   /* Close the Main Menu */
+   menu_main_close();
+   unpause_game();
+
+   /* Set dimensions */
+   y  = 20 + (BUTTON_HEIGHT+20)*2;
+   h  = y + 80;
+
+   wid = window_create( "Editors", -1, -1, MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
+   window_setCancel( wid, menu_editors_close );
+
+   /* Set buttons for the editors */
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH, BUTTON_HEIGHT,
+      "btnUniverse", "Universe Map", uniedit_open, SDLK_u );
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH, BUTTON_HEIGHT,
+      "btnMapEdit", "Map Outfits", mapedit_open, SDLK_m );
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH, BUTTON_HEIGHT,
+      "btnMain", "Exit to Main Menu", menu_editors_close, SDLK_x );
+
+    /* Editors menu is open. */
+   menu_Open( MENU_EDITORS );
+
+   /*WARN("Exiting function.");*/
+
+   return;
+}
+
+/**
+ * @brief Closes the editors menu.
+ *    @param str Unused.
+ */
+static void menu_editors_close( unsigned int wid, char* str )
+{
+   (void)str;
+   
+   /* Close the Editors Menu and mark it as closed */
+   /*WARN("Entering function.");*/
+   window_destroy( wid );
+   menu_Close( MENU_EDITORS );
+   
+   /* Restores Main Menu */
+   /*WARN("Restoring Main Menu.");*/
+   menu_main();
+   /*WARN("Exiting function.");*/
+   
+   return;
+}

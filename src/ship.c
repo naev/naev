@@ -849,6 +849,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Already preemptively loaded, avoids warning. */
          continue;
       }
+      xmlr_float(node,"time_mod",temp->dt_default);
       xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
@@ -986,6 +987,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
+   MELEMENT(temp->dt_default==0.,"time_mod");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->armour==0.,"armour");

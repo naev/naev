@@ -17,6 +17,7 @@
 #define MENU_DEATH      (1<<3) /**< Player death menu. */
 #define MENU_OPTIONS    (1<<4) /**< Player's options menu. */
 #define MENU_ASKQUIT    (1<<5) /**< Really quit naev? menu. */
+#define MENU_EDITORS    (1<<6) /**< Editors menu. */
 #define menu_isOpen(f)  (menu_open & (f)) /**< Checks if a certain menu is opened. */
 extern int menu_open; /**< Used internally by menu_isOpen() */
 

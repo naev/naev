@@ -28,6 +28,7 @@ CODE_SOURCE = \
 	dev_system.c \
 	dev_sysedit.c \
 	dev_uniedit.c \
+	dev_mapedit.c \
 	dialogue.c \
 	economy.c \
 	equipment.c \

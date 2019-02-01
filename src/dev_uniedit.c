@@ -171,8 +171,8 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_wid = wid;
 
    /* Close button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("Close"), uniedit_close );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Exit"), uniedit_close, SDLK_x );
    buttonPos++;
 
    /* Autosave toggle. */
@@ -182,11 +182,6 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Save button. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", _("Save All"), uniedit_save );
-   buttonPos++;
-
-   /* Save Map button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSaveMap", _("Save Map"), uniedit_saveMap );
    buttonPos++;
 
    /* Jump toggle. */
@@ -313,18 +308,6 @@ void uniedit_autosave( unsigned int wid_unused, char *unused )
 void uniedit_updateAutosave (void)
 {
    window_checkboxSet( uniedit_wid, "chkEditAutoSave", conf.devautosave );
-}
-
-
-/*
- * @brief Saves a map.
- */
-static void uniedit_saveMap( unsigned int wid_unused, char *unused )
-{
-   (void) wid_unused;
-   (void) unused;
-
-   dsys_saveMap(uniedit_sys, uniedit_nsys);
 }
 
 

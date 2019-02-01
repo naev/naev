@@ -6,6 +6,7 @@
  <sound>engine</sound>
  <class>Fighter</class>
  <price>280000</price>
+ <time_mod>1</time_mod>
  <fabricator>Skull and Bones</fabricator>
  <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
  <health>
