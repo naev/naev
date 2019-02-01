@@ -79,7 +79,7 @@ function accept()
 
       misn.setTitle(misn_title:format(missys:name()))
       misn.setReward(misn_reward:format(numstring(reward)))
-      misn.setDesc(misn_desc:format(missys))
+      misn.setDesc(misn_desc:format(missys:name()))
       osd = misn.osdCreate(osd_title:format(missys:name()), osd_msg)
       misn.osdActive(1)
 
