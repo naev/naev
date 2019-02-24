@@ -4,19 +4,19 @@
 
 
 function create()
-   
+
    --Get Player
    pp = player.pilot()
    pp = player.pilot()
    pfact = pp:faction()
    pname = player.name()
    pship = pp:ship()
-   
+
    --Get sizes
    screen_w, screen_h = gfx.dim()
    deffont_h = gfx.fontSize()
    smallfont_h = gfx.fontSize(true)
-   
+
    --Colors
    col_shield = colour.new(  24/255,  31/255,  80/255 )
    col_armour = colour.new(  52/255,  52/255,  52/255 )
@@ -37,7 +37,7 @@ function create()
    col_text = colour.new( 203/255, 203/255, 203/255 )
    col_unkn = colour.new( 130/255, 130/255, 130/255 )
    col_lgray = colour.new( 160/255, 160/255, 160/255 )
-   
+
    --Images
    local base = "dat/gfx/gui/brushed/"
    main = tex.open( base .. "main.png" )
@@ -119,14 +119,14 @@ function create()
 
    --Positions
    --Main is at 0,0
-   
+
    --Radar
    radar_x = 263
    radar_y = 5
    radar_w = 114
    radar_h = 120
    gui.radarInit( false, radar_w, radar_h )
-   
+
    bar_y = 2
    bar_x = 46
    bar_w, bar_h = bar_bg:dim()
@@ -138,7 +138,7 @@ function create()
 
    pl_speed_x = 38
    pl_speed_y = 2
-   
+
    target_bar_x = 57
    target_bar_y = 92
    bars_target = { "target_shield", "target_armour", "target_energy" }
@@ -146,23 +146,23 @@ function create()
       _G[ "x_" .. v ] = target_bar_x + (k-1)*(bar_w + 6)
       _G[ "y_" .. v ] = target_bar_y
    end
-   
+
    target_image_x = 53
    target_image_y = 172
    target_image_w, target_image_h = target_bg:dim()
    question_w, question_h = question:dim()
-   
+
    x_name = 102
    y_name = 197
-   
+
    field_w, field_h = field_bg_left:dim()
-   
+
    x_dist = 102
    y_dist = 172
-   
+
    x_speed = 189
    y_speed = 173
-   
+
    right_side_x = 406
    left_side_w, left_side_h = main:dim()
    end_right_w, end_right_h = end_right:dim()
@@ -170,18 +170,18 @@ function create()
    popup_left_y = 88
    popup_right_x = 432
    popup_right_y = 88
-   
+
    weapbars = math.max( 3, math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) ) --number of weapon bars that can fit on the screen (minimum 3)
-   
+
    circle_w, circle_h = icon_refire:dim()
 
    tbar_center_x = screen_w/2
    tbar_center_w, tbar_center_h = top_bar_center:dim()
    tbar_w, tbar_h = top_bar:dim()
    tbar_y = screen_h - tbar_h
-   
+
    gui.viewport( 0, 0, screen_w, screen_h )
-   
+
    fields_y = tbar_y + 15
    if screen_w <=1024 then
       fields_w = (screen_w-tbar_center_w)/4-8
@@ -190,7 +190,7 @@ function create()
       fields_w = (1024-tbar_center_w)/4-8
       fields_x = (screen_w - 1024)/2
    end
-   
+
    buttons_y = screen_h - 34
    buttons_w, buttons_h = button_normal:dim()
    buttontypes = { "missions", "cargo", "ship", "weapons" }
@@ -232,13 +232,13 @@ function create()
    local osd_w = 225
    local osd_h = screen_h - 275
    gui.osdInit( 30, screen_h - 50, osd_w, osd_h )
-   
+
    first_time = { true, 2 }
    navstring = _("none")
-   
+
    gui.mouseClickEnable(true)
    gui.mouseMoveEnable(true)
-   
+
    update_target()
    update_ship()
    update_system()
@@ -277,9 +277,9 @@ function update_target()
       ta_gfx_w, ta_gfx_h, ta_gfx_sw, ta_gfx_sh = ta_gfx:dim()
       ta_fact = ptarget:faction()
       ta_stats = ptarget:stats()
-      
+
       ta_gfx_aspect = ta_gfx_sw / ta_gfx_sh
-      
+
       if ta_gfx_aspect >= 1 then
          if ta_gfx_sw > target_image_w then
             ta_gfx_draw_w = target_image_w
@@ -361,7 +361,7 @@ end
 function update_cargo()
    cargo = pp:cargoFree()
    cargolist = pp:cargoList()
-   
+
    if not first_time[1] then
       if #cargolist == 0 then
          buttons["cargo"].state = "disabled"
@@ -375,7 +375,7 @@ end
 
 function update_ship()
    stats = pp:stats()
-   
+
    if not first_time[2] then
       if buttons["ship"].state ~= "mouseover" then
          buttons["ship"].state = "hilighted"
@@ -393,9 +393,9 @@ end
 
 function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
    local offsets = { 2, 2, 4, 54, 12, -2 } --Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
-   
+
    local vars = { "col", "col_top", "x", "y", "icon" }
-   for k, v in ipairs( vars ) do 
+   for k, v in ipairs( vars ) do
       if (v == "x" or v == "y") and prefix ~= nil then
          _G[ "l_" .. v ] = _G[ v .. "_" .. prefix .. "_" .. name ]
       else
@@ -404,7 +404,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
    end
    l_x = l_x + mod_x
    icon_w, icon_h = l_icon:dim()
-   
+
    if locked == true then
       gfx.renderTex( bar_lock, l_x + offsets[1], l_y + offsets[2] ) --Lock
    else
@@ -475,7 +475,7 @@ function renderWeapBar( weapon, x, y )
          heatcol = col_heat2
          heatcol_top = col_top_heat2
       end
-      
+
       if weapon.is_outfit then
          icon = outfit.get( weapon.name ):icon()
          icon_w, icon_h = icon:dim()
@@ -495,7 +495,7 @@ function renderWeapBar( weapon, x, y )
          else
             top_icon = icon_Kinetic
          end
-         
+
          if weapon.type == "Bolt Cannon" or weapon.type == "Bolt Turret" then
             bottom_icon = icon_projectile
          elseif weapon.type == "Beam Cannon" or weapon.type == "Beam Turret" then
@@ -534,7 +534,7 @@ function renderWeapBar( weapon, x, y )
             if not weapon.in_arc and player.pilot():target() ~= nil then
                col = col_lgray
             end
-            
+
             if weapon.lockon ~= nil then
                gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lockon indicator
             end
@@ -570,7 +570,7 @@ end
 function renderField( text, x, y, w, col, icon )
    local offsets = { 3, 14, 6 } --Sheen x and y, Icon x
    local onetwo = 1
-   
+
    gfx.renderTex( field_bg_left, x, y )
    drawn_w = 14
    while drawn_w < w - 14 do
@@ -583,7 +583,7 @@ function renderField( text, x, y, w, col, icon )
       drawn_w = drawn_w + 2
    end
    gfx.renderTex( _G[ "field_bg_right" .. tostring(onetwo) ], x + w - 14, y )
-   
+
    if icon ~= nil then
       local icon_w, icon_h = icon:dim()
       gfx.renderTex( icon, x + offsets[3], y + 11 - icon_h/2 )
@@ -591,9 +591,9 @@ function renderField( text, x, y, w, col, icon )
    else
       gfx.print( true, text, x, y + field_h/2 - smallfont_h/2, col, w, true )
    end
-   
+
    --gfx.renderTex( field_frame, x, y ) --Frame
-   
+
    gfx.renderTex( field_frame_left, x, y )
    if w > 28 then
       gfx.renderTexRaw( field_frame_center, x+14, y, w-28, field_h, 1, 1, 0, 0, 1, 1 )
@@ -603,7 +603,7 @@ function renderField( text, x, y, w, col, icon )
    else
       gfx.renderTex( field_frame_right, x+14, y )
    end
-   
+
    --gfx.renderTex( field_sheen, x + offsets[1], y + offsets[2] ) --Sheen
    gfx.renderTex( field_sheen_left, x + offsets[1], y + offsets[2] )
    gfx.renderTexRaw( field_sheen, x + offsets[1] + 6, y + offsets[2], w - (2*offsets[1]+6), 6, 1, 1, 0, 0, 1, 1 )
@@ -611,7 +611,7 @@ end
 
 function renderButton( button )
    local v_button = buttons[button]
-   
+
    if v_button.state == "hilighted" then
       gfx.renderTex( button_hilighted, v_button.x, v_button.y )
    elseif v_button.state == "mouseover" then
@@ -623,19 +623,20 @@ function renderButton( button )
    else
       gfx.renderTex( button_normal, v_button.x, v_button.y )
    end
-   
+
    gfx.renderTex( v_button.icon, v_button.x+v_button.w/2-v_button.icon_w/2, v_button.y+v_button.h/2-v_button.icon_h/2 )
 end
 
 function render( dt )
-   
+
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
    fuel = player.fuel() / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
    wset_name, wset = pp:weapset( true )
-   aset = pp:actives(true)
+   aset = pp:actives( true )
+   table.sort( aset, function(v) return v.weapset end )
 
    for k, v in ipairs( wset ) do
       v.is_outfit = false
@@ -648,7 +649,7 @@ function render( dt )
    credits, credits_h = player.credits(2)
    autonav = player.autonav()
    lockons = pp:lockon()
-   
+
    --Main window right
    if #wset > weapbars then
       wbars_right = weapbars
@@ -675,7 +676,7 @@ function render( dt )
       gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6, 165, height, 1, 1, 0, 0, 1, 1 )
       gfx.renderTex( popup_bottom_side_left, popup_right_x + 7 + mod_x, popup_right_y )
       gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y, -3, 19, 1, 1, 0, 0, 1, 1 )
-      
+
       local drawn
       for i=1, (amount+1) do
          local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
@@ -700,18 +701,18 @@ function render( dt )
       mesg_w = new_mesg_w
       gui.mesgInit( mesg_w, mesg_x, mesg_y )
    end
-   
+
    --Main window left
    gfx.renderTex( main, mod_x, 0 )
    gui.radarRender( radar_x + mod_x, radar_y )
-   
+
    if lockons > 0 then
       gfx.renderTex( icon_lockon, 378 + mod_x, 50 )
    end
    if autonav then
       gfx.renderTex( icon_autonav, 246 + mod_x, 52 )
    end
-   
+
    for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
       local ht = nil
       local st = nil
@@ -739,15 +740,15 @@ function render( dt )
       gfx.renderTex( speed_light_off, pl_speed_x + mod_x, pl_speed_y + (i-1)*6 )
       end
    end
-   
-   
+
+
    --Popup left
    if ptarget ~= nil then
       ta_detect, ta_scanned = pp:inrange(ptarget)
-      
+
       if ta_detect then
          gfx.renderTex( popup_pilot, popup_left_x + mod_x, popup_left_y ) --Frame
-         
+
          --Target Image
          gfx.renderTex( target_bg, target_image_x + mod_x, target_image_y )
          ta_dist = pp:pos():dist(ptarget:pos())
@@ -773,10 +774,10 @@ function render( dt )
             renderField( _("Unknown"), x_name + mod_x, y_name, 86, col_unkn )
             renderField( tostring( math.floor(ta_dist) ), x_dist + mod_x, y_dist, 86, col_text )
          end
-         
+
          gfx.renderTex( target_frame, target_image_x + mod_x, target_image_y )
          gfx.renderTex( target_sheen, target_image_x + 3 + mod_x, target_image_y + 32 )
-         
+
          --Speed Lights
          local nlights = 7
          local value = round( ptarget:vel():mod() * nlights / ta_stats.speed_max )
@@ -799,12 +800,12 @@ function render( dt )
       end
    else
       gfx.renderTex( popup_empty, popup_left_x + mod_x, popup_left_y )
-   end   
+   end
    gfx.renderTex( popup_bottom, popup_left_x + mod_x, popup_left_y - 5 )
-   
+
    --Top Bar
    gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
-   
+
    if nav_pnt ~= nil then
       renderField( nav_pnt:name(), fields_x + 4, fields_y, fields_w, col_text, icon_pnt_target )
    else
@@ -817,10 +818,10 @@ function render( dt )
    end
    renderField( credits_h, tbar_center_x + tbar_center_w/2 + 4, fields_y, fields_w, col_text, icon_money )
    renderField( tostring(cargo) .. "t", tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
-   
+
    --Center
    gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, screen_h - tbar_center_h )
-   
+
    --Time
    local time_str = time.str(time.get())
    local time_str_w = gfx.printDim(false, time_str)
@@ -832,7 +833,7 @@ function render( dt )
    local sysname_w = gfx.printDim(false, sysname)
    gfx.print( false, sysname, screen_w/2 - 67, screen_h - tbar_center_h + 19, col_text, 132, true )
    gfx.renderTex( top_bar_center_sheen2, screen_w/2 - 66, screen_h - 92 )
-   
+
    for k, v in ipairs(buttontypes) do
       renderButton( v )
    end
@@ -899,7 +900,7 @@ function mouse_click( button, x, y, state )
    else
       lmouse = state
       pressed = mouseInsideButton( x, y )
-      
+
       if pressed == nil then
          if not state then
             for k, v in pairs(buttons) do
