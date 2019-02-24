@@ -443,8 +443,9 @@ function renderBar( name, value, light, locked, prefix, mod_x, heat, stress )
       gfx.renderTex( bar_frame_light, l_x, l_y ) --Frame
       local show_light = false
       if name == "fuel" then
+         show_light = player.jumps() <= 0
          if autonav_hyp ~= nil then
-            show_light = player.jumps() < autonav_hyp:jumpDist()
+            show_light = show_light or player.jumps() < autonav_hyp:jumpDist()
          end
       else
          show_light = value < 20
