@@ -106,7 +106,7 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderAsteroidsField( double x, double y);
+static void sysedit_renderAsteroidsField( double bx, double by, double x, double y);
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
@@ -668,7 +668,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       selected = 0;
       sysedit_renderSprite( asteroid_gfx[0], x, y, ast->pos.x, ast->pos.y,
                             0, 0, NULL, selected, _("Asteroid Field") );
-      sysedit_renderAsteroidsField( x, y );
+      sysedit_renderAsteroidsField( x, y, ast->pos.x, ast->pos.y );
    }
 
    /* Render cursor position. */
@@ -683,10 +683,10 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
  * @brief Draws an asteroids field on the map.
  *
  */
-static void sysedit_renderAsteroidsField( double x, double y )
+static void sysedit_renderAsteroidsField( double bx, double by, double x, double y )
 {
    // "Constants" that were previously parameters
-         double r = 100.0;
+         double r =  10.0;
    const double a =   0.5;
    const int num  =   1;
    const int cur  =   1;
@@ -700,9 +700,17 @@ static void sysedit_renderAsteroidsField( double x, double y )
    int i;
    double alpha, cos_alpha, sin_alpha;
    GLfloat vertex[3*(2+4)];
+   double tx, ty, z;
+
+   /* Comfort. */
+   z  = sysedit_zoom;
+
+   /* Translate coords. */
+   tx = bx + x*z;
+   ty = by + y*z;
 
    /* Calculate the angle. */
-   alpha = 0;
+   alpha = 45;
 
    alpha += M_PI*2. * (double)cur/(double)num;
    cos_alpha = r * cos(alpha);
@@ -710,12 +718,12 @@ static void sysedit_renderAsteroidsField( double x, double y )
    r = 3 * r;
 
    /* Draw the marking triangle. */
-   vertex[0] = x + cos_alpha;
-   vertex[1] = y + sin_alpha;
-   vertex[2] = x + cos_alpha + r * cos(beta + alpha);
-   vertex[3] = y + sin_alpha + r * sin(beta + alpha);
-   vertex[4] = x + cos_alpha + r * cos(beta - alpha);
-   vertex[5] = y + sin_alpha - r * sin(beta - alpha);
+   vertex[0] = tx + cos_alpha;
+   vertex[1] = ty + sin_alpha;
+   vertex[2] = tx + cos_alpha + r * cos(beta + alpha);
+   vertex[3] = ty + sin_alpha + r * sin(beta + alpha);
+   vertex[4] = tx + cos_alpha + r * cos(beta - alpha);
+   vertex[5] = ty + sin_alpha - r * sin(beta - alpha);
 
    for (i=0; i<3; i++) {
       vertex[6 + 4*i + 0] = colours[type]->r;
