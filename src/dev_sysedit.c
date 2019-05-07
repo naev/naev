@@ -106,6 +106,7 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
+static void sysedit_renderAsteroidsField( double x, double y);
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
@@ -151,6 +152,8 @@ static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
 
+/* VBO. */
+static gl_vbo *sysedit_vbo = NULL; /**< Map VBO. */
 
 /**
  * @brief Opens the system editor interface.
@@ -656,6 +659,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       selected = 0;
       sysedit_renderSprite( asteroid_gfx[0], x, y, ast->pos.x, ast->pos.y,
                             0, 0, NULL, selected, _("Asteroid Field") );
+      sysedit_renderAsteroidsField( x, y );
    }
 
    /* Render cursor position. */
@@ -665,6 +669,61 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          (by + sysedit_my - y)/z );
 }
 
+
+/**
+ * @brief Draws an asteroids field on the map.
+ *
+ */
+static void sysedit_renderAsteroidsField( double x, double y )
+{
+   // "Constants" that were previously parameters
+         double r = 100.0;
+   const double a =   0.5;
+   const int num  =   1;
+   const int cur  =   1;
+   const int type =   1;
+
+   const double beta = M_PI / 9;
+   static const glColour* colours[] = {
+      &cGreen, &cBlue, &cRed, &cOrange, &cYellow
+   };
+
+   int i;
+   double alpha, cos_alpha, sin_alpha;
+   GLfloat vertex[3*(2+4)];
+
+   /* Calculate the angle. */
+   alpha = 0;
+
+   alpha += M_PI*2. * (double)cur/(double)num;
+   cos_alpha = r * cos(alpha);
+   sin_alpha = r * sin(alpha);
+   r = 3 * r;
+
+   /* Draw the marking triangle. */
+   vertex[0] = x + cos_alpha;
+   vertex[1] = y + sin_alpha;
+   vertex[2] = x + cos_alpha + r * cos(beta + alpha);
+   vertex[3] = y + sin_alpha + r * sin(beta + alpha);
+   vertex[4] = x + cos_alpha + r * cos(beta - alpha);
+   vertex[5] = y + sin_alpha - r * sin(beta - alpha);
+
+   for (i=0; i<3; i++) {
+      vertex[6 + 4*i + 0] = colours[type]->r;
+      vertex[6 + 4*i + 1] = colours[type]->g;
+      vertex[6 + 4*i + 2] = colours[type]->b;
+      vertex[6 + 4*i + 3] = colours[type]->a * a;
+   }
+
+   glEnable(GL_POLYGON_SMOOTH);
+   gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+   gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,
+         sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLES, 0, 3 );
+   gl_vboDeactivate();
+   glDisable(GL_POLYGON_SMOOTH);
+}
 
 /**
  * @brief Renders the custom widget background.
