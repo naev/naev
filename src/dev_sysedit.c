@@ -164,6 +164,9 @@ void sysedit_open( StarSystem *sys )
    char buf[PATH_MAX];
    int i;
 
+   /* Create the VBO. */
+   sysedit_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
 
@@ -270,6 +273,12 @@ static void sysedit_close( unsigned int wid, char *wgt )
 {
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
+   
+   /* Unload VBO */
+   if (sysedit_vbo != NULL) {
+      gl_vboDestroy(sysedit_vbo);
+      sysedit_vbo = NULL;
+   }
 
    /* Remove selection. */
    sysedit_deselect();
