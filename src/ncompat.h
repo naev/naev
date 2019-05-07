@@ -29,12 +29,21 @@
 #define HAS_FREEBSD 0
 #endif
 /**
- * @brief System is Windows-class.
+ * @brief System is Windows-class (set for win32 and win64).
  */
 #if (defined(_WIN32))
 #define HAS_WIN32 1
 #else
 #define HAS_WIN32 0
+
+#endif
+/**
+ * @brief System is Windows-64-class.
+ */
+#if (defined(_WIN64))
+#define HAS_WIN64 1
+#else
+#define HAS_WIN64 0
 
 #endif
 /**

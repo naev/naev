@@ -112,6 +112,7 @@ static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static char short_version[64]; /**< Contains version. */
 static char human_version[256]; /**< Human readable version. */
+static char human_build[256]; /**< Human readable build. */
 static glTexture *loading     = NULL; /**< Loading screen. */
 static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
@@ -199,7 +200,7 @@ int main( int argc, char** argv )
    binary_path = strdup(argv[0]);
 
    /* Print the version */
-   LOG( " %s v%s", APPNAME, naev_version(0) );
+   LOG( " %s v%s build for %s", APPNAME, naev_version(0), naev_build() );
 #ifdef GIT_COMMIT
    DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
 #endif /* GIT_COMMIT */
@@ -1297,6 +1298,34 @@ int naev_versionCompare( int version[3] )
       return +1;
 
    return 0;
+}
+
+
+/**
+ * @brief Returns the build in a human readable string.
+ *
+ *    @return The human readable build string.
+ */
+char *naev_build (void)
+{
+   nsnprintf( human_build, sizeof(human_version), "(unidentified)" );
+#if HAS_LINUX
+   nsnprintf( human_build, sizeof(human_version), "Linux" );
+#endif
+#if HAS_FREEBSD
+   nsnprintf( human_build, sizeof(human_version), "FreeBSD" );
+#endif
+#if HAS_WIN32
+#if HAS_WIN64
+   nsnprintf( human_build, sizeof(human_version), "Win64" );
+#else
+   nsnprintf( human_build, sizeof(human_version), "Win32" );
+#endif
+#endif
+#if HAS_MACOS
+   nsnprintf( human_build, sizeof(human_version), "MacOS" );
+#endif
+   return human_build;
 }
 
 
