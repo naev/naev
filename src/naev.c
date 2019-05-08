@@ -1219,7 +1219,7 @@ char *naev_version( int long_version )
    if (long_version) {
       if (human_version[0] == '\0')
          nsnprintf( human_version, sizeof(human_version),
-               " "APPNAME" v%s%s - %s", short_version,
+               " "APPNAME" v%s (%s)%s - %s", short_version, naev_build(),
 #ifdef DEBUGGING
                _(" debug"),
 #else /* DEBUGGING */
@@ -1308,22 +1308,22 @@ int naev_versionCompare( int version[3] )
  */
 char *naev_build (void)
 {
-   nsnprintf( human_build, sizeof(human_version), "(unidentified)" );
+   nsnprintf( human_build, sizeof(human_version), "Unknown_Arch" );
 #if HAS_LINUX
-   nsnprintf( human_build, sizeof(human_version), "Linux" );
+   nsnprintf( human_build, sizeof(human_version), "linux" );
 #endif
 #if HAS_FREEBSD
-   nsnprintf( human_build, sizeof(human_version), "FreeBSD" );
+   nsnprintf( human_build, sizeof(human_version), "freeBSD" );
 #endif
 #if HAS_WIN32
 #if HAS_WIN64
-   nsnprintf( human_build, sizeof(human_version), "Win64" );
+   nsnprintf( human_build, sizeof(human_version), "win64" );
 #else
-   nsnprintf( human_build, sizeof(human_version), "Win32" );
+   nsnprintf( human_build, sizeof(human_version), "win32" );
 #endif
 #endif
 #if HAS_MACOS
-   nsnprintf( human_build, sizeof(human_version), "MacOS" );
+   nsnprintf( human_build, sizeof(human_version), "macOS" );
 #endif
    return human_build;
 }
