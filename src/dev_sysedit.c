@@ -697,11 +697,12 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
       &cGreen, &cBlue, &cRed, &cOrange, &cYellow
    };
 
-   int i, j;
+   int i, j, k;
    double alpha, cos_alpha, sin_alpha;
    GLfloat vertex[               3*(2+4)];
-   GLfloat corners[ast->ncorners*3*(2+4)];
+   GLfloat corners[ast->ncorners*3*(2+4)];  /* Field # of vertices is large enough to contain any convex's # of vertices, so no need to limit and resize for each convex */
    double tx, ty, z;
+   AsteroidSubset *sub;
 
    /* Render icon */
    sysedit_renderSprite( asteroid_gfx[0], bx, by, ast->pos.x, ast->pos.y,
@@ -733,33 +734,38 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
       vertex[6 + 4*i + 3] = colours[type_triangle]->a * a_triangle;
    }
 
-   /* Setup the corners' vertex array : [tx,ty,x0,y0,x1,y1,...,tx,ty,xn,yn,x0,y0,r1,g1,b1,a1,...,r3n,g3n,b3n,a3n]. */
-   for (j=0; j<ast->ncorners; j++) {
-      corners[                  6*j + 0] = tx;
-      corners[                  6*j + 1] = ty;
-      corners[                  6*j + 2] = bx + ast->corners[j].x*z;
-      corners[                  6*j + 3] = by + ast->corners[j].y*z;
-      corners[                  6*j + 4] = bx + ast->corners[(j+1)%ast->ncorners].x*z;
-      corners[                  6*j + 5] = by + ast->corners[(j+1)%ast->ncorners].y*z;
-      for (i=0; i<3; i++) {
-         corners[6*ast->ncorners + 3*4*j + 4*i + 0] = colours[type_corners]->r;
-         corners[6*ast->ncorners + 3*4*j + 4*i + 1] = colours[type_corners]->g;
-         corners[6*ast->ncorners + 3*4*j + 4*i + 2] = colours[type_corners]->b;
-         corners[6*ast->ncorners + 3*4*j + 4*i + 3] = colours[type_corners]->a * a_corners;
+   /* Loop on convex subsets */
+   for (k=0; k<ast->nsubsets; k++) {
+      sub = &ast->subsets[k];
+      /* Setup the subset's corners' vertex array : [tx,ty,x0,y0,x1,y1,...,tx,ty,xn,yn,x0,y0,r1,g1,b1,a1,...,r3n,g3n,b3n,a3n]. */
+      for (j=0; j<sub->ncorners; j++) {
+         corners[                  6*j + 0] = tx;
+         corners[                  6*j + 1] = ty;
+         corners[                  6*j + 2] = bx + sub->corners[j].x*z;
+         corners[                  6*j + 3] = by + sub->corners[j].y*z;
+         corners[                  6*j + 4] = bx + sub->corners[(j+1)%sub->ncorners].x*z;
+         corners[                  6*j + 5] = by + sub->corners[(j+1)%sub->ncorners].y*z;
+         for (i=0; i<3; i++) {
+            corners[6*sub->ncorners + 3*4*j + 4*i + 0] = colours[type_corners]->r;
+            corners[6*sub->ncorners + 3*4*j + 4*i + 1] = colours[type_corners]->g;
+            corners[6*sub->ncorners + 3*4*j + 4*i + 2] = colours[type_corners]->b;
+            corners[6*sub->ncorners + 3*4*j + 4*i + 3] = colours[type_corners]->a * a_corners;
+         }
       }
+
+      /* First render each convex subset : enable + resize + load vertices + load colors + draw + disable */
+      glEnable(GL_POLYGON_SMOOTH);
+      gl_vboData( sysedit_vbo, sizeof(GLfloat) * sub->ncorners*3*(2+4), NULL );
+      gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * sub->ncorners*3*(2+4), corners );
+      gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0,                                   2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,  sizeof(GLfloat) * sub->ncorners*3*2, 4, GL_FLOAT, 0 );
+      glDrawArrays( GL_TRIANGLES, 0, sub->ncorners*3 );
+      gl_vboDeactivate();
+      glDisable(GL_POLYGON_SMOOTH);
+
    }
    
-   /* First render the corners : activate + resize + load vertices + load colors + draw */
-   glEnable(GL_POLYGON_SMOOTH);
-   gl_vboData( sysedit_vbo, sizeof(GLfloat) * ast->ncorners*3*(2+4), NULL );
-   gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * ast->ncorners*3*(2+4), corners );
-   gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0,                                   2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,  sizeof(GLfloat) * 2*3*ast->ncorners, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLES, 0, 3*ast->ncorners );
-   gl_vboDeactivate();
-   glDisable(GL_POLYGON_SMOOTH);
-
-   /* Then render the triangle : resize + load vertices + load colors + draw */
+   /* Then render the triangle : enable + resize + load vertices + load colors + draw + disable */
    glEnable(GL_POLYGON_SMOOTH);
    gl_vboData( sysedit_vbo, sizeof(GLfloat) * 3*(2+4), NULL );
    gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
