@@ -684,61 +684,87 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected )
 {
    // "Constants" that were previously parameters
-         double r =  10.0;
-   const double a =   0.5;
-   const int num  =   1;
-   const int cur  =   1;
-   const int type =   1;
+         double r          =   5.0;
+   const double a_triangle =   1.0;
+   const double a_corners  =   0.2;
+   const int num           =   1;
+   const int cur           =   1;
+   const int type_corners  =   2;
+   const int type_triangle =   3;
 
    const double beta = M_PI / 9;
    static const glColour* colours[] = {
       &cGreen, &cBlue, &cRed, &cOrange, &cYellow
    };
 
-   int i;
+   int i, j;
    double alpha, cos_alpha, sin_alpha;
-   GLfloat vertex[3*(2+4)];
+   GLfloat vertex[               3*(2+4)];
+   GLfloat corners[ast->ncorners*3*(2+4)];
    double tx, ty, z;
 
    /* Render icon */
    sysedit_renderSprite( asteroid_gfx[0], bx, by, ast->pos.x, ast->pos.y,
                          0, 0, NULL, selected, _("Asteroid Field") );
 
-   /* Comfort. */
+   /* Inits. */
    z  = sysedit_zoom;
 
-   /* Translate coords. */
+   /* Translate asteroids field center's coords. */
    tx = bx + ast->pos.x*z;
    ty = by + ast->pos.y*z;
 
-   /* Calculate the angle. */
+   /* Setup the marking triangle's vertex array : [x0,y0,x1,y1,x2,y2,r0,g0,b0,a0,r1,g1,b1,a1,r2,g2,b2,a2]. */
    alpha = 45;
-
    alpha += M_PI*2. * (double)cur/(double)num;
    cos_alpha = r * cos(alpha);
    sin_alpha = r * sin(alpha);
    r = 3 * r;
-
-   /* Draw the marking triangle. */
    vertex[0] = tx + cos_alpha;
    vertex[1] = ty + sin_alpha;
    vertex[2] = tx + cos_alpha + r * cos(beta + alpha);
    vertex[3] = ty + sin_alpha + r * sin(beta + alpha);
    vertex[4] = tx + cos_alpha + r * cos(beta - alpha);
    vertex[5] = ty + sin_alpha - r * sin(beta - alpha);
-
    for (i=0; i<3; i++) {
-      vertex[6 + 4*i + 0] = colours[type]->r;
-      vertex[6 + 4*i + 1] = colours[type]->g;
-      vertex[6 + 4*i + 2] = colours[type]->b;
-      vertex[6 + 4*i + 3] = colours[type]->a * a;
+      vertex[6 + 4*i + 0] = colours[type_triangle]->r;
+      vertex[6 + 4*i + 1] = colours[type_triangle]->g;
+      vertex[6 + 4*i + 2] = colours[type_triangle]->b;
+      vertex[6 + 4*i + 3] = colours[type_triangle]->a * a_triangle;
    }
 
+   /* Setup the corners' vertex array : [tx,ty,x0,y0,x1,y1,...,tx,ty,xn,yn,x0,y0,r1,g1,b1,a1,...,r3n,g3n,b3n,a3n]. */
+   for (j=0; j<ast->ncorners; j++) {
+      corners[                  6*j + 0] = tx;
+      corners[                  6*j + 1] = ty;
+      corners[                  6*j + 2] = bx + ast->corners[j].x*z;
+      corners[                  6*j + 3] = by + ast->corners[j].y*z;
+      corners[                  6*j + 4] = bx + ast->corners[(j+1)%ast->ncorners].x*z;
+      corners[                  6*j + 5] = by + ast->corners[(j+1)%ast->ncorners].y*z;
+      for (i=0; i<3; i++) {
+         corners[6*ast->ncorners + 3*4*j + 4*i + 0] = colours[type_corners]->r;
+         corners[6*ast->ncorners + 3*4*j + 4*i + 1] = colours[type_corners]->g;
+         corners[6*ast->ncorners + 3*4*j + 4*i + 2] = colours[type_corners]->b;
+         corners[6*ast->ncorners + 3*4*j + 4*i + 3] = colours[type_corners]->a * a_corners;
+      }
+   }
+   
+   /* First render the corners : activate + resize + load vertices + load colors + draw */
    glEnable(GL_POLYGON_SMOOTH);
+   gl_vboData( sysedit_vbo, sizeof(GLfloat) * ast->ncorners*3*(2+4), NULL );
+   gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * ast->ncorners*3*(2+4), corners );
+   gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0,                                   2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,  sizeof(GLfloat) * 2*3*ast->ncorners, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLES, 0, 3*ast->ncorners );
+   gl_vboDeactivate();
+   glDisable(GL_POLYGON_SMOOTH);
+
+   /* Then render the triangle : resize + load vertices + load colors + draw */
+   glEnable(GL_POLYGON_SMOOTH);
+   gl_vboData( sysedit_vbo, sizeof(GLfloat) * 3*(2+4), NULL );
    gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
-   gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,
-         sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+   gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0,                     2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,  sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLES, 0, 3 );
    gl_vboDeactivate();
    glDisable(GL_POLYGON_SMOOTH);
