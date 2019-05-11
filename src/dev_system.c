@@ -166,19 +166,14 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_jumps);
 
    /* Asteroids. */
-   WARN("Found %u asteroids fields in system %s", sys->nasteroids, sys->name);
    if (sys->nasteroids > 0) {
       xmlw_startElem( writer, "asteroids" );
       for (i=0; i<sys->nasteroids; i++) {
-         WARN("\tWriting asteroids field #%u", i);
          ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
          /* Corners */
          for (j=0; j<ast->ncorners; j++) {
-            WARN("\t\tCorner #%u", j);
-            WARN("\t\t\tX : %5.0f", ast->corners[j].x);
-            WARN("\t\t\tY : %5.0f", ast->corners[j].y);
             xmlw_startElem( writer, "corner" );
             xmlw_elem( writer, "x", "%f", ast->corners[j].x );
             xmlw_elem( writer, "y", "%f", ast->corners[j].y );

@@ -2988,16 +2988,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    /* Added asteroid. */
    sys->nasteroids++;
 
-   /* DEBUG LOG */
-   WARN("");
-   WARN("Loading Asteroids field #%u (%u corners) in system %s", sys->nasteroids-1, a->ncorners, sys->name );
-   WARN("\tInitial list of corners.");
-   for (i=0; i<a->ncorners; i++) {
-      WARN("\t\tCorner #%u", i);
-      WARN("\t\t\tX : %5.0f", a->corners[i].x);
-      WARN("\t\t\tY : %5.0f", a->corners[i].y);
-   }
-
    /* Initialize the convex subsets. */
    a->subsets = malloc( sizeof(AsteroidSubset) );
    a->subsets[0].ncorners = a->ncorners;
@@ -3115,14 +3105,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                     - (sub->corners[0].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
       }
       sub->aera /= 2;
-   }
-
-   /* DEBUG LOG */
-   WARN("\tList of corners after convex subsets generation.");
-   for (i=0; i<a->ncorners; i++) {
-      WARN("\t\tCorner #%u", i);
-      WARN("\t\t\tX : %5.0f", a->corners[i].x);
-      WARN("\t\t\tY : %5.0f", a->corners[i].y);
    }
 
    return 0;

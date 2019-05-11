@@ -656,15 +656,6 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       selected = 0;
       sysedit_renderSprite( asteroid_gfx[0], x, y, ast->pos.x, ast->pos.y,
                             0, 0, NULL, selected, _("Asteroid Field") );
-
-      /* DEBUG : display asteroids field corners on stderr */
-      WARN("");
-      WARN("Rendering asteroids field #%u", i);
-      for (j=0; j<ast->ncorners; j++) {
-         WARN("\tCorner #%u", j);
-         WARN("\t\tX : %5.0f", ast->corners[j].x);
-         WARN("\t\tY : %5.0f", ast->corners[j].y);
-      }
    }
 
    /* Render cursor position. */
