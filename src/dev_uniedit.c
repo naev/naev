@@ -145,6 +145,40 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    (void) unused;
    unsigned int wid;
    int buttonPos = 0;
+   int i, j, k, l;
+   StarSystem *sys;
+   AsteroidAnchor *ast;
+   AsteroidSubset *sub;
+
+   /* DEBUG LOG */
+   WARN("");
+   WARN("Entering Universe Editor");
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+      if (sys->nasteroids > 0) {
+         WARN("Found %u asteroids fields in system %s", sys->nasteroids, sys->name);
+         for (j=0; j<sys->nasteroids; j++) {
+            ast = &sys->asteroids[j];
+            WARN("\tLogging asteroids field #%u (%u corners, %u subsets)", j, ast->ncorners, ast->nsubsets);
+            /* Corners */
+            for (k=0; k<ast->ncorners; k++) {
+               WARN("\t\tCorner #%u", k);
+               WARN("\t\t\tX : %5.0f", ast->corners[k].x);
+               WARN("\t\t\tY : %5.0f", ast->corners[k].y);
+            }
+            /* Convex subsets */
+            for (k=0; k<ast->nsubsets; k++) {
+               WARN("\t\tSubset #%u", k);
+               sub = &ast->subsets[k];
+               for (l=0; l<sub->ncorners; l++) {
+                  WARN("\t\t\tCorner #%u", l);
+                  WARN("\t\t\t\tX : %5.0f", sub->corners[l].x);
+                  WARN("\t\t\t\tY : %5.0f", sub->corners[l].y);
+               }
+            }
+         }
+      }
+   }
 
    /* Pause. */
    pause_game();
