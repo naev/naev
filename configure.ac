@@ -600,6 +600,8 @@ AC_SUBST([VMAJOR])
 AC_SUBST([VMINOR])
 AC_SUBST([VREV])
 
+AC_DEFINE_UNQUOTED([HOST], ["$host"], [Host triple])
+
 # USE_OPENAL
 AS_IF([test "x$have_openal" = "xyes"], [
   AC_DEFINE([USE_OPENAL], 1, [Define to 1 if using OpenAL])

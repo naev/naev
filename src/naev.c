@@ -199,7 +199,7 @@ int main( int argc, char** argv )
    binary_path = strdup(argv[0]);
 
    /* Print the version */
-   LOG( " %s v%s", APPNAME, naev_version(0) );
+   LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
 #ifdef GIT_COMMIT
    DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
 #endif /* GIT_COMMIT */
