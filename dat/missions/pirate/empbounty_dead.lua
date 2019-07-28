@@ -30,7 +30,6 @@
 
 include "numstring.lua"
 include "jumpdist.lua"
-include "pilot/empire.lua"
 
 
 -- Mission details
