@@ -151,7 +151,6 @@ function accept ()
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
    hook.takeoff( "takeoff" )
-   hook.land( "land" )
 end
 
 
