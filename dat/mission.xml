@@ -878,41 +878,6 @@
    <cond>system.get("Ogat"):jumpDist() == 4 and player.jumps() &gt;= 4</cond>
   </avail>
  </mission>
- <mission name="Hitman">
-  <lua>pirate/hitman</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 30</cond>
-  </avail>
- </mission>
- <mission name="Hitman 2">
-  <lua>pirate/hitman2</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 40</cond>
-   <done>Hitman</done>
-  </avail>
- </mission>
- <mission name="Hitman 3">
-  <lua>pirate/hitman3</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 50</cond>
-   <done>Hitman 2</done>
-  </avail>
- </mission>
  <mission name="Hot dogs from space">
   <lua>neutral/reynir</lua>
   <flags>
@@ -930,14 +895,6 @@
             end
             return count &gt; 1
         end)()</cond>
-  </avail>
- </mission>
- <mission name="Stealing ships">
-  <lua>pirate/pir_ship_stealing</lua>
-  <avail>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>faction.playerStanding("Pirate") &gt;= 10</cond>
   </avail>
  </mission>
  <mission name="The macho teenager">
@@ -975,23 +932,46 @@
    <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
   </avail>
  </mission>
- <mission name="Empire Patrol Bounty">
-  <lua>pirate/pir_empbounty</lua>
+ <mission name="Hitman">
+  <lua>pirate/hitman</lua>
+  <flags>
+   <unique />
+  </flags>
   <avail>
-   <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
    <chance>10</chance>
-   <done>Hitman 3</done>
    <location>Bar</location>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 30</cond>
+  </avail>
+ </mission>
+ <mission name="Hitman 2">
+  <lua>pirate/hitman2</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 40</cond>
+   <done>Hitman</done>
+  </avail>
+ </mission>
+ <mission name="Pirate Empire Patrol Bounty">
+  <lua>pirate/empbounty_dead</lua>
+  <avail>
+   <priority>2</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket()</cond>
+   <chance>660</chance>
+   <location>Computer</location>
    <faction>Pirate</faction>
    <faction>Independent</faction>
+   <faction>FLF</faction>
   </avail>
  </mission>
  <mission name="Pirate Shipping">
   <lua>pirate/pir_cargo</lua>
   <avail>
    <priority>3</priority>
-   <cond>faction.playerStanding("Pirate") &gt;= 0 and player.numOutfit("Pirate Landing Pass") &gt; 0</cond>
+   <cond>faction.playerStanding("Pirate") &gt;= 0</cond>
    <chance>960</chance>
    <location>Computer</location>
    <faction>Pirate</faction>
@@ -1005,6 +985,14 @@
    <chance>10</chance>
    <location>Bar</location>
    <faction>Pirate</faction>
+  </avail>
+ </mission>
+ <mission name="Stealing ships">
+  <lua>pirate/pir_ship_stealing</lua>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>faction.playerStanding("Pirate") &gt;= 10</cond>
   </avail>
  </mission>
  <mission name="Drunkard">
