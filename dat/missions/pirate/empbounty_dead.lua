@@ -78,7 +78,7 @@ function create ()
    target_factions[8] = "Sirius"
    target_factions[9] = "Za'lek"
 
-   local systems = getsysatdistance( system.cur(), 1, 3,
+   local systems = getsysatdistance( system.cur(), 1, 6,
       function(s)
          for i, j in ipairs(target_factions) do
             local p = s:presences()[j]
