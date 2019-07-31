@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Alleyway">
+ <pos>
+  <x>7683.061332</x>
+  <y>4794.949483</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Originally intended to be a trading hub and refueling stop for merchants, this station has effectively turned into a hub for both pirates and bounty hunters. Authorities have long ago given up any hope of controlling the chaos, so everyone knows to be armed and remain vigilant at all times.</description>
+  <bar>The bar is a mix of mostly pirates and bounty hunters, with a handful of merchants and gamblers. Fights often break out and it's hard to tell who to trust, so most people keep to themselves and avoid eye contact with others.</bar>
+ </general>
+</asset>
