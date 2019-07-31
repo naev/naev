@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Secundus Station">
+ <pos>
+  <x>-5198.478537</x>
+  <y>-9255.152333</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>5.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>100</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>This old, rusty station has been mostly abandoned, but a handful of dedicated individuals continue to keep it running. It has been rumored that the maintainers of the station have connections to pirates, but no such connection has been proven and the local Dvaered officials don't seem to care anyway.</description>
+ </general>
+</asset>

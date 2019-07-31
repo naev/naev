@@ -22,9 +22,9 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
   <commodities>
    <commodity>Food</commodity>
