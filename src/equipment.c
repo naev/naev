@@ -101,9 +101,7 @@ static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_renameShip( unsigned int wid, char *str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
-static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
-static credits_t equipment_transportPrice( char *shipname );
 static void equipment_filterOutfits( unsigned int wid, char *str );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
 static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab );
@@ -313,8 +311,6 @@ void equipment_open( unsigned int wid )
       "Cargo Space:\n"
       "Fuel:\n"
       "\n"
-      "Transportation:\n"
-      "Location:\n"
       "Ship Status:");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
@@ -1645,11 +1641,11 @@ eq_qCol( cur, base, inv ), cur
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[1024], sysname[128], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char buf[1024], buf2[ECON_CRED_STRLEN];
    char errorReport[256];
    char *shipname;
    Pilot *ship;
-   char *loc, *nt;
+   char *nt;
    credits_t price;
    int onboard;
    int cargo;
@@ -1663,24 +1659,16 @@ void equipment_updateShips( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
       ship    = player.p;
-      loc     = _("Onboard");
-      price   = 0;
       onboard = 1;
-      sysname[0] = '\0';
    }
    else {
       ship   = player_getShip( shipname );
-      loc    = player_getLoc(ship->name);
-      price  = equipment_transportPrice( shipname );
       onboard = 0;
-      nsnprintf( sysname, sizeof(sysname), _(" in the %s system"),
-            planet_getSystem(loc) );
    }
    eq_wgt.selected = ship;
 
    /* update text */
-   price2str( buf2, price, player.p->credits, 2 ); /* transport */
-   credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
+   credits2str( buf2, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
 
@@ -1708,14 +1696,12 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%d / \a%c%d\a0 tonnes\n"
          "%d / \a%c%d\a0 units (%d jumps)\n"
          "\n"
-         "%s credits\n"
-         "%s%s\n"
          "\a%c%s\a0"),
          /* Generic. */
       ship->name,
       ship->ship->name,
       ship_class(ship->ship),
-      buf3,
+      buf2,
       /* Movement. */
       ship->solid->mass,
       '0', nt,
@@ -1736,9 +1722,6 @@ void equipment_updateShips( unsigned int wid, char* str )
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
       ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
-      /* Transportation. */
-      buf2,
-      loc, sysname,
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 
@@ -1750,19 +1733,8 @@ void equipment_updateShips( unsigned int wid, char* str )
       window_disableButton( wid, "btnSellShip" );
       window_disableButton( wid, "btnChangeShip" );
    }
-   else {
-      if (strcmp(land_planet->name,loc)) { /* ship not here */
-         window_buttonCaption( wid, "btnChangeShip", _("Transport") );
-         if (!player_hasCredits( price ))
-            window_disableButton( wid, "btnChangeShip" );
-         else
-            window_enableButton( wid, "btnChangeShip" );
-      }
-      else { /* ship is here */
-         window_buttonCaption( wid, "btnChangeShip", _("Swap Ship") );
-         window_enableButton( wid, "btnChangeShip" );
-      }
-      /* If ship is there you can always sell. */
+   else {\
+      window_enableButton( wid, "btnChangeShip" );
       window_enableButton( wid, "btnSellShip" );
    }
 }
@@ -1836,22 +1808,15 @@ static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
 }
 
 /**
- * @brief Changes or transport depending on what is active.
+ * @brief Changes ship.
  *    @param wid Window player is attempting to change ships in.
  *    @param str Unused.
  */
 static void equipment_transChangeShip( unsigned int wid, char* str )
 {
    (void) str;
-   char *shipname, *loc;
 
-   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   loc   = player_getLoc( shipname );
-
-   if (strcmp(land_planet->name,loc)) /* ship not here */
-      equipment_transportShip( wid );
-   else
-      equipment_changeShip( wid );
+   equipment_changeShip( wid );
 
    /* update the window to reflect the change */
    equipment_updateShips( wid, NULL );
@@ -1899,41 +1864,6 @@ static void equipment_changeShip( unsigned int wid )
    /* Focus new ship. */
    toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, 0 );
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
-}
-/**
- * @brief Player attempts to transport their ship to the planet they're at.
- *
- *    @param wid Window player is trying to transport their ship from.
- */
-static void equipment_transportShip( unsigned int wid )
-{
-   credits_t price;
-   char *shipname, buf[ECON_CRED_STRLEN];
-
-   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-
-   price = equipment_transportPrice( shipname );
-   if (price==0) { /* already here */
-      dialogue_alert( _("Your ship '%s' is already here."), shipname );
-      return;
-   }
-   else if (!player_hasCredits( price )) { /* not enough money. */
-      credits2str( buf, price-player.p->credits, 2 );
-      dialogue_alert( _("You need %s more credits to transport '%s' here."),
-            buf, shipname );
-      return;
-   }
-
-   /* Obligatory annoying dialogue. */
-   credits2str( buf, price, 2 );
-   if (dialogue_YesNo(_("Are you sure?"), /* confirm */
-            _("Do you really want to spend %s transporting your ship %s here?"),
-            buf, shipname )==0)
-      return;
-
-   /* success */
-   player_modCredits( -price );
-   player_setLoc( shipname, land_planet->name );
 }
 
 
@@ -2094,46 +2024,6 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    /* Destroy widget - must be before widget. */
    equipment_regenLists( wid, 0, 1 );
-}
-
-
-/**
- * @brief Gets the ship's transport price.
- *    @param shipname Name of the ship to get the transport price.
- *    @return The price to transport the ship to the current planet.
- */
-static credits_t equipment_transportPrice( char* shipname )
-{
-   char *loc;
-   Pilot* ship;
-   credits_t price;
-   StarSystem **s;
-   int jumps;
-
-   ship = player_getShip(shipname);
-   loc = player_getLoc(shipname);
-   if ( strcmp( loc,land_planet->name ) == 0 ) /* already here */
-      return 0;
-
-   /* Here we also use hidden jump points, which may not be the best idea but ensures
-    * that things can be reached. */
-   if ( !planet_hasSystem( loc ) )
-      /* Planet doesn't exist; assume a huge number of jumps. */
-      jumps = 200;
-   else if ( strcmp( planet_getSystem( loc ), cur_system->name ) != 0 )
-   {
-      s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem( loc ), 1,
-         1, NULL );
-      if ( s == NULL )
-         jumps = 50; /* Just consider a large number. */
-      free(s);
-   }
-   else /* Ship is in the same system and no jump path can be generated */
-      jumps = 0;
-   /* Modest base price scales fairly rapidly with distance. */
-   price = (credits_t)(ceil(sqrt(ship->ship->mass) * pow(jumps + 1, .6) * 10.) * 100.);
-
-   return price;
 }
 
 

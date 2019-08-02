@@ -977,6 +977,15 @@
    <faction>Pirate</faction>
   </avail>
  </mission>
+ <mission name="Pirate Patrol">
+  <lua>pirate/patrol</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>560</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
  <mission name="Pirate Clan Shipping">
   <lua>pirate/pir_clan_cargo</lua>
   <avail>

@@ -169,17 +169,11 @@ int land_doneLoading (void)
 int can_swapEquipment( char* shipname )
 {
    int failure = 0;
-   char *loc = player_getLoc(shipname);
    Pilot *newship;
    newship = player_getShip(shipname);
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
-      failure = 1;
-   }
-   if (strcmp(loc,land_planet->name)) { /* Ship isn't here. */
-      dialogue_alert( _("You must transport the ship to %s to be able to get in."),
-            land_planet->name );
       failure = 1;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
