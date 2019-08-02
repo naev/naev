@@ -71,13 +71,20 @@
   </sys>
   <!-- Stations where a few “interesting” quests are available -->
   <sys name="Suna">
-     <asset>The Wringer</asset>
+   <asset>The Wringer</asset>
   </sys>
   <sys name="Alteris">
-     <asset>Darkshed</asset>
+   <asset>Darkshed</asset>
   </sys>
+  <!-- And stations that help you to get around -->
   <sys name="Eridani">
-     <asset>The Crucible</asset>
+   <asset>The Crucible</asset>
+  </sys>
+  <sys name="Doranthex">
+   <asset>Secundus Station</asset>
+  </sys>
+  <sys name="Brimstone">
+   <asset>Alleyway</asset>
   </sys>
  </specific>
 </outfit>
