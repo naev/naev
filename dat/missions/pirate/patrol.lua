@@ -61,3 +61,6 @@ osd_msg["__save"] = true
 
 mark_name = _("Patrol Point")
 
+
+use_hidden_jumps = true
+

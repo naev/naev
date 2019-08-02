@@ -64,6 +64,9 @@ osd_msg["__save"] = true
 mark_name = _("Patrol Point")
 
 
+use_hidden_jumps = false
+
+
 -- Get the number of enemies in a particular system
 function get_enemies( sys )
    local enemies = 0
@@ -84,7 +87,7 @@ function create ()
       function(s)
          local this_faction = s:presences()[paying_faction:name()]
          return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0
-      end )
+      end, nil, use_hidden_jumps )
    if get_enemies( system.cur() ) then
       systems[ #systems + 1 ] = system.cur()
    end
