@@ -87,7 +87,7 @@ function create ()
             end
          end
          return false
-      end )
+      end, nil, true )
 
    if #systems == 0 then
       -- No enemy presence nearby
