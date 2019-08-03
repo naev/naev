@@ -57,13 +57,14 @@ oos_failure = _([[A scratchy voice from what sounds like very far away cut in on
    The voice cuts out, and you feel like you've made a horrible mistake.]])
 misn_desc = _([[A Sirius assault fleet has just jumped into %s. Destroy this fleet. WARNING: DO NOT JUMP OUT-SYSTEM OR LAND ON ANY ASSETS.]])
 time_to_come_home = _([[Your comm squeaks as the voice of Draga comes onto the channel. "%s! This is a lot larger of an assault than we thought. There is no way that we can handle this. We need you to get back to the station now! We are evacuating!" The comm goes silent, and you start heading back.]])
+misn_reward = _("%s credits")
 
 function create()
    --this mission makes one mission claim, in suna.
    --initialize your variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
-   reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01
+   reward = math.floor((100000+(math.random(5,8)*2000)*(nasin_rep^1.315))*.01+.5)/.01
    planding = 0
    homeasset, homesys = planet.cur()
    msg_checker = 0
@@ -71,7 +72,7 @@ function create()
    if not misn.claim(homesys) then
       misn.finish(false)
    end
-   misn.setReward( reward )
+   misn.setReward( misn_reward:format( numstring( reward ) ) )
    misn.setTitle( misn_title )
    misn.setNPC(npc_name,"neutral/thief2")
    misn.setDesc(bar_desc)

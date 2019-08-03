@@ -66,6 +66,7 @@ osd_desc[2] = _("Alternatively, turn Gregar in to the nearest Dvaered base")
 osd_adddesc = _("Follow the FLF ships to their secret base. Do not lose them!")
 
 misn_desc = _("You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered.")
+misn_reward = _("A chance to learn more about the FLF")
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -86,6 +87,7 @@ function create()
     misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_desc[2]})
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
+    misn.setReward(misn_reward)
     misn.markerAdd(system.get(destsysname), "low")
     
     gregar = misn.cargoAdd("Gregar", 0)

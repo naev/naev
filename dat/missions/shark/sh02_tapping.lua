@@ -79,7 +79,7 @@ end
 function accept()
 
    stage = 0
-   reward = 50000
+   reward = 750000
    proba = 0.3  --the chances you have to get an ambush
 
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then

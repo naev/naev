@@ -110,7 +110,7 @@ function create()
         time_limit:add(time.create( 0, 0, math.floor((num_jumps-1) / jumpsperstop) * stu_jumps ))
     end
 
-   payment = stu_distance + (stu_jumps / 10)
+   payment = 5 * (stu_distance + (stu_jumps / 10))
 
    -- Range of 5-10 tons for tier 0, 21-58 for tier 4.
    cargo_size = rnd.rnd( 5 + 4 * tier, 10 + 12 * tier )
@@ -137,7 +137,7 @@ function accept()
 
    -- mission details
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(payment))
+   misn.setReward(misn_reward:format(numstring(payment)))
    misn.setDesc(misn_desc:format(dest_planet:name()))
    marker = misn.markerAdd(dest_sys, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo

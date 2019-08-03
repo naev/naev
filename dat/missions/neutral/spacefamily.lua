@@ -120,9 +120,9 @@ end
 
 function land()
    if planet.cur() == destplanet then -- We've arrived!
-      if nextstop == 3 then -- This is the last stop
+      if nextstop >= 3 then -- This is the last stop
          tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
-         player.pay(20000)
+         player.pay(500000)
          misn.cargoJet(carg_id)
          misn.finish(true)
       else

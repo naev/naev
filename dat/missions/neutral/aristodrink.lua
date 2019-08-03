@@ -29,7 +29,7 @@ OSDtable = {}
 prevPlanets = {}
 prevPlanets.__save = true
 
-payment = 75000
+payment = 200000
 
 title = {}  --stage titles
 text = {}   --mission text

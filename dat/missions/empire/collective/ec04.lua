@@ -14,9 +14,10 @@
 
 include "dat/scripts/nextjump.lua"
 include "proximity.lua"
+include "numstring.lua"
 
 misn_title = _("Collective Extraction")
-misn_reward = _("None")
+misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Check for survivors on %s in %s.")
 misn_desc[2] = _("Travel back to %s in %s.")
@@ -59,13 +60,15 @@ function create ()
    if tk.yesno( title[1], string.format(text[1], misn_target:name()) ) then
       misn.accept()
 
+      credits = 1000000
+
       misn_stage = 0
       misn_base, misn_base_sys = planet.get("Omega Station")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
+      misn.setReward( misn_reward:format( numstring( credits ) ) )
       misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
       tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
@@ -234,6 +237,7 @@ function land ()
       var.pop("emp_commando")
 
       -- Rewards
+      player.pay(credits)
       faction.modPlayerSingle("Empire",5)
 
       misn.finish(true)

@@ -81,6 +81,7 @@ osd_desc[3] = _("Destroy the FLF base")
 osd_desc[4] = _("Return to %s in the %s system")
 
 misn_desc = _("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory.")
+misn_reward = _("Wealth and glory")
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -113,7 +114,7 @@ function accept()
         osd_desc[4] = string.format(osd_desc[4], DVplanet, DVsys)
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
-        misn.setReward("Wealth, glory")
+        misn.setReward(misn_reward)
         misn.setTitle(misn_title)
         mission_marker = misn.markerAdd( system.get(destsysname), "high" )
         
@@ -189,7 +190,7 @@ function land()
         tk.msg(title[3], text[6])
         dv_modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
-        player.pay(100000) -- 100K
+        player.pay(1000000) -- 1M
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
         diff.apply("FLF_base")

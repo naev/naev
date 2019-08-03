@@ -68,7 +68,7 @@ end
 function accept()
 
    stage = 0
-   reward = 50000
+   reward = 750000
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()
