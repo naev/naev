@@ -54,7 +54,7 @@ function accept ()
    near_sys = get_pir_system( system.cur() )
 
    -- Get credits
-   credits  = rnd.rnd(5,10) * 10000
+   credits  = rnd.rnd(5,10) * 100000
 
    -- Mission details:
    if tk.yesno( title[1], string.format( text[1], player.name(),

@@ -15,6 +15,7 @@
 
 include "jumpdist.lua"
 include "numstring.lua"
+include "dat/missions/pirate/common.lua"
 
 local informer
 local refusal
@@ -242,13 +243,7 @@ function create ()
 
    ship.system = ship.planet:system()
 
-   -- FIXME: Portrait
-   local portraits = {}
-   portraits[1] = "pirate/pirate1"
-   portraits[2] = "pirate/pirate2"
-   portraits[3] = "pirate/pirate3"
-   portraits[4] = "pirate/pirate4"
-   local portrait = portraits[ rnd.rnd( 1, #portraits ) ]
+   local portrait = pir_getLordRandomPortrait()
    misn.setNPC( _("A Pirate informer"), portrait )
    misn.setDesc( informer.description )
 end

@@ -1160,18 +1160,17 @@
     <unique />
   </flags>
   <avail>
-    <cond>player.pilot():ship():class() == "Yacht"</cond>
-   <chance>5</chance>
+    <cond>player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht"</cond>
+   <chance>10</chance>
    <location>Bar</location>
   </avail>
  </mission>
  <mission name="Racing Skills 2">
   <lua>neutral/race2</lua>
-  <flags>
-  </flags>
   <avail>
-    <cond>player.pilot():ship():class() == "Yacht" and player.misnDone("Racing Skills 1")</cond>
-   <chance>5</chance>
+   <cond>player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht"</cond>
+   <done>Racing Skills 1</done>
+   <chance>20</chance>
    <location>Bar</location>
   </avail>
  </mission>

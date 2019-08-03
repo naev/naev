@@ -44,7 +44,7 @@ text7 = _([[Harja raises an eyebrow when he's confronted with you again. "Well w
    
 title7 = _("Building a bridge")
 text8 = _([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.
-    Joanne greets you, and Harja somewhat more stiffly. You notice she looks a bit tired. "My apologies," she says when she notices your glance. "I just came off my shift, and my work can be a bit taxing at times. But never mind that, we're not here to talk about my job today." She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with %s here, he told me you swore your innocence, by Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."
+    Joanne greets you, and Harja somewhat more stiffly. You notice she looks a bit tired. "My apologies," she says when she notices your glance. "I just came off my shift, and my work can be a bit taxing at times. But never mind that, we're not here to talk about my job today." She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with %s here, I was told that you swore your innocence, by Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."
     There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of Sirichana, I so swear."]])
    
 text9 = _([[There is silence again. Harja's oath sounded practiced and formal, but despite that you feel he was being very sincere when he spoke it.
@@ -118,7 +118,7 @@ function land()
    elseif planet.cur() == startplanet and stage == stages.finish then
       tk.msg(title7, text8:format(player.name()))
       tk.msg(title7, text9:format(player.name()))
-      player.pay(100000) -- 100K
+      player.pay(1500000) -- 1.5M
       var.pop("achack04repeat")
       misn.finish(true)
    end

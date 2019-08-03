@@ -25,7 +25,7 @@ osd_msg3 = _("You have reached your maximum payment. Return to %s.")
 function create ()
    rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
-   max_payment = math.floor( (10000 * math.sqrt(rep) * rep/10 / 1e3) + .5 ) * 1e3
+   max_payment = rep * 50000
    misn_desc = misn_desc:format( numstring(max_payment) )
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
@@ -69,14 +69,14 @@ end
 function death(pilot,killer)
    if pilot:faction() == faction.get("Pirate") and killer == player.pilot() then
       reward_table = {
-         ["Hyena"]             =  1000,
-         ["Pirate Shark"]      =  2000,
-         ["Pirate Vendetta"]   =  4000,
-         ["Pirate Ancestor"]   =  5000,
-         ["Pirate Rhino"]      = 10000,
-         ["Pirate Phalanx"]    = 11000,
-         ["Pirate Admonisher"] = 12000,
-         ["Pirate Kestrel"]    = 24000
+         ["Hyena"]             =  10000,
+         ["Pirate Shark"]      =  30000,
+         ["Pirate Vendetta"]   =  80000,
+         ["Pirate Ancestor"]   = 100000,
+         ["Pirate Rhino"]      = 120000,
+         ["Pirate Phalanx"]    = 140000,
+         ["Pirate Admonisher"] = 150000,
+         ["Pirate Kestrel"]    = 600000
       }
 
       killed_ship = pilot:ship():name()

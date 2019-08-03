@@ -67,7 +67,7 @@ end
 function accept()
 
    stage = 0
-   reward = 200000
+   reward = 1000000
 
    if tk.yesno(title[1], text[1]:format(player.name())) then
       misn.accept()

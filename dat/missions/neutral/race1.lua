@@ -77,7 +77,7 @@ function create ()
    curplanet = planet.cur()
    misn.setNPC(NPCname, "neutral/male1")
    misn.setDesc(NPCdesc)
-   credits = rnd.rnd(10000, 50000)
+   credits = rnd.rnd(20000, 100000)
 end
 
 
