@@ -1995,7 +1995,7 @@ int map_center( const char *sys )
  */
 int map_load (void)
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
