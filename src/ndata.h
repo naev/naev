@@ -26,6 +26,7 @@
 #define FACTION_LOGO_PATH        "dat/gfx/logo/" /**< Path to logo gfx. */
 #define SOUND_PATH               "dat/snd/sounds/" /**< Location of the sounds. */
 #define COMMODITY_GFX_PATH          "dat/gfx/commodity/" /**< Path to commodities graphics. */
+#define MAP_DECORATOR_GFX_PATH   "dat/gfx/map/"
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "dat/mission.xml" /**< Path to missions XML. */
@@ -37,6 +38,7 @@
 #define TECH_DATA_PATH           "dat/tech.xml"   /**< XML file containing techs. */
 #define DIFF_DATA_PATH           "dat/unidiff.xml" /**< Unidiff XML file. */
 #define ASTERO_DATA_PATH         "dat/asteroids.xml" /**< Asteroid types XML file. */
+#define MAP_DECORATOR_DATA_PATH  "dat/map.xml" /**< Commodity XML file. */
 
 #define MISSION_LUA_PATH         "dat/missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "dat/events/" /**< Path to Lua files. */
