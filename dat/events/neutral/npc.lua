@@ -80,7 +80,7 @@ msg_lore["general"] =      {_("I heard the nebula is haunted! My uncle Bobby tol
                               _("Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"),
                               _("I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."),
                               _("Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"),
-                              _("Hey, you ever wonder why we're here?\", you say, \"It's one of life's great mysteries isn't it?\", the citizen replies, \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are we in here, in this bar?")
+                              _("Hey, you ever wonder why we're here?\", you say. \"It's one of life's great mysteries isn't it?\", the citizen replies. \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night.\" You stare at the citizen incredulously. \"What?? No, I mean why are we in here, in this bar?")
                            }
 
 msg_lore["Independent"] =  {_("We're not part of any of the galactic superpowers. We can take care of ourselves!"),
@@ -177,6 +177,12 @@ msg_lore["Pirate"] =       {_("Hi mate. Money or your life! Heh heh, just messin
                               _("Hey, look at these new scars I got!"),
                               _("Have you heard of the Pirates' Code? They're more guidelines than rules..."),
                               _("My gran said 'Never trust a pirate', she was right too, I got a pretty credit chip for her with the slavers."),
+                              _("Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."),
+                              _("I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."),
+                              _("Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."),
+                              _("I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a \"small-time pirate\"! Sometimes I think I'll never make it in this line of work..."),
+                              _("Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."),
+                              _("I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual.")
                            }
 
 msg_lore["Trader"] =       {_("Just another link in the Great Chain, right?"),
