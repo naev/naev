@@ -64,7 +64,7 @@ function accept()
    misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
-   player.allowSave(false) -- so the player won't get stuck with a mission he can't complete.
+   player.allowSave(false) -- so the player won't get stuck with a mission they can't complete.
    tk.msg(misn_title,bmsg[2])
    tk.msg(misn_title,bmsg[3])
    --convo over. time to finish setting the mission stuff.

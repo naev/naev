@@ -75,7 +75,7 @@ function accept()
    misn.osdActive(1)
    freecargo = player.pilot():cargoFree() --checks to make sure the player has 5 tons available
    if freecargo < 5 then
-      tk.msg(misn_title,notenoughcargo) --and if he doesnt, the mission finishes.
+      tk.msg(misn_title,notenoughcargo) --and if they don't, the mission finishes.
       misn.finish(false)
    end
    small_arms = misn.cargoAdd("Small Arms",5) --i'd like this to be contraband when this actually gets implemented in-game.

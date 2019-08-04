@@ -110,7 +110,7 @@ function land2()
   end
 end
 
--- first trade: send player 2 2nd system, if he goes back here, tell him to get going...
+-- first trade: send player 2 2nd system, if he goes back here, tell them to get going...
 function first_trd()
   if talked then
      tk.msg(title[1], text[7])
@@ -130,7 +130,7 @@ function first_trd()
   lhook2 = hook.land("land2", "land")
   
 end
--- 2nd trade: Get player the stuff and make him pay, let him be hunted by the police squad
+-- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
   if not tk.yesno( title[1], text[8]:format(pho_mny) ) then
@@ -181,7 +181,7 @@ function fnl_ld ()
       misn.finish(true)
    end
 end
--- when the player takes off the authorities will want her/him
+-- when the player takes off the authorities will want them
 function sys_enter ()
    if system.cur() == system.get(t_sys[2]) then
       hook.timer(7000, "call_the_police")

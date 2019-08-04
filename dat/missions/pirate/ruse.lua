@@ -142,7 +142,7 @@ function sys_enter ()
       -- just some moving around, stolen from baron missions ;D
       idlehook = hook.pilot(broship, "idle", "idle",broship,bropla)
       misn.osdActive(2)
-      -- get point between jumpgate and broship to spawn mercenaries disencouraging him from following
+      -- get point between jumpgate and broship to spawn mercenaries disencouraging you from following
       jpt = get_nearest_jump(broship)
       jpx,jpy = jpt:pos():get()
       px,py = broship:pos():get()
