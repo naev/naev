@@ -792,40 +792,40 @@ void map_renderDecorators( double x, double y, int editor)
 
    for (i=0; i<decorator_nstack; i++) {
 
-	   decorator=&decorator_stack[i];
+      decorator=&decorator_stack[i];
 
-	   //only if pict couldn't be loaded
-	   if (decorator->picture == NULL)
-		   continue;
+      //only if pict couldn't be loaded
+      if (decorator->picture == NULL)
+         continue;
 
-	   visible=0;
+      visible=0;
 
-	   if (!editor) {
-		   for (j=0; j<systems_nstack && visible==0; j++) {
-			   sys = system_getIndex( j );
+      if (!editor) {
+         for (j=0; j<systems_nstack && visible==0; j++) {
+            sys = system_getIndex( j );
 
-			   if (!sys_isKnown(sys))
-				   continue;
+            if (!sys_isKnown(sys))
+               continue;
 
-			   if (decorator->x < sys->pos.x + decorator->detection_radius && decorator->x > sys->pos.x - decorator->detection_radius
-					   && decorator->y < sys->pos.y + decorator->detection_radius && decorator->y > sys->pos.y - decorator->detection_radius) {
-				   visible=1;
-			   }
-		   }
-	   }
+            if (decorator->x < sys->pos.x + decorator->detection_radius && decorator->x > sys->pos.x - decorator->detection_radius
+                  && decorator->y < sys->pos.y + decorator->detection_radius && decorator->y > sys->pos.y - decorator->detection_radius) {
+               visible=1;
+            }
+         }
+      }
 
-	   if (editor || visible==1) {
+      if (editor || visible==1) {
 
-		   tx = x + decorator->x*map_zoom;
-		   ty = y + decorator->y*map_zoom;
+         tx = x + decorator->x*map_zoom;
+         ty = y + decorator->y*map_zoom;
 
-		   sw = decorator->picture->sw*map_zoom;
-		   sh = decorator->picture->sh*map_zoom;
+         sw = decorator->picture->sw*map_zoom;
+         sh = decorator->picture->sh*map_zoom;
 
-		   gl_blitScale(
-				   decorator->picture,
-				   tx - sw/2, ty - sh/2, sw, sh, &cWhite );
-	   }
+         gl_blitScale(
+               decorator->picture,
+               tx - sw/2, ty - sh/2, sw, sh, &cWhite );
+      }
    }
 }
 
@@ -2049,34 +2049,34 @@ int map_load (void)
 }
 
 static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
-	xmlNodePtr node;
+   xmlNodePtr node;
 
-	/* Clear memory. */
-	memset( temp, 0, sizeof(MapDecorator) );
+   /* Clear memory. */
+   memset( temp, 0, sizeof(MapDecorator) );
 
-	temp->detection_radius=10;
-	temp->auto_fade=0;
+   temp->detection_radius=10;
+   temp->auto_fade=0;
 
-	/* Parse body. */
-	node = parent->xmlChildrenNode;
-	do {
-		xml_onlyNodes(node);
-		xmlr_float(node, "x", temp->x);
-		xmlr_float(node, "y", temp->y);
-		xmlr_int(node, "auto_fade", temp->auto_fade);
-		xmlr_int(node, "detection_radius", temp->detection_radius);
-		if (xml_isNode(node,"pict")) {
-			temp->picture = xml_parseTexture( node,
-					MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+   /* Parse body. */
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+      xmlr_float(node, "x", temp->x);
+      xmlr_float(node, "y", temp->y);
+      xmlr_int(node, "auto_fade", temp->auto_fade);
+      xmlr_int(node, "detection_radius", temp->detection_radius);
+      if (xml_isNode(node,"pict")) {
+         temp->picture = xml_parseTexture( node,
+               MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
 
-			if (temp->picture == NULL) {
-				WARN("Could not load map decorator texture '%s'.", xml_get(node));
-			}
+         if (temp->picture == NULL) {
+            WARN("Could not load map decorator texture '%s'.", xml_get(node));
+         }
 
-			continue;
-		}
-		WARN("Map decorator has unknown node '%s'.", node->name);
-	} while (xml_nextNode(node));
+         continue;
+      }
+      WARN("Map decorator has unknown node '%s'.", node->name);
+   } while (xml_nextNode(node));
 
-	return 0;
+   return 0;
 }
