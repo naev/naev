@@ -25,7 +25,7 @@ _fstanding_neutral = 0
 _ftext_standing = {}
 _ftext_standing[95] = _("Legend")
 _ftext_standing[20] = _("Clansman")
-_ftext_standing[0]  = _("Brother")
+_ftext_standing[0]  = _("Partner")
 _ftext_standing[-1] = _("Normie")
 
 _ftext_friendly = _("Friendly")
