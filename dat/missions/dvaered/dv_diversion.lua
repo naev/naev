@@ -59,9 +59,9 @@ misn_desc = _("You have been recruited to distract the Dvaered fighter escorts a
 misn_reward = _("Some good money, hopefully")
 
 chatter[0] = _("All right men, this will be Hawk's maiden jump. Continue on course to the %s jump gate.")
-chatter[1] = _("How dare he attack me! Get them!")
-chatter[2] = _("You heard Warlord Khan, blow him to pieces!")
-chatter[3] = _("He's attacking us, blow him to pieces!")
+chatter[1] = _("How dare they attack me! Get them!")
+chatter[2] = _("You heard Warlord Khan, blow them to pieces!")
+chatter[3] = _("They're attacking us, blow them to pieces!")
 chatter[4] = _("Arrgh!")
 chatter[5] = _("Khan is dead! Who will be our warlord now?")
 chatter[6] = _("Obviously the one who killed him, idiot!")
