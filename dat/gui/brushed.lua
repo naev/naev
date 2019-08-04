@@ -2,6 +2,7 @@
    The new "brushed" UI.
 --]]
 
+playerform = include "dat/scripts/playerform.lua"
 
 function create()
 
@@ -837,6 +838,32 @@ function render( dt )
 
    for k, v in ipairs(buttontypes) do
       renderButton( v )
+   end
+
+   -- Formation selection button
+   if #pp:followers() ~= 0 then
+      local x = 0
+      local _, height = field_frame_center:dim()
+      local width = gfx.printDim(false, "Set formation")
+      local y = tbar_y - height
+
+      if buttons["formation"] == nil then
+          buttons["formation"] = {}
+      end
+
+      local button = buttons["formation"]
+      button.x = x
+      button.y = y
+      button.w = width
+      button.h = height
+      button.action = playerform
+
+      local col = col_text
+      if button.state == "mouseover" then
+          col = col_lgray
+      end
+
+      renderField( "Set formation", x, y, width, col )
    end
 
    -- Planet pane
