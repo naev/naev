@@ -55,7 +55,6 @@ static int playerL_omsgChange( lua_State *L );
 static int playerL_omsgRm( lua_State *L );
 static int playerL_allowSave( lua_State *L );
 /* Faction stuff. */
-static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
 static int playerL_getPilot( lua_State *L );
 /* Fuel stuff. */
@@ -99,7 +98,6 @@ static const luaL_Reg playerL_methods[] = {
    { "omsgChange", playerL_omsgChange },
    { "omsgRm", playerL_omsgRm },
    { "allowSave", playerL_allowSave },
-   { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
    { "jumps", playerL_jumps },
@@ -155,7 +153,6 @@ int nlua_loadPlayer( nlua_env env )
  * @code
  * pname = player.name()
  * shipname = player.ship()
- * rating = player.getRating()
  * @endcode
  * @luamod player
  */
@@ -367,19 +364,6 @@ static int playerL_allowSave( lua_State *L )
    else
       player_setFlag(PLAYER_NOSAVE);
    return 0;
-}
-/**
- * @brief Gets the player's combat rating.
- *
- *    @luatreturn number The combat rating (in raw number).
- *    @luatreturn string The actual standing in human readable form.
- * @luafunc getRating()
- */
-static int playerL_getRating( lua_State *L )
-{
-   lua_pushnumber(L, player.crating);
-   lua_pushstring(L, player_rating());
-   return 2;
 }
 
 /**
