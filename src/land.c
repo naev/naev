@@ -1316,6 +1316,9 @@ void takeoff( int delay )
    /* Clear planet target. Allows for easier autonav out of the system. */
    player_targetPlanetSet( -1 );
 
+   /* Clear pilots other than player. */
+   pilots_clean(0);
+
    /* initialize the new space */
    h = player.p->nav_hyperspace;
    space_init(NULL);
