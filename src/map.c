@@ -107,6 +107,8 @@ int map_init (void)
  */
 void map_exit (void)
 {
+   int i;
+
    /* Destroy the VBO. */
    if (map_vbo != NULL) {
       gl_vboDestroy(map_vbo);
@@ -118,6 +120,14 @@ void map_exit (void)
 
    if (gl_map_circle != NULL)
       gl_freeTexture( gl_map_circle );
+
+   if (decorator_stack != NULL) {
+      for (i=0; i<decorator_nstack; i++)
+         gl_freeTexture( decorator_stack[i].picture );
+      free( decorator_stack );
+      decorator_stack = NULL;
+      decorator_nstack = 0;
+   }
 }
 
 
@@ -792,7 +802,7 @@ void map_renderDecorators( double x, double y, int editor)
 
    for (i=0; i<decorator_nstack; i++) {
 
-      decorator=&decorator_stack[i];
+      decorator = &decorator_stack[i];
 
       //only if pict couldn't be loaded
       if (decorator->picture == NULL)
