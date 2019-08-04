@@ -10,7 +10,7 @@ local function count_classes(pilots)
    return class_count
 end
 
-formations = {}
+local formations = {}
 
 function formations.cross(leader)
    local pilots = leader:followers()
