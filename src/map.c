@@ -715,7 +715,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
-   
+
    map_renderDecorators( x, y, 0 );
 
    /* Render faction disks. */
