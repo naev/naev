@@ -502,7 +502,7 @@
    <unique />
   </flags> 
   <avail>
-   <chance>3</chance>\
+   <chance>3</chance>
    <location>None</location>
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
