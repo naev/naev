@@ -126,6 +126,7 @@
    <enemy>Proteron</enemy>
    <enemy>Thurion</enemy>
    <enemy>Nasin</enemy>
+   <enemy>Militia</enemy>
   </enemies>
  </faction>
  <faction>
@@ -158,6 +159,20 @@
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Militia</enemy>
+  </enemies>
+ </faction>
+ <faction name="Militia">
+  <known/>
+  <logo>militia</logo>
+  <longname>Militia Of Free Citizen</longname>
+  <colour>blue</colour>
+  <player>10</player>
+  <standing>static</standing>
+  <allies/>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Soromid</enemy>
   </enemies>
  </faction>
  <faction>
