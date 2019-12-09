@@ -36,6 +36,7 @@ misn_title = _("The Return")
 npc_name = _("Shaman")
 bar_desc = _("A tall man sitting at a table littered with papers.")
 misn_desc = _("Deliver the message to %s in %s for Shaman.")
+misn_reward = _("%s credits")
 osd = {}
 osd[1] = _("Fly to %s in the %s system and deliver the message.")
 
@@ -44,11 +45,11 @@ function create()
    --create some mission variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
-   reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
+   reward = math.floor((100000+(math.random(5,8)*2000)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
    targetasset, targetsystem = planet.get("The Wringer")
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(reward)
+   misn.setReward(misn_reward:format(numstring(reward)))
    misn.setNPC(npc_name,"neutral/male1")
    misn.setDesc(bar_desc)
 

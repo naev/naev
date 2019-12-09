@@ -147,7 +147,7 @@
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
   <chance>40</chance>
-  <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+  <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
  </event>
  <event name="FLF Catastrophe">
   <lua>flf/flf_catastrophe</lua>

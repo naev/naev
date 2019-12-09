@@ -170,14 +170,13 @@ static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
-static int player_saveShip( xmlTextWriterPtr writer,
-      Pilot* ship, char* loc );
+static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
-static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
+static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
@@ -544,7 +543,6 @@ static Pilot* player_newShipMake( const char* name )
       ship        = &player_stack[player_nstack];
       /* Create the ship. */
       ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
-      ship->loc   = strdup( land_planet->name );
       player_nstack++;
       new_pilot   = ship->p;
    }
@@ -671,9 +669,8 @@ void player_rmShip( char* shipname )
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
 
-      /* Free player ship and location. */
+      /* Free player ship. */
       pilot_free(player_stack[i].p);
-      free(player_stack[i].loc);
 
       /* Move memory to make adjacent. */
       memmove( player_stack+i, player_stack+i+1,
@@ -743,7 +740,6 @@ void player_cleanup (void)
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
       pilot_free(player_stack[i].p);
-      free(player_stack[i].loc);
    }
    if (player_stack != NULL)
       free(player_stack);
@@ -2427,50 +2423,6 @@ Pilot* player_getShip( char* shipname )
 
 
 /**
- * @brief Gets where a specific ship is.
- *
- *    @param shipname Ship to check where it is.
- *    @return The location of the ship.
- */
-char* player_getLoc( char* shipname )
-{
-   int i;
-
-   if (strcmp(player.p->name,shipname)==0)
-      return land_planet->name;
-
-   for (i=0; i < player_nstack; i++)
-      if (strcmp(player_stack[i].p->name, shipname)==0)
-         return player_stack[i].loc;
-
-   WARN(_("Player ship '%s' not found in stack"), shipname);
-   return NULL;
-}
-
-
-/**
- * @brief Sets the location of a specific ship.
- *
- *    @param shipname Name of the ship to change location of.
- *    @param loc Location of the ship to change to.
- */
-void player_setLoc( char* shipname, char* loc )
-{
-   int i;
-
-   for (i=0; i < player_nstack; i++) {
-      if (strcmp(player_stack[i].p->name, shipname)==0) {
-         free(player_stack[i].loc);
-         player_stack[i].loc = strdup(loc);
-         return;
-      }
-   }
-
-   WARN(_("Player ship '%s' not found in stack"), shipname);
-}
-
-
-/**
  * @brief Gets how many of the outfit the player owns.
  *
  *    @param outfitname Outfit to check how many the player owns.
@@ -2958,12 +2910,12 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Current ship. */
    xmlw_elem(writer,"location","%s",land_planet->name);
-   player_saveShip( writer, player.p, NULL ); /* current ship */
+   player_saveShip( writer, player.p ); /* current ship */
 
    /* Ships. */
    xmlw_startElem(writer,"ships");
    for (i=0; i<player_nstack; i++)
-      player_saveShip( writer, player_stack[i].p, player_stack[i].loc );
+      player_saveShip( writer, player_stack[i].p );
    xmlw_endElem(writer); /* "ships" */
 
    /* GUIs. */
@@ -3043,11 +2995,9 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
  *
  *    @param writer XML writer.
  *    @param ship Ship to save.
- *    @param loc Location of the ship.
  *    @return 0 on success.
  */
-static int player_saveShip( xmlTextWriterPtr writer,
-      Pilot* ship, char* loc )
+static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
 {
    int i, j, k, n;
    int found;
@@ -3057,9 +3007,6 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name","%s",ship->name);
    xmlw_attr(writer,"model","%s",ship->ship->name);
-
-   if (loc != NULL)
-      xmlw_elem(writer,"location","%s",loc);
 
    /* save the fuel */
    xmlw_elem(writer,"fuel","%d",ship->fuel);
@@ -3259,14 +3206,14 @@ static Planet* player_parse( xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"ship"))
-         player_parseShip(node, 1, planet);
+         player_parseShip(node, 1);
 
       /* Parse ships. */
       else if (xml_isNode(node,"ships")) {
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"ship"))
-               player_parseShip(cur, 0, planet);
+               player_parseShip(cur, 0);
          } while (xml_nextNode(cur));
       }
 
@@ -3616,12 +3563,11 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
  *
  *    @param parent Node of the ship.
  *    @param is_player Is it the ship the player is currently in?
- *    @param planet Default planet in case ship location not found.
  *    @return 0 on success.
  */
-static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
+static int player_parseShip( xmlNodePtr parent, int is_player )
 {
-   char *name, *model, *loc, *q, *id;
+   char *name, *model, *q, *id;
    int i, n;
    int fuel;
    Ship *ship_parsed;
@@ -3640,7 +3586,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    xmlr_attr(parent,"model",model);
 
    /* Sane defaults. */
-   loc = NULL;
    pilot_clearFlagsRaw( flags );
    pilot_setFlagRaw( flags, PILOT_PLAYER );
    pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
@@ -3684,10 +3629,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* Start parsing. */
    node = parent->xmlChildrenNode;
    do {
-      /* Get location. */
-      if (is_player == 0)
-         xmlr_str(node,"location",loc);
-
       /* get fuel */
       xmlr_int(node,"fuel",fuel);
 
@@ -3782,8 +3723,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* Test for sanity. */
    if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
-   if ((is_player == 0) && (planet_get(loc)==NULL))
-      loc = planet;
    /* ships can now be non-spaceworthy on save
     * str = pilot_checkSpaceworthy( ship ); */
    if (!pilot_slotsCheckSanity( ship )) {
@@ -3803,7 +3742,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    if (is_player == 0) {
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
       player_stack[player_nstack].p    = ship;
-      player_stack[player_nstack].loc  = (loc!=NULL) ? strdup(loc) : strdup(_("Uknown"));
       player_nstack++;
    }
 

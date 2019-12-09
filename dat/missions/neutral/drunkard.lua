@@ -23,7 +23,7 @@ OSDdesc = {}
 OSDdesc[1] = _("Go pickup some goods at %s in the %s system.")
 OSDdesc[2] = _("Drop off the goods at %s in the %s system.")
 
-payment = 250000
+payment = 500000
 
 -- Cargo Details
 cargo = "Goods"

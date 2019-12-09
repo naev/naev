@@ -33,6 +33,7 @@ misn_title = _("Take the Dvaered crew home")
 osd_desc = {_("Take the Dvaered crew on board your ship to any Dvaered controlled world or station")}
 
 misn_desc = _("Take the Dvaered crew on board your ship to any Dvaered controlled world or station.")
+misn_reward = _("A chance to aid in the effort against the FLF")
 
 function create()
     -- Note: this mission makes no system claims.
@@ -43,6 +44,7 @@ function create()
     misn.osdCreate(misn_title, osd_desc)
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
+    misn.setReward(misn_reward)
     
     DVcrew = misn.cargoAdd("Dvaered ship crew", 0)
     
@@ -53,7 +55,7 @@ function land()
     if planet.cur():faction():name() == "Dvaered" then
         if var.peek("flfbase_flfshipkilled") then
             tk.msg(title[2], text[2] .. text[3] .. text[5])
-            player.pay(10000) -- 10K
+            player.pay(100000) -- 100K
         else
             tk.msg(title[2], text[2] .. text[4] .. text[5])
         end

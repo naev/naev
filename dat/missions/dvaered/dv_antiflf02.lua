@@ -71,6 +71,7 @@ osd_desc[4] = _("Disable and board at least one FLF ship")
 osd_desc[5] = _("Return to any Dvaered world")
 
 misn_desc = _("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disabling and boarding one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete.")
+misn_reward = _("Serving alongside real Dvaered warlords")
 
 comm_msg["enter"] = _("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!")
 comm_msg["victory"] = _("All targets neutralized. Download the flight log and let's get out of here!")
@@ -98,6 +99,7 @@ function accept()
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setTitle(misn_title)
+        misn.setReward(misn_reward)
         marker = misn.markerAdd( system.get(destsysname), "low" )
         
         missionstarted = false
@@ -138,7 +140,7 @@ function land()
         tk.msg(title[6], text[6])
         var.push("flfbase_intro", 3)
         faction.get("Dvaered"):modPlayerSingle(5)
-        player.pay(70000) -- 70K
+        player.pay(700000) -- 700K
         misn.finish(true)
     end
 end

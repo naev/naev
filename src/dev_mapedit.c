@@ -1080,6 +1080,9 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    compareLimit = MAPEDIT_FILENAME_MAX;
    if (!strncmp(ns->sMapName, name, compareLimit)==0) {
       //WARN("\t\tInconsistent names between list and file : list=\"%s\", file=\"%s\"", ns->sMapName, name);
+      free(file);
+      xmlFreeDoc(doc);
+      free(buf);
 	  return;
    } else {
       /*WARN("\t\tNames found OK between list and file : \"%s\"", name);*/

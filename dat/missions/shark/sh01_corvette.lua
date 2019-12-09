@@ -77,7 +77,7 @@ end
 function accept()
 
    stage = 0
-   reward = 100000
+   reward = 750000
 
    if tk.yesno(title[1], text[1]:format(battlesys:name(), numstring(reward/2))) then
       misn.accept()

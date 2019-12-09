@@ -16,7 +16,7 @@ text1r = _([["Hi %s," Joanne says. "Good to see you again. Say, I still haven't 
 
 text2 = _([["I want you to get out there and find Harja. I doubt he's on the Wringer anymore, that place isn't healthy to stick around for anyone, especially an academic type like Harja. He's probably on the move, doing whatever it is he does to be able to hire those assassins. So, I need you to intercept him and get him to tell you what he thinks he's doing. I don't know where he is now, you'll have to look for him yourself. I don't think he'll venture outside Sirius controlled space though. He won't be happy to see you, of course, so you may have to be a little... persuasive, shall we say? Just make sure to find out what his motives are and what it'll take for him to leave the past alone. But!" and here Joanne's face turns stern, "I don't want any serious harm to come to him. You may be thinking that removing Harja will solve the problem, but even if he's a threat to my life, murder is still murder. This is a private investigation, not a private war. Are we clear?"
     You acknowledge that you won't kill Harja if you can possibly help it. This seems to satisfy Joanne.
-    "Good. I know I can trust you, %s. I can offer you 150,000 credits if you complete this job. Go find Harja. Make him talk. Then come back and tell me what he said. Maybe, hopefully, it'll put my mind at rest."]])
+    "Good. I know I can trust you, %s. I can offer you 1,000,000 credits if you complete this job. Go find Harja. Make him talk. Then come back and tell me what he said. Maybe, hopefully, it'll put my mind at rest."]])
 
 title2 = _("The hunt begins")
 text3 = _([["Oh, I'm glad to hear that. Here, I'll upload the details of Harja's private ship into your computer. I did some digging in the military database to find them. You don't graduate from the Sinass High Academy with honors without picking up a few tricks! I know, I know, it's classified data, but it's for a good cause, wouldn't you say? You should be able to identify Harja when you pick him up on your sensors now. If you have trouble locating him, consider installing better sensors on your ship so you can pick him up from farther away. But don't spend too much effort looking for him, just keep a look out as you go about your normal business. If you just stay in Sirius space, I'm sure you'll run into him sooner or later."
@@ -66,7 +66,7 @@ osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
 misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
-misn_reward = _("Joanne will pay you another 150,000 credits.")
+misn_reward = _("Joanne will pay you another 1,000,000 credits.")
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -205,7 +205,7 @@ function land()
    if planet.cur() == destplanet and harjatalked then
       player.landWindow("bar")
       tk.msg(title5, text7:format(player.name()))
-      player.pay(150000) -- 150K
+      player.pay(1000000) -- 1M
       var.pop("achack03repeat")
       misn.finish(true)
    end

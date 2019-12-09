@@ -95,7 +95,7 @@ end
 
 function accept()
 
-   reward = 4000000
+   reward = 6000000
    stage = 0
 
    --Initialization of dead pirate memory

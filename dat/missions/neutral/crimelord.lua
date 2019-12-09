@@ -43,7 +43,7 @@ function accept ()
    end
    
    misn.accept()
-   reward = 40000
+   reward = 600000
    tk.msg( title[1], text[1] ) --dialogue 2
    misn.setTitle( title[0] ) --OSD stuff
    misn.setReward( reward_desc )

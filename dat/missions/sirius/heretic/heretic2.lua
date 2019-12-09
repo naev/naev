@@ -42,6 +42,7 @@ doom_clock_msg = _([[A scratchy voice jumps in on your comms priority channel.
 out_sys_failure_msg = _([[Your comm station flares up with a scratchy, obviously-from-far-away noise. A voice is heard through it.
    "%s! We told you we needed you to stay in system! Apparently you have more important things to do. So get lost, kid! We'll take care of ourselves." The static cuts out, and you consider yourself fired.]])
 misn_desc = _("Destroy the Sirius recon element that flew into %s. WARNING: DO NOT JUMP OUT-SYSTEM OR LAND ON THE PLANET PREMATURELY.")
+misn_reward = _("%s credits")
 
 function create()
    --this mission does make one system claim, in suna.
@@ -53,7 +54,7 @@ function create()
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
    playername = player.name()
-   reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01
+   reward = math.floor((100000+(math.random(5,8)*2000)*(nasin_rep^1.315))*.01+.5)/.01
    chronic = 0
    finished = 0
    takeoff_counter = 0
@@ -61,7 +62,7 @@ function create()
    deathcount = 0
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(numstring(reward) .. "credits")
+   misn.setReward(misn_reward:format(numstring(reward)))
    misn.setNPC(npc_name,"neutral/thief2")
    misn.setDesc(bar_desc)
 

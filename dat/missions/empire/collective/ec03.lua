@@ -12,9 +12,11 @@
 
 ]]--
 
+include "numstring.lua"
+
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")
-misn_reward = _("None")
+misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Go to draw the Collective's attention in the %s system.")
 misn_desc[2] = _("Travel back to %s in %s.")
@@ -50,6 +52,7 @@ end
 function accept ()
 
    commando_planet = "Eiroik"
+   credits = 1000000
 
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], commando_planet) )
@@ -65,7 +68,7 @@ function accept ()
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
+      misn.setReward( misn_reward:format( numstring( credits ) ) )
       misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
 
       tk.msg( title[1], string.format(text[2], commando_planet, commando_planet ) )
@@ -113,6 +116,7 @@ function land()
       var.push( "emp_commando", time.tonumber(time.get() + time.create( 0, 10, 0 )) )
 
       -- Rewards
+      player.pay(credits)
       faction.modPlayerSingle("Empire",5)
 
       misn.finish(true)

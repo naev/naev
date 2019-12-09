@@ -30,6 +30,7 @@
 
 include "numstring.lua"
 include "jumpdist.lua"
+include "dat/missions/pirate/common.lua"
 
 
 -- Mission details
@@ -87,7 +88,7 @@ function create ()
             end
          end
          return false
-      end )
+      end, nil, true )
 
    if #systems == 0 then
       -- No enemy presence nearby
@@ -531,6 +532,32 @@ end
 function succeed ()
    player.msg( "\ag" .. msg[4] .. "\a0" )
    player.pay( credits )
+
+   -- Pirate rep cap increase
+   local bounty_done = var.peek( "pir_bounty_done" )
+   var.push( "pir_bounty_done", true )
+   if bounty_done ~= true then
+      var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
+   end
+
+   if level >= 5 then
+      local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
+      var.push( "pir_bounty_dangerous_done", true )
+      if bounty_dangerous_done ~= true then
+         var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
+         pir_modDecayFloor( 5 )
+      end
+
+      if level >= 6 then
+         local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
+         var.push( "pir_bounty_highly_dangerous_done", true )
+         if bounty_highly_dangerous_done ~= true then
+            var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
+            pir_modDecayFloor( 5 )
+         end
+      end
+   end
+
    paying_faction:modPlayerSingle( reputation )
    misn.finish( true )
 end

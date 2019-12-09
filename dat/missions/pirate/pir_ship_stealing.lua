@@ -13,7 +13,9 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-include "dat/scripts/jumpdist.lua"
+include "jumpdist.lua"
+include "numstring.lua"
+include "dat/missions/pirate/common.lua"
 
 local informer
 local refusal
@@ -39,38 +41,16 @@ approval = {
    Hopefully, the pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]])
 }
 
+not_enough_title = _("Not Enough Money")
+not_enough_msg = _([["Do you take me for a fool? Get out of here! Come back when you have enough money."]])
+
 success = {
    title = _("Ship successfully stolen!"),
-   message = _([[   It took you several hours to escape patrols, and a few more ours to get in the ship to steal and manage to access it, but you finally take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
+   message = _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
    Enemy ships will probably be after you as soon as you'll leave the atmosphere, so you should get ready and use wisely the little time you have on this planet.]])
 }
 
 local base_price = 100000
-
-local guards = {
-   -- FIXME: Too much empire_idles is bad.
-   Empire = {
-      -- Not too big, we may have to fight our way through.
-      ship = "Empire Admonisher",
-      AI = "empire_idle"
-   },
-   Dvaered = {
-      ship = "Dvaered Phalanx",
-      AI = "empire_idle"
-   },
-   Sirius = {
-      ship = "Sirius Preacher",
-      AI = "empire_idle"
-   },
-   Soromid = {
-      ship = "Soromid Odium",
-      AI = "empire_idle"
-   },
-   Independent = {
-      ship = "Phalanx",
-      AI = "empire_idle"
-   }
-}
 
 local ships = {
    Empire = {
@@ -263,78 +243,54 @@ function create ()
 
    ship.system = ship.planet:system()
 
-   -- FIXME: Portrait
-   misn.setNPC( _("A Pirate informer"), "pirate/pirate4" )
+   local portrait = pir_getLordRandomPortrait()
+   misn.setNPC( _("A Pirate informer"), portrait )
    misn.setDesc( informer.description )
 end
 
 function accept()
-   if
-      tk.yesno(
-         informer.title,
-         string.format(
-            informer.message,
-            ship.class,
-            ship.faction,
-            tostring(ship.price)
-         )
-      )
-   then
-      tk.msg(
-         approval.title,
-         string.format(
-            approval.message,
-            ship.planet:name(),
-            ship.system:name()
-         )
-      )
+   if tk.yesno( informer.title, informer.message:format(
+         ship.class, ship.faction, numstring(ship.price) ) ) then
+      if player.credits() >= ship.price then
+         tk.msg( approval.title, approval.message:format(
+            ship.planet:name(), ship.system:name() ) )
 
-      misn.accept()
+         player.pay( -ship.price )
+         misn.accept()
 
-      -- Mission title, reward, description
-      misn.setTitle(
-         string.format(
-            title,
-            ship.class
-         )
-      )
-      misn.setReward(
-         string.format(
-            reward,
-            ship.class
-         )
-      )
-      misn.setDesc(
-         string.format(
-            description,
-            ship.planet:name(),
-            ship.system:name(),
-            ship.class
-         )
-      )
+         -- Mission title, reward, description
+         misn.setTitle( title:format( ship.class ) )
+         misn.setReward( reward:format( ship.class ) )
+         misn.setDesc( description:format(
+            ship.planet:name(),  ship.system:name(), ship.class ) )
 
-      -- Mission marker
-      misn.markerAdd( ship.system, "low" )
+         -- Mission marker
+         misn.markerAdd( ship.system, "low" )
 
-      -- OSD
-      misn.osdCreate(
-         string.format(
-            title,
-            ship.class
-         ), {
+         -- OSD
+         misn.osdCreate(
             string.format(
-               description,
-               ship.planet:name(),
-               ship.system:name(),
+               title,
                ship.class
-            )
-         }
-      )
+            ), {
+               string.format(
+                  description,
+                  ship.planet:name(),
+                  ship.system:name(),
+                  ship.class
+               )
+            }
+         )
 
-      hook.land("land")
-      hook.enter("enter")
+         hook.land("land")
+         hook.enter("enter")
+      else
+         tk.msg( not_enough_title, not_enough_text )
+         misn.finish()
+      end
    else
       -- Why would we care?
+      misn.finish()
    end
 end
 
@@ -393,39 +349,6 @@ function enter()
    if system.cur() == ship.system then
       -- We want the player to be able to land on the destination planet…
       ship.planet:landOverride(true)
-
-      -- I’m not really sure what this is for, but in was in shadowrun.lua,
-      -- so I just kept it…
-      pilot.clear()
-      pilot.toggleSpawn(false)
-
-      -- FIXME: Make the number of guarding ships (and therefor their 
-      --        position) vary with the player’s rating, his pirate fame,
-      --        etc. The class of the ship on the ground should also
-      --        influence the number of guardians, or maybe the class of
-      --        ships guarding?
-      local planetpos = ship.planet:pos()
-      local positions = {
-         planetpos + vec2.new(200,0),
-         planetpos + vec2.new(130,130),
-         planetpos + vec2.new(0,200),
-         planetpos + vec2.new(-130,130),
-         planetpos + vec2.new(-200,0),
-         planetpos + vec2.new(-130,-130),
-         planetpos + vec2.new(0,-200),
-         planetpos + vec2.new(130,-130),
-      }
-
-      for i = 1,#positions do
-         local position = positions[i]
-         local p = pilot.addRaw(guards[ship.faction].ship, guards[ship.faction].AI, position, ship.faction)
-         -- We don’t want the player to just land and be given his new ship…
-         p[1]:setHostile()
-      end
    end
-end
-
-function abort()
-   misn.finish(false)
 end
 

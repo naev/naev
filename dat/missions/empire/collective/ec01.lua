@@ -11,9 +11,11 @@
 
 ]]--
 
+include "numstring.lua"
+
 bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to him.")
 misn_title = _("Collective Espionage")
-misn_reward = _("None")
+misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Scan the Collective systems for wireless communications.")
 misn_desc[2] = _("Travel back to %s in %s.")
@@ -51,6 +53,8 @@ function accept ()
    -- Accept mission
    misn.accept()
 
+   credits = 600000
+
    misn_stage = 0
    systems_visited = 0 -- Number of Collective systems visited
    misn_base,misn_base_sys = planet.get("Omega Station")
@@ -60,7 +64,7 @@ function accept ()
    -- Mission details
    misn_desc[2] = misn_desc[2]:format(misn_base:name(), misn_base_sys:name())
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward )
+   misn.setReward( misn_reward:format( numstring( credits ) ) )
    misn.setDesc(misn_desc[1])
    misn_marker1 = misn.markerAdd(targsys1, "low")
    misn_marker2 = misn.markerAdd(targsys2, "low")
@@ -117,6 +121,7 @@ end
 function land()
    if planet.cur() == misn_base and sysdone1 and sysdone2 then
       tk.msg( title[3], text[3] )
+      player.pay(credits)
       faction.modPlayerSingle("Empire",5)
       misn.finish(true)
    end

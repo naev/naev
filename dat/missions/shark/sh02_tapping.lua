@@ -55,13 +55,9 @@ osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
 osd_msg[2] = _("Bring the recording back to %s in the %s system")
 
 function create ()
-
-   --Change here to change the planets and the systems
-   mispla,missys = planet.getLandable(faction.get("Sirius"))
-
-   while mispla:services()["bar"] == false do  --It must be a bar on this Planet
-      mispla,missys = planet.getLandable(faction.get("Sirius"))
-   end
+   repeat
+      mispla, missys = planet.getLandable(faction.get("Sirius"))
+   until mispla:services()["bar"]
 
    pplname = "Darkshed"
    psyname = "Alteris"
@@ -79,7 +75,7 @@ end
 function accept()
 
    stage = 0
-   reward = 50000
+   reward = 750000
    proba = 0.3  --the chances you have to get an ambush
 
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then

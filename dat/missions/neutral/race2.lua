@@ -88,8 +88,8 @@ function create ()
    curplanet = planet.cur()
    misn.setNPC(NPCname, "neutral/male1")
    misn.setDesc(NPCdesc)
-   credits_easy = rnd.rnd(10000, 50000)
-   credits_hard = rnd.rnd(50000, 100000)
+   credits_easy = rnd.rnd(20000, 100000)
+   credits_hard = rnd.rnd(200000, 300000)
 end
 
 

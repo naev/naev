@@ -16,15 +16,15 @@ t_pla = {}
 t_pla[1] = "Gastan"
 t_sys[1] = "Seiben"
 t_sys[2] = "Shikima"
--- player makes maximum 50k, minimum 30k
-reward = rnd.rnd(3,4)*10000+rnd.rnd(10)*1000 
+-- player makes maximum 500k, minimum 300k
+reward = rnd.rnd(3,4)*100000+rnd.rnd(10)*10000 
 shpnm = _("Tokera")
 -- Mission details
 title = {}
 text = {}
 osd_msg = {}
 misn_title = _("The one with the Visit")
-misn_reward = _("A the gratitude of science and a bit of compensation")
+misn_reward = _("The gratitude of science and a bit of compensation")
 misn_desc = _("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype.")
 bar_desc = _("You see Dr Geller and he is waving you over. Apparently he has another job for you.")
 
@@ -74,6 +74,7 @@ function accept()
    misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[2],shpnm),osd_msg[2]:format(shpnm),osd_msg[3]:format(t_pla[1],t_sys[1])})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
    misn.osdActive(1)
    misn_mark = misn.markerAdd( system.get(t_sys[2]), "high" )
    targetalive = true

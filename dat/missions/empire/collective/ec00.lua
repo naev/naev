@@ -12,10 +12,11 @@
 ]]--
 
 include "proximity.lua"
+include "numstring.lua"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
-misn_reward = _("None")
+misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Find a scout last seen in the %s system.")
 misn_desc[2] = _("Travel back to %s in %s.")
@@ -68,10 +69,11 @@ function accept ()
 
    misn_stage = 0
    misn_marker = misn.markerAdd( misn_target, "low" )
+   credits = 500000
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward )
+   misn.setReward( misn_reward:format( numstring( credits ) ) )
    misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
 
    -- Flavour text and mini-briefing
@@ -123,6 +125,7 @@ function land()
    if misn_stage == 1 and  pnt == misn_base then
       tk.msg( title[3], string.format(text[4],misn_target:name()) )
       faction.modPlayerSingle("Empire",5)
+      player.pay(credits)
       misn.finish(true)
    end
 end

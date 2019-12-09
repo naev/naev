@@ -54,7 +54,7 @@ function accept ()
    near_sys = get_pir_system( system.cur() )
 
    -- Get credits
-   credits  = rnd.rnd(5,10) * 10000
+   credits  = rnd.rnd(5,10) * 100000
 
    -- Mission details:
    if tk.yesno( title[1], string.format( text[1], player.name(),
@@ -171,14 +171,7 @@ function pir_generate ()
    pir_name = pirate_name()
 
    -- Get the pirate details
-   rating = player.getRating()
-   if rating < 50 then
-      pir_ship, pir_outfits = pir_easy()
-   elseif rating < 150 then
-      pir_ship, pir_outfits = pir_medium()
-   else
-      pir_ship, pir_outfits = pir_hard()
-   end
+   pir_ship, pir_outfits = pir_easy()
 
    -- Make sure to save the outfits.
    pir_outfits["__save"] = true
@@ -190,20 +183,6 @@ function pir_easy ()
       return pirate_createAncestor(false)
    else
       return pirate_createVendetta(false)
-   end
-end
-function pir_medium ()
-   if rnd.rnd() < 0.5 then
-      return pirate_createAdmonisher(false)
-   else
-      return pir_easy()
-   end
-end
-function pir_hard ()
-   if rnd.rnd() < 0.5 then
-      return pirate_createKestrel(false)
-   else
-      return pir_medium()
    end
 end
 
