@@ -1442,4 +1442,15 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
+ <mission name="Coming Out">
+  <lua>soromid/srm_comingout</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <chance>20</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
 </Missions>

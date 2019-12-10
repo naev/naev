@@ -31,7 +31,7 @@ text[2] = _([["Yes, finally!" It's as if a massive weight has been lifted off of
 text[3] = _([["Ugh, this is so annoying... I understand, though. Just let me know if you change your mind, okay?"]])
 
 pay_text = {}
-pay_text[1] = _([[Upon your return to the station, you are greeted by Benito. "Thanks once again for a job well done. I really do appreciate it. Not only have those traitors been taken care of, the others have become much more open to the idea that, hay, traitors are traitors and must be eliminated." She hands you a credit chip. "Here is your pay. Thank you again."]])
+pay_text[1] = _([[Upon your return to the station, you are greeted by Benito. "Thanks once again for a job well done. I really do appreciate it. Not only have those traitors been taken care of, the others have become much more open to the idea that, hey, traitors are traitors and must be eliminated." She hands you a credit chip. "Here is your pay. Thank you again."]])
 
 misn_title = _("The Split")
 misn_desc = _("A fleet of FLF soldiers has betrayed the FLF. Destroy this fleet.")
