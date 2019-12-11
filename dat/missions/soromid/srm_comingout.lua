@@ -23,7 +23,7 @@ title = {}
 text = {}
 
 title[1] = _("Just Some Transportation")
-text[1] = _([[As you approach, the stranger still seems rather nervous, but speaks up. The stranger's voice is deeper than you expected, but you pay it no mind.
+text[1] = _([[The stranger seems rather nervous as you approach, but speaks up. The stranger's voice is deeper than you expected from their appearance, but you pay it no mind.
     "H-hi! N-nice to meet you. I'm... um, you know what, you can just call me 'C' for now. I'm not sure about the name yet. They/them pronouns if that's okay." You agree to the request, introduce yourself, and chat with them a bit. Despite the murmurs throughout the bar they seem like a perfectly nice person. You can't help but wonder why these people would speak so lowly of them.
     After a while, C crosses their arms in thought. "So... um, you're a pilot, you say, right? Thing is, I'm in need of some transportation, but I don't really have much money on me so no one's willing to take me. It's a bit far and there's a lot of pirates in the area, so I get why no one wants to do it, but you know... I just... I need to see my parents. Just something I need to tell them. I'm not picky about how long it takes, and I promise I won't cause any trouble.... Could you do this for me?"]])
 
@@ -37,12 +37,12 @@ chatter = {}
 
 chatter[1] = _([["I just want to say again, thank you so much for helping me," C says. "It's a bit nerve-wracking, coming out to my parents, and those people in the bar and in so many places... anyway, it's nice to meet someone who accepts me for who I am rather than treating me like some kind of freak. I hope my parents understand...."]])
 
-chatter[2] = _([[C perks up. "Can I talk to you about something?" You respond affirmatively. "Thank you," they say. "I've been needing to talk to someone about this for months, but no one will listen. I feel like you will.
+chatter[2] = _([[C perks up. "Can I talk to you about something?" You respond affirmatively. "Thank you," they say. "I was going to come out to my parents first, but I'm so nervous and... I feel safe coming out to you, you know? Since you've been so nice to me this entire time, and I feel... I know this sounds terrible, but I feel safer coming out to you than my parents.
     "I was assigned male at birth, and society tends to see me as a man. But I've come to the conclusion that... I'm transgender. I feel like I should be... a woman, I think? I'm not sure. Does... does that make sense? I'm not stupid, am I?" You respond that, no, they're not stupid; everyone is different and no one can know C better than they can. C seems relieved to hear this.]])
 
-chatter[3] = _([["Hey... is there any chance, um... I know I asked you to use they/them pronouns for me before, but could you use she/her pronouns instead, please? I hope that's not too much trouble...." You assure her that it's no trouble at all and the two of you have a rather long and interesting conversation about the place of pronouns in society. She seems relieved.]])
+chatter[3] = _([["Hey... is there any chance, um... I know I asked you to use they/them pronouns for me before, but could you use she/her pronouns instead, please? I hope that's not too much trouble...." You assure her that it's no trouble at all and the two of you have a rather long and interesting conversation about the place of pronouns in society. You can tell that she's a lot happier and more comfortable than she was before.]])
 
-chatter[4] = _([["I've given it some thought. I think... my new name, I like the sound of 'Chelsea'." You respond that it sounds like a nice name and Chelsea smiles.]])
+chatter[4] = _([["I've given it some thought," C says. "I think... my new name, I like the sound of 'Chelsea'." You respond that it sounds like a nice name, plastering a smile on Chelsea's face.]])
 
 chatter[5] = _([[You and Chelsea have a long conversation about ships and piloting. It turns out that she's quite interested in the subject and has aspirations of being a mercenary some day. You talk about your adventures with passion and share some tips on how to get started with being a freelance pilot.]])
 
@@ -64,7 +64,7 @@ misn_desc = _("Your new friend needs you to take them to their parents in %s.")
 misn_reward = _("The satisfaction of helping out a new friend")
 
 npc_name = _("A different-looking stranger")
-npc_desc = _("Many people are murmuring about this person, who it seems they don't like much if at all. You can't help but wonder why. Meanwhile, the stranger is sitting quietly at a table, alone.")
+npc_desc = _("Many people are murmuring about this person, who it seems they don't like much if at all. You can't help but wonder why. The stranger is sitting quietly at a table, alone, and you get the feeling that they are in need of a suitable pilot.")
 
 osd_desc    = {}
 osd_desc[1] = _("Go to the %s system and land on the planet %s.")
@@ -76,7 +76,11 @@ function create ()
    started = false
    chatter_index = 0
 
-   -- FIXME: Make a real portrait for C
+   -- FIXME: Make a portrait for Chelsea. She should have a pretty
+   -- androgynous face slightly on the masculine side, with long-ish but
+   -- not that long hair (like someone who used to have short hair but
+   -- has started growing it long recently). She should also have a
+   -- regular human appearance (instead of a Soromid appearance).
    misn.setNPC( npc_name, "none" )
    misn.setDesc( npc_desc )
 end
@@ -101,7 +105,8 @@ function accept ()
 
       hook.land( "land" )
 
-      chatter_freq = time.create( 0, 0, 5000 )
+      chatter_freq = time.create( 0, 1, 5000 )
+      chatter_freq_mod = 5000
       hook.date( chatter_freq, "chatter" )
    else
       tk.msg( title[1], text[3] )
@@ -113,7 +118,8 @@ function chatter ()
    if chatter_index < #chatter then
       chatter_index = chatter_index + 1
       tk.msg( "", chatter[ chatter_index ] )
-      hook.date( chatter_freq, "chatter" )
+      local this_mod = rnd.rnd(-chatter_freq_mod, chatter_freq_mod)
+      hook.date( chatter_freq + time.create( 0, 0, this_mod ), "chatter" )
    end
 end
 
