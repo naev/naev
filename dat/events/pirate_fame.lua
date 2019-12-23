@@ -30,6 +30,7 @@ local function using_pirate_ship()
    local s = player.pilot():ship():name()
 
    return has(s, {
+      "Hyena",
       "Pirate Kestrel",
       "Pirate Admonisher",
       "Pirate Phalanx",

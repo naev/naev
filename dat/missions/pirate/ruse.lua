@@ -3,7 +3,7 @@
    Pirate The Ruse
 
    A girl asks you to find his brother but it turns out it is her assassination target.
-   Creates a ship in one out of 3 listed systems. The system and planet the brother is is chosen randomly.
+   Creates a ship in one out of 3 listed systems. The system and planet the brother is in is chosen randomly.
    spawns some mercenaries that were supposed to protect the brother to intercept the player
 
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
@@ -47,9 +47,9 @@ text[6] = _([["My sister? What the heck could she want from me? Prepare for dock
 text[7] = _([[The woman is standing next to you while the airlock opens. You see the man. The grin on his face changes to a baffled expression. You hear the sound of a blaster. A dark spot on chest of the man. The lady rushes past you and closes the airdock before you entirely realize what happens. While the airdock mechanism locks in you see the Poppy Seed depart.]])
 text[8] = _([[You find some of the stuff she left in your ship that you can turn to cash and a note saying:"Sorry"]])
 text[9] = _([[Your com starts beeping: "We received confirmation that you were invovled in the killing of our associate. Prepare to be boarded."]])
-text[10] = _([[What do you do: Chase the Poppy Seed or run away from the mercenaries closing in on you]])
+text[10] = _([[What do you do: Chase the Poppy Seed or run away from the mercenaries closing in on you?]])
 refusetitle = _("Sorry, I can't")
-refusetext = _([["How can you be such a heartless person?" asks you the woman half weepingly. " What has this universe become..."]])
+refusetext = _([["How can you be such a heartless person?" the woman asks half weepingly. "What has this universe become?..."]])
 
 -- Messages
 msg      = {}
@@ -142,7 +142,7 @@ function sys_enter ()
       -- just some moving around, stolen from baron missions ;D
       idlehook = hook.pilot(broship, "idle", "idle",broship,bropla)
       misn.osdActive(2)
-      -- get point between jumpgate and broship to spawn mercenaries disencouraging him from following
+      -- get point between jumpgate and broship to spawn mercenaries disencouraging you from following
       jpt = get_nearest_jump(broship)
       jpx,jpy = jpt:pos():get()
       px,py = broship:pos():get()
@@ -183,7 +183,7 @@ function got_boarded(shipp)
       badguys[i]:setHostile(true)
    end
    tk.msg( title[4], text[10] )
-   player.pay(rnd.rnd(40,60)*1000)
+   player.pay(rnd.rnd(40,60)*10000)
    misn.finish(true)
 end
 -- idle

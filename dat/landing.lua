@@ -160,7 +160,7 @@ function pir_clanworld( pnt )
 
    local land_msg
    if can_land then
-      land_msg = _("Permission to land granted. Welcome, brother.")
+      land_msg = _("Permission to land granted. Welcome, mate.")
    elseif standing >= 0 then
       land_msg = _("Small time pirates have no business on our clanworld!")
    else

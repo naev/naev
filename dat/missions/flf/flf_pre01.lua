@@ -37,7 +37,7 @@ text[3] = _([[You are skeptical at first, but a few seconds later it becomes app
     
 title[4] = _("Gregar leaves the party")
 text[4] = _([[You and Gregar step out of your airlock and onto Sindbad Station. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with mistrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
-    "All right, Mr. %s," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason why you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]])
+    "All right, %s," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason why you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]])
 
 title[5] = ""
 text[5] = _([[The moment of tension passes, and the officer leans back in his chair.
@@ -66,6 +66,7 @@ osd_desc[2] = _("Alternatively, turn Gregar in to the nearest Dvaered base")
 osd_adddesc = _("Follow the FLF ships to their secret base. Do not lose them!")
 
 misn_desc = _("You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered.")
+misn_reward = _("A chance to learn more about the FLF")
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -86,6 +87,7 @@ function create()
     misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_desc[2]})
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
+    misn.setReward(misn_reward)
     misn.markerAdd(system.get(destsysname), "low")
     
     gregar = misn.cargoAdd("Gregar", 0)

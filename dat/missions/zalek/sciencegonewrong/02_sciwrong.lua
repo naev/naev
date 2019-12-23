@@ -20,7 +20,7 @@ osd_msg = {}
 t_sys = {}
 t_pla = {}
 -- Mission details
-reward = 100000
+reward = 1000000
 -- amount of jumps the drone did to escape. Each jump reduces it's speed
 fled = false
 jumps = 0 
@@ -85,6 +85,7 @@ function accept()
    misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1]),osd_msg[2],osd_msg[3]:format(t_pla[2],t_sys[2])})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
    misn.osdActive(1)
    mmarker = misn.markerAdd(system.get(t_sys[1]), "high")
    hook.jumpin("sys_enter")

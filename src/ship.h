@@ -104,6 +104,7 @@ typedef struct Ship_ {
    int fuel;                /**< How much fuel by default. */
    int fuel_consumption; /**< Fuel consumption by engine. */
    double cap_cargo;        /**< Cargo capacity (in volume). */
+   double dt_default;      /**< Default/minimum time delta. */
 
    /* health */
    double armour;    /**< Maximum base armour in MJ. */

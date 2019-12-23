@@ -11,7 +11,7 @@ include "dat/scripts/jumpdist.lua"
 
 bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
 misn_title = _("Soromid Long Distance Recruitment")
-misn_reward = _("50000 credits")
+misn_reward = _("500,000 credits")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Soromid Customs Central in the Oberon system.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -52,7 +52,7 @@ function accept ()
    misn.accept()
   
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 50000
+   reward = 500000
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )

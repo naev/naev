@@ -106,6 +106,7 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected);
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
@@ -151,6 +152,8 @@ static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
 
+/* VBO. */
+static gl_vbo *sysedit_vbo = NULL; /**< Map VBO. */
 
 /**
  * @brief Opens the system editor interface.
@@ -160,6 +163,9 @@ void sysedit_open( StarSystem *sys )
    unsigned int wid;
    char buf[PATH_MAX];
    int i;
+
+   /* Create the VBO. */
+   sysedit_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -183,8 +189,8 @@ void sysedit_open( StarSystem *sys )
    window_setAccept( wid, sysedit_close );
 
    /* Close button. */
-   window_addButton( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("Close"), sysedit_close );
+   window_addButtonKey( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Exit"), sysedit_close, SDLK_x );
    i = 1;
 
    /* Autosave toggle. */
@@ -267,6 +273,12 @@ static void sysedit_close( unsigned int wid, char *wgt )
 {
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
+   
+   /* Unload VBO */
+   if (sysedit_vbo != NULL) {
+      gl_vboDestroy(sysedit_vbo);
+      sysedit_vbo = NULL;
+   }
 
    /* Remove selection. */
    sysedit_deselect();
@@ -654,8 +666,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    for (i=0; i<sys->nasteroids; i++) {
       ast = &sys->asteroids[i];
       selected = 0;
-      sysedit_renderSprite( asteroid_gfx[0], x, y, ast->pos.x, ast->pos.y,
-                            0, 0, NULL, selected, _("Asteroid Field") );
+      sysedit_renderAsteroidsField( x, y, ast, selected );
    }
 
    /* Render cursor position. */
@@ -665,6 +676,105 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          (by + sysedit_my - y)/z );
 }
 
+
+/**
+ * @brief Draws an asteroids field on the map.
+ *
+ */
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected )
+{
+   // "Constants" that were previously parameters
+         double r          =   5.0;
+   const double a_triangle =   1.0;
+   const double a_corners  =   0.2;
+   const int num           =   1;
+   const int cur           =   1;
+   const int type_corners  =   2;
+   const int type_triangle =   3;
+
+   const double beta = M_PI / 9;
+   static const glColour* colours[] = {
+      &cGreen, &cBlue, &cRed, &cOrange, &cYellow
+   };
+
+   int i, j, k;
+   double alpha, cos_alpha, sin_alpha;
+   GLfloat vertex[               3*(2+4)];
+   GLfloat corners[ast->ncorners*3*(2+4)];  /* Field # of vertices is large enough to contain any convex's # of vertices, so no need to limit and resize for each convex */
+   double tx, ty, z;
+   AsteroidSubset *sub;
+
+   /* Render icon */
+   sysedit_renderSprite( asteroid_gfx[0], bx, by, ast->pos.x, ast->pos.y,
+                         0, 0, NULL, selected, _("Asteroid Field") );
+
+   /* Inits. */
+   z  = sysedit_zoom;
+
+   /* Translate asteroids field center's coords. */
+   tx = bx + ast->pos.x*z;
+   ty = by + ast->pos.y*z;
+
+   /* Setup the marking triangle's vertex array : [x0,y0,x1,y1,x2,y2,r0,g0,b0,a0,r1,g1,b1,a1,r2,g2,b2,a2]. */
+   alpha = 45;
+   alpha += M_PI*2. * (double)cur/(double)num;
+   cos_alpha = r * cos(alpha);
+   sin_alpha = r * sin(alpha);
+   r = 3 * r;
+   vertex[0] = tx + cos_alpha;
+   vertex[1] = ty + sin_alpha;
+   vertex[2] = tx + cos_alpha + r * cos(beta + alpha);
+   vertex[3] = ty + sin_alpha + r * sin(beta + alpha);
+   vertex[4] = tx + cos_alpha + r * cos(beta - alpha);
+   vertex[5] = ty + sin_alpha - r * sin(beta - alpha);
+   for (i=0; i<3; i++) {
+      vertex[6 + 4*i + 0] = colours[type_triangle]->r;
+      vertex[6 + 4*i + 1] = colours[type_triangle]->g;
+      vertex[6 + 4*i + 2] = colours[type_triangle]->b;
+      vertex[6 + 4*i + 3] = colours[type_triangle]->a * a_triangle;
+   }
+
+   /* Loop on convex subsets */
+   for (k=0; k<ast->nsubsets; k++) {
+      sub = &ast->subsets[k];
+      /* Setup the subset's corners' vertex array : [tx,ty,x0,y0,x1,y1,...,tx,ty,xn,yn,x0,y0,r1,g1,b1,a1,...,r3n,g3n,b3n,a3n]. */
+      for (j=0; j<sub->ncorners; j++) {
+         corners[                  6*j + 0] = tx;
+         corners[                  6*j + 1] = ty;
+         corners[                  6*j + 2] = bx + sub->corners[j].x*z;
+         corners[                  6*j + 3] = by + sub->corners[j].y*z;
+         corners[                  6*j + 4] = bx + sub->corners[(j+1)%sub->ncorners].x*z;
+         corners[                  6*j + 5] = by + sub->corners[(j+1)%sub->ncorners].y*z;
+         for (i=0; i<3; i++) {
+            corners[6*sub->ncorners + 3*4*j + 4*i + 0] = colours[type_corners]->r;
+            corners[6*sub->ncorners + 3*4*j + 4*i + 1] = colours[type_corners]->g;
+            corners[6*sub->ncorners + 3*4*j + 4*i + 2] = colours[type_corners]->b;
+            corners[6*sub->ncorners + 3*4*j + 4*i + 3] = colours[type_corners]->a * a_corners;
+         }
+      }
+
+      /* First render each convex subset : enable + resize + load vertices + load colors + draw + disable */
+      glEnable(GL_POLYGON_SMOOTH);
+      gl_vboData( sysedit_vbo, sizeof(GLfloat) * sub->ncorners*3*(2+4), NULL );
+      gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * sub->ncorners*3*(2+4), corners );
+      gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0,                                   2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,  sizeof(GLfloat) * sub->ncorners*3*2, 4, GL_FLOAT, 0 );
+      glDrawArrays( GL_TRIANGLES, 0, sub->ncorners*3 );
+      gl_vboDeactivate();
+      glDisable(GL_POLYGON_SMOOTH);
+
+   }
+   
+   /* Then render the triangle : enable + resize + load vertices + load colors + draw + disable */
+   glEnable(GL_POLYGON_SMOOTH);
+   gl_vboData( sysedit_vbo, sizeof(GLfloat) * 3*(2+4), NULL );
+   gl_vboSubData( sysedit_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+   gl_vboActivateOffset( sysedit_vbo, GL_VERTEX_ARRAY, 0,                     2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( sysedit_vbo, GL_COLOR_ARRAY,  sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLES, 0, 3 );
+   gl_vboDeactivate();
+   glDisable(GL_POLYGON_SMOOTH);
+}
 
 /**
  * @brief Renders the custom widget background.

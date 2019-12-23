@@ -23,16 +23,16 @@ t_pla[2] = "Waterhole's Moon"
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
 t_sys[3] = "Seiben"
 t_pla[3] = "Gastan"
--- player makes maximum 49k+, minimum 30k
+-- player makes maximum 490k+, minimum 300k
 pho_mny = 50000
-reward = pho_mny+30000+rnd.rnd(3,4)*10000+rnd.rnd(10)*1000 
+reward = pho_mny+300000+rnd.rnd(3,4)*100000+rnd.rnd(10)*1000 
 title = {}
 text = {}
 osd_msg = {}
 -- set text variables
 -- Mission details
 misn_title = _("The one with the Shopping")
-misn_reward = _("A the gratitude of science and a bit of compensation")
+misn_reward = _("The gratitude of science and a bit of compensation")
 misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs to build his prototype.")
 bar_desc = _("You see this scientist talking to various pilots. He looks at you with a measuring look.")
 trd1_desc = _("This seems to be a regular trader with some bodyguards. Business is dangerous nowadays...")
@@ -90,6 +90,7 @@ function accept()
    misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1], t_pla[1])})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
    misn_mark = misn.markerAdd( system.get(t_sys[1]), "high" )
    talked = false
    lhook1 =  hook.land("land1", "land")
@@ -109,7 +110,7 @@ function land2()
   end
 end
 
--- first trade: send player 2 2nd system, if he goes back here, tell him to get going...
+-- first trade: send player 2 2nd system, if he goes back here, tell them to get going...
 function first_trd()
   if talked then
      tk.msg(title[1], text[7])
@@ -129,7 +130,7 @@ function first_trd()
   lhook2 = hook.land("land2", "land")
   
 end
--- 2nd trade: Get player the stuff and make him pay, let him be hunted by the police squad
+-- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
   if not tk.yesno( title[1], text[8]:format(pho_mny) ) then
@@ -180,7 +181,7 @@ function fnl_ld ()
       misn.finish(true)
    end
 end
--- when the player takes off the authorities will want her/him
+-- when the player takes off the authorities will want them
 function sys_enter ()
    if system.cur() == system.get(t_sys[2]) then
       hook.timer(7000, "call_the_police")

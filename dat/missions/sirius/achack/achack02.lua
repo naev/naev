@@ -14,7 +14,7 @@ text1 = _([[When you approach her, the officer greets you with a smile. "What a 
     
 text1r = _([["Hello again, %s," Joanne greets you. "I'm afraid I still find myself under threat from mercenary assassins. Have you reconsidered my offer? Let me tell you again what I need."]])
    
-text2 = _([["See, this is the situation," she continues. "My duties as a Sirian administration officer require me to pay visits to several military outposts throughout Sirius space. It's a long trek every time, but that just comes with the job. Now, the trouble is that Harja's assassins might have many opportunities to ambush me along the way. I've had combat training, of course, just like every other Serra soldier, but I'm afraid I have little actual fighting experience, and I'm not sure I could survive an attack unassisted. You, however, seem to have seen quite some action. If you were to escort me while I make my rounds, I would feel a lot more secure. I can reward you, of course. Let's see... Another 150,000 credits seems a fair sum. What do you think, are you willing to do it?"]])
+text2 = _([["See, this is the situation," she continues. "My duties as a Sirian administration officer require me to pay visits to several military outposts throughout Sirius space. It's a long trek every time, but that just comes with the job. Now, the trouble is that Harja's assassins might have many opportunities to ambush me along the way. I've had combat training, of course, just like every other Serra soldier, but I'm afraid I have little actual fighting experience, and I'm not sure I could survive an attack unassisted. You, however, seem to have seen quite some action. If you were to escort me while I make my rounds, I would feel a lot more secure. I can reward you, of course. Let's see... Another 750,000 credits seems a fair sum. What do you think, are you willing to do it?"]])
     
 title2 = _("Joanne's escort")
 text3 = _([["That's wonderful! Thank you so much. As I said, my job requires that I travel between Sirian military bases. You're going to need fuel to make the necessary jumps, of course. Now that you have agreed to be my personal escort I can give you clearance to dock with those bases if you don't have it already so you can automatically refuel, but either way I won't be on station long, so you won't have time to disembark and do other things while you're there.
@@ -74,7 +74,7 @@ osd_final = {_("Land on Sroolu to get your reward")}
 osd_final["__save"] = true
 
 misn_desc = _("Joanne needs you to escort her ship and fight off mercenaries sent to kill her.")
-misn_reward = _("Joanne will pay you another 150,000 credits.")
+misn_reward = _("Joanne will pay you another 750,000 credits.")
 
 function create()
    if not misn.claim ( {system.get("Humdrum"), system.get("Lapis")} ) then
@@ -158,7 +158,7 @@ function land()
       tk.msg(title4, text5:format(player.name(), player.name()))
       tk.msg(title5, text6)
       tk.msg(title5, text7:format(player.name()))
-      player.pay(150000) -- 150K
+      player.pay(750000) -- 750K
       var.pop("achack02repeat")
       misn.finish(true)
    end

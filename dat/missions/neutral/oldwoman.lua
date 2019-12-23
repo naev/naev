@@ -103,7 +103,7 @@ end
 function land()
     if planet.cur() == destplanet then
         tk.msg(title2, text3)
-        player.pay(50000) -- 50K
+        player.pay(500000) -- 500K
         misn.finish(true)
     end
 end

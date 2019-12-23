@@ -31,6 +31,7 @@
 #include "escort.h"
 #include "music.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "gui.h"
 #include "board.h"
 #include "debris.h"
@@ -1478,7 +1479,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* This is sort of a hack to make sure it gets reset... */
       if (p->id==PLAYER_ID)
-         pause_setSpeed( player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1. );
+         player_autonavResetSpeed();
    }
 }
 
@@ -2869,14 +2870,17 @@ void pilots_free (void)
 
 
 /**
- * @brief Cleans up the pilot stack - leaves the player, and persisted pilots.
+ * @brief Cleans up the pilot stack - leaves the player
+ *
+ *    @param persist Do not remove persistant pilots.
  */
-void pilots_clean (void)
+void pilots_clean (int persist)
 {
    int i, persist_count=0;
    for (i=0; i < pilot_nstack; i++) {
       /* move player and persisted pilots to start */
-      if (pilot_stack[i] == player.p || pilot_isFlag(pilot_stack[i], PILOT_PERSIST)) {
+      if (pilot_stack[i] == player.p ||
+          (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          pilot_stack[persist_count] = pilot_stack[i];
          pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
          pilot_clearTimers( player.p ); /* Reset timers. */
@@ -2910,7 +2914,7 @@ void pilots_clear (void)
  */
 void pilots_cleanAll (void)
 {
-   pilots_clean();
+   pilots_clean(0);
    if (player.p != NULL) {
       pilot_free(player.p);
       player.p = NULL;

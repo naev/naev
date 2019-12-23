@@ -171,8 +171,8 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_wid = wid;
 
    /* Close button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("Close"), uniedit_close );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Exit"), uniedit_close, SDLK_x );
    buttonPos++;
 
    /* Autosave toggle. */
@@ -182,11 +182,6 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Save button. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", _("Save All"), uniedit_save );
-   buttonPos++;
-
-   /* Save Map button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSaveMap", _("Save Map"), uniedit_saveMap );
    buttonPos++;
 
    /* Jump toggle. */
@@ -316,18 +311,6 @@ void uniedit_updateAutosave (void)
 }
 
 
-/*
- * @brief Saves a map.
- */
-static void uniedit_saveMap( unsigned int wid_unused, char *unused )
-{
-   (void) wid_unused;
-   (void) unused;
-
-   dsys_saveMap(uniedit_sys, uniedit_nsys);
-}
-
-
 /**
  * @brief Enters the editor in new jump mode.
  */
@@ -418,6 +401,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
+
+   map_renderDecorators( x, y, 1 );
 
    /* Render faction disks. */
    map_renderFactionDisks( x, y, 1 );

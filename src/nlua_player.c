@@ -55,7 +55,6 @@ static int playerL_omsgChange( lua_State *L );
 static int playerL_omsgRm( lua_State *L );
 static int playerL_allowSave( lua_State *L );
 /* Faction stuff. */
-static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
 static int playerL_getPilot( lua_State *L );
 /* Fuel stuff. */
@@ -99,7 +98,6 @@ static const luaL_Reg playerL_methods[] = {
    { "omsgChange", playerL_omsgChange },
    { "omsgRm", playerL_omsgRm },
    { "allowSave", playerL_allowSave },
-   { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
    { "jumps", playerL_jumps },
@@ -155,7 +153,6 @@ int nlua_loadPlayer( nlua_env env )
  * @code
  * pname = player.name()
  * shipname = player.ship()
- * rating = player.getRating()
  * @endcode
  * @luamod player
  */
@@ -368,19 +365,6 @@ static int playerL_allowSave( lua_State *L )
       player_setFlag(PLAYER_NOSAVE);
    return 0;
 }
-/**
- * @brief Gets the player's combat rating.
- *
- *    @luatreturn number The combat rating (in raw number).
- *    @luatreturn string The actual standing in human readable form.
- * @luafunc getRating()
- */
-static int playerL_getRating( lua_State *L )
-{
-   lua_pushnumber(L, player.crating);
-   lua_pushstring(L, player_rating());
-   return 2;
-}
 
 /**
  * @brief Gets the player's position.
@@ -565,7 +549,8 @@ static int playerL_cinematics( lua_State *L )
    /* Remove doublespeed. */
    if (player_isFlag( PLAYER_DOUBLESPEED )) {
       player_rmFlag( PLAYER_DOUBLESPEED );
-      pause_setSpeed(1.);
+      pause_setSpeed( player.p->ship->dt_default );
+      sound_setSpeed( 1. );
    }
 
    if (b) {
@@ -573,7 +558,8 @@ static int playerL_cinematics( lua_State *L )
       player_autonavAbort( abort_msg );
       player_rmFlag( PLAYER_DOUBLESPEED );
       ovr_setOpen(0);
-      pause_setSpeed(1.);
+      pause_setSpeed( player.p->ship->dt_default );
+      sound_setSpeed( 1. );
 
       if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );

@@ -88,18 +88,7 @@ function create()
       riskreward = 50
    end
     
-    --Select size of convoy. Must have enough combat exp to get large convoys.
-   if player.getRating() >= 5000 then
-      convoysize = rnd.rnd(1,5)
-   elseif player.getRating() >= 2000 then
-      convoysize = rnd.rnd(1,4)
-   elseif player.getRating() >= 1000 then
-      convoysize = rnd.rnd(1,3)
-   elseif player.getRating() >= 500 then
-      convoysize = rnd.rnd(1,2)
-   else
-      convoysize = 1
-   end
+   convoysize = rnd.rnd(1,5)
    
    -- Choose mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.

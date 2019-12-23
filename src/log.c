@@ -67,7 +67,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
       /* Add header if necessary. */
       /* Print variable text. */
       va_start( ap, fmt );
-      n = vsnprintf( &buf[2], sizeof(buf)-3-n, fmt, ap )-1;
+      n = vsnprintf( &buf[2], sizeof(buf)-3, fmt, ap )-1;
       va_end( ap );
 
    }

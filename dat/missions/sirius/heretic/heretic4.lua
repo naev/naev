@@ -32,13 +32,14 @@ misn_title = _("The Egress")
 npc_name = _("Draga")
 bar_desc = _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out.")
 misn_desc = _("Assist the Nasin refugees by flying to %s in %s, and unloading them there.")
+misn_reward = _("%s credits")
 
 function create()
    --this mission make no system claims.
    --initalize your variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
-   reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01
+   reward = math.floor((100000+(math.random(5,8)*2000)*(nasin_rep^1.315))*.01+.5)/.01
    homeasset = planet.cur()
    targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the nasin in the next part.
    free_cargo = player.pilot():cargoFree()
@@ -46,8 +47,8 @@ function create()
    --set some mission stuff
    misn.setNPC(npc_name,"neutral/thief2")
    misn.setDesc(bar_desc)
-   misn.setTitle = misn_title
-   misn.setReward = reward
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward:format(numstring(reward)))
 
    osd[1] = osd[1]:format(targetasset:name(),targetsys:name())
 end
@@ -63,7 +64,7 @@ function accept()
    misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
-   player.allowSave(false) -- so the player won't get stuck with a mission he can't complete.
+   player.allowSave(false) -- so the player won't get stuck with a mission they can't complete.
    tk.msg(misn_title,bmsg[2])
    tk.msg(misn_title,bmsg[3])
    --convo over. time to finish setting the mission stuff.

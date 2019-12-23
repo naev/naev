@@ -80,7 +80,7 @@ msg_lore["general"] =      {_("I heard the nebula is haunted! My uncle Bobby tol
                               _("Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"),
                               _("I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."),
                               _("Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"),
-                              _("Hey, you ever wonder why we're here?\", you say, \"It's one of life's great mysteries isn't it?\", the citizen replies, \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are we in here, in this bar?")
+                              _("Hey, you ever wonder why we're here?\", you say. \"It's one of life's great mysteries isn't it?\", the citizen replies. \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night.\" You stare at the citizen incredulously. \"What?? No, I mean why are we in here, in this bar?")
                            }
 
 msg_lore["Independent"] =  {_("We're not part of any of the galactic superpowers. We can take care of ourselves!"),
@@ -177,6 +177,12 @@ msg_lore["Pirate"] =       {_("Hi mate. Money or your life! Heh heh, just messin
                               _("Hey, look at these new scars I got!"),
                               _("Have you heard of the Pirates' Code? They're more guidelines than rules..."),
                               _("My gran said 'Never trust a pirate', she was right too, I got a pretty credit chip for her with the slavers."),
+                              _("Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."),
+                              _("I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."),
+                              _("Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."),
+                              _("I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a \"small-time pirate\"! Sometimes I think I'll never make it in this line of work..."),
+                              _("Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."),
+                              _("I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual.")
                            }
 
 msg_lore["Trader"] =       {_("Just another link in the Great Chain, right?"),
@@ -192,7 +198,6 @@ msg_tip =                  {_("I heard you can set your weapons to only fire whe
                               _("Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with " .. tutGetKey("hail") .. ", and click the bribe button! Careful though, it doesn't always work."),
                               _("Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"),
                               _("These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."),
-                              _("Your equipment travels with you from planet to planet, but your ships don't! Nobody knows why, it's just life, I guess."),
                               _("You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."),
                               _("Are you buying missiles? You can hold down \abctrl\a0 to buy 5 of them at a time, and \abshift\a0 to buy 10. And if you press them both at once, you can buy 50 at a time! It actually works for everything, but why would you want to buy 50 laser cannons?"),
                               _("If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."),
@@ -205,6 +210,8 @@ msg_tip =                  {_("I heard you can set your weapons to only fire whe
                               _("If you're having trouble with overheating weapons or outfits, you can press " .. tutGetKey("autobrake") .. " twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"),
                               _("If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"),
                               _("You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."),
+                              _("Flying bigger ships is awesome, but it's a bit tougher than flying smaller ships. There's so much more you have to do for the same actions, time just seems to fly by faster. I guess the upside of that is that you don't notice how slow your ship is as much."),
+                              _("I know it can be tempting to fly the big and powerful ships, but don't underestimate smaller ones! Given their simpler designs and lesser crew size, you have a lot more time to react with a smaller vessel. Some are even so simple to pilot that time seems to slow down all around you!"),
                            }
 
 -- Jump point messages.
@@ -360,7 +367,7 @@ function getJmpMessage(fac)
          table.insert(mytargets, j)
       end
    end
-   
+
    if #mytargets == 0 then -- The player already knows all jumps in this system.
       return getLoreMessage(fac), nil
    end
@@ -410,7 +417,7 @@ function getMissionLikeMessage(fac)
             msg_combined[#msg_combined + 1] = j[2]
          end
       end
-   
+
       -- After-care.
       -- After-care messages are only valid if the relevant mission has been completed.
       for i, j in pairs(msg_mdone) do

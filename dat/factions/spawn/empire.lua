@@ -97,7 +97,7 @@ end
 function spawn_fleet ()
    local pilots = {}
    pilots.__fleet = true
-   pilots.__formation = formations.random_key()
+   pilots.__formation = formation.random_key()
 
    scom.addPilot( pilots, "Empire Peacemaker", 165 )
 

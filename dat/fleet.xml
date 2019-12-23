@@ -63,6 +63,13 @@
    <pilot name="Civilian Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Miner Llama">
+  <ai>miner</ai>
+  <faction>Miner</faction>
+  <pilots>
+   <pilot name="Miner Llama" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>

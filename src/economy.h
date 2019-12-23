@@ -76,6 +76,8 @@ void economy_destroy (void);
  */
 void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel );
 void gatherable_render( void );
+int gatherable_getClosest( Vector2d pos, double rad );
+int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id );
 void gatherable_free( void );
 void gatherable_update( double dt );
 void gatherable_gather( int pilot );

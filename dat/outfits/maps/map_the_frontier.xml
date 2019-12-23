@@ -31,6 +31,7 @@
   <sys name="Brimstone">
    <jump>Shickhaw</jump>
    <jump>Triap</jump>
+   <asset>Alleyway</asset>
    <asset>Brimstone I</asset>
    <asset>Brimstone II</asset>
    <asset>Brimstone III</asset>

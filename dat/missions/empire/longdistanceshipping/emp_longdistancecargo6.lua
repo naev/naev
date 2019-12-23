@@ -11,7 +11,7 @@ include "dat/scripts/jumpdist.lua"
 
 bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
 misn_title = _("Empire Long Distance Recruitment")
-misn_reward = _("5000 credits")
+misn_reward = _("50,000 credits")
 misn_desc = _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -55,7 +55,7 @@ function accept ()
    misn.accept()
   
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 5000
+   reward = 50000
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )

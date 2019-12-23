@@ -55,7 +55,7 @@ function create ()
       misn.finish(false)
    end
    satellite_sys = system.get("Arandon") -- Not too unstable
-   credits = 75000
+   credits = 750000
 
    -- Set stuff up for the spaceport bar
    misn.setNPC( _("Scientists"), "neutral/scientist" )

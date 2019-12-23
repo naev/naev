@@ -1,11 +1,11 @@
 --[[
-   
+
    This is the seventh mission of the Shark's teeth campaign. The player has to meet the FLF in Arandon.
-   
+
    Stages :
    0) Way to Arandon
    1) Way back to Darkshed
-   
+
 --]]
 
 include "numstring.lua"
@@ -19,30 +19,29 @@ bar_desc = {}
 title[1] = _("Let's go")
 text[1] = _([["Is your ship ready for the dangers of the Nebula?"]])
 
-refusetitle = _("Sorry, not interested")
+refusetitle = _("...Or not")
 refusetext = _([["Come back when you are ready."]])
 
 title[2] = _("Go")
 text[2] = _([[Smith once again steps in your ship in order to go to a meeting.]])
 
 title[3] = _("Well done!")
-text[3] = _([["Here is your pay," says Smith. I will be in the bar if I have an other task for you.]])
+text[3] = _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]])
 
 title[4] = _("The Meeting")
-text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few hours later, he comes back, satisfied. It seems, this time luck is on your side. "They will buy tons of these damn "Sharks", all we have to do now is to fix a few details, so let's go back to %s," he says happily.
-   You unboard, wondering what kind of details he could be thinking about...]])
-   
+text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few hours later, he comes back, satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to %s.]])
+
 title[5] = _("Hail")
-text[5] = _([[As you hail him, the Pacifier commander answers you and stops his ship, waiting to be boarded.]])
+text[5] = _([[The Pacifier commander answers you and stops his ship, waiting to be boarded.]])
 
 -- Mission details
 misn_title = _("A Journey To %s")
-misn_reward = _("50,000 credits")
-misn_desc = _("Nexus Shipyard asks you to take contact with the FLF")
+misn_reward = _("%s credits")
+misn_desc = _("You are to transport Arnold Smith to %s so that he can talk about a deal.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[It's fun to see how this guy's dishonesty has led him to help the most idealistic group in the galaxy.]])
+bar_desc[1] = _([[He's waiting for you.]])
 
 -- OSD
 osd_title = _("A Journey To %s")
@@ -50,44 +49,44 @@ osd_msg[1] = _("Go to %s and wait for the FLF ship, then hail and board it.")
 osd_msg[2] = _("Go back to %s in %s")
 
 function create ()
-   
+
    --Change here to change the planets and the systems
    missys = system.get("Arandon")
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
-   
+
    if not misn.claim(missys) then
       misn.finish(false)
    end
-   
+
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
 
 function accept()
-   
-   stage = 0 
-   reward = 50000
-   
+
+   stage = 0
+   reward = 750000
+
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       tk.msg(title[2], text[2])
-      
+
       osd_msg[1] = osd_msg[1]:format(missys:name())
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-      
+
       misn.setTitle(misn_title:format(missys:name()))
-      misn.setReward(misn_reward)
-      misn.setDesc(misn_desc)
+      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setDesc(misn_desc:format(missys:name()))
       osd = misn.osdCreate(osd_title:format(missys:name()), osd_msg)
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
-      
+
       smith = misn.cargoAdd("Person", 0)  --Adding the cargo
-      
+
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
       else
@@ -116,10 +115,10 @@ function enter()
       --Lets unspawn everybody (if any)
       pilot.clear()
       pilot.toggleSpawn(false)
-      
+
       --Waiting to spawn the FLF in order to let the player's shield decrease
       hook.timer(10000,"flf_people")
-      
+
    end
 end
 

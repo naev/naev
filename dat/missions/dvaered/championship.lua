@@ -42,13 +42,13 @@ title[3] = _("You won this round")
 text[3] = _([["Congratulations", the staff says to you. Come back when you are ready for the next round!]])
 
 title[4] = _("You are the new champion")
-text[4] = _([[Congratulations! The staff pays you %s k credits.]])
+text[4] = _([[Congratulations! The staff pays you %s credits.]])
 
 title[5] = _("You are the vice-champion")
-text[5] = _([[Congratulations! The staff pays you %s k credits.]])
+text[5] = _([[Congratulations! The staff pays you %s credits.]])
 
 title[6] = _("Thanks for playing")
-text[6] = _([[The staff pays you %s k credits.]])
+text[6] = _([[The staff pays you %s credits.]])
 
 comptitle[1] = _("I am here to win the championship")
 comptext[1] = _([["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
@@ -68,11 +68,11 @@ comptext[5] = _([["Hi, I'm... err... I'm an independant pilot. I'm here to take 
 
 comptitle[6] = _("I am here to win the championship")
 comptext[6] = _([["Hello," the pilot says, "I came to become the new champion of this cycle! I prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible, and my Vendetta is indestructible.
-   Do you know who I am? I am the famous independant pilot who helped Dvaered High Command to destroy the FLF base in the nebula. I managed to defeat lots of FLF fighters with my ship! An other day, I will tell you my adventures, but now, I need to concentrate myself."]])
+   Do you know who I am? I am the famous independant pilot who helped Dvaered High Command to destroy the FLF base in the nebula. I managed to defeat lots of FLF fighters with my ship! Another day, I will tell you my adventures, but now, I need to concentrate myself."]])
    
 -- Mission details
 misn_title = _("The Dvaered Championship")
-misn_reward = _("From 5k to 160k credits, depending on your rank")
+misn_reward = _("From 50k to 1.6m credits, depending on your rank")
 misn_desc = _("You take part to a fight contest. Try to do your best!")
 
 -- NPC
@@ -165,7 +165,7 @@ end
 function accept()
    
    level = 0
-   reward = 5000
+   reward = 50000
    
    if tk.yesno(title[1], text[1]) then
 
@@ -182,7 +182,7 @@ function accept()
 
       beginbattle()
 
-      else
+   else
       tk.msg(refusetitle, refusetext)
       misn.finish(false)
    end
@@ -364,10 +364,10 @@ function enter()
       mark = system.mrkAdd( mark_name, start_pos )
       prox = hook.timer(500, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
-      elseif haslauncher == true then
+   elseif haslauncher == true then
       tk.msg(dismisstitle, missiletext)
       misn.finish(false)
-      elseif playerclass ~= "Fighter" then
+   elseif playerclass ~= "Fighter" then
       tk.msg(dismisstitle, fightertext)
       misn.finish(false)
    end
@@ -415,11 +415,11 @@ function land()
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
       if level == 5 then  --you are the champion
-         tk.msg(title[4], text[4]:format(numstring(reward/1000 * 2^level)))
-         elseif level == 4 then
-         tk.msg(title[5], text[5]:format(numstring(reward/1000 * 2^level)))
-         else
-         tk.msg(title[6], text[6]:format(numstring(reward/1000 * 2^level)))
+         tk.msg(title[4], text[4]:format(numstring(reward * 2^level)))
+      elseif level == 4 then
+         tk.msg(title[5], text[5]:format(numstring(reward * 2^level)))
+      else
+         tk.msg(title[6], text[6]:format(numstring(reward * 2^level)))
       end
 
       player.pay(reward * 2^level)

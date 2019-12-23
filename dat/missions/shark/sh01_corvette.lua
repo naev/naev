@@ -1,12 +1,12 @@
 --[[
-   
+
    This is the second mission of the Shark's teeth campaign. The player has to take part to a fake battle.
-   
+
    Stages :
    0) Way to Toaxis
    1) Battle
    2) Going to Darkshed
-   
+
 --]]
 
 include "numstring.lua"
@@ -18,22 +18,22 @@ npc_desc = {}
 bar_desc = {}
 
 title[1] = _("Nexus Shipyards needs you")
-text[1] = _([[As you approach Smith, he recognizes you. "I have an other job for you. Let me explain it: the baron isn't convinced yet that the Shark is the fighter he needs. He saw your fight against the Ancestor, but he would like to see a Shark beating a destroyer class ship. Of course, Nexus Shipyards don't want to take the risk to make you face a destroyer with a Shark.
-   So, we have an other plan: we need somebody to pretend to be an outlaw destroyer pilot and to let one of our men disable his ship. If you are ready for it, all you have to do is to jump in %s with a destroyer class ship and to let the Shark disable you. As there isn't any Empire bounty this time, you will only be paid %s credits.
-   What do you say, are you in?" ]])
-   
+text[1] = _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating destroyer class ships.
+    "Now, one small problem we face is that pirates almost never use destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a destroyer class ship and just let another pilot disable them with ion cannons.
+    "What do you say? Are you interested?"]])
+
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, so never mind." Smith says.]])
+refusetext = _([["Ok, that's alright."]])
 
 title[2] = _("Wonderful")
-text[2] = _([["I had no doubts you would accept," Smith says. "Go and meet our pilot in %s. After the job is done, meet me on %s in %s"]])
+text[2] = _([["Great! Go and meet our pilot in %s. After the job is done, meet me on %s in the %s system."]])
 
 title[3] = _("Reward")
-text[3] = _([[As you land, you see Arnold Smith who was waiting for you. He explains you that the baron was so impressed by the battle that he signed the contract. You made it possible for Nexus Shipyard to sell 20 Shark fighters. Of course, that's not a very big thing for a multi-stellar company like Nexus, but as a reward, they give you twice the sum of credits they promised to you.]])
+text[3] = _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]])
 
 title[4] = _("You ran away!")
-title[5] = _("The shark is destroyed!")
-title[6] = _("The shark ran away")
+title[5] = _("The Lancelot is destroyed!")
+title[6] = _("The Lancelot ran away!")
 text[4] = _([[Your mission failed.]])
 
 -- Mission details
@@ -50,8 +50,11 @@ osd_title = _("Sharkman Is Back")
 osd_msg[1] = _("Jump in %s with a destroyer class ship and let the shark disable you")
 osd_msg[2] = _("Go to %s in %s to collect your pay")
 
+msg_run = _("MISSION FAILED: You ran away.")
+msg_destroyed = _("MISSION FAILED: You destroyed the Lancelot.")
+
 function create ()
-   
+
    --Change here to change the planet and the system
    bsyname = "Toaxis"
    psyname = "Alteris"
@@ -62,27 +65,27 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
    escapesys = system.get(esyname)
-   
+
    if not misn.claim(battlesys) then
       misn.finish(false)
    end
-   
+
    misn.setNPC(npc_desc[1], "neutral/male1")
    misn.setDesc(bar_desc[1])
 end
 
 function accept()
-   
-   stage = 0 
-   reward = 100000
-   
+
+   stage = 0
+   reward = 750000
+
    if tk.yesno(title[1], text[1]:format(battlesys:name(), numstring(reward/2))) then
       misn.accept()
       tk.msg(title[2], text[2]:format(battlesys:name(), paypla:name(), paysys:name()))
-      
+
       osd_msg[1] = osd_msg[1]:format(battlesys:name())
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-      
+
       misn.setTitle(misn_title)
       misn.setReward(misn_reward:format(numstring(reward/2)))
       misn.setDesc(misn_desc)
@@ -90,7 +93,7 @@ function accept()
       misn.osdActive(1)
 
       marker = misn.markerAdd(battlesys, "low")
-      
+
       jumpouthook = hook.jumpout("jumpout")
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
@@ -102,14 +105,14 @@ end
 
 function jumpout()
    if stage == 1 then --player trying to escape
-      tk.msg(title[4], text[4])
+      player.msg( "\ar" .. msg_run .. "\a0" )
       misn.finish(false)
    end
 end
 
 function land()
    if stage == 1 then --player trying to escape
-      tk.msg(title[4], text[4])
+      player.msg( "\ar" .. msg_run .. "\a0" )
       misn.finish(false)
    end
    if stage == 2 and planet.cur() == paypla then
@@ -124,50 +127,43 @@ function land()
 end
 
 function enter()
-   
+
    playerclass = player.pilot():ship():class()
    --Jumping in Toaxis for the battle with a destroyer class ship
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
-      
-      -- spawns the Shark 
-      sharkboy = pilot.addRaw( "Shark","baddie", nil, "Civilian" )
+
+      -- spawns the Shark
+      sharkboy = pilot.addRaw( "Lancelot","baddie_norun", nil, "Mercenary" )
       sharkboy:setHostile()
       sharkboy:setHilight()
-      
+
       --The shark becomes nice outfits
       sharkboy:rmOutfit("all")
       sharkboy:rmOutfit("cores")
-      
-      sharkboy:addOutfit("S&K Ultralight Combat Plating")
-      sharkboy:addOutfit("Milspec Prometheus 2203 Core System")
-      sharkboy:addOutfit("Tricon Zephyr Engine")
-      
-      sharkboy:addOutfit("Reactor Class I",2)
+
+      sharkboy:addOutfit("S&K Light Combat Plating")
+      sharkboy:addOutfit("Milspec Prometheus 3603 Core System")
+      sharkboy:addOutfit("Tricon Zephyr II Engine")
+
+      sharkboy:addOutfit("Reactor Class I",3)
       sharkboy:addOutfit("Battery",2)
-      
-      sharkboy:addOutfit("Ion Cannon",3)-- The goal is to disable the player
-      
+
+      sharkboy:addOutfit("Heavy Ion Cannon")
+      sharkboy:addOutfit("Ion Cannon",3)
+
       sharkboy:setHealth(100,100)
       sharkboy:setEnergy(100)
       sharkboy:setFuel(true)
       stage = 1
-      
+
       hook.pilot( sharkboy, "death", "shark_dead" )
-      hook.pilot( sharkboy, "jump", "shark_jump" )
       hook.pilot( player.pilot(), "disable", "disabled" )
    end
 end
 
 function shark_dead()  --you killed the shark
-   tk.msg(title[5], text[4])
+   player.msg( "\ar" .. msg_destroyed .. "\a0" )
    misn.finish(false)
-end
-
-function shark_jump()  --the shark jumped away before having disabled the player
-   if stage == 1 then
-      tk.msg(title[6], text[4])
-      misn.finish(false)
-   end
 end
 
 function disabled(pilot, attacker)
@@ -178,6 +174,7 @@ function disabled(pilot, attacker)
       marker2 = misn.markerAdd(paysys, "low")
    end
    sharkboy:control()
-   --making sure the shark doesn't continue attacking the player and minimizing the chance of it being accidentally destroyed by pirates
+   --making sure the shark doesn't continue attacking the player
    sharkboy:hyperspace(escapesys)
+   sharkboy:setNoDeath(true)
 end
