@@ -43,7 +43,7 @@ libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool
 
 ### Other \*nix 
 
-See http://wiki.naev.org/wiki/Compiling_Nix for package lists for several
+See https://github.com/naev/naev/wiki/Compiling-Nix for package lists for several
 distributions.
 
 ## COMPILING
@@ -68,7 +68,7 @@ from 16x16 to 256x256 can be found in extras/logos
 
 ## WINDOWS
 
-See http://wiki.naev.org/wiki/Compiling_Win for how to compile on windows.
+See https://github.com/naev/naev/wiki/Compiling-Win for how to compile on windows.
 
 ## CRASHES & PROBLEMS
 
@@ -77,5 +77,5 @@ bug report, as it covers a number of common gameplay questions and
 common issues.
 
 If Naev is crashing during gameplay, please file a bug report after
-reading http://wiki.naev.org/wiki/Bugs
+reading https://github.com/naev/naev/wiki/Bugs
 
