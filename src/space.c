@@ -2907,7 +2907,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->density  = .2;
    a->ncorners = 0;
    a->corners  = NULL;
-   a->aera     = 0.;
+   a->area     = 0.;
    a->ntype    = 0;
    a->type     = NULL;
    vect_cset( &a->pos, 0., 0. );
@@ -2968,21 +2968,21 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->pos.x /= a->ncorners;
    a->pos.y /= a->ncorners;
 
-   /* Compute the aera as a sum of triangles */
+   /* Compute the area as a sum of triangles */
    for (i=0; i<a->ncorners-1; i++) {
-      a->aera += (a->corners[i].x-a->pos.x)*(a->corners[i+1].y-a->pos.y) 
+      a->area += (a->corners[i].x-a->pos.x)*(a->corners[i+1].y-a->pos.y) 
                - (a->corners[i+1].x-a->pos.x)*(a->corners[i].y-a->pos.y);
    }
    /* And the last one to loop */
    if (a->ncorners > 0) {
       i = a->ncorners-1;
-      a->aera += (a->corners[i].x-a->pos.x)*(a->corners[0].y-a->pos.y) 
+      a->area += (a->corners[i].x-a->pos.x)*(a->corners[0].y-a->pos.y) 
                - (a->corners[0].x-a->pos.x)*(a->corners[i].y-a->pos.y);
    }
-   a->aera /= 2;
+   a->area /= 2;
 
    /* Compute number of asteroids */
-   a->nb      = floor( ABS(a->aera) / 500000 * a->density );
+   a->nb      = floor( ABS(a->area) / 500000 * a->density );
    a->ndebris = floor(100*a->density);
 
    /* Added asteroid. */
@@ -3021,13 +3021,13 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                l = 0;
             }
 
-            /* Test the orientation of the angle towards signed aera. */
+            /* Test the orientation of the angle towards signed area. */
             pro = (sub->corners[k].x-sub->corners[j].x) *
                   (sub->corners[l].y-sub->corners[j].y) - 
                   (sub->corners[k].y-sub->corners[j].y) *
                   (sub->corners[l].x-sub->corners[j].x);
 
-            if (pro * a->aera > 0) {
+            if (pro * a->area > 0) {
                /* Cut here, find an other point. */
                x = (sub->corners[k].x + sub->corners[l].x)/2;
                y = (sub->corners[k].y + sub->corners[l].y)/2;
@@ -3085,7 +3085,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       sub = &a->subsets[i];
       sub->pos.x = 0;
       sub->pos.y = 0;
-      sub->aera  = 0;
+      sub->area  = 0;
       for (j=0; j<sub->ncorners; j++) {
          sub->pos.x += sub->corners[j].x;
          sub->pos.y += sub->corners[j].y;
@@ -3093,18 +3093,18 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       sub->pos.x /= sub->ncorners;
       sub->pos.y /= sub->ncorners;
 
-      /* Compute the aera as a sum of triangles */
+      /* Compute the area as a sum of triangles */
       for (j=0; j<sub->ncorners-1; j++) {
-         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[j+1].y-sub->pos.y) 
+         sub->area += (sub->corners[j].x-sub->pos.x)*(sub->corners[j+1].y-sub->pos.y) 
                     - (sub->corners[j+1].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
       }
       /* And the last one to loop */
       if (sub->ncorners > 0) {
          j = sub->ncorners-1;
-         sub->aera += (sub->corners[j].x-sub->pos.x)*(sub->corners[0].y-sub->pos.y) 
+         sub->area += (sub->corners[j].x-sub->pos.x)*(sub->corners[0].y-sub->pos.y) 
                     - (sub->corners[0].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
       }
-      sub->aera /= 2;
+      sub->area /= 2;
    }
 
    return 0;
@@ -4308,7 +4308,7 @@ int space_isInField ( Vector2d *p )
    int i, j, k, isin, istotin;
    AsteroidAnchor *a;
    AsteroidSubset *sub;
-   double aera;
+   double area;
 
    istotin = -1;
    for (i=0; i < cur_system->nasteroids; i++) {
@@ -4317,11 +4317,11 @@ int space_isInField ( Vector2d *p )
       for (k=0; k < a->nsubsets; k++) {
          sub = &a->subsets[k];
          isin = 1;
-         /* test every signed aera */
+         /* test every signed area */
          for (j=0; j < sub->ncorners-1; j++) {
-            aera = (sub->corners[j].x-p->x)*(sub->corners[j+1].y-p->y) 
+            area = (sub->corners[j].x-p->x)*(sub->corners[j+1].y-p->y) 
                  - (sub->corners[j+1].x-p->x)*(sub->corners[j].y-p->y);
-            if (sub->aera*aera <= 0) {
+            if (sub->area*area <= 0) {
                isin = 0;
                break;
             }
@@ -4329,9 +4329,9 @@ int space_isInField ( Vector2d *p )
          /* And the last one to loop */
          if (sub->ncorners > 0) {
             j = sub->ncorners-1;
-            aera = (sub->corners[j].x-p->x)*(sub->corners[0].y-p->y) 
+            area = (sub->corners[j].x-p->x)*(sub->corners[0].y-p->y) 
                  - (sub->corners[0].x-p->x)*(sub->corners[j].y-p->y);
-            if (sub->aera*aera <= 0)
+            if (sub->area*area <= 0)
                isin = 0;
          }
 
