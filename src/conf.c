@@ -1105,7 +1105,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("devmode",conf.devmode);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Automatic saving for developer mode"));
+   conf_saveComment(_("Automatic saving for when using the universe editor whenever an edit is done"));
    conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
