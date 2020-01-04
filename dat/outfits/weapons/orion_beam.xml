@@ -7,7 +7,7 @@
   <mass>30</mass>
   <price>30000</price>
   <description>The turret-mounted edition of the Orion design offers mid-sized ships exceptional short-duration firepower, a potent deterrent against lighter vessels.</description>
-  <gfx_store>orion</gfx_store>
+  <gfx_store>ragnarok</gfx_store>
   <cpu>-16</cpu>
  </general>
  <specific type="turret beam">

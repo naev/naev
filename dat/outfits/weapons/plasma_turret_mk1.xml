@@ -6,7 +6,7 @@
   <license>Medium Weapon License</license>
   <mass>18</mass>
   <price>21000</price>
-  <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+  <description>The plasma turret essentially takes a plasma blaster and mounts it on a turret. Its short range makes it ill-suited for defense, so it is not especially popular with traders and merchants, but it has found a niche among inexperienced mercenaries who are not as well-practiced at aiming as the pros.</description>
   <gfx_store>plasma2</gfx_store>
   <cpu>-10</cpu>
  </general>
