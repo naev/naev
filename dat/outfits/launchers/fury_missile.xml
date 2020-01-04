@@ -2,7 +2,7 @@
 <outfit name="Fury Missile">
  <general>
   <mass>0.2</mass>
-  <price>400</price>
+  <price>0</price>
   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility come at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
   <gfx_store>fury</gfx_store>
  </general>

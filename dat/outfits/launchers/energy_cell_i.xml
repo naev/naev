@@ -3,7 +3,7 @@
  <general>
   <license>Medium Weapon License</license>
   <mass>0.1</mass>
-  <price>40</price>
+  <price>0</price>
   <description>This energy cell is required for the initialization of the self-contained energy cascades the Thurion use for their homing energy weapons.</description>
   <gfx_store>cpu_i</gfx_store>
  </general>
