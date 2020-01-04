@@ -2,7 +2,7 @@
 <outfit name="Asterokiller Rocket">
  <general>
   <mass>0.5</mass>
-  <price>1000</price>
+  <price>0</price>
   <description>As asteroid miners understood that the easiest way to gather ore from asteroids was to blow them up, one of them adapted a mace rocket of his time. The principle of this ammo is to perforate the asteroid and explode from the inside of it.</description>
   <gfx_store>mace</gfx_store>
  </general>

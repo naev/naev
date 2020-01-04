@@ -3,7 +3,7 @@
  <general>
   <license>Medium Weapon License</license>
   <mass>0.1</mass>
-  <price>200</price>
+  <price>0</price>
   <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
   <gfx_store>mace</gfx_store>
  </general>

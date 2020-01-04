@@ -1110,8 +1110,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
          ammo = slot->u.ammo.outfit;
-         q    = pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
-         player_addOutfit( ammo, q );
+         pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
       }
 
       /* Remove outfit. */
@@ -1270,13 +1269,10 @@ void equipment_addAmmo (void)
       ammo = outfit_ammo(o);
       if (ammo == NULL)
          continue;
-      q    = player_outfitOwned(ammo);
+      q = o->u.lau.amount - p->outfits[i]->u.ammo.quantity;
 
       /* Add ammo. */
-      q = pilot_addAmmo( p, p->outfits[i], ammo, q );
-
-      /* Remove from player. */
-      player_rmOutfit( ammo, q );
+      pilot_addAmmo( p, p->outfits[i], ammo, q );
    }
 
    /* Update weapon sets if needed. */
@@ -1923,8 +1919,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       /* Remove ammo first. */
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
-         ret = pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
-         player_addOutfit( ammo, ret );
+         pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
       }
 
       /* Remove rest. */
