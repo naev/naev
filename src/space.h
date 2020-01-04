@@ -225,7 +225,7 @@ typedef struct AsteroidSubset_ {
    Vector2d *corners; /**< Set of corners of the polygon. */
    int ncorners; /**< Number of corners. */
    Vector2d pos; /**< Center. */
-   double aera; /**< Subset's aera. */
+   double area; /**< Subset's area. */
 } AsteroidSubset;
 
 
@@ -242,7 +242,7 @@ typedef struct AsteroidAnchor_ {
    int ndebris; /**< Number of debris. */
    Vector2d *corners; /**< Set of corners of the polygon. */
    int ncorners; /**< Number of corners. */
-   double aera; /**< Field's aera. */
+   double area; /**< Field's area. */
    AsteroidSubset *subsets; /**< Convex subsets. */
    int nsubsets; /**< Number of convex subsets. */
    int *type; /**< Types of asteroids. */
