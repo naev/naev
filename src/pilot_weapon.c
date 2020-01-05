@@ -1150,11 +1150,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
 
       /* Create the escort. */
       escort_create( p, w->u.ammo.outfit->u.fig.ship,
-            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
+            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, w );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
-      w->u.ammo.deployed += 1; /* Mark as deployed. */
       pilot_updateMass( p );
    }
    else
