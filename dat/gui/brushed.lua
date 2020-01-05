@@ -814,7 +814,11 @@ function render( dt )
       renderField( "None", fields_x + 4, fields_y, fields_w, col_unkn, icon_pnt_target )
    end
    if autonav_hyp ~= nil then
-      renderField( autonav_hyp:name() .. " (" .. tostring(autonav_hyp:jumpDist()) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
+      local name = autonav_hyp:name()
+      if not autonav_hyp:known() then
+         name = "Unknown"
+      end
+      renderField( name .. " (" .. tostring(autonav_hyp:jumpDist()) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
    else
       renderField( _("None"), fields_x + fields_w + 12, fields_y, fields_w, col_unkn, icon_nav_target )
    end
