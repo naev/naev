@@ -835,7 +835,7 @@ int pilot_maxAmmo( Pilot* pilot )
  */
 void pilot_fillAmmo( Pilot* pilot )
 {
-   int i;
+   int i, ammo_threshold;
    Outfit *o, *ammo;
 
    for (i=0; i<pilot->noutfits; i++) {
@@ -850,9 +850,16 @@ void pilot_fillAmmo( Pilot* pilot )
       if (ammo == NULL)
          continue;
 
+      /* Initial (raw) ammo threshold */
+      ammo_threshold = o->u.lau.amount;
+
+      /* Adjust for deployed fighters if needed */
+      if ( outfit_isFighterBay( o ) )
+         ammo_threshold -= pilot->outfits[i]->u.ammo.deployed;
+
       /* Add ammo. */
-      pilot_addAmmo(pilot, pilot->outfits[i], ammo,
-         o->u.lau.amount - pilot->outfits[i]->u.ammo.quantity);
+      pilot_addAmmo( pilot, pilot->outfits[i], ammo,
+         ammo_threshold - pilot->outfits[i]->u.ammo.quantity );
    }
 }
 

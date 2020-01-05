@@ -267,8 +267,14 @@ void pilot_heatUpdateCooldown( Pilot *p )
       if (ammo == NULL)
          continue;
 
+      /* Initial (raw) ammo threshold */
       ammo_threshold = (int)(t * o->outfit->u.lau.amount);
-      if (o->u.ammo.quantity < ammo_threshold)
+
+      /* Adjust for deployed fighters if needed */
+      if ( outfit_isFighterBay( o->outfit ) )
+         ammo_threshold -= o->u.ammo.deployed;
+
+      if ( o->u.ammo.quantity < ammo_threshold )
          pilot_addAmmo( p, p->outfits[i], ammo, ammo_threshold - o->u.ammo.quantity );
    }
 }
