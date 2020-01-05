@@ -1258,22 +1258,7 @@ void equipment_addAmmo (void)
       p = eq_wgt.selected;
 
    /* Add ammo to all outfits. */
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i]->outfit;
-
-      /* Must be valid outfit. */
-      if (o == NULL)
-         continue;
-
-      /* Add ammo if able to. */
-      ammo = outfit_ammo(o);
-      if (ammo == NULL)
-         continue;
-      q = o->u.lau.amount - p->outfits[i]->u.ammo.quantity;
-
-      /* Add ammo. */
-      pilot_addAmmo( p, p->outfits[i], ammo, q );
-   }
+   pilot_fillAmmo( p );
 
    /* Update weapon sets if needed. */
    if (p->autoweap)

@@ -22,6 +22,7 @@
 #include "gui.h"
 #include "slots.h"
 #include "nstring.h"
+#include "outfit.h"
 
 
 /*
@@ -824,6 +825,35 @@ int pilot_maxAmmo( Pilot* pilot )
      max += outfit->u.lau.amount;
   }
   return max;
+}
+
+
+/**
+ * @brief Fills pilot's ammo completely.
+ *
+ *    @param pilot Pilot to add ammo to.
+ */
+void pilot_fillAmmo( Pilot* pilot )
+{
+   int i;
+   Outfit *o, *ammo;
+
+   for (i=0; i<pilot->noutfits; i++) {
+      o = pilot->outfits[i]->outfit;
+
+      /* Must be valid outfit. */
+      if (o == NULL)
+         continue;
+
+      /* Add ammo if able to. */
+      ammo = outfit_ammo(o);
+      if (ammo == NULL)
+         continue;
+
+      /* Add ammo. */
+      pilot_addAmmo(pilot, pilot->outfits[i], ammo,
+         o->u.lau.amount - pilot->outfits[i]->u.ammo.quantity);
+   }
 }
 
 
