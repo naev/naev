@@ -27,6 +27,7 @@
 #include "rng.h"
 #include "hook.h"
 #include "map.h"
+#include "equipment.h"
 #include "explosion.h"
 #include "escort.h"
 #include "music.h"
@@ -929,7 +930,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
 
    /* Cooldown finished naturally, reset heat just in case. */
    if (p->ctimer < 0.)
+   {
       pilot_heatReset( p );
+      equipment_addAmmo();
+   }
 }
 
 
