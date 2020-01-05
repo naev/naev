@@ -19,7 +19,7 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id,
 int escort_rmList( Pilot *p, unsigned int id );
 unsigned int escort_create( Pilot *p, char *ship,
       Vector2d *pos, Vector2d *vel, double dir,
-      EscortType_t type, int add );
+      EscortType_t type, int add, PilotOutfitSlot* dockslot );
 
 /* Keybind commands. */
 int escorts_attack( Pilot *parent );

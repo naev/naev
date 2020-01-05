@@ -533,7 +533,7 @@ static Pilot* player_newShipMake( const char* name )
 
       /* Create the player. */
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
-            dir, &vp, &vv, flags );
+            dir, &vp, &vv, flags, NULL );
       cam_setTargetPilot( id, 0 );
       new_pilot = pilot_get( id );
    }
@@ -2769,23 +2769,6 @@ void player_runHooks (void)
 
 
 /**
- * @brief Clears escorts to make sure deployment is sane.
- */
-void player_clearEscorts (void)
-{
-   int i;
-
-   for (i=0; i<player.p->noutfits; i++) {
-      if (player.p->outfits[i]->outfit == NULL)
-         continue;
-
-      if (outfit_isFighterBay(player.p->outfits[i]->outfit))
-         player.p->outfits[i]->u.ammo.deployed = 0;
-   }
-}
-
-
-/**
  * @brief Adds the player's escorts.
  *
  *    @return 0 on success.
@@ -2799,9 +2782,6 @@ int player_addEscorts (void)
    Outfit *o;
    int q;
 
-   /* Clear escorts first. */
-   player_clearEscorts();
-
    for (i=0; i<player.p->nescorts; i++) {
       if (!player.p->escorts[i].persist) {
          escort_rmList(player.p, player.p->escorts[i].id);
@@ -2812,10 +2792,6 @@ int player_addEscorts (void)
       a = RNGF() * 2 * M_PI;
       vect_cset( &v, player.p->solid->pos.x + 50.*cos(a),
             player.p->solid->pos.y + 50.*sin(a) );
-      e = escort_create( player.p, player.p->escorts[i].ship,
-            &v, &player.p->solid->vel, player.p->solid->dir,
-            player.p->escorts[i].type, 0 );
-      player.p->escorts[i].id = e; /* Important to update ID. */
 
       /* Update outfit if needed. */
       if (player.p->escorts[i].type != ESCORT_TYPE_BAY)
@@ -2841,8 +2817,11 @@ int player_addEscorts (void)
          if (q >= outfit_amount(player.p->outfits[j]->outfit))
             continue;
 
-         /* Mark as deployed. */
-         player.p->outfits[j]->u.ammo.deployed += 1;
+         /* Create escort. */
+         e = escort_create( player.p, player.p->escorts[i].ship,
+               &v, &player.p->solid->vel, player.p->solid->dir,
+               player.p->escorts[i].type, 0, player.p->outfits[j] );
+         player.p->escorts[i].id = e; /* Important to update ID. */  
          break;
       }
       if (j >= player.p->noutfits)
@@ -3268,14 +3247,14 @@ static Planet* player_parse( xmlNodePtr parent )
       if (player_nstack == 0) {
          WARN(_("Player has no other ships, giving starting ship."));
          pilot_create( ship_get(start_ship()), "MIA",
-               faction_get("Player"), "player", 0., NULL, NULL, flags );
+               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
       }
       else {
 
          /* Just give player.p a random ship in the stack. */
          old_ship = player_stack[player_nstack-1].p;
          pilot_create( old_ship->ship, old_ship->name,
-               faction_get("Player"), "player", 0., NULL, NULL, flags );
+               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
          player_rmShip( old_ship->name );
          WARN(_("Giving player ship '%s'."), player.p->name );
       }
@@ -3607,7 +3586,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* player is currently on this ship */
    if (is_player != 0) {
-      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
       ship = player.p;
       cam_setTargetPilot( pid, 0 );
    }

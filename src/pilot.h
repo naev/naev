@@ -393,6 +393,7 @@ typedef struct Pilot_ {
    unsigned int parent; /**< Pilot's parent. */
    Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts;     /**< Number of pilot escorts. */
+   PilotOutfitSlot* dockslot; /**< Outfit slot pilot originates from. */
 
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
@@ -484,7 +485,7 @@ int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
 int pilot_hasDeployed( Pilot *p );
-int pilot_dock( Pilot *p, Pilot *target, int deployed );
+int pilot_dock( Pilot *p, Pilot *target );
 ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );
 
@@ -494,10 +495,10 @@ void pilot_untargetAsteroid( int anchor, int asteroid );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags );
+      const PilotFlags flags, PilotOutfitSlot* dockslot );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags );
+      const PilotFlags flags, PilotOutfitSlot* dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );

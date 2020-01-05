@@ -116,15 +116,6 @@ void player_board (void)
       player_message(_("\arYou are going too fast to board the ship."));
       return;
    }
-   /* We'll recover it if it's the pilot's ex-escort. */
-   else if (p->parent == PLAYER_ID) {
-      /* Try to recover. */
-      pilot_dock( p, player.p, 0 );
-      if (pilot_isFlag(p, PILOT_DELETE )) { /* Hack to see if it boarded. */
-         player_message(_("\apYou recover \ag%s\ap into your fighter bay."), p->name);
-         return;
-      }
-   }
 
    /* Is boarded. */
    board_boarded = 1;
