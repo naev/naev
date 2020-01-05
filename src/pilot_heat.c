@@ -244,8 +244,9 @@ double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
 void pilot_heatUpdateCooldown( Pilot *p )
 {
    double t;
-   int i;
+   int i, ammo_threshold;
    PilotOutfitSlot *o;
+   Outfit *ammo;
 
    t = pow2( 1. - p->ctimer / p->cdelay );
    p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
@@ -255,6 +256,20 @@ void pilot_heatUpdateCooldown( Pilot *p )
       o = p->outfits[i];
       o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
             CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+
+      /* Refill ammo too (also part of Active Cooldown) */
+      /* Must be valid outfit. */
+      if (o->outfit == NULL)
+         continue;
+
+      /* Add ammo if able to. */
+      ammo = outfit_ammo( o->outfit );
+      if (ammo == NULL)
+         continue;
+
+      ammo_threshold = (int)(t * o->outfit->u.lau.amount);
+      if (o->u.ammo.quantity < ammo_threshold)
+         pilot_addAmmo( p, p->outfits[i], ammo, ammo_threshold - o->u.ammo.quantity );
    }
 }
 
