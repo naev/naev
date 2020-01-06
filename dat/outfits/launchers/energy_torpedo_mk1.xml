@@ -13,7 +13,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Thurion Energy Cell I</ammo>
   <delay>1.0</delay>
-  <reload_time>90</reload_time>
+  <reload_time>10</reload_time>
   <amount>150</amount>
   <lockon>1</lockon>
   <arc>15</arc>

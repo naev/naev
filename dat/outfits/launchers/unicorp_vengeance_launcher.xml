@@ -13,7 +13,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
-  <reload_time>90</reload_time>
+  <reload_time>60</reload_time>
   <amount>10</amount>
   <lockon>12</lockon>
   <arc>6</arc>

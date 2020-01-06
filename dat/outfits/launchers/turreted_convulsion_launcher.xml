@@ -14,7 +14,7 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
  <specific type="turret launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
   <delay>2.5</delay>
-  <reload_time>90</reload_time>
+  <reload_time>30</reload_time>
   <amount>35</amount>
   <lockon>5</lockon>
   <ew_target>3</ew_target>
