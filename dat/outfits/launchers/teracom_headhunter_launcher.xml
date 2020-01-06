@@ -15,7 +15,7 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
  <specific type="launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
   <delay>3.5</delay>
-  <reload_time>90</reload_time>
+  <reload_time>60</reload_time>
   <amount>15</amount>
   <lockon>6</lockon>
   <arc>8</arc>

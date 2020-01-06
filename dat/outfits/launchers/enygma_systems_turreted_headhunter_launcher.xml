@@ -13,7 +13,7 @@
  <specific type="turret launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
   <delay>2.5</delay>
-  <reload_time>90</reload_time>
+  <reload_time>60</reload_time>
   <amount>25</amount>
   <lockon>7</lockon>
   <ew_target>1.5</ew_target>

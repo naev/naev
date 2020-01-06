@@ -13,7 +13,7 @@
  <specific type="fighter bay" secondary="1">
   <ammo>Za'lek Light Drone Fighter</ammo>
   <delay>3</delay>
-  <reload_time>180</reload_time>
+  <reload_time>120</reload_time>
   <amount>4</amount>
  </specific>
 </outfit>
