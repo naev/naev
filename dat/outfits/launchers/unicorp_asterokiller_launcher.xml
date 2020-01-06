@@ -5,7 +5,7 @@
   <size>small</size>
   <mass>10</mass>
   <price>45000</price>
-  <description>This modified Mace launcher contains Asterokiller rockets.</description>
+  <description>As asteroid miners understood that the easiest way to gather ore from asteroids was to blow them up, one of them adapted a mace rocket of his time. The principle of this ammo is to perforate the asteroid and explode from the inside of it.</description>
   <gfx_store>macelauncher</gfx_store>
   <cpu>-5</cpu>
  </general>
