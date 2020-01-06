@@ -1163,9 +1163,6 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
    /* Reset timer. */
    w->timer += rate_mod * outfit_delay( w->outfit );
 
-   /* Shooting prevents reloading. Reset reload timer. */
-   w->rtimer = 0;
-
    return 1;
 }
 

@@ -13,7 +13,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Banshee Rocket</ammo>
   <delay>4</delay>
-  <reload_time>30</reload_time>
+  <reload_time>90</reload_time>
   <amount>20</amount>
  </specific>
 </outfit>

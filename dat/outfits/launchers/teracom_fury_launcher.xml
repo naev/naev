@@ -14,7 +14,7 @@ TeraCom's Fury Launcher is a high-performance missile launcher equipped with pat
  <specific type="launcher" secondary="1">
   <ammo>Fury Missile</ammo>
   <delay>2</delay>
-  <reload_time>20</reload_time>
+  <reload_time>90</reload_time>
   <amount>25</amount>
   <lockon>4</lockon>
   <arc>8</arc>
