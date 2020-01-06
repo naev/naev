@@ -1769,9 +1769,8 @@ void pilot_update( Pilot* pilot, const double dt )
          if ( outfit_isFighterBay( o->outfit ) )
             ammo_threshold -= o->u.ammo.deployed;
 
-         /* Don't allow accumulation of the timer if fighters still alive */
-         if ( outfit_isFighterBay( o->outfit ) &&
-               ( o->u.ammo.quantity >= ammo_threshold ) ) {
+         /* Don't allow accumulation of the timer before reload allowed */
+         if ( o->u.ammo.quantity >= ammo_threshold ) {
             o->rtimer = 0;
          }
 
