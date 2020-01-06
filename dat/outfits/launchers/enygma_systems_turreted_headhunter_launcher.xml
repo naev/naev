@@ -6,7 +6,7 @@
   <license>Medium Weapon License</license>
   <mass>40</mass>
   <price>140000</price>
-  <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies. These launchers are sometimes employed by cruiser captains whose ships aren't manoeuvrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
+  <description>These turreted launchers are sometimes employed by cruiser captains whose ships aren't manoeuvrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-14</cpu>
  </general>

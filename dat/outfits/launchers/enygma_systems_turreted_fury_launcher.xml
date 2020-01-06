@@ -5,7 +5,7 @@
   <size>small</size>
   <mass>25</mass>
   <price>80000</price>
-  <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility comes at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters. Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but can be a powerful means of discouraging pirate fighters.</description>
+  <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but Fury missiles can be a powerful means of discouraging pirate fighters, albeit not so effective against heavier craft.</description>
   <gfx_store>turreted_fury_launcher</gfx_store>
   <cpu>-9</cpu>
  </general>
