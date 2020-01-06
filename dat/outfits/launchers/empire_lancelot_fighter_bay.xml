@@ -13,6 +13,7 @@
  <specific type="fighter bay" secondary="1">
   <ammo>Empire Lancelot Fighter</ammo>
   <delay>6</delay>
+  <reload_time>120</reload_time>
   <amount>2</amount>
  </specific>
 </outfit>

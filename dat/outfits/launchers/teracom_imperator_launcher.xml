@@ -13,6 +13,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Imperator Torpedo</ammo>
   <delay>11</delay>
+  <reload_time>90</reload_time>
   <lockon>18</lockon>
   <arc>6</arc>
   <ew_target>0.3</ew_target>

@@ -181,6 +181,7 @@ typedef struct PilotOutfitSlot_ {
    PilotOutfitState state; /**< State of the outfit. */
    double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
+   double rtimer;    /**< Used to store when a reload can happen. */
    int level;        /**< Level in current weapon set (-1 is none). */
    int weapset;      /**< First weapon set that uses the outfit (-1 is none). */
 
