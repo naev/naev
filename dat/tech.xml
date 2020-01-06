@@ -60,45 +60,30 @@
   <item>Energy Dart</item>
   <item>Energy Missile</item>
   <item>Energy Torpedo</item>
-  <item>Thurion Energy Cell I</item>
-  <item>Thurion Energy Cell II</item>
-  <item>Thurion Energy Cell III</item>
   <item>Electron Burst Cannon</item>
-  <item>Electron Energy Cell</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
-  <item>Fury Missile</item>
   <item>Unicorp Headhunter Launcher</item>
   <item>TeraCom Headhunter Launcher</item>
   <item>Enygma Systems Turreted Headhunter Launcher</item>
-  <item>Headhunter Missile</item>
   <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
   <item>Enygma Systems Turreted Vengeance Launcher</item>
-  <item>Vengeance Missile</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
   <item>Unicorp Asterokiller Launcher</item>
-  <item>Mace Rocket</item>
-  <item>Asterokiller Rocket</item>
   <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
-  <item>Banshee Rocket</item>
   <item>Unicorp Caesar IV Launcher</item>
-  <item>Caesar IV Torpedo</item>
   <item>TeraCom Imperator Launcher</item>
-  <item>Imperator Torpedo</item>
   <item>EMP Grenade Launcher</item>
-  <item>EMP Grenade</item>
   <item>Unicorp Medusa Launcher</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Medusa Missile</item>
   <item>Enygma Systems Spearhead Launcher</item>
-  <item>Spearhead Missile</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
-  <item>Convulsion Missile</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -172,19 +157,12 @@
   <item>GUI - Slimv2</item>
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
-  <item>Lancelot Fighter</item>
   <item>Empire Lancelot Fighter Bay</item>
-  <item>Empire Lancelot Fighter</item>
   <item>Fidelity Fighter Bay</item>
-  <item>Fidelity Fighter</item>
   <item>Drone Fighter Bay</item>
-  <item>Drone Fighter</item>
   <item>Za'lek Light Drone Fighter Bay</item>
-  <item>Za'lek Light Drone Fighter</item>
   <item>Za'lek Heavy Drone Fighter Bay</item>
-  <item>Za'lek Heavy Drone Fighter</item>
   <item>Za'lek Bomber Drone Fighter Bay</item>
-  <item>Za'lek Bomber Drone Fighter</item>
   <item>Large Civilian Vessel License</item>
   <item>Medium Weapon License</item>
   <item>Heavy Weapon License</item>
@@ -464,7 +442,6 @@
   <item>Plasma Blaster MK1</item>
   <item>Gauss Gun</item>
   <item>Unicorp Fury Launcher</item>
-  <item>Fury Missile</item>
   <item>Battery</item>
   <item>Solar Panel</item>
   <item>Fuel Pod</item>
@@ -502,7 +479,6 @@
   <item>Laser Cannon MK2</item>
   <item>Plasma Blaster MK2</item>
   <item>Unicorp Banshee Launcher</item>
-  <item>Banshee Rocket</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor</item>
   <item>Plasteel Plating</item>
@@ -555,9 +531,7 @@
   <item>Railgun</item>
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
-  <item>EMP Grenade</item>
   <item>Enygma Systems Spearhead Launcher</item>
-  <item>Spearhead Missile</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
@@ -623,7 +597,6 @@
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Lancelot Fighter Bay</item>
-  <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
@@ -644,7 +617,6 @@
   <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
-  <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
@@ -653,31 +625,22 @@
  </tech>
  <tech name="Missiles 1">
   <item>Unicorp Banshee Launcher</item>
-  <item>Banshee Rocket</item>
   <item>Unicorp Fury Launcher</item>
-  <item>Fury Missile</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Medusa Missile</item>
   <item>Unicorp Headhunter Launcher</item>
-  <item>Headhunter Missile</item>
-  <item>Mace Rocket</item>
   <item>Unicorp Caesar IV Launcher</item>
  </tech>
  <tech name="Missiles 2">
   <item>Unicorp Headhunter Launcher</item>
-  <item>Headhunter Missile</item>
   <item>Unicorp Mace Launcher</item>
-  <item>Mace Rocket</item>
   <item>Unicorp Caesar IV Launcher</item>
-  <item>Caesar IV Torpedo</item>
   <item>Enygma Systems Spearhead Launcher</item>
-  <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Medusa Missile</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
-  <item>Vengeance Missile</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
@@ -797,12 +760,8 @@
   <item>Energy Dart</item>
   <item>Energy Missile</item>
   <item>Energy Torpedo</item>
-  <item>Thurion Energy Cell I</item>
-  <item>Thurion Energy Cell II</item>
-  <item>Thurion Energy Cell III</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
-  <item>Convulsion Missile</item>
   <item>Nebular Shielding Prototype</item>
   <item>Thurion Reactor Class I</item>
   <item>Thurion Reactor Class II</item>
@@ -821,9 +780,7 @@
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
   <item>Electron Burst Cannon</item>
-  <item>Electron Energy Cell</item>
   <item>Drone Fighter Bay</item>
-  <item>Drone Fighter</item>
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>
