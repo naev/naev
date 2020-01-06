@@ -136,6 +136,7 @@
   <lua>neutral/trader_escort</lua>
   <avail>
    <priority>5</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
    <chance>560</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
