@@ -13,6 +13,7 @@
  <specific type="turret launcher" secondary="1">
   <ammo>Vengeance Missile</ammo>
   <delay>5.5</delay>
+  <reload_time>60</reload_time>
   <amount>15</amount>
   <lockon>10</lockon>
   <ew_target>1</ew_target>

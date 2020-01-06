@@ -1695,6 +1695,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
 void pilot_update( Pilot* pilot, const double dt )
 {
    int i, cooling, nchg;
+   int ammo_threshold;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1750,6 +1751,32 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Handle firerate timer. */
       if (o->timer > 0.)
          o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+
+      /* Handle reload timer. (Note: this works backwards compared to
+       * other timers. This helps to simplify code resetting the timer
+       * elsewhere.)
+       */
+      if ( ( o->outfit != NULL ) &&
+            ( outfit_isLauncher( o->outfit ) || outfit_isFighterBay( o->outfit ) ) &&
+            ( outfit_ammo( o->outfit ) != NULL ) ) {
+         if (o->rtimer < o->outfit->u.lau.reload_time)
+            o->rtimer += dt;
+
+         /* Initial (raw) ammo threshold */
+         ammo_threshold = o->outfit->u.lau.amount;
+
+         /* Adjust for deployed fighters if needed */
+         if ( outfit_isFighterBay( o->outfit ) )
+            ammo_threshold -= o->u.ammo.deployed;
+
+         while ( ( o->rtimer >= o->outfit->u.lau.reload_time ) &&
+               ( o->u.ammo.quantity < ammo_threshold ) ) {
+            o->rtimer -= o->outfit->u.lau.reload_time;
+            pilot_addAmmo( pilot, o, outfit_ammo( o->outfit ), 1 );
+         }
+
+         o->rtimer = MIN( o->rtimer, o->outfit->u.lau.reload_time );
+      }
 
       /* Handle state timer. */
       if (o->stimer >= 0.) {

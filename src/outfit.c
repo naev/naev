@@ -1350,6 +1350,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"delay",temp->u.lau.delay);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
+      xmlr_int(node,"reload_time",temp->u.lau.reload_time);
       xmlr_float(node,"ew_target",temp->u.lau.ew_target);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       if (!outfit_isTurret(temp))
@@ -1371,6 +1372,7 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(temp->u.lau.delay==0.,"delay");
    MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.lau.amount==0.,"amount");
+   MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
 #undef MELEMENT
 }
 
@@ -1738,6 +1740,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    do {
       xml_onlyNodes(node);
       xmlr_int(node,"delay",temp->u.bay.delay);
+      xmlr_int(node,"reload_time",temp->u.lau.reload_time);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
       xmlr_int(node,"amount",temp->u.bay.amount);
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
@@ -1762,6 +1765,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bay.delay==0,"delay");
+   MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
    MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.bay.amount==0,"amount");

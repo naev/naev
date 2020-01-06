@@ -12,6 +12,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
   <delay>3</delay>
+  <reload_time>30</reload_time>
   <amount>20</amount>
   <lockon>4</lockon>
   <arc>8</arc>

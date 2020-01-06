@@ -12,6 +12,7 @@
  <specific type="turret launcher" secondary="1">
   <ammo>EMP Grenade</ammo>
   <delay>2</delay>
+  <reload_time>20</reload_time>
   <amount>18</amount>
  </specific>
 </outfit>
