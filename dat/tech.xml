@@ -80,7 +80,6 @@
   <item>EMP Grenade Launcher</item>
   <item>Unicorp Medusa Launcher</item>
   <item>TeraCom Medusa Launcher</item>
-  <item>Medusa Missile</item>
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
@@ -492,7 +491,6 @@
   <item>Large Civilian Vessel License</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Jump Scanner</item>
-  <item>Medusa Missile</item>
   <item>Local System Map</item>
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
@@ -627,7 +625,6 @@
   <item>Unicorp Banshee Launcher</item>
   <item>Unicorp Fury Launcher</item>
   <item>Unicorp Medusa Launcher</item>
-  <item>Medusa Missile</item>
   <item>Unicorp Headhunter Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
  </tech>
@@ -638,7 +635,6 @@
   <item>Enygma Systems Spearhead Launcher</item>
   <item>TeraCom Medusa Launcher</item>
   <item>TeraCom Fury Launcher</item>
-  <item>Medusa Missile</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
  </tech>
