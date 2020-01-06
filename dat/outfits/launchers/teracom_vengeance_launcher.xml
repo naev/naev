@@ -15,7 +15,7 @@ TeraCom's patented launcher hardware considerably reduces the time it takes to a
  <specific type="launcher" secondary="1">
   <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
-  <reload_time>60</reload_time>
+  <reload_time>90</reload_time>
   <amount>10</amount>
   <lockon>8</lockon>
   <arc>8</arc>
