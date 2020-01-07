@@ -186,7 +186,6 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
  *
  *    @param p Pilot that wants to dock.
  *    @param target Pilot to dock on.
- *    @param deployed Was pilot already deployed?
  *    @return 0 on successful docking.
  */
 int pilot_dock( Pilot *p, Pilot *target )
