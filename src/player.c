@@ -2769,6 +2769,23 @@ void player_runHooks (void)
 
 
 /**
+ * @brief Clears escorts to make sure deployment is sane.
+ */
+void player_clearEscorts (void)
+{
+   int i;
+
+   for (i=0; i<player.p->noutfits; i++) {
+      if (player.p->outfits[i]->outfit == NULL)
+         continue;
+
+      if (outfit_isFighterBay(player.p->outfits[i]->outfit))
+         player.p->outfits[i]->u.ammo.deployed = 0;
+   }
+}
+
+
+/**
  * @brief Adds the player's escorts.
  *
  *    @return 0 on success.
@@ -2781,6 +2798,10 @@ int player_addEscorts (void)
    unsigned int e;
    Outfit *o;
    int q;
+   PilotOutfitSlot *dockslot = NULL;
+
+   /* Clear escorts first. */
+   player_clearEscorts();
 
    for (i=0; i<player.p->nescorts; i++) {
       if (!player.p->escorts[i].persist) {
@@ -2817,15 +2838,18 @@ int player_addEscorts (void)
          if (q >= outfit_amount(player.p->outfits[j]->outfit))
             continue;
 
-         /* Create escort. */
-         e = escort_create( player.p, player.p->escorts[i].ship,
-               &v, &player.p->solid->vel, player.p->solid->dir,
-               player.p->escorts[i].type, 0, player.p->outfits[j] );
-         player.p->escorts[i].id = e; /* Important to update ID. */  
+         dockslot = player.p->outfits[j];
          break;
       }
-      if (j >= player.p->noutfits)
-         WARN(_("Unable to mark escort as deployed"));
+
+      if (dockslot == NULL)
+         DEBUG(_("Escort is undeployed"));
+
+      /* Create escort. */
+      e = escort_create( player.p, player.p->escorts[i].ship,
+            &v, &player.p->solid->vel, player.p->solid->dir,
+            player.p->escorts[i].type, 0, dockslot );
+      player.p->escorts[i].id = e; /* Important to update ID. */
    }
 
    return 0;
