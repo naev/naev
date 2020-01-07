@@ -2,8 +2,9 @@
 <outfit name="Unicorp Fury Launcher">
  <general>
   <slot>weapon</slot>
-  <size>small</size>
-  <mass>5</mass>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>15</mass>
   <price>25000</price>
   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility comes at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
   <gfx_store>unicorp_fury_launcher</gfx_store>

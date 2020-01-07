@@ -2,10 +2,11 @@
 <outfit name="Enygma Systems Turreted Fury Launcher">
  <general>
   <slot>weapon</slot>
-  <size>small</size>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
   <mass>25</mass>
   <price>80000</price>
-  <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but Fury missiles can be a powerful means of discouraging pirate fighters, albeit not so effective against heavier craft.</description>
+  <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but Fury missiles can be a powerful means of discouraging pirate fighters and an effective means of defending against hostile bombers.</description>
   <gfx_store>turreted_fury_launcher</gfx_store>
   <cpu>-9</cpu>
  </general>

@@ -2,8 +2,9 @@
 <outfit name="Convulsion Launcher">
  <general>
   <slot>weapon</slot>
-  <size>small</size>
-  <mass>6</mass>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>16</mass>
   <price>60000</price>
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.</description>
   <gfx_store>convulsion_launcher</gfx_store>

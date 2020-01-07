@@ -2,7 +2,7 @@
 <outfit name="TeraCom Headhunter Launcher">
  <general>
   <slot>weapon</slot>
-  <size>small</size>
+  <size>medium</size>
   <license>Medium Weapon License</license>
   <mass>12</mass>
   <price>100000</price>
