@@ -700,6 +700,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    double th;
    int iw;
+   double mass;
 
    /* 452 px is the sum of the 128 px outfit image width, its 4 px border,
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
@@ -708,6 +709,12 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    outfit = outfit_get( toolkit_getList(wid, wgtname) );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+
+   mass = outfit->mass;
+   if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
+         (outfit_ammo(outfit) != NULL)) {
+      mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
+   }
 
    window_modifyText( wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
@@ -725,7 +732,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          player_outfitOwned(outfit),
          outfit_slotName(outfit),
          outfit_slotSize(outfit),
-         outfit->mass,
+         mass,
          buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : _("None") );
