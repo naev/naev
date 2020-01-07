@@ -433,9 +433,9 @@ void outfits_update( unsigned int wid, char* str )
       nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", outfit->license );
 
    mass = outfit->mass;
-   if ( (outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
-         ( outfit_ammo( outfit ) != NULL ) ) {
-      mass += outfit->u.lau.amount * outfit_ammo(outfit)->mass;
+   if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
+         (outfit_ammo(outfit) != NULL)) {
+      mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
    nsnprintf( buf, PATH_MAX,

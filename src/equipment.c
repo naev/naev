@@ -741,6 +741,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    int pos;
    Outfit *o;
    CstSlotWidget *wgt;
+   double mass;
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
@@ -806,6 +807,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
    }
 
+   mass = o->mass;
+   if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
+         (outfit_ammo(o) != NULL)) {
+      mass += outfit_amount(o) * outfit_ammo(o)->mass;
+   }
+
    /* Get text. */
    if (o->desc_short == NULL)
       return;
@@ -820,7 +827,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
             _("\n%.0f Tons"),
-            o->mass );
+            mass );
 
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
@@ -1456,6 +1463,7 @@ static void equipment_genOutfitList( unsigned int wid )
    const glColour *c;
    glColour *bg, blend;
    const char *typename;
+   double mass;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1556,6 +1564,12 @@ static void equipment_genOutfitList( unsigned int wid )
       if (o->desc_short == NULL)
          alt[i] = NULL;
       else {
+         mass = o->mass;
+         if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
+               (outfit_ammo(o) != NULL)) {
+            mass += outfit_amount(o) * outfit_ammo(o)->mass;
+         }
+
          l = strlen(o->desc_short) + 128;
          alt[i] = malloc( l );
          p  = snprintf( &alt[i][0], l, "%s\n", o->name );
@@ -1567,7 +1581,7 @@ static void equipment_genOutfitList( unsigned int wid )
          if ((o->mass > 0.) && (p < l))
             snprintf( &alt[i][p], l-p,
                   _("\n%.0f Tons"),
-                  o->mass );
+                  mass );
       }
 
       /* Quantity. */
