@@ -1,6 +1,317 @@
 -- Outfit definitions
 include("dat/factions/equip/outfits.lua")
 
+
+-- Table of available core systems by class.
+equip_classOutfits_coreSystems = {
+   ["Yacht"] = {
+      "Unicorp PT-100 Core System"
+   },
+   ["Luxury Yacht"] = {
+      "Unicorp PT-100 Core System"
+   },
+   ["Scout"] = {
+      "Unicorp PT-100 Core System", "Milspec Aegis 2201 Core System"
+   },
+   ["Courier"] = {
+      "Unicorp PT-200 Core System", "Milspec Aegis 3601 Core System"
+   },
+   ["Freighter"] = {
+      "Unicorp PT-600 Core System", "Milspec Aegis 5401 Core System"
+   },
+   ["Armoured Transport"] = {
+      "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System"
+   },
+   ["Fighter"] = {
+      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+   },
+   ["Bomber"] = {
+      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+   },
+   ["Corvette"] = {
+      "Unicorp PT-500 Core System", "Milspec Orion 4801 Core System"
+   },
+   ["Destroyer"] = {
+      "Unicorp PT-600 Core System", "Milspec Orion 5501 Core System"
+   },
+   ["Cruiser"] = {
+      "Unicorp PT-1000 Core System", "Milspec Orion 9901 Core System"
+   },
+   ["Carrier"] = {
+      "Milspec Orion 9901 Core System"
+   },
+   ["Drone"] = {
+      "Milspec Orion 2301 Core System"
+   },
+   ["Heavy Drone"] = {
+      "Milspec Orion 3701 Core System"
+   }
+}
+
+
+-- Table of available engines by class.
+equip_classOutfits_engines = {
+   ["Yacht"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine"
+   },
+   ["Luxury Yacht"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine"
+   },
+   ["Scout"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Courier"] = {
+      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
+      "Tricon Zephyr II Engine", "Melendez Ox XL Engine"
+   },
+   ["Freighter"] = {
+      "Unicorp Falcon 1200 Engine", "Malendez Buffalo XL Engine"
+   },
+   ["Armoured Transport"] = {
+      "Malendez Buffalo XL Engine"
+   },
+   ["Fighter"] = {
+      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
+      "Tricon Zephyr II Engine"
+   },
+   ["Bomber"] = {
+      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
+      "Tricon Zephyr II Engine"
+   },
+   ["Corvette"] = {
+      "Unicorp Falcon 550 Engine", "Nexus Arrow 550 Engine",
+      "Tricon Cyclone Engine"
+   },
+   ["Destroyer"] = {
+      "Unicorp Falcon 1200 Engine", "Nexus Arrow 1200 Engine",
+      "Tricon Cyclone II Engine"
+   },
+   ["Cruiser"] = {
+      "Unicorp Eagle 6500 Engine", "Nexus Bolt 6500 Engine",
+      "Tricon Typhoon II Engine"
+   },
+   ["Carrier"] = {
+      "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine",
+      "Malendez Mammoth XL Engine"
+   },
+   ["Drone"] = {
+      "Tricon Zephyr Engine"
+   },
+   ["Heavy Drone"] = {
+      "Tricon Zephyr II Engine"
+   }
+}
+
+
+-- Table of available hulls by class.
+equip_classOutfits_hulls = {
+   ["Yacht"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating"
+   },
+   ["Luxury Yacht"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating"
+   },
+   ["Scout"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating"
+   },
+   ["Courier"] = {
+      "Unicorp D-4 Light Plating", "S&K Small Cargo Hull"
+   },
+   ["Freighter"] = {
+      "Unicorp D-12 Medium Plating", "S&K Medium Cargo Hull"
+   },
+   ["Armoured Transport"] = {
+      "S&K Medium Cargo Hull"
+   },
+   ["Fighter"] = {
+      "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
+      "S&K Light Stealth Plating", "S&K Light Combat Plating"
+   },
+   ["Bomber"] = {
+      "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
+      "S&K Light Stealth Plating", "S&K Light Combat Plating"
+   },
+   ["Corvette"] = {
+      "Unicorp D-8 Medium Plating", "Unicorp B-8 Medium Plating",
+      "S&K Medium Stealth Plating", "S&K Medium Combat Plating"
+   },
+   ["Destroyer"] = {
+      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
+      "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating"
+   },
+   ["Cruiser"] = {
+      "Unicorp D-20 Heavy Plating", "Unicorp B-20 Heavy Plating",
+      "S&K Superheavy Combat Plating"
+   },
+   ["Carrier"] = {
+      "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+   },
+   ["Drone"] = {
+      "S&K Ultralight Stealth Plating"
+   },
+   ["Heavy Drone"] = {
+      "S&K Light Stealth Plating"
+   }
+}
+
+
+-- Tables of available weapons by class.
+-- For weapons, each table is split up into sub-tables that are iterated
+-- through when equipping a ship. These tables include a "num" field which
+-- indicates how many of the chosen weapon to equip before moving on to the
+-- next set; if nil, the chosen weapon will be equipped as many times as
+-- possible. For example, if you list 3 tables with "num" set to 2, 1, and nil
+-- respectively, two of a weapon from the first table will be equipped,
+-- followed by one of a weapon from the second table, and then finally all
+-- remaining slots will be filled with a weapon from the third table.
+-- In general, the final table should be a table of possible primary weapons,
+-- and in front should be a table of secondary weapons restricted to 1 or 2
+-- (depending on the type of ship).
+equip_classOutfits_weapons = {
+   ["Yacht"] = {
+      {
+         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2",
+         "Laser PD MK1", "Turreted Gauss Gun"
+      }
+   },
+   ["Luxury Yacht"] = {
+      {
+         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2"
+      }
+   },
+   ["Scout"] = {
+      {
+         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
+         "Turreted Gauss Gun"
+      }
+   },
+   ["Courier"] = {
+      {
+         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
+         "Turreted Gauss Gun"
+      }
+   },
+   ["Freighter"] = {
+      {
+         num = 1;
+         "Laser Turret MK1", "Laser Turret MK2", "EMP Grenade Launcher",
+         "Pulse Beam", "Enygma Systems Turreted Fury Launcher"
+      },
+      {
+         "Laser Turret MK1", "Laser Turret MK2"
+      }
+   },
+   ["Armoured Transport"] = {
+      {
+         num = 1;
+         "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
+         "Heavy Laser", "Heavy Ripper Turret", "Lancelot Fighter Bay"
+      },
+      {
+         "Laser Turret MK2", "Laser Turret MK3"
+      }
+   },
+   ["Fighter"] = {
+      {
+         num = 1;
+         "Mass Driver MK1", "Ion Cannon", "Unicorp Mace Launcher",
+         "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
+         "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
+         "Unicorp Medusa Launcher"
+      },
+      {
+         "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",
+         "Vulcan Gun", "Ripper Cannon"
+      }
+   },
+   ["Bomber"] = {
+      {
+         num = 3;
+         "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
+         "Unicorp Headhunter Launcher", "Unicorp Mace Launcher",
+         "Unicorp Banshee Launcher"
+      },
+      {
+         "Gauss Gun", "Vulcan Gun", "Laser Cannon MK2", "Plasma Blaster MK2"
+      }
+   },
+   ["Corvette"] = {
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
+         "TeraCom Medusa Launcher"
+      },
+      {
+         num = 2;
+         "Mass Driver MK1", "Mass Driver MK2", "Heavy Ion Cannon",
+         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2"
+      },
+      {
+         "Ripper Cannon", "Plasma Blaster MK2", "Laser Cannon MK2",
+         "Vulcan Gun", "Ion Cannon"
+      }
+   },
+   ["Destroyer"] = {
+      {
+         num = 2;
+         "Railgun", "Heavy Ripper Turret", "Heavy Laser", "Orion Beam",
+         "Grave Beam", "Laser Turret MK3", "Razor Turret MK2"
+      },
+      {
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher", "Unicorp Caesar IV Launcher",
+         "Unicorp Headhunter Launcher", "TeraCom Medusa Launcher"
+      },
+      {
+         "Laser Turret MK2", "Laser Turret MK3", "Turreted Vulcan Gun"
+      }
+   },
+   ["Cruiser"] = {
+      {
+         num = 2;
+         "Turbolaser", "Ragnarok Beam", "Grave Beam", "Railgun Turret"
+      },
+      {
+         "Heavy Laser", "Heavy Ripper Turret", "Railgun Turret"
+      },
+      {
+         "Laser Turret MK3", "Turreted Vulcan Gun"
+      }
+   },
+   ["Carrier"] = {
+      {
+         num = 2;
+         "Turbolaser", "Ragnarok Beam"
+      },
+      {
+         num = 2;
+         "Heavy Laser", "Grave Beam", "Railgun Turret"
+      },
+      {
+         "Lancelot Fighter Bay"
+      },
+      {
+         "Laser Turret MK3", "Turreted Vulcan Gun"
+      }
+   },
+   ["Drone"] = {
+      {
+         "Neutron Disruptor"
+      }
+   },
+   ["Heavy Drone"] = {
+      {
+         "Heavy Neutron Disruptor"
+      },
+      {
+         "Electron Burst Cannon"
+      }
+   }
+}
+
+
 -- Helper functions
 include("dat/factions/equip/helper.lua")
 
