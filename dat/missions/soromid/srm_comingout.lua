@@ -85,7 +85,6 @@ function create ()
    misplanet, missys = planet.get( "Durea" )
    -- Note: This mission does not make system claims
    if missys:jumpDist( system.cur(), true ) < #chatter * 3 / 2 then
-      print("Invalid planet for Coming Out mission (need distance ", #chatter * 3 / 2, ", have distance ", missys:jumpDist( system.cur(), true ))
       misn.finish( false )
    end
 
