@@ -253,10 +253,10 @@ void input_setDefault ( int wasd )
    /* Escorts */
    input_setKeybind( "e_targetNext", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    input_setKeybind( "e_targetPrev", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-   input_setKeybind( "e_attack", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-   input_setKeybind( "e_hold", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-   input_setKeybind( "e_return", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-   input_setKeybind( "e_clear", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_END, NMOD_NONE );
+   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_INSERT, NMOD_NONE );
+   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_DELETE, NMOD_NONE );
+   input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_HOME, NMOD_NONE );
    /* Space Navigation */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, NMOD_CTRL );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
