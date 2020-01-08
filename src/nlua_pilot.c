@@ -548,7 +548,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    if (from_ship) {
       /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags );
+      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, NULL );
       lua_pushpilot(L,p);
    }
    else {

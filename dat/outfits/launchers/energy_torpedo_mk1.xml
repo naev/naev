@@ -5,7 +5,7 @@
   <size>small</size>
   <license>Medium Weapon License</license>
   <mass>5</mass>
-  <price>25000</price>
+  <price>0</price>
   <description>One of the greatest advancements the Thurion have made was in the field of non-corporeal computation. While it wasn't the original intention, the self-contained energy cascades that are capable of doing simple calculations are used as weapons. While such weapons have very high computational requirements, the homing energy projectiles have a high chance of hitting an evasive target.</description>
   <gfx_store>energy_dart</gfx_store>
   <cpu>-14</cpu>
@@ -13,6 +13,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Thurion Energy Cell I</ammo>
   <delay>1.0</delay>
+  <reload_time>240</reload_time>
   <amount>150</amount>
   <lockon>1</lockon>
   <arc>15</arc>

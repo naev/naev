@@ -5,13 +5,14 @@
   <size>small</size>
   <mass>6</mass>
   <price>60000</price>
-  <description>This missile launcher fires Convulsion class missiles used by the Thurion.</description>
+  <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.</description>
   <gfx_store>convulsion_launcher</gfx_store>
   <cpu>-12</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
   <delay>3</delay>
+  <reload_time>90</reload_time>
   <amount>20</amount>
   <lockon>4</lockon>
   <arc>8</arc>

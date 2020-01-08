@@ -2636,7 +2636,7 @@ static int aiL_dock( lua_State *L )
 
    /* Target is another ship. */
    p = luaL_validpilot(L,1);
-   pilot_dock(cur_pilot, p, 1);
+   pilot_dock(cur_pilot, p);
 
    return 0;
 }

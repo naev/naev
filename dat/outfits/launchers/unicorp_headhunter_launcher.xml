@@ -6,13 +6,14 @@
   <license>Medium Weapon License</license>
   <mass>10</mass>
   <price>40000</price>
-  <description>This launcher fires Headhunter class interceptor missiles. Made to standard specification, this model has been optimized for minimum system strain and maximum compatibility.</description>
+  <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
   <delay>3.5</delay>
+  <reload_time>60</reload_time>
   <amount>15</amount>
   <lockon>8</lockon>
   <arc>6</arc>

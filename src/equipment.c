@@ -741,6 +741,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    int pos;
    Outfit *o;
    CstSlotWidget *wgt;
+   double mass;
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
@@ -806,6 +807,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
    }
 
+   mass = o->mass;
+   if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
+         (outfit_ammo(o) != NULL)) {
+      mass += outfit_amount(o) * outfit_ammo(o)->mass;
+   }
+
    /* Get text. */
    if (o->desc_short == NULL)
       return;
@@ -820,7 +827,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
             _("\n%.0f Tons"),
-            o->mass );
+            mass );
 
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
@@ -1110,8 +1117,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
          ammo = slot->u.ammo.outfit;
-         q    = pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
-         player_addOutfit( ammo, q );
+         pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
       }
 
       /* Remove outfit. */
@@ -1259,25 +1265,7 @@ void equipment_addAmmo (void)
       p = eq_wgt.selected;
 
    /* Add ammo to all outfits. */
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i]->outfit;
-
-      /* Must be valid outfit. */
-      if (o == NULL)
-         continue;
-
-      /* Add ammo if able to. */
-      ammo = outfit_ammo(o);
-      if (ammo == NULL)
-         continue;
-      q    = player_outfitOwned(ammo);
-
-      /* Add ammo. */
-      q = pilot_addAmmo( p, p->outfits[i], ammo, q );
-
-      /* Remove from player. */
-      player_rmOutfit( ammo, q );
-   }
+   pilot_fillAmmo( p );
 
    /* Update weapon sets if needed. */
    if (p->autoweap)
@@ -1475,6 +1463,7 @@ static void equipment_genOutfitList( unsigned int wid )
    const glColour *c;
    glColour *bg, blend;
    const char *typename;
+   double mass;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1575,6 +1564,12 @@ static void equipment_genOutfitList( unsigned int wid )
       if (o->desc_short == NULL)
          alt[i] = NULL;
       else {
+         mass = o->mass;
+         if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
+               (outfit_ammo(o) != NULL)) {
+            mass += outfit_amount(o) * outfit_ammo(o)->mass;
+         }
+
          l = strlen(o->desc_short) + 128;
          alt[i] = malloc( l );
          p  = snprintf( &alt[i][0], l, "%s\n", o->name );
@@ -1586,7 +1581,7 @@ static void equipment_genOutfitList( unsigned int wid )
          if ((o->mass > 0.) && (p < l))
             snprintf( &alt[i][p], l-p,
                   _("\n%.0f Tons"),
-                  o->mass );
+                  mass );
       }
 
       /* Quantity. */
@@ -1923,8 +1918,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       /* Remove ammo first. */
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
-         ret = pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
-         player_addOutfit( ammo, ret );
+         pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
       }
 
       /* Remove rest. */

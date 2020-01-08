@@ -1305,9 +1305,6 @@ static int playerL_teleport( lua_State *L )
    /* Map gets deformed when jumping this way. */
    map_clear();
 
-   /* Add the escorts. */
-   player_addEscorts();
-
    /* Run hooks - order is important. */
    hooks_run( "jumpin" );
    hooks_run( "enter" );

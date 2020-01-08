@@ -1290,6 +1290,9 @@ void takeoff( int delay )
    /* Refuel if needed. */
    land_refuel();
 
+   /* Refill ammo if needed. */
+   equipment_addAmmo();
+
    /* In case we had paused messy sounds. */
    sound_stopAll();
 

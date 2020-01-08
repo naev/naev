@@ -38,6 +38,7 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param ship Ship of the escort.
  *    @param type Type of the escort.
  *    @param id ID of the pilot representing the escort.
+ *    @param dockslot The outfit slot which launched the escort (NULL if N/A)
  *    @return 0 on success.
  */
 int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id,
@@ -70,6 +71,7 @@ int escort_rmList( Pilot *p, unsigned int id ) {
          p->nescorts--;
          memmove( &p->escorts[i], &p->escorts[i+1],
                sizeof(Escort_t)*(p->nescorts-i) );
+
          break;
       }
    }
@@ -88,11 +90,12 @@ int escort_rmList( Pilot *p, unsigned int id ) {
  *    @param dir Direction to face.
  *    @param type Type of escort.
  *    @param add Whether or not to add it to the escort list.
+ *    @param dockslot The outfit slot which launched the escort (NULL if N/A)
  *    @return The ID of the escort on success.
  */
 unsigned int escort_create( Pilot *p, char *ship,
       Vector2d *pos, Vector2d *vel, double dir,
-      EscortType_t type, int add )
+      EscortType_t type, int add, PilotOutfitSlot* dockslot )
 {
    Ship *s;
    Pilot *pe;
@@ -112,7 +115,7 @@ unsigned int escort_create( Pilot *p, char *ship,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f );
+   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, dockslot );
    pe = pilot_get(e);
    pe->parent = parent;
 

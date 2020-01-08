@@ -180,6 +180,7 @@ typedef struct OutfitLauncherData_ {
    char *ammo_name;  /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
+   double reload_time; /**< Time it takes to reload 1 ammo. */
 
    /* Lockon information. */
    double lockon;    /**< Time it takes to lock on the target */

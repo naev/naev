@@ -6,13 +6,16 @@
   <license>Medium Weapon License</license>
   <mass>10</mass>
   <price>30000</price>
-  <description>TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
+  <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.
+
+TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
   <gfx_store>macelauncher</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Mace Rocket</ammo>
   <delay>0.3</delay>
+  <reload_time>6</reload_time>
   <amount>50</amount>
  </specific>
 </outfit>

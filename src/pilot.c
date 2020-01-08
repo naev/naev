@@ -929,7 +929,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
 
    /* Cooldown finished naturally, reset heat just in case. */
    if (p->ctimer < 0.)
+   {
       pilot_heatReset( p );
+      pilot_fillAmmo( p );
+   }
 }
 
 
@@ -1692,6 +1695,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
 void pilot_update( Pilot* pilot, const double dt )
 {
    int i, cooling, nchg;
+   int ammo_threshold;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1747,6 +1751,37 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Handle firerate timer. */
       if (o->timer > 0.)
          o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+
+      /* Handle reload timer. (Note: this works backwards compared to
+       * other timers. This helps to simplify code resetting the timer
+       * elsewhere.)
+       */
+      if ( ( o->outfit != NULL ) &&
+            ( outfit_isLauncher( o->outfit ) || outfit_isFighterBay( o->outfit ) ) &&
+            ( outfit_ammo( o->outfit ) != NULL ) ) {
+         if (o->rtimer < o->outfit->u.lau.reload_time)
+            o->rtimer += dt;
+
+         /* Initial (raw) ammo threshold */
+         ammo_threshold = o->outfit->u.lau.amount;
+
+         /* Adjust for deployed fighters if needed */
+         if ( outfit_isFighterBay( o->outfit ) )
+            ammo_threshold -= o->u.ammo.deployed;
+
+         /* Don't allow accumulation of the timer before reload allowed */
+         if ( o->u.ammo.quantity >= ammo_threshold ) {
+            o->rtimer = 0;
+         }
+
+         while ( ( o->rtimer >= o->outfit->u.lau.reload_time ) &&
+               ( o->u.ammo.quantity < ammo_threshold ) ) {
+            o->rtimer -= o->outfit->u.lau.reload_time;
+            pilot_addAmmo( pilot, o, outfit_ammo( o->outfit ), 1 );
+         }
+
+         o->rtimer = MIN( o->rtimer, o->outfit->u.lau.reload_time );
+      }
 
       /* Handle state timer. */
       if (o->stimer >= 0.) {
@@ -2069,6 +2104,13 @@ void pilot_delete( Pilot* p )
          escort_rmList(leader, p->id);
    }
 
+   /* Unmark as deployed if necessary */
+   if ( p->dockslot != NULL )
+   {
+      p->dockslot->u.ammo.deployed -= 1;
+      p->dockslot = NULL;
+   }
+
    /* Set flag to mark for deletion. */
    pilot_setFlag(p, PILOT_DELETE);
 }
@@ -2380,10 +2422,11 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param pos Initial position.
  *    @param vel Initial velocity.
  *    @param flags Used for tweaking the pilot.
+ *    @param dockslot The outfit slot which launched the escort (NULL if N/A)
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags )
+      const PilotFlags flags, PilotOutfitSlot* dockslot )
 {
    int i, p;
 
@@ -2397,6 +2440,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Defaults. */
    pilot->autoweap = 1;
+   pilot->dockslot = dockslot;
 
    /* Basic information. */
    pilot->ship = ship;
@@ -2469,6 +2513,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->energy = pilot->energy_max;
    pilot->fuel   = pilot->fuel_max;
 
+   /* Mark as deployed if needed */
+   if (pilot->dockslot != NULL)
+      pilot->dockslot->u.ammo.deployed += 1;
+
    /* Sanity check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSpaceworthy( pilot );
@@ -2535,7 +2583,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags )
+      const PilotFlags flags, PilotOutfitSlot* dockslot )
 {
    Pilot *dyn;
 
@@ -2560,7 +2608,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    pilot_nstack++; /* there's a new pilot */
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockslot );
 
    return dyn->id;
 }
@@ -2586,7 +2634,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       return 0;
    }
    pilot_setFlagRaw( flags, PILOT_EMPTY );
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, NULL );
    return dyn;
 }
 
@@ -2839,6 +2887,13 @@ void pilot_destroy(Pilot* p)
    if (p->presence > 0) {
       system_rmCurrentPresence( cur_system, p->faction, p->presence );
       p->presence = 0;
+   }
+
+   /* Unmark as deployed if necessary */
+   if ( p->dockslot != NULL )
+   {
+      p->dockslot->u.ammo.deployed -= 1;
+      p->dockslot = NULL;
    }
 
    /* pilot is eliminated */

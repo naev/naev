@@ -6,12 +6,13 @@
   <mass>15</mass>
   <price>31000</price>
   <gfx_store>empgrenadelauncher</gfx_store>
-  <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
+  <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. The grenades unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive; the EM pulses rarely destroy the ship, leaving it floating disabled in space. These are favoured by traders for keeping pirates at bay.</description>
   <cpu>-8</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
   <ammo>EMP Grenade</ammo>
   <delay>2</delay>
+  <reload_time>40</reload_time>
   <amount>18</amount>
  </specific>
 </outfit>

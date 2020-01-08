@@ -6,13 +6,14 @@
   <license>Medium Weapon License</license>
   <mass>15</mass>
   <price>70000</price>
-  <description>This launcher fires Vengeance class interceptor missiles. Its bulk makes it less suitable for ships that rely on mobility, but it's relatively efficient otherwise.</description>
+  <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. It's designed to excel at killing armoured targets at the expense of making it poor against shields. Best paired with anti-shield weapons.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-6</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
+  <reload_time>60</reload_time>
   <amount>10</amount>
   <lockon>12</lockon>
   <arc>6</arc>
