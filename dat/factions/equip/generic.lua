@@ -158,7 +158,7 @@ equip_classOutfits_hulls = {
 
 
 -- Tables of available weapons by class.
--- For weapons, each table is split up into sub-tables that are iterated
+-- Each table is split up into sub-tables that are iterated
 -- through when equipping a ship. These tables include a "num" field which
 -- indicates how many of the chosen weapon to equip before moving on to the
 -- next set; if nil, the chosen weapon will be equipped as many times as
@@ -169,6 +169,10 @@ equip_classOutfits_hulls = {
 -- In general, the final table should be a table of possible primary weapons,
 -- and in front should be a table of secondary weapons restricted to 1 or 2
 -- (depending on the type of ship).
+--
+-- If, rather than equipping multiples of the same outfit you would like to
+-- select a random outfit `num` times, you can do so by setting "varied" to
+-- true.
 equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
@@ -307,6 +311,123 @@ equip_classOutfits_weapons = {
       },
       {
          "Electron Burst Cannon"
+      }
+   }
+}
+
+
+-- Tables of available utilities by class.
+-- Each table is split up into sub-tables that are iterated
+-- through when equipping a ship. These tables include a "num" field which
+-- indicates how many of the chosen weapon to equip before moving on to the
+-- next set; if nil, the chosen weapon will be equipped as many times as
+-- possible. For example, if you list 3 tables with "num" set to 2, 1, and nil
+-- respectively, two of a weapon from the first table will be equipped,
+-- followed by one of a weapon from the second table, and then finally all
+-- remaining slots will be filled with a weapon from the third table.
+-- In general, the final table should be a table of possible primary weapons,
+-- and in front should be a table of secondary weapons restricted to 1 or 2
+-- (depending on the type of ship).
+--
+-- If, rather than equipping multiples of the same outfit you would like to
+-- select a random outfit `num` times, you can do so by setting "varied" to
+-- true.
+equip_classOutfits_utilities = {
+   ["Yacht"] = {
+      {
+         varied = true;
+         "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
+         "Generic Afterburner"
+      }
+   },
+   ["Luxury Yacht"] = {
+      {
+         varied = true;
+         "Reactor Class I", "Unicorp Scrambler", "Small Shield Booster"
+      }
+   },
+   ["Scout"] = {
+      {
+         varied = true;
+         "Unicorp Scrambler", "Small Shield Booster", "Jump Scanner",
+         "Generic Afterburner", "Emergency Shield Booster"
+      }
+   },
+   ["Courier"] = {
+      {
+         varied = true;
+         "Reactor Class I", "Small Shield Booster", "Unicorp Scrambler",
+         "Hellburner", "Emergency Shield Booster"
+      }
+   },
+   ["Freighter"] = {
+      {
+         varied = true;
+         "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
+         "Droid Repair Crew", "Boarding Androids MKI"
+      }
+   },
+   ["Armoured Transport"] = {
+      {
+         varied = true;
+         "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
+         "Droid Repair Crew", "Boarding Androids MKI"
+      }
+   },
+   ["Fighter"] = {
+      {
+         varied = true;
+         "Reactor Class I", "Unicorp Scrambler", "Emergency Shield Booster",
+         "Reverse Thrusters"
+      }
+   },
+   ["Bomber"] = {
+      {
+         varied = true;
+         "Reactor Class I", "Milspec Scrambler", "Small Shield Booster",
+         "Emergency Shield Booster", "Hellburner", "Reverse Thrusters"
+      }
+   },
+   ["Corvette"] = {
+      {
+         varied = true;
+         "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
+         "Droid Repair Crew", "Boarding Androids MKI", "Hellburner"
+      }
+   },
+   ["Destroyer"] = {
+      {
+         varied = true;
+         "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
+         "Boarding Androids MKI"
+      }
+   },
+   ["Cruiser"] = {
+      {
+         varied = true;
+         "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
+         "Boarding Androids MKII"
+      }
+   },
+   ["Carrier"] = {
+      {
+         varied = true;
+         "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
+         "Boarding Androids MKII"
+      }
+   },
+   ["Drone"] = {
+      {
+         "Reactor Class I"
+      }
+   },
+   ["Heavy Drone"] = {
+      {
+         num = 1
+         "Unicorp Scrambler"
+      },
+      {
+         "Reactor Class I"
       }
    }
 }
