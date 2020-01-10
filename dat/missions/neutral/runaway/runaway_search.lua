@@ -38,6 +38,7 @@ osd3 = _("Catch Cynthia on Torloth in Cygnus")
 osd4 = _("Return Cynthia to her father on Zhiru in the Goddard system.")
 osdlie = _("Go to Zhiru in Goddard to lie to Cynthia's father")
 
+
 function create ()
    targetworld_sys = system.get("Dohriabi")
    targetworld = planet.get("Niflheim")
@@ -127,7 +128,7 @@ function land ()
       misn.markerRm(runawayMarker)
 
       --Talk to the father and get the reward
-      if osd_text[4] == osd4 then
+      if misn.osdGetActiveItem() == osd4 then
          tk.msg(title, misn_father)
          player.pay(reward)
          misn.cargoRm(cargoID)

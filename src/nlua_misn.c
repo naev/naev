@@ -85,6 +85,7 @@ static int misn_cargoJet( lua_State *L );
 static int misn_osdCreate( lua_State *L );
 static int misn_osdDestroy( lua_State *L );
 static int misn_osdActive( lua_State *L );
+static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
@@ -105,6 +106,7 @@ static const luaL_Reg misn_methods[] = {
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
+   { "osdGetActiveItem", misn_osdGetActiveItem },
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
@@ -856,6 +858,24 @@ static int misn_osdActive( lua_State *L )
       osd_active( cur_mission->osd, n );
 
    return 0;
+}
+
+static int misn_osdGetActiveItem( lua_State *L )
+{
+   Mission *cur_mission;
+   cur_mission = misn_getFromLua(L);
+
+   int nitems;
+   char **items = osd_getItems(cur_mission->osd, &nitems);
+   int active   = osd_getActive(cur_mission->osd);
+
+   if (!items || active < 0) {
+      lua_pushnil(L);
+      return 1;
+   }
+
+   lua_pushstring(L, items[active]);
+   return 1;
 }
 
 
