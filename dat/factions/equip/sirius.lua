@@ -1,5 +1,8 @@
--- Generic equipping routines, helper functions and outfit definitions.
 include("dat/factions/equip/generic.lua")
+
+
+-- TODO: define faction-specific outfits
+
 
 --[[
 -- @brief Does sirius pilot equipping
@@ -7,19 +10,7 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   -- Start with an empty ship
-   p:rmOutfit("all")
-   p:rmOutfit("cores")
-
-   -- Get ship info
-   local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
-
-   -- Split by type
-   if shiptype == "military" then
-      equip_siriusMilitary( p, shipsize )
-   else
-      equip_generic( p )
-   end
+   equip_generic( p )
 end
 
 

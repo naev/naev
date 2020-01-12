@@ -1,5 +1,8 @@
--- Generic equipping routines, helper functions and outfit definitions.
 include("dat/factions/equip/generic.lua")
+
+
+-- TODO: define faction-specific outfits
+
 
 --[[
 -- @brief Does pirate pilot equipping
@@ -7,20 +10,7 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   -- Start with an empty ship
-   p:rmOutfit("all")
-   p:rmOutfit("cores")
-
-   -- Get ship info
-   local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
-   local class = p:ship():class()
-
-   -- Split by type
-   if shiptype == "military" or class == "Armoured Transport" then
-      equip_pirateMilitary( p, shipsize )
-   else
-      equip_generic( p )
-   end
+   equip_generic( p )
 end
 
 

@@ -1,14 +1,7 @@
 include("dat/factions/spawn/common.lua")
 include("dat/factions/spawn/mercenary_helper.lua")
 
-include("pilot/empire.lua") -- Uniques
-
 local formation = include "dat/scripts/formation.lua"
-
-function empire_unique()
-   local p = empire_create( true )
-   return {p}
-end
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
@@ -67,10 +60,8 @@ function spawn_capship ()
       -- Generate the capship
       if r < 0.7 then
          scom.addPilot( pilots, "Empire Hawking", 140 )
-      elseif r < 0.97 then
-         scom.addPilot( pilots, "Empire Peacemaker", 165 )
       else
-         scom.addPilot( pilots, empire_unique, 200 )
+         scom.addPilot( pilots, "Empire Peacemaker", 165 )
       end
 
       -- Generate the escorts

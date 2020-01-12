@@ -180,7 +180,6 @@
   <colour>silver</colour>
   <spawn>collective</spawn>
   <standing>collective</standing>
-  <equip>collective</equip>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>

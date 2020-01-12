@@ -1,7 +1,3 @@
--- Outfit definitions
-include("dat/factions/equip/outfits.lua")
-
-
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
@@ -158,21 +154,7 @@ equip_classOutfits_hulls = {
 
 
 -- Tables of available weapons by class.
--- Each table is split up into sub-tables that are iterated
--- through when equipping a ship. These tables include a "num" field which
--- indicates how many of the chosen weapon to equip before moving on to the
--- next set; if nil, the chosen weapon will be equipped as many times as
--- possible. For example, if you list 3 tables with "num" set to 2, 1, and nil
--- respectively, two of a weapon from the first table will be equipped,
--- followed by one of a weapon from the second table, and then finally all
--- remaining slots will be filled with a weapon from the third table.
--- In general, the final table should be a table of possible primary weapons,
--- and in front should be a table of secondary weapons restricted to 1 or 2
--- (depending on the type of ship).
---
--- If, rather than equipping multiples of the same outfit you would like to
--- select a random outfit `num` times, you can do so by setting "varied" to
--- true.
+-- See equip_set function for more info.
 equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
@@ -223,7 +205,7 @@ equip_classOutfits_weapons = {
          "Mass Driver MK1", "Ion Cannon", "Unicorp Mace Launcher",
          "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
-         "Unicorp Medusa Launcher"
+         "Unicorp Medusa Launcher", "Ripper Cannon"
       },
       {
          "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",
@@ -232,7 +214,7 @@ equip_classOutfits_weapons = {
    },
    ["Bomber"] = {
       {
-         num = 3;
+         num = 3, varied = true;
          "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
          "Unicorp Headhunter Launcher", "Unicorp Mace Launcher",
          "Unicorp Banshee Launcher"
@@ -317,21 +299,7 @@ equip_classOutfits_weapons = {
 
 
 -- Tables of available utilities by class.
--- Each table is split up into sub-tables that are iterated
--- through when equipping a ship. These tables include a "num" field which
--- indicates how many of the chosen weapon to equip before moving on to the
--- next set; if nil, the chosen weapon will be equipped as many times as
--- possible. For example, if you list 3 tables with "num" set to 2, 1, and nil
--- respectively, two of a weapon from the first table will be equipped,
--- followed by one of a weapon from the second table, and then finally all
--- remaining slots will be filled with a weapon from the third table.
--- In general, the final table should be a table of possible primary weapons,
--- and in front should be a table of secondary weapons restricted to 1 or 2
--- (depending on the type of ship).
---
--- If, rather than equipping multiples of the same outfit you would like to
--- select a random outfit `num` times, you can do so by setting "varied" to
--- true.
+-- See equip_set function for more info.
 equip_classOutfits_utilities = {
    ["Yacht"] = {
       {
@@ -423,7 +391,7 @@ equip_classOutfits_utilities = {
    },
    ["Heavy Drone"] = {
       {
-         num = 1
+         num = 1;
          "Unicorp Scrambler"
       },
       {
@@ -433,21 +401,7 @@ equip_classOutfits_utilities = {
 }
 
 -- Tables of available structurals by class.
--- Each table is split up into sub-tables that are iterated
--- through when equipping a ship. These tables include a "num" field which
--- indicates how many of the chosen weapon to equip before moving on to the
--- next set; if nil, the chosen weapon will be equipped as many times as
--- possible. For example, if you list 3 tables with "num" set to 2, 1, and nil
--- respectively, two of a weapon from the first table will be equipped,
--- followed by one of a weapon from the second table, and then finally all
--- remaining slots will be filled with a weapon from the third table.
--- In general, the final table should be a table of possible primary weapons,
--- and in front should be a table of secondary weapons restricted to 1 or 2
--- (depending on the type of ship).
---
--- If, rather than equipping multiples of the same outfit you would like to
--- select a random outfit `num` times, you can do so by setting "varied" to
--- true.
+-- See equip_set function for more info.
 equip_classOutfits_structurals = {
    ["Yacht"] = {
       {
@@ -538,8 +492,8 @@ equip_classOutfits_structurals = {
    },
    ["Heavy Drone"] = {
       {
-         num = 1
-         "Steering Thrustersr"
+         num = 1;
+         "Steering Thrusters"
       },
       {
          "Solar Panel"
@@ -548,8 +502,127 @@ equip_classOutfits_structurals = {
 }
 
 
--- Helper functions
-include("dat/factions/equip/helper.lua")
+-- Table of available core systems by base type.
+equip_typeOutfits_coreSystems = {}
+
+
+-- Table of available engines by base type.
+equip_typeOutfits_engines = {}
+
+
+-- Table of available hulls by base type.
+equip_typeOutfits_hulls = {}
+
+
+-- Tables of available weapons by base type.
+-- See equip_set function for more info.
+equip_typeOutfits_weapons = {}
+
+
+-- Tables of available utilities by base type.
+-- See equip_set function for more info.
+equip_typeOutfits_utilities = {}
+
+-- Tables of available structurals by base type.
+-- See equip_set function for more info.
+equip_typeOutfits_structurals = {}
+
+
+-- Table of available core systems by ship.
+equip_shipOutfits_coreSystems = {}
+
+
+-- Table of available engines by ship.
+equip_shipOutfits_engines = {}
+
+
+-- Table of available hulls by ship.
+equip_shipOutfits_hulls = {}
+
+
+-- Tables of available weapons by ship.
+-- See equip_set function for more info.
+equip_shipOutfits_weapons = {}
+
+
+-- Tables of available utilities by ship.
+-- See equip_set function for more info.
+equip_shipOutfits_utilities = {}
+
+-- Tables of available structurals by ship.
+-- See equip_set function for more info.
+equip_shipOutfits_structurals = {}
+
+
+--[[
+-- @brief Wrapper for pilot.addOutfit that prints a warning if no outfits added.
+--]]
+function equip_warn( p, outfit, q, bypass )
+   if q == nil then q = 1 end
+   if bypass == nil then bypass = false end
+   local r = pilot.addOutfit( p, outfit, q, bypass )
+   if r <= 0 then
+      warn("Could not equip " .. system .. " on pilot " .. p:name() .. "!")
+   end
+   return r
+end
+
+
+--[[
+-- @brief Choose an outfit from a table of outfits.
+--
+--    @param p Pilot to equip to.
+--    @param set table laying out the set of outfits to equip (see below).
+--
+-- ``set`` is split up into sub-tables that are iterated through. These
+-- tables include a "num" field which indicates how many of the chosen outfit
+-- to equip before moving on to the next set; if nil, the chosen outfit will be
+-- equipped as many times as possible. For example, if you list 3 tables with
+-- "num" set to 2, 1, and nil respectively, two of an outfit from the first
+-- table will be equipped, followed by one of an outfit from the second table,
+-- and then finally all remaining slots will be filled with an outfit from the
+-- third table.
+--
+-- If, rather than equipping multiples of the same outfit you would like to
+-- select a random outfit `num` times, you can do so by setting "varied" to
+-- true.
+--
+-- Note that there should only be one type of outfit (weapons, utilities, or
+-- structurals) in ``set``; including multiple types will prevent proper
+-- detection of how many are needed.
+--]]
+function equip_set( p, set )
+   if set == nil then return end
+
+   local num = set.num
+   local varied = set.varied
+   local choices, c, i, equipped
+
+   for k, v in ipairs( set ) do
+      choices = {}
+      for i, choice in ipairs( v ) do
+         choices[i] = choice
+      end
+
+      c = rnd.rnd( 1, #choices )
+      i = 1
+      while #choices > 0 and (num == nil or i <= num) do
+         i = i + 1
+         if varied then c = rnd.rnd( 1, #choices ) end
+
+         equipped = p:addOutfit( choices[c] )
+         if equipped <= 0 then
+            if varied or num == nil then
+               table.remove( choices, c )
+               c = rnd.rnd( 1, #choices )
+            else
+               break
+            end
+         end
+      end
+   end
+end
+
 
 --[[
 -- @brief Does generic pilot equipping
@@ -558,325 +631,81 @@ include("dat/factions/equip/helper.lua")
 --]]
 function equip_generic( p )
    -- Start with an empty ship
-   p:rmOutfit("all")
-   p:rmOutfit("cores")
+   p:rmOutfit( "all" )
+   p:rmOutfit( "cores" )
 
-   -- Get ship info
-   local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
-   
-   -- Equip core outfits. This process is separate from the other outfits, because cores were introduced
-   -- later, and the outfitting routine should be fairly granular and tweakable.
-   --equip_cores(p)
+   local shipname = p:ship():name()
+   local basetype = p:ship():baseType()
+   local class = p:ship():class()
+   local success
+   local o
 
-   -- Split by type
-   if shiptype == "civilian" and p:faction() ~= faction.get("Trader") then
-      if shipsize == "small" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Unicorp Hawk 150 Engine", "Unicorp PT-100 Core System", "Unicorp D-2 Light Plating"},
-            {"Unicorp Hawk 300 Engine", "Unicorp PT-200 Core System", "Unicorp D-4 Light Plating"}
-         }))
-      elseif shipsize == "medium" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Unicorp Falcon 550 Engine", "Unicorp PT-500 Core System", "Unicorp D-8 Medium Plating"},
-            {"Unicorp Falcon 1200 Engine", "Unicorp PT-600 Core System", "Unicorp D-12 Medium Plating"}
-         }))
-      else
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Unicorp Eagle 4500 Engine", "Unicorp PT-1000 Core System", "Unicorp D-16 Heavy Plating"},
-            {"Unicorp Eagle 6500 Engine", "Unicorp PT-1000 Core System", "Unicorp D-20 Heavy Plating"}
-         }))
-      end
-      equip_genericCivilian( p, shipsize )
-   elseif shiptype == "merchant" or p:faction() == faction.get("Trader") then
-      if shipsize == "small" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Melendez Ox Engine", "Unicorp PT-100 Core System", "S&K Small Cargo Hull"},
-            {"Melendez Ox XL Engine", "Unicorp PT-200 Core System", "S&K Small Cargo Hull"}
-         }))
-      elseif shipsize == "medium" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Melendez Buffalo Engine", "Unicorp PT-500 Core System", "S&K Medium Cargo Hull"},
-            {"Melendez Buffalo XL Engine", "Unicorp PT-500 Core System", "S&K Medium Cargo Hull"}
-         }))
-      else
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Melendez Mammoth Engine", "Unicorp PT-1000 Core System", "S&K Large Cargo Hull"},
-            {"Melendez Mammoth XL Engine", "Unicorp PT-1000 Core System", "S&K Large Cargo Hull"}
-         }))
-      end
-      equip_genericMerchant( p, shipsize )
-   elseif shiptype == "military" then
-      if shipsize == "small" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Nexus Dart 150 Engine", "Milspec Hermes 2202 Core System", "Unicorp B-2 Light Plating"},
-            {"Nexus Dart 300 Engine", "Milspec Hermes 3602 Core System", "Unicorp B-4 Light Plating"}
-         }))
-      elseif shipsize == "medium" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Nexus Arrow 550 Engine", "Milspec Hermes 4702 Core System", "Unicorp B-8 Medium Plating"},
-            {"Nexus Arrow 1200 Engine", "Milspec Hermes 5402 Core System", "Unicorp B-12 Medium Plating"}
-         }))
-      else
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Nexus Bolt 4500 Engine", "Milspec Hermes 9802 Core System", "Unicorp B-16 Heavy Plating"},
-            {"Nexus Bolt 6500 Engine", "Milspec Hermes 9802 Core System", "Unicorp B-20 Heavy Plating"}
-         }))
-      end
-      equip_genericMilitary( p, shipsize )
-   elseif shiptype == "robotic" then
-      if shipsize == "small" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Nexus Dart 150 Engine", "Milspec Hermes 2202 Core System", "Unicorp B-2 Light Plating"},
-            {"Nexus Dart 300 Engine", "Milspec Hermes 3602 Core System", "Unicorp B-4 Light Plating"}
-         }))
-      elseif shipsize == "medium" then
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Nexus Arrow 550 Engine", "Milspec Hermes 4702 Core System", "Unicorp B-8 Medium Plating"},
-            {"Nexus Arrow 1200 Engine", "Milspec Hermes 5402 Core System", "Unicorp B-12 Medium Plating"}
-         }))
-      else
-         equip_cores(p, equip_getCores(p, shipsize, {
-            {"Nexus Bolt 4500 Engine", "Milspec Hermes 9802 Core System", "Unicorp B-16 Heavy Plating"},
-            {"Nexus Bolt 6500 Engine", "Milspec Hermes 9802 Core System", "Unicorp B-20 Heavy Plating"}
-         }))
-      end
-
-      equip_genericRobotic( p, shipsize )
+   -- Core systems
+   success = false
+   o = equip_shipOutfits_coreSystems[shipname]
+   if o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
-end
-
---[[
--- @brief Equips a ship with core outfits.
---
---    @param p Pilot to equip
---]]
-function equip_cores( p, engine, system, hull )
-   p:rmOutfit("cores")
-   if p:addOutfit(system, 1, false) == 0 then warn("Could not equip " .. system .. " on pilot " .. p:name() .. "!") end
-   if p:addOutfit(hull,   1, false) == 0 then warn("Could not equip " .. hull .. " on pilot " .. p:name() .. "!") end
-   if p:addOutfit(engine, 1, false) == 0 then warn("Could not equip " .. engine .. " on pilot " .. p:name() .. "!") end
-end
-
---[[
--- @brief Gets suitably-sized core outfits for a ship.
---
---    @param p Pilot to get cores for
---    @param shipsize Size of the ship, including its core slots
---    @param cores Table of tables, containing 2 size classes with 3 cores each
---]]
-function equip_getCores( p, shipsize, cores )
-   local mass = p:stats()['mass']
-
-   -- These thresholds are somewhat arbitrary, but serve to delineate between
-   -- large and small ships within a class, e.g. a Shark (light fighter) is
-   -- 45t, while a Lancelot (heavy fighter) is 80t. Thus, the Shark is under
-   -- the small slot's threshold, while the Lancelot is over.
-   if shipsize == "small" then
-       threshold = 60
-   elseif shipsize == "medium" then
-      threshold = 220
-   else
-      threshold = 1800
+   o = equip_typeOutfits_coreSystems[basetype]
+   if not success and o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
+   end
+   o = equip_classOutfits_coreSystems[class]
+   if not success and o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
+   end
+   if not success then
+      equip_warn( p, "Unicorp PT-100 Core System" )
    end
 
-   if p:stats()['mass'] <= threshold then
-      return unpack(cores[1])
+   -- Engines
+   success = false
+   o = equip_shipOutfits_engines[shipname]
+   if o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
+   end
+   o = equip_typeOutfits_engines[basetype]
+   if not success and o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
+   end
+   o = equip_classOutfits_engines[class]
+   if not success and o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
+   end
+   if not success then
+      equip_warn( p, "Unicorp Hawk 150 Engine" )
    end
 
-   return unpack(cores[2])
-end
-
---[[
--- @brief Equips a generic civilian type ship.
---]]
-function equip_genericCivilian( p, shipsize )
-   local medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = p:ship():slots()
-
-   -- Defaults
-   medium      = { "Unicorp Scrambler" }
-
-   weapons = {}
-   use_primary = rnd.rnd(nhigh) -- Use fewer slots
-   use_secondary = 0
-   use_medium  = 0
-   use_low     = 0
-
-   -- Per ship type
-   if shipsize == "small" then
-      addWeapons( equip_forwardLow(), use_primary )
-      medium   = { "Unicorp Scrambler" }
-      if rnd.rnd() > 0.8 then
-         use_medium = 1
-      end
-   else
-      addWeapons( equip_turretLow(), use_primary )
-      medium   = { "Unicorp Scrambler" }
-      if rnd.rnd() > 0.5 then
-         use_medium = 1
-      end
-      low      = { "Plasteel Plating" }
-      if rnd.rnd() > 0.5 then
-         use_low = 1
-      end
+   -- Hulls
+   success = false
+   o = equip_shipOutfits_hulls[shipname]
+   if o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
-   equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low )
-end
-
-
---[[
--- @brief Equips a generic merchant type ship.
---]]
-function equip_genericMerchant( p, shipsize )
-   local medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = p:ship():slots()
-
-   -- Defaults
-   medium      = { "Unicorp Scrambler" }
-
-   weapons     = {}
-   use_primary = rnd.rnd(1,nhigh) -- Use fewer slots
-   use_secondary = 0
-   use_medium  = 0
-   use_low     = 0
-
-   -- Equip by size
-   if shipsize == "small" then
-      r = rnd.rnd()
-      if r > 0.9 or r > 0.2 and use_primary < 2 then -- 10% chance of all-turrets.
-         addWeapons( equip_turretLow(), use_primary )
-      elseif r > 0.2 then -- 70% chance of mixed loadout.
-         use_turrets = rnd.rnd( 1, use_primary-1 )
-         use_primary = use_primary - use_turrets
-         addWeapons( equip_turretLow(), use_turrets )
-         addWeapons( equip_forwardLow(), use_primary )
-      else -- Poor guy gets no turrets.
-         addWeapons( equip_forwardLow(), use_primary )
-      end
-
-      medium   = { "Unicorp Scrambler" }
-      if rnd.rnd() > 0.8 then
-         use_medium = 1
-      end
-   elseif shipsize == "medium" then
-      addWeapons( equip_turretLow(), use_primary )
-
-      use_secondary = math.min(1, nhigh - use_primary)
-      if use_secondary > 0 then
-         addWeapons( { "EMP Grenade Launcher" }, use_secondary )
-      end
-
-      medium   = { "Unicorp Scrambler" }
-      if rnd.rnd() > 0.6 then
-         use_medium = 1
-      end
-      low    = { "Plasteel Plating" }
-      if rnd.rnd() > 0.6 then
-         use_low = 1
-      end
-   else
-      addWeapons( equip_turretLow(), use_primary )
-
-      use_secondary = math.min(2, nhigh - use_primary)
-      if use_secondary > 0 then
-         addWeapons( { "EMP Grenade Launcher" }, use_secondary )
-      end
-
-      medium = { "Unicorp Scrambler" }
-      if rnd.rnd() > 0.4 then
-         use_medium = 1
-      end
-      low    = { "Plasteel Plating" }
-      if rnd.rnd() > 0.6 then
-         use_low = 1
-      end
+   o = equip_typeOutfits_hulls[basetype]
+   if not success and o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
-   equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low )
-end
-
-
---[[
--- @brief Equips a generic military type ship.
---]]
-function equip_genericMilitary( p, shipsize )
-   local medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = p:ship():slots()
-
-   -- Defaults
-   medium      = { "Unicorp Scrambler" }
-   weapons     = {}
-
-   -- Equip by size and type
-   if shipsize == "small" then
-      local class = p:ship():class()
-
-      -- Scout
-      if class == "Scout" then
-         use_primary    = rnd.rnd(1,nhigh)
-         addWeapons( equip_forwardLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Scrambler" }
-         use_medium     = 2
-         low            = { "Solar Panel" }
-
-      -- Fighter
-      elseif class == "Fighter" then
-         use_primary    = nhigh-1
-         use_secondary  = 1
-         addWeapons( equip_forwardLow(), use_primary )
-         addWeapons( equip_secondaryLow(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
-
-
-      -- Bomber
-      elseif class == "Bomber" then
-         use_primary    = rnd.rnd(1,2)
-         use_secondary  = nhigh - use_primary
-         addWeapons( equip_forwardLow(), use_primary )
-         addWeapons( equip_rangedLow(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
-
-      end
-
-   elseif shipsize == "medium" then
-      use_secondary  = rnd.rnd(1,2)
-      use_primary    = nhigh - use_secondary
-      if rnd.rnd() < 0.6 then
-         addWeapons( equip_forwardMedLow(), use_primary )
-      else
-         addWeapons( equip_turretLow(), use_primary )
-      end
-      addWeapons( equip_secondaryMedLow(), use_secondary )
-      medium         = equip_mediumMed()
-      low            = equip_lowMed()
-
-
-   else
-      use_primary    = nhigh-2
-      use_secondary  = 2
-      addWeapons( equip_turretHigMedLow(), use_primary )
-      addWeapons( equip_secondaryMedLow(), use_secondary )
-      medium         = equip_mediumHig()
-      low            = equip_lowHig()
-
+   o = equip_classOutfits_hulls[class]
+   if not success and o ~= nil then
+      success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
-   equip_ship( p, false, weapons, medium, low,
-               use_medium, use_low )
+   if not success then
+      equip_warn( p, "Unicorp Hawk 150 Engine" )
+   end
+
+   -- Weapons
+   equip_set( p, equip_shipOutfits_weapons[shipname] )
+   equip_set( p, equip_typeOutfits_weapons[basetype] )
+   equip_set( p, equip_classOutfits_weapons[class] )
+
+   -- Utilities
+   equip_set( p, equip_shipOutfits_utilities[shipname] )
+   equip_set( p, equip_typeOutfits_utilities[basetype] )
+   equip_set( p, equip_classOutfits_utilities[class] )
+
+   -- Structurals
+   equip_set( p, equip_shipOutfits_structurals[shipname] )
+   equip_set( p, equip_typeOutfits_structurals[basetype] )
+   equip_set( p, equip_classOutfits_structurals[class] )
 end
-
-
---[[
--- @brief Equips a generic robotic type ship.
---]]
-function equip_genericRobotic( p, shipsize )
-   equip_fillSlots( p, { "Neutron Disruptor" }, { }, { } )
-end
-
-
-
