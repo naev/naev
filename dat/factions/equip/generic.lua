@@ -432,6 +432,121 @@ equip_classOutfits_utilities = {
    }
 }
 
+-- Tables of available structurals by class.
+-- Each table is split up into sub-tables that are iterated
+-- through when equipping a ship. These tables include a "num" field which
+-- indicates how many of the chosen weapon to equip before moving on to the
+-- next set; if nil, the chosen weapon will be equipped as many times as
+-- possible. For example, if you list 3 tables with "num" set to 2, 1, and nil
+-- respectively, two of a weapon from the first table will be equipped,
+-- followed by one of a weapon from the second table, and then finally all
+-- remaining slots will be filled with a weapon from the third table.
+-- In general, the final table should be a table of possible primary weapons,
+-- and in front should be a table of secondary weapons restricted to 1 or 2
+-- (depending on the type of ship).
+--
+-- If, rather than equipping multiples of the same outfit you would like to
+-- select a random outfit `num` times, you can do so by setting "varied" to
+-- true.
+equip_classOutfits_structurals = {
+   ["Yacht"] = {
+      {
+         varied = true;
+         "Cargo Pod", "Solar Panel", "Fuel Pod", "Battery", "Shield Capacitor",
+         "Improved Stabilizer", "Engine Reroute", "Steering Thrusters"
+      }
+   },
+   ["Luxury Yacht"] = {
+      {
+         varied = true;
+         "Shield Capacitor", "Engine Reroute", "Steering Thrusters"
+      }
+   },
+   ["Scout"] = {
+      {
+         varied = true;
+         "Fuel Pod", "Improved Stabilizer", "Shield Capacitor"
+      }
+   },
+   ["Courier"] = {
+      {
+         varied = true;
+         "Cargo Pod", "Fuel Pod", "Improved Stabilizer",
+         "Improved Refrigeration Cycle"
+      }
+   },
+   ["Freighter"] = {
+      {
+         varied = true;
+         "Cargo Pod", "Cargo Pod", "Cargo Pod", "Medium Fuel Pod"
+      }
+   },
+   ["Armoured Transport"] = {
+      {
+         varied = true;
+         "Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+         "Improved Power Regulator"
+      }
+   },
+   ["Fighter"] = {
+      {
+         varied = true;
+         "Solar Panel", "Fuel Pod", "Steering Thrusters", "Engine Reroute",
+         "Battery", "Shield Capacitor", "Power Regulation Override",
+         "Forward Shock Absorbers"
+      }
+   },
+   ["Bomber"] = {
+      {
+         varied = true;
+         "Fuel Pod", "Steering Thrusters", "Engine Reroute", "Shield Capacitor"
+      }
+   },
+   ["Corvette"] = {
+      {
+         varied = true;
+         "Solar Panel", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+         "Forward Shock Absorbers"
+      }
+   },
+   ["Destroyer"] = {
+      {
+         varied = true;
+         "Plasteel Plating", "Medium Fuel Pod", "Battery II",
+         "Shield Capacitor II", "Improved Power Regulator",
+         "Targeting Array"
+      }
+   },
+   ["Cruiser"] = {
+      {
+         varied = true;
+         "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
+         "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
+      }
+   },
+   ["Carrier"] = {
+      {
+         varied = true;
+         "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
+         "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
+      }
+   },
+   ["Drone"] = {
+      {
+         "Steering Thrusters"
+      }
+   },
+   ["Heavy Drone"] = {
+      {
+         num = 1
+         "Steering Thrustersr"
+      },
+      {
+         "Solar Panel"
+      }
+   }
+}
+
 
 -- Helper functions
 include("dat/factions/equip/helper.lua")
