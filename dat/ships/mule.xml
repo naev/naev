@@ -9,7 +9,7 @@
  <time_mod>2</time_mod>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel License</license>
- <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
+ <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favorite target of pirates, so avoiding dangerous systems is strongly advised.</description>
  <health>
   <absorb>16</absorb>
   <armour>350</armour>
@@ -22,7 +22,6 @@
   <cargo>180</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="25" y="0" h="0"/>
   <weapon size="medium" x="-15" y="0" h="4"/>
   <weapon size="medium" x="15" y="0" h="4"/>
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>

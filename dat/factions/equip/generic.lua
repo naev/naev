@@ -182,11 +182,11 @@ equip_classOutfits_weapons = {
    ["Freighter"] = {
       {
          num = 1;
-         "Laser Turret MK1", "Laser Turret MK2", "EMP Grenade Launcher",
-         "Pulse Beam", "Enygma Systems Turreted Fury Launcher"
+         "Laser Turret MK2", "Enygma Systems Turreted Fury Launcher"
       },
       {
-         "Laser Turret MK1", "Laser Turret MK2"
+         "Laser Turret MK1", "Laser Turret MK2", "EMP Grenade Launcher",
+         "Pulse Beam"
       }
    },
    ["Armoured Transport"] = {
