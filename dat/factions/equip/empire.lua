@@ -1,7 +1,126 @@
 include("dat/factions/equip/generic.lua")
 
 
--- TODO: define faction-specific outfits
+equip_shipOutfits_coreSystems["Empire Shark"] = {
+   "Milspec Orion 2301 Core System"
+}
+equip_shipOutfits_coreSystems["Empire Lancelot"] = {
+   "Milspec Orion 3701 Core System"
+}
+equip_shipOutfits_coreSystems["Empire Admonisher"] = {
+   "Milspec Orion 4801 Core System"
+}
+equip_shipOutfits_coreSystems["Empire Pacifier"] = {
+   "Milspec Orion 5501 Core System"
+}
+equip_shipOutfits_coreSystems["Empire Hawking"] = {
+   "Milspec Orion 9901 Core System"
+}
+equip_shipOutfits_coreSystems["Empire Peacemaker"] = {
+   "Milspec Hermes 9802 Core System"
+}
+
+equip_shipOutfits_engines["Empire Shark"] = {
+   "Tricon Zephyr Engine"
+}
+equip_shipOutfits_engines["Empire Lancelot"] = {
+}
+   "Tricon Zephyr II Engine"
+equip_shipOutfits_engines["Empire Admonisher"] = {
+   "Tricon Cyclone Engine"
+}
+equip_shipOutfits_engines["Empire Pacifier"] = {
+   "Tricon Cyclone II Engine"
+}
+equip_shipOutfits_engines["Empire Hawking"] = {
+   "Tricon Typhoon II Engine", "Nexus Bolt 6500 Engine"
+}
+equip_shipOutfits_engines["Empire Peacemaker"] = {
+   "Melendez Mammoth XL Engine"
+}
+
+equip_shipOutfits_hull["Empire Shark"] = {
+   "S&K Ultralight Combat Plating"
+}
+equip_shipOutfits_hull["Empire Lancelot"] = {
+   "S&K Light Combat Plating"
+}
+equip_shipOutfits_hull["Empire Admonisher"] = {
+   "S&K Medium Combat Plating"
+}
+equip_shipOutfits_hull["Empire Pacifier"] = {
+   "S&K Medium-Heavy Combat Plating"
+}
+equip_shipOutfits_hull["Empire Hawking"] = {
+   "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+}
+equip_shipOutfits_hull["Empire Peacemaker"] = {
+   "S&K Superheavy Combat Plating"
+}
+
+equip_shipOutfits_weapons["Empire Shark"] = {
+   {
+      num = 1;
+      "Unicorp Banshee Launcher", "Ripper Cannon"
+   },
+   {
+      "Ripper Cannon", "Laser Cannon MK3"
+   }
+}
+-- Empire Lancelot weapons specified in generic.lua
+equip_shipOutfits_weapons["Empire Admonisher"] = {
+   {
+      num = 1;
+      "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
+      "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher"
+   },
+   {
+      "Heavy Ripper Cannon"
+   },
+   {
+      "Ripper Cannon"
+   }
+}
+equip_shipOutfits_weapons["Empire Pacifier"] = {
+   {
+      num = 2;
+      "Heavy Ripper Turret", "Railgun"
+   },
+   {
+      num = 1;
+      "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
+      "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher",
+      "Unicorp Caesar IV Launcher", "Enygma Systems Turreted Fury Launcher"
+   },
+   {
+      num = 1;
+      "Heavy Ripper Cannon", "Laser Turret MK3", "Orion Beam", "Pulse Beam"
+   },
+   {
+      "Heavy Ripper Cannon", "Laser Turret MK3"
+   }
+}
+equip_shipOutfits_weapons["Empire Hawking"] = {
+   {
+      num = 2;
+      "Heavy Laser"
+   },
+   {
+      num = 2;
+      "Turbolaser", "Ragnarok Beam", "Grave Beam"
+   },
+   {
+      num = 1;
+      "Turbolaser", "Ragnarok Beam", "Grave Beam"
+   },
+   {
+      num = 1;
+      "Turbolaser", "Heavy Laser"
+   },
+   {
+      "Heavy Laser"
+   }
+}
 
 
 --[[
@@ -10,149 +129,37 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   equip_generic( p )
-end
-
-
--- CANNONS
-function equip_forwardEmpLow ()
-   return { "Laser Cannon MK3", "Ripper Cannon" }
-end
-function equip_forwardEmpMed ()
-   return { "Ripper Cannon", "Heavy Ripper Cannon" }
-end
--- TURRETS
-function equip_turretEmpLow ()
-   return { "Laser Turret MK2" }
-end
-function equip_turretEmpMed ()
-   return { "Laser Turret MK2", "Laser Turret MK3" }
-end
-function equip_turretEmpMedHig ()
-   return { "Heavy Ripper Turret" }
-end
-function equip_turretEmpHig ()
-   return { "Heavy Laser", "Turbolaser" }
-end
--- RANGED
-function equip_rangedEmp ()
-   return { "Unicorp Headhunter Launcher" }
-end
-function equip_secondaryEmp ()
-   return { "Unicorp Headhunter Launcher" }
-end
-
-
-
---[[
--- @brief Equips a empire military type ship.
---]]
-function equip_empireMilitary( p, shipsize )
-   local medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local use_forward, use_turrets, use_medturrets
-   local nhigh, nmedium, nlow = p:ship():slots()
-   local scramble
-
-   -- Defaults
-   medium      = { "Unicorp Scrambler" }
-   weapons     = {}
-   scramble    = false
-
-   -- Equip by size and type
-   if shipsize == "small" then
-      local class = p:ship():class()
-      cores = {
-         {"Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Combat Plating"},
-         {"Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating"}
+   if diff.isApplied( "collective_dead" ) then
+      equip_shipOutfits_weapons["Empire Peacemaker"] = {
+         {
+            num = 2, varied = true;
+            "Turbolaser", "Heavy Laser", "Ragnarok", "Grave Beam"
+         },
+         {
+            varied = true;
+            "Empire Lancelot Fighter Bay", "Drone Fighter Bay"
+         },
+         {
+            varied = true;
+            "Heavy Ripper Turret", "Laser Turret MK3"
+         }
       }
-      equip_cores(p, equip_getCores(p, shipsize, cores))
-
-      -- Scout
-      if class == "Scout" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultraight Stealth Plating")
-         use_primary    = rnd.rnd(1,#nhigh)
-         addWeapons( equip_forwardLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Scrambler" }
-         use_medium     = 2
-         low            = { "Solar Panel" }
-
-      -- Fighter
-      elseif class == "Fighter" then
-         use_primary    = nhigh-1
-         use_secondary  = 1
-         addWeapons( equip_forwardEmpLow(), use_primary )
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
-
-
-      -- Bomber
-      elseif class == "Bomber" then
-         use_primary    = rnd.rnd(1,2)
-         use_secondary  = nhigh - use_primary
-         addWeapons( equip_forwardEmpLow(), use_primary )
-         addWeapons( equip_rangedEmp(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
-
-      end
-
-   elseif shipsize == "medium" then
-      local class = p:ship():class()
-      cores = {
-         {"Tricon Cyclone Engine", "Milspec Orion 4801 Core System", "S&K Medium Combat Plating"},
-         {"Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "S&K Medium-Heavy Combat Plating"}
+   else
+      equip_shipOutfits_weapons["Empire Peacemaker"] = {
+         {
+            num = 2, varied = true;
+            "Turbolaser", "Heavy Laser", "Ragnarok", "Grave Beam"
+         },
+         {
+            varied = true;
+            "Empire Lancelot Fighter Bay"
+         },
+         {
+            varied = true;
+            "Heavy Ripper Turret", "Laser Turret MK3"
+         }
       }
-      equip_cores(p, equip_getCores(p, shipsize, cores))
-      
-      -- Corvette
-      if class == "Corvette" then
-         use_secondary  = rnd.rnd(1,2)
-         use_primary    = nhigh - use_secondary
-         addWeapons( equip_forwardEmpMed(), use_primary )
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         medium         = equip_mediumMed()
-         low            = equip_lowMed()
-
-      end
-
-      -- Destroyer
-      if class == "Destroyer" then
-         use_secondary  = rnd.rnd(1,2)
-         use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
-         use_forward    = nhigh - use_secondary - use_turrets
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         addWeapons( icmb( equip_turretEmpMed(), equip_turretEmpMedHig() ), use_turrets )
-         addWeapons( equip_forwardEmpMed(), use_forward )
-         medium         = equip_mediumMed()
-         low            = equip_lowMed()
-
-      end
-
-   else -- "large"
-      -- TODO: Divide into carrier and cruiser classes.
-      cores = {
-         {"Tricon Typhoon Engine", "Milspec Orion 9901 Core System", "S&K Heavy Combat Plating"},
-         {"Tricon Typhoon II Engine", "Milspec Orion 9901 Core System", "S&K Superheavy Combat Plating"}
-      }
-      equip_cores(p, equip_getCores(p, shipsize, cores))
-
-      use_secondary  = 2
-      if rnd.rnd() > 0.4 then -- Anti-fighter variant.
-         use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
-         use_medturrets = nhigh - use_secondary - use_turrets
-         addWeapons( equip_turretEmpMed(), use_medturrets )
-      else -- Anti-capital variant.
-         use_turrets    = nhigh - use_secondary
-      end
-      addWeapons( equip_turretEmpHig(), use_turrets )
-      addWeapons( equip_secondaryEmp(), use_secondary )
-      medium         = equip_mediumHig()
-      low            = equip_lowHig()
-
    end
 
-   equip_ship( p, scramble, weapons, medium, low,
-               use_medium, use_low )
+   equip_generic( p )
 end

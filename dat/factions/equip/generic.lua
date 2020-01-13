@@ -641,7 +641,28 @@ equip_shipOutfits_hulls = {}
 
 -- Tables of available weapons by ship.
 -- See equip_set function for more info.
-equip_shipOutfits_weapons = {}
+equip_shipOutfits_weapons = {
+   ["Empire Lancelot"] = {
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
+         "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher",
+         "Heavy Ripper Cannon"
+      },
+      {
+         "Ripper Cannon"
+      }
+   },
+   ["Sirius Fidelity"] = {
+      {
+         num = 2;
+         "Razor MK2", "Razor MK3", "Ion Cannon"
+      },
+      {
+         "Razor MK2", "Razor MK3", "Ion Cannon"
+      }
+   }
+}
 
 
 -- Tables of available utilities by ship.
