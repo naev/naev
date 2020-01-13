@@ -1,7 +1,107 @@
 include("dat/factions/equip/generic.lua")
 
 
--- TODO: define faction-specific outfits
+equip_shipOutfits_coreSystems["Hyena"] = {
+   "Unicorp PT-100 Core System", "Milspec Prometheus 2203 Core System"
+}
+equip_shipOutfits_coreSystems["Pirate Shark"] = {
+   "Unicorp PT-100 Core System", "Milspec Prometheus 2203 Core System"
+}
+equip_shipOutfits_coreSystems["Pirate Vendetta"] = {
+   "Unicorp PT-200 Core System", "Milspec Prometheus 3603 Core System"
+}
+equip_shipOutfits_coreSystems["Pirate Ancestor"] = {
+   "Unicorp PT-200 Core System", "Milspec Prometheus 3603 Core System"
+}
+equip_shipOutfits_coreSystems["Pirate Phalanx"] = {
+   "Unicorp PT-500 Core System", "Milspec Prometheus 4703 Core System"
+}
+equip_shipOutfits_coreSystems["Pirate Admonisher"] = {
+   "Unicorp PT-500 Core System", "Milspec Prometheus 4703 Core System"
+}
+equip_shipOutfits_coreSystems["Pirate Kestrel"] = {
+   "Unicorp PT-1000 Core System", "Milspec Prometheus 8503 Core System"
+}
+
+equip_shipOutfits_engines["Pirate Rhino"] = {
+   "Unicorp Falcon 1200 Engine", "Nexus Arrow 1200 Engine",
+   "Tricon Cyclone II Engine"
+}
+
+equip_shipOutfits_weapons["Hyena"] = {
+   {
+      varied = true;
+      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK1",
+      "Plasma Blaster MK2", "Gauss Gun", "Vulcan Gun", "Laser Cannon MK2",
+      "Laser Cannon MK3", "Razor MK2"
+   }
+}
+equip_shipOutfits_weapons["Pirate Shark"] = {
+   {
+      varied = true;
+      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
+      "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
+      "Unicorp Banshee Launcher"
+   }
+}
+equip_shipOutfits_weapons["Pirate Vendetta"] = {
+   {
+      varied = true;
+      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
+      "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
+      "Unicorp Banshee Launcher"
+   }
+}
+equip_shipOutfits_weapons["Pirate Ancestor"] = {
+   {
+      num = 3, varied = true;
+      "Unicorp Mace Launcher", "Unicorp Medusa Launcher",
+      "TeraCom Medusa Launcher", "Heavy Ion Cannon", "Unicorp Fury Launcher",
+      "Unicorp Headhunter Launcher", "Unicorp Banshee Launcher"
+   },
+   {
+      "Vulcan Gun", "Shredder", "Ripper Cannon", "Plasma Blaster MK2",
+      "Ion Cannon", "Unicorp Mace Launcher"
+   }
+}
+equip_shipOutfits_weapons["Pirate Rhino"] = {
+   {
+      varied = true;
+      "Pulse Beam", "Heavy Ripper Turret", "Laser Turret MK2",
+      "EMP Grenade Launcher", "Enygma Systems Turreted Fury Launcher",
+      "Heavy Ion Turret", "Razor Turret MK2"
+   }
+}
+equip_shipOutfits_weapons["Pirate Phalanx"] = {
+   {
+      varied = true;
+      "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
+      "TeraCom Medusa Launcher", "Unicorp Medusa Launcher", "Heavy Ion Cannon",
+      "Mass Driver MK1", "Mass Driver MK2", "Plasma Turret MK2",
+      "Plasma Blaster MK2", "Laser Turret MK1", "Shredder", "Ion Cannon",
+      "Heavy Ripper Cannon", "Ripper Cannon"
+   }
+}
+equip_shipOutfits_weapons["Pirate Admonisher"] = {
+   {
+      varied = true;
+      "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
+      "TeraCom Medusa Launcher", "Unicorp Medusa Launcher", "Heavy Ion Cannon",
+      "Mass Driver MK1", "Mass Driver MK2", "Plasma Turret MK2",
+      "Plasma Blaster MK2", "Laser Turret MK1", "Shredder", "Ion Cannon",
+      "Heavy Ripper Cannon", "Ripper Cannon"
+   }
+}
+equip_shipOutfits_weapons["Pirate Kestrel"] = {
+   {
+      varied = true;
+      "Repeating Railgun", "Railgun", "Heavy Laser", "Railgun Turret",
+      "Laser Turret MK3", "Heavy Ion Turret", "EMP Grenade Launcher",
+      "Mass Driver MK2", "Mass Driver MK3", "Heavy Ion Cannon",
+      "Turreted Vulcan Gun", "Orion Beam", "Unicorp Caesar IV Launcher",
+      "TeraCom Medusa Launcher", "Razor Turret MK3"
+   }
+}
 
 
 --[[
@@ -11,150 +111,4 @@ include("dat/factions/equip/generic.lua")
 --]]
 function equip( p )
    equip_generic( p )
-end
-
-
---[[
-   The idea is they get the basic stuff + the middle stuff a tier lower. For example:
-      low = low basic weapons
-      med = low licensed weapons + medium basic weapons
-      hig = medium licensed weapons + high basic weapons
---]]
-function equip_forwardPirLow ()
-   return { "Laser Cannon MK1", "Ion Cannon", "Razor MK1", "Gauss Gun" }
-end
-function equip_forwardPirMed ()
-   return { "Laser Cannon MK2", "Ripper Cannon", "Razor MK2", "Vulcan Gun", "Mass Driver MK1" }
-end
-function equip_forwardPirHig ()
-   return { "Heavy Ion Cannon", "Mass Driver MK2" }
-end
-function equip_turretPirLow ()
-   return { "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun" }
-end
-function equip_turretPirMed ()
-   return { "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun" }
-end
-function equip_turretPirHig ()
-   return { "Railgun Turret", "Heavy Laser" }
-end
-function equip_secondaryPirLow ()
-   return { "Unicorp Mace Launcher" }
-end
-function equip_secondaryPirMedLow ()
-   return { "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
-end
-
-
---[[
--- @brief Equips a pirate military type ship.
---]]
-function equip_pirateMilitary( p, shipsize )
-   local primary, secondary, medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = p:ship():slots()
-
-   -- Defaults
-   medium      = { "Unicorp Scrambler" }
-
-   weapons     = {}
-
-   -- Equip by size and type
-   if shipsize == "small" then
-      local class = p:ship():class()
-
-      -- Smaller pirate vessels should have a fair amount of variance in their
-      -- core outfit quality.
-      small_engines = { "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine" }
-      large_engines = { "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine" }
-      small_hulls   = { "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-            "S&K Ultralight Combat Plating" }
-      large_hulls   = { "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
-            "S&K Light Combat Plating" }
-
-      local small_engine = small_engines[ rnd.rnd(1, #small_engines) ]
-      local large_engine = large_engines[ rnd.rnd(1, #large_engines) ]
-      local small_hull   = small_hulls[ rnd.rnd(1, #small_hulls) ]
-      local large_hull   = large_hulls[ rnd.rnd(1, #large_hulls) ]
-
-      cores = {
-         { small_engine, "Milspec Prometheus 2203 Core System", small_hull },
-         { large_engine, "Milspec Prometheus 3603 Core System", large_hull }
-      }
-      equip_cores(p, equip_getCores(p, shipsize, cores))
-
-      -- Scout - shouldn't exist
-      if class == "Scout" then
-         equip_cores(p, small_engine, "Milspec Prometheus 2203 Core System", small_hull)
-         use_primary    = rnd.rnd(1,#nhigh)
-         addWeapons( equip_forwardPirLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Scrambler" }
-         use_medium     = 2
-         low            = { "Solar Panel" }
-
-      -- Fighter
-      elseif class == "Fighter" then
-         if nhigh > 3 then
-            use_primary    = nhigh-1
-            use_secondary  = 1
-            addWeapons( equip_secondaryPirLow(), use_secondary )
-         else
-            use_primary    = nhigh
-         end
-         addWeapons( equip_forwardPirLow(), use_primary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
-
-
-      -- Bomber
-      elseif class == "Bomber" then
-         equip_cores(p, large_engine, "Milspec Aegis 3601 Core System", large_hull)
-         use_primary    = rnd.rnd(1,2)
-         use_secondary  = nhigh - use_primary
-         addWeapons( equip_forwardPirLow(), use_primary )
-         addWeapons( equip_secondaryPirLow(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
-
-      end
-
-   elseif shipsize == "medium" then
-      local class = p:ship():class()
-      cores = {
-         {"Nexus Arrow 550 Engine", "Milspec Prometheus 4703 Core System", "S&K Medium Combat Plating"},
-         {"Nexus Arrow 1200 Engine", "Milspec Prometheus 5403 Core System", "Unicorp B-12 Medium Plating"}
-      }
-      equip_cores(p, equip_getCores(p, shipsize, cores))
-
-      use_secondary  = rnd.rnd(1,2)
-      use_primary    = nhigh - use_secondary
-
-      -- Corvette
-      if class == "Corvette" then
-         addWeapons( equip_turretPirLow(), use_secondary )
-      else
-         addWeapons( equip_turretPirMed(), use_secondary )
-      end
-      addWeapons( equip_forwardPirMed(), use_primary )
-      medium         = equip_mediumMed()
-      low            = equip_lowMed()
-
-
-   else
-      if p:ship():baseType() == "Kestrel" then
-         equip_cores(p, "Krain Remige Engine", "Milspec Prometheus 8503 Core System", "S&K Heavy Combat Plating")
-      else
-         equip_cores(p, "Nexus Bolt 4500 Engine", "Milspec Prometheus 9803 Core System", "S&K Heavy Combat Plating")
-      end
-      primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
-      use_primary    = nhigh-2
-      use_secondary  = 2
-      addWeapons( primary, use_primary )
-      addWeapons( equip_secondaryPirMedLow(), use_secondary )
-      medium         = equip_mediumHig()
-      low            = equip_lowHig()
-
-   end
-   equip_ship( p, true, weapons, medium, low,
-               use_medium, use_low )
 end

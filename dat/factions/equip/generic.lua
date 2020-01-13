@@ -62,10 +62,10 @@ equip_classOutfits_engines = {
       "Tricon Zephyr II Engine", "Melendez Ox XL Engine"
    },
    ["Freighter"] = {
-      "Unicorp Falcon 1200 Engine", "Malendez Buffalo XL Engine"
+      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine"
    },
    ["Armoured Transport"] = {
-      "Malendez Buffalo XL Engine"
+      "Melendez Buffalo XL Engine"
    },
    ["Fighter"] = {
       "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
@@ -89,7 +89,7 @@ equip_classOutfits_engines = {
    },
    ["Carrier"] = {
       "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine",
-      "Malendez Mammoth XL Engine"
+      "Melendez Mammoth XL Engine"
    },
    ["Drone"] = {
       "Tricon Zephyr Engine"
@@ -503,20 +503,119 @@ equip_classOutfits_structurals = {
 
 
 -- Table of available core systems by base type.
-equip_typeOutfits_coreSystems = {}
+equip_typeOutfits_coreSystems = {
+   ["Hyena"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+   },
+   ["Shark"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+   },
+   ["Brigand"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+   },
+   ["Fidelity"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+   },
+   ["Perspicacity"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+   },
+   ["Derivative"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+   },
+   ["Kestrel"] = {
+      "Unicorp PT-900 Core System", "Milspec Orion 8601 Core System"
+   },
+}
 
 
 -- Table of available engines by base type.
-equip_typeOutfits_engines = {}
+equip_typeOutfits_engines = {
+   ["Hyena"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Shark"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Brigand"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Fidelity"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Perspicacity"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Derivative"] = {
+      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+      "Tricon Zephyr Engine"
+   },
+   ["Kestrel"] = {
+      "Unicorp Eagle 4500 Engine", "Nexus Bolt 4500 Engine",
+      "Krain Remige Engine", "Tricon Typhoon Engine"
+   },
+}
 
 
 -- Table of available hulls by base type.
-equip_typeOutfits_hulls = {}
+equip_typeOutfits_hulls = {
+   ["Hyena"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating"
+   },
+   ["Shark"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+   },
+   ["Brigand"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+   },
+   ["Fidelity"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+   },
+   ["Perspicacity"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+   },
+   ["Derivative"] = {
+      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
+      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+   },
+   ["Kestrel"] = {
+      "Unicorp D-16 Heavy Plating", "Unicorp B-16 Heavy Plating",
+      "S&K Heavy Combat Plating"
+   },
+}
 
 
 -- Tables of available weapons by base type.
 -- See equip_set function for more info.
-equip_typeOutfits_weapons = {}
+equip_typeOutfits_weapons = {
+   ["Vigilance"] = {
+      {
+         num = 2;
+         "Railgun"
+      },
+      {
+         varied = true;
+         "Turreted Vulcan Gun", "Mass Driver MK2", "Unicorp Mace Launcher",
+         "Heavy Ion Cannon"
+      }
+   },
+   ["Goddard"] = {
+      {
+         varied = true;
+         "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver MK3",
+         "Mass Driver MK2", "Heavy Laser", "Grave Beam"
+      }
+   }
+}
 
 
 -- Tables of available utilities by base type.
