@@ -1,56 +1,54 @@
 include("dat/factions/equip/generic.lua")
 
 
-equip_shipOutfits_coreSystems["Sirius Fidelity"] = {
+equip_typeOutfits_coreSystems["Fidelity"] = {
    "Milspec Prometheus 2203 Core System"
 }
-equip_shipOutfits_coreSystems["Sirius Shaman"] = {
+equip_typeOutfits_coreSystems["Shaman"] = {
    "Milspec Prometheus 3603 Core System"
 }
-equip_shipOutfits_coreSystems["Sirius Preacher"] = {
+equip_typeOutfits_coreSystems["Preacher"] = {
    "Milspec Orion 4801 Core System"
 }
-equip_shipOutfits_coreSystems["Sirius Dogma"] = {
+equip_typeOutfits_coreSystems["Dogma"] = {
    "Milspec Orion 9901 Core System"
 }
-equip_shipOutfits_coreSystems["Sirius Divinity"] = {
-   "Milspec Orion 9901 Core System"
-}
+equip_typeOutfits_coreSystems["Divinity"] = equip_typeOutfits_coreSystems["Dogma"]
 
-equip_shipOutfits_engines["Sirius Fidelity"] = {
+equip_typeOutfits_engines["Fidelity"] = {
    "Tricon Zephyr Engine"
 }
-equip_shipOutfits_engines["Sirius Shaman"] = {
+equip_typeOutfits_engines["Shaman"] = {
    "Tricon Zephyr II Engine"
 }
-equip_shipOutfits_engines["Sirius Preacher"] = {
+equip_typeOutfits_engines["Preacher"] = {
    "Tricon Cyclone Engine"
 }
-equip_shipOutfits_engines["Sirius Dogma"] = {
+equip_typeOutfits_engines["Dogma"] = {
    "Tricon Typhoon II Engine", "Nexus Bolt 6500 Engine"
 }
-equip_shipOutfits_engines["Sirius Divinity"] = {
+equip_typeOutfits_engines["Divinity"] = {
    "Melendez Mammoth XL Engine"
 }
 
-equip_shipOutfits_hulls["Sirius Fidelity"] = {
+equip_typeOutfits_hulls["Fidelity"] = {
    "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
 }
-equip_shipOutfits_hulls["Sirius Shaman"] = {
+equip_typeOutfits_hulls["Shaman"] = {
    "S&K Light Combat Plating"
 }
-equip_shipOutfits_hulls["Sirius Preacher"] = {
+equip_typeOutfits_hulls["Preacher"] = {
    "S&K Medium Combat Plating"
 }
-equip_shipOutfits_hulls["Sirius Dogma"] = {
+equip_typeOutfits_hulls["Dogma"] = {
    "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
 }
-equip_shipOutfits_hulls["Sirius Divinity"] = {
+equip_typeOutfits_hulls["Divinity"] = {
    "S&K Superheavy Combat Plating"
 }
 
--- Sirius Fidelity weapons specified in generic.lua
-equip_shipOutfits_weapons["Sirius Shaman"] = {
+equip_typeOutfits_weapons["Fidelity"] = equip_shipOutfits_weapons["Sirius Fidelity"]
+equip_typeOutfits_weapons["Shaman"] = {
    {
       num = 1;
       "Heavy Ion Cannon", "Unicorp Medusa Launcher", "TeraCom Medusa Launcher",
@@ -64,7 +62,7 @@ equip_shipOutfits_weapons["Sirius Shaman"] = {
       "Razor MK2", "Razor MK3", "Ion Cannon"
    }
 }
-equip_shipOutfits_weapons["Sirius Preacher"] = {
+equip_typeOutfits_weapons["Preacher"] = {
    {
       num = 2;
       "Heavy Ion Cannon", "Razor MK3", "Shattershield Lance"
@@ -80,13 +78,13 @@ equip_shipOutfits_weapons["Sirius Preacher"] = {
       "Laser Turret MK1", "Laser Turret MK2"
    }
 }
-equip_shipOutfits_weapons["Sirius Dogma"] = {
+equip_typeOutfits_weapons["Dogma"] = {
    {
       varied = true;
       "Heavy Razor Turret", "Heavy Ion Cannon", "Razor Turret MK3"
    }
 }
-equip_shipOutfits_weapons["Sirius Divinity"] = {
+equip_typeOutfits_weapons["Divinity"] = {
    {
       num = 1;
       "Fidelity Fighter Bay"

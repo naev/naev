@@ -1,24 +1,24 @@
 include("dat/factions/equip/generic.lua")
 
 
-equip_shipOutfits_weapons["Thurion Perspicacity"] = {
+equip_typeOutfits_weapons["Perspicacity"] = {
    {
       "Energy Dart", "Ripper Cannon"
    }
 }
-equip_shipOutfits_weapons["Thurion Ingenuity"] = {
+equip_typeOutfits_weapons["Ingenuity"] = {
    {
       varied = true;
       "Energy Dart", "Ripper Cannon", "Ion Cannon", "Laser Cannon MK3"
    }
 }
-equip_shipOutfits_weapons["Thurion Scintillation"] = {
+equip_typeOutfits_weapons["Scintillation"] = {
    {
       varied = true;
       "Convulsion Launcher", "Energy Missile", "Unicorp Medusa Launcher"
    }
 }
-equip_shipOutfits_weapons["Thurion Virtuosity"] = {
+equip_typeOutfits_weapons["Virtuosity"] = {
    {
       num = 1;
       "Convulsion Launcher", "Energy Missile"
@@ -32,7 +32,7 @@ equip_shipOutfits_weapons["Thurion Virtuosity"] = {
       "Energy Dart", "Ripper Cannon", "Ion Cannon", "Laser Cannon MK3"
    }
 }
-equip_shipOutfits_weapons["Thurion Taciturnity"] = {
+equip_typeOutfits_weapons["Taciturnity"] = {
    {
       num = 2, varied = true;
       "Turreted Convulsion Launcher", "EMP Grenade", "Laser Turret MK1"
@@ -42,21 +42,21 @@ equip_shipOutfits_weapons["Thurion Taciturnity"] = {
       "Turreted Gauss Gun", "Laser PD MK1"
    }
 }
-equip_shipOutfits_weapons["Goddard"] = {
+equip_typeOutfits_weapons["Goddard"] = {
    {
       varied = true;
       "Railgun", "Energy Torpedo", "Turreted Convulsion Launcher"
    }
 }
 
-equip_shipOutfits_utilities["Thurion Perspicacity"] = {
+equip_typeOutfits_utilities["Perspicacity"] = {
    {
       varied = true;
       "Unicorp Scrambler", "Sensor Array", "Jump Scanner",
       "Thurion Reactor Class I", "Small Shield Booster", "Generic Afterburner"
    }
 }
-equip_shipOutfits_utilities["Thurion Ingenuity"] = {
+equip_typeOutfits_utilities["Ingenuity"] = {
    {
       num = 1;
       "Droid Repair Crew", "Boarding Androids MKI", "Thurion Reactor Class II",
@@ -68,14 +68,14 @@ equip_shipOutfits_utilities["Thurion Ingenuity"] = {
       "Small Shield Booster", "Hellburner"
    }
 }
-equip_shipOutfits_utilities["Thurion Scintillation"] = {
+equip_typeOutfits_utilities["Scintillation"] = {
    {
       varied = true;
       "Sensor Array", "Unicorp Scrambler", "Thurion Reactor Class I",
       "Small Shield Booster", "Hellburner"
    }
 }
-equip_shipOutfits_utilities["Thurion Virtuosity"] = {
+equip_typeOutfits_utilities["Virtuosity"] = {
    {
       varied = true;
       "Droid Repair Crew", "Boarding Androids MKI", "Thurion Reactor Class II",
@@ -87,7 +87,7 @@ equip_shipOutfits_utilities["Thurion Virtuosity"] = {
       "Small Shield Booster", "Hellburner"
    }
 }
-equip_shipOutfits_utilities["Thurion Taciturnity"] = {
+equip_typeOutfits_utilities["Taciturnity"] = {
    {
       varied = true;
       "Droid Repair Crew", "Boarding Androids MKI", "Thurion Reactor Class II",
@@ -99,7 +99,7 @@ equip_shipOutfits_utilities["Thurion Taciturnity"] = {
       "Small Shield Booster", "Hellburner"
    }
 }
-equip_shipOutfits_utilities["Goddard"] = {
+equip_typeOutfits_utilities["Goddard"] = {
    {
       varied = true;
       "Boarding Androids MKII", "Thurion Reactor Class III",
@@ -108,42 +108,42 @@ equip_shipOutfits_utilities["Goddard"] = {
    }
 }
 
-equip_shipOutfits_structurals["Thurion Perspicacity"] = {
+equip_typeOutfits_structurals["Perspicacity"] = {
    {
       varied = true;
       "Adaptive Stealth Plating", "Fuel Pod", "Thurion Engine Reroute",
       "Steering Thrusters", "Shield Capacitor"
    }
 }
-equip_shipOutfits_structurals["Thurion Ingenuity"] = {
+equip_typeOutfits_structurals["Ingenuity"] = {
    {
       varied = true;
       "Adaptive Stealth Plating", "Fuel Pod", "Thurion Engine Reroute",
       "Steering Thrusters", "Shield Capacitor"
    }
 }
-equip_shipOutfits_structurals["Thurion Scintillation"] = {
+equip_typeOutfits_structurals["Scintillation"] = {
    {
       varied = true;
       "Adaptive Stealth Plating", "Fuel Pod", "Thurion Engine Reroute",
       "Steering Thrusters", "Shield Capacitor"
    }
 }
-equip_shipOutfits_structurals["Thurion Virtuosity"] = {
+equip_typeOutfits_structurals["Virtuosity"] = {
    {
       varied = true;
       "Active Plating", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
       "Adaptive Stealth Plating"
    }
 }
-equip_shipOutfits_structurals["Thurion Taciturnity"] = {
+equip_typeOutfits_structurals["Taciturnity"] = {
    {
       varied = true;
       "Active Plating", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
       "Adaptive Stealth Plating", "Cargo Pod"
    }
 }
-equip_shipOutfits_structurals["Goddard"] = {
+equip_typeOutfits_structurals["Goddard"] = {
    {
       num = 2;
       "Nebular Shielding Prototype"

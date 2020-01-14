@@ -1,34 +1,31 @@
 include("dat/factions/equip/generic.lua")
 
 
-equip_shipOutfits_coreSystems["Hyena"] = {
+equip_typeOutfits_coreSystems["Hyena"] = {
    "Unicorp PT-100 Core System", "Milspec Prometheus 2203 Core System"
 }
-equip_shipOutfits_coreSystems["Pirate Shark"] = {
-   "Unicorp PT-100 Core System", "Milspec Prometheus 2203 Core System"
-}
-equip_shipOutfits_coreSystems["Pirate Vendetta"] = {
+equip_typeOutfits_coreSystems["Shark"] = equip_typeOutfits_coreSystems["Hyena"]
+equip_typeOutfits_coreSystems["Vendetta"] = {
    "Unicorp PT-200 Core System", "Milspec Prometheus 3603 Core System"
 }
-equip_shipOutfits_coreSystems["Pirate Ancestor"] = {
-   "Unicorp PT-200 Core System", "Milspec Prometheus 3603 Core System"
-}
-equip_shipOutfits_coreSystems["Pirate Phalanx"] = {
+equip_typeOutfits_coreSystems["Ancestor"] = equip_typeOutfits_coreSystems["Vendetta"]
+equip_typeOutfits_coreSystems["Phalanx"] = {
    "Unicorp PT-500 Core System", "Milspec Prometheus 4703 Core System"
 }
-equip_shipOutfits_coreSystems["Pirate Admonisher"] = {
-   "Unicorp PT-500 Core System", "Milspec Prometheus 4703 Core System"
+equip_typeOutfits_coreSystems["Admonisher"] = equip_typeOutfits_coreSystems["Phalanx"]
+equip_typeOutfits_coreSystems["Pacifier"] = {
+   "Unicorp PT-600 Core System", "Milspec Prometheus 5403 Core System"
 }
-equip_shipOutfits_coreSystems["Pirate Kestrel"] = {
+equip_typeOutfits_coreSystems["Kestrel"] = {
    "Unicorp PT-1000 Core System", "Milspec Prometheus 8503 Core System"
 }
 
-equip_shipOutfits_engines["Pirate Rhino"] = {
+equip_typeOutfits_engines["Rhino"] = {
    "Unicorp Falcon 1200 Engine", "Nexus Arrow 1200 Engine",
    "Tricon Cyclone II Engine"
 }
 
-equip_shipOutfits_weapons["Hyena"] = {
+equip_typeOutfits_weapons["Hyena"] = {
    {
       varied = true;
       "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK1",
@@ -36,7 +33,7 @@ equip_shipOutfits_weapons["Hyena"] = {
       "Laser Cannon MK3", "Razor MK2"
    }
 }
-equip_shipOutfits_weapons["Pirate Shark"] = {
+equip_typeOutfits_weapons["Shark"] = {
    {
       varied = true;
       "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
@@ -44,15 +41,8 @@ equip_shipOutfits_weapons["Pirate Shark"] = {
       "Unicorp Banshee Launcher"
    }
 }
-equip_shipOutfits_weapons["Pirate Vendetta"] = {
-   {
-      varied = true;
-      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
-      "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
-      "Unicorp Banshee Launcher"
-   }
-}
-equip_shipOutfits_weapons["Pirate Ancestor"] = {
+equip_typeOutfits_weapons["Vendetta"] = equip_typeOutfits_weapons["Shark"]
+equip_typeOutfits_weapons["Ancestor"] = {
    {
       num = 3, varied = true;
       "Unicorp Mace Launcher", "Unicorp Medusa Launcher",
@@ -64,7 +54,7 @@ equip_shipOutfits_weapons["Pirate Ancestor"] = {
       "Ion Cannon", "Unicorp Mace Launcher"
    }
 }
-equip_shipOutfits_weapons["Pirate Rhino"] = {
+equip_typeOutfits_weapons["Rhino"] = {
    {
       varied = true;
       "Pulse Beam", "Heavy Ripper Turret", "Laser Turret MK2",
@@ -72,7 +62,7 @@ equip_shipOutfits_weapons["Pirate Rhino"] = {
       "Heavy Ion Turret", "Razor Turret MK2"
    }
 }
-equip_shipOutfits_weapons["Pirate Phalanx"] = {
+equip_typeOutfits_weapons["Phalanx"] = {
    {
       varied = true;
       "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
@@ -82,17 +72,9 @@ equip_shipOutfits_weapons["Pirate Phalanx"] = {
       "Heavy Ripper Cannon", "Ripper Cannon"
    }
 }
-equip_shipOutfits_weapons["Pirate Admonisher"] = {
-   {
-      varied = true;
-      "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
-      "TeraCom Medusa Launcher", "Unicorp Medusa Launcher", "Heavy Ion Cannon",
-      "Mass Driver MK1", "Mass Driver MK2", "Plasma Turret MK2",
-      "Plasma Blaster MK2", "Laser Turret MK1", "Shredder", "Ion Cannon",
-      "Heavy Ripper Cannon", "Ripper Cannon"
-   }
-}
-equip_shipOutfits_weapons["Pirate Kestrel"] = {
+equip_typeOutfits_weapons["Admonisher"] = equip_typeOutfits_weapons["Phalanx"]
+equip_typeOutfits_weapons["Pacifier"] = equip_typeOutfits_weapons["Phalanx"]
+equip_typeOutfits_weapons["Kestrel"] = {
    {
       varied = true;
       "Repeating Railgun", "Railgun", "Heavy Laser", "Railgun Turret",
