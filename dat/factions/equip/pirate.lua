@@ -8,6 +8,7 @@ equip_typeOutfits_coreSystems["Shark"] = equip_typeOutfits_coreSystems["Hyena"]
 equip_typeOutfits_coreSystems["Vendetta"] = {
    "Unicorp PT-200 Core System", "Milspec Prometheus 3603 Core System"
 }
+equip_typeOutfits_coreSystems["Lancelot"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Ancestor"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Phalanx"] = {
    "Unicorp PT-500 Core System", "Milspec Prometheus 4703 Core System"
@@ -42,6 +43,16 @@ equip_typeOutfits_weapons["Shark"] = {
    }
 }
 equip_typeOutfits_weapons["Vendetta"] = equip_typeOutfits_weapons["Shark"]
+equip_typeOutfits_weapons["Lancelot"] = {
+   {
+      varied = true;
+      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
+      "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
+      "Unicorp Banshee Launcher", "Unicorp Medusa Launcher",
+      "TeraCom Medusa Launcher", "Heavy Ion Cannon", "Unicorp Fury Launcher",
+      "Unicorp Headhunter Launcher"
+   }
+}
 equip_typeOutfits_weapons["Ancestor"] = {
    {
       num = 3, varied = true;
