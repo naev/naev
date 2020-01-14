@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ship name="Za'lek Bomber Drone">
- <base_type>Za'lek Drone</base_type>
+ <base_type>Za'lek Bomber Drone</base_type>
  <GFX>zalek_drone_bomber</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>

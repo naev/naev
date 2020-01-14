@@ -24,8 +24,8 @@ equip_shipOutfits_engines["Empire Shark"] = {
    "Tricon Zephyr Engine"
 }
 equip_shipOutfits_engines["Empire Lancelot"] = {
-}
    "Tricon Zephyr II Engine"
+}
 equip_shipOutfits_engines["Empire Admonisher"] = {
    "Tricon Cyclone Engine"
 }
@@ -39,22 +39,22 @@ equip_shipOutfits_engines["Empire Peacemaker"] = {
    "Melendez Mammoth XL Engine"
 }
 
-equip_shipOutfits_hull["Empire Shark"] = {
+equip_shipOutfits_hulls["Empire Shark"] = {
    "S&K Ultralight Combat Plating"
 }
-equip_shipOutfits_hull["Empire Lancelot"] = {
+equip_shipOutfits_hulls["Empire Lancelot"] = {
    "S&K Light Combat Plating"
 }
-equip_shipOutfits_hull["Empire Admonisher"] = {
+equip_shipOutfits_hulls["Empire Admonisher"] = {
    "S&K Medium Combat Plating"
 }
-equip_shipOutfits_hull["Empire Pacifier"] = {
+equip_shipOutfits_hulls["Empire Pacifier"] = {
    "S&K Medium-Heavy Combat Plating"
 }
-equip_shipOutfits_hull["Empire Hawking"] = {
+equip_shipOutfits_hulls["Empire Hawking"] = {
    "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
 }
-equip_shipOutfits_hull["Empire Peacemaker"] = {
+equip_shipOutfits_hulls["Empire Peacemaker"] = {
    "S&K Superheavy Combat Plating"
 }
 

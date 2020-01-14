@@ -191,9 +191,9 @@ equip_classOutfits_weapons = {
    },
    ["Armoured Transport"] = {
       {
-         num = 1;
+         num = 2, varied = true;
          "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
-         "Heavy Laser", "Heavy Ripper Turret", "Lancelot Fighter Bay"
+         "Heavy Laser", "Heavy Ripper Turret"
       },
       {
          "Laser Turret MK2", "Laser Turret MK3"
@@ -628,15 +628,30 @@ equip_typeOutfits_structurals = {}
 
 
 -- Table of available core systems by ship.
-equip_shipOutfits_coreSystems = {}
+equip_shipOutfits_coreSystems = {
+   ["Za'lek Scout Drone"] = { "Milspec Aegis 2201 Core System" },
+   ["Za'lek Light Drone"] = { "Milspec Orion 2301 Core System" },
+   ["Za'lek Heavy Drone"] = {  "Milspec Orion 3701 Core System" },
+   ["Za'lek Bomber Drone"] = { "Milspec Hermes 3602 Core System" }
+}
 
 
 -- Table of available engines by ship.
-equip_shipOutfits_engines = {}
+equip_shipOutfits_engines = {
+   ["Za'lek Scout Drone"] = { "Tricon Zephyr Engine" },
+   ["Za'lek Light Drone"] = { "Tricon Zephyr Engine" },
+   ["Za'lek Heavy Drone"] = { "Tricon Zephyr II Engine" },
+   ["Za'lek Bomber Drone"] = { "Tricon Zephyr II Engine" }
+}
 
 
 -- Table of available hulls by ship.
-equip_shipOutfits_hulls = {}
+equip_shipOutfits_hulls = {
+   ["Za'lek Scout Drone"] = { "S&K Ultralight Stealth Plating" },
+   ["Za'lek Light Drone"] = { "S&K Ultralight Combat Plating" },
+   ["Za'lek Heavy Drone"] = { "S&K Light Combat Plating" },
+   ["Za'lek Bomber Drone"] = { "S&K Light Combat Plating" }
+}
 
 
 -- Tables of available weapons by ship.
@@ -660,6 +675,41 @@ equip_shipOutfits_weapons = {
       },
       {
          "Razor MK2", "Razor MK3", "Ion Cannon"
+      }
+   },
+   ["Za'lek Scout Drone"] = {
+      {
+         "Particle Lance"
+      }
+   },
+   ["Za'lek Light Drone"] = {
+      {
+         "Particle Lance", "Orion Lance"
+      }
+   },
+   ["Za'lek Heavy Drone"] = {
+      {
+         "Grave Lance"
+      },
+      {
+         num = 1;
+         "Orion Lance"
+      },
+      {
+         "Electron Burst Cannon"
+      }
+   },
+   ["Za'lek Bomber Drone"] = {
+      {
+         varied = true;
+         "Unicorp Fury Launcher", "TeraCom Fury Launcher",
+         "Unicorp Headhunter Launcher", "Unicorp Vengeance Launcher"
+      },
+      {
+         "Electron Burst Cannon"
+      },
+      {
+         "Particle Lance"
       }
    }
 }

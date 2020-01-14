@@ -33,19 +33,19 @@ equip_shipOutfits_engines["Sirius Divinity"] = {
    "Melendez Mammoth XL Engine"
 }
 
-equip_shipOutfits_hull["Sirius Fidelity"] = {
+equip_shipOutfits_hulls["Sirius Fidelity"] = {
    "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
 }
-equip_shipOutfits_hull["Sirius Shaman"] = {
+equip_shipOutfits_hulls["Sirius Shaman"] = {
    "S&K Light Combat Plating"
 }
-equip_shipOutfits_hull["Sirius Preacher"] = {
+equip_shipOutfits_hulls["Sirius Preacher"] = {
    "S&K Medium Combat Plating"
 }
-equip_shipOutfits_hull["Sirius Dogma"] = {
+equip_shipOutfits_hulls["Sirius Dogma"] = {
    "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
 }
-equip_shipOutfits_hull["Sirius Divinity"] = {
+equip_shipOutfits_hulls["Sirius Divinity"] = {
    "S&K Superheavy Combat Plating"
 }
 

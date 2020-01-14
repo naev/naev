@@ -1,7 +1,156 @@
 include("dat/factions/equip/generic.lua")
 
 
--- TODO: define faction-specific outfits
+equip_shipOutfits_coreSystems["Za'lek Sting"] = {
+   "Milspec Orion 4801 Core System"
+}
+equip_shipOutfits_coreSystems["Za'lek Demon"] = {
+   "Milspec Orion 5501 Core System"
+}
+equip_shipOutfits_coreSystems["Za'lek Mephisto"] = {
+   "Milspec Orion 9901 Core System"
+}
+equip_shipOutfits_coreSystems["Za'lek Diablo"] = {
+   "Milspec Orion 9901 Core System"
+}
+equip_shipOutfits_coreSystems["Za'lek Hephaestus"] = {
+   "Milspec Orion 9901 Core System"
+}
+
+equip_shipOutfits_engines["Za'lek Sting"] = {
+   "Tricon Cyclone Engine"
+}
+equip_shipOutfits_engines["Za'lek Demon"] = {
+   "Tricon Cyclone II Engine"
+}
+equip_shipOutfits_engines["Za'lek Mephisto"] = {
+   "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine"
+}
+equip_shipOutfits_engines["Za'lek Diablo"] = {
+   "Melendez Mammoth XL Engine"
+}
+equip_shipOutfits_engines["Za'lek Hephaestus"] = {
+   "Melendez Mammoth XL Engine"
+}
+
+equip_shipOutfits_hulls["Za'lek Sting"] = {
+   "S&K Medium Stealth Plating"
+}
+equip_shipOutfits_hulls["Za'lek Demon"] = {
+   "S&K Medium Stealth Plating"
+}
+equip_shipOutfits_hulls["Za'lek Mephisto"] = {
+   "Unicorp B-16 Heavy Plating"
+}
+equip_shipOutfits_hulls["Za'lek Diablo"] = {
+   "Unicorp B-20 Heavy Plating"
+}
+equip_shipOutfits_hulls["Za'lek Hephaestus"] = {
+   "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+}
+
+equip_shipOutfits_weapons["Za'lek Sting"] = {
+   {
+      num = 1;
+      "Grave Lance"
+   },
+   {
+      num = 2;
+      "Orion Lance", "Heavy Ripper Cannon", "Laser Cannon MK3"
+   },
+   {
+      "Orion Lance", "Heavy Ripper Cannon", "Laser Cannon MK3"
+   }
+}
+equip_shipOutfits_weapons["Za'lek Demon"] = {
+   {
+      num = 2;
+      "Grave Lance", "Heavy Ripper Cannon"
+   },
+   {
+      "Orion Beam", "Pulse Beam", "Laser Turret MK2", "Laser Turret MK3",
+      "Unicorp Headhunter Launcher", "Unicorp Caesar IV Launcher",
+      "Enygma Systems Turreted Fury Launcher"
+   }
+}
+equip_shipOutfits_weapons["Za'lek Mephisto"] = {
+   {
+      num = 4, varied = true;
+      "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam"
+   },
+   {
+      num = 1;
+      "Enygma Systems Turreted Fury Launcher"
+   },
+   {
+      varied = true;
+      "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam"
+   }
+}
+equip_shipOutfits_weapons["Za'lek Diablo"] = {
+   {
+      num = 2, varied = true;
+      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
+      "Za'lek Bomber Drone Fighter Bay"
+   },
+   {
+      varied = true;
+      "Ragnarok Beam", "Grave Beam"
+   },
+   {
+      varied = true;
+      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
+      "Za'lek Bomber Drone Fighter Bay"
+   }
+}
+equip_shipOutfits_weapons["Za'lek Hephaestus"] = {
+   {
+      num = 2, varied = true;
+      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
+      "Za'lek Bomber Drone Fighter Bay"
+   },
+   {
+      varied = true;
+      "Ragnarok Beam", "Grave Beam"
+   },
+   {
+      varied = true;
+      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
+      "Za'lek Bomber Drone Fighter Bay"
+   }
+}
+
+equip_shipOutfits_utilities["Za'lek Demon"] = {
+   {
+      num = 1;
+      "Reactor Class III"
+   },
+   {
+      num = 1;
+      "Large Shield Booster"
+   },
+   {
+      varied = true;
+      "Droid Repair Crew", "Milspec Scrambler", "Boarding Androids MKI"
+   }
+}
+
+equip_shipOutfits_structurals["Za'lek Demon"] = {
+   {
+      "Shield Capacitor IV"
+   },
+   {
+      varied = true;
+      "Battery II", "Shield Capacitor II"
+   }
+}
+equip_shipOutfits_structurals["Za'lek Diablo"] = {
+   {
+      varied = true;
+      "Large Fuel Pod", "Battery III", "Shield Capacitor IV",
+      "Shield Capacitor III"
+   }
+}
 
 
 --[[
