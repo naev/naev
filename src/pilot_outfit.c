@@ -828,10 +828,6 @@ void pilot_fillAmmo( Pilot* pilot )
    Outfit *o, *ammo;
 
    for (i=0; i<pilot->noutfits; i++) {
-      /* Must have outfit */
-      if (pilot->outfits[i] == NULL)
-         continue;
-
       o = pilot->outfits[i]->outfit;
 
       /* Must be valid outfit. */
