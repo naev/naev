@@ -131,6 +131,8 @@ function enter()
    playerclass = player.pilot():ship():class()
    --Jumping in Toaxis for the battle with a destroyer class ship
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
+      pilot.clear()
+      pilot.toggleSpawn( false )
 
       -- spawns the Shark
       sharkboy = pilot.addRaw( "Lancelot","baddie_norun", nil, "Mercenary" )
@@ -172,6 +174,7 @@ function disabled(pilot, attacker)
       misn.osdActive(2)
       misn.markerRm(marker)
       marker2 = misn.markerAdd(paysys, "low")
+      pilot.toggleSpawn( true )
    end
    sharkboy:control()
    --making sure the shark doesn't continue attacking the player
