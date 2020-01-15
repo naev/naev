@@ -810,17 +810,15 @@ function equip_set( p, set )
 
       choices = {}
       for i, choice in ipairs( v ) do
-         choices[i] = choice
-      end
-   
-      -- Add entries based on "probability".
-      if probability ~= nil then
-         for g, w in ipairs( choices ) do
-            chance = probability[ w ]
+         choices[ #choices + 1 ] = choice
+
+         -- Add entries based on "probability".
+         if probability ~= nil then
+            chance = probability[ choice ]
             if chance ~= nil then
                -- Starting at 2 because the first one is already in the table.
-               for i=2,chance do
-                  choices[ #choices + 1 ] = w
+               for j=2,chance do
+                  choices[ #choices + 1 ] = choice
                end
             end
          end
