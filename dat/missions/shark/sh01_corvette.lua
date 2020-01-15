@@ -39,7 +39,7 @@ text[4] = _([[Your mission failed.]])
 -- Mission details
 misn_title = _("Sharkman is back")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyards needs you to demonstrate again to Baron Sauterfeldt that a Shark is able to defend his system against pirates.")
+misn_desc = _("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
