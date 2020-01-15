@@ -861,7 +861,7 @@ function equip_generic( p )
       success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
    if not success then
-      equip_warn( p, "Unicorp Hawk 150 Engine" )
+      equip_warn( p, "Unicorp D-2 Light Plating" )
    end
 
    -- Weapons
