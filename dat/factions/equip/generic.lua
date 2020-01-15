@@ -418,33 +418,44 @@ equip_classOutfits_structurals = {
    },
    ["Scout"] = {
       {
-         varied = true;
+         varied = true, probability = {
+            ["Fuel Pod"] = 4, ["Improved Stabilizer"] = 2
+         };
          "Fuel Pod", "Improved Stabilizer", "Shield Capacitor"
       }
    },
    ["Courier"] = {
       {
-         varied = true;
+         varied = true, probability = {
+            ["Improved Stabilizer"] = 10, ["Cargo Pod"] = 4
+         };
          "Cargo Pod", "Fuel Pod", "Improved Stabilizer",
          "Improved Refrigeration Cycle"
       }
    },
    ["Freighter"] = {
       {
-         varied = true;
-         "Cargo Pod", "Cargo Pod", "Cargo Pod", "Medium Fuel Pod"
+         varied = true, probability = {
+            ["Cargo Pod"] = 6
+         };
+         "Cargo Pod", "Medium Fuel Pod"
       }
    },
    ["Armoured Transport"] = {
       {
-         varied = true;
+         varied = true, probability = {
+            ["Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3
+         };
          "Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
          "Improved Power Regulator"
       }
    },
    ["Fighter"] = {
       {
-         varied = true;
+         varied = true, probability = {
+            ["Steering Thrusters"] = 8, ["Engine Reroute"] = 4,
+            ["Forward Shock Absorbers"] = 2, ["Power Regulation Override"] = 2
+         };
          "Solar Panel", "Fuel Pod", "Steering Thrusters", "Engine Reroute",
          "Battery", "Shield Capacitor", "Power Regulation Override",
          "Forward Shock Absorbers"
@@ -473,14 +484,19 @@ equip_classOutfits_structurals = {
    },
    ["Cruiser"] = {
       {
-         varied = true;
+         varied = true, probability = {
+            ["Nanobond Plating"] = 3, ["Shield Capacitor IV"] = 2
+         };
          "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
          "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
       }
    },
    ["Carrier"] = {
       {
-         varied = true;
+         varied = true, probability = {
+            ["Nanobond Plating"] = 6, ["Shield Capacitor IV"] = 4,
+            ["Large Fuel Pod"] = 3, ["Biometal Armour"] = 2
+         };
          "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
          "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
       }
@@ -624,7 +640,16 @@ equip_typeOutfits_utilities = {}
 
 -- Tables of available structurals by base type.
 -- See equip_set function for more info.
-equip_typeOutfits_structurals = {}
+equip_typeOutfits_structurals = {
+   ["Koala"] = {
+      {
+         varied = true, probability = {
+            ["Cargo Pod"] = 9, ["Fuel Pod"] = 2
+         };
+         "Cargo Pod", "Fuel Pod", "Improved Refrigeration Cycle"
+      }
+   }
+}
 
 
 -- Table of available core systems by ship.
