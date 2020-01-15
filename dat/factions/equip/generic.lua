@@ -757,6 +757,17 @@ end
 -- select a random outfit `num` times, you can do so by setting "varied" to
 -- true.
 --
+-- "probability" can be set to a table specifying the relative chance of each
+-- outfit (keyed by name) to the other outfits. If unspecified, each outfit
+-- will have a relative chance of 1. So for example, if the outfits are "Foo",
+-- "Bar", and "Baz", with no "probability" table, each outfit will have a 1/3
+-- chance of being selected; however, with this "probability" table:
+--
+--    probability = { ["Foo"] = 6, ["Bar"] = 2 }
+--
+-- This will lead to "Foo" having a 6/9 (2/3) chance, "Bar" will have a 2/9
+-- chance, and "Baz" will have a 1/9 chance
+--
 -- Note that there should only be one type of outfit (weapons, utilities, or
 -- structurals) in ``set``; including multiple types will prevent proper
 -- detection of how many are needed.
@@ -764,14 +775,30 @@ end
 function equip_set( p, set )
    if set == nil then return end
 
-   local num = set.num
-   local varied = set.varied
-   local choices, c, i, equipped
+   local num, varied, probability
+   local choices, chance, c, i, equipped
 
    for k, v in ipairs( set ) do
+      num = v.num
+      varied = v.varied
+      probability = v.probability
+
       choices = {}
       for i, choice in ipairs( v ) do
          choices[i] = choice
+      end
+   
+      -- Add entries based on "probability".
+      if probability ~= nil then
+         for g, w in ipairs( choices ) do
+            chance = probability[ w ]
+            if chance ~= nil then
+               -- Starting at 2 because the first one is already in the table.
+               for i=2,chance do
+                  choices[ #choices + 1 ] = w
+               end
+            end
+         end
       end
 
       c = rnd.rnd( 1, #choices )
