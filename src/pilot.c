@@ -418,6 +418,7 @@ unsigned int pilot_getBoss( const Pilot* p )
    double relpower, ppower, curpower;
    /* TODO : all the parameters should be adjustable with arguments */
 
+   relpower = 0;
    t = 0;
 
    /* Initialized to 0.25 which would mean equivalent power. */
