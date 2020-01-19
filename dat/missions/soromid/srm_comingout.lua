@@ -113,7 +113,7 @@ function accept ()
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc )
+      misn.setDesc( misn_desc:format( missys:name() ) )
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "low" )
 
