@@ -398,6 +398,7 @@ void gatherable_render( void )
  *
  *    @param pos position.
  *    @param rad radius.
+ *    @return The id of the closest gatherable, or -1 if none is found.
  */
 int gatherable_getClosest( Vector2d pos, double rad )
 {
@@ -405,6 +406,7 @@ int gatherable_getClosest( Vector2d pos, double rad )
    Gatherable *gat;
    double mindist, curdist;
 
+   curg = -1;
    mindist = INFINITY;
 
    for (i=0; i < gatherable_nstack; i++) {
