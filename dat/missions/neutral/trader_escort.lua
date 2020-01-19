@@ -76,45 +76,46 @@ function create()
       misn.finish(false)
    elseif numjumps == 0 then
       misn.finish(false) -- have to escort them at least one jump!
-   elseif avgrisk <= 25 then
+   elseif avgrisk * numjumps <= 25 then
       misn.finish(false) -- needs to be a little bit of piracy possible along route
    end
    
-   if avgrisk > 25 and avgrisk <= 100 then
+   if avgrisk == 0 then
+      piracyrisk = piracyrisk[1]
+   elseif avgrisk <= 25 then
+      piracyrisk = piracyrisk[2]
+   elseif avgrisk <= 100 then
       piracyrisk = piracyrisk[3]
-      riskreward = 25
    else
       piracyrisk = piracyrisk[4]
-      riskreward = 50
    end
     
    convoysize = rnd.rnd(1,5)
    
    -- Choose mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
    if convoysize == 1 then
       tier = 1
-      jumpreward = commodity.price(cargo)
-      distreward = math.log(1000*commodity.price(cargo))/100
+      jumpreward = 6*commodity.price(cargo)
+      distreward = math.log(500*commodity.price(cargo))/100
    elseif convoysize == 2 then
       tier = 2
-      jumpreward = commodity.price(cargo)
-      distreward = math.log(2500*commodity.price(cargo))/100
+      jumpreward = 7*commodity.price(cargo)
+      distreward = math.log(700*commodity.price(cargo))/100
    elseif convoysize == 3 then
       tier = 3
-      jumpreward = commodity.price(cargo)
-      distreward = math.log(5000*commodity.price(cargo))/100
+      jumpreward = 8*commodity.price(cargo)
+      distreward = math.log(800*commodity.price(cargo))/100
    elseif convoysize == 4 then
       tier = 4
-      jumpreward = commodity.price(cargo)
-      distreward = math.log(7500*commodity.price(cargo))/100
+      jumpreward = 9*commodity.price(cargo)
+      distreward = math.log(900*commodity.price(cargo))/100
    elseif convoysize == 5 then
       tier = 5
-      jumpreward = commodity.price(cargo)
-      distreward = math.log(10000*commodity.price(cargo))/100
+      jumpreward = 10*commodity.price(cargo)
+      distreward = math.log(1000*commodity.price(cargo))/100
    end
-   reward = 2.0^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( misn_title:format( convoysizestr[convoysize], destplanet:name(), destsys:name() ) )
    misn.setDesc(title_p1:format(convoysizestr[convoysize], destplanet:name(), destsys:name()) .. title_p2:format(cargo, numjumps, traveldist, piracyrisk))
