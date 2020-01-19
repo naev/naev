@@ -182,8 +182,10 @@ static int texL_open( lua_State *L )
       tex = gl_newImage( path, 0 );
    else
       tex = gl_newSprite( path, sx, sy, 0 );
+   /* Failed to load. */
    if (tex == NULL)
       return 0;
+   /* Properly loaded. */
    lua_pushtex( L, tex );
    return 1;
 }

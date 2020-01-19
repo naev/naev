@@ -691,8 +691,12 @@ static int planetL_gfxSpace( lua_State *L )
    Planet *p;
    glTexture *tex;
    p        = luaL_validplanet(L,1);
-   if (p->gfx_space == NULL) /* Not loaded. */
+   if (p->gfx_space == NULL) { /* Not loaded. */
+      /* If the planet has no texture, just return nothing. */
+      if (p->gfx_spaceName == NULL)
+         return 0;
       tex = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+   }
    else
       tex = gl_dupTexture( p->gfx_space );
    lua_pushtex( L, tex );
@@ -712,6 +716,11 @@ static int planetL_gfxExterior( lua_State *L )
 {
    Planet *p;
    p = luaL_validplanet(L,1);
+
+   /* If no exterior image just return nothing instead of crashing. */
+   if (p->gfx_exterior==NULL)
+      return 0;
+
    lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
    return 1;
 }

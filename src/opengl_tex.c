@@ -568,6 +568,10 @@ static glTexture* gl_texExists( const char* path )
 {
    glTexList *cur;
 
+   /* Null does never exist. */
+   if (path==NULL)
+      return NULL;
+
    /* check to see if it already exists */
    if (texture_list != NULL) {
       for (cur=texture_list; cur!=NULL; cur=cur->next) {
@@ -649,7 +653,12 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    char *str;
    int len;
 
-   /* load from packfile */
+   if (path==NULL) {
+      WARN(_("Trying to load image from NULL path."));
+      return NULL;
+   }
+
+   /* Load from packfile */
    rw = ndata_rwops( path );
    if (rw == NULL) {
       WARN(_("Failed to load surface '%s' from ndata."), path);
