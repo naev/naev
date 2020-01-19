@@ -3045,7 +3045,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                   WARN(_("Non-convex asteroid polygon seems to be self-intersecting in %d"), sys->name);
 
                /* Split subset i into 2 subsets */
-
                a->subsets = realloc( a->subsets, (a->nsubsets+1)*sizeof(AsteroidSubset) );
 
                /* Need to recall who is sub. */
@@ -3066,7 +3065,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
                }
 
                /* Remove some nodes to the old subset */
-               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j) );
+               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j - 1) );
                sub->ncorners = sub->ncorners-(j-n)+1;
                sub->corners = realloc(sub->corners, sizeof(Vector2d) * sub->ncorners);
 
