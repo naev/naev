@@ -173,6 +173,10 @@ function land ()
       tk.msg( "", landtext[2] )
       tk.msg( "", landtext[3]:format( numstring( credits ) ) )
       player.pay(credits)
+
+      local t = time.get():tonumber()
+      var.push( "comingout_time", t )
+
       misn.finish(true)
    end
 end
