@@ -272,12 +272,12 @@ equip_classOutfits_weapons = {
          "Turbolaser", "Ragnarok Beam"
       },
       {
-         num = 2;
+--         num = 2;
          "Heavy Laser", "Grave Beam", "Railgun Turret"
       },
-      {
-         "Lancelot Fighter Bay"
-      },
+--      {
+--         "Lancelot Fighter Bay"
+--      },
       {
          "Laser Turret MK3", "Turreted Vulcan Gun"
       }
