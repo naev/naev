@@ -84,7 +84,7 @@ equip_typeOutfits_weapons["Dogma"] = {
       "Heavy Razor Turret", "Heavy Ion Cannon", "Razor Turret MK3"
    }
 }
-equip_typeOutfits_weapons["Divinity"] = {
+equip_typeOutfits_weapons["Divinity"] = equip_typeOutfits_weapons["Dogma"] --[[ {
    {
       num = 1;
       "Fidelity Fighter Bay"
@@ -97,6 +97,7 @@ equip_typeOutfits_weapons["Divinity"] = {
       "Fidelity Fighter Bay"
    }
 }
+--]]
 
 
 --[[

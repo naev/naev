@@ -87,7 +87,7 @@ equip_typeOutfits_weapons["Mephisto"] = {
       "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam"
    }
 }
-equip_typeOutfits_weapons["Diablo"] = {
+equip_typeOutfits_weapons["Diablo"] = equip_typeOutfits_weapons["Mephisto"] --[[ {
    {
       num = 2, varied = true;
       "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
@@ -103,7 +103,8 @@ equip_typeOutfits_weapons["Diablo"] = {
       "Za'lek Bomber Drone Fighter Bay"
    }
 }
-equip_typeOutfits_weapons["Hephaestus"] = {
+--]]
+equip_typeOutfits_weapons["Hephaestus"] = equip_typeOutfits_weapons["Mephisto"] --[[ {
    {
       num = 2, varied = true;
       "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
@@ -119,6 +120,7 @@ equip_typeOutfits_weapons["Hephaestus"] = {
       "Za'lek Bomber Drone Fighter Bay"
    }
 }
+--]]
 
 equip_typeOutfits_utilities["Demon"] = {
    {
