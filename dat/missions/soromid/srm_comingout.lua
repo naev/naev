@@ -122,9 +122,9 @@ function accept ()
 
       hook.land( "land" )
 
-      chatter_freq = time.create( 0, 5, 0 )
+      chatter_freq = time.create( 0, 10, 0 )
       chatter_freq_mod = 8000
-      reminder_freq = time.create( 0, 10, 0 )
+      reminder_freq = time.create( 0, 20, 0 )
       date_hook = hook.date( chatter_freq, "init_chatter" )
    else
       tk.msg( title[1], text[3] )
