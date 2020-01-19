@@ -433,8 +433,11 @@ int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
 {
    Gatherable *gat;
 
-   if ( id > gatherable_nstack-1 )
+   if ((id < 0) || (id > gatherable_nstack-1) ) {
+      vectnull( pos );
+      vectnull( vel );
       return 0;
+   }
 
    gat = &gatherable_stack[id];
    *pos = gat->pos;
