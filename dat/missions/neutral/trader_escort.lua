@@ -96,23 +96,23 @@ function create()
    if convoysize == 1 then
       tier = 1
       jumpreward = commodity.price(cargo)
-      distreward = math.log(100*commodity.price(cargo))/100
+      distreward = math.log(1000*commodity.price(cargo))/100
    elseif convoysize == 2 then
       tier = 2
       jumpreward = commodity.price(cargo)
-      distreward = math.log(250*commodity.price(cargo))/100
+      distreward = math.log(2500*commodity.price(cargo))/100
    elseif convoysize == 3 then
       tier = 3
       jumpreward = commodity.price(cargo)
-      distreward = math.log(500*commodity.price(cargo))/100
+      distreward = math.log(5000*commodity.price(cargo))/100
    elseif convoysize == 4 then
       tier = 4
       jumpreward = commodity.price(cargo)
-      distreward = math.log(1000*commodity.price(cargo))/100
+      distreward = math.log(7500*commodity.price(cargo))/100
    elseif convoysize == 5 then
       tier = 5
       jumpreward = commodity.price(cargo)
-      distreward = math.log(2000*commodity.price(cargo))/100
+      distreward = math.log(10000*commodity.price(cargo))/100
    end
    reward = 2.0^tier * (avgrisk * riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
