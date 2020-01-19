@@ -92,26 +92,21 @@ function create()
     
    convoysize = rnd.rnd(1,5)
    
-   -- Choose mission reward. This depends on the mission tier.
+   -- Choose mission reward.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    if convoysize == 1 then
-      tier = 1
       jumpreward = 6*commodity.price(cargo)
       distreward = math.log(500*commodity.price(cargo))/100
    elseif convoysize == 2 then
-      tier = 2
       jumpreward = 7*commodity.price(cargo)
       distreward = math.log(700*commodity.price(cargo))/100
    elseif convoysize == 3 then
-      tier = 3
       jumpreward = 8*commodity.price(cargo)
       distreward = math.log(800*commodity.price(cargo))/100
    elseif convoysize == 4 then
-      tier = 4
       jumpreward = 9*commodity.price(cargo)
       distreward = math.log(900*commodity.price(cargo))/100
    elseif convoysize == 5 then
-      tier = 5
       jumpreward = 10*commodity.price(cargo)
       distreward = math.log(1000*commodity.price(cargo))/100
    end
