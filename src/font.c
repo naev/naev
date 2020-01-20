@@ -977,7 +977,10 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 
    /* Store data. */
    c->data = malloc( sizeof(GLubyte) * w*h );
-   memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
+   if (bitmap.buffer == NULL)
+      memset( c->data, 0, sizeof(GLubyte) * w*h );
+   else
+      memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
    c->w     = w;
    c->h     = h;
    c->off_x = slot->bitmap_left;

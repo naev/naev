@@ -46,7 +46,8 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
       hstaparam[0].type       = HOOK_PARAM_PILOT;
       hstaparam[0].u.lp       = p->id;
       n  = 1;
-      memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
+      if (nparam != 0)
+         memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
       n += nparam;
       hstaparam[n].type = HOOK_PARAM_SENTINEL;
       hdynparam         = NULL;

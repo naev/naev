@@ -2622,7 +2622,8 @@ void system_setFaction( StarSystem *sys )
    Planet *pnt;
 
    /* Sort presences in descending order. */
-   qsort( sys->presence, sys->npresence, sizeof(SystemPresence), sys_cmpSysFaction );
+   if (sys->npresence != 0)
+      qsort( sys->presence, sys->npresence, sizeof(SystemPresence), sys_cmpSysFaction );
 
    sys->faction = -1;
    for (i=0; i<sys->npresence; i++) {
