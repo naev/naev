@@ -26,7 +26,7 @@ addons:
       - libxml2-dev
       - libfontconfig1-dev
       - libfreetype6-dev
-      - libpng12-dev
+      - libpng-dev
       - libopenal-dev
       - libvorbis-dev
       - binutils-dev
