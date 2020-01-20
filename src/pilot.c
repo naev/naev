@@ -2939,8 +2939,8 @@ void pilots_clean (int persist)
           (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          pilot_stack[persist_count] = pilot_stack[i];
          pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
-         pilot_clearTimers( player.p ); /* Reset timers. */
-	 persist_count++;
+         pilot_clearTimers( pilot_stack[persist_count] ); /* Reset timers. */
+         persist_count++;
       }
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
