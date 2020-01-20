@@ -47,9 +47,6 @@ typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 /* comfort flags. */
 #define player_isTut()     player_isFlag(PLAYER_TUTORIAL)
 
-/* dt_default grabber helper */
-#define player_dt_default() (player.p != NULL && player.p->ship != NULL ? player.p->ship->dt_default : 1)
-
 
 /* Control restoration reasons. */
 enum {
@@ -239,6 +236,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 int player_getHypPreempt(void);
+double player_dt_default (void);
 
 /*
  * Targeting.

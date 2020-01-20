@@ -1659,6 +1659,20 @@ int player_getHypPreempt(void)
 
 
 /**
+ * @brief Returns the player's dt_default taken from the ship if possible, 1 otherwise.
+ *
+ *    @return The default/minimum time delta
+ */
+double player_dt_default (void)
+{
+   if (player.p != NULL && player.p->ship != NULL)
+      return player.p->ship->dt_default;
+
+   return 1.;
+}
+
+
+/**
  * @brief Starts the hail sounds and aborts autoNav
  */
 void player_hailStart (void)
