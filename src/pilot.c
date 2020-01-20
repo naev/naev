@@ -17,6 +17,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <assert.h>
 
 #include "nxml.h"
 #include "nstring.h"
