@@ -1827,7 +1827,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       colours[4*i + 3] = a;
    }
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
-      sizeof(GLfloat) * 5*4, colours );
+      sizeof(GLfloat) * 4*4, colours );
    /* Now load the data. */
    vx = cx;
    vy = cy;
