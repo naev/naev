@@ -533,7 +533,7 @@ static Pilot* player_newShipMake( const char* name )
 
       /* Create the player. */
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
-            dir, &vp, &vv, flags, NULL );
+            dir, &vp, &vv, flags, NULL, NULL );
       cam_setTargetPilot( id, 0 );
       new_pilot = pilot_get( id );
    }
@@ -3271,14 +3271,14 @@ static Planet* player_parse( xmlNodePtr parent )
       if (player_nstack == 0) {
          WARN(_("Player has no other ships, giving starting ship."));
          pilot_create( ship_get(start_ship()), "MIA",
-               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
+               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL, NULL );
       }
       else {
 
          /* Just give player.p a random ship in the stack. */
          old_ship = player_stack[player_nstack-1].p;
          pilot_create( old_ship->ship, old_ship->name,
-               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
+               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL, NULL );
          player_rmShip( old_ship->name );
          WARN(_("Giving player ship '%s'."), player.p->name );
       }
@@ -3610,7 +3610,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* player is currently on this ship */
    if (is_player != 0) {
-      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, NULL, NULL );
       ship = player.p;
       cam_setTargetPilot( pid, 0 );
    }

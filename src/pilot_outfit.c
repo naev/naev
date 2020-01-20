@@ -216,7 +216,8 @@ int pilot_dock( Pilot *p, Pilot *target )
          o = outfit_ammo(target->outfits[i]->outfit);
 
          /* Try to add fighter. */
-         p->dockslot->u.ammo.deployed -= 1;
+         p->dockslot->u.ammo.deployed--;
+         p->dockpilot = NULL;
          p->dockslot = NULL;
          break;
       }

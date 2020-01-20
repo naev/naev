@@ -394,6 +394,10 @@ typedef struct Pilot_ {
    unsigned int parent; /**< Pilot's parent. */
    Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts;     /**< Number of pilot escorts. */
+   Pilot* dockpilot; /**< Pilot's dock pilot (the pilot it originates from). This is
+                          separate from parent because it needs to be set in sync with
+                          dockslot (below). Used to unset dockslot when the dock pilot
+                          is destroyed. */
    PilotOutfitSlot* dockslot; /**< Outfit slot pilot originates from. */
 
    /* Targeting. */
@@ -496,10 +500,10 @@ void pilot_untargetAsteroid( int anchor, int asteroid );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, PilotOutfitSlot* dockslot );
+      const PilotFlags flags, Pilot* dockpilot, PilotOutfitSlot* dockslot );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, PilotOutfitSlot* dockslot );
+      const PilotFlags flags, Pilot* dockpilot, PilotOutfitSlot* dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );

@@ -38,7 +38,6 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param ship Ship of the escort.
  *    @param type Type of the escort.
  *    @param id ID of the pilot representing the escort.
- *    @param dockslot The outfit slot which launched the escort (NULL if N/A)
  *    @return 0 on success.
  */
 int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id,
@@ -115,7 +114,7 @@ unsigned int escort_create( Pilot *p, char *ship,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, dockslot );
+   e = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, p, dockslot );
    pe = pilot_get(e);
    pe->parent = parent;
 
