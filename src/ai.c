@@ -747,7 +747,7 @@ void ai_think( Pilot* pilot, const double dt )
    Task *t;
 
    /* Must have AI. */
-   if (cur_pilot->ai == NULL)
+   if (pilot->ai == NULL)
       return;
 
    ai_setPilot(pilot);
