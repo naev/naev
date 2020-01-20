@@ -41,6 +41,7 @@
 #include <stddef.h>
 #include <assert.h>
 #include <stdint.h>
+#include <stdalign.h>
 
 #ifdef DEBUGGING
 #define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
@@ -55,7 +56,7 @@ typedef struct {
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
-   char _array[0];        /**< Begin of the array */
+   char alignas(max_align_t) _array[0];  /**< Begin of the array */
 } _private_container;
 
 
