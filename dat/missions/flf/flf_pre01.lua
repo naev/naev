@@ -31,7 +31,7 @@ text[2] = _([["Wha- hey! What's going on!"
 title[3] = ""
 text[3] = _([[You are skeptical at first, but a few seconds later it becomes apparent that the FLF fighters have indeed ceased firing. Then, there is an incoming comm from the lead ship.
     "This is FLF sentinel Alpha. Lt. Fletcher, authorization code verified. Why are you with that civilian? Where is your ship? And why didn't you contact us right away?"
-    "Apologies, Alpha. It's a long story. For now, let me just tell you that you can trust the pilot of this ship. He has kindly helped me out of a desperate situation, and without him I probably would never have returned alive. Request you escort us to Sindbad."
+    "Apologies, Alpha. It's a long story. For now, let me just tell you that you can trust the pilot of this ship. This pilot kindly helped me out of a desperate situation, and without that help I probably would never have returned alive. Request you escort us to Sindbad."
     "Copy that Lt. Fletcher." Alpha then addresses you. "Please follow us. We will guide you to our base. Stay close. Sensor range is lousy in these parts, and if you get separated from us, we won't be able to find you again, and you won't be able to find us or our base."
     With that, Alpha breaks the connection. It seems you have little choice but to do as he says if you ever want to take Gregar to his destination.]])
     
