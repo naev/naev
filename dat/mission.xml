@@ -1428,7 +1428,7 @@
   </avail>
  </mission>
  <mission name="Coming Out">
-  <lua>soromid/srm_comingout</lua>
+  <lua>soromid/comingout/srm_comingout</lua>
   <flags>
    <unique/>
   </flags>
