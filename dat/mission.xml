@@ -1438,4 +1438,17 @@
    <faction>Soromid</faction>
   </avail>
  </mission>
+ <mission name="Coming of Age">
+  <lua>soromid/comingout/srm_comingout2</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <done>Coming Out</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Durea</planet>
+   <cond>var.peek("comingout_time") == nil or time.fromnumber(var.peek("comingout_time")) &gt;= time.get() + time.create(0, 20, 0)</cond>
+  </avail>
+ </mission>
 </Missions>
