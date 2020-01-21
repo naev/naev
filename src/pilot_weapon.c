@@ -1038,6 +1038,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
    double rate_mod, energy_mod;
    double energy;
    int j;
+   int dockslot = -1;
 
    /* Make sure weapon has outfit. */
    if (w->outfit == NULL)
@@ -1148,9 +1149,15 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
          return 0;
 
+      /* Get index of outfit slot */
+      for (j=0; j<p->noutfits; j++) {
+         if (p->outfits[j] == w)
+            dockslot = j;
+      }
+
       /* Create the escort. */
       escort_create( p, w->u.ammo.outfit->u.fig.ship,
-            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, w );
+            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;

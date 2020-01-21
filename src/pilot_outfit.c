@@ -192,9 +192,15 @@ int pilot_dock( Pilot *p, Pilot *target )
 {
    int i;
    Outfit *o = NULL;
+   PilotOutfitSlot* dockslot;
+
+   /* Must belong to target */
+   if (p->dockpilot != target->id)
+      return -1;
 
    /* Must have a dockslot */
-   if (p->dockslot == NULL)
+   dockslot = pilot_getDockSlot( p );
+   if (dockslot == NULL)
       return -1;
 
    /* Must be close. */
@@ -208,21 +214,17 @@ int pilot_dock( Pilot *p, Pilot *target )
          (double)pow2(MAX_HYPERSPACE_VEL))
       return -1;
 
-   /* Check to see if target has an available bay. */
-   for (i=0; i<target->noutfits; i++) {
+   /* Grab dock ammo */
+   i = p->dockslot;
+   if (p->dockslot < target->noutfits)
+      o = outfit_ammo(target->outfits[i]->outfit);
 
-      if (target->outfits[i] == p->dockslot)
-      {
-         o = outfit_ammo(target->outfits[i]->outfit);
+   /* Try to add fighter. */
+   dockslot->u.ammo.deployed--;
+   p->dockpilot = 0;
+   p->dockslot = -1;
 
-         /* Try to add fighter. */
-         p->dockslot->u.ammo.deployed--;
-         p->dockpilot = 0;
-         p->dockslot = NULL;
-         break;
-      }
-   }
-   if ((o==NULL) || (i >= target->noutfits))
+   if (o == NULL)
       return -1;
 
    /* Add the pilot's outfit. */

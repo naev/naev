@@ -548,7 +548,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    if (from_ship) {
       /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, 0, NULL );
+      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, 0, 0 );
       lua_pushpilot(L,p);
    }
    else {
@@ -4107,6 +4107,7 @@ static int pilotL_leader( lua_State *L ) {
  */
 static int pilotL_setLeader( lua_State *L ) {
    Pilot *p, *leader, *prev_leader;
+   PilotOutfitSlot* dockslot;
    int i;
 
    NLUA_CHECKRW(L);
@@ -4126,11 +4127,12 @@ static int pilotL_setLeader( lua_State *L ) {
       p->parent = leader->id;
 
       /* Reset dock slot */
-      if (p->dockslot != NULL)
+      dockslot = pilot_getDockSlot( p );
+      if (dockslot != NULL)
       {
-         p->dockslot->u.ammo.deployed--;
+         dockslot->u.ammo.deployed--;
          p->dockpilot = 0;
-         p->dockslot = NULL;
+         p->dockslot = -1;
       }
 
       /* TODO: Figure out escort type */

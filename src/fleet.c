@@ -89,7 +89,7 @@ unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
          vel,
          flags,
          0,
-         NULL );
+         0 );
    return p;
 }
 

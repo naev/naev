@@ -89,12 +89,12 @@ int escort_rmList( Pilot *p, unsigned int id ) {
  *    @param dir Direction to face.
  *    @param type Type of escort.
  *    @param add Whether or not to add it to the escort list.
- *    @param dockslot The outfit slot which launched the escort (NULL if N/A)
+ *    @param dockslot The outfit slot which launched the escort (-1 if N/A)
  *    @return The ID of the escort on success.
  */
 unsigned int escort_create( Pilot *p, char *ship,
       Vector2d *pos, Vector2d *vel, double dir,
-      EscortType_t type, int add, PilotOutfitSlot* dockslot )
+      EscortType_t type, int add, int dockslot )
 {
    Ship *s;
    Pilot *pe;
