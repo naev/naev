@@ -36,7 +36,7 @@ text[4] = _([["Oh, hi again. I'm still having trouble finding someone. Can you h
 chatter = {}
 
 chatter[1] = _([["I just want to say again, thank you so much for helping me," C says. "It's a bit nerve-wracking, coming out to my parents, and I've met so many people who... anyway, it's nice to meet someone who understands and respects my wishes and doesn't react with sarcasm. I hope my parents understand...."
-    After confirming that it's about the pronouns you use to refer to them that they're talking about, you simply say that it should be common decency to respect people's wishes regarding how they wish to be referred to. This leads to a conversation about common decency and people who do rude things for no good reason.]])
+    After confirming that it's about the pronouns you use to refer to them, you simply say that it should be common decency to respect people's wishes regarding how they wish to be referred to. This leads to a conversation about common decency and people who do rude things for no good reason.]])
 
 chatter[2] = _([[C perks up. "Can I tell you something?" You respond affirmatively. "Thank you," they say. "I was going to come out to my parents first, but I'm so nervous and... I feel safe coming out to you, you know? Since you've been so nice to me this entire time.
     "I was assigned male at birth, and society tends to see me as a man. But I've come to the conclusion that... I'm transgender. I feel like I should be... a woman, I think? I'm not sure. Does... does that make sense? I'm not stupid, am I?" You respond that, no, they're not stupid; everyone is different and no one can know C better than they can. C seems relieved to hear this.]])
@@ -113,7 +113,7 @@ function accept ()
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc )
+      misn.setDesc( misn_desc:format( missys:name() ) )
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "low" )
 
@@ -122,9 +122,9 @@ function accept ()
 
       hook.land( "land" )
 
-      chatter_freq = time.create( 0, 1, 5000 )
-      chatter_freq_mod = 5000
-      reminder_freq = time.create( 0, 10, 0 )
+      chatter_freq = time.create( 0, 10, 0 )
+      chatter_freq_mod = 8000
+      reminder_freq = time.create( 0, 20, 0 )
       date_hook = hook.date( chatter_freq, "init_chatter" )
    else
       tk.msg( title[1], text[3] )
@@ -173,6 +173,10 @@ function land ()
       tk.msg( "", landtext[2] )
       tk.msg( "", landtext[3]:format( numstring( credits ) ) )
       player.pay(credits)
+
+      local t = time.get():tonumber()
+      var.push( "comingout_time", t )
+
       misn.finish(true)
    end
 end
