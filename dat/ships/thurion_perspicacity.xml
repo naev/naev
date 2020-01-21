@@ -9,7 +9,7 @@
  <time_mod>1</time_mod>
  <fabricator>Thurion shipyards</fabricator>
  <license>Light Combat Vessel License</license>
- <description>The Thurion Perspicacity is a fast fighter with great defensive capabilities, but armed with only a low ammount of weapons. These ships are therefor often used as scouts.</description>
+ <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
  <health>
   <absorb>6</absorb>
   <armour>50</armour>
