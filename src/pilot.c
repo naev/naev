@@ -2937,14 +2937,6 @@ void pilot_destroy(Pilot* p)
 
    /* copy other pilots down */
    memmove(&pilot_stack[i], &pilot_stack[i+1], (pilot_nstack-i)*sizeof(Pilot*));
-
-   /* Clear docks for launched fighters if necessary */
-   for (i=0; i < pilot_nstack; i++) {
-      if (pilot_stack[i]->dockpilot == my_id) {
-         pilot_stack[i]->dockpilot = 0;
-         pilot_stack[i]->dockslot = -1;
-      }
-   }
 }
 
 
