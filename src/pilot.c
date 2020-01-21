@@ -667,6 +667,27 @@ int pilot_isFriendly( const Pilot *p )
 
 
 /**
+ * @brief Gets the dock slot of the pilot.
+ *
+ *    @param p Pilot to get dock slot of.
+ *    @return The dock slot as an outfit slot, or NULL if N/A.
+ */
+PilotOutfitSlot* pilot_getDockSlot( Pilot* p )
+{
+   Pilot* dockpilot;
+
+   if ((p->dockpilot != 0) && (p->dockslot != -1)) {
+      dockpilot = pilot_get(p->dockpilot);
+      if (dockpilot != NULL)
+         return dockpilot->outfits[p->dockslot];
+   }
+   p->dockpilot = 0;
+   p->dockslot = -1;
+   return NULL;
+}
+
+
+/**
  * @brief Tries to turn the pilot to face dir.
  *
  * Sets the direction velocity property of the pilot's solid, does not
@@ -2092,11 +2113,12 @@ void pilot_update( Pilot* pilot, const double dt )
 /**
  * @brief Deletes a pilot.
  *
- *    @param p Pilot to delete3.
+ *    @param p Pilot to delete.
  */
 void pilot_delete( Pilot* p )
 {
    Pilot *leader;
+   PilotOutfitSlot* dockslot;
 
    /* Remove from parent's escort list */
    if (p->parent != 0) {
@@ -2106,10 +2128,12 @@ void pilot_delete( Pilot* p )
    }
 
    /* Unmark as deployed if necessary */
-   if ( p->dockslot != NULL )
+   dockslot = pilot_getDockSlot( p );
+   if ( dockslot != NULL )
    {
-      p->dockslot->u.ammo.deployed -= 1;
-      p->dockslot = NULL;
+      dockslot->u.ammo.deployed--;
+      p->dockpilot = 0;
+      p->dockslot = -1;
    }
 
    /* Set flag to mark for deletion. */
@@ -2423,13 +2447,15 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param pos Initial position.
  *    @param vel Initial velocity.
  *    @param flags Used for tweaking the pilot.
- *    @param dockslot The outfit slot which launched the escort (NULL if N/A)
+ *    @param dockpilot The pilot which launched this pilot (0 if N/A).
+ *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, PilotOutfitSlot* dockslot )
+      const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    int i, p;
+   PilotOutfitSlot* dslot;
 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
@@ -2441,6 +2467,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Defaults. */
    pilot->autoweap = 1;
+   pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
 
    /* Basic information. */
@@ -2515,8 +2542,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->fuel   = pilot->fuel_max;
 
    /* Mark as deployed if needed */
-   if (pilot->dockslot != NULL)
-      pilot->dockslot->u.ammo.deployed += 1;
+   dslot = pilot_getDockSlot( pilot );
+   if (dslot != NULL)
+      dslot->u.ammo.deployed++;
 
    /* Sanity check. */
 #ifdef DEBUGGING
@@ -2584,7 +2612,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, PilotOutfitSlot* dockslot )
+      const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    Pilot *dyn;
 
@@ -2609,7 +2637,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    pilot_nstack++; /* there's a new pilot */
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockslot );
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockpilot, dockslot );
 
    return dyn->id;
 }
@@ -2635,7 +2663,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       return 0;
    }
    pilot_setFlagRaw( flags, PILOT_EMPTY );
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, NULL );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
 }
 
@@ -2878,11 +2906,16 @@ void pilot_free( Pilot* p )
 void pilot_destroy(Pilot* p)
 {
    int i;
+   PilotOutfitSlot* dockslot;
+   unsigned int my_id;
 
    /* find the pilot */
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
+
+   /* Log pilot's ID */
+   my_id = p->id;
 
    /* Remove faction if necessary. */
    if (p->presence > 0) {
@@ -2891,10 +2924,11 @@ void pilot_destroy(Pilot* p)
    }
 
    /* Unmark as deployed if necessary */
-   if ( p->dockslot != NULL )
-   {
-      p->dockslot->u.ammo.deployed -= 1;
-      p->dockslot = NULL;
+   dockslot = pilot_getDockSlot( p );
+   if ( dockslot != NULL ) {
+      dockslot->u.ammo.deployed--;
+      p->dockpilot = 0;
+      p->dockslot = -1;
    }
 
    /* pilot is eliminated */

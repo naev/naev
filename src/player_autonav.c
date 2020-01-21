@@ -49,11 +49,11 @@ static int player_autonavBrake (void);
 void player_autonavResetSpeed (void)
 {
    if (player_isFlag(PLAYER_DOUBLESPEED)) {
-      tc_mod         = 2. * player.p->ship->dt_default;
+      tc_mod         = 2. * player_dt_default();
       pause_setSpeed( tc_mod );
       sound_setSpeed( 2 );
    } else {
-      tc_mod         = player.p->ship->dt_default;
+      tc_mod         = player_dt_default();
       pause_setSpeed( tc_mod );
       sound_setSpeed( 1 );
    }
@@ -113,7 +113,7 @@ static int player_autonavSetup (void)
    player_message(_("\apAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
-      tc_base   = player.p->ship->dt_default * (player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.);
+      tc_base   = player_dt_default() * (player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.);
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
@@ -134,7 +134,7 @@ static int player_autonavSetup (void)
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
-   sound_setSpeed( tc_mod / player.p->ship->dt_default );
+   sound_setSpeed( tc_mod / player_dt_default() );
 
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
@@ -570,7 +570,7 @@ void player_updateAutonav( double dt )
             tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
       }
       pause_setSpeed( tc_mod );
-      sound_setSpeed( tc_mod / player.p->ship->dt_default );
+      sound_setSpeed( tc_mod / player_dt_default() );
       return;
    }
 
@@ -583,7 +583,7 @@ void player_updateAutonav( double dt )
       if (tc_mod != tc_base) {
          tc_mod = MAX( tc_base, tc_mod-tc_down*dt );
          pause_setSpeed( tc_mod );
-         sound_setSpeed( tc_mod / player.p->ship->dt_default );
+         sound_setSpeed( tc_mod / player_dt_default() );
       }
       return;
    }
@@ -597,7 +597,7 @@ void player_updateAutonav( double dt )
    if (tc_mod > player.tc_max)
       tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );
-   sound_setSpeed( tc_mod / player.p->ship->dt_default );
+   sound_setSpeed( tc_mod / player_dt_default() );
 }
 
 

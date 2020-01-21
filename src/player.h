@@ -236,6 +236,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 int player_getHypPreempt(void);
+double player_dt_default (void);
 
 /*
  * Targeting.

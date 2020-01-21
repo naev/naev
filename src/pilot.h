@@ -394,7 +394,11 @@ typedef struct Pilot_ {
    unsigned int parent; /**< Pilot's parent. */
    Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts;     /**< Number of pilot escorts. */
-   PilotOutfitSlot* dockslot; /**< Outfit slot pilot originates from. */
+   unsigned int dockpilot; /**< Pilot's dock pilot (the pilot it originates from). This is
+                          separate from parent because it needs to be set in sync with
+                          dockslot (below). Used to unset dockslot when the dock pilot
+                          is destroyed. */
+   int dockslot; /**< Outfit slot pilot originates from, index of dockpilot's outfits. */
 
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
@@ -489,6 +493,7 @@ int pilot_hasDeployed( Pilot *p );
 int pilot_dock( Pilot *p, Pilot *target );
 ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );
+PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 
 
 /*
@@ -496,10 +501,10 @@ void pilot_untargetAsteroid( int anchor, int asteroid );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, PilotOutfitSlot* dockslot );
+      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, PilotOutfitSlot* dockslot );
+      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );

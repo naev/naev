@@ -1024,13 +1024,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
          if (player_isFlag(PLAYER_DOUBLESPEED)) {
             if (!player_isFlag(PLAYER_AUTONAV)) {
-               pause_setSpeed( player.p->ship->dt_default );
+               pause_setSpeed( player_dt_default() );
                sound_setSpeed( 1. );
             }
             player_rmFlag(PLAYER_DOUBLESPEED);
          } else {
             if (!player_isFlag(PLAYER_AUTONAV)) {
-               pause_setSpeed( 2. * player.p->ship->dt_default );
+               pause_setSpeed( 2. * player_dt_default() );
                sound_setSpeed( 2. );
             }
             player_setFlag(PLAYER_DOUBLESPEED);

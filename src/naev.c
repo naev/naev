@@ -1123,7 +1123,7 @@ static void display_fps( const double dt )
 
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
-      dt_mod_base = player.p->ship->dt_default;
+      dt_mod_base = player_dt_default();
    }
    if (dt_mod != dt_mod_base)
       gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod / dt_mod_base);

@@ -533,7 +533,7 @@ static Pilot* player_newShipMake( const char* name )
 
       /* Create the player. */
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
-            dir, &vp, &vv, flags, NULL );
+            dir, &vp, &vv, flags, 0, 0 );
       cam_setTargetPilot( id, 0 );
       new_pilot = pilot_get( id );
    }
@@ -1655,6 +1655,20 @@ void player_hyperspacePreempt( int preempt )
 int player_getHypPreempt(void)
 {
    return preemption;
+}
+
+
+/**
+ * @brief Returns the player's dt_default taken from the ship if possible, 1 otherwise.
+ *
+ *    @return The default/minimum time delta
+ */
+double player_dt_default (void)
+{
+   if (player.p != NULL && player.p->ship != NULL)
+      return player.p->ship->dt_default;
+
+   return 1.;
 }
 
 
@@ -2798,7 +2812,7 @@ int player_addEscorts (void)
    unsigned int e;
    Outfit *o;
    int q;
-   PilotOutfitSlot *dockslot = NULL;
+   int dockslot = -1;
 
    /* Clear escorts first. */
    player_clearEscorts();
@@ -2838,11 +2852,11 @@ int player_addEscorts (void)
          if (q >= outfit_amount(player.p->outfits[j]->outfit))
             continue;
 
-         dockslot = player.p->outfits[j];
+         dockslot = j;
          break;
       }
 
-      if (dockslot == NULL)
+      if (dockslot == -1)
          DEBUG(_("Escort is undeployed"));
 
       /* Create escort. */
@@ -3271,14 +3285,14 @@ static Planet* player_parse( xmlNodePtr parent )
       if (player_nstack == 0) {
          WARN(_("Player has no other ships, giving starting ship."));
          pilot_create( ship_get(start_ship()), "MIA",
-               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
+               faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       }
       else {
 
          /* Just give player.p a random ship in the stack. */
          old_ship = player_stack[player_nstack-1].p;
          pilot_create( old_ship->ship, old_ship->name,
-               faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
+               faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
          player_rmShip( old_ship->name );
          WARN(_("Giving player ship '%s'."), player.p->name );
       }
@@ -3610,7 +3624,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* player is currently on this ship */
    if (is_player != 0) {
-      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, NULL );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
       cam_setTargetPilot( pid, 0 );
    }
