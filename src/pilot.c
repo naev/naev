@@ -2110,7 +2110,7 @@ void pilot_delete( Pilot* p )
    if ( p->dockslot != NULL )
    {
       p->dockslot->u.ammo.deployed--;
-      p->dockpilot = NULL;
+      p->dockpilot = 0;
       p->dockslot = NULL;
    }
 
@@ -2430,7 +2430,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, Pilot* dockpilot, PilotOutfitSlot* dockslot )
+      const PilotFlags flags, unsigned int dockpilot, PilotOutfitSlot* dockslot )
 {
    int i, p;
 
@@ -2448,7 +2448,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->dockslot = dockslot;
 
    /* Make sure we have both or neither */
-   assert( (pilot->dockpilot == NULL) == (pilot->dockslot == NULL) );
+   assert( (pilot->dockpilot == 0) == (pilot->dockslot == NULL) );
 
    /* Basic information. */
    pilot->ship = ship;
@@ -2591,7 +2591,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, Pilot* dockpilot, PilotOutfitSlot* dockslot )
+      const PilotFlags flags, unsigned int dockpilot, PilotOutfitSlot* dockslot )
 {
    Pilot *dyn;
 
@@ -2642,7 +2642,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       return 0;
    }
    pilot_setFlagRaw( flags, PILOT_EMPTY );
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, NULL, NULL );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, NULL );
    return dyn;
 }
 
@@ -2900,7 +2900,7 @@ void pilot_destroy(Pilot* p)
    /* Unmark as deployed if necessary */
    if ( p->dockslot != NULL ) {
       p->dockslot->u.ammo.deployed--;
-      p->dockpilot = NULL;
+      p->dockpilot = 0;
       p->dockslot = NULL;
    }
 
@@ -2913,8 +2913,8 @@ void pilot_destroy(Pilot* p)
 
    /* Clear docks for launched fighters if necessary */
    for (i=0; i < pilot_nstack; i++) {
-      if (pilot_stack[i]->dockpilot == p) {
-         pilot_stack[i]->dockpilot = NULL;
+      if (pilot_stack[i]->dockpilot == p->id) {
+         pilot_stack[i]->dockpilot = 0;
          pilot_stack[i]->dockslot = NULL;
       }
    }

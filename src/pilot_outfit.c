@@ -217,7 +217,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
          /* Try to add fighter. */
          p->dockslot->u.ammo.deployed--;
-         p->dockpilot = NULL;
+         p->dockpilot = 0;
          p->dockslot = NULL;
          break;
       }

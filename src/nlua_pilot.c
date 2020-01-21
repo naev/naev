@@ -548,7 +548,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    if (from_ship) {
       /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, NULL, NULL );
+      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, 0, NULL );
       lua_pushpilot(L,p);
    }
    else {
@@ -4129,7 +4129,7 @@ static int pilotL_setLeader( lua_State *L ) {
       if (p->dockslot != NULL)
       {
          p->dockslot->u.ammo.deployed--;
-         p->dockpilot = NULL;
+         p->dockpilot = 0;
          p->dockslot = NULL;
       }
 
