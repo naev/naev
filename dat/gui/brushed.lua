@@ -523,8 +523,14 @@ function renderWeapBar( weapon, x, y )
       if weapon.is_outfit then
          gfx.renderTex( icon_outfit, x + offsets[1], y + offsets[5] )
          gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 20, y + offsets[2] + outfit_yoffset, 40, 40, 1, 1, 0, 0, 1, 1 )
-         if weapon.weapset then
-            gfx.print( false, weapon.weapset, x + offsets[1], y + offsets[2] + name_offset, col_text, 40, true )
+         if weapon.weapset ~= nil then
+            local ws_name
+            if weapon.weapset == 10 then
+               ws_name = "0"
+            else
+               ws_name = string.format( "%d", weapon.weapset )
+            end
+            gfx.print( false, ws_name, x + offsets[1], y + offsets[2] + name_offset, col_text, 40, true )
          end
       else
          local col = nil
@@ -636,12 +642,18 @@ function render( dt )
    energy = pp:energy()
    fuel = player.fuel() / stats.fuel_max * 100
    heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
-   wset_name, wset = pp:weapset( true )
+   wset_name, pwset = pp:weapset( true )
+   wset_id = string.format( "%d", pp:activeWeapset() )
+   if wset_id == 10 then wset_id = 0 end
+   wset = {}
    aset = pp:actives( true )
    table.sort( aset, function(v) return v.weapset end )
 
-   for k, v in ipairs( wset ) do
+   for k, v in ipairs( pwset ) do
       v.is_outfit = false
+      if v.level ~= 0 then
+         wset[ #wset + 1 ] = v
+      end
    end
    for k, v in ipairs( aset ) do
       v.is_outfit = true
@@ -712,7 +724,8 @@ function render( dt )
       gfx.renderTex( icon_lockon, 378 + mod_x, 50 )
    end
    if autonav then
-      gfx.renderTex( icon_autonav, 246 + mod_x, 52 )
+      --gfx.renderTex( icon_autonav, 246 + mod_x, 52 )
+      gfx.print( false, "A", 246 + mod_x, 52, col_text, 12 )
    end
 
    for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
@@ -724,6 +737,9 @@ function render( dt )
       end
       renderBar( v, _G[v], _G[v .. "_light"], nil, nil, mod_x, ht, st )
    end
+
+   --Weapon set indicator
+   gfx.print( false, wset_id, 383 + mod_x, 52, col_text, 12, true )
 
    --Speed Lights
    local nlights = 11
