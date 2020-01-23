@@ -2504,6 +2504,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    for (i=0; i<pilot->outfit_nstructure; i++) {
       pilot->outfits[p] = &pilot->outfit_structure[i];
       pilot->outfits[p]->sslot = &ship->outfit_structure[i];
+      pilot->outfits[p]->weapset = -1;
       if (ship->outfit_structure[i].data != NULL)
          pilot_addOutfitRaw( pilot, ship->outfit_structure[i].data, pilot->outfits[p] );
       p++;
@@ -2511,6 +2512,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    for (i=0; i<pilot->outfit_nutility; i++) {
       pilot->outfits[p] = &pilot->outfit_utility[i];
       pilot->outfits[p]->sslot = &ship->outfit_utility[i];
+      pilot->outfits[p]->weapset = -1;
       if (ship->outfit_utility[i].data != NULL)
          pilot_addOutfitRaw( pilot, ship->outfit_utility[i].data, pilot->outfits[p] );
       p++;

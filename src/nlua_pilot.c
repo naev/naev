@@ -76,6 +76,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
+static int pilotL_activeWeapset( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
@@ -165,6 +166,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
+   { "activeWeapset", pilotL_activeWeapset },
    { "weapset", pilotL_weapset },
    { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
@@ -1012,6 +1014,22 @@ static int pilotL_nav( lua_State *L )
    }
 
    return 2;
+}
+
+
+/**
+ * @brief Gets the ID (number from 1 to 10) of the current active weapset.
+ *
+ * @usage set_id = p:activeWeapset() -- A number from 1 to 10
+ *
+ *    @luatparam Pilot p Pilot to get active weapset ID of.
+ *    @luatparam number current active weapset ID.
+ */
+static int pilotL_activeWeapset( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, p->active_set + 1 );
+   return 1;
 }
 
 
