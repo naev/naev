@@ -145,11 +145,7 @@ end
 
 -- Za'lek's military center.
 function zlk_ruadan( pnt )
-   return land_military(pnt, 75,
-         _("Docking sequence transmitted."),
-         _("This is a restricted area. Your clearance is far too low. Go away."),
-         _("Authorization denied."),
-         _("Bribery is a crime, and will not get you on this planet."))
+   return false, "Permission denied. Ruadan space is off-limits to you."
 end
 
 -- Pirate clanworld.
