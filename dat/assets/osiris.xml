@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Osiris">
+ <pos>
+  <x>8165.439424</x>
+  <y>-3379.428504</y>
+ </pos>
+ <GFX>
+  <space>moon-X00.png</space>
+  <exterior>uninhabited-rocky-magenta-01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>5.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>100</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>House Proteron was once a formidable Great House of the Empire, before all of its teritories were destroyed in the incident. The Proteron ships that were outside what is now the Sol Nebula gathered at the uninhabited world of Osiris.
+
+In principle, the system is under Empire sovereignty, and House Proteron was dissolved after the destruction of all of its worlds in the incident. In practice, the former Proteron officers and soldiers residing here do not care for imperial control, nor does anyone else have an interest in the world.</description>
+  <bar>The bar has a very utilitarian design, consisting of the bare minimum to keep out the toxic atmosphere. They offer a small selection of drinks imported from neighboring Empire and Soromid space.</bar>
+ </general>
+</asset>
