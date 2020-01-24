@@ -1024,6 +1024,8 @@ static int pilotL_nav( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get active weapset ID of.
  *    @luatparam number current active weapset ID.
+ *
+ * @luafunc activeWeapset( p, number )
  */
 static int pilotL_activeWeapset( lua_State *L )
 {
