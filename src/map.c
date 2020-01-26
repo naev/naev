@@ -82,7 +82,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
 static glTexture *gl_genFactionDisk( int radius );
-static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
+static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -134,7 +134,7 @@ void map_exit (void)
 /**
  * @brief Handles key input to the map window.
  */
-static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
+static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 

@@ -37,17 +37,17 @@ typedef enum {
  * set input
  */
 void input_setDefault( int wasd );
-SDLKey input_keyConv( const char *name );
-void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod mod );
-const char* input_modToText( SDLMod mod );
-SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod );
+SDL_Keycode input_keyConv( const char *name );
+void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod );
+const char* input_modToText( SDL_Keymod mod );
+SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod *mod );
 const char* input_getKeybindDescription( const char *keybind );
-const char *input_keyAlreadyBound( KeybindType type, SDLKey key, SDLMod mod );
+const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 
 /*
  * Misc.
  */
-SDLMod input_translateMod( SDLMod mod );
+SDL_Keymod input_translateMod( SDL_Keymod mod );
 void input_enableAll (void);
 void input_disableAll (void);
 void input_toggleEnable( const char *key, int enable );

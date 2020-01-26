@@ -133,7 +133,7 @@ static void uniedit_btnNew( unsigned int wid_unused, char *unused );
 static void uniedit_btnOpen( unsigned int wid_unused, char *unused );
 static void uniedit_btnFind( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
-static int uniedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 
 
 /**
@@ -242,7 +242,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 /**
  * @brief Handles keybindings.
  */
-static int uniedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
+static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
    (void) mod;
@@ -455,7 +455,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    int i;
    double x,y, t;
    StarSystem *sys;
-   SDLMod mod;
+   SDL_Keymod mod;
 
    t = 15.*15.; /* threshold */
 

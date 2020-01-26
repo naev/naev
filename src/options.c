@@ -502,9 +502,9 @@ static void menuKeybinds_genList( unsigned int wid )
 {
    int i, j, l, p;
    char **str, mod_text[64];
-   SDLKey key;
+   SDL_Keycode key;
    KeybindType type;
-   SDLMod mod;
+   SDL_Keymod mod;
    int w, h;
    int lw, lh;
    int regen, pos, off;
@@ -599,9 +599,9 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    int selected;
    const char *keybind;
    const char *desc;
-   SDLKey key;
+   SDL_Keycode key;
    KeybindType type;
-   SDLMod mod;
+   SDL_Keymod mod;
    char buf[1024];
    char binding[64];
 
@@ -966,7 +966,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    unsigned int parent;
    KeybindType type;
    int key, test_key_event;
-   SDLMod mod, ev_mod;
+   SDL_Keymod mod, ev_mod;
    const char *str;
 
    /* See how to handle it. */
@@ -974,17 +974,17 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       case SDL_KEYDOWN:
          key  = event->key.keysym.sym;
          /* If control key make player hit twice. */
-         test_key_event = (key == SDLK_NUMLOCK) ||
+         test_key_event = (key == SDLK_NUMLOCKCLEAR) ||
                           (key == SDLK_CAPSLOCK) ||
-                          (key == SDLK_SCROLLOCK) ||
+                          (key == SDLK_SCROLLLOCK) ||
                           (key == SDLK_RSHIFT) ||
                           (key == SDLK_LSHIFT) ||
                           (key == SDLK_RCTRL) ||
                           (key == SDLK_LCTRL) ||
                           (key == SDLK_RALT) ||
                           (key == SDLK_LALT) ||
-                          (key == SDLK_RMETA) ||
-                          (key == SDLK_LMETA);
+                          (key == SDLK_RGUI) ||
+                          (key == SDLK_LGUI);
          if (test_key_event  && (opt_lastKeyPress != key)) {
             opt_lastKeyPress = key;
             return 0;
@@ -1001,7 +1001,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
                mod |= NMOD_CTRL;
             if (ev_mod & (KMOD_LALT | KMOD_RALT))
                mod |= NMOD_ALT;
-            if (ev_mod & (KMOD_LMETA | KMOD_RMETA))
+            if (ev_mod & (KMOD_LGUI | KMOD_RGUI))
                mod |= NMOD_META;
          }
          /* Set key. */

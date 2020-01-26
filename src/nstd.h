@@ -44,11 +44,11 @@
 /**
  * @brief Converts a key to lowercase if applicable.
  */
-#define nstd_tolower(k)    (nstd_checkascii(k) ? (SDLKey)tolower(k) : k)
+#define nstd_tolower(k)    (nstd_checkascii(k) ? (SDL_Keycode)tolower(k) : k)
 /**
  * @brief Converts a key to uppercase if applicable.
  */
-#define nstd_toupper(k)    (nstd_checkascii(k) ? (SDLKey)toupper(k) : k)
+#define nstd_toupper(k)    (nstd_checkascii(k) ? (SDL_Keycode)toupper(k) : k)
 
 
 /* Adds STRCASECMP. */

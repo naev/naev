@@ -764,7 +764,7 @@ static void outfits_sell( unsigned int wid, char* str )
  */
 static int outfits_getMod (void)
 {
-   SDLMod mods;
+   SDL_Keymod mods;
    int q;
 
    mods = SDL_GetModState();

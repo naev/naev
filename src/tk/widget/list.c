@@ -16,7 +16,7 @@
 
 
 static void lst_render( Widget* lst, double bx, double by );
-static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
+static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
@@ -159,7 +159,7 @@ static void lst_render( Widget* lst, double bx, double by )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int lst_key( Widget* lst, SDLKey key, SDLMod mod )
+static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 

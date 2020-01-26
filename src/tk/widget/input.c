@@ -21,7 +21,7 @@
 
 static void inp_render( Widget* inp, double bx, double by );
 static int inp_isBreaker(char c);
-static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
+static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, uint32_t ch );
 static void inp_clampView( Widget *inp );
@@ -266,7 +266,7 @@ static int inp_isBreaker(char c)
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
+static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
    int n, prevpos, curchars, prevchars, charsfromleft, lines;

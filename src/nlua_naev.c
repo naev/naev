@@ -112,9 +112,9 @@ static int naev_keyGet( lua_State *L )
 {
    int p;
    const char *keyname;
-   SDLKey key;
+   SDL_Keycode key;
    KeybindType type;
-   SDLMod mod;
+   SDL_Keymod mod;
    char buf[128];
 
    /* Get parameters. */

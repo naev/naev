@@ -144,7 +144,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused );
 /* Jump editing */
 static void sysedit_editJump( void );
 /* Keybindings handling. */
-static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
 static int sysedit_selectCmp( Select_t *a, Select_t *b );
 static void sysedit_checkButtons (void);
@@ -253,7 +253,7 @@ void sysedit_open( StarSystem *sys )
 /**
  * @brief Handles keybindings.
  */
-static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
    (void) mod;
@@ -879,7 +879,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    (void) data;
    int i, j;
    double x,y, t;
-   SDLMod mod;
+   SDL_Keymod mod;
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;

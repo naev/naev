@@ -327,10 +327,10 @@ int conf_loadConfig ( const char* file )
 {
    int i, t;
    const char *str, *mod;
-   SDLKey key;
+   SDL_Keycode key;
    int type;
    int w,h;
-   SDLMod m;
+   SDL_Keymod m;
 
    /* Check to see if file exists. */
    if (!nfile_fileExists(file))
@@ -828,11 +828,11 @@ int conf_saveConfig ( const char* file )
    size_t oldsize;
    char buf[32*1024];
    size_t pos;
-   SDLKey key;
+   SDL_Keycode key;
    char keyname[17];
    KeybindType type;
    const char *typename;
-   SDLMod mod;
+   SDL_Keymod mod;
    const char *modname;
 
    pos         = 0;

@@ -48,8 +48,8 @@ static int window_dead = 0; /**< There are dead windows lying around. */
 /*
  * simulate keypresses when holding
  */
-static SDLKey input_key             = 0; /**< Current pressed key. */
-static SDLMod input_mod             = 0; /**< Current pressed modifier. */
+static SDL_Keycode input_key             = 0; /**< Current pressed key. */
+static SDL_Keymod input_mod             = 0; /**< Current pressed modifier. */
 static unsigned int input_keyTime   = 0; /**< Tick pressed. */
 static int input_keyCounter         = 0; /**< Number of repetitions. */
 static char input_text              = 0; /**< Current character. */
@@ -748,7 +748,7 @@ void window_setBorder( unsigned int wid, int enable )
  *  itself grabs the input.
  */
 void window_handleKeys( const unsigned int wid,
-      int (*keyhandler)(unsigned int,SDLKey,SDLMod) )
+      int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) )
 {
    Window *wdw;
 
@@ -1974,12 +1974,12 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
 
 /**
- * @brief Maps modifier keysyms (ctrl, alt, shift) to SDLMods.
+ * @brief Maps modifier keysyms (ctrl, alt, shift) to SDL_Keymods.
  *
  *    @param key Key to convert.
- *    @return The SDLMod corresponding to the key, or 0 if none correspond.
+ *    @return The SDL_Keymod corresponding to the key, or 0 if none correspond.
  */
-static SDLMod toolkit_mapMod( SDLKey key )
+static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
 {
    switch(key) {
       case SDLK_LCTRL:
@@ -2004,9 +2004,9 @@ static SDLMod toolkit_mapMod( SDLKey key )
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDLKey key, SDLKey c )
+static void toolkit_regKey( SDL_Keycode key, SDL_Keycode c )
 {
-   SDLMod mod;
+   SDL_Keymod mod;
 
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
@@ -2028,9 +2028,9 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
  *
  *    @param key Key to unregister.
  */
-static void toolkit_unregKey( SDLKey key )
+static void toolkit_unregKey( SDL_Keycode key )
 {
-   SDLMod mod;
+   SDL_Keymod mod;
 
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
@@ -2062,8 +2062,8 @@ void toolkit_clearKey (void)
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 {
    Widget *wgt;
-   SDLKey key;
-   SDLMod mod;
+   SDL_Keycode key;
+   SDL_Keymod mod;
    int handled = 0;
 
    /* Event info. */

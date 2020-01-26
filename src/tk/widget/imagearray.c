@@ -21,7 +21,7 @@
 static void iar_render( Widget* iar, double bx, double by );
 static void iar_renderOverlay( Widget* iar, double bx, double by );
 /* Key. */
-static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
+static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod );
 /* Mouse. */
 static int iar_mclick( Widget* iar, int button, int x, int y );
 static int iar_mwheel( Widget* lst, SDL_MouseWheelEvent event );
@@ -336,7 +336,7 @@ static void iar_renderOverlay( Widget* iar, double bx, double by )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
+static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
@@ -419,10 +419,10 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
       case SDL_BUTTON_LEFT:
          iar_focus( iar, x, y );
          return 1;
-      case SDL_BUTTON_WHEELUP:
+      case SDL_BUTTON_X1:
          iar_scroll( iar, +1 );
          return 1;
-      case SDL_BUTTON_WHEELDOWN:
+      case SDL_BUTTON_X2:
          iar_scroll( iar, -1 );
          return 1;
       case SDL_BUTTON_RIGHT:
