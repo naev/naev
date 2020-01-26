@@ -88,9 +88,7 @@ static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
 static int ndata_openFile (void);
 static int ndata_isndata( const char *path, ... );
-#if SDL_VERSION_ATLEAST(2,0,0)
 static int ndata_prompt( void *data );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int ndata_notfound (void);
 static char** ndata_listBackend( const char* path, size_t* nfiles, int dirs );
 static char **stripPath( const char **list, int nlist, const char *path );
@@ -155,7 +153,6 @@ const char* ndata_getPath (void)
 }
 
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 static int ndata_prompt( void *data )
 {
    int ret;
@@ -167,7 +164,6 @@ static int ndata_prompt( void *data )
 
    return ret;
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 #define NONDATA
@@ -192,7 +188,6 @@ static int ndata_notfound (void)
    }
 
    /* Create the window. */
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_Window *window;
    SDL_Renderer *renderer;
    window = SDL_CreateWindow( title,
@@ -200,16 +195,6 @@ static int ndata_notfound (void)
          320, 240, SDL_WINDOW_SHOWN);
    renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_SOFTWARE );
    screen = SDL_GetWindowSurface( window );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
-   if (screen == NULL) {
-      WARN(_("Unable to set video mode"));
-      return 0;
-   }
-
-   /* Set caption. */
-   SDL_WM_SetCaption( title, APPNAME );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Create the surface. */
    rw    = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
@@ -220,7 +205,6 @@ static int ndata_notfound (void)
 
    /* Render. */
    SDL_BlitSurface( sur, NULL, screen, NULL );
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_EventState( SDL_DROPFILE, SDL_ENABLE );
 #if SDL_VERSION_ATLEAST(2,0,2)
    SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
@@ -233,9 +217,6 @@ static int ndata_notfound (void)
 
    /* TODO substitute. */
    SDL_RenderPresent( renderer );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_Flip(screen);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    found = 0;
 
@@ -256,7 +237,6 @@ static int ndata_notfound (void)
                break;
          }
       }
-#if SDL_VERSION_ATLEAST(2,0,0)
       else if (event.type == SDL_DROPFILE) {
          found = ndata_isndata( event.drop.file );
          if (found) {
@@ -270,22 +250,15 @@ static int ndata_notfound (void)
          else
             free( event.drop.file );
       }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       /* Render. */
       SDL_BlitSurface( sur, NULL, screen, NULL );
-#if SDL_VERSION_ATLEAST(2,0,0)
       /* TODO substitute. */
       SDL_RenderPresent( renderer );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      SDL_Flip(screen);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_EventState( SDL_DROPFILE, SDL_DISABLE );
    SDL_DestroyWindow(window);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    return found;
 }

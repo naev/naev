@@ -16,7 +16,7 @@
 
 
 static Widget *chk_getWgt( const unsigned int wid, const char *name );
-static int chk_key( Widget* chk, SDLKey key, SDLMod mod );
+static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod );
 static int chk_mclick( Widget* chk, int button, int x, int y );
 static void chk_render( Widget* chk, double bx, double by );
 static void chk_cleanup( Widget* chk );
@@ -165,7 +165,7 @@ static void chk_toggleState( Widget *chk )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int chk_key( Widget* chk, SDLKey key, SDLMod mod )
+static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 

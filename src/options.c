@@ -502,9 +502,9 @@ static void menuKeybinds_genList( unsigned int wid )
 {
    int i, j, l, p;
    char **str, mod_text[64];
-   SDLKey key;
+   SDL_Keycode key;
    KeybindType type;
-   SDLMod mod;
+   SDL_Keymod mod;
    int w, h;
    int lw, lh;
    int regen, pos, off;
@@ -599,9 +599,9 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    int selected;
    const char *keybind;
    const char *desc;
-   SDLKey key;
+   SDL_Keycode key;
    KeybindType type;
-   SDLMod mod;
+   SDL_Keymod mod;
    char buf[1024];
    char binding[64];
 
@@ -966,7 +966,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    unsigned int parent;
    KeybindType type;
    int key, test_key_event;
-   SDLMod mod, ev_mod;
+   SDL_Keymod mod, ev_mod;
    const char *str;
 
    /* See how to handle it. */
@@ -974,22 +974,17 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       case SDL_KEYDOWN:
          key  = event->key.keysym.sym;
          /* If control key make player hit twice. */
-         test_key_event = (key == SDLK_NUMLOCK) ||
+         test_key_event = (key == SDLK_NUMLOCKCLEAR) ||
                           (key == SDLK_CAPSLOCK) ||
-                          (key == SDLK_SCROLLOCK) ||
+                          (key == SDLK_SCROLLLOCK) ||
                           (key == SDLK_RSHIFT) ||
                           (key == SDLK_LSHIFT) ||
                           (key == SDLK_RCTRL) ||
                           (key == SDLK_LCTRL) ||
                           (key == SDLK_RALT) ||
                           (key == SDLK_LALT) ||
-                          (key == SDLK_RMETA) ||
-                          (key == SDLK_LMETA);
-#if !SDL_VERSION_ATLEAST(2,0,0) /* SUPER don't exist in 2.0.0 */
-         test_key_event = test_key_event ||
-                          (key == SDLK_LSUPER) ||
-                          (key == SDLK_RSUPER);
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */                 
+                          (key == SDLK_RGUI) ||
+                          (key == SDLK_LGUI);
          if (test_key_event  && (opt_lastKeyPress != key)) {
             opt_lastKeyPress = key;
             return 0;
@@ -1006,7 +1001,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
                mod |= NMOD_CTRL;
             if (ev_mod & (KMOD_LALT | KMOD_RALT))
                mod |= NMOD_ALT;
-            if (ev_mod & (KMOD_LMETA | KMOD_RMETA))
+            if (ev_mod & (KMOD_LGUI | KMOD_RGUI))
                mod |= NMOD_META;
          }
          /* Set key. */
@@ -1177,7 +1172,6 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", _("Fullscreen"), NULL, conf.fullscreen );
    y -= 30;
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_DisplayMode mode;
    int k;
    int n = SDL_GetNumDisplayModes( 0 );
@@ -1212,29 +1206,6 @@ static void opt_video( unsigned int wid )
          res_def = i;
       nres++;
    }
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_Rect** modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
-   j = 1;
-   for (i=0; modes[i]; i++) {
-      if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
-         j = 0;
-   }
-   res   = malloc( sizeof(char*) * (i+j) );
-   nres  = 0;
-   res_def = 0;
-   if (j) {
-      res[0]   = malloc(16);
-      nsnprintf( res[0], 16, "%dx%d", conf.width, conf.height );
-      nres     = 1;
-   }
-   for (i=0; modes[i]; i++) {
-      res[ nres ] = malloc(16);
-      nsnprintf( res[ nres ], 16, "%dx%d", modes[i]->w, modes[i]->h );
-      if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
-         res_def = i;
-      nres++;
-   }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
    y -= 120;
    window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
@@ -1297,11 +1268,9 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", _("Engine Glow (More RAM)"), NULL, conf.engineglow );
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
@@ -1375,7 +1344,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    /* Fullscreen. */
    fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    int origw, origh, origf, mode, changed;
    int rw, rh, nw, nh; /* Real width and height. */
    SDL_DisplayMode current;
@@ -1483,21 +1451,6 @@ static int opt_videoSave( unsigned int wid, char *str )
       nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
       window_setInput( wid, "inpRes", buf );
    }
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   if ((w != conf.width) || (h != conf.height)) {
-      conf.explicit_dim = 1;
-      conf.width  = w;
-      conf.height = h;
-      opt_needRestart();
-      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-      window_setInput( wid, "inpRes", buf );
-   }
-
-   if (conf.fullscreen != fullscreen) {
-      conf.fullscreen = fullscreen;
-      opt_needRestart();
-   }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );
@@ -1540,10 +1493,8 @@ static int opt_videoSave( unsigned int wid, char *str )
    f = window_checkboxState( wid, "chkMinimize" );
    if (conf.minimize != f) {
       conf.minimize = f;
-#if SDL_VERSION_ATLEAST(2,0,0)
       SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
             conf.minimize ? "1" : "0" );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
 
    return 0;

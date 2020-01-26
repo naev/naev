@@ -17,19 +17,15 @@
 
 #include "SDL.h"
 #include "SDL_joystick.h"
-#if SDL_VERSION_ATLEAST(1,3,0)
 #include "SDL_haptic.h"
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 #include "log.h"
 
 
 static SDL_Joystick *joystick = NULL; /**< Current joystick in use. */
-#if SDL_VERSION_ATLEAST(1,3,0)
 static int has_haptic = 0; /**< Does the player have haptic? */
 SDL_Haptic *haptic = NULL; /**< Current haptic in use, externed in spfx.c. */
 unsigned int haptic_query = 0; /**< Properties of the haptic device. */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 
 /*
@@ -49,11 +45,7 @@ int joystick_get( const char* namjoystick )
    const char *jname;
    int i;
    for (i=0; i < SDL_NumJoysticks(); i++) {
-#if SDL_VERSION_ATLEAST(2,0,0)
       jname = SDL_JoystickNameForIndex(i);
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      jname = SDL_JoystickName(i);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       if (strstr( jname, namjoystick ))
          return i;
    }
@@ -89,11 +81,7 @@ int joystick_use( int indjoystick )
 
    /* Start using joystick. */
    joystick = SDL_JoystickOpen(indjoystick);
-#if SDL_VERSION_ATLEAST(2,0,0)
    jname = SDL_JoystickNameForIndex(indjoystick);
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   jname = SDL_JoystickName(indjoystick);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    if (joystick == NULL) {
       WARN(_("Error opening joystick %d [%s]"), indjoystick, jname);
       return -1;
@@ -118,7 +106,6 @@ int joystick_use( int indjoystick )
  */
 static void joystick_initHaptic (void)
 {
-#if SDL_VERSION_ATLEAST(1,3,0)
    if (has_haptic && SDL_JoystickIsHaptic(joystick)) {
 
       /* Close haptic if already open. */
@@ -144,7 +131,6 @@ static void joystick_initHaptic (void)
 
       DEBUG(_("   force feedback enabled"));
    }
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
 
 
@@ -163,21 +149,15 @@ int joystick_init (void)
       return -1;
    }
 
-#if SDL_VERSION_ATLEAST(1,3,0)
    if (SDL_InitSubSystem(SDL_INIT_HAPTIC) == 0)
       has_haptic = 1;
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
    DEBUG( ngettext("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
    for (i=0; i < numjoysticks; i++) {
       const char *jname;
-#if SDL_VERSION_ATLEAST(2,0,0)
       jname = SDL_JoystickNameForIndex(i);
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      jname = SDL_JoystickName(i);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       DEBUG("  %d. %s", i, jname);
    }
 
@@ -193,12 +173,10 @@ int joystick_init (void)
  */
 void joystick_exit (void)
 {
-#if SDL_VERSION_ATLEAST(1,3,0)
    if (haptic != NULL) {
       SDL_HapticClose(haptic);
       haptic = NULL;
    }
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    if (joystick != NULL) {
       SDL_JoystickClose(joystick);

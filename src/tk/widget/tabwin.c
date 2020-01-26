@@ -189,10 +189,8 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    ret = 0;
    if (event->type == SDL_MOUSEBUTTONDOWN)
       ret = tab_mouse( tab, event );
-#if SDL_VERSION_ATLEAST(2,0,0)
    else if (event->type == SDL_MOUSEWHEEL)
       ret = tab_mouse( tab, event );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    else if (event->type == SDL_KEYDOWN)
       ret = tab_key( tab, event );
 
@@ -258,19 +256,10 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 
       /* Mark as active. */
       change = -1;
-#if !SDL_VERSION_ATLEAST(2,0,0)
-      if (event->button.button == SDL_BUTTON_WHEELUP)
+      if (event->button.button == SDL_BUTTON_X1)
          change = tab_scroll(tab, -1);
-      else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+      else if (event->button.button == SDL_BUTTON_X2)
          change = tab_scroll(tab, 1);
-#else /* !SDL_VERSION_ATLEAST(2,0,0) */
-      if (event->type == SDL_MOUSEWHEEL) {
-         if (event->wheel.y > 0)
-            change = tab_scroll(tab, -1);
-         else
-            change = tab_scroll(tab, 1);
-      }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       else
          tab->dat.tab.active = i;
 
@@ -297,8 +286,8 @@ if ((key == bind_key) && (mod == bind_mod)) \
 static int tab_key( Widget* tab, SDL_Event *event )
 {
    int old, change;
-   SDLKey key, bind_key;
-   SDLMod mod, bind_mod;
+   SDL_Keycode key, bind_key;
+   SDL_Keymod mod, bind_mod;
    Window *wdw;
    int ret;
 

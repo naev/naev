@@ -17,7 +17,7 @@
 
 
 static int btn_mclick( Widget* btn, int button, int x, int y );
-static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
+static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
 static Widget* btn_get( const unsigned int wid, const char* name );
@@ -46,7 +46,7 @@ void window_addButtonKey( const unsigned int wid,
                        const int w, const int h,
                        char* name, char* display,
                        void (*call) (unsigned int wgt, char* wdwname),
-                       SDLKey key )
+                       SDL_Keycode key )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -275,7 +275,7 @@ static void btn_updateHotkey( Widget *btn )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
+static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 

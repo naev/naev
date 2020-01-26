@@ -16,7 +16,7 @@ typedef struct WidgetButtonData_ {
    char *display; /**< Displayed text. */
    int disabled; /**< 1 if button is disabled, 0 if enabled. */
    int softdisable; /**< Whether the function should still run if disabled. */
-   SDLKey key;
+   SDL_Keycode key;
 } WidgetButtonData;
 
 
@@ -26,7 +26,7 @@ void window_addButtonKey( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, char* display, /* label name, display name */
       void (*call) (unsigned int,char*), /* function to call when clicked */
-      SDLKey key ); /* Hotkey for using the button without it being focused. */
+      SDL_Keycode key ); /* Hotkey for using the button without it being focused. */
 
 void window_addButton( const unsigned int wid,
       const int x, const int y, /* position */

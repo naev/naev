@@ -82,7 +82,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
 static glTexture *gl_genFactionDisk( int radius );
-static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
+static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -134,7 +134,7 @@ void map_exit (void)
 /**
  * @brief Handles key input to the map window.
  */
-static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
+static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
@@ -663,11 +663,7 @@ static glTexture *gl_genFactionDisk( int radius )
    const int h = 2 * radius + 1;
 
    /* Create the surface. */
-#if SDL_VERSION_ATLEAST(1,3,0)
    sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_SWSURFACE, w, h, 32, RGBAMASK );
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    pixels = sur->pixels;
    memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
@@ -1231,7 +1227,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
    switch (event->type) {
 
-#if SDL_VERSION_ATLEAST(2,0,0)
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -1242,20 +1237,11 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          else
             map_buttonZoom( 0, "btnZoomOut" );
          return 1;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-         /* Zooming */
-         if (event->button.button == SDL_BUTTON_WHEELUP)
-            map_buttonZoom( 0, "btnZoomIn" );
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            map_buttonZoom( 0, "btnZoomOut" );
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {

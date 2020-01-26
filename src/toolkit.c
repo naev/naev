@@ -48,8 +48,8 @@ static int window_dead = 0; /**< There are dead windows lying around. */
 /*
  * simulate keypresses when holding
  */
-static SDLKey input_key             = 0; /**< Current pressed key. */
-static SDLMod input_mod             = 0; /**< Current pressed modifier. */
+static SDL_Keycode input_key             = 0; /**< Current pressed key. */
+static SDL_Keymod input_mod             = 0; /**< Current pressed modifier. */
 static unsigned int input_keyTime   = 0; /**< Tick pressed. */
 static int input_keyCounter         = 0; /**< Number of repetitions. */
 static char input_text              = 0; /**< Current character. */
@@ -78,9 +78,7 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event );
 static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       SDL_Event *event, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
-#if SDL_VERSION_ATLEAST(2,0,0)
 static int toolkit_textEvent( Window *wdw, SDL_Event* event );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 /* Focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
@@ -750,7 +748,7 @@ void window_setBorder( unsigned int wid, int enable )
  *  itself grabs the input.
  */
 void window_handleKeys( const unsigned int wid,
-      int (*keyhandler)(unsigned int,SDLKey,SDLMod) )
+      int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) )
 {
    Window *wdw;
 
@@ -1747,9 +1745,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          case SDL_MOUSEMOTION:
          case SDL_MOUSEBUTTONDOWN:
          case SDL_MOUSEBUTTONUP:
-#if SDL_VERSION_ATLEAST(2,0,0)
          case SDL_MOUSEWHEEL:
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
             ret |= toolkit_mouseEvent(wdw, event);
             break;
 
@@ -1758,13 +1754,11 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
             ret |= toolkit_keyEvent(wdw, event);
             break;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
          case SDL_TEXTINPUT:
             ret |= toolkit_textEvent(wdw, event);
             break;
          case SDL_TEXTEDITING:
             break;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
       }
    }
 
@@ -1803,10 +1797,8 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       *x = event->button.x;
       *y = event->button.y;
    }
-#if SDL_VERSION_ATLEAST(2,0,0)
    else if (event->type == SDL_MOUSEWHEEL)
       SDL_GetMouseState( x, y );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Translate offset. */
    gl_windowToScreenPos( x, y, *x, *y );
@@ -1915,7 +1907,6 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          break;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
       case SDL_MOUSEWHEEL:
          if (!inbounds)
             break;
@@ -1925,7 +1916,6 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             ret |= (*wgt->mwheelevent)( wgt, event->wheel );
 
          break;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEBUTTONDOWN:
          if (!inbounds)
@@ -1984,12 +1974,12 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
 
 /**
- * @brief Maps modifier keysyms (ctrl, alt, shift) to SDLMods.
+ * @brief Maps modifier keysyms (ctrl, alt, shift) to SDL_Keymods.
  *
  *    @param key Key to convert.
- *    @return The SDLMod corresponding to the key, or 0 if none correspond.
+ *    @return The SDL_Keymod corresponding to the key, or 0 if none correspond.
  */
-static SDLMod toolkit_mapMod( SDLKey key )
+static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
 {
    switch(key) {
       case SDLK_LCTRL:
@@ -2014,9 +2004,9 @@ static SDLMod toolkit_mapMod( SDLKey key )
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDLKey key, SDLKey c )
+static void toolkit_regKey( SDL_Keycode key, SDL_Keycode c )
 {
-   SDLMod mod;
+   SDL_Keymod mod;
 
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
@@ -2038,9 +2028,9 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
  *
  *    @param key Key to unregister.
  */
-static void toolkit_unregKey( SDLKey key )
+static void toolkit_unregKey( SDL_Keycode key )
 {
-   SDLMod mod;
+   SDL_Keymod mod;
 
    /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
     * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
@@ -2072,12 +2062,9 @@ void toolkit_clearKey (void)
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 {
    Widget *wgt;
-   SDLKey key;
-   SDLMod mod;
+   SDL_Keycode key;
+   SDL_Keymod mod;
    int handled = 0;
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   char buf[2];
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -2085,11 +2072,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-#if SDL_VERSION_ATLEAST(2,0,0)
       toolkit_regKey(key, key);
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      toolkit_regKey(key, event->key.keysym.unicode);
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
@@ -2110,15 +2093,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
          if (wgt->keyevent( wgt, input_key, input_mod ))
             return 1;
       }
-#if !SDL_VERSION_ATLEAST(2,0,0)
-      if (wgt->textevent != NULL) {
-         buf[0] = key & 0x7f;
-         buf[0] = event->key.keysym.unicode & 0x7f;
-         buf[1] = '\0';
-         if ((*wgt->textevent)( wgt, buf ))
-            return 1;
-      }
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
    }
 
    /* Handle button hotkeys. */
@@ -2162,7 +2136,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    return 0;
 }
-#if SDL_VERSION_ATLEAST(2,0,0)
 static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 {
    Widget *wgt;
@@ -2182,7 +2155,6 @@ static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 
    return 0;
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**
@@ -2261,15 +2233,6 @@ static void toolkit_purgeDead (void)
  */
 void toolkit_update (void)
 {
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   unsigned int t;
-   Window *wdw;
-   Widget *wgt;
-   char buf[2];
-   SDL_Event event;
-   int ret;
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-
    /* Clean up the dead if needed. */
    if (!dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
       if (toolkit_delayCounter > 0)
@@ -2286,53 +2249,6 @@ void toolkit_update (void)
          unpause_game();
       return; /*  No need to handle anything else. */
    }
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   /* Must have a key pressed. */
-   if (input_key == 0 && input_mod == 0)
-      return;
-
-   t = SDL_GetTicks();
-
-   /* Should be repeating. */
-   if (input_keyTime + INPUT_DELAY + input_keyCounter*INPUT_FREQ > t)
-      return;
-
-   /* Increment counter. */
-   input_keyCounter++;
-
-   /* Get the window. */
-   wdw = toolkit_getActiveWindow();
-   if (wdw == NULL)
-      return;
-
-   /* See if widget needs event. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-         if (wgt->rawevent != NULL) {
-            event.type           = SDL_KEYDOWN;
-            event.key.state      = SDL_PRESSED;
-            event.key.keysym.sym = input_key;
-            event.key.keysym.mod = input_mod;
-            event.key.keysym.unicode = (uint8_t)input_text;
-            ret = wgt->rawevent( wgt, &event );
-            if (ret != 0)
-               return;
-         }
-      }
-   }
-
-   /* Handle the focused widget. */
-   wgt = toolkit_getFocus( wdw );
-   if ((wgt != NULL) && (wgt->keyevent != NULL))
-      wgt->keyevent( wgt, input_key, input_mod );
-
-   if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
-      buf[0] = input_text;
-      buf[1] = '\0';
-      wgt->textevent( wgt, buf );
-   }
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 

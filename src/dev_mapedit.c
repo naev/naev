@@ -111,7 +111,7 @@ static void mapedit_btnOpen( unsigned int wid_unused, char *unused );
 static void mapedit_btnSaveMapAs( unsigned int wid_unused, char *unused );
 static void mapedit_clear( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
-static int mapedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Loading of Map files. */
 static void mapedit_loadMapMenu_open (void);
 static void mapedit_loadMapMenu_close( unsigned int wdw, char *str );
@@ -271,7 +271,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
 /**
  * @brief Handles keybindings.
  */
-static int mapedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
+static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
@@ -427,7 +427,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    int found;
    double x,y, t;
    StarSystem *sys;
-   /*SDLMod mod;*/
+   /*SDL_Keymod mod;*/
 
    /* Debug log */
    /*WARN("Entering function.");*/
@@ -448,11 +448,11 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             return 0;
 
          /* Zooming */
-         if (event->button.button == SDL_BUTTON_WHEELUP) {
+         if (event->button.button == SDL_BUTTON_X1) {
             mapedit_buttonZoom( 0, "btnZoomIn" );
             return 1;
          }
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+         else if (event->button.button == SDL_BUTTON_X2) {
             mapedit_buttonZoom( 0, "btnZoomOut" );
             return 1;
          }

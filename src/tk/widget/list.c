@@ -16,11 +16,9 @@
 
 
 static void lst_render( Widget* lst, double bx, double by );
-static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
+static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
-#if SDL_VERSION_ATLEAST(2,0,0)
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
@@ -67,9 +65,7 @@ void window_addList( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
    wgt->mclickevent        = lst_mclick;
-#if SDL_VERSION_ATLEAST(2,0,0)
    wgt->mwheelevent        = lst_mwheel;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    wgt->mmoveevent         = lst_mmove;
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
@@ -163,7 +159,7 @@ static void lst_render( Widget* lst, double bx, double by )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int lst_key( Widget* lst, SDLKey key, SDLMod mod )
+static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
@@ -197,15 +193,6 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
          lst_focus( lst, x, y );
          return 1;
 
-#if !SDL_VERSION_ATLEAST(2,0,0)
-      case SDL_BUTTON_WHEELUP:
-         lst_scroll( lst, +5 );
-         return 1;
-      case SDL_BUTTON_WHEELDOWN:
-         lst_scroll( lst, -5 );
-         return 1;
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-
       default:
          break;
    }
@@ -213,7 +200,6 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
 }
 
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 /**
  * @brief Handler for mouse wheel events for the list widget.
  *
@@ -230,7 +216,6 @@ static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
 
    return 1;
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**

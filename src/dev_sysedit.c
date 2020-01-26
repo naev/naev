@@ -144,7 +144,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused );
 /* Jump editing */
 static void sysedit_editJump( void );
 /* Keybindings handling. */
-static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
 static int sysedit_selectCmp( Select_t *a, Select_t *b );
 static void sysedit_checkButtons (void);
@@ -253,7 +253,7 @@ void sysedit_open( StarSystem *sys )
 /**
  * @brief Handles keybindings.
  */
-static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
    (void) mod;
@@ -879,7 +879,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    (void) data;
    int i, j;
    double x,y, t;
-   SDLMod mod;
+   SDL_Keymod mod;
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
@@ -893,7 +893,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
    switch (event->type) {
 
-#if SDL_VERSION_ATLEAST(2,0,0)
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -905,20 +904,11 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             sysedit_buttonZoom( 0, "btnZoomOut" );
 
          return 1;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-         /* Zooming */
-         if (event->button.button == SDL_BUTTON_WHEELUP)
-            sysedit_buttonZoom( 0, "btnZoomIn" );
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            sysedit_buttonZoom( 0, "btnZoomOut" );
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {

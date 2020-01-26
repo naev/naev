@@ -89,7 +89,7 @@ static const luaL_Reg cli_methods[] = {
 /*
  * Prototypes.
  */
-static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
+static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
 static int cli_printCore( lua_State *L, int cli_only );
 void cli_tabComplete( unsigned int wid );
@@ -255,7 +255,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 /**
  * @brief Key handler for the console window.
  */
-static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
+static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
    int i, pos;

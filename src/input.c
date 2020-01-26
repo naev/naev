@@ -49,8 +49,8 @@ typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
    const char *name; /**< keybinding name, taken from keybind_info */
    KeybindType type; /**< type, defined in player.h */
-   SDLKey key; /**< key/axis/button event number */
-   SDLMod mod; /**< Key modifiers (where applicable). */
+   SDL_Keycode key; /**< key/axis/button event number */
+   SDL_Keymod mod; /**< Key modifiers (where applicable). */
 } Keybind;
 
 
@@ -167,21 +167,8 @@ extern double player_right; /**< player.c */
 
 
 /*
- * Key conversion table.
- */
-#if !SDL_VERSION_ATLEAST(2,0,0)
-#define INPUT_NUMKEYS     SDLK_LAST /**< Number of keys available. */
-static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-
-
-/*
  * Prototypes.
  */
-#if !SDL_VERSION_ATLEAST(2,0,0)
-static void input_keyConvGen (void);
-static void input_keyConvDestroy (void);
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 static void input_key( int keynum, double value, double kabs, int repeat );
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
@@ -304,14 +291,6 @@ void input_init (void)
    Keybind *temp;
    int i;
 
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   /* We need unicode for the input widget. */
-   SDL_EnableUNICODE(1);
-
-   /* Key repeat fscks up stuff like double tap. */
-   SDL_EnableKeyRepeat( 0, 0 );
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-
    /* Window. */
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
 
@@ -333,7 +312,6 @@ void input_init (void)
    /* Quit. */
    SDL_EventState( SDL_QUIT,            SDL_ENABLE );
 
-#if SDL_VERSION_ATLEAST(1,3,0)
    /* Window. */
    SDL_EventState( SDL_WINDOWEVENT,     SDL_ENABLE );
 
@@ -342,7 +320,6 @@ void input_init (void)
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
    for (i=0; strcmp(keybind_info[i][0],"end"); i++);
@@ -358,11 +335,6 @@ void input_init (void)
       temp->key         = SDLK_UNKNOWN;
       temp->mod         = NMOD_NONE;
    }
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   /* Generate Key translation table. */
-   input_keyConvGen();
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -372,10 +344,6 @@ void input_init (void)
 void input_exit (void)
 {
    free(input_keybinds);
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   input_keyConvDestroy();
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -439,85 +407,21 @@ void input_mouseHide (void)
 }
 
 
-#if !SDL_VERSION_ATLEAST(2,0,0)
-/**
- * @brief Creates the key conversion table.
- */
-static void input_keyConvGen (void)
-{
-   SDLKey k;
-
-   for (k=0; k < INPUT_NUMKEYS; k++)
-      keyconv[k] = strdup( SDL_GetKeyName(k) );
-}
-
-
-/**
- * @brief Destroys the key conversion table.
- */
-static void input_keyConvDestroy (void)
-{
-   int i;
-
-   for (i=0; i < INPUT_NUMKEYS; i++)
-      free( keyconv[i] );
-}
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-
-
 /**
  * @brief Gets the key id from its name.
  *
  *    @param name Name of the key to get id from.
  *    @return ID of the key.
  */
-SDLKey input_keyConv( const char *name )
+SDL_Keycode input_keyConv( const char *name )
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
-   SDLKey k;
+   SDL_Keycode k;
    k = SDL_GetKeyFromName( name );
 
    if (k == SDLK_UNKNOWN)
       WARN(_("Keyname '%s' doesn't match any key."), name);
 
    return k;
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDLKey k, m;
-   size_t l;
-   char buf;
-
-   l = strlen(name);
-   buf = tolower(name[0]);
-
-   /* Compare for single character. */
-   if (l == 1) {
-      m = MIN(256, INPUT_NUMKEYS);
-      for (k=0; k < m; k++) { /* Only valid for char range. */
-         /* Must not be NULL. */
-         if (keyconv[k] == NULL)
-            continue;
-
-         /* Check if is also a single char. */
-         if ((buf == tolower(keyconv[k][0])) && (keyconv[k][1] == '\0'))
-            return k;
-      }
-   }
-   /* Compare for strings. */
-   else {
-      for (k=0; k < INPUT_NUMKEYS; k++) {
-         /* Must not be NULL. */
-         if (keyconv[k] == NULL)
-            continue;
-
-         /* Compare strings. */
-         if (strcmp(name , keyconv[k])==0)
-            return k;
-      }
-   }
-
-   WARN(_("Keyname '%s' doesn't match any key."), name);
-   return SDLK_UNKNOWN;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -529,7 +433,7 @@ SDLKey input_keyConv( const char *name )
  *    @param key The key to bind to.
  *    @param mod Modifiers to check for.
  */
-void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod mod )
+void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
    int i;
    for (i=0; i<input_numbinds; i++) {
@@ -553,7 +457,7 @@ void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod
  *    @param[out] mod Stores the modifiers used with the keybinding.
  *    @return The key associated with the keybinding.
  */
-SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
+SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod *mod )
 {
    int i;
    for (i=0; i<input_numbinds; i++) {
@@ -566,7 +470,7 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
       }
    }
    WARN(_("Unable to get keybinding '%s', that command doesn't exist"), keybind);
-   return (SDLKey)-1;
+   return (SDL_Keycode)-1;
 }
 
 
@@ -576,7 +480,7 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
  *    @brief mod Mod to get human readable version from.
  *    @return Human readable version of mod.
  */
-const char* input_modToText( SDLMod mod )
+const char* input_modToText( SDL_Keymod mod )
 {
    switch ((int)mod) {
       case NMOD_NONE:   return _("None");
@@ -598,7 +502,7 @@ const char* input_modToText( SDLMod mod )
  *    @param mod Key modifiers.
  *    @return Name of the key that is already bound to it.
  */
-const char *input_keyAlreadyBound( KeybindType type, SDLKey key, SDLMod mod )
+const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
    int i;
    Keybind *k;
@@ -663,16 +567,16 @@ const char* input_getKeybindDescription( const char *keybind )
  *    @param mod SDL modifier to translate.
  *    @return Naev modifier.
  */
-SDLMod input_translateMod( SDLMod mod )
+SDL_Keymod input_translateMod( SDL_Keymod mod )
 {
-   SDLMod mod_filtered = 0;
+   SDL_Keymod mod_filtered = 0;
    if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
       mod_filtered |= NMOD_SHIFT;
    if (mod & (KMOD_LCTRL | KMOD_RCTRL))
       mod_filtered |= NMOD_CTRL;
    if (mod & (KMOD_LALT | KMOD_RALT))
       mod_filtered |= NMOD_ALT;
-   if (mod & (KMOD_LMETA | KMOD_RMETA))
+   if (mod & (KMOD_LGUI | KMOD_RGUI))
       mod_filtered |= NMOD_META;
    return mod_filtered;
 }
@@ -1004,11 +908,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* take a screenshot */
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();
-#if SDL_VERSION_ATLEAST(2,0,0)
    /* toggle fullscreen */
    } else if (KEY("togglefullscreen") && !repeat) {
       if (value==KEY_PRESS) naev_toggleFullscreen();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    /* pause the games */
    } else if (KEY("pause") && !repeat) {
       if (value==KEY_PRESS) {
@@ -1069,9 +971,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
  * events
  */
 /* prototypes */
-static void input_joyaxis( const SDLKey axis, const int value );
-static void input_joyevent( const int event, const SDLKey button );
-static void input_keyevent( const int event, const SDLKey key, const SDLMod mod, const int repeat );
+static void input_joyaxis( const SDL_Keycode axis, const int value );
+static void input_joyevent( const int event, const SDL_Keycode button );
+static void input_keyevent( const int event, const SDL_Keycode key, const SDL_Keymod mod, const int repeat );
 
 /*
  * joystick
@@ -1081,7 +983,7 @@ static void input_keyevent( const int event, const SDLKey key, const SDLMod mod,
  *    @param axis Axis generated by the event.
  *    @param value Value of the axis.
  */
-static void input_joyaxis( const SDLKey axis, const int value )
+static void input_joyaxis( const SDL_Keycode axis, const int value )
 {
    int i, k;
    for (i=0; i<input_numbinds; i++) {
@@ -1111,7 +1013,7 @@ static void input_joyaxis( const SDLKey axis, const int value )
  *    @param event Event type (down/up).
  *    @param button Button generating the event.
  */
-static void input_joyevent( const int event, const SDLKey button )
+static void input_joyevent( const int event, const SDL_Keycode button )
 {
    int i;
    for (i=0; i<input_numbinds; i++) {
@@ -1165,10 +1067,10 @@ static void input_joyhatevent( const Uint8 value, const Uint8 hat )
  *    @param key Key generating the event.
  *    @param mod Modifiers active when event was generated.
  */
-static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const int repeat )
+static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod mod, const int repeat )
 {
    int i;
-   SDLMod mod_filtered;
+   SDL_Keymod mod_filtered;
 
    /* Filter to "Naev" modifiers. */
    mod_filtered = input_translateMod(mod);
@@ -1227,18 +1129,6 @@ static void input_clickevent( SDL_Event* event )
    hparam[0].u.num   = event->button.button;
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   /* Handle zoom. */
-   if (event->button.button == SDL_BUTTON_WHEELUP) {
-      input_clickZoom( 1.1 );
-      return;
-   }
-   else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
-      input_clickZoom( 0.9 );
-      return;
-   }
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Player must not be NULL. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -1631,18 +1521,14 @@ void input_handle( SDL_Event* event )
          break;
 
       case SDL_KEYDOWN:
-#if SDL_VERSION_ATLEAST(2,0,0)
          if (event->key.repeat != 0)
             return;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
       case SDL_KEYUP:
-#if SDL_VERSION_ATLEAST(2,0,0)
          if (event->key.repeat !=0)
             return;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
@@ -1652,14 +1538,12 @@ void input_handle( SDL_Event* event )
          input_clickevent( event );
          break;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
       case SDL_MOUSEWHEEL:
          if (event->wheel.y > 0)
             input_clickZoom( 1.1 );
          else
             input_clickZoom( 0.9 );
          break;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEMOTION:
          input_mouseMove( event );

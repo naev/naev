@@ -225,9 +225,6 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    SDL_Surface* temp;
    int potw, poth;
    SDL_Rect rtemp;
-#if ! SDL_VERSION_ATLEAST(1,3,0)
-   Uint32 saved_flags;
-#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Make size power of two. */
    potw = gl_pot(surface->w);
@@ -240,23 +237,11 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
       rtemp.h = surface->h;
 
       /* saves alpha */
-#if SDL_VERSION_ATLEAST(1,3,0)
       SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
 
       /* create the temp POT surface */
       temp = SDL_CreateRGBSurface( 0, potw, poth,
             surface->format->BytesPerPixel*8, RGBAMASK );
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-      saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
-      if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
-         SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
-         SDL_SetColorKey( surface, 0, surface->format->colorkey );
-      }
-
-      /* create the temp POT surface */
-      temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-            potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
       if (temp == NULL) {
          WARN(_("Unable to create POT surface: %s"), SDL_GetError());
@@ -273,11 +258,6 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
       SDL_FreeSurface( surface );
       surface = temp;
 
-#if ! SDL_VERSION_ATLEAST(1,3,0)
-      /* set saved alpha */
-      if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
-         SDL_SetAlpha( surface, 0, 0 );
-#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
    }
 
    return surface;

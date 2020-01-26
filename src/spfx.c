@@ -16,9 +16,7 @@
 #include <inttypes.h>
 
 #include "SDL.h"
-#if SDL_VERSION_ATLEAST(1,3,0)
 #include "SDL_haptic.h"
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 #include "log.h"
 #include "pilot.h"
@@ -61,13 +59,11 @@ static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
 static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
 
 
-#if SDL_VERSION_ATLEAST(1,3,0)
 extern SDL_Haptic *haptic; /**< From joystick.c */
 extern unsigned int haptic_query; /**< From joystick.c */
 static int haptic_rumble         = -1; /**< Haptic rumble effect ID. */
 static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
 static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again. */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 
 /**
@@ -523,13 +519,9 @@ void spfx_begin( const double dt, const double real_dt )
    if (shake_off)
       return;
 
-#if SDL_VERSION_ATLEAST(1,3,0)
    /* Decrement the haptic timer. */
    if (haptic_lastUpdate > 0.)
       haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-   (void) real_dt; /* Avoid warning. */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Micro basic simple control loop. */
    if (dt > shake_fps_min) {
@@ -613,7 +605,6 @@ void spfx_getShake( double *x, double *y )
  */
 static int spfx_hapticInit (void)
 {
-#if SDL_VERSION_ATLEAST(1,3,0)
    SDL_HapticEffect *efx;
 
    /* Haptic must be enabled. */
@@ -635,7 +626,6 @@ static int spfx_hapticInit (void)
       WARN(_("Unable to upload haptic effect: %s."), SDL_GetError());
       return -1;
    }
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    return 0;
 }
@@ -648,7 +638,6 @@ static int spfx_hapticInit (void)
  */
 static void spfx_hapticRumble( double mod )
 {
-#if SDL_VERSION_ATLEAST(1,3,0)
    SDL_HapticEffect *efx;
    double len, mag;
 
@@ -681,9 +670,6 @@ static void spfx_hapticRumble( double mod )
       /* Set timer again. */
       haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
    }
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-   (void) mod;
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
 
 

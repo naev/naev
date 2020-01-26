@@ -21,7 +21,7 @@
 
 static void inp_render( Widget* inp, double bx, double by );
 static int inp_isBreaker(char c);
-static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
+static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, uint32_t ch );
 static void inp_clampView( Widget *inp );
@@ -266,7 +266,7 @@ static int inp_isBreaker(char c)
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
+static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
    int n, prevpos, curchars, prevchars, charsfromleft, lines;
@@ -418,11 +418,9 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    }
 
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    /* Don't use, but don't eat, either. */
    if ((key == SDLK_TAB) || (key == SDLK_ESCAPE))
       return 0;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Eat everything else that isn't usable. Om nom. */
    /* Only catch some keys. */
@@ -434,11 +432,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          (key != SDLK_END) &&
          (key != SDLK_PAGEUP) &&
          (key != SDLK_PAGEDOWN))
-#if SDL_VERSION_ATLEAST(2,0,0)
       return 1; /* SDL2 uses TextInput and should eat most keys. Om nom. */
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      return 0;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* backspace -> delete text */
    if (key == SDLK_BACKSPACE) {
@@ -734,7 +728,6 @@ void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(u
  */
 static void inp_focusGain( Widget* inp )
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_Rect input_pos;
    Window *w;
 
@@ -746,9 +739,6 @@ static void inp_focusGain( Widget* inp )
 
    SDL_StartTextInput();
    SDL_SetTextInputRect( &input_pos );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   (void) inp;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 /**
@@ -759,9 +749,7 @@ static void inp_focusGain( Widget* inp )
 static void inp_focusLose( Widget* inp )
 {
    (void) inp;
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_StopTextInput();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 

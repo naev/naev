@@ -151,9 +151,6 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    SDL_Surface *ss_surface;
    int r, i;
    SDL_Rect rtemp;
-#if ! SDL_VERSION_ATLEAST(1,3,0)
-   unsigned int surf_flags;
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Initialize parameters. */
    ss_surface  = NULL;
@@ -163,21 +160,10 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    ss_h        = surface->h;
 
    /* Handle alpha. */
-#if SDL_VERSION_ATLEAST(1,3,0)
    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
 
    /* Create base surface. */
    ss_surface = SDL_CreateRGBSurface( 0, ss_w, ss_h, 32, RGBAMASK );
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-   surf_flags = surface->flags & (SDL_SRCALPHA | SDL_SRCCOLORKEY);
-   if ((surf_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
-      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
-      SDL_SetColorKey( surface, 0, surface->format->colorkey );
-   }
-
-   /* Create base surface. */
-   ss_surface = SDL_CreateRGBSurface( SDL_SRCCOLORKEY, ss_w, ss_h, 32, RGBAMASK );
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
    if (ss_surface == NULL) {
       WARN(_("Unable to create RGB surface."));
       return -1;
@@ -200,13 +186,6 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    ss_rows = malloc(sizeof(png_bytep) * ss_size);
    if (ss_rows == NULL)
       return -1;
-
-   /* Reset flags. */
-#if ! SDL_VERSION_ATLEAST(1,3,0)
-   /* Set saved alpha */
-   if ((surf_flags & SDL_SRCALPHA) == SDL_SRCALPHA)
-      SDL_SetAlpha( surface, 0, 0 );
-#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Copy pixels into data. */
    for (i = 0; i < ss_h; i++)
@@ -266,31 +245,7 @@ GLboolean gl_hasVersion( int major, int minor )
  */
 GLboolean gl_hasExt( char *name )
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
    return SDL_GL_ExtensionSupported( name );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   /*
-    * Search for name in the extensions string.  Use of strstr()
-    * is not sufficient because extension names can be prefixes of
-    * other extension names.  Could use strtok() but the constant
-    * string returned by glGetString can be in read-only memory.
-    */
-   const char *p, *end;
-   size_t len, n;
-
-   p = (const char*) glGetString(GL_EXTENSIONS);
-   len = strlen(name);
-   end = p + strlen(p);
-
-   while (p < end) {
-      n = strcspn(p, " ");
-      if ((len == n) && (strncmp(name,p,n)==0))
-         return GL_TRUE;
-
-      p += (n + 1);
-   }
-   return GL_FALSE;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -368,15 +323,7 @@ static int gl_setupAttributes (void)
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, conf.fsaa);
    }
    if (gl_has(OPENGL_VSYNC))
-#if SDL_VERSION_ATLEAST(1,3,0)
       SDL_GL_SetSwapInterval(1);
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-#if SDL_VERSION_ATLEAST(1,2,10)
-      SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
-#else /* SDL_VERSION_ATLEAST(1,2,10) */
-      DEBUG(_("VSync unsupported on old SDL versions (before 1.2.10)."));
-#endif /* SDL_VERSION_ATLEAST(1,2,10) */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    return 0;
 }
@@ -401,7 +348,6 @@ static int gl_setupFullscreen( unsigned int *flags )
       gl_screen.h = gl_screen.desktop_h;
    }
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    (void) flags;
    SDL_DisplayMode mode;
    int n = SDL_GetNumDisplayModes( 0 );
@@ -441,53 +387,6 @@ static int gl_setupFullscreen( unsigned int *flags )
       gl_screen.w = mode.w;
       gl_screen.h = mode.h;
    }
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   /* Get available modes and see what we can use. */
-   SDL_Rect** modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
-   if (modes == NULL) { /* rare case, but could happen */
-      WARN(_("No fullscreen modes available"));
-      if ((*flags) & SDL_FULLSCREEN) {
-         WARN(_("Disabling fullscreen mode"));
-         (*flags) &= ~SDL_FULLSCREEN;
-      }
-   }
-   else if (modes == (SDL_Rect **)-1)
-      DEBUG(_("All fullscreen modes available"));
-   else {
-      DEBUG(_("Available fullscreen modes:"));
-      for (i=0; modes[i]; i++) {
-         DEBUG(_("  %d x %d"), modes[i]->w, modes[i]->h);
-         if (((*flags) & SDL_FULLSCREEN) && (modes[i]->w == SCREEN_W) &&
-               (modes[i]->h == SCREEN_H))
-            supported = 1; /* mode we asked for is supported */
-      }
-   }
-   /* makes sure fullscreen mode is supported */
-   if ((modes!=NULL) && ((*flags) & SDL_FULLSCREEN) && !supported) {
-
-      /* Try to get closest approximation to mode asked for */
-      off = -1;
-      j   = -1;
-      for (i=0; modes[i] != NULL; i++) {
-         toff = ABS(SCREEN_W-modes[i]->w) + ABS(SCREEN_H-modes[i]->h);
-         if ((off == -1) || (toff < off)) {
-            j   = i;
-            off = toff;
-         }
-      }
-      if (j<0) {
-         ERR(_("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!"),
-               SCREEN_W, SCREEN_H);
-      }
-
-      WARN(_("Fullscreen mode %dx%d is not supported by your setup\n"
-            "   switching to %dx%d"),
-            SCREEN_W, SCREEN_H,
-            modes[j]->w, modes[j]->h );
-      gl_screen.w = modes[j]->w;
-      gl_screen.h = modes[j]->h;
-   }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    return 0;
 }
@@ -500,7 +399,6 @@ static int gl_setupFullscreen( unsigned int *flags )
  */
 static int gl_createWindow( unsigned int flags )
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
    int ret;
    int w, h;
 
@@ -533,34 +431,6 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   int depth;
-
-   /* Test the setup - aim for 32. */
-   gl_screen.depth = 32;
-   depth = SDL_VideoModeOK( SCREEN_W, SCREEN_H, gl_screen.depth, flags);
-   if (depth == 0)
-      WARN(_("Video Mode %dx%d @ %d bpp not supported"
-           "   going to try to create it anyways..."),
-            SCREEN_W, SCREEN_H, gl_screen.depth );
-   if (depth != gl_screen.depth)
-      DEBUG(_("Depth %d bpp unavailable, will use %d bpp"), gl_screen.depth, depth);
-   gl_screen.depth = depth;
-
-   /* Actually creating the screen. */
-   if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags )==NULL) {
-      /* Try again possibly disabling FSAA. */
-      if (conf.fsaa > 1) {
-         LOG(_("Unable to create OpenGL window: Trying without FSAA."));
-         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
-         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
-      }
-      if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
-         ERR(_("Unable to create OpenGL window: %s"), SDL_GetError());
-         return -1;
-      }
-   }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    gl_screen.rw = SCREEN_W;
    gl_screen.rh = SCREEN_H;
    gl_activated = 1; /* Opengl is now activated. */
@@ -715,32 +585,20 @@ int gl_init (void)
    dw = gl_screen.desktop_w;
    dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
-#if SDL_VERSION_ATLEAST(2,0,0)
    flags  = SDL_WINDOW_OPENGL;
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   flags  = SDL_OPENGL;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    gl_screen.desktop_w = dw;
    gl_screen.desktop_h = dh;
 
    /* Load configuration. */
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   if (conf.vsync)
-      gl_screen.flags |= OPENGL_VSYNC;
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
    if (conf.fullscreen) {
       gl_screen.flags |= OPENGL_FULLSCREEN;
-#if SDL_VERSION_ATLEAST(2,0,0)
       if (conf.modesetting)
          flags |= SDL_WINDOW_FULLSCREEN;
       else
          flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      flags |= SDL_FULLSCREEN;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
 
    /* Initializes Video */

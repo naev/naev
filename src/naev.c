@@ -225,19 +225,10 @@ int main( int argc, char** argv )
    }
 
    /* Get desktop dimensions. */
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_DisplayMode current;
    SDL_GetCurrentDisplayMode( 0, &current );
    gl_screen.desktop_w = current.w;
    gl_screen.desktop_h = current.h;
-#elif SDL_VERSION_ATLEAST(1,2,10)
-   const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
-   gl_screen.desktop_w = vidinfo->current_w;
-   gl_screen.desktop_h = vidinfo->current_h;
-#else /* #elif SDL_VERSION_ATLEAST(1,2,10) */
-   gl_screen.desktop_w = 0;
-   gl_screen.desktop_h = 0;
-#endif /* #elif SDL_VERSION_ATLEAST(1,2,10) */
 
    /* We'll be parsing XML. */
    LIBXML_TEST_VERSION
@@ -330,10 +321,8 @@ int main( int argc, char** argv )
    gl_fontInit( &gl_smallFont, "Arial", FONT_DEFAULT_PATH, conf.font_size_small ); /* small font */
    gl_fontInit( &gl_defFontMono, "Monospace", FONT_MONOSPACE_PATH, conf.font_size_def );
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    /* Detect size changes that occurred after window creation. */
    naev_resize( -1., -1. );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Display the load screen. */
    loadscreen_load();
@@ -390,10 +379,8 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    /* Detect size changes that occurred during load. */
    naev_resize( -1., -1. );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Generate the CSV. */
    if (conf.devcsv)
@@ -490,13 +477,11 @@ int main( int argc, char** argv )
                break;
             }
          }
-#if SDL_VERSION_ATLEAST(2,0,0)
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
             naev_resize( event.window.data1, event.window.data2 );
             continue;
          }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
@@ -659,11 +644,7 @@ void loadscreen_render( double done, const char *msg )
    gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
 
    /* Flip buffers. */
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_GL_SwapWindow( gl_screen.window );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_GL_SwapBuffers();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
@@ -789,15 +770,10 @@ void main_loop( int update )
       toolkit_render();
    gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_GL_SwapWindow( gl_screen.window );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_GL_SwapBuffers();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
  */
@@ -885,7 +861,6 @@ void naev_toggleFullscreen (void)
    if ((w != conf.width) || (h != conf.height))
       naev_resize( w, h );
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
@@ -1173,13 +1148,8 @@ static void window_caption (void)
 
    /* Set caption. */
    nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_WM_SetCaption(buf, APPNAME);
-   SDL_WM_SetIcon( naev_icon, NULL );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 /**
@@ -1321,13 +1291,9 @@ static void print_SDLversion (void)
 
    /* Extract information. */
    SDL_VERSION(&compiled);
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_version ll;
    SDL_GetVersion( &ll );
    linked = &ll;
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   linked = SDL_Linked_Version();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    DEBUG( _("SDL: %d.%d.%d [compiled: %d.%d.%d]"),
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
