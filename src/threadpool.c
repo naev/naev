@@ -445,9 +445,7 @@ static int threadpool_handler( void *data )
       /* Start a new thread and increment the thread counter */
       if (newthread) {
          SDL_CreateThread( threadpool_worker,
-#if SDL_VERSION_ATLEAST(1,3,0)
                "threadpool_worker",
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
                threadarg );
          nrunning += 1;
       }
@@ -472,9 +470,7 @@ static int threadpool_handler( void *data )
  */
 int threadpool_init (void)
 {
-#if SDL_VERSION_ATLEAST(1,3,0)
    MAXTHREADS = SDL_GetCPUCount() + 1; /* SDL 1.3 is pretty cool. */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* There's already a queue */
    if (global_queue != NULL) {
@@ -487,9 +483,7 @@ int threadpool_init (void)
 
    /* Initialize the threadpool handler. */
    SDL_CreateThread( threadpool_handler,
-#if SDL_VERSION_ATLEAST(1,3,0)
                "threadpool_handler",
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
                NULL );
 
    return 0;

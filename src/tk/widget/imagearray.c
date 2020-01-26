@@ -24,9 +24,7 @@ static void iar_renderOverlay( Widget* iar, double bx, double by );
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
 /* Mouse. */
 static int iar_mclick( Widget* iar, int button, int x, int y );
-#if SDL_VERSION_ATLEAST(2,0,0)
 static int iar_mwheel( Widget* lst, SDL_MouseWheelEvent event );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
 /* Focus. */
 static int iar_focusImage( Widget* iar, double bx, double by );
@@ -88,9 +86,7 @@ void window_addImageArray( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = iar_key;
    wgt->mclickevent        = iar_mclick;
-#if SDL_VERSION_ATLEAST(2,0,0)
    wgt->mwheelevent        = iar_mwheel;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    wgt->mmoveevent         = iar_mmove;
    wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
    wgt->dat.iar.images     = tex;
@@ -423,14 +419,12 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
       case SDL_BUTTON_LEFT:
          iar_focus( iar, x, y );
          return 1;
-#if !SDL_VERSION_ATLEAST(2,0,0)
       case SDL_BUTTON_WHEELUP:
          iar_scroll( iar, +1 );
          return 1;
       case SDL_BUTTON_WHEELDOWN:
          iar_scroll( iar, -1 );
          return 1;
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
       case SDL_BUTTON_RIGHT:
          iar_focus( iar, x, y );
          if (iar->dat.iar.rmptr != NULL)
@@ -447,7 +441,6 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
 }
 
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 /**
  * @brief Handler for mouse wheel events for an image array.
  *
@@ -464,7 +457,6 @@ static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
 
    return 1;
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**

@@ -79,10 +79,8 @@ typedef struct glInfo_ {
    int tex_max; /**< Maximum texture size */
    int multitex_max; /**< Maximum multitexture levels */
    int fsaa; /**< Full Scene Anti Aliasing level. */
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_Window *window; /**< Window for SDL2. */
    SDL_GLContext context; /**< Context for OpenGL. */
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
