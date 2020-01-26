@@ -439,12 +439,12 @@ end
 
 -- Handle the convoy getting attacked.
 function traderAttacked(j)
-    if shuttingup == true then return
-    else
+   if shuttingup == true then return
+   else
       shuttingup = true
       j:comm(player.pilot(),traderdistress)
       hook.timer(5000, "traderShutup") -- Shuts him up for at least 5s.
-    end
+   end
 end
 
 function traderShutup()
@@ -452,12 +452,12 @@ function traderShutup()
 end
 
 function convoyContinues()
-    convoy = pilot.add(convoyname, nil, origin) 
-    for i, j in ipairs(convoy) do
+   convoy = pilot.add(convoyname, nil, origin) 
+   for i, j in ipairs(convoy) do
       if not alive[i] then j:rm() end -- Dead traders stay dead.
       if j:exists() then
-          j:changeAI( "trader" )
-          j:control(false)
+         j:changeAI( "trader" )
+         j:control(false)
       end
    end 
    misn.finish(false)

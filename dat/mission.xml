@@ -1455,4 +1455,17 @@
    <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
   </avail>
  </mission>
+ <mission name="A Friend's Aid">
+  <lua>soromid/comingout/srm_comingout3</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <done>Coming of Age</done>
+   <chance>30</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+  </avail>
+ </mission>
 </Missions>
