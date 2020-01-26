@@ -276,6 +276,7 @@
   <player>-100</player>
   <colour>red</colour>
   <standing>static</standing>
+  <equip>pirate</equip>
   <enemies>
    <enemy>FLF</enemy>
   </enemies>
@@ -288,6 +289,7 @@
   <player>-100</player>
   <colour>red</colour>
   <standing>static</standing>
+  <equip>pirate</equip>
   <enemies>
    <enemy>FLF</enemy>
   </enemies>
@@ -441,6 +443,29 @@
   <enemies>
    <enemy>Sirius</enemy>
    <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Comingout_associates</name>
+  <display>Mercenary</display>
+  <static />
+  <invisible />
+  <player>70</player>
+  <standing>static</standing>
+  <enemies>
+   <enemy>Comingout_thugs</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Comingout_thugs</name>
+  <display>Thugs</display>
+  <static />
+  <invisible />
+  <player>-20</player>
+  <standing>static</standing>
+  <equip>pirate</equip>
+  <enemies>
+   <enemy>Comingout_associates</enemy>
   </enemies>
  </faction>
 </Factions>

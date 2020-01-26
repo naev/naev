@@ -384,11 +384,11 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>var.peek("es_cargo") == true and planet.get("Omega Station") == planet.cur() and faction.playerStanding("Empire") &gt; 5</cond>
+   <cond>var.peek("es_cargo") == true and faction.playerStanding("Empire") &gt; 5</cond>
    <chance>40</chance>
    <location>Bar</location>
    <done>Empire Shipping 3</done>
-   <faction>Empire</faction>
+   <planet>Omega Station</planet>
   </avail>
  </mission>
  <mission name="Collective Espionage 1">
@@ -581,7 +581,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>player.misnDone("Baron")</cond>
+   <done>Baron</done>
    <chance>2</chance>
    <location>Bar</location>
    <faction>Empire</faction>
@@ -628,7 +628,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>player.misnDone("Kidnapped")</cond>
+   <done>Kidnapped</done>
    <chance>12</chance>
    <location>Bar</location>
    <faction>Empire</faction>
@@ -657,7 +657,8 @@
    <priority>1</priority>
    <chance>100</chance>
    <location>Bar</location>
-   <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
+   <cond>var.peek("flfbase_intro") == 2</cond>
+   <planet>Sindbad</planet>
   </avail>
  </mission>
  <mission name="Eliminate a Dvaered Patrol">
@@ -834,7 +835,8 @@
   <avail>
    <chance>10</chance>
    <location>Bar</location>
-   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
+   <cond>var.peek("flfbase_intro") == 1</cond>
+   <faction>Dvaered</faction>
   </avail>
  </mission>
  <mission name="Destroy the FLF base!">
@@ -845,7 +847,8 @@
   <avail>
    <chance>10</chance>
    <location>Bar</location>
-   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
+   <cond>var.peek("flfbase_intro") == 3</cond>
+   <faction>Dvaered</faction>
   </avail>
  </mission>
  <mission name="Crimelord">
@@ -1013,7 +1016,7 @@
     </flags>
     <avail>
      <chance>50</chance>
-     <cond>player.misnDone("Deliver Love")</cond>
+     <done>Deliver Love</done>
      <location>Bar</location>
      <planet>Zhiru</planet>
     </avail>
@@ -1043,7 +1046,7 @@
    <unique />
   </flags>
   <avail>
-   <cond>planet.cur() == planet.get("The Wringer")</cond>
+   <planet>The Wringer</planet>
    <chance>50</chance>
    <location>Bar</location>
   </avail>
@@ -1054,7 +1057,8 @@
    <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Sirian Bounty") and planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+   <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+   <done>Sirian Bounty</done>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
@@ -1066,7 +1070,7 @@
    <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Harja's Vengeance")</cond>
+   <done>Harja's Vengeance</done>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
@@ -1117,7 +1121,7 @@
     <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("The Runaway")</cond>
+   <done>The Runaway</done>
    <chance>11</chance>
    <location>Bar</location>
    <system>Goddard</system>
@@ -1260,7 +1264,7 @@
     <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("The one with the Shopping")</cond>
+   <done>The one with the Shopping</done>
    <chance>100</chance>
    <location>Bar</location>
    <planet>Gastan</planet>
@@ -1272,7 +1276,7 @@
     <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("The one with the Visit")</cond>
+   <done>The one with the Visit</done>
    <chance>100</chance>
    <location>Bar</location>
    <planet>Gastan</planet>
@@ -1304,7 +1308,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("A Shark Bites")</cond>
+   <done>A Shark Bites</done>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
@@ -1343,7 +1347,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Unfair Competition")</cond>
+   <done>Unfair Competition</done>
    <chance>50</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
@@ -1355,7 +1359,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Invitation")</cond>
+   <done>Invitation</done>
    <chance>100</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
@@ -1367,7 +1371,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("The Meeting")</cond>
+   <done>The Meeting</done>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
@@ -1387,7 +1391,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("The FLF Contact")</cond>
+   <done>The FLF Contact</done>
    <chance>100</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
@@ -1399,7 +1403,7 @@
   <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("A Journey To Arandon")</cond>
+   <done>A Journey To Arandon</done>
    <chance>50</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
@@ -1448,6 +1452,19 @@
    <chance>100</chance>
    <location>Bar</location>
    <planet>Durea</planet>
+   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+  </avail>
+ </mission>
+ <mission name="A Friend's Aid">
+  <lua>soromid/comingout/srm_comingout3</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <done>Coming of Age</done>
+   <chance>30</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
    <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
   </avail>
  </mission>
