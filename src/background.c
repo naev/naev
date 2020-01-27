@@ -70,6 +70,7 @@ static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
+static GLuint stars_glsl_program = 0;
 
 
 /*
@@ -82,6 +83,7 @@ static void background_clearImgArr( background_image_t **arr );
 /* Sorting. */
 static int bkg_compare( const void *p1, const void *p2 );
 static void bkg_sort( background_image_t *arr );
+static GLuint stars_glsl_program_compile( void );
 
 
 /**
@@ -190,6 +192,8 @@ void background_renderStars( const double dt )
    /*
     * gprof claims it's the slowest thing in the game!
     */
+
+   glUseProgram(stars_glsl_program);
 
    /* Do some scaling for now. */
    z = cam_getZoom();
@@ -312,6 +316,8 @@ void background_renderStars( const double dt )
 
    /* Check for errors. */
    gl_checkErr();
+
+   glUseProgram(0);
 }
 
 
@@ -467,6 +473,9 @@ int background_init (void)
 {
    /* Load Lua. */
    bkg_def_env = background_create( "default" );
+
+   stars_glsl_program = stars_glsl_program_compile();
+
    return 0;
 }
 
@@ -606,5 +615,28 @@ void background_free (void)
    }
    nstars = 0;
    mstars = 0;
+
+   glDeleteProgram(stars_glsl_program);
+   stars_glsl_program = 0;
 }
 
+static GLuint stars_glsl_program_compile( void ) {
+   GLuint vertex_shader, fragment_shader, program;
+
+   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, "stars.vert");
+   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, "stars.frag");
+
+   program = glCreateProgram();
+   glAttachShader(program, vertex_shader);
+   glAttachShader(program, fragment_shader);
+   if (gl_program_link(program) == -1) {
+      program = 0;
+   }
+
+   glDeleteShader(vertex_shader);
+   glDeleteShader(fragment_shader);
+
+   gl_checkErr();
+
+   return program;
+}
