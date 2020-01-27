@@ -8,6 +8,8 @@
 
 #include <stdint.h>
 
+#define GL_GLEXT_PROTOTYPES
+
 #include "SDL.h"
 #include "SDL_opengl.h"
 
@@ -24,6 +26,7 @@
 #include "opengl_matrix.h"
 #include "opengl_vbo.h"
 #include "opengl_render.h"
+#include "opengl_shader.h"
 
 
 /* Recommended for compatibility and such */

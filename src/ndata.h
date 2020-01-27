@@ -63,6 +63,8 @@
 #define LUA_INCLUDE_PATH         "dat/scripts/" /**< Path for Lua includes. */
 #define AI_PATH                  "dat/ai/" /**< Location of the AI files. */
 
+#define GLSL_PATH                "dat/glsl/"
+
 /*
  * ndata open/close
  */
