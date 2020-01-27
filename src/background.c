@@ -123,8 +123,8 @@ void background_initStars( int n )
       /* Set the position. */
       star_vertex[4*i+0] = RNGF()*w - hw;
       star_vertex[4*i+1] = RNGF()*h - hh;
-      star_vertex[4*i+2] = 0.;
-      star_vertex[4*i+3] = 0.;
+      star_vertex[4*i+2] = star_vertex[4*i+0];
+      star_vertex[4*i+3] = star_vertex[4*i+1];
       /* Set the colour. */
       star_colour[8*i+0] = 1.;
       star_colour[8*i+1] = 1.;
@@ -133,7 +133,7 @@ void background_initStars( int n )
       star_colour[8*i+4] = 1.;
       star_colour[8*i+5] = 1.;
       star_colour[8*i+6] = 1.;
-      star_colour[8*i+7] = 0.;
+      star_colour[8*i+7] = star_colour[8*i+3];
    }
 
    /* Destroy old VBO. */
@@ -180,7 +180,7 @@ void background_renderStars( const double dt )
 {
    (void) dt;
    unsigned int i;
-   GLfloat hh, hw, h, w;
+   GLfloat h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
    double z;
@@ -191,6 +191,10 @@ void background_renderStars( const double dt )
    /*
     * gprof claims it's the slowest thing in the game!
     */
+
+   if (stars_glsl_program == 0) {
+      return;
+   }
 
    glUseProgram(stars_glsl_program);
 
@@ -238,34 +242,17 @@ void background_renderStars( const double dt )
    w += conf.zoom_stars * (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
    h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-   hw = w/2.;
-   hh = h/2.;
-
-   /* Calculate new star positions. */
-   for (i=0; i < nstars; i++) {
-      /* Calculate new position */
-      b = 1./(9. - 10.*star_colour[8*i+3]);
-      star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
-      star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
-
-      /* check boundaries */
-      star_vertex[4*i+0] = fmod(star_vertex[4*i+0] - hw, w) + hw;
-      star_vertex[4*i+1] = fmod(star_vertex[4*i+1] - hh, h) + hh;
-
-      /* Generate lines. */
-      if (shade_mode) {
-         brightness = star_colour[8*i+3];
-         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
-      }
-   }
-
-   /* Upload the data. */
-   gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
 
    /* Render. */
    gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "star_x"), star_x);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "star_y"), star_y);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "w"), w);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "h"), h);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "x"), x);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "y"), y);
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
       glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
@@ -273,10 +260,6 @@ void background_renderStars( const double dt )
    }
    else
       glDrawArrays( GL_POINTS, 0, nstars );
-
-   /* Clear star movement. */
-   star_x = 0.;
-   star_y = 0.;
 
    /* Disable vertex array. */
    gl_vboDeactivate();
