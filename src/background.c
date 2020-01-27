@@ -170,27 +170,15 @@ void background_moveStars( double x, double y )
 /**
  * @brief Renders the starry background.
  *
- * This could really benefit from OpenCL directly. It would probably give a great
- *  speed up, although we'll consider it when we get a runtime linking OpenCL
- *  framework someday.
- *
  *    @param dt Current delta tick.
  */
 void background_renderStars( const double dt )
 {
    (void) dt;
-   unsigned int i;
    GLfloat h, w;
-   GLfloat x, y, m, b;
-   GLfloat brightness;
+   GLfloat x, y, m;
    double z;
    int shade_mode;
-   int j, n;
-
-
-   /*
-    * gprof claims it's the slowest thing in the game!
-    */
 
    if (stars_glsl_program == 0) {
       return;
@@ -223,7 +211,6 @@ void background_renderStars( const double dt )
          y = m*sin(VANGLE(player.p->solid->vel));
       }
       else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
-
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
