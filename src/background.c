@@ -184,7 +184,6 @@ void background_renderStars( const double dt )
    GLfloat x, y, m, b;
    GLfloat brightness;
    double z;
-   double sx, sy;
    int shade_mode;
    int j, n;
 
@@ -213,36 +212,16 @@ void background_renderStars( const double dt )
       hw = w/2.;
       hh = h/2.;
 
-      /* Calculate multiple updates in the case the ship is moving really ridiculously fast. */
-      if ((star_x > SCREEN_W) || (star_y > SCREEN_H)) {
-         sx = ceil( star_x / SCREEN_W );
-         sy = ceil( star_y / SCREEN_H );
-         n  = MAX( sx, sy );
-         star_x /= (double)n;
-         star_y /= (double)n;
-      }
-      else
-         n = 1;
-
       /* Calculate new star positions. */
-      for (j=0; j < n; j++) {
-         for (i=0; i < nstars; i++) {
+      for (i=0; i < nstars; i++) {
+         /* Calculate new position */
+         b = 1./(9. - 10.*star_colour[8*i+3]);
+         star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
+         star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
 
-            /* Calculate new position */
-            b = 1./(9. - 10.*star_colour[8*i+3]);
-            star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
-            star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
-
-            /* check boundaries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
+         /* check boundaries */
+         star_vertex[4*i+0] = fmod(star_vertex[4*i+0] - hw, w) + hw;
+         star_vertex[4*i+1] = fmod(star_vertex[4*i+1] - hh, h) + hh;
       }
 
       /* Upload the data. */
