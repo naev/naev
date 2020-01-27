@@ -70,6 +70,7 @@ static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
+static GLuint stars_glsl_program = 0;
 
 
 /*
@@ -82,6 +83,7 @@ static void background_clearImgArr( background_image_t **arr );
 /* Sorting. */
 static int bkg_compare( const void *p1, const void *p2 );
 static void bkg_sort( background_image_t *arr );
+static GLuint stars_glsl_program_compile( void );
 
 
 /**
@@ -121,8 +123,8 @@ void background_initStars( int n )
       /* Set the position. */
       star_vertex[4*i+0] = RNGF()*w - hw;
       star_vertex[4*i+1] = RNGF()*h - hh;
-      star_vertex[4*i+2] = 0.;
-      star_vertex[4*i+3] = 0.;
+      star_vertex[4*i+2] = star_vertex[4*i+0];
+      star_vertex[4*i+3] = star_vertex[4*i+1];
       /* Set the colour. */
       star_colour[8*i+0] = 1.;
       star_colour[8*i+1] = 1.;
@@ -131,7 +133,7 @@ void background_initStars( int n )
       star_colour[8*i+4] = 1.;
       star_colour[8*i+5] = 1.;
       star_colour[8*i+6] = 1.;
-      star_colour[8*i+7] = 0.;
+      star_colour[8*i+7] = star_colour[8*i+3];
    }
 
    /* Destroy old VBO. */
@@ -168,28 +170,23 @@ void background_moveStars( double x, double y )
 /**
  * @brief Renders the starry background.
  *
- * This could really benefit from OpenCL directly. It would probably give a great
- *  speed up, although we'll consider it when we get a runtime linking OpenCL
- *  framework someday.
- *
  *    @param dt Current delta tick.
  */
 void background_renderStars( const double dt )
 {
    (void) dt;
-   unsigned int i;
-   GLfloat hh, hw, h, w;
-   GLfloat x, y, m, b;
-   GLfloat brightness;
+   GLfloat h, w;
+   GLfloat x, y, m;
    double z;
-   double sx, sy;
    int shade_mode;
-   int j, n;
 
+   /* TODO: Use geometry shader instead of drawing both points and lines */
 
-   /*
-    * gprof claims it's the slowest thing in the game!
-    */
+   if (stars_glsl_program == 0) {
+      return;
+   }
+
+   glUseProgram(stars_glsl_program);
 
    /* Do some scaling for now. */
    z = cam_getZoom();
@@ -197,53 +194,6 @@ void background_renderStars( const double dt )
    gl_matrixPush();
       gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
       gl_matrixScale( z, z );
-
-   if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-      /* Calculate some dimensions. */
-      w  = (SCREEN_W + 2.*STAR_BUF);
-      w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-      h  = (SCREEN_H + 2.*STAR_BUF);
-      h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-      hw = w/2.;
-      hh = h/2.;
-
-      /* Calculate multiple updates in the case the ship is moving really ridiculously fast. */
-      if ((star_x > SCREEN_W) || (star_y > SCREEN_H)) {
-         sx = ceil( star_x / SCREEN_W );
-         sy = ceil( star_y / SCREEN_H );
-         n  = MAX( sx, sy );
-         star_x /= (double)n;
-         star_y /= (double)n;
-      }
-      else
-         n = 1;
-
-      /* Calculate new star positions. */
-      for (j=0; j < n; j++) {
-         for (i=0; i < nstars; i++) {
-
-            /* Calculate new position */
-            b = 1./(9. - 10.*star_colour[8*i+3]);
-            star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
-            star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
-
-            /* check boundaries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
-      }
-
-      /* Upload the data. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-   }
 
    /* Decide on shade mode. */
    shade_mode = 0;
@@ -263,7 +213,6 @@ void background_renderStars( const double dt )
          y = m*sin(VANGLE(player.p->solid->vel));
       }
       else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
-
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
@@ -275,23 +224,22 @@ void background_renderStars( const double dt )
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
-
-      if (shade_mode) {
-         /* Generate lines. */
-         for (i=0; i < nstars; i++) {
-            brightness = star_colour[8*i+3];
-            star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-            star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
-         }
-
-         /* Upload new data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      }
    }
+
+   /* Calculate some dimensions. */
+   w  = (SCREEN_W + 2.*STAR_BUF);
+   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+   h  = (SCREEN_H + 2.*STAR_BUF);
+   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
 
    /* Render. */
    gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
+   glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "w"), w);
+   glUniform1f(glGetUniformLocation(stars_glsl_program, "h"), h);
+   glUniform2f(glGetUniformLocation(stars_glsl_program, "xy"), x, y);
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
       glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
@@ -299,10 +247,6 @@ void background_renderStars( const double dt )
    }
    else
       glDrawArrays( GL_POINTS, 0, nstars );
-
-   /* Clear star movement. */
-   star_x = 0.;
-   star_y = 0.;
 
    /* Disable vertex array. */
    gl_vboDeactivate();
@@ -312,6 +256,8 @@ void background_renderStars( const double dt )
 
    /* Check for errors. */
    gl_checkErr();
+
+   glUseProgram(0);
 }
 
 
@@ -467,6 +413,9 @@ int background_init (void)
 {
    /* Load Lua. */
    bkg_def_env = background_create( "default" );
+
+   stars_glsl_program = stars_glsl_program_compile();
+
    return 0;
 }
 
@@ -606,5 +555,28 @@ void background_free (void)
    }
    nstars = 0;
    mstars = 0;
+
+   glDeleteProgram(stars_glsl_program);
+   stars_glsl_program = 0;
 }
 
+static GLuint stars_glsl_program_compile( void ) {
+   GLuint vertex_shader, fragment_shader, program;
+
+   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, "stars.vert");
+   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, "stars.frag");
+
+   program = glCreateProgram();
+   glAttachShader(program, vertex_shader);
+   glAttachShader(program, fragment_shader);
+   if (gl_program_link(program) == -1) {
+      program = 0;
+   }
+
+   glDeleteShader(vertex_shader);
+   glDeleteShader(fragment_shader);
+
+   gl_checkErr();
+
+   return program;
+}

@@ -109,6 +109,7 @@ CODE_SOURCE = \
 	opengl_ext.c \
 	opengl_matrix.c \
 	opengl_render.c \
+	opengl_shader.c \
 	opengl_tex.c \
 	opengl_vbo.c \
 	options.c \
@@ -252,6 +253,7 @@ CODE_SOURCE = \
 	opengl_ext.h \
 	opengl_matrix.h \
 	opengl_render.h \
+	opengl_shader.h \
 	opengl_tex.h \
 	opengl_vbo.h \
 	options.h \
