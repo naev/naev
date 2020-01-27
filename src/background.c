@@ -180,6 +180,8 @@ void background_renderStars( const double dt )
    double z;
    int shade_mode;
 
+   /* TODO: Use geometry shader instead of drawing both points and lines */
+
    if (stars_glsl_program == 0) {
       return;
    }
