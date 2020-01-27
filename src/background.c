@@ -234,12 +234,10 @@ void background_renderStars( const double dt )
    gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
    glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
-   glUniform1f(glGetUniformLocation(stars_glsl_program, "star_x"), star_x);
-   glUniform1f(glGetUniformLocation(stars_glsl_program, "star_y"), star_y);
+   glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
    glUniform1f(glGetUniformLocation(stars_glsl_program, "w"), w);
    glUniform1f(glGetUniformLocation(stars_glsl_program, "h"), h);
-   glUniform1f(glGetUniformLocation(stars_glsl_program, "x"), x);
-   glUniform1f(glGetUniformLocation(stars_glsl_program, "y"), y);
+   glUniform2f(glGetUniformLocation(stars_glsl_program, "xy"), x, y);
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
       glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */

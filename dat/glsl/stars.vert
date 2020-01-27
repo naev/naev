@@ -1,24 +1,20 @@
 #version 130
 
-uniform float star_x;
-uniform float star_y;
+uniform vec2  star_xy;
 uniform float w;
 uniform float h;
 
 uniform int shade_mode;
-uniform float x;
-uniform float y;
+uniform vec2 xy;
 
 out vec4 color;
 
 void main(void) {
    float brightness = gl_Color[3];
-   gl_Position = gl_Vertex;
 
    /* Calculate position */
    float b = 1./(9. - 10.*brightness);
-   gl_Position[0] += star_x*b;
-   gl_Position[1] += star_y*b;
+   gl_Position = gl_Vertex + vec4(star_xy, 0, 0) * b;
 
    /* check boundaries */
    gl_Position[0] = mod(gl_Position[0] + w/2, w) - w/2;
@@ -26,8 +22,7 @@ void main(void) {
 
    /* Generate lines. */
    if (shade_mode != 0 && mod(gl_VertexID, 2) == 1) {
-      gl_Position[0] += x*brightness;
-      gl_Position[1] += y*brightness;
+      gl_Position += vec4(xy, 0, 0) * brightness;
    }
 
    gl_Position = gl_ModelViewProjectionMatrix * gl_Position;
