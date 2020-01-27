@@ -201,33 +201,6 @@ void background_renderStars( const double dt )
       gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
       gl_matrixScale( z, z );
 
-   if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-      /* Calculate some dimensions. */
-      w  = (SCREEN_W + 2.*STAR_BUF);
-      w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-      h  = (SCREEN_H + 2.*STAR_BUF);
-      h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-      hw = w/2.;
-      hh = h/2.;
-
-      /* Calculate new star positions. */
-      for (i=0; i < nstars; i++) {
-         /* Calculate new position */
-         b = 1./(9. - 10.*star_colour[8*i+3]);
-         star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
-         star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
-
-         /* check boundaries */
-         star_vertex[4*i+0] = fmod(star_vertex[4*i+0] - hw, w) + hw;
-         star_vertex[4*i+1] = fmod(star_vertex[4*i+1] - hh, h) + hh;
-      }
-
-      /* Upload the data. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-   }
-
    /* Decide on shade mode. */
    shade_mode = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -258,18 +231,40 @@ void background_renderStars( const double dt )
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
+   }
 
-      if (shade_mode) {
+   if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING)) { /* update position */
+
+      /* Calculate some dimensions. */
+      w  = (SCREEN_W + 2.*STAR_BUF);
+      w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+      h  = (SCREEN_H + 2.*STAR_BUF);
+      h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+      hw = w/2.;
+      hh = h/2.;
+
+      /* Calculate new star positions. */
+      for (i=0; i < nstars; i++) {
+         /* Calculate new position */
+         b = 1./(9. - 10.*star_colour[8*i+3]);
+         star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
+         star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
+
+         /* check boundaries */
+         star_vertex[4*i+0] = fmod(star_vertex[4*i+0] - hw, w) + hw;
+         star_vertex[4*i+1] = fmod(star_vertex[4*i+1] - hh, h) + hh;
+
          /* Generate lines. */
-         for (i=0; i < nstars; i++) {
+         if (shade_mode) {
             brightness = star_colour[8*i+3];
             star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
             star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
          }
-
-         /* Upload new data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
       }
+
+      /* Upload the data. */
+      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
    }
 
    /* Render. */
