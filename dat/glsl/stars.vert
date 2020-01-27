@@ -21,9 +21,8 @@ void main(void) {
    gl_Position[1] += star_y*b;
 
    /* check boundaries */
-   // TODO: Why isn't this working?
-   //gl_Position[0] = mod(gl_Position[0] - w/2, w) + w/2;
-   //gl_Position[1] = mod(gl_Position[1] - h/2, h) + h/2;
+   gl_Position[0] = mod(gl_Position[0] + w/2, w) - w/2;
+   gl_Position[1] = mod(gl_Position[1] + h/2, h) - h/2;
 
    /* Generate lines. */
    if (shade_mode != 0 && mod(gl_VertexID, 2) == 1) {
