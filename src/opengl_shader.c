@@ -2,25 +2,28 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+#include "naev.h"
 #include "opengl.h"
 #include "ndata.h"
 #include "log.h"
+#include "nstring.h"
 
+/**
+ * @brief Open and compile GLSL shader from ndata.
+ */
 GLuint gl_shader_read(GLuint type, const char *filename) {
    size_t bufsize;
    char *buf;
-   char *path;
+   char path[PATH_MAX];
    GLuint shader, length;
    GLuint compile_status, log_length;
    char *log;
 
-   path = malloc(strlen(GLSL_PATH) + strlen(filename) + 1);
-   strcpy(path, GLSL_PATH);
-   strcat(path, filename);
+   nsnprintf(path, sizeof(path), GLSL_PATH "%s", filename);
 
    buf = ndata_read(path, &bufsize);
    if (buf == NULL) {
-      free(path);
+      WARN( _("Shader '%s' not found."), path);
       return 0;
    }
    length = bufsize;
@@ -29,23 +32,25 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
    glShaderSource(shader, 1, (const char**)&buf, &length);
    glCompileShader(shader);
 
-   // Check for compile error
+   /* Check for compile error */
    glGetShaderiv(shader, GL_COMPILE_STATUS, &compile_status);
    if (compile_status == GL_FALSE) {
       glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
-      ERR("%s\n", log);
+      WARN("%s\n", log);
       free(log);
       shader = 0;
    }
    
-   free(path);
    free(buf);
 
    return shader;
 }
 
+/**
+ * @brief Link a GLSL program and check for link error.
+ */
 int gl_program_link(GLuint program) {
    GLuint link_status, log_length;
    char *log;
@@ -58,7 +63,7 @@ int gl_program_link(GLuint program) {
       glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
-      ERR("%s\n", log);
+      WARN("%s\n", log);
       free(log);
       return -1;
    }
