@@ -1290,9 +1290,6 @@ void takeoff( int delay )
    /* Refuel if needed. */
    land_refuel();
 
-   /* Refill ammo if needed. */
-   equipment_addAmmo();
-
    /* In case we had paused messy sounds. */
    sound_stopAll();
 
@@ -1315,6 +1312,9 @@ void takeoff( int delay )
 
    /* heal the player */
    pilot_healLanded( player.p );
+
+   /* Refill ammo */
+   pilot_fillAmmo( player.p );
 
    /* Clear planet target. Allows for easier autonav out of the system. */
    player_targetPlanetSet( -1 );
