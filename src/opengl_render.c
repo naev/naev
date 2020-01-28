@@ -265,7 +265,7 @@ void gl_blitTexture(  const glTexture* texture,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c )
 {
-   GLfloat vertex[4*2], tex[4*2], col[4*4];
+   GLfloat vertex[4*2], tex[4*2];
 
    if (texture_glsl_program == 0) {
       return;
@@ -307,25 +307,7 @@ void gl_blitTexture(  const glTexture* texture,
          gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
 
    /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -459,25 +441,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
 
    /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
 
    /* Set the vertex. */
    vertex[0] = (GLfloat)x;

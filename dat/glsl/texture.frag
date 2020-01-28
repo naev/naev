@@ -1,9 +1,9 @@
 #version 130
 
+uniform vec4 color;
 uniform sampler2D sampler;
 
 in vec2 tex_coord;
-in vec4 color;
 out vec4 color_out;
 
 void main(void) {
