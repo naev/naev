@@ -308,7 +308,7 @@ void gl_blitTexture(  const glTexture* texture,
 
    /* Set shader uniforms. */
    glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
-   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "projection_matrix"), gl_view_matrix);
+   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "projection"), gl_view_matrix);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

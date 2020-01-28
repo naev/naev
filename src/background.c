@@ -179,6 +179,7 @@ void background_renderStars( const double dt )
    GLfloat x, y, m;
    double z;
    int shade_mode;
+   gl_Matrix4 projection;
 
    /* TODO: Use geometry shader instead of drawing both points and lines */
 
@@ -191,9 +192,8 @@ void background_renderStars( const double dt )
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   gl_matrixPush();
-      gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
-      gl_matrixScale( z, z );
+   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2., SCREEN_H/2., 0 );
+   projection = gl_Matrix4_Scale( projection, z, z, 1 );
 
    /* Decide on shade mode. */
    shade_mode = 0;
@@ -235,6 +235,7 @@ void background_renderStars( const double dt )
    /* Render. */
    gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   gl_Matrix4_Uniform(glGetUniformLocation(stars_glsl_program, "projection"), projection);
    glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "wh"), w, h);
@@ -249,9 +250,6 @@ void background_renderStars( const double dt )
 
    /* Disable vertex array. */
    gl_vboDeactivate();
-
-   /* Pop matrix. */
-   gl_matrixPop();
 
    /* Check for errors. */
    gl_checkErr();

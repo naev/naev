@@ -1,5 +1,7 @@
 #version 130
 
+uniform mat4 projection;
+
 uniform vec2 star_xy;
 uniform vec2 wh;
 
@@ -24,7 +26,7 @@ void main(void) {
       gl_Position.xy += xy * brightness;
    }
 
-   gl_Position = gl_ModelViewProjectionMatrix * gl_Position;
+   gl_Position = projection * gl_Position;
 
    color = gl_Color;
 }
