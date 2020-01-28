@@ -679,9 +679,9 @@ void gl_resize( int w, int h )
  */
 void gl_viewport( int x, int y, int w, int h )
 {
-   gl_matrixMode(GL_PROJECTION);
-   gl_matrixIdentity();
-   gl_matrixOrtho( 0., /* Left edge. */
+   gl_Matrix4 proj;
+
+   proj = gl_Matrix4_Ortho( 0., /* Left edge. */
             gl_screen.nw, /* Right edge. */
             0., /* Bottom edge. */
             gl_screen.nh, /* Top edge. */
@@ -691,7 +691,7 @@ void gl_viewport( int x, int y, int w, int h )
    /* Take into account possible translation. */
    gl_screen.x = x;
    gl_screen.y = y;
-   gl_matrixTranslate( x, y );
+   proj = gl_Matrix4_Translate(proj, x, y, 0);
 
    /* Set screen size. */
    gl_screen.w = w;
@@ -699,7 +699,11 @@ void gl_viewport( int x, int y, int w, int h )
 
    /* Take into account possible scaling. */
    if (gl_screen.scale != 1.)
-      gl_matrixScale( gl_screen.wscale, gl_screen.hscale );
+      proj = gl_Matrix4_Scale(proj, gl_screen.wscale, gl_screen.hscale, 1);
+
+   /* TODO: Remove once everything is using shaders */
+   gl_matrixMode(GL_PROJECTION);
+   gl_Matrix4_Load(proj);
 }
 
 
