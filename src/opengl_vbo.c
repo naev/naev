@@ -41,9 +41,6 @@ struct gl_vbo_s {
 };
 
 
-static int has_vbo = 0; /**< Whether or not has VBO. */
-
-
 /**
  * Prototypes.
  */
@@ -57,9 +54,6 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
  */
 int gl_initVBO (void)
 {
-   if (nglGenBuffers != NULL)
-      has_vbo = 1;
-
    return 0;
 }
 
@@ -69,7 +63,6 @@ int gl_initVBO (void)
  */
 void gl_exitVBO (void)
 {
-   has_vbo = 0;
 }
 
 
@@ -92,23 +85,13 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    /* General stuff. */
    vbo->size = size;
 
-   if (has_vbo) {
-      /* Create the buffer. */
-      nglGenBuffers( 1, &vbo->id );
+   /* Create the buffer. */
+   nglGenBuffers( 1, &vbo->id );
 
-      /* Upload the data. */
-      nglBindBuffer( target, vbo->id );
-      nglBufferData( target, size, data, usage );
-      nglBindBuffer( target, 0 );
-   }
-   else {
-      vbo->size = size;
-      vbo->data = malloc(size);
-      if (data == NULL)
-         memset( vbo->data, 0, size );
-      else
-         memcpy( vbo->data, data, size );
-   }
+   /* Upload the data. */
+   nglBindBuffer( target, vbo->id );
+   nglBufferData( target, size, data, usage );
+   nglBindBuffer( target, 0 );
 
    /* Check for errors. */
    gl_checkErr();
@@ -130,29 +113,19 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
 
    vbo->size = size;
 
-   if (has_vbo) {
-      /* Get usage. */
-      if (vbo->type == NGL_VBO_STREAM)
-         usage = GL_STREAM_DRAW;
-      else if (vbo->type == NGL_VBO_DYNAMIC)
-         usage = GL_DYNAMIC_DRAW;
-      else if (vbo->type == NGL_VBO_STATIC)
-         usage = GL_STATIC_DRAW;
-      else
-         usage = GL_STREAM_DRAW;
+   /* Get usage. */
+   if (vbo->type == NGL_VBO_STREAM)
+      usage = GL_STREAM_DRAW;
+   else if (vbo->type == NGL_VBO_DYNAMIC)
+      usage = GL_DYNAMIC_DRAW;
+   else if (vbo->type == NGL_VBO_STATIC)
+      usage = GL_STATIC_DRAW;
+   else
+      usage = GL_STREAM_DRAW;
 
-      /* Get new data. */
-      nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-      nglBufferData( GL_ARRAY_BUFFER, size, data, usage );
-   }
-   else {
-      /* Grow memory. */
-      vbo->data = realloc( vbo->data, size );
-      if (data == NULL)
-         memset( vbo->data, 0, size );
-      else
-         memcpy( vbo->data, data, size );
-   }
+   /* Get new data. */
+   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   nglBufferData( GL_ARRAY_BUFFER, size, data, usage );
 
    /* Check for errors. */
    gl_checkErr();
@@ -169,12 +142,8 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
  */
 void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
 {
-   if (has_vbo) {
-      nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-      nglBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
-   }
-   else
-      memcpy( &vbo->data[offset], data, size );
+   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   nglBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
 
    /* Check for errors. */
    gl_checkErr();
@@ -248,12 +217,8 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, void* data )
  */
 void* gl_vboMap( gl_vbo *vbo )
 {
-   if (has_vbo) {
-      nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-      return nglMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
-   }
-   else
-      return vbo->data;
+   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   return nglMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
 }
 
 
@@ -265,8 +230,7 @@ void* gl_vboMap( gl_vbo *vbo )
 void gl_vboUnmap( gl_vbo *vbo )
 {
    (void) vbo;
-   if (has_vbo)
-      nglUnmapBuffer( GL_ARRAY_BUFFER );
+   nglUnmapBuffer( GL_ARRAY_BUFFER );
 
    /* Check for errors. */
    gl_checkErr();
@@ -305,12 +269,8 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
    const GLvoid *pointer;
 
    /* Set up. */
-   if (has_vbo) {
-      nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-      pointer = BUFFER_OFFSET(offset);
-   }
-   else
-      pointer = &vbo->data[offset];
+   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   pointer = BUFFER_OFFSET(offset);
 
    /* Class specific. */
    switch (class) {
@@ -356,8 +316,7 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
  */
 void gl_vboDeactivate (void)
 {
-   if (has_vbo)
-      nglBindBuffer(GL_ARRAY_BUFFER, 0);
+   nglBindBuffer(GL_ARRAY_BUFFER, 0);
    glDisableClientState(GL_VERTEX_ARRAY);
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -380,11 +339,8 @@ void gl_vboDeactivate (void)
  */
 void gl_vboDestroy( gl_vbo *vbo )
 {
-   if (has_vbo)
-      /* Destroy VBO. */
-      nglDeleteBuffers( 1, &vbo->id );
-   else
-      free(vbo->data);
+   /* Destroy VBO. */
+   nglDeleteBuffers( 1, &vbo->id );
 
    /* Check for errors. */
    gl_checkErr();
@@ -392,15 +348,3 @@ void gl_vboDestroy( gl_vbo *vbo )
    /* Free memory. */
    free(vbo);
 }
-
-
-/**
- * @brief Checks to see if the VBOs are supported by HW.
- *
- *    @return 1 if VBOs are enabled and supported by HW.
- */
-int gl_vboIsHW (void)
-{
-   return has_vbo;
-}
-

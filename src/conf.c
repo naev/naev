@@ -252,7 +252,6 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = FSAA_DEFAULT;
    conf.vsync        = VSYNC_DEFAULT;
-   conf.vbo          = VBO_DEFAULT; /* Seems to cause a lot of issues. */
    conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
    conf.interpolate  = INTERPOLATION_DEFAULT;
@@ -346,7 +345,6 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt("fsaa",conf.fsaa);
       conf_loadBool("vsync",conf.vsync);
-      conf_loadBool("vbo",conf.vbo);
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
       conf_loadBool("interpolate",conf.interpolate);
@@ -897,10 +895,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Synchronize framebuffer updates with the vertical blanking interval"));
    conf_saveBool("vsync",conf.vsync);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Use OpenGL Vertex Buffer Objects extensions"));
-   conf_saveBool("vbo",conf.vbo);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL MipMaps"));

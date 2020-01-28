@@ -86,7 +86,7 @@ static int gl_extMultitexture (void)
 static int gl_extVBO (void)
 {
    /* Vertex Buffers. */
-   if (conf.vbo && gl_hasVersion( 1, 5 )) {
+   if (gl_hasVersion( 1, 5 )) {
       nglGenBuffers     = gl_extGetProc("glGenBuffers");
       nglBindBuffer     = gl_extGetProc("glBindBuffer");
       nglBufferData     = gl_extGetProc("glBufferData");
@@ -95,7 +95,7 @@ static int gl_extVBO (void)
       nglUnmapBuffer    = gl_extGetProc("glUnmapBuffer");
       nglDeleteBuffers  = gl_extGetProc("glDeleteBuffers");
    }
-   else if (conf.vbo && gl_hasExt("GL_ARB_vertex_buffer_object")) {
+   else if (gl_hasExt("GL_ARB_vertex_buffer_object")) {
       nglGenBuffers     = gl_extGetProc("glGenBuffersARB");
       nglBindBuffer     = gl_extGetProc("glBindBufferARB");
       nglBufferData     = gl_extGetProc("glBufferDataARB");
@@ -112,10 +112,8 @@ static int gl_extVBO (void)
       nglMapBuffer      = NULL;
       nglUnmapBuffer    = NULL;
       nglDeleteBuffers  = NULL;
-      if (conf.vbo) {
-         WARN("GL_ARB_vertex_buffer_object not found!");
-         return -1;
-      }
+      WARN("GL_ARB_vertex_buffer_object not found!");
+      return -1;
    }
    return 0;
 }

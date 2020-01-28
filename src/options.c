@@ -1246,9 +1246,6 @@ static void opt_video( unsigned int wid )
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkVBO", _("Vertex Buffer Objects*"), NULL, conf.vbo );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkMipmaps", _("Mipmaps*"), NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
@@ -1463,11 +1460,6 @@ static int opt_videoSave( unsigned int wid, char *str )
       conf.vsync = f;
       opt_needRestart();
    }
-   f = window_checkboxState( wid, "chkVBO" );
-   if (conf.vbo != f) {
-      conf.vbo = f;
-      opt_needRestart();
-   }
    f = window_checkboxState( wid, "chkMipmaps" );
    if (conf.mipmaps != f) {
       conf.mipmaps = f;
@@ -1518,7 +1510,6 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    /* Checkboxes. */
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
-   window_checkboxSet( wid, "chkVBO", VBO_DEFAULT );
    window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
    window_checkboxSet( wid, "chkInterpolate", INTERPOLATION_DEFAULT );
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );

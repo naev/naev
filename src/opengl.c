@@ -476,9 +476,8 @@ static int gl_getGLInfo (void)
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? _("yes") : _("no"),
          gl_screen.fsaa, gl_screen.tex_max);
-   DEBUG(_("vsync: %s, vbo: %s, mm: %s, compress: %s, npot: %s"),
+   DEBUG(_("vsync: %s, mm: %s, compress: %s, npot: %s"),
          gl_has(OPENGL_VSYNC) ? _("yes") : _("no"),
-         gl_vboIsHW() ? _("yes") : _("no"),
          gl_texHasMipmaps() ? _("yes") : _("no"),
          gl_texHasCompress() ? _("yes") : _("no"),
          gl_needPOT() ? _("no") : _("yes") );

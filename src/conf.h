@@ -28,7 +28,6 @@
 #define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
-#define VBO_DEFAULT                          0     /**< Whether to use Vertex Buffer Objects. */
 #define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
 #define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
 #define INTERPOLATION_DEFAULT                1     /**< Whether to use interpolation. */
@@ -72,7 +71,6 @@ typedef struct PlayerConf_s {
    /* OpenGL properties. */
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
    int vsync; /**< Whether or not to use vsync. */
-   int vbo; /**< Use vbo. */
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
    int interpolate; /**< Use texture interpolation. */
