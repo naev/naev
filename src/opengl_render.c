@@ -44,6 +44,7 @@
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
+static GLuint texture_glsl_program = 0;
 
 
 /*
@@ -63,6 +64,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c );
+static GLuint texture_glsl_program_compile( void );
 
 
 /**
@@ -265,6 +267,12 @@ void gl_blitTexture(  const glTexture* texture,
 {
    GLfloat vertex[4*2], tex[4*2], col[4*4];
 
+   if (texture_glsl_program == 0) {
+      return;
+   }
+
+   glUseProgram(texture_glsl_program);
+
    /* Bind the texture. */
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
@@ -328,6 +336,8 @@ void gl_blitTexture(  const glTexture* texture,
 
    /* anything failed? */
    gl_checkErr();
+
+   glUseProgram(0);
 }
 
 
@@ -357,6 +367,10 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat vertex[4*2], tex[4*2], col[4*4];
    GLfloat mcol[4] = { 0., 0., 0. };
 
+   if (texture_glsl_program == 0) {
+      return;
+   }
+
    /* No interpolation. */
    if (!conf.interpolate || (tb == NULL)) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
@@ -381,6 +395,8 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
          gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
+
+   glUseProgram(texture_glsl_program);
 
    /* Set default colour. */
    if (c == NULL)
@@ -500,6 +516,8 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    nglActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
+
+   glUseProgram(0);
 
    /* anything failed? */
    gl_checkErr();
@@ -1163,6 +1181,8 @@ int gl_initRender (void)
    /* Initialize the circles. */
    gl_circle      = gl_genCircle( 128 );
 
+   texture_glsl_program = texture_glsl_program_compile();
+
    return 0;
 }
 
@@ -1181,3 +1201,23 @@ void gl_exitRender (void)
    gl_circle = NULL;
 }
 
+static GLuint texture_glsl_program_compile( void ) {
+   GLuint vertex_shader, fragment_shader, program;
+
+   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, "texture.vert");
+   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, "texture.frag");
+
+   program = glCreateProgram();
+   glAttachShader(program, vertex_shader);
+   glAttachShader(program, fragment_shader);
+   if (gl_program_link(program) == -1) {
+      program = 0;
+   }
+
+   glDeleteShader(vertex_shader);
+   glDeleteShader(fragment_shader);
+
+   gl_checkErr();
+
+   return program;
+}
