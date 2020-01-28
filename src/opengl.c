@@ -69,6 +69,7 @@ static int gl_view_x = 0; /* X viewport offset. */
 static int gl_view_y = 0; /* Y viewport offset. */
 static int gl_view_w = 0; /* Viewport width. */
 static int gl_view_h = 0; /* Viewport height. */
+gl_Matrix4 gl_view_matrix = {0};
 
 
 /* Whether Intel is the OpenGL vendor. */
@@ -704,6 +705,8 @@ void gl_viewport( int x, int y, int w, int h )
    /* TODO: Remove once everything is using shaders */
    gl_matrixMode(GL_PROJECTION);
    gl_Matrix4_Load(proj);
+
+   gl_view_matrix = proj;
 }
 
 

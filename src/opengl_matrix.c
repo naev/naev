@@ -234,3 +234,7 @@ gl_Matrix4 gl_Matrix4_Get ( GLenum pname ) {
    glGetFloatv(pname, gl_Matrix4_Ptr(&m));
    return m;
 }
+
+void gl_Matrix4_Uniform( GLint location, gl_Matrix4 m ) {
+   glUniformMatrix4fv(location, 1, GL_FALSE, gl_Matrix4_Ptr(&m));
+}

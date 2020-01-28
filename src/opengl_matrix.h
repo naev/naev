@@ -55,6 +55,7 @@ gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z );
 GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m );
 void gl_Matrix4_Load( gl_Matrix4 m );
 gl_Matrix4 gl_Matrix4_Get ( GLenum pname );
+void gl_Matrix4_Uniform( GLint location, gl_Matrix4 m );
 
 #endif /* OPENGL_MATRIX_H */
 

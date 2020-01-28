@@ -306,8 +306,9 @@ void gl_blitTexture(  const glTexture* texture,
    gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE_COORD_ARRAY,
          gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
 
-   /* Set the colour. */
+   /* Set shader uniforms. */
    glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "projection_matrix"), gl_view_matrix);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
