@@ -237,8 +237,7 @@ void background_renderStars( const double dt )
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
    glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
-   glUniform1f(glGetUniformLocation(stars_glsl_program, "w"), w);
-   glUniform1f(glGetUniformLocation(stars_glsl_program, "h"), h);
+   glUniform2f(glGetUniformLocation(stars_glsl_program, "wh"), w, h);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "xy"), x, y);
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
