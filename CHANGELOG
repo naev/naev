@@ -1,0 +1,16 @@
+
+* 0.8.0 (unreleased)
+   * Gameplay
+      * Made missiles reload while in space
+      * Added asteroids and mining
+      * Improved player GUI
+      * Improved and fixed escort system
+      * New missions
+      * Fixed and improved a diversity of missions
+   * Engine
+      * Added shaders to speed up and improve graphics
+      * Added support for non-ascii direct character input
+      * Added support for map decorators
+      * Removed support for Lua 5.0
+      * Removed support for SDL 1, only SDL 2 is support
+      * Added support for translating
