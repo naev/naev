@@ -986,19 +986,23 @@ void gui_radarRender( double x, double y )
    int i, j;
    Radar *radar;
    AsteroidAnchor *ast;
+   gl_Matrix4 view_matrix_prev;
 
    /* The global radar. */
    radar = &gui_radar;
    gui_radar.x = x;
    gui_radar.y = y;
 
-   gl_matrixPush();
+   /* TODO: modifying gl_view_matrix like this is a bit of a hack */
+   view_matrix_prev = gl_view_matrix;
    if (radar->shape==RADAR_RECT) {
       gl_clipRect( x, y, radar->w, radar->h );
-      gl_matrixTranslate( x + radar->w/2., y + radar->h/2. );
+      gl_view_matrix = gl_Matrix4_Translate(gl_view_matrix,
+            x + radar->w/2., y + radar->h/2., 0 );
    }
    else if (radar->shape==RADAR_CIRCLE)
-      gl_matrixTranslate( x, y );
+      gl_view_matrix = gl_Matrix4_Translate(gl_view_matrix,
+            x, y, 0 );
 
    /*
     * planets
@@ -1050,7 +1054,7 @@ void gui_radarRender( double x, double y )
    /* Render the player cross. */
    gui_renderPlayer( radar->res, 0 );
 
-   gl_matrixPop();
+   gl_view_matrix = view_matrix_prev;
    if (radar->shape==RADAR_RECT)
       gl_unclipRect();
 }
