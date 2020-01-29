@@ -70,3 +70,27 @@ int gl_program_link(GLuint program) {
 
    return 0;
 }
+
+int gl_program_vert_frag(const char *vert, const char *frag) {
+   GLuint vertex_shader, fragment_shader, program;
+
+   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, vert);
+   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, frag);
+
+   program = 0;
+   if (vertex_shader != 0 && fragment_shader != 0) {
+      program = glCreateProgram();
+      glAttachShader(program, vertex_shader);
+      glAttachShader(program, fragment_shader);
+      if (gl_program_link(program) == -1) {
+         program = 0;
+      }
+   }
+
+   glDeleteShader(vertex_shader);
+   glDeleteShader(fragment_shader);
+
+   gl_checkErr();
+
+   return program;
+}

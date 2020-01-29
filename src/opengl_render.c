@@ -46,6 +46,7 @@ static gl_vbo *gl_squareVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 static GLuint texture_glsl_program = 0;
+static GLuint rect_glsl_program = 0;
 
 
 /*
@@ -79,50 +80,27 @@ static GLuint texture_glsl_program_compile( void );
  */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
-   GLfloat vertex[4*2], col[4*4];
+   gl_Matrix4 projection;
+
+   glUseProgram(rect_glsl_program);
 
    /* Set the vertex. */
-   /*   1--2
-    *   |  |
-    *   3--4
-    */
-   vertex[0] = (GLfloat)x;
-   vertex[4] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[6] = vertex[2];
-   vertex[1] = (GLfloat)y;
-   vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)h;
-   vertex[7] = vertex[5];
-   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   /* Set shader uniforms. */
+   glUniform4f(glGetUniformLocation(rect_glsl_program, "color"), c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(glGetUniformLocation(rect_glsl_program, "projection"), projection);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    gl_vboDeactivate();
+
+   glUseProgram(0);
 
    /* Check errors. */
    gl_checkErr();
@@ -1156,7 +1134,8 @@ int gl_initRender (void)
    vertex[7] = 1;
    gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
-   texture_glsl_program = texture_glsl_program_compile();
+   texture_glsl_program = gl_program_vert_frag("texture.vert", "texture.frag");
+   rect_glsl_program = gl_program_vert_frag("rect.vert", "rect.frag");
 
    return 0;
 }
@@ -1175,25 +1154,4 @@ void gl_exitRender (void)
    /* Destroy the circles. */
    gl_freeTexture(gl_circle);
    gl_circle = NULL;
-}
-
-static GLuint texture_glsl_program_compile( void ) {
-   GLuint vertex_shader, fragment_shader, program;
-
-   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, "texture.vert");
-   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, "texture.frag");
-
-   program = glCreateProgram();
-   glAttachShader(program, vertex_shader);
-   glAttachShader(program, fragment_shader);
-   if (gl_program_link(program) == -1) {
-      program = 0;
-   }
-
-   glDeleteShader(vertex_shader);
-   glDeleteShader(fragment_shader);
-
-   gl_checkErr();
-
-   return program;
 }

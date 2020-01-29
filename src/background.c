@@ -411,7 +411,7 @@ int background_init (void)
    /* Load Lua. */
    bkg_def_env = background_create( "default" );
 
-   stars_glsl_program = stars_glsl_program_compile();
+   stars_glsl_program = gl_program_vert_frag("stars.vert", "stars.frag");
 
    return 0;
 }
@@ -555,25 +555,4 @@ void background_free (void)
 
    glDeleteProgram(stars_glsl_program);
    stars_glsl_program = 0;
-}
-
-static GLuint stars_glsl_program_compile( void ) {
-   GLuint vertex_shader, fragment_shader, program;
-
-   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, "stars.vert");
-   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, "stars.frag");
-
-   program = glCreateProgram();
-   glAttachShader(program, vertex_shader);
-   glAttachShader(program, fragment_shader);
-   if (gl_program_link(program) == -1) {
-      program = 0;
-   }
-
-   glDeleteShader(vertex_shader);
-   glDeleteShader(fragment_shader);
-
-   gl_checkErr();
-
-   return program;
 }
