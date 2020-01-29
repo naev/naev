@@ -350,10 +350,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat vertex[4*2], tex[4*2], col[4*4];
    GLfloat mcol[4] = { 0., 0., 0. };
 
-   if (texture_glsl_program == 0) {
-      return;
-   }
-
    /* No interpolation. */
    if (!conf.interpolate || (tb == NULL)) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
@@ -378,8 +374,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
          gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
-
-   glUseProgram(texture_glsl_program);
 
    /* Set default colour. */
    if (c == NULL)
@@ -442,7 +436,25 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
 
    /* Set the colour. */
-   glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
+   col[0] = c->r;
+   col[1] = c->g;
+   col[2] = c->b;
+   col[3] = c->a;
+   col[4] = col[0];
+   col[5] = col[1];
+   col[6] = col[2];
+   col[7] = col[3];
+   col[8] = col[0];
+   col[9] = col[1];
+   col[10] = col[2];
+   col[11] = col[3];
+   col[12] = col[0];
+   col[13] = col[1];
+   col[14] = col[2];
+   col[15] = col[3];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
 
    /* Set the vertex. */
    vertex[0] = (GLfloat)x;
@@ -481,8 +493,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    nglActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
-
-   glUseProgram(0);
 
    /* anything failed? */
    gl_checkErr();
