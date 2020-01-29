@@ -47,6 +47,7 @@ static gl_vbo *gl_squareEmptyVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 static GLuint texture_glsl_program = 0;
+static GLuint texture_interpolate_glsl_program = 0;
 static GLuint rect_glsl_program = 0;
 
 
@@ -308,127 +309,58 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
       return;
    }
 
-   /* Set default colour. */
-   if (c == NULL)
-      c = &cWhite;
+   gl_Matrix4 projection, tex_mat;
+
+   if (texture_interpolate_glsl_program == 0) {
+      return;
+   }
+
+   glUseProgram(texture_interpolate_glsl_program);
 
    /* Bind the textures. */
-   /* Texture 0. */
    nglActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, ta->texture);
-
-   /* Set the mode. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
-
-   /* Interpolate texture and alpha. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
-   mcol[3] = inter;
-   glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, mcol );
-
-   /* Arguments. */
-   /* Arg0. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
-   /* Arg1. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_TEXTURE1 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_TEXTURE1 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
-   /* Arg2. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_RGB,    GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_RGB,   GL_SRC_ALPHA );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_ALPHA,  GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
-
-   /* Texture 1. */
    nglActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, tb->texture);
 
-   /* Set the mode. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
-
-   /* Interpolate texture and alpha. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_MODULATE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_MODULATE );
-
-   /* Arguments. */
-   /* Arg0. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_PREVIOUS );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_PREVIOUS );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
-   /* Arg1. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_PRIMARY_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_PRIMARY_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
-
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   /* Must have colour for now. */
+   if (c == NULL)
+      c = &cWhite;
 
    /* Set the vertex. */
-   vertex[0] = (GLfloat)x;
-   vertex[4] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[6] = vertex[2];
-   vertex[1] = (GLfloat)y;
-   vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)h;
-   vertex[7] = vertex[5];
-   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex[0] = (GLfloat)tx;
-   tex[4] = tex[0];
-   tex[2] = tex[0] + (GLfloat)tw;
-   tex[6] = tex[2];
-   tex[1] = (GLfloat)ty;
-   tex[3] = tex[1];
-   tex[5] = tex[1] + (GLfloat)th;
-   tex[7] = tex[5];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE0,
-         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE1,
-         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
+   tex_mat = gl_Matrix4_Identity();
+   tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
+   tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
+
+   /* Set shader uniforms. */
+   glUniform1i(glGetUniformLocation(texture_interpolate_glsl_program, "sampler1"), 0);
+   glUniform1i(glGetUniformLocation(texture_interpolate_glsl_program, "sampler2"), 1);
+   glUniform4f(glGetUniformLocation(texture_interpolate_glsl_program, "color"), c->r, c->g, c->b, c->a);
+   glUniform1f(glGetUniformLocation(texture_interpolate_glsl_program, "inter"), inter);
+   gl_Matrix4_Uniform(glGetUniformLocation(texture_interpolate_glsl_program, "projection"), projection);
+   gl_Matrix4_Uniform(glGetUniformLocation(texture_interpolate_glsl_program, "tex_mat"), tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    gl_vboDeactivate();
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
    nglActiveTexture( GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */
    gl_checkErr();
+
+   glUseProgram(0);
 }
 
 
@@ -1114,6 +1046,8 @@ int gl_initRender (void)
    gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    texture_glsl_program = gl_program_vert_frag("texture.vert", "texture.frag");
+   texture_interpolate_glsl_program = gl_program_vert_frag("texture.vert",
+         "texture_interpolate.frag");
    rect_glsl_program = gl_program_vert_frag("rect.vert", "rect.frag");
 
    return 0;
