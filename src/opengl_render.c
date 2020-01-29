@@ -42,6 +42,7 @@
 
 
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
+static gl_vbo *gl_squareVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 static GLuint texture_glsl_program = 0;
@@ -265,7 +266,7 @@ void gl_blitTexture(  const glTexture* texture,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c )
 {
-   GLfloat vertex[4*2], tex[4*2];
+   gl_Matrix4 projection, tex_mat;
 
    if (texture_glsl_program == 0) {
       return;
@@ -282,33 +283,20 @@ void gl_blitTexture(  const glTexture* texture,
       c = &cWhite;
 
    /* Set the vertex. */
-   vertex[0] = (GLfloat)x;
-   vertex[4] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[6] = vertex[2];
-   vertex[1] = (GLfloat)y;
-   vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)h;
-   vertex[7] = vertex[5];
-   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex[0] = (GLfloat)tx;
-   tex[4] = tex[0];
-   tex[2] = tex[0] + (GLfloat)tw;
-   tex[6] = tex[2];
-   tex[1] = (GLfloat)ty;
-   tex[3] = tex[1];
-   tex[5] = tex[1] + (GLfloat)th;
-   tex[7] = tex[5];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE_COORD_ARRAY,
-         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
+   tex_mat = gl_Matrix4_Identity();
+   tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
+   tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
    glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
-   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "projection"), gl_view_matrix);
+   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "projection"), projection);
+   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "tex_mat"), tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -1147,6 +1135,8 @@ glTexture *gl_genCircle( int radius )
  */
 int gl_initRender (void)
 {
+   GLfloat vertex[4*2];
+
    /* Initialize the VBO. */
    gl_renderVBO = gl_vboCreateStream( sizeof(GLfloat) *
          OPENGL_RENDER_VBO_SIZE*(2 + 2 + 4), NULL );
@@ -1155,6 +1145,16 @@ int gl_initRender (void)
 
    /* Initialize the circles. */
    gl_circle      = gl_genCircle( 128 );
+
+   vertex[0] = 0;
+   vertex[1] = 0;
+   vertex[2] = 1;
+   vertex[3] = 0;
+   vertex[4] = 0;
+   vertex[5] = 1;
+   vertex[6] = 1;
+   vertex[7] = 1;
+   gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    texture_glsl_program = texture_glsl_program_compile();
 
@@ -1169,6 +1169,7 @@ void gl_exitRender (void)
 {
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
+   gl_vboDestroy( gl_squareVBO );
    gl_renderVBO = NULL;
 
    /* Destroy the circles. */

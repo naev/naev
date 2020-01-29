@@ -178,6 +178,15 @@ gl_Matrix4 gl_Matrix4_Mult( gl_Matrix4 m1, gl_Matrix4 m2 ) {
    return m;
 }
 
+gl_Matrix4 gl_Matrix4_Identity( void ) {
+   gl_Matrix4 m = {0};
+   m.m[0][0] = 1;
+   m.m[1][1] = 1;
+   m.m[2][2] = 1;
+   m.m[3][3] = 1;
+   return m;
+}
+
 gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal )
 {
