@@ -323,8 +323,6 @@ static int gl_setupAttributes (void)
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, conf.fsaa);
    }
-   if (gl_has(OPENGL_VSYNC))
-      SDL_GL_SetSwapInterval(1);
 
    return 0;
 }
@@ -428,6 +426,8 @@ static int gl_createWindow( unsigned int flags )
       ret = SDL_GL_SetSwapInterval( 1 );
       if (ret == 0)
          gl_screen.flags |= OPENGL_VSYNC;
+   } else {
+      SDL_GL_SetSwapInterval( 0 );
    }
 
    /* Finish getting attributes. */
