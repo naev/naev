@@ -46,9 +46,24 @@ static gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
+
+/* GLSL programs, uniform indexes, attribute indexes */
 static GLuint texture_glsl_program = 0;
+static GLuint texture_glsl_program_vertex = 0;
+static GLuint texture_glsl_program_projection = 0;
+static GLuint texture_glsl_program_color = 0;
+static GLuint texture_glsl_program_tex_mat = 0;
 static GLuint texture_interpolate_glsl_program = 0;
+static GLuint texture_interpolate_glsl_program_vertex = 0;
+static GLuint texture_interpolate_glsl_program_projection = 0;
+static GLuint texture_interpolate_glsl_program_color = 0;
+static GLuint texture_interpolate_glsl_program_tex_mat = 0;
+static GLuint texture_interpolate_glsl_program_sampler1 = 0;
+static GLuint texture_interpolate_glsl_program_sampler2 = 0;
+static GLuint texture_interpolate_glsl_program_inter = 0;
 static GLuint rect_glsl_program = 0;
+static GLuint rect_glsl_program_color = 0;
+static GLuint rect_glsl_program_projection = 0;
 
 
 /*
@@ -93,8 +108,8 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   glUniform4f(glGetUniformLocation(rect_glsl_program, "color"), c->r, c->g, c->b, c->a);
-   gl_Matrix4_Uniform(glGetUniformLocation(rect_glsl_program, "projection"), projection);
+   glUniform4f(rect_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(rect_glsl_program_projection, projection);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -130,8 +145,8 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
    gl_vboActivateOffset( gl_squareEmptyVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   glUniform4f(glGetUniformLocation(rect_glsl_program, "color"), c->r, c->g, c->b, c->a);
-   gl_Matrix4_Uniform(glGetUniformLocation(rect_glsl_program, "projection"), projection);
+   glUniform4f(rect_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(rect_glsl_program_projection, projection);
 
    /* Draw. */
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
@@ -232,9 +247,8 @@ void gl_blitTexture(  const glTexture* texture,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( glGetAttribLocation(texture_glsl_program, "vertex") );
-   gl_vboActivateAttribOffset( gl_squareVBO,
-         glGetAttribLocation(texture_glsl_program, "vertex"),
+   glEnableVertexAttribArray( texture_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, texture_glsl_program_vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
@@ -243,9 +257,9 @@ void gl_blitTexture(  const glTexture* texture,
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
-   glUniform4f(glGetUniformLocation(texture_glsl_program, "color"), c->r, c->g, c->b, c->a);
-   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "projection"), projection);
-   gl_Matrix4_Uniform(glGetUniformLocation(texture_glsl_program, "tex_mat"), tex_mat);
+   glUniform4f(texture_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(texture_glsl_program_projection, projection);
+   gl_Matrix4_Uniform(texture_glsl_program_tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -345,12 +359,12 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
-   glUniform1i(glGetUniformLocation(texture_interpolate_glsl_program, "sampler1"), 0);
-   glUniform1i(glGetUniformLocation(texture_interpolate_glsl_program, "sampler2"), 1);
-   glUniform4f(glGetUniformLocation(texture_interpolate_glsl_program, "color"), c->r, c->g, c->b, c->a);
-   glUniform1f(glGetUniformLocation(texture_interpolate_glsl_program, "inter"), inter);
-   gl_Matrix4_Uniform(glGetUniformLocation(texture_interpolate_glsl_program, "projection"), projection);
-   gl_Matrix4_Uniform(glGetUniformLocation(texture_interpolate_glsl_program, "tex_mat"), tex_mat);
+   glUniform1i(texture_interpolate_glsl_program_sampler1, 0);
+   glUniform1i(texture_interpolate_glsl_program_sampler2, 1);
+   glUniform4f(texture_interpolate_glsl_program_color, c->r, c->g, c->b, c->a);
+   glUniform1f(texture_interpolate_glsl_program_inter, inter);
+   gl_Matrix4_Uniform(texture_interpolate_glsl_program_projection, projection);
+   gl_Matrix4_Uniform(texture_interpolate_glsl_program_tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -1050,9 +1064,25 @@ int gl_initRender (void)
    gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    texture_glsl_program = gl_program_vert_frag("texture.vert", "texture.frag");
+   texture_glsl_program_vertex = glGetAttribLocation(texture_glsl_program, "vertex");
+   texture_glsl_program_projection = glGetUniformLocation(texture_glsl_program, "projection");
+   texture_glsl_program_color = glGetUniformLocation(texture_glsl_program, "color");
+   texture_glsl_program_tex_mat = glGetUniformLocation(texture_glsl_program, "tex_mat");
+
    texture_interpolate_glsl_program = gl_program_vert_frag("texture.vert",
          "texture_interpolate.frag");
+   texture_interpolate_glsl_program_projection = glGetUniformLocation(texture_interpolate_glsl_program, "projection");
+   texture_interpolate_glsl_program_color = glGetUniformLocation(texture_interpolate_glsl_program, "color");
+   texture_interpolate_glsl_program_tex_mat = glGetUniformLocation(texture_interpolate_glsl_program, "tex_mat");
+   texture_interpolate_glsl_program_sampler1 = glGetUniformLocation(texture_interpolate_glsl_program, "sampler1");
+   texture_interpolate_glsl_program_sampler2 = glGetUniformLocation(texture_interpolate_glsl_program, "sampler2");
+   texture_interpolate_glsl_program_inter = glGetUniformLocation(texture_interpolate_glsl_program, "inter");
+
    rect_glsl_program = gl_program_vert_frag("rect.vert", "rect.frag");
+   rect_glsl_program_projection = glGetUniformLocation(rect_glsl_program, "projection");
+   rect_glsl_program_color = glGetUniformLocation(rect_glsl_program, "color");
+
+   gl_checkErr();
 
    return 0;
 }
