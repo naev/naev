@@ -232,7 +232,10 @@ void gl_blitTexture(  const glTexture* texture,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( glGetAttribLocation(texture_glsl_program, "vertex") );
+   gl_vboActivateAttribOffset( gl_squareVBO,
+         glGetAttribLocation(texture_glsl_program, "vertex"),
+         0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = gl_Matrix4_Identity();
@@ -250,6 +253,7 @@ void gl_blitTexture(  const glTexture* texture,
    /* Clear state. */
    gl_vboDeactivate();
    glDisable(GL_TEXTURE_2D);
+   glDisableVertexAttribArray( glGetAttribLocation(texture_glsl_program, "vertex") );
 
    /* anything failed? */
    gl_checkErr();

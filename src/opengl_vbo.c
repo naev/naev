@@ -311,6 +311,22 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
 }
 
 
+void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
+      GLint size, GLenum type, GLsizei stride )
+{
+   const GLvoid *pointer;
+
+   /* Set up. */
+   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   pointer = BUFFER_OFFSET(offset);
+
+   glVertexAttribPointer( index, size, type, GL_FALSE, stride, pointer );
+
+   /* Check for errors. */
+   gl_checkErr();
+}
+
+
 /**
  * @brief Deactivates the vbo stuff.
  */

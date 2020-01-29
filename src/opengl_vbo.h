@@ -39,6 +39,8 @@ void gl_vboUnmap( gl_vbo *vbo );
 void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei stride );
 void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
       GLint size, GLenum type, GLsizei stride );
+void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
+      GLint size, GLenum type, GLsizei stride );
 void gl_vboDeactivate (void);
 
 
