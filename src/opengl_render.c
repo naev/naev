@@ -43,6 +43,7 @@
 
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 static gl_vbo *gl_squareVBO = 0;
+static gl_vbo *gl_squareEmptyVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 static GLuint texture_glsl_program = 0;
@@ -99,7 +100,6 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    /* Clear state. */
    gl_vboDeactivate();
-
    glUseProgram(0);
 
    /* Check errors. */
@@ -118,59 +118,26 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
  */
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
 {
-   GLfloat vx, vy, vxw, vyh;
-   GLfloat vertex[5*2], col[5*4];
+   gl_Matrix4 projection;
 
-   /* Helper variables. */
-   vx  = (GLfloat) x;
-   vy  = (GLfloat) y;
-   vxw = vx + (GLfloat) w;
-   vyh = vy + (GLfloat) h;
+   glUseProgram(rect_glsl_program);
 
    /* Set the vertex. */
-   vertex[0] = vx;
-   vertex[1] = vy;
-   vertex[2] = vxw;
-   vertex[3] = vy;
-   vertex[4] = vxw;
-   vertex[5] = vyh;
-   vertex[6] = vx;
-   vertex[7] = vyh;
-   vertex[8] = vx;
-   vertex[9] = vy;
-   gl_vboSubData( gl_renderVBO, 0, sizeof(vertex), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   gl_vboActivateOffset( gl_squareEmptyVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   col[16] = col[0];
-   col[17] = col[1];
-   col[18] = col[2];
-   col[19] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, sizeof(col), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   /* Set shader uniforms. */
+   glUniform4f(glGetUniformLocation(rect_glsl_program, "color"), c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(glGetUniformLocation(rect_glsl_program, "projection"), projection);
 
    /* Draw. */
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
 
    /* Clear state. */
    gl_vboDeactivate();
+   glUseProgram(0);
 
    /* Check errors. */
    gl_checkErr();
@@ -1134,6 +1101,18 @@ int gl_initRender (void)
    vertex[7] = 1;
    gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
+   vertex[0] = 0;
+   vertex[1] = 0;
+   vertex[2] = 1;
+   vertex[3] = 0;
+   vertex[4] = 1;
+   vertex[5] = 1;
+   vertex[6] = 0;
+   vertex[7] = 1;
+   vertex[8] = 0;
+   vertex[9] = 0;
+   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
    texture_glsl_program = gl_program_vert_frag("texture.vert", "texture.frag");
    rect_glsl_program = gl_program_vert_frag("rect.vert", "rect.frag");
 
@@ -1149,6 +1128,7 @@ void gl_exitRender (void)
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
+   gl_vboDestroy( gl_squareEmptyVBO );
    gl_renderVBO = NULL;
 
    /* Destroy the circles. */
