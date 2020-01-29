@@ -735,29 +735,8 @@ static void gui_renderBorder( double dt )
 
          /* Set up colours. */
          col = gui_getPilotColour(plt);
-         for (j=0; j<4; j++) {
-            colours[4*j + 0] = col->r;
-            colours[4*j + 1] = col->g;
-            colours[4*j + 2] = col->b;
-            colours[4*j + 3] = int_a;
-         }
-         gl_vboSubData( gui_vbo, gui_vboColourOffset,
-               sizeof(GLfloat) * 4*4, colours );
-         /* Set up vertex. */
-         vertex[0] = cx-5.;
-         vertex[1] = cy-5.;
-         vertex[2] = cx+5.;
-         vertex[3] = cy+5.;
-         vertex[4] = cx+5.;
-         vertex[5] = cy-5.;
-         vertex[6] = cx-5.;
-         vertex[7] = cy+5.;
-         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
-         /* Draw tho VBO. */
-         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-               gui_vboColourOffset, 4, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINES, 0, 4 );
+
+         gl_renderRectEmpty(cx-5, cy-5, 10, 10, col);
       }
    }
 
