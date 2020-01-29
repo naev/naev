@@ -1012,7 +1012,7 @@ glTexture *gl_genCircle( int radius )
  */
 int gl_initRender (void)
 {
-   GLfloat vertex[4*2];
+   GLfloat vertex[10];
 
    /* Initialize the VBO. */
    gl_renderVBO = gl_vboCreateStream( sizeof(GLfloat) *
