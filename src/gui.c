@@ -982,6 +982,7 @@ void gui_radarRender( double x, double y )
    else if (radar->shape==RADAR_CIRCLE)
       gl_view_matrix = gl_Matrix4_Translate(gl_view_matrix,
             x, y, 0 );
+   gl_Matrix4_Load(gl_view_matrix);
 
    /*
     * planets
@@ -1034,6 +1035,7 @@ void gui_radarRender( double x, double y )
    gui_renderPlayer( radar->res, 0 );
 
    gl_view_matrix = view_matrix_prev;
+   gl_Matrix4_Load(gl_view_matrix);
    if (radar->shape==RADAR_RECT)
       gl_unclipRect();
 }
