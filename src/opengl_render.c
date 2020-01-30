@@ -65,6 +65,10 @@ static GLuint rect_glsl_program = 0;
 static GLuint rect_glsl_program_color = 0;
 static GLuint rect_glsl_program_projection = 0;
 static GLuint rect_glsl_program_vertex = 0;
+static GLuint circle_filled_glsl_program = 0;
+static GLuint circle_filled_glsl_program_vertex = 0;
+static GLuint circle_filled_glsl_program_color = 0;
+static GLuint circle_filled_glsl_program_projection = 0;
 
 
 /*
@@ -106,8 +110,8 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( texture_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, texture_glsl_program_vertex,
+   glEnableVertexAttribArray( rect_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, rect_glsl_program_vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
@@ -119,7 +123,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    /* Clear state. */
    gl_vboDeactivate();
-   glDisableVertexAttribArray( texture_glsl_program_vertex );
+   glDisableVertexAttribArray( rect_glsl_program_vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -146,8 +150,8 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( texture_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareEmptyVBO, texture_glsl_program_vertex,
+   glEnableVertexAttribArray( rect_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareEmptyVBO, rect_glsl_program_vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
@@ -159,7 +163,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 
    /* Clear state. */
    gl_vboDeactivate();
-   glDisableVertexAttribArray( texture_glsl_program_vertex );
+   glDisableVertexAttribArray( rect_glsl_program_vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -796,6 +800,36 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
 }
 #undef PIXEL
 
+static void gl_drawCircleFilled( const double cx, const double cy,
+      const double r, const glColour *c )
+{
+   gl_Matrix4 projection;
+
+   glUseProgram(circle_filled_glsl_program);
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
+   projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
+   glEnableVertexAttribArray( texture_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, circle_filled_glsl_program_vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   glUniform4f(circle_filled_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_Matrix4_Uniform(circle_filled_glsl_program_projection, projection);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+   glDisableVertexAttribArray( texture_glsl_program_vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
+}
 
 /**
  * @brief Draws a circle.
@@ -810,8 +844,7 @@ void gl_drawCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
 {
    if (filled)
-      gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
-         0., 0., gl_circle->srw, gl_circle->srh, c );
+      gl_drawCircleFilled( cx, cy, r, c );
    else if (gl_vendorIsIntel())
       gl_drawCircleEmpty( cx, cy, r, c );
    else
@@ -1089,6 +1122,11 @@ int gl_initRender (void)
    rect_glsl_program_projection = glGetUniformLocation(rect_glsl_program, "projection");
    rect_glsl_program_color = glGetUniformLocation(rect_glsl_program, "color");
    rect_glsl_program_vertex = glGetAttribLocation(rect_glsl_program, "vertex");
+
+   circle_filled_glsl_program = gl_program_vert_frag("circle_filled.vert", "circle_filled.frag");
+   circle_filled_glsl_program_vertex = glGetAttribLocation(circle_filled_glsl_program, "vertex");
+   circle_filled_glsl_program_projection = glGetUniformLocation(circle_filled_glsl_program, "projection");
+   circle_filled_glsl_program_color = glGetUniformLocation(circle_filled_glsl_program, "color");
 
    gl_checkErr();
 
