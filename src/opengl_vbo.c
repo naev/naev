@@ -86,12 +86,12 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    vbo->size = size;
 
    /* Create the buffer. */
-   nglGenBuffers( 1, &vbo->id );
+   glGenBuffers( 1, &vbo->id );
 
    /* Upload the data. */
-   nglBindBuffer( target, vbo->id );
-   nglBufferData( target, size, data, usage );
-   nglBindBuffer( target, 0 );
+   glBindBuffer( target, vbo->id );
+   glBufferData( target, size, data, usage );
+   glBindBuffer( target, 0 );
 
    /* Check for errors. */
    gl_checkErr();
@@ -124,8 +124,8 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
       usage = GL_STREAM_DRAW;
 
    /* Get new data. */
-   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-   nglBufferData( GL_ARRAY_BUFFER, size, data, usage );
+   glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   glBufferData( GL_ARRAY_BUFFER, size, data, usage );
 
    /* Check for errors. */
    gl_checkErr();
@@ -142,8 +142,8 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
  */
 void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
 {
-   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-   nglBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
+   glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   glBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
 
    /* Check for errors. */
    gl_checkErr();
@@ -217,8 +217,8 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, void* data )
  */
 void* gl_vboMap( gl_vbo *vbo )
 {
-   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-   return nglMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+   glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   return glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
 }
 
 
@@ -230,7 +230,7 @@ void* gl_vboMap( gl_vbo *vbo )
 void gl_vboUnmap( gl_vbo *vbo )
 {
    (void) vbo;
-   nglUnmapBuffer( GL_ARRAY_BUFFER );
+   glUnmapBuffer( GL_ARRAY_BUFFER );
 
    /* Check for errors. */
    gl_checkErr();
@@ -269,7 +269,7 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
    const GLvoid *pointer;
 
    /* Set up. */
-   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    pointer = BUFFER_OFFSET(offset);
 
    /* Class specific. */
@@ -290,13 +290,13 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
          break;
 
       case GL_TEXTURE0:
-         nglClientActiveTexture( GL_TEXTURE0 );
+         glClientActiveTexture( GL_TEXTURE0 );
          glEnableClientState(GL_TEXTURE_COORD_ARRAY);
          glTexCoordPointer( size, type, stride, pointer );
          break;
 
       case GL_TEXTURE1:
-         nglClientActiveTexture( GL_TEXTURE1 );
+         glClientActiveTexture( GL_TEXTURE1 );
          glEnableClientState(GL_TEXTURE_COORD_ARRAY);
          glTexCoordPointer( size, type, stride, pointer );
          break;
@@ -317,7 +317,7 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
    const GLvoid *pointer;
 
    /* Set up. */
-   nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+   glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    pointer = BUFFER_OFFSET(offset);
 
    glVertexAttribPointer( index, size, type, GL_FALSE, stride, pointer );
@@ -332,16 +332,14 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
  */
 void gl_vboDeactivate (void)
 {
-   nglBindBuffer(GL_ARRAY_BUFFER, 0);
+   glBindBuffer(GL_ARRAY_BUFFER, 0);
    glDisableClientState(GL_VERTEX_ARRAY);
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-   if (nglClientActiveTexture != NULL) {
-      nglClientActiveTexture( GL_TEXTURE1 );
-      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-      nglClientActiveTexture( GL_TEXTURE0 );
-      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-   }
+   glClientActiveTexture( GL_TEXTURE1 );
+   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+   glClientActiveTexture( GL_TEXTURE0 );
+   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
    /* Check for errors. */
    gl_checkErr();
@@ -356,7 +354,7 @@ void gl_vboDeactivate (void)
 void gl_vboDestroy( gl_vbo *vbo )
 {
    /* Destroy VBO. */
-   nglDeleteBuffers( 1, &vbo->id );
+   glDeleteBuffers( 1, &vbo->id );
 
    /* Check for errors. */
    gl_checkErr();

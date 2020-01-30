@@ -46,7 +46,6 @@
 #include "SDL_version.h"
 
 #include "log.h"
-#include "opengl_ext.h"
 #include "ndata.h"
 #include "gui.h"
 #include "conf.h"
@@ -297,9 +296,6 @@ void gl_checkHandleError( const char *func, int line )
          break;
       case GL_OUT_OF_MEMORY:
          errstr = _("GL out of memory");
-         break;
-      case GL_TABLE_TOO_LARGE:
-         errstr = _("GL table too large");
          break;
 
       default:
@@ -562,10 +558,8 @@ static int gl_hint (void)
 
    /* Do some hinting. */
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, mod);
-   if (nglGenerateMipmap != NULL)
-      glHint(GL_GENERATE_MIPMAP_HINT, mod);
-   if (nglCompressedTexImage2D != NULL)
-      glHint(GL_TEXTURE_COMPRESSION_HINT, mod);
+   glHint(GL_GENERATE_MIPMAP_HINT, mod);
+   glHint(GL_TEXTURE_COMPRESSION_HINT, mod);
 
    return 0;
 }
@@ -629,9 +623,6 @@ int gl_init (void)
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
-
-   /* Load extensions. */
-   gl_initExtensions();
 
    /* Start hinting. */
    gl_hint();
@@ -760,7 +751,6 @@ void gl_exit (void)
    gl_exitVBO();
    gl_exitTextures();
    gl_exitMatrix();
-   gl_exitExtensions();
 
    /* Shut down the subsystem */
    SDL_QuitSubSystem(SDL_INIT_VIDEO);

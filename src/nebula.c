@@ -335,8 +335,7 @@ void nebu_render( const double dt )
       return;
 
    /* Different rendering backends. */
-   if (nglActiveTexture != NULL)
-      nebu_renderMultitexture(dt);
+   nebu_renderMultitexture(dt);
 
    /* Now render the puffs, they are generic. */
    nebu_renderPuffs( 1 );
@@ -382,12 +381,12 @@ static void nebu_renderMultitexture( const double dt )
 
    /* Set up the targets */
    /* Texture 0 */
-   nglActiveTexture( GL_TEXTURE0 );
+   glActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
    /* Texture 1 */
-   nglActiveTexture( GL_TEXTURE1 );
+   glActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[0]]);
 
@@ -431,7 +430,7 @@ static void nebu_renderMultitexture( const double dt )
    /* Set values to defaults */
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
-   nglActiveTexture( GL_TEXTURE0 );
+   glActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
 
