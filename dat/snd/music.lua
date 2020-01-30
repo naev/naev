@@ -12,7 +12,7 @@ last = "idle"
 
 -- Faction-specific songs.
 factional = {
-   Collective = { "collective1", "collective2", "automat" },
+   Collective = { "collective1", "automat" },
    Empire     = { "empire1", "empire2" },
    Sirius     = { "sirius1", "sirius2" },
    Dvaered    = { "dvaered1", "dvaered2" },
@@ -258,6 +258,20 @@ function choose_ambient ()
 end
 
 
+-- Faction-specific combat songs
+factional_combat = {
+   Collective = { "collective2", "galacticbattle", "battlesomething1", "combat3" },
+   Pirate     = { "battlesomething2", add_neutral = true },
+   Empire     = { "galacticbattle", "battlesomething2"; add_neutral = true },
+   Goddard    = { "flf_battle1", "battlesomething1"; add_neutral = true },
+   Dvaered    = { "flf_battle1", "battlesomething1", "battlesomething2"; add_neutral = true },
+   ["FLF"]    = { "flf_battle1", "battlesomething2"; add_neutral = true },
+   Frontier   = { "flf_battle1"; add_neutral = true },
+   Sirius     = { "galacticbattle", "battlesomething1"; add_neutral = true },
+   Soromid    = { "galacticbattle", "battlesomething2"; add_neutral = true },
+   ["Za'lek"] = { "collective2", "galacticbattle", "battlesomething1", add_neutral = true }
+}
+
 --[[
 -- @brief Chooses battle songs.
 --]]
@@ -265,14 +279,34 @@ function choose_combat ()
    -- Get some data about the system
    local sys                  = system.cur()
    local nebu_dens, nebu_vol  = sys:nebula()
+   local presences            = sys:presences()
+   
+   local strongest = nil
+   if presences then
+      local strongest_amount = 0
+      for k, v in pairs( presences ) do
+         if faction.get(k):playerStanding() < 0 and v > strongest_amount then
+            strongest = k
+            strongest_amount = v
+         end
+      end
+   end
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1", "battlesomething2",
-            "combat1", "combat2" }
+      combat = { "nebu_battle1", "nebu_battle2", "combat1", "combat2" }
    else
-      combat = { "galacticbattle", "flf_battle1", "battlesomething1", "battlesomething2",
-            "combat3", "combat1", "combat2" }
+      combat = { "combat3", "combat1", "combat2" }
+   end
+
+   if factional_combat[strongest] then
+      if factional_combat[strongest].add_neutral then
+         for k, v in ipairs( factional_combat[strongest] ) do
+            combat[ #combat + 1 ] = v
+         end
+      else
+         combat = factional_combat[strongest]
+      end
    end
 
    -- Make sure it's not already in the list or that we have to stop the
