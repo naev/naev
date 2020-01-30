@@ -339,7 +339,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    /* Create mipmaps. */
    if ((flags & OPENGL_TEX_MIPMAPS) && gl_texHasMipmaps()) {
       /* Do fancy stuff. */
-      if (gl_hasExt("GL_EXT_texture_filter_anisotropic")) {
+      if (GLAD_GL_ARB_texture_filter_anisotropic) {
          glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &param);
          glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, param);
       }
@@ -880,7 +880,7 @@ int gl_needPOT (void)
  */
 int gl_initTextures (void)
 {
-   if (gl_hasVersion(2,0) || gl_hasExt("GL_ARB_texture_non_power_of_two"))
+   if (gl_hasVersion(2,0))
       gl_tex_ext_npot = 1;
 
    return 0;

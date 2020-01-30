@@ -238,18 +238,6 @@ GLboolean gl_hasVersion( int major, int minor )
 
 
 /**
- * @brief Checks for on opengl extension.
- *
- *    @param name Extension to check for.
- *    @return GL_TRUE if found, GL_FALSE if isn't.
- */
-GLboolean gl_hasExt( char *name )
-{
-   return SDL_GL_ExtensionSupported( name );
-}
-
-
-/**
  * @brief Returns whether the OpenGL vendor is Intel.
  *
  * This is a bit ugly, but it seems that Intel integrated graphics tend to lie
@@ -610,6 +598,10 @@ int gl_init (void)
 
    /* Create the window. */
    gl_createWindow( flags );
+
+   /* Load extensions. */
+   if (!gladLoadGLLoader(SDL_GL_GetProcAddress))
+      ERR("Unable to load OpenGL using GLAD");
 
    /* Some OpenGL options. */
    glClearColor( 0., 0., 0., 1. );

@@ -38,7 +38,7 @@ CODE_SOURCE = \
 	faction.c \
 	fleet.c \
 	font.c \
-	gl.c \
+	glad.c \
 	gui.c \
 	gui_omsg.c \
 	gui_osd.c \
@@ -47,6 +47,7 @@ CODE_SOURCE = \
 	input.c \
 	intro.c \
 	joystick.c \
+	khrplatform.h \
 	land.c \
 	land_outfits.c \
 	land_shipyard.c \
@@ -177,7 +178,7 @@ CODE_SOURCE = \
 	faction.h \
 	fleet.h \
 	font.h \
-	gl.h \
+	glad.h \
 	gui.h \
 	gui_omsg.h \
 	gui_osd.h \
