@@ -423,6 +423,15 @@ WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
 NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
 
+# glad requires libdl on non-Windows platforms
+case "$host" in
+  *-mingw*)
+    ;;
+  *)
+    NAEV_LIBS="$NAEV_LIBS -ldl"
+    ;;
+esac
+
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
