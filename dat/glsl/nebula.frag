@@ -7,7 +7,7 @@ out vec4 color_out;
 
 void main(void) {
    color_out = color;
-   float dist = length(gl_FragCoord.xy - center);
+   float dist = distance(gl_FragCoord.xy, center);
    if (dist < radius) {
       color_out.a *= (dist / radius);
    }
