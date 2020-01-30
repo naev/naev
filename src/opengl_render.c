@@ -329,15 +329,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
       return;
    }
 
-   /* No multitexture. */
-   if (nglActiveTexture == NULL) {
-      if (inter > 0.5)
-         gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
-      else
-         gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
-      return;
-   }
-
    gl_Matrix4 projection, tex_mat;
 
    if (texture_interpolate_glsl_program == 0) {
@@ -347,10 +338,10 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    glUseProgram(texture_interpolate_glsl_program);
 
    /* Bind the textures. */
-   nglActiveTexture( GL_TEXTURE0 );
+   glActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, ta->texture);
-   nglActiveTexture( GL_TEXTURE1 );
+   glActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, tb->texture);
 
@@ -383,7 +374,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    /* Clear state. */
    gl_vboDeactivate();
    glDisable(GL_TEXTURE_2D);
-   nglActiveTexture( GL_TEXTURE0 );
+   glActiveTexture( GL_TEXTURE0 );
    glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */

@@ -38,6 +38,7 @@ CODE_SOURCE = \
 	faction.c \
 	fleet.c \
 	font.c \
+	gl.c \
 	gui.c \
 	gui_omsg.c \
 	gui_osd.c \
@@ -106,7 +107,6 @@ CODE_SOURCE = \
 	nxml_lua.c \
 	nzip.c \
 	opengl.c \
-	opengl_ext.c \
 	opengl_matrix.c \
 	opengl_render.c \
 	opengl_shader.c \
@@ -177,6 +177,7 @@ CODE_SOURCE = \
 	faction.h \
 	fleet.h \
 	font.h \
+	gl.h \
 	gui.h \
 	gui_omsg.h \
 	gui_osd.h \
@@ -250,7 +251,6 @@ CODE_SOURCE = \
 	nxml_lua.h \
 	nzip.h \
 	opengl.h \
-	opengl_ext.h \
 	opengl_matrix.h \
 	opengl_render.h \
 	opengl_shader.h \
