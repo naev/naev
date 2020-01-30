@@ -64,6 +64,7 @@ static GLuint texture_interpolate_glsl_program_inter = 0;
 static GLuint rect_glsl_program = 0;
 static GLuint rect_glsl_program_color = 0;
 static GLuint rect_glsl_program_projection = 0;
+static GLuint rect_glsl_program_vertex = 0;
 
 
 /*
@@ -105,7 +106,9 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( texture_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, texture_glsl_program_vertex,
+         0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
    glUniform4f(rect_glsl_program_color, c->r, c->g, c->b, c->a);
@@ -116,6 +119,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    /* Clear state. */
    gl_vboDeactivate();
+   glDisableVertexAttribArray( texture_glsl_program_vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -142,7 +146,9 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   gl_vboActivateOffset( gl_squareEmptyVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( texture_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareEmptyVBO, texture_glsl_program_vertex,
+         0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
    glUniform4f(rect_glsl_program_color, c->r, c->g, c->b, c->a);
@@ -153,6 +159,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 
    /* Clear state. */
    gl_vboDeactivate();
+   glDisableVertexAttribArray( texture_glsl_program_vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -1081,6 +1088,7 @@ int gl_initRender (void)
    rect_glsl_program = gl_program_vert_frag("rect.vert", "rect.frag");
    rect_glsl_program_projection = glGetUniformLocation(rect_glsl_program, "projection");
    rect_glsl_program_color = glGetUniformLocation(rect_glsl_program, "color");
+   rect_glsl_program_vertex = glGetAttribLocation(rect_glsl_program, "vertex");
 
    gl_checkErr();
 
