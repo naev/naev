@@ -254,7 +254,6 @@ function enter ()
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
          boss:setHilight()
-         boss:setVisible()
 
          pirates_left = 4
          pirates = addShips( "Pirate Hyena", "pirate_norun", vec, pirates_left )
