@@ -210,24 +210,29 @@ gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
 }
 
 gl_Matrix4 gl_Matrix4_Scale( gl_Matrix4 m, double x, double y, double z ) {
-   gl_Matrix4 mul = {0};
-   mul.m[0][0] = x;
-   mul.m[1][1] = y;
-   mul.m[2][2] = z;
-   mul.m[3][3] = 1;
-   return gl_Matrix4_Mult(m, mul);
+   int i;
+   gl_Matrix4 res;
+
+   res = m;
+   for (i = 0; i < 4; i++) {
+      res.m[0][i] *= x;
+      res.m[1][i] *= y;
+      res.m[2][i] *= z;
+   }
+
+   return res;
 }
 
 gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z ) {
-   gl_Matrix4 mul = {0};
-   mul.m[0][0] = 1;
-   mul.m[1][1] = 1;
-   mul.m[2][2] = 1;
-   mul.m[3][3] = 1;
-   mul.m[3][0] = x;
-   mul.m[3][1] = y;
-   mul.m[3][2] = z;
-   return gl_Matrix4_Mult(m, mul);
+   int i;
+   gl_Matrix4 res;
+
+   res = m;
+   for (i = 0; i < 4; i++) {
+      res.m[3][i] += res.m[0][i] * x + res.m[1][i] * y + res.m[2][i] * z;
+   }
+
+   return res;
 }
 
 GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m ) {
