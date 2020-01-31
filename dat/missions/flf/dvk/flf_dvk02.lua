@@ -131,7 +131,7 @@ function accept ()
       pirates = nil
       boss_hook = nil
 
-      ore_needed = 300
+      ore_needed = 40
       credits = 300000
       reputation = 10
       pir_reputation = 10
