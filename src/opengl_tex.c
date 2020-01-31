@@ -280,7 +280,7 @@ int gl_texHasMipmaps (void)
  */
 int gl_texHasCompress (void)
 {
-   return 1;
+   return conf.compress;
 }
 
 /**
