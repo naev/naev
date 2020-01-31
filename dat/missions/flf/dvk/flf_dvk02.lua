@@ -131,7 +131,7 @@ function accept ()
       pirates = nil
       boss_hook = nil
 
-      ore_needed = 300
+      ore_needed = 40
       credits = 300000
       reputation = 10
       pir_reputation = 10
@@ -253,7 +253,7 @@ function enter ()
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
-         boss:setHilight( true )
+         boss:setHilight()
 
          pirates_left = 4
          pirates = addShips( "Pirate Hyena", "pirate_norun", vec, pirates_left )
@@ -280,7 +280,8 @@ function enter ()
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()
-         boss:setHilight( true )
+         boss:setHilight()
+         boss:setVisible()
       end
    end
 end
