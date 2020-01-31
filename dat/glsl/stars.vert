@@ -8,14 +8,17 @@ uniform vec2 wh;
 uniform int shade_mode;
 uniform vec2 xy;
 
-out vec4 color;
+in vec4 vertex;
+in vec4 color;
+
+out vec4 color_out;
 
 void main(void) {
-   float brightness = gl_Color[3];
+   float brightness = color[3];
 
    /* Calculate position */
    float b = 1./(9. - 10.*brightness);
-   gl_Position = gl_Vertex;
+   gl_Position = vertex;
    gl_Position.xy += star_xy * b;
 
    /* check boundaries */
@@ -28,5 +31,5 @@ void main(void) {
 
    gl_Position = projection * gl_Position;
 
-   color = gl_Color;
+   color_out = color;
 }

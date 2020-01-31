@@ -70,7 +70,15 @@ static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
+
 static GLuint stars_glsl_program = 0;
+static GLuint stars_glsl_program_vertex = 0;
+static GLuint stars_glsl_program_color = 0;
+static GLuint stars_glsl_program_projection = 0;
+static GLuint stars_glsl_program_shade_mode = 0;
+static GLuint stars_glsl_program_star_xy = 0;
+static GLuint stars_glsl_program_star_wh = 0;
+static GLuint stars_glsl_program_xy = 0;
 
 
 /*
@@ -236,8 +244,13 @@ void background_renderStars( const double dt )
    h += conf.zoom_stars * (h / conf.zoom_far - 1.);
 
    /* Render. */
-   gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
-   gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   glEnableVertexAttribArray( stars_glsl_program_vertex );
+   glEnableVertexAttribArray( stars_glsl_program_color );
+   gl_vboActivateAttribOffset( star_vertexVBO, stars_glsl_program_vertex, 0,
+         2, GL_FLOAT, 2 * sizeof(GLfloat) );
+   gl_vboActivateAttribOffset( star_colourVBO, stars_glsl_program_color, 0,
+         4, GL_FLOAT, 4 * sizeof(GLfloat) );
+
    gl_Matrix4_Uniform(glGetUniformLocation(stars_glsl_program, "projection"), projection);
    glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
@@ -252,7 +265,8 @@ void background_renderStars( const double dt )
       glDrawArrays( GL_POINTS, 0, nstars );
 
    /* Disable vertex array. */
-   gl_vboDeactivate();
+   glDisableVertexAttribArray( stars_glsl_program_vertex );
+   glDisableVertexAttribArray( stars_glsl_program_color );
 
    glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
@@ -418,6 +432,13 @@ int background_init (void)
    bkg_def_env = background_create( "default" );
 
    stars_glsl_program = gl_program_vert_frag("stars.vert", "stars.frag");
+   stars_glsl_program_vertex = glGetAttribLocation(stars_glsl_program, "vertex");
+   stars_glsl_program_color = glGetAttribLocation(stars_glsl_program, "color");
+   stars_glsl_program_projection = glGetUniformLocation(stars_glsl_program, "projection");
+   stars_glsl_program_shade_mode = glGetUniformLocation(stars_glsl_program, "shade_mode");
+   stars_glsl_program_star_xy = glGetUniformLocation(stars_glsl_program, "star_xy");
+   stars_glsl_program_star_wh = glGetUniformLocation(stars_glsl_program, "wh");
+   stars_glsl_program_star_xy = glGetUniformLocation(stars_glsl_program, "xy");
 
    return 0;
 }
