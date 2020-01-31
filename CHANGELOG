@@ -1,17 +1,30 @@
 
 * 0.8.0 (unreleased)
    * Gameplay
-      * Made missiles reload while in space
+      * Made missiles and fighter bays reload while in space
+      * Modified the balancing of missiles
       * Added asteroids and mining
       * Improved player GUI
       * Brushed GUI is now the default
       * Improved and fixed escort system
-      * New missions
-      * Fixed and improved a diversity of missions
+      * Made Pirates and FLF spawn in a fairer way
+      * Made time pass at different rates for different ships ("Time Dilation")
+      * Made some piracy missions available from any Independent or black market
+        planet (instead of just on pirate strongholds)
+      * Substantially increased pay for unique missions (10x in most cases)
+      * Made references to the player gender-neutral
+      * New and/or improved missions
+         * Completed the FLF campaign
+         * Fixed up the Collective campaign
+         * Improved the Shark (Nexus Shipyards) campaign
+         * Improved the Dvaered anti-FLF campaign
+         * Added and improved piracy missions
+         * New minor Soromid campaign, "Coming Out"
+         * Improved generic missions
    * Engine
       * Added shaders to speed up and improve graphics
       * Added support for non-ascii direct character input
       * Added support for map decorators
       * Removed support for Lua 5.0
-      * Removed support for SDL 1, only SDL 2 is support
+      * Removed support for SDL 1, only SDL 2 is supported
       * Added support for translating
