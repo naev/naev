@@ -135,7 +135,7 @@ void background_initStars( int n )
       star_vertex[4*i+3] = star_vertex[4*i+1];
       /* Set the colour. */
       star_colour[2*i+0] = RNGF()*0.6 + 0.2;
-      star_colour[2*i+1] = star_colour[8*i+3];
+      star_colour[2*i+1] = star_colour[2*i+0];
    }
 
    /* Destroy old VBO. */
