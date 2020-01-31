@@ -9,13 +9,11 @@ uniform int shade_mode;
 uniform vec2 xy;
 
 in vec4 vertex;
-in vec4 color;
+in float brightness;
 
-out vec4 color_out;
+out vec4 color;
 
 void main(void) {
-   float brightness = color[3];
-
    /* Calculate position */
    float b = 1./(9. - 10.*brightness);
    gl_Position = vertex;
@@ -31,5 +29,5 @@ void main(void) {
 
    gl_Position = projection * gl_Position;
 
-   color_out = color;
+   color = vec4(1, 1, 1, brightness);
 }
