@@ -109,7 +109,7 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 /**
  * @brief nstrndup wrapper.
  *
- * Taken frob glibc.
+ * Taken from glibc.
  */
 #if !(HAS_POSIX && defined(_GNU_SOURCE))
 char* nstrndup( const char *s, size_t n )
