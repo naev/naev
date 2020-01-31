@@ -253,7 +253,8 @@ function enter ()
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
-         boss:setHilight( true )
+         boss:setHilight()
+         boss:setVisible()
 
          pirates_left = 4
          pirates = addShips( "Pirate Hyena", "pirate_norun", vec, pirates_left )
@@ -280,7 +281,8 @@ function enter ()
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()
-         boss:setHilight( true )
+         boss:setHilight()
+         boss:setVisible()
       end
    end
 end
