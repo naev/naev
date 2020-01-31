@@ -147,7 +147,7 @@ void background_initStars( int n )
    }
 
    /* Create now VBO. */
-   star_vertexVBO = gl_vboCreateStream(
+   star_vertexVBO = gl_vboCreateStatic(
          nstars * sizeof(GLfloat) * 4, star_vertex );
    star_colourVBO = gl_vboCreateStatic(
          nstars * sizeof(GLfloat) * 8, star_colour );
