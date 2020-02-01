@@ -315,7 +315,7 @@ function choose_combat ()
       local cur = music.current()
       for k,v in pairs(combat) do
          if cur == v then
-            return false
+            return true
          end
       end
 

@@ -967,8 +967,7 @@ void pilot_setHostile( Pilot* p )
 {
    if (!pilot_isFlag(p, PILOT_HOSTILE)) {
       /* Time to play combat music. */
-      if (player.enemies == 0)
-         music_choose("combat");
+      music_choose("combat");
 
       player.enemies++;
       pilot_setFlag(p, PILOT_HOSTILE);
@@ -1164,14 +1163,14 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
 void pilot_rmHostile( Pilot* p )
 {
    if (pilot_isFlag(p, PILOT_HOSTILE)) {
-      if (!pilot_isDisabled(p))
-         player.enemies--;
+      player.enemies--;
+      if (pilot_isDisabled(p))
+         player.disabled_enemies--;
       pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
-      if (player.enemies <= 0) {
+      if (player.enemies <= player.disabled_enemies) {
          music_choose("ambient");
-         player.enemies = 0;
       }
    }
 }
@@ -1444,12 +1443,9 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag(p, PILOT_HYP_BRAKE);
       pilot_rmFlag(p, PILOT_HYPERSPACE);
 
-      /* If hostile, must remove counter. */
-      h = (pilot_isHostile(p)) ? 1 : 0;
-      pilot_rmHostile(p);
-      if (h == 1) /* Horrible hack to make sure player.p can hit it if it was hostile. */
-         /* Do not use pilot_setHostile here or music will change again. */
-         pilot_setFlag(p,PILOT_HOSTILE);
+      /* If hostile, must add counter. */
+      if (pilot_isHostile(p))
+         player.disabled_enemies++;
 
       /* Modify player combat rating if applicable. */
       /* TODO: Base off something more sensible than mass. */
@@ -1495,6 +1491,14 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
       pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Clear perma-disable flag if necessary. */
       pilot_rmFlag( p, PILOT_BOARDING ); /* Can get boarded again. */
+
+      /* If hostile, must remove counter. */
+      if (pilot_isHostile(p))
+      {
+         player.disabled_enemies--;
+         /* Time to play combat music. */
+         music_choose("combat");
+      }
 
       /* Reset the accumulated disable time. */
       p->dtimer_accum = 0.;
