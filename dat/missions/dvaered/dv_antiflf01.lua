@@ -52,7 +52,7 @@ function create()
 end
 
 function land()
-    if planet.cur():faction():name() == "Dvaered" then
+    if planet.cur():faction() == faction.get("Dvaered") then
         if var.peek("flfbase_flfshipkilled") then
             tk.msg(title[2], text[2] .. text[3] .. text[5])
             player.pay(100000) -- 100K

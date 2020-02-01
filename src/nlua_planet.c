@@ -494,7 +494,7 @@ static int planetL_radius( lua_State *L )
  *
  * @usage f = p:faction()
  *    @luatparam Planet p Planet to get the faction of.
- *    @luatreturn Faction The planet's faction.
+ *    @luatreturn Faction The planet's faction, or nil if it has no faction.
  * @luafunc faction( p )
  */
 static int planetL_faction( lua_State *L )

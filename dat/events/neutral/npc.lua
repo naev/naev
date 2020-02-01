@@ -285,7 +285,8 @@ function spawnNPC()
 
    local nongeneric = false
 
-   local planfaction = planet.cur():faction():name()
+   local f = planet.cur():faction()
+   local planfaction = f ~= nil and f:name() or nil
    local fac = "general"
    local select = rnd.rnd()
    if planfaction ~= nil then

@@ -379,7 +379,9 @@ articles["Thurion"]={}
    --create generic news
 function create()
 
-   faction = planet.cur():faction():name()
+   local f = planet.cur():faction()
+   faction = f ~= nil and f:name() or nil
+   if faction == nil then evt.finish(false) end
 
    remove_header(faction)
 

@@ -223,9 +223,9 @@ function create ()
 
    ship.planet  = random_planet()
 
-   if not ship.planet then
+   if not ship.planet or ship.planet:faction() == nil then
       -- If we’re here, it means we couldn’t get a planet close enough.
-      misn.finish()
+      misn.finish(false)
    end
 
    ship.faction = ship.planet:faction():name()
@@ -234,7 +234,7 @@ function create ()
    if not ship.class then
       -- If we’re here, it means we couldn’t get a ship of the right faction
       -- and of the right class.
-      misn.finish()
+      misn.finish(false)
    end
 
    -- We’re assuming ships[faction][class] is not empty, here…

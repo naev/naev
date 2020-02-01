@@ -127,7 +127,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
 
-   if planet.cur():faction():name() == "Pirate" then
+   if planet.cur():faction() == faction.get("Pirate") then
       misn.setDesc( misn_desc:format( target_faction, missys:name(), paying_faction:name() ) )
    else
       -- We're not on a pirate stronghold, so include a warning that the

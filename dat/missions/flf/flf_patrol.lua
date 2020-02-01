@@ -206,7 +206,7 @@ end
 function land_flf ()
    leave()
    last_system = planet.cur()
-   if planet.cur():faction():name() == "FLF" then
+   if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( credits )
       faction.get("FLF"):modPlayer( reputation )

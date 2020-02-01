@@ -351,7 +351,7 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur():faction():name() == "FLF" then
+   if planet.cur():faction() == faction.get("FLF") then
       tk.msg( title[4], text[4] )
       tk.msg( title[4], text[5]:format( player.name() ) )
       tk.msg( title[4], text[6] )

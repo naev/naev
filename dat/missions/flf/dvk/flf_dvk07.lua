@@ -90,7 +90,7 @@ end
 function land_flf ()
    leave()
    last_system = nil
-   if planet.cur():faction():name() == "FLF" then
+   if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[1] )
       player.pay( credits )
       flf_setReputation( 95 )

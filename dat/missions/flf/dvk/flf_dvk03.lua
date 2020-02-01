@@ -366,7 +366,7 @@ end
 
 
 function land ()
-   if planet.cur():faction():name() == "FLF" then
+   if planet.cur():faction() == faction.get("FLF") then
       tk.msg( title[8], text[8] )
       finish()
    end

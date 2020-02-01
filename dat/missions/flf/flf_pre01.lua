@@ -145,7 +145,7 @@ function land()
         misn.cargoJet(gregar)
         misn.finish(true)
     -- Case Dvaered planet
-    elseif planet.cur():faction():name() == "Dvaered" and not basefound then
+    elseif planet.cur():faction() == faction.get("Dvaered") and not basefound then
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
             faction.get("Dvaered"):modPlayerSingle(5)

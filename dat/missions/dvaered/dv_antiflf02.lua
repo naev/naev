@@ -136,7 +136,7 @@ function enter()
 end
 
 function land()
-    if logsfound and planet.cur():faction():name() == "Dvaered" then
+    if logsfound and planet.cur():faction() == faction.get("Dvaered") then
         tk.msg(title[6], text[6])
         var.push("flfbase_intro", 3)
         faction.get("Dvaered"):modPlayerSingle(5)
