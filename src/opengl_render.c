@@ -247,7 +247,6 @@ void gl_blitTexture(  const glTexture* texture,
    glUseProgram(texture_glsl_program);
 
    /* Bind the texture. */
-   glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
 
    /* Must have colour for now. */
@@ -339,10 +338,8 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 
    /* Bind the textures. */
    glActiveTexture( GL_TEXTURE0 );
-   glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, ta->texture);
    glActiveTexture( GL_TEXTURE1 );
-   glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, tb->texture);
 
    /* Must have colour for now. */
