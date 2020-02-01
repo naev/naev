@@ -50,7 +50,7 @@ osd_msg["__save"] = true
 function create ()
     missys = {system.get("C-59"), system.get("C-28"), system.get("C-00")}
     if not misn.claim(missys) then
-        abort()
+        misn.finish( false )
     end
 
    misn.setNPC( _("Keer"), "empire/unique/keer" )
