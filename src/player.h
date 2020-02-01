@@ -73,6 +73,7 @@ typedef struct Player_s {
    /* Player data. */
    PlayerFlags flags; /**< Player's flags. */
    int enemies; /**< Amount of enemies the player has. */
+   int disabled_enemies; /**< Amount of enemies that are disabled. */
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */

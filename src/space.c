@@ -1466,6 +1466,7 @@ void space_init( const char* sysname )
 
    /* Reset player enemies. */
    player.enemies = 0;
+   player.disabled_enemies = 0;
 
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
