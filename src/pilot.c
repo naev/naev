@@ -1494,7 +1494,11 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* If hostile, must remove counter. */
       if (pilot_isHostile(p))
+      {
          player.disabled_enemies--;
+         /* Time to play combat music. */
+         music_choose("combat");
+      }
 
       /* Reset the accumulated disable time. */
       p->dtimer_accum = 0.;
