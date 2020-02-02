@@ -403,13 +403,23 @@ void osd_render (void)
 {
    OSD_t *ll;
    double p;
-   int i, j, k, l;
+   int i, j, k, l, m;
    int w, x;
    const glColour *c;
+   int *ignore;
+   int nignore;
+   int is_duplicate, duplicates;
+   char title[1024];
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
+
+   nignore = array_size(osd_list);
+   ignore = malloc( sizeof(ignore) * nignore );
+   for (m=0; m<nignore; m++) {
+      ignore[m] = 0;
+   }
 
    /* Background. */
    gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
@@ -418,19 +428,56 @@ void osd_render (void)
    p = osd_y-gl_smallFont.h;
    l = 0;
    for (k=0; k<array_size(osd_list); k++) {
+      if (ignore[k])
+         continue;
+
       ll = &osd_list[k];
       x = osd_x;
       w = osd_w;
 
+      /* Check how many duplicates we have, mark duplicates for ignoring */
+      duplicates = 0;
+      for (m=k+1; m<array_size(osd_list); m++) {
+         if ((strcmp(osd_list[m].title, ll->title) == 0) &&
+               (osd_list[m].nitems == ll->nitems) &&
+               (osd_list[m].active == ll->active)) {
+            is_duplicate = 1;
+            for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
+               if (osd_list[m].items[i].nchunks == ll->items[i].nchunks) {
+                  for (j=0; j<osd_list[m].items[i].nchunks; j++) {
+                     if (strcmp(osd_list[m].items[i].chunks[j], ll->items[i].chunks[j]) != 0 ) {
+                        is_duplicate = 0;
+                        break;
+                     }
+                  }
+               } else {
+                  is_duplicate = 0;
+               }
+               if (!is_duplicate)
+                  break;
+            }
+            if (is_duplicate) {
+               duplicates++;
+               ignore[m] = 1;
+            }
+         }
+      }
+
       /* Print title. */
-      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
+      if (duplicates > 0)
+         sprintf( title, "%s (%d)", ll->title, duplicates + 1 );
+      else
+         strcpy( title, ll->title );
+      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, title );
       p -= gl_smallFont.h + 5.;
       l++;
-      if (l >= osd_lines)
+      if (l >= osd_lines) {
+         free(ignore);
          return;
+      }
 
       /* Print items. */
-      for (i=0; i<ll->nitems; i++) {
+      for (i=ll->active; i<ll->nitems; i++) {
          x = osd_x;
          w = osd_w;
          c = (ll->active == i) ? &cConsole : NULL;
@@ -443,11 +490,15 @@ void osd_render (void)
             }
             p -= gl_smallFont.h + 5.;
             l++;
-            if (l >= osd_lines)
+            if (l >= osd_lines) {
+               free(ignore);
                return;
+            }
          }
       }
    }
+
+   free(ignore);
 }
 
 
@@ -457,27 +508,68 @@ void osd_render (void)
 static void osd_calcDimensions (void)
 {
    OSD_t *ll;
-   int i, j, k;
+   int i, j, k, m;
    double len;
+   int *ignore;
+   int nignore;
+   int is_duplicate, duplicates;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
+   nignore = array_size(osd_list);
+   ignore = malloc( sizeof(ignore) * nignore );
+   for (m=0; m<nignore; m++) {
+      ignore[m] = 0;
+   }
+
    /* Render each thingy. */
    len = 0;
    for (k=0; k<array_size(osd_list); k++) {
+      if (ignore[k])
+         continue;
+
       ll = &osd_list[k];
+
+      /* Check how many duplicates we have, mark duplicates for ignoring */
+      duplicates = 0;
+      for (m=k+1; m<array_size(osd_list); m++) {
+         if ((strcmp(osd_list[m].title, ll->title) == 0) &&
+               (osd_list[m].nitems == ll->nitems) &&
+               (osd_list[m].active == ll->active)) {
+            is_duplicate = 1;
+            for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
+               if (osd_list[m].items[i].nchunks == ll->items[i].nchunks) {
+                  for (j=0; j<osd_list[m].items[i].nchunks; j++) {
+                     if (strcmp(osd_list[m].items[i].chunks[j], ll->items[i].chunks[j]) != 0 ) {
+                        is_duplicate = 0;
+                        break;
+                     }
+                  }
+               } else {
+                  is_duplicate = 0;
+               }
+               if (!is_duplicate)
+                  break;
+            }
+            if (is_duplicate) {
+               duplicates++;
+               ignore[m] = 1;
+            }
+         }
+      }
 
       /* Print title. */
       len += gl_smallFont.h + 5.;
 
       /* Print items. */
-      for (i=0; i<ll->nitems; i++)
+      for (i=ll->active; i<ll->nitems; i++)
          for (j=0; j<ll->items[i].nchunks; j++)
             len += gl_smallFont.h + 5.;
    }
    osd_rh = MIN( len, osd_h );
+   free(ignore);
 }
 
 
