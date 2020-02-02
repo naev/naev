@@ -536,7 +536,7 @@ void spfx_begin( const double dt, const double real_dt )
       spfx_updateShake( dt );
 
    /* set the new viewport */
-   gl_matrixTranslate( shake_pos.x, shake_pos.y );
+   gl_view_matrix = gl_Matrix4_Translate( gl_view_matrix, shake_pos.x, shake_pos.y, 0 );
    shake_set = 1;
 }
 

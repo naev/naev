@@ -17,30 +17,6 @@ int gl_initMatrix (void);
 void gl_exitMatrix (void);
 
 
-/*
- * Matrix mode.
- */
-void gl_matrixMode( GLenum mode );
-
-
-/*
- * Push/pop matrix.
- */
-void gl_matrixPush (void);
-void gl_matrixPop (void);
-
-
-/*
- * Matrix manipulation.
- */
-void gl_matrixIdentity (void);
-void gl_matrixOrtho( double left, double right,
-      double bottom, double top, double nearVal, double farVal );
-void gl_matrixTranslate( double x, double y );
-void gl_matrixScale( double x, double y );
-void gl_matrixRotate( double a );
-
-
 typedef struct gl_Matrix4_ {
    /* Column-major; m[x][y] */
    GLfloat m[4][4];

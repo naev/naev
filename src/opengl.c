@@ -685,7 +685,6 @@ void gl_viewport( int x, int y, int w, int h )
       proj = gl_Matrix4_Scale(proj, gl_screen.wscale, gl_screen.hscale, 1);
 
    /* TODO: Remove once everything is using shaders */
-   gl_matrixMode(GL_PROJECTION);
    gl_Matrix4_Load(proj);
 
    gl_view_matrix = proj;
