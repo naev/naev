@@ -40,6 +40,14 @@
 #define MAX_ROWS 128 /**< Max number of rows per texture cache. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 
+static GLuint font_glsl_program = 0;
+static GLuint font_glsl_program_color = 0;
+static GLuint font_glsl_program_projection = 0;
+static GLuint font_glsl_program_vertex = 0;
+static GLuint font_glsl_program_tex_coord = 0;
+
+static gl_Matrix4 font_projection_mat;
+
 
 /**
  * @brief Stores the row information for a font.
@@ -999,30 +1007,30 @@ static void gl_fontRenderStart( const glFontStash* font, double x, double y, con
 {
    double a;
 
-   /* Enable textures. */
-   glEnable(GL_TEXTURE_2D);
+   glUseProgram(font_glsl_program);
 
-   /* Set up matrix. */
-   gl_matrixMode(GL_MODELVIEW);
-   gl_matrixPush();
-      gl_matrixTranslate( round(x), round(y) );
+   font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
 
    /* Handle colour. */
    if (font_restoreLast) {
       a   = (c==NULL) ? 1. : c->a;
-      ACOLOUR(*font_lastCol,a);
+      gl_uniformAColor(font_glsl_program_color, font_lastCol, a);
    }
    else {
       if (c==NULL)
-         glColor4d( 1., 1., 1., 1. );
+         gl_uniformColor(font_glsl_program_color, &cWhite);
       else
-         COLOUR(*c);
+         gl_uniformColor(font_glsl_program_color, c);
    }
    font_restoreLast = 0;
 
    /* Activate the appropriate VBOs. */
-   gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
+   glEnableVertexAttribArray( font_glsl_program_vertex );
+   gl_vboActivateAttribOffset( font->vbo_vert, font_glsl_program_vertex,
+         0, 2, GL_SHORT, 0 );
+   glEnableVertexAttribArray( font_glsl_program_tex_coord );
+   gl_vboActivateAttribOffset( font->vbo_tex, font_glsl_program_tex_coord,
+         0, 2, GL_FLOAT, 0 );
 }
 
 
@@ -1154,12 +1162,12 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       a   = (c==NULL) ? 1. : c->a;
       if (col == NULL) {
          if (c==NULL)
-            glColor4d( 1., 1., 1., 1. );
+            gl_uniformColor(font_glsl_program_color, &cWhite);
          else
-            COLOUR(*c);
+            gl_uniformColor(font_glsl_program_color, c);
       }
       else
-         ACOLOUR(*col,a);
+         gl_uniformAColor(font_glsl_program_color, col, a);
       font_lastCol = col;
       return 0;
    }
@@ -1176,11 +1184,14 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, glyph->tex->id);
 
+   gl_Matrix4_Uniform(font_glsl_program_projection, font_projection_mat);
+
    /* Draw the element. */
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
-   gl_matrixTranslate( glyph->adv_x, glyph->adv_y );
+   font_projection_mat = gl_Matrix4_Translate( font_projection_mat,
+         glyph->adv_x, glyph->adv_y, 0 );
 
    return 0;
 }
@@ -1192,9 +1203,9 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
 static void gl_fontRenderEnd (void)
 {
    gl_vboDeactivate();
-   gl_matrixPop();
-   gl_matrixMode( GL_PROJECTION );
-   glDisable(GL_TEXTURE_2D);
+   glDisableVertexAttribArray( font_glsl_program_vertex );
+   glDisableVertexAttribArray( font_glsl_program_tex_coord );
+   glUseProgram(0);
 
    /* Check for errors. */
    gl_checkErr();
@@ -1231,6 +1242,16 @@ static char *gl_fontFind( const char *fname )
 }
 
 
+static void gl_initFontShader() {
+   if (font_glsl_program == 0) {
+      font_glsl_program = gl_program_vert_frag("font.vert", "font.frag");
+      font_glsl_program_projection = glGetUniformLocation(font_glsl_program, "projection");
+      font_glsl_program_color = glGetUniformLocation(font_glsl_program, "color");
+      font_glsl_program_vertex = glGetAttribLocation(font_glsl_program, "vertex");
+      font_glsl_program_tex_coord = glGetAttribLocation(font_glsl_program, "tex_coord");
+   }
+}
+
 /**
  * @brief Initializes a font.
  *
@@ -1248,6 +1269,8 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
    int i;
    glFontStash *stsh;
    char *used_font;
+
+   gl_initFontShader();
 
    /* See if we should override fonts. */
    used_font = NULL;
