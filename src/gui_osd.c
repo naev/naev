@@ -370,6 +370,7 @@ int osd_setup( int x, int y, int w, int h )
    /* Calculate some font things. */
    osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
    osd_hyphenLen = gl_printWidthRaw( &gl_smallFont, "- " );
+   osd_calcDimensions();
 
    return 0;
 }
