@@ -392,7 +392,7 @@ void nebu_renderOverlay( const double dt )
 
    glUseProgram(nebula_glsl_program);
    glColour c = cDarkBlue;
-   glUniform4f(glGetUniformLocation(nebula_glsl_program, "color"), c.r, c.g, c.b, c.a);
+   gl_uniformColor(glGetUniformLocation(nebula_glsl_program, "color"), &cDarkBlue);
    gl_Matrix4_Uniform(glGetUniformLocation(nebula_glsl_program, "projection"), projection);
    glUniform2f(glGetUniformLocation(nebula_glsl_program, "center"), gl_screen.rw / 2, gl_screen.rh / 2);
    glUniform1f(glGetUniformLocation(nebula_glsl_program, "radius"), nebu_view * z * (1 / gl_screen.scale));
