@@ -287,18 +287,18 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    vbo_tex[ 1 ] = ty;
    vbo_tex[ 2 ] = txw; /* Top right. */
    vbo_tex[ 3 ] = ty;
-   vbo_tex[ 4 ] = txw; /* Bottom right. */
+   vbo_tex[ 4 ] = tx;  /* Bottom left. */
    vbo_tex[ 5 ] = tyh;
-   vbo_tex[ 6 ] = tx;  /* Bottom left. */
+   vbo_tex[ 6 ] = txw; /* Bottom right. */
    vbo_tex[ 7 ] = tyh;
    /* Vertex coords. */
    vbo_vert[ 0 ] = vx;    /* Top left. */
    vbo_vert[ 1 ] = vy+vh;
    vbo_vert[ 2 ] = vx+vw; /* Top right. */
    vbo_vert[ 3 ] = vy+vh;
-   vbo_vert[ 4 ] = vx+vw; /* Bottom right. */
+   vbo_vert[ 4 ] = vx;    /* Bottom left. */
    vbo_vert[ 5 ] = vy;
-   vbo_vert[ 6 ] = vx;    /* Bottom left. */
+   vbo_vert[ 6 ] = vx+vw; /* Bottom right. */
    vbo_vert[ 7 ] = vy;
    /* Update vbos. */
    gl_vboData( stsh->vbo_tex,  sizeof(GLfloat)*n,  stsh->vbo_tex_data );
@@ -1142,10 +1142,8 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
  */
 static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state )
 {
-   GLushort ind[6];
    double a;
    const glColour *col;
-   int vbo_id;
 
    /* Handle escape sequences. */
    if (ch == '\a') {/* Start sequence. */
@@ -1178,17 +1176,8 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, glyph->tex->id);
 
-   /* VBO indices. */
-   vbo_id = glyph->vbo_id;
-   ind[0] = vbo_id + 0;
-   ind[1] = vbo_id + 1;
-   ind[2] = vbo_id + 3;
-   ind[3] = vbo_id + 1;
-   ind[4] = vbo_id + 3;
-   ind[5] = vbo_id + 2;
-
    /* Draw the element. */
-   glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+   glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
    gl_matrixTranslate( glyph->adv_x, glyph->adv_y );
