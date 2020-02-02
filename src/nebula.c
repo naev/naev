@@ -229,17 +229,15 @@ double nebu_getSightRadius (void)
  */
 static int nebu_loadTexture( SDL_Surface *sur, int w, int h, glTexture **tex )
 {
-   SDL_Surface *nebu_sur;
+   *tex = gl_loadImage(sur, 0);
 
-   nebu_sur = gl_prepareSurface( sur );
    if ((w!=0) && (h!=0) &&
-         ((sur->w != w) || (sur->h != h))) {
+         (((*tex)->rw != w) || ((*tex)->rh != h))) {
       WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
-            nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
+            (*tex)->rw, (*tex)->rh, nebu_pw, nebu_ph );
       return -1;
    }
 
-   *tex = gl_loadImage(sur, 0);
    return 0;
 }
 
@@ -392,7 +390,7 @@ void nebu_renderOverlay( const double dt )
 
    glUseProgram(nebula_glsl_program);
    glColour c = cDarkBlue;
-   glUniform4f(glGetUniformLocation(nebula_glsl_program, "color"), c.r, c.g, c.b, c.a);
+   gl_uniformColor(glGetUniformLocation(nebula_glsl_program, "color"), &cDarkBlue);
    gl_Matrix4_Uniform(glGetUniformLocation(nebula_glsl_program, "projection"), projection);
    glUniform2f(glGetUniformLocation(nebula_glsl_program, "center"), gl_screen.rw / 2, gl_screen.rh / 2);
    glUniform1f(glGetUniformLocation(nebula_glsl_program, "radius"), nebu_view * z * (1 / gl_screen.scale));

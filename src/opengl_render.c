@@ -109,7 +109,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   glUniform4f(rect_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_uniformColor(rect_glsl_program_color, c);
    gl_Matrix4_Uniform(rect_glsl_program_projection, projection);
 
    /* Draw. */
@@ -149,7 +149,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   glUniform4f(rect_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_uniformColor(rect_glsl_program_color, c);
    gl_Matrix4_Uniform(rect_glsl_program_projection, projection);
 
    /* Draw. */
@@ -261,7 +261,7 @@ void gl_blitTexture(  const glTexture* texture,
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
-   glUniform4f(texture_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_uniformColor(texture_glsl_program_color, c);
    gl_Matrix4_Uniform(texture_glsl_program_projection, projection);
    gl_Matrix4_Uniform(texture_glsl_program_tex_mat, tex_mat);
 
@@ -354,7 +354,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    /* Set shader uniforms. */
    glUniform1i(texture_interpolate_glsl_program_sampler1, 0);
    glUniform1i(texture_interpolate_glsl_program_sampler2, 1);
-   glUniform4f(texture_interpolate_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_uniformColor(texture_interpolate_glsl_program_color, c);
    glUniform1f(texture_interpolate_glsl_program_inter, inter);
    gl_Matrix4_Uniform(texture_interpolate_glsl_program_projection, projection);
    gl_Matrix4_Uniform(texture_interpolate_glsl_program_tex_mat, tex_mat);
@@ -798,7 +798,7 @@ static void gl_drawCircleFilled( const double cx, const double cy,
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   glUniform4f(circle_filled_glsl_program_color, c->r, c->g, c->b, c->a);
+   gl_uniformColor(circle_filled_glsl_program_color, c);
    gl_Matrix4_Uniform(circle_filled_glsl_program_projection, projection);
 
    /* Draw. */

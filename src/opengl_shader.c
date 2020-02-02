@@ -94,3 +94,7 @@ int gl_program_vert_frag(const char *vert, const char *frag) {
 
    return program;
 }
+
+void gl_uniformColor(GLint location, const glColour *c) {
+   glUniform4f(location, c->r, c->g, c->b, c->a);
+}
