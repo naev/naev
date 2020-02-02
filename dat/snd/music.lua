@@ -249,7 +249,20 @@ function choose_ambient ()
       end
 
       -- Load music and play
-      music.load( ambient[ rnd.rnd(1,#ambient) ] )
+      local new_track = ambient[ rnd.rnd(1,#ambient) ]
+
+      -- Make it very unlikely (but not impossible) for the same music
+      -- to play twice
+      for i=1, 3 do
+         if new_track == last_track then
+            new_track = ambient[ rnd.rnd(1,#ambient) ]
+         else
+            break
+         end
+      end
+
+      last_track = new_track
+      music.load( new_track )
       music.play()
       return true
    end
@@ -323,7 +336,20 @@ function choose_combat ()
       return true
    end
 
-   music.load( combat[ rnd.rnd(1,#combat) ] )
+   local new_track = combat[ rnd.rnd(1,#combat) ]
+
+   -- Make it very unlikely (but not impossible) for the same music
+   -- to play twice
+   for i=1, 3 do
+      if new_track == last_track then
+         new_track = combat[ rnd.rnd(1,#combat) ]
+      else
+         break
+      end
+   end
+
+   last_track = new_track
+   music.load( new_track )
    music.play()
    return true
 end
