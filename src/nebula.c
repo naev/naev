@@ -229,13 +229,10 @@ double nebu_getSightRadius (void)
  */
 static int nebu_loadTexture( SDL_Surface *sur, int w, int h, glTexture **tex )
 {
-   SDL_Surface *nebu_sur;
-
-   nebu_sur = gl_prepareSurface( sur );
    if ((w!=0) && (h!=0) &&
          ((sur->w != w) || (sur->h != h))) {
       WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
-            nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
+            sur->w, sur->h, nebu_pw, nebu_ph );
       return -1;
    }
 
