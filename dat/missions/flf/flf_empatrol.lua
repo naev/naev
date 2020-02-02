@@ -29,7 +29,7 @@ misn_desc[3] = _(" There is a Pacifier among them, so you must proceed with caut
 misn_desc[4] = _(" There is a Hawking among them, so you must be very careful.")
 misn_desc[5] = _(" You will be accompanied by %d other FLF pilots for this mission.")
 
-osd_title   = _("Dvaered Patrol")
+osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Empire patrol")

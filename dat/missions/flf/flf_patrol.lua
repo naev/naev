@@ -49,7 +49,7 @@ misn_level[4] = _("Large")
 misn_level[5] = _("Dangerous")
 misn_level[6] = _("Highly Dangerous")
 
-osd_title   = _("Dvaered Patrol")
+osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
