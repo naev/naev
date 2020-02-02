@@ -586,6 +586,13 @@ void player_swapShip( char* shipname )
       /* move cargo over */
       pilot_cargoMove( ship, player.p );
 
+      /* Copy target info */
+      ship->target = player.p->target;
+      ship->nav_planet = player.p->nav_planet;
+      ship->nav_hyperspace = player.p->nav_hyperspace;
+      ship->nav_anchor = player.p->nav_anchor;
+      ship->nav_asteroid = player.p->nav_asteroid;
+
       /* Store position. */
       v = player.p->solid->pos;
       dir = player.p->solid->dir;
