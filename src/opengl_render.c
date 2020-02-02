@@ -82,12 +82,6 @@ static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
  */
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
-static void gl_blitTextureInterpolate(  const glTexture* ta,
-      const glTexture* tb, const double inter,
-      const double x, const double y,
-      const double w, const double h,
-      const double tx, const double ty,
-      const double tw, const double th, const glColour *c );
 static GLuint texture_glsl_program_compile( void );
 
 
@@ -302,7 +296,7 @@ void gl_blitTexture(  const glTexture* texture,
  *    @param th Texture height.
  *    @param c Colour to use (modifies texture colour).
  */
-static void gl_blitTextureInterpolate(  const glTexture* ta,
+void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
       const double w, const double h,
