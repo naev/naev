@@ -328,6 +328,7 @@ int osd_active( unsigned int osd, int msg )
    }
 
    o->active = msg;
+   osd_calcDimensions();
    return 0;
 }
 
