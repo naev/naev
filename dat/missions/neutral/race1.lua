@@ -239,6 +239,7 @@ end
 function board(ship)
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
+         player.msg( string.format( positionmsg, player.name(),target[4]) )
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
@@ -246,10 +247,10 @@ function board(ship)
          else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end
+         break
       end
    end
-   player.msg( string.format( positionmsg, player.name(),target[4]) )
-   player.unboard() 
+   player.unboard()
 end
 
 
