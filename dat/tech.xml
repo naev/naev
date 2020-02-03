@@ -143,6 +143,7 @@
   <item>Map: FLF Hidden Jumps</item>
   <item>Map: FLF-Pirate Route</item>
   <item>Map: Inner Nebula Secret Jump</item>
+  <item>Map: Thurion Core</item>
   <item>Ultra Map</item>
   <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
@@ -768,6 +769,7 @@
   <item>Thurion Engine Reroute</item>
   <item>Adaptive Stealth Plating</item>
   <item>Active Plating</item>
+  <item>Map: Thurion Core</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>

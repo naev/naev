@@ -12,8 +12,6 @@
  </pos>
  <assets>
   <asset>Coran</asset>
-  <asset>HS-224</asset>
-  <asset>SY-314</asset>
  </assets>
  <jumps>
   <jump target="Aet">
