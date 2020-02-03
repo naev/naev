@@ -42,7 +42,7 @@
 
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
-#define OUTFIT_SHORTDESC_MAX  256 /**< Max length of the short description of the outfit. */
+#define OUTFIT_SHORTDESC_MAX  1024 /**< Max length of the short description of the outfit. */
 
 
 /*
@@ -1387,7 +1387,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    char *buf;
-   int l;
 
    node = parent->xmlChildrenNode;
 
@@ -1480,27 +1479,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         _("%s\n"
-         "%.0f%% Penetration\n"
-         "%.0f Damage [%s]\n"),
-         outfit_getType(temp),
-         temp->u.amm.dmg.penetration*100.,
-         temp->u.amm.dmg.damage, dtype_damageTypeToStr(temp->u.amm.dmg.type) );
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("%.0f Disable\n"),
-         temp->u.amm.dmg.disable );
-   }
-   l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("%.0f Energy\n"
-         "%.0f Maximum Speed\n"
-         "%.0f%% Jam resistance\n"
-         "%.1f duration"),
-         temp->u.amm.energy,
-         temp->u.amm.speed,
-         temp->u.amm.resist,
-         temp->u.amm.duration );
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "" );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2428,24 +2407,39 @@ static void outfit_launcherDesc( Outfit* o )
    o->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = nsnprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s [%s]\n"
-         "%.0f CPU\n"
+         "%.0f CPU\n"),
+         outfit_getType(o), dtype_damageTypeToStr(a->u.amm.dmg.type),
+         o->cpu );
+
+   if (outfit_isSeeker(o))
+      l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+            _("%.1f Second Lockon\n"),
+            o->u.lau.lockon );
+
+   l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+         _("Holds %d %s:\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"),
-         outfit_getType(o), dtype_damageTypeToStr(a->u.amm.dmg.type),
-         o->cpu,
+         o->u.lau.amount, o->u.lau.ammo_name,
          a->u.amm.dmg.penetration * 100.,
          1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
 
    if (a->u.amm.dmg.disable > 0.)
       l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-            _("%.2f Disable/s [%.0f Disable]\n"),
+            _("%.1f Disable/s [%.0f Disable]\n"),
             1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
 
    l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
-         "Holds %d %s"),
+         "%.1f EPS [%.0f Energy]\n"
+         "%.0f Range [%.1f duration]\n"
+         "%.0f Maximum Speed\n"
+         "%.0f%% Jam resistance\n"),
          1. / o->u.lau.delay,
-         o->u.lau.amount, o->u.lau.ammo_name );
+         o->u.lau.delay * a->u.amm.energy, a->u.amm.energy,
+         outfit_range(a), a->u.amm.duration,
+         a->u.amm.speed,
+         a->u.amm.resist );
 }
 
 
