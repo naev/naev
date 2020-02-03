@@ -369,10 +369,15 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
 
    /* Account final travel to planet for planet targets. */
    if (pnt != NULL) {
-      ss = slist[ i ];
-      for (j=0; j < ss->njumps; j++)
-         if (ss->jumps[j].target == slist[i-1])
-            vs = &ss->jumps[j].pos;
+      if (i > 0) {
+         ss = slist[ i ];
+         for (j=0; j < ss->njumps; j++) {
+            if (ss->jumps[j].target == slist[i-1]) {
+               vs = &ss->jumps[j].pos;
+               break;
+            }
+         }
+      }
 
       ve = &pnt->pos;
       d += vect_dist( vs, ve );
