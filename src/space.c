@@ -1567,6 +1567,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    /* randomly init the gfx ID */
    at = &asteroid_types[ast->type];
    ast->gfxID = RNG(0,at->ngfx-1);
+   ast->armour = at->armour;
 
    /* Grow effect stuff */
    ast->appearing = 1;
@@ -3265,6 +3266,7 @@ static int asteroidTypes_load (void)
          at->gfxs = NULL;
          at->material = NULL;
          at->quantity = NULL;
+         at->armour = 0.;
 
          cur = node->children;
          i = 0; j = 0;
@@ -3289,6 +3291,9 @@ static int asteroidTypes_load (void)
 
             else if (xml_isNode(cur,"id"))
                at->ID = xml_getStrd(cur);
+
+            else if (xml_isNode(cur,"armour"))
+               at->armour = xml_getFloat(cur);
 
             else if (xml_isNode(cur,"commodity")) {
                at->material = realloc( at->material, sizeof(Commodity*)*(j+1) );
@@ -4362,11 +4367,19 @@ AsteroidType *space_getType ( int ID )
  * @brief Hits an asteroid.
  *
  *    @param a hitten asteroid
+ *    @param dmg Damage being done
  */
-void asteroid_hit( Asteroid *a )
+void asteroid_hit( Asteroid *a, const Damage *dmg )
 {
-   a->appearing = 3;
-   a->timer = 0.;
+   double darmour;
+   dtype_calcDamage( NULL, &darmour, 1, NULL, dmg, NULL );
+
+   a->armour -= darmour;
+   if (a->armour <= 0)
+   {
+      a->appearing = 3;
+      a->timer = 0.;
+   }
 }
 
 

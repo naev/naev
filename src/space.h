@@ -186,6 +186,7 @@ typedef struct AsteroidType_ {
    Commodity **material; /**< Materials contained in the asteroid. */
    int *quantity; /**< Quantities of materials. */
    int nmaterial; /**< size of both material stacks. */
+   double armour; /**< Starting "armour" of the asteroid. */
 } AsteroidType;
 
 
@@ -213,6 +214,7 @@ typedef struct Asteroid_ {
    int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
    int type; /**< The ID of the asteroid type */
    int scanned; /**< Wether the player already scanned this asteroid. */
+   double armour; /**< Current "armour" of the asteroid. */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 
@@ -434,7 +436,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /*
  * Asteroids
  */
-void asteroid_hit( Asteroid *a);
+void asteroid_hit( Asteroid *a, const Damage *dmg );
 int space_isInField ( Vector2d *p );
 AsteroidType *space_getType ( int ID );
 
