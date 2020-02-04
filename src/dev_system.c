@@ -180,13 +180,13 @@ int dsys_saveSystem( StarSystem *sys )
             }
          }
 
-         /* Corners */
-         for (j=0; j<ast->ncorners; j++) {
-            xmlw_startElem( writer, "corner" );
-            xmlw_elem( writer, "x", "%f", ast->corners[j].x );
-            xmlw_elem( writer, "y", "%f", ast->corners[j].y );
-            xmlw_endElem( writer ); /* "corner" */
-         }
+         /* Radius */
+         xmlw_elem( writer, "radius", "%f", ast->radius );
+
+         xmlw_startElem( writer, "pos" );
+         xmlw_attr( writer, "x", "%f", ast->pos.x );
+         xmlw_attr( writer, "y", "%f", ast->pos.y );
+         xmlw_endElem( writer ); /* "pos" */
 
          /* Misc. properties. */
          xmlw_elem( writer, "density", "%f", ast->density );
