@@ -106,6 +106,7 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected);
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
@@ -661,6 +662,13 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
             jp->sx, jp->sy, c, selected, jp->target->name );
    }
 
+   /* Render asteroids */
+   for (i=0; i<sys->nasteroids; i++) {
+      ast = &sys->asteroids[i];
+      selected = 0;
+      sysedit_renderAsteroidsField( x, y, ast, selected );
+   }
+
    /* Render cursor position. */
    gl_print( &gl_smallFont, bx + 5., by + 5.,
          &cWhite, "%.2f, %.2f",
@@ -668,6 +676,30 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          (by + sysedit_my - y)/z );
 }
 
+
+/**
+ * @brief Draws an asteroids field on the map.
+ *
+ */
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected )
+{
+   double tx, ty, z;
+
+   /* Render icon */
+   sysedit_renderSprite( asteroid_gfx[0], bx, by, ast->pos.x, ast->pos.y,
+                         0, 0, NULL, selected, _("Asteroid Field") );
+
+   /* Inits. */
+   z  = sysedit_zoom;
+
+   /* Translate asteroid field center's coords. */
+   tx = bx + ast->pos.x*z;
+   ty = by + ast->pos.y*z;
+
+   glEnable(GL_LINE_SMOOTH);
+   gl_drawCircleLoop( tx, ty, ast->radius * sysedit_zoom, &cOrange );
+   glDisable(GL_LINE_SMOOTH);
+}
 
 /**
  * @brief Renders the custom widget background.
