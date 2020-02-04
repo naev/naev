@@ -2,24 +2,12 @@
 include("dat/factions/equip/generic.lua")
 
 
-equip_classOutfits_weapons["Yacht"] = {
-   { "Asterokiller Gauss Gun" }
-}
-
 equip_classOutfits_utilities["Yacht"] = {
    { "Asteroid Scanner" }
 }
 
-equip_classOutfits_weapons["Courier"] = {
-   { "Asterokiller Gauss Gun" }
-}
-
 equip_classOutfits_utilities["Courier"] = {
    { "Asteroid Scanner" }
-}
-
-equip_classOutfits_weapons["Freighter"] = {
-   { "Asterokiller Gauss Gun" }
 }
 
 equip_classOutfits_utilities["Freighter"] = {
