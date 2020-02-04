@@ -960,39 +960,35 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
-   /* Asterokiller weapons collide with asteroids*/
+   /* Collide with asteroids*/
    if (outfit_isAmmo(w->outfit)) {
-      if ( w->outfit->u.amm.dmg.asterokill ) {
-         for (i=0; i<cur_system->nasteroids; i++) {
-            ast = &cur_system->asteroids[i];
-            for (j=0; j<ast->nb; j++) {
-               a = &ast->asteroids[j];
-               at = space_getType ( a->type );
-               if (a->appearing==0 &&
-                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     at->gfxs[a->gfxID], 0, 0, &a->pos,
-                     &crash[0] ) ) {
-                     weapon_hitAst( w, a, layer, &crash[0] );
-                     return; /* Weapon is destroyed. */
-               }
+      for (i=0; i<cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         for (j=0; j<ast->nb; j++) {
+            a = &ast->asteroids[j];
+            at = space_getType ( a->type );
+            if (a->appearing==0 &&
+                  CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                        at->gfxs[a->gfxID], 0, 0, &a->pos,
+                        &crash[0] ) ) {
+               weapon_hitAst( w, a, layer, &crash[0] );
+               return; /* Weapon is destroyed. */
             }
          }
       }
    }
    else if (outfit_isBolt(w->outfit)) {
-      if ( w->outfit->u.blt.dmg.asterokill ) {
-         for (i=0; i<cur_system->nasteroids; i++) {
-            ast = &cur_system->asteroids[i];
-            for (j=0; j<ast->nb; j++) {
-               a = &ast->asteroids[j];
-               at = space_getType ( a->type );
-               if (a->appearing==0 &&
-                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     at->gfxs[a->gfxID], 0, 0, &a->pos,
-                     &crash[0] ) ) {
-                     weapon_hitAst( w, a, layer, &crash[0] );
-                     return; /* Weapon is destroyed. */
-               }
+      for (i=0; i<cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         for (j=0; j<ast->nb; j++) {
+            a = &ast->asteroids[j];
+            at = space_getType ( a->type );
+            if (a->appearing==0 &&
+                  CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                        at->gfxs[a->gfxID], 0, 0, &a->pos,
+                        &crash[0] ) ) {
+               weapon_hitAst( w, a, layer, &crash[0] );
+               return; /* Weapon is destroyed. */
             }
          }
       }
