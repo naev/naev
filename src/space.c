@@ -72,6 +72,9 @@
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
+#define ASTEROID_EXPLODE_INTERVAL 30. /**< Interval of asteroids randomly exploding */
+#define ASTEROID_EXPLODE_CHANCE   0.1 /**< Chance of asteroid exploding each interval */
+
 /*
  * planet <-> system name stack
  */
@@ -156,7 +159,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
-static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field );
+static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
@@ -1315,16 +1318,27 @@ void space_update( const double dt )
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
 
-         /* Grow and shrink */
-         if (a->appearing == ASTEROID_GROWING) {
+         if (a->appearing == ASTEROID_VISIBLE) {
+            /* Random explosions */
+            a->timer += dt;
+            if (a->timer >= ASTEROID_EXPLODE_INTERVAL) {
+               a->timer = 0.;
+               if ( (RNGF() < ASTEROID_EXPLODE_CHANCE) ||
+                     (space_isInField(&a->pos) < 0) ) {
+                  asteroid_explode( a, ast, 0 );
+               }
+            }
+         }
+         else if (a->appearing == ASTEROID_GROWING) {
+            /* Grow */
             a->timer += dt;
             if (a->timer >= 2.) {
                a->timer = 0.;
                a->appearing = ASTEROID_VISIBLE;
             }
          }
-
-         if (a->appearing == ASTEROID_SHRINKING) {
+         else if (a->appearing == ASTEROID_SHRINKING) {
+            /* Shrink */
             a->timer += dt;
             if (a->timer >= 2.) {
                /* Remove the asteroid target to any pilot. */
@@ -1333,21 +1347,13 @@ void space_update( const double dt )
                asteroid_init( a, ast );
             }
          }
-
-         /* Exploding asteroid */
-         if (a->appearing == ASTEROID_EXPLODING) {
+         else if (a->appearing == ASTEROID_EXPLODING) {
+            /* Exploding asteroid */
             a->timer += dt;
             if (a->timer >= .5) {
                /* Make it explode */
-               asteroid_explode( a, ast );
+               asteroid_explode( a, ast, 1 );
             }
-         }
-
-         /* Manage the asteroid getting outside the field */
-         if ( (a->appearing == ASTEROID_VISIBLE) && (space_isInField(&a->pos) < 0) ) {
-            /* Make it shrink */
-            a->timer = 0.;
-            a->appearing = ASTEROID_SHRINKING;
          }
       }
 
@@ -4335,13 +4341,14 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
  *
  *    @param a asteroid to make explode
  */
-static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
+static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward )
 {
    int i, j, nb;
    Damage dmg;
    AsteroidType *at;
    Commodity *com;
    Vector2d pos, vel;
+   char buf[16];
 
    /* Manage the explosion */
    dmg.type          = dtype_get("explosion_splash");
@@ -4351,20 +4358,26 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
    expl_explode( a->pos.x, a->pos.y, a->vel.x, a->vel.y,
                  50., &dmg, NULL, EXPL_MODE_SHIP );
 
-   /* Release commodity. */
-   at = &asteroid_types[a->type];
+   /* Play random explosion sound. */
+   nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+   sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
 
-   for (i=0; i < at->nmaterial; i++) {
-      nb = RNG(0,at->quantity[i]);
-      com = at->material[i];
-      for (j=0; j < nb; j++) {
-         pos = a->pos;
-         vel = a->vel;
-         pos.x += (RNGF()*30.-15.);
-         pos.y += (RNGF()*30.-15.);
-         vel.x += (RNGF()*20.-10.);
-         vel.y += (RNGF()*20.-10.);
-         gatherable_init( com, pos, vel );
+   if ( give_reward ) {
+      /* Release commodity. */
+      at = &asteroid_types[a->type];
+
+      for (i=0; i < at->nmaterial; i++) {
+         nb = RNG(0,at->quantity[i]);
+         com = at->material[i];
+         for (j=0; j < nb; j++) {
+            pos = a->pos;
+            vel = a->vel;
+            pos.x += (RNGF()*30.-15.);
+            pos.y += (RNGF()*30.-15.);
+            vel.x += (RNGF()*20.-10.);
+            vel.y += (RNGF()*20.-10.);
+            gatherable_init( com, pos, vel );
+         }
       }
    }
 
