@@ -52,7 +52,7 @@
 #define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
 
 /* Gatherables */
-#define GATHER_DIST 20. /**< Maximum distance a gatherable can be gathered. */
+#define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */
 
 
 /* commodity stack */
