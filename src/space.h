@@ -26,6 +26,17 @@
 #define ASSET_REAL            1 /**< The asset is real. */
 
 
+/* Asteroid status enum */
+enum {
+   ASTEROID_VISIBLE,    /**< Asteroid is visible (normal state). */
+   ASTEROID_GROWING,    /**< Asteroid is in the process of appearing. */
+   ASTEROID_SHRINKING,  /**< Asteroid is in the process of disappearing. */
+   ASTEROID_EXPLODING,  /**< Asteroid is in the process of exploding. */
+   ASTEROID_INIT,       /**< Asteroid has not been created yet. */
+   ASTEROID_INVISIBLE,  /**< Asteroid is not used. */
+};
+
+
 /*
  * planet services
  */
@@ -239,6 +250,15 @@ typedef struct AsteroidAnchor_ {
 
 
 /**
+ * @brief Represents an asteroid exclusion zone.
+ */
+typedef struct AsteroidExclusion_ {
+   Vector2d pos; /**< Position in the system (from center). */
+   double radius; /**< Radius of the exclusion zone. */
+} AsteroidExclusion;
+
+
+/**
  * @brief Represents a star system.
  *
  * The star system is the basic setting in Naev.
@@ -267,8 +287,10 @@ struct StarSystem_ {
    int njumps; /**< number of adjacent jumps */
 
    /* Asteroids. */
-   AsteroidAnchor *asteroids; /**< Asteroids fields in the system */
-   int nasteroids; /**< number of asteroids fields */
+   AsteroidAnchor *asteroids; /**< Asteroid fields in the system */
+   int nasteroids; /**< number of asteroid fields */
+   AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
+   int nastexclude; /**< number of asteroid exclusion zones */
 
    /* Fleets. */
    Fleet** fleets; /**< fleets that can appear in the current system */

@@ -1388,6 +1388,10 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    const glColour *col;
    glColour ccol;
 
+   /* Skip invisible asteroids */
+   if (a->appearing == ASTEROID_INVISIBLE)
+      return;
+
    /* Make sure is in range. TODO: real detection system for asteroids */
    if ( MOD( a->pos.x - player.p->solid->pos.x,
              a->pos.y - player.p->solid->pos.y ) > 4000. )

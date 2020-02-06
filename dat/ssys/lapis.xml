@@ -35,18 +35,6 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <corner>
-    <x>5000.000000</x>
-    <y>-6000.000000</y>
-   </corner>
-   <corner>
-    <x>6000.000000</x>
-    <y>-4000.000000</y>
-   </corner>
-   <corner>
-    <x>7000.000000</x>
-    <y>1000.000000</y>
-   </corner>
    <pos x="6000" y="-5000"/>
    <radius>1000</radius>
    <density>1.500000</density>
@@ -61,5 +49,9 @@
    <radius>500</radius>
    <density>1.500000</density>
   </asteroid>
+  <exclusion>
+   <pos x="2000" y="-700"/>
+   <radius>4700</radius>
+  </exclusion>
  </asteroids>
 </ssys>

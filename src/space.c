@@ -148,6 +148,7 @@ static int asteroidTypes_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
+static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
@@ -534,6 +535,11 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
       f = &sys->asteroids[i];
       for (k=0; k<f->nb; k++) {
          as = &f->asteroids[k];
+
+         /* Skip invisible asteroids */
+         if (as->appearing == ASTEROID_INVISIBLE)
+            continue;
+
          td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
          if (td < d) {
             *pnt  = -1; /* We must clear planet target as asteroid is closer. */
@@ -602,6 +608,11 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
       f  = &sys->asteroids[i];
       for (k=0; k<f->nb; k++) {
          as = &f->asteroids[k];
+
+         /* Skip invisible asteroids */
+         if (as->appearing == ASTEROID_INVISIBLE)
+            continue;
+
          ta = atan2( y - as->pos.y, x - as->pos.x);
          if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
             *pnt  = -1; /* We must clear planet target as asteroid is closer. */
@@ -1297,19 +1308,23 @@ void space_update( const double dt )
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
 
+         /* Skip invisible asteroids */
+         if (a->appearing == ASTEROID_INVISIBLE)
+            continue;
+
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
 
          /* Grow and shrink */
-         if (a->appearing == 1) {
+         if (a->appearing == ASTEROID_GROWING) {
             a->timer += dt;
             if (a->timer >= 2.) {
                a->timer = 0.;
-               a->appearing = 0;
+               a->appearing = ASTEROID_VISIBLE;
             }
          }
 
-         if (a->appearing == 2) {
+         if (a->appearing == ASTEROID_SHRINKING) {
             a->timer += dt;
             if (a->timer >= 2.) {
                /* Remove the asteroid target to any pilot. */
@@ -1320,7 +1335,7 @@ void space_update( const double dt )
          }
 
          /* Exploding asteroid */
-         if (a->appearing == 3) {
+         if (a->appearing == ASTEROID_EXPLODING) {
             a->timer += dt;
             if (a->timer >= .5) {
                /* Make it explode */
@@ -1329,10 +1344,10 @@ void space_update( const double dt )
          }
 
          /* Manage the asteroid getting outside the field */
-         if ( space_isInField(&a->pos)<0 && a->appearing==0 ) {
+         if ( (a->appearing == ASTEROID_VISIBLE) && (space_isInField(&a->pos) < 0) ) {
             /* Make it shrink */
             a->timer = 0.;
-            a->appearing = 2;
+            a->appearing = ASTEROID_SHRINKING;
          }
       }
 
@@ -1446,6 +1461,7 @@ void space_init( const char* sysname )
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
          a->id = j;
+         a->appearing = ASTEROID_INIT;
          asteroid_init(a, ast);
       }
       /* Add the debris to the anchor */
@@ -1527,19 +1543,10 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    double mod, theta;
    double angle, radius;
    AsteroidType *at;
+   int attempts = 0;
 
    ast->parent = field->id;
    ast->scanned = 0;
-
-   angle = RNGF() * 2 * M_PI;
-   radius = RNGF() * field->radius;
-   ast->pos.x = radius * cos(angle) + field->pos.x;
-   ast->pos.y = radius * sin(angle) + field->pos.y;
-
-   /* And a random velocity */
-   theta = RNGF()*2.*M_PI;
-   mod = RNGF() * 20;
-   vect_pset( &ast->vel, mod, theta );
 
    /* randomly init the type of asteroid */
    i = RNG(0,field->ntype-1);
@@ -1549,8 +1556,30 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->gfxID = RNG(0,at->ngfx-1);
    ast->armour = at->armour;
 
+   do {
+      angle = RNGF() * 2 * M_PI;
+      radius = RNGF() * field->radius;
+      ast->pos.x = radius * cos(angle) + field->pos.x;
+      ast->pos.y = radius * sin(angle) + field->pos.y;
+
+      /* If this is the first time and it's spawned outside the field,
+       * we get rid of it so that density remains roughly consistent. */
+      if ( (ast->appearing == ASTEROID_INIT) &&
+            (space_isInField(&ast->pos) < 0) ) {
+         ast->appearing = ASTEROID_INVISIBLE;
+         return;
+      }
+
+      attempts++;
+   } while ( (space_isInField(&ast->pos) < 0) && (attempts < 1000) );
+
+   /* And a random velocity */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * 20;
+   vect_pset( &ast->vel, mod, theta );
+
    /* Grow effect stuff */
-   ast->appearing = 1;
+   ast->appearing = ASTEROID_GROWING;
    ast->timer = 0.;
 }
 
@@ -2873,10 +2902,10 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 {
-   int i, j, k, l, m, n, retry, getout;
+   int i;
    AsteroidAnchor *a;
-   xmlNodePtr cur, pcur;
-   double x, y, pro, prob;
+   xmlNodePtr cur;
+   double x, y;
    char *name;
    int pos;
    char *buf;
@@ -2973,6 +3002,77 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
 
 /**
+ * @brief Parses a single asteroid exclusion zone for a system.
+ *
+ *    @param node Parent node containing asteroid exclusion information.
+ *    @param sys System.
+ *    @return 0 on success.
+ */
+static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
+{
+   int i;
+   AsteroidExclusion *a;
+   xmlNodePtr cur;
+   double x, y;
+   int pos;
+   char *buf;
+
+   /* Allocate more space. */
+   sys->astexclude = realloc( sys->astexclude, (sys->nastexclude+1)*sizeof(AsteroidExclusion) );
+   a = &sys->astexclude[ sys->nastexclude ];
+   memset( a, 0, sizeof(a) );
+
+   /* Initialize stuff. */
+   a->radius   = 0.;
+   vect_cset( &a->pos, 0., 0. );
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xmlr_float( cur, "radius", a->radius );
+
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         pos = 1;
+         xmlr_attr( cur, "x", buf );
+         if (buf==NULL) {
+            WARN(_("Asteroid exclusion for system '%s' has position node missing 'x' position, using 0."), sys->name);
+            x = 0.;
+         }
+         else {
+            x = atof(buf);
+            free(buf);
+         }
+         xmlr_attr( cur, "y", buf );
+         if (buf==NULL) {
+            WARN(_("Asteroid exclusion for system '%s' has position node missing 'y' position, using 0."), sys->name);
+            y = 0.;
+         }
+         else {
+            y = atof(buf);
+            free(buf);
+         }
+
+         /* Set position. */
+         vect_cset( &a->pos, x, y );
+      }
+
+   } while (xml_nextNode(cur));
+
+   if (!pos)
+      WARN(_("Asteroid exclusion in %s has no position."), sys->name);
+
+   if (a->radius == 0.)
+      WARN(_("Asteroid exclusion in %s has no radius."), sys->name);
+
+   /* Added asteroid exclusion. */
+   sys->nastexclude++;
+
+   return 0;
+}
+
+
+/**
  * @brief Loads the asteroid anchor into a system.
  *
  *    @param parent System parent node.
@@ -2990,6 +3090,8 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
          do {
             if (xml_isNode(cur,"asteroid"))
                system_parseAsteroidField( cur, sys );
+            else if (xml_isNode(cur,"exclusion"))
+               system_parseAsteroidExclusion( cur, sys );
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -3464,10 +3566,14 @@ static void space_renderAsteroid( Asteroid *a )
    Commodity *com;
    char c[20];
 
+   /* Skip invisible asteroids */
+   if (a->appearing == ASTEROID_INVISIBLE)
+      return;
+
    /* Check if needs scaling. */
-   if (a->appearing == 1)
+   if (a->appearing == ASTEROID_GROWING)
       scale = CLAMP( 0., 1., a->timer / 2. );
-   else if (a->appearing == 2)
+   else if (a->appearing == ASTEROID_SHRINKING)
       scale = CLAMP( 0., 1., 1. - a->timer / 2. );
    else
       scale = 1.;
@@ -3608,6 +3714,7 @@ void space_exit (void)
          free(ast->type);
       }
       free(sys->asteroids);
+      free(sys->astexclude);
 
    }
    free(systems_stack);
@@ -4171,7 +4278,16 @@ int space_isInField ( Vector2d *p )
 {
    int i;
    AsteroidAnchor *a;
+   AsteroidExclusion *e;
 
+   /* Always return -1 if in an exclusion zone */
+   for (i=0; i < cur_system->nastexclude; i++) {
+      e = &cur_system->astexclude[i];
+      if (vect_dist( p, &e->pos ) <= e->radius)
+         return -1;
+   }
+
+   /* Check if in asteroid field */
    for (i=0; i < cur_system->nasteroids; i++) {
       a = &cur_system->asteroids[i];
       if (vect_dist( p, &a->pos ) <= a->radius)
@@ -4208,7 +4324,7 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
    a->armour -= darmour;
    if (a->armour <= 0)
    {
-      a->appearing = 3;
+      a->appearing = ASTEROID_EXPLODING;
       a->timer = 0.;
    }
 }

@@ -107,6 +107,7 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
 static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected);
+static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected );
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
@@ -597,6 +598,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    Planet *p;
    JumpPoint *jp;
    AsteroidAnchor *ast;
+   AsteroidExclusion *aexcl;
    double x,y, z;
    const glColour *c;
    int selected;
@@ -669,6 +671,13 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       sysedit_renderAsteroidsField( x, y, ast, selected );
    }
 
+   /* Render asteroid exclusions */
+   for (i=0; i<sys->nastexclude; i++) {
+      aexcl = &sys->astexclude[i];
+      selected = 0;
+      sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
+   }
+
    /* Render cursor position. */
    gl_print( &gl_smallFont, bx + 5., by + 5.,
          &cWhite, "%.2f, %.2f",
@@ -678,7 +687,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
 
 /**
- * @brief Draws an asteroids field on the map.
+ * @brief Draws an asteroid field on the map.
  *
  */
 static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected )
@@ -698,6 +707,30 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
 
    glEnable(GL_LINE_SMOOTH);
    gl_drawCircleLoop( tx, ty, ast->radius * sysedit_zoom, &cOrange );
+   glDisable(GL_LINE_SMOOTH);
+}
+
+/**
+ * @brief Draws an asteroid exclusion zone on the map.
+ *
+ */
+static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
+{
+   double tx, ty, z;
+
+   /* Render icon */
+   sysedit_renderSprite( asteroid_gfx[0], bx, by, aexcl->pos.x, aexcl->pos.y,
+                         0, 0, NULL, selected, _("Asteroid Exclusion") );
+
+   /* Inits. */
+   z  = sysedit_zoom;
+
+   /* Translate asteroid field center's coords. */
+   tx = bx + aexcl->pos.x*z;
+   ty = by + aexcl->pos.y*z;
+
+   glEnable(GL_LINE_SMOOTH);
+   gl_drawCircleLoop( tx, ty, aexcl->radius * sysedit_zoom, &cWhite );
    glDisable(GL_LINE_SMOOTH);
 }
 
