@@ -338,7 +338,8 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
       pilot->mass_cargo    -= q;
       pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
       pilot_updateMass( pilot );
-      gui_setGeneric( pilot );
+      if (!cleanup)
+         gui_setGeneric( pilot );
       return q;
    }
    return 0; /* pilot didn't have it */
