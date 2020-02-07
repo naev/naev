@@ -72,7 +72,7 @@
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
-#define ASTEROID_EXPLODE_INTERVAL 30. /**< Interval of asteroids randomly exploding */
+#define ASTEROID_EXPLODE_INTERVAL 10. /**< Interval of asteroids randomly exploding */
 #define ASTEROID_EXPLODE_CHANCE   0.1 /**< Chance of asteroid exploding each interval */
 
 /*
