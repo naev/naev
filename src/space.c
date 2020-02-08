@@ -3451,10 +3451,6 @@ void space_renderOverlay( const double dt )
    if (cur_system == NULL)
       return;
 
-   if ((cur_system->nebu_density > 0.) &&
-         !menu_isOpen( MENU_MAIN ))
-      nebu_renderOverlay(dt);
-
    /* Render the debris. */
    pplayer = pilot_get( PLAYER_ID );
    if (pplayer != NULL) {
@@ -3470,6 +3466,9 @@ void space_renderOverlay( const double dt )
       }
    }
 
+   if ((cur_system->nebu_density > 0.) &&
+         !menu_isOpen( MENU_MAIN ))
+      nebu_renderOverlay(dt);
 }
 
 
