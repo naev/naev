@@ -133,34 +133,39 @@ function enter()
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
       pilot.clear()
       pilot.toggleSpawn( false )
+      pilot.setVisible(player.pilot())
 
-      -- spawns the Shark
-      sharkboy = pilot.addRaw( "Lancelot","baddie_norun", nil, "Mercenary" )
-      sharkboy:setHostile()
-      sharkboy:setHilight()
-
-      --The shark becomes nice outfits
-      sharkboy:rmOutfit("all")
-      sharkboy:rmOutfit("cores")
-
-      sharkboy:addOutfit("S&K Light Combat Plating")
-      sharkboy:addOutfit("Milspec Prometheus 3603 Core System")
-      sharkboy:addOutfit("Tricon Zephyr II Engine")
-
-      sharkboy:addOutfit("Reactor Class I",3)
-      sharkboy:addOutfit("Battery",2)
-
-      sharkboy:addOutfit("Heavy Ion Cannon")
-      sharkboy:addOutfit("Ion Cannon",3)
-
-      sharkboy:setHealth(100,100)
-      sharkboy:setEnergy(100)
-      sharkboy:setFuel(true)
-      stage = 1
-
-      hook.pilot( sharkboy, "death", "shark_dead" )
-      hook.pilot( player.pilot(), "disable", "disabled" )
+      hook.timer(2000,"lets_go")
    end
+end
+
+function lets_go()
+   -- spawns the Shark
+   sharkboy = pilot.addRaw( "Lancelot","baddie_norun", system.get("Raelid"), "Mercenary" )
+   sharkboy:setHostile()
+   sharkboy:setHilight()
+
+   --The shark becomes nice outfits
+   sharkboy:rmOutfit("all")
+   sharkboy:rmOutfit("cores")
+
+   sharkboy:addOutfit("S&K Light Combat Plating")
+   sharkboy:addOutfit("Milspec Prometheus 3603 Core System")
+   sharkboy:addOutfit("Tricon Zephyr II Engine")
+
+   sharkboy:addOutfit("Reactor Class I",3)
+   sharkboy:addOutfit("Battery",2)
+
+   sharkboy:addOutfit("Heavy Ion Cannon")
+   sharkboy:addOutfit("Ion Cannon",3)
+
+   sharkboy:setHealth(100,100)
+   sharkboy:setEnergy(100)
+   sharkboy:setFuel(true)
+   stage = 1
+
+   hook.pilot( sharkboy, "death", "shark_dead" )
+   hook.pilot( player.pilot(), "disable", "disabled" )
 end
 
 function shark_dead()  --you killed the shark
