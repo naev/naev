@@ -319,7 +319,6 @@ void player_newTutorial (void)
 void player_new (void)
 {
    int r;
-   int i;
 
    /* Set up new player. */
    player_newSetup( 0 );
