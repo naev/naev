@@ -1037,19 +1037,19 @@ static void input_joyhatevent( const Uint8 value, const Uint8 hat )
       if (input_keybinds[i].key != hat)
          continue;
 
-      if ((input_keybinds[i].type == KEYBIND_JHAT_UP)) {
+      if (input_keybinds[i].type == KEYBIND_JHAT_UP) {
          event = (value & SDL_HAT_UP) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
-      } else if ((input_keybinds[i].type == KEYBIND_JHAT_DOWN)) {
+      } else if (input_keybinds[i].type == KEYBIND_JHAT_DOWN) {
          event = (value & SDL_HAT_DOWN) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
-      } else if ((input_keybinds[i].type == KEYBIND_JHAT_LEFT)) {
+      } else if (input_keybinds[i].type == KEYBIND_JHAT_LEFT) {
          event = (value & SDL_HAT_LEFT) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
-      } else if ((input_keybinds[i].type == KEYBIND_JHAT_RIGHT)) {
+      } else if (input_keybinds[i].type == KEYBIND_JHAT_RIGHT) {
          event = (value & SDL_HAT_RIGHT) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
