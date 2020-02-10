@@ -1078,7 +1078,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    name = xml_nodeProp( node,"name" );
    /*WARN("\t\tName = \"%s\"", name);*/
    compareLimit = MAPEDIT_FILENAME_MAX;
-   if (!strncmp(ns->sMapName, name, compareLimit)==0) {
+   if (strncmp(ns->sMapName, name, compareLimit)!=0) {
       //WARN("\t\tInconsistent names between list and file : list=\"%s\", file=\"%s\"", ns->sMapName, name);
       free(file);
       xmlFreeDoc(doc);
@@ -1131,7 +1131,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
          sys = system_getIndex( i );
          compareLimit = strlen(systemName);
          if (strncmp(systemName, sys->name, compareLimit)==0) {
-		    found = 1;
+		      found = 1;
 			break;
 		 }
 	  }
@@ -1420,7 +1420,7 @@ static int mapedit_mapsList_refresh (void)
 
       /* If its not a map, we don't care. */
       compareLimit = 3;
-      if (!strncmp(outfitType, "map", compareLimit)==0) {
+      if (strncmp(outfitType, "map", compareLimit)!=0) {
          //WARN("\t\tFile is not a regular map");
          free(file);
          xmlFreeDoc(doc);
