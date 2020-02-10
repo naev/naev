@@ -15,8 +15,8 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
    size_t bufsize;
    char *buf;
    char path[PATH_MAX];
-   GLuint shader, length;
-   GLuint compile_status, log_length;
+   GLuint shader;
+   GLint length, compile_status, log_length;
    char *log;
 
    nsnprintf(path, sizeof(path), GLSL_PATH "%s", filename);
@@ -52,7 +52,7 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
  * @brief Link a GLSL program and check for link error.
  */
 int gl_program_link(GLuint program) {
-   GLuint link_status, log_length;
+   GLint link_status, log_length;
    char *log;
 
    glLinkProgram(program);
