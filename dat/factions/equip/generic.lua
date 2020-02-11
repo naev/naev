@@ -1,3 +1,6 @@
+include "jumpdist.lua"
+
+
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
@@ -928,4 +931,22 @@ function equip_generic( p )
    equip_set( p, equip_shipOutfits_structurals[shipname] )
    equip_set( p, equip_typeOutfits_structurals[basetype] )
    equip_set( p, equip_classOutfits_structurals[class] )
+
+   -- Add cargo
+   local avail_cargo = {}
+   local systems = getsysatdistance( nil, 0, 4 )
+   for i, sys in ipairs( systems ) do
+      for j, pl in ipairs( sys:planets() ) do
+         for k, com in ipairs( pl:commoditiesSold() ) do
+            avail_cargo[ #avail_cargo + 1 ] = com
+         end
+      end
+   end
+
+   if avail_cargo then
+      for i=1,rnd.rnd(1,3) do
+         local ncargo = rnd.rnd( 0, p:cargoFree() )
+         p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:name(), ncargo )
+      end
+   end
 end

@@ -215,12 +215,11 @@ function interceptors()
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
 
-      badguys[i]:addOutfit("Unicorp D-2 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-100 Core System")
+      badguys[i]:addOutfit("S&K Ultralight Combat Plating")
+      badguys[i]:addOutfit("Milspec Prometheus 2203 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
 
-      badguys[i]:addOutfit("Laser Cannon MK2",2)
-      badguys[i]:addOutfit("Unicorp Fury Launcher")
+      badguys[i]:addOutfit("Shredder",3)
       badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
 
       badguys[i]:setHealth(100,100)
@@ -244,7 +243,7 @@ function hvy_intercept()
       badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
-      badguys[i]:addOutfit("Mass Driver MK1")
+      badguys[i]:addOutfit("TeraCom Fury Launcher")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
       badguys[i]:addOutfit("Shield Capacitor",2)

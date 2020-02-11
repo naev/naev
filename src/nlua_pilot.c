@@ -520,7 +520,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       planetind = -1;
       pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, 0 );
 
-      if ( planetind >= 0 ) {
+      if (planetind >= 0) {
          planet = planet_getIndex( planetind );
          pilot_setFlagRaw( flags, PILOT_TAKEOFF );
          a = RNGF() * 2. * M_PI;
@@ -531,7 +531,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          a = RNGF() * 2.*M_PI;
          vectnull( &vv );
       }
-      else if ( &vp != NULL ) {
+      else {
          a = RNGF() * 2.*M_PI;
          vectnull( &vv );
       }

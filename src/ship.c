@@ -452,6 +452,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    SDL_RWops *rw;
    npng_t *npng;
    SDL_Surface *surface;
+   int ret;
 
    /* Load the space sprite. */
    rw    = ndata_rwops( str );
@@ -465,7 +466,9 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
          w, h, sx, sy, 0 );
 
    /* Create the target graphic. */
-   ship_genTargetGFX( temp, surface, sx, sy );
+   ret = ship_genTargetGFX( temp, surface, sx, sy );
+   if (ret != 0)
+      return ret;
 
    /* Free stuff. */
    npng_close( npng );
@@ -475,6 +478,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    /* Calculate mount angle. */
    temp->mangle  = 2.*M_PI;
    temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
+   return 0;
 }
 
 
@@ -487,6 +491,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
 {
    temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+   return (temp->gfx_engine != NULL);
 }
 
 

@@ -1059,7 +1059,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       free(file);
       xmlFreeDoc(doc);
       free(buf);
-	  return;
+      return;
    } else {
       /*WARN("\t\tFile form OK");*/
    }
@@ -1069,7 +1069,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       free(file);
       xmlFreeDoc(doc);
       free(buf);
-	  return;
+      return;
    } else {
       /*WARN("\t\t<outfit> element found");*/
    }
@@ -1078,12 +1078,12 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    name = xml_nodeProp( node,"name" );
    /*WARN("\t\tName = \"%s\"", name);*/
    compareLimit = MAPEDIT_FILENAME_MAX;
-   if (!strncmp(ns->sMapName, name, compareLimit)==0) {
+   if (strncmp(ns->sMapName, name, compareLimit)!=0) {
       //WARN("\t\tInconsistent names between list and file : list=\"%s\", file=\"%s\"", ns->sMapName, name);
       free(file);
       xmlFreeDoc(doc);
       free(buf);
-	  return;
+      return;
    } else {
       /*WARN("\t\tNames found OK between list and file : \"%s\"", name);*/
    }
@@ -1124,25 +1124,25 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       /* Display "name" property from "sys" node and increment number of systems found */
       systemName = xml_nodeProp( node,"name" );
       /*WARN("\t\t\t\tSystem name = \"%s\"", systemName);*/
-	  
-	  /* Find system */
-	  found  = 0;
+     
+     /* Find system */
+     found  = 0;
       for (i=0; i<systems_nstack; i++) {
          sys = system_getIndex( i );
          compareLimit = strlen(systemName);
          if (strncmp(systemName, sys->name, compareLimit)==0) {
-		    found = 1;
-			break;
-		 }
-	  }
+            found = 1;
+         break;
+       }
+     }
 
-	  /* If system exists, select it */
-	  if (found) {
+     /* If system exists, select it */
+     if (found) {
          /*WARN("\t\t\t\tSystem \"%s\" found in stack, i=%i", systemName, i);*/
-	     mapedit_selectAdd( sys );
-	  } else {
+        mapedit_selectAdd( sys );
+     } else {
          /*WARN("\t\t\t\tSystem \"%s\" not found in stack", systemName);*/
-	  }
+     }
    } while (xml_nextNode(node));
    /*WARN("\t\tEnding loop on <sys> nodes");*/
 
@@ -1403,7 +1403,7 @@ static int mapedit_mapsList_refresh (void)
                //WARN("\t\t\t\tFile \"%s\" has description \"%s\"", map_files[i], description);
             } else {
                //WARN("\t\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
-			}
+         }
             continue;
          }
 
@@ -1420,7 +1420,7 @@ static int mapedit_mapsList_refresh (void)
 
       /* If its not a map, we don't care. */
       compareLimit = 3;
-      if (!strncmp(outfitType, "map", compareLimit)==0) {
+      if (strncmp(outfitType, "map", compareLimit)!=0) {
          //WARN("\t\tFile is not a regular map");
          free(file);
          xmlFreeDoc(doc);
@@ -1451,23 +1451,23 @@ static int mapedit_mapsList_refresh (void)
       //WARN("\t\t%i systems found", nSystems);
 
       /* If the map is a regular one, then load it into the list */
-	  if (nSystems > 0) {
+     if (nSystems > 0) {
          newMapItem = &array_grow( &mapList );
          //WARN("\t\tLoading map into list :");
          newMapItem->iNumSystems   = nSystems;
          len  = strlen(map_files[i])+1;
-		 nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
+       nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
          len  = strlen(name)+1;
-		 nsnprintf( newMapItem->sMapName, len, "%s", name );
+       nsnprintf( newMapItem->sMapName, len, "%s", name );
          len  = strlen(description)+1;
-		 nsnprintf( newMapItem->sDescription, len, "%s", description );
+       nsnprintf( newMapItem->sDescription, len, "%s", description );
          //WARN("\t\t\tnewMapItem->iNumSystems  = %i",     newMapItem->iNumSystems);
          //WARN("\t\t\tnewMapItem->sFileName    = \"%s\"", newMapItem->sFileName);
          //WARN("\t\t\tnewMapItem->sMapName     = \"%s\"", newMapItem->sMapName);
          //WARN("\t\t\tnewMapItem->sDescription = \"%s\"", newMapItem->sDescription);
-	  } else {
+     } else {
          //WARN("\t\tFile contains no stellar system");
-	  }
+     }
 
       /* Clean up. */
       free(name);

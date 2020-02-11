@@ -166,7 +166,7 @@ end
 
 function enter()
 
-  if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) then
+  if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) and (not rescued) then
     kidnappers = pilot.add("Trader Koala", nil, planet.get("Zhiru"):pos() + vec2.new(-800,-800))[1]
     kidnappers:rename(_("Progeny"))
     kidnappers:setFaction("Kidnappers")
@@ -213,7 +213,9 @@ function attackedkidnappers()
 end
 
 function explodedkidnappers()
-  hook.timer(1500, "kidskilled")
+  if (not rescued) then
+     hook.timer(1500, "kidskilled")
+  end
 end
 
 function kidskilled()

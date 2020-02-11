@@ -82,6 +82,7 @@ typedef struct Faction_ {
 
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
+   unsigned int oflags; /**< Original flags (for when new game is started). */
 } Faction;
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
@@ -1422,13 +1423,15 @@ static void faction_parseSocial( xmlNodePtr parent )
 
 
 /**
- * @brief Resets the player's standing with the factions to default.
+ * @brief Resets player standing and flags of factions to default.
  */
 void factions_reset (void)
 {
    int i;
-   for (i=0; i<faction_nstack; i++)
+   for (i=0; i<faction_nstack; i++) {
       faction_stack[i].player = faction_stack[i].player_def;
+      faction_stack[i].flags = faction_stack[i].oflags;
+   }
 }
 
 
@@ -1481,6 +1484,7 @@ int factions_load (void)
 
          /* Load faction. */
          faction_parse(&faction_stack[faction_nstack-1], node);
+         faction_stack[faction_nstack-1].oflags = faction_stack[faction_nstack-1].flags;
       }
    } while (xml_nextNode(node));
 

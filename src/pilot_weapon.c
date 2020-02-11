@@ -884,19 +884,18 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel
    dist = vect_dist( &parent->solid->pos, pos );
 
    /* Beam weapons */
-   if (outfit_isBeam(o))
-      {
+   if (outfit_isBeam(o)) {
       if (dist > o->u.bem.range)
          return INFINITY;
       return 0.;
-      }
+   }
 
    /* A bay doesn't have range issues */
    if (outfit_isFighterBay(o))
       return 0.;
 
-   /* Rockets use absolute velocity while bolt use relative vel */
-   if (outfit_isLauncher(o))
+   /* Missiles use absolute velocity while bolts and dumbfire rockets use relative vel */
+   if (outfit_isLauncher(o) && o->u.lau.ammo->u.amm.ai != AMMO_AI_DUMB)
          vect_cset( &approach_vector, - vel->x, - vel->y );
    else
          vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,

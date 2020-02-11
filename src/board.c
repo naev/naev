@@ -460,6 +460,7 @@ static int board_fail( unsigned int wdw )
 static void board_update( unsigned int wdw )
 {
    int i, j;
+   int total_cargo;
    char str[PATH_MAX];
    char cred[ECON_CRED_STRLEN];
    Pilot* p;
@@ -475,14 +476,15 @@ static void board_update( unsigned int wdw )
    if ((p->ncommodities==0) && (j < PATH_MAX))
       j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
    else {
-     for (i=0; i<p->ncommodities; i++) {
+      total_cargo = 0;
+      for (i=0; i<p->ncommodities; i++) {
          if (j > PATH_MAX)
             break;
          if (p->commodities[i].commodity == NULL)
             continue;
-         j += snprintf( &str[j], PATH_MAX-j, "%d %s\n",
-                        p->commodities[i].quantity, p->commodities[i].commodity->name );
-     }
+         total_cargo += p->commodities[i].quantity;
+      }
+      j += snprintf( &str[j], PATH_MAX-j, _("%d tons\n"), total_cargo );
    }
 
    /* Fuel. */
