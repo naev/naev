@@ -1235,32 +1235,46 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
       double swivel, double time )
 {
+   AsteroidAnchor *field;
+   Asteroid *ast;
+   Vector2d target_pos;
+   Vector2d target_vel;
    Vector2d relative_location;
    double rdir, lead_angle;
    double x, y, t;
    double off;
 
-   if (pilot_target == NULL)
-      rdir        = dir;
+   if (pilot_target != NULL) {
+      target_pos = pilot_target->solid->pos;
+      target_vel = pilot_target->solid->vel;
+   }
    else {
-      /* Get the vector : shooter -> target*/
-      vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
-            VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
+      if (parent->nav_asteroid < 0)
+         return dir;
 
-         /* Try to predict where the enemy will be. */
-      t = time;
-      if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
-         t = 0.;
+      field = &cur_system->asteroids[parent->nav_anchor];
+      ast = &field->asteroids[parent->nav_asteroid];
+      target_pos = ast->pos;
+      target_vel = ast->vel;
+   }
 
-      /* Position is calculated on where it should be */
-      x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-         - (pos->x + vel->x*t);
-      y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-         - (pos->y + vel->y*t);
+   /* Get the vector : shooter -> target*/
+   vect_cset( &relative_location, VX(target_pos) - VX(parent->solid->pos),
+         VY(target_pos) - VY(parent->solid->pos) );
 
-      /* Set angle to face. */
-      rdir = ANGLE(x, y);
+   /* Try to predict where the enemy will be. */
+   t = time;
+   if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
+      t = 0.;
 
+   /* Position is calculated on where it should be */
+   x = (target_pos.x + target_vel.x*t) - (pos->x + vel->x*t);
+   y = (target_pos.y + target_vel.y*t) - (pos->y + vel->y*t);
+
+   /* Set angle to face. */
+   rdir = ANGLE(x, y);
+
+   if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
       lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
 
@@ -1272,15 +1286,15 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          else
             rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
       }
+   }
 
-      /* Calculate bounds. */
-      off = angle_diff( rdir, dir );
-      if (fabs(off) > swivel) {
-         if (off > 0.)
-            rdir = dir - swivel;
-         else
-            rdir = dir + swivel;
-      }
+   /* Calculate bounds. */
+   off = angle_diff( rdir, dir );
+   if (fabs(off) > swivel) {
+      if (off > 0.)
+         rdir = dir - swivel;
+      else
+         rdir = dir + swivel;
    }
 
    return rdir;
@@ -1310,12 +1324,12 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    glTexture *gfx;
 
    /* Only difference is the direction of fire */
-   if ((w->parent!=w->target) && (w->target != 0)) { /* Must have valid target */
+   if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
-   }
-   else /* fire straight */
-      rdir = dir;
+   else /* fire straight or at asteroid */
+      pilot_target = NULL;
+
+   rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
 
    /* Calculate accuracy. */
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
