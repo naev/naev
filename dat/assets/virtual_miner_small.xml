@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Virtual Miner Small">
+ <virtual/>
+ <presence>
+  <faction>Miner</faction>
+  <value>80.000000</value>
+  <range>2</range>
+ </presence>
+</asset>
