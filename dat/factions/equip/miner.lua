@@ -2,16 +2,27 @@
 include("dat/factions/equip/generic.lua")
 
 
-equip_classOutfits_utilities["Yacht"] = {
-   { "Asteroid Scanner" }
+equip_classOutfits_weapons["Yacht"] = {
+   {
+      "Laser Cannon MK1", "Gauss Gun"
+   }
 }
 
-equip_classOutfits_utilities["Courier"] = {
-   { "Asteroid Scanner" }
+equip_classOutfits_weapons["Courier"] = {
+   {
+      "Turreted Gauss Gun", "Laser PD MK2"
+   }
 }
 
-equip_classOutfits_utilities["Freighter"] = {
-   { "Asteroid Scanner" }
+equip_classOutfits_weapons["Freighter"] = {
+   {
+      num = 1;
+      "Laser Turret MK2", "Plasma Turret MK2",
+      "Enygma Systems Turreted Fury Launcher"
+   },
+   {
+      "Laser Turret MK2", "Plasma Turret MK2"
+   }
 }
 
 
