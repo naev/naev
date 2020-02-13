@@ -67,6 +67,12 @@ static int nebu_loaded = 0; /**< Whether the nebula has been loaded. */
 static gl_vbo *nebu_vboOverlay   = NULL; /**< Overlay VBO. */
 
 static GLuint nebula_glsl_program = 0;
+static GLuint nebula_glsl_program_vertex = 0;
+static GLuint nebula_glsl_program_color = 0;
+static GLuint nebula_glsl_program_projection = 0;
+static GLuint nebula_glsl_program_center = 0;
+static GLuint nebula_glsl_program_radius = 0;
+
 
 /**
  * @struct NebulaPuff
@@ -110,6 +116,12 @@ static void nebu_renderMultitexture( const double dt );
 int nebu_init (void)
 {
    nebula_glsl_program = gl_program_vert_frag("nebula.vert", "nebula.frag");
+   nebula_glsl_program_vertex = glGetAttribLocation(nebula_glsl_program, "vertex");
+   nebula_glsl_program_color = glGetUniformLocation(nebula_glsl_program, "color");
+   nebula_glsl_program_projection = glGetUniformLocation(nebula_glsl_program, "projection");
+   nebula_glsl_program_center = glGetUniformLocation(nebula_glsl_program, "center");
+   nebula_glsl_program_radius = glGetUniformLocation(nebula_glsl_program, "radius");
+
    return nebu_init_recursive( 0 );
 }
 
@@ -390,16 +402,17 @@ void nebu_renderOverlay( const double dt )
 
    glUseProgram(nebula_glsl_program);
    glColour c = cDarkBlue;
-   gl_uniformColor(glGetUniformLocation(nebula_glsl_program, "color"), &cDarkBlue);
-   gl_Matrix4_Uniform(glGetUniformLocation(nebula_glsl_program, "projection"), projection);
-   glUniform2f(glGetUniformLocation(nebula_glsl_program, "center"), gl_screen.rw / 2, gl_screen.rh / 2);
-   glUniform1f(glGetUniformLocation(nebula_glsl_program, "radius"), nebu_view * z * (1 / gl_screen.scale));
+   gl_uniformColor(nebula_glsl_program_color, &cDarkBlue);
+   gl_Matrix4_Uniform(nebula_glsl_program_projection, projection);
+   glUniform2f(nebula_glsl_program_center, gl_screen.rw / 2, gl_screen.rh / 2);
+   glUniform1f(nebula_glsl_program_radius, nebu_view * z * (1 / gl_screen.scale));
 
-   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray(nebula_glsl_program_vertex);
+   gl_vboActivateAttribOffset( nebu_vboOverlay, nebula_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    glUseProgram(0);
-   gl_vboDeactivate();
+   glDisableVertexAttribArray(nebula_glsl_program_vertex);
 
    /* Reset puff movement. */
    puff_x = 0.;

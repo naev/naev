@@ -328,7 +328,8 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( texture_interpolate_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, texture_interpolate_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = gl_Matrix4_Identity();
@@ -347,7 +348,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
+   glDisableVertexAttribArray( texture_interpolate_glsl_program_vertex );
    glDisable(GL_TEXTURE_2D);
    glActiveTexture( GL_TEXTURE0 );
    glDisable(GL_TEXTURE_2D);
@@ -1063,6 +1064,7 @@ int gl_initRender (void)
 
    texture_interpolate_glsl_program = gl_program_vert_frag("texture.vert",
          "texture_interpolate.frag");
+   texture_interpolate_glsl_program_vertex = glGetAttribLocation(texture_interpolate_glsl_program, "vertex");
    texture_interpolate_glsl_program_projection = glGetUniformLocation(texture_interpolate_glsl_program, "projection");
    texture_interpolate_glsl_program_color = glGetUniformLocation(texture_interpolate_glsl_program, "color");
    texture_interpolate_glsl_program_tex_mat = glGetUniformLocation(texture_interpolate_glsl_program, "tex_mat");
