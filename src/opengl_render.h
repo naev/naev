@@ -70,6 +70,11 @@ void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
 
 
+extern GLuint solid_glsl_program_vertex;
+void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c);
+void gl_endSolidProgram();
+
+
 /* Circles. */
 void gl_drawCircle( const double x, const double y,
       const double r, const glColour *c, int filled );

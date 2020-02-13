@@ -64,7 +64,7 @@ static GLuint texture_interpolate_glsl_program_inter = 0;
 static GLuint solid_glsl_program = 0;
 static GLuint solid_glsl_program_color = 0;
 static GLuint solid_glsl_program_projection = 0;
-static GLuint solid_glsl_program_vertex = 0;
+GLuint solid_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program = 0;
 static GLuint circle_filled_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program_color = 0;
@@ -85,6 +85,21 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
 static GLuint texture_glsl_program_compile( void );
 
 
+void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c) {
+   glUseProgram(solid_glsl_program);
+   glEnableVertexAttribArray(solid_glsl_program_vertex);
+   gl_uniformColor(solid_glsl_program_color, c);
+   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
+}
+
+void gl_endSolidProgram() {
+   glDisableVertexAttribArray(solid_glsl_program_vertex);
+   glUseProgram(0);
+   gl_checkErr();
+}
+
+
+
 /**
  * @brief Renders a rectangle.
  *
@@ -98,30 +113,15 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
    gl_Matrix4 projection;
 
-   glUseProgram(solid_glsl_program);
-
    /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( solid_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, solid_glsl_program_vertex,
-         0, 2, GL_FLOAT, 0 );
 
-   /* Set shader uniforms. */
-   gl_uniformColor(solid_glsl_program_color, c);
-   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
-
-   /* Draw. */
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_squareVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-   glDisableVertexAttribArray( solid_glsl_program_vertex );
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
+   gl_endSolidProgram();
 }
 
 
@@ -138,30 +138,14 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 {
    gl_Matrix4 projection;
 
-   glUseProgram(solid_glsl_program);
-
-   /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( solid_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareEmptyVBO, solid_glsl_program_vertex,
-         0, 2, GL_FLOAT, 0 );
 
-   /* Set shader uniforms. */
-   gl_uniformColor(solid_glsl_program_color, c);
-   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
-
-   /* Draw. */
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_squareEmptyVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-   glDisableVertexAttribArray( solid_glsl_program_vertex );
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
+   gl_endSolidProgram();
 }
 
 
@@ -652,8 +636,6 @@ void gl_drawCircleLoop( const double cx, const double cy,
    double nxc, xc, yc;
    GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
-   glUseProgram(solid_glsl_program);
-
    /* Aim for 10 px between each vertex. */
    points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
 
@@ -679,18 +661,10 @@ void gl_drawCircleLoop( const double cx, const double cy,
 
    gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
 
-   glEnableVertexAttribArray( solid_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_renderVBO, solid_glsl_program_vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   gl_Matrix4_Uniform(solid_glsl_program_projection, gl_view_matrix);
-   gl_uniformColor(solid_glsl_program_color, c);
-
-   /* Draw. */
+   gl_beginSolidProgram(gl_view_matrix, c);
+   gl_vboActivateAttribOffset( gl_renderVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_LOOP, 0, points );
-
-   glDisableVertexAttribArray( solid_glsl_program_vertex );
-   glUseProgram(0);
+   gl_endSolidProgram();
 }
 
 
