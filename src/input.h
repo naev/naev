@@ -55,7 +55,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
 int input_clickedJump( int jump, int autonav );
 int input_clickedPlanet( int planet, int autonav );
 int input_clickedAsteroid( int field, int asteroid );
-int input_clickedPilot( unsigned int pilot );
+int input_clickedPilot( unsigned int pilot, int autonav );
 void input_clicked( void *clicked );
 int input_isDoubleClick( void *clicked );
 

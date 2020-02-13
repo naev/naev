@@ -40,6 +40,7 @@ static double lasta;
 static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel );
 static int player_autonavBrake (void);
 
 
@@ -196,6 +197,23 @@ void player_autonavPnt( char *name )
 
 
 /**
+ * @brief Starts autonav with a pilot to follow.
+ */
+void player_autonavPil( unsigned int p )
+{
+   Pilot *pilot;
+
+   pilot = pilot_get( p );
+
+   if (!player_autonavSetup())
+      return;
+
+   player.autonav    = AUTONAV_PLT_FOLLOW;
+   player.autonavmsg = pilot->name;
+}
+
+
+/**
  * @brief Handles common time accel ramp-down for autonav to positions and planets.
  */
 static void player_autonavRampdown( double d )
@@ -277,6 +295,7 @@ void player_autonavAbort( const char *reason )
 static void player_autonav (void)
 {
    JumpPoint *jp;
+   Pilot *p;
    int ret;
    double d, t, tint;
    double vel;
@@ -352,6 +371,7 @@ static void player_autonav (void)
          else if (!tc_rampdown)
             player_autonavRampdown(d);
          break;
+
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
@@ -362,6 +382,20 @@ static void player_autonav (void)
          }
          else if (!tc_rampdown)
             player_autonavRampdown(d);
+         break;
+
+      case AUTONAV_PLT_FOLLOW:
+         p = pilot_get( player.p->target );
+         if (p == NULL)
+            p = pilot_get( PLAYER_ID );
+         if (p->id == PLAYER_ID) {
+            /* TODO : handle the different reasons: pilot jumped away, landed or died.*/
+            player_message( _("\ap%s has been lost."),
+                              player.autonavmsg );
+            player_autonavEnd();
+         }
+         else
+            player_autonavFollow( &p->solid->pos, &p->solid->vel );
          break;
    }
 }
@@ -413,6 +447,41 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
       return 1;
    }
    return 0;
+}
+
+
+/**
+ * @brief Handles following a moving point with autonav (PD controller).
+ *
+ *    @param[in] pos Position to go to.
+ *    @param[in] vel Velocity of the target.
+ */
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel )
+{
+   double Kp, Kd, angle, radius, d;
+   Vector2d dir, point;
+
+   /* Define the control coefficients. If needed, they could be adapted.
+      Maybe radius could be adjustable by the player. */
+   Kp = 10;
+   Kd = 20;
+   radius = 100;
+
+   /* Find a point behind the target at a distance of radius */
+   angle = M_PI + vel->angle;
+   vect_cset( &point, pos->x + radius * cos(angle),
+              pos->y + radius * sin(angle) );
+
+   vect_cset( &dir, (point.x - player.p->solid->pos.x) * Kp +
+         (vel->x - player.p->solid->vel.x) *Kd,
+         (point.y - player.p->solid->pos.y) * Kp +
+         (vel->y - player.p->solid->vel.y) *Kd );
+
+   d = pilot_face( player.p, VANGLE(dir) );
+   if ((FABS(d) < MIN_DIR_ERR) && (VMOD(dir) > 300))
+      player_accel( 1. );
+   else
+      player_accel( 0. );
 }
 
 

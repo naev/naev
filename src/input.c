@@ -1170,8 +1170,8 @@ static void input_clickevent( SDL_Event* event )
       if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
          jpid = pntid = astid = fieid = -1; /* Asset angle difference is too great. */
 
-      if (!autonav && pid != PLAYER_ID) {
-         if (input_clickedPilot(pid))
+      if (pid != PLAYER_ID) {
+         if (input_clickedPilot(pid, autonav))
             return;
       }
       else if (pntid >= 0) { /* Planet is closest. */
@@ -1200,7 +1200,6 @@ static void input_clickevent( SDL_Event* event )
       gui_radarGetRes( &res );
       x = (mxr - (rx + rw / 2.)) * res + px;
       y = (myr - (ry + rh / 2.)) * res + py;
-
       if (input_clickPos( event, x, y, zoom, 10. * res, 15. * res ))
          return;
    }
@@ -1208,7 +1207,6 @@ static void input_clickevent( SDL_Event* event )
    /* Visual (on-screen) */
    gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
    zoom = res = 1. / cam_getZoom();
-
    input_clickPos( event, x, y, zoom, 10. * res, 15. * res );
    return;
 }
@@ -1276,7 +1274,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    /* Target a pilot, planet or jump, and/or perform an appropriate action. */
    if (event->button.button == SDL_BUTTON_LEFT) {
       if (pid != PLAYER_ID) {
-         return input_clickedPilot(pid);
+         return input_clickedPilot(pid, 0);
       }
       else if (pntid >= 0) { /* Planet is closest. */
          return input_clickedPlanet(pntid, 0);
@@ -1290,7 +1288,9 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    }
    /* Right click only controls autonav. */
    else if (event->button.button == SDL_BUTTON_RIGHT) {
-      if ((pntid >= 0) && input_clickedPlanet(pntid, 1))
+      if ((pid != PLAYER_ID) && input_clickedPilot(pid, 1))
+         return 1;
+      else if ((pntid >= 0) && input_clickedPlanet(pntid, 1))
          return 1;
       else if ((jpid >= 0) && input_clickedJump(jpid, 1))
          return 1;
@@ -1407,12 +1407,18 @@ int input_clickedAsteroid( int field, int asteroid )
  *    @param pilot Index of the pilot.
  *    @return Whether the click was used.
  */
-int input_clickedPilot( unsigned int pilot )
+int input_clickedPilot( unsigned int pilot, int autonav )
 {
    Pilot *p;
 
    if (pilot == PLAYER_ID)
       return 0;
+
+   if (autonav) {
+      player_targetSet( pilot );
+      player_autonavPil( pilot );
+      return 1;
+   }
 
    p = pilot_get(pilot);
    if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
