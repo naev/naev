@@ -17,6 +17,7 @@
 #define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
 #define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
 #define AUTONAV_PNT_APPROACH   11 /**< Player is going to a planet. */
+#define AUTONAV_PLT_FOLLOW    100 /**<Player is following a pilot. */
 
 
 void player_thinkAutonav( Pilot *pplayer, double dt );
@@ -30,6 +31,7 @@ int player_autonavShouldResetSpeed (void);
 void player_autonavStartWindow( unsigned int wid, char *str);
 void player_autonavPos( double x, double y );
 void player_autonavPnt( char *name );
+void player_autonavPil( unsigned int p );
 
 
 #endif /* PLAYER_AUTONAV_H */
