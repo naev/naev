@@ -2,7 +2,7 @@
 
 uniform vec4 color;
 out vec4 color_out;
-varying vec2 pos;
+in vec2 pos;
 
 void main(void) {
    float dist = length(pos);

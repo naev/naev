@@ -2,7 +2,7 @@
 
 in vec4 vertex;
 uniform mat4 projection;
-varying vec2 pos;
+out vec2 pos;
 
 void main(void) {
    pos = vertex.xy - .5;
