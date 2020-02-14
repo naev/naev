@@ -722,7 +722,7 @@ function mine ()
    local relpos = vec2.add( p:pos(), vec2.mul(target2,-1) ):mod()
    local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
    -- TODO : make 30 and 2 parameters dependent to Kp and Kd
-   if relpos < 30 and relvel < 2 then
+   if relpos < 30 and relvel < 10 then
       ai.pushsubtask("__killasteroid")
    end
 end
