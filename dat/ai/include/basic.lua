@@ -736,8 +736,9 @@ function __killasteroid ()
 
    -- Second task : destroy it
    if dir < 8 then
-      ai.weapset( 3 )
+      ai.weapset( 1 )
       ai.shoot()
+      ai.shoot(true)
    end
    if system.asteroiddestroyed( field, ast ) then
       ai.poptask()
