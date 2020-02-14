@@ -388,10 +388,11 @@ static void player_autonav (void)
          p = pilot_get( player.p->target );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
-         if (p->id == PLAYER_ID) {
-            /* TODO : handle the different reasons: pilot jumped away, landed or died.*/
+         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p ))) {
+            /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
             player_message( _("\ap%s has been lost."),
                               player.autonavmsg );
+            player_accel( 0. );
             player_autonavEnd();
          }
          else
