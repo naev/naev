@@ -1890,6 +1890,10 @@ void player_targetSet( unsigned int id )
       player_soundPlayGUI( snd_target, 1 );
    }
    gui_setTarget();
+
+   /* The player should not continue following if the target pilot has been changed. */
+   if (player_isFlag(PLAYER_AUTONAV) && player.autonav == AUTONAV_PLT_FOLLOW)
+      player_autonavAbort(NULL);
 }
 
 

@@ -44,6 +44,7 @@
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 static gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
+static gl_vbo *gl_crossVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 
@@ -64,7 +65,7 @@ static GLuint texture_interpolate_glsl_program_inter = 0;
 static GLuint solid_glsl_program = 0;
 static GLuint solid_glsl_program_color = 0;
 static GLuint solid_glsl_program_projection = 0;
-static GLuint solid_glsl_program_vertex = 0;
+GLuint solid_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program = 0;
 static GLuint circle_filled_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program_color = 0;
@@ -85,6 +86,21 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
 static GLuint texture_glsl_program_compile( void );
 
 
+void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c) {
+   glUseProgram(solid_glsl_program);
+   glEnableVertexAttribArray(solid_glsl_program_vertex);
+   gl_uniformColor(solid_glsl_program_color, c);
+   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
+}
+
+void gl_endSolidProgram() {
+   glDisableVertexAttribArray(solid_glsl_program_vertex);
+   glUseProgram(0);
+   gl_checkErr();
+}
+
+
+
 /**
  * @brief Renders a rectangle.
  *
@@ -98,30 +114,15 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
    gl_Matrix4 projection;
 
-   glUseProgram(solid_glsl_program);
-
    /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( solid_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, solid_glsl_program_vertex,
-         0, 2, GL_FLOAT, 0 );
 
-   /* Set shader uniforms. */
-   gl_uniformColor(solid_glsl_program_color, c);
-   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
-
-   /* Draw. */
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_squareVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-   glDisableVertexAttribArray( solid_glsl_program_vertex );
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
+   gl_endSolidProgram();
 }
 
 
@@ -138,30 +139,14 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 {
    gl_Matrix4 projection;
 
-   glUseProgram(solid_glsl_program);
-
-   /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( solid_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareEmptyVBO, solid_glsl_program_vertex,
-         0, 2, GL_FLOAT, 0 );
 
-   /* Set shader uniforms. */
-   gl_uniformColor(solid_glsl_program_color, c);
-   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
-
-   /* Draw. */
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_squareEmptyVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-   glDisableVertexAttribArray( solid_glsl_program_vertex );
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
+   gl_endSolidProgram();
 }
 
 
@@ -175,40 +160,15 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
  */
 void gl_renderCross( double x, double y, double r, const glColour *c )
 {
-   int i;
-   GLfloat vertex[2*4], colours[4*4];
-   GLfloat vx,vy, vr;
+   gl_Matrix4 projection;
 
-   /* Set up stuff. */
-   vx = x;
-   vy = y;
-   vr = r;
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
 
-   /* the + sign in the middle of the radar representing the player */
-   for (i=0; i<4; i++) {
-      colours[4*i + 0] = c->r;
-      colours[4*i + 1] = c->g;
-      colours[4*i + 2] = c->b;
-      colours[4*i + 3] = c->a;
-   }
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset,
-         sizeof(GLfloat) * 4*4, colours );
-   /* Set up vertex. */
-   vertex[0] = vx+0.;
-   vertex[1] = vy-vr;
-   vertex[2] = vx+0.;
-   vertex[3] = vy+vr;
-   vertex[4] = vx-vr;
-   vertex[5] = vy+0.;
-   vertex[6] = vx+vr;
-   vertex[7] = vy+0.;
-   gl_vboSubData( gl_renderVBO, 0, sizeof(GLfloat) * 4*2, vertex );
-   /* Draw tho VBO. */
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_crossVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINES, 0, 4 );
-   gl_vboDeactivate();
+   gl_endSolidProgram();
 }
 
 
@@ -344,7 +304,8 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   gl_vboActivateOffset( gl_squareVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( texture_interpolate_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, texture_interpolate_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = gl_Matrix4_Identity();
@@ -363,7 +324,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
+   glDisableVertexAttribArray( texture_interpolate_glsl_program_vertex );
    glDisable(GL_TEXTURE_2D);
    glActiveTexture( GL_TEXTURE0 );
    glDisable(GL_TEXTURE_2D);
@@ -652,8 +613,6 @@ void gl_drawCircleLoop( const double cx, const double cy,
    double nxc, xc, yc;
    GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
-   glUseProgram(solid_glsl_program);
-
    /* Aim for 10 px between each vertex. */
    points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
 
@@ -679,18 +638,10 @@ void gl_drawCircleLoop( const double cx, const double cy,
 
    gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
 
-   glEnableVertexAttribArray( solid_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_renderVBO, solid_glsl_program_vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   gl_Matrix4_Uniform(solid_glsl_program_projection, gl_view_matrix);
-   gl_uniformColor(solid_glsl_program_color, c);
-
-   /* Draw. */
+   gl_beginSolidProgram(gl_view_matrix, c);
+   gl_vboActivateAttribOffset( gl_renderVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_LOOP, 0, points );
-
-   glDisableVertexAttribArray( solid_glsl_program_vertex );
-   glUseProgram(0);
+   gl_endSolidProgram();
 }
 
 
@@ -1081,6 +1032,16 @@ int gl_initRender (void)
    vertex[9] = 0;
    gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
+   vertex[0] = 0.;
+   vertex[1] = -1;
+   vertex[2] = 0.;
+   vertex[3] = 1;
+   vertex[4] = -1;
+   vertex[5] = 0.;
+   vertex[6] = 1;
+   vertex[7] = 0.;
+   gl_crossVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
    texture_glsl_program = gl_program_vert_frag("texture.vert", "texture.frag");
    texture_glsl_program_vertex = glGetAttribLocation(texture_glsl_program, "vertex");
    texture_glsl_program_projection = glGetUniformLocation(texture_glsl_program, "projection");
@@ -1089,6 +1050,7 @@ int gl_initRender (void)
 
    texture_interpolate_glsl_program = gl_program_vert_frag("texture.vert",
          "texture_interpolate.frag");
+   texture_interpolate_glsl_program_vertex = glGetAttribLocation(texture_interpolate_glsl_program, "vertex");
    texture_interpolate_glsl_program_projection = glGetUniformLocation(texture_interpolate_glsl_program, "projection");
    texture_interpolate_glsl_program_color = glGetUniformLocation(texture_interpolate_glsl_program, "color");
    texture_interpolate_glsl_program_tex_mat = glGetUniformLocation(texture_interpolate_glsl_program, "tex_mat");
@@ -1121,6 +1083,7 @@ void gl_exitRender (void)
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
    gl_vboDestroy( gl_squareEmptyVBO );
+   gl_vboDestroy( gl_crossVBO );
    gl_renderVBO = NULL;
 
    /* Destroy the circles. */
