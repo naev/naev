@@ -2703,8 +2703,8 @@ static int aiL_setasterotarget( lua_State *L )
  * @brief Gets the closest gatherable within a radius.
  * 
  *    @luaparam float rad Radius to search in.
- *    @luareturn int i Id of the gatherable.
- *    @luafunc setasterotarget( field, ast )
+ *    @luareturn int i Id of the gatherable or nil if none found.
+ *    @luafunc getgatherable( field, ast )
  */
 static int aiL_getGatherable( lua_State *L )
 {
@@ -2718,7 +2718,10 @@ static int aiL_getGatherable( lua_State *L )
 
    i = gatherable_getClosest( cur_pilot->solid->pos, rad );
 
-   lua_pushnumber(L,i);
+   if (i != -1)
+      lua_pushnumber(L,i);
+   else
+      lua_pushnil(L);
 
    return 1;
 }
@@ -2730,7 +2733,7 @@ static int aiL_getGatherable( lua_State *L )
  *    @luaparam int id Id of the gatherable.
  *    @luareturn vec2 pos position of the gatherable.
  *    @luareturn vec2 vel velocity of the gatherable.
- *    @luafunc setasterotarget( field, ast )
+ *    @luafunc gatherablepos( field, ast )
  */
 static int aiL_gatherablePos( lua_State *L )
 {
