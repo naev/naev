@@ -66,10 +66,16 @@ static GLuint solid_glsl_program = 0;
 static GLuint solid_glsl_program_color = 0;
 static GLuint solid_glsl_program_projection = 0;
 GLuint solid_glsl_program_vertex = 0;
+static GLuint circle_glsl_program = 0;
+static GLuint circle_glsl_program_vertex = 0;
+static GLuint circle_glsl_program_color = 0;
+static GLuint circle_glsl_program_projection = 0;
+static GLuint circle_glsl_program_radius = 0;
 static GLuint circle_filled_glsl_program = 0;
 static GLuint circle_filled_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program_color = 0;
 static GLuint circle_filled_glsl_program_projection = 0;
+static GLuint circle_filled_glsl_program_radius = 0;
 
 
 /*
@@ -605,46 +611,6 @@ void gl_blitStatic( const glTexture* texture,
 }
 
 
-void gl_drawCircleLoop( const double cx, const double cy,
-      const double r, const glColour *c )
-{
-   int i, points;
-   double angi, cosi, sini;
-   double nxc, xc, yc;
-   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
-
-   /* Aim for 10 px between each vertex. */
-   points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
-
-   angi = 2. * M_PI / (double)points;
-   cosi = cos(angi);
-   sini = sin(angi);
-
-   vertex[0] = cx + r;
-   vertex[1] = cy;
-
-   xc = 1.;
-   yc = 0.;
-
-   /* Calculate the vertices by iterating counter-clockwise. */
-   for (i=1; i<points; i++) {
-      nxc = cosi * xc - sini * yc;
-      yc  = sini * xc + cosi * yc;
-      xc  = nxc;
-
-      vertex[i*2+0] = cx + xc * r;
-      vertex[i*2+1] = cy + yc * r;
-   }
-
-   gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
-
-   gl_beginSolidProgram(gl_view_matrix, c);
-   gl_vboActivateAttribOffset( gl_renderVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_LOOP, 0, points );
-   gl_endSolidProgram();
-}
-
-
 /**
  * @brief Draws an empty circle.
  *
@@ -653,81 +619,37 @@ void gl_drawCircleLoop( const double cx, const double cy,
  *    @param r Radius of the circle.
  *    @param c Colour to use.
  */
-#define PIXEL(x,y)   \
-if (i<OPENGL_RENDER_VBO_SIZE) { \
-   vertex[2*i+0] = x; \
-   vertex[2*i+1] = y; \
-   i++; \
-}
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c )
 {
-   int i, j;
-   double x,y,p;
-   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
+   gl_Matrix4 projection;
 
-   /* Starting parameters. */
-   i = 0;
-   x = 0;
-   y = r;
-   p = (5. - (r*4.)) / 4.;
+   glUseProgram(circle_glsl_program);
 
-   PIXEL( cx,   cy+y );
-   PIXEL( cx,   cy-y );
-   PIXEL( cx+y, cy   );
-   PIXEL( cx-y, cy   );
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
+   projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
+   glEnableVertexAttribArray( circle_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, circle_glsl_program_vertex,
+         0, 2, GL_FLOAT, 0 );
 
-   while (x<y) {
-      x++;
-      if (p < 0) p += 2*(double)(x)+1;
-      else p += 2*(double)(x-(--y))+1;
-
-      if (x==0) {
-         PIXEL( cx,   cy+y );
-         PIXEL( cx,   cy-y );
-         PIXEL( cx+y, cy   );
-         PIXEL( cx-y, cy   );
-      }
-      else
-         if (x==y) {
-            PIXEL( cx+x, cy+y );
-            PIXEL( cx-x, cy+y );
-            PIXEL( cx+x, cy-y );
-            PIXEL( cx-x, cy-y );
-         }
-         else
-            if (x<y) {
-               PIXEL( cx+x, cy+y );
-               PIXEL( cx-x, cy+y );
-               PIXEL( cx+x, cy-y );
-               PIXEL( cx-x, cy-y );
-               PIXEL( cx+y, cy+x );
-               PIXEL( cx-y, cy+x );
-               PIXEL( cx+y, cy-x );
-               PIXEL( cx-y, cy-x );
-            }
-   }
-   gl_vboSubData( gl_renderVBO, 0, i*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-
-   /* Set up the colour. */
-   for (j=0; j<i; j++) {
-      col[4*j+0] = c->r;
-      col[4*j+1] = c->g;
-      col[4*j+2] = c->b;
-      col[4*j+3] = c->a;
-   }
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, j*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   /* Set shader uniforms. */
+   gl_uniformColor(circle_glsl_program_color, c);
+   gl_Matrix4_Uniform(circle_glsl_program_projection, projection);
+   glUniform1f(circle_glsl_program_radius, r);
 
    /* Draw. */
-   glDrawArrays( GL_POINTS, 0, i );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    gl_vboDeactivate();
+   glDisableVertexAttribArray( circle_glsl_program_vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
 }
-#undef PIXEL
 
 static void gl_drawCircleFilled( const double cx, const double cy,
       const double r, const glColour *c )
@@ -740,20 +662,21 @@ static void gl_drawCircleFilled( const double cx, const double cy,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
    projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
-   glEnableVertexAttribArray( texture_glsl_program_vertex );
+   glEnableVertexAttribArray( circle_filled_glsl_program_vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, circle_filled_glsl_program_vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
    gl_uniformColor(circle_filled_glsl_program_color, c);
    gl_Matrix4_Uniform(circle_filled_glsl_program_projection, projection);
+   glUniform1f(circle_filled_glsl_program_radius, r);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    gl_vboDeactivate();
-   glDisableVertexAttribArray( texture_glsl_program_vertex );
+   glDisableVertexAttribArray( circle_filled_glsl_program_vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -774,10 +697,8 @@ void gl_drawCircle( const double cx, const double cy,
 {
    if (filled)
       gl_drawCircleFilled( cx, cy, r, c );
-   else if (gl_vendorIsIntel())
-      gl_drawCircleEmpty( cx, cy, r, c );
    else
-      gl_drawCircleLoop( cx, cy, r, c );
+      gl_drawCircleEmpty( cx, cy, r, c );
 }
 
 
@@ -1063,10 +984,18 @@ int gl_initRender (void)
    solid_glsl_program_color = glGetUniformLocation(solid_glsl_program, "color");
    solid_glsl_program_vertex = glGetAttribLocation(solid_glsl_program, "vertex");
 
+   circle_glsl_program = gl_program_vert_frag("circle.vert", "circle.frag");
+   circle_glsl_program_vertex = glGetAttribLocation(circle_glsl_program, "vertex");
+   circle_glsl_program_projection = glGetUniformLocation(circle_glsl_program, "projection");
+   circle_glsl_program_color = glGetUniformLocation(circle_glsl_program, "color");
+   circle_glsl_program_radius = glGetUniformLocation(circle_glsl_program, "radius");
+
+
    circle_filled_glsl_program = gl_program_vert_frag("circle_filled.vert", "circle_filled.frag");
    circle_filled_glsl_program_vertex = glGetAttribLocation(circle_filled_glsl_program, "vertex");
    circle_filled_glsl_program_projection = glGetUniformLocation(circle_filled_glsl_program, "projection");
    circle_filled_glsl_program_color = glGetUniformLocation(circle_filled_glsl_program, "color");
+   circle_filled_glsl_program_radius = glGetUniformLocation(circle_filled_glsl_program, "radius");
 
    gl_checkErr();
 
