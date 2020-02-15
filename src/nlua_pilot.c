@@ -1162,8 +1162,7 @@ static int pilotL_weapset( lua_State *L )
             continue;
 
          /* Must be weapon. */
-         if (outfit_isJammer(o) ||
-               outfit_isMod(o) ||
+         if (outfit_isMod(o) ||
                outfit_isAfterburner(o))
             continue;
 
@@ -1380,8 +1379,7 @@ static int pilotL_weapsetHeat( lua_State *L )
             continue;
 
          /* Must be weapon. */
-         if (outfit_isJammer(o) ||
-               outfit_isMod(o) ||
+         if (outfit_isMod(o) ||
                outfit_isAfterburner(o))
             continue;
 
@@ -1470,8 +1468,7 @@ static int pilotL_actives( lua_State *L )
          continue;
       if (!o->active)
          continue;
-      if (!outfit_isJammer(o->outfit) &&
-            !outfit_isMod(o->outfit) &&
+      if (!outfit_isMod(o->outfit) &&
             !outfit_isAfterburner(o->outfit))
          continue;
 

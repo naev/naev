@@ -214,7 +214,6 @@ static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
-static int aiL_hasjammers( lua_State *L ); /* bool hasjammers() */
 static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
@@ -303,7 +302,6 @@ static const luaL_Reg aiL_methods[] = {
    { "weapset", aiL_weapSet },
    { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
-   { "hasjammers", aiL_hasjammers },
    { "hasafterburner", aiL_hasafterburner },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
@@ -2821,19 +2819,6 @@ static int aiL_hascannons( lua_State *L )
 static int aiL_hasturrets( lua_State *L )
 {
    lua_pushboolean( L, cur_pilot->nturrets > 0 );
-   return 1;
-}
-
-
-/**
- * @brief Does the pilot have jammers?
- *
- *    @luatreturn boolean True if the pilot has jammers.
- * @luafunc hasjammers()
- */
-static int aiL_hasjammers( lua_State *L )
-{
-   lua_pushboolean( L, cur_pilot->njammers > 0 );
    return 1;
 }
 

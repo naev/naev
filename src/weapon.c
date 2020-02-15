@@ -66,7 +66,6 @@ typedef struct Weapon_ {
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
    double real_vel; /**< Keeps track of the real velocity. */
-   double jam_power; /**< Power being jammed by. */
    double dam_mod; /**< Damage modifier. */
    int voice; /**< Weapon's voice. */
    double exp_timer; /**< Explosion timer for beams. */
@@ -354,7 +353,7 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         turn_max = w->outfit->u.amm.turn * (1. - w->jam_power);
+         turn_max = w->outfit->u.amm.turn * (1. - p->ew_hide);
          weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.amm.turn ));
          break;
@@ -370,10 +369,10 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Limit speed here */
    w->real_vel = MIN( w->outfit->u.amm.speed, w->real_vel + w->outfit->u.amm.thrust*dt );
-   vect_pset( &w->solid->vel, (1. - w->jam_power) * w->real_vel, w->solid->dir );
+   vect_pset( &w->solid->vel, (1. - p->ew_hide) * w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
-   //w->solid->speed_max = w->outfit->u.amm.speed * (1. - w->jam_power);
+   //w->solid->speed_max = w->outfit->u.amm.speed * (1. - p->ew_hide);
 }
 
 
@@ -482,50 +481,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       default:
          WARN(_("Unknown weapon layer!"));
          return;
-   }
-
-   /** @TODO optimize me plz. */
-   /* Reset jam power. */
-   for (k=0; k < *nlayer; k++) {
-      w = wlayer[k];
-      if (!outfit_isSeeker( w->outfit ))
-         continue;
-      w->jam_power = 0.;
-   }
-   /* Iterate over all pilots. */
-   for (i=0; i<pilot_nstack; i++) {
-      p = pilot_stack[i];
-
-      /* Must be jamming. */
-      if (!p->jamming)
-         continue;
-
-      /* Iterate over outfits to find jammers. */
-      for (j=0; j<p->noutfits; j++) {
-         o    = p->outfits[j]->outfit;
-         if (o==NULL)
-            continue;
-         /* Must be on. */
-         if (p->outfits[j]->state != PILOT_OUTFIT_ON)
-            continue;
-         /* Must be a jammer. */
-         if (!outfit_isJammer(o))
-            continue;
-    
-         /* Apply jamming. */
-         for (k=0; k < *nlayer; k++) {
-            w = wlayer[k];
-            if (!outfit_isSeeker( w->outfit ))
-               continue;
-
-            /* Must be in range. */
-            if (o->u.jam.range2 < vect_dist2( &w->solid->pos, &p->solid->pos ))
-               continue;
-
-            /* We only consider the strongest jammer. */
-            w->jam_power = CLAMP( 0., 1., MAX( w->jam_power, (o->u.jam.power - w->outfit->u.amm.resist) ) );
-         }
-      }
    }
 
    i = 0;

@@ -10,7 +10,7 @@
   <cpu>-3</cpu>
  </general>
  <specific type="modification">
-  <energy_usage>12</energy_usage>
+  <energy_usage>6</energy_usage>
   <ew_hide>20</ew_hide>
  </specific>
 </outfit>
