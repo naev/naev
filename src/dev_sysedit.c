@@ -810,9 +810,7 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    for (   ; sy<w; sy += sz)
       gl_renderRect( bx, by+sy, w, 1., &cBlue );
 
-   glEnable(GL_LINE_SMOOTH);
-   gl_drawCircleLoop( x, y, sysedit_sys->radius * sysedit_zoom, &cLightBlue );
-   glDisable(GL_LINE_SMOOTH);
+   gl_drawCircle( x, y, sysedit_sys->radius * sysedit_zoom, &cLightBlue, 0 );
 }
 
 
