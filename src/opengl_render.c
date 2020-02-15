@@ -70,6 +70,7 @@ static GLuint circle_filled_glsl_program = 0;
 static GLuint circle_filled_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program_color = 0;
 static GLuint circle_filled_glsl_program_projection = 0;
+static GLuint circle_filled_glsl_program_radius = 0;
 
 
 /*
@@ -747,6 +748,7 @@ static void gl_drawCircleFilled( const double cx, const double cy,
    /* Set shader uniforms. */
    gl_uniformColor(circle_filled_glsl_program_color, c);
    gl_Matrix4_Uniform(circle_filled_glsl_program_projection, projection);
+   glUniform1f(circle_filled_glsl_program_radius, r);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -1067,6 +1069,7 @@ int gl_initRender (void)
    circle_filled_glsl_program_vertex = glGetAttribLocation(circle_filled_glsl_program, "vertex");
    circle_filled_glsl_program_projection = glGetUniformLocation(circle_filled_glsl_program, "projection");
    circle_filled_glsl_program_color = glGetUniformLocation(circle_filled_glsl_program, "color");
+   circle_filled_glsl_program_radius = glGetUniformLocation(circle_filled_glsl_program, "radius");
 
    gl_checkErr();
 
