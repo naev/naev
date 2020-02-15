@@ -590,19 +590,31 @@ static int systemL_jumps( lua_State *L )
 static int systemL_asteroid( lua_State *L )
 {
    int field, ast;
-   int attempts;
+   int bad_asteroid;
+   int i;
 
    if (cur_system->nasteroids > 0) {
-      attempts = 0;
-      do {
-         field = RNG(0,cur_system->nasteroids-1);
-         ast   = RNG(0,cur_system->asteroids[field].nb-1);
-         attempts++;
-      } while ( attempts < 200 &&
-            cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_VISIBLE );
+      field = RNG(0,cur_system->nasteroids-1);
+      ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      bad_asteroid = 0;
+      if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
+            (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INIT)) {
+         /* Switch to next index until we find a valid one, or until we come full-circle. */
+         bad_asteroid = 1;
+         for (i=0; i<cur_system->asteroids[field].nb; i++) {
+            ast = (ast + 1) % cur_system->asteroids[field].nb;
+            if ( (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INVISIBLE) &&
+                  (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INIT)) {
+               bad_asteroid = 0;
+               break;
+            }
+         }
+      }
 
-      if (attempts >= 200)
-         WARN("Failed to get a valid asteroid in 200 attempts.");
+      if (bad_asteroid) {
+         WARN("Failed to get a valid asteroid in field %d.", field);
+         return 0;
+      }
 
       lua_pushnumber(L,field);
       lua_pushnumber(L,ast);
