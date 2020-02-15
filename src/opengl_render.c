@@ -235,7 +235,6 @@ void gl_blitTexture(  const glTexture* texture,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
    glDisable(GL_TEXTURE_2D);
    glDisableVertexAttribArray( glGetAttribLocation(texture_glsl_program, "vertex") );
 
@@ -643,7 +642,6 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
    glDisableVertexAttribArray( circle_glsl_program_vertex );
    glUseProgram(0);
 
@@ -675,7 +673,6 @@ static void gl_drawCircleFilled( const double cx, const double cy,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
    glDisableVertexAttribArray( circle_filled_glsl_program_vertex );
    glUseProgram(0);
 
