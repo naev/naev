@@ -705,9 +705,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
    tx = bx + ast->pos.x*z;
    ty = by + ast->pos.y*z;
 
-   glEnable(GL_LINE_SMOOTH);
-   gl_drawCircleLoop( tx, ty, ast->radius * sysedit_zoom, &cOrange );
-   glDisable(GL_LINE_SMOOTH);
+   gl_drawCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
 }
 
 /**
@@ -716,11 +714,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
  */
 static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
 {
-   double tx, ty, z;
-
-   /* Render icon */
-   sysedit_renderSprite( asteroid_gfx[0], bx, by, aexcl->pos.x, aexcl->pos.y,
-                         0, 0, NULL, selected, _("Asteroid Exclusion") );
+   double tx, ty, z, r, rr;
 
    /* Inits. */
    z  = sysedit_zoom;
@@ -728,10 +722,12 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclu
    /* Translate asteroid field center's coords. */
    tx = bx + aexcl->pos.x*z;
    ty = by + aexcl->pos.y*z;
+   r = aexcl->radius * sysedit_zoom;
+   rr = r * sin(M_PI / 4);
 
-   glEnable(GL_LINE_SMOOTH);
-   gl_drawCircleLoop( tx, ty, aexcl->radius * sysedit_zoom, &cWhite );
-   glDisable(GL_LINE_SMOOTH);
+   gl_drawCircle( tx, ty, r, &cRed, 0 );
+   gl_renderCross( tx, ty, r, &cRed );
+   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, &cRed );
 }
 
 /**
