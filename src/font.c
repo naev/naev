@@ -1204,7 +1204,6 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
  */
 static void gl_fontRenderEnd (void)
 {
-   gl_vboDeactivate();
    glDisableVertexAttribArray( font_glsl_program_vertex );
    glDisableVertexAttribArray( font_glsl_program_tex_coord );
    glUseProgram(0);

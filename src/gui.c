@@ -1318,9 +1318,6 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
       h *= 2.;
    }
 
-   /* Deactivate VBO. */
-   gl_vboDeactivate();
-
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);

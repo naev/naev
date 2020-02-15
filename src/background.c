@@ -207,7 +207,6 @@ void background_renderStars( const double dt )
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
 
-         glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
          /* lines get longer the closer we are to finishing the jump */
@@ -218,7 +217,6 @@ void background_renderStars( const double dt )
          y = m*sin(VANGLE(player.p->solid->vel));
       }
       else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
-         glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
          /* Very short lines tend to flicker horribly. A stock Llama at 2x
@@ -253,7 +251,6 @@ void background_renderStars( const double dt )
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
       glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
-      glShadeModel(GL_FLAT);
    }
    else
       glDrawArrays( GL_POINTS, 0, nstars );
