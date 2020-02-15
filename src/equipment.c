@@ -25,7 +25,6 @@
 #include "player.h"
 #include "mission.h"
 #include "ntime.h"
-#include "opengl_vbo.h"
 #include "conf.h"
 #include "gui.h"
 #include "land_outfits.h"
@@ -60,7 +59,6 @@
 static CstSlotWidget eq_wgt; /**< Equipment widget. */
 static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
-static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 
@@ -237,18 +235,6 @@ void equipment_open( unsigned int wid )
 
    /* Set global WID. */
    equipment_wid = wid;
-
-   /* Create the vbo if necessary. */
-   if (equipment_vbo == NULL) {
-      equipment_vbo = gl_vboCreateStream( (sizeof(GLshort)*2 + sizeof(GLfloat)*4)*4, NULL );
-      for (i=0; i<4; i++) {
-         colour[i*4+0] = cRadar_player.r;
-         colour[i*4+1] = cRadar_player.g;
-         colour[i*4+2] = cRadar_player.b;
-         colour[i*4+3] = cRadar_player.a;
-      }
-      gl_vboSubData( equipment_vbo, sizeof(GLshort)*2*4, sizeof(colour), colour );
-   }
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -892,22 +878,10 @@ static void equipment_renderShip( double bx, double by,
       py += ph/2;
       v.x *= pw / p->ship->gfx_space->sw;
       v.y *= ph / p->ship->gfx_space->sh;
+
       /* Render it. */
-      vertex[0] = px + v.x + 0.;
-      vertex[1] = py + v.y - 7;
-      vertex[2] = vertex[0];
-      vertex[3] = py + v.y + 7;
-      vertex[4] = px + v.x - 7.;
-      vertex[5] = py + v.y + 0.;
-      vertex[6] = px + v.x + 7.;
-      vertex[7] = vertex[5];
       glLineWidth( 3. );
-      gl_vboSubData( equipment_vbo, 0, sizeof(vertex), vertex );
-      gl_vboActivateOffset( equipment_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
-      gl_vboActivateOffset( equipment_vbo, GL_COLOR_ARRAY,
-            sizeof(vertex), 4, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, 4 );
-      gl_vboDeactivate();
+      gl_renderCross(px + v.x, py + v.y, 7, &cRadar_player);
       glLineWidth( 1. );
    }
    lc = toolkit_colLight;
@@ -2026,12 +2000,6 @@ static void equipment_renameShip( unsigned int wid, char *str )
  */
 void equipment_cleanup (void)
 {
-   /* Destroy the VBO. */
-   if (equipment_vbo != NULL)
-      gl_vboDestroy( equipment_vbo );
-
-   equipment_vbo = NULL;
-
    /* Free stored positions. */
    if (iar_data != NULL) {
       free(iar_data);
