@@ -54,6 +54,7 @@ glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing fact
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
+static gl_vbo *marker_vbo = NULL;
 
 
 /*
@@ -93,8 +94,19 @@ static void map_selectCur (void);
  */
 int map_init (void)
 {
+   const double beta = M_PI / 9;
+   GLfloat vertex[6];
+
    /* Create the VBO. */
    map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+
+   vertex[0] = 1;
+   vertex[1] = 0;
+   vertex[2] = 1 + 3 * cos(beta);
+   vertex[3] = 3 * sin(beta);
+   vertex[4] = 1 + 3 * cos(beta);
+   vertex[5] = -3 * sin(beta);
+   marker_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 6, vertex );
 
    gl_faction_disk = gl_genFactionDisk( 150. );
    return 0;
@@ -590,15 +602,13 @@ int map_isOpen (void)
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type )
 {
-   const double beta = M_PI / 9;
    static const glColour* colours[] = {
       &cGreen, &cBlue, &cRed, &cOrange, &cYellow
    };
 
-   int i;
-   double alpha, cos_alpha, sin_alpha;
-   GLfloat vertex[3*(2+4)];
-
+   double alpha;
+   glColour col;
+   gl_Matrix4 projection;
 
    /* Calculate the angle. */
    if ((num == 1) || (num == 2) || (num == 4))
@@ -611,32 +621,18 @@ static void map_drawMarker( double x, double y, double r, double a,
       alpha = M_PI/2.;
 
    alpha += M_PI*2. * (double)cur/(double)num;
-   cos_alpha = r * cos(alpha);
-   sin_alpha = r * sin(alpha);
-   r = 3 * r;
 
    /* Draw the marking triangle. */
-   vertex[0] = x + cos_alpha;
-   vertex[1] = y + sin_alpha;
-   vertex[2] = x + cos_alpha + r * cos(beta + alpha);
-   vertex[3] = y + sin_alpha + r * sin(beta + alpha);
-   vertex[4] = x + cos_alpha + r * cos(beta - alpha);
-   vertex[5] = y + sin_alpha - r * sin(beta - alpha);
-
-   for (i=0; i<3; i++) {
-      vertex[6 + 4*i + 0] = colours[type]->r;
-      vertex[6 + 4*i + 1] = colours[type]->g;
-      vertex[6 + 4*i + 2] = colours[type]->b;
-      vertex[6 + 4*i + 3] = colours[type]->a * a;
-   }
-
    glEnable(GL_POLYGON_SMOOTH);
-   gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
-   gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
-         sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+   col = *colours[type];
+   col.a *= a;
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
+   projection = gl_Matrix4_Rotate2d(projection, alpha);
+   gl_beginSolidProgram(projection, &col);
+   gl_vboActivateAttribOffset( marker_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLES, 0, 3 );
-   gl_vboDeactivate();
+   gl_endSolidProgram();
    glDisable(GL_POLYGON_SMOOTH);
 }
 
