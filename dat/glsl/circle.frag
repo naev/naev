@@ -7,6 +7,5 @@ in vec2 pos;
 
 void main(void) {
    color_out = color;
-   color_out.a = clamp(radius - length(pos), 0, 1);
-   color_out.a *= clamp(length(pos) - radius + 2, 0, 1);
+   color_out.a = 1 - clamp(abs(radius - length(pos) - 1), 0, 1);
 }
