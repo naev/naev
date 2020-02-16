@@ -264,12 +264,15 @@ function enter()
       oppotype = opponent:ship()
 
       --The core systems
-      cores = {
-         {"Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Combat Plating"},
-         {"Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating"}
-      }
-
-      equip_cores(opponent, equip_getCores(opponent, "small", cores))
+      if oppotype == ship.get("Hyena") or  oppotype == ship.get("Shark") then
+         opponent:addOutfit("Tricon Zephyr Engine")
+         opponent:addOutfit("Milspec Orion 2301 Core System")
+         opponent:addOutfit("S&K Ultralight Combat Plating")
+      else
+         opponent:addOutfit("Tricon Zephyr II Engine")
+         opponent:addOutfit("Milspec Orion 3701 Core System")
+         opponent:addOutfit("S&K Light Combat Plating")
+      end
       
       -- Equipment
       local nhigh, nmedium, nlow = oppotype:slots()
@@ -396,21 +399,12 @@ end
 
 function land()
 
-   --First remove some hooks...
-   for i, j in ipairs({jumphook,landhook,opdehook,opjuhook,enterhook}) do
-      hook.rm(j)
-   end
-
-   for i, j in ipairs(hooks) do
-      hook.rm(j)
-   end
-
-   --Then manage the player's progress
    if stage == 2 and planet.cur() == mispla then  --player goes to next round
+      --Manage the player's progress
       tk.msg(title[3], text[3])
 
       populate_bar()
-      official = misn.npcAdd("beginbattle", npc_desc[1], officialFace, bar_desc[1])
+      official = misn.npcAdd("cleanNbegin", npc_desc[1], officialFace, bar_desc[1])
 
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
@@ -429,6 +423,22 @@ function land()
       tk.msg(dismisstitle, fleetext)
       misn.finish(false)
    end
+end
+
+function cleanNbegin()
+   -- Remove some hooks and begin a new battle
+   for i, j in ipairs({jumphook,landhook,opdehook,opjuhook,enterhook}) do
+      hook.rm(j)
+   end
+
+   if hooks == nil then
+      hooks = {}
+   end
+
+   for i, j in ipairs(hooks) do
+      hook.rm(j)
+   end
+   beginbattle()
 end
 
 function oppo_dead()  --The player killed his opponent
