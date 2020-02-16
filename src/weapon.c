@@ -107,6 +107,12 @@ static int weapon_vboSize      = 0; /**< Size of the VBO. */
 static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
 
 
+static GLuint beam_glsl_program = 0;
+static GLuint beam_glsl_program_vertex = 0;
+static GLuint beam_glsl_program_projection = 0;
+static GLuint beam_glsl_program_tex_mat = 0;
+
+
 /*
  * Prototypes
  */
@@ -146,6 +152,14 @@ void weapon_minimap( const double res, const double w,
 /* movement. */
 static void weapon_setThrust( Weapon *w, double thrust );
 static void weapon_setTurn( Weapon *w, double turn );
+
+
+void weapon_init (void) {
+   beam_glsl_program = gl_program_vert_frag("beam.vert", "beam.frag");
+   beam_glsl_program_vertex = glGetAttribLocation(beam_glsl_program, "vertex");
+   beam_glsl_program_projection = glGetUniformLocation(beam_glsl_program, "projection");
+   beam_glsl_program_tex_mat = glGetUniformLocation(beam_glsl_program, "tex_mat");
+}
 
 
 /**
@@ -665,6 +679,65 @@ void weapons_render( const WeaponLayer layer, const double dt )
 }
 
 
+static void weapon_renderBeam( Weapon* w, const double dt ) {
+   double x, y, z, cx, cy, gx, gy;
+   glTexture *gfx;
+   gl_Matrix4 projection, tex_mat;
+
+   /* Load GLSL program */
+   glUseProgram(beam_glsl_program);
+
+   gfx = outfit_gfx(w->outfit);
+
+   /* Zoom. */
+   z = cam_getZoom();
+
+   /* Position. */
+   cam_getPos( &cx, &cy );
+   gui_getOffset( &gx, &gy );
+   x = (w->solid->pos.x - cx)*z + gx;
+   y = (w->solid->pos.y - cy)*z + gy;
+
+   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
+   projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
+   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,gfx->sh * z, 1 );
+
+   /* Bind the texture. */
+   glBindTexture( GL_TEXTURE_2D, gfx->texture);
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( beam_glsl_program_vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, beam_glsl_program_vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set the texture. */
+   tex_mat = gl_Matrix4_Identity();
+   tex_mat = gl_Matrix4_Translate(tex_mat, w->anim, 0, 0);
+   tex_mat = gl_Matrix4_Scale(tex_mat, w->outfit->u.bem.range / gfx->sw, 1, 1);
+
+   /* Set shader uniforms. */
+   gl_Matrix4_Uniform(beam_glsl_program_projection, projection);
+   gl_Matrix4_Uniform(beam_glsl_program_tex_mat, tex_mat);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisable(GL_TEXTURE_2D);
+   glDisableVertexAttribArray( beam_glsl_program_vertex );
+   glUseProgram(0);
+
+   /* anything failed? */
+   gl_checkErr();
+
+   /* Do the beam movement. */
+   gfx = outfit_gfx(w->outfit);
+   w->anim -= 5. * dt;
+   if (w->anim <= -gfx->sw)
+      w->anim += gfx->sw;
+}
+
+
 /**
  * @brief Renders an individual weapon.
  *
@@ -725,74 +798,7 @@ static void weapon_render( Weapon* w, const double dt )
       /* Beam weapons. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
-         gfx = outfit_gfx(w->outfit);
-
-         /* Zoom. */
-         z = cam_getZoom();
-
-         /* Position. */
-         cam_getPos( &cx, &cy );
-         gui_getOffset( &gx, &gy );
-         x = (w->solid->pos.x - cx)*z + gx;
-         y = (w->solid->pos.y - cy)*z + gy;
-
-         /* Set up the matrix. */
-         glPushMatrix();
-            glTranslated( SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
-            glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
-
-         /* Preparatives. */
-         glEnable(GL_TEXTURE_2D);
-         glBindTexture( GL_TEXTURE_2D, gfx->texture);
-         glShadeModel(GL_SMOOTH);
-
-         /* Actual rendering. */
-         glBegin(GL_QUAD_STRIP);
-
-            /* Start faded. */
-            ACOLOUR(cWhite, 0.);
-
-            glTexCoord2d( w->anim, 0. );
-            glVertex2d( -gfx->sh/2.*z, 0. );
-
-            glTexCoord2d( w->anim, 1. );
-            glVertex2d( +gfx->sh/2.*z, 0. );
-
-            /* Full strength. */
-            COLOUR(cWhite);
-
-            glTexCoord2d( w->anim + 10. / gfx->sw, 0. );
-            glVertex2d( -gfx->sh/2.*z, 10.*z );
-
-            glTexCoord2d( w->anim + 10. / gfx->sw, 1. );
-            glVertex2d( +gfx->sh/2.*z, 10.*z );
-
-            glTexCoord2d( w->anim + 0.8*w->outfit->u.bem.range / gfx->sw, 0. );
-            glVertex2d( -gfx->sh/2.*z, 0.8*w->outfit->u.bem.range*z );
-
-            glTexCoord2d( w->anim + 0.8*w->outfit->u.bem.range / gfx->sw, 1. );
-            glVertex2d( +gfx->sh/2.*z, 0.8*w->outfit->u.bem.range*z );
-
-            /* Fades out. */
-            ACOLOUR(cWhite, 0.);
-
-            glTexCoord2d( w->anim + w->outfit->u.bem.range / gfx->sw, 0. );
-            glVertex2d( -gfx->sh/2.*z, w->outfit->u.bem.range*z );
-
-            glTexCoord2d( w->anim + w->outfit->u.bem.range / gfx->sw, 1. );
-            glVertex2d( +gfx->sh/2.*z, w->outfit->u.bem.range*z );
-         glEnd(); /* GL_QUAD_STRIP */
-
-         /* Do the beam movement. */
-         w->anim -= 5. * dt;
-         if (w->anim <= -gfx->sw)
-            w->anim += gfx->sw;
-
-         /* Clean up. */
-         glDisable(GL_TEXTURE_2D);
-         glShadeModel(GL_FLAT);
-         glPopMatrix();
-         gl_checkErr();
+         weapon_renderBeam(w, dt);
          break;
 
       default:

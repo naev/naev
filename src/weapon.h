@@ -21,6 +21,9 @@
 typedef enum { WEAPON_LAYER_BG, WEAPON_LAYER_FG } WeaponLayer;
 
 
+void weapon_init (void);
+
+
 /*
  * addition
  */

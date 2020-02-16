@@ -70,6 +70,7 @@ void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
 
 
+extern gl_vbo *gl_squareVBO;
 extern GLuint solid_glsl_program_vertex;
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c);
 void gl_endSolidProgram();

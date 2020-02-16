@@ -42,7 +42,7 @@
 
 
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
-static gl_vbo *gl_squareVBO = 0;
+gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
@@ -772,6 +772,8 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
       const double rx, const double ry, const double rw, const double rh,
       const glColour *c, int filled )
 {
+   gl_drawCircle(cx, cy, r, c, filled);
+   return;
    int i, j;
    double rxw,ryh, x,y,p, w,h, tx,ty, tw,th, r2;
    GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
