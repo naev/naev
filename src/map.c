@@ -740,7 +740,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.b = cRed.b;
 
    glDisable(GL_LINE_SMOOTH);
-   glDisable(GL_POINT_SMOOTH);
 
    /* Selected system. */
    if (map_selected != -1) {
@@ -761,7 +760,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    if (!gl_vendorIsIntel())
       glDisable(GL_LINE_SMOOTH);
-   glDisable(GL_POINT_SMOOTH);
 }
 
 
@@ -960,7 +958,6 @@ void map_renderSystems( double bx, double by, double x, double y,
 
    /* Smoother circles. */
    glDisable(GL_LINE_SMOOTH);
-   glDisable(GL_POINT_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -1000,7 +997,6 @@ void map_renderSystems( double bx, double by, double x, double y,
 
    if (!gl_vendorIsIntel())
       glDisable( GL_LINE_SMOOTH );
-   glDisable(GL_POINT_SMOOTH);
 }
 
 
