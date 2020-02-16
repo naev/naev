@@ -63,9 +63,7 @@ static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
  */
 #define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
 static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
-static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
 static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
-static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
@@ -75,7 +73,6 @@ static GLuint stars_glsl_program = 0;
 static GLuint stars_glsl_program_vertex = 0;
 static GLuint stars_glsl_program_brightness = 0;
 static GLuint stars_glsl_program_projection = 0;
-static GLuint stars_glsl_program_shade_mode = 0;
 static GLuint stars_glsl_program_star_xy = 0;
 static GLuint stars_glsl_program_star_wh = 0;
 static GLuint stars_glsl_program_xy = 0;
@@ -123,19 +120,18 @@ void background_initStars( int n )
 
    if (mstars < nstars) {
       /* Create data. */
-      star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
-      star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 2 );
+      star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 6 );
       mstars = nstars;
    }
    for (i=0; i < nstars; i++) {
       /* Set the position. */
-      star_vertex[4*i+0] = RNGF()*w - hw;
-      star_vertex[4*i+1] = RNGF()*h - hh;
-      star_vertex[4*i+2] = star_vertex[4*i+0];
-      star_vertex[4*i+3] = star_vertex[4*i+1];
+      star_vertex[6*i+0] = RNGF()*w - hw;
+      star_vertex[6*i+1] = RNGF()*h - hh;
+      star_vertex[6*i+3] = star_vertex[6*i+0];
+      star_vertex[6*i+4] = star_vertex[6*i+1];
       /* Set the colour. */
-      star_colour[2*i+0] = RNGF()*0.6 + 0.2;
-      star_colour[2*i+1] = star_colour[2*i+0];
+      star_vertex[6*i+2] = RNGF()*0.6 + 0.2;
+      star_vertex[6*i+5] = star_vertex[6*i+2];
    }
 
    /* Destroy old VBO. */
@@ -143,16 +139,10 @@ void background_initStars( int n )
       gl_vboDestroy( star_vertexVBO );
       star_vertexVBO = NULL;
    }
-   if (star_colourVBO != NULL) {
-      gl_vboDestroy( star_colourVBO );
-      star_colourVBO = NULL;
-   }
 
    /* Create now VBO. */
    star_vertexVBO = gl_vboCreateStatic(
-         nstars * sizeof(GLfloat) * 4, star_vertex );
-   star_colourVBO = gl_vboCreateStatic(
-         nstars * sizeof(GLfloat) * 2, star_colour );
+         nstars * sizeof(GLfloat) * 6, star_vertex );
 }
 
 
@@ -239,12 +229,11 @@ void background_renderStars( const double dt )
    glEnableVertexAttribArray( stars_glsl_program_vertex );
    glEnableVertexAttribArray( stars_glsl_program_brightness );
    gl_vboActivateAttribOffset( star_vertexVBO, stars_glsl_program_vertex, 0,
-         2, GL_FLOAT, 2 * sizeof(GLfloat) );
-   gl_vboActivateAttribOffset( star_colourVBO, stars_glsl_program_brightness, 0,
-         1, GL_FLOAT, sizeof(GLfloat) );
+         2, GL_FLOAT, 3 * sizeof(GLfloat) );
+   gl_vboActivateAttribOffset( star_vertexVBO, stars_glsl_program_brightness, 2 * sizeof(GLfloat),
+         1, GL_FLOAT, 3 * sizeof(GLfloat) );
 
    gl_Matrix4_Uniform(glGetUniformLocation(stars_glsl_program, "projection"), projection);
-   glUniform1i(glGetUniformLocation(stars_glsl_program, "shade_mode"), shade_mode);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "wh"), w, h);
    glUniform2f(glGetUniformLocation(stars_glsl_program, "xy"), x, y);
@@ -426,7 +415,6 @@ int background_init (void)
    stars_glsl_program_vertex = glGetAttribLocation(stars_glsl_program, "vertex");
    stars_glsl_program_brightness = glGetAttribLocation(stars_glsl_program, "brightness");
    stars_glsl_program_projection = glGetUniformLocation(stars_glsl_program, "projection");
-   stars_glsl_program_shade_mode = glGetUniformLocation(stars_glsl_program, "shade_mode");
    stars_glsl_program_star_xy = glGetUniformLocation(stars_glsl_program, "star_xy");
    stars_glsl_program_star_wh = glGetUniformLocation(stars_glsl_program, "wh");
    stars_glsl_program_star_xy = glGetUniformLocation(stars_glsl_program, "xy");
@@ -554,19 +542,11 @@ void background_free (void)
       gl_vboDestroy( star_vertexVBO );
       star_vertexVBO = NULL;
    }
-   if (star_colourVBO != NULL) {
-      gl_vboDestroy( star_colourVBO );
-      star_colourVBO = NULL;
-   }
 
    /* Free the stars. */
    if (star_vertex != NULL) {
       free(star_vertex);
       star_vertex = NULL;
-   }
-   if (star_colour != NULL) {
-      free(star_colour);
-      star_colour = NULL;
    }
    nstars = 0;
    mstars = 0;
