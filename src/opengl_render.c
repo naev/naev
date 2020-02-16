@@ -66,6 +66,10 @@ static GLuint solid_glsl_program = 0;
 static GLuint solid_glsl_program_color = 0;
 static GLuint solid_glsl_program_projection = 0;
 GLuint solid_glsl_program_vertex = 0;
+static GLuint smooth_glsl_program = 0;
+static GLuint smooth_glsl_program_projection = 0;
+GLuint smooth_glsl_program_vertex = 0;
+GLuint smooth_glsl_program_vertex_color = 0;
 static GLuint circle_glsl_program = 0;
 static GLuint circle_glsl_program_vertex = 0;
 static GLuint circle_glsl_program_color = 0;
@@ -105,6 +109,20 @@ void gl_endSolidProgram() {
    gl_checkErr();
 }
 
+
+void gl_beginSmoothProgram(gl_Matrix4 projection) {
+   glUseProgram(smooth_glsl_program);
+   glEnableVertexAttribArray(smooth_glsl_program_vertex);
+   glEnableVertexAttribArray(smooth_glsl_program_vertex_color);
+   gl_Matrix4_Uniform(smooth_glsl_program_projection, projection);
+}
+
+void gl_endSmoothProgram() {
+   glDisableVertexAttribArray(smooth_glsl_program_vertex);
+   glDisableVertexAttribArray(smooth_glsl_program_vertex_color);
+   glUseProgram(0);
+   gl_checkErr();
+}
 
 
 /**
@@ -980,6 +998,11 @@ int gl_initRender (void)
    solid_glsl_program_projection = glGetUniformLocation(solid_glsl_program, "projection");
    solid_glsl_program_color = glGetUniformLocation(solid_glsl_program, "color");
    solid_glsl_program_vertex = glGetAttribLocation(solid_glsl_program, "vertex");
+
+   smooth_glsl_program = gl_program_vert_frag("smooth.vert", "smooth.frag");
+   smooth_glsl_program_projection = glGetUniformLocation(smooth_glsl_program, "projection");
+   smooth_glsl_program_vertex = glGetAttribLocation(smooth_glsl_program, "vertex");
+   smooth_glsl_program_vertex_color = glGetAttribLocation(smooth_glsl_program, "vertex_color");
 
    circle_glsl_program = gl_program_vert_frag("circle.vert", "circle.frag");
    circle_glsl_program_vertex = glGetAttribLocation(circle_glsl_program, "vertex");

@@ -879,7 +879,6 @@ void map_renderJumps( double x, double y, int editor)
    StarSystem *sys, *jsys;
 
    /* Generate smooth lines. */
-   glShadeModel( GL_SMOOTH );
    glDisable( GL_LINE_SMOOTH );
    glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
@@ -890,8 +889,9 @@ void map_renderJumps( double x, double y, int editor)
          continue; /* we don't draw hyperspace lines */
 
       /* first we draw all of the paths. */
-      gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+      gl_beginSmoothProgram(gl_view_matrix);
+      gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex_color,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j = 0; j < sys->njumps; j++) {
          jsys = sys->jumps[j].target;
@@ -938,11 +938,10 @@ void map_renderJumps( double x, double y, int editor)
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
       }
-      gl_vboDeactivate();
+      gl_endSmoothProgram();
    }
 
    /* Reset render parameters. */
-   glShadeModel( GL_FLAT );
    glDisable( GL_LINE_SMOOTH );
    glLineWidth( 1. );
 }
@@ -1022,7 +1021,6 @@ static void map_renderPath( double x, double y, double a )
       jcur = jmax; /* Jump range remaining. */
 
       /* Generate smooth lines. */
-      glShadeModel( GL_SMOOTH );
       glDisable( GL_LINE_SMOOTH );
       glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
@@ -1056,17 +1054,18 @@ static void map_renderPath( double x, double y, double a )
          vertex[16] = col->b;
          vertex[17] = a / 4. + .25;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
-         gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+
+         gl_beginSmoothProgram(gl_view_matrix);
+         gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex_color,
                sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
-         gl_vboDeactivate();
+         gl_endSmoothProgram();
 
          lsys = jsys;
       }
 
       /* Reset render parameters. */
-      glShadeModel( GL_FLAT );
       glDisable( GL_LINE_SMOOTH );
       glLineWidth( 1. );
    }

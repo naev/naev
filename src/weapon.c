@@ -270,16 +270,11 @@ void weapon_minimap( const double res, const double w,
       gl_vboSubData( weapon_vbo, offset * sizeof(GLfloat),
             sizeof(GLfloat) * 4*p, &weapon_vboData[offset] );
 
-      /* Activate VBO. */
-      gl_vboActivateOffset( weapon_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateOffset( weapon_vbo, GL_COLOR_ARRAY, offset * sizeof(GLfloat),
-            4, GL_FLOAT, 0 );
-
-      /* Render VBO. */
+      gl_beginSmoothProgram(gl_view_matrix);
+      gl_vboActivateAttribOffset( weapon_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( weapon_vbo, smooth_glsl_program_vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
-
-      /* Disable VBO. */
-      gl_vboDeactivate();
+      gl_endSmoothProgram();
    }
 }
 
