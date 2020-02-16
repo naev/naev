@@ -34,6 +34,9 @@ text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alon
 title[5] = _("Hail")
 text[5] = _([[The Pacifier commander answers you and stops his ship, waiting to be boarded.]])
 
+title[6] = _("Let's wait")
+text[6] = _([["Mm. It looks like the other ones have not arrived yet." Smith says. "Just wait close to the jump point, they should arrive soon."]])
+
 -- Mission details
 misn_title = _("A Journey To %s")
 misn_reward = _("%s credits")
@@ -117,9 +120,15 @@ function enter()
       pilot.toggleSpawn(false)
 
       --Waiting to spawn the FLF in order to let the player's shield decrease
+      hook.timer(2000,"wait_msg")
       hook.timer(10000,"flf_people")
 
    end
+end
+
+function wait_msg()
+   -- Prevents the player from being impatient
+   tk.msg(title[6], text[6])
 end
 
 function flf_people()
