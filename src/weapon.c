@@ -137,6 +137,8 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
+static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
+      Vector2d pos[2], const double dt );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
@@ -993,6 +995,24 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          }
       }
    }
+   else if (b) { /* Beam */
+      for (i=0; i<cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         for (j=0; j<ast->nb; j++) {
+            a = &ast->asteroids[j];
+            at = space_getType ( a->type );
+            if ( (a->appearing == ASTEROID_VISIBLE) &&
+                  CollideLineSprite( &w->solid->pos, w->solid->dir,
+                        w->outfit->u.bem.range,
+                        at->gfxs[a->gfxID], 0, 0, &a->pos,
+                        crash ) ) {
+               weapon_hitAstBeam( w, a, layer, crash, dt );
+               /* No return because beam can still think, it's not
+                * destroyed like the other weapons.*/
+            }
+         }
+      }
+   }
 
    /* smart weapons also get to think their next move */
    if (weapon_isSmart(w))
@@ -1212,10 +1232,49 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
-         w->exp_timer = -2;
+      w->exp_timer = -2;
 
       /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
       weapon_hitAI( p, parent, damage );
+   }
+}
+
+
+/**
+ * @brief Weapon hit an asteroid.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param a Asteroid that got hit.
+ *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
+ *    @param dt Current delta tick.
+ */
+static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
+      Vector2d pos[2], const double dt )
+{
+   int s, spfx;
+   Damage dmg;
+   const Damage *odmg;
+
+   /* Get general details. */
+   odmg              = outfit_damage( w->outfit );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable * dt;
+
+   asteroid_hit( a, &dmg );
+
+   /* Add sprite. */
+   if (w->exp_timer == -1.) {
+      spfx = outfit_spfxArmour(w->outfit);
+
+      /* Add graphic. */
+      spfx_add( spfx, pos[0].x, pos[0].y,
+            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+      spfx_add( spfx, pos[1].x, pos[1].y,
+            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+      w->exp_timer = -2;
    }
 }
 
