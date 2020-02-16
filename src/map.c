@@ -744,8 +744,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Selected system. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
-      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.5*r, bx, by, w, h, &col, 0 );
+      gl_drawCircle( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            1.5*r, &col, 0 );
    }
 
    /* Values from cRadar_tPlanet */
@@ -754,9 +754,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.b = cRadar_tPlanet.b;
 
    /* Current planet. */
-   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+   gl_drawCircle( x + cur_system->pos.x * map_zoom,
          y + cur_system->pos.y * map_zoom,
-         1.5*r, bx, by, w, h, &col, 0 );
+         1.5*r, &col, 0 );
 
    if (!gl_vendorIsIntel())
       glDisable(GL_LINE_SMOOTH);
@@ -975,7 +975,7 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       /* Draw an outer ring. */
-      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
+      gl_drawCircle( tx, ty, r, &cInert, 0 );
 
       /* If system is known fill it. */
       if ((editor || sys_isKnown(sys)) && (system_hasPlanet(sys))) {
@@ -987,7 +987,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 
          if (editor) {
             /* Radius slightly shorter. */
-            gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
+            gl_drawCircle( tx, ty, 0.5 * r, col, 1 );
          }
          else
             gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
