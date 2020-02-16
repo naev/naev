@@ -313,6 +313,7 @@ static void think_seeker( Weapon* w, const double dt )
    Pilot *p;
    Vector2d v;
    double t, turn_max;
+   double ewtrack;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -323,6 +324,8 @@ static void think_seeker( Weapon* w, const double dt )
       weapon_setTurn( w, 0. );
       return;
    }
+
+   ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
 
    /* Handle by status. */
    switch (w->status) {
@@ -353,7 +356,7 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         turn_max = w->outfit->u.amm.turn * (1. - p->ew_hide);
+         turn_max = w->outfit->u.amm.turn * (1. - ewtrack);
          weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.amm.turn ));
          break;
@@ -369,10 +372,10 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Limit speed here */
    w->real_vel = MIN( w->outfit->u.amm.speed, w->real_vel + w->outfit->u.amm.thrust*dt );
-   vect_pset( &w->solid->vel, (1. - p->ew_hide) * w->real_vel, w->solid->dir );
+   vect_pset( &w->solid->vel, (1. - ewtrack) * w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
-   //w->solid->speed_max = w->outfit->u.amm.speed * (1. - p->ew_hide);
+   //w->solid->speed_max = w->outfit->u.amm.speed * (1. - ewtrack);
 }
 
 
