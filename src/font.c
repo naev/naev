@@ -27,7 +27,9 @@
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
+#ifdef USE_FONTCONFIG
 #include <fontconfig/fontconfig.h>
+#endif
 
 #include "log.h"
 #include "array.h"
