@@ -302,6 +302,9 @@ void gl_checkHandleError( const char *func, int line )
  */
 static int gl_setupAttributes (void)
 {
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
    if (conf.fsaa > 1) {
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
@@ -447,7 +450,7 @@ static int gl_getGLInfo (void)
 
    /* Texture information */
    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
-   glGetIntegerv(GL_MAX_TEXTURE_UNITS, &gl_screen.multitex_max);
+   glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &gl_screen.multitex_max);
 
    /* Ugly, but Intel hardware seems to be uniquely problematic. */
    vendor = (char*)glGetString(GL_VENDOR);
@@ -489,11 +492,9 @@ static int gl_defState (void)
 {
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 /* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
-   glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
 
    /* Set the blending/shading model to use. */
-   glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
    return 0;
@@ -545,8 +546,6 @@ static int gl_hint (void)
    mod = GL_NICEST;
 
    /* Do some hinting. */
-   glHint(GL_PERSPECTIVE_CORRECTION_HINT, mod);
-   glHint(GL_GENERATE_MIPMAP_HINT, mod);
    glHint(GL_TEXTURE_COMPRESSION_HINT, mod);
 
    return 0;
@@ -561,6 +560,7 @@ int gl_init (void)
 {
    unsigned int flags;
    int dw, dh;
+   GLuint VaoId;
 
    /* Defaults. */
    /* desktop_w and desktop_h get set in naev.c when initializing. */
@@ -627,6 +627,10 @@ int gl_init (void)
 
    /* Get info about the OpenGL window */
    gl_getGLInfo();
+
+   /* Modern OpenGL requires at least one VAO */
+   glGenVertexArrays(1, &VaoId);
+   glBindVertexArray(VaoId);
 
    /* Cosmetic new line. */
    DEBUG("");

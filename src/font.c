@@ -228,7 +228,9 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
 
       /* Initialize size. */
       data = calloc( 2*stsh->tw*stsh->th, sizeof(GLubyte) );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, stsh->tw, stsh->th, 0,
+      /* FIXME: Using GL_ALPHA instead of GL_RGBA here worked on OpenGL 3.0,
+       * but not 3.2? */
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, stsh->tw, stsh->th, 0,
             GL_ALPHA, GL_UNSIGNED_BYTE, data );
       free(data);
 
