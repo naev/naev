@@ -15,6 +15,7 @@ pack
 pack.exe
 docs/doxygen/*
 docs/lua/*.luadoc
+docs/html
 config.h.in
 Makefile.in
 *Makefile

@@ -4,14 +4,12 @@ uniform mat4 projection;
 
 uniform vec2 star_xy;
 uniform vec2 wh;
-
-uniform int shade_mode;
 uniform vec2 xy;
 
 in vec4 vertex;
 in float brightness;
 
-out vec4 color;
+out float brightness_out;
 
 void main(void) {
    /* Calculate position */
@@ -23,11 +21,9 @@ void main(void) {
    gl_Position.xy = mod(gl_Position.xy + wh/2, wh) - wh/2;
 
    /* Generate lines. */
-   if (shade_mode != 0 && mod(gl_VertexID, 2) == 1) {
-      gl_Position.xy += xy * brightness;
-   }
+   gl_Position.xy += mod(gl_VertexID, 2) * xy * brightness;
 
    gl_Position = projection * gl_Position;
 
-   color = vec4(1, 1, 1, brightness);
+   brightness_out = brightness;
 }

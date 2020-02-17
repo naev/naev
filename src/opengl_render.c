@@ -42,7 +42,7 @@
 
 
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
-static gl_vbo *gl_squareVBO = 0;
+gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
@@ -66,6 +66,10 @@ static GLuint solid_glsl_program = 0;
 static GLuint solid_glsl_program_color = 0;
 static GLuint solid_glsl_program_projection = 0;
 GLuint solid_glsl_program_vertex = 0;
+static GLuint smooth_glsl_program = 0;
+static GLuint smooth_glsl_program_projection = 0;
+GLuint smooth_glsl_program_vertex = 0;
+GLuint smooth_glsl_program_vertex_color = 0;
 static GLuint circle_glsl_program = 0;
 static GLuint circle_glsl_program_vertex = 0;
 static GLuint circle_glsl_program_color = 0;
@@ -76,12 +80,6 @@ static GLuint circle_filled_glsl_program_vertex = 0;
 static GLuint circle_filled_glsl_program_color = 0;
 static GLuint circle_filled_glsl_program_projection = 0;
 static GLuint circle_filled_glsl_program_radius = 0;
-
-
-/*
- * Circle textures.
- */
-static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
 
 
 /*
@@ -105,6 +103,20 @@ void gl_endSolidProgram() {
    gl_checkErr();
 }
 
+
+void gl_beginSmoothProgram(gl_Matrix4 projection) {
+   glUseProgram(smooth_glsl_program);
+   glEnableVertexAttribArray(smooth_glsl_program_vertex);
+   glEnableVertexAttribArray(smooth_glsl_program_vertex_color);
+   gl_Matrix4_Uniform(smooth_glsl_program_projection, projection);
+}
+
+void gl_endSmoothProgram() {
+   glDisableVertexAttribArray(smooth_glsl_program_vertex);
+   glDisableVertexAttribArray(smooth_glsl_program_vertex_color);
+   glUseProgram(0);
+   gl_checkErr();
+}
 
 
 /**
@@ -730,187 +742,6 @@ void gl_unclipRect (void)
 
 
 /**
- * @brief Only displays the pixel if it's in the screen.
- */
-#define PIXEL(x,y)   \
-if ((x>rx) && (y>ry) && (x<rxw) && (y<ryh) && (i<OPENGL_RENDER_VBO_SIZE)) { \
-   vertex[2*i+0] = x; \
-   vertex[2*i+1] = y; \
-   i++; \
-}
-/**
- * @brief Draws a circle in a rectangle.
- *
- *    @param cx X position of the center in screen coordinates..
- *    @param cy Y position of the center in screen coordinates.
- *    @param r Radius of the circle.
- *    @param rx X position of the rectangle limiting the circle in screen coords.
- *    @param ry Y position of the rectangle limiting the circle in screen coords.
- *    @param rw Width of the limiting rectangle.
- *    @param rh Height of the limiting rectangle.
- *    @param c Colour to use.
- */
-void gl_drawCircleInRect( const double cx, const double cy, const double r,
-      const double rx, const double ry, const double rw, const double rh,
-      const glColour *c, int filled )
-{
-   int i, j;
-   double rxw,ryh, x,y,p, w,h, tx,ty, tw,th, r2;
-   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
-
-   rxw = rx+rw;
-   ryh = ry+rh;
-
-   /* is offscreen? */
-   if ((cx+r < rx) || (cy+r < ry) || (cx-r > rxw) || (cy-r > ryh))
-      return;
-   /* can be drawn normally? */
-   else if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
-      gl_drawCircle( cx, cy, r, c, filled );
-      return;
-   }
-
-   /* Case if filled. */
-   if (filled) {
-      r2 = 2.*r;
-      /* Clamp bottom left. */
-      x  = CLAMP( rx, rxw, cx-r );
-      y  = CLAMP( ry, ryh, cy-r );
-      /* Clamp width. */
-      w  = CLAMP( rx, rxw, cx+r ) - x;
-      h  = CLAMP( ry, ryh, cy+r ) - y;
-      /* Calculate texture bottom left. */
-      tx  = x - (cx-r);
-      tx *= gl_circle->srw / r2; /* Transform to unitary coordinates. */
-      ty  = y - (cy-r);
-      ty *= gl_circle->srh / r2;
-      /* Calculate dimensions of texture. */
-      tw  = w/r2 * gl_circle->srw;
-      th  = h/r2 * gl_circle->srh;
-      /* Render. */
-      gl_blitTexture( gl_circle, x, y, w, h, tx, ty, tw, th, c );
-      return;
-   }
-
-   /* Starting parameters. */
-   i = 0;
-   x = 0;
-   y = r;
-   p = (5. - (r*4.)) / 4.;
-
-   PIXEL( cx,   cy+y );
-   PIXEL( cx,   cy-y );
-   PIXEL( cx+y, cy   );
-   PIXEL( cx-y, cy   );
-
-   while (x<y) {
-      x++;
-      if (p < 0) p += 2*(double)(x)+1;
-      else p += 2*(double)(x-(--y))+1;
-
-      if (x==0) {
-         PIXEL( cx,   cy+y );
-         PIXEL( cx,   cy-y );
-         PIXEL( cx+y, cy   );
-         PIXEL( cx-y, cy   );
-      }
-      else
-         if (x==y) {
-            PIXEL( cx+x, cy+y );
-            PIXEL( cx-x, cy+y );
-            PIXEL( cx+x, cy-y );
-            PIXEL( cx-x, cy-y );
-         }
-         else
-            if (x<y) {
-               PIXEL( cx+x, cy+y );
-               PIXEL( cx-x, cy+y );
-               PIXEL( cx+x, cy-y );
-               PIXEL( cx-x, cy-y );
-               PIXEL( cx+y, cy+x );
-               PIXEL( cx-y, cy+x );
-               PIXEL( cx+y, cy-x );
-               PIXEL( cx-y, cy-x );
-            }
-   }
-   gl_vboSubData( gl_renderVBO, 0, i*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-
-   /* Set up the colour. */
-   for (j=0; j<i; j++) {
-      col[4*j+0] = c->r;
-      col[4*j+1] = c->g;
-      col[4*j+2] = c->b;
-      col[4*j+3] = c->a;
-   }
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, i*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw. */
-   glDrawArrays( GL_POINTS, 0, i );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-}
-#undef PIXEL
-
-
-
-/**
- * @brief Generates an filled circle texture.
- *
- *    @param radius Radius of the circle to generate.
- *    @return The tetxure containing the generated circle.
- */
-glTexture *gl_genCircle( int radius )
-{
-   int i, j, edge, blur;
-   SDL_Surface *sur;
-   uint8_t *pix;
-   int h, w;
-   double dist;
-   char name[PATH_MAX];
-
-   /* Calculate parameters. */
-   w = 2*radius+1;
-   h = 2*radius+1;
-
-   /* Create the surface. */
-   sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
-   pix = sur->pixels;
-
-   /* Generate the circle. */
-   SDL_LockSurface( sur );
-
-   edge = pow2(radius);
-   blur = pow2(radius - 1);
-
-   for (i=0; i<w; i++) {
-      for (j=0; j<h; j++) {
-         dist = pow2(i - radius) + pow2(j - radius);
-         if (dist > edge)
-            pix[i*sur->pitch + j*4 + 3] = 0;
-         else if (dist <= blur)
-            pix[i*sur->pitch + j*4 + 3] = 0xFF;
-         else
-            pix[i*sur->pitch + j*4 + 3] = CLAMP(0, 0xFF, (edge - dist) / (edge - blur) * 0xFF);
-
-         pix[i*sur->pitch + j*4 + 0] = 0xFF;
-         pix[i*sur->pitch + j*4 + 1] = 0xFF;
-         pix[i*sur->pitch + j*4 + 2] = 0xFF;
-      }
-   }
-
-   SDL_UnlockSurface( sur );
-
-   /* Return texture. */
-   nsnprintf( name, sizeof(name), "gencircle%d", radius );
-   return gl_loadImagePad( name, sur, OPENGL_TEX_MIPMAPS, sur->w, sur->h, 1, 1, 1 );
-}
-
-
-/**
  * @brief Initializes the OpenGL rendering routines.
  *
  *    @return 0 on success.
@@ -924,9 +755,6 @@ int gl_initRender (void)
          OPENGL_RENDER_VBO_SIZE*(2 + 2 + 4), NULL );
    gl_renderVBOtexOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*2;
    gl_renderVBOcolOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*(2+2);
-
-   /* Initialize the circles. */
-   gl_circle      = gl_genCircle( 128 );
 
    vertex[0] = 0;
    vertex[1] = 0;
@@ -981,6 +809,11 @@ int gl_initRender (void)
    solid_glsl_program_color = glGetUniformLocation(solid_glsl_program, "color");
    solid_glsl_program_vertex = glGetAttribLocation(solid_glsl_program, "vertex");
 
+   smooth_glsl_program = gl_program_vert_frag("smooth.vert", "smooth.frag");
+   smooth_glsl_program_projection = glGetUniformLocation(smooth_glsl_program, "projection");
+   smooth_glsl_program_vertex = glGetAttribLocation(smooth_glsl_program, "vertex");
+   smooth_glsl_program_vertex_color = glGetAttribLocation(smooth_glsl_program, "vertex_color");
+
    circle_glsl_program = gl_program_vert_frag("circle.vert", "circle.frag");
    circle_glsl_program_vertex = glGetAttribLocation(circle_glsl_program, "vertex");
    circle_glsl_program_projection = glGetUniformLocation(circle_glsl_program, "projection");
@@ -1011,8 +844,4 @@ void gl_exitRender (void)
    gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_crossVBO );
    gl_renderVBO = NULL;
-
-   /* Destroy the circles. */
-   gl_freeTexture(gl_circle);
-   gl_circle = NULL;
 }

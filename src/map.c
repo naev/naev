@@ -740,13 +740,12 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.b = cRed.b;
 
    glDisable(GL_LINE_SMOOTH);
-   glDisable(GL_POINT_SMOOTH);
 
    /* Selected system. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
-      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.5*r, bx, by, w, h, &col, 0 );
+      gl_drawCircle( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            1.5*r, &col, 0 );
    }
 
    /* Values from cRadar_tPlanet */
@@ -755,13 +754,12 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.b = cRadar_tPlanet.b;
 
    /* Current planet. */
-   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+   gl_drawCircle( x + cur_system->pos.x * map_zoom,
          y + cur_system->pos.y * map_zoom,
-         1.5*r, bx, by, w, h, &col, 0 );
+         1.5*r, &col, 0 );
 
    if (!gl_vendorIsIntel())
       glDisable(GL_LINE_SMOOTH);
-   glDisable(GL_POINT_SMOOTH);
 }
 
 
@@ -879,7 +877,6 @@ void map_renderJumps( double x, double y, int editor)
    StarSystem *sys, *jsys;
 
    /* Generate smooth lines. */
-   glShadeModel( GL_SMOOTH );
    glDisable( GL_LINE_SMOOTH );
    glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
@@ -890,8 +887,9 @@ void map_renderJumps( double x, double y, int editor)
          continue; /* we don't draw hyperspace lines */
 
       /* first we draw all of the paths. */
-      gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+      gl_beginSmoothProgram(gl_view_matrix);
+      gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex_color,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j = 0; j < sys->njumps; j++) {
          jsys = sys->jumps[j].target;
@@ -938,11 +936,10 @@ void map_renderJumps( double x, double y, int editor)
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
       }
-      gl_vboDeactivate();
+      gl_endSmoothProgram();
    }
 
    /* Reset render parameters. */
-   glShadeModel( GL_FLAT );
    glDisable( GL_LINE_SMOOTH );
    glLineWidth( 1. );
 }
@@ -961,7 +958,6 @@ void map_renderSystems( double bx, double by, double x, double y,
 
    /* Smoother circles. */
    glDisable(GL_LINE_SMOOTH);
-   glDisable(GL_POINT_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -979,7 +975,7 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       /* Draw an outer ring. */
-      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
+      gl_drawCircle( tx, ty, r, &cInert, 0 );
 
       /* If system is known fill it. */
       if ((editor || sys_isKnown(sys)) && (system_hasPlanet(sys))) {
@@ -991,7 +987,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 
          if (editor) {
             /* Radius slightly shorter. */
-            gl_drawCircleInRect( tx, ty, 0.5 * r, bx, by, w, h, col, 1 );
+            gl_drawCircle( tx, ty, 0.5 * r, col, 1 );
          }
          else
             gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
@@ -1001,7 +997,6 @@ void map_renderSystems( double bx, double by, double x, double y,
 
    if (!gl_vendorIsIntel())
       glDisable( GL_LINE_SMOOTH );
-   glDisable(GL_POINT_SMOOTH);
 }
 
 
@@ -1022,7 +1017,6 @@ static void map_renderPath( double x, double y, double a )
       jcur = jmax; /* Jump range remaining. */
 
       /* Generate smooth lines. */
-      glShadeModel( GL_SMOOTH );
       glDisable( GL_LINE_SMOOTH );
       glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
@@ -1056,17 +1050,18 @@ static void map_renderPath( double x, double y, double a )
          vertex[16] = col->b;
          vertex[17] = a / 4. + .25;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
-         gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+
+         gl_beginSmoothProgram(gl_view_matrix);
+         gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex_color,
                sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
-         gl_vboDeactivate();
+         gl_endSmoothProgram();
 
          lsys = jsys;
       }
 
       /* Reset render parameters. */
-      glShadeModel( GL_FLAT );
       glDisable( GL_LINE_SMOOTH );
       glLineWidth( 1. );
    }

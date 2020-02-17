@@ -380,21 +380,21 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
    /* Render the selected system selections. */
    for (i=0; i<mapedit_nsys; i++) {
       sys = mapedit_sys[i];
-      gl_drawCircleInRect( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
-            1.8*r, bx, by, w, h, &cRed, 0 );
-      gl_drawCircleInRect( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
-            2.0*r, bx, by, w, h, &cRed, 0 );
+      gl_drawCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
+            1.8*r, &cRed, 0 );
+      gl_drawCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
+            2.0*r, &cRed, 0 );
    }
    
    /* Render last clicked system */
    if (mapedit_iLastClickedSystem != 0) {
       sys = system_getIndex( mapedit_iLastClickedSystem );
-      gl_drawCircleInRect( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
-            2.4*r, bx, by, w, h, &cBlue, 0 );
-      gl_drawCircleInRect( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
-            2.6*r, bx, by, w, h, &cBlue, 0 );
-      gl_drawCircleInRect( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
-            2.8*r, bx, by, w, h, &cBlue, 0 );
+      gl_drawCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
+            2.4*r, &cBlue, 0 );
+      gl_drawCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
+            2.6*r, &cBlue, 0 );
+      gl_drawCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
+            2.8*r, &cBlue, 0 );
    }
 }
 

@@ -8,6 +8,7 @@
  * @brief Handles windows and widgets.
  */
 
+/* TODO: better rendering with static VBO and smooth corners */
 
 #include "toolkit.h"
 
@@ -986,9 +987,6 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    GLshort tri[5][4];
    glColour colours[10];
 
-   /* Set shade model. */
-   glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
-
    x -= b - thick;
    w += 2 * (b - thick);
    y -= b - thick;
@@ -1039,16 +1037,12 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, 0, sizeof(tri), tri );
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
-   /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+   gl_beginSmoothProgram(gl_view_matrix);
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw the VBO. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
-
-   /* Deactivate VBO. */
-   gl_vboDeactivate();
+   gl_endSmoothProgram();
 }
 
 
@@ -1070,9 +1064,6 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 {
    GLshort lines[4][2];
    glColour colours[4];
-
-   /* Set shade model. */
-   glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
 
    x -= b, w += 2 * b;
    y -= b, h += 2 * b;
@@ -1099,16 +1090,12 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, 0, sizeof(lines), lines );
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
-   /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+   gl_beginSmoothProgram(gl_view_matrix);
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw the VBO. */
    glDrawArrays( GL_LINE_LOOP, 0, 4 );
-
-   /* Deactivate VBO. */
-   gl_vboDeactivate();
+   gl_endSmoothProgram();
 }
 /**
  * @brief Draws a rectangle.
@@ -1127,9 +1114,6 @@ void toolkit_drawRect( int x, int y, int w, int h,
 {
    GLshort vertex[4][2];
    glColour colours[4];
-
-   /* Set shade model. */
-   glShadeModel( (lc) ? GL_SMOOTH : GL_FLAT );
 
    lc = lc == NULL ? c : lc;
 
@@ -1154,17 +1138,12 @@ void toolkit_drawRect( int x, int y, int w, int h,
    gl_vboSubData( toolkit_vbo, 0, sizeof(vertex), vertex );
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
-   /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY,
-         0, 2, GL_SHORT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+   gl_beginSmoothProgram(gl_view_matrix);
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw the VBO. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Deactivate VBO. */
-   gl_vboDeactivate();
+   gl_endSmoothProgram();
 }
 /**
  * @brief Draws an alt text.
@@ -1273,11 +1252,13 @@ static void window_renderBorder( Window* w )
    toolkit_drawRect( x+21, y,          w->w-42., 0.6*w->h, dc, c );
    toolkit_drawRect( x+21, y+0.6*w->h, w->w-42., 0.4*w->h, c, NULL );
 
-   glShadeModel(GL_SMOOTH);
+   /* Load GLSL program */
+   gl_beginSmoothProgram(gl_view_matrix);
+
    /* Both sides. */
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    /* Colour is shared. */
    colours[0] = c->r;
    colours[1] = c->g;
@@ -1479,7 +1460,6 @@ static void window_renderBorder( Window* w )
    /*
     * outer outline
     */
-   glShadeModel(GL_FLAT);
    /* Colour. */
    for (i=0; i<31; i++) {
       colours[4*i + 0] = oc->r;
@@ -1566,7 +1546,7 @@ static void window_renderBorder( Window* w )
    glDrawArrays( GL_LINE_LOOP, 0, 31 );
 
    /* Clean up. */
-   gl_vboDeactivate();
+   gl_endSmoothProgram();
 
    /*
     * render window name

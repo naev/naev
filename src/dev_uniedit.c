@@ -419,8 +419,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Render the selected system selections. */
    for (i=0; i<uniedit_nsys; i++) {
       sys = uniedit_sys[i];
-      gl_drawCircleInRect( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
-            1.5*r, bx, by, w, h, &cWhite, 0 );
+      gl_drawCircle( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
+            1.5*r, &cWhite, 0 );
    }
 }
 
