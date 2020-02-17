@@ -389,12 +389,14 @@ static void think_beam( Weapon* w, const double dt )
 {
    (void)dt;
    Pilot *p, *t;
+   AsteroidAnchor *field;
+   Asteroid *ast;
    double diff;
    Vector2d v;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
-   if (p==NULL) {
+   if (p == NULL) {
       w->timer = -1.; /* Hack to make it get destroyed next update. */
       return;
    }
@@ -419,18 +421,25 @@ static void think_beam( Weapon* w, const double dt )
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
-         /* Get target, if target is dead beam stops moving. */
-         t = pilot_get(w->target);
-         if (t==NULL) {
-            weapon_setTurn( w, 0. );
-            return;
-         }
+         /* Get target, if target is dead beam stops moving. Targeting
+          * self is invalid so in that case we ignore the target.
+          */
+         t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
+         if (t == NULL) {
+            if (p->nav_asteroid >= 0) {
+               field = &cur_system->asteroids[p->nav_anchor];
+               ast = &field->asteroids[p->nav_asteroid];
 
-         if (w->target == w->parent) /* Invalid target, tries to follow shooter. */
-            diff = angle_diff(w->solid->dir, p->solid->dir);
+               diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                     vect_angle(&w->solid->pos, &ast->pos));
+            }
+            else
+               diff = angle_diff(w->solid->dir, p->solid->dir);
+         }
          else
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
                   vect_angle(&w->solid->pos, &t->solid->pos));
+
          weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
                   10 * diff *  w->outfit->u.bem.turn ));
          break;
@@ -1525,6 +1534,9 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 {
    double mass, rdir;
    Pilot *pilot_target;
+   AsteroidAnchor *field;
+   Asteroid *ast;
+   
    Weapon* w;
 
    /* Create basic features */
@@ -1552,13 +1564,18 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Beam weapons are treated together. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
-         if ((outfit->type == OUTFIT_TYPE_TURRET_BEAM) && (w->parent!=w->target)) {
+         rdir = dir;
+         if (outfit->type == OUTFIT_TYPE_TURRET_BEAM) {
             pilot_target = pilot_get(target);
-            rdir = (pilot_target == NULL) ? dir :
-                  vect_angle(pos, &pilot_target->solid->pos);
+            if ((w->parent != w->target) && (pilot_target != NULL))
+               rdir = vect_angle(pos, &pilot_target->solid->pos);
+            else if (parent->nav_asteroid >= 0) {
+               field = &cur_system->asteroids[parent->nav_anchor];
+               ast = &field->asteroids[parent->nav_asteroid];
+               rdir = vect_angle(pos, &ast->pos);
+            }
          }
-         else
-            rdir = dir;
+
          if (rdir < 0.)
             rdir += 2.*M_PI;
          else if (rdir >= 2.*M_PI)
