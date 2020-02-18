@@ -16,7 +16,7 @@
   <thrust>0</thrust>
   <turn>50</turn>
   <speed>500</speed>
-  <resist>15</resist>
+  <resist>20</resist>
   <damage>
    <type>emp</type>
    <penetrate>15</penetrate>

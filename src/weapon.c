@@ -325,7 +325,7 @@ static void think_seeker( Weapon* w, const double dt )
       return;
    }
 
-   ewtrack = MAX( w->outfit->u.amm.resist, pilot_ewWeaponTrack( pilot_get(w->parent), p, 1. ) );
+   ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
 
    /* Handle by status. */
    switch (w->status) {
@@ -372,7 +372,7 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Limit speed here */
    w->real_vel = MIN( w->outfit->u.amm.speed, w->real_vel + w->outfit->u.amm.thrust*dt );
-   vect_pset( &w->solid->vel, ewtrack * w->real_vel, w->solid->dir );
+   vect_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
    //w->solid->speed_max = w->outfit->u.amm.speed * ewtrack;

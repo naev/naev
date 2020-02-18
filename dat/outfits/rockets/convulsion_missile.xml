@@ -16,7 +16,7 @@
   <thrust>0</thrust>
   <turn>55</turn>
   <speed>850</speed>
-  <resist>10</resist>
+  <resist>50</resist>
   <damage>
    <type>shieldbreaker</type>
    <penetrate>5</penetrate>

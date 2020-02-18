@@ -1457,8 +1457,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post-processing */
-   temp->u.amm.resist /= 100.; /* Set it in per one */
-   temp->u.amm.turn   *= M_PI/180.; /* Convert to rad/s. */
+   temp->u.amm.turn *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2368,12 +2367,12 @@ static void outfit_launcherDesc( Outfit* o )
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
-         "%.0f%% Jam resistance\n"),
+         "%.0f%% Jam Resistance\n"),
          1. / o->u.lau.delay,
          o->u.lau.delay * a->u.amm.energy, a->u.amm.energy,
          outfit_range(a), a->u.amm.duration,
          a->u.amm.speed,
-         a->u.amm.resist );
+         (a->u.amm.resist <= 0 ? 0. : (1. - 1. / a->u.amm.resist) * 100.) );
 }
 
 
