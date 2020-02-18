@@ -2973,11 +2973,16 @@ void pilots_free (void)
 void pilots_clean (int persist)
 {
    int i, persist_count=0;
+   Pilot *p;
    for (i=0; i < pilot_nstack; i++) {
       /* move player and persisted pilots to start */
       if (pilot_stack[i] == player.p ||
           (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
+         /* Have to swap the pilots so it gets properly freed. */
+         p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
+         pilot_stack[i] = p;
+         /* Misc clean up. */
          pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
          pilot_clearTimers( pilot_stack[persist_count] ); /* Reset timers. */
          persist_count++;
