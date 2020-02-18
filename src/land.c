@@ -1359,7 +1359,7 @@ void takeoff( int delay )
 
    /* Reset speed */
    player_autonavResetSpeed();
-   }
+}
 
 
 /**
