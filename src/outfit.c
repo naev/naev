@@ -2367,12 +2367,12 @@ static void outfit_launcherDesc( Outfit* o )
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
-         "%.0f%% Jam Resistance\n"),
+         "%.1f%% Jam Resistance\n"),
          1. / o->u.lau.delay,
          o->u.lau.delay * a->u.amm.energy, a->u.amm.energy,
          outfit_range(a), a->u.amm.duration,
          a->u.amm.speed,
-         (a->u.amm.resist <= 0 ? 0. : (1. - 1. / a->u.amm.resist) * 100.) );
+         (a->u.amm.resist <= 0 ? 0. : (1. - 0.5 / a->u.amm.resist) * 100.) );
 }
 
 
