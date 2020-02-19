@@ -13,7 +13,7 @@
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
 typedef struct MapDecorator_ {
-	glTexture* picture;
+	glTexture* image;
 	double x,y;
 	int detection_radius;
 	int auto_fade;

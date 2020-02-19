@@ -131,7 +131,7 @@ void map_exit (void)
 
    if (decorator_stack != NULL) {
       for (i=0; i<decorator_nstack; i++)
-         gl_freeTexture( decorator_stack[i].picture );
+         gl_freeTexture( decorator_stack[i].image );
       free( decorator_stack );
       decorator_stack = NULL;
       decorator_nstack = 0;
@@ -811,7 +811,7 @@ void map_renderDecorators( double x, double y, int editor)
       decorator = &decorator_stack[i];
 
       //only if pict couldn't be loaded
-      if (decorator->picture == NULL)
+      if (decorator->image == NULL)
          continue;
 
       visible=0;
@@ -835,11 +835,11 @@ void map_renderDecorators( double x, double y, int editor)
          tx = x + decorator->x*map_zoom;
          ty = y + decorator->y*map_zoom;
 
-         sw = decorator->picture->sw*map_zoom;
-         sh = decorator->picture->sh*map_zoom;
+         sw = decorator->image->sw*map_zoom;
+         sh = decorator->image->sh*map_zoom;
 
          gl_blitScale(
-               decorator->picture,
+               decorator->image,
                tx - sw/2, ty - sh/2, sw, sh, &cWhite );
       }
    }
@@ -2060,11 +2060,11 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
       xmlr_float(node, "y", temp->y);
       xmlr_int(node, "auto_fade", temp->auto_fade);
       xmlr_int(node, "detection_radius", temp->detection_radius);
-      if (xml_isNode(node,"pict")) {
-         temp->picture = xml_parseTexture( node,
+      if (xml_isNode(node,"image")) {
+         temp->image = xml_parseTexture( node,
                MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
 
-         if (temp->picture == NULL) {
+         if (temp->image == NULL) {
             WARN("Could not load map decorator texture '%s'.", xml_get(node));
          }
 
