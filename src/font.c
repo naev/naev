@@ -227,12 +227,8 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
       /* Initialize size. */
-      data = calloc( 2*stsh->tw*stsh->th, sizeof(GLubyte) );
-      /* FIXME: Using GL_ALPHA instead of GL_RGBA here worked on OpenGL 3.0,
-       * but not 3.2? */
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, stsh->tw, stsh->th, 0,
-            GL_ALPHA, GL_UNSIGNED_BYTE, data );
-      free(data);
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, stsh->tw, stsh->th, 0,
+            GL_RED, GL_UNSIGNED_BYTE, NULL );
 
       /* Check for errors. */
       gl_checkErr();
@@ -245,7 +241,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    glBindTexture( GL_TEXTURE_2D, tex->id );
    glPixelStorei(GL_UNPACK_ALIGNMENT,1);
    glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
-         GL_ALPHA, GL_UNSIGNED_BYTE, ch->data );
+         GL_RED, GL_UNSIGNED_BYTE, ch->data );
 
    /* Check for error. */
    gl_checkErr();
