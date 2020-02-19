@@ -61,6 +61,12 @@ miss[1]= _("Cargo Missing")
 miss[2] = _("You are missing the %d tons of %s!.")
 miss[3] = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
+-- Use hidden jumps
+cargo_use_hidden = true
+
+-- Always available
+cargo_always_available = true
+
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
 --   and pays a lot more then the rush missions
@@ -75,7 +81,7 @@ function create()
    local routepos = origin_p:pos()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, _, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end

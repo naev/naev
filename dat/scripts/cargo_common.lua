@@ -1,6 +1,12 @@
 include "dat/scripts/jumpdist.lua"
 include "dat/scripts/nextjump.lua"
 
+-- Don't use hidden jumps by default; set this to true to use hidden jumps.
+cargo_use_hidden = false
+
+-- By default, only generate if commodities available. Set to true to always generate.
+cargo_always_available = false
+
 -- Find an inhabited planet 0-3 jumps away.
 function cargo_selectMissionDistance ()
    local seed = rnd.rnd()
@@ -34,7 +40,8 @@ function cargo_selectPlanets(missdist, routepos)
             end
          end
          return true
-      end)
+      end,
+      nil, cargo_use_hidden)
 
    return planets   
 end
@@ -45,7 +52,7 @@ end
 function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
    local traveldist = 0
 
-   jumps = routesys:jumpPath( destsys )
+   jumps = routesys:jumpPath( destsys, cargo_use_hidden )
    if jumps then
       for k, v in ipairs(jumps) do
          -- We're not in the destination system yet.
@@ -87,7 +94,7 @@ function cargo_calculateRoute ()
    -- Assume shortest route with no interruptions.
    -- This is used to calculate the reward.
 
-   local numjumps   = origin_s:jumpDist(destsys)
+   local numjumps   = origin_s:jumpDist(destsys, cargo_use_hidden)
    local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
    
    
@@ -107,12 +114,18 @@ function cargo_calculateRoute ()
    local avgrisk = risk/(numjumps + 1)
    
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
-   -- TODO: I'm using the standard cargo types for now, but this should be changed to custom cargo once local-defined commodities are implemented.
+   local cargo
    local cargoes = difference(planet.cur():commoditiesSold(),destplanet:commoditiesSold())
    if #cargoes == 0 then
-      return
+      if cargo_always_available then
+         cargo = nil
+      else
+         return
+      end
+   else
+      cargo = cargoes[rnd.rnd(1,#cargoes)]:name()
    end
-   local cargo = cargoes[rnd.rnd(1,#cargoes)]:name()
+   
 
    -- Return lots of stuff
    return destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier
