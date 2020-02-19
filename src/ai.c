@@ -1377,8 +1377,6 @@ static int aiL_getflybydistance( lua_State *L )
    Pilot *p;
    int offset_distance;
 
-   v = NULL;
-
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
@@ -1389,10 +1387,8 @@ static int aiL_getflybydistance( lua_State *L )
 
       /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
    }
-   else {
+   else
       NLUA_INVALID_PARAMETER(L);
-      return 0;
-   }
 
    vect_cset(&offset_vect, VX(*v) - VX(cur_pilot->solid->pos), VY(*v) - VY(cur_pilot->solid->pos) );
    vect_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid->vel)+M_PI_2);
