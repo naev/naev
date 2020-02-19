@@ -3026,7 +3026,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    /* Allocate more space. */
    sys->astexclude = realloc( sys->astexclude, (sys->nastexclude+1)*sizeof(AsteroidExclusion) );
    a = &sys->astexclude[ sys->nastexclude ];
-   memset( a, 0, sizeof(a) );
+   memset( a, 0, sizeof(*a) );
 
    /* Initialize stuff. */
    a->radius   = 0.;
