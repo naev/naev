@@ -137,7 +137,11 @@ function abort ()
    for i, j in ipairs( factions ) do
       if orig_standing[j] ~= nil then
          if misnvars[j] ~= nil then
-            var.push( misnvars[j], orig_cap[j] + var.peek( misnvars[j] ) - temp_cap )
+            if orig_cap[j] ~= nil then
+               var.push( misnvars[j], orig_cap[j] + var.peek( misnvars[j] ) - temp_cap )
+            else
+               var.pop( misnvars[j] )
+            end
          end
          faction.get(j):setPlayerStanding( orig_standing[j] )
       end
