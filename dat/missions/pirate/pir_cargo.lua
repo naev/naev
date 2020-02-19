@@ -82,7 +82,7 @@ function create()
 
    -- target destination
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   if destplanet == nil then
+   if destplanet == nil or destplanet:faction() == faction.get("Pirate") then
       misn.finish(false)
    end
 
