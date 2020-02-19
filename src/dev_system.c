@@ -81,6 +81,7 @@ int dsys_saveSystem( StarSystem *sys )
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
    const AsteroidAnchor *ast;
+   const AsteroidExclusion *aexcl;
    char file[PATH_MAX], *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
@@ -166,7 +167,7 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_jumps);
 
    /* Asteroids. */
-   if (sys->nasteroids > 0) {
+   if (sys->nasteroids > 0 || sys->nastexclude > 0) {
       xmlw_startElem( writer, "asteroids" );
       for (i=0; i<sys->nasteroids; i++) {
          ast = &sys->asteroids[i];
@@ -180,17 +181,31 @@ int dsys_saveSystem( StarSystem *sys )
             }
          }
 
-         /* Corners */
-         for (j=0; j<ast->ncorners; j++) {
-            xmlw_startElem( writer, "corner" );
-            xmlw_elem( writer, "x", "%f", ast->corners[j].x );
-            xmlw_elem( writer, "y", "%f", ast->corners[j].y );
-            xmlw_endElem( writer ); /* "corner" */
-         }
+         /* Radius */
+         xmlw_elem( writer, "radius", "%f", ast->radius );
+
+         /* Position */
+         xmlw_startElem( writer, "pos" );
+         xmlw_attr( writer, "x", "%f", ast->pos.x );
+         xmlw_attr( writer, "y", "%f", ast->pos.y );
+         xmlw_endElem( writer ); /* "pos" */
 
          /* Misc. properties. */
          xmlw_elem( writer, "density", "%f", ast->density );
          xmlw_endElem( writer ); /* "asteroid" */
+      }
+      for (i=0; i<sys->nastexclude; i++) {
+         aexcl = &sys->astexclude[i];
+         xmlw_startElem( writer, "exclusion" );
+
+         /* Radius */
+         xmlw_elem( writer, "radius", "%f", aexcl->radius );
+
+         /* Position */
+         xmlw_startElem( writer, "pos" );
+         xmlw_attr( writer, "x", "%f", aexcl->pos.x );
+         xmlw_attr( writer, "y", "%f", aexcl->pos.y );
+         xmlw_endElem( writer ); /* "pos" */
       }
       xmlw_endElem( writer ); /* "asteroids" */
    }

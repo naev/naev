@@ -51,6 +51,9 @@
 #define ECON_PROD_MODIFIER 500000. /**< Production modifier, divide production by this amount. */
 #define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
 
+/* Gatherables */
+#define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */
+
 
 /* commodity stack */
 static Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -463,8 +466,7 @@ void gatherable_gather( int pilot )
    for (i=0; i < gatherable_nstack; i++) {
       gat = &gatherable_stack[i];
 
-      if (0.03*vect_dist( &p->solid->pos, &gat->pos ) +
-          0.03*vect_dist( &p->solid->vel, &gat->vel )  < 1. ) {
+      if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */
          q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
 

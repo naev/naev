@@ -12,6 +12,7 @@
  </pos>
  <assets>
   <asset>Virtual Pirate Small</asset>
+  <asset>Virtual Miner Small</asset>
  </assets>
  <jumps>
   <jump target="Straight Row">
@@ -24,4 +25,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <pos x="1000" y="3000"/>
+   <radius>2000</radius>
+   <density>1.0</density>
+  </asteroid>
+ </asteroids>
 </ssys>

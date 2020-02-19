@@ -142,6 +142,8 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
+static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
+      Vector2d pos[2], const double dt );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
@@ -398,12 +400,14 @@ static void think_beam( Weapon* w, const double dt )
 {
    (void)dt;
    Pilot *p, *t;
+   AsteroidAnchor *field;
+   Asteroid *ast;
    double diff;
    Vector2d v;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
-   if (p==NULL) {
+   if (p == NULL) {
       w->timer = -1.; /* Hack to make it get destroyed next update. */
       return;
    }
@@ -428,18 +432,25 @@ static void think_beam( Weapon* w, const double dt )
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
-         /* Get target, if target is dead beam stops moving. */
-         t = pilot_get(w->target);
-         if (t==NULL) {
-            weapon_setTurn( w, 0. );
-            return;
-         }
+         /* Get target, if target is dead beam stops moving. Targeting
+          * self is invalid so in that case we ignore the target.
+          */
+         t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
+         if (t == NULL) {
+            if (p->nav_asteroid >= 0) {
+               field = &cur_system->asteroids[p->nav_anchor];
+               ast = &field->asteroids[p->nav_asteroid];
 
-         if (w->target == w->parent) /* Invalid target, tries to follow shooter. */
-            diff = angle_diff(w->solid->dir, p->solid->dir);
+               diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                     vect_angle(&w->solid->pos, &ast->pos));
+            }
+            else
+               diff = angle_diff(w->solid->dir, p->solid->dir);
+         }
          else
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
                   vect_angle(&w->solid->pos, &t->solid->pos));
+
          weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
                   10 * diff *  w->outfit->u.bem.turn ));
          break;
@@ -919,39 +930,53 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
-   /* Asterokiller weapons collide with asteroids*/
+   /* Collide with asteroids*/
    if (outfit_isAmmo(w->outfit)) {
-      if ( w->outfit->u.amm.dmg.asterokill ) {
-         for (i=0; i<cur_system->nasteroids; i++) {
-            ast = &cur_system->asteroids[i];
-            for (j=0; j<ast->nb; j++) {
-               a = &ast->asteroids[j];
-               at = space_getType ( a->type );
-               if (a->appearing==0 &&
-                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     at->gfxs[a->gfxID], 0, 0, &a->pos,
-                     &crash[0] ) ) {
-                     weapon_hitAst( w, a, layer, &crash[0] );
-                     return; /* Weapon is destroyed. */
-               }
+      for (i=0; i<cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         for (j=0; j<ast->nb; j++) {
+            a = &ast->asteroids[j];
+            at = space_getType ( a->type );
+            if ( (a->appearing == ASTEROID_VISIBLE) &&
+                  CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                        at->gfxs[a->gfxID], 0, 0, &a->pos,
+                        &crash[0] ) ) {
+               weapon_hitAst( w, a, layer, &crash[0] );
+               return; /* Weapon is destroyed. */
             }
          }
       }
    }
    else if (outfit_isBolt(w->outfit)) {
-      if ( w->outfit->u.blt.dmg.asterokill ) {
-         for (i=0; i<cur_system->nasteroids; i++) {
-            ast = &cur_system->asteroids[i];
-            for (j=0; j<ast->nb; j++) {
-               a = &ast->asteroids[j];
-               at = space_getType ( a->type );
-               if (a->appearing==0 &&
-                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     at->gfxs[a->gfxID], 0, 0, &a->pos,
-                     &crash[0] ) ) {
-                     weapon_hitAst( w, a, layer, &crash[0] );
-                     return; /* Weapon is destroyed. */
-               }
+      for (i=0; i<cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         for (j=0; j<ast->nb; j++) {
+            a = &ast->asteroids[j];
+            at = space_getType ( a->type );
+            if ( (a->appearing == ASTEROID_VISIBLE) &&
+                  CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                        at->gfxs[a->gfxID], 0, 0, &a->pos,
+                        &crash[0] ) ) {
+               weapon_hitAst( w, a, layer, &crash[0] );
+               return; /* Weapon is destroyed. */
+            }
+         }
+      }
+   }
+   else if (b) { /* Beam */
+      for (i=0; i<cur_system->nasteroids; i++) {
+         ast = &cur_system->asteroids[i];
+         for (j=0; j<ast->nb; j++) {
+            a = &ast->asteroids[j];
+            at = space_getType ( a->type );
+            if ( (a->appearing == ASTEROID_VISIBLE) &&
+                  CollideLineSprite( &w->solid->pos, w->solid->dir,
+                        w->outfit->u.bem.range,
+                        at->gfxs[a->gfxID], 0, 0, &a->pos,
+                        crash ) ) {
+               weapon_hitAstBeam( w, a, layer, crash, dt );
+               /* No return because beam can still think, it's not
+                * destroyed like the other weapons.*/
             }
          }
       }
@@ -1100,6 +1125,15 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos )
 {
    int s, spfx;
+   Damage dmg;
+   const Damage *odmg;
+
+   /* Get general details. */
+   odmg              = outfit_damage( w->outfit );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable;
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1115,7 +1149,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    weapon_destroy(w,layer);
-   asteroid_hit( a );
+   asteroid_hit( a, &dmg );
 }
 
 
@@ -1166,10 +1200,49 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
-         w->exp_timer = -2;
+      w->exp_timer = -2;
 
       /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
       weapon_hitAI( p, parent, damage );
+   }
+}
+
+
+/**
+ * @brief Weapon hit an asteroid.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param a Asteroid that got hit.
+ *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
+ *    @param dt Current delta tick.
+ */
+static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
+      Vector2d pos[2], const double dt )
+{
+   int s, spfx;
+   Damage dmg;
+   const Damage *odmg;
+
+   /* Get general details. */
+   odmg              = outfit_damage( w->outfit );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable * dt;
+
+   asteroid_hit( a, &dmg );
+
+   /* Add sprite. */
+   if (w->exp_timer == -1.) {
+      spfx = outfit_spfxArmour(w->outfit);
+
+      /* Add graphic. */
+      spfx_add( spfx, pos[0].x, pos[0].y,
+            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+      spfx_add( spfx, pos[1].x, pos[1].y,
+            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+      w->exp_timer = -2;
    }
 }
 
@@ -1189,32 +1262,46 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
       double swivel, double time )
 {
+   AsteroidAnchor *field;
+   Asteroid *ast;
+   Vector2d target_pos;
+   Vector2d target_vel;
    Vector2d relative_location;
    double rdir, lead_angle;
    double x, y, t;
    double off;
 
-   if (pilot_target == NULL)
-      rdir        = dir;
+   if (pilot_target != NULL) {
+      target_pos = pilot_target->solid->pos;
+      target_vel = pilot_target->solid->vel;
+   }
    else {
-      /* Get the vector : shooter -> target*/
-      vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
-            VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
+      if (parent->nav_asteroid < 0)
+         return dir;
 
-         /* Try to predict where the enemy will be. */
-      t = time;
-      if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
-         t = 0.;
+      field = &cur_system->asteroids[parent->nav_anchor];
+      ast = &field->asteroids[parent->nav_asteroid];
+      target_pos = ast->pos;
+      target_vel = ast->vel;
+   }
 
-      /* Position is calculated on where it should be */
-      x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-         - (pos->x + vel->x*t);
-      y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-         - (pos->y + vel->y*t);
+   /* Get the vector : shooter -> target*/
+   vect_cset( &relative_location, VX(target_pos) - VX(parent->solid->pos),
+         VY(target_pos) - VY(parent->solid->pos) );
 
-      /* Set angle to face. */
-      rdir = ANGLE(x, y);
+   /* Try to predict where the enemy will be. */
+   t = time;
+   if (t == INFINITY)  /*Postprocess (t = INFINITY means target is not hittable)*/
+      t = 0.;
 
+   /* Position is calculated on where it should be */
+   x = (target_pos.x + target_vel.x*t) - (pos->x + vel->x*t);
+   y = (target_pos.y + target_vel.y*t) - (pos->y + vel->y*t);
+
+   /* Set angle to face. */
+   rdir = ANGLE(x, y);
+
+   if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
       lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
 
@@ -1226,15 +1313,15 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          else
             rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
       }
+   }
 
-      /* Calculate bounds. */
-      off = angle_diff( rdir, dir );
-      if (fabs(off) > swivel) {
-         if (off > 0.)
-            rdir = dir - swivel;
-         else
-            rdir = dir + swivel;
-      }
+   /* Calculate bounds. */
+   off = angle_diff( rdir, dir );
+   if (fabs(off) > swivel) {
+      if (off > 0.)
+         rdir = dir - swivel;
+      else
+         rdir = dir + swivel;
    }
 
    return rdir;
@@ -1264,12 +1351,12 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    glTexture *gfx;
 
    /* Only difference is the direction of fire */
-   if ((w->parent!=w->target) && (w->target != 0)) { /* Must have valid target */
+   if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
-   }
-   else /* fire straight */
-      rdir = dir;
+   else /* fire straight or at asteroid */
+      pilot_target = NULL;
+
+   rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
 
    /* Calculate accuracy. */
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
@@ -1406,6 +1493,9 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 {
    double mass, rdir;
    Pilot *pilot_target;
+   AsteroidAnchor *field;
+   Asteroid *ast;
+   
    Weapon* w;
 
    /* Create basic features */
@@ -1433,13 +1523,18 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Beam weapons are treated together. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
-         if ((outfit->type == OUTFIT_TYPE_TURRET_BEAM) && (w->parent!=w->target)) {
+         rdir = dir;
+         if (outfit->type == OUTFIT_TYPE_TURRET_BEAM) {
             pilot_target = pilot_get(target);
-            rdir = (pilot_target == NULL) ? dir :
-                  vect_angle(pos, &pilot_target->solid->pos);
+            if ((w->parent != w->target) && (pilot_target != NULL))
+               rdir = vect_angle(pos, &pilot_target->solid->pos);
+            else if (parent->nav_asteroid >= 0) {
+               field = &cur_system->asteroids[parent->nav_anchor];
+               ast = &field->asteroids[parent->nav_asteroid];
+               rdir = vect_angle(pos, &ast->pos);
+            }
          }
-         else
-            rdir = dir;
+
          if (rdir < 0.)
             rdir += 2.*M_PI;
          else if (rdir >= 2.*M_PI)

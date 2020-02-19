@@ -4,8 +4,15 @@ include("dat/factions/spawn/common.lua")
 -- @brief Spawns a small group of miners
 function spawn_patrol ()
     local pilots = {}
+    local r = rnd.rnd()
 
-    scom.addPilot( pilots, "Miner Llama", 20 );
+    if r < 0.5 then
+        scom.addPilot( pilots, "Miner Llama", 20 )
+    elseif r < 0.8 then
+        scom.addPilot( pilots, "Miner Koala", 40 )
+    else
+        scom.addPilot( pilots, "Miner Mule", 45 )
+    end
 
     return pilots
 end
@@ -38,7 +45,7 @@ function spawn ( presence, max )
     end
   
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Trader" )
+    pilots = scom.spawn( spawn_data, "Miner" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

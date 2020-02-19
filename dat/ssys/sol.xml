@@ -25,4 +25,13 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>golden</type>
+   <pos x="0" y="0"/>
+   <radius>20000</radius>
+   <density>0.05</density>
+  </asteroid>
+ </asteroids>
 </ssys>

@@ -112,7 +112,6 @@ typedef struct Damage_ {
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
    double damage;       /**< Amount of damage, this counts towards killing the ship. */
    double disable;      /**< Amount of disable damage, this counts towards disabling the ship. */
-   int asterokill;      /**< Whether it is possible to destroy asteroids. */
 } Damage;
 
 

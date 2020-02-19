@@ -70,6 +70,20 @@
    <pilot name="Miner Llama" ship="Llama"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Miner Koala">
+  <ai>miner</ai>
+  <faction>Miner</faction>
+  <pilots>
+   <pilot name="Miner Koala" ship="Koala"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Miner Mule">
+  <ai>miner</ai>
+  <faction>Miner</faction>
+  <pilots>
+   <pilot name="Miner Mule" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>

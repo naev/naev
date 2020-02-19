@@ -17,4 +17,11 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <pos x="0" y="0"/>
+   <radius>3000</radius>
+   <density>1.0</density>
+  </asteroid>
+ </asteroids>
 </ssys>
