@@ -573,6 +573,29 @@ static void map_update( unsigned int wid )
 
       p += nsnprintf(&buf[p], PATH_MAX-p, _(" Interference"));
    }
+   /* Asteroids. */
+   if (sys->nasteroids > 0) {
+      double density;
+
+      if (buf[0] != '\0')
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+
+      density = 0.;
+      for (i=0; i<sys->nasteroids; i++) {
+         density += sys->asteroids[i].area * sys->asteroids[i].density;
+      }
+
+      /* TODO vary text based on density. */
+      /*
+      if (density > X)
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
+      else if (density < X)
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
+      */
+
+      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Asteroid Field"));
+
+   }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
 
