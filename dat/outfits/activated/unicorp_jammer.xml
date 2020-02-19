@@ -10,9 +10,9 @@
   <limit>jammer</limit>
   <cpu>-4</cpu>
  </general>
- <specific type="jammer" group="7">
-  <range>170</range>
-  <power>35</power>
-  <energy>-15</energy>
+ <specific type="modification" group="7">
+  <active/>
+  <ew_hide>70</ew_hide>
+  <energy_loss>35</energy_loss>
  </specific>
 </outfit>
