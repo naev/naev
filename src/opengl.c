@@ -276,11 +276,8 @@ void gl_checkHandleError( const char *func, int line )
       case GL_INVALID_OPERATION:
          errstr = _("GL invalid operation");
          break;
-      case GL_STACK_OVERFLOW:
-         errstr = _("GL stack overflow");
-         break;
-      case GL_STACK_UNDERFLOW:
-         errstr = _("GL stack underflow");
+      case GL_INVALID_FRAMEBUFFER_OPERATION:
+         errstr = _("GL invalid framebuffer operation");
          break;
       case GL_OUT_OF_MEMORY:
          errstr = _("GL out of memory");
