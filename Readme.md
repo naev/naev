@@ -14,7 +14,7 @@ accompanying everything from planets to equipment.
 
 Naev's dependencies are intended to be relatively common. In addition to
 an OpenGL-capable graphics card and driver, Naev requires the following:
-* SDL (version 2 is preferred)
+* SDL 2
 * libxml2
 * freetype2
 * fontconfig
@@ -64,7 +64,7 @@ Naev currently supports make install which will install everything that
 is needed.
 
 If you wish to create a .desktop for your desktop environment, logos
-from 16x16 to 256x256 can be found in extras/logos
+from 16x16 to 256x256 can be found in `extras/logos/`.
 
 ## WINDOWS
 
