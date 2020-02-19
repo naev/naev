@@ -247,7 +247,6 @@ void gl_blitTexture(  const glTexture* texture,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisable(GL_TEXTURE_2D);
    glDisableVertexAttribArray( glGetAttribLocation(texture_glsl_program, "vertex") );
 
    /* anything failed? */
@@ -342,9 +341,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 
    /* Clear state. */
    glDisableVertexAttribArray( texture_interpolate_glsl_program_vertex );
-   glDisable(GL_TEXTURE_2D);
    glActiveTexture( GL_TEXTURE0 );
-   glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */
    gl_checkErr();

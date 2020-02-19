@@ -692,7 +692,6 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisable(GL_TEXTURE_2D);
    glDisableVertexAttribArray( beam_glsl_program_vertex );
    glUseProgram(0);
 
