@@ -8,7 +8,7 @@
 #  define COLOUR_H
 
 
-#include "SDL_opengl.h"
+#include "glad.h"
 
 
 /**

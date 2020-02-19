@@ -10,7 +10,6 @@
 #include <stdint.h>
 
 #include "SDL.h"
-#include "SDL_opengl.h"
 
 #include "physics.h"
 #include "colour.h"
