@@ -18,10 +18,10 @@ void main(void) {
    gl_Position.xy += star_xy * b;
 
    /* check boundaries */
-   gl_Position.xy = mod(gl_Position.xy + wh/2, wh) - wh/2;
+   gl_Position.xy = mod(gl_Position.xy + wh/2., wh) - wh/2.;
 
    /* Generate lines. */
-   gl_Position.xy += mod(gl_VertexID, 2) * xy * brightness;
+   gl_Position.xy += mod(float(gl_VertexID), 2.) * xy * brightness;
 
    gl_Position = projection * gl_Position;
 
