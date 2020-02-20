@@ -41,7 +41,7 @@ SDL_Keycode input_keyConv( const char *name );
 void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 const char *input_modToText( SDL_Keymod mod );
 SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod *mod );
-void input_getKeybindDisplay( const char *keybind, char *buf );
+void input_getKeybindDisplay( const char *keybind, char *buf, int len );
 const char *input_getKeybindDescription( const char *keybind );
 const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 

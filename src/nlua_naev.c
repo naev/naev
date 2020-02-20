@@ -116,7 +116,7 @@ static int naev_keyGet( lua_State *L )
    /* Get parameters. */
    keyname = luaL_checkstring( L, 1 );
 
-   input_getKeybindDisplay( keyname, buf );
+   input_getKeybindDisplay( keyname, buf, sizeof(buf) );
    lua_pushstring( L, buf );
 
    return 1;
