@@ -32,6 +32,7 @@
 #include "camera.h"
 #include "map_overlay.h"
 #include "hook.h"
+#include "nstring.h"
 
 
 #define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
@@ -452,7 +453,7 @@ void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, S
 /**
  * @brief Gets the value of a keybind.
  *
- *    @brief keybind Name of the keybinding to get.
+ *    @param[in] keybind Name of the keybinding to get.
  *    @param[out] type Stores the type of the keybinding.
  *    @param[out] mod Stores the modifiers used with the keybinding.
  *    @return The key associated with the keybinding.
@@ -475,9 +476,75 @@ SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod
 
 
 /**
+ * @brief Gets the display name of a keybind
+ *
+ *    @param[in] keybind Name of the keybinding to get display name of.
+ *    @param[out] buf Buffer to write the display name to. 
+ */
+void input_getKeybindDisplay( const char *keybind, char *buf )
+{
+   int p;
+   SDL_Keycode key;
+   KeybindType type;
+   SDL_Keymod mod;
+
+   /* Get the keybinding. */
+   key = input_getKeybind( keybind, &type, &mod );
+
+   /* Handle type. */
+   switch (type) {
+      case KEYBIND_KEYBOARD:
+         p = 0;
+         /* Handle mod. */
+         if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
+            p += nsnprintf( &buf[p], sizeof(buf)-p, "%s + ", input_modToText(mod) );
+         /* Print key. */
+         if (nstd_isalpha(key))
+            p += nsnprintf( &buf[p], sizeof(buf)-p, "%c", nstd_toupper(key) );
+         else
+            p += nsnprintf( &buf[p], sizeof(buf)-p, "%s", SDL_GetKeyName(key) );
+         break;
+
+      case KEYBIND_JBUTTON:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy button %d"), key );
+         break;
+
+      case KEYBIND_JHAT_UP:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d up"), key );
+         break;
+
+      case KEYBIND_JHAT_DOWN:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d down"), key );
+         break;
+
+      case KEYBIND_JHAT_LEFT:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d left"), key );
+         break;
+
+      case KEYBIND_JHAT_RIGHT:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d right"), key );
+         break;
+
+      case KEYBIND_JAXISPOS:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d-"), key );
+         break;
+
+      case KEYBIND_JAXISNEG:
+         nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d+"), key );
+         break;
+
+      case KEYBIND_NULL:
+      default:
+         strncpy( buf, gettext_noop("Not bound"), sizeof(buf) );
+         break;
+   }
+}
+
+
+/**
  * @brief Gets the human readable version of mod.
  *
- *    @brief mod Mod to get human readable version from.
+ *    @param mod Mod to get human readable version from.
  *    @return Human readable version of mod.
  */
 const char* input_modToText( SDL_Keymod mod )
