@@ -10,6 +10,7 @@
 -- Text
 broadcastmsg = _("SOS. This is %s. We are shipwrecked. Requesting immediate assistance.")
 shipname = _("August") --The ship will have a unique name
+shipwreck = _("Shipwrecked %s")
 
 function create ()
 
@@ -33,7 +34,7 @@ function create ()
     for k,v in ipairs(p) do
         v:setFaction("Derelict")
         v:disable()
-        v:rename("Shipwrecked " .. shipname)
+        v:rename(shipwreck:format(shipname))
         -- Added extra visibility for big systems (A.)
         v:setVisplayer( true )
         v:setHilight( true )

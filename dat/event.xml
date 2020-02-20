@@ -80,14 +80,16 @@
  <event name="Baroncomm_baron">
   <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
-  <chance>4</chance>
-  <cond>player.misnDone("Baron") == false and
-        player.misnActive("Baron") == false and
-        (
-           system.cur():faction() == faction.get("Empire") or
-           system.cur():faction() == faction.get("Dvaered") or
-           system.cur():faction() == faction.get("Sirius")
-        )
+  <chance>100</chance>
+  <cond>
+   not var.peek("baron_hated") and
+   not player.misnDone("Baron") and
+   not player.misnActive("Baron") and
+   (
+      system.cur():faction() == faction.get("Empire") or
+      system.cur():faction() == faction.get("Dvaered") or
+      system.cur():faction() == faction.get("Sirius")
+   )
   </cond>
   <flags>
   </flags>
@@ -98,6 +100,7 @@
   <chance>10</chance>
   <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
   <flags>
+   <unique />
   </flags>
  </event>
  <event name="Shadowcomm">

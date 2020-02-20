@@ -1366,12 +1366,11 @@ int input_clickedPlanet( int planet, int autonav )
 
    if (planet == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
       player_hyperspacePreempt(0);
-      if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
-         if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
-            player_hailPlanet();
-         else
-            player_land();
-      }
+      if ((pnt->faction < 0) || pnt->can_land || pnt->bribed ||
+            (pnt->land_override > 0))
+         player_land();
+      else
+         player_hailPlanet();
    }
    else
       player_targetPlanetSet( planet );
