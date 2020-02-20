@@ -1690,8 +1690,8 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    input_getKeybindDisplay( "autohail", buf );
-   nsnprintf( msg, sizeof(msg), buf );
-   player_messageRaw(_("\arReceiving hail! Press %s to respond."));
+   nsnprintf( msg, sizeof(msg), _("\arReceiving hail! Press %s to respond."), buf );
+   player_messageRaw( msg );
 
    /* Reset speed. */
    player_autonavResetSpeed();
