@@ -80,7 +80,7 @@
  <event name="Baroncomm_baron">
   <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>4</chance>
   <cond>
    not var.peek("baron_hated") and
    not player.misnDone("Baron") and
