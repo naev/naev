@@ -1684,10 +1684,16 @@ double player_dt_default (void)
  */
 void player_hailStart (void)
 {
+   char msg[1024];
+   char buf[128];
+
    player_hailCounter = 5;
 
-   /* Abort autonav. */
-   player_messageRaw(_("\arReceiving hail!"));
+   input_getKeybindDisplay( "autohail", buf );
+   nsnprintf( msg, sizeof(msg), buf );
+   player_messageRaw(_("\arReceiving hail! Press %s to respond."));
+
+   /* Reset speed. */
    player_autonavResetSpeed();
    player.autonav_timer = MAX( player.autonav_timer, 10. );
 }
