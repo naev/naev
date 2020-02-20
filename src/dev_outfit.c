@@ -241,7 +241,7 @@ void dout_csvAmmo( const char *path )
             "%f,%s,%f,%f\n",
             o->name, outfit_getType(o), o->license,
             o->mass, o->price,
-            o->u.amm.duration, o->u.amm.resist * 100, ai,
+            o->u.amm.duration, o->u.amm.resist, ai,
             o->u.amm.speed, o->u.amm.turn * 180 / M_PI, o->u.amm.thrust, o->u.amm.energy,
             dmg->penetration * 100, dtype_damageTypeToStr(dmg->type), dmg->damage, dmg->disable
             );

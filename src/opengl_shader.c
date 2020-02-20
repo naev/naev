@@ -38,7 +38,7 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
       glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
-      WARN("%s\n", log);
+      WARN("%s %s\n", filename, log);
       free(log);
       shader = 0;
    }

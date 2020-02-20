@@ -30,4 +30,36 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <pos x="-2000" y="-3000"/>
+   <radius>1000</radius>
+   <density>0.500000</density>
+  </asteroid>
+  <asteroid>
+   <type>default</type>
+   <pos x="-1000" y="-2500"/>
+   <radius>1000</radius>
+   <density>0.500000</density>
+  </asteroid>
+  <asteroid>
+   <type>default</type>
+   <pos x="0" y="-1000"/>
+   <radius>1500</radius>
+   <density>0.500000</density>
+  </asteroid>
+  <asteroid>
+   <type>default</type>
+   <pos x="500" y="500"/>
+   <radius>1000</radius>
+   <density>0.500000</density>
+  </asteroid>
+  <asteroid>
+   <type>default</type>
+   <pos x="1400" y="-2000"/>
+   <radius>500</radius>
+   <density>0.750000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

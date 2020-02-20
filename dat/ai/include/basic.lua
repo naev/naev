@@ -700,29 +700,44 @@ end
 -- Mines an asteroid
 --]]
 function mine ()
+   ai.weapset( 1 )
    local fieldNast = ai.target()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
    local p         = ai.pilot()
+   local wrange    = ai.getweaprange()
+   local erange    = 100
+   local trange    = math.min( math.max( erange, wrange * 3 / 4 ), wrange )
+   local mbd       = ai.minbrakedist()
+
+   -- See if there's a gatherable; if so, pop this task and gather instead
+   local gat = ai.getgatherable( wrange )
+   if gat ~= nil and ai.gatherablepos( gat ) ~= nil then
+      ai.poptask()
+      ai.pushtask("gather")
+      return
+   end
 
    ai.setasterotarget( field, ast )
 
    local target, vel = system.asteroidpos( field, ast )
-   local target2 = vec2.add(target,200,0)
+
+   local dist, angle = vec2.polar( p:pos() - target )
 
    -- First task : place the ship close to the asteroid
-   local goal = ai.face_accurate( target2, vel, 0, 0, mem.Kp, mem.Kd )
+   local goal = ai.face_accurate( target, vel, trange, angle, mem.Kp, mem.Kd )
 
    local dir  = ai.face(goal)
    local mod  = ai.dist(goal)
 
-   if dir < 10 and mod > 300 then
+   if dir < 10 and mod > mbd then
       ai.accel()
    end
-   local relpos = vec2.add( p:pos(), vec2.mul(target2,-1) ):mod()
+   
+   local relpos = vec2.add( p:pos(), vec2.mul(target,-1) ):mod()
    local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
-   -- TODO : make 30 and 2 parameters dependent to Kp and Kd
-   if relpos < 30 and relvel < 2 then
+
+   if relpos < wrange and relvel < 10 then
       ai.pushsubtask("__killasteroid")
    end
 end
@@ -730,14 +745,30 @@ function __killasteroid ()
    local fieldNast = ai.target()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
+   local wrange    = ai.getweaprange()
 
    local target = system.asteroidpos( field, ast )
    local dir  = ai.face(target)
 
+    -- See if there's a gatherable; if so, pop this task and gather instead
+   local gat = ai.getgatherable( wrange )
+   if gat ~= nil and ai.gatherablepos( gat ) ~= nil then
+      ai.poptask()
+      ai.pushtask("gather")
+      return
+   end
+
+   -- Have to start over if we're out of range for some reason
+   if ai.dist(target) > wrange then
+      ai.poptask()
+      return
+   end
+
    -- Second task : destroy it
    if dir < 8 then
-      ai.weapset( 3 )
+      ai.weapset( 1 )
       ai.shoot()
+      ai.shoot(true)
    end
    if system.asteroiddestroyed( field, ast ) then
       ai.poptask()
@@ -755,7 +786,7 @@ function gather ()
       return
    end
 
-   local gat = ai.getgatherable( 500 );
+   local gat = ai.getgatherable( ai.getweaprange() )
 
    if gat == nil then -- Nothing to gather
       ai.poptask()
@@ -773,7 +804,7 @@ function gather ()
    local dir  = ai.face(goal)
    local mod  = ai.dist(goal)
 
-   if dir < 10 and mod > 300 then
+   if dir < 10 and mod > 100 then
       ai.accel()
    end
 end

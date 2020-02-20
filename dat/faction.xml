@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Factions>
  <faction>
   <name>Dummy</name>
@@ -91,7 +91,7 @@
   <longname>Space Miners</longname>
   <player>3</player>
   <spawn>miner</spawn>
-  <standing>trader</standing>
+  <standing>miner</standing>
   <equip>miner</equip>
   <allies>
   </allies>

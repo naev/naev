@@ -1361,11 +1361,11 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
    asection *section;
 
    for (section = abfd->sections; section != NULL; section = section->next) {
-      if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
+      if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
          continue;
 
-      bfd_vma vma = bfd_get_section_vma(abfd, section);
-      bfd_size_type size = bfd_get_section_size(section);
+      bfd_vma vma = bfd_section_vma(section);
+      bfd_size_type size = bfd_section_size(section);
       if (address < vma || address >= vma + size)
          continue;
 

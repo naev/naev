@@ -17,7 +17,7 @@
   <thrust>0</thrust>
   <turn>80</turn>
   <speed>600</speed>
-  <resist>5</resist>
+  <resist>100</resist>
   <energy>40</energy>
   <damage>
    <type>normal</type>

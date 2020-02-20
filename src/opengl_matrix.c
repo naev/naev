@@ -147,16 +147,6 @@ GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m ) {
    return (GLfloat*)m->m;
 }
 
-void gl_Matrix4_Load( gl_Matrix4 m ) {
-   glLoadMatrixf(gl_Matrix4_Ptr(&m));
-}
-
-gl_Matrix4 gl_Matrix4_Get ( GLenum pname ) {
-   gl_Matrix4 m;
-   glGetFloatv(pname, gl_Matrix4_Ptr(&m));
-   return m;
-}
-
 void gl_Matrix4_Uniform( GLint location, gl_Matrix4 m ) {
    glUniformMatrix4fv(location, 1, GL_FALSE, gl_Matrix4_Ptr(&m));
 }

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Events>
- <event name="reputation">
-  <lua>reputation</lua>
-  <trigger>load</trigger>
-  <chance>100</chance>
- </event>
  <event name="Pirate Fame">
   <lua>pirate_fame</lua>
   <trigger>enter</trigger>
@@ -86,13 +81,15 @@
   <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>player.misnDone("Baron") == false and
-        player.misnActive("Baron") == false and
-        (
-           system.cur():faction() == faction.get("Empire") or
-           system.cur():faction() == faction.get("Dvaered") or
-           system.cur():faction() == faction.get("Sirius")
-        )
+  <cond>
+   not var.peek("baron_hated") and
+   not player.misnDone("Baron") and
+   not player.misnActive("Baron") and
+   (
+      system.cur():faction() == faction.get("Empire") or
+      system.cur():faction() == faction.get("Dvaered") or
+      system.cur():faction() == faction.get("Sirius")
+   )
   </cond>
   <flags>
   </flags>
@@ -103,6 +100,7 @@
   <chance>10</chance>
   <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
   <flags>
+   <unique />
   </flags>
  </event>
  <event name="Shadowcomm">

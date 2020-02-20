@@ -365,15 +365,10 @@ typedef struct Pilot_ {
    int ncannons;      /**< Number of cannons equipped. */
    int nturrets;      /**< Number of turrets equipped. */
    int nbeams;        /**< Number of beams equipped. */
-   int njammers;      /**< Number of jammers equipped. */
    int nafterburners; /**< Number of afterburners equipped. */
 
    /* For easier usage. */
    PilotOutfitSlot *afterburner; /**< the afterburner */
-
-   /* Jamming */
-   int jamming;      /**< Pilot is current jamming with at least a single jammer (used to
-                          speed up later checks in the code). */
 
    /* Weapon sets. */
    PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */

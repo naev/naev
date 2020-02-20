@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-    <decorator>
-    <pict>empire</pict>
+  <decorator>
+    <image>empire</image>
     <x>-320.200000</x>
     <y>-313.800000</y>
     <detection_radius>300</detection_radius>

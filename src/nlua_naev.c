@@ -110,73 +110,14 @@ static int naev_ticks( lua_State *L )
  */
 static int naev_keyGet( lua_State *L )
 {
-   int p;
    const char *keyname;
-   SDL_Keycode key;
-   KeybindType type;
-   SDL_Keymod mod;
    char buf[128];
 
    /* Get parameters. */
    keyname = luaL_checkstring( L, 1 );
 
-   /* Get the keybinding. */
-   key = input_getKeybind( keyname, &type, &mod );
-
-   /* Handle type. */
-   switch (type) {
-      case KEYBIND_NULL:
-         lua_pushstring( L, gettext_noop("Not bound") );
-         break;
-
-      case KEYBIND_KEYBOARD:
-         p = 0;
-         /* Handle mod. */
-         if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
-            p += nsnprintf( &buf[p], sizeof(buf)-p, "%s + ", input_modToText(mod) );
-         /* Print key. */
-         if (nstd_isalpha(key))
-            p += nsnprintf( &buf[p], sizeof(buf)-p, "%c", nstd_toupper(key) );
-         else
-            p += nsnprintf( &buf[p], sizeof(buf)-p, "%s", SDL_GetKeyName(key) );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JBUTTON:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy button %d"), key );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JHAT_UP:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d up"), key );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JHAT_DOWN:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d down"), key );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JHAT_LEFT:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d left"), key );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JHAT_RIGHT:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy hat %d right"), key );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JAXISPOS:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d-"), key );
-         lua_pushstring( L, buf );
-         break;
-
-      case KEYBIND_JAXISNEG:
-         nsnprintf( buf, sizeof(buf), gettext_noop("joy axis %d+"), key );
-         lua_pushstring( L, buf );
-         break;
-   }
+   input_getKeybindDisplay( keyname, buf, sizeof(buf) );
+   lua_pushstring( L, buf );
 
    return 1;
 }

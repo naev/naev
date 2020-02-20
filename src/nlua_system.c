@@ -590,10 +590,32 @@ static int systemL_jumps( lua_State *L )
 static int systemL_asteroid( lua_State *L )
 {
    int field, ast;
+   int bad_asteroid;
+   int i;
 
    if (cur_system->nasteroids > 0) {
       field = RNG(0,cur_system->nasteroids-1);
       ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      bad_asteroid = 0;
+      if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
+            (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INIT)) {
+         /* Switch to next index until we find a valid one, or until we come full-circle. */
+         bad_asteroid = 1;
+         for (i=0; i<cur_system->asteroids[field].nb; i++) {
+            ast = (ast + 1) % cur_system->asteroids[field].nb;
+            if ( (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INVISIBLE) &&
+                  (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INIT)) {
+               bad_asteroid = 0;
+               break;
+            }
+         }
+      }
+
+      if (bad_asteroid) {
+         WARN("Failed to get a valid asteroid in field %d.", field);
+         return 0;
+      }
+
       lua_pushnumber(L,field);
       lua_pushnumber(L,ast);
       return 2;
@@ -675,7 +697,7 @@ static int systemL_asteroidDestroyed( lua_State *L )
    }
 
    /* If the asteroid is re-appearing, it was destroyed recently. */
-   isdestroyed = (cur_system->asteroids[field].asteroids[ast].appearing == 1);
+   isdestroyed = (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_GROWING);
    lua_pushboolean(L, isdestroyed);
    return 1;
 }

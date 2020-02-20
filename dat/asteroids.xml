@@ -10,9 +10,10 @@
   <gfx>asteroid-D11</gfx>
   <gfx>asteroid-D12</gfx>
   <gfx>asteroid-D13</gfx>
+  <armour>50</armour>
   <commodity>
    <name>Ore</name>
-   <quantity>10</quantity>
+   <quantity>5</quantity>
   </commodity>
  </asteroid>
  <asteroid>
@@ -24,13 +25,10 @@
   <gfx>asteroid-D05</gfx>
   <gfx>asteroid-D06</gfx>
   <gfx>asteroid-D14</gfx>
+  <armour>100</armour>
   <commodity>
    <name>Ore</name>
-   <quantity>7</quantity>
-  </commodity>
-  <commodity>
-   <name>Gold</name>
-   <quantity>3</quantity>
+   <quantity>15</quantity>
   </commodity>
  </asteroid>
 </Asteroid_types>

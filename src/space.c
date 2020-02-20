@@ -72,6 +72,9 @@
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
+#define ASTEROID_EXPLODE_INTERVAL 5. /**< Interval of asteroids randomly exploding */
+#define ASTEROID_EXPLODE_CHANCE   0.1 /**< Chance of asteroid exploding each interval */
+
 /*
  * planet <-> system name stack
  */
@@ -148,6 +151,7 @@ static int asteroidTypes_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
+static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
@@ -155,7 +159,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
-static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field );
+static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
@@ -534,6 +538,11 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
       f = &sys->asteroids[i];
       for (k=0; k<f->nb; k++) {
          as = &f->asteroids[k];
+
+         /* Skip invisible asteroids */
+         if (as->appearing == ASTEROID_INVISIBLE)
+            continue;
+
          td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
          if (td < d) {
             *pnt  = -1; /* We must clear planet target as asteroid is closer. */
@@ -602,6 +611,11 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
       f  = &sys->asteroids[i];
       for (k=0; k<f->nb; k++) {
          as = &f->asteroids[k];
+
+         /* Skip invisible asteroids */
+         if (as->appearing == ASTEROID_INVISIBLE)
+            continue;
+
          ta = atan2( y - as->pos.y, x - as->pos.x);
          if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
             *pnt  = -1; /* We must clear planet target as asteroid is closer. */
@@ -1297,19 +1311,34 @@ void space_update( const double dt )
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
 
+         /* Skip invisible asteroids */
+         if (a->appearing == ASTEROID_INVISIBLE)
+            continue;
+
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
 
-         /* Grow and shrink */
-         if (a->appearing == 1) {
+         if (a->appearing == ASTEROID_VISIBLE) {
+            /* Random explosions */
+            a->timer += dt;
+            if (a->timer >= ASTEROID_EXPLODE_INTERVAL) {
+               a->timer = 0.;
+               if ( (RNGF() < ASTEROID_EXPLODE_CHANCE) ||
+                     (space_isInField(&a->pos) < 0) ) {
+                  asteroid_explode( a, ast, 0 );
+               }
+            }
+         }
+         else if (a->appearing == ASTEROID_GROWING) {
+            /* Grow */
             a->timer += dt;
             if (a->timer >= 2.) {
                a->timer = 0.;
-               a->appearing = 0;
+               a->appearing = ASTEROID_VISIBLE;
             }
          }
-
-         if (a->appearing == 2) {
+         else if (a->appearing == ASTEROID_SHRINKING) {
+            /* Shrink */
             a->timer += dt;
             if (a->timer >= 2.) {
                /* Remove the asteroid target to any pilot. */
@@ -1318,21 +1347,13 @@ void space_update( const double dt )
                asteroid_init( a, ast );
             }
          }
-
-         /* Exploding asteroid */
-         if (a->appearing == 3) {
+         else if (a->appearing == ASTEROID_EXPLODING) {
+            /* Exploding asteroid */
             a->timer += dt;
             if (a->timer >= .5) {
                /* Make it explode */
-               asteroid_explode( a, ast );
+               asteroid_explode( a, ast, 1 );
             }
-         }
-
-         /* Manage the asteroid getting outside the field */
-         if ( space_isInField(&a->pos)<0 && a->appearing==0 ) {
-            /* Make it shrink */
-            a->timer = 0.;
-            a->appearing = 2;
          }
       }
 
@@ -1446,6 +1467,7 @@ void space_init( const char* sysname )
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
          a->id = j;
+         a->appearing = ASTEROID_INIT;
          asteroid_init(a, ast);
       }
       /* Add the debris to the anchor */
@@ -1524,42 +1546,13 @@ void space_init( const char* sysname )
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
    int i, j, k;
-   double mod, theta, x, y;
-   AsteroidSubset *sub;
+   double mod, theta;
+   double angle, radius;
    AsteroidType *at;
+   int attempts = 0;
 
    ast->parent = field->id;
    ast->scanned = 0;
-
-   /* Get a random position:
-       * choose a convex subset
-       * choose a triangle 
-       * get a random position in a reference 1X1 rectangle
-       * transform it into a triangle (by folding)
-       * apply a linear transformation to the reference triangle */
-   k = RNG( 0, field->nsubsets-1 );
-   sub = &field->subsets[k];
-
-   i = RNG( 0, sub->ncorners-1 );
-   if (i<sub->ncorners-1)
-      j = i+1;
-   else
-      j = 0;
-   x = RNGF();
-   y = RNGF();
-   if (x+y > 1) {
-      x = 1-x;
-      y = 1-y;
-   }
-   ast->pos.x = sub->pos.x*(1-x-y)
-                + sub->corners[i].x*x + sub->corners[j].x*y;
-   ast->pos.y = sub->pos.y*(1-x-y)
-                + sub->corners[i].y*x + sub->corners[j].y*y;
-
-   /* And a random velocity */
-   theta = RNGF()*2.*M_PI;
-   mod = RNGF() * 20;
-   vect_pset( &ast->vel, mod, theta );
 
    /* randomly init the type of asteroid */
    i = RNG(0,field->ntype-1);
@@ -1567,9 +1560,32 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    /* randomly init the gfx ID */
    at = &asteroid_types[ast->type];
    ast->gfxID = RNG(0,at->ngfx-1);
+   ast->armour = at->armour;
+
+   do {
+      angle = RNGF() * 2 * M_PI;
+      radius = RNGF() * field->radius;
+      ast->pos.x = radius * cos(angle) + field->pos.x;
+      ast->pos.y = radius * sin(angle) + field->pos.y;
+
+      /* If this is the first time and it's spawned outside the field,
+       * we get rid of it so that density remains roughly consistent. */
+      if ( (ast->appearing == ASTEROID_INIT) &&
+            (space_isInField(&ast->pos) < 0) ) {
+         ast->appearing = ASTEROID_INVISIBLE;
+         return;
+      }
+
+      attempts++;
+   } while ( (space_isInField(&ast->pos) < 0) && (attempts < 1000) );
+
+   /* And a random velocity */
+   theta = RNGF()*2.*M_PI;
+   mod = RNGF() * 20;
+   vect_pset( &ast->vel, mod, theta );
 
    /* Grow effect stuff */
-   ast->appearing = 1;
+   ast->appearing = ASTEROID_GROWING;
    ast->timer = 0.;
 }
 
@@ -2892,12 +2908,13 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 {
-   int i, j, k, l, m, n, retry, getout;
+   int i;
    AsteroidAnchor *a;
-   AsteroidSubset *sub, *newsub;
-   xmlNodePtr cur, pcur;
-   double x, y, pro, prob;
+   xmlNodePtr cur;
+   double x, y;
    char *name;
+   int pos;
+   char *buf;
 
    /* Allocate more space. */
    sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
@@ -2906,11 +2923,10 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Initialize stuff. */
    a->density  = .2;
-   a->ncorners = 0;
-   a->corners  = NULL;
    a->area     = 0.;
    a->ntype    = 0;
    a->type     = NULL;
+   a->radius   = 0.;
    vect_cset( &a->pos, 0., 0. );
 
    /* Parse data. */
@@ -2934,29 +2950,41 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
          }
       }
 
-      /* Handle corners. */
-      if (xml_isNode(cur,"corner")) {
-         pcur = cur->children;
-         do {
-            xmlr_float( pcur, "x", x );
-            xmlr_float( pcur, "y", y );
-         } while (xml_nextNode(pcur));
-         a->ncorners++;
-         if (a->corners==NULL)
-            a->corners = malloc( sizeof(Vector2d) );
-         else
-            a->corners = realloc( a->corners, (a->ncorners)*sizeof(Vector2d) );
+      xmlr_float( cur, "radius", a->radius );
+
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         pos = 1;
+         xmlr_attr( cur, "x", buf );
+         if (buf==NULL) {
+            WARN(_("Asteroid field for system '%s' has position node missing 'x' position, using 0."), sys->name);
+            x = 0.;
+         }
+         else {
+            x = atof(buf);
+            free(buf);
+         }
+         xmlr_attr( cur, "y", buf );
+         if (buf==NULL) {
+            WARN(_("Asteroid field for system '%s' has position node missing 'y' position, using 0."), sys->name);
+            y = 0.;
+         }
+         else {
+            y = atof(buf);
+            free(buf);
+         }
+
          /* Set position. */
-         vect_cset( &a->corners[a->ncorners-1], x, y );
-         /* Increment center. */
-         a->pos.x += x;
-         a->pos.y += y;
+         vect_cset( &a->pos, x, y );
       }
 
    } while (xml_nextNode(cur));
 
-   if (a->ncorners < 3)
-       WARN(_("asteroid field in %d has less than 3 corners."), sys->name);
+   if (!pos)
+      WARN(_("Asteroid field in %s has no position."), sys->name);
+
+   if (a->radius == 0.)
+      WARN(_("Asteroid field in %s has no radius."), sys->name);
 
    /* By default, take the first in the list. */
    if (a->type == NULL) {
@@ -2965,22 +2993,8 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
        a->type[0] = 0;
    }
 
-   /* Normalize the center */
-   a->pos.x /= a->ncorners;
-   a->pos.y /= a->ncorners;
-
-   /* Compute the area as a sum of triangles */
-   for (i=0; i<a->ncorners-1; i++) {
-      a->area += (a->corners[i].x-a->pos.x)*(a->corners[i+1].y-a->pos.y) 
-               - (a->corners[i+1].x-a->pos.x)*(a->corners[i].y-a->pos.y);
-   }
-   /* And the last one to loop */
-   if (a->ncorners > 0) {
-      i = a->ncorners-1;
-      a->area += (a->corners[i].x-a->pos.x)*(a->corners[0].y-a->pos.y) 
-               - (a->corners[0].x-a->pos.x)*(a->corners[i].y-a->pos.y);
-   }
-   a->area /= 2;
+   /* Calculate area */
+   a->area = M_PI * a->radius * a->radius;
 
    /* Compute number of asteroids */
    a->nb      = floor( ABS(a->area) / 500000 * a->density );
@@ -2989,123 +3003,76 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    /* Added asteroid. */
    sys->nasteroids++;
 
-   /* Initialize the convex subsets. */
-   a->subsets = malloc( sizeof(AsteroidSubset) );
-   a->subsets[0].ncorners = a->ncorners;
-   a->subsets[0].corners = malloc( sizeof(Vector2d)*a->ncorners );
-   for (j=0; j<a->ncorners; j++) {
-      a->subsets[0].corners[j].x = a->corners[j].x;
-      a->subsets[0].corners[j].y = a->corners[j].y;
-   }
-   a->nsubsets = 1;
+   return 0;
+}
 
-   /* Cut the subsets until they are all convex. */
-   retry  = 1;
-   getout = 0;
 
-   while (retry) {
-      retry = 0;
-      for (i=0; i<a->nsubsets; i++) {
-         sub = &a->subsets[i];
-         for (j=0; j<sub->ncorners; j++) {
-            /* Find the 2 other corners. */
-            if (j>0 && j<sub->ncorners-1) {
-               k = j-1;
-               l = j+1;
-            }
-            else if (j==0) {
-               k = sub->ncorners-1;
-               l = j+1;
-            }
-            else { /* (j==ncorners-1) */
-               k = j-1;
-               l = 0;
-            }
+/**
+ * @brief Parses a single asteroid exclusion zone for a system.
+ *
+ *    @param node Parent node containing asteroid exclusion information.
+ *    @param sys System.
+ *    @return 0 on success.
+ */
+static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
+{
+   int i;
+   AsteroidExclusion *a;
+   xmlNodePtr cur;
+   double x, y;
+   int pos;
+   char *buf;
 
-            /* Test the orientation of the angle towards signed area. */
-            pro = (sub->corners[k].x-sub->corners[j].x) *
-                  (sub->corners[l].y-sub->corners[j].y) - 
-                  (sub->corners[k].y-sub->corners[j].y) *
-                  (sub->corners[l].x-sub->corners[j].x);
+   /* Allocate more space. */
+   sys->astexclude = realloc( sys->astexclude, (sys->nastexclude+1)*sizeof(AsteroidExclusion) );
+   a = &sys->astexclude[ sys->nastexclude ];
+   memset( a, 0, sizeof(*a) );
 
-            if (pro * a->area > 0) {
-               /* Cut here, find an other point. */
-               x = (sub->corners[k].x + sub->corners[l].x)/2;
-               y = (sub->corners[k].y + sub->corners[l].y)/2;
+   /* Initialize stuff. */
+   a->radius   = 0.;
+   vect_cset( &a->pos, 0., 0. );
 
-               pro = 1.;
-               for (m=0; m<sub->ncorners; m++) {
-                  prob = (x-sub->corners[j].x)*(sub->corners[m].x-sub->corners[j].x) +
-                         (y-sub->corners[j].y)*(sub->corners[m].y-sub->corners[j].y);
-                  if ( prob < pro ) {
-                     pro = prob;
-                     n = m;
-                  }
-               }
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xmlr_float( cur, "radius", a->radius );
 
-               if (pro>=0)
-                  WARN(_("Non-convex asteroid polygon seems to be self-intersecting in %d"), sys->name);
-
-               /* Split subset i into 2 subsets */
-               a->subsets = realloc( a->subsets, (a->nsubsets+1)*sizeof(AsteroidSubset) );
-
-               /* Need to recall who is sub. */
-               sub = &a->subsets[i];
-               newsub = &a->subsets[a->nsubsets];
-
-               /* First, make sure n<j: invert j and n if needed */
-               if (j<n) {k=n; n=j; j=k;}
-
-               newsub->ncorners = j-n+1;
-               newsub->corners  = malloc( sizeof(Vector2d)*newsub->ncorners );
-
-               /* Add some nodes to the new subset */
-               k = 0;
-               for (m=n; m<j+1; m++) {
-                  newsub->corners[k] = sub->corners[m];
-                  k++;
-               }
-
-               /* Remove some nodes to the old subset */
-               memmove(&sub->corners[n+1], &sub->corners[j], sizeof(AsteroidSubset)*(sub->ncorners - j - 1) );
-               sub->ncorners = sub->ncorners-(j-n)+1;
-               sub->corners = realloc(sub->corners, sizeof(Vector2d) * sub->ncorners);
-
-               a->nsubsets++;
-
-               getout = 1;
-               break;
-            }
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         pos = 1;
+         xmlr_attr( cur, "x", buf );
+         if (buf==NULL) {
+            WARN(_("Asteroid exclusion for system '%s' has position node missing 'x' position, using 0."), sys->name);
+            x = 0.;
          }
-         if (getout) break;
-      }
-   }
-   for (i=0; i<a->nsubsets; i++) {
-      /* Get a center of the polygon */
-      sub = &a->subsets[i];
-      sub->pos.x = 0;
-      sub->pos.y = 0;
-      sub->area  = 0;
-      for (j=0; j<sub->ncorners; j++) {
-         sub->pos.x += sub->corners[j].x;
-         sub->pos.y += sub->corners[j].y;
-      }
-      sub->pos.x /= sub->ncorners;
-      sub->pos.y /= sub->ncorners;
+         else {
+            x = atof(buf);
+            free(buf);
+         }
+         xmlr_attr( cur, "y", buf );
+         if (buf==NULL) {
+            WARN(_("Asteroid exclusion for system '%s' has position node missing 'y' position, using 0."), sys->name);
+            y = 0.;
+         }
+         else {
+            y = atof(buf);
+            free(buf);
+         }
 
-      /* Compute the area as a sum of triangles */
-      for (j=0; j<sub->ncorners-1; j++) {
-         sub->area += (sub->corners[j].x-sub->pos.x)*(sub->corners[j+1].y-sub->pos.y) 
-                    - (sub->corners[j+1].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
+         /* Set position. */
+         vect_cset( &a->pos, x, y );
       }
-      /* And the last one to loop */
-      if (sub->ncorners > 0) {
-         j = sub->ncorners-1;
-         sub->area += (sub->corners[j].x-sub->pos.x)*(sub->corners[0].y-sub->pos.y) 
-                    - (sub->corners[0].x-sub->pos.x)*(sub->corners[j].y-sub->pos.y);
-      }
-      sub->area /= 2;
-   }
+
+   } while (xml_nextNode(cur));
+
+   if (!pos)
+      WARN(_("Asteroid exclusion in %s has no position."), sys->name);
+
+   if (a->radius == 0.)
+      WARN(_("Asteroid exclusion in %s has no radius."), sys->name);
+
+   /* Added asteroid exclusion. */
+   sys->nastexclude++;
 
    return 0;
 }
@@ -3129,6 +3096,8 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
          do {
             if (xml_isNode(cur,"asteroid"))
                system_parseAsteroidField( cur, sys );
+            else if (xml_isNode(cur,"exclusion"))
+               system_parseAsteroidExclusion( cur, sys );
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -3265,6 +3234,7 @@ static int asteroidTypes_load (void)
          at->gfxs = NULL;
          at->material = NULL;
          at->quantity = NULL;
+         at->armour = 0.;
 
          cur = node->children;
          i = 0; j = 0;
@@ -3289,6 +3259,9 @@ static int asteroidTypes_load (void)
 
             else if (xml_isNode(cur,"id"))
                at->ID = xml_getStrd(cur);
+
+            else if (xml_isNode(cur,"armour"))
+               at->armour = xml_getFloat(cur);
 
             else if (xml_isNode(cur,"commodity")) {
                at->material = realloc( at->material, sizeof(Commodity*)*(j+1) );
@@ -3478,10 +3451,6 @@ void space_renderOverlay( const double dt )
    if (cur_system == NULL)
       return;
 
-   if ((cur_system->nebu_density > 0.) &&
-         !menu_isOpen( MENU_MAIN ))
-      nebu_renderOverlay(dt);
-
    /* Render the debris. */
    pplayer = pilot_get( PLAYER_ID );
    if (pplayer != NULL) {
@@ -3497,6 +3466,9 @@ void space_renderOverlay( const double dt )
       }
    }
 
+   if ((cur_system->nebu_density > 0.) &&
+         !menu_isOpen( MENU_MAIN ))
+      nebu_renderOverlay(dt);
 }
 
 
@@ -3599,10 +3571,14 @@ static void space_renderAsteroid( Asteroid *a )
    Commodity *com;
    char c[20];
 
+   /* Skip invisible asteroids */
+   if (a->appearing == ASTEROID_INVISIBLE)
+      return;
+
    /* Check if needs scaling. */
-   if (a->appearing == 1)
+   if (a->appearing == ASTEROID_GROWING)
       scale = CLAMP( 0., 1., a->timer / 2. );
-   else if (a->appearing == 2)
+   else if (a->appearing == ASTEROID_SHRINKING)
       scale = CLAMP( 0., 1., 1. - a->timer / 2. );
    else
       scale = 1.;
@@ -3740,10 +3716,10 @@ void space_exit (void)
          ast = &sys->asteroids[j];
          free(ast->asteroids);
          free(ast->debris);
-         free(ast->subsets);
          free(ast->type);
       }
       free(sys->asteroids);
+      free(sys->astexclude);
 
    }
    free(systems_stack);
@@ -4305,44 +4281,25 @@ void space_reconstructPresences( void )
  */
 int space_isInField ( Vector2d *p )
 {
-   int i, j, k, isin, istotin;
+   int i;
    AsteroidAnchor *a;
-   AsteroidSubset *sub;
-   double area;
+   AsteroidExclusion *e;
 
-   istotin = -1;
-   for (i=0; i < cur_system->nasteroids; i++) {
-      a = &cur_system->asteroids[i];
-
-      for (k=0; k < a->nsubsets; k++) {
-         sub = &a->subsets[k];
-         isin = 1;
-         /* test every signed area */
-         for (j=0; j < sub->ncorners-1; j++) {
-            area = (sub->corners[j].x-p->x)*(sub->corners[j+1].y-p->y) 
-                 - (sub->corners[j+1].x-p->x)*(sub->corners[j].y-p->y);
-            if (sub->area*area <= 0) {
-               isin = 0;
-               break;
-            }
-         }
-         /* And the last one to loop */
-         if (sub->ncorners > 0) {
-            j = sub->ncorners-1;
-            area = (sub->corners[j].x-p->x)*(sub->corners[0].y-p->y) 
-                 - (sub->corners[0].x-p->x)*(sub->corners[j].y-p->y);
-            if (sub->area*area <= 0)
-               isin = 0;
-         }
-
-         if (isin) {
-            istotin = i;
-            break;
-         }
-      }
+   /* Always return -1 if in an exclusion zone */
+   for (i=0; i < cur_system->nastexclude; i++) {
+      e = &cur_system->astexclude[i];
+      if (vect_dist( p, &e->pos ) <= e->radius)
+         return -1;
    }
 
-   return istotin;
+   /* Check if in asteroid field */
+   for (i=0; i < cur_system->nasteroids; i++) {
+      a = &cur_system->asteroids[i];
+      if (vect_dist( p, &a->pos ) <= a->radius)
+         return i;
+   }
+
+   return -1;
 }
 
 
@@ -4362,11 +4319,19 @@ AsteroidType *space_getType ( int ID )
  * @brief Hits an asteroid.
  *
  *    @param a hitten asteroid
+ *    @param dmg Damage being done
  */
-void asteroid_hit( Asteroid *a )
+void asteroid_hit( Asteroid *a, const Damage *dmg )
 {
-   a->appearing = 3;
-   a->timer = 0.;
+   double darmour;
+   dtype_calcDamage( NULL, &darmour, 1, NULL, dmg, NULL );
+
+   a->armour -= darmour;
+   if (a->armour <= 0)
+   {
+      a->appearing = ASTEROID_EXPLODING;
+      a->timer = 0.;
+   }
 }
 
 
@@ -4375,13 +4340,14 @@ void asteroid_hit( Asteroid *a )
  *
  *    @param a asteroid to make explode
  */
-static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
+static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward )
 {
    int i, j, nb;
    Damage dmg;
    AsteroidType *at;
    Commodity *com;
    Vector2d pos, vel;
+   char buf[16];
 
    /* Manage the explosion */
    dmg.type          = dtype_get("explosion_splash");
@@ -4391,20 +4357,26 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field )
    expl_explode( a->pos.x, a->pos.y, a->vel.x, a->vel.y,
                  50., &dmg, NULL, EXPL_MODE_SHIP );
 
-   /* Release commodity. */
-   at = &asteroid_types[a->type];
+   /* Play random explosion sound. */
+   nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+   sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
 
-   for (i=0; i < at->nmaterial; i++) {
-      nb = RNG(0,at->quantity[i]);
-      com = at->material[i];
-      for (j=0; j < nb; j++) {
-         pos = a->pos;
-         vel = a->vel;
-         pos.x += (RNGF()*30.-15.);
-         pos.y += (RNGF()*30.-15.);
-         vel.x += (RNGF()*20.-10.);
-         vel.y += (RNGF()*20.-10.);
-         gatherable_init( com, pos, vel );
+   if ( give_reward ) {
+      /* Release commodity. */
+      at = &asteroid_types[a->type];
+
+      for (i=0; i < at->nmaterial; i++) {
+         nb = RNG(0,at->quantity[i]);
+         com = at->material[i];
+         for (j=0; j < nb; j++) {
+            pos = a->pos;
+            vel = a->vel;
+            pos.x += (RNGF()*30.-15.);
+            pos.y += (RNGF()*30.-15.);
+            vel.x += (RNGF()*20.-10.);
+            vel.y += (RNGF()*20.-10.);
+            gatherable_init( com, pos, vel );
+         }
       }
    }
 

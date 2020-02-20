@@ -338,7 +338,10 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
       pilot->mass_cargo    -= q;
       pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
       pilot_updateMass( pilot );
-      gui_setGeneric( pilot );
+      /* This can call Lua code and be called during takeoff (pilot cleanup), causing
+       * the Lua code to be run with a half-assed pilot state crashing the game. */
+      if (!cleanup)
+         gui_setGeneric( pilot );
       return q;
    }
    return 0; /* pilot didn't have it */

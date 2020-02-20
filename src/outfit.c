@@ -69,7 +69,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent );
-static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
@@ -364,8 +363,6 @@ int outfit_isActive( const Outfit* o )
       return 1;
    if (outfit_isMod(o) && o->u.mod.active)
       return 1;
-   if (outfit_isJammer(o))
-      return 1;
    if (outfit_isAfterburner(o))
       return 1;
    return 0;
@@ -462,15 +459,6 @@ int outfit_isMod( const Outfit* o )
 int outfit_isAfterburner( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_AFTERBURNER);
-}
-/**
- * @brief Checks if outfit is a missile jammer.
- *    @param o Outfit to check.
- *    @return 1 if o is a jammer.
- */
-int outfit_isJammer( const Outfit* o )
-{
-   return (o->type==OUTFIT_TYPE_JAMMER);
 }
 /**
  * @brief Checks if outfit is a fighter bay.
@@ -748,7 +736,6 @@ double outfit_duration( const Outfit* o )
 {
    Outfit *amm;
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
-   else if (outfit_isJammer(o)) return INFINITY;
    else if (outfit_isAfterburner(o)) return INFINITY;
    else if (outfit_isBolt(o)) return (o->u.blt.range / o->u.blt.speed);
    else if (outfit_isBeam(o)) return o->u.bem.duration;
@@ -769,7 +756,6 @@ double outfit_duration( const Outfit* o )
 double outfit_cooldown( const Outfit* o )
 {
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.cooldown; }
-   else if (outfit_isJammer(o)) return 0.;
    else if (outfit_isAfterburner(o)) return 0.;
    return -1.;
 }
@@ -794,7 +780,6 @@ const char* outfit_getType( const Outfit* o )
          "Turret Launcher",
          "Ship Modification",
          "Afterburner",
-         "Jammer",
          "Fighter Bay",
          "Fighter",
          "Star Map",
@@ -825,7 +810,6 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isTurret(o))     return gettext_noop("Turret");
    else if (outfit_isMod(o))        return gettext_noop("Modification");
    else if (outfit_isAfterburner(o)) return gettext_noop("Afterburner");
-   else if (outfit_isJammer(o))     return gettext_noop("Jammer");
    else if (outfit_isFighterBay(o)) return gettext_noop("Fighter Bay");
    else if (outfit_isFighter(o))    return gettext_noop("Fighter");
    else if (outfit_isMap(o))        return gettext_noop("Map");
@@ -960,7 +944,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
    O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
    O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
-   O_CMP("jammer",         OUTFIT_TYPE_JAMMER);
    O_CMP("map",            OUTFIT_TYPE_MAP);
    O_CMP("localmap",       OUTFIT_TYPE_LOCALMAP);
    O_CMP("license",        OUTFIT_TYPE_LICENSE);
@@ -995,7 +978,6 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
    dmg->disable      = 0.;
-   dmg->asterokill   = 0;
 
    cur = node->xmlChildrenNode;
    do {
@@ -1015,8 +997,6 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
             WARN(_("Unknown damage type '%s'"), buf);
          }
       }
-      else if (xml_isNode(cur,"asterokiller"))
-         dmg->asterokill   = 1;
       else WARN(_("Damage has unknown node '%s'"), cur->name);
 
    } while (xml_nextNode(cur));
@@ -1474,8 +1454,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post-processing */
-   temp->u.amm.resist /= 100.; /* Set it in per one */
-   temp->u.amm.turn   *= M_PI/180.; /* Convert to rad/s. */
+   temp->u.amm.turn *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1524,8 +1503,13 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
             temp->u.mod.cooldown = atof( buf );
             free(buf);
          }
-         temp->u.mod.duration = xml_getFloat(node);
          temp->u.mod.active   = 1;
+         temp->u.mod.duration = xml_getFloat(node);
+
+         /* Infinity if no duration specified. */
+         if (temp->u.mod.duration == 0)
+            temp->u.mod.duration = INFINITY;
+
          continue;
       }
       /* movement */
@@ -1995,58 +1979,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 
 
 /**
- * @brief Parses the jammer tidbits of the outfit.
- *
- *    @param temp Outfit to finish loading.
- *    @param parent Outfit's parent node.
- */
-static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
-{
-   xmlNodePtr node;
-   node = parent->children;
-
-   do {
-      xml_onlyNodes(node);
-      xmlr_float(node,"energy",temp->u.jam.energy);
-      xmlr_float(node,"range",temp->u.jam.range);
-      xmlr_float(node,"power",temp->u.jam.power);
-      WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
-   } while (xml_nextNode(node));
-
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
-   temp->u.jam.energy = -temp->u.jam.energy;
-
-   /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         _("%s\n"
-         "\arActivated Outfit\a0\n"
-         "%.0f CPU\n"
-         "Only one can be equipped\n"
-         "%.0f Range\n"
-         "%.0f%% Power\n"
-         "%.1f EPS"),
-         outfit_getType(temp),
-         temp->cpu,
-         temp->u.jam.range,
-         temp->u.jam.power,
-         temp->u.jam.energy );
-
-   temp->u.jam.power  /= 100.; /* Put in per one, instead of percent */
-   temp->u.jam.range2  = pow2( temp->u.jam.range ); /**< We square it already. */
-
-#define MELEMENT(o,s) \
-if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.jam.range==0.,"range");
-   MELEMENT(temp->u.jam.power==0.,"power");
-   MELEMENT(temp->cpu==0.,"cpu");
-#undef MELEMENT
-}
-
-
-/**
  * @brief Parses and returns Outfit from parent node.
 
  *    @param temp Outfit to load into.
@@ -2174,8 +2106,6 @@ static int outfit_parse( Outfit* temp, const char* file )
             outfit_parseSMod( temp, node );
          else if (outfit_isAfterburner(temp))
             outfit_parseSAfterburner( temp, node );
-         else if (outfit_isJammer(temp))
-            outfit_parseSJammer( temp, node );
          else if (outfit_isFighterBay(temp))
             outfit_parseSFighterBay( temp, node );
          else if (outfit_isFighter(temp))
@@ -2434,12 +2364,12 @@ static void outfit_launcherDesc( Outfit* o )
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
-         "%.0f%% Jam resistance\n"),
+         "%.1f%% Jam Resistance\n"),
          1. / o->u.lau.delay,
          o->u.lau.delay * a->u.amm.energy, a->u.amm.energy,
          outfit_range(a), a->u.amm.duration,
          a->u.amm.speed,
-         a->u.amm.resist );
+         (a->u.amm.resist <= 0 ? 0. : (1. - 0.5 / a->u.amm.resist) * 100.) );
 }
 
 

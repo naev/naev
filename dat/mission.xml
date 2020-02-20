@@ -75,6 +75,15 @@
    <location>Computer</location>
   </avail>
  </mission>
+ <mission name="Fake ID">
+  <lua>pirate/fake_id</lua>
+  <avail>
+   <priority>10</priority>
+   <chance>100</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>

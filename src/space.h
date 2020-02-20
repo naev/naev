@@ -26,6 +26,17 @@
 #define ASSET_REAL            1 /**< The asset is real. */
 
 
+/* Asteroid status enum */
+enum {
+   ASTEROID_VISIBLE,    /**< Asteroid is visible (normal state). */
+   ASTEROID_GROWING,    /**< Asteroid is in the process of appearing. */
+   ASTEROID_SHRINKING,  /**< Asteroid is in the process of disappearing. */
+   ASTEROID_EXPLODING,  /**< Asteroid is in the process of exploding. */
+   ASTEROID_INIT,       /**< Asteroid has not been created yet. */
+   ASTEROID_INVISIBLE,  /**< Asteroid is not used. */
+};
+
+
 /*
  * planet services
  */
@@ -186,6 +197,7 @@ typedef struct AsteroidType_ {
    Commodity **material; /**< Materials contained in the asteroid. */
    int *quantity; /**< Quantities of materials. */
    int nmaterial; /**< size of both material stacks. */
+   double armour; /**< Starting "armour" of the asteroid. */
 } AsteroidType;
 
 
@@ -213,19 +225,10 @@ typedef struct Asteroid_ {
    int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
    int type; /**< The ID of the asteroid type */
    int scanned; /**< Wether the player already scanned this asteroid. */
+   double armour; /**< Current "armour" of the asteroid. */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 
-
-/**
- * @brief Represents a convex subset of an asteroid field.
- */
-typedef struct AsteroidSubset_ {
-   Vector2d *corners; /**< Set of corners of the polygon. */
-   int ncorners; /**< Number of corners. */
-   Vector2d pos; /**< Center. */
-   double area; /**< Subset's area. */
-} AsteroidSubset;
 
 
 /**
@@ -233,20 +236,26 @@ typedef struct AsteroidSubset_ {
  */
 typedef struct AsteroidAnchor_ {
    int id; /**< ID of the anchor, for targeting. */
-   Vector2d pos; /**< Position in the system. */
+   Vector2d pos; /**< Position in the system (from center). */
    double density; /**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb; /**< Number of asteroids. */
    Debris *debris; /**< Debris belonging to the field. */
    int ndebris; /**< Number of debris. */
-   Vector2d *corners; /**< Set of corners of the polygon. */
-   int ncorners; /**< Number of corners. */
+   double radius; /**< Radius of the anchor. */
    double area; /**< Field's area. */
-   AsteroidSubset *subsets; /**< Convex subsets. */
-   int nsubsets; /**< Number of convex subsets. */
    int *type; /**< Types of asteroids. */
    int ntype; /**< Number of types. */
 } AsteroidAnchor;
+
+
+/**
+ * @brief Represents an asteroid exclusion zone.
+ */
+typedef struct AsteroidExclusion_ {
+   Vector2d pos; /**< Position in the system (from center). */
+   double radius; /**< Radius of the exclusion zone. */
+} AsteroidExclusion;
 
 
 /**
@@ -278,8 +287,10 @@ struct StarSystem_ {
    int njumps; /**< number of adjacent jumps */
 
    /* Asteroids. */
-   AsteroidAnchor *asteroids; /**< Asteroids fields in the system */
-   int nasteroids; /**< number of asteroids fields */
+   AsteroidAnchor *asteroids; /**< Asteroid fields in the system */
+   int nasteroids; /**< number of asteroid fields */
+   AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
+   int nastexclude; /**< number of asteroid exclusion zones */
 
    /* Fleets. */
    Fleet** fleets; /**< fleets that can appear in the current system */
@@ -434,7 +445,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /*
  * Asteroids
  */
-void asteroid_hit( Asteroid *a);
+void asteroid_hit( Asteroid *a, const Damage *dmg );
 int space_isInField ( Vector2d *p );
 AsteroidType *space_getType ( int ID );
 

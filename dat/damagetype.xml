@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <dtypes>
  <!-- Leave "normal" at the top, as this is the damage type used as a fallback. -->
  <dtype name="normal">

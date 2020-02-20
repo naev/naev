@@ -1,7 +1,6 @@
 --[[
 
    Pirate Empire bounty
-   Copyright 2014, 2015, 2019 Julie Marchant
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -519,8 +518,9 @@ function spawn_pirate( param )
          target_ship = pilot.add( ship, nil, param )[1]
          target_ship:setHilight( true )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
-         death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-         pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+         hook.pilot( target_ship, "death", "pilot_death" )
+         hook.pilot( target_ship, "jump", "pilot_jump" )
+         hook.pilot( target_ship, "land", "pilot_jump" )
       else
          fail( msg[1] )
       end

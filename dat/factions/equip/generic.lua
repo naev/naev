@@ -943,7 +943,7 @@ function equip_generic( p )
       end
    end
 
-   if avail_cargo then
+   if #avail_cargo > 0 then
       for i=1,rnd.rnd(1,3) do
          local ncargo = rnd.rnd( 0, p:cargoFree() )
          p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:name(), ncargo )

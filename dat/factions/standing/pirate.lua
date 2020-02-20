@@ -23,9 +23,12 @@ _fstanding_neutral = 0
 
 
 _ftext_standing = {}
-_ftext_standing[95] = _("Legend")
-_ftext_standing[20] = _("Clansman")
-_ftext_standing[0]  = _("Partner")
+_ftext_standing[95] = _("Clan Legend")
+_ftext_standing[80] = _("Clan Lord")
+_ftext_standing[60] = _("Clan Warrior")
+_ftext_standing[40] = _("Clan Plunderer")
+_ftext_standing[20] = _("Clan Thug")
+_ftext_standing[0]  = _("Common Thief")
 _ftext_standing[-1] = _("Normie")
 
 _ftext_friendly = _("Friendly")

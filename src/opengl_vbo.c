@@ -238,79 +238,15 @@ void gl_vboUnmap( gl_vbo *vbo )
 
 
 /**
- * @brief Activates a VBO.
- *
- *    @param vbo VBO to activate.
- *    @param Should be one of GL_COLOR_ARRAY, GL_VERTEX_ARRAY, or GL_TEXTURE_COORD_ARRAY.
- *    @param size Specifies components per point.
- *    @param type Type of data (usually GL_FLOAT).
- *    @param stride Offset between consecutive points.
- */
-void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei stride )
-{
-   gl_vboActivateOffset( vbo, class, 0, size, type, stride );
-}
-
-
-/**
  * @brief Activates a VBO's offset.
  *
  *    @param vbo VBO to activate.
- *    @param class Should be one of GL_COLOR_ARRAY, GL_VERTEX_ARRAY,
- *           GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 or GL_TEXTURE1.
+ *    @param index Index of generic vertex attribute.
  *    @param offset Offset (in bytes).
  *    @param size Specifies components per point.
  *    @param type Type of data (usually GL_FLOAT).
  *    @param stride Offset between consecutive points.
  */
-void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
-      GLint size, GLenum type, GLsizei stride )
-{
-   const GLvoid *pointer;
-
-   /* Set up. */
-   glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-   pointer = BUFFER_OFFSET(offset);
-
-   /* Class specific. */
-   switch (class) {
-      case GL_COLOR_ARRAY:
-         glEnableClientState(class);
-         glColorPointer( size, type, stride, pointer );
-         break;
-
-      case GL_VERTEX_ARRAY:
-         glEnableClientState(class);
-         glVertexPointer( size, type, stride, pointer );
-         break;
-
-      case GL_TEXTURE_COORD_ARRAY:
-         glEnableClientState(class);
-         glTexCoordPointer( size, type, stride, pointer );
-         break;
-
-      case GL_TEXTURE0:
-         glClientActiveTexture( GL_TEXTURE0 );
-         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-         glTexCoordPointer( size, type, stride, pointer );
-         break;
-
-      case GL_TEXTURE1:
-         glClientActiveTexture( GL_TEXTURE1 );
-         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-         glTexCoordPointer( size, type, stride, pointer );
-         break;
-
-      default:
-         WARN(_("Unknown VBO class."));
-         break;
-   }
-
-   /* Check for errors. */
-   gl_checkErr();
-}
-
-
 void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
       GLint size, GLenum type, GLsizei stride )
 {
@@ -321,25 +257,6 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
    pointer = BUFFER_OFFSET(offset);
 
    glVertexAttribPointer( index, size, type, GL_FALSE, stride, pointer );
-
-   /* Check for errors. */
-   gl_checkErr();
-}
-
-
-/**
- * @brief Deactivates the vbo stuff.
- */
-void gl_vboDeactivate (void)
-{
-   glBindBuffer(GL_ARRAY_BUFFER, 0);
-   glDisableClientState(GL_VERTEX_ARRAY);
-   glDisableClientState(GL_COLOR_ARRAY);
-   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-   glClientActiveTexture( GL_TEXTURE1 );
-   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-   glClientActiveTexture( GL_TEXTURE0 );
-   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
    /* Check for errors. */
    gl_checkErr();

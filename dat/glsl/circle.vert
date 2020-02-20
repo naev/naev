@@ -6,6 +6,6 @@ uniform float radius;
 out vec2 pos;
 
 void main(void) {
-   pos = 2 * radius * (vertex.xy - .5);
+   pos = 2. * radius * (vertex.xy - .5);
    gl_Position = projection * vertex;
 }

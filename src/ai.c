@@ -214,7 +214,6 @@ static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
-static int aiL_hasjammers( lua_State *L ); /* bool hasjammers() */
 static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
@@ -303,7 +302,6 @@ static const luaL_Reg aiL_methods[] = {
    { "weapset", aiL_weapSet },
    { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
-   { "hasjammers", aiL_hasjammers },
    { "hasafterburner", aiL_hasafterburner },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
@@ -1379,8 +1377,6 @@ static int aiL_getflybydistance( lua_State *L )
    Pilot *p;
    int offset_distance;
 
-   v = NULL;
-
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
@@ -1391,10 +1387,8 @@ static int aiL_getflybydistance( lua_State *L )
 
       /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
    }
-   else {
+   else
       NLUA_INVALID_PARAMETER(L);
-      return 0;
-   }
 
    vect_cset(&offset_vect, VX(*v) - VX(cur_pilot->solid->pos), VY(*v) - VY(cur_pilot->solid->pos) );
    vect_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid->vel)+M_PI_2);
@@ -2703,8 +2697,8 @@ static int aiL_setasterotarget( lua_State *L )
  * @brief Gets the closest gatherable within a radius.
  * 
  *    @luaparam float rad Radius to search in.
- *    @luareturn int i Id of the gatherable.
- *    @luafunc setasterotarget( field, ast )
+ *    @luareturn int i Id of the gatherable or nil if none found.
+ *    @luafunc getgatherable( field, ast )
  */
 static int aiL_getGatherable( lua_State *L )
 {
@@ -2718,7 +2712,10 @@ static int aiL_getGatherable( lua_State *L )
 
    i = gatherable_getClosest( cur_pilot->solid->pos, rad );
 
-   lua_pushnumber(L,i);
+   if (i != -1)
+      lua_pushnumber(L,i);
+   else
+      lua_pushnil(L);
 
    return 1;
 }
@@ -2730,7 +2727,7 @@ static int aiL_getGatherable( lua_State *L )
  *    @luaparam int id Id of the gatherable.
  *    @luareturn vec2 pos position of the gatherable.
  *    @luareturn vec2 vel velocity of the gatherable.
- *    @luafunc setasterotarget( field, ast )
+ *    @luafunc gatherablepos( field, ast )
  */
 static int aiL_gatherablePos( lua_State *L )
 {
@@ -2821,19 +2818,6 @@ static int aiL_hascannons( lua_State *L )
 static int aiL_hasturrets( lua_State *L )
 {
    lua_pushboolean( L, cur_pilot->nturrets > 0 );
-   return 1;
-}
-
-
-/**
- * @brief Does the pilot have jammers?
- *
- *    @luatreturn boolean True if the pilot has jammers.
- * @luafunc hasjammers()
- */
-static int aiL_hasjammers( lua_State *L )
-{
-   lua_pushboolean( L, cur_pilot->njammers > 0 );
    return 1;
 }
 

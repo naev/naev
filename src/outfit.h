@@ -51,7 +51,6 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
    OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
-   OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
    OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
    OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
@@ -113,7 +112,6 @@ typedef struct Damage_ {
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
    double damage;       /**< Amount of damage, this counts towards killing the ship. */
    double disable;      /**< Amount of disable damage, this counts towards disabling the ship. */
-   int asterokill;      /**< Whether it is possible to destroy asteroids. */
 } Damage;
 
 
@@ -303,16 +301,6 @@ typedef struct OutfitLocalMapData_ {
 } OutfitLocalMapData;
 
 /**
- * @brief Represents a jammer.
- */
-typedef struct OutfitJammerData_ {
-   double energy;    /**< Energy it uses to run */
-   double range;     /**< Range it starts to do effect */
-   double range2;    /**< Range squared. */
-   double power;     /**< Strength of the effect. */
-} OutfitJammerData;
-
-/**
  * @brief Represents a GUI.
  */
 typedef struct OutfitGUIData_ {
@@ -354,7 +342,6 @@ typedef struct Outfit_ {
       OutfitAmmoData amm;         /**< AMMO */
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb;  /**< AFTERBURNER */
-      OutfitJammerData jam;       /**< JAMMER */
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */
       OutfitFighterData fig;      /**< FIGHTER */
       OutfitMapData_t *map;       /**< MAP */
@@ -382,7 +369,6 @@ int outfit_isSeeker( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
-int outfit_isJammer( const Outfit* o );
 int outfit_isFighterBay( const Outfit* o );
 int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );

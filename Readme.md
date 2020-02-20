@@ -14,7 +14,7 @@ accompanying everything from planets to equipment.
 
 Naev's dependencies are intended to be relatively common. In addition to
 an OpenGL-capable graphics card and driver, Naev requires the following:
-* SDL (version 2 is preferred)
+* SDL 2
 * libxml2
 * freetype2
 * fontconfig
@@ -38,7 +38,7 @@ Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 ```bash
 apt-get install build-essential automake libsdl2-dev libsdl2-image-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
-libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool
+libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev
 ```
 
 ### Other \*nix 
@@ -64,7 +64,7 @@ Naev currently supports make install which will install everything that
 is needed.
 
 If you wish to create a .desktop for your desktop environment, logos
-from 16x16 to 256x256 can be found in extras/logos
+from 16x16 to 256x256 can be found in `extras/logos/`.
 
 ## WINDOWS
 

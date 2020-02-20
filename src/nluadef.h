@@ -16,7 +16,6 @@
 /*
  * debug stuff
  */
-#ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
 #define NLUA_DEBUG(str, args...) \
    (DEBUG("Lua: "str"\n", ## args), abort())
@@ -36,13 +35,6 @@
       luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
-
-   
-#else /* DEBUGGING */
-#define NLUA_DEBUG(str, args...) do {;} while(0)
-#define NLUA_MIN_ARGS(n)         do {;} while(0)
-#define NLUA_INVALID_PARAMETER(L) do {;} while(0)
-#endif /* DEBUGGING */
 
 
 /*

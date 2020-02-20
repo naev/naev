@@ -13,6 +13,7 @@
  <assets>
   <asset>Nougat I</asset>
   <asset>Nougat II</asset>
+  <asset>Virtual Miner Small</asset>
  </assets>
  <jumps>
   <jump target="Chraan">
@@ -28,4 +29,15 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <pos x="-480" y="10020"/>
+   <radius>800</radius>
+   <density>10.0</density>
+  </asteroid>
+  <exclusion>
+   <pos x="-480" y="10020"/>
+   <radius>500</radius>
+  </exclusion>
+ </asteroids>
 </ssys>

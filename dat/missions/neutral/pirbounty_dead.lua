@@ -379,6 +379,7 @@ function spawn_pirate( param )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
          death_hook = hook.pilot( target_ship, "death", "pilot_death" )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+         pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
 
          local pir_crew = target_ship:stats().crew
          local pl_crew = player.pilot():stats().crew
@@ -410,6 +411,9 @@ function succeed ()
    end
    if pir_jump_hook ~= nil then
       hook.rm( pir_jump_hook )
+   end
+   if pir_land_hook ~= nil then
+      hook.rm( pir_land_hook )
    end
 end
 

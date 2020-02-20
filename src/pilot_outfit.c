@@ -309,8 +309,6 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->nturrets++;
    else if (outfit_isBolt(outfit))
       pilot->ncannons++;
-   else if (outfit_isJammer(outfit))
-      pilot->njammers++;
    else if (outfit_isAfterburner(outfit))
       pilot->nafterburners++;
 
@@ -942,7 +940,6 @@ void pilot_calcStats( Pilot* pilot )
     * Now add outfit changes
     */
    pilot->mass_outfit   = 0.;
-   pilot->jamming       = 0;
    for (i=0; i<pilot->noutfits; i++) {
       slot = pilot->outfits[i];
       o    = slot->outfit;
@@ -1002,10 +999,6 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isAfterburner(o)) { /* Afterburner */
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
          pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
-      }
-      else if (outfit_isJammer(o)) { /* Jammer */
-         pilot->jamming        = 1;
-         pilot->energy_loss   += o->u.jam.energy;
       }
    }
 

@@ -12,6 +12,7 @@
  </pos>
  <assets>
   <asset>Haven</asset>
+  <asset>Virtual Miner Small</asset>
  </assets>
  <jumps>
   <jump target="Andres">
@@ -33,4 +34,17 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>golden</type>
+   <pos x="6000" y="6000"/>
+   <radius>4000</radius>
+   <density>0.500000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Techs>
  <!-- Templates - add all new outfits, commodities and ships here! -->
  <tech name="All Outfits">
@@ -27,7 +27,6 @@
   <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Gauss Gun</item>
-  <item>Asterokiller Gauss Gun</item>
   <item>Vulcan Gun</item>
   <item>Shredder</item>
   <item>Turreted Gauss Gun</item>
@@ -72,7 +71,6 @@
   <item>Enygma Systems Turreted Vengeance Launcher</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
-  <item>Unicorp Asterokiller Launcher</item>
   <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
