@@ -9,12 +9,20 @@ function create ()
     end
 
     hyena = pilot.add("Civilian Hyena", nil, true)[1]
-    
+
     hook.pilot(hyena, "jump", "finish")
     hook.pilot(hyena, "death", "finish")
     hook.land("finish")
     hook.jumpout("finish")
-    
+
+    -- Lower chance of getting this event. First three times are
+    -- full chance; after that, chance decreases by half each time.
+    -- Does not apply to the Toaxis system. (This is here to
+    -- prevent annoyance from a player constantly being offered
+    -- this mission when they have no interest in it.)
+    local chance = var.peek( "baron_comm_chance" ) or 4
+    var.push( "baron_comm_chance", chance / 2 )
+
     hailie = hook.timer( 3000., "hailme" );
 end
 
