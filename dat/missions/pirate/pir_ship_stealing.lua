@@ -31,14 +31,14 @@ informer = {
    description = _("A pirate informer is looking at you. Maybe he has some useful information to sell?"),
    title = _("Ship to steal"),
    message = _([["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
-   "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
-   Do you really want to pay to know where that ship is?]])
+    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
+    Do you want to pay to know where that ship is?]])
 }
 
 approval = {
    title = _("Of course"),
    message = _([[You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
-   Hopefully, the pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]])
+    The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]])
 }
 
 not_enough_title = _("Not Enough Money")
@@ -47,7 +47,7 @@ not_enough_msg = _([["Do you take me for a fool? Get out of here! Come back when
 success = {
    title = _("Ship successfully stolen!"),
    message = _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
-   Enemy ships will probably be after you as soon as you'll leave the atmosphere, so you should get ready and use wisely the little time you have on this planet.]])
+    Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]])
 }
 
 local base_price = 100000
