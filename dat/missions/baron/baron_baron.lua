@@ -58,8 +58,12 @@ text[19] = _([[You cough to get the Baron's attention. He looks up, clearly disp
 refusetitle = _("Never the wiser")
 refusetext = _([["Oh. Oh well, too bad. I'll just try to find someone who will take the job, then. Sorry for taking up your time. See you around!"]])
 
+angrytitle = _("Well, then...")
+angrytext = _([[The pilot frowns. "I see I misjudged you. I thought for sure you would be more open-minded. Get out of my sight and never show your face to me again! You are clearly useless to my employer."]])
+
 choice1 = _("Accept the job")
 choice2 = _("Politely decline")
+choice3 = _("Angrily refuse")
 
 comm1 = _("All troops, engage %s %s! It has broken %s law!")
 
@@ -87,10 +91,15 @@ function create ()
    tk.msg(title[1], text[1])
    tk.msg(title[1], text[2])
    tk.msg(title[1], text[3])
-   if tk.choice(title[1], text[4], choice1, choice2) == 1 then
+   local c = tk.choice(title[1], text[4], choice1, choice2, choice3)
+   if c == 1 then
       accept()
-   else
+   elseif c == 2 then
       tk.msg(refusetitle, refusetext)
+      abort()
+   else
+      tk.msg(angrytitle, angrytext)
+      var.push("baron_hated", true)
       abort()
    end
 end
