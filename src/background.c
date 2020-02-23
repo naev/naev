@@ -69,14 +69,6 @@ static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
 
-static GLuint stars_glsl_program = 0;
-static GLuint stars_glsl_program_vertex = 0;
-static GLuint stars_glsl_program_brightness = 0;
-static GLuint stars_glsl_program_projection = 0;
-static GLuint stars_glsl_program_star_xy = 0;
-static GLuint stars_glsl_program_star_wh = 0;
-static GLuint stars_glsl_program_xy = 0;
-
 
 /*
  * Prototypes.
@@ -88,7 +80,6 @@ static void background_clearImgArr( background_image_t **arr );
 /* Sorting. */
 static int bkg_compare( const void *p1, const void *p2 );
 static void bkg_sort( background_image_t *arr );
-static GLuint stars_glsl_program_compile( void );
 
 
 /**
@@ -175,11 +166,11 @@ void background_renderStars( const double dt )
 
    /* TODO: Use geometry shader instead of drawing both points and lines */
 
-   if (stars_glsl_program == 0) {
+   if (shaders.stars.program == 0) {
       return;
    }
 
-   glUseProgram(stars_glsl_program);
+   glUseProgram(shaders.stars.program);
 
    glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
@@ -226,17 +217,17 @@ void background_renderStars( const double dt )
    h += conf.zoom_stars * (h / conf.zoom_far - 1.);
 
    /* Render. */
-   glEnableVertexAttribArray( stars_glsl_program_vertex );
-   glEnableVertexAttribArray( stars_glsl_program_brightness );
-   gl_vboActivateAttribOffset( star_vertexVBO, stars_glsl_program_vertex, 0,
+   glEnableVertexAttribArray( shaders.stars.vertex );
+   glEnableVertexAttribArray( shaders.stars.brightness );
+   gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
          2, GL_FLOAT, 3 * sizeof(GLfloat) );
-   gl_vboActivateAttribOffset( star_vertexVBO, stars_glsl_program_brightness, 2 * sizeof(GLfloat),
+   gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
          1, GL_FLOAT, 3 * sizeof(GLfloat) );
 
-   gl_Matrix4_Uniform(glGetUniformLocation(stars_glsl_program, "projection"), projection);
-   glUniform2f(glGetUniformLocation(stars_glsl_program, "star_xy"), star_x, star_y);
-   glUniform2f(glGetUniformLocation(stars_glsl_program, "wh"), w, h);
-   glUniform2f(glGetUniformLocation(stars_glsl_program, "xy"), x, y);
+   gl_Matrix4_Uniform(shaders.stars.projection, projection);
+   glUniform2f(shaders.stars.star_xy, star_x, star_y);
+   glUniform2f(shaders.stars.wh, w, h);
+   glUniform2f(shaders.stars.xy, x, y);
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
       glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
@@ -245,8 +236,8 @@ void background_renderStars( const double dt )
       glDrawArrays( GL_POINTS, 0, nstars );
 
    /* Disable vertex array. */
-   glDisableVertexAttribArray( stars_glsl_program_vertex );
-   glDisableVertexAttribArray( stars_glsl_program_brightness );
+   glDisableVertexAttribArray( shaders.stars.vertex );
+   glDisableVertexAttribArray( shaders.stars.brightness );
 
    glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
@@ -411,14 +402,6 @@ int background_init (void)
    /* Load Lua. */
    bkg_def_env = background_create( "default" );
 
-   stars_glsl_program = gl_program_vert_frag("stars.vert", "stars.frag");
-   stars_glsl_program_vertex = glGetAttribLocation(stars_glsl_program, "vertex");
-   stars_glsl_program_brightness = glGetAttribLocation(stars_glsl_program, "brightness");
-   stars_glsl_program_projection = glGetUniformLocation(stars_glsl_program, "projection");
-   stars_glsl_program_star_xy = glGetUniformLocation(stars_glsl_program, "star_xy");
-   stars_glsl_program_star_wh = glGetUniformLocation(stars_glsl_program, "wh");
-   stars_glsl_program_star_xy = glGetUniformLocation(stars_glsl_program, "xy");
-
    return 0;
 }
 
@@ -550,7 +533,4 @@ void background_free (void)
    }
    nstars = 0;
    mstars = 0;
-
-   glDeleteProgram(stars_glsl_program);
-   stars_glsl_program = 0;
 }

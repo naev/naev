@@ -6,6 +6,11 @@ AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
+shaders.gen.c shaders.gen.h: shaders_c_gen
+	./$<
+
+CLEANFILES = shaders.gen.c shaders.gen.h
+
 CODE_SOURCE = \
 	ai.c \
 	array.c \
@@ -132,6 +137,7 @@ CODE_SOURCE = \
 	queue.c \
 	rng.c \
 	save.c \
+	shaders.gen.c \
 	ship.c \
 	shipstats.c \
 	slots.c \
@@ -276,6 +282,7 @@ CODE_SOURCE = \
 	queue.h \
 	rng.h \
 	save.h \
+	shaders.gen.h \
 	ship.h \
 	shipstats.h \
 	slots.h \

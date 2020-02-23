@@ -27,6 +27,7 @@
 #include "opengl_render.h"
 #include "opengl_shader.h"
 
+#include "shaders.gen.h"
 
 /* Recommended for compatibility and such */
 #if HAS_BIGENDIAN

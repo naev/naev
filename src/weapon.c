@@ -106,12 +106,6 @@ static int weapon_vboSize      = 0; /**< Size of the VBO. */
 static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
 
 
-static GLuint beam_glsl_program = 0;
-static GLuint beam_glsl_program_vertex = 0;
-static GLuint beam_glsl_program_projection = 0;
-static GLuint beam_glsl_program_tex_mat = 0;
-
-
 /*
  * Prototypes
  */
@@ -153,14 +147,6 @@ void weapon_minimap( const double res, const double w,
 /* movement. */
 static void weapon_setThrust( Weapon *w, double thrust );
 static void weapon_setTurn( Weapon *w, double turn );
-
-
-void weapon_init (void) {
-   beam_glsl_program = gl_program_vert_frag("beam.vert", "beam.frag");
-   beam_glsl_program_vertex = glGetAttribLocation(beam_glsl_program, "vertex");
-   beam_glsl_program_projection = glGetUniformLocation(beam_glsl_program, "projection");
-   beam_glsl_program_tex_mat = glGetUniformLocation(beam_glsl_program, "tex_mat");
-}
 
 
 /**
@@ -286,8 +272,8 @@ void weapon_minimap( const double res, const double w,
             sizeof(GLfloat) * 4*p, &weapon_vboData[offset] );
 
       gl_beginSmoothProgram(gl_view_matrix);
-      gl_vboActivateAttribOffset( weapon_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateAttribOffset( weapon_vbo, smooth_glsl_program_vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( weapon_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( weapon_vbo, shaders.smooth.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
       gl_endSmoothProgram();
    }
@@ -654,7 +640,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    gl_Matrix4 projection, tex_mat;
 
    /* Load GLSL program */
-   glUseProgram(beam_glsl_program);
+   glUseProgram(shaders.beam.program);
 
    gfx = outfit_gfx(w->outfit);
 
@@ -675,8 +661,8 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    glBindTexture( GL_TEXTURE_2D, gfx->texture);
 
    /* Set the vertex. */
-   glEnableVertexAttribArray( beam_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, beam_glsl_program_vertex,
+   glEnableVertexAttribArray( shaders.beam.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
@@ -685,14 +671,14 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    tex_mat = gl_Matrix4_Scale(tex_mat, w->outfit->u.bem.range / gfx->sw, 1, 1);
 
    /* Set shader uniforms. */
-   gl_Matrix4_Uniform(beam_glsl_program_projection, projection);
-   gl_Matrix4_Uniform(beam_glsl_program_tex_mat, tex_mat);
+   gl_Matrix4_Uniform(shaders.beam.projection, projection);
+   gl_Matrix4_Uniform(shaders.beam.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( beam_glsl_program_vertex );
+   glDisableVertexAttribArray( shaders.beam.vertex );
    glUseProgram(0);
 
    /* anything failed? */

@@ -629,6 +629,8 @@ int gl_init (void)
    glGenVertexArrays(1, &VaoId);
    glBindVertexArray(VaoId);
 
+   shaders_load();
+
    /* Cosmetic new line. */
    DEBUG("");
 
@@ -740,6 +742,8 @@ void gl_exit (void)
    gl_exitVBO();
    gl_exitTextures();
    gl_exitMatrix();
+
+   shaders_unload();
 
    /* Shut down the subsystem */
    SDL_QuitSubSystem(SDL_INIT_VIDEO);

@@ -375,7 +375,6 @@ int main( int argc, char** argv )
    map_init(); /* initializes the map. */
    cond_init(); /* Initialize conditional subsystem. */
    cli_init(); /* Initialize console. */
-   weapon_init();
 
    /* Data loading */
    load_all();

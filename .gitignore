@@ -63,6 +63,9 @@ po/stamp-it
 po/stamp-po
 po/@GETTEXT_PACKAGE@.pot
 po/*.gmo
+*.gen.c
+*.gen.h
+src/shaders_c_gen
 
 /.cproject
 /.project

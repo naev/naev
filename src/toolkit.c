@@ -1038,8 +1038,8 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    gl_beginSmoothProgram(gl_view_matrix);
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
    gl_endSmoothProgram();
@@ -1091,8 +1091,8 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    gl_beginSmoothProgram(gl_view_matrix);
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_LOOP, 0, 4 );
    gl_endSmoothProgram();
@@ -1139,8 +1139,8 @@ void toolkit_drawRect( int x, int y, int w, int h,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    gl_beginSmoothProgram(gl_view_matrix);
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_endSmoothProgram();
@@ -1256,8 +1256,8 @@ static void window_renderBorder( Window* w )
    gl_beginSmoothProgram(gl_view_matrix);
 
    /* Both sides. */
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, smooth_glsl_program_vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    /* Colour is shared. */
    colours[0] = c->r;

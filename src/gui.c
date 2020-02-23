@@ -671,7 +671,7 @@ static void gui_renderBorder( double dt )
             col = &cWhite;
 
          gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), col);
-         gl_vboActivateAttribOffset( gui_triangle_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 4 );
          gl_endSolidProgram();
       }
@@ -1256,7 +1256,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
          col.a = 1.-interference_alpha;
 
          gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &cRadar_tPilot);
-         gl_vboActivateAttribOffset( gui_radar_select_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
          glDrawArrays( GL_LINES, 0, 8 );
          gl_endSolidProgram();
       }
@@ -1406,7 +1406,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
       projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
       projection = gl_Matrix4_Scale(projection, vr, vr, 1);
       gl_beginSolidProgram(projection, &col);
-      gl_vboActivateAttribOffset( gui_planet_blink_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( gui_planet_blink_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 8 );
       gl_endSolidProgram();
    }
@@ -1460,7 +1460,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
    c.a = 1.-interference_alpha;
 
    gl_beginSolidProgram(projection, &c);
-   gl_vboActivateAttribOffset( gui_out_of_range_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gui_out_of_range_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINES, 0, 2 );
    gl_endSolidProgram();
 }
@@ -1540,7 +1540,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       col.a = 1.-interference_alpha;
 
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
-   gl_vboActivateAttribOffset( gui_planet_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
 
@@ -1631,7 +1631,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
    projection = gl_Matrix4_Rotate2d(projection, -M_PI/2-jp->angle);
    gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( gui_triangle_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
 

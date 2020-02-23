@@ -48,72 +48,37 @@ static gl_vbo *gl_crossVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 
-/* GLSL programs, uniform indexes, attribute indexes */
-static GLuint texture_glsl_program = 0;
-static GLuint texture_glsl_program_vertex = 0;
-static GLuint texture_glsl_program_projection = 0;
-static GLuint texture_glsl_program_color = 0;
-static GLuint texture_glsl_program_tex_mat = 0;
-static GLuint texture_interpolate_glsl_program = 0;
-static GLuint texture_interpolate_glsl_program_vertex = 0;
-static GLuint texture_interpolate_glsl_program_projection = 0;
-static GLuint texture_interpolate_glsl_program_color = 0;
-static GLuint texture_interpolate_glsl_program_tex_mat = 0;
-static GLuint texture_interpolate_glsl_program_sampler1 = 0;
-static GLuint texture_interpolate_glsl_program_sampler2 = 0;
-static GLuint texture_interpolate_glsl_program_inter = 0;
-static GLuint solid_glsl_program = 0;
-static GLuint solid_glsl_program_color = 0;
-static GLuint solid_glsl_program_projection = 0;
-GLuint solid_glsl_program_vertex = 0;
-static GLuint smooth_glsl_program = 0;
-static GLuint smooth_glsl_program_projection = 0;
-GLuint smooth_glsl_program_vertex = 0;
-GLuint smooth_glsl_program_vertex_color = 0;
-static GLuint circle_glsl_program = 0;
-static GLuint circle_glsl_program_vertex = 0;
-static GLuint circle_glsl_program_color = 0;
-static GLuint circle_glsl_program_projection = 0;
-static GLuint circle_glsl_program_radius = 0;
-static GLuint circle_filled_glsl_program = 0;
-static GLuint circle_filled_glsl_program_vertex = 0;
-static GLuint circle_filled_glsl_program_color = 0;
-static GLuint circle_filled_glsl_program_projection = 0;
-static GLuint circle_filled_glsl_program_radius = 0;
-
-
 /*
  * prototypes
  */
 static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
-static GLuint texture_glsl_program_compile( void );
 
 
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c) {
-   glUseProgram(solid_glsl_program);
-   glEnableVertexAttribArray(solid_glsl_program_vertex);
-   gl_uniformColor(solid_glsl_program_color, c);
-   gl_Matrix4_Uniform(solid_glsl_program_projection, projection);
+   glUseProgram(shaders.solid.program);
+   glEnableVertexAttribArray(shaders.solid.vertex);
+   gl_uniformColor(shaders.solid.color, c);
+   gl_Matrix4_Uniform(shaders.solid.projection, projection);
 }
 
 void gl_endSolidProgram() {
-   glDisableVertexAttribArray(solid_glsl_program_vertex);
+   glDisableVertexAttribArray(shaders.solid.vertex);
    glUseProgram(0);
    gl_checkErr();
 }
 
 
 void gl_beginSmoothProgram(gl_Matrix4 projection) {
-   glUseProgram(smooth_glsl_program);
-   glEnableVertexAttribArray(smooth_glsl_program_vertex);
-   glEnableVertexAttribArray(smooth_glsl_program_vertex_color);
-   gl_Matrix4_Uniform(smooth_glsl_program_projection, projection);
+   glUseProgram(shaders.smooth.program);
+   glEnableVertexAttribArray(shaders.smooth.vertex);
+   glEnableVertexAttribArray(shaders.smooth.vertex_color);
+   gl_Matrix4_Uniform(shaders.smooth.projection, projection);
 }
 
 void gl_endSmoothProgram() {
-   glDisableVertexAttribArray(smooth_glsl_program_vertex);
-   glDisableVertexAttribArray(smooth_glsl_program_vertex_color);
+   glDisableVertexAttribArray(shaders.smooth.vertex);
+   glDisableVertexAttribArray(shaders.smooth.vertex_color);
    glUseProgram(0);
    gl_checkErr();
 }
@@ -138,7 +103,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
    gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_squareVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_endSolidProgram();
 }
@@ -162,7 +127,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
    gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_squareEmptyVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
 }
@@ -184,7 +149,7 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
    projection = gl_Matrix4_Scale(projection, r, r, 1);
 
    gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_crossVBO, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gl_crossVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINES, 0, 4 );
    gl_endSolidProgram();
 }
@@ -212,11 +177,11 @@ void gl_blitTexture(  const glTexture* texture,
 {
    gl_Matrix4 projection, tex_mat;
 
-   if (texture_glsl_program == 0) {
+   if (shaders.texture.program == 0) {
       return;
    }
 
-   glUseProgram(texture_glsl_program);
+   glUseProgram(shaders.texture.program);
 
    /* Bind the texture. */
    glBindTexture( GL_TEXTURE_2D, texture->texture);
@@ -229,8 +194,8 @@ void gl_blitTexture(  const glTexture* texture,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( texture_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, texture_glsl_program_vertex,
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
@@ -239,15 +204,15 @@ void gl_blitTexture(  const glTexture* texture,
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
-   gl_uniformColor(texture_glsl_program_color, c);
-   gl_Matrix4_Uniform(texture_glsl_program_projection, projection);
-   gl_Matrix4_Uniform(texture_glsl_program_tex_mat, tex_mat);
+   gl_uniformColor(shaders.texture.color, c);
+   gl_Matrix4_Uniform(shaders.texture.projection, projection);
+   gl_Matrix4_Uniform(shaders.texture.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( glGetAttribLocation(texture_glsl_program, "vertex") );
+   glDisableVertexAttribArray( glGetAttribLocation(shaders.texture.program, "vertex") );
 
    /* anything failed? */
    gl_checkErr();
@@ -300,11 +265,11 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 
    gl_Matrix4 projection, tex_mat;
 
-   if (texture_interpolate_glsl_program == 0) {
+   if (shaders.texture_interpolate.program == 0) {
       return;
    }
 
-   glUseProgram(texture_interpolate_glsl_program);
+   glUseProgram(shaders.texture_interpolate.program);
 
    /* Bind the textures. */
    glActiveTexture( GL_TEXTURE0 );
@@ -320,8 +285,8 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
-   glEnableVertexAttribArray( texture_interpolate_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, texture_interpolate_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = gl_Matrix4_Identity();
@@ -329,18 +294,18 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
-   glUniform1i(texture_interpolate_glsl_program_sampler1, 0);
-   glUniform1i(texture_interpolate_glsl_program_sampler2, 1);
-   gl_uniformColor(texture_interpolate_glsl_program_color, c);
-   glUniform1f(texture_interpolate_glsl_program_inter, inter);
-   gl_Matrix4_Uniform(texture_interpolate_glsl_program_projection, projection);
-   gl_Matrix4_Uniform(texture_interpolate_glsl_program_tex_mat, tex_mat);
+   glUniform1i(shaders.texture_interpolate.sampler1, 0);
+   glUniform1i(shaders.texture_interpolate.sampler2, 1);
+   gl_uniformColor(shaders.texture_interpolate.color, c);
+   glUniform1f(shaders.texture_interpolate.inter, inter);
+   gl_Matrix4_Uniform(shaders.texture_interpolate.projection, projection);
+   gl_Matrix4_Uniform(shaders.texture_interpolate.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( texture_interpolate_glsl_program_vertex );
+   glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
    glActiveTexture( GL_TEXTURE0 );
 
    /* anything failed? */
@@ -632,26 +597,26 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
 {
    gl_Matrix4 projection;
 
-   glUseProgram(circle_glsl_program);
+   glUseProgram(shaders.circle.program);
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
    projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
-   glEnableVertexAttribArray( circle_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, circle_glsl_program_vertex,
+   glEnableVertexAttribArray( shaders.circle.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor(circle_glsl_program_color, c);
-   gl_Matrix4_Uniform(circle_glsl_program_projection, projection);
-   glUniform1f(circle_glsl_program_radius, r);
+   gl_uniformColor(shaders.circle.color, c);
+   gl_Matrix4_Uniform(shaders.circle.projection, projection);
+   glUniform1f(shaders.circle.radius, r);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( circle_glsl_program_vertex );
+   glDisableVertexAttribArray( shaders.circle.vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -663,26 +628,26 @@ static void gl_drawCircleFilled( const double cx, const double cy,
 {
    gl_Matrix4 projection;
 
-   glUseProgram(circle_filled_glsl_program);
+   glUseProgram(shaders.circle_filled.program);
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
    projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
-   glEnableVertexAttribArray( circle_filled_glsl_program_vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, circle_filled_glsl_program_vertex,
+   glEnableVertexAttribArray( shaders.circle_filled.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle_filled.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor(circle_filled_glsl_program_color, c);
-   gl_Matrix4_Uniform(circle_filled_glsl_program_projection, projection);
-   glUniform1f(circle_filled_glsl_program_radius, r);
+   gl_uniformColor(shaders.circle_filled.color, c);
+   gl_Matrix4_Uniform(shaders.circle_filled.projection, projection);
+   glUniform1f(shaders.circle_filled.radius, r);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( circle_filled_glsl_program_vertex );
+   glDisableVertexAttribArray( shaders.circle_filled.vertex );
    glUseProgram(0);
 
    /* Check errors. */
@@ -784,45 +749,6 @@ int gl_initRender (void)
    vertex[6] = 1;
    vertex[7] = 0.;
    gl_crossVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
-
-   texture_glsl_program = gl_program_vert_frag("texture.vert", "texture.frag");
-   texture_glsl_program_vertex = glGetAttribLocation(texture_glsl_program, "vertex");
-   texture_glsl_program_projection = glGetUniformLocation(texture_glsl_program, "projection");
-   texture_glsl_program_color = glGetUniformLocation(texture_glsl_program, "color");
-   texture_glsl_program_tex_mat = glGetUniformLocation(texture_glsl_program, "tex_mat");
-
-   texture_interpolate_glsl_program = gl_program_vert_frag("texture.vert",
-         "texture_interpolate.frag");
-   texture_interpolate_glsl_program_vertex = glGetAttribLocation(texture_interpolate_glsl_program, "vertex");
-   texture_interpolate_glsl_program_projection = glGetUniformLocation(texture_interpolate_glsl_program, "projection");
-   texture_interpolate_glsl_program_color = glGetUniformLocation(texture_interpolate_glsl_program, "color");
-   texture_interpolate_glsl_program_tex_mat = glGetUniformLocation(texture_interpolate_glsl_program, "tex_mat");
-   texture_interpolate_glsl_program_sampler1 = glGetUniformLocation(texture_interpolate_glsl_program, "sampler1");
-   texture_interpolate_glsl_program_sampler2 = glGetUniformLocation(texture_interpolate_glsl_program, "sampler2");
-   texture_interpolate_glsl_program_inter = glGetUniformLocation(texture_interpolate_glsl_program, "inter");
-
-   solid_glsl_program = gl_program_vert_frag("solid.vert", "solid.frag");
-   solid_glsl_program_projection = glGetUniformLocation(solid_glsl_program, "projection");
-   solid_glsl_program_color = glGetUniformLocation(solid_glsl_program, "color");
-   solid_glsl_program_vertex = glGetAttribLocation(solid_glsl_program, "vertex");
-
-   smooth_glsl_program = gl_program_vert_frag("smooth.vert", "smooth.frag");
-   smooth_glsl_program_projection = glGetUniformLocation(smooth_glsl_program, "projection");
-   smooth_glsl_program_vertex = glGetAttribLocation(smooth_glsl_program, "vertex");
-   smooth_glsl_program_vertex_color = glGetAttribLocation(smooth_glsl_program, "vertex_color");
-
-   circle_glsl_program = gl_program_vert_frag("circle.vert", "circle.frag");
-   circle_glsl_program_vertex = glGetAttribLocation(circle_glsl_program, "vertex");
-   circle_glsl_program_projection = glGetUniformLocation(circle_glsl_program, "projection");
-   circle_glsl_program_color = glGetUniformLocation(circle_glsl_program, "color");
-   circle_glsl_program_radius = glGetUniformLocation(circle_glsl_program, "radius");
-
-
-   circle_filled_glsl_program = gl_program_vert_frag("circle_filled.vert", "circle_filled.frag");
-   circle_filled_glsl_program_vertex = glGetAttribLocation(circle_filled_glsl_program, "vertex");
-   circle_filled_glsl_program_projection = glGetUniformLocation(circle_filled_glsl_program, "projection");
-   circle_filled_glsl_program_color = glGetUniformLocation(circle_filled_glsl_program, "color");
-   circle_filled_glsl_program_radius = glGetUniformLocation(circle_filled_glsl_program, "radius");
 
    gl_checkErr();
 

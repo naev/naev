@@ -653,7 +653,7 @@ static void map_drawMarker( double x, double y, double r, double a,
    projection = gl_Matrix4_Scale(projection, r, r, 1);
    projection = gl_Matrix4_Rotate2d(projection, alpha);
    gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( marker_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( marker_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLES, 0, 3 );
    gl_endSolidProgram();
    glDisable(GL_POLYGON_SMOOTH);
@@ -911,8 +911,8 @@ void map_renderJumps( double x, double y, int editor)
 
       /* first we draw all of the paths. */
       gl_beginSmoothProgram(gl_view_matrix);
-      gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex_color,
+      gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j = 0; j < sys->njumps; j++) {
          jsys = sys->jumps[j].target;
@@ -1075,8 +1075,8 @@ static void map_renderPath( double x, double y, double a )
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
 
          gl_beginSmoothProgram(gl_view_matrix);
-         gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateAttribOffset( map_vbo, smooth_glsl_program_vertex_color,
+         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
                sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
          gl_endSmoothProgram();
