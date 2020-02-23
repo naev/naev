@@ -9,11 +9,13 @@
       * Improved and fixed escort system
       * Made Pirates and FLF spawn in a fairer way
       * Made time pass at different rates for different ships ("Time Dilation")
-      * Made some piracy missions available from any Independent or black market
-        planet (instead of just on pirate strongholds)
+      * Made piracy missions available from any Independent or black market planet
       * Substantially increased pay for unique missions (10x in most cases)
       * Made references to the player gender-neutral
-      * Scramblers and jammers unified into scramblers
+      * Made combat music vary from faction to faction
+      * Made it so AI ships spawn with cargo
+      * Added the ability to buy "fake IDs" from pirate strongholds
+      * Made jammers into activated outfits that increase cloaking
       * New and/or improved missions
          * Completed the FLF campaign
          * Fixed up the Collective campaign
@@ -29,3 +31,6 @@
       * Removed support for Lua 5.0
       * Removed support for SDL 1, only SDL 2 is supported
       * Added support for translating
+      * Made the OSD compact itself to avoid showing redundant information
+      * Made Autonav able to follow ships
+      * Consolidated the effects of cloaking and jammers under cloaking
