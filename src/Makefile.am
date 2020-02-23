@@ -10,6 +10,7 @@ shaders.gen.c shaders.gen.h: shaders_c_gen
 	./$<
 
 CLEANFILES = shaders.gen.c shaders.gen.h
+BUILT_SOURCES = shaders.gen.h
 
 CODE_SOURCE = \
 	ai.c \
