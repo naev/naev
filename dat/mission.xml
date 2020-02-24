@@ -1477,4 +1477,16 @@
    <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
   </avail>
  </mission>
+ <mission name="Visiting Family">
+  <lua>soromid/comingout/srm_comingout4</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <done>A Friend's Aid</done>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
 </Missions>
