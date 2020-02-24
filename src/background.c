@@ -177,6 +177,8 @@ void background_renderStars( const double dt )
 
    /* Decide on shade mode. */
    shade_mode = 0;
+   x = 0;
+   y = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
