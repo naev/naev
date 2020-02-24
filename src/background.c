@@ -63,9 +63,7 @@ static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
  */
 #define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
 static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
-static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
-static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
 
@@ -92,6 +90,7 @@ void background_initStars( int n )
    unsigned int i;
    GLfloat w, h, hw, hh;
    double size;
+   GLfloat *star_vertex;
 
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
@@ -109,11 +108,9 @@ void background_initStars( int n )
    size  *= n;
    nstars = (unsigned int)(size/(800.*600.));
 
-   if (mstars < nstars) {
-      /* Create data. */
-      star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 6 );
-      mstars = nstars;
-   }
+   /* Create data. */
+   star_vertex = malloc( nstars * sizeof(GLfloat) * 6 );
+
    for (i=0; i < nstars; i++) {
       /* Set the position. */
       star_vertex[6*i+0] = RNGF()*w - hw;
@@ -128,12 +125,13 @@ void background_initStars( int n )
    /* Destroy old VBO. */
    if (star_vertexVBO != NULL) {
       gl_vboDestroy( star_vertexVBO );
-      star_vertexVBO = NULL;
    }
 
    /* Create now VBO. */
    star_vertexVBO = gl_vboCreateStatic(
          nstars * sizeof(GLfloat) * 6, star_vertex );
+
+   free(star_vertex);
 }
 
 
@@ -522,11 +520,5 @@ void background_free (void)
       star_vertexVBO = NULL;
    }
 
-   /* Free the stars. */
-   if (star_vertex != NULL) {
-      free(star_vertex);
-      star_vertex = NULL;
-   }
    nstars = 0;
-   mstars = 0;
 }
