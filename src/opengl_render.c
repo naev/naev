@@ -177,10 +177,6 @@ void gl_blitTexture(  const glTexture* texture,
 {
    gl_Matrix4 projection, tex_mat;
 
-   if (shaders.texture.program == 0) {
-      return;
-   }
-
    glUseProgram(shaders.texture.program);
 
    /* Bind the texture. */
@@ -264,10 +260,6 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    }
 
    gl_Matrix4 projection, tex_mat;
-
-   if (shaders.texture_interpolate.program == 0) {
-      return;
-   }
 
    glUseProgram(shaders.texture_interpolate.program);
 

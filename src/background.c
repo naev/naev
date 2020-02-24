@@ -166,10 +166,6 @@ void background_renderStars( const double dt )
 
    /* TODO: Use geometry shader instead of drawing both points and lines */
 
-   if (shaders.stars.program == 0) {
-      return;
-   }
-
    glUseProgram(shaders.stars.program);
 
    glPointSize(1 / gl_screen.scale);
