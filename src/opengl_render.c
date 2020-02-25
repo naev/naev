@@ -208,7 +208,7 @@ void gl_blitTexture(  const glTexture* texture,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( glGetAttribLocation(shaders.texture.program, "vertex") );
+   glDisableVertexAttribArray( shaders.texture.vertex );
 
    /* anything failed? */
    gl_checkErr();
