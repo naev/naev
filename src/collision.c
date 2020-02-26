@@ -16,6 +16,74 @@
 #include "log.h"
 
 
+/*
+ * Prototypes
+ */
+int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+      float x, float y );
+
+
+/**
+ * @brief Loads a polygon from an xml node.
+ *
+ *    @param[out] poly Polygon.
+ *    @param[in] node xml node.
+ */
+void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
+{
+   float d;
+   xmlNodePtr cur;
+   char *list, *ch;
+   int i;
+
+   cur = node->children;
+   do {
+      if (xml_isNode(cur,"x")) {
+         list = xml_get(cur);
+         i = 0;
+         /* split the list of coordiantes */
+         ch = strtok(list, ",");
+         polygon->x = malloc( sizeof(float) );
+         polygon->xmin = 0;
+         polygon->xmax = 0;
+         while( ch != NULL ) {
+            i++;
+            polygon->x = realloc( polygon->x, sizeof(float) * i );
+            d = atof(ch);
+            polygon->x[i-1] = d;
+            polygon->xmin = MIN( polygon->xmin, d );
+            polygon->xmax = MAX( polygon->xmax, d );
+            ch = strtok(NULL, ",");
+         }
+      }
+      else if (xml_isNode(cur,"y")) {
+         list = xml_get(cur);
+         i = 0;
+         /* split the list of coordiantes */
+         ch = strtok(list, ",");
+         polygon->y = malloc( sizeof(float) );
+         polygon->ymin = 0;
+         polygon->ymax = 0;
+         while( ch != NULL ) {
+            i++;
+            polygon->y = realloc( polygon->y, sizeof(float) * i );
+            d = atof(ch);
+            polygon->y[i-1] = d;
+            polygon->ymin = MIN( polygon->ymin, d );
+            polygon->ymax = MAX( polygon->ymax, d );
+            ch = strtok(NULL, ",");
+         }
+         polygon->npt = i;
+      }
+   } while (xml_nextNode(cur));
+
+   free(list);
+   free(ch);
+
+   return;
+}
+
+
 /**
  * @brief Checks whether or not two sprites collide.
  *
@@ -101,6 +169,207 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
          }
 
    return 0;
+}
+
+
+/**
+ * @brief Checks whether or not a sprite collides with a polygon.
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] bt Texture b.
+ *    @param[in] bsx Position of x of sprite b.
+ *    @param[in] bsy Position of y of sprite b.
+ *    @param[in] bp Position in space of sprite b.
+ *    @param[out] crash Actual position of the collision (only set on collision).
+ *    @return 1 on collision, 0 else.
+ */
+int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
+      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
+      Vector2d* crash )
+{
+   int x,y;
+   //int i;
+   int ax1,ax2, ay1,ay2;
+   int bx1,bx2, by1,by2;
+   int inter_x0, inter_x1, inter_y0, inter_y1;
+   //float vprod, sprod, angle;
+   //float dxi, dxip, dyi, dyip;
+   int rbsy;
+   int bbx, bby;
+
+#if DEBUGGING
+   /* Make sure the surfaces have transparency maps. */
+   if (bt->trans == NULL) {
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
+      return 0;
+   }
+#endif /* DEBUGGING */
+
+   /* a - cube coordinates */
+   ax1 = (int)VX(*ap) + (int)(at->xmin);
+   ay1 = (int)VY(*ap) + (int)(at->ymin);
+   ax2 = (int)VX(*ap) + (int)(at->xmax);
+   ay2 = (int)VY(*ap) + (int)(at->ymax);
+
+   /* b - cube coordinates */
+   bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
+   by1 = (int)VY(*bp) - (int)(bt->sh)/2;
+   bx2 = bx1 + bt->sw - 1;
+   by2 = by1 + bt->sh - 1;
+
+   /* check if bounding boxes intersect */
+   if((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if((by2 < ay1) || (ay2 < by1)) return 0;
+
+   /* define the remaining binding box */
+   inter_x0 = MAX( ax1, bx1 );
+   inter_x1 = MIN( ax2, bx2 );
+   inter_y0 = MAX( ay1, by1 );
+   inter_y1 = MIN( ay2, by2 );
+
+   /* real vertical sprite value (flipped) */
+   rbsy = bt->sy - bsy - 1;
+
+   /* set up the base points */
+   bbx =  bsx*(int)(bt->sw) - bx1;
+   bby = rbsy*(int)(bt->sh) - by1;
+   for (y=inter_y0; y<=inter_y1; y++) {
+      for (x=inter_x0; x<=inter_x1; x++) {
+         /* compute offsets for surface before pass to TransparentPixel test */
+         if ((!gl_isTrans(bt, bbx + x, bby + y))) {
+            if (pointInPolygon( at, ap, (float)x, (float)y )) {
+               crash->x = x;
+               crash->y = y;
+               return 1;
+            }
+         }
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Checks whether or not two polygons collide.
+ *  /!\ The function is not symmetric: the points of polygon 2 are tested
+ * against the polygon 1. Consequently, it works better if polygon 2 is small
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] bt Polygon b.
+ *    @param[in] bp Position in space of polygon b.
+ *    @param[out] crash Actual position of the collision (only set on collision).
+ *    @return 1 on collision, 0 else.
+ */
+int CollidePolygon( const CollPoly* at, const Vector2d* ap,
+      const CollPoly* bt, const Vector2d* bp, Vector2d* crash )
+{
+   int x,y;
+   int i;
+   int ax1,ax2, ay1,ay2;
+   int bx1,bx2, by1,by2;
+   int inter_x0, inter_x1, inter_y0, inter_y1;
+   int rbsy;
+   int bbx, bby;
+   float xabs, yabs;
+
+   /* a - cube coordinates */
+   ax1 = (int)VX(*ap) + (int)(at->xmin);
+   ay1 = (int)VY(*ap) + (int)(at->ymin);
+   ax2 = (int)VX(*ap) + (int)(at->xmax);
+   ay2 = (int)VY(*ap) + (int)(at->ymax);
+
+   /* b - cube coordinates */
+   bx1 = (int)VX(*bp) + (int)(bt->xmin);
+   by1 = (int)VY(*bp) + (int)(bt->ymin);
+   bx2 = (int)VX(*bp) + (int)(bt->xmax);
+   by2 = (int)VY(*bp) + (int)(bt->ymax);
+
+   /* check if bounding boxes intersect */
+   if((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if((by2 < ay1) || (ay2 < by1)) return 0;
+
+   /* define the remaining binding box */
+   inter_x0 = MAX( ax1, bx1 );
+   inter_x1 = MIN( ax2, bx2 );
+   inter_y0 = MAX( ay1, by1 );
+   inter_y1 = MIN( ay2, by2 );
+
+/*   for (y=inter_y0; y<=inter_y1; y++) {*/
+/*      for (x=inter_x0; x<=inter_x1; x++) {*/
+/*         if ((!gl_isTrans(bt, bbx + x, bby + y))) {*/
+/*            if (pointInPolygon( at, ap, (float)x, (float)y )) {*/
+/*               crash->x = x;*/
+/*               crash->y = y;*/
+/*               return 1;*/
+/*            }*/
+/*         }*/
+/*      }*/
+/*   }*/
+
+   /* loop on the points of bt to see if one of them is in polygon at. */
+   for (i=0; i<=bt->npt; i++) {
+      xabs = bt->x[i] + VX(*bp);
+      yabs = bt->y[i] + VY(*bp);
+
+      if ((xabs<inter_x0) || (xabs>inter_x1) ||
+          (yabs<inter_y0) || (yabs>inter_y1)) {
+         if (pointInPolygon( at, ap, xabs, yabs )) {
+            crash->x = (int)xabs;
+            crash->y = (int)yabs;
+            return 1;
+         }
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Checks whether or not a point is inside a polygon.
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] x Coordiante of point.
+ *    @param[in] y Coordinate of point.
+ *    @return 1 on collision, 0 else.
+ */
+int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+      float x, float y )
+{
+   int i;
+   float vprod, sprod, angle;
+   float dxi, dxip, dyi, dyip;
+
+   /* See if the pixel is inside the polygon:
+      We increment the angle when doing a loop along all the points
+      If the final angle is 0, we are outside the polygon
+      Otherwise, the angle should be +/- 2pi*/
+   angle = 0.0;
+   for (i=0; i<=at->npt-2; i++) {
+      dxi  = at->x[i]  +VX(*ap)-x;
+      dxip = at->x[i+1]+VX(*ap)-x;
+      dyi  = at->y[i]  +VY(*ap)-y;
+      dyip = at->y[i+1]+VY(*ap)-y;
+      sprod = dxi * dxip + dyi * dyip;
+      vprod = dxi * dyip - dyi * dxip;
+      angle += atan2(vprod, sprod);
+   }
+   dxi  = at->x[at->npt-1] + VX(*ap) - x;
+   dxip = at->x[0] + VX(*ap) - x;
+   dyi  = at->y[at->npt-1] + VY(*ap)- y;
+   dyip = at->y[0] + VY(*ap) - y;
+   sprod = dxi * dxip + dyi * dyip;
+   vprod = dxi * dyip - dyi * dxip;
+   angle += atan2(vprod, sprod);
+
+   if (abs(angle) < 1e-5)
+      return 0;
+
+   return 1;
 }
 
 

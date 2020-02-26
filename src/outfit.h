@@ -12,6 +12,7 @@
 #include "sound.h"
 #include "economy.h"
 #include "shipstats.h"
+#include "collision.h"
 
 
 /*
@@ -139,6 +140,10 @@ typedef struct OutfitBoltData_ {
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit. */
    int spfx_shield;  /**< special effect on hit. */
+
+   /* collision polygon */
+   CollPoly *polygon; /**< Collision polygons. */
+   int npolygon; /**< Number of collision polygons. */
 } OutfitBoltData;
 
 /**

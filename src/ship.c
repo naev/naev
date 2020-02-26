@@ -28,6 +28,7 @@
 #include "shipstats.h"
 #include "slots.h"
 #include "nfile.h"
+#include "unistd.h"
 
 
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
@@ -53,6 +54,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  * Prototypes
  */
 static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine );
+static int ship_loadPLG( Ship *temp, char *buf );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -543,6 +545,76 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
 
 
 /**
+ * @brief Loads the collision polygon for a ship.
+ *
+ *    @param temp Ship to load into.
+ *    @param buf Name of the file.
+ */
+static int ship_loadPLG( Ship *temp, char *buf )
+{
+   size_t bufsize;
+   char *file;
+   int sl;
+   CollPoly *polygon;
+   xmlDocPtr doc;
+   xmlNodePtr node, cur;
+
+   temp->npolygon = 0;
+
+   sl   = strlen(buf)+strlen(SHIP_POLYGON_PATH)+strlen(".xml")+1;
+   file = malloc( sl );
+
+   nsnprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
+
+   /* See if the file does exist. */
+   if (access(file, F_OK) == -1) {
+      free(file);
+      return 0;
+   }
+
+   /* Load the XML. */
+   buf  = ndata_read( file, &bufsize );
+   doc  = xmlParseMemory( buf, bufsize );
+
+   if (doc == NULL) {
+      WARN(_("%s file is invalid xml!"), file);
+      free(file);
+      return 0;
+   }
+
+   node = doc->xmlChildrenNode; /* First polygon node */
+   if (node == NULL) {
+      xmlFreeDoc(doc);
+      WARN(_("Malformed %s file: does not contain elements"), file);
+      free(file);
+      return 0;
+   }
+
+   free(file);
+
+   DEBUG("reading collision xml for %s",temp->name);
+
+   do { /* load the polygon data */
+      if (xml_isNode(node,"polygons")) {
+         cur = node->children;
+         temp->polygon = malloc( sizeof(CollPoly) );
+         do {
+            if (xml_isNode(cur,"polygon")) {
+               temp->npolygon++;
+               temp->polygon = realloc( temp->polygon, sizeof(CollPoly) * temp->npolygon );
+               polygon = &temp->polygon[temp->npolygon-1];
+
+               LoadPolygon( polygon, cur );
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
  * @brief Parses a slot for a ship.
  *
  *    @param temp Ship to be parsed.
@@ -740,6 +812,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Load the graphics. */
          ship_loadGFX( temp, buf, sx, sy, engine );
+
+         /* Load the polygon. */
+         ship_loadPLG( temp, buf );
 
          continue;
       }
@@ -1111,6 +1186,15 @@ void ships_free (void)
       if (s->gfx_store != NULL)
          gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
+
+      /* Free collision polygons. */
+      if (s->npolygon != 0) {
+         for (j=0; j<s->npolygon; j++) {
+            free(s->polygon[j].x);
+            free(s->polygon[j].y);
+         }
+         free(s->polygon);
+      }
    }
 
    array_free(ship_stack);

@@ -863,7 +863,8 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, j, b, psx,psy;
+   int i, j, b, psx, psy, k, n;
+   unsigned int coll;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
@@ -918,13 +919,39 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
       /* dumb weapons hit anything not of the same faction */
       else {
-         if (weapon_checkCanHit(w,p) &&
-               CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     p->ship->gfx_space, psx, psy,
-                     &p->solid->pos,
-                     &crash[0] )) {
+         if (weapon_checkCanHit(w,p)){
+            /* see if there exists a collision polygon */
+            if (p->ship->npolygon == 0) {
+               coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                        p->ship->gfx_space, psx, psy,
+                        &p->solid->pos, &crash[0] );
+            }
+            else {
+               if (outfit_isBolt(w->outfit)) {
+                  if (w->outfit->u.blt.npolygon == 0) {
+                     coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                              p->ship->gfx_space, psx, psy,
+                              &p->solid->pos, &crash[0] );
+                  }
+                  else {
+                     k = p->ship->gfx_space->sx * psy + psx;
+                     n = gfx->sx * w->sy + w->sx;
+                     //coll = CollideSpritePolygon( &p->ship->polygon[k], &p->solid->pos,
+                       //       gfx, w->sx, w->sy, &w->solid->pos, &crash[0] );
+                     coll = CollidePolygon( &p->ship->polygon[k], &p->solid->pos,
+                              &w->outfit->u.blt.polygon[n], &w->solid->pos, &crash[0] );
+                  }
+               }
+               else {
+                  coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                           p->ship->gfx_space, psx, psy,
+                           &p->solid->pos, &crash[0] );
+               }
+            }
+            if (coll) {
             weapon_hit( w, p, layer, &crash[0] );
             return; /* Weapon is destroyed. */
+            }
          }
       }
    }
