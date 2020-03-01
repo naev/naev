@@ -189,12 +189,9 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
       Vector2d* crash )
 {
    int x,y;
-   //int i;
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
-   //float vprod, sprod, angle;
-   //float dxi, dxip, dyi, dyip;
    int rbsy;
    int bbx, bby;
 
@@ -296,18 +293,6 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    inter_x1 = MIN( ax2, bx2 );
    inter_y0 = MAX( ay1, by1 );
    inter_y1 = MIN( ay2, by2 );
-
-/*   for (y=inter_y0; y<=inter_y1; y++) {*/
-/*      for (x=inter_x0; x<=inter_x1; x++) {*/
-/*         if ((!gl_isTrans(bt, bbx + x, bby + y))) {*/
-/*            if (pointInPolygon( at, ap, (float)x, (float)y )) {*/
-/*               crash->x = x;*/
-/*               crash->y = y;*/
-/*               return 1;*/
-/*            }*/
-/*         }*/
-/*      }*/
-/*   }*/
 
    /* loop on the points of bt to see if one of them is in polygon at. */
    for (i=0; i<=bt->npt; i++) {
@@ -576,3 +561,134 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
 }
 
 
+/**
+ * @brief Checks to see if a line collides with a polygon.
+ *
+ * First collisions are detected on all the walls of the polygon's rectangle.
+ *  Then the collisions are tested on every line of the polygon.
+ *
+ *    @param[in] ap Origin of the line.
+ *    @param[in] ad Direction of the line.
+ *    @param[in] al Length of the line.
+ *    @param[in] bt Polygon b.
+ *    @param[in] bp Position in space of polygon b.
+ *    @param[out] crash Position of the collision.
+ *    @return 1 on collision, 0 else.
+ *
+ * @sa CollidePolygon
+ */
+int CollideLinePolygon( const Vector2d* ap, double ad, double al,
+      const CollPoly* bt, const Vector2d* bp, Vector2d crash[2] )
+{
+   int i;
+   double ep[2], bl[2], tr[2];
+   double xi, yi, xip, yip;
+   int hits, real_hits;
+   Vector2d tmp_crash;
+
+   /* Set up end point of line. */
+   ep[0] = ap->x + al*cos(ad);
+   ep[1] = ap->y + al*sin(ad);
+
+   real_hits = 0;
+
+   /* Check if the beginning point is inside polygon */
+   if ( pointInPolygon( bt, bp, (float) ap->x, (float) ap->y ) ) {
+      crash[real_hits].x = ap->x;
+      crash[real_hits].y = ap->y;
+      real_hits++;
+   }
+
+   /* same thing for end point */
+   if ( pointInPolygon( bt, bp, (float) ep[0], (float) ep[1] ) ) {
+      crash[real_hits].x = ep[0];
+      crash[real_hits].y = ep[1];
+      real_hits++;
+   }
+
+   /* If both are inside, we got the two collision points. */
+   if (real_hits == 2)
+      return 1;
+
+   /* None is inside, check if there is a chance of intersection */
+   if (real_hits == 0) {
+      /* Set up top right corner of the rectangle. */
+      tr[0] = bp->x + (double)bt->xmax;
+      tr[1] = bp->y + (double)bt->ymax;
+      /* Set up bottom left corner of the rectangle. */
+      bl[0] = bp->x + (double)bt->xmin;
+      bl[1] = bp->y + (double)bt->ymin;
+
+      /*
+       * Start check for rectangular collisions.
+       */
+      hits = 0;
+      /* Left border. */
+      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            bl[0], bl[1], bl[0], tr[1], &tmp_crash) == 1)
+         hits++;
+
+      /* Top border. */
+      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            bl[0], tr[1], tr[0], tr[1], &tmp_crash) == 1)
+         hits++;
+
+      /* Right border. */
+      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            tr[0], tr[1], tr[0], bl[1], &tmp_crash) == 1)
+         hits++;
+
+      /* Bottom border. */
+      if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            tr[0], bl[1], bl[0], bl[1], &tmp_crash) == 1)
+         hits++;
+
+      /* No hits - missed. No need to go further */
+      if (hits == 0)
+         return 0;
+   }
+
+   /*
+    * Now we check any line of the polygon
+    */
+   xi  = (double)bt->x[bt->npt-1] + bp->x;
+   xip = (double)bt->x[0]         + bp->x;
+   yi  = (double)bt->y[bt->npt-1] + bp->y;
+   yip = (double)bt->y[0]         + bp->y;
+   if ( CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+        xi, yi, xip, yip, &tmp_crash) ) {
+      crash[real_hits].x = tmp_crash.x;
+      crash[real_hits].y = tmp_crash.y;
+      real_hits++;
+      if (real_hits == 2)
+         return 1;
+   }
+   for (i=0; i<=bt->npt-2; i++) {
+      xi  = (double)bt->x[i]   + bp->x;
+      xip = (double)bt->x[i+1] + bp->x;
+      yi  = (double)bt->y[i]   + bp->y;
+      yip = (double)bt->y[i+1] + bp->y;
+      if ( CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+           xi, yi, xip, yip, &tmp_crash) ) {
+         crash[real_hits].x = tmp_crash.x;
+         crash[real_hits].y = tmp_crash.y;
+         real_hits++;
+         if (real_hits == 2)
+            return 1;
+      }
+   }
+
+   /* Actually missed. */
+   if (real_hits == 0)
+      return 0;
+
+   /* Strange situation, should never happen but just in case we duplicate
+    *  the hit. */
+   if (real_hits == 1) {
+      crash[1].x = crash[0].x;
+      crash[1].y = crash[0].y;
+   }
+
+   /* We hit. */
+   return 1;
+}

@@ -592,8 +592,6 @@ static int ship_loadPLG( Ship *temp, char *buf )
 
    free(file);
 
-   DEBUG("reading collision xml for %s",temp->name);
-
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons")) {
          cur = node->children;
