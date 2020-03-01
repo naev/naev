@@ -1142,7 +1142,7 @@ static void land_createMainTab( unsigned int wid )
    /*
     * Pretty display.
     */
-   window_addImage( wid, 20, -40, 0, 0, "imgPlanet", gfx_exterior, 1 );
+   window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
