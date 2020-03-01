@@ -295,7 +295,7 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    inter_y1 = MIN( ay2, by2 );
 
    /* loop on the points of bt to see if one of them is in polygon at. */
-   for (i=0; i<=bt->npt; i++) {
+   for (i=0; i<=bt->npt-1; i++) {
       xabs = bt->x[i] + VX(*bp);
       yabs = bt->y[i] + VY(*bp);
 
