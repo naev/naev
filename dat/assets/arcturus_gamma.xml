@@ -32,6 +32,7 @@
    <commodity>Ore</commodity>
    <commodity>Luxury Goods</commodity>
    <commodity>Industrial Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Arcturus Gamma is the Empire's first line of defense when it comes to their core systems. Piracy is nearly non-existent in the core systems due to the large standing force stationed here and their routine patrols.</description>
   <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained and full of off-duty Empire soldiers - not a place to get into a fight.</bar>

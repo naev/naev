@@ -27,6 +27,7 @@
   <commodities>
    <commodity>Food</commodity>
    <commodity>Ore</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Jorcan is a very barren, dull planet, like most mining worlds. Having been mined for decades, its resources have been nearly exhausted. However, mining corporations are known to persist until there's no longer a profit to be made, leaving depleted, dead planets.</description>
   <bar>The one word that would describe the Jorcan spaceport bar would be dust. It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces. A coarse soot has coated your palm just holding your drink. You wonder if it will ever wash off.</bar>

@@ -27,6 +27,7 @@
    <commodity>Food</commodity>
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Fort Sirius is the primary military hub of the Sirius army. It serves as the gatekeeper for Aesir, making sure no threats will ever reach Mutris. The station has hundreds of hangars in all sizes, allowing a full contingent to be stationed and ready at all times.</description>
  </general>

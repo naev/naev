@@ -26,6 +26,7 @@
   <commodities>
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>As with most of the Sirius fleet, the equipment installed on the ships is produced right here at Aesir. As a general rule, no finished ship leaves the system without being fully equipped first.</description>
  </general>

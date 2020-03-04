@@ -29,6 +29,8 @@
   <commodities>
    <commodity>Food</commodity>
    <commodity>Gold</commodity>
+   <commodity>Diamond</commodity>
+   <commodity>Water</commodity>
    <commodity>Medicine</commodity>
    <commodity>Ore</commodity>
   </commodities>

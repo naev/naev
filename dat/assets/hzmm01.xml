@@ -25,6 +25,7 @@
   </services>
   <commodities>
    <commodity>Ore</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>This small moon is a mining world run by House Za'lek; it is regarded as so insignificant that it does not even have a formal name yet, and likely never will.</description>
  </general>

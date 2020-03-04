@@ -26,6 +26,10 @@
  </jumps>
  <asteroids>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>liquid</type>
    <pos x="3000" y="-1000"/>
    <radius>5000</radius>
    <density>0.5</density>

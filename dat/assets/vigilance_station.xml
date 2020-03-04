@@ -30,6 +30,7 @@
    <commodity>Industrial Goods</commodity>
    <commodity>Medicine</commodity>
    <commodity>Luxury Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Vigilance Station is the defense center for Procyon. Unusually for a Za'lek military asset, it is well-supplied and cared for, with the staff being ready at a moment's notice to come to Procyon's aid.</description>
   <bar>This bar is simple and clean. Every inch a military establishment.</bar>

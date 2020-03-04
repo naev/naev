@@ -20,6 +20,20 @@
   <gfx_space>gold</gfx_space>
  </commodity>
  <commodity>
+  <name>Diamond</name>
+  <description>Diamonds are formed in massive telluric planets, deep under the ground, by the high pressure. In the past, diamonds used to be very expensive due to its rarity on the surface of earth. Nowadays, artificial diamonds are so easy to produce that the prices are very low.</description>
+  <price>220</price>
+  <gfx_store>diamonds</gfx_store>
+  <gfx_space>diamonds</gfx_space>
+ </commodity>
+ <commodity>
+  <name>Water</name>
+  <description>On some desertic planets, water is quite expensive due to the high demand.</description>
+  <price>250</price>
+  <gfx_store>heavy_water</gfx_store>
+  <gfx_space>water</gfx_space>
+ </commodity>
+ <commodity>
   <name>Industrial Goods</name>
   <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
   <price>340</price>

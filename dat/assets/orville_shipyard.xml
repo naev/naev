@@ -26,6 +26,7 @@
   </services>
   <commodities>
    <commodity>Industrial Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Orville Shipyard is a relatively modest ship building facility, though it is invaluable to Inios Station and Brandt Station, as most of their reinforcements come from here. The station relies on Mastodon Station for the ships' energy cores and weaponry, as Rhu is too far removed from Aesir to send the ships to be outfitted at Sirius Ordnance.</description>
   <bar>Over the bar in this facility, there is a counter display that keeps track of the amount of ships that have been produced at Orville Shipyard since it was commissioned. Clearly, the people here at Rhu take pride in being able to contribute to the Sirian military effort.</bar>

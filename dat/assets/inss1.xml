@@ -25,6 +25,7 @@
   </services>
   <commodities>
    <commodity>Food</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>INSS-1, or Imperial Nutrient Supply Station 1, was the first in a number of Imperially funded space-side crop growing projects. The main purpose of the station is to grow food for nearby colonies and stations at extreme efficiency.</description>
   <bar>Trim and functional, the bar here is situated in the central growing dome of INSS-1. The windows look out on vast stretches of multi-layered crop beds, and there's always a harvester to be seen at work somewhere out there.</bar>

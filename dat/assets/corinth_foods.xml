@@ -25,6 +25,7 @@
   </services>
   <commodities>
    <commodity>Food</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>This new type of agristation serves as the primary food producer for the Procyon enclave and beyond. The station is designed in a multi-tiered way to produce more food in a better-controlled environment using less materials and maintenance. So far it seems to be working, as Corinth Foodsproduces enough food to be exported from Za'lek space entirely.</description>
  </general>

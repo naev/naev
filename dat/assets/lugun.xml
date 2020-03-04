@@ -26,6 +26,7 @@
   </services>
   <commodities>
    <commodity>Food</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Lugun is a research hub where a large amount of the data from surrounding laboratories and universities is kept for storage and use for other researchers. As such, it is regarded as an important asset to House Zalek in the area and is guarded.</description>
   <bar>This bar is full of chatting scientists and a few military personnel; though with Za'lek's society, the two are not always readily apparent. It is very clean and orderly however, with server droids handing out drinks and food.</bar>

@@ -28,6 +28,7 @@
   <commodities>
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Manuel Station is named after Eduard Manuel Goddard, the man to which House Goddard owes its existence. The station is primarily a shipyard, and thus contributes a great deal to House Goddard's local economy. Its position around Goddard III is no coincidence, as the lifeless planet provides many of the raw materials needed to produce space ships.</description>
   <bar>The station's bar is more businesslike than recreational. The people who come here are either traders who came to load or unload goods, or potential customers looking for a Goddard-made ship. Nobody is really interested in just passing the time, because time is money on Manuel Station.</bar>

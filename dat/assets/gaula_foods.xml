@@ -26,6 +26,7 @@
   </services>
   <commodities>
    <commodity>Food</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>Gaula Foods is the food factory that processes the produce grown on Gaula into human digestible meal units. The station outputs an amazing variety of foodstuffs considering the limited diversity of the plants they are made from.</description>
   <bar>The bar offers samples of most of the products made in the factory complex. The taste is generally not bad, although after a while it starts to get a little samey.</bar>

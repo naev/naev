@@ -26,6 +26,7 @@
    <commodity>Food</commodity>
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>This station is a high-yield crop growing facility. While most farm stations are always facing the local star to make optimal use of its light, this station slowly rotates, exposing both of its sides to the star in turns. One side of the station is used for crop fields while the other side is used to breed livestock. The artificial day-night cycle is found to have a positive effect on the animals.</description>
  </general>

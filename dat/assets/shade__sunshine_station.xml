@@ -26,6 +26,7 @@
   <commodities>
    <commodity>Food</commodity>
    <commodity>Medicine</commodity>
+   <commodity>Water</commodity>
   </commodities>
   <description>When the Soromid do something to do with biology, you can assume they do it really well. Shade &amp; Sunshine is a crop growing station with an amazing output. Between the eternal day granted by the station's alignment with the sun and the Soromid's skill with genetic manipulation, crops here are among the most bountiful in the entire galaxy.</description>
   <bar>Shade &amp; Sunshine rotates the crops it grows on a regular basis. The spacedock bar is themed on the currently cultivated crops, using subtle lighting and holopaintings along the walls.</bar>
