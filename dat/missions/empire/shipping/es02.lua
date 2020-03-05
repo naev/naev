@@ -145,17 +145,17 @@ function enter ()
       enter_vect = jump.pos(sys, prevsys)
       m,a = enter_vect:polar()
       enter_vect:setP( m-3000, a )
-      p = pilot.add( "Trader Gawain", "dummy", enter_vect )
-      for _,v in ipairs(p) do
-         v:setPos( enter_vect )
-         v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
-         v:disable()
-         v:setHilight(true)
-         v:setVisplayer(true)
-         v:setFaction( "Empire" )
-         hook.pilot( v, "board", "board" )
-         hook.pilot( v, "death", "death" )
-      end
+      v = pilot.add( "Trader Gawain", "dummy", enter_vect )[1]
+
+      v:setPos( enter_vect )
+      v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
+      v:disable()
+      v:setHilight(true)
+      v:setVisplayer(true)
+      v:setFaction( "Empire" )
+      v:rename(_("VIP"))
+      hook.pilot( v, "board", "board" )
+      hook.pilot( v, "death", "death" )
 
       -- FLF Spawn around the Gawain
       p = pilot.add( "FLF Med Force", nil, enter_vect )
