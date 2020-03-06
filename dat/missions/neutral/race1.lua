@@ -139,11 +139,11 @@ function takeoff()
       j:setInvincible(true)
       j:setVisible(true)
       j:control()
-      j:face(checkpoint[1], true)
+      j:face(checkpoint[1]:pos(), true)
       j:broadcast(chatter[i])
    end
    player.pilot():control()
-   player.pilot():face(checkpoint[1], true)
+   player.pilot():face(checkpoint[1]:pos(), true)
    countdown = 5 -- seconds
    omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
    counting = true
