@@ -42,7 +42,13 @@ equip_typeOutfits_weapons["Taciturnity"] = {
       "Turreted Gauss Gun", "Laser PD MK1"
    }
 }
-equip_typeOutfits_weapons["Goddard"] = {
+equip_typeOutfits_weapons["Apprehension"] = {
+   {
+      varied = true;
+       "Laser Turret MK3", "Railgun", "Energy Torpedo", "Turreted Convulsion Launcher"
+   }
+}
+equip_typeOutfits_weapons["Certitude"] = {
    {
       varied = true;
       "Railgun", "Energy Torpedo", "Turreted Convulsion Launcher"
@@ -99,7 +105,15 @@ equip_typeOutfits_utilities["Taciturnity"] = {
       "Small Shield Booster", "Hellburner"
    }
 }
-equip_typeOutfits_utilities["Goddard"] = {
+equip_typeOutfits_utilities["Apprehension"] = {
+   {
+      varied = true;
+      "Boarding Androids MKII", "Thurion Reactor Class II",
+      "Medium Shield Booster", "Droid Repair Crew", "Sensor Array",
+      "Milspec Scrambler"
+   }
+}
+equip_typeOutfits_utilities["Certitude"] = {
    {
       varied = true;
       "Boarding Androids MKII", "Thurion Reactor Class III",
@@ -143,12 +157,16 @@ equip_typeOutfits_structurals["Taciturnity"] = {
       "Adaptive Stealth Plating", "Cargo Pod"
    }
 }
-equip_typeOutfits_structurals["Goddard"] = {
+equip_typeOutfits_structurals["Apprehension"] = {
    {
-      num = 2;
-      "Nebular Shielding Prototype"
-   },
+      varied = true;
+      "Active Plating", "Nanobond Plating", "Medium Fuel Pod", "Battery II",
+      "Shield Capacitor III"
+   }
+}
+equip_typeOutfits_structurals["Certitude"] = {
    {
+      varied = true;
       "Biometal Armour", "Nanobond Plating", "Large Fuel Pod", "Battery III",
       "Shield Capacitor IV"
    }
