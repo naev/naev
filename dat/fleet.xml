@@ -1068,11 +1068,18 @@
    <pilot name="Thurion Taciturnity" ship="Thurion Taciturnity"></pilot>
   </pilots>
  </fleet>
- <fleet name="Thurion Goddard">
+ <fleet name="Thurion Apprehension">
   <ai>thurion</ai>
   <faction>Thurion</faction>
   <pilots>
-   <pilot name="Thurion Goddard" ship="Goddard"></pilot>
+   <pilot name="Thurion Apprehension" ship="Thurion Apprehension"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Thurion Certitude">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Certitude" ship="Thurion Certitude"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Recon Force">
