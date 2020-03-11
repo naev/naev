@@ -34,6 +34,7 @@ dismisstitle = _("You are dismissed")
 missiletext = _("You aren't allowed to use missiles")
 fightertext = _("You had to use a fighter")
 fleetext = _("You weren't supposed to go away")
+cheetext = _("You weren't supposed to attack before the signal")
 
 title[2] = _("Let's go")
 text[2] = _([[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]])
@@ -186,6 +187,10 @@ function accept()
       tk.msg(refusetitle, refusetext)
       misn.finish(false)
    end
+end
+
+function abort () -- Everyone lands in case the player aborts
+   land_everyone()
 end
 
 function beginbattle()
@@ -376,10 +381,19 @@ function enter()
    end
 end
 
+function land_everyone()
+   for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22, opponent}) do
+      k:control()
+      k:land("Dvaer Prime")
+   end
+end
+
 function oppo_attacked(pilot, attacker)  --The player tries to cheat by attacking before the signal
    if stage == 0 and attacker == player.pilot() then
+      land_everyone()
+      tk.msg(dismisstitle, cheetext)
+      system.mrkRm(mark)
       misn.finish(false)
-      opponent:land("Dvaer Prime")
    end
 end
 
