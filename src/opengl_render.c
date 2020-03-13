@@ -593,8 +593,8 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
-   projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
+   projection = gl_Matrix4_Translate(projection, cx - r - 1, cy - r - 1, 0);
+   projection = gl_Matrix4_Scale(projection, 2*(r+1), 2*(r+1), 1);
    glEnableVertexAttribArray( shaders.circle.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle.vertex,
          0, 2, GL_FLOAT, 0 );
@@ -602,7 +602,7 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
    /* Set shader uniforms. */
    gl_uniformColor(shaders.circle.color, c);
    gl_Matrix4_Uniform(shaders.circle.projection, projection);
-   glUniform1f(shaders.circle.radius, r);
+   glUniform1f(shaders.circle.radius, r + 1);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
