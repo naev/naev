@@ -8,6 +8,7 @@
 #  define SHIP_H
 
 
+#include "collision.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
@@ -121,6 +122,10 @@ typedef struct Ship_ {
    glTexture *gfx_target; /**< Targeting window graphic. */
    glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm;   /**< Name of graphic for communication. */
+
+   /* collision polygon */
+   CollPoly *polygon; /**< Collision polygons. */
+   int npolygon; /**< Number of collision polygons. */
 
    /* GUI interface */
    char* gui;        /**< Name of the GUI the ship uses by default. */

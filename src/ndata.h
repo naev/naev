@@ -25,8 +25,10 @@
 #define SPFX_GFX_PATH            "dat/gfx/spfx/" /**< location of the graphic */
 #define FACTION_LOGO_PATH        "dat/gfx/logo/" /**< Path to logo gfx. */
 #define SOUND_PATH               "dat/snd/sounds/" /**< Location of the sounds. */
-#define COMMODITY_GFX_PATH          "dat/gfx/commodity/" /**< Path to commodities graphics. */
+#define COMMODITY_GFX_PATH       "dat/gfx/commodity/" /**< Path to commodities graphics. */
 #define MAP_DECORATOR_GFX_PATH   "dat/gfx/map/"
+#define SHIP_POLYGON_PATH        "dat/gfx/ship_polygon/" /**< Path to ship's collision polygon. */
+#define OUTFIT_POLYGON_PATH      "dat/gfx/outfit/space_polygon/" /**< Path to ship's collision polygon. */
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "dat/mission.xml" /**< Path to missions XML. */

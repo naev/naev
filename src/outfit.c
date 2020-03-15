@@ -36,6 +36,7 @@
 #include "damagetype.h"
 #include "slots.h"
 #include "mapData.h"
+#include "unistd.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -75,6 +76,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
+static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt );
 
 
 /**
@@ -536,6 +538,16 @@ glTexture* outfit_gfx( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
    else if (outfit_isBeam(o)) return o->u.bem.gfx;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
+   return NULL;
+}
+/**
+ * @brief Gets the outfit's collision polygon.
+ *    @param o Outfit to get information from.
+ */
+CollPoly* outfit_plg( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.polygon;
+   else if (outfit_isAmmo(o)) return o->u.amm.polygon;
    return NULL;
 }
 /**
@@ -1009,6 +1021,95 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 
 
 /**
+ * @brief Loads the collision polygon for a bolt outfit.
+ *
+ *    @param temp Outfit to load into.
+ *    @param buf Name of the file.
+ *    @param bolt 1 if outfit is a Bolt, 0 if it is an Ammo
+ */
+static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
+{
+   size_t bufsize;
+   char *file;
+   int sl;
+   CollPoly *polygon;
+   xmlDocPtr doc;
+   xmlNodePtr node, cur;
+
+   if (bolt)
+      temp->u.blt.npolygon = 0;
+   else
+      temp->u.amm.npolygon = 0;
+
+   sl   = strlen(buf)+strlen(OUTFIT_POLYGON_PATH)+strlen(".xml")+1;
+   file = malloc( sl );
+
+   nsnprintf( file, sl, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
+
+   /* See if the file does exist. */
+   if (access(file, F_OK) == -1) {
+      free(file);
+      return 0;
+   }
+
+   /* Load the XML. */
+   buf  = ndata_read( file, &bufsize );
+   doc  = xmlParseMemory( buf, bufsize );
+
+   if (doc == NULL) {
+      WARN(_("%s file is invalid xml!"), file);
+      free(file);
+      return 0;
+   }
+
+   node = doc->xmlChildrenNode; /* First polygon node */
+   if (node == NULL) {
+      xmlFreeDoc(doc);
+      WARN(_("Malformed %s file: does not contain elements"), file);
+      free(file);
+      return 0;
+   }
+
+   free(file);
+
+   if (bolt) {
+      do { /* load the polygon data */
+         if (xml_isNode(node,"polygons")) {
+            cur = node->children;
+            temp->u.blt.polygon = malloc( sizeof(CollPoly) );
+            do {
+               if (xml_isNode(cur,"polygon")) {
+                  temp->u.blt.npolygon++;
+                  temp->u.blt.polygon = realloc( temp->u.blt.polygon, sizeof(CollPoly) * temp->u.blt.npolygon );
+                  polygon = &temp->u.blt.polygon[temp->u.blt.npolygon-1];
+                  LoadPolygon( polygon, cur );
+               }
+            } while (xml_nextNode(cur));
+         }
+      } while (xml_nextNode(node));
+   }
+   else {
+      do { /* Second case: outfit is an ammo */
+         if (xml_isNode(node,"polygons")) {
+            cur = node->children;
+            temp->u.amm.polygon = malloc( sizeof(CollPoly) );
+            do {
+               if (xml_isNode(cur,"polygon")) {
+                  temp->u.amm.npolygon++;
+                  temp->u.amm.polygon = realloc( temp->u.amm.polygon, sizeof(CollPoly) * temp->u.amm.npolygon );
+                  polygon = &temp->u.amm.polygon[temp->u.amm.npolygon-1];
+                  LoadPolygon( polygon, cur );
+               }
+            } while (xml_nextNode(cur));
+         }
+      } while (xml_nextNode(node));
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Parses the specific area for a bolt weapon and loads it into Outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1067,6 +1168,9 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
             temp->u.blt.spin = atof( buf );
             free(buf);
          }
+         /* Load the collision polygon. */
+         buf = xml_get(node);
+         outfit_loadPLG( temp, buf, 1 );
          continue;
       }
       if (xml_isNode(node,"gfx_end")) {
@@ -1413,6 +1517,9 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
             temp->u.amm.spin = atof( buf );
             free(buf);
          }
+         /* Load the collision polygon. */
+         buf = xml_get(node);
+         outfit_loadPLG( temp, buf, 0 );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -2378,7 +2485,7 @@ static void outfit_launcherDesc( Outfit* o )
  */
 void outfit_free (void)
 {
-   int i;
+   int i, j;
    Outfit *o;
    for (i=0; i < array_size(outfit_stack); i++) {
       o = &outfit_stack[i];
@@ -2391,8 +2498,17 @@ void outfit_free (void)
       outfit_freeSlot( &outfit_stack[i].slot );
 
       /* Type specific. */
-      if (outfit_isBolt(o) && o->u.blt.gfx_end)
+      if (outfit_isBolt(o) && o->u.blt.gfx_end) {
          gl_freeTexture(o->u.blt.gfx_end);
+         /* Free collision polygons. */
+         if (o->u.blt.npolygon != 0) {
+            for (j=0; j<o->u.blt.npolygon; j++) {
+               free(o->u.blt.polygon[j].x);
+               free(o->u.blt.polygon[j].y);
+            }
+            free(o->u.blt.polygon);
+         }
+      }
       if (outfit_isLauncher(o) && o->u.lau.ammo_name)
          free(o->u.lau.ammo_name);
       if (outfit_isFighterBay(o) && o->u.bay.ammo_name)

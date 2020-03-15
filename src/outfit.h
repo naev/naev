@@ -12,6 +12,7 @@
 #include "sound.h"
 #include "economy.h"
 #include "shipstats.h"
+#include "collision.h"
 
 
 /*
@@ -139,6 +140,10 @@ typedef struct OutfitBoltData_ {
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit. */
    int spfx_shield;  /**< special effect on hit. */
+
+   /* collision polygon */
+   CollPoly *polygon; /**< Collision polygons. */
+   int npolygon; /**< Number of collision polygons. */
 } OutfitBoltData;
 
 /**
@@ -207,6 +212,10 @@ typedef struct OutfitAmmoData_ {
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
+
+   /* collision polygon */
+   CollPoly *polygon; /**< Collision polygons. */
+   int npolygon; /**< Number of collision polygons. */
 } OutfitAmmoData;
 
 /**
@@ -395,6 +404,7 @@ const char *slotSize( const OutfitSlotSize o );
 const glColour *outfit_slotSizeColour( const OutfitSlot* os );
 OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
+CollPoly* outfit_plg( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 const Damage *outfit_damage( const Outfit* o );
