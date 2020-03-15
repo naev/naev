@@ -177,6 +177,23 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
+ <mission name="Seek And Destoy">
+  <lua>neutral/seek_n_destroy</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>75</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
  <mission name="Alive Bounty">
   <lua>neutral/pirbounty_alive</lua>
   <avail>
