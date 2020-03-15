@@ -19,7 +19,7 @@
 /*
  * Prototypes
  */
-int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+static int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       float x, float y );
 
 
