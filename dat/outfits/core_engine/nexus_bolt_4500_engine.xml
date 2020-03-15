@@ -8,7 +8,7 @@
   <mass>60</mass>
   <price>900000</price>
   <description>The Bolt 4500 is a mid-range engine designed for light cruisers. Like most Nexus engines, it doesn't excel in any particular aspect, but its lack of over-specialization allows it to be flexible, whether it's propelling a cruiser into combat or moving a freighter through a system.</description>
-  <gfx_store>engine02</gfx_store>
+  <gfx_store>engine11</gfx_store>
  </general>
  <specific type="modification">
   <thrust>57</thrust>
