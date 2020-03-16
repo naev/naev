@@ -79,6 +79,13 @@ const Shader shaders[] = {
       .attributes = {"vertex"},
       .uniforms = {"projection", "color", "tex_mat"}
    },
+   {
+      .name = "tk",
+      .vs_path = "tk.vert",
+      .fs_path = "tk.frag",
+      .attributes = {"vertex"},
+      .uniforms = {"projection", "color1", "color2", "wh", "corner_radius"}
+   },
 };
 
 const int nshaders = sizeof(shaders) / sizeof(Shader);

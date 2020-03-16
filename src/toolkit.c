@@ -1070,7 +1070,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    lc = lc ? lc : c;
 
    /* Lines. */
-   lines[0][0]   = x - 1;  /* left-up */
+   lines[0][0]   = x;  /* left-up */
    lines[0][1]   = y;
    colours[0]    = *lc;
 
@@ -1213,12 +1213,9 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
  */
 static void window_renderBorder( Window* w )
 {
-   int i;
-   GLshort cx, cy;
    double x, y;
    const glColour *lc, *c, *dc, *oc;
-   GLshort vertex[31*4];
-   GLfloat colours[31*4];
+   gl_Matrix4 projection;
 
    /* position */
    x = w->x;
@@ -1245,308 +1242,27 @@ static void window_renderBorder( Window* w )
       return;
    }
 
-   /*
-    * window shaded bg
-    */
-   /* main body */
-   toolkit_drawRect( x+21, y,          w->w-42., 0.6*w->h, dc, c );
-   toolkit_drawRect( x+21, y+0.6*w->h, w->w-42., 0.4*w->h, c, NULL );
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, w->x, w->y, 0);
+   projection = gl_Matrix4_Scale(projection, w->w, w->h, 1);
 
-   /* Load GLSL program */
-   gl_beginSmoothProgram(gl_view_matrix);
+   glUseProgram(shaders.tk.program);
+   glEnableVertexAttribArray(shaders.tk.vertex);
+   gl_uniformColor(shaders.tk.color1, dc);
+   gl_uniformColor(shaders.tk.color2, c);
+   gl_Matrix4_Uniform(shaders.tk.projection, projection);
+   glUniform2f(shaders.tk.wh, w->w, w->h);
+   glUniform1f(shaders.tk.corner_radius, 10. / gl_screen.scale);
 
-   /* Both sides. */
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
-         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   /* Colour is shared. */
-   colours[0] = c->r;
-   colours[1] = c->g;
-   colours[2] = c->b;
-   colours[3] = c->a;
-   for (i=0; i<7; i++) {
-      colours[4 + 4*i + 0] = dc->r;
-      colours[4 + 4*i + 1] = dc->g;
-      colours[4 + 4*i + 2] = dc->b;
-      colours[4 + 4*i + 3] = dc->a;
-   }
-   for (i=0; i<8; i++) {
-      colours[32 + 4*i + 0] = c->r;
-      colours[32 + 4*i + 1] = c->g;
-      colours[32 + 4*i + 2] = c->b;
-      colours[32 + 4*i + 3] = c->a;
-   }
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset,
-         sizeof(GLfloat) * 4*16, colours );
-   /* Left side vertex. */
-   cx = x;
-   cy = y;
-   vertex[0]  = cx + 21;
-   vertex[1]  = cy + 0.6*w->h;
-   vertex[2]  = cx + 21;
-   vertex[3]  = cy;
-   vertex[4]  = cx + 15;
-   vertex[5]  = cy + 1;
-   vertex[6]  = cx + 10;
-   vertex[7]  = cy + 3;
-   vertex[8]  = cx + 6;
-   vertex[9]  = cy + 6;
-   vertex[10] = cx + 3;
-   vertex[11] = cy + 10;
-   vertex[12] = cx + 1;
-   vertex[13] = cy + 15;
-   vertex[14] = cx;
-   vertex[15] = cy + 21;
-   vertex[16] = cx;
-   vertex[17] = cy + 0.6*w->h;
-   vertex[18] = cx;
-   cy = y + w->h;
-   vertex[19] = cy - 21;
-   vertex[20] = cx + 1;
-   vertex[21] = cy - 15;
-   vertex[22] = cx + 3;
-   vertex[23] = cy - 10;
-   vertex[24] = cx + 6;
-   vertex[25] = cy - 6;
-   vertex[26] = cx + 10;
-   vertex[27] = cy - 3;
-   vertex[28] = cx + 15;
-   vertex[29] = cy - 1;
-   vertex[30] = cx + 21;
-   vertex[31] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
-   /* Right side vertex. */
-   cx = x + w->w;
-   cy = y;
-   vertex[0]  = cx - 21;
-   vertex[1]  = cy + 0.6*w->h;
-   vertex[2]  = cx - 21;
-   vertex[3]  = cy;
-   vertex[4]  = cx - 15;
-   vertex[5]  = cy + 1;
-   vertex[6]  = cx - 10;
-   vertex[7]  = cy + 3;
-   vertex[8]  = cx - 6;
-   vertex[9]  = cy + 6;
-   vertex[10] = cx - 3;
-   vertex[11] = cy + 10;
-   vertex[12] = cx - 1;
-   vertex[13] = cy + 15;
-   vertex[14] = cx;
-   vertex[15] = cy + 21;
-   vertex[16] = cx;
-   vertex[17] = cy + 0.6*w->h;
-   vertex[18] = cx;
-   cy = y + w->h;
-   vertex[19] = cy - 21;
-   vertex[20] = cx - 1;
-   vertex[21] = cy - 15;
-   vertex[22] = cx - 3;
-   vertex[23] = cy - 10;
-   vertex[24] = cx - 6;
-   vertex[25] = cy - 6;
-   vertex[26] = cx - 10;
-   vertex[27] = cy - 3;
-   vertex[28] = cx - 15;
-   vertex[29] = cy - 1;
-   vertex[30] = cx - 21;
-   vertex[31] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.tk.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   glDisableVertexAttribArray(shaders.tk.vertex);
+   glUseProgram(0);
+   gl_checkErr();
 
 
-   /*
-    * inner outline
-    */
-   /* Colour. */
-   for (i=0; i<7; i++) {
-      colours[4*i + 0] = c->r;
-      colours[4*i + 1] = c->g;
-      colours[4*i + 2] = c->b;
-      colours[4*i + 3] = c->a;
-   }
-   for (; i<7+16; i++) {
-      colours[4*i + 0] = lc->r;
-      colours[4*i + 1] = lc->g;
-      colours[4*i + 2] = lc->b;
-      colours[4*i + 3] = lc->a;
-   }
-   for (; i<7+16+8; i++) {
-      colours[4*i + 0] = c->r;
-      colours[4*i + 1] = c->g;
-      colours[4*i + 2] = c->b;
-      colours[4*i + 3] = c->a;
-   }
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset,
-         sizeof(GLfloat) * 4*31, colours );
-   /* Vertex. */
-   /* Left side. */
-   cx = x + 1;
-   cy = y + 1;
-   vertex[0]  = cx + 21;
-   vertex[1]  = cy;
-   vertex[2]  = cx + 15;
-   vertex[3]  = cy + 1;
-   vertex[4]  = cx + 10;
-   vertex[5]  = cy + 3;
-   vertex[6]  = cx + 6;
-   vertex[7]  = cy + 6;
-   vertex[8]  = cx + 3;
-   vertex[9]  = cy + 10;
-   vertex[10] = cx + 1;
-   vertex[11] = cy + 15;
-   vertex[12] = cx;
-   vertex[13] = cy + 21;
-   vertex[14] = cx;
-   vertex[15] = cy + 0.6*w->h - 1;
-   cy = y + w->h - 1;
-   vertex[16] = cx;
-   vertex[17] = cy - 21;
-   vertex[18] = cx + 1;
-   vertex[19] = cy - 15;
-   vertex[20] = cx + 3;
-   vertex[21] = cy - 10;
-   vertex[22] = cx + 6;
-   vertex[23] = cy - 6;
-   vertex[24] = cx + 10;
-   vertex[25] = cy - 3;
-   vertex[26] = cx + 15;
-   vertex[27] = cy - 1;
-   vertex[28] = cx + 21;
-   vertex[29] = cy;
-   /* Right side via top. */
-   cx = x + w->w - 1;
-   cy = y + w->h - 1;
-   vertex[30] = cx - 21;
-   vertex[31] = cy;
-   vertex[32] = cx - 15;
-   vertex[33] = cy - 1;
-   vertex[34] = cx - 10;
-   vertex[35] = cy - 3;
-   vertex[36] = cx - 6;
-   vertex[37] = cy - 6;
-   vertex[38] = cx - 3;
-   vertex[39] = cy - 10;
-   vertex[40] = cx - 1;
-   vertex[41] = cy - 15;
-   vertex[42] = cx;
-   vertex[43] = cy - 21;
-   cy = y + 1;
-   vertex[44] = cx;
-   vertex[45] = cy + 0.6*w->h - 1;
-   vertex[46] = cx;
-   vertex[47] = cy + 21;
-   vertex[48] = cx - 1;
-   vertex[49] = cy + 15;
-   vertex[50] = cx - 3;
-   vertex[51] = cy + 10;
-   vertex[52] = cx - 6;
-   vertex[53] = cy + 6;
-   vertex[54] = cx - 10;
-   vertex[55] = cy + 3;
-   vertex[56] = cx - 15;
-   vertex[57] = cy + 1;
-   vertex[58] = cx - 21;
-   vertex[59] = cy;
-   cx = x + 1;
-   cy = y + 1;
-   vertex[60] = cx + 21;
-   vertex[61] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*31, vertex );
-   glDrawArrays( GL_LINE_LOOP, 0, 31 );
-
-
-   /*
-    * outer outline
-    */
-   /* Colour. */
-   for (i=0; i<31; i++) {
-      colours[4*i + 0] = oc->r;
-      colours[4*i + 1] = oc->g;
-      colours[4*i + 2] = oc->b;
-      colours[4*i + 3] = oc->a;
-   }
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset,
-         sizeof(GLfloat) * 4*31, colours );
-   /* Vertex. */
-   /* Left side. */
-   cx = x;
-   cy = y;
-   vertex[0]  = cx + 21;
-   vertex[1]  = cy;
-   vertex[2]  = cx + 15;
-   vertex[3]  = cy + 1;
-   vertex[4]  = cx + 10;
-   vertex[5]  = cy + 3;
-   vertex[6]  = cx + 6;
-   vertex[7]  = cy + 6;
-   vertex[8]  = cx + 3;
-   vertex[9]  = cy + 10;
-   vertex[10] = cx + 1;
-   vertex[11] = cy + 15;
-   vertex[12] = cx;
-   vertex[13] = cy + 21;
-   vertex[14] = cx;
-   vertex[15] = cy + 0.6*w->h;
-   cy = y + w->h;
-   vertex[16] = cx;
-   vertex[17] = cy - 21;
-   vertex[18] = cx + 1;
-   vertex[19] = cy - 15;
-   vertex[20] = cx + 3;
-   vertex[21] = cy - 10;
-   vertex[22] = cx + 6;
-   vertex[23] = cy - 6;
-   vertex[24] = cx + 10;
-   vertex[25] = cy - 3;
-   vertex[26] = cx + 15;
-   vertex[27] = cy - 1;
-   vertex[28] = cx + 21;
-   vertex[29] = cy;
-   /* Right side via top. */
-   cx = x + w->w;
-   cy = y + w->h;
-   vertex[30] = cx - 21;
-   vertex[31] = cy;
-   vertex[32] = cx - 15;
-   vertex[33] = cy - 1;
-   vertex[34] = cx - 10;
-   vertex[35] = cy - 3;
-   vertex[36] = cx - 6;
-   vertex[37] = cy - 6;
-   vertex[38] = cx - 3;
-   vertex[39] = cy - 10;
-   vertex[40] = cx - 1;
-   vertex[41] = cy - 15;
-   vertex[42] = cx;
-   vertex[43] = cy - 21;
-   cy = y;
-   vertex[44] = cx;
-   vertex[45] = cy + 0.6*w->h;
-   vertex[46] = cx;
-   vertex[47] = cy + 21;
-   vertex[48] = cx - 1;
-   vertex[49] = cy + 15;
-   vertex[50] = cx - 3;
-   vertex[51] = cy + 10;
-   vertex[52] = cx - 6;
-   vertex[53] = cy + 6;
-   vertex[54] = cx - 10;
-   vertex[55] = cy + 3;
-   vertex[56] = cx - 15;
-   vertex[57] = cy + 1;
-   vertex[58] = cx - 21;
-   vertex[59] = cy;
-   cx = x;
-   cy = y;
-   vertex[60] = cx + 21;
-   vertex[61] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*31, vertex );
-   glDrawArrays( GL_LINE_LOOP, 0, 31 );
-
-   /* Clean up. */
-   gl_endSmoothProgram();
 
    /*
     * render window name
