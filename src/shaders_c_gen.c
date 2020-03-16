@@ -18,7 +18,7 @@ const Shader shaders[] = {
    },
    {
       .name = "circle_filled",
-      .vs_path = "circle_filled.vert",
+      .vs_path = "circle.vert",
       .fs_path = "circle_filled.frag",
       .attributes = {"vertex"},
       .uniforms = {"projection", "color", "radius"}
