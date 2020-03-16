@@ -762,8 +762,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.g = cRed.g;
    col.b = cRed.b;
 
-   glDisable(GL_LINE_SMOOTH);
-
    /* Selected system. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
@@ -780,9 +778,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
    gl_drawCircle( x + cur_system->pos.x * map_zoom,
          y + cur_system->pos.y * map_zoom,
          1.5*r, &col, 0 );
-
-   if (!gl_vendorIsIntel())
-      glDisable(GL_LINE_SMOOTH);
 }
 
 
@@ -900,7 +895,6 @@ void map_renderJumps( double x, double y, int editor)
    StarSystem *sys, *jsys;
 
    /* Generate smooth lines. */
-   glDisable( GL_LINE_SMOOTH );
    glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
    for (i=0; i<systems_nstack; i++) {
@@ -963,7 +957,6 @@ void map_renderJumps( double x, double y, int editor)
    }
 
    /* Reset render parameters. */
-   glDisable( GL_LINE_SMOOTH );
    glLineWidth( 1. );
 }
 
@@ -978,9 +971,6 @@ void map_renderSystems( double bx, double by, double x, double y,
    const glColour *col;
    StarSystem *sys;
    double tx, ty;
-
-   /* Smoother circles. */
-   glDisable(GL_LINE_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -1017,9 +1007,6 @@ void map_renderSystems( double bx, double by, double x, double y,
       }
 
    }
-
-   if (!gl_vendorIsIntel())
-      glDisable( GL_LINE_SMOOTH );
 }
 
 
@@ -1040,7 +1027,6 @@ static void map_renderPath( double x, double y, double a )
       jcur = jmax; /* Jump range remaining. */
 
       /* Generate smooth lines. */
-      glDisable( GL_LINE_SMOOTH );
       glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
       for (j=0; j<map_npath; j++) {
@@ -1085,7 +1071,6 @@ static void map_renderPath( double x, double y, double a )
       }
 
       /* Reset render parameters. */
-      glDisable( GL_LINE_SMOOTH );
       glLineWidth( 1. );
    }
 }
