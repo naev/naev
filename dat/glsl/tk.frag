@@ -1,7 +1,9 @@
 #version 130
 
-uniform vec4 color1;
-uniform vec4 color2;
+uniform vec4 dc;
+uniform vec4 c;
+uniform vec4 lc;
+uniform vec4 oc;
 uniform vec2 wh;
 uniform float corner_radius;
 
@@ -10,12 +12,23 @@ in vec2 pos;
 out vec4 color_out;
 
 void main(void) {
-   color_out = mix(color1, color2, ratio);
+   vec2 diff = wh/2 - abs(pos);
 
-   float d1 = corner_radius - distance(abs(pos), wh/2-corner_radius + 1);
+   // Distance from rectangle edge
+   float d1 = min(diff.x, diff.y);
 
-   vec2 diff = wh/2-corner_radius - abs(pos);
-   float d2 = max(diff.x, diff.y);
+   // Distance from corner circle edge
+   float d2 = corner_radius - distance(abs(pos), wh/2 - corner_radius);
 
-   color_out.a = min(max(d1, 0.) + max(d2, 0.), 1.);
+   // Distance from rounded rectangle edge
+   float d = mix(d2, d1, step(corner_radius, max(diff.x, diff.y)));
+
+   // Gradiant body
+   color_out = mix(dc, c, ratio);
+   // Inner border
+   color_out = mix(lc, color_out, clamp(d - 2, 0., 1.));
+   // Outer border
+   color_out = mix(oc, color_out, clamp(d - 1, 0., 1.));
+
+   color_out.a = d;
 }

@@ -1242,15 +1242,16 @@ static void window_renderBorder( Window* w )
       return;
    }
 
-   /* Set the vertex. */
    projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, w->x, w->y, 0);
    projection = gl_Matrix4_Scale(projection, w->w, w->h, 1);
 
    glUseProgram(shaders.tk.program);
    glEnableVertexAttribArray(shaders.tk.vertex);
-   gl_uniformColor(shaders.tk.color1, dc);
-   gl_uniformColor(shaders.tk.color2, c);
+   gl_uniformColor(shaders.tk.dc, dc);
+   gl_uniformColor(shaders.tk.c, c);
+   gl_uniformColor(shaders.tk.oc, oc);
+   gl_uniformColor(shaders.tk.lc, lc);
    gl_Matrix4_Uniform(shaders.tk.projection, projection);
    glUniform2f(shaders.tk.wh, w->w, w->h);
    glUniform1f(shaders.tk.corner_radius, 10. / gl_screen.scale);
@@ -1261,8 +1262,6 @@ static void window_renderBorder( Window* w )
    glDisableVertexAttribArray(shaders.tk.vertex);
    glUseProgram(0);
    gl_checkErr();
-
-
 
    /*
     * render window name

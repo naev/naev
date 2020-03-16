@@ -84,7 +84,7 @@ const Shader shaders[] = {
       .vs_path = "tk.vert",
       .fs_path = "tk.frag",
       .attributes = {"vertex"},
-      .uniforms = {"projection", "color1", "color2", "wh", "corner_radius"}
+      .uniforms = {"projection", "c", "dc", "lc", "oc", "wh", "corner_radius"}
    },
 };
 
