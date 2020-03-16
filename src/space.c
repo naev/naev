@@ -3741,6 +3741,7 @@ void space_exit (void)
       for (j=0; j<at->ngfx; j++) {
          gl_freeTexture(at->gfxs[j]);
       }
+      free(at->gfxs);
    }
    free(asteroid_types);
    asteroid_types = NULL;

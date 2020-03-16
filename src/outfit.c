@@ -2498,9 +2498,20 @@ void outfit_free (void)
       /* Free slot. */
       outfit_freeSlot( &outfit_stack[i].slot );
 
+      if (outfit_isAmmo(o)) {
+         /* Free collision polygons. */
+         if (o->u.amm.npolygon != 0) {
+            for (j=0; j<o->u.amm.npolygon; j++) {
+               free(o->u.amm.polygon[j].x);
+               free(o->u.amm.polygon[j].y);
+            }
+            free(o->u.amm.polygon);
+         }
+      }
       /* Type specific. */
-      if (outfit_isBolt(o) && o->u.blt.gfx_end) {
-         gl_freeTexture(o->u.blt.gfx_end);
+      if (outfit_isBolt(o)) {
+         if (o->u.blt.gfx_end)
+            gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
          if (o->u.blt.npolygon != 0) {
             for (j=0; j<o->u.blt.npolygon; j++) {
