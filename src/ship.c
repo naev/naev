@@ -575,6 +575,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
    /* Load the XML. */
    buf  = ndata_read( file, &bufsize );
    doc  = xmlParseMemory( buf, bufsize );
+   free(buf);
 
    if (doc == NULL) {
       WARN(_("%s file is invalid xml!"), file);

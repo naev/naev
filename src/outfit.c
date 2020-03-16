@@ -1055,6 +1055,7 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    /* Load the XML. */
    buf  = ndata_read( file, &bufsize );
    doc  = xmlParseMemory( buf, bufsize );
+   free(buf);
 
    if (doc == NULL) {
       WARN(_("%s file is invalid xml!"), file);

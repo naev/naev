@@ -1137,6 +1137,8 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    /* Find empty texture and render char. */
    gl_fontAddGlyphTex( stsh, &ft_char, glyph );
 
+   free(ft_char.data);
+
    return glyph;
 }
 
@@ -1228,10 +1230,13 @@ static char *gl_fontFind( const char *fname )
       if (FcPatternGetString(font, FC_FILE, 0, &file) == FcResultMatch) {
          fontFile = strdup( (char*)file );
          FcPatternDestroy(pat);
+         FcPatternDestroy(font);
+         FcConfigDestroy(config);
          return fontFile;
       }
    }
    FcPatternDestroy(pat);
+   FcConfigDestroy(config);
 #endif
    return NULL;
 }
@@ -1375,6 +1380,8 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
    /* Free read buffer. */
    free(buf);
 #endif
+
+   free(used_font);
 
    return 0;
 }

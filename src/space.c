@@ -3173,6 +3173,10 @@ int space_load (void)
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
+   for (i=0; i<nasterogfx; i++)
+      free(asteroid_files[i]);
+   free(asteroid_files);
+
    return 0;
 }
 
@@ -3250,6 +3254,7 @@ static int asteroidTypes_load (void)
                npng  = npng_open( rw );
                npng_dim( npng, &w, &h );
                surface = npng_readSurface( npng, gl_needPOT(), 1 );
+               npng_close(npng);
 
                at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
