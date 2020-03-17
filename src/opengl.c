@@ -266,27 +266,7 @@ void gl_checkHandleError( const char *func, int line )
    if (err == GL_NO_ERROR)
       return;
 
-   switch (err) {
-      case GL_INVALID_ENUM:
-         errstr = _("GL invalid enum");
-         break;
-      case GL_INVALID_VALUE:
-         errstr = _("GL invalid value");
-         break;
-      case GL_INVALID_OPERATION:
-         errstr = _("GL invalid operation");
-         break;
-      case GL_INVALID_FRAMEBUFFER_OPERATION:
-         errstr = _("GL invalid framebuffer operation");
-         break;
-      case GL_OUT_OF_MEMORY:
-         errstr = _("GL out of memory");
-         break;
-
-      default:
-         errstr = _("GL unknown error");
-         break;
-   }
+   errstr = gluErrorString(err);
    WARN(_("OpenGL error [%s:%d]: %s"), func, line, errstr);
 }
 #endif /* DEBUGGING */
