@@ -666,6 +666,38 @@ void gl_drawCircle( const double cx, const double cy,
 
 
 /**
+ * @brief Draws a line.
+ *
+ *    @param cx x1 position of the first point in screen coordinates.
+ *    @param cy y1 position of the first point in screen coordinates.
+ *    @param cx x1 position of the second point in screen coordinates.
+ *    @param cy y1 position of the second point in screen coordinates.
+ *    @param c Colour to use.
+ */
+void gl_drawLine( const double x1, const double y1,
+      const double x2, const double y2, const glColour *c )
+{
+   GLfloat vertex[4];
+   gl_Matrix4 projection;
+   gl_vbo *my_vbo;
+
+   projection = gl_view_matrix;
+   vertex[0] = x1;
+   vertex[1] = y1;
+   vertex[2] = x2;
+   vertex[3] = y2;
+
+   my_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 4, vertex );
+
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( my_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 2 );
+   gl_endSolidProgram();
+   gl_vboDestroy( my_vbo );
+}
+
+
+/**
  * @brief Sets up 2d clipping planes around a rectangle.
  *
  *    @param x X position of the rectangle.

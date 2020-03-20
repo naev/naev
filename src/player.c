@@ -996,6 +996,13 @@ credits_t player_modCredits( credits_t amount )
  */
 void player_render( double dt )
 {
+   double a, x1, y1, x2, y2, r;
+   gl_Matrix4 projection;
+   glColour c;
+   GLfloat vertex[4];
+   gl_vbo *gui_out_of_range_vbo;
+   Pilot *target;
+
    /*
     * Check to see if the death menu should pop up.
     */
@@ -1010,8 +1017,33 @@ void player_render( double dt )
     * Render the player.
     */
    if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
-         !pilot_isFlag( player.p, PILOT_INVISIBLE))
+         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
+
+      /* Render the aiming lines. */
+      a = player.p->solid->dir;
+      r = 200.;
+
+      gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+      x2 = x1 + r*cos( a );
+      y2 = y1 + r*sin( a );
+      c = cFriend; //cNeutral; cHostile;
+      c.a = .5;
+      gl_drawLine( x1, y1, x2, y2, &c );
+
+
+      if (player.p->target != PLAYER_ID) {
+         target = pilot_get(player.p->target);
+         a = pilot_aimAngle( player.p, target );
+         x2 = x1 + r*cos( a );
+         y2 = y1 + r*sin( a );
+         c = cHostile; //cNeutral; cHostile;
+         c.a = .5;
+         gl_drawLine( x1, y1, x2, y2, &c );
+      }
+
+      /* Render the player's pilot. */
       pilot_render(player.p, dt);
+   }
 }
 
 
