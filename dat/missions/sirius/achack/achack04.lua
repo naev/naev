@@ -182,7 +182,7 @@ function jumpin()
       bhfleet = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
       bhfleet = addRawShips(bhfleet, "baddie_norun", vec2.new(-3000, -7000), "Achack_thugs")
       alive = #bhfleet
-      for _, j in ipairs(bhfleet) do
+      for i, j in ipairs(bhfleet) do
          j:control()
          j:rename(_("Bounty Hunter"))
          j:setHilight(true)
