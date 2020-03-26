@@ -289,6 +289,7 @@ void player_newTutorial (void)
 
    /* Load the GUI. */
    gui_load( gui_pick() );
+   player.aimLines = 0;
 
    /* It's the tutorial. */
    player_setFlag( PLAYER_TUTORIAL );
@@ -368,6 +369,7 @@ void player_new (void)
 
    /* Load the GUI. */
    gui_load( gui_pick() );
+   player.aimLines = 0;
 }
 
 
@@ -996,11 +998,8 @@ credits_t player_modCredits( credits_t amount )
  */
 void player_render( double dt )
 {
-   double a, x1, y1, x2, y2, r;
-   gl_Matrix4 projection;
+   double a, b, d, x1, y1, x2, y2, r;
    glColour c;
-   GLfloat vertex[4];
-   gl_vbo *gui_out_of_range_vbo;
    Pilot *target;
 
    /*
@@ -1020,25 +1019,46 @@ void player_render( double dt )
          !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
 
       /* Render the aiming lines. */
-      a = player.p->solid->dir;
-      r = 200.;
-
-      gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
-      x2 = x1 + r*cos( a );
-      y2 = y1 + r*sin( a );
-      c = cFriend; //cNeutral; cHostile;
-      c.a = .5;
-      gl_drawLine( x1, y1, x2, y2, &c );
-
-
-      if (player.p->target != PLAYER_ID) {
+      if (player.p->target != PLAYER_ID && player.aimLines) {
          target = pilot_get(player.p->target);
-         a = pilot_aimAngle( player.p, target );
-         x2 = x1 + r*cos( a );
-         y2 = y1 + r*sin( a );
-         c = cHostile; //cNeutral; cHostile;
-         c.a = .5;
-         gl_drawLine( x1, y1, x2, y2, &c );
+         if (target != NULL) {
+            a = player.p->solid->dir;
+            r = 200.;
+            gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+
+            b = pilot_aimAngle( player.p, target );
+
+            /* The angular error will give the exact colour that is used. */
+            d = ABS( 10*angle_diff(a,b) / M_PI ); 
+            d = MIN( 1, d );
+
+            c = cInert;
+            c.a = .1;
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+M_PI/20 ),
+                                   player.p->solid->pos.y + r*sin( a+M_PI/20 ) );
+            gl_drawLine( x1, y1, x2, y2, &c );
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-M_PI/20 ),
+                                   player.p->solid->pos.y + r*sin( a-M_PI/20 ) );
+            gl_drawLine( x1, y1, x2, y2, &c );
+
+            c.r = d*.9;
+            c.g = d*.2 + (1-d)*.8;
+            c.b = (1-d)*.2;
+            c.a = .3;
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
+                                   player.p->solid->pos.y + r*sin( a ) );
+
+            gl_drawLine( x1, y1, x2, y2, &c );
+            c.a = .7;
+            gl_renderCross( x2, y2, 4., &c );
+
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
+                                   player.p->solid->pos.y + r*sin( b ) );
+            c.a = .2;
+            gl_drawLine( x1, y1, x2, y2, &c );
+            c.a = .7;
+            gl_drawCircle( x2, y2, 5., &c, 0 );
+         }
       }
 
       /* Render the player's pilot. */
@@ -2964,6 +2984,7 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
+   xmlw_elem(writer,"aimLines","%d",player.aimLines);
 
    /* Time. */
    xmlw_startElem(writer,"time");
@@ -3216,7 +3237,7 @@ static Planet* player_parse( xmlNodePtr parent )
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
-   int i, map_overlay;
+   int i, map_overlay, aim_lines;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
@@ -3234,6 +3255,7 @@ static Planet* player_parse( xmlNodePtr parent )
    planet      = NULL;
    time_set    = 0;
    map_overlay = 0;
+   aim_lines   = 0;
 
    /* Must get planet first. */
    node = parent->xmlChildrenNode;
@@ -3252,6 +3274,8 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_int(node,"guiOverride",player.guiOverride);
       xmlr_int(node,"mapOverlay",map_overlay);
       ovr_setOpen(map_overlay);
+      xmlr_int(node,"aimLines",aim_lines);
+      player.aimLines = aim_lines;
 
       /* Time. */
       if (xml_isNode(node,"time")) {

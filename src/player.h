@@ -69,6 +69,7 @@ typedef struct Player_s {
    char *name; /**< Player's name. */
    char *gui; /**< Player's GUI. */
    int guiOverride; /**< GUI is overridden (not default). */
+   int aimLines; /**< Activate aiming helper lines. */
 
    /* Player data. */
    PlayerFlags flags; /**< Player's flags. */
