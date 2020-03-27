@@ -1048,6 +1048,9 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
 
    /* See if the file does exist. */
    if (access(file, F_OK) == -1) {
+      WARN(_("%s xml collision polygon does not exist!\n \
+               Please use the script 'polygon_from_sprite.py' \
+that can be found in naev's artwork repo."), file);
       free(file);
       return 0;
    }
