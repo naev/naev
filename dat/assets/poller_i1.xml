@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Poller I-1">
+ <pos>
+  <x>4696.355991</x>
+  <y>-6357.651987</y>
+ </pos>
+ <GFX>
+  <space>I02.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>
