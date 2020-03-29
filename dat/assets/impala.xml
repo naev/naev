@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Impala">
+ <pos>
+  <x>2960.095590</x>
+  <y>2281.447104</y>
+ </pos>
+ <GFX>
+  <space>moon-D02.png</space>
+  <exterior>uninhabited-rocky-airless-02.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>10.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>100</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>This lonely outpost was once an active space-based research and development center. Since the congregation of scientists to Ruadan, it has been all but abandoned. It's sole purpose now is as a refueling stop for the sparsely-populated south of Za'lek space.</description>
+ </general>
+</asset>

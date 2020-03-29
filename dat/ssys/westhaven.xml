@@ -10,7 +10,10 @@
   <x>-371.489640</x>
   <y>-1109.550320</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>WSTHVN D-1</asset>
+  <asset>WSTHVN P-1</asset>
+ </assets>
  <jumps>
   <jump target="Straight Row">
    <autopos/>

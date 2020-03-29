@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Newmarch D-3">
+ <pos>
+  <x>11244.857836</x>
+  <y>7193.945119</y>
+ </pos>
+ <GFX>
+  <space>D00.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

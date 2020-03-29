@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vaal">
+ <pos>
+  <x>-19.168800</x>
+  <y>-83.064800</y>
+ </pos>
+ <GFX>
+  <space>J08.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+  </services>
+  <commodities/>
+  <description>This mysterious, stormy world has a rich amount of minerals and noble gasses in its atmosphere, but seems abandoned of life. It seems that a Za'lek survey once invesigated this world, explaining the small landing pad, but no other sign of their presence or indeed any human presence here at all. Just the sound of the wind and distant thunder as your only companion</description>
+ </general>
+</asset>
