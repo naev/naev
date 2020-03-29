@@ -8,6 +8,11 @@
   <space>station-agriculture.png</space>
   <exterior>forest2.png</exterior>
  </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
  <general>
   <class>A</class>
   <population>0</population>
