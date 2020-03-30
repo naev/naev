@@ -3,14 +3,16 @@
  <general>
   <radius>10000.000000</radius>
   <stars>400</stars>
-  <interference>0.000000</interference>
+  <interference>500.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-780.252216</x>
-  <y>-1144.780298</y>
+  <x>-789.867057</x>
+  <y>-1196.104886</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Vaal</asset>
+ </assets>
  <jumps>
   <jump target="Poller">
    <autopos/>

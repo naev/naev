@@ -1048,6 +1048,9 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
 
    /* See if the file does exist. */
    if (access(file, F_OK) == -1) {
+      WARN(_("%s xml collision polygon does not exist!\n \
+               Please use the script 'polygon_from_sprite.py' \
+that can be found in naev's artwork repo."), file);
       free(file);
       return 0;
    }
@@ -1055,6 +1058,7 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    /* Load the XML. */
    buf  = ndata_read( file, &bufsize );
    doc  = xmlParseMemory( buf, bufsize );
+   free(buf);
 
    if (doc == NULL) {
       WARN(_("%s file is invalid xml!"), file);
@@ -2497,9 +2501,20 @@ void outfit_free (void)
       /* Free slot. */
       outfit_freeSlot( &outfit_stack[i].slot );
 
+      if (outfit_isAmmo(o)) {
+         /* Free collision polygons. */
+         if (o->u.amm.npolygon != 0) {
+            for (j=0; j<o->u.amm.npolygon; j++) {
+               free(o->u.amm.polygon[j].x);
+               free(o->u.amm.polygon[j].y);
+            }
+            free(o->u.amm.polygon);
+         }
+      }
       /* Type specific. */
-      if (outfit_isBolt(o) && o->u.blt.gfx_end) {
-         gl_freeTexture(o->u.blt.gfx_end);
+      if (outfit_isBolt(o)) {
+         if (o->u.blt.gfx_end)
+            gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
          if (o->u.blt.npolygon != 0) {
             for (j=0; j<o->u.blt.npolygon; j++) {

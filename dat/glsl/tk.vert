@@ -1,11 +1,14 @@
 #version 130
 
-in vec4 vertex;
 uniform mat4 projection;
-uniform float radius;
+uniform vec2 wh;
+
+in vec4 vertex;
 out vec2 pos;
+out float ratio;
 
 void main(void) {
-   pos = 2. * radius * (vertex.xy - .5);
+   pos = wh * (vertex.xy - .5);
+   ratio = vertex.y;
    gl_Position = projection * vertex;
 }

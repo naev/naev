@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Greenberg">
+ <pos>
+  <x>-6733.386104</x>
+  <y>-5801.470834</y>
+ </pos>
+ <GFX>
+  <space>G03.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>50000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>This world has suffered from the centralization of Za'lek space particularly hard. With the effective abandonment by the Za'lek authorities beyond a skeleton government, this world has fallen into hard times and struggles to remain afloat.</description>
+  <bar>This bar seems very shabby and run-down. It has mismatching furniature and the walls ahve been visibly repaired more than once. THere are few people, and most of them seem to be the types too old and stubborn to leave.</bar>
+ </general>
+</asset>

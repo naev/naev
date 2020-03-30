@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wahri">
+ <pos>
+  <x>-5939.054155</x>
+  <y>-4578.683324</y>
+ </pos>
+ <GFX>
+  <space>moon-C00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>30.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>30000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>A simple lunar outpost built primarily to mine the local X-class world for its resources and ship them to other parts of Za'lek space. There are rumors of the world being used for weapons testing, but there is little evidence to support that.</description>
+  <bar>A simple spacebort bar built entirely out of prefabricated parts. If you want watered-down beer and a filling meal, it will do the job.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Crappy Core Systems</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+ </tech>
+</asset>

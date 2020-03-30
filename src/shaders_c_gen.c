@@ -18,7 +18,7 @@ const Shader shaders[] = {
    },
    {
       .name = "circle_filled",
-      .vs_path = "circle_filled.vert",
+      .vs_path = "circle.vert",
       .fs_path = "circle_filled.frag",
       .attributes = {"vertex"},
       .uniforms = {"projection", "color", "radius"}
@@ -78,6 +78,13 @@ const Shader shaders[] = {
       .fs_path = "beam.frag",
       .attributes = {"vertex"},
       .uniforms = {"projection", "color", "tex_mat"}
+   },
+   {
+      .name = "tk",
+      .vs_path = "tk.vert",
+      .fs_path = "tk.frag",
+      .attributes = {"vertex"},
+      .uniforms = {"projection", "c", "dc", "lc", "oc", "wh", "corner_radius"}
    },
 };
 

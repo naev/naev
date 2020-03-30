@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="HS - 5 1">
+ <pos>
+  <x>-4533.758622</x>
+  <y>-7183.066534</y>
+ </pos>
+ <GFX>
+  <space>moon-X00.png</space>
+  <exterior>rocky_small.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>7500</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This airless, low-gravity moon serves as a modest civilian spaceborne shipyard. It was dubbed cheaper and less effort to get ships to and from the surface of Jurai. There is little of interest to experienced captains, but younger pilots, primarily from Jurai, flock here.</description>
+  <bar>This bar is even more of a mess than usual for a Za'lek world. The clientele are young, and congregate around the randomly-blased tables and chairs enthusiastically arguing over a myriad of subjects. Unlike most Za'lek worlds, there are few scientists here.</bar>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Missiles 1</item>
+  <item>Crappy Core Systems</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Systems Low</item>
+  <item>Systems Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Cargo</item>
+ </tech>
+</asset>

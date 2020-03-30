@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tomas X-1">
+ <pos>
+  <x>-6300.855543</x>
+  <y>-4415.036102</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>uninhabited-rocky-red-01.png</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

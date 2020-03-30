@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jurai">
+ <pos>
+  <x>3494.242339</x>
+  <y>1924.878737</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1500000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Jurai is a humble and pleasantly liveable class M world. It is a population center for the Za'lek, and is dotted with universities and laboratories. Many younger people on this world yearn to leave to more exciting worlds, while older Za'lek tend to retire here.</description>
+  <bar>The bar is as rambling as many Za'lek institutions, yet seems cozy all the same with booths sunken into the floor and soft lighting. The patrons are disproportionately older.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Crappy Core Systems</item>
+  <item>High Tech Upgrades 1</item>
+ </tech>
+</asset>
