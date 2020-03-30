@@ -23,7 +23,9 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
   <description>One of House Za'leks nutrition stations, this simple agristation services the local sector, augmenting what worlds are unable to feed themselves.</description>
  </general>
 </asset>

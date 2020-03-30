@@ -26,9 +26,12 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
   <description>This airless, low-gravity moon serves as a modest civilian spaceborne shipyard. It was dubbed cheaper and less effort to get ships to and from the surface of Jurai. There is little of interest to experienced captains, but younger pilots, primarily from Jurai, flock here.</description>
-  <bar>This bar is even more of a mess than usual for a Za'lek world. The clientele are young, and congregate around the randomly-blased tables and chairs enthusiastically arguing over a myriad of subjects. Unlike most Za'lek worlds, there are few scientists here.</bar>
+  <bar>This bar is even more of a mess than usual for a Za'lek world. The clientele are young, and congregate around the randomly-placed tables and chairs enthusiastically arguing over a myriad of subjects. Unlike most Za'lek worlds, there are few scientists here.</bar>
  </general>
  <tech>
   <item>Basic Civilian Ships</item>

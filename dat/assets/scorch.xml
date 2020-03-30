@@ -24,7 +24,11 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
   <description>This world is teeming with volcanos and rivers of lava, punctuated with frequent earthquakes and acid rains. It is possibly one of the most hostile enviroments to be found in space. So naturally, there is a sizable presence of scientists and geologists who find it to be a treasure trove. The Za'lek authorities use it as a hostile enviroment training center as well.</description>
   <bar>The bar overlooks Scorch's lively weather. The glass is at least a meter thick. The patrons to not seem to mind the visible havoc going on outside, tending to their drinks and conversations with reassurring casualness.</bar>
  </general>
