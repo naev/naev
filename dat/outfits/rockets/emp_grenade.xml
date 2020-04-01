@@ -3,11 +3,11 @@
  <general>
   <mass>0.5</mass>
   <price>0</price>
-  <gfx_store>empgrenade</gfx_store>
+  <gfx_store>empgrenade_blue</gfx_store>
   <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
  </general>
  <specific type="ammo">
-  <gfx spin="0.3">empgrenade</gfx>
+  <gfx spin="0.3">empgrenade_blue</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>EmpS</spfx_shield>

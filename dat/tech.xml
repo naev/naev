@@ -52,6 +52,8 @@
   <item>Orion Beam</item>
   <item>Pulse Beam</item>
   <item>Grave Lance</item>
+  <item>Particle Beam</item>
+  <item>Particle Lance</item>
   <item>Orion Lance</item>
   <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
@@ -81,6 +83,8 @@
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
+  <item>Za'lek Hunter Launcher</item>
+  <item>Za'lek Reaper Launcher</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -785,6 +789,11 @@
   <item>Drone Fighter Bay</item>
   <item>Drone</item>
   <item>Heavy Drone</item>
+ </tech>
+ 
+ <tech name="__Za'lek Launchers"> 
+  <item>Za'lek Hunter Launcher</item>
+  <item>Za'lek Reaper Launcher</item>
  </tech>
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>
