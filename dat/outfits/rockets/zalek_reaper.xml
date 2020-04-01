@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Za'lek Reaper Drone">
+ <general>
+  <license>Heavy Weapon License</license>
+  <mass>5</mass>
+  <price>0</price>
+  <description>Reaper drones are the Za'lek version of other nations' torpedoes. They are reasonably fast, and hit with shattering force.</description>
+  <gfx_store>zalek_reaper</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>zalek_reaper</gfx>
+  <sound>1-second-detachment</sound>
+  <sound_hit>lrgexp0</sound_hit>
+  <spfx_shield>ExpL2</spfx_shield>
+  <spfx_armour>ExpL2</spfx_armour>
+  <duration blowup="armour">60</duration>
+  <thrust>0</thrust>
+  <turn>40</turn>
+  <speed>270</speed>
+  <resist>100</resist>
+  <damage>
+   <type>ion</type>
+   <penetrate>90</penetrate>
+   <physical>900</physical>
+   <disable>50</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>
