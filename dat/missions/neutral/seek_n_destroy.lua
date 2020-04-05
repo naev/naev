@@ -139,7 +139,7 @@ function create ()
       misn.finish( false )
    end
 
-   local systems = getsysatdistance( system.cur(), 1, 7,
+   local systems = getsysatdistance( system.cur(), 1, 5,
       function(s)
          local p = s:presences()[target_faction:name()]
          return p ~= nil and p > 0
