@@ -84,6 +84,25 @@
    <faction>Pirate</faction>
   </avail>
  </mission>
+ <mission name="Waste Dump">
+  <lua>neutral/wastedump</lua>
+  <avail>
+   <priority>9</priority>
+   <done>Garbage Person</done>
+   <chance>100</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>
