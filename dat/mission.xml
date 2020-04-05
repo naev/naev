@@ -84,6 +84,25 @@
    <faction>Pirate</faction>
   </avail>
  </mission>
+ <mission name="Waste Dump">
+  <lua>neutral/wastedump</lua>
+  <avail>
+   <priority>9</priority>
+   <done>Garbage Person</done>
+   <chance>100</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>
@@ -1118,18 +1137,6 @@
    <location>None</location>
   </avail>
  </mission>
- <mission name="Waste dump">
-  <lua>empire/waste_dump</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <chance>25</chance>
-   <location>Computer</location>
-   <system>Shakar</system>
-  </avail>
- </mission>
  <mission name="The Runaway">
   <lua>neutral/runaway/runaway_cynthia</lua>
   <flags>
@@ -1502,6 +1509,18 @@
   <avail>
    <done>A Friend's Aid</done>
    <chance>10</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Garbage Person">
+  <lua>soromid/comingout/srm_comingout5</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <done>Visiting Family</done>
+   <chance>30</chance>
    <location>Bar</location>
    <faction>Soromid</faction>
   </avail>
