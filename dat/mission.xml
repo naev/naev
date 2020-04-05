@@ -201,7 +201,7 @@
   <avail>
    <priority>4</priority>
    <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>75</chance>
+   <chance>875</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>

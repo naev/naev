@@ -93,7 +93,7 @@ ambush_comm[7] = _("You were not supposed to get on the way of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
-breef_text = _("%s is a %s pilot who is wanted by the authorities, dead or alive. Any citizen who will find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
+breef_text = _("%s is a %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
 
 flee_title = _("You're not going to kill anybody like that")
 flee_text = _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going.")
@@ -139,7 +139,7 @@ function create ()
       misn.finish( false )
    end
 
-   local systems = getsysatdistance( system.cur(), 1, 3,
+   local systems = getsysatdistance( system.cur(), 1, 7,
       function(s)
          local p = s:presences()[target_faction:name()]
          return p ~= nil and p > 0
