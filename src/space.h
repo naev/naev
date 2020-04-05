@@ -79,7 +79,7 @@ typedef struct Planet_ {
    double radius; /**< Radius of the planet. */
 
    /* Planet details. */
-   char *class; /**< planet type */
+   char *class; /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
    int faction; /**< planet faction */
    uint64_t population; /**< Population of the planet. */
 
