@@ -161,7 +161,7 @@ function abort ()
          choices = { "Collective Lge Swarm", "Collective Sml Swarm" }
       elseif f == faction.get( "FLF" ) then
          choices = { "FLF Pacifier", "FLF Vendetta", "FLF Lancelot" }
-      else
+      elseif f == faction.get( "Pirate" ) then
          choices = { "Pirate Kestrel", "Pirate Phalanx", "Pirate Admonisher" }
       end
 
