@@ -71,6 +71,7 @@ extern const glColour cDConsole;
 extern const glColour cHilight;
 /* objects */
 extern const glColour cInert;
+extern const glColour cMapInert;
 extern const glColour cNeutral;
 extern const glColour cMapNeutral;
 extern const glColour cFriend;

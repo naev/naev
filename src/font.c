@@ -1056,7 +1056,7 @@ static const glColour* gl_fontGetColour( uint32_t ch )
       case 'F': col = &cFriend; break;
       case 'H': col = &cHostile; break;
       case 'N': col = &cNeutral; break;
-      case 'I': col = &cInert; break;
+      case 'I': col = &cMapInert; break;
       case 'R': col = &cRestricted; break;
       case 'S': col = &cDRestricted; break;
       case 'M': col = &cMapNeutral; break;
