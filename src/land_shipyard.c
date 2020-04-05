@@ -106,7 +106,7 @@ void shipyard_open( unsigned int wid )
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -240, 128, 200, 0, "txtStats",
+   window_addText( wid, -40, -240, 128, 400, 0, "txtStats",
          &gl_smallFont, &cBlack, NULL );
 
    /* text */

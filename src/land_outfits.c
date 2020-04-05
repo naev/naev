@@ -138,7 +138,7 @@ void outfits_open( unsigned int wid )
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
          280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+         280, 320, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10,
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          _("Owned:\n"
