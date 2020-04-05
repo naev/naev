@@ -103,6 +103,12 @@ function bounty_setup ()
 end
 
 
+-- Adjust pirate faction (used for "alive" bounties)
+function set_pirate_faction ()
+   target_ship:setFaction( "Wanted Pirate" )
+end
+
+
 function board_fail ()
    if rnd.rnd() < 0.25 then
       board_failed = true

@@ -371,6 +371,7 @@ function spawn_pirate( param )
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
          target_ship = pilot.add( ship, nil, param )[1]
+         set_pirate_faction()
          target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "disable", "pilot_disable" )
@@ -391,6 +392,11 @@ function spawn_pirate( param )
          fail( msg[1]:format( name ) )
       end
    end
+end
+
+
+-- Adjust pirate faction (used for "alive" bounties)
+function set_pirate_faction ()
 end
 
 
