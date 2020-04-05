@@ -1506,4 +1506,16 @@
    <faction>Soromid</faction>
   </avail>
  </mission>
+ <mission name="Garbage Person">
+  <lua>soromid/comingout/srm_comingout5</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <done>Visiting Family</done>
+   <chance>30</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
 </Missions>
