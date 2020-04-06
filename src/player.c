@@ -68,7 +68,7 @@
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static credits_t player_creds = 0; /**< Temporary hack for when creating. */
-static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
+static char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
  * Licenses.
@@ -737,6 +737,12 @@ void player_cleanup (void)
    if (player.name != NULL) {
       free(player.name);
       player.name = NULL;
+   }
+
+   /* Clean up no-land message. */
+   if (player_message_noland != NULL) {
+      free(player_message_noland);
+      player_message_noland = NULL;
    }
 
    /* Clean up gui. */
@@ -1570,10 +1576,14 @@ int player_canTakeoff(void)
  */
 void player_nolandMsg( const char *str )
 {
+   if (player_message_noland != NULL)
+      free(player_message_noland);
+
+   /* Duplicate so that Lua memory which might be garbage-collected isn't relied on. */
    if (str != NULL)
-      player_message_noland = str;
+      player_message_noland = strdup(str);
    else
-      player_message_noland = _("You are not allowed to land at this moment.");
+      player_message_noland = strdup(_("You are not allowed to land at this moment."));
 }
 
 
