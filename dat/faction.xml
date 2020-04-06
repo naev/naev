@@ -22,6 +22,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -37,6 +38,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -82,6 +84,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -98,6 +101,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -110,6 +114,9 @@
   <spawn>pirate</spawn>
   <standing>pirate</standing>
   <equip>pirate</equip>
+  <allies>
+   <ally>Wanted Pirate</ally>
+  </allies>
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
@@ -183,6 +190,7 @@
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -217,6 +225,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -250,6 +259,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Nasin</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -267,6 +277,31 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Wanted Pirate</name>
+  <display>Pirate</display>
+  <static />
+  <invisible />
+  <logo>pirate</logo>
+  <longname>Galactic Pirates</longname>
+  <player>-100</player>
+  <colour>red</colour>
+  <standing>static</standing>
+  <equip>pirate</equip>
+  <allies>
+   <ally>Pirate</ally>
+  </allies>
+  <enemies>
+   <enemy>Civilian</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Collective</enemy>
+   <enemy>Sirius</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Nasin</enemy>
   </enemies>
  </faction>
  <faction>
@@ -443,6 +478,7 @@
   <enemies>
    <enemy>Sirius</enemy>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
