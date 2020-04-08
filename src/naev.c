@@ -176,6 +176,7 @@ void naev_quit (void)
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
+   int w, h;
 
    if (!log_isTerminal())
       log_copy(1);
@@ -479,7 +480,8 @@ int main( int argc, char** argv )
          }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
-            naev_resize( event.window.data1, event.window.data2 );
+            SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
+            naev_resize( w, h );
             continue;
          }
          input_handle(&event); /* handles all the events and player keybinds */
@@ -781,7 +783,7 @@ void naev_resize( int w, int h )
 {
    /* Auto-detect window size. */
    if ((w < 0.) && (h < 0.))
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
+      SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
