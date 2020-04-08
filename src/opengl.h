@@ -71,6 +71,8 @@ typedef struct glInfo_ {
    double scale; /**< Scale factor. */
    double wscale; /**< Width scale factor. */
    double hscale; /**< Height scale factor. */
+   double dwscale; /**< Drawable height scale factor. */
+   double dhscale; /**< Drawable width scale factor. */
    double mxscale; /**< Mouse X scale factor. */
    double myscale; /**< Mouse y scale factor. */
    int depth; /**< Depth in bpp */

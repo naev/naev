@@ -791,7 +791,7 @@ void naev_resize (void)
 {
    /* Auto-detect window size. */
    int w, h;
-   SDL_GetWindowSize( gl_screen.window, &w, &h );
+   SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))

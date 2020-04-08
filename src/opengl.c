@@ -374,7 +374,8 @@ static int gl_createWindow( unsigned int flags )
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+         800, 600, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+                                   | SDL_WINDOW_ALLOW_HIGHDPI );
    if (gl_screen.window == NULL)
       ERR(_("Unable to create window! %s"), SDL_GetError());
 
@@ -488,6 +489,17 @@ static int gl_defState (void)
 static int gl_setupScaling (void)
 {
    double scalew, scaleh;
+   int drawable_w, drawable_h, window_w, window_h;
+
+   /* Calculate scale factor, if OS has native HiDPI scaling. */
+   SDL_GL_GetDrawableSize(gl_screen.window, &drawable_w, &drawable_h);
+   SDL_GetWindowSize(gl_screen.window, &window_w, &window_h);
+   gl_screen.dwscale = (double)window_w / (double)drawable_w;
+   gl_screen.dhscale = (double)window_h / (double)drawable_h;
+
+   /* Combine scale factor from OS with the one in Naev's config */
+   gl_screen.scale *= fmax(gl_screen.dwscale, gl_screen.dhscale);
+
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
@@ -704,6 +716,9 @@ void gl_defViewport (void)
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 {
+   wx /= gl_screen.dwscale;
+   wy /= gl_screen.dhscale;
+
    *sx = gl_screen.mxscale * (double)wx - (double)gl_screen.x;
    *sy = gl_screen.myscale * (double)(gl_screen.rh - wy) - (double)gl_screen.y;
 }
@@ -716,6 +731,9 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
 {
    *wx = (sx + (double)gl_screen.x) / gl_screen.mxscale;
    *wy = (double)gl_screen.rh - (sy + (double)gl_screen.y) / gl_screen.myscale;
+
+   *wx *= gl_screen.dwscale;
+   *wy *= gl_screen.dhscale;
 }
 
 
