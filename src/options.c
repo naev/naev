@@ -1346,7 +1346,7 @@ static int opt_videoSave( unsigned int wid, char *str )
    SDL_DisplayMode current;
 
    changed = 0;
-   SDL_GetWindowSize( gl_screen.window, &rw, &rh );
+   SDL_GL_GetDrawableSize( gl_screen.window, &rw, &rh );
    SDL_GetWindowDisplayMode( gl_screen.window, &current );
    mode = (conf.modesetting) ?
          SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
