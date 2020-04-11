@@ -30,7 +30,7 @@ function create()
    fuel_col    = colour.new( 0.9, 0.1, 0.4, 0.8 )
 
    -- Load graphics
-   local base = "dat/gfx/gui/default/"
+   local base = "dat/gfx/gui/legacy/"
    frame    = tex.open( base .. "minimal.png" )
    energy   = tex.open( base .. "minimal_energy.png" )
    fuel     = tex.open( base .. "minimal_fuel.png" )
