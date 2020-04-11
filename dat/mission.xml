@@ -1525,4 +1525,18 @@
    <faction>Soromid</faction>
   </avail>
  </mission>
+ <mission name="Moving Up">
+  <lua>soromid/comingout/srm_comingout6</lua>
+  <flags>
+   <unique/>
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <done>Garbage Person</done>
+   <chance>30</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+  </avail>
+ </mission>
 </Missions>

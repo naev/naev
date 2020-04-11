@@ -133,6 +133,7 @@
    <enemy>Proteron</enemy>
    <enemy>Thurion</enemy>
    <enemy>Nasin</enemy>
+   <enemy>Comingout_associates</enemy>
   </enemies>
  </faction>
  <faction>
@@ -489,6 +490,7 @@
   <player>70</player>
   <standing>static</standing>
   <enemies>
+   <enemy>Pirate</enemy>
    <enemy>Comingout_thugs</enemy>
   </enemies>
  </faction>

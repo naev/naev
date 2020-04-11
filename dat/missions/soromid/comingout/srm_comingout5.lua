@@ -36,7 +36,7 @@ text[4] = _([["I'm not having any luck coming up with a plan to get rid of all o
 title[6] = _("The Unbearable Smell Now Ends")
 text[6] = _([[As you dock, you can't help but notice the foul smell of garbage all around you. The planet really does fit the name. You grimace as you watch workers unload what must be hundreds of tonnes of garbage from Chelsea's ship, some of which is leaking. Eventually Chelsea's ship is emptied and you and Chelsea are handed your credit chips for the job. You and Chelsea part ways, vowing to take a shower immediately while Chelsea vows to scrub the cargo hold of their ship clean.]])
 
-misn_title = _("Garbage Person")
+misn_title = _("Waste Collector")
 misn_desc = _("Chelsea needs an escort to %s so they can get rid of the garbage now filling their ship.")
 misn_reward = _("%s credits")
 
