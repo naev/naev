@@ -149,6 +149,7 @@ function create ()
    nbsys = rnd.rnd( 5, 9 ) -- Total nb of avaliable systems (in case the player misses the target first time)
    pisys = rnd.rnd( 2, 4 ) -- System where the target will be
    mysys = {}
+   hailed = {}
 
    if #systems <= nbsys then
       -- Not enough systems
