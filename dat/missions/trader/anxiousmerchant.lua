@@ -42,9 +42,7 @@ full_title = _("No Room")
 full_text = _([[You don't have enough cargo space to accept this mission.]])
 
 slow_title = _("Too slow")
-slow_text = _([[The goods have to arrive in %s but it will take %s for your ship to reach %s.
-
-Accept the mission anyway?]])
+slow_text = _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]])
 
 -- Portrait Choice
 portrait = {"neutral/male1",
