@@ -149,7 +149,6 @@ function create ()
    nbsys = rnd.rnd( 5, 9 ) -- Total nb of avaliable systems (in case the player misses the target first time)
    pisys = rnd.rnd( 2, 4 ) -- System where the target will be
    mysys = {}
-   hailed = {}
 
    if #systems <= nbsys then
       -- Not enough systems
@@ -215,7 +214,7 @@ function accept ()
    increment = false
    last_sys = system.cur()
    tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, numstring(credits), paying_faction:name(), mysys[1]:name() ) )
-   jumphook = hook.jumpin( "jumpin" )
+   jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
 
@@ -225,7 +224,8 @@ function accept ()
    misn.osdCreate( osd_title, osd_msg )
 end
 
-function jumpin ()
+function enter ()
+   hailed = {}
 
    -- Increment the target if needed
    if increment then
@@ -234,7 +234,6 @@ function jumpin ()
    end
 
    if system.cur() == mysys[cursys] then
-
       -- This system will contain the pirate
       -- cursys > pisys means the player has failed once (or more).
       if cursys == pisys or (cursys > pisys and rnd.rnd() > .5) then
@@ -242,7 +241,6 @@ function jumpin ()
       end
 
       if stage == 0 then  -- Clue system
-         hailed = {}
          if not var.peek("got_advice") then -- A bountyhunter who explains how it works
             var.push( "got_advice", true )
             spawn_advisor ()
@@ -281,7 +279,6 @@ function jumpin ()
             target_ship:control()
             target_ship:runaway(player.pilot())
          end
-
       end
    end
    last_sys = system.cur()
