@@ -212,6 +212,7 @@ msg_tip =                  {_("I heard you can set your weapons to only fire whe
                               _("Flying bigger ships is awesome, but it's a bit tougher than flying smaller ships. There's so much more you have to do for the same actions, time just seems to fly by faster. I guess the upside of that is that you don't notice how slow your ship is as much."),
                               _("I know it can be tempting to fly the big and powerful ships, but don't underestimate smaller ones! Given their simpler designs and lesser crew size, you have a lot more time to react with a smaller vessel. Some are even so simple to pilot that time seems to slow down all around you!"),
                               _("Mining can be an easy way to earn some extra credits, but every once in a while an asteroid will just randomly explode for no apparent reason, so you have to watch out for that. Yeah, I don't know why they do that either."),
+                              _("Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. I don't get it personally; it's all the same no matter what ship you're in."),
                            }
 
 -- Jump point messages.
@@ -233,7 +234,6 @@ msg_mhint =                {{"Shadowrun", _("Apparently there's a woman who regu
                               {"Collective Espionage 1", _("The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station.")},
                               {"Hitman", _("There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!")},
                               {"Za'lek Shipping Delivery", _("So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money.")},
-                              {"Sightseeing", _("Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. Look like you can put a price on luxury!")},
                            }
 
 -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
