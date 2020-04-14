@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Missions>
- <mission name="Tutorial Mission">
-  <lua>tutorial/tutmis</lua>
+ <mission name="Tutorial">
+  <lua>tutorial/tutorial</lua>
   <flags>
    <unique />
   </flags>
   <avail>
+   <priority>1</priority>
    <location>None</location>
   </avail>
  </mission>
