@@ -53,7 +53,7 @@ portrait = {"neutral/male1",
 
 misn_desc = _("You decided to help a fraught merchant by delivering some goods to %s.")
 
-text[1] = _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
+text[1] = _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
     You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for Wernet Trading and the deal is I transport stuff for them, they pay me. Only problem is I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! it's like I'm in the Sol nebula without a shield generator."
     You attempt to reassure the merchant by telling them that surely the company will cut some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get these %s tonnes of %s to %s... I really need this job, you know? I don't know what to do...." The merchant pauses. "Unless... say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to %s in the %s system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]])
 
