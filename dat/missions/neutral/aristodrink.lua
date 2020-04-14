@@ -193,7 +193,7 @@ function land ()
 
                tk.msg( exworktitle, exworktxt:format( desc[curtenderdesc], gender[curtendergen], hairdesc[curtenderhair], clothing[curtendergen][curtendercloth], clueplanet:name(), cluesys:name() ) )
 
-            else  -- get the drink
+            elseif not hasDrink then  -- get the drink
                hasDrink = true
 
                tk.msg( worktitle, worktxt:format( desc[fintenderdesc], gender[fintendergen], hairdesc[fintenderhair], clothing[fintendergen][fintendercloth], himher[fintendergen], himher[fintendergen], heshe[fintendergen], heshe[fintendergen], heshe[fintendergen], heshe[fintendergen], himher[fintendergen], himher[fintendergen], hisher[fintendergen], heshe[fintendergen] ) )
