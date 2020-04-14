@@ -53,7 +53,7 @@ title[6] = _("Drunkard's Call")
 text[6] = _([["Hello again. It's Willie. I'm just here to inform you that the countess has taken care of your payment and transfered it to your account. And don't worry about me, the countess has covered my portion just fine. I'm just glad to have Ol' Bessy here back."]])
 
 title[7] = _("Bonus")
-text[7] = _([["Oh, and she put in a nice bonus for you of %d credits for such a speedy delivery."]])
+text[7] = _([["Oh, and she put in a nice bonus for you of %s credits for such a speedy delivery."]])
 
 title[8] = _("Check Account")
 text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]])
@@ -160,7 +160,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( bonus ) )
+--   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end

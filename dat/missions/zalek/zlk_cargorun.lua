@@ -3,7 +3,7 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-include "dat/scripts/numstring.lua"
+include "numstring.lua"
 
 -- Bar Description
 bar_desc = _("You see a drunkard at the bar mumbling about how he was so close to getting his break.")
@@ -50,7 +50,7 @@ title[6] = _("A Small Delay")
 text[6] = _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay, but I got held up. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[7] = _("Bonus")
-text[7] = _([["For your trouble, I will add a bonus of %d credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
+text[7] = _([["For your trouble, I will add a bonus of %s credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[8] = _("Check Account")
 text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. A good compensation indeed. You feel better already.]])
@@ -157,7 +157,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( bonus ) )
+--   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end
