@@ -9,54 +9,6 @@
   <lua>start</lua>
   <trigger>none</trigger>
  </event>
- <event name="Tutorial">
-  <lua>tutorial/tutorial</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Basic Operation">
-  <lua>tutorial/tutorial-basic</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Exploration and Discovery">
-  <lua>tutorial/tutorial-discovery</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Interstellar Flight">
-  <lua>tutorial/tutorial-interstellar</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Communications">
-  <lua>tutorial/tutorial-comms</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Basic Combat">
-  <lua>tutorial/tutorial-combat1</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Missile Combat">
-  <lua>tutorial/tutorial-combat2</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Heat">
-  <lua>tutorial/tutorial-heat</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Activated Outfits">
-  <lua>tutorial/tutorial-aoutfits</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Disabling">
-  <lua>tutorial/tutorial-disabling</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: The Planetary Screen">
-  <lua>tutorial/tutorial-planet</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Missions and Events">
-  <lua>tutorial/tutorial-missions</lua>
-  <trigger>none</trigger>
- </event>
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
