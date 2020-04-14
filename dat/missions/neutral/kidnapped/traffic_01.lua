@@ -11,23 +11,18 @@
 
 --]]
 
--- variables:
-targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
-misn_marker = {}
-reward = rnd.rnd(40,60)*1000
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
 -- Bar information
-bar_desc = _("This woman is looking at you. She then, a bit hecticly and desperately, waves at you.")
+bar_desc = _("The woman waves at you a bit desperately.")
 
 -- Mission details
 misn_title  = _("The lost Brother")
 misn_reward = _("Some money and a happy sister.") -- Possibly some hard to get contraband once it is introduced
 misn_desc   = {}
-misn_desc[1] = _("Locate the brother. He has to be in the %s system.")
-misn_desc[2] = _("Locate the brother. He is either in the %s or %s system.")
-misn_desc[3] = _("Locate the brother. He is either in the %s, %s or %s system.")
-misn_desc[4] = _("Hail the Poppy Seed and board it to reunite the siblings.")
+misn_desc[1] = _("Locate the brother in the %s system")
+misn_desc[2] = _("Locate the brother in the %s system or the %s system")
+misn_desc[3] = _("Locate the brother in the %s system, the %s system, or the %s system")
+misn_desc[4] = _("Hail the Poppy Seed and board it to reunite the siblings")
 
 -- Text
 title    = {}
@@ -35,31 +30,32 @@ text     = {}
 title[1] = _("In the Bar")
 title[2] = _("Wrong system")
 title[3] = _("Right system")
-title[4] = _("Com Channel")
+title[4] = _("Comm Channel")
 title[5] = _("The Deception")
 title[6] = _("Mission Complete")
-text[1]  = _([[After you give her attention the woman immediately starts to prattle. "Oh my dear brother, I must find him. 
-Please! Please help me. I think he is in danger. Please! Please help me! I don't have a ship and he is the only family I have left!"]])
-text[2] = _([[After you signal your willingness to help the woman calms down. "Oh thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
-   And please hurry. I was told someone was sent to assassinate him. I don't have much to give, but whatever I have saved you can have.]])
-text[3] = _([["I don't thnk he is here, probably he is in one of the other systems. Please, hurry!"]])
-text[4] = _([["I think this is it! We found him!" says the woman full excitement. 
-"I just need to get something from my stuff." she says disappearing into another compartment.]])
-text[5] = _([["Calling the Poppy Seed. I have your sister on board that wants to see you and told me she has urgent information for you."]])
+text[1]  = _([["I must find my dear brother! Please! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left Could you please help me? Please!!"]])
+text[2] = _([[The woman calms down as you signal your willingness to help. "Oh thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
+   And please hurry. I was told someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]])
+text[3] = _([["I don't thnk he is here. He must be in one of the other systems. Please, hurry!"]])
+text[4] = _([["I think this is it! We found him!" says the woman.]])
+text[5] = _([[You radio the ship with a message saying you have his sister on board and that she has a message for him.]])
 text[6] = _([["My sister? What the heck could she want from me? Prepare for docking."]])
-text[7] = _([[The woman is standing next to you while the airlock opens. You see the man. The grin on his face changes to a baffled expression. You hear the sound of a blaster. A dark spot on chest of the man. The lady rushes past you and closes the airdock before you entirely realize what happens. While the airdock mechanism locks in you see the Poppy Seed depart.]])
-text[8] = _([[You find some of the stuff she left in your ship that you can turn to cash and a note saying:"Sorry"]])
-text[9] = _([[Your com starts beeping: "We received confirmation that you were invovled in the killing of our associate. Prepare to be boarded."]])
-text[10] = _([[What do you do: Chase the Poppy Seed or run away from the mercenaries closing in on you]])
+text[7] = _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airdock.
+    You find some of the stuff she left in your ship that you can turn to cash and a note: "Sorry"
+    Suddenly, your comm starts beeping. "We've received confirmation that you were invovled in the killing of our associate. Prepare to be boarded."]])
 refusetitle = _("Sorry, I can't")
-refusetext = _([["How can you be such a heartless person?" asks you the woman half weepingly. " What has this universe become..."]])
+refusetext = _([["How can you be such a heartless person?" asks you the woman half weepingly. " What has this universe become?..."]])
 
 -- Messages
 msg      = {}
 msg[1]   = _("MISSION SUCCESS!")
 
 function create ()
-   -- Note: this mission does not make any system claims. 
+   -- Note: this mission does not make any system claims.
+
+   targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
+   misn_marker = {}
+   reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
    misn.setNPC( _("Ordinary Woman"),  "zalek_scientist_placeholder")
@@ -87,7 +83,7 @@ function accept ()
 
    -- Set mission details
    misn.setTitle( misn_title )
-   misn.setReward( string.format( misn_reward, credits) )
+   misn.setReward( string.format( misn_reward, reward) )
    misn.setDesc( string.format( misn_desc[1], targetsys[1]:name(), targetsys[2]:name(), targetsys[3]:name() ) )
    misn.osdCreate(misn_title, {misn_desc[3]:format(targetsys[1]:name(), targetsys[2]:name(), targetsys[3]:name()), misn_desc[4]})
    misn_marker = {[1]=misn.markerAdd( targetsys[1], "low" ), [2]=misn.markerAdd( targetsys[2], "low" ), [3]=misn.markerAdd( targetsys[3], "low" )}
@@ -178,23 +174,13 @@ function got_boarded(shipp)
    --get nearest jumppoints and let ship escape in this direction
    shipp:hyperspace(jpt:dest())
    tk.msg(title[5], text[7])
-   tk.msg(title[5], text[8])
-   tk.msg( title[4], text[9] )
    -- turn mercs hostile
    for i=1,#badguys do
      badguys[i]:setHostile(true)
    end
-   v = var.peek("ruse_chase")
-   if v == nil then
-      if not tk.yesno( title[4], text[10] ) then
-         player.pay(reward+10000)
-         var.push("ruse_chase", false)
-      else
-         var.push("ruse_chase", true)
-         player.pay(reward)
-      end
-      misn.finish(true)
-   end
+
+   player.pay(reward)
+   misn.finish(true)
 end
 -- idle
 function idle(shipp,pplanet)
