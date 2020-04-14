@@ -80,11 +80,11 @@ msg_lore["general"] =      {_("I heard the nebula is haunted! My uncle Bobby tol
                               _("Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"),
                               _("I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."),
                               _("Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"),
-                              _("Hey, you ever wonder why we're here?\", you say. \"It's one of life's great mysteries isn't it?\", the citizen replies. \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night.\" You stare at the citizen incredulously. \"What?? No, I mean why are we in here, in this bar?")
+                              _("Hey, you ever wonder why we're here?\" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. \"What?? No, I mean why are we in here, in this bar?")
                            }
 
 msg_lore["Independent"] =  {_("We're not part of any of the galactic superpowers. We can take care of ourselves!"),
-                              _("Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas of conquering us!"),
+                              _("Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"),
                            }
 
 msg_lore["Empire"] =       {_("Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!"),
@@ -195,7 +195,7 @@ msg_lore["Trader"] =       {_("Just another link in the Great Chain, right?"),
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the tips are always faction neutral.
 msg_tip =                  {_("I heard you can set your weapons to only fire when your target is in range, or just let them fire when you pull the trigger. Sounds handy!"),
-                              _("Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with " .. tutGetKey("hail") .. ", and click the bribe button! Careful though, it doesn't always work."),
+                              string.format( _("Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with %s, and click the bribe button! Careful though, it doesn't always work."), tutGetKey("hail") ),
                               _("Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"),
                               _("These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."),
                               _("You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."),
@@ -206,12 +206,13 @@ msg_tip =                  {_("I heard you can set your weapons to only fire whe
                               _("There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."),
                               _("If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."),
                               _("Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."),
-                              _("If you're having trouble with overheating weapons or outfits, you can press " .. tutGetKey("autobrake") .. " twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"),
+                              string.format( _("If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"), tutGetKey("autobrake") ),
                               _("If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"),
                               _("You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."),
                               _("Flying bigger ships is awesome, but it's a bit tougher than flying smaller ships. There's so much more you have to do for the same actions, time just seems to fly by faster. I guess the upside of that is that you don't notice how slow your ship is as much."),
                               _("I know it can be tempting to fly the big and powerful ships, but don't underestimate smaller ones! Given their simpler designs and lesser crew size, you have a lot more time to react with a smaller vessel. Some are even so simple to pilot that time seems to slow down all around you!"),
-                              _("Mining can be an easy way to earn some extra credits, but every once in a while an asteroid will just randomly explode for no apparent reason, so you have to watch out for that. Yeah, I don't know why they do that either.")
+                              _("Mining can be an easy way to earn some extra credits, but every once in a while an asteroid will just randomly explode for no apparent reason, so you have to watch out for that. Yeah, I don't know why they do that either."),
+                              _("Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. I don't get it personally; it's all the same no matter what ship you're in."),
                            }
 
 -- Jump point messages.
@@ -233,7 +234,6 @@ msg_mhint =                {{"Shadowrun", _("Apparently there's a woman who regu
                               {"Collective Espionage 1", _("The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station.")},
                               {"Hitman", _("There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!")},
                               {"Za'lek Shipping Delivery", _("So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money.")},
-                              {"Sightseeing", _("Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. Look like you can put a price on luxury!")},
                            }
 
 -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
@@ -262,6 +262,11 @@ msg_edone =                {{"Animal trouble", _("What? You had rodents sabotage
 function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
+
+   -- Chance of a tip message showing up. As this gradually goes down, it is
+   -- replaced by lore messages. See spawnNPC function below.
+   tip_chance = var.peek( "npc_tip_chance" ) or 0.55
+   var.push( "npc_tip_chance", math.max( tip_chance - 0.03, 0.1 ) )
 
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
@@ -316,15 +321,15 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= 0.3 then
-      -- Lore message.
-      msg = getLoreMessage(fac)
-   elseif select <= 0.55 then
-      -- Jump point message.
-      msg, func = getJmpMessage(fac)
-   elseif select <= 0.8 then
+   if select <= tip_chance then
       -- Gameplay tip message.
       msg = getTipMessage(fac)
+   elseif select <= 0.55 then
+      -- Lore message.
+      msg = getLoreMessage(fac)
+   elseif select <= 0.8 then
+      -- Jump point message.
+      msg, func = getJmpMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then

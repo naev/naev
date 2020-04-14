@@ -23,7 +23,8 @@
          * Improved the Dvaered anti-FLF campaign
          * Added and improved piracy missions
          * New minor Soromid campaign, "Coming Out"
-         * Improved generic missions
+         * New tutorial mission at the start of a new game
+         * Various newly added and improved generic missions
    * Engine
       * Added shaders to speed up and improve graphics
       * Added support for non-ascii direct character input
