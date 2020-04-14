@@ -36,7 +36,7 @@ function create ()
    --   abort()
    --end
 
-   reward = 75000
+   reward = 500000
 
    misn.setNPC( npc_name, "neutral/miner2" )
    misn.setDesc( bar_desc )
