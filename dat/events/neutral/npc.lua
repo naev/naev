@@ -84,7 +84,7 @@ msg_lore["general"] =      {_("I heard the nebula is haunted! My uncle Bobby tol
                            }
 
 msg_lore["Independent"] =  {_("We're not part of any of the galactic superpowers. We can take care of ourselves!"),
-                              _("Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas of conquering us!"),
+                              _("Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"),
                            }
 
 msg_lore["Empire"] =       {_("Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!"),
