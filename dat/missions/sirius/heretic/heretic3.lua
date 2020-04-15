@@ -27,7 +27,6 @@ osd[2] = _("Return to %s")
 misn_title = _("The Assault")
 npc_name = _("Draga")
 bar_desc = _("The familiar form of Draga is at a table with some officers. They look busy.")
-return_to_base_msg = _([[A clear voice booms in your ship through the comm system. "%s! We need you to return to %s immediately! We are being overwhelmed and are evacuating! Please hurry!" The voice cuts out in a tumult of static.]])
 p_landing = _([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]])
 oos_failure = _([[You recieve a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]])
 misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
@@ -64,7 +63,7 @@ function accept()
 
       misn.accept()
       misn.setDesc(misn_desc)
-      misn.markerAdd(homesys,"plot")
+      misn.markerAdd(homesys,"high")
       misn.osdCreate(misn_title,osd)
       misn.osdActive(1)
 
@@ -120,8 +119,6 @@ function death(p)
 end
 
 function flee()
-   tk.msg(misn_title, return_to_base_msg:format( player.name(),homeasset:name() ))
-
    returnchecker = true --used to show that deathcounter has been reached, and that the player is landing 'just because'
    misn.osdActive(2)
    tk.msg(misn_title, time_to_come_home:format( player.name() ))

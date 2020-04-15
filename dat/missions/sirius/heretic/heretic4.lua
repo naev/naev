@@ -63,7 +63,7 @@ function accept()
    tk.msg(misn_title,bmsg[2])
    tk.msg(misn_title,bmsg[3])
    --convo over. time to finish setting the mission stuff.
-   misn.markerAdd(targetsys,"plot")
+   misn.markerAdd(targetsys,"high")
    free_cargo = player.pilot():cargoFree()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    refugees = misn.cargoAdd("Refugees",free_cargo)

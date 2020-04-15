@@ -14,7 +14,7 @@ bmsg[2] = _([["Marvelous! I knew I could count on you! Don't you worry; you'll b
 bmsg[3] = _([["Gah! I should have known you would be so spineless! Get out of my sight!"]])
 
 --message at the end
-emsg_1 = _([[You land, having destroyed the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]])
+emsg_1 = _([[You land, having defeated the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]])
 --mission osd
 osd = {}
 osd[1] = _("Destroy the Sirius patrol")
