@@ -58,7 +58,7 @@ end
 
 function accept()
    if tk.yesno( misn_title, bmsg[1]:format( player.name() ) ) then
-      misn.acept()
+      misn.accept()
       tk.msg( misn_title, bmsg[2] )
 
       misn.setDesc(misn_desc)
