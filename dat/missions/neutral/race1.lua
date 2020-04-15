@@ -14,10 +14,10 @@ ftitle = {}
 ftext = {}
 
 title[1] = _("Looking for a 4th")
-text[1] = _([["Hey man, we are planning on having a race around this system. We need a 4th person to participate. You have to bring a Yacht class ship. There's a prize of %s credits if you win. Interested?"]])
+text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s credits if you win. Interested?"]])
 
 title[2] = _("Awesome")
-text[2] = _([["Thats great man. Here is how it works. We will all be in a yacht class ship. Once we take off from %s, there will be a countdown. At the end of the countdown, we will proceed to the various checkpoints in order, boarding them before proceeding to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
+text[2] = _([["Thats great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
 
 title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
@@ -28,7 +28,7 @@ refusetext = _([["I guess we'll need to find another pilot."]])
 
 wintitle = _("You Won!")
 wintext = _([[The laid back man comes up to you and hands you a credit chip. 
-   "Congratulations, man! Here's your prize money. Let's race again sometime soon!"]])
+   "Nice racing! Here's your prize money. Let's race again sometime soon!"]])
    
 ftitle[1] = _("Illegal ship!")
 ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
@@ -97,7 +97,7 @@ end
 
 
 function takeoff()
-   if player.pilot():ship():class() ~= "Yacht" then
+   if player.pilot():ship():class() ~= "Yacht" and player.pilot():ship():class() ~= "Luxury Yacht" then
       tk.msg(ftitle[1], ftext[1])
       abort()
    end
@@ -127,11 +127,11 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")
+   racers[1] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
    racers[1]:addOutfit("Engine Reroute")
-   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")
+   racers[2] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
    racers[2]:addOutfit("Steering Thrusters")
-   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")
+   racers[3] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
    racers[3]:addOutfit("Improved Stabilizer")
    for i, j in ipairs(racers) do
       j:rename(string.format(_("Racer %s"), i))

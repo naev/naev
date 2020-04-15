@@ -3,6 +3,8 @@ This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
 --]]
 
+include "numstring.lua"
+
 npc_name = _("Young Teenager")
 bar_desc = _("A pretty teenager sits alone at a table.")
 title = _("The Runaway")
@@ -34,7 +36,7 @@ function create ()
    --   abort()
    --end
 
-   reward = 75000
+   reward = 500000
 
    misn.setNPC( npc_name, "neutral/miner2" )
    misn.setDesc( bar_desc )
@@ -43,7 +45,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, numstring(reward), targetworld:name() ) ) then
       misn.finish()
    end
 
@@ -63,7 +65,7 @@ function accept ()
 
    misn.setTitle( title )
 
-   misn.setReward( string.format( reward_desc, reward ) )
+   misn.setReward( string.format( reward_desc, numstring(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.markerAdd( targetworld_sys, "high")
@@ -79,7 +81,7 @@ function land ()
       misn.cargoRm( cargoID )
       player.pay( reward )
 
-      tk.msg( title, string.format(misn_accomplished, reward) )
+      tk.msg( title, string.format( misn_accomplished, numstring(reward) ) )
 
       misn.finish(true)
    end
