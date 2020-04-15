@@ -38,7 +38,6 @@ function create()
    reward = math.floor((100000+(math.random(5,8)*2000)*(nasin_rep^1.315))*.01+.5)/.01
    homeasset = planet.cur()
    targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the nasin in the next part.
-   people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    --set some mission stuff
    misn.setNPC(npc_name,"neutral/thief2")
    misn.setDesc(bar_desc)
