@@ -48,9 +48,6 @@ function create()
    misn.setNPC(npc_name,"neutral/male1")
    misn.setDesc(bar_desc)
 
-   -- TODO: bmsg[1] is currently unused
-   -- bmsg[1] = bmsg[1]:format(planet.cur():name())
-
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
