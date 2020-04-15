@@ -16,7 +16,7 @@ bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would
 --ending messages
 emsg = {}
 emsg[1] = _([[As you descend onto the %s spaceport, you notice how deserted the place seems to be. Finally, after a search that seem to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
-    You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you, if you're interested. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]])
+    You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]])
 
 --misn osd stuffs
 osd = {}
@@ -53,7 +53,7 @@ function accept()
    --the obligatory opening messages
    local aname = targetasset:name()
 
-   if not tk.yesno( misn_title, bmsg[1]:format( aname, aname, numstring(reward) ) ) then
+   if not tk.yesno( misn_title, bmsg[1]:format( aname, numstring(reward) ) ) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end
