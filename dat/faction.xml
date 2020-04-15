@@ -132,7 +132,6 @@
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
    <enemy>Thurion</enemy>
-   <enemy>Nasin</enemy>
    <enemy>Comingout_associates</enemy>
   </enemies>
  </faction>
@@ -302,7 +301,6 @@
    <enemy>Trader</enemy>
    <enemy>Miner</enemy>
    <enemy>Independent</enemy>
-   <enemy>Nasin</enemy>
   </enemies>
  </faction>
  <faction>
@@ -478,8 +476,6 @@
   <player>0</player>
   <enemies>
    <enemy>Sirius</enemy>
-   <enemy>Pirate</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>

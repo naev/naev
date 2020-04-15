@@ -452,6 +452,75 @@
    <done>Empire Shipping 3</done>
   </avail>
  </mission>
+ <mission name="The Gauntlet">
+  <lua>sirius/heretic/heretic0</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Nasin") >= 0</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="The Return">
+  <lua>sirius/heretic/heretic1</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Gauntlet</done>
+   <cond>faction.playerStanding("Nasin") >= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Margot</planet>
+  </avail>
+ </mission>
+ <mission name="The Patrol">
+  <lua>sirius/heretic/heretic2</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Return</done>
+   <cond>faction.playerStanding("Nasin") >= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Assault">
+  <lua>sirius/heretic/heretic3</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Patrol</done>
+   <cond>faction.playerStanding("Nasin") >= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Egress">
+  <lua>sirius/heretic/heretic4</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Assault</done>
+   <cond>faction.playerStanding("Nasin") >= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
  <mission name="Sirian Bounty">
   <lua>sirius/achack/achack01</lua>
   <flags>
@@ -694,6 +763,23 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Anxious Merchant">
+  <lua>trader/anxiousmerchant</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>1</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
  <mission name="Empire Shipping">
   <lua>empire/es_cargo</lua>
   <avail>
@@ -769,88 +855,6 @@
    <faction>FLF</faction>
    <faction>Frontier</faction>
    <cond>diff.isApplied("flf_vs_empire") and not diff.isApplied( "flf_dead" )</cond>
-  </avail>
- </mission>
- <mission name="The Gauntlet">
-  <lua>sirius/heretic/heretic0</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>var.peek("heretic_misn_tracker") == nil</cond>
-   <chance>50</chance>
-   <location>Bar</location>
-   <faction>Sirius</faction>
-  </avail>
- </mission>
- <mission name="The Return">
-  <lua>sirius/heretic/heretic1</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>var.peek("heretic_misn_tracker") == 1</cond>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Margot</planet>
-  </avail>
- </mission>
- <mission name="The Patrol">
-  <lua>sirius/heretic/heretic2</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>var.peek("heretic_misn_tracker") == 2</cond>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>The Wringer</planet>
-  </avail>
- </mission>
- <mission name="The Assault">
-  <lua>sirius/heretic/heretic3</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>The Patrol</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>The Wringer</planet>
-  </avail>
- </mission>
- <mission name="The Egress">
-  <lua>sirius/heretic/heretic4</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>var.peek("heretic_misn_tracker") == 4</cond>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>The Wringer</planet>
-  </avail>
- </mission>
- <mission name="Anxious Merchant">
-  <lua>trader/anxiousmerchant</lua>
-  <avail>
-   <priority>3</priority>
-   <chance>1</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Trader</faction>
-   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Racing Skills 2">
