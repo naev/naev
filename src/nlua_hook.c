@@ -54,6 +54,7 @@ static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
 static int hook_standing( lua_State *L );
 static int hook_discover( lua_State *L );
+static int hook_pay( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_Reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -77,6 +78,7 @@ static const luaL_Reg hook_methods[] = {
    { "safe", hook_safe },
    { "standing", hook_standing },
    { "discover", hook_discover },
+   { "pay", hook_pay },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -652,6 +654,24 @@ static int hook_discover( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "discover", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to when the player receives  or loses money.
+ *
+ * The amount paid (or taken from the player) is passed as a parameter:<br/>
+ * function f( amount, args )
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc pay( funcname, arg )
+ */
+static int hook_pay( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "pay", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
