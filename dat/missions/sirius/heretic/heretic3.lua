@@ -144,7 +144,7 @@ end
 
 function out_sys_failure() --feel like jumping out? AWOL! its easier this way. trust me.
    tk.msg(misn_title,oos_failure) 
-   faction.modPlayer("Nasin",-50)
+   faction.modPlayerSingle("Nasin",-50)
    misn.finish(false)
 end
 
@@ -162,13 +162,13 @@ end
 function return_to_base()
    if not returnchecker then --feel like landing early? AWOL!
       tk.msg(misn_title,p_landing)
-      faction.modPlayer("Nasin",-50)
+      faction.modPlayerSingle("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else
       player.pay(reward)
       tk.msg(misn_title,emsg[1]:format( player.name() ))
       misn_tracker = misn_tracker + 1
-      faction.modPlayer("Nasin",20)
+      faction.modPlayer("Nasin",10)
       var.push("heretic_misn_tracker",misn_tracker)
       misn.finish(true)
    end

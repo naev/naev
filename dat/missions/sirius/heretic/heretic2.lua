@@ -109,7 +109,7 @@ end
 function land()
    if finished ~= 1 then
       tk.msg(misn_title,chronic_failure) --landing pre-emptively is a bad thing.
-      faction.modPlayer("Nasin",-20)
+      faction.modPlayerSingle("Nasin",-20)
       misn.finish(false) 
    elseif planet.cur() == homeasset and finished == 1 then
       tk.msg(misn_title,emsg_1)
@@ -124,7 +124,7 @@ end
 function out_sys_failure() --jumping pre-emptively is a bad thing.
    if system.cur() ~= homesys then
       tk.msg(misn_title, out_sys_failure_msg:format( player.name() ))
-      faction.modPlayer("Nasin",-20)
+      faction.modPlayerSingle("Nasin",-20)
       misn.finish(false)
    end
 end
