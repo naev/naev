@@ -8,34 +8,25 @@ include "dat/scripts/numstring.lua"
     
 --the intro messages
 bmsg = {}
-bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare cooly. Lackadaisically, he strikes up a converrsation.
-    "Good weather on %s these days, I hear." 
-    "I hear nothing but good things about %s." you reply, badly feigning interest. You order a drink, as he takes a gulp of his.
-    He looks at you, sizing you up. He probably has been waiting for someone to set next to him all day. "You look like a man in need of a couple spare credits. I have a, uhh, shipment that needs getting to %s. Are you interested? Thing is, it's not exactly... legal. Pay is good though. All you need to know," he continues, "is that someone will be at the starport in %s waiting for this shipment. And they got credits. %s credits. Just for you, kiddo, if you want."
-    You get your drink, a greenish slimy-looking thing called a "tartar coobadu", and decide you just have to ask. "What exactly is this shipment?"]])
-bmsg[2] = _([[He almost looks suprised at the question. He motions you to a corner table as if to tell you to go there, but forcifully leads you. People seem to be avoiding this table, probably because of a peculiar vomit-odor that is wafting from somewhere underneath. He sits you down rather roughly, and then sits down himself.
-    "Look, I really can't tell you the exact contents of the box. Let's just say it's "small" weaponry. My... employer... isn't fond of the government of %s. As such, he needs... " he takes a drink "a shipment delivered there ASAP. Thats all I can tell you, I'm afraid"
-    You sip your slime, and answer him...]])
-bmsg[3] = _([[You feel a very large hand slap you on the back. "Thats a lad!" he cries exuberantly. "I'll have my boys load up the cargo, as quickly as you please. Remember, all you gotta do is fly to %s, and avoid the military, police, and civvies that like to stick their noses where they don't belong. I'll let my contacts know to expect you, and to pay you when you land."
-    You shake his sticky hand, and walk off, content that you've made an easy buck.]])
+bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare cooly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
+    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s credits. That's all you need to know." He pauses for a moment. "How about it?"]])
+bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the military and police. I'll let my contacts know to expect you. They'll pay you when you land."
+    You shake his sticky hand and walk off, content that you've made an easy buck.]])
 
 --ending messages
 emsg = {}
-emsg[1] = _([[As you descend to the %s spaceport, you notice a severe lack of... well... anybody. The place seems deserted. You received an impersonal message saying *LAND IN BAY 71A4* on your way into the atmosphere, but that is the only communication you received. You don't even see any vessels flying around. As you steer your ship into the aforementioned bay, you finally see a small group of gruff and wary men waiting for you. Almost as soon as you land, they have the goods out, and as you walk out to say hello, you already see it disappearing on the far end of the bay.]])
-emsg[2] = _([[You approach the man who appears to be the leader of the group. "One box of... stuff, as requested." You say, motioning to the now-gone box. 
-    The large, unshaven man looks you right in the eyes."Yes, thanks. I suppose you will be wanting payment now." He hands you a credit chip. "You know, we need to get a message back to our... employers. Interested in taking one more trip? If you are, I'll be in the bar after I've verified the contents of our shipment. Meet me there."]])
+emsg[1] = _([[As you descend onto the %s spaceport, you notice how deserted the place seems to be. Finally, after a search that seem to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
+    You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you, if you're interested. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]])
 
 --misn osd stuffs
 osd = {}
-osd[1] = _("Deliver the shipment to %s in the %s system.")
+osd[1] = _("Deliver the shipment to %s in the %s system")
 --random odds and ends
-notenoughcargo = _([["You say you want this job, but you don't have enough cargo room for this assignment, little man!" Ragnarok turns away, displeased at wasting a whole 5 seconds on you.]])
-rejected = _([[He looks at you, almost appearing confused.
-    "Well, thats your choice boy. Be on your way now. I'm busy."
-    You walk away, wondering if you really missed out on an oppourtunity.]])
-npc_name = _("Ragnarok")
-bar_desc = _("You see a rougher looking gent sitting at the bar, guzzling a brownish ale.")
-misn_desc = _("Deliver the shipment to %s in %s for the Nasin.")
+notenoughcargo = _([["You say you want this job, but you don't have enough cargo space! Stop wasting my time!"]])
+rejected = _([["Well, that's your choice. Be on your way now. I'm busy."]])
+npc_name = _("A Scrappy Man")
+bar_desc = _("You see a rougher looking man sitting at the bar and guzzling a brownish ale.")
+misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding police.")
 misn_title = _("The Gauntlet")
 misn_reward = _("%s credits")
 
@@ -62,15 +53,14 @@ function accept()
    --the obligatory opening messages
    local aname = targetasset:name()
 
-   tk.msg(misn_title, bmsg[1]:format( aname, aname, aname, aname, numstring(reward) ))
-   if not tk.yesno(misn_title,bmsg[2]:format(aname)) then
+   if not tk.yesno( misn_title, bmsg[1]:format( aname, aname, numstring(reward) ) ) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end
-   tk.msg(misn_title,bmsg[3]:format(aname))
+   tk.msg(misn_title,bmsg[2]:format(aname))
    misn.setDesc(misn_desc)
    misn.accept()
-   misn.markerAdd(targetsystem,"plot")
+   misn.markerAdd(targetsystem,"high")
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
    freecargo = player.pilot():cargoFree() --checks to make sure the player has 5 tons available
@@ -84,8 +74,7 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg(misn_title, emsg[1]:format( targetasset:name() ))
-      tk.msg(misn_title, emsg[2])
+      tk.msg( misn_title, emsg[1]:format( targetasset:name() ) )
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against sirius, and we want sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --nasin rep is used in mission rewards, and I am trying to avoid having the pay skyrocket.
