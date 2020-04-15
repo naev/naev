@@ -364,7 +364,7 @@ function cleanup()
    player.pilot():control(false)
    camera.set()
    player.cinematics(false)
-   evt.finish()
+   evt.finish(true)
 end
 
 --oops, it seems the preacher died. End gracefully
@@ -383,7 +383,7 @@ function badCleanup()
       follower=survivors[rnd.rnd(1,#survivors)]
       follower:broadcast(preacherDead[rnd.rnd(1,#preacherDead)],true)
    end
-   evt.finish()
+   evt.finish(false)
 end
 
 --the preacher has landed. Land all his followers too
@@ -395,7 +395,7 @@ function landCleanup()
          j:land(target)
       end
    end
-   evt.finish()
+   evt.finish(true)
 end
 
 --the preacher has jumped. Jump all his followers too
@@ -408,5 +408,5 @@ function jumpCleanup()
          j:hyperspace(target,true) --attack back as they move away?
       end
    end
-   evt.finish()
+   evt.finish(true)
 end
