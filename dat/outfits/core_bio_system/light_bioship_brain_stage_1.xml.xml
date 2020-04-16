@@ -6,7 +6,7 @@
   <size>small</size>
   <priority>7</priority>
   <mass>50</mass>
-  <price>0</price>
+  <price>105000</price>
   <description>The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve.</description>
   <gfx_store>core_system01</gfx_store>
  </general>
