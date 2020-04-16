@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Superheavy Bioship Brain Stage 1">
+<outfit name="Superheavy Bioship Brain Stage 11">
  <general>
   <typename>Bioship Brain</typename>
   <slot prop="bio_systems">utility</slot>
@@ -12,10 +12,10 @@
  </general>
  <specific type="modification">
   <cpu_max>130</cpu_max>
-  <shield>500</shield>
-  <shield_regen>8</shield_regen>
-  <energy>1900</energy>
-  <energy_regen>80</energy_regen>
+  <shield>1000</shield>
+  <shield_regen>18</shield_regen>
+  <energy>4100</energy>
+  <energy_regen>180</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>
