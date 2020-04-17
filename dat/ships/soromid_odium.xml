@@ -22,17 +22,17 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="0" h="2"/>
-  <weapon size="medium" x="4" y="2" h="-5"/>
-  <weapon size="medium" x="4" y="-2" h="-5"/>
-  <weapon size="small" x="-9" y="-5" h="-9"/>
-  <weapon size="small" x="-9" y="5" h="-9"/>
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
+  <weapon size="medium" prop="bio_weapon" x="15" y="0" h="2"/>
+  <weapon size="medium" prop="bio_weapon" x="4" y="2" h="-5"/>
+  <weapon size="medium" prop="bio_weapon" x="4" y="-2" h="-5"/>
+  <weapon size="small" prop="bio_weapon" x="-9" y="-5" h="-9"/>
+  <weapon size="small" prop="bio_weapon" x="-9" y="5" h="-9"/>
+  <utility size="medium" prop="bio_systems" exclusive="1" required="1">Medium Bioship Brain Stage 1</utility>
   <utility size="medium"/>
   <utility size="medium"/>
   <utility size="small"/>
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
+  <structure size="medium" prop="bio_engines" exclusive="1" required="1">Medium Bioship Fin Stage 1</structure>
+  <structure size="medium" prop="bio_hull" exclusive="1" required="1">Medium Bioship Shell Stage 1</structure>
   <structure size="medium"/>
   <structure size="medium"/>
   <structure size="medium"/>
