@@ -30,7 +30,7 @@
   <utility size="small"/>
   <utility size="small"/>
   <utility size="small"/>
-  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Bioship Fin Stage 1</structure>
+  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Bioship Fast Fin Stage 1</structure>
   <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Bioship Shell Stage 1</structure>
   <structure size="small"/>
   <structure size="small"/>

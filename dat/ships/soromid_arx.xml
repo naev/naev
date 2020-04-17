@@ -32,7 +32,7 @@
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
-  <structure size="large" prop="bio_engines" exclusive="1" required="1">Superheavy Bioship Fin Stage 1</structure>
+  <structure size="large" prop="bio_engines" exclusive="1" required="1">Superheavy Bioship Strong Fin Stage 1</structure>
   <structure size="large" prop="bio_hull" exclusive="1" required="1">Superheavy Bioship Shell Stage 1</structure>
   <structure size="large"/>
   <structure size="large"/>
