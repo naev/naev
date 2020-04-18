@@ -69,3 +69,5 @@ src/shaders_c_gen
 
 /.cproject
 /.project
+
+bin/
