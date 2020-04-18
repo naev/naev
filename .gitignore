@@ -70,4 +70,6 @@ src/shaders_c_gen
 /.cproject
 /.project
 
-bin/
+/bin
+/naev-dta
+/datapath.lua
