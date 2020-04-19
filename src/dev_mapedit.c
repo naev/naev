@@ -295,9 +295,9 @@ static void mapedit_close( unsigned int wid, char *wgt )
    /* Frees some memory. */
    mapedit_deselect();
    if (mapList == NULL) {
-      //WARN("mapList does not exist.");
+      WARN("mapList does not exist.");
    } else {
-      //WARN("mapList exists.");
+      WARN("mapList exists.");
       array_free(mapList);
    }
 
@@ -645,7 +645,7 @@ static void mapedit_selectRm( StarSystem *sys )
          return;
       }
    }
-   //WARN("Trying to remove system '%s' from selection when not selected.", sys->name);
+   WARN("Trying to remove system '%s' from selection when not selected.", sys->name);
 }
 
 
@@ -761,7 +761,7 @@ void mapedit_saveMapMenu_open (void)
    int curLines = 0;
    
    /* Debug log */
-   //WARN("Entering function.");
+   WARN("Entering function.");
 
    /* window */
    wid = window_create( "Save to Map Outfit", -1, -1, MAPEDIT_SAVE_WIDTH, MAPEDIT_SAVE_HEIGHT );
@@ -795,8 +795,8 @@ void mapedit_saveMapMenu_open (void)
    }
 
    /* Debug Log */
-   //WARN("List[0] : %s", names[0]);
-   //WARN("WID     : %i", mapedit_widSave);
+   WARN("List[0] : %s", names[0]);
+   WARN("WID     : %i", mapedit_widSave);
 
    /* Filename. */
    curLines = 1;
@@ -832,7 +832,7 @@ void mapedit_saveMapMenu_open (void)
    linesPos+=curLines+1;
 
    /* Debug log */
-   //WARN("Creating list.");
+   WARN("Creating list.");
 
    /* Create list : must be created after inpFileName, inpMapName, inpDescription and txtLoadedNumSystems */
    window_addList( mapedit_widSave, 20, -50,
@@ -840,7 +840,7 @@ void mapedit_saveMapMenu_open (void)
          "lstMapOutfits", names, n, iCurrent, mapedit_saveMapMenu_update );
 
    /* Debug log */
-   //WARN("Creating buttons.");
+   WARN("Creating buttons.");
 
    /* Buttons */
    window_addButtonKey( mapedit_widSave, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -852,7 +852,7 @@ void mapedit_saveMapMenu_open (void)
    mapedit_saveMapMenu_update( mapedit_widSave, "" );
 
    /* Debug log */
-   //WARN("Exiting function.");
+   WARN("Exiting function.");
 }
 
 
@@ -868,7 +868,7 @@ void mapedit_loadMapMenu_open (void)
    /*int len;*/
    
    /* Debug log */
-   //WARN("Entering function.");
+   WARN("Entering function.");
 
    /* window */
    wid = window_create( "Open Map Outfit", -1, -1, MAPEDIT_OPEN_WIDTH, MAPEDIT_OPEN_HEIGHT );
@@ -899,11 +899,11 @@ void mapedit_loadMapMenu_open (void)
    }
 
    /* Debug Log */
-   //WARN("List[0] : %s", names[0]);
-   //WARN("WID     : %i", mapedit_widLoad);
+   WARN("List[0] : %s", names[0]);
+   WARN("WID     : %i", mapedit_widLoad);
 
    /* Debug log */
-   //WARN("Creating list.");
+   WARN("Creating list.");
 
    /* Map info text. */
    window_addText( mapedit_widLoad, -20, -40, MAPEDIT_OPEN_TXT_WIDTH, MAPEDIT_OPEN_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
@@ -914,7 +914,7 @@ void mapedit_loadMapMenu_open (void)
          "lstMapOutfits", names, n, 0, mapedit_loadMapMenu_update );
 
    /* Debug log */
-   //WARN("Creating buttons.");
+   WARN("Creating buttons.");
 
    /* Buttons */
    window_addButtonKey( mapedit_widLoad, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -925,7 +925,7 @@ void mapedit_loadMapMenu_open (void)
          "btnDelete", "Del", mapedit_loadMapMenu_close );
 
    /* Debug log */
-   //WARN("Exiting function.");
+   WARN("Exiting function.");
 }
 
 
@@ -944,27 +944,27 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
    char buf[256];
 
     /* Debug log */
-   //WARN("Entering function.");
+   WARN("Entering function.");
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
    if (strcmp(save,"None") == 0) {
-      //WARN("No list.");
+      WARN("No list.");
       return;
    }
 
    /* Get position. */
-   //WARN("Getting current position in list.");
+   WARN("Getting current position in list.");
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
    ns  = mapedit_mapsList_getList( &n );
    ns  = &ns[pos];
-   //WARN("\tPosition is : %i.", pos);
+   WARN("\tPosition is : %i.", pos);
 
    /* Display text. */
-   //WARN("Formatting text to display :");
-   //WARN("\tFile Name   : \"%s\"", ns->sFileName);
-   //WARN("\tMap name    : \"%s\"", ns->sMapName);
-   //WARN("\tSystems     : %i", ns->iNumSystems);
+   WARN("Formatting text to display :");
+   WARN("\tFile Name   : \"%s\"", ns->sFileName);
+   WARN("\tMap name    : \"%s\"", ns->sMapName);
+   WARN("\tSystems     : %i", ns->iNumSystems);
    nsnprintf( buf, sizeof(buf),
          "File Name:\n"
          "   %s\n"
@@ -981,7 +981,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
    window_modifyText( wdw, "txtMapInfo", buf );
 
     /* Debug log */
-   //WARN("Exiting function.");
+   WARN("Exiting function.");
 }
 
 
@@ -1019,12 +1019,12 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    StarSystem *sys;
 
    /* Debug log */
-   //WARN("Entering function.");
+   WARN("Entering function.");
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
    if (strcmp(save,"None") == 0) {
-      //WARN("No list.");
+      WARN("No list.");
       return;
    }
 
@@ -1037,10 +1037,10 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 
    /* Display text. */
    /*WARN("Getting file to load :");*/
-   //WARN("\tFile Name   : \"%s\"", ns->sFileName);
-   //WARN("\tMap name    : \"%s\"", ns->sMapName);
-   //WARN("\tDescription : \"%s\"", ns->sDescription);
-   //WARN("\tSystems     : %i", ns->iNumSystems);
+   WARN("\tFile Name   : \"%s\"", ns->sFileName);
+   WARN("\tMap name    : \"%s\"", ns->sMapName);
+   WARN("\tDescription : \"%s\"", ns->sDescription);
+   WARN("\tSystems     : %i", ns->iNumSystems);
 
    /*WARN("\tGetting full file path");*/
    len  = strlen(MAP_DATA_PATH)+strlen(ns->sFileName)+2;
@@ -1055,7 +1055,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    /* Get first node, normally "outfit" */
    node = doc->xmlChildrenNode;
    if (node == NULL) {
-      //WARN("\t\tMalformed file \"%s\" : does not contain any elements", ns->sFileName);
+      WARN("\t\tMalformed file \"%s\" : does not contain any elements", ns->sFileName);
       free(file);
       xmlFreeDoc(doc);
       free(buf);
@@ -1065,7 +1065,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    }
 
    if (!xml_isNode(node,"outfit")) {
-      //WARN("\t\tMalformed file \"%s\" : no <outfit> elements", ns->sFileName);
+      WARN("\t\tMalformed file \"%s\" : no <outfit> elements", ns->sFileName);
       free(file);
       xmlFreeDoc(doc);
       free(buf);
@@ -1079,7 +1079,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    /*WARN("\t\tName = \"%s\"", name);*/
    compareLimit = MAPEDIT_FILENAME_MAX;
    if (strncmp(ns->sMapName, name, compareLimit)!=0) {
-      //WARN("\t\tInconsistent names between list and file : list=\"%s\", file=\"%s\"", ns->sMapName, name);
+      WARN("\t\tInconsistent names between list and file : list=\"%s\", file=\"%s\"", ns->sMapName, name);
       free(file);
       xmlFreeDoc(doc);
       free(buf);
@@ -1146,11 +1146,11 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    } while (xml_nextNode(node));
    /*WARN("\t\tEnding loop on <sys> nodes");*/
 
-   //WARN("\tSetting global display variables");
-   //WARN("\tFile Name   : \"%s\"", ns->sFileName);
-   //WARN("\tMap name    : \"%s\"", ns->sMapName);
-   //WARN("\tDescription : \"%s\"", ns->sDescription);
-   //WARN("\tSystems     : %i", ns->iNumSystems);
+   WARN("\tSetting global display variables");
+   WARN("\tFile Name   : \"%s\"", ns->sFileName);
+   WARN("\tMap name    : \"%s\"", ns->sMapName);
+   WARN("\tDescription : \"%s\"", ns->sDescription);
+   WARN("\tSystems     : %i", ns->iNumSystems);
    mapedit_setGlobalLoadedInfos ( mapedit_nsys, ns->sFileName, ns->sMapName, ns->sDescription);
    
    /*WARN("\tCleaning up memory");*/
@@ -1162,7 +1162,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    window_destroy( wdw );
 
    /* Debug log */
-   //WARN("Exiting function.");
+   WARN("Exiting function.");
 }
 
 
@@ -1180,31 +1180,31 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
    char buf[25], sFileName[MAPEDIT_FILENAME_MAX];
 
     /* Debug log */
-   //WARN("Entering function.");
+   WARN("Entering function.");
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
    if (strcmp(save,"None") == 0) {
-      //WARN("No list.");
+      WARN("No list.");
       return;
    }
    
    /* Get position. */
-   //WARN("Getting current position in list.");
+   WARN("Getting current position in list.");
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
    ns  = mapedit_mapsList_getList( &n );
    ns  = &ns[pos];
-   //WARN("\tPosition is : %i.", pos);
+   WARN("\tPosition is : %i.", pos);
 
    /* Getting file nae without extension */
    len = strlen( ns->sFileName );
    nsnprintf( sFileName, len-3, "%s", ns->sFileName );
 
    /* Display text. */
-   //WARN("Formatting text to display :");
-   //WARN("\tFile Name   : \"%s\"", sFileName);
-   //WARN("\tMap name    : \"%s\"", ns->sMapName);
-   //WARN("\tSystems     : %i", ns->iNumSystems);
+   WARN("Formatting text to display :");
+   WARN("\tFile Name   : \"%s\"", sFileName);
+   WARN("\tMap name    : \"%s\"", ns->sMapName);
+   WARN("\tSystems     : %i", ns->iNumSystems);
    nsnprintf( buf, sizeof(buf), "Selected: %i; File: %i", mapedit_nsys, ns->iNumSystems );
 
    /* Displaying info strings */
@@ -1214,7 +1214,7 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
    window_modifyText( wdw, "txtLoadedNumSystems", buf );
 
     /* Debug log */
-   //WARN("Exiting function.");
+   WARN("Exiting function.");
 }
 
 
@@ -1230,13 +1230,13 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
    char sFileName[MAPEDIT_FILENAME_MAX], sMapName[MAPEDIT_NAME_MAX], sDescription[MAPEDIT_DESCRIPTION_MAX];
 
    /* Debug log */
-   //WARN("Entering function.");
-   //WARN("\tWndow ID wid=%i", wdw);
+   WARN("Entering function.");
+   WARN("\tWndow ID wid=%i", wdw);
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
    if (strcmp(save,"None") == 0) {
-      //WARN("No list.");
+      WARN("No list.");
       return;
    }
 
@@ -1263,30 +1263,30 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
    nsnprintf( sDescription, len+1, "%s", save );
 
    /* Display text. */
-   //WARN("Getting file to save :");
-   //WARN("\tFile Name   : \"%s\"", sFileName);
-   //WARN("\tMap name    : \"%s\"", sMapName);
-   //WARN("\tDescription : \"%s\"", sDescription);
-   //WARN("\tSystems     : %i", mapedit_nsys);
+   WARN("Getting file to save :");
+   WARN("\tFile Name   : \"%s\"", sFileName);
+   WARN("\tMap name    : \"%s\"", sMapName);
+   WARN("\tDescription : \"%s\"", sDescription);
+   WARN("\tSystems     : %i", mapedit_nsys);
 
-   //WARN("\tSaving the file");
+   WARN("\tSaving the file");
    dsys_saveMap(mapedit_sys, mapedit_nsys, sFileName, sMapName, sDescription);
 
-   //WARN("\tSetting global display variables");
-   //WARN("\tFile Name   : \"%s\"", sFileName);
-   //WARN("\tMap name    : \"%s\"", sMapName);
-   //WARN("\tDescription : \"%s\"", sDescription);
-   //WARN("\tSystems     : %i", mapedit_nsys);
+   WARN("\tSetting global display variables");
+   WARN("\tFile Name   : \"%s\"", sFileName);
+   WARN("\tMap name    : \"%s\"", sMapName);
+   WARN("\tDescription : \"%s\"", sDescription);
+   WARN("\tSystems     : %i", mapedit_nsys);
    mapedit_setGlobalLoadedInfos ( mapedit_nsys, sFileName, sMapName, sDescription);
 
-   //WARN("\tCleaning up memory");
+   WARN("\tCleaning up memory");
    /*free(save);*/
 
-   //WARN("\tDestroying window");
+   WARN("\tDestroying window");
    window_destroy( wdw );
 
    /* Debug log */
-   //WARN("Exiting function.");
+   WARN("Exiting function.");
 }
 
 /**
@@ -1335,12 +1335,12 @@ static int mapedit_mapsList_refresh (void)
    mapOutfitsList_t *newMapItem;
 
    /* Debug log */
-   //WARN("Entering function.");
+   WARN("Entering function.");
 
    if (mapList == NULL) {
-      //WARN("mapList does not exist.");
+      WARN("mapList does not exist.");
    } else {
-      //WARN("mapList exists.");
+      WARN("mapList exists.");
       array_free(mapList);
    }
    mapList = array_create( mapOutfitsList_t );
@@ -1349,7 +1349,7 @@ static int mapedit_mapsList_refresh (void)
    newMapItem = NULL;
    for (i=0; i<(int)nfiles; i++) {
 
-      //WARN("\tNew file found");
+      WARN("\tNew file found");
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
@@ -1360,32 +1360,32 @@ static int mapedit_mapsList_refresh (void)
       /* Get first node, normally "outfit" */
       node = doc->xmlChildrenNode;
       if (node == NULL) {
-         //WARN("\t\tMalformed file \"%s\" : does not contain any elements", map_files[i]);
+         WARN("\t\tMalformed file \"%s\" : does not contain any elements", map_files[i]);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
          return -1;
       } else {
-         //WARN("\t\tFile form OK");
+         WARN("\t\tFile form OK");
       }
 
       if (!xml_isNode(node,"outfit")) {
-         //WARN("\t\tMalformed file \"%s\" : no <outfit> elements", map_files[i]);
+         WARN("\t\tMalformed file \"%s\" : no <outfit> elements", map_files[i]);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
          return -1;
       } else {
-         //WARN("\t\t<outfit> element found");
+         WARN("\t\t<outfit> element found");
       }
 
       /* Get "name" property from the "outfit" node */
       name = xml_nodeProp( node,"name" );
-      //WARN("\t\tName = \"%s\"", name);
+      WARN("\t\tName = \"%s\"", name);
 
       /* Loop on the nodes to find <specific> node */
       node = node->xmlChildrenNode;
-      //WARN("\t\tBeginning loop searching for <specific> node");
+      WARN("\t\tBeginning loop searching for <specific> node");
       do {
          outfitType = "";
          xml_onlyNodes(node);
@@ -1393,35 +1393,35 @@ static int mapedit_mapsList_refresh (void)
          if (!xml_isNode(node,"specific")) {
             if (xml_isNode(node,"general")) {
                description = NULL;
-               //WARN("\t\t\t<general> element found");
-               //WARN("\t\t\t\tReading subnode \"description\"");
+               WARN("\t\t\t<general> element found");
+               WARN("\t\t\t\tReading subnode \"description\"");
                cur = node->children;
                do {
                   xml_onlyNodes(cur);
                   xmlr_strd(cur,"description",description);
                } while (xml_nextNode(cur));
-               //WARN("\t\t\t\tFile \"%s\" has description \"%s\"", map_files[i], description);
+               WARN("\t\t\t\tFile \"%s\" has description \"%s\"", map_files[i], description);
             } else {
-               //WARN("\t\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
+               WARN("\t\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
          }
             continue;
          }
 
-         //WARN("\t\t\t<specific> element found");
+         WARN("\t\t\t<specific> element found");
 
          /* Get the "type" property from "specific" node */
          outfitType = xml_nodeProp( node,"type" );
-         //WARN("\t\t\t\tOutfit type = \"%s\"", outfitType);
+         WARN("\t\t\t\tOutfit type = \"%s\"", outfitType);
 
          /* Break out of the loop, either with a correct outfitType or not */
          break;
       } while (xml_nextNode(node));
-      //WARN("\t\tEnding loop searching for <specific> node");
+      WARN("\t\tEnding loop searching for <specific> node");
 
       /* If its not a map, we don't care. */
       compareLimit = 3;
       if (strncmp(outfitType, "map", compareLimit)!=0) {
-         //WARN("\t\tFile is not a regular map");
+         WARN("\t\tFile is not a regular map");
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1431,13 +1431,13 @@ static int mapedit_mapsList_refresh (void)
       /* Loop on the nodes to find all <sys> node */
       nSystems = 0;
       node = node->xmlChildrenNode;
-      //WARN("\t\tBeginning loop on <sys> nodes");
+      WARN("\t\tBeginning loop on <sys> nodes");
       do {
          /*systemName = "";*/
          xml_onlyNodes(node);
 
          if (!xml_isNode(node,"sys")) {
-            //WARN("\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
+            WARN("\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
             continue;
          }
          /*WARN("\t\t\t<sys> element found");*/
@@ -1447,13 +1447,13 @@ static int mapedit_mapsList_refresh (void)
          /*systemName = xml_nodeProp( node,"name" );*/
          /*WARN("\t\t\t\tSystem name = \"%s\"", systemName);*/
       } while (xml_nextNode(node));
-      //WARN("\t\tEnding loop on <sys> nodes");
-      //WARN("\t\t%i systems found", nSystems);
+      WARN("\t\tEnding loop on <sys> nodes");
+      WARN("\t\t%i systems found", nSystems);
 
       /* If the map is a regular one, then load it into the list */
      if (nSystems > 0) {
          newMapItem = &array_grow( &mapList );
-         //WARN("\t\tLoading map into list :");
+         WARN("\t\tLoading map into list :");
          newMapItem->iNumSystems   = nSystems;
          len  = strlen(map_files[i])+1;
        nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
@@ -1461,19 +1461,19 @@ static int mapedit_mapsList_refresh (void)
        nsnprintf( newMapItem->sMapName, len, "%s", name );
          len  = strlen(description)+1;
        nsnprintf( newMapItem->sDescription, len, "%s", description );
-         //WARN("\t\t\tnewMapItem->iNumSystems  = %i",     newMapItem->iNumSystems);
-         //WARN("\t\t\tnewMapItem->sFileName    = \"%s\"", newMapItem->sFileName);
-         //WARN("\t\t\tnewMapItem->sMapName     = \"%s\"", newMapItem->sMapName);
-         //WARN("\t\t\tnewMapItem->sDescription = \"%s\"", newMapItem->sDescription);
+         WARN("\t\t\tnewMapItem->iNumSystems  = %i",     newMapItem->iNumSystems);
+         WARN("\t\t\tnewMapItem->sFileName    = \"%s\"", newMapItem->sFileName);
+         WARN("\t\t\tnewMapItem->sMapName     = \"%s\"", newMapItem->sMapName);
+         WARN("\t\t\tnewMapItem->sDescription = \"%s\"", newMapItem->sDescription);
      } else {
-         //WARN("\t\tFile contains no stellar system");
+         WARN("\t\tFile contains no stellar system");
      }
 
       /* Clean up. */
       free(name);
       free(file);
       free(buf);
-      //WARN("\tNew file end");
+      WARN("\tNew file end");
   }
 
    /* Clean up. */
