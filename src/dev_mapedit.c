@@ -1456,12 +1456,11 @@ static int mapedit_mapsList_refresh (void)
          WARN("\t\tLoading map into list :");
          newMapItem->iNumSystems   = nSystems;
          len  = strlen(map_files[i])+1;
-         nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
+       nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
          len  = strlen(name)+1;
-         nsnprintf( newMapItem->sMapName, len, "%s", name );
+       nsnprintf( newMapItem->sMapName, len, "%s", name );
          len  = strlen(description)+1;
-         WARN("\t\t\tlen of nsnprintf       o  = %i", len);
-         nsnprintf( newMapItem->sDescription, len, "%s", description );
+       nsnprintf( newMapItem->sDescription, len, "%s", description );
          WARN("\t\t\tnewMapItem->iNumSystems  = %i",     newMapItem->iNumSystems);
          WARN("\t\t\tnewMapItem->sFileName    = \"%s\"", newMapItem->sFileName);
          WARN("\t\t\tnewMapItem->sMapName     = \"%s\"", newMapItem->sMapName);
