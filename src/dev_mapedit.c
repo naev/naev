@@ -1457,17 +1457,17 @@ static int mapedit_mapsList_refresh (void)
          newMapItem->iNumSystems   = nSystems;
          len  = strlen(map_files[i])+1;
          if (len>MAPEDIT_NAME_MAX) {
-             len = MAPEDIT_NAME_MAX
+             len = MAPEDIT_NAME_MAX;
          }
          nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
          len  = strlen(name)+1;
          if (len>MAPEDIT_FILENAME_MAX) {
-             len = MAPEDIT_FILENAME_MAX
+             len = MAPEDIT_FILENAME_MAX;
          }
          nsnprintf( newMapItem->sMapName, len, "%s", name );
          len  = strlen(description)+1;
          if (len>MAPEDIT_DESCRIPTION_MAX) {
-             len = MAPEDIT_DESCRIPTION_MAX
+             len = MAPEDIT_DESCRIPTION_MAX;
          }
          nsnprintf( newMapItem->sDescription, len, "%s", description );
          //WARN("\t\t\tnewMapItem->iNumSystems  = %i",     newMapItem->iNumSystems);
