@@ -90,6 +90,7 @@ static double mapedit_mx      = 0.; /**< X mouse position. */
 static double mapedit_my      = 0.; /**< Y mouse position. */
 static unsigned int mapedit_widLoad = 0; /**< Load Map Outfit wid. */
 static unsigned int mapedit_widSave = 0; /**< Save Map Outfit wid. */
+static char *mapedit_sLoadMapName = NULL; /**< Loaded Map Outfit. */
 
 
 /*
@@ -295,12 +296,7 @@ static void mapedit_close( unsigned int wid, char *wgt )
 {
    /* Frees some memory. */
    mapedit_deselect();
-   if (mapList == NULL) {
-      //WARN("mapList does not exist.");
-   } else {
-      //WARN("mapList exists.");
-      mapsList_free();
-   }
+   mapsList_free();
 
    /* Reconstruct jumps. */
    systems_reconstructJumps();
@@ -760,6 +756,7 @@ void mapedit_saveMapMenu_open (void)
    int textPos = 0;
    int linesPos = 0;
    int curLines = 0;
+   char *curMap = NULL;
    
    /* Debug log */
    //WARN("Entering function.");
@@ -773,9 +770,11 @@ void mapedit_saveMapMenu_open (void)
    window_setCancel( mapedit_widSave, mapedit_loadMapMenu_close );
 
    /* Load list of map outfits */
+   if (mapedit_sLoadMapName != NULL)
+      curMap = strdup( mapedit_sLoadMapName );
    mapedit_mapsList_refresh();
 
-   /* load the maps */
+   /* Load the maps */
    iCurrent = 0;
    nslist = mapedit_mapsList_getList( &n );
    if (n > 0) {
@@ -784,9 +783,9 @@ void mapedit_saveMapMenu_open (void)
          ns       = &nslist[i];
          /*len      = strlen(ns->sMapName);*/
          names[i] = strdup(ns->sMapName);
-          /*if (!strcmp(mapedit_sLoadMapName, ns->sMapName)) {
+         if ((curMap != NULL) && !strcmp(curMap, ns->sMapName)) {
             iCurrent = i;
-          }*/
+         }
       }
    } else {
       /* case there are no files */
@@ -794,6 +793,8 @@ void mapedit_saveMapMenu_open (void)
       names[0] = strdup("None");
       n     = 1;
    }
+   if (curMap != NULL)
+      free( curMap );
 
    /* Debug Log */
    //WARN("List[0] : %s", names[0]);
@@ -882,13 +883,12 @@ void mapedit_loadMapMenu_open (void)
    /* Load list of map outfits */
    mapedit_mapsList_refresh();
 
-   /* load the maps */
+   /* Load the maps */
    nslist = mapedit_mapsList_getList( &n );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
          ns       = &nslist[i];
-         /*len      = strlen(ns->sMapName);*/
          names[i] = strdup(ns->sMapName);
       }
    }
@@ -1291,7 +1291,7 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
 /**
  * @brief Set and display the global variables describing last loaded/saved file
  */
-void mapedit_setGlobalLoadedInfos (int nSys, char *sFileName, char *sMapName, char *sDescription)
+void mapedit_setGlobalLoadedInfos( int nSys, char *sFileName, char *sMapName, char *sDescription )
 {
    char buf[8];
 
@@ -1300,6 +1300,11 @@ void mapedit_setGlobalLoadedInfos (int nSys, char *sFileName, char *sMapName, ch
    window_modifyText( mapedit_wid, "txtMapName",     sMapName );
    window_modifyText( mapedit_wid, "txtDescription", sDescription );
    window_modifyText( mapedit_wid, "txtLoadedNumSystems", buf );
+
+   /* Local information. */
+   if (mapedit_sLoadMapName != NULL)
+      free( mapedit_sLoadMapName );
+   mapedit_sLoadMapName = strdup( sMapName );
 }
 
 
@@ -1323,12 +1328,7 @@ static int mapedit_mapsList_refresh (void)
    /* Debug log */
    //WARN("Entering function.");
 
-   if (mapList == NULL) {
-      //WARN("mapList does not exist.");
-   } else {
-      //WARN("mapList exists.");
-      mapsList_free();
-   }
+   mapsList_free();
    mapList = array_create( mapOutfitsList_t );
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
@@ -1487,13 +1487,20 @@ mapOutfitsList_t *mapedit_mapsList_getList( int *n )
 static void mapsList_free (void)
 {
    unsigned int n, i;
-   n = array_size( mapList );
-   for (i=0; i<n; i++) {
-      free( mapList[i].sFileName );
-      free( mapList[i].sMapName );
-      free( mapList[i].sDescription );
+
+   if (mapList != NULL) {
+      n = array_size( mapList );
+      for (i=0; i<n; i++) {
+         free( mapList[i].sFileName );
+         free( mapList[i].sMapName );
+         free( mapList[i].sDescription );
+      }
+      array_free(mapList);
    }
-   array_free(mapList);
    mapList = NULL;
+
+   if (mapedit_sLoadMapName != NULL)
+      free( mapedit_sLoadMapName );
+   mapedit_sLoadMapName = NULL;
 }
 
