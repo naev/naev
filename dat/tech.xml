@@ -706,6 +706,34 @@
   <item>Local System Map</item>
  </tech>
 
+ <!-- Bioship outfits -->
+ <tech name="Bioship Outfits">
+  <item>Ultralight Bioship Brain Stage 1</item>
+  <item>Light Bioship Brain Stage 1</item>
+  <item>Medium Bioship Brain Stage 1</item>
+  <item>Medium-Heavy Bioship Brain Stage 1</item>
+  <item>Heavy Bioship Brain Stage 1</item>
+  <item>Superheavy Bioship Brain Stage 1</item>
+  <item>Ultralight Bioship Shell Stage 1</item>
+  <item>Light Bioship Shell Stage 1</item>
+  <item>Medium Bioship Shell Stage 1</item>
+  <item>Medium-Heavy Bioship Shell Stage 1</item>
+  <item>Heavy Bioship Shell Stage 1</item>
+  <item>Superheavy Bioship Shell Stage 1</item>
+  <item>Ultralight Bioship Fast Fin Stage 1</item>
+  <item>Light Bioship Fast Fin Stage 1</item>
+  <item>Medium Bioship Fast Fin Stage 1</item>
+  <item>Medium-Heavy Bioship Fast Fin Stage 1</item>
+  <item>Heavy Bioship Fast Fin Stage 1</item>
+  <item>Superheavy Bioship Fast Fin Stage 1</item>
+  <item>Ultralight Bioship Strong Fin Stage 1</item>
+  <item>Light Bioship Strong Fin Stage 1</item>
+  <item>Medium Bioship Strong Fin Stage 1</item>
+  <item>Medium-Heavy Bioship Strong Fin Stage 1</item>
+  <item>Heavy Bioship Strong Fin Stage 1</item>
+  <item>Superheavy Bioship Strong Fin Stage 1</item>
+ </tech>
+
  <!-- Ships -->
  <tech name="Basic Civilian Ships">
   <item>Ancestor</item>
@@ -793,30 +821,6 @@
   <item>Soromid Nyx</item>
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
-  <item>Ultralight Bioship Brain Stage 1</item>
-  <item>Light Bioship Brain Stage 1</item>
-  <item>Medium Bioship Brain Stage 1</item>
-  <item>Medium-Heavy Bioship Brain Stage 1</item>
-  <item>Heavy Bioship Brain Stage 1</item>
-  <item>Superheavy Bioship Brain Stage 1</item>
-  <item>Ultralight Bioship Shell Stage 1</item>
-  <item>Light Bioship Shell Stage 1</item>
-  <item>Medium Bioship Shell Stage 1</item>
-  <item>Medium-Heavy Bioship Shell Stage 1</item>
-  <item>Heavy Bioship Shell Stage 1</item>
-  <item>Superheavy Bioship Shell Stage 1</item>
-  <item>Ultralight Bioship Fast Fin Stage 1</item>
-  <item>Light Bioship Fast Fin Stage 1</item>
-  <item>Medium Bioship Fast Fin Stage 1</item>
-  <item>Medium-Heavy Bioship Fast Fin Stage 1</item>
-  <item>Heavy Bioship Fast Fin Stage 1</item>
-  <item>Superheavy Bioship Fast Fin Stage 1</item>
-  <item>Ultralight Bioship Strong Fin Stage 1</item>
-  <item>Light Bioship Strong Fin Stage 1</item>
-  <item>Medium Bioship Strong Fin Stage 1</item>
-  <item>Medium-Heavy Bioship Strong Fin Stage 1</item>
-  <item>Heavy Bioship Strong Fin Stage 1</item>
-  <item>Superheavy Bioship Strong Fin Stage 1</item>
  </tech>
  <tech name="Thurion Military Ships">
   <item>Thurion Perspicacity</item>

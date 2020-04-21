@@ -21,6 +21,7 @@
    <land>srm_mil_restricted</land>
    <refuel/>
    <bar/>
+   <outfits/>
    <shipyard/>
   </services>
   <commodities/>
@@ -28,6 +29,14 @@
   <bar>It's typically only Soromid officers who frequent the recreational facilities on a military station. Regular Soromid sailors tend to stay with the ships, caring for them and making sure they are in good health.</bar>
  </general>
  <tech>
+  <item>Plasma 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Missiles 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Bioship Outfits</item>
   <item>Soromid Military Ships</item>
  </tech>
 </asset>
