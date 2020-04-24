@@ -444,7 +444,7 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
+      for (i=0; keybind_info[i][0] != NULL; i++) {
          nlua_getenv(env, keybind_info[i][0]);
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
@@ -1130,7 +1130,7 @@ int conf_saveConfig ( const char* file )
    keyname[sizeof(keyname)-1] = '\0';
 
    /* Iterate over the keybinding names */
-   for (i=0; strcmp(keybind_info[i][0], "end"); i++) {
+   for (i=0; keybind_info[i][0] != NULL; i++) {
       /* Save a comment line containing the description */
       conf_saveComment(input_getKeybindDescription( keybind_info[i][0] ));
 
