@@ -4,10 +4,10 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
-  <mass>1</mass>
+  <mass>7</mass>
   <price>18000</price>
-  <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
-  <gfx_store>plasma2</gfx_store>
+  <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful and lags slightly behind its synthetic cousin, the Plasma Blaster MK3, in terms of raw power, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <gfx_store>plasma</gfx_store>
   <cpu>-1</cpu>
  </general>
  <specific type="bolt">
@@ -15,20 +15,20 @@
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
-  <delay>0.75</delay>
-  <speed>550</speed>
-  <range>1125</range>
-  <falloff>225</falloff>
+  <delay>0.7</delay>
+  <speed>500</speed>
+  <range>500</range>
+  <falloff>380</falloff>
   <gfx_end>plasma2-end</gfx_end>
-  <energy>20</energy>
-  <heatup>40</heatup>
+  <energy>15</energy>
+  <heatup>25</heatup>
   <track>2</track>
-  <swivel>10</swivel>
+  <swivel>5</swivel>
   <damage>
    <type>normal</type>
-   <penetrate>30</penetrate>
-   <physical>25</physical>
-   <disable>2</disable>
+   <penetrate>7</penetrate>
+   <physical>8</physical>
+   <disable>1</disable>
   </damage>
  </specific>
 </outfit>

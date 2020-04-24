@@ -42,8 +42,6 @@
   <item>Plasma Blaster MK3</item>
   <item>Plasma Turret MK1</item>
   <item>Plasma Turret MK2</item>
-  <item>BioPlasma Organ Stage 1</item>
-  <item>BioPlasma Organ Stage 2</item>
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
   <item>Plasma Cluster Cannon MK3</item>
@@ -85,6 +83,8 @@
   <item>Turreted Convulsion Launcher</item>
   <item>Za'lek Hunter Launcher</item>
   <item>Za'lek Reaper Launcher</item>
+  <item>BioPlasma Organ Stage 1</item>
+  <item>BioPlasma Organ Stage X</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -460,8 +460,6 @@
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
   <item>Plasma Cluster Cannon MK3</item>
-  <item>BioPlasma Organ Stage 1</item>
-  <item>BioPlasma Organ Stage 2</item>
   -->
   <item>Plasma Turret MK2</item>
  </tech>
@@ -708,6 +706,7 @@
 
  <!-- Bioship outfits -->
  <tech name="Bioship Outfits">
+  <item>BioPlasma Organ Stage 1</item>
   <item>Ultralight Bioship Brain Stage 1</item>
   <item>Light Bioship Brain Stage 1</item>
   <item>Medium Bioship Brain Stage 1</item>

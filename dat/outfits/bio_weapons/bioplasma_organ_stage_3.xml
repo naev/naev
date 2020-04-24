@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="BioPlasma Organ Stage 2">
+<outfit name="BioPlasma Organ Stage 3">
  <general>
   <slot>weapon</slot>
   <size>small</size>
@@ -17,13 +17,13 @@
   <spfx_armour>PlaS2</spfx_armour>
   <delay>0.7</delay>
   <speed>500</speed>
-  <range>630</range>
+  <range>765</range>
   <falloff>380</falloff>
   <gfx_end>plasma2-end</gfx_end>
   <energy>15</energy>
-  <heatup>30</heatup>
+  <heatup>35</heatup>
   <track>2</track>
-  <swivel>6</swivel>
+  <swivel>7</swivel>
   <damage>
    <type>normal</type>
    <penetrate>7</penetrate>
