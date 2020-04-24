@@ -131,8 +131,8 @@ const char *keybind_info[][3] = {
    { "switchtab8", gettext_noop("Switch Tab 8"), gettext_noop("Switches to tab 8.") },
    { "switchtab9", gettext_noop("Switch Tab 9"), gettext_noop("Switches to tab 9.") },
    { "switchtab0", gettext_noop("Switch Tab 0"), gettext_noop("Switches to tab 0.") },
-   /* Must terminate in "end". */
-   { "end", "end", "end" }
+   /* Must terminate in NULL. */
+   { NULL, NULL, NULL }
 }; /**< Names of possible keybindings. */
 
 
@@ -323,7 +323,7 @@ void input_init (void)
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 
    /* Get the number of keybindings. */
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++);
+   for (i=0; keybind_info[i][0] != NULL; i++);
    input_numbinds = i;
    input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
@@ -354,7 +354,7 @@ void input_exit (void)
 void input_enableAll (void)
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+   for (i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 0;
 }
 
@@ -365,7 +365,7 @@ void input_enableAll (void)
 void input_disableAll (void)
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+   for (i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 1;
 }
 
@@ -620,7 +620,7 @@ const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod
 const char* input_getKeybindDescription( const char *keybind )
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+   for (i=0; keybind_info[i][0] != NULL; i++)
       if (strcmp(keybind, input_keybinds[i].name)==0)
          return _(keybind_info[i][2]);
    WARN(_("Unable to get keybinding description '%s', that command doesn't exist"), keybind);
