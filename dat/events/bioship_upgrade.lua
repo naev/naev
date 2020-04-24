@@ -158,6 +158,12 @@ function pay( amount )
                new_part = bioship_parts[index][1]:format( sn )
             end
             player.pilot():addOutfit( new_part )
+
+            -- Reset stats since we leveled up (prevents gameplay problems)
+            player.pilot():setHealth( 100, 100 )
+            player.pilot():setEnergy( 100 )
+            player.pilot():setTemp( 0 )
+            player.pilot():setFuel( true )
          end
       end 
    end
