@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="BioPlasma Organ Stage 1">
  <general>
-  <slot>weapon</slot>
+  <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
   <mass>7</mass>
