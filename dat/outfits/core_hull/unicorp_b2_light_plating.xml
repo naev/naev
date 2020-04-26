@@ -8,7 +8,7 @@
   <mass>30</mass>
   <price>40000</price>
   <description>Built with more sophisticated materials but fundamentally similar to the D-2 plating, the B-2 is a notable improvement over its predecessor in many respects, though it comes at a significantly increased price.</description>
-  <gfx_store>refined_hull_s</gfx_store>
+  <gfx_store>refined_hull_t</gfx_store>
  </general>
  <specific type="modification">
   <cargo>5</cargo>

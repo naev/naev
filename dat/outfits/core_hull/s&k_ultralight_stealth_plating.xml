@@ -8,7 +8,7 @@
   <mass>30</mass>
   <price>95000</price>
   <description>Designed for military scouting vessels, Schafer &amp; Kane's Ultralight Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>
-  <gfx_store>stealth_hull_s</gfx_store>
+  <gfx_store>stealth_hull_t</gfx_store>
  </general>
  <specific type="modification">
   <cargo>3</cargo>

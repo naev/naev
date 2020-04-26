@@ -8,7 +8,7 @@
   <mass>1500</mass>
   <price>900000</price>
   <description>Derived from the venerable D-20 plating, the B-20 utilizes high-density composites to provide additional protection while also leaving more room for cargo, at the cost of slightly increased mass.</description>
-  <gfx_store>refined_hull_l</gfx_store>
+  <gfx_store>refined_hull_x</gfx_store>
  </general>
  <specific type="modification">
   <cargo>100</cargo>
