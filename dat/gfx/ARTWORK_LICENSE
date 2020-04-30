@@ -1027,7 +1027,7 @@
        * core_system_refined_m1.png
        * core_system_refined_m2.png
        * core_system_refined_s1.png
-       * core_system_Refined_s2.png
+       * core_system_refined_s2.png
        * energy_dart.png
        * energy_missile.png
        * energy_torpedo.png
@@ -1069,6 +1069,10 @@
        * weapon01.png
        * weapon02.png
    * ship
+     * apprehension
+       * *
+     * certitude
+       * *
      * perspicacity
        * *
      * scintillation
