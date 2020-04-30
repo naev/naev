@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Superheavy Bioship Strong Fin Stage 4">
+ <general>
+  <typename>Bioship Fin</typename>
+  <slot prop="bio_engines">structure</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>100</mass>
+  <price>750000</price>
+  <description>The fin is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and comes in either a strong form (for heavy loads) or a fast form (for greater speed and agility). All fins start off undeveloped, but over time, just like the ships themselves, they grow and improve.</description>
+  <gfx_store>engine02</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>29</thrust>
+  <turn>36</turn>
+  <speed>61</speed>
+  <fuel>2000</fuel>
+  <energy_usage>45</energy_usage>
+  <engine_limit>8000</engine_limit>
+ </specific>
+</outfit>

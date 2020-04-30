@@ -22,15 +22,15 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="0"/>
-  <weapon size="medium" x="8" y="0" h="0"/>
-  <weapon size="small" x="-2" y="9" h="-1"/>
-  <weapon size="small" x="-2" y="-9" h="-1"/>
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0"/>
+  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0"/>
+  <weapon size="small" prop="bio_weapon" x="-2" y="9" h="-1"/>
+  <weapon size="small" prop="bio_weapon" x="-2" y="-9" h="-1"/>
+  <utility size="small" prop="bio_systems" exclusive="1" required="1">Light Bioship Brain Stage 1</utility>
   <utility size="small"/>
   <utility size="small"/>
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
+  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Bioship Strong Fin Stage 1</structure>
+  <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Bioship Shell Stage 1</structure>
   <structure size="small"/>
  </slots>
  <stats>

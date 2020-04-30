@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Heavy Bioship Brain Stage X">
+ <general>
+  <typename>Bioship Brain</typename>
+  <slot prop="bio_systems">utility</slot>
+  <size>large</size>
+  <priority>3</priority>
+  <mass>660</mass>
+  <price>1500000</price>
+  <description>The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. This brain has reached Stage X, its full potential.</description>
+  <gfx_store>misc05</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>100</cpu_max>
+  <shield>1050</shield>
+  <shield_regen>19</shield_regen>
+  <energy>4400</energy>
+  <energy_regen>200</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>
