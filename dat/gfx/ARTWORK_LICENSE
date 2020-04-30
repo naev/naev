@@ -1001,13 +1001,33 @@
        * convulsion.png
      * store
        * active_plating.png
+       * base_hull_h.png
+       * base_hull_l.png
+       * base_hull_m.png
+       * base_hull_s.png
+       * base_hull_t.png
+       * base_hull_x.png
+       * combat_hull_h.png
+       * combat_hull_l.png
+       * combat_hull_m.png
+       * combat_hull_s.png
+       * combat_hull_t.png
+       * combat_hull_x.png
        * convulsion.png
        * convulsion_launcher.png
-       * core_system01.png
-       * core_system02.png
-       * core_system03.png
-       * core_system04.png
-       * core_system05.png
+       * core_system_basic_l1.png
+       * core_system_basic_l2.png
+       * core_system_basic_m1.png
+       * core_system_basic_m2.png
+       * core_system_basic_m2.png
+       * core_system_basic_s1.png
+       * core_system_basic_s2.png
+       * core_system_refined_l1.png
+       * core_system_refined_l2.png
+       * core_system_refined_m1.png
+       * core_system_refined_m2.png
+       * core_system_refined_s1.png
+       * core_system_Refined_s2.png
        * energy_dart.png
        * energy_missile.png
        * energy_torpedo.png
@@ -1026,12 +1046,24 @@
        * engine13.png
        * engine14.png
        * engine15.png
+       * large_cargo_hull.png
+       * medium_cargo_hull.png
        * misc01.png
        * misc02.png
        * misc04.png
-       * misc05.png
        * plating01.png
        * reactor01.png
+       * refined_hull_h.png
+       * refined_hull_l.png
+       * refined_hull_m.png
+       * refined_hull_s.png
+       * refined_hull_t.png
+       * refined_hull_x.png
+       * small_cargo_hull.png
+       * stealth_hull_h.png
+       * stealth_hull_m.png
+       * stealth_hull_s.png
+       * stealth_hull_t.png
        * stealth_plating.png
        * turreted_convulsion_launcher.png
        * weapon01.png

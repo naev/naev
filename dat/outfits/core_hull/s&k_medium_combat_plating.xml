@@ -8,7 +8,7 @@
   <mass>140</mass>
   <price>360000</price>
   <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
-  <gfx_store>plating_combat</gfx_store>
+  <gfx_store>combat_hull_m</gfx_store>
  </general>
  <specific type="modification">
   <cargo>16</cargo>

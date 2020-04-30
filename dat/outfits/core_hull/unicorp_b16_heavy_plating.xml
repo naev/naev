@@ -8,7 +8,7 @@
   <mass>900</mass>
   <price>700000</price>
   <description>B-16 plating improves on Unicorp's D-16 plating, offering increased protection and cargo capacity, for only slightly increased mass.</description>
-  <gfx_store>nanobond</gfx_store>
+  <gfx_store>refined_hull_l</gfx_store>
  </general>
  <specific type="modification">
   <cargo>80</cargo>
