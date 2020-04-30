@@ -8,7 +8,7 @@
   <mass>200</mass>
   <price>300000</price>
   <description>The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. This brain has reached Stage X, its full potential.</description>
-  <gfx_store>core_system04</gfx_store>
+  <gfx_store>core_system_refined_m2</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>65</cpu_max>
