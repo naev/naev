@@ -8,7 +8,7 @@
   <mass>40</mass>
   <price>130000</price>
   <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Ultralight Combat Plating configuration is a product made for light fighters and in-system patrol craft, providing optimum protection.</description>
-  <gfx_store>plating_combat</gfx_store>
+  <gfx_store>combat_hull_t</gfx_store>
  </general>
  <specific type="modification">
   <cargo>4</cargo>

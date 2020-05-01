@@ -5,6 +5,14 @@
   <trigger>enter</trigger>
   <chance>100</chance>
  </event>
+ <event name="Bioship Upgrade">
+  <lua>bioship_upgrade</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="start_event">
   <lua>start</lua>
   <trigger>none</trigger>

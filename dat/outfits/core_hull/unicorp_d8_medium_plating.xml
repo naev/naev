@@ -8,7 +8,7 @@
   <mass>100</mass>
   <price>45000</price>
   <description>D-8 plating provides a serviceable layer of armour to medium ships, and doesn't weigh too much.</description>
-  <gfx_store>nanobond</gfx_store>
+  <gfx_store>base_hull_m</gfx_store>
  </general>
  <specific type="modification">
   <cargo>18</cargo>

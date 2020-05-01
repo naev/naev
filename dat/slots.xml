@@ -18,4 +18,26 @@
   <exclusive/>
   <required/>
  </slot>
+ <slot name="bio_systems">
+  <display>Bioship Brain</display>
+  <description>This slot is used for the brain, the biological equivalent to Core Systems. The brain of an organism is responsible for managing the function of the rest of the organism and allocating energy reserves for the battery and shield.</description>
+  <exclusive/>
+  <required/>
+ </slot>
+ <slot name="bio_hull">
+  <display>Bioship Shell</display>
+  <description>This slot is used for the shell, the biological equivalent to Hull Modifications. The shell is the last line of defense for the organism, protecting critical organs from damage. It is also helps determine the organism's cargo space.</description>
+  <exclusive/>
+  <required/>
+ </slot>
+ <slot name="bio_engines">
+  <display>Bioship Fins</display>
+  <description>This slot is used for the fins, the biological equivalent to Engines. Fins propel the organism through space.</description>
+  <exclusive/>
+  <required/>
+ </slot>
+ <slot name="bio_weapon">
+  <display>Bioship Weapons</display>
+  <description>In addition to standard weapons, this slot can be used for special organic weapons which can only be equipped to bioships. Organic weapons are generally similar to their synthetic counterparts, but more efficient, which is important to compensate for the reduced CPU capacity of the brain in comparison to synthetic constructs.</description>
+ </slot>
 </Slots>

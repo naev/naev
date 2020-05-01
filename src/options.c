@@ -513,7 +513,7 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++);
+   for (i=0; keybind_info[i][0] != NULL; i++);
    str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
       l = 64;

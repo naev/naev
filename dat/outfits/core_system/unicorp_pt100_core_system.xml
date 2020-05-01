@@ -8,7 +8,7 @@
   <mass>10</mass>
   <price>20000</price>
   <description>The PT-100 is a modest but to-spec core system offering reasonable, all-round performance for small vessels.</description>
-  <gfx_store>core_system01</gfx_store>
+  <gfx_store>core_system_basic_s1</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>28</cpu_max>

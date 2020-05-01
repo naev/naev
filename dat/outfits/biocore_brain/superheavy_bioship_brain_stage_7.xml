@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Superheavy Bioship Brain Stage 7">
+ <general>
+  <typename>Bioship Brain</typename>
+  <slot prop="bio_systems">utility</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>1075</mass>
+  <price>2000000</price>
+  <description>The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve.</description>
+  <gfx_store>core_system05</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>130</cpu_max>
+  <shield>1120</shield>
+  <shield_regen>20</shield_regen>
+  <energy>4850</energy>
+  <energy_regen>225</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

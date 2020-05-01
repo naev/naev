@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="BioPlasma Organ Stage 2">
+ <general>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <mass>7</mass>
+  <price>18000</price>
+  <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful and lags slightly behind its synthetic cousin, the Plasma Blaster MK3, in terms of raw power, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <gfx_store>plasma</gfx_store>
+  <cpu>-1</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx>plasma2</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.7</delay>
+  <speed>500</speed>
+  <range>630</range>
+  <falloff>380</falloff>
+  <gfx_end>plasma2-end</gfx_end>
+  <energy>15</energy>
+  <heatup>30</heatup>
+  <track>2</track>
+  <swivel>6</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>7</penetrate>
+   <physical>8</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

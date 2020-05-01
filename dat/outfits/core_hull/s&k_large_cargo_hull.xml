@@ -8,7 +8,7 @@
   <mass>1150</mass>
   <price>1100000</price>
   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
-  <gfx_store>plating_cargo</gfx_store>
+  <gfx_store>large_cargo_hull</gfx_store>
  </general>
  <specific type="modification">
   <cargo>300</cargo>
