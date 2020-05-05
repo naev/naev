@@ -1,7 +1,14 @@
 include("dat/factions/equip/generic.lua")
 
 
--- TODO: define faction-specific outfits
+equip_typeOutfits_weapons["Brigand"] = {
+   varied = true, probability = {
+      ["BioPlasma Organ Stage X"] = 3
+   };
+   "BioPlasma Organ Stage 1", "BioPlasma Organ Stage 2",
+   "BioPlasma Organ Stage 3", "BioPlasma Organ Stage X",
+   "Plasma Blaster MK3"
+}
 
 
 --[[

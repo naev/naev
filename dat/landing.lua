@@ -116,7 +116,7 @@ end
 
 -- Soromid military assets.
 function srm_mil_restricted( pnt )
-   return land_military(pnt, 30,
+   return land_military(pnt, 50,
          _("Permission to land granted."),
          _("Permission denied. You're not truly one of us."),
          _("Landing request denied."),
