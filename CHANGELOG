@@ -37,3 +37,4 @@
       * Made Autonav able to follow ships
       * Consolidated the effects of cloaking and jammers under cloaking
       * Added workaround for ALSOFT buggy version that crashes
+      * Added a polygon-based collision algorithm
