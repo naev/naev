@@ -1,4 +1,4 @@
-#!/d/dev/python/3.3.0/python.exe
+#!python
 # -*- coding: utf-8 -*-
 
 '''Universe mapping tool for Naev.
@@ -14,8 +14,9 @@ output. Example usage:
 #
 # Version 0.008
 #   Modified by Benoît 'Mutos' ROBIN, 01/04/2020
-#     - Python indentation using tabulations
-#     - SVG indentation using tabulations
+#    - Python indentation using tabulations
+#    - SVG indentation using tabulations
+#    - Graphics attributes for better map readability
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
