@@ -74,3 +74,4 @@ bin/
 utils/starmap/*.svg
 utils/starmap/*.png
 utils/starmap/*.jpg
+utils/starmap/*.log
