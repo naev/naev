@@ -1022,12 +1022,39 @@
        * core_system_basic_m2.png
        * core_system_basic_s1.png
        * core_system_basic_s2.png
+       * core_system_cpu_l1.png
+       * core_system_cpu_l2.png
+       * core_system_cpu_m1.png
+       * core_system_cpu_m2.png
+       * core_system_cpu_m2.png
+       * core_system_cpu_s1.png
+       * core_system_cpu_s2.png
+       * core_system_organic_l1.png
+       * core_system_organic_l2.png
+       * core_system_organic_m1.png
+       * core_system_organic_m2.png
+       * core_system_organic_s1.png
+       * core_system_organic_s2.png
+       * core_system_power_l1.png
+       * core_system_power_l2.png
+       * core_system_power_m1.png
+       * core_system_power_m2.png
+       * core_system_power_m2.png
+       * core_system_power_s1.png
+       * core_system_power_s2.png
        * core_system_refined_l1.png
        * core_system_refined_l2.png
        * core_system_refined_m1.png
        * core_system_refined_m2.png
        * core_system_refined_s1.png
-       * core_system_Refined_s2.png
+       * core_system_refined_s2.png
+       * core_system_shield_l1.png
+       * core_system_shield_l2.png
+       * core_system_shield_m1.png
+       * core_system_shield_m2.png
+       * core_system_shield_m2.png
+       * core_system_shield_s1.png
+       * core_system_shield_s2.png
        * energy_dart.png
        * energy_missile.png
        * energy_torpedo.png
@@ -1051,6 +1078,24 @@
        * misc01.png
        * misc02.png
        * misc04.png
+       * organic_engine_fast_l1.png
+       * organic_engine_fast_l2.png
+       * organic_engine_fast_m1.png
+       * organic_engine_fast_m2.png
+       * organic_engine_fast_s1.png
+       * organic_engine_fast_s2.png
+       * organic_engine_strong_l1.png
+       * organic_engine_strong_l2.png
+       * organic_engine_strong_m1.png
+       * organic_engine_strong_m2.png
+       * organic_engine_strong_s1.png
+       * organic_engine_strong_s2.png
+       * organic_hull_h.png
+       * organic_hull_l.png
+       * organic_hull_m.png
+       * organic_hull_s.png
+       * organic_hull_t.png
+       * organic_hull_x.png
        * plating01.png
        * reactor01.png
        * refined_hull_h.png
@@ -1069,6 +1114,10 @@
        * weapon01.png
        * weapon02.png
    * ship
+     * apprehension
+       * *
+     * certitude
+       * *
      * perspicacity
        * *
      * scintillation
