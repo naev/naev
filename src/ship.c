@@ -819,6 +819,13 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Load the polygon. */
          ship_loadPLG( temp, buf );
 
+         /* Sanity check: there must be 1 polygon per sprite. */
+         if (temp->npolygon != sx*sy) {
+            WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, temp->npolygon, sx*sy);
+         }
+
          continue;
       }
 
