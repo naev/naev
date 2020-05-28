@@ -106,6 +106,7 @@ CODE_SOURCE = \
 	nlua_vec2.c \
 	nmath.c \
 	nondata.c \
+	nopenal.c \
 	npng.c \
 	npc.c \
 	nstring.c \

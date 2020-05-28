@@ -1175,6 +1175,13 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          /* Load the collision polygon. */
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 1 );
+
+         /* Sanity check: there must be 1 polygon per sprite. */
+         if (temp->u.blt.npolygon != 36) {
+            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, temp->u.blt.npolygon, 36);
+         }
          continue;
       }
       if (xml_isNode(node,"gfx_end")) {
@@ -1524,6 +1531,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          /* Load the collision polygon. */
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 0 );
+
+         /* Sanity check: there must be 1 polygon per sprite. */
+         if (temp->u.amm.npolygon != 36) {
+            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, temp->u.amm.npolygon, 36);
+         }
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
