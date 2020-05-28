@@ -36,6 +36,16 @@ typedef struct Commodity_ {
    glTexture* gfx_space; /**< Space graphic. */
 } Commodity;
 
+typedef struct CommodityPrice_ {
+  double price; /**< Average price of a commodity on a particular planet */
+  double planetPeriod; /**< Minor time period (days) over which commidity price varies */
+  double sysPeriod; /** Major time period */
+  double planetVariation; /**< Mmount by which a commodity price varies */
+  double sysVariation; /**< System level commodity price variation.  At a given time, commodity price is equal to price + sysVariation*sin(2pi t/sysPeriod) + planetVariation*sin(2pi t/planetPeriod) */
+  int cnt; /**< used for averaging */
+  char *name; /**< used for keeping tabs during averaging */
+  double temp; /**< used when averaging over jump points during setup */
+} CommodityPrice;
 
 /**
  * @struct Gatherable
@@ -91,5 +101,19 @@ void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 
+/*
+ * Calculating the sinusoidal economy values
+ */
+int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcImg(char *gfx_spaceName,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcSurface(char *gfx_exterior,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcPopulation(uint64_t population,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcFaction(char *faction,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcRange(int presenceRange,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcSysRadius(double radius,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcSysVolatility(double nebu_volatility,double interference,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcSysJumps(int njumps,Commodity *commodity,CommodityPrice *commodityPrice);
+
+			      
 
 #endif /* ECONOMY_H */

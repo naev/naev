@@ -594,6 +594,10 @@ credits_t economy_getPrice( const Commodity *com,
    (void) p;
    int i, k;
    double price;
+   ntime_t t;
+
+   /* Get current time */
+   t=ntime_get();
 
    /* Get position in stack. */
    k = com - commodity_stack;
@@ -936,4 +940,235 @@ void economy_destroy (void)
 
    /* Economy is now deinitialized. */
    econ_initialized = 0;
+}
+
+
+int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Modifies price of commodity dependent on asset type:
+    Types are defined as for the star trek universe*/
+
+  double m=1.;
+  if(!strcmp(commodity->name,"Food")){
+    switch (class[0]){
+    case '0':m=1.1;break;
+    case '1':m=1.05;break;
+    case '2':m=1.2;break;
+    case '3':m=0.95;break;
+    case 'B':m=1.1;break;
+    case 'K':m=0.95;break;
+    case 'L':m=0.9;break;
+    case 'M':m=0.6;break;
+    case 'O':m=0.7;break;
+    case 'P':m=0.9;break;
+    case 'Q':m=0.9;break;
+    default: break;
+    }
+  }else if(!strcmp(commodity->name,"Ore")){
+    switch (class[0]){
+    case '2':m=1.1;break;
+    case 'H':m=1.05;break;
+    case 'I':m=1.2;break;
+    case 'J':m=1.2;break;
+    case 'L':m=0.8;break;
+    case 'M':m=1.1;break;
+    case 'O':m=1.3;break;
+    case 'P':m=0.9;break;
+    default: break;
+    }
+  }else if(!strcmp(commodity->name,"Gold")){
+    switch (class[0]){
+    case '0':m=1.2;break;
+    case '1':m=1.3;break;
+    case '2':m=1.4;break;
+    case '3':m=0.8;break;
+    case 'L':m=0.8;break;
+    case 'M':m=0.9;break;
+    case 'O':m=0.85;break;
+    case 'P':m=0.75;break;
+    default: break;
+    }
+  }else if(!strcmp(commodity->name,"Industrial Goods")){
+    switch (class[0]){
+    case '1':m=1.1;break;
+    case '2':m=1.1;break;
+    case '3':m=1.1;break;
+    case 'H':m=0.8;break;
+    case 'A':m=0.9;break;
+    case 'K':m=1.1;break;
+    case 'L':m=1.05;break;
+    case 'M':m=0.8;break;
+    case 'N':m=1.1;break;
+    case 'O':m=1.05;break;
+    case 'P':m=0.95;break;
+    default: break;
+    }
+  }else if(!strcmp(commodity->name,"Medicine")){
+    switch (class[0]){
+    case '1':m=1.1;break;
+    case '2':m=1.2;break;
+    case 'H':m=1.2;break;
+    case 'K':m=0.9;break;
+    case 'L':m=0.8;break;
+    case 'M':m=0.9;break;
+    case 'O':m=0.8;break;
+    case 'P':m=1.05;break;
+    default: break;
+    }
+  }else if(!strcmp(commodity->name,"Luxury Goods")){
+    switch (class[0]){
+    case '0':m=1.05;break;
+    case '1':m=1.2;break;
+    case '2':m=0.8;break;
+    case 'K':m=0.9;break;
+    case 'L':m=0.8;break;
+    case 'M':m=1.15;break;
+    case 'N':m=1.05;break;
+    case 'O':m=1.1;break;
+    case 'P':m=0.9;break;
+    default: break;
+    }
+  }
+  commodityPrice->price*=m;
+  return 0;
+}
+int economy_calcImg(char *gfx_spaceName,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Use the filename of space to specify the frequency of oscillation*/
+  double period,base=100;
+  period=32*(gfx_spaceName[0]%32)+gfx_spaceName[1]%32;
+  if(!strcmp(commodity->name,"Food"))
+    base=80;
+  else if(!strcmp(commodity->name,"Ore"))
+    base=100;
+  else if(!strcmp(commodity->name,"Gold"))
+    base=40;
+  else if(!strcmp(commodity->name,"Industrial Goods"))
+    base=60;
+  else if(!strcmp(commodity->name,"Medicine"))
+    base=70;
+  else if(!strcmp(commodity->name,"Luxury Goods"))
+    base=50;
+  commodityPrice->planetPeriod=period + base;
+  return 0;
+}
+int economy_calcSurface(char *gfx_exterior,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Use the filename of the exterior (planet surface) to modify the asset period.  Length varies from 7-32 (currently)*/
+  double scale=1+(strlen(gfx_exterior)-19)/100.;
+  commodityPrice->planetPeriod*=scale;
+  return 0;
+}
+int economy_calcPopulation(uint64_t population,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Price will vary more slowly for larger populations.  Essentials will be cheaper, but luxuries more expensive.
+    Max popuation is currently approx 10 billion.*/
+  double factor=-1;
+  double base=0;
+  if(population>0)
+    factor=tanh((log((double)population)-log(1e8))/2);
+  if(!strcmp(commodity->name,"Food"))
+    base=-0.2;
+  else if(!strcmp(commodity->name,"Ore"))
+    base=-0.1;
+  else if(!strcmp(commodity->name,"Gold"))
+    base=0.1;
+  else if(!strcmp(commodity->name,"Industrial Goods"))
+    base=-0.25;
+  else if(!strcmp(commodity->name,"Medicine"))
+    base=-0.3;
+  else if(!strcmp(commodity->name,"Luxury Goods"))
+    base=0.2;
+  commodityPrice->price*=1+factor*base;
+  commodityPrice->planetVariation*=0.5-factor*0.25;
+  commodityPrice->planetPeriod*=1+factor*0.5;
+  return 0;
+}
+int economy_calcFaction(char *faction,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Some factions place a higher value on certain goods.
+    Some factions are more stable than others.*/
+  double scale=1.;
+  if(!strcmp(commodity->name,"Food")){
+    if(!strcmp(faction,"Dvaered"))
+      scale=1.1;
+    else if(!strcmp(faction,"FLF"))
+      scale=1.2;
+    else if(!strcmp(faction,"Pirate"))
+      scale=1.05;
+  }else if(!strcmp(commodity->name,"Ore")){
+    if(!strcmp(faction,"Dvaered"))
+      scale=1.1;
+    else if(!strcmp(faction,"Empire"))
+      scale=0.9;
+    else if(!strcmp(faction,"Civilian"))
+      scale=0.9;
+    else if(!strcmp(faction,"Frontier"))
+      scale=0.8;
+    else if(!strcmp(faction,"Miner"))
+      scale=0.7;
+    else if(!strcmp(faction,"Proteron"))
+      scale=1.2;
+  }else if(!strcmp(commodity->name,"Gold")){
+    if(!strcmp(faction,"Empire"))
+      scale=1.1;
+    else if(!strcmp(faction,"Pirate"))
+      scale=1.2;
+    else if(!strcmp(faction,"FLF"))
+      scale=0.8;
+    else if(!strcmp(faction,"Sirius"))
+      scale=0.9;
+  }else if(!strcmp(commodity->name,"Industrial Goods")){
+    if(!strcmp(faction,"Dvaered"))
+      scale=0.8;
+    else if(!strcmp(faction,"Proteron"))
+      scale=0.9;
+    else if(!strcmp(faction,"Sirius"))
+      scale=1.1;
+    else if(!strcmp(faction,"FLF"))
+      scale=1.2;
+  }else if(!strcmp(commodity->name,"Medicine")){
+    if(!strcmp(faction,"FLF"))
+      scale=1.2;
+    else if(!strcmp(faction,"Soromid"))
+      scale=0.9;
+    else if(!strcmp(faction,"Sirius"))
+      scale=0.8;
+    else if(!strcmp(faction,"Empire"))
+      scale=1.1;
+    else if(!strcmp(faction,"Pirate"))
+      scale=1.2;
+  }else if(!strcmp(commodity->name,"Luxury Goods")){
+    if(!strcmp(faction,"Empire"))
+      scale=1.2;
+    else if(!strcmp(faction,"Sirius"))
+      scale=0.9;
+    else if(!strcmp(faction,"Dvaered"))
+      scale=0.8;
+    else if(!strcmp(faction,"FLF"))
+      scale=0.9;
+  }
+  commodityPrice->price*=scale;
+  return 0;
+}
+int economy_calcRange(int presenceRange,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety and so lower prices and improve stability*/
+  commodityPrice->price*=(1-presenceRange/30.);
+  commodityPrice->planetPeriod*=1/(1-presenceRange/30.);
+  return 0;
+}
+int economy_calcSysRadius(double radius,Commodity *commodity,CommodityPrice *commodityPrice){
+  /* Largest is approx 35000.  Increased radius will increase price since further to travel, and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
+  commodityPrice->price*=1+radius/200000.;
+  commodityPrice->planetPeriod*=1/(1-radius/200000.);
+  commodityPrice->planetVariation*=1/(1-radius/300000.);
+  return 0;
+}
+int economy_calcSysVolatility(double nebu_volatility,double interference,Commodity *commodity,CommodityPrice *commodityPrice){
+/*Increase price with volatility, which goes up to about 600.
+And with interference, since systems are harder to find, which goes up to about 1000.*/
+  commodityPrice->price*=1+nebu_volatility/6000.;
+  commodityPrice->price*=1+interference/10000.;
+  return 0;
+}
+int economy_calcSysJumps(int njumps,Commodity *commodity,CommodityPrice *commodityPrice){
+  /*Use number of jumps to determine sytsem time period.  More jumps means more options for trade so shorter period.
+    Between 1 to 6 jumps.  Make the base time 1000.*/
+  commodityPrice->sysPeriod=2000./(njumps+1);
+  return 0;
 }

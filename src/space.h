@@ -104,6 +104,7 @@ typedef struct Planet_ {
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
+   CommodityPrice *commodityPrice; /**< the base cost of a commodity on this planet */
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
@@ -312,6 +313,10 @@ struct StarSystem_ {
    int markers_high; /**< Number of high mission markers. */
    int markers_plot; /**< Number of plot level mission markers. */
 
+   /* Economy. */
+   CommodityPrice *averagePrice;
+   int ncommodities;
+  
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
 };
