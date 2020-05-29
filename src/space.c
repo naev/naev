@@ -1303,7 +1303,7 @@ void space_update( const double dt )
 
    /* Update the gatherable objects. */
    gatherable_update(dt);
-
+   
    /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
@@ -1890,7 +1890,7 @@ void space_gfxUnload( StarSystem *sys )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent )
 {
-  int mem,i;
+   int mem;
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
@@ -3109,6 +3109,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
       }
    } while (xml_nextNode(node));
 }
+
 
 /**
  * @brief Loads the entire universe into ram - pretty big feat eh?

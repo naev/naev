@@ -629,10 +629,10 @@ credits_t economy_getPrice( const Commodity *com,
    }
    commPrice=&p->commodityPrice[i];
    /* Calculate price. */
-   //price  = (double) com->price;
-   //price *= sys->prices[i];
+   /* price  = (double) com->price; */
+   /* price *= sys->prices[i]; */
    price=commPrice->price + commPrice->sysVariation*sin(2*M_PI*t/commPrice->sysPeriod) + commPrice->planetVariation*sin(2*M_PI*t/commPrice->planetPeriod);
-   return (credits_t) price+0.5;//+0.5 to round
+   return (credits_t) price+0.5;/* +0.5 to round */
 }
 
 
