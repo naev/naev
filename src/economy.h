@@ -104,7 +104,7 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 );
 /*
  * Calculating the sinusoidal economy values
  */
-int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *commodityPrice);
+/*int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *commodityPrice);
 int economy_calcImg(char *gfx_spaceName,Commodity *commodity,CommodityPrice *commodityPrice);
 int economy_calcSurface(char *gfx_exterior,Commodity *commodity,CommodityPrice *commodityPrice);
 int economy_calcPopulation(uint64_t population,Commodity *commodity,CommodityPrice *commodityPrice);
@@ -112,7 +112,8 @@ int economy_calcFaction(char *faction,Commodity *commodity,CommodityPrice *commo
 int economy_calcRange(int presenceRange,Commodity *commodity,CommodityPrice *commodityPrice);
 int economy_calcSysRadius(double radius,Commodity *commodity,CommodityPrice *commodityPrice);
 int economy_calcSysVolatility(double nebu_volatility,double interference,Commodity *commodity,CommodityPrice *commodityPrice);
-int economy_calcSysJumps(int njumps,Commodity *commodity,CommodityPrice *commodityPrice);
+int economy_calcSysJumps(int njumps,Commodity *commodity,CommodityPrice *commodityPrice);*/
+void economy_initialiseCommodityPrices(void);
 
 			      
 
