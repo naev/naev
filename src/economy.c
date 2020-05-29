@@ -594,10 +594,15 @@ credits_t economy_getPrice( const Commodity *com,
    (void) p;
    int i, k;
    double price;
-   ntime_t t;
-
-   /* Get current time */
-   t=ntime_get();
+   double t;
+   CommodityPrice *commPrice;
+   /* Get current time in STP.
+    * Note, taking off and landing takes about 1e7 ntime, which is 1 STP.  
+    * Time does not advance when on a planet. 
+    * Journey with a single jump takes approx 3e7, so about 3 STP.
+    * If NT_STU_DIV in ntime.c ever changes from 1000, will need to change it here too.
+    */
+   t=ntime_get()/1000./NT_STP_STU;
 
    /* Get position in stack. */
    k = com - commodity_stack;
@@ -613,10 +618,21 @@ credits_t economy_getPrice( const Commodity *com,
       return 0;
    }
 
+   /* and get the index on this planet */
+   for (i=0; i<p->ncommodities; i++){
+     if(!strcmp(p->commodities[i]->name,com->name))
+       break;
+   }
+   if (i >= p->ncommodities) {
+     WARN(_("Price for commodity '%s' not known on this planet."), com->name);
+     return 0;
+   }
+   commPrice=&p->commodityPrice[i];
    /* Calculate price. */
-   price  = (double) com->price;
-   price *= sys->prices[i];
-   return (credits_t) price;
+   //price  = (double) com->price;
+   //price *= sys->prices[i];
+   price=commPrice->price + commPrice->sysVariation*sin(2*M_PI*t/commPrice->sysPeriod) + commPrice->planetVariation*sin(2*M_PI*t/commPrice->planetPeriod);
+   return (credits_t) price+0.5;//+0.5 to round
 }
 
 
@@ -1029,6 +1045,8 @@ int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *comm
     }
   }
   commodityPrice->price*=m;
+  commodityPrice->planetVariation=0.5;
+  commodityPrice->sysVariation=0.;
   return 0;
 }
 int economy_calcImg(char *gfx_spaceName,Commodity *commodity,CommodityPrice *commodityPrice){
