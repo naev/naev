@@ -260,7 +260,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
-      if(xml_isNode(node,"planet_modifier")){
+      if (xml_isNode(node,"planet_modifier")){
          newdict=malloc(sizeof(CommodityModifier));
          newdict->next=temp->planet_modifier;
 			newdict->name=xml_nodeProp(node,(xmlChar*)"type");
@@ -268,7 +268,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          temp->planet_modifier=newdict;
 			continue;
 		}
-		if(xml_isNode(node,"faction_modifier")){
+		if (xml_isNode(node,"faction_modifier")){
 			newdict=malloc(sizeof(CommodityModifier));
 			newdict->next=temp->faction_modifier;
 			newdict->name=xml_nodeProp(node,(xmlChar*)"type");
@@ -639,8 +639,8 @@ credits_t economy_getPrice( const Commodity *com,
    }
 
    /* and get the index on this planet */
-   for (i=0; i<p->ncommodities; i++){
-     if(!strcmp(p->commodities[i]->name,com->name))
+   for ( i=0; i<p->ncommodities; i++){
+     if ( !strcmp(p->commodities[i]->name, com->name ))
        break;
    }
    if (i >= p->ncommodities) {
@@ -989,16 +989,16 @@ int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *comm
    CommodityModifier *cm;
    cm=commodity->planet_modifier;
 	while ( cm!=NULL ) {
-		if ( !strcmp( class, cm->name ) ){
-			m=cm->value;
-			break;
-		}
-		cm=cm->next;
-	}
-	commodityPrice->price*=m;
-	commodityPrice->planetVariation=0.5;
-	commodityPrice->sysVariation=0.;
-	return 0;
+      if ( !strcmp( class, cm->name ) ){
+         m=cm->value;
+         break;
+      }
+      cm=cm->next;
+   }
+   commodityPrice->price*=m;
+   commodityPrice->planetVariation=0.5;
+   commodityPrice->sysVariation=0.;
+   return 0;
 }
 
 /**
@@ -1047,16 +1047,16 @@ int economy_calcPopulation(uint64_t population,Commodity *commodity,CommodityPri
 int economy_calcFaction(char *faction,Commodity *commodity,CommodityPrice *commodityPrice){
 	/*Some factions place a higher value on certain goods.
 	  Some factions are more stable than others.*/
-	double scale=1.;
+   double scale=1.;
    CommodityModifier *cm;
    cm=commodity->planet_modifier;
-	while ( cm!=NULL ) {
-		if ( !strcmp( faction, cm->name ) ){
-			scale=cm->value;
-			break;
-		}
-		cm=cm->next;
-	}
+   while ( cm!=NULL ) {
+      if ( !strcmp( faction, cm->name ) ){
+         scale=cm->value;
+         break;
+      }
+      cm=cm->next;
+   }
   commodityPrice->price*=scale;
   return 0;
 }
