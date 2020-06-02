@@ -21,6 +21,19 @@ typedef int64_t credits_t;
 #define CREDITS_PRI        PRIu64
 
 /**
+ * @struct CommodityModifier
+ *
+ * @brief Represents a dictionary of values used to modify a commodity.
+ *
+ */
+struct CommodityModifier_ {
+   char *name;
+   float value;
+   struct CommodityModifier_ *next;
+};
+typedef struct CommodityModifier_ CommodityModifier;
+
+/**
  * @struct Commodity
  *
  * @brief Represents a commodity.
@@ -34,6 +47,10 @@ typedef struct Commodity_ {
    double price; /**< Base price of the commodity. */
    glTexture* gfx_store; /**< Store graphic. */
    glTexture* gfx_space; /**< Space graphic. */
+   CommodityModifier *planet_modifier; /**< The price modifier for different planet types. */
+   double period; /**< Period of price fluctuation. */
+   double population_modifier; /**< Scale of price modification due to population. */
+   CommodityModifier *faction_modifier; /**< Price modifier for different factions. */
 } Commodity;
 
 typedef struct CommodityPrice_ {
