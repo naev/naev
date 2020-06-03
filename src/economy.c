@@ -183,6 +183,7 @@ Commodity* commodity_getW( const char* name )
  */
 static void commodity_freeOne( Commodity* com )
 {
+   CommodityModifier *this,*next;
    if (com->name)
       free(com->name);
    if (com->description)
@@ -191,7 +192,22 @@ static void commodity_freeOne( Commodity* com )
       gl_freeTexture(com->gfx_store);
    if (com->gfx_space)
       gl_freeTexture(com->gfx_space);
-
+   next=com->planet_modifier;
+   com->planet_modifier=NULL;
+   while (next != NULL ){
+      this=next;
+      next=this->next;
+      free(this->name);
+      free(this);
+   }
+   next=com->faction_modifier;
+   com->faction_modifier=NULL;
+   while (next != NULL ){
+      this=next;
+      next=this->next;
+      free(this->name);
+      free(this);
+   }
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
 }
@@ -263,19 +279,19 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       if (xml_isNode(node,"planet_modifier")){
          newdict=malloc(sizeof(CommodityModifier));
          newdict->next=temp->planet_modifier;
-			newdict->name=xml_nodeProp(node,(xmlChar*)"type");
-			newdict->value=xml_getFloat(node);
+         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
+         newdict->value=xml_getFloat(node);
          temp->planet_modifier=newdict;
-			continue;
-		}
-		if (xml_isNode(node,"faction_modifier")){
-			newdict=malloc(sizeof(CommodityModifier));
-			newdict->next=temp->faction_modifier;
-			newdict->name=xml_nodeProp(node,(xmlChar*)"type");
-			newdict->value=xml_getFloat(node);
-			temp->faction_modifier=newdict;
-		}
-	
+         continue;
+      }
+      if (xml_isNode(node,"faction_modifier")){
+         newdict=malloc(sizeof(CommodityModifier));
+         newdict->next=temp->faction_modifier;
+         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
+         newdict->value=xml_getFloat(node);
+         temp->faction_modifier=newdict;
+      }
+   
    } while (xml_nextNode(node));
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
@@ -1248,6 +1264,8 @@ void economy_initialiseCommodityPrices(void){
    int i,j,k;
    Planet *planet;
    StarSystem *sys;
+   Commodity *com;
+   CommodityModifier *this,*next;
    /* First use planet attributes to set prices and variability */
    for (k=0; k<systems_nstack; k++) {
       sys = &systems_stack[k];
@@ -1281,5 +1299,25 @@ void economy_initialiseCommodityPrices(void){
    for ( i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
       economy_calcUpdatedCommodityPrice(sys);
+   }
+   /* And now free temporary commodity information */
+   for ( i=0 ; i<commodity_nstack; i++){
+      com=&commodity_stack[i];
+      next=com->planet_modifier;
+      com->planet_modifier=NULL;
+      while (next != NULL ){
+         this=next;
+         next=this->next;
+         free(this->name);
+         free(this);
+      }
+      next=com->faction_modifier;
+      com->faction_modifier=NULL;
+      while (next != NULL ){
+         this=next;
+         next=this->next;
+         free(this->name);
+         free(this);
+      }
    }
 }

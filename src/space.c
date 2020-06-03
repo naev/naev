@@ -3700,6 +3700,7 @@ void space_exit (void)
 
       /* commodities */
       free(pnt->commodities);
+      free(pnt->commodityPrice);
    }
    free(planet_stack);
    planet_stack = NULL;
