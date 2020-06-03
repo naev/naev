@@ -123,6 +123,5 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 );
  */
 void economy_initialiseCommodityPrices(void);
 
-			      
 
 #endif /* ECONOMY_H */

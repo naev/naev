@@ -2024,21 +2024,21 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                            mem *= 2;
                         planet->commodities = realloc(planet->commodities,
                               mem * sizeof(Commodity*));
-			planet->commodityPrice = realloc(planet->commodityPrice,
-			      mem * sizeof(CommodityPrice));
+                        planet->commodityPrice = realloc(planet->commodityPrice,
+                              mem * sizeof(CommodityPrice));
                      }
                      planet->commodities[planet->ncommodities-1] =
                         commodity_get( xml_get(ccur) );
-		     /* Set commodity price on this planet to the base price */
-		     planet->commodityPrice[planet->ncommodities-1].price =
-		       planet->commodities[planet->ncommodities-1]->price;
+                     /* Set commodity price on this planet to the base price */
+                     planet->commodityPrice[planet->ncommodities-1].price =
+                       planet->commodities[planet->ncommodities-1]->price;
                   }
                } while (xml_nextNode(ccur));
                /* Shrink to minimum size. */
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
-	       planet->commodityPrice = realloc(planet->commodityPrice,
-		     planet->ncommodities * sizeof(CommodityPrice));
+               planet->commodityPrice = realloc(planet->commodityPrice,
+                     planet->ncommodities * sizeof(CommodityPrice));
             }
 
             else if (xml_isNode(cur, "blackmarket")) {
