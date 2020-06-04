@@ -1,6 +1,7 @@
 
 * 0.8.0 (unreleased)
    * Gameplay
+      * Simple economy model implemented
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
       * Added asteroids and mining
