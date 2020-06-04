@@ -637,7 +637,6 @@ void commodity_free (void)
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
-   (void) p;
    int i, k;
    double price;
    double t;
