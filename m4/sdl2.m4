@@ -68,8 +68,8 @@ AC_ARG_VAR(SDL2_FRAMEWORK, [Path to SDL2.framework])
         sdl_framework=$SDL2_FRAMEWORK
       else
         for d in / ~/ /System/; do
-          if test -d "${d}Library/Frameworks/SDL2.framework"; then
-            sdl_framework="${d}Library/Frameworks/SDL2.framework"
+          if test -d "$dLibrary/Frameworks/SDL2.framework"; then
+            sdl_framework="$dLibrary/Frameworks/SDL2.framework"
           fi
         done
       fi
@@ -77,7 +77,7 @@ AC_ARG_VAR(SDL2_FRAMEWORK, [Path to SDL2.framework])
       if test -d $sdl_framework; then
         AC_MSG_RESULT($sdl_framework)
         sdl_framework_dir=`dirname $sdl_framework`
-        SDL_CFLAGS="-F$sdl_framework_dir -I$sdl_framework/Headers"
+        SDL_CFLAGS="-F$sdl_framework_dir -Wl,-framework,SDL2 -I$sdl_framework/include"
         SDL_LIBS="-F$sdl_framework_dir -Wl,-framework,SDL2"
       else
         no_sdl=yes
