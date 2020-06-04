@@ -636,9 +636,8 @@ credits_t economy_getPrice( const Commodity *com,
     * Note, taking off and landing takes about 1e7 ntime, which is 1 STP.  
     * Time does not advance when on a planet. 
     * Journey with a single jump takes approx 3e7, so about 3 STP.
-    * If NT_STU_DIV in ntime.c ever changes from 1000, will need to change it here too.
     */
-   t=ntime_get()/1000./NT_STP_STU;
+   t = ntime_convertSTU( ntime_get() ) / NT_STP_STU;
 
    /* Get position in stack. */
    k = com - commodity_stack;
