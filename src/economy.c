@@ -92,17 +92,6 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B );
 static int econ_createGMatrix (void);
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /* externed in land.c */
-/* Internal calculations. */
-static int economy_calcPriceClass( char *class, Commodity *commodity, CommodityPrice *commodityPrice );
-static int economy_calcImg( char *gfx_spaceName, Commodity *commodity, CommodityPrice *commodityPrice );
-static int economy_calcSurface( char *gfx_exterior, Commodity *commodity, CommodityPrice *commodityPrice );
-static int economy_calcPopulation( uint64_t population, Commodity *commodity, CommodityPrice *commodityPrice );
-static int economy_calcFaction( char *faction, Commodity *commodity, CommodityPrice *commodityPrice );
-static int economy_calcRange( int presenceRange,Commodity *commodity,CommodityPrice *commodityPrice );
-static int economy_calcSysRadius( double radius, Commodity *commodity, CommodityPrice *commodityPrice );
-static int economy_calcSysVolatility( double nebu_volatility,double interference,Commodity *commodity,CommodityPrice *commodityPrice );
-static int economy_calcSysJumps( int njumps, Commodity *commodity, CommodityPrice *commodityPrice );
-
 
 /**
  * @brief Converts credits to a usable string for displaying.
@@ -1003,128 +992,70 @@ void economy_destroy (void)
 }
 
 /**
- * @brief Used during startup to set price of the economy, depending on planet class
+ * @brief Used during startup to set price and variation of the economy, depending on planet information.
  */
-static int economy_calcPriceClass( char *class, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Modifies price of commodity dependent on asset type:
-     Types are defined as for the star trek universe*/
+static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPrice *commodityPrice ){
 
-   double m=1.;
    CommodityModifier *cm;
+   double period,base,scale,factor;
+   char *factionname;
+   
+   /* Get the cost modifier suitable for planet type/class. */
    cm=commodity->planet_modifier;
+   scale = 1.;
    while ( cm!=NULL ) {
-      if ( !strcmp( class, cm->name ) ){
-         m=cm->value;
+      if ( !strcmp( planet->class, cm->name ) ){
+         scale  = cm->value;
          break;
       }
       cm=cm->next;
    }
-   commodityPrice->price*=m;
-   commodityPrice->planetVariation=0.5;
-   commodityPrice->sysVariation=0.;
-   return 0;
-}
+   commodityPrice->price *= scale;
+   commodityPrice->planetVariation = 0.5;
+   commodityPrice->sysVariation = 0.;
 
-/**
- * @brief Used during startup to set price of the economy, depending on planet image.
- */
-static int economy_calcImg( char *gfx_spaceName, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Use the filename of space to specify the frequency of oscillation*/
-   double period,base=100;
-   period=32*(gfx_spaceName[0]%32)+gfx_spaceName[1]%32;
-   commodityPrice->planetPeriod=commodity->period + base;
-   return 0;
-}
+   /* Use filename to specify a variation period. */
+   base=100;
+   period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)]%32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1]%32;
+   commodityPrice->planetPeriod = commodity->period + base;
 
-/**
- * @brief Used during startup to set price of the economy, depending on surface image
- */
-static int economy_calcSurface( char *gfx_exterior, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Use the filename of the exterior (planet surface) to modify the asset period.  Length varies from 7-32 (currently)*/
-   double scale=1+(strlen(gfx_exterior)-19)/100.;
-   commodityPrice->planetPeriod*=scale;
-   return 0;
-}
+   /* Use filename of exterior graphic to modify the variation period.  
+      No rhyme or reason, just gives some variability. */
+   scale = 1 + (strlen(planet->gfx_exterior) - strlen(PLANET_GFX_EXTERIOR_PATH) - 19) / 100.;
+   commodityPrice->planetPeriod *= scale;
 
+   /* Use population to modify price and variability.  The tanh function scales from -1 (small population)
+      to +1 (large population), done on a log scale.  Price is then modified by this factor, scaled by a 
+      value defined in the xml, as is variation.  So for some commodities, prices increase with population,
+      while for others, prices decrease. */
+   factor=-1;
+   if ( planet->population > 0 )
+      factor=tanh( ( log((double)planet->population) - log(1e8) ) /2 );
+   base = commodity->population_modifier;
+   commodityPrice->price *= 1 + factor * base;
+   commodityPrice->planetVariation *= 0.5 - factor * 0.25;
+   commodityPrice->planetPeriod *= 1 + factor * 0.5;
 
-/**
- * @brief Used during startup to set price of the economy, depending on population
- */
-static int economy_calcPopulation( uint64_t population, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Price will vary more slowly for larger populations.  Essentials will be cheaper, but luxuries more expensive.
-     Max popuation is currently approx 10 billion.*/
-   double factor=-1;
-   double base=0;
-   if ( population > 0 )
-      factor=tanh((log((double)population)-log(1e8))/2);
-   
-   base=commodity->population_modifier;
-   commodityPrice->price*=1+factor*base;
-   commodityPrice->planetVariation*=0.5-factor*0.25;
-   commodityPrice->planetPeriod*=1+factor*0.5;
-   return 0;
-}
-
-/**
- * @brief Used during startup to set price of the economy, depending on faction
- */
-static int economy_calcFaction( char *faction, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Some factions place a higher value on certain goods.
-     Some factions are more stable than others.*/
-   double scale=1.;
-   CommodityModifier *cm;
+   /* Modify price based on faction (as defined in the xml). 
+      Some factions place a higher value on certain goods.
+      Some factions are more stable than others.*/
+   scale=1.;
    cm=commodity->planet_modifier;
+   factionname=faction_name(planet->faction);
    while ( cm!=NULL ) {
-      if ( !strcmp( faction, cm->name ) ){
+     if ( !strcmp( factionname, cm->name ) ){
          scale=cm->value;
          break;
       }
       cm=cm->next;
    }
   commodityPrice->price*=scale;
-  return 0;
-}
-   
 
-/**
- * @brief Used during startup to set price of the economy, depending on range.
- */
-static int economy_calcRange( int presenceRange, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety and so lower prices and improve stability*/
-   commodityPrice->price*=(1-presenceRange/30.);
-   commodityPrice->planetPeriod*=1/(1-presenceRange/30.);
-   return 0;
-}
+   /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety
+     and so lower prices and improve stability*/
+   commodityPrice->price*=(1-planet->presenceRange/30.);
+   commodityPrice->planetPeriod*=1/(1-planet->presenceRange/30.);
 
-/**
- * @brief Used during startup to set price of the economy, depending on system radius.
- */
-static int economy_calcSysRadius( double radius, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /* Largest is approx 35000.  Increased radius will increase price since further to travel, and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
-   commodityPrice->price*=1+radius/200000.;
-   commodityPrice->planetPeriod*=1/(1-radius/200000.);
-   commodityPrice->planetVariation*=1/(1-radius/300000.);
-   return 0;
-}
-
-/**
- * @brief Used during startup to set price of the economy, depending on system volatility.
- */
-static int economy_calcSysVolatility( double nebu_volatility, double interference, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Increase price with volatility, which goes up to about 600.
-     And with interference, since systems are harder to find, which goes up to about 1000.*/
-   commodityPrice->price*=1+nebu_volatility/6000.;
-   commodityPrice->price*=1+interference/10000.;
-   return 0;
-}
-
-/**
- * @brief Used during startup to set price of the economy, depending on number of jumps.
- */
-static int economy_calcSysJumps( int njumps, Commodity *commodity, CommodityPrice *commodityPrice ){
-   /*Use number of jumps to determine sytsem time period.  More jumps means more options for trade so shorter period.
-     Between 1 to 6 jumps.  Make the base time 1000.*/
-   commodityPrice->sysPeriod=2000./(njumps+1);
    return 0;
 }
 
@@ -1143,9 +1074,21 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys){
    for( i=0; i<sys->nplanets; i++ ){
       planet=sys->planets[i];
       for( j=0; j<planet->ncommodities; j++ ) {
-         economy_calcSysRadius(sys->radius, planet->commodities[j], &planet->commodityPrice[j]);
-         economy_calcSysVolatility(sys->nebu_volatility, sys->interference, planet->commodities[j], &planet->commodityPrice[j]);
-         economy_calcSysJumps(sys->njumps, planet->commodities[j], &planet->commodityPrice[j]);
+        /* Largest is approx 35000.  Increased radius will increase price since further to travel, 
+           and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
+         planet->commodityPrice[j].price *= 1 + sys->radius/200000;
+         planet->commodityPrice[j].planetPeriod *= 1 / (1 - sys->radius/200000.);
+         planet->commodityPrice[j].planetVariation *= 1 / (1 - sys->radius/300000.);
+
+         /* Increase price with volatility, which goes up to about 600.
+            And with interference, since systems are harder to find, which goes up to about 1000.*/
+         planet->commodityPrice[j].price *= 1 + sys->nebu_volatility/6000.;
+         planet->commodityPrice[j].price *= 1 + sys->interference/10000.;
+         
+         /* Use number of jumps to determine sytsem time period.  More jumps means more options for trade
+            so shorter period.  Between 1 to 6 jumps.  Make the base time 1000.*/
+         planet->commodityPrice[j].sysPeriod = 2000. / (sys->njumps + 1);
+         
          for( k=0; k<nav; k++){
             if( !strcmp( planet->commodities[j]->name, avprice[k].name ) ){
                avprice[k].cnt++;
@@ -1281,12 +1224,7 @@ void economy_initialiseCommodityPrices(void){
          planet=sys->planets[j];
          /* Set up the commodity prices on the system, based on its attributes. */
          for( i=0; i<planet->ncommodities; i++ ) {
-            economy_calcPriceClass(planet->class,planet->commodities[i],&planet->commodityPrice[i]);
-            economy_calcImg(planet->gfx_spaceName,planet->commodities[i],&planet->commodityPrice[i]);
-            economy_calcSurface(planet->gfx_exterior,planet->commodities[i],&planet->commodityPrice[i]);
-            economy_calcPopulation(planet->population,planet->commodities[i],&planet->commodityPrice[i]);
-            economy_calcFaction(faction_name(planet->faction),planet->commodities[i],&planet->commodityPrice[i]);
-            economy_calcRange(planet->presenceRange,planet->commodities[i],&planet->commodityPrice[i]);
+            economy_calcPrice(planet,planet->commodities[i],&planet->commodityPrice[i]);
          }
       }
    }
