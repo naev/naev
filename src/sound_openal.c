@@ -206,7 +206,7 @@ ov_callbacks sound_al_ovcall_noclose = {
  */
 int sound_al_init (void)
 {
-   int ret, efx_enabled;
+   int ret;
    ALuint s;
    ALint freq;
    ALint attribs[4] = { 0, 0, 0, 0 };
@@ -259,12 +259,12 @@ int sound_al_init (void)
    alcGetIntegerv( al_device, ALC_FREQUENCY, sizeof(freq), &freq );
 
    /* Try to enable EFX. */
-   if (al_info.efx == AL_TRUE)
-      efx_enabled = !al_enableEFX();
+   if (al_info.efx == AL_TRUE) {
+      al_enableEFX();
+   }
    else {
       al_info.efx_reverb = AL_FALSE;
       al_info.efx_echo   = AL_FALSE;
-      efx_enabled        = 0;
    }
 
    /* Allocate source for music. */
@@ -357,7 +357,7 @@ int sound_al_init (void)
    /* debug magic */
    DEBUG(_("OpenAL started: %d Hz"), freq);
    DEBUG(_("Renderer: %s"), alGetString(AL_RENDERER));
-   if (efx_enabled)
+   if (al_info.efx)
       DEBUG(_("Version: %s with EFX %d.%d"), alGetString(AL_VERSION),
             al_info.efx_major, al_info.efx_minor);
    else
@@ -392,8 +392,10 @@ static int al_enableEFX (void)
 {
    /* Issues with ALSOFT 1.19.1 crashes so we work around it.
     * TODO: Disable someday. */
+   DEBUG( "'%s'", alGetString(AL_VERSION));
    if (strcmp(alGetString(AL_VERSION), "1.1 ALSOFT 1.19.1")==0) {
       DEBUG(_("Crashing ALSOFT version detected, disabling EFX"));
+      al_info.efx = AL_FALSE;
       return -1;
    }
 
