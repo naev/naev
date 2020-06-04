@@ -1110,7 +1110,7 @@ static int economy_calcSysRadius( double radius, Commodity *commodity, Commodity
 /**
  * @brief Used during startup to set price of the economy, depending on system volatility.
  */
-static int economy_calcSysVolatility( double nebu_volatility,double interference,Commodity *commodity,CommodityPrice *commodityPrice ){
+static int economy_calcSysVolatility( double nebu_volatility, double interference, Commodity *commodity, CommodityPrice *commodityPrice ){
    /*Increase price with volatility, which goes up to about 600.
      And with interference, since systems are harder to find, which goes up to about 1000.*/
    commodityPrice->price*=1+nebu_volatility/6000.;
