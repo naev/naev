@@ -183,6 +183,7 @@ Commodity* commodity_getW( const char* name )
  */
 static void commodity_freeOne( Commodity* com )
 {
+   CommodityModifier *this,*next;
    if (com->name)
       free(com->name);
    if (com->description)
@@ -191,7 +192,22 @@ static void commodity_freeOne( Commodity* com )
       gl_freeTexture(com->gfx_store);
    if (com->gfx_space)
       gl_freeTexture(com->gfx_space);
-
+   next=com->planet_modifier;
+   com->planet_modifier=NULL;
+   while (next != NULL ){
+      this=next;
+      next=this->next;
+      free(this->name);
+      free(this);
+   }
+   next=com->faction_modifier;
+   com->faction_modifier=NULL;
+   while (next != NULL ){
+      this=next;
+      next=this->next;
+      free(this->name);
+      free(this);
+   }
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
 }
@@ -233,9 +249,11 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
 static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
-
+   CommodityModifier *newdict;
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
+   temp->period=200;
+   temp->population_modifier=0.;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -256,6 +274,24 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          }
          continue;
       }
+      xmlr_float(node, "population_modifier", temp->population_modifier);
+      xmlr_float(node, "period", temp->period);
+      if (xml_isNode(node,"planet_modifier")){
+         newdict=malloc(sizeof(CommodityModifier));
+         newdict->next=temp->planet_modifier;
+         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
+         newdict->value=xml_getFloat(node);
+         temp->planet_modifier=newdict;
+         continue;
+      }
+      if (xml_isNode(node,"faction_modifier")){
+         newdict=malloc(sizeof(CommodityModifier));
+         newdict->next=temp->faction_modifier;
+         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
+         newdict->value=xml_getFloat(node);
+         temp->faction_modifier=newdict;
+      }
+   
    } while (xml_nextNode(node));
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
@@ -524,7 +560,7 @@ int commodity_load (void)
       return -1;
    }
 
-   node = node->xmlChildrenNode; /* first faction node */
+   node = node->xmlChildrenNode; /* first commodity type */
    if (node == NULL) {
       ERR(_("Malformed %s file: does not contain elements"), COMMODITY_DATA_PATH);
       return -1;
@@ -594,6 +630,15 @@ credits_t economy_getPrice( const Commodity *com,
    (void) p;
    int i, k;
    double price;
+   double t;
+   CommodityPrice *commPrice;
+   /* Get current time in STP.
+    * Note, taking off and landing takes about 1e7 ntime, which is 1 STP.  
+    * Time does not advance when on a planet. 
+    * Journey with a single jump takes approx 3e7, so about 3 STP.
+    * If NT_STU_DIV in ntime.c ever changes from 1000, will need to change it here too.
+    */
+   t=ntime_get()/1000./NT_STP_STU;
 
    /* Get position in stack. */
    k = com - commodity_stack;
@@ -609,10 +654,21 @@ credits_t economy_getPrice( const Commodity *com,
       return 0;
    }
 
+   /* and get the index on this planet */
+   for ( i=0; i<p->ncommodities; i++){
+     if ( !strcmp(p->commodities[i]->name, com->name ))
+       break;
+   }
+   if (i >= p->ncommodities) {
+     WARN(_("Price for commodity '%s' not known on this planet."), com->name);
+     return 0;
+   }
+   commPrice=&p->commodityPrice[i];
    /* Calculate price. */
-   price  = (double) com->price;
-   price *= sys->prices[i];
-   return (credits_t) price;
+   /* price  = (double) com->price; */
+   /* price *= sys->prices[i]; */
+   price=commPrice->price + commPrice->sysVariation*sin(2*M_PI*t/commPrice->sysPeriod) + commPrice->planetVariation*sin(2*M_PI*t/commPrice->planetPeriod);
+   return (credits_t) price+0.5;/* +0.5 to round */
 }
 
 
@@ -936,4 +992,332 @@ void economy_destroy (void)
 
    /* Economy is now deinitialized. */
    econ_initialized = 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on planet class
+ */
+int economy_calcPriceClass(char *class,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Modifies price of commodity dependent on asset type:
+     Types are defined as for the star trek universe*/
+
+   double m=1.;
+   CommodityModifier *cm;
+   cm=commodity->planet_modifier;
+   while ( cm!=NULL ) {
+      if ( !strcmp( class, cm->name ) ){
+         m=cm->value;
+         break;
+      }
+      cm=cm->next;
+   }
+   commodityPrice->price*=m;
+   commodityPrice->planetVariation=0.5;
+   commodityPrice->sysVariation=0.;
+   return 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on planet image.
+ */
+int economy_calcImg(char *gfx_spaceName,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Use the filename of space to specify the frequency of oscillation*/
+   double period,base=100;
+   period=32*(gfx_spaceName[0]%32)+gfx_spaceName[1]%32;
+   commodityPrice->planetPeriod=commodity->period + base;
+   return 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on surface image
+ */
+int economy_calcSurface(char *gfx_exterior,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Use the filename of the exterior (planet surface) to modify the asset period.  Length varies from 7-32 (currently)*/
+   double scale=1+(strlen(gfx_exterior)-19)/100.;
+   commodityPrice->planetPeriod*=scale;
+   return 0;
+}
+
+
+/**
+ * @brief Used during startup to set price of the economy, depending on population
+ */
+int economy_calcPopulation(uint64_t population,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Price will vary more slowly for larger populations.  Essentials will be cheaper, but luxuries more expensive.
+     Max popuation is currently approx 10 billion.*/
+   double factor=-1;
+   double base=0;
+   if ( population > 0 )
+      factor=tanh((log((double)population)-log(1e8))/2);
+   
+   base=commodity->population_modifier;
+   commodityPrice->price*=1+factor*base;
+   commodityPrice->planetVariation*=0.5-factor*0.25;
+   commodityPrice->planetPeriod*=1+factor*0.5;
+   return 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on faction
+ */
+int economy_calcFaction(char *faction,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Some factions place a higher value on certain goods.
+     Some factions are more stable than others.*/
+   double scale=1.;
+   CommodityModifier *cm;
+   cm=commodity->planet_modifier;
+   while ( cm!=NULL ) {
+      if ( !strcmp( faction, cm->name ) ){
+         scale=cm->value;
+         break;
+      }
+      cm=cm->next;
+   }
+  commodityPrice->price*=scale;
+  return 0;
+}
+   
+
+/**
+ * @brief Used during startup to set price of the economy, depending on range.
+ */
+int economy_calcRange(int presenceRange,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety and so lower prices and improve stability*/
+   commodityPrice->price*=(1-presenceRange/30.);
+   commodityPrice->planetPeriod*=1/(1-presenceRange/30.);
+   return 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on system radius.
+ */
+int economy_calcSysRadius(double radius,Commodity *commodity,CommodityPrice *commodityPrice){
+   /* Largest is approx 35000.  Increased radius will increase price since further to travel, and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
+   commodityPrice->price*=1+radius/200000.;
+   commodityPrice->planetPeriod*=1/(1-radius/200000.);
+   commodityPrice->planetVariation*=1/(1-radius/300000.);
+   return 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on system volatility.
+ */
+int economy_calcSysVolatility(double nebu_volatility,double interference,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Increase price with volatility, which goes up to about 600.
+     And with interference, since systems are harder to find, which goes up to about 1000.*/
+   commodityPrice->price*=1+nebu_volatility/6000.;
+   commodityPrice->price*=1+interference/10000.;
+   return 0;
+}
+
+/**
+ * @brief Used during startup to set price of the economy, depending on number of jumps.
+ */
+int economy_calcSysJumps(int njumps,Commodity *commodity,CommodityPrice *commodityPrice){
+   /*Use number of jumps to determine sytsem time period.  More jumps means more options for trade so shorter period.
+     Between 1 to 6 jumps.  Make the base time 1000.*/
+   commodityPrice->sysPeriod=2000./(njumps+1);
+   return 0;
+}
+
+
+/**
+ * @brief Modifies commodity price based on system characteristics.
+ *
+ *    @param sys System.
+ */
+static void economy_modifySystemCommodityPrice(StarSystem *sys){
+   int i,j,k;
+   Planet *planet;
+   CommodityPrice *avprice=NULL;
+   int nav=0;
+   
+   for( i=0; i<sys->nplanets; i++ ){
+      planet=sys->planets[i];
+      for( j=0; j<planet->ncommodities; j++ ) {
+         economy_calcSysRadius(sys->radius, planet->commodities[j], &planet->commodityPrice[j]);
+         economy_calcSysVolatility(sys->nebu_volatility, sys->interference, planet->commodities[j], &planet->commodityPrice[j]);
+         economy_calcSysJumps(sys->njumps, planet->commodities[j], &planet->commodityPrice[j]);
+         for( k=0; k<nav; k++){
+            if( !strcmp( planet->commodities[j]->name, avprice[k].name ) ){
+               avprice[k].cnt++;
+               avprice[k].price+=planet->commodityPrice[j].price;
+               avprice[k].planetPeriod+=planet->commodityPrice[j].planetPeriod;
+               avprice[k].sysPeriod+=planet->commodityPrice[j].sysPeriod;
+               avprice[k].planetVariation+=planet->commodityPrice[j].planetVariation;
+               avprice[k].sysVariation+=planet->commodityPrice[j].sysVariation;
+               break;
+            }
+         }
+         if( k == nav ){/* first visit of this commodity for this system */
+            nav++;
+            avprice=realloc( avprice, nav * sizeof(CommodityPrice) );
+            avprice[k].name=planet->commodities[j]->name;
+            avprice[k].cnt=1;
+            avprice[k].price=planet->commodityPrice[j].price;
+            avprice[k].planetPeriod=planet->commodityPrice[j].planetPeriod;
+            avprice[k].sysPeriod=planet->commodityPrice[j].sysPeriod;
+            avprice[k].planetVariation=planet->commodityPrice[j].planetVariation;
+            avprice[k].sysVariation=planet->commodityPrice[j].sysVariation;
+         }
+      }
+   }
+   /* Do some inter-planet averaging */
+   for( k=0; k<nav; k++ ){
+      avprice[k].price/=avprice[k].cnt;
+      avprice[k].planetPeriod/=avprice[k].cnt;
+      avprice[k].sysPeriod/=avprice[k].cnt;
+      avprice[k].planetVariation/=avprice[k].cnt;
+      avprice[k].sysVariation/=avprice[k].cnt;
+   }
+   /* And now apply the averaging */
+   for( i=0; i<sys->nplanets; i++ ){
+      planet=sys->planets[i];
+      for( j=0; j<planet->ncommodities; j++ ){
+         for( k=0; k<nav; k++ ){
+            if( !strcmp( planet->commodities[j]->name, avprice[k].name ) ){
+               planet->commodityPrice[j].price*=0.25;
+               planet->commodityPrice[j].price+=0.75*avprice[k].price;
+               planet->commodityPrice[j].sysVariation=0.2*avprice[k].planetVariation;
+            }
+         }
+      }
+   }
+   sys->averagePrice=avprice;
+   sys->ncommodities=nav;
+}
+
+
+/**
+ * @brief Calculates smoothing of commodity price based on neighbouring systems
+ *
+ *    @param sys System.
+ */
+static void economy_smoothCommodityPrice(StarSystem *sys){
+   StarSystem *neighbour;
+   int nav=sys->ncommodities;
+   CommodityPrice *avprice=sys->averagePrice;
+   double price;
+   int n,i,j,k;
+   /*Now modify based on neighbouring systems */
+   /*First, calculate mean price of neighbouring systems */
+   
+   for( j =0; j<nav; j++ ){/* for each commodity in this system */
+      price=0.;
+      n=0;
+      for( i=0; i<sys->njumps; i++ ){/* for each neighbouring system */
+         neighbour=sys->jumps[i].target;
+         for( k=0; k<neighbour->ncommodities; k++ ){
+            if( !strcmp( neighbour->averagePrice[k].name, avprice[j].name ) ) {
+               price+=neighbour->averagePrice[k].price;
+               n++;
+               break;
+            }
+         }
+      }
+      if(n!=0)
+         avprice[j].temp=price/n;
+      else
+         avprice[j].temp=avprice[j].price;
+   }
+}
+
+/**
+ * @brief Modifies commodity price based on neighbouring systems
+ *
+ *    @param sys System.
+ */
+static void economy_calcUpdatedCommodityPrice(StarSystem *sys){
+   int nav=sys->ncommodities;
+   CommodityPrice *avprice=sys->averagePrice;
+   Planet *planet;
+   int i,j,k;
+   for( j=0; j<nav; j++ ){
+      /*Use mean price to adjust current price */
+      avprice[j].price=0.5*(avprice[j].price + avprice[j].temp);
+   }
+   /*and finally modify assets based on the means */
+   for ( i=0; i<sys->nplanets; i++ ){
+      planet=sys->planets[i];
+      for( j=0; j<planet->ncommodities; j++ ) {
+         for( k=0; k<nav; k++ ){
+            if( !strcmp(avprice[k].name, planet->commodities[j]->name ) ) {
+               planet->commodityPrice[j].price=0.25*planet->commodityPrice[j].price + 0.75*avprice[k].price;
+               planet->commodityPrice[j].planetVariation=0.1*(0.5*avprice[k].planetVariation+0.5*planet->commodityPrice[j].planetVariation);
+               planet->commodityPrice[j].planetVariation*=planet->commodityPrice[j].price;
+               planet->commodityPrice[j].sysVariation*=planet->commodityPrice[j].price;
+               break;
+            }
+         }
+      }
+   }
+   free( sys->averagePrice );
+   sys->averagePrice=NULL;
+   sys->ncommodities=0;
+}
+
+/**
+ * @brief Initialises commodity prices for the sinusoidal economy model.
+ *
+ */
+void economy_initialiseCommodityPrices(void){
+   int i,j,k;
+   Planet *planet;
+   StarSystem *sys;
+   Commodity *com;
+   CommodityModifier *this,*next;
+   /* First use planet attributes to set prices and variability */
+   for (k=0; k<systems_nstack; k++) {
+      sys = &systems_stack[k];
+      for( j=0; j<sys->nplanets; j++ ){
+         planet=sys->planets[j];
+         /* Set up the commodity prices on the system, based on its attributes. */
+         for( i=0; i<planet->ncommodities; i++ ) {
+            economy_calcPriceClass(planet->class,planet->commodities[i],&planet->commodityPrice[i]);
+            economy_calcImg(planet->gfx_spaceName,planet->commodities[i],&planet->commodityPrice[i]);
+            economy_calcSurface(planet->gfx_exterior,planet->commodities[i],&planet->commodityPrice[i]);
+            economy_calcPopulation(planet->population,planet->commodities[i],&planet->commodityPrice[i]);
+            economy_calcFaction(faction_name(planet->faction),planet->commodities[i],&planet->commodityPrice[i]);
+            economy_calcRange(planet->presenceRange,planet->commodities[i],&planet->commodityPrice[i]);
+         }
+      }
+   }
+   
+   /* Modify prices and availability based on system attributes, and do some inter-planet averaging to smooth prices */
+   for ( i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      economy_modifySystemCommodityPrice(sys);
+   }
+
+   /* Compute average prices for all systems */
+   for ( i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      economy_smoothCommodityPrice(sys);
+   }
+
+   /* Smooth prices based on neighbouring systems */
+   for ( i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      economy_calcUpdatedCommodityPrice(sys);
+   }
+   /* And now free temporary commodity information */
+   for ( i=0 ; i<commodity_nstack; i++){
+      com=&commodity_stack[i];
+      next=com->planet_modifier;
+      com->planet_modifier=NULL;
+      while (next != NULL ){
+         this=next;
+         next=this->next;
+         free(this->name);
+         free(this);
+      }
+      next=com->faction_modifier;
+      com->faction_modifier=NULL;
+      while (next != NULL ){
+         this=next;
+         next=this->next;
+         free(this->name);
+         free(this);
+      }
+   }
 }

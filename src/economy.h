@@ -21,6 +21,19 @@ typedef int64_t credits_t;
 #define CREDITS_PRI        PRIu64
 
 /**
+ * @struct CommodityModifier
+ *
+ * @brief Represents a dictionary of values used to modify a commodity.
+ *
+ */
+struct CommodityModifier_ {
+   char *name;
+   float value;
+   struct CommodityModifier_ *next;
+};
+typedef struct CommodityModifier_ CommodityModifier;
+
+/**
  * @struct Commodity
  *
  * @brief Represents a commodity.
@@ -34,8 +47,22 @@ typedef struct Commodity_ {
    double price; /**< Base price of the commodity. */
    glTexture* gfx_store; /**< Store graphic. */
    glTexture* gfx_space; /**< Space graphic. */
+   CommodityModifier *planet_modifier; /**< The price modifier for different planet types. */
+   double period; /**< Period of price fluctuation. */
+   double population_modifier; /**< Scale of price modification due to population. */
+   CommodityModifier *faction_modifier; /**< Price modifier for different factions. */
 } Commodity;
 
+typedef struct CommodityPrice_ {
+  double price; /**< Average price of a commodity on a particular planet */
+  double planetPeriod; /**< Minor time period (days) over which commidity price varies */
+  double sysPeriod; /** Major time period */
+  double planetVariation; /**< Mmount by which a commodity price varies */
+  double sysVariation; /**< System level commodity price variation.  At a given time, commodity price is equal to price + sysVariation*sin(2pi t/sysPeriod) + planetVariation*sin(2pi t/planetPeriod) */
+  int cnt; /**< used for averaging */
+  char *name; /**< used for keeping tabs during averaging */
+  double temp; /**< used when averaging over jump points during setup */
+} CommodityPrice;
 
 /**
  * @struct Gatherable
@@ -90,6 +117,11 @@ void credits2str( char *str, credits_t credits, int decimals );
 void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
+
+/*
+ * Calculating the sinusoidal economy values
+ */
+void economy_initialiseCommodityPrices(void);
 
 
 #endif /* ECONOMY_H */
