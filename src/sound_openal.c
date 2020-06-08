@@ -392,7 +392,6 @@ static int al_enableEFX (void)
 {
    /* Issues with ALSOFT 1.19.1 crashes so we work around it.
     * TODO: Disable someday. */
-   DEBUG( "'%s'", alGetString(AL_VERSION));
    if (strcmp(alGetString(AL_VERSION), "1.1 ALSOFT 1.19.1")==0) {
       DEBUG(_("Crashing ALSOFT version detected, disabling EFX"));
       al_info.efx = AL_FALSE;
