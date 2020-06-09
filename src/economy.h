@@ -51,6 +51,7 @@ typedef struct Commodity_ {
    double period; /**< Period of price fluctuation. */
    double population_modifier; /**< Scale of price modification due to population. */
    CommodityModifier *faction_modifier; /**< Price modifier for different factions. */
+   credits_t lastPurchasePrice; /**< Price paid when last purchasing this commodity. */
 } Commodity;
 
 typedef struct CommodityPrice_ {
@@ -59,9 +60,11 @@ typedef struct CommodityPrice_ {
   double sysPeriod; /** Major time period */
   double planetVariation; /**< Mmount by which a commodity price varies */
   double sysVariation; /**< System level commodity price variation.  At a given time, commodity price is equal to price + sysVariation*sin(2pi t/sysPeriod) + planetVariation*sin(2pi t/planetPeriod) */
-  int cnt; /**< used for averaging */
+  int64_t updateTime; /**< used for averaging and to hold the time last average was calculated. */
   char *name; /**< used for keeping tabs during averaging */
-  double temp; /**< used when averaging over jump points during setup */
+  double sum; /**< used when averaging over jump points during setup, and then for capturing the moving average when the player visits a planet. */
+  double sum2; /**< sum of (squared prices seen), used for calc of standard deviation. */
+  int cnt; /**< used for calc of mean and standard deviation - number of records in the data. */
 } CommodityPrice;
 
 /**
@@ -122,6 +125,6 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 );
  * Calculating the sinusoidal economy values
  */
 void economy_initialiseCommodityPrices(void);
-
+int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std );
 
 #endif /* ECONOMY_H */

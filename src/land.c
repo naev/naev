@@ -118,6 +118,11 @@ static char *errorlist_ptr;
 static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
 static void land_stranded (void);
 
+/*
+ * Averaging of visited commodity prices
+ */
+void economy_averageSeenPrices( Planet *p );
+
 
 /*
  * prototypes
@@ -1096,6 +1101,9 @@ void land( Planet* p, int load )
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
 
+   /* Average economy prices that player has seen */
+   economy_averageSeenPrices( p );
+   
    /* Clear the NPC. */
    npc_clear();
 

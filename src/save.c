@@ -56,6 +56,8 @@ extern int pfaction_save( xmlTextWriterPtr writer ); /**< Saves faction data. */
 extern int hook_save( xmlTextWriterPtr writer ); /**< Saves hooks. */
 /* space.c */
 extern int space_sysSave( xmlTextWriterPtr writer ); /**< Saves the space stuff. */
+/* economy.c */
+extern int economy_sysSave( xmlTextWriterPtr writer ); /**< Saves the economy stuff. */
 /* unidiff.c */
 extern int diff_save( xmlTextWriterPtr writer ); /**< Saves the universe diffs. */
 /* static */
@@ -80,7 +82,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
-
+   if (economy_sysSave(writer) < 0) return -1;
    return 0;
 }
 
