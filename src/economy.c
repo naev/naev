@@ -1394,12 +1394,9 @@ void economy_averageSeenPrices( Planet *p ){
    CommodityPrice *cp;
    credits_t price;
    t = ntime_get();
-   printf("Averaging prices for planet %s with %d commodities\n",p->name,p->ncommodities);
    for ( i = 0 ; i < p->ncommodities ; i++ ){
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
-      printf("Pointers: %p, %p\n",c,cp);
-      printf("Commodity %s last updated %ld, t=%ld, %s\n",c->name,cp->updateTime,t,cp->updateTime<t?"updating":"not updating");
       if( cp->updateTime < t ){ //has not yet been updated at present time
          cp->updateTime = t;
          /* Calculate a rolling average */
@@ -1413,8 +1410,6 @@ void economy_averageSeenPrices( Planet *p ){
            else
            cp->average = 0.75 * cp->average + 0.25 * economy_getPrice( c, NULL, p);*/
       }
-      if(cp->cnt>0)
-         printf("Av %g +- %g\n",cp->sum/cp->cnt,sqrt(cp->sum2/cp->cnt-(cp->sum*cp->sum)/(cp->cnt*cp->cnt)));
    }
 }
 /**
