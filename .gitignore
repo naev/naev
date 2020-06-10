@@ -44,6 +44,7 @@ stdout.txt
 *.mode1v3
 extras/macos/Info.plist
 extras/.dirstamp
+dist/*
 Naev.app
 datapath.lua
 core
