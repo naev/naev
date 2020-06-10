@@ -8,6 +8,5 @@ autogen_error () {
    echo "   intltool"
    exit 1
 }
-autoreconf -vif || autogen_error
+autoreconf --verbose --install --force || autogen_error
 intltoolize --force || autogen_error
-aclocal || autogen_error
