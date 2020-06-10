@@ -10,3 +10,4 @@ autogen_error () {
 }
 autoreconf -vif || autogen_error
 intltoolize --force || autogen_error
+aclocal || autogen_error
