@@ -1,7 +1,10 @@
 SUBDIRS =
+DIST_SUBDIRS =
 if LUA_INTERNAL
 SUBDIRS += lua
+DIST_SUBDIRS += lua
 endif
 if CSPARSE_INTERNAL
 SUBDIRS += csparse
+DIST_SUBDIRS += csparse
 endif
