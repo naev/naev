@@ -15,7 +15,12 @@ fi
 NAEVDIR="$(pwd)"
 OUTPUTDIR="${NAEVDIR}/dist/"
 STEAMPATH="${NAEVDIR}/steam/tools/linux/"
+LOGFILE="release.log"
 CFLAGS="-j5"
+
+function log {
+   echo "$1" >> "${LOGFILE}"
+}
 
 function get_version {
    VERSION="$(cat ${NAEVDIR}/VERSION)"
@@ -28,6 +33,7 @@ function get_version {
 }
 
 function make_generic {
+   log "Compiling $2"
    make distclean
    ./autogen.sh
    ./configure $1
@@ -41,29 +47,50 @@ function make_linux_64 {
 }
 
 function make_linux_steam_64 {
-   ${STEAMPATH}/shell-amd64.sh "${NAEVDIR}/extras/steam-compile.sh"
+   log "Compiling linux-steam-x86-64"
+   TMPPATH="/tmp/naev_steam_compile.sh"
+   echo "#!/bin/bash" > "${TMPPATH}"
+   echo "make distclean" >> "${TMPPATH}"
+   echo "./autogen.sh" >> "${TMPPATH}"
+   echo "./configure --enable-lua=internal --without-libzip" >> "${TMPPATH}"
+   echo "make ${CFLAGS}" >> "${TMPPATH}"
+   chmod +x "${TMPPATH}"
+   ${STEAMPATH}/shell-amd64.sh "${TMPPATH}"
    get_version
    mv src/naev "${OUTPUTDIR}/naev-${VERSION}-linux-steam-x86-64"
+}
+
+function make_source {
+   log "Making source bzip2"
+   VERSIONRAW="$(cat ${NAEVDIR}/VERSION)"
+   make dist-bzip2
+   get_version
+   mv "naev-${VERSIONRAW}.tar.bz2" "dist/naev-${VERSION}-source.tar.bz2"
+}
+
+function make_ndata {
+   log "Making ndata"
+   get_version
+   make "ndata.zip"
+   mv "ndata.zip" "${OUTPUTDIR}/ndata-${VERSION}.zip"
 }
 
 # Create output dirdectory if necessary
 test -d "$OUTPUTDIR" || mkdir "$OUTPUTDIR"
 
-# Source
+# Set up log
+touch "${LOGFILE}"
+
+# Preparation
+make distclean
 ./autogen.sh
 ./configure
-make distclean
-make dist-bzip2
-get_version
-mv "naev-${VERSION}.tar.bz2" "dist/"
+make VERSION
 
-# Compile shit
+# Make stuff
+make_source
+make_ndata
 make_linux_64
 make_linux_steam_64
-
-# Ndata
-get_version
-make "ndata.zip"
-mv "ndata.zip" "${OUTPUTDIR}/ndata-${VERSION}.zip"
 
 
