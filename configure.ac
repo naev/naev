@@ -319,17 +319,17 @@ case "$used_lua" in
   shared)
     have_lua=no
     m4_foreach([pkgname], [lua-5.1, lua5.1, lua51, lua], [
-        AS_IF([test "$have_lua" = "no"], [
+        AS_IF([test "x$have_lua" = "xno"], [
             PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
         ])
     ])
-    AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
+    AS_IF([test "x$have_lua" = "xno"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
     ;;
   *)
     have_lua=no
     ;;
 esac
-AS_IF([test "$have_lua" = "no"], [
+AS_IF([test "x$have_lua" = "xno"], [
   LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
   LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
   have_lua=yes
@@ -482,10 +482,10 @@ esac
 # automake to detect when the binary needs recompiling after a library has been
 # changed.
 NAEV_DEPENDENCIES="$WIDGET_LIBS"
-AS_IF([test "$used_lua" == "internal"], [
+AS_IF([test "x$used_lua" = "xinternal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $LUA_LIBS"
 ])
-AS_IF([test "$used_csparse" == "internal"], [
+AS_IF([test "x$used_csparse" = "xinternal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $CSPARSE_LIBS"
 ])
 
