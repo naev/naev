@@ -397,7 +397,7 @@ static int ndata_openFile (void)
 
       /* Check ndata with version appended. */
 #if VREV < 0
-      nsnprintf ( pathname, PATH_MAX, _("%s-%d.%d.0-beta%d"), NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
+      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
 #else /* VREV < 0 */
       nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
