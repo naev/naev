@@ -209,7 +209,7 @@ static int ndata_notfound (void)
 #if SDL_VERSION_ATLEAST(2,0,2)
    SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
    SDL_DetachThread(thread);
-#else
+#else /* SDL_VERSION_ATLEAST(2,0,2) */
    /* Ignore return value because SDL_DetachThread is only present in
     * SDL >= 2.0.2 */
    SDL_CreateThread( &ndata_prompt, "Prompt", window );
