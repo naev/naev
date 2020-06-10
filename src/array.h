@@ -41,7 +41,9 @@
 #include <stddef.h>
 #include <assert.h>
 #include <stdint.h>
+#ifdef HAVE_STDALIGN_H
 #include <stdalign.h>
+#endif /* HAVE_STDALIGN_H */
 
 #ifdef DEBUGGING
 #define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
@@ -56,7 +58,15 @@ typedef struct {
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
+   /* The following check is fairly nasty and is here to handle cases
+    * when being compiled with too old versions of gcc. Note that this
+    * does lead to undefined behaviour, but at the current time it is
+    * necessary to compile for Steam. */
+#ifdef HAVE_STDALIGN_H
    char alignas(max_align_t) _array[0];  /**< Begin of the array */
+#else /* HAVE_STDALIGN_H */
+   char _array[0]; /* Undefined behaviour that seems to "work" */
+#endif /* HAVE_STDALIGN_H */
 } _private_container;
 
 

@@ -272,6 +272,9 @@ AC_SUBST([ndata_path])
 # Checks for libraries.
 #
 
+# "Newish" GCC
+AC_CHECK_HEADERS([stdalign.h])
+
 # SDL
 AM_PATH_SDL2(2.0.0, [], [
   AC_MSG_ERROR([SDL 2 not found])
