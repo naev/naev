@@ -50,6 +50,9 @@ function make_linux_steam_64 {
 test -d "$OUTPUTDIR" || mkdir "$OUTPUTDIR"
 
 # Source
+./autogen.sh
+./configure
+make distclean
 make dist-bzip2
 get_version
 mv "naev-${VERSION}.tar.bz2" "dist/"
