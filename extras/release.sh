@@ -49,6 +49,11 @@ function make_linux_steam_64 {
 # Create output dirdectory if necessary
 test -d "$OUTPUTDIR" || mkdir "$OUTPUTDIR"
 
+# Source
+make dist-bzip2
+get_version
+mv "naev-${VERSION}.tar.bz2" "dist/"
+
 # Compile shit
 make_linux_64
 make_linux_steam_64
