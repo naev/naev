@@ -92,13 +92,7 @@ function create ()
    started = false
    chatter_index = 0
 
-   -- FIXME: Make a portrait for Chelsea. She should have a generally
-   -- androgynous face slightly on the masculine side, with long-ish but
-   -- not that long hair (like someone who used to have short hair but
-   -- has started growing it long recently). She should also have a
-   -- regular human appearance (instead of a Soromid appearance); this
-   -- will come into play in later missions.
-   misn.setNPC( npc_name, "none" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea" )
    misn.setDesc( npc_desc )
 end
 
