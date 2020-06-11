@@ -1,6 +1,7 @@
 SUBDIRS = tk
 
-bin_PROGRAMS = naev shaders_c_gen
+bin_PROGRAMS = naev
+noinst_PROGRAMS = shaders_c_gen
 
 AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
