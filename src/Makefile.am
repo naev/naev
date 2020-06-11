@@ -1,10 +1,12 @@
 SUBDIRS = tk
 
-bin_PROGRAMS = naev
+bin_PROGRAMS = naev shaders_c_gen
 
 AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
+
+shaders_c_gen_SOURCES = shaders_c_gen.c shaders_c_gen.h
 
 shaders.gen.c shaders.gen.h: shaders_c_gen
 	./$<
@@ -317,3 +319,4 @@ MACOS_SOURCE =
 endif
 
 naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE) $(MACOS_SOURCE)
+nodist_naev_SOURCES = shaders.gen.c shaders.gen.h
