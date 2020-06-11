@@ -560,6 +560,18 @@
      * store
        * gatling.png
 
+ * Author: Ingo Ruhnke <grumbel@gmx.de>, Licence: GPLv3
+   * portraits
+     * none.png
+     * unknown.png
+     * zalek_scientist_placeholder.png
+   * logo
+     * dvaered_*.png
+     * empire_*.png
+     * goddard_*.png
+     * sirius_*.png
+     * zalek_*.png
+
  * Author: Nihilos <https://opengameart.org/users/nihilos>, License: CC-by 3.0 (based on portraits by Ingo Ruhnke <grumbel@gmx.de>)
    * portraits
      * dvaered
@@ -610,15 +622,7 @@
        * cyborg2.png
        * cyborg3.png
        * female1.png
-       * female2.png
-       * female3.png
-       * female4.png
-       * female5.png
        * male1.png
-       * male2.png
-       * male3.png
-       * male4.png
-       * male5.png
        * miner1.png
        * miner2.png
        * scientist.png
@@ -627,7 +631,6 @@
        * thief1.png
        * thief2.png
        * thief3.png
-       * thief4.png
      * pirate
        * pirate_militia1.png
        * pirate_militia2.png
@@ -635,27 +638,37 @@
        * pirate2.png
        * pirate3.png
        * pirate4.png
-       * pirate5.png
      * sirius
        * unique
-         * joanne.png
          * harja.png
+         * joanne.png
          * patrek.png
        * sirius_fyrra_f1.png
        * sirius_fyrra_f2.png
        * sirius_fyrra_m1.png
+
+ * Author: diligentcircle (based on components by Nihilos), License: CC-by 3.0
+   * portraits
+     * neutral
+       * female2.png
+       * female3.png
+       * female4.png
+       * female5.png
+       * male2.png
+       * male3.png
+       * male4.png
+       * male5.png
+       * thief4.png
+     * pirate
+       * pirate5.png
+     * sirius
+       * unique
+         * draga.png
+         * shaman.png
+         * strangeman.png
      * soromid
        * unique
          * chelsea.png
-     * none.png
-     * unknown.png
-     * zalek_scientist_placeholder.png
-   * logo
-     * dvaered_*.png
-     * empire_*.png
-     * goddard_*.png
-     * sirius_*.png
-     * zalek_*.png
 
  * Author: AstroMenace (Viewizard), License: GPLv3
    * outfit

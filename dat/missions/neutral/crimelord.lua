@@ -31,7 +31,7 @@ reward_desc = _("A generous compensation") --reward description
 function create ()
    targetsystem = system.get("Ogat") --find target system
    
-   misn.setNPC( NPC_name, "neutral/thief2") --spawn NPC
+   misn.setNPC( NPC_name, "neutral/unique/hunter") --spawn NPC
    misn.setDesc( bar_desc )
 end
 

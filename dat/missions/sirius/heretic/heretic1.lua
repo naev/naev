@@ -22,11 +22,6 @@ bmsg[4] = _([["Fantastic!" He hands you the message. "They will take care of you
 emsg = {}
 emsg[1] = _([[As you land, you are once again surprised to not be greeted by anyone. After searching for a bit, you return to your ship to find that the message has been taken and a small envelope has replaced it. Inside the envelope is a note. "Our sincere apologies for missing you," it says. "As you can see, we have obtained the message, and you will also notice that a payment of %s credits has been deposited into your account. You have done great work for us and we appreciate your services. Please feel free to meet us at the bar sometime."]])
 
---conversational options
-option = {}
-option[1] = _("Tell me about the mission.")
-option[2] = _("Tell me about the Nasin.")
-
 --random odds and ends
 misn_title = _("The Return")
 npc_name = _("A Tall Man")
@@ -46,7 +41,7 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(misn_reward:format(numstring(reward)))
-   misn.setNPC(npc_name,"neutral/male1")
+   misn.setNPC(npc_name, "sirius/unique/shaman")
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())

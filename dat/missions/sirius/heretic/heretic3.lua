@@ -48,7 +48,7 @@ function create()
    end
    misn.setReward( misn_reward:format( numstring( reward ) ) )
    misn.setTitle( misn_title )
-   misn.setNPC(npc_name,"neutral/thief2")
+   misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(homeasset:name())
