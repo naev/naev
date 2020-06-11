@@ -644,6 +644,7 @@ AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
+AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "src/shaders_c_gen.c"])
 
 #
 # Output
