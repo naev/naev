@@ -84,7 +84,7 @@ touch "${LOGFILE}"
 # Preparation
 make distclean
 ./autogen.sh
-./configure
+./configure --enable-lua=internal --enable-csparse=internal
 make VERSION
 
 # Make stuff
