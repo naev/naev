@@ -14,7 +14,7 @@ shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
 	./$<
 
 CLEANFILES = shaders.gen.c shaders.gen.h
-BUILT_SOURCES = shaders.gen.h
+BUILT_SOURCES = shaders.gen.c shaders.gen.h
 
 CODE_SOURCE = \
 	ai.c \
