@@ -4,9 +4,9 @@
 ;Enables Unicode installer to clear ANSI deprecation message 
 Unicode true
 ;Version, Arch, Icon and URL
-!define VERSION "0.8.0"
-!define VERSION_SUFFIX "-beta1" ; This string can be used for betas and release candidates.
-!define ARCH "32"
+;!define VERSION "0.8.0"
+;!define VERSION_SUFFIX "-beta1" ; This string can be used for betas and release candidates.
+;!define ARCH "32"
 !define URL "https://naev.org"
 !define MUI_ICON "..\logos\logo.ico"
 ;!define MUI_UNICON "..\logos\logo.ico"
