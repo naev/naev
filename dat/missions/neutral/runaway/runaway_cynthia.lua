@@ -38,7 +38,7 @@ function create ()
 
    reward = 500000
 
-   misn.setNPC( npc_name, "neutral/miner2" )
+   misn.setNPC( npc_name, "neutral/unique/cynthia" )
    misn.setDesc( bar_desc )
 end
 

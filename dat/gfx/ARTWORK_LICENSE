@@ -614,7 +614,6 @@
          * rebina_casual.png
          * reynir.png
          * reynir2.png
-         * shifty_merchant.png
          * youngbusinessman.png
          * youngbusinessman2.png
        * barman.png
@@ -650,6 +649,10 @@
  * Author: diligentcircle (based on components by Nihilos), License: CC-by 3.0
    * portraits
      * neutral
+       * unique
+         * cynthia.png
+         * cynthia_father.png
+         * shifty_merchant.png
        * female2.png
        * female3.png
        * female4.png
