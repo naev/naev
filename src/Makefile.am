@@ -1,20 +1,19 @@
 SUBDIRS = tk
 
 bin_PROGRAMS = naev
-noinst_PROGRAMS = shaders_c_gen
 
 AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
+
+noinst_PROGRAMS = shaders_c_gen
 shaders_c_gen_SOURCES = shaders_c_gen.c
 shaders_c_gen_LDADD = $(SDL_LIBS)
-
 shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
 	./$<
-
 CLEANFILES = shaders.gen.c shaders.gen.h
-BUILT_SOURCES = shaders.gen.c shaders.gen.h
+
 
 CODE_SOURCE = \
 	ai.c \
@@ -143,6 +142,7 @@ CODE_SOURCE = \
 	queue.c \
 	rng.c \
 	save.c \
+	shaders.gen.c \
 	ship.c \
 	shipstats.c \
 	slots.c \
@@ -180,6 +180,7 @@ CODE_SOURCE = \
 	dev_system.h \
 	dev_sysedit.h \
 	dev_uniedit.h \
+	dev_mapedit.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \
@@ -287,6 +288,7 @@ CODE_SOURCE = \
 	queue.h \
 	rng.h \
 	save.h \
+	shaders.gen.h \
 	ship.h \
 	shipstats.h \
 	slots.h \
@@ -319,4 +321,3 @@ MACOS_SOURCE =
 endif
 
 naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE) $(MACOS_SOURCE)
-nodist_naev_SOURCES = shaders.gen.c shaders.gen.h
