@@ -12,11 +12,12 @@ if [[ ! -f "naev.6" ]]; then
    exit -1
 fi
 
+CORECOUNT=$"(cat nproc --all)"
 NAEVDIR="$(pwd)"
 OUTPUTDIR="${NAEVDIR}/dist/"
 STEAMPATH="${NAEVDIR}/steam/tools/linux/"
 LOGFILE="release.log"
-CFLAGS="-j5"
+CFLAGS="-j${CORECOUNT}"
 
 function log {
    echo
@@ -52,14 +53,21 @@ function make_windows {
    ./autogen.sh
    if [$2 = "win32"] then
       mingw32-configure $1
+      mingw32-make ${CFLAGS}
+      get_version
+      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    elif [$2 = "win64"]  
       mingw64-configure $1
+      mingw32-make ${CFLAGS}
+      get_version
+      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    else
       ./configure $1
+      make ${CFLAGS}
+      get_version
+      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    fi
-   make ${CFLAGS}
-   get_version
-   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
+
 }
 
 function make_win32 {
