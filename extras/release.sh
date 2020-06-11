@@ -67,7 +67,6 @@ function make_windows {
       get_version
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    fi
-
 }
 
 function make_win32 {
