@@ -58,7 +58,7 @@ function make_windows {
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    elif [$2 = "win64"]  
       mingw64-configure $1
-      mingw32-make ${CFLAGS}
+      mingw64-make ${CFLAGS}
       get_version
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    else
