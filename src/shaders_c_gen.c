@@ -182,4 +182,5 @@ int main( int argc, char** argv ) {
    (void) argv;
    generate_h_file(fopen("shaders.gen.h", "w"));
    generate_c_file(fopen("shaders.gen.c", "w"));
+   return 0;
 }
