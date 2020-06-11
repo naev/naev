@@ -236,6 +236,24 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
 }
 
 /**
+ * @brief Gets the price of a commodity at a planet at given time.
+ *
+ *    @param p Planet to get price at.
+ *    @param c Commodity to get price of.
+ *    @param t Time to get price at.
+ */
+credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t )
+{
+   char *sysname;
+   StarSystem *sys;
+
+   sysname = planet_getSystem( p->name );
+   sys = system_get( sysname );
+
+   return economy_getPriceAtTime( c, sys, p, t );
+}
+
+/**
  * @brief Gets the average price of a commodity at a planet that has been seen so far.
  *
  * @param p Planet to get average price at.

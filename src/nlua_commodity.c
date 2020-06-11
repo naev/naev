@@ -26,6 +26,7 @@ static int commodityL_get( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
+static int commodityL_priceAtTime( lua_State *L );
 static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
@@ -33,6 +34,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "name", commodityL_name },
    { "price", commodityL_price },
    { "priceAt", commodityL_priceAt },
+   { "priceAtTime", commodityL_priceAtTime },
    {0,0}
 }; /**< Commodity metatable methods. */
 
@@ -279,6 +281,42 @@ static int commodityL_priceAt( lua_State *L )
    }
 
    lua_pushnumber( L, planet_commodityPrice( p, c ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the base price of an commodity at a certain planet at a certain time.
+ *
+ * @usage if o:priceAt( planet.get("Polaris Prime"), time ) > 100 then -- Checks price of an outfit at polaris prime
+ *
+ *    @luatparam Commodity o Commodity to get information of.
+ *    @luatparam Planet p Planet to get price at.
+ *    @luatparam Time to get the price at.
+ *    @luatreturn number The price of the commodity at the planet.
+ * @luafunc priceAt( o, p, t )
+ */
+static int commodityL_priceAtTime( lua_State *L )
+{
+   Commodity *c;
+   Planet *p;
+   StarSystem *sys;
+   char *sysname;
+   ntime_t t;
+   c = luaL_validcommodity(L,1);
+   p = luaL_validplanet(L,2);
+   t = luaL_validtime(L, 3);
+   sysname = planet_getSystem( p->name );
+   if (sysname == NULL) {
+      NLUA_ERROR( L, _("Planet '%s' does not belong to a system"), p->name );
+      return 0;
+   }
+   sys = system_get( sysname );
+   if (sys == NULL) {
+      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'"), p->name, sysname );
+      return 0;
+   }
+
+   lua_pushnumber( L, planet_commodityPriceAtTime( p, c, t ) );
    return 1;
 }
 

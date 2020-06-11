@@ -632,6 +632,23 @@ void commodity_free (void)
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
+   /* Get current time in STP.
+    */
+   return economy_getPriceAtTime( com, sys, p, ntime_get());
+}
+
+/**
+ * @brief Gets the price of a good on a planet in a system.
+ *
+ *    @param com Commodity to get price of.
+ *    @param sys System to get price of commodity.
+ *    @param p Planet to get price of commodity.
+ *    @param t Time to get price at, eg as retunred by ntime_get()
+ *    @return The price of the commodity.
+ */
+credits_t economy_getPriceAtTime( const Commodity *com,
+                                  const StarSystem *sys, const Planet *p, ntime_t t )
+{
    int i, k;
    double price;
    double t;
@@ -641,7 +658,7 @@ credits_t economy_getPrice( const Commodity *com,
     * Time does not advance when on a planet. 
     * Journey with a single jump takes approx 3e7, so about 3 STP.
     */
-   t = ntime_convertSTU( ntime_get() ) / NT_STP_STU;
+   t = ntime_convertSTU( t ) / NT_STP_STU;
 
    /* Get position in stack. */
    k = com - commodity_stack;
