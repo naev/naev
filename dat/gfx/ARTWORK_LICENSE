@@ -560,7 +560,7 @@
      * store
        * gatling.png
 
- * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv3
+ * Author: Nihilos <https://opengameart.org/users/nihilos>, License: CC-by 3.0 (based on portraits by Ingo Ruhnke <grumbel@gmx.de>)
    * portraits
      * dvaered
        * unique
@@ -593,11 +593,15 @@
          * aristocrat.png
          * drunkard.png
          * flintley.png
+         * hunter.png
          * jorek.png
          * mia.png
+         * neil.png
          * oldwoman.png
          * rebina.png
+         * rebina_casual.png
          * reynir.png
+         * reynir2.png
          * shifty_merchant.png
          * youngbusinessman.png
        * barman.png
@@ -609,6 +613,8 @@
        * miner1.png
        * miner2.png
        * scientist.png
+       * scientist2.png
+       * scientist3.png
        * thief1.png
        * thief2.png
        * thief3.png
@@ -1135,11 +1141,6 @@
        * M10.png
        * moon-X00.png
        * O04.png
-
- * Author: PhoenixRiver, License: GPLv3
-   * portraits
-     * neutral
-       * female1.png
 
  * Author: NASA, License: PD
    * bkg
