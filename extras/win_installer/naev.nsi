@@ -5,7 +5,7 @@
 !define VERSION "0.7.0"
 !define VERSION_SUFFIX "" ; This string can be used for betas and release candidates.
 !define ARCH "32"
-!define URL "http://naev.org"
+!define URL "https://naev.org"
 !define MUI_ICON "..\logos\logo.ico"
 ;!define MUI_UNICON "..\logos\logo.ico"
 
@@ -131,8 +131,8 @@ SectionEnd
 
 Section "Naev Data (Download)" DataSection
    dwn:
-    AddSize 296859 ;Size (kB) of Naev ndata
-    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
+    AddSize 296859 ;Size (kB) of Naev ndata   
+    NSISdl::download "https://github.com/naev/naev/releases/download/naev-${VERSION}${VERSION_SUFFIX}/naev-${VERSION}${VERSION_SUFFIX}-ndata.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip
         MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
