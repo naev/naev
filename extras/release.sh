@@ -80,7 +80,7 @@ function make_ndata {
 }
 
 # Create output dirdectory if necessary
-test -d "$OUTPUTDIR" || mkdir "$OUTPUTDIR"
+test -d "${OUTPUTDIR}" || mkdir "${OUTPUTDIR}"
 
 # Set up log
 rm -f "${LOGFILE}"
