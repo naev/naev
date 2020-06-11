@@ -9,7 +9,7 @@ naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 shaders_c_gen_SOURCES = shaders_c_gen.c
 
-shaders.gen.c shaders.gen.h: shaders_c_gen
+shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
 	./$<
 
 CLEANFILES = shaders.gen.c shaders.gen.h
