@@ -45,7 +45,7 @@ misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs.")
 
 -- NPC
-npc_desc[1] = _("A honest-looking man")
+npc_desc[1] = _("An honest-looking man")
 bar_desc[1] = _("This man looks like a honest citizen. He glances in your direction.")
 
 npc_desc[2] = _("Arnold Smith")
@@ -75,7 +75,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
