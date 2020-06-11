@@ -45,7 +45,7 @@ function create () --No system shall be claimed by mission
 
    reward = 10000
 
-   misn.setNPC( npc_name, "neutral/female1" )
+   misn.setNPC( npc_name, "neutral/unique/paddy" )
    misn.setDesc( bar_desc )
 end
 
