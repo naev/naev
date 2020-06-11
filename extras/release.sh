@@ -36,7 +36,7 @@ function get_version {
    fi
 }
 
-function make_generic {
+function make_linux {
    log "Compiling $2"
    make distclean
    ./autogen.sh
@@ -46,8 +46,32 @@ function make_generic {
    mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
 }
 
+function make_windows {
+   log "Compiling $2"
+   make distclean
+   ./autogen.sh
+   if [$2 = "win32"] then
+      mingw32-configure $1
+   elif [$2 = "win64"]  
+      mingw64-configure $1
+   else
+      ./configure $1
+   fi
+   make ${CFLAGS}
+   get_version
+   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
+}
+
+function make_win32 {
+   make_windows "" "win32"
+}
+
+function make_win64 {
+   make_windows "" "win64"
+}
+
 function make_linux_64 {
-   make_generic "--enable-lua=internal" "linux-x86-64"
+   make_linux "--enable-lua=internal" "linux-x86-64"
 }
 
 function make_linux_steam_64 {
@@ -95,6 +119,8 @@ make VERSION
 # Make stuff
 make_source          2>&1 | tee -a "${LOGFILE}"
 make_ndata           2>&1 | tee -a "${LOGFILE}"
+make_win32           2>&1 | tee -a "${LOGFILE}"
+make_win64           2>&1 | tee -a "${LOGFILE}"
 make_linux_64        2>&1 | tee -a "${LOGFILE}"
 make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
 
