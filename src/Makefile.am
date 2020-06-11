@@ -8,6 +8,7 @@ naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 shaders_c_gen_SOURCES = shaders_c_gen.c
+shaders_c_gen_LDADD = $(SDL_LIBS)
 
 shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
 	./$<
