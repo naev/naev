@@ -53,12 +53,12 @@ end
 
 
 function accept ()
-   misn.markerAdd( sys, "low" )
-
    -- Intro text
    if not tk.yesno( title[1], text[1] ) then
       misn.finish()
    end
+
+   misn.markerAdd( sys, "low" )
 
    -- Accept the mission
    misn.accept()
