@@ -18,19 +18,36 @@ nongeneric_factions = { "Pirate", "FLF", "Thurion", "Proteron" }
 -- Make sure you spell the faction name exactly the same as in faction.xml though!
 civ_port = {}
 civ_port["general"] =   {"neutral/male1",
+                           "neutral/male2",
+                           "neutral/male3",
+                           "neutral/male4",
+                           "neutral/male5",
                            "neutral/female1",
+                           "neutral/female2",
+                           "neutral/female3",
+                           "neutral/female4",
+                           "neutral/female5",
                            "neutral/miner1",
                            "neutral/miner2",
                            "neutral/thief1",
                            "neutral/thief2",
                            "neutral/thief3",
+                           "neutral/thief4",
                         }
 civ_port["Sirius"] =    {"sirius/sirius_fyrra_f1",
                            "sirius/sirius_fyrra_f2",
                            "sirius/sirius_fyrra_m1",
                         }
 civ_port["Trader"] =    {"neutral/male1",
+                           "neutral/male2",
+                           "neutral/male3",
+                           "neutral/male4",
+                           "neutral/male5",
                            "neutral/female1",
+                           "neutral/female2",
+                           "neutral/female3",
+                           "neutral/female4",
+                           "neutral/female5",
                            "neutral/thief1",
                            "neutral/thief3",
                         }
@@ -38,6 +55,7 @@ civ_port["Pirate"] =    {"pirate/pirate1",
                            "pirate/pirate2",
                            "pirate/pirate3",
                            "pirate/pirate4",
+                           "pirate/pirate5",
                         }
 civ_name = "Civilian"
 

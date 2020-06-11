@@ -610,7 +610,15 @@
        * cyborg2.png
        * cyborg3.png
        * female1.png
+       * female2.png
+       * female3.png
+       * female4.png
+       * female5.png
        * male1.png
+       * male2.png
+       * male3.png
+       * male4.png
+       * male5.png
        * miner1.png
        * miner2.png
        * scientist.png
@@ -619,6 +627,7 @@
        * thief1.png
        * thief2.png
        * thief3.png
+       * thief4.png
      * pirate
        * pirate_militia1.png
        * pirate_militia2.png
@@ -626,6 +635,7 @@
        * pirate2.png
        * pirate3.png
        * pirate4.png
+       * pirate5.png
      * sirius
        * unique
          * joanne.png

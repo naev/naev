@@ -17,6 +17,7 @@ function pir_getLordRandomPortrait ()
       "pirate/pirate2",
       "pirate/pirate3",
       "pirate/pirate4",
+      "pirate/pirate5",
    }
 
    return portraits[ rnd.rnd( 1, #portraits ) ]
