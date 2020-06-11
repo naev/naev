@@ -68,6 +68,8 @@ extern int pfaction_load( xmlNodePtr parent ); /**< Loads faction data. */
 extern int hook_load( xmlNodePtr parent ); /**< Loads hooks. */
 /* space.c */
 extern int space_sysLoad( xmlNodePtr parent ); /**< Loads the space stuff. */
+/* economy.c */
+extern int economy_sysLoad( xmlNodePtr parent ); /**< Loads the economy stuff. */
 /* unidiff.c */
 extern int diff_load( xmlNodePtr parent ); /**< Loads the universe diffs. */
 /* static */
@@ -584,6 +586,7 @@ int load_game( const char* file, int version_diff )
 
    /* Initialize the economy. */
    economy_init();
+   economy_sysLoad(node);
 
    /* Check sanity. */
    event_checkSanity();

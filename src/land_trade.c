@@ -80,16 +80,18 @@ void commodity_exchange_open( unsigned int wid )
          128, 128, "imgStore", NULL, 1 );
 
    /* text */
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH, 80, 0,
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH, 100, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          _("You have:\n"
-         "Market Price:\n"
-         "\n"
-         "Free Space:\n"
-         "Money:\n") );
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2, 80, 0,
+           "Purchased at:\n"
+           "Market Price:\n"
+           "Free Space:\n"
+           "Money:\n"
+           "Av price here:\n"
+           "Av price all:") );
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2, 100, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, -40, -290, LAND_BUTTON_WIDTH-20,
+   window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20,
          h-140-LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
@@ -130,17 +132,22 @@ void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
    char buf[PATH_MAX];
+   char buf2[80];
    char *comname;
    Commodity *com;
-   
+   credits_t mean,globalmean;
+   double std,globalstd;
+   int owned;
    comname = toolkit_getImageArray( wid, "iarTrade" );
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
       nsnprintf( buf, PATH_MAX,
          _("NA Tons\n"
-         "NA Cr./Ton\n"
-         "\n"
-         "%d Tons\n"
-         "%"PRIu64" Cr.\n"),
+           "\n"
+           "NA Cr./Ton\n"
+           "%d Tons\n"
+           "%"PRIu64" Cr.\n"
+           "NA Cr./Ton\n"
+           "NA Cr./Ton"),
          pilot_cargoFree(player.p),
          pilot_modCredits(player.p, 0) );
       window_modifyText( wid, "txtDInfo", buf );
@@ -154,17 +161,29 @@ void commodity_update( unsigned int wid, char* str )
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 128, 128 );
 
+   planet_averagePlanetPrice( land_planet, com, &mean, &std);
+   economy_getAveragePrice( com, &globalmean, &globalstd );
    /* modify text */
+   buf2[0]='\0';
+   owned=pilot_cargoOwned( player.p, comname );
+   if ( owned > 0 )
+      nsnprintf( buf2, 80, _("%"PRIu64" Cr./Ton"),com->lastPurchasePrice);
    nsnprintf( buf, PATH_MAX,
          _("%d Tons\n"
+         "%s\n"
          "%"PRIu64" Cr./Ton\n"
-         "\n"
          "%d Tons\n"
-         "%"PRIu64" Cr.\n"),
-         pilot_cargoOwned( player.p, comname ),
+         "%"PRIu64" Cr.\n"
+         "%"PRIu64" +- %.1f\n"
+         "%"PRIu64" +- %.1f\n"),
+         owned,
+         buf2,     
          planet_commodityPrice( land_planet, com ),
          pilot_cargoFree(player.p),
-         pilot_modCredits(player.p, 0) );
+         pilot_modCredits(player.p, 0),
+         mean, std,
+         globalmean,globalstd );
+   
    window_modifyText( wid, "txtDInfo", buf );
    nsnprintf( buf, PATH_MAX,
          "%s\n"
@@ -254,6 +273,7 @@ void commodity_buy( unsigned int wid, char* str )
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q, 0 );
+   com->lastPurchasePrice = price; /* To show the player how much they paid for it */
    price *= q;
    player_modCredits( -price );
    commodity_update(wid, NULL);
@@ -296,6 +316,8 @@ void commodity_sell( unsigned int wid, char* str )
    q = pilot_cargoRm( player.p, com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
+   if ( pilot_cargoOwned( player.p, com->name) == 0 ) /* None left, set purchase price to zero, in case missions add cargo. */
+     com->lastPurchasePrice = 0;
    commodity_update(wid, NULL);
 
    /* Run hooks. */

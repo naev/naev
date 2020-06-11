@@ -175,6 +175,7 @@ int space_sysLoad( xmlNodePtr parent );
  */
 extern credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
+extern credits_t economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std ); /**< from economy.c */
 
 
 char* planet_getServiceName( int service )
@@ -234,6 +235,15 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
    return economy_getPrice( c, sys, p );
 }
 
+/**
+ * @brief Gets the average price of a commodity at a planet that has been seen so far.
+ *
+ * @param p Planet to get average price at.
+ * @param c Commodity to get average price of.
+ */
+int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std){
+  return economy_getAveragePlanetPrice( c, p, mean, std );
+}
 
 /**
  * @brief Changes the planets faction.
@@ -3912,8 +3922,7 @@ int space_rmMarker( int sys, SysMarker type )
  */
 int space_sysSave( xmlTextWriterPtr writer )
 {
-   int i;
-   int j;
+  int i,j;
    StarSystem *sys;
 
    xmlw_startElem(writer,"space");
