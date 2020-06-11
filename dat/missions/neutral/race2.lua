@@ -1,7 +1,7 @@
 --[[
    --
    -- MISSION: Racing Skills 2
-   -- DESCRIPTION: A man asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
+   -- DESCRIPTION: A person asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
    --
 --]]
 
@@ -44,14 +44,14 @@ ftitle[2] = _("You left the race!")
 ftext[2] = _([["Because you left the race, you have been disqualified."]])
 
 ftitle[3] = _("You failed to win the race.")
-ftext[3] = _([[As you congratulate the winner on a great race, the laid back man comes up to you.
+ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
    
 ftitle[4] = _("Illegal ship!")
 ftext[4] = _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]])
 
-NPCname = _("A laid back man")
-NPCdesc = _("You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
+NPCname = _("A laid back person")
+NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
 
 misndesc = _("You're participating in another race!")
 misnreward = _("%s credits")
@@ -86,7 +86,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/male1")
+   misn.setNPC(NPCname, "neutral/unique/laidback")
    misn.setDesc(NPCdesc)
    credits_easy = rnd.rnd(20000, 100000)
    credits_hard = rnd.rnd(200000, 300000)

@@ -68,9 +68,7 @@ function create ()
    credits = 500000
    started = false
 
-   -- FIXME: Portrait needed; this should be the same portrait as the one used
-   -- for the "Coming Out" mission. See srm_comingout.lua for more details.
-   misn.setNPC( npc_name, "none" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea" )
    misn.setDesc( npc_desc )
 end
 

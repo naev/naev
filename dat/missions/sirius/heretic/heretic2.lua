@@ -47,7 +47,7 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(misn_reward:format(numstring(reward)))
-   misn.setNPC(npc_name,"neutral/thief2")
+   misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
    -- Format OSD

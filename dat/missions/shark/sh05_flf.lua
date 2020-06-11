@@ -60,7 +60,7 @@ function create ()
    paysys = system.get(paysys:name())
    paypla = planet.get(paypla:name())
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
