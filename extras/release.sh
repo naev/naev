@@ -19,7 +19,11 @@ LOGFILE="release.log"
 CFLAGS="-j5"
 
 function log {
-   echo "$1" >> "${LOGFILE}"
+   echo
+   echo
+   echo "====================================="
+   echo "$1"
+   echo "====================================="
 }
 
 function get_version {
@@ -79,6 +83,7 @@ function make_ndata {
 test -d "$OUTPUTDIR" || mkdir "$OUTPUTDIR"
 
 # Set up log
+rm -f "${LOGFILE}"
 touch "${LOGFILE}"
 
 # Preparation
@@ -88,9 +93,9 @@ make distclean
 make VERSION
 
 # Make stuff
-make_source
-make_ndata
-make_linux_64
-make_linux_steam_64
+make_source          2>&1 | tee -a "${LOGFILE}"
+make_ndata           2>&1 | tee -a "${LOGFILE}"
+make_linux_64        2>&1 | tee -a "${LOGFILE}"
+make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
 
 
