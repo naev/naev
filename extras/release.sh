@@ -65,7 +65,7 @@ function make_windows {
 }
 
 function make_win32 {
-   make_windows "--enable-lua=internal --with-openal=no" "win32"
+   make_windows "--enable-lua=internal --with-openal=no" "win32" # Disabled due to issues while compiling.. not sure what is up.
 }
 
 function make_win64 {
