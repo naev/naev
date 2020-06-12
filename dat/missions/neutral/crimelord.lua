@@ -5,7 +5,8 @@ MISSION: Chase Test
 DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
-include("dat/scripts/fleethelper.lua")
+include "numstring.lua"
+include "fleethelper.lua"
 
 NPC_name = _("A detective") --NPC params
 bar_desc = _("A private detective is signalling you to come speak with him.")
@@ -138,7 +139,7 @@ function pilotKilled () --function for second trigger
 end
 
 function capHailed () --when hailing the capship back
-   tk.msg( title[2], string.format( text[2], reward) ) --congratulates
+   tk.msg( title[2], string.format( text[2], numstring( reward ) ) ) --congratulates
    player.pay( reward )
    misn.finish(true)
 end
