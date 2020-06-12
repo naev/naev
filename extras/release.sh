@@ -66,11 +66,11 @@ function make_windows {
 }
 
 function make_win32 {
-   make_windows "--enable-lua=internal --enable-csparse=internal" "win32"
+   make_windows "--enable-lua=internal" "win32"
 }
 
 function make_win64 {
-   make_windows "--enable-lua=internal --enable-csparse=internal" "win64"
+   make_windows "--enable-lua=internal" "win64"
 }
 
 function make_linux_64 {
@@ -120,11 +120,11 @@ make distclean
 make VERSION
 
 # Make stuff
-#make_source          2>&1 | tee -a "${LOGFILE}"
+make_source          2>&1 | tee -a "${LOGFILE}"
 make_ndata           2>&1 | tee -a "${LOGFILE}"
-make_win32           2>&1 | tee -a "${LOGFILE}"
-make_win64           2>&1 | tee -a "${LOGFILE}"
-#make_linux_64        2>&1 | tee -a "${LOGFILE}"
-#make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
+# make_win32           2>&1 | tee -a "${LOGFILE}" Assumes working mingw cross compile environment exists
+# make_win64           2>&1 | tee -a "${LOGFILE}" Assumes working mingw cross compile environment exists
+make_linux_64        2>&1 | tee -a "${LOGFILE}"
+make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
 
 
