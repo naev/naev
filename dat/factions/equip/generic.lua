@@ -997,7 +997,7 @@ function equip_warn( p, outfit, q, bypass )
    if bypass == nil then bypass = false end
    local r = pilot.addOutfit( p, outfit, q, bypass )
    if r <= 0 then
-      warn("Could not equip " .. system .. " on pilot " .. p:name() .. "!")
+      warn("Could not equip " .. outfit .. " on pilot " .. p:name() .. "!")
    end
    return r
 end
