@@ -361,11 +361,15 @@ AS_IF([test "$used_csparse" = "internal"], [
     CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
     CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
+# OpenAL
+# AS_IF([test "$with_openal" = "yes"], [
+#  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
+#])
 
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
-  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
-])
+  PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
+], [have_openal=no])
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
@@ -644,6 +648,7 @@ AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
+AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "src/shaders_c_gen.c"])
 
 #
 # Output
