@@ -87,12 +87,15 @@ function jumpout ()
 end
 
 function spawnBaddies ()
+   local sp
    if last_system == startsystem then
       ai = "baddie"
+      sp = nil
    else
       ai = "baddie_norun"
+      sp = last_system
    end
-   thugs = addRawShips( "Admonisher", ai, last_system, "Thugs", 4 )
+   thugs = addRawShips( "Admonisher", ai, sp, "Thugs", 4 )
    -- renameShips( thugs, "^.*", "Thug" )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:rename(_("Thug"))
