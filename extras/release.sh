@@ -17,7 +17,7 @@ NAEVDIR="$(pwd)"
 OUTPUTDIR="${NAEVDIR}/dist/"
 STEAMPATH="${NAEVDIR}/steam/tools/linux/"
 LOGFILE="release.log"
-CFLAGS="-j${CORECOUNT}"
+CFLAGS=("-j" + ${CORECOUNT})
 
 function log {
    echo
@@ -51,21 +51,15 @@ function make_windows {
    log "Compiling $2"
    make distclean
    ./autogen.sh
-   if [$2 == 'win32'] 
+   if [ $2 == 'win32' ] 
    then
       mingw32-configure $1
       mingw32-make ${CFLAGS}
       get_version
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
-   elif [$2 == 'win64'] 
-   then
+   elif [ $2 == 'win64' ] 
       mingw64-configure $1
       mingw64-make ${CFLAGS}
-      get_version
-      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
-   else
-      ./configure $1
-      make ${CFLAGS}
       get_version
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
    fi
