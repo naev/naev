@@ -51,22 +51,21 @@ function make_windows {
    log "Compiling $2"
    make distclean
    ./autogen.sh
-   if [ $2 == 'win32' ] 
+   if [ $2 = "win32" ] 
    then
-      mingw32-configure $1
-      mingw32-make ${CFLAGS}
-      get_version
-      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
-   elif [ $2 == 'win64' ] 
-      mingw64-configure $1
-      mingw64-make ${CFLAGS}
-      get_version
-      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
+      ./configure --host=i686-w64-mingw32.static $1
+      make ${CFLAGS}
+   elif [ $2 = "win64" ]
+   then
+      ./configure --host=x86_64-w64-mingw32.static $1
+      make ${CFLAGS}
    fi
+   get_version
+   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
 }
 
 function make_win32 {
-   make_windows "--enable-lua=internal" "win32"
+   make_windows "--enable-lua=internal --with-openal=no" "win32"
 }
 
 function make_win64 {
@@ -116,15 +115,15 @@ touch "${LOGFILE}"
 # Preparation
 make distclean
 ./autogen.sh
-./configure --enable-lua=internal --enable-csparse=internal
+./configure --enable-lua=internal
 make VERSION
 
 # Make stuff
 make_source          2>&1 | tee -a "${LOGFILE}"
 make_ndata           2>&1 | tee -a "${LOGFILE}"
-# make_win32           2>&1 | tee -a "${LOGFILE}" Assumes working mingw cross compile environment exists
-# make_win64           2>&1 | tee -a "${LOGFILE}" Assumes working mingw cross compile environment exists
+make_win32           2>&1 | tee -a "${LOGFILE}"
+make_win64           2>&1 | tee -a "${LOGFILE}"
 make_linux_64        2>&1 | tee -a "${LOGFILE}"
-make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
+#make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
 
 
