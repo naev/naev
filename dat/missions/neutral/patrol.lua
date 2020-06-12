@@ -51,7 +51,7 @@ msg[4] = _("Patrol complete. You can now collect your pay.")
 msg[5] = _("MISSION FAILURE! You showed up too late.")
 msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
-osd_title  = _("Patrol of %s")
+osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg_2  = _("Go to indicated point (%d remaining)")
@@ -143,7 +143,6 @@ end
 function accept ()
    misn.accept()
 
-   osd_title = osd_title:format( missys:name() )
    osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[2] = osd_msg_2:format( #points )
    osd_msg[4] = osd_msg[4]:format( paying_faction:name() )

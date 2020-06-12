@@ -67,7 +67,7 @@ ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
 ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existance above the skies.")
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
-osd_title  = _("Sightseeing tour in %s")
+osd_title  = _("Sightseeing")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg_2  = _("Go to indicated point (%d remaining)")
@@ -146,7 +146,6 @@ function accept ()
 
    misn.accept()
 
-   osd_title = osd_title:format( missys:name() )
    osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[2] = osd_msg_2:format( #points )
    osd_msg[3] = osd_msg[3]:format( startingplanet:name(),startingsystem:name() )
