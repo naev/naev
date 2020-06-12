@@ -51,12 +51,14 @@ function make_windows {
    log "Compiling $2"
    make distclean
    ./autogen.sh
-   if [$2 = "win32"] then
+   if [$2 == 'win32'] 
+   then
       mingw32-configure $1
       mingw32-make ${CFLAGS}
       get_version
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
-   elif [$2 = "win64"]  
+   elif [$2 == 'win64'] 
+   then
       mingw64-configure $1
       mingw64-make ${CFLAGS}
       get_version
