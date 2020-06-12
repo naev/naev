@@ -162,6 +162,8 @@ function enter()
       badboy:setVisplayer()
       badboy:setHilight()
 
+      player.pilot():setVisible()
+
       hook.pilot( badboy, "death", "pirate_dead" )
       hook.pilot( badboy, "jump", "pirate_jump" )
    end
@@ -186,6 +188,7 @@ function pirate_jump()  --he went away
 end
 
 function pirate_dead()  --wou win
+   player.pilot():setVisible(false)
    stage = 4
    misn.markerRm(marker1)
    marker2 = misn.markerAdd(missys, "low")
