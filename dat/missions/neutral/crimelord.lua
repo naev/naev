@@ -92,7 +92,13 @@ function spawnBaddies ()
    else
       ai = "baddie_norun"
    end
-   thugs = addRawShips( "Admonisher", ai, last_system, "Thugs", 4 )
+
+   local sp = nil
+   if last_system ~= system.cur() then
+      sp = last_system
+   end
+
+   thugs = addRawShips( "Admonisher", ai, sp, "Thugs", 4 )
    -- renameShips( thugs, "^.*", "Thug" )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:rename(_("Thug"))
