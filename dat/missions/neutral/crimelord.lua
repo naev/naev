@@ -26,7 +26,7 @@ text[1] = _([[After quickly glancing around to make sure nobody's taken a partic
    "Be careful out there. I doubt you'll be able to get far without being noticed."]]) --dialogue 2
 text[2] = _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had %s credits transferred to you.\"") --finished
 text[3] = _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence.")
-misn_desc = _("Evade the thugs and deliver the evidence to %s.") --OSD text
+misn_desc = _("Evade the thugs and deliver the evidence to %s") --OSD text
 reward_desc = _("A generous compensation") --reward description
 
 function create ()

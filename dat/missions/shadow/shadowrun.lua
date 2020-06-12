@@ -107,13 +107,13 @@ osd_msg2  = {}
 
 osd_title = _("Shadowrun")
 
-osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek.")
-osd_msg1[2] = _("You have %s remaining.")
+osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek")
+osd_msg1[2] = _("You have %s remaining")
 osd_msg1["__save"] = true
 
-osd_msg2[1] = _("You could not persuade Jorek to come with you. Report your result.")
-osd_msg2[2] = _("Fly to the %s system and dock with (board) %s")
-osd_msg2[3] = _("You have %s remaining.")
+osd_msg2[1] = _("You could not persuade Jorek to come with you")
+osd_msg2[2] = _("Fly to the %s system and dock with (board) %s to report your result")
+osd_msg2[3] = _("You have %s remaining")
 osd_msg2["__save"] = true
 
 function create ()
@@ -212,6 +212,7 @@ function date()
                                     string.format(osd_msg2[2], sysname2, shipname),
                                     string.format(osd_msg2[3], time.str(deadline2 - time.get()))
                                   })
+        misn.osdActive(2)
     else
         abort()
     end

@@ -49,8 +49,8 @@ talk[1] = ""
 
 -- Other text for the mission -- ??
 osd_msg = {}
-osd_msg[1] = _("Fly around in the system, preferably near %s.")
-osd_msg[2] = _("Take Reynir home to %s.")
+osd_msg[1] = _("Fly around in the system, preferably near %s")
+osd_msg[2] = _("Take Reynir home to %s")
 msg_abortTitle = "" 
 msg_abort = [[]]
 

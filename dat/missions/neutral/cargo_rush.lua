@@ -72,10 +72,10 @@ timeup_2 = _("The delivery to %s has been canceled! You were too late.")
 
 osd_title = _("Rush cargo mission")
 osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s.")
-osd_msg[2] = _("You have %s remaining.")
-osd_msg1 = _("Fly to %s in the %s system before %s.")
-osd_msg2 = _("You have %s remaining.") -- Need to reuse.
+osd_msg[1] = _("Fly to %s in the %s system before %s")
+osd_msg[2] = _("You have %s remaining")
+osd_msg1 = _("Fly to %s in the %s system before %s")
+osd_msg2 = _("You have %s remaining") -- Need to reuse.
 
 -- Create the mission
 function create()
