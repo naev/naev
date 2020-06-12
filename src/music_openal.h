@@ -2,6 +2,7 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+
 #if USE_OPENAL
 
 #ifndef MUSIC_OPENAL_H
