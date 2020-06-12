@@ -93,7 +93,7 @@ ambush_comm[7] = _("You were not supposed to get on the way of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
-breef_text = _("%s is a %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
+breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
 
 flee_title = _("You're not going to kill anybody like that")
 flee_text = _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going.")
@@ -120,7 +120,7 @@ bar_desc = _("This person might be an outlaw, a pirate, or even worse, a bounty 
 -- Mission details
 misn_title  = _("Seek And Destroy Mission, starting in %s")
 misn_reward = _("%s credits")
-misn_desc   = _("A %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
+misn_desc   = _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
 
 function create ()
    paying_faction = planet.cur():faction()
