@@ -162,7 +162,7 @@ msg_lore["Thurion"] =      {_("Did you know that even the slightest bit of brain
                               _("The best part of our lives is after we're uploaded, but that doesn't mean we lead boring lives before then. We have quite easy and satisfying biological lives before uploading."),
                               _("Being uploaded allows you to live forever, but that doesn't mean you're forced to. Any uploaded Thurion can choose to end their own life if they want, though few have chosen to do so."),
                               _("Uploading is a choice in our society. No one is forced to do it. It's just that, well, what kind of person would turn down the chance to live a second life on the network?"),
-                              _("We were lucky to not get touched by the Incident. In fact, we kind of benefited from it. The nebula that resulted gave us a great cover and sealed off the Empire from us. It also got rid of those lunatics, the Proterons."),
+                              _("We were lucky to not get touched by the Incident. In fact, we kind of benefited from it. The nebula that resulted gave us a great cover and sealed off the Empire from us. It also got rid of those dangerous Proterons."),
                               _("We don't desire galactic dominance. That being said, we do want to spread our way of life to the rest of the galaxy, so that everyone can experience the joy of being uploaded."),
                               _("I think you're from the outside, aren't you? That's awesome! I've never met a foreigner before. What's it like outside the nebula?"),
                               _("We actually make occasional trips outside of the nebula, though only rarely, and we always make sure to not get discovered by the Empire."),
@@ -193,7 +193,7 @@ msg_lore["FLF"] =          {_("I can't stand Dvaereds. I just want to wipe them 
                               _("One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"),
                               _("Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."),
                               _("I was in charge of a bombing run last week. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."),
-                              _("What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius lunatics to worry about. I don't think our job will ever end in our lifetimes."),
+                              _("What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."),
                               _("Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."),
                               _("Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."),
                               _("No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."),
@@ -283,7 +283,7 @@ msg_mdone =                {{"Nebula Satellite", _("Heard some crazy scientists 
 -- This text will be said by NPCs once the player has completed the event in question.
 -- Make sure the messages are always faction neutral.
 msg_edone =                {{"Animal trouble", _("What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line...")},
-                              {"Naev Needs You!", _("What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic.")},
+                              {"Naev Needs You!", _("What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?")},
                            }
 
 
