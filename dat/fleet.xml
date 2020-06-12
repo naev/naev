@@ -807,7 +807,7 @@
   <ai>trader</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot name="Seiryuu" ship="Seiryuu"></pilot>
+   <pilot name="Seiryuu" ship="Pirate Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Genbu">
