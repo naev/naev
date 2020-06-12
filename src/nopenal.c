@@ -1,6 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
+#if USE_OPENAL
 
 #include "nopenal.h"
 
@@ -31,3 +32,4 @@ ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
 ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
 ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
 
+#endif /* USE_OPENAL */
