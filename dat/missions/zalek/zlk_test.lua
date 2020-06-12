@@ -69,7 +69,7 @@ cannot_title = _("You can not accept this mission")
 cannot_text = _("You are already testing another engine.")
 
 osd_title = _("Za'lek Test")
-osd_msg = {_("Fly to %s in the %s system.")}
+osd_msg = {_("Fly to %s in the %s system")}
 
 function create()
    -- Claim core engine slot

@@ -66,10 +66,10 @@ text[15] = _([[Dr Geller looks at you. "Have you got it?" You present the chip a
 text[16] = _([[He turns away and after you clear your throat with a pretty audible "Uh uhm" turns back to you. "Oh, yes, of course you want some payment for your service, right? Well, here you go. I might need you again in the future." He hands you a payment slip and walks away.]])
 trd_disc = _([[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]])
 -- osd_msg
-osd_msg[1] = _("Go to the %s system and talk to the trader on %s.")
-osd_msg[2] = _("Go to the %s system and talk to the contact person on %s.")
-osd_msg[3] = _("Return to the %s system to the trader on %s.")
-osd_msg[4] = _("Return to the %s system and deliver to Dr.Geller on %s.")
+osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
+osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
+osd_msg[3] = _("Return to the %s system to the trader on %s")
+osd_msg[4] = _("Return to the %s system and deliver to Dr.Geller on %s")
 -- refusetext 
 refusetitle = _("No Science Today")
 refusetext = _("I guess you don't care that much about science...")

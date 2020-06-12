@@ -14,9 +14,9 @@ bar_desc = _("You see Commander Soldner who is expecting you.")
 misn_title = _("Empire Shipping Delivery")
 misn_reward = _("%s credits")
 misn_desc = {}
-misn_desc[1] = _("Pick up a package at %s in the %s system.")
-misn_desc[2] = _("Deliver the package to %s in the %s system.") 
-misn_desc[3] = _("Return to %s in the %s system.")
+misn_desc[1] = _("Pick up a package at %s in the %s system")
+misn_desc[2] = _("Deliver the package to %s in the %s system") 
+misn_desc[3] = _("Return to %s in the %s system")
 -- Fancy text messages
 title = {}
 title[1] = _("Commander Soldner")

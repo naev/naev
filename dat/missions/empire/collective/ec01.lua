@@ -17,8 +17,8 @@ bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to
 misn_title = _("Collective Espionage")
 misn_reward = _("%s credits")
 misn_desc = {}
-misn_desc[1] = _("Scan the Collective systems for wireless communications.")
-misn_desc[2] = _("Travel back to %s in %s.")
+misn_desc[1] = _("Scan the Collective systems for wireless communications")
+misn_desc[2] = _("Travel back to %s in %s")
 misn_desc["__save"] = true 
 
 title = {}

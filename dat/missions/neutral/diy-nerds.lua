@@ -113,15 +113,15 @@ text[20] = [[As you enter the bar, the nerds are immediately upon you. "What is 
 textosd = {}
 -- stage 1
 textosd[1] = _("Bring the nerds and their box to %s before %s")
-textosd[2] = _("You have %s remaining.")
-textosd[3] = _("You're late. Mia has started verbally abusing you and your ship. Better land to get rid of the nerds and their box.")
+textosd[2] = _("You have %s remaining")
+textosd[3] = _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")
 -- stage 2
-textosd[4] = _("You are to wait several periods until hailed by the nerds for their return trip.")
-textosd[5] = _("Pick up the nerds on %s for their return trip to %s.")
-textosd[6] = _("The nerds are getting impatient.")
-textosd[7] = _("You didn't pick up the nerds in time.")
+textosd[4] = _("Wait several periods until hailed by the nerds for their return trip")
+textosd[5] = _("Pick up the nerds on %s for their return trip to %s")
+textosd[6] = _("The nerds are getting impatient")
+textosd[7] = _("You didn't pick up the nerds in time")
 -- stage 3
-textosd[8] = _("Return the nerds to %s.")
+textosd[8] = _("Return the nerds to %s")
 
 textmsg = {}
 -- displayed if you leave without the nerd's authorization

@@ -71,7 +71,7 @@ description = _([[Search for the kidnapped children, then rescue the children an
 osdtitle = _("Kidnapped")
 osdmsg[1] = _("Fly to the %s system and land on planet %s")
 osdmsg[2] = _("Fly to the %s system and land on planet %s")
-osdmsg[3] = _("Fly to the %s system and disable (do not destroy) that Koala!")
+osdmsg[3] = _("Fly to the %s system and disable (do not destroy) that Koala")
 osdmsg[4] = _("Return the children to the %s system on planet %s")
 
 --NPCs

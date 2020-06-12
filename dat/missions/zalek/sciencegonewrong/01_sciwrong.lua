@@ -49,9 +49,9 @@ title[4] = _([[What have you done?]])
 text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now. You have failed Dr Geller! And even worse: you failed science!]])
 OSDtitle = _("The one with the Visit")
 osd_msg = {}
-osd_msg[1] = _("Go to the %s system and find the %s.")
-osd_msg[2] = _("Board the %s and retrieve the secret technology.")
-osd_msg[3] = _("Return to %s in the %s system.")
+osd_msg[1] = _("Go to the %s system and find the %s")
+osd_msg[2] = _("Board the %s and retrieve the secret technology")
+osd_msg[3] = _("Return to %s in the %s system")
 
 -- refuestext 
 refusetitle = _("No Science Today")

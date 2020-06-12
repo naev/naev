@@ -24,8 +24,8 @@ misn_reward = _("%s credits")
 -- OSD
 osd_title = _("Help the Merchant")
 osd_desc = {}
-osd_desc[1] = _("Drop off the goods at %s in the %s system. You have %s remaining.")
-osd_desc[2] = _("Drop off the goods at %s in the %s system. You are late.")
+osd_desc[1] = _("Drop off the goods at %s in the %s system (You have %s remaining)")
+osd_desc[2] = _("Drop off the goods at %s in the %s system (You are late)")
 
 -- Cargo Details
 cargo = "Goods"

@@ -33,7 +33,7 @@ piracyrisk[4] = _("High")
 accept_title = _("Mission Accepted")
 
 osd_title = _("Convey Escort")
-osd_msg = _("Escort a convoy of traders to %s in the %s system.")
+osd_msg = _("Escort a convoy of traders to %s in the %s system")
 
 slow = {}
 slow[1] = _("Not enough fuel")

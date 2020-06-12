@@ -16,8 +16,8 @@ misn_desc = _("You agreed to help a Za'lek scientist pick up some cargo way out 
 -- OSD
 OSDtitle = _("Za'lek Cargo Monkey")
 OSDdesc = {}
-OSDdesc[1] = _("Go pick up some equipment at %s in the %s system.")
-OSDdesc[2] = _("Drop off the equipment at %s in the %s system.")
+OSDdesc[1] = _("Go pick up some equipment at %s in the %s system")
+OSDdesc[2] = _("Drop off the equipment at %s in the %s system")
 
 payment = 250000
 
