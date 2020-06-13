@@ -54,7 +54,7 @@ teleport_title = _("What the hell is happening?")
 teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the %s system!")
 
 slow_title = _("Where has the power gone?")
-slow_text = _("The engine doesn't seem to want to propel your ship anymore...")
+slow_text = _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to.")
 speed_title = _("Power is back.")
 speed_text = _("It seems the engine decided to work properly again.")
 

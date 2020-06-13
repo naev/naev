@@ -807,7 +807,7 @@
   <avail>
    <priority>3</priority>
    <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
-   <chance>890</chance>
+   <chance>675</chance>
    <location>Computer</location>
    <faction>Za'lek</faction>
   </avail>
