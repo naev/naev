@@ -32,7 +32,7 @@ title[1] = _("Spaceport Bar")
 text[1] = _([[This Za'lek scientist seems to be looking for someone. As you approach, he begins to speak. "Excuse me, but do you happen to know a ship captain who can help me with something?"]])
 
 title[2] = _("A long haul through tough territory")
-text[2] = _([[You say that he is looking at one right now. Rather surprisingly, the he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan, by the way. I warn you, it'll be simple, but rather dangerous, but I will pay you handsomely for your services.
+text[2] = _([[You say that he is looking at one right now. Rather surprisingly, the he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan. The job will be a bit dangerous, but I will pay you handsomely for your services.
     "I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there.]])
 
 title[3] = _("Deliver the Equipment")
