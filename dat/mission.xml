@@ -806,7 +806,7 @@
   <lua>zalek/zlk_test</lua>
   <avail>
    <priority>3</priority>
-   <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"]</cond>
+   <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
    <chance>450</chance>
    <location>Computer</location>
    <faction>Za'lek</faction>
