@@ -2,114 +2,179 @@
 -- @brief Generates pilot names
 --]]
 function pirate_name ()
-   -- TODO this needs some work to be translatable...
+   -- For translation, just transliterate if necessary. (Note the space
+   -- appended to each entry; this can be omitted for transliterations
+   -- to languages that don't use spaces, like Japanese.)
    local articles = {
-      _("The"),
+      _("Das "),
+      _("Der "),
+      _("Kono "),
+      _("Le "),
+      _("The "),
+      _("Ye "),
    }
    local descriptors = {
-      _("Lustful"),
-      _("Bloody"),
-      _("Morbid"),
-      _("Horrible"),
-      _("Terrible"),
-      _("Very Bad"),
-      _("No Good"),
-      _("Dark"),
-      _("Evil"),
-      _("Murderous"),
-      _("Fearsome"),
-      _("Defiant"),
-      _("Unsightly"),
-      _("Pirate's"),
-      _("Night's"),
-      _("Space"),
-      _("Astro"),
-      _("Delicious"),
-      _("Fearless"),
-      _("Eternal"),
-      _("Mighty")
+      _("Astro "),
+      _("Beautiful "),
+      _("Big "),
+      _("Bloody "),
+      _("Crusty "),
+      _("Dark "),
+      _("Defiant "),
+      _("Delicious "),
+      _("Drunk "),
+      _("Eternal "),
+      _("Evil "),
+      _("Fearless "),
+      _("Fearsome "),
+      _("Filthy "),
+      _("Glittery "),
+      _("Horrible "),
+      _("Kowai "),
+      _("Lovely "),
+      _("Lustful "),
+      _("Malodorous "),
+      _("Messy "),
+      _("Mighty "),
+      _("Morbid "),
+      _("Mukashi No "),
+      _("Murderous "),
+      _("Night's "),
+      _("No Good "),
+      _("Numb "),
+      _("Ōkina "),
+      _("Pirate's "),
+      _("Ruthless "),
+      _("Satanic "),
+      _("Slimy "),
+      _("Smelly "),
+      _("Space "),
+      _("Strawhat "),
+      _("Sukina "),
+      _("Terrible "),
+      _("Unsightly "),
+      _("Utsukushī "),
+      _("Very Bad "),
+      _("Warui "),
+      _("Wretched "),
+      _("Yummy "),
    }
    local colours = {
-      _("Red"),
-      _("Green"),
-      _("Blue"),
-      _("Cyan"),
-      _("Black"),
-      _("Brown"),
-      _("Mauve"),
-      _("Crimson"),
-      _("Yellow"),
-      _("Purple")
+      _("Akai "),
+      _("Amarillo "),
+      _("Aoi "),
+      _("Azul "),
+      _("Black "),
+      _("Blau "),
+      _("Bleu "),
+      _("Blue "),
+      _("Braun "),
+      _("Brown "),
+      _("Chairo No "),
+      _("Crimson "),
+      _("Cyan "),
+      _("Gelb "),
+      _("Green "),
+      _("Grün "),
+      _("Kiiroi "),
+      _("Kuroi "),
+      _("Mauve "),
+      _("Purple "),
+      _("Red "),
+      _("Roho "),
+      _("Schwarz "),
+      _("Shiroi "),
+      _("Yellow "),
    }
    local actors = {
+      _("Aku"),
+      _("Akuma"),
+      _("Amigo"),
+      _("Angle Grinder"),
+      _("Anvil"),
+      _("Baka"),
+      _("Band Saw"),
       _("Beard"),
+      _("Belt Sander"),
+      _("Bench Grinder"),
+      _("Blargh"),
+      _("Bolt Cutter"),
+      _("Bulk"),
+      _("Chainsaw"),
+      _("Cheese"),
+      _("Chi"),
+      _("Claw Hammer"),
+      _("Corsair"),
+      _("Crowbar"),
+      _("Death"),
+      _("Demon"),
+      _("Destroyer"),
+      _("Devil"),
+      _("Doom"),
+      _("Dread"),
+      _("Drill Press"),
+      _("Emperor"),
+      _("Gift"),
+      _("Hamburger"),
+      _("Horror"),
+      _("Husband"),
+      _("Impact Wrench"),
+      _("Insanity"),
+      _("Jalapeño"),
+      _("Jigsaw"),
+      _("Kamikaze"),
+      _("Killer"),
+      _("Lance"),
+      _("Mosquito"),
       _("Moustache"),
       _("Neckbeard"),
-      _("Demon"),
-      _("Vengeance"),
-      _("Corsair"),
-      _("Pride"),
-      _("Insanity"),
+      _("Ninja"),
+      _("Oyster"),
       _("Peril"),
-      _("Death"),
-      _("Doom"),
-      _("Raider"),
-      _("Devil"),
-      _("Serpent"),
-      _("Bulk"),
-      _("Killer"),
-      _("Thunder"),
-      _("Tyrant"),
-      _("Lance"),
-      _("Destroyer"),
-      _("Horror"),
-      _("Dread"),
-      _("Blargh"),
-      _("Terror")
-   }
-   local actorspecials = {
-      _("Angle Grinder"),
-      _("Belt Sander"),
-      _("Chainsaw"),
-      _("Impact Wrench"),
-      _("Band Saw"),
-      _("Table Saw"),
-      _("Drill Press"),
-      _("Jigsaw"),
-      _("Turret Lathe"),
-      _("Claw Hammer"),
-      _("Rubber Mallet"),
-      _("Squeegee"),
-      _("Pipe Wrench"),
-      _("Bolt Cutter"),
-      _("Staple Gun"),
-      _("Crowbar"),
       _("Pickaxe"),
-      _("Bench Grinder"),
-      _("Scythe")
+      _("Pipe Wrench"),
+      _("Pride"),
+      _("Raider"),
+      _("Rubber Mallet"),
+      _("Sasori"),
+      _("Scythe"),
+      _("Sentinel"),
+      _("Serpent"),
+      _("Shinigami"),
+      _("Shujin"),
+      _("Squeegee"),
+      _("Staple Gun"),
+      _("Stir-fry"),
+      _("Table Saw"),
+      _("Tallman"),
+      _("Terror"),
+      _("Thunder"),
+      _("Turret Lathe"),
+      _("Tyrant"),
+      _("Vengeance"),
+      _("Wizard"),
+      _("Yakuza"),
+      _("Yarou"),
+      _("Yatsu"),
+      _("Youma"),
    }
    local article = articles[ rnd.rnd(1,#articles) ]
    local descriptor = descriptors[ rnd.rnd(1,#descriptors) ]
    local colour = colours[ rnd.rnd(1,#colours) ]
    local actor = actors[ rnd.rnd(1,#actors) ]
-   local actorspecial = actorspecials[ rnd.rnd(1,#actorspecials) ]
 
-   if rnd.rnd() < 0.25 then
-      return article .. " " .. actorspecial
+   local r = rnd.rnd()
+   if r < 0.166 then
+      return article .. actor
+   elseif r < 0.333 then
+      return colour .. actor
+   elseif r < 0.50 then
+      return descriptor .. actor
+   elseif r < 0.666 then
+      return article .. descriptor .. actor
+   elseif r < 0.833 then
+      return article .. colour .. actor
    else
-      local r = rnd.rnd()
-      if r < 0.166 then
-         return article .. " " .. actor
-      elseif r < 0.333 then
-         return colour .. " " .. actor
-      elseif r < 0.50 then
-         return descriptor .. " " .. actor
-      elseif r < 0.666 then
-         return article .. " " .. descriptor .. " " .. actor
-      elseif r < 0.833 then
-         return article .. " " .. colour .. " " .. actor
-      else
-         return article .. " " .. descriptor .. " " .. colour .. " " .. actor
-      end
+      return article .. descriptor .. colour .. actor
    end
 end
