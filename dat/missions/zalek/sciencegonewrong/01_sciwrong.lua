@@ -16,8 +16,7 @@ t_pla = {}
 t_pla[1] = "Gastan"
 t_sys[1] = "Seiben"
 t_sys[2] = "Shikima"
--- player makes maximum 500k, minimum 300k
-reward = rnd.rnd(3,4)*100000+rnd.rnd(10)*10000 
+reward = 1000000
 shpnm = _("Tokera")
 -- Mission details
 title = {}
@@ -26,27 +25,22 @@ osd_msg = {}
 misn_title = _("The one with the Visit")
 misn_reward = _("The gratitude of science and a bit of compensation")
 misn_desc = _("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype.")
-bar_desc = _("You see Dr Geller and he is waving you over. Apparently he has another job for you.")
+bar_desc = _("You see Dr. Geller waving you over. Apparently he has another job for you.")
 
 
 title[1] = _([[In the bar]])
-text[1]  = _([["Ah there you are! I've got a job for you. I am so close to revolutionizing science! I will become a dinosaur of science! The T-Rex of progress! Well, this job involves some acquisition of technology from the Soromid. They did not want to give it to me and so for science you will have to get it for me. Are you up for it?]])
-text[2] = _([["Excellent. From what I have been told it looks like this." He says gesticulating around with his hands to no merit. "You will recognize it, it is in a box that should be kept separately from the remaining stuff and labelled top secret! Not secret enough now, I suppose! Ah you might need this!" and he hands you a handheld device.
-"Oh and the ship is called the %s"
-You realize that you are supposed to steal something top secret. Quirky people those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you get yourself on the way.]])
+text[1]  = _([["Ah, there you are! I've got a job for you. Specifically, some... acquisition... of technology from the Soromid, who haven't been very cooperative. Are you up for it?" It sounds like he wants you to do something that would get you in trouble with Soromid authorities. Do you accept the job?]])
+text[2] = _([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the %s."
+    So he wants you to steal something top secret from the Soromid. Quirky people those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]])
 -- msgs by soromid forces
-title[2] = _([[Intercom]])
-text[3] = _([["You have committed and act of aggression against the House Soromid. Stand down or suffer the consequences."]])
 title[3] = _([[In the ship]])
-text[4] = _([[You make your way through the ship, the crew is obviously shaken and not very prepared for fighting. By wielding your guns you can convince them to not cause any trouble, so you can see how they despise you with their looks. Clearly you have not made any friends here today, but who wants to be friends with those mutants anyway, you justify to yourself. You search through the ship and the handheld in your pocket starts beeping. 
-It appears to be some sort of detector allowing you to home in on the technology. You manage to locate a box on a table in one of the crew chambers. Apparently nobody expected somebody to be nuts enough to try to do what you are doing. You grab the box and head back to your ship.
-Well this was the easy part, you think. Now off to the escape.]])
+text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
+    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected somebody to be nuts enough to try to do what you are doing. You grab the box and head back to your ship.]])
 
-text[5] = _([["Have you got it?" asks Dr Geller. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my Prototype. 
-"Oh, and this is for you!" and he tosses you a payslip before walking off, smiling.]])
+text[5] = _([["How'd it go?" asks Dr Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
 -- if the player kills the ship before getting the tech
 title[4] = _([[What have you done?]])
-text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now. You have failed Dr Geller! And even worse: you failed science!]])
+text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]])
 OSDtitle = _("The one with the Visit")
 osd_msg = {}
 osd_msg[1] = _("Go to the %s system and find the %s")
@@ -60,7 +54,7 @@ refusetext = _("But I really thought you were into science...")
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek_scientist_placeholder")
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller")
    misn.setDesc( bar_desc )
 end
 function accept()
@@ -97,7 +91,6 @@ function sys_enter ()
       hidle = hook.pilot(target, "idle", "targetIdle")
       hexp = hook.pilot(target, "exploded", "targetExploded")
       hboard = hook.pilot(target, "board", "targetBoard")
-      hnoharm = hook.pilot(target, "attacked", "tar_attacked")
       targetIdle()
    end
 end
@@ -149,12 +142,6 @@ function targetBoard()
    hland = hook.land("land")
    boarded = true
    hook.rm(hboard)
-end
-
-function tar_attacked ()
-   tk.msg(title[2], text[3])
-   target:setHostile(true)
-   hook.rm(hnoharm)
 end
 
 function land()
