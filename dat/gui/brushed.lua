@@ -209,6 +209,7 @@ function create()
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
+   ta_pnt_pane_w_m, ta_pnt_pane_h_m = planet_pane_m:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
    ta_pnt_pane_x = math.max( screen_w - ta_pnt_pane_w - 16, tbar_center_x + tbar_center_w/2 - 10 )
    ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 32
@@ -898,7 +899,9 @@ function render( dt )
 
       -- Render background images.
       gfx.renderTex( planet_pane_t, ta_pnt_pane_x, ta_pnt_pane_y )
-      gfx.renderTexRaw( planet_pane_m, ta_pnt_pane_x, ta_pnt_pane_y - services_h, ta_pnt_pane_w, services_h, 1, 1, 0, 0, 1, 1 )
+      for y = ta_pnt_pane_y, ta_pnt_pane_y-services_h, -ta_pnt_pane_h_m do
+          gfx.renderTex( planet_pane_m, ta_pnt_pane_x, y )
+      end
       gfx.renderTex( planet_pane_b, ta_pnt_pane_x, ta_pnt_pane_y - services_h - ta_pnt_pane_h_b )
       gfx.renderTex( planet_bg, ta_pnt_image_x, ta_pnt_image_y )
 
