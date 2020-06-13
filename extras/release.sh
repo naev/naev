@@ -12,12 +12,15 @@ if [[ ! -f "naev.6" ]]; then
    exit -1
 fi
 
-CORECOUNT=$"(cat nproc --all)"
 NAEVDIR="$(pwd)"
 OUTPUTDIR="${NAEVDIR}/dist/"
 STEAMPATH="${NAEVDIR}/steam/tools/linux/"
 LOGFILE="release.log"
-CFLAGS=("-j" + ${CORECOUNT})
+CFLAGS="-j$(nproc --all)"
+
+COMPILED=""
+FAILED=""
+SKIPPED=""
 
 function log {
    echo
@@ -25,6 +28,7 @@ function log {
    echo "====================================="
    echo "$1"
    echo "====================================="
+   return 0
 }
 
 function get_version {
@@ -35,48 +39,45 @@ function get_version {
       BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
       VERSION="${BASEVER}.0-beta${BETAVER}"
    fi
+   return 0
 }
 
-function make_linux {
+function make_generic {
    log "Compiling $2"
    make distclean
    ./autogen.sh
    ./configure $1
    make ${CFLAGS}
    get_version
-   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
-}
-
-function make_windows {
-   log "Compiling $2"
-   make distclean
-   ./autogen.sh
-   if [ $2 = "win32" ] 
-   then
-      ./configure --host=i686-w64-mingw32.static $1
-      make ${CFLAGS}
-   elif [ $2 = "win64" ]
-   then
-      ./configure --host=x86_64-w64-mingw32.static $1
-      make ${CFLAGS}
+   if [[ -f src/naev ]]; then
+      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
+      COMPILED="$COMPILED $2"
+      return 0
+   else
+      FAILED="$FAILED $2"
+      return 1
    fi
-   get_version
-   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
 }
 
 function make_win32 {
-   make_windows "--enable-lua=internal --with-openal=no" "win32" # Disabled due to issues while compiling.. not sure what is up.
+   # Openal isabled due to issues while compiling.. not sure what is up.
+   make_generic "--host=i686-w64-mingw32.static --enable-lua=internal --with-openal=no" "win32"
 }
 
 function make_win64 {
-   make_windows "--enable-lua=internal" "win64"
+   make_generic "--host=x86_64-w64-mingw32.static --enable-lua=internal" "win64"
 }
 
 function make_linux_64 {
-   make_linux "--enable-lua=internal" "linux-x86-64"
+   make_generic "--enable-lua=internal" "linux-x86-64"
 }
 
 function make_linux_steam_64 {
+   if [[ ! -d "${STEAMPATH}" ]]; then
+      log "Skipping linux-steam-x86-64"
+      SKIPPED+=( "linux-steam-x86-64" )
+      return 2
+   fi
    log "Compiling linux-steam-x86-64"
    TMPPATH="/tmp/naev_steam_compile.sh"
    echo "#!/bin/bash" > "${TMPPATH}"
@@ -87,22 +88,43 @@ function make_linux_steam_64 {
    chmod +x "${TMPPATH}"
    ${STEAMPATH}/shell-amd64.sh "${TMPPATH}"
    get_version
-   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-linux-steam-x86-64"
+   if [[ -f src/naev ]]; then
+      mv src/naev "${OUTPUTDIR}/naev-${VERSION}-linux-steam-x86-64"
+      COMPILED="$COMPILED linux-steam-x86-64"
+      return 0
+   else
+      FAILED="$FAILED linux-steam-x86-64"
+      return 1
+   fi
 }
 
 function make_source {
    log "Making source bzip2"
    VERSIONRAW="$(cat ${NAEVDIR}/VERSION)"
    make dist-bzip2
-   get_version
-   mv "naev-${VERSIONRAW}.tar.bz2" "dist/naev-${VERSION}-source.tar.bz2"
+   if [[ -f "naev-${VERSIONRAW}.tar.bz2" ]]; then
+      get_version
+      mv "naev-${VERSIONRAW}.tar.bz2" "dist/naev-${VERSION}-source.tar.bz2"
+      COMPILED="$COMPILED source"
+      return 0
+   else
+      FAILED="$FAILED source"
+      return 1
+   fi
 }
 
 function make_ndata {
    log "Making ndata"
    get_version
    make "ndata.zip"
-   mv "ndata.zip" "${OUTPUTDIR}/ndata-${VERSION}.zip"
+   if [[ -f "ndata.zip" ]]; then
+      mv "ndata.zip" "${OUTPUTDIR}/ndata-${VERSION}.zip"
+      COMPILED="$COMPILED ndata"
+      return 0
+   else
+      FAILED="$FAILED ndata"
+      return 1
+   fi
 }
 
 # Create output dirdectory if necessary
@@ -119,11 +141,18 @@ make distclean
 make VERSION
 
 # Make stuff
-make_source          2>&1 | tee -a "${LOGFILE}"
-make_ndata           2>&1 | tee -a "${LOGFILE}"
-make_win32           2>&1 | tee -a "${LOGFILE}"
-make_win64           2>&1 | tee -a "${LOGFILE}"
-make_linux_64        2>&1 | tee -a "${LOGFILE}"
-#make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
+make_source          >> "${LOGFILE}" 2>&1
+make_ndata           >> "${LOGFILE}" 2>&1
+make_win32           >> "${LOGFILE}" 2>&1
+make_win64           >> "${LOGFILE}" 2>&1
+make_linux_64        >> "${LOGFILE}" 2>&1
+make_linux_steam_64  >> "${LOGFILE}" 2>&1
 
+log "COMPILED"
+for i in ${COMPILED[@]}; do echo "$i"; done
 
+log "SKIPPED"
+for i in ${SKIPPED[@]}; do echo "$i"; done
+
+log "FAILED"
+for i in ${FAILED[@]}; do echo "$i"; done
