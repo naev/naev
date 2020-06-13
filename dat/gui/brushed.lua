@@ -888,10 +888,12 @@ function render( dt )
 
       -- Render background images.
       gfx.renderTex( planet_pane_t, ta_pnt_pane_x, ta_pnt_pane_y )
-      for y = ta_pnt_pane_y, ta_pnt_pane_y-services_h, -ta_pnt_pane_h_m do
+      local y
+      for yy = ta_pnt_pane_y, ta_pnt_pane_y-services_h, -ta_pnt_pane_h_m do
+         y = yy
          gfx.renderTex( planet_pane_m, ta_pnt_pane_x, y )
       end
-      gfx.renderTex( planet_pane_b, ta_pnt_pane_x, ta_pnt_pane_y - services_h - ta_pnt_pane_h_b )
+      gfx.renderTex( planet_pane_b, ta_pnt_pane_x, y - ta_pnt_pane_h_b )
       gfx.renderTex( planet_bg, ta_pnt_image_x, ta_pnt_image_y )
 
       --Render planet image.
