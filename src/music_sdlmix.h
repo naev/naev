@@ -3,13 +3,10 @@
  */
 
 
-
 #ifndef MUSIC_SDLMIX_H
 #  define MUSIC_SDLMIX_H
 
-
 #if USE_SDLMIX
-
 
 #include "SDL_rwops.h"
 
@@ -42,6 +39,5 @@ int music_mix_isPlaying (void);
 
 
 #endif /* USE_SDLMIX */
-
 
 #endif /* MUSIC_SDLMIX_H */

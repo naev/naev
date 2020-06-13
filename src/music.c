@@ -16,10 +16,7 @@
 #include "SDL.h"
 
 #include "music_sdlmix.h"
-
-#if USE_OPENAL
 #include "music_openal.h"
-#endif /* Comment out if not using OpenAL*/
 
 #include "nlua.h"
 #include "nluadef.h"

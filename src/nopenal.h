@@ -5,7 +5,6 @@
 
 #if USE_OPENAL
 
-
 #ifndef NOPENAL_H
 #  define NOPENAL_H
 
@@ -107,7 +106,6 @@ extern ALvoid (AL_APIENTRY *nalEffecti)(ALuint,ALenum,ALint);
 extern ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
 extern ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
 extern ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
-
 
 #endif /* NOPENAL_H */
 
