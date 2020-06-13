@@ -12,7 +12,7 @@ include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
 misn_title = _("ZT test of an engine %s")
-misn_desc = _("A Za'lek research team need you to travel to %s in %s using an engine in order to test it.")
+misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 misn_reward = _("%s credits")
 
 title = _([[ZT: go to %s in the %s system
@@ -37,35 +37,35 @@ engines = {_("with phase-change material cooling"),
            }
 
 znpcs = {}
-znpcs[1] = _([[A group of university students greet you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
-znpcs[2] = _([[A very old Za'lek researcher needs you to fly with his instrumented device in order to take measurements.]])
+znpcs[1] = _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
+znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
-znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system he has implemented in this engine.]])
+znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
 
 msg_msg = {}
 msg_msg[1] = _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine.")
 msg_msg[2] = _("You have too many active missions.")
 msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you. You ask them why they aren't using drones for such missions and they answer that they don't want to risk damaging a drone.")
-msg_msg[4] = _("It seems, you forgot the engine you are supposed to test... Land again and put it in your ship")
+msg_msg[4] = _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.")
 misst = _("Mission failed")
 miss = _("You traveled without the engine.")
 
-teleport_title = _("What the hell happens there?")
-teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going to hyperspace. Then a shock makes you pass out. As you wake up, your ship is damaged and your compass indicates that you are in the %s system!")
+teleport_title = _("What the hell is happening?")
+teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the %s system!")
 
-slow_title = _("Where is the power gone?")
+slow_title = _("Where has the power gone?")
 slow_text = _("The engine doesn't seem to want to propel your ship anymore...")
 speed_title = _("Power is back.")
-speed_text = _("It seems, the engine decided to work properly again.")
+speed_text = _("It seems the engine decided to work properly again.")
 
-outOf_title = _("This wasn't supposed to happened")
-outOf_text = _("Your ship is totally out of control. Apparently, the experimental engine seems to have some defects.")
+outOf_title = _("This wasn't supposed to happen")
+outOf_text = _("Your ship is totally out of control. You curse under your breath at the defective engine.")
 noAn_title = _("Engine is dead")
-noAn_text = _("It seems, the engine doesn't work anymore...")
+noAn_text = _("The engine has stopped working. It had better start working again soon; you don't want to die out here!")
 baTo_title = _("Back to normal")
-baTo_text = _("The engine works again.")
+baTo_text = _("The engine is working again. You breathe a sigh of relief.")
 
-cannot_title = _("You can not accept this mission")
+cannot_title = _("You cannot accept this mission")
 cannot_text = _("You are already testing another engine.")
 
 osd_title = _("Za'lek Test")
