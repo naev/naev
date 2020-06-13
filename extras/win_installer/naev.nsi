@@ -1,10 +1,12 @@
 ;For testing the script
 ;SetCompress Off
 
+;Enables Unicode installer to clear ANSI deprecation message 
+Unicode true
 ;Version, Arch, Icon and URL
-!define VERSION "0.8.0"
-!define VERSION_SUFFIX "-beta1" ; This string can be used for betas and release candidates.
-!define ARCH "32"
+;!define VERSION "0.8.0"
+;!define VERSION_SUFFIX "-beta1" ; This string can be used for betas and release candidates.
+;!define ARCH "32"
 !define URL "https://naev.org"
 !define MUI_ICON "..\logos\logo.ico"
 ;!define MUI_UNICON "..\logos\logo.ico"
@@ -69,7 +71,7 @@ Var StartMenuFolder
 
 !insertmacro MUI_PAGE_INSTFILES
 
-!define MUI_FINISHPAGE_RUN $INSTDIR\naev.exe
+!define MUI_FINISHPAGE_RUN $INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe
 !define MUI_FINISHPAGE_RUN_PARAMETERS
 !insertmacro MUI_PAGE_FINISH
 
@@ -92,7 +94,7 @@ Section "Naev Engine" BinarySection
 
    SetOutPath "$INSTDIR"
    File bin\*.dll
-   File bin\naev.exe
+   File bin\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe
    File ..\logos\logo.ico
    
    IntOp $PortID $PortID & ${SF_SELECTED}
@@ -106,12 +108,12 @@ Section "Naev Engine" BinarySection
 
    ;Add uninstall information
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayName" "Naev"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayIcon" "$\"$INSTDIR\naev.exe$\""
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayIcon" "$\"$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "URLInfoAbout" "${URL}"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}${VERSION_SUFFIX}"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "Publisher" "Naev Project"
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "Publisher" "Naev Team"
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoModify" 1
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoRepair" 1
 
@@ -119,8 +121,8 @@ Section "Naev Engine" BinarySection
 
       ;Create shortcuts
       CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev.exe"
-      CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev.exe"
+      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
+      CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
 
    !insertmacro MUI_STARTMENU_WRITE_END
    ${Else}
@@ -131,11 +133,12 @@ SectionEnd
 
 Section "Naev Data (Download)" DataSection
    dwn:
-    AddSize 296859 ;Size (kB) of Naev ndata   
-    NSISdl::download "https://github.com/naev/naev/releases/download/naev-${VERSION}${VERSION_SUFFIX}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
+    AddSize 331538 ;Size (kB) of Naev ndata
+    ;use inetc due to the fact that NSISdl cannot download via HTTPS   
+    inetc::get "http://github.com/naev/naev/releases/download/naev-${VERSION}${VERSION_SUFFIX}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
-      StrCmp $R0 "success" skip
-        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
+      StrCmp $R0 "OK" skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe.$\n$\nRetry?" IDNO skip
       Goto dwn
    skip:
 SectionEnd
@@ -186,7 +189,7 @@ FunctionEnd
 Section "Uninstall"
 
    Delete "$INSTDIR\Uninstall.exe"
-   Delete "$INSTDIR\naev.exe"
+   Delete "$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
    Delete "$INSTDIR\logo.ico"
    Delete "$INSTDIR\ndata.zip"
    Delete "$INSTDIR\*.dll"

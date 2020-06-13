@@ -11,8 +11,8 @@
 
 #include "ncompat.h"
 
-#include OPENAL_ALC_H
-#include OPENAL_AL_H
+#include "alc.h"
+#include "al.h"
 
 /*
  * EFX stuff.

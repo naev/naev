@@ -12,11 +12,12 @@ if [[ ! -f "naev.6" ]]; then
    exit -1
 fi
 
+CORECOUNT=$"(cat nproc --all)"
 NAEVDIR="$(pwd)"
 OUTPUTDIR="${NAEVDIR}/dist/"
 STEAMPATH="${NAEVDIR}/steam/tools/linux/"
 LOGFILE="release.log"
-CFLAGS="-j5"
+CFLAGS=("-j" + ${CORECOUNT})
 
 function log {
    echo
@@ -36,7 +37,7 @@ function get_version {
    fi
 }
 
-function make_generic {
+function make_linux {
    log "Compiling $2"
    make distclean
    ./autogen.sh
@@ -46,8 +47,33 @@ function make_generic {
    mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
 }
 
+function make_windows {
+   log "Compiling $2"
+   make distclean
+   ./autogen.sh
+   if [ $2 = "win32" ] 
+   then
+      ./configure --host=i686-w64-mingw32.static $1
+      make ${CFLAGS}
+   elif [ $2 = "win64" ]
+   then
+      ./configure --host=x86_64-w64-mingw32.static $1
+      make ${CFLAGS}
+   fi
+   get_version
+   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
+}
+
+function make_win32 {
+   make_windows "--enable-lua=internal --with-openal=no" "win32" # Disabled due to issues while compiling.. not sure what is up.
+}
+
+function make_win64 {
+   make_windows "--enable-lua=internal" "win64"
+}
+
 function make_linux_64 {
-   make_generic "--enable-lua=internal" "linux-x86-64"
+   make_linux "--enable-lua=internal" "linux-x86-64"
 }
 
 function make_linux_steam_64 {
@@ -89,13 +115,15 @@ touch "${LOGFILE}"
 # Preparation
 make distclean
 ./autogen.sh
-./configure --enable-lua=internal --enable-csparse=internal
+./configure --enable-lua=internal
 make VERSION
 
 # Make stuff
 make_source          2>&1 | tee -a "${LOGFILE}"
 make_ndata           2>&1 | tee -a "${LOGFILE}"
+make_win32           2>&1 | tee -a "${LOGFILE}"
+make_win64           2>&1 | tee -a "${LOGFILE}"
 make_linux_64        2>&1 | tee -a "${LOGFILE}"
-make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
+#make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
 
 

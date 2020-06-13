@@ -361,11 +361,15 @@ AS_IF([test "$used_csparse" = "internal"], [
     CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
     CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
+# OpenAL
+# AS_IF([test "$with_openal" = "yes"], [
+#  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
+#])
 
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
-  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
-])
+  PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
+], [have_openal=no])
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
