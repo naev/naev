@@ -62,6 +62,9 @@ function create()
    planet_pane_m = tex.open( base .. "frame_planet_middle.png" )
    planet_pane_b = tex.open( base .. "frame_planet_bottom.png" )
    planet_bg = tex.open( base .. "planet_image.png" )
+   fleet_pane_t = tex.open( base .. "frame_fleet_top.png" )
+   fleet_pane_m = planet_pane_m
+   fleet_pane_b = planet_pane_b
    icon_shield = tex.open( base .. "iconShield.png" )
    icon_armour = tex.open( base .. "iconArmour.png" )
    icon_energy = tex.open( base .. "iconEnergy.png" )
@@ -209,9 +212,22 @@ function create()
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
+   ta_pnt_pane_w_m, ta_pnt_pane_h_m = planet_pane_m:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
    ta_pnt_pane_x = math.max( screen_w - ta_pnt_pane_w - 16, tbar_center_x + tbar_center_w/2 - 10 )
    ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 32
+
+   -- Fleet pane
+   ta_flt_pane_w, ta_flt_pane_h = fleet_pane_t:dim()
+   ta_flt_pane_w_m, ta_flt_pane_h_m = fleet_pane_m:dim()
+   ta_flt_pane_w_b, ta_flt_pane_h_b = fleet_pane_b:dim()
+   ta_flt_pane_x = ta_pnt_pane_x - ta_flt_pane_w - 16
+   if ta_flt_pane_x < tbar_center_x + tbar_center_w / 2 - 10 then
+       ta_flt_pane_x = nil
+       ta_flt_pane_y = nil
+   else
+       ta_flt_pane_y = screen_h - ta_flt_pane_h - 32
+   end
 
    -- Planet faction icon
    ta_pnt_fact_x = ta_pnt_pane_x + 140
@@ -860,32 +876,6 @@ function render( dt )
       renderButton( v )
    end
 
-   -- Formation selection button
-   if #pp:followers() ~= 0 then
-      local x = 0
-      local _, height = field_frame_center:dim()
-      local width = gfx.printDim(false, "Set formation")
-      local y = tbar_y - height
-
-      if buttons["formation"] == nil then
-          buttons["formation"] = {}
-      end
-
-      local button = buttons["formation"]
-      button.x = x
-      button.y = y
-      button.w = width
-      button.h = height
-      button.action = playerform
-
-      local col = col_text
-      if button.state == "mouseover" then
-          col = col_lgray
-      end
-
-      renderField( "Set formation", x, y, width, col )
-   end
-
    -- Planet pane
    if nav_pnt then
       ta_pnt_dist = pp:pos():dist( planet.pos )
@@ -898,7 +888,9 @@ function render( dt )
 
       -- Render background images.
       gfx.renderTex( planet_pane_t, ta_pnt_pane_x, ta_pnt_pane_y )
-      gfx.renderTexRaw( planet_pane_m, ta_pnt_pane_x, ta_pnt_pane_y - services_h, ta_pnt_pane_w, services_h, 1, 1, 0, 0, 1, 1 )
+      for y = ta_pnt_pane_y, ta_pnt_pane_y-services_h, -ta_pnt_pane_h_m do
+         gfx.renderTex( planet_pane_m, ta_pnt_pane_x, y )
+      end
       gfx.renderTex( planet_pane_b, ta_pnt_pane_x, ta_pnt_pane_y - services_h - ta_pnt_pane_h_b )
       gfx.renderTex( planet_bg, ta_pnt_image_x, ta_pnt_image_y )
 
@@ -939,6 +931,66 @@ function render( dt )
       gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
 
       gfx.renderTex( top_bar_center_sheen, ta_pnt_pane_x + 11, ta_pnt_pane_y + ta_pnt_pane_h - 15 )
+   end
+
+   -- Fleet functions
+   -- TODO: Add an API for and implement fleet command buttons
+   if #pp:followers() ~= 0 then
+      local base_x, y, panel_y, width, height
+      width, height = field_frame_center:dim()
+      base_x = nil
+      y = tbar_y - height
+
+      local my_buttons = { "formation" }
+      local button_text = { formation = _("Set formation") }
+      local button_action = { formation = playerform }
+
+      if ta_flt_pane_x ~= nil and ta_flt_pane_y ~= nil then
+         base_x = ta_flt_pane_x + ta_flt_pane_w/2
+
+         gfx.renderTex( fleet_pane_t, ta_flt_pane_x, ta_flt_pane_y )
+         panel_y = ta_flt_pane_y
+      end
+
+      for i, v in ipairs( my_buttons ) do
+         local text = button_text[v]
+         width = gfx.printDim(false, text)
+
+         if buttons[v] == nil then
+            buttons[v] = {}
+         end
+
+         local button = buttons[v]
+         if base_x ~= nil then
+            button.x = math.max( 0, base_x - width/2 )
+         else
+            button.x = 16
+         end
+         button.y = y
+         button.w = width
+         button.h = height
+         button.action = button_action[v]
+
+         local col = col_text
+         if button.state == "mouseover" then
+             col = col_lgray
+         end
+
+         if base_x ~= nil then
+            while y < panel_y do
+               panel_y = panel_y - ta_flt_pane_h_m
+               gfx.renderTex( fleet_pane_m, ta_flt_pane_x, panel_y )
+            end
+         end
+
+         renderField( text, button.x, button.y, width, col )
+
+         y = y - height - 2
+      end
+
+      if base_x ~= nil then
+         gfx.renderTex( fleet_pane_b, ta_flt_pane_x, panel_y - ta_flt_pane_h_b )
+      end
    end
 end
 
