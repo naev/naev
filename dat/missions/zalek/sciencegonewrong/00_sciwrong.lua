@@ -115,7 +115,7 @@ function first_trd()
      return
   else
      tk.msg(title[1], text[3])
-     tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name())
+     tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
      talked = true
   end
   
