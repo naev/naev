@@ -6,6 +6,9 @@
 # to the "dist/" directory.
 #
 # Steam sdk should be unpacked, set up, and named "steam/" in the naev directory.
+# For Windows Cross-Compile, it is assumed that a  working MXE environment is configured with all packages required to build.
+# Wine is required at buildtime for Windows builds.
+
 
 if [[ ! -f "naev.6" ]]; then
    echo "Please run from Naev root directory."
@@ -61,11 +64,11 @@ function make_windows {
       make ${CFLAGS}
    fi
    get_version
-   mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
+   mv src/naev.exe "${OUTPUTDIR}/naev-${VERSION}-$2.exe"
 }
 
 function make_win32 {
-   make_windows "--enable-lua=internal --with-openal=no" "win32" # Disabled due to issues while compiling.. not sure what is up.
+   make_windows "--enable-lua=internal" "win32"
 }
 
 function make_win64 {
@@ -121,9 +124,9 @@ make VERSION
 # Make stuff
 make_source          2>&1 | tee -a "${LOGFILE}"
 make_ndata           2>&1 | tee -a "${LOGFILE}"
-make_win32           2>&1 | tee -a "${LOGFILE}"
-make_win64           2>&1 | tee -a "${LOGFILE}"
+#make_win32           2>&1 | tee -a "${LOGFILE}" # Enable if you'd like to cross compile
+#make_win64           2>&1 | tee -a "${LOGFILE}" # Enable if you'd like to cross compile
 make_linux_64        2>&1 | tee -a "${LOGFILE}"
-#make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
+make_linux_steam_64  2>&1 | tee -a "${LOGFILE}"
 
 
