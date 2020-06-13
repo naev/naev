@@ -11,7 +11,7 @@
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
-misn_title = _("ZT test of an engine %s")
+misn_title = _("ZT test of engine %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 misn_reward = _("%s credits")
 
@@ -72,11 +72,6 @@ osd_title = _("Za'lek Test")
 osd_msg = {_("Fly to %s in the %s system")}
 
 function create()
-   -- Claim core engine slot
-   if not misn.claim( 'outfit_engine_core' ) then
-      misn.finish( false )
-   end
-
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
@@ -88,7 +83,7 @@ function create()
    end
 
    --All the mission must go to Za'lek planets with a place to change outfits
-   if destplanet:faction() ~= faction.get( "Za'lek" ) or destplanet:services()["outfits"] == nil then
+   if destplanet:faction() ~= faction.get( "Za'lek" ) or not destplanet:services()["outfits"] then
       misn.finish(false)
    end
 
