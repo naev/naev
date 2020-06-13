@@ -233,7 +233,7 @@ function enter ()
       cursys = cursys + 1
    end
 
-   if system.cur() == mysys[cursys] then
+   if stage <= 2 and system.cur() == mysys[cursys] then
       -- This system will contain the pirate
       -- cursys > pisys means the player has failed once (or more).
       if cursys == pisys or (cursys > pisys and rnd.rnd() > .5) then
@@ -253,9 +253,13 @@ function enter ()
          
          -- Get the position of the target
          jp  = jump.get(system.cur(), last_sys)
-         x = 6000 * rnd.rnd() - 3000
-         y = 6000 * rnd.rnd() - 3000
-         pos = jp:pos() + vec2.new(x,y)
+         if jp ~= nil then
+            x = 6000 * rnd.rnd() - 3000
+            y = 6000 * rnd.rnd() - 3000
+            pos = jp:pos() + vec2.new(x,y)
+         else
+            pos = nil
+         end
 
          -- Spawn the target
          pilot.toggleSpawn( false )
