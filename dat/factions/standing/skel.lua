@@ -170,7 +170,7 @@ function default_hit( current, amount, source, secondary )
             local witness = pilot.get( { _fthis } )
             if not has_planet and witness then
                for _, pilot in ipairs(witness) do
-                  if player.pilot():pos():dist( pilot:pos() ) < 5000 then
+                  if player.pos():dist( pilot:pos() ) < 5000 then
                      -- Halve impact relative to a normal secondary hit.
                      f = math.min( cap, f + math.min(delta[2], amount * 0.5 * clerp( f, 0, 1, cap, 0.2 )) )
                      break
