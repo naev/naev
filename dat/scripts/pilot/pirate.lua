@@ -24,6 +24,7 @@ function pirate_name ()
       _("Big "),
       _("Bloody "),
       _("Brooding "),
+      _("BT "),
       _("Clustered "),
       _("Creamy "),
       _("Crusty "),
@@ -48,6 +49,7 @@ function pirate_name ()
       _("Hashitteru "),
       _("Hen'na "),
       _("Horrible "),
+      _("IDS "),
       _("Insatiable "),
       _("Kakkowarui "),
       _("Koronderu "),
@@ -130,6 +132,7 @@ function pirate_name ()
       _("Yellow "),
    }
    local actors = {
+      _("1024"),
       _("Aku"),
       _("Akuma"),
       _("Amigo"),
