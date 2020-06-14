@@ -99,7 +99,7 @@ bar_desc[6] = _([[This pilot looks like a pirate, but strangely enough, the auth
 osd_title = _("The Dvaered Championship, round %n")
 final_title = _("The Dvaered Championship, final")
 osd_msg[1] = _("Go to the starting point")
-osd_msg[2] = _("Disable your opponent, DON'T KILL HIM")
+osd_msg[2] = _("Disable your opponent; DO NOT KILL")
 osd_msg[3] = _("Land on %s")
 
 --mark
