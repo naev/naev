@@ -150,7 +150,7 @@ void commodity_update( unsigned int wid, char* str )
            "NA credits/ton\n"
            "NA credits/ton"),
          pilot_cargoFree(player.p),
-         pilot_modCredits(player.p, 0) );
+         buf3 );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", _("No commodities available.") );
       window_disableButton( wid, "btnCommodityBuy" );
