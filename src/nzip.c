@@ -197,18 +197,10 @@ char** nzip_listFiles ( struct zip* arc, size_t* nfiles )
  */
 void nzip_printError ( int err )
 {
-   char *buf;
-   int size;
-
-   // Get length of message
-   size = zip_error_to_str ( NULL, 0, err, 0 );
-   // Get message
-   buf = malloc ( sizeof ( char ) * size );
-   zip_error_to_str ( buf, 50, err, 0 );
-
-   WARN ( "%s", buf );
-
-   free ( buf );
+   char buf[256];
+   /* Get message. */
+   zip_error_to_str( buf, sizeof(buf), err, 0 );
+   WARN( "%s", buf );
 }
 
 /**
