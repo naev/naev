@@ -191,7 +191,7 @@ static glFont* dialogue_getSize( const char* title,
 
 
    d = ((double)w/(double)h)*(3./4.); /* deformation factor. */
-   if (fabs(d) > 0.3) {
+   if (FABS(d) > 0.3) {
       if (h > w)
          w = h;
       h = gl_printHeightRaw( font, w-40, msg );

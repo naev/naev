@@ -1061,7 +1061,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
             k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
             if ((k == KEY_PRESS) && input_keybinds[i].disabled)
                continue;
-            input_key( i, k, fabs(((double)value)/32767.), 0 );
+            input_key( i, k, FABS(((double)value)/32767.), 0 );
          }
 
          /* Negative axis keybinding. */
@@ -1070,7 +1070,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
             k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
             if ((k == KEY_PRESS) && input_keybinds[i].disabled)
                continue;
-            input_key( i, k, fabs(((double)value)/32767.), 0 );
+            input_key( i, k, FABS(((double)value)/32767.), 0 );
          }
       }
    }

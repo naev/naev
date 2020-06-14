@@ -1254,7 +1254,7 @@ void space_update( const double dt )
          }
 
          /* Head towards target. */
-         if (fabs(interference_alpha - interference_target) > 1e-05) {
+         if (FABS(interference_alpha - interference_target) > 1e-05) {
             /* Asymptotic. */
             interference_alpha += (interference_target - interference_alpha) * dt;
 

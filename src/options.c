@@ -1532,7 +1532,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
 {
    char buf[32];
    double scale = window_getFaderValue(wid, str);
-   if (fabs(conf.scalefactor-scale) > 1e-4)
+   if (FABS(conf.scalefactor-scale) > 1e-4)
       opt_needRestart();
    conf.scalefactor = scale;
    nsnprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );

@@ -377,9 +377,9 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
       /* Check distance. */
       temp = range_factor *
                vect_dist2( &target->solid->pos, &p->solid->pos )
-            + fabs( pilot_relsize( p, target ) - mass_factor)
-            + fabs( pilot_relhp(   p, target ) - health_factor)
-            + fabs( pilot_reldps(  p, target ) - damage_factor);
+            + FABS( pilot_relsize( p, target ) - mass_factor)
+            + FABS( pilot_relhp(   p, target ) - health_factor)
+            + FABS( pilot_reldps(  p, target ) - damage_factor);
 
       if ((tp == 0) || (temp < current_heuristic_value)) {
          current_heuristic_value = temp;
