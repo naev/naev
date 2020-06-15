@@ -86,7 +86,7 @@ thank_comm[3] = _("See you later!")
 thank_comm[4] = _("Good luck!")
 
 not_scared_comm    = {}
-not_scared_comm[1] = _([[The pilot mocks you. "Mommy, I'm so scared!"]])
+not_scared_comm[1] = _("Mommy, I'm so scared! Har har har!")
 not_scared_comm[2] = _("Haw haw haw! you're ridiculous!")
 not_scared_comm[3] = _("Just come at me if you dare!")
 not_scared_comm[4] = _("You're so pitiful!")
@@ -98,7 +98,7 @@ ambush_comm[3] = _("Why are you following %s?")
 ambush_comm[4] = _("Quit following %s!")
 ambush_comm[5] = _("Your quest for %s ends here!")
 ambush_comm[6] = _("You ask too many questions about %s!")
-ambush_comm[7] = _("You were not supposed to get on the way of %s!")
+ambush_comm[7] = _("You were not supposed to get on the trail of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
