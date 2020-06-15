@@ -117,7 +117,7 @@ osd_msg[3] = _("Take the artefact to Baron Sauterfeldt")
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(npc_desc, "none")
+   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman")
    misn.setDesc(bar_desc)
 end
 
