@@ -592,10 +592,10 @@
          * dimitri.png
          * keer.png
          * soldner.png
-       * empire1.png
-       * empire2.png
-       * empire3.png
-       * empire4.png
+       * empire_mil_f1.png
+       * empire_mil_m1.png
+       * empire_mil_m2.png
+       * empire_mil_m3.png
      * flf
        * unique
          * benito.png
@@ -651,12 +651,44 @@
        * dv_civilian_f3.png
        * dv_civilian_f4.png
        * dv_civilian_f5.png
+       * dv_civilian_f6.png
+       * dv_civilian_f7.png
+       * dv_civilian_f8.png
+       * dv_civilian_f9.png
+       * dv_civilian_f10.png
+       * dv_civilian_f11.png
        * dv_civilian_m1.png
        * dv_civilian_m2.png
        * dv_civilian_m3.png
        * dv_civilian_m4.png
        * dv_civilian_m5.png
        * dv_civilian_m6.png
+       * dv_civilian_m7.png
+       * dv_civilian_m8.png
+       * dv_civilian_m9.png
+       * dv_civilian_m10.png
+       * dv_civilian_m11.png
+       * dv_military_f3.png
+       * dv_military_f4.png
+       * dv_military_f5.png
+       * dv_military_f6.png
+       * dv_military_f7.png
+       * dv_military_f8.png
+       * dv_military_m4.png
+       * dv_military_m5.png
+       * dv_military_m6.png
+       * dv_military_m7.png
+       * dv_military_m8.png
+     * empire
+       * empire_mil_f2.png
+       * empire_mil_f3.png
+       * empire_mil_f4.png
+       * empire_mil_f5.png
+       * empire_mil_m4.png
+       * empire_mil_m5.png
+       * empire_mil_m6.png
+       * empire_mil_m7.png
+       * empire_mil_m8.png
      * neutral
        * unique
          * arnoldsmith.png
@@ -713,6 +745,16 @@
        * sirius_fyrra_m3.png
        * sirius_fyrra_m4.png
        * sirius_fyrra_m5.png
+       * sirius_shiara_f1.png
+       * sirius_shiara_f2.png
+       * sirius_shiara_f3.png
+       * sirius_shiara_f4.png
+       * sirius_shiara_f5.png
+       * sirius_shiara_m1.png
+       * sirius_shiara_m2.png
+       * sirius_shiara_m3.png
+       * sirius_shiara_m4.png
+       * sirius_shiara_m5.png
        * unique
          * draga.png
          * shaman.png
