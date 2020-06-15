@@ -272,7 +272,7 @@ static void cam_updateFly( double x, double y, double dt )
    background_moveStars( -dx, -dy );
 
    /* Stop within 100 pixels. */
-   if (fabs((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
+   if (FABS((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
       old_X = camera_X;
       old_Y = camera_Y;
       camera_fly = 0;
@@ -327,7 +327,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
    vx       = follow->solid->vel.x*1.5;
    vy       = follow->solid->vel.y*1.5;
    dir      = angle_diff( atan2(vy,vx), follow->solid->dir);
-   dir      = (M_PI - fabs(dir)) /  M_PI; /* Normalize. */
+   dir      = (M_PI - FABS(dir)) /  M_PI; /* Normalize. */
    vx      *= dir;
    vy      *= dir;
    bias_x  += vx;

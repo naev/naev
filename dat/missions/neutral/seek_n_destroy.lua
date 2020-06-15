@@ -11,6 +11,7 @@
 
 include "numstring.lua"
 include "jumpdist.lua"
+include "portrait.lua"
 include "pilot/pirate.lua"
 
 clue_title   = _("I know the pilot you're looking at")
@@ -93,7 +94,7 @@ ambush_comm[7] = _("You were not supposed to get on the way of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
-breef_text = _("%s is a %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
+breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
 
 flee_title = _("You're not going to kill anybody like that")
 flee_text = _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going.")
@@ -120,7 +121,7 @@ bar_desc = _("This person might be an outlaw, a pirate, or even worse, a bounty 
 -- Mission details
 misn_title  = _("Seek And Destroy Mission, starting in %s")
 misn_reward = _("%s credits")
-misn_desc   = _("A %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
+misn_desc   = _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
 
 function create ()
    paying_faction = planet.cur():faction()
@@ -233,7 +234,7 @@ function enter ()
       cursys = cursys + 1
    end
 
-   if system.cur() == mysys[cursys] then
+   if stage <= 2 and system.cur() == mysys[cursys] then
       -- This system will contain the pirate
       -- cursys > pisys means the player has failed once (or more).
       if cursys == pisys or (cursys > pisys and rnd.rnd() > .5) then
@@ -253,9 +254,13 @@ function enter ()
          
          -- Get the position of the target
          jp  = jump.get(system.cur(), last_sys)
-         x = 6000 * rnd.rnd() - 3000
-         y = 6000 * rnd.rnd() - 3000
-         pos = jp:pos() + vec2.new(x,y)
+         if jp ~= nil then
+            x = 6000 * rnd.rnd() - 3000
+            y = 6000 * rnd.rnd() - 3000
+            pos = jp:pos() + vec2.new(x,y)
+         else
+            pos = nil
+         end
 
          -- Spawn the target
          pilot.toggleSpawn( false )
@@ -483,8 +488,6 @@ function land ()
 
    -- Player seek for a clue
    elseif system.cur() == mysys[cursys] and stage == 0 then
-      portrait = {"neutral/female1", "neutral/male1", "neutral/thief1", "neutral/thief2", "neutral/thief3" }
-
       if rnd.rnd() < .3 then -- NPC does not know the target
          know = 0
       elseif rnd.rnd() < .5 then -- NPC wants money
@@ -493,7 +496,7 @@ function land ()
       else -- NPC tells the clue
          know = 2
       end
-      mynpc = misn.npcAdd("clue_bar", npc_desc, portrait[rnd.rnd(1, #portrait)], bar_desc)
+      mynpc = misn.npcAdd("clue_bar", npc_desc, getPortrait("Pirate"), bar_desc)
 
    -- Player wants to be paid
    elseif planet.cur():faction() == paying_faction and stage == 4 then

@@ -6,7 +6,9 @@
 -- 3 = player has talked to SHITMAN
 --]]
 
--- localization stuff, translators would work here
+include "portrait.lua"
+
+
 planetname = "Durea" -- The planet where SHITMAN lives
 pnt = planet.get(planetname)
 sysname = "Capricorn" -- The system the planet is part of
@@ -84,21 +86,18 @@ jorek_text[3] = _([[Jorek exhales derisively. "No, I thought not. Probably thoug
 jorek_text[4] = _([[Jorek pointedly ignores you. It doesn't seem like he's willing to give you the time of day any longer. You decide not to push your luck.]])
 off_npc = {}
 off_npc["name"] = _("Officer at the bar")
-off_npc["portrait"] = "empire/empire1"
 off_npc["desc"] = _("You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though...")
 off_title = { _("You were ignored") }
 off_text = { _("You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up.") }
 sol1_npc = {}
 sol1_npc["name"] = _("Soldier at the news kiosk")
-sol1_npc["portrait"] = "empire/empire2"
 sol1_npc["desc"] = _("You see a soldier at a news kiosk. For some reason, he keeps reading the same articles over and over again.")
 sol1_title = { _("You were shooed away") }
 sol1_text = { _("Leave me alone. Can't you see I'm busy?") }
 sol2_npc = {}
 sol2_npc["name"] = _("Card-playing soldier")
-sol2_npc["portrait"] = "empire/empire2"
 sol2_npc["desc"] = _("Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game.")
-sol2_title = { _("They didn't need a third man") }
+sol2_title = { _("They didn't need a third player") }
 sol2_text = { _("They don't seem to appreciate your company. You decide to leave them to their game.") }
 
 -- OSD stuff
@@ -107,13 +106,13 @@ osd_msg2  = {}
 
 osd_title = _("Shadowrun")
 
-osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek.")
-osd_msg1[2] = _("You have %s remaining.")
+osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek")
+osd_msg1[2] = _("You have %s remaining")
 osd_msg1["__save"] = true
 
-osd_msg2[1] = _("You could not persuade Jorek to come with you. Report your result.")
-osd_msg2[2] = _("Fly to the %s system and dock with (board) %s")
-osd_msg2[3] = _("You have %s remaining.")
+osd_msg2[1] = _("You could not persuade Jorek to come with you")
+osd_msg2[2] = _("Fly to the %s system and dock with (board) %s to report your result")
+osd_msg2[3] = _("You have %s remaining")
 osd_msg2["__save"] = true
 
 function create ()
@@ -124,7 +123,7 @@ function create ()
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
     
-    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina" )
+    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual" )
     misn.setDesc( bar_desc ) 
 end
 
@@ -167,10 +166,10 @@ function land()
    local landed = planet.cur()
    if pnt == landed then
       misn.npcAdd( "jorek", jorek_npc["name"], jorek_npc["portrait"], jorek_npc["desc"] )
-      misn.npcAdd( "officer", off_npc["name"], off_npc["portrait"], off_npc["desc"] )
-      misn.npcAdd( "soldier1", sol1_npc["name"], sol1_npc["portrait"], sol1_npc["desc"] )
-      misn.npcAdd( "soldier2", sol2_npc["name"], sol2_npc["portrait"], sol2_npc["desc"] )
-      misn.npcAdd( "soldier2", sol2_npc["name"], sol2_npc["portrait"], sol2_npc["desc"] )
+      misn.npcAdd( "officer", off_npc["name"], getMaleMilPortrait("Empire"), off_npc["desc"] )
+      misn.npcAdd( "soldier1", sol1_npc["name"], getMaleMilPortrait("Empire"), sol1_npc["desc"] )
+      misn.npcAdd( "soldier2", sol2_npc["name"], getMilPortrait("Empire"), sol2_npc["desc"] )
+      misn.npcAdd( "soldier2", sol2_npc["name"], getMilPortrait("Empire"), sol2_npc["desc"] )
    end
 end
 
@@ -212,6 +211,7 @@ function date()
                                     string.format(osd_msg2[2], sysname2, shipname),
                                     string.format(osd_msg2[3], time.str(deadline2 - time.get()))
                                   })
+        misn.osdActive(2)
     else
         abort()
     end

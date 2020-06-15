@@ -3,13 +3,10 @@
  */
 
 
-
 #ifndef MUSIC_OPENAL_H
 #  define MUSIC_OPENAL_H
 
-
 #if USE_OPENAL
-
 
 #include "SDL_rwops.h"
 
@@ -49,8 +46,6 @@ void music_al_resume (void);
 void music_al_setPos( double sec );
 int music_al_isPlaying (void);
 
-
 #endif /* USE_OPENAL */
-
 
 #endif /* MUSIC_OPENAL_H */

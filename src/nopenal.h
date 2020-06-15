@@ -5,14 +5,13 @@
 
 #if USE_OPENAL
 
-
 #ifndef NOPENAL_H
 #  define NOPENAL_H
 
 #include "ncompat.h"
 
-#include OPENAL_ALC_H
-#include OPENAL_AL_H
+#include "AL/alc.h"
+#include "AL/al.h"
 
 /*
  * EFX stuff.
@@ -107,7 +106,6 @@ extern ALvoid (AL_APIENTRY *nalEffecti)(ALuint,ALenum,ALint);
 extern ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
 extern ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
 extern ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
-
 
 #endif /* NOPENAL_H */
 

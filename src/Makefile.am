@@ -6,11 +6,17 @@ AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
-shaders.gen.c shaders.gen.h: shaders_c_gen
-	./$<
 
+if HAVE_SHADERS_C_GEN
+noinst_PROGRAMS = shaders_c_gen
+nodist_shaders_c_gen_SOURCES = shaders_c_gen.c
+shaders_c_gen_LDADD = $(SDL_LIBS)
+shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
+	./$<
 CLEANFILES = shaders.gen.c shaders.gen.h
-BUILT_SOURCES = shaders.gen.h
+BUILT_SOURCES = shaders.gen.c shaders.gen.h
+endif
+
 
 CODE_SOURCE = \
 	ai.c \
@@ -177,6 +183,7 @@ CODE_SOURCE = \
 	dev_system.h \
 	dev_sysedit.h \
 	dev_uniedit.h \
+	dev_mapedit.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \

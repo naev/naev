@@ -45,7 +45,7 @@ misn_desc = _("Take as many waste containers off of here as your ship can hold a
 
 osd_title = _("Waste Dump")
 osd_msg = {}
-osd_msg[1] = _("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers.")
+osd_msg[1] = _("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")
 
 -- List of possible waste dump planets.
 dest_planets = { "The Stinker", "Eiroik" }

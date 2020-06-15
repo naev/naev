@@ -6,8 +6,7 @@
 # This script assumes the environment we set up in Travis, and copies the
 # dependencies to the bundle. These are:
 #
-# - From Homebrew: freetype, libpng, libvorbis, libzip, luajit
-# - SDL2 framework installed in ~/Library/Frameworks
+# - From Homebrew: freetype, libpng, libvorbis, libzip, luajit, sdl2, sdl2_mixer, sdl2_image
 
 set -e
 
@@ -22,10 +21,6 @@ mkdir -p Naev.app/Contents/{MacOS,Resources,Frameworks}/
 cp extras/macos/Info.plist Naev.app/Contents/
 cp extras/macos/naev.icns Naev.app/Contents/Resources/
 cp src/naev Naev.app/Contents/MacOS/
-
-# Bundle the SDL2 framework.
-cp -R ~/Library/Frameworks/SDL2.framework \
-  Naev.app/Contents/Frameworks/SDL2.framework
 
 # Find all Homebrew dependencies (from /usr/local),
 # and descend to find deps of deps.
@@ -67,7 +62,6 @@ for dep in $deps; do
 done
 
 # Apply changes to the Naev executable, and add the rpath entry.
-# (This rpath entry also covers the lookup of the SDL2 framework.)
 install_name_tool $change_args \
   -add_rpath @executable_path/../Frameworks \
   Naev.app/Contents/MacOS/naev

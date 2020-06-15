@@ -11,6 +11,8 @@
 
 --]]
 
+include "portrait.lua"
+
 
 -- Bar information
 bar_desc = _("The woman waves at you a bit desperately.")
@@ -58,7 +60,7 @@ function create ()
    reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Ordinary Woman"),  "zalek_scientist_placeholder")
+   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister" )
    misn.setDesc( bar_desc )
 end
 

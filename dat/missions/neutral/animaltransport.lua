@@ -7,13 +7,15 @@
 --
 --]]
 
-include("dat/scripts/jumpdist.lua")
+include "jumpdist.lua"
+include "portrait.lua"
+
 
 text = {}
 title = {}
 
 title[1] = _("Animal transport")
-text[1] = _([["Good day to you, captain," the man greets you. "I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid 200,000 credits. Are you interested in the job?]])
+text[1] = _([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid 200,000 credits. Are you interested in the job?"]])
 
 text[2] = _([["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]])
 
@@ -54,7 +56,7 @@ function create ()
     misndesc = misndesc:format(destplanet:name(), destsys:name())
     OSD[1] = OSD[1]:format(destsys:name(), destplanet:name())
 
-    misn.setNPC(NPCname, "sirius/sirius_fyrra_m1")
+    misn.setNPC(NPCname, getMalePortrait("Sirius"))
     misn.setDesc(NPCdesc)
 end
 

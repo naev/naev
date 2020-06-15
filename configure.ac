@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.7.0], [bobbens@gmail.com])
+AC_INIT([naev], [0.8.-1], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -272,6 +272,9 @@ AC_SUBST([ndata_path])
 # Checks for libraries.
 #
 
+# "Newish" GCC
+AC_CHECK_HEADERS([stdalign.h])
+
 # SDL
 AM_PATH_SDL2(2.0.0, [], [
   AC_MSG_ERROR([SDL 2 not found])
@@ -316,17 +319,17 @@ case "$used_lua" in
   shared)
     have_lua=no
     m4_foreach([pkgname], [lua-5.1, lua5.1, lua51, lua], [
-        AS_IF([test "$have_lua" = "no"], [
+        AS_IF([test "x$have_lua" = "xno"], [
             PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
         ])
     ])
-    AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
+    AS_IF([test "x$have_lua" = "xno"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
     ;;
   *)
     have_lua=no
     ;;
 esac
-AS_IF([test "$have_lua" = "no"], [
+AS_IF([test "x$have_lua" = "xno"], [
   LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
   LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
   have_lua=yes
@@ -361,8 +364,8 @@ AS_IF([test "$used_csparse" = "internal"], [
 
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
-  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
-])
+  PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
+], [have_openal=no])
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
@@ -479,10 +482,10 @@ esac
 # automake to detect when the binary needs recompiling after a library has been
 # changed.
 NAEV_DEPENDENCIES="$WIDGET_LIBS"
-AS_IF([test "$used_lua" == "internal"], [
+AS_IF([test "x$used_lua" = "xinternal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $LUA_LIBS"
 ])
-AS_IF([test "$used_csparse" == "internal"], [
+AS_IF([test "x$used_csparse" = "xinternal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $CSPARSE_LIBS"
 ])
 
@@ -641,6 +644,7 @@ AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
+AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "src/shaders_c_gen.c"])
 
 #
 # Output

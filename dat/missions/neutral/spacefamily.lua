@@ -42,7 +42,7 @@ misn_title = _("The Space Family")
 misn_reward = _("A clear conscience.")
 misn_desc = {}
 misn_desc[1] = _("A shipwrecked space family has enlisted your aid. Can you take them to safety?")
-misn_desc[2] = _("Take the space family to %s (%s system).")
+misn_desc[2] = _("Take the space family to %s in the %s system")
 
 -- Aborted mission
 msg_abortTitle = _("A parting of ways")
@@ -87,7 +87,6 @@ function create ()
    destplanet = getlandable(destsys) -- pick a landable planet in the destination system
    destplanetname = destplanet:name()
    tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-   misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
    misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
    misn_marker = misn.markerAdd( destsys, "low" )
 
@@ -135,7 +134,6 @@ function land()
          destplanet = getlandable(destsys) -- pick a landable planet in the destination system
          destplanetname = destplanet:name()
          tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-         misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
          misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
          misn.markerMove( misn_marker, destsys )
       end

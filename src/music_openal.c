@@ -4,7 +4,6 @@
 
 #if USE_OPENAL
 
-
 #include "music_openal.h"
 
 #include <math.h>

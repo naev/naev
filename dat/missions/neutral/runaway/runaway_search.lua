@@ -28,14 +28,14 @@ misn_father = _("As Cynthia sees her father, she begins her crying anew. You ove
 
 -- Here are stored the fake texts for the osd
 osd_text = {}
-osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi.")
-osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar.")
-osd_text[3] = _("Search for Cynthia on Selphod in Eridani.")
-osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris.")
+osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
+osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar")
+osd_text[3] = _("Search for Cynthia on Selphod in Eridani")
+osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris")
 
 -- Can't let them see what's coming up, can I?
 osd3 = _("Catch Cynthia on Torloth in Cygnus")
-osd4 = _("Return Cynthia to her father on Zhiru in the Goddard system.")
+osd4 = _("Return Cynthia to her father on Zhiru in the Goddard system")
 osdlie = _("Go to Zhiru in Goddard to lie to Cynthia's father")
 
 
@@ -46,7 +46,7 @@ function create ()
    releasereward = 25000
    reward = 100000
 
-   misn.setNPC( npc_name, "neutral/male1" )
+   misn.setNPC( npc_name, "neutral/unique/cynthia_father" )
    misn.setDesc( bar_desc )
 end
 

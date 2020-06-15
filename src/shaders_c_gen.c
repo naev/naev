@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "SDL.h"
+
 typedef struct Shader_ {
    const char *name;
    const char *vs_path;
@@ -175,7 +177,10 @@ void generate_c_file(FILE *f) {
 
 }
 
-int main() {
+int main( int argc, char** argv ) {
+   (void) argc;
+   (void) argv;
    generate_h_file(fopen("shaders.gen.h", "w"));
    generate_c_file(fopen("shaders.gen.c", "w"));
+   return 0;
 }

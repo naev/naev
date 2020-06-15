@@ -351,7 +351,7 @@ int pointInPolygon( const CollPoly* at, const Vector2d* ap,
    vprod = dxi * dyip - dyi * dxip;
    angle += atan2(vprod, sprod);
 
-   if (abs(angle) < 1e-5)
+   if (FABS(angle) < 1e-5)
       return 0;
 
    return 1;

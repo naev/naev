@@ -20,8 +20,8 @@ misn_desc = _("You've decided to help some drunkard at the bar by picking up som
 -- OSD
 OSDtitle = _("Help the Drunkard")
 OSDdesc = {}
-OSDdesc[1] = _("Go pickup some goods at %s in the %s system.")
-OSDdesc[2] = _("Drop off the goods at %s in the %s system.")
+OSDdesc[1] = _("Go pickup some goods at %s in the %s system")
+OSDdesc[2] = _("Drop off the goods at %s in the %s system")
 
 payment = 500000
 

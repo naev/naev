@@ -19,8 +19,8 @@ include "numstring.lua"
 misn_title = _("Collective Extraction")
 misn_reward = _("%s credits")
 misn_desc = {}
-misn_desc[1] = _("Check for survivors on %s in %s.")
-misn_desc[2] = _("Travel back to %s in %s.")
+misn_desc[1] = _("Check for survivors on %s in %s")
+misn_desc[2] = _("Travel back to %s in %s")
 title = {}
 title[1] = _("Collective Extraction")
 title[2] = _("Planet %s")

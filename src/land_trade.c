@@ -132,7 +132,7 @@ void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
    char buf[PATH_MAX];
-   char buf2[80];
+   char buf2[80], buf3[ECON_CRED_STRLEN];
    char *comname;
    Commodity *com;
    credits_t mean,globalmean;
@@ -140,16 +140,17 @@ void commodity_update( unsigned int wid, char* str )
    int owned;
    comname = toolkit_getImageArray( wid, "iarTrade" );
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
+      credits2str( buf3, player.p->credits, 2 );
       nsnprintf( buf, PATH_MAX,
-         _("NA Tons\n"
+         _("NA tons\n"
            "\n"
-           "NA Cr./Ton\n"
-           "%d Tons\n"
-           "%"PRIu64" Cr.\n"
-           "NA Cr./Ton\n"
-           "NA Cr./Ton"),
+           "NA credits/ton\n"
+           "%d tons\n"
+           "%s credits\n"
+           "NA credits/ton\n"
+           "NA credits/ton"),
          pilot_cargoFree(player.p),
-         pilot_modCredits(player.p, 0) );
+         buf3 );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", _("No commodities available.") );
       window_disableButton( wid, "btnCommodityBuy" );
@@ -168,19 +169,20 @@ void commodity_update( unsigned int wid, char* str )
    owned=pilot_cargoOwned( player.p, comname );
    if ( owned > 0 )
       nsnprintf( buf2, 80, _("%"PRIu64" Cr./Ton"),com->lastPurchasePrice);
+   credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
-         _("%d Tons\n"
+         _("%d tons\n"
          "%s\n"
-         "%"PRIu64" Cr./Ton\n"
-         "%d Tons\n"
-         "%"PRIu64" Cr.\n"
-         "%"PRIu64" +- %.1f\n"
-         "%"PRIu64" +- %.1f\n"),
+         "%"PRIu64" credits/ton\n"
+         "%d tons\n"
+         "%s credits\n"
+         "%"PRIu64" ± %.1f\n"
+         "%"PRIu64" ± %.1f\n"),
          owned,
          buf2,     
          planet_commodityPrice( land_planet, com ),
          pilot_cargoFree(player.p),
-         pilot_modCredits(player.p, 0),
+         buf3,
          mean, std,
          globalmean,globalstd );
    

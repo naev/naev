@@ -5,7 +5,8 @@ MISSION: Chase Test
 DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
-include("dat/scripts/fleethelper.lua")
+include "numstring.lua"
+include "fleethelper.lua"
 
 NPC_name = _("A detective") --NPC params
 bar_desc = _("A private detective is signalling you to come speak with him.")
@@ -25,13 +26,13 @@ text[1] = _([[After quickly glancing around to make sure nobody's taken a partic
    "Be careful out there. I doubt you'll be able to get far without being noticed."]]) --dialogue 2
 text[2] = _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had %s credits transferred to you.\"") --finished
 text[3] = _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence.")
-misn_desc = _("Evade the thugs and deliver the evidence to %s.") --OSD text
+misn_desc = _("Evade the thugs and deliver the evidence to %s") --OSD text
 reward_desc = _("A generous compensation") --reward description
 
 function create ()
    targetsystem = system.get("Ogat") --find target system
    
-   misn.setNPC( NPC_name, "neutral/thief2") --spawn NPC
+   misn.setNPC( NPC_name, "neutral/unique/hunter") --spawn NPC
    misn.setDesc( bar_desc )
 end
 
@@ -92,7 +93,13 @@ function spawnBaddies ()
    else
       ai = "baddie_norun"
    end
-   thugs = addRawShips( "Admonisher", ai, last_system, "Thugs", 4 )
+
+   local sp = nil
+   if last_system ~= system.cur() then
+      sp = last_system
+   end
+
+   thugs = addRawShips( "Admonisher", ai, sp, "Thugs", 4 )
    -- renameShips( thugs, "^.*", "Thug" )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:rename(_("Thug"))
@@ -132,7 +139,7 @@ function pilotKilled () --function for second trigger
 end
 
 function capHailed () --when hailing the capship back
-   tk.msg( title[2], string.format( text[2], reward) ) --congratulates
+   tk.msg( title[2], string.format( text[2], numstring( reward ) ) ) --congratulates
    player.pay( reward )
    misn.finish(true)
 end

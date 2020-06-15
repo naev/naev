@@ -6,6 +6,7 @@
 
 include "dat/events/tutorial/tutorial-common.lua"
 include "dat/scripts/jumpdist.lua"
+include "portrait.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -13,33 +14,6 @@ include "dat/scripts/jumpdist.lua"
 -- of the main universe (Thurion, Proteron).
 nongeneric_factions = { "Pirate", "FLF", "Thurion", "Proteron" }
 
--- Portraits.
--- When adding portraits, make sure to add them to the table of the faction they belong to.
--- Does your faction not have a table? Then just add it. The script will find and use it if it exists.
--- Make sure you spell the faction name exactly the same as in faction.xml though!
-civ_port = {}
-civ_port["general"] =   {"neutral/male1",
-                           "neutral/female1",
-                           "neutral/miner1",
-                           "neutral/miner2",
-                           "neutral/thief1",
-                           "neutral/thief2",
-                           "neutral/thief3",
-                        }
-civ_port["Sirius"] =    {"sirius/sirius_fyrra_f1",
-                           "sirius/sirius_fyrra_f2",
-                           "sirius/sirius_fyrra_m1",
-                        }
-civ_port["Trader"] =    {"neutral/male1",
-                           "neutral/female1",
-                           "neutral/thief1",
-                           "neutral/thief3",
-                        }
-civ_port["Pirate"] =    {"pirate/pirate1",
-                           "pirate/pirate2",
-                           "pirate/pirate3",
-                           "pirate/pirate4",
-                        }
 civ_name = "Civilian"
 
 -- Civilian descriptions for the spaceport bar.
@@ -135,7 +109,7 @@ msg_lore["Thurion"] =      {_("Did you know that even the slightest bit of brain
                               _("The best part of our lives is after we're uploaded, but that doesn't mean we lead boring lives before then. We have quite easy and satisfying biological lives before uploading."),
                               _("Being uploaded allows you to live forever, but that doesn't mean you're forced to. Any uploaded Thurion can choose to end their own life if they want, though few have chosen to do so."),
                               _("Uploading is a choice in our society. No one is forced to do it. It's just that, well, what kind of person would turn down the chance to live a second life on the network?"),
-                              _("We were lucky to not get touched by the Incident. In fact, we kind of benefited from it. The nebula that resulted gave us a great cover and sealed off the Empire from us. It also got rid of those lunatics, the Proterons."),
+                              _("We were lucky to not get touched by the Incident. In fact, we kind of benefited from it. The nebula that resulted gave us a great cover and sealed off the Empire from us. It also got rid of those dangerous Proterons."),
                               _("We don't desire galactic dominance. That being said, we do want to spread our way of life to the rest of the galaxy, so that everyone can experience the joy of being uploaded."),
                               _("I think you're from the outside, aren't you? That's awesome! I've never met a foreigner before. What's it like outside the nebula?"),
                               _("We actually make occasional trips outside of the nebula, though only rarely, and we always make sure to not get discovered by the Empire."),
@@ -166,7 +140,7 @@ msg_lore["FLF"] =          {_("I can't stand Dvaereds. I just want to wipe them 
                               _("One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"),
                               _("Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."),
                               _("I was in charge of a bombing run last week. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."),
-                              _("What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius lunatics to worry about. I don't think our job will ever end in our lifetimes."),
+                              _("What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."),
                               _("Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."),
                               _("Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."),
                               _("No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."),
@@ -275,7 +249,7 @@ msg_mdone =                {{"Nebula Satellite", _("Heard some crazy scientists 
 -- This text will be said by NPCs once the player has completed the event in question.
 -- Make sure the messages are always faction neutral.
 msg_edone =                {{"Animal trouble", _("What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line...")},
-                              {"Naev Needs You!", _("What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic.")},
+                              {"Naev Needs You!", _("What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?")},
                            }
 
 
@@ -333,7 +307,7 @@ function spawnNPC()
    end
 
    -- Select a portrait
-   local portrait = getCivPortrait(fac)
+   local portrait = getPortrait(fac)
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
@@ -507,15 +481,6 @@ function getMissionLikeMessage(fac)
       table.remove(msg_combined, sel)
       return pick
    end
-end
-
--- Returns a portrait for a given faction.
-function getCivPortrait(fac)
-   -- Get a factional portrait if possible, otherwise fall back to the generic ones.
-   if civ_port[fac] == nil or #civ_port[fac] == 0 then
-      fac = "general"
-   end
-   return civ_port[fac][rnd.rnd(1, #civ_port[fac])]
 end
 
 function talkNPC(id)

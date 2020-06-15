@@ -32,9 +32,9 @@ title[2] = _("Wonderful")
 text[2] = _([["Great! I knew I could trust you. I'll meet you on %s in the %s system. I'll be with my boss and our customer, Baron Sauterfeldt."]])
 
 title[3] = _("Ready for action")
-text[3] = _([["Nice to see you again," the man says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."
-    The man guides you to some kind of control room where you see some important-looking people. After introducing you to some of them, he goes over the mission, rather over-emphasizing the threat involved; it's just a Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.
-    The man gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at %s. Now go show them what your ship can do!" Time to head back to the ship, then.]])
+text[3] = _([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."
+    Arnold Smith guides you to some kind of control room where you see some important-looking people. After introducing you to some of them, he goes over the mission, rather over-emphasizing the threat involved; it's just a Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.
+    Arnold Smith gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at %s. Now go show them what your ship can do!" Time to head back to the ship, then.]])
 
 title[4] = _("Congratulations!")
 text[4] = _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]])
@@ -45,7 +45,7 @@ misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs.")
 
 -- NPC
-npc_desc[1] = _("A honest-looking man")
+npc_desc[1] = _("An honest-looking man")
 bar_desc[1] = _("This man looks like a honest citizen. He glances in your direction.")
 
 npc_desc[2] = _("Arnold Smith")
@@ -75,7 +75,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
@@ -115,7 +115,7 @@ function land()
 
    -- Did the player reach Ulios ?
    if planet.cur() == mispla and stage == 0 then
-      smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/male1", bar_desc[2])
+      smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/unique/arnoldsmith", bar_desc[2])
    end
 
    -- Did the player land again on Ulios after having killed the pirate
@@ -162,6 +162,8 @@ function enter()
       badboy:setVisplayer()
       badboy:setHilight()
 
+      player.pilot():setVisible()
+
       hook.pilot( badboy, "death", "pirate_dead" )
       hook.pilot( badboy, "jump", "pirate_jump" )
    end
@@ -186,6 +188,7 @@ function pirate_jump()  --he went away
 end
 
 function pirate_dead()  --wou win
+   player.pilot():setVisible(false)
    stage = 4
    misn.markerRm(marker1)
    marker2 = misn.markerAdd(missys, "low")

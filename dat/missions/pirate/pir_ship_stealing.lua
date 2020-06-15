@@ -15,7 +15,7 @@
 
 include "jumpdist.lua"
 include "numstring.lua"
-include "dat/missions/pirate/common.lua"
+include "portrait.lua"
 
 local informer
 local refusal
@@ -243,8 +243,7 @@ function create ()
 
    ship.system = ship.planet:system()
 
-   local portrait = pir_getLordRandomPortrait()
-   misn.setNPC( _("A Pirate informer"), portrait )
+   misn.setNPC( _("A Pirate informer"), getPortrait("Pirate") )
    misn.setDesc( informer.description )
 end
 

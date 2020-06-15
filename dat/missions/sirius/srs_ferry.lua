@@ -131,10 +131,10 @@ wrongplanet_msg = _("You drop the upset pilgrim off at the nearest spaceport.")
 
 osd_title = _("Pilgrimage transport")
 osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s.")
-osd_msg[2] = _("You have %s remaining.")
-osd_msg1 = _("Fly to %s in the %s system before %s.")
-osd_msg2 = _("You have %s remaining.")
+osd_msg[1] = _("Fly to %s in the %s system before %s")
+osd_msg[2] = _("You have %s remaining")
+osd_msg1 = _("Fly to %s in the %s system before %s")
+osd_msg2 = _("You have %s remaining")
 
 abort_t = _("Passenger transport aborted")
 abort_p = _("Informing the pilgrim that their flight to %s has been canceled, you promise to drop them off at the nearest planet.")

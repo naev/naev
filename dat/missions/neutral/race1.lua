@@ -1,7 +1,7 @@
 --[[
 --
 -- MISSION: Racing Skills 1
--- DESCRIPTION: A man asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
+-- DESCRIPTION: A person asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
 --
 --]]
 
@@ -27,7 +27,7 @@ refusetitle = _("Refusal")
 refusetext = _([["I guess we'll need to find another pilot."]])
 
 wintitle = _("You Won!")
-wintext = _([[The laid back man comes up to you and hands you a credit chip. 
+wintext = _([[The laid back person comes up to you and hands you a credit chip. 
    "Nice racing! Here's your prize money. Let's race again sometime soon!"]])
    
 ftitle[1] = _("Illegal ship!")
@@ -37,11 +37,11 @@ ftitle[2] = _("You left the race!")
 ftext[2] = _([["Because you left the race, you have been disqualified."]])
 
 ftitle[3] = _("You failed to win the race.")
-ftext[3] = _([[As you congratulate the winner on a great race, the laid back man comes up to you.
+ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
    
-NPCname = _("A laid back man")
-NPCdesc = _("You see a laid back man, who appears to be one of the locals, looking around the bar.")
+NPCname = _("A laid back person")
+NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar.")
 
 misndesc = _("You're participating in a race!")
 misnreward = _("%s credits")
@@ -75,7 +75,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/male1")
+   misn.setNPC(NPCname, "neutral/unique/laidback")
    misn.setDesc(NPCdesc)
    credits = rnd.rnd(20000, 100000)
 end

@@ -22,7 +22,7 @@ misn_desc = _("Go find a specific drink for an aristocrat.")
 
 -- OSD
 OSDtitle = _("Find the Drink")
-OSDdesc = _("Go to %s in the %s system and look for the special drink that the Aristocrat wants.")
+OSDdesc = _("Go to %s in the %s system and look for the special drink that the Aristocrat wants")
 OSDtable = {}
 
 -- defines Previous Planets table

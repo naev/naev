@@ -12,7 +12,7 @@ include "dat/scripts/jumpdist.lua"
 bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
 misn_title = _("Empire Long Distance Recruitment")
 misn_reward = _("50,000 credits")
-misn_desc = _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system.")
+misn_desc = _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")
 title = {}
 title[1] = _("Spaceport Bar")
 title[2] = _("Empire Long Distance Recruitment")

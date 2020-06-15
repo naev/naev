@@ -703,7 +703,6 @@ credits_t economy_getPriceAtTime( const Commodity *com,
 int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std){
    int i,k;
    CommodityPrice *commPrice;
-   printf("Getting averagePlanetPrice for %s\n",com->name);
    /* Get position in stack */
    k=com - commodity_stack;
 
@@ -739,9 +738,7 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
       *mean=0;
       *std=0;
    }
-   printf("commprice average: %ld+-%g\n",*mean,*std);
    return 0;
-
 }
 
 
