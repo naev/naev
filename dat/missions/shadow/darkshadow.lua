@@ -366,7 +366,7 @@ end
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
     for _, patroller in ipairs(leader) do
-        if vec2.dist(player.pilot():pos(), patroller:pos()) < 1200 then
+        if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
             patroller:broadcast(patrolcomm)
             attacked()
             return
