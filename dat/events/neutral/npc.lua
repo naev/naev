@@ -5,6 +5,7 @@
 --]]
 
 include "dat/events/tutorial/tutorial-common.lua"
+include "dat/scripts/jumpdist.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -236,15 +237,16 @@ msg_econ =                {_("Hi, I was recently on %s in the %s system, and the
                            _("Trading seems to be getting harder these days, or maybe I'm just getting older.  I was on %s in the %s system a few STP ago, and the price of goods there was: %s  Put that in your computer, and it might help you make a profit."),
                            _("You wanna good tip?  When I was on %s recently, in the %s system, I took a peek at the commodities on offer.  The cost then was: %s  Hopefully that will help, from one pal to another!"),
                            _("Awesome!  Did you know that a few STP ago on %s in the %s system, the cost of stuff in the trade area was: %s  The prices do change with time though, so it might be a bit different by the time you get there."),
-                           _("Hey!  I'll add some valuable information to your computer, which might help you make a good trade.  I heard that on %s in the %s system recently, prices there were: %s"),
-                           _("The times are a'changin, and so it seems are prices.  On %s in the %s system, I recently saw the prices, though I expect they'll have changed a bit by now!  I'll stick them in your computer for you to help.  They were: "),
-                           _("Did you know that commodity costs vary somewhat with time?  On some systems, the price fluctuates slowly, whilst on others it seems to change more quickly.  A few STP ago on %s in the %s system, for example, the prices were: %s"),
-                           _("I used to make a bit of profit trading between two systems, but recently it hasn't been as profitable, since the prices have been changing with time.  I'm not sure why, I guess its something to do with supply and demand.  Or maybe it just happens like the pendulum of life!  Anyway, on %s (thats in the %s system), I recently saw that the commoditys were being bought and sold for: %s"),
+                           _("Hey!  I'll add some valuable information to your computer, which might help you make a good trade.  I heard that on %s in the %s system recently, prices there were: %sThat might help you pay off the ship - or maybe not!"),
+                           _("The times are a'changin, and so it seems are prices.  On %s in the %s system, I recently saw the prices, though I expect they'll have changed a bit by now!  I'll stick them in your computer for you to help.  They were: %sWill probably have changed again by the time you get there!"),
+                           _("Did you know that commodity costs vary somewhat with time?  On some systems, the price fluctuates slowly, whilst on others it seems to change more quickly.  A few STP ago on %s in the %s system, for example, the prices were: %sBut I'm pretty sure they were a bit different the previous time I was there..."),
+                           _("I used to make a bit of profit trading between two systems, but recently it hasn't been as profitable, since the prices have been changing with time.  I'm not sure why, I guess its something to do with supply and demand.  Or maybe it just happens like the pendulum of life!  Anyway, on %s (thats in the %s system), I recently saw that the commodities were being bought and sold for: %sActually, I've found that if I time it right, I can even make a small profit just by buying something, taking off, landing again, and selling it.  Only seems to work about half the time though!"),
                            _("I made a good trade recently on %s in the %s system.  The prices there then were %s  I expect they'll have changed by now though!"),
-                           _("I'm not an economist, and the way prices change don't seem to make much sense to me.  I regularly travel between here and %s in the %s system, and they just seem to fluctuate around some average value.  The last time I was there, the cost was: %s"),
+                           _("I'm not an economist, and the way prices change don't seem to make much sense to me.  I regularly travel between here and %s in the %s system, and they just seem to fluctuate around some average value.  The last time I was there, the cost was: %sThey'll be different next time, though my computer will probably have improved its average price accuracy by then."),
                            _("I studied economics for my PhD, looking at ancient civilisations in the Sol system.  Incredible, there seemed to be no rhyme or reason then for when the markets would suddenly crash.  Fortunately that doesn't seem to happen here anymore, the prices seem a lot more stable, with just a bit of variation.  In fact, I've been doing some modelling, and think that prices depend a bit on system type, and various other factors.  I did a study of %s in the %s system recently, and the prices there then were %s  This fits in pretty well with my sinusoidal model, though not perfectly!"),
-                           _("I made an awesome trade recently on %s in the %s system, but then got so hammered I gave all my profits away to a local charity there!  Fortunately, I made a note of the prices, so I might be able to repeat it.  If you buy me a drink, I'll tell you what they were: %s")
+                           _("I made an awesome trade recently on %s in the %s system, but then got so hammered I gave all my profits away to a local charity there!  Fortunately, I made a note of the prices, so I might be able to repeat it.  If you buy me a drink, I'll tell you what they were: %sNow you owe me a drink!"),
 			   }
+			   
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the hints are always faction neutral.
@@ -342,12 +344,15 @@ function spawnNPC()
    if select <= tip_chance then
       -- Gameplay tip message.
       msg = getTipMessage(fac)
-   elseif select <= 0.55 then
+   elseif select <= 0.4 then
       -- Lore message.
       msg = getLoreMessage(fac)
-   elseif select <= 0.8 then
+   elseif select <= 0.65 then
       -- Jump point message.
       msg, func = getJmpMessage(fac)
+   elseif select <= 0.8 then
+      -- Economy message
+      msg, func = getEconMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then
@@ -356,7 +361,6 @@ function spawnNPC()
          msg = getLoreMessage(fac)
       end
    end
-
    local npcdata = {name = npcname, msg = msg, func = func}
 
    id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
@@ -393,12 +397,12 @@ function getJmpMessage(fac)
    end
 
    if #mytargets == 0 then -- The player already knows all jumps in this system.
-      return getLoreMessage(fac), nil
+      return getEconMessage(fac)
    end
 
    -- All jump messages are valid always.
    if #msg_jmp == 0 then
-      return getLoreMessage(fac), nil
+      return getEconMessage(fac)
    end
    local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
    local sel = rnd.rnd(1, #mytargets)
@@ -415,7 +419,7 @@ end
 -- Returns an economy message, and updates known economy information accordingly.
 function getEconMessage(fac)
    -- Select a planet in a nearby system which has commodities for sale.
-   sysList = getsysatdistance( max=3, hidden=true )
+   sysList = getsysatdistance( system.cur(), 1, 5 )
    if #sysList == 0 then
       return getLoreMessage(fac), nil
    end
@@ -425,18 +429,27 @@ function getEconMessage(fac)
    for i=1,10,1
    do
       local sys = sysList[rnd.rnd(1, #sysList)]
-      for key, planet in ipairs( sys:planets() ) do
-         commodities=planet:commoditiesSold()
+      local jumpdist = sys:jumpDist()
+      local t = time.get() - time.create( 0, 2 * jumpdist, 0 )
+      local planetList=sys:planets()
+      if #planetList > 0 then
+         local planet = planetList[rnd.rnd(1, #planetList)]
+         local commodities=planet:commoditiesSold()
          if #commodities > 0 then
-	    for c in commodities
+            local coststr="\n"
+	    for cname, commod in ipairs ( commodities )
 	    do
-	       t = time.get() - time.create( 0, 5, 0 )
-               c:priceAtTime(planet,t)
-            done
-            return retmsg:format(planet:name(),system:get(planet),coststr), myfunc
-         end
-      done
-   done   
+               local price=commod:priceAtTime(planet,t)
+	       coststr = coststr..string.format("%s -> %d Cr./Ton\n", commod:name(), price)
+            end
+	    local myfunc = function()
+	                   planet:recordCommodityPriceAtTime(t)
+   			end
+	    econmsg=retmsg:format(planet:name(),system.get(planet):name(),coststr)
+            return econmsg, myfunc
+	 end
+      end
+   end 
    return getLoreMessage(fac), nil
 end
 

@@ -16,6 +16,7 @@
 
 #include "nluadef.h"
 #include "nlua_planet.h"
+#include "nlua_time.h"
 #include "log.h"
 #include "rng.h"
 

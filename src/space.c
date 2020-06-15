@@ -176,6 +176,8 @@ int space_sysLoad( xmlNodePtr parent );
 extern credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
 extern credits_t economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std ); /**< from economy.c */
+extern void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
+extern credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, const Planet *p, ntime_t tme );
 
 
 char* planet_getServiceName( int service )
@@ -252,6 +254,17 @@ credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntim
 
    return economy_getPriceAtTime( c, sys, p, t );
 }
+
+/**
+ * @brief Adds cost of commodities on planet p to known statistics at time t.
+ *
+ *     @param p Planet to get price at
+ *     @param t time to get prices at
+ */
+void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
+   economy_averageSeenPricesAtTime( p, tupdate );
+}
+
 
 /**
  * @brief Gets the average price of a commodity at a planet that has been seen so far.
