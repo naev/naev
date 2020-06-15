@@ -350,7 +350,9 @@ char **planet_searchFuzzyCase( const char* planetname, int *n );
 char* planet_getServiceName( int service );
 int planet_getService( char *name );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t );
 int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std);
+void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
 /* Misc modification. */
 int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */

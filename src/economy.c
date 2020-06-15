@@ -92,6 +92,8 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B );
 static int econ_createGMatrix (void);
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /* externed in land.c */
+credits_t economy_getPriceAtTime( const Commodity *com,
+                                  const StarSystem *sys, const Planet *p, ntime_t t );
 
 /*
  * Externed prototypes.
@@ -632,6 +634,23 @@ void commodity_free (void)
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
+   /* Get current time in STP.
+    */
+   return economy_getPriceAtTime( com, sys, p, ntime_get());
+}
+
+/**
+ * @brief Gets the price of a good on a planet in a system.
+ *
+ *    @param com Commodity to get price of.
+ *    @param sys System to get price of commodity.
+ *    @param p Planet to get price of commodity.
+ *    @param t Time to get price at, eg as retunred by ntime_get()
+ *    @return The price of the commodity.
+ */
+credits_t economy_getPriceAtTime( const Commodity *com,
+                                  const StarSystem *sys, const Planet *p, ntime_t tme )
+{
    int i, k;
    double price;
    double t;
@@ -641,7 +660,7 @@ credits_t economy_getPrice( const Commodity *com,
     * Time does not advance when on a planet. 
     * Journey with a single jump takes approx 3e7, so about 3 STP.
     */
-   t = ntime_convertSTU( ntime_get() ) / NT_STP_STU;
+   t = ntime_convertSTU( tme ) / NT_STP_STU;
 
    /* Get position in stack. */
    k = com - commodity_stack;
@@ -1384,7 +1403,7 @@ void economy_initialiseCommodityPrices(void){
    }
 }
 
-void economy_averageSeenPrices( Planet *p ){
+void economy_averageSeenPrices( const Planet *p ){
    int i;
    ntime_t t;
    Commodity *c;
@@ -1396,19 +1415,37 @@ void economy_averageSeenPrices( Planet *p ){
       cp=&p->commodityPrice[i];
       if( cp->updateTime < t ){ //has not yet been updated at present time
          cp->updateTime = t;
-         /* Calculate a rolling average */
+         /* Calculate values for mean and std */
          cp->cnt++;
          price = economy_getPrice(c, NULL, p);
-         //printf("Price %ld\n",price);
          cp->sum += price;
          cp->sum2 += price*price;
-         /*if ( cp -> cnt == 0 )
-           cp -> average = economy_getPrice( c, NULL, p);
-           else
-           cp->average = 0.75 * cp->average + 0.25 * economy_getPrice( c, NULL, p);*/
       }
    }
 }
+
+
+void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
+   int i;
+   ntime_t t;
+   Commodity *c;
+   CommodityPrice *cp;
+   credits_t price;
+   t = ntime_get();
+   for ( i = 0 ; i < p->ncommodities ; i++ ){
+      c=p->commodities[i];
+      cp=&p->commodityPrice[i];
+      if( cp->updateTime < t ){ //has not yet been updated at present time
+         cp->updateTime = t;
+         cp->cnt++;
+         price = economy_getPriceAtTime(c, NULL, p, tupdate);
+         cp->sum += price;
+         cp->sum2 += price*price;
+      }
+   }
+
+}
+
 /**
  * @brief Clears all system knowledge.
  */
