@@ -8,7 +8,6 @@
 --]]
 
 include "jumpdist.lua"
-include "portrait.lua"
 
 
 text = {}
@@ -56,7 +55,7 @@ function create ()
     misndesc = misndesc:format(destplanet:name(), destsys:name())
     OSD[1] = OSD[1]:format(destsys:name(), destplanet:name())
 
-    misn.setNPC(NPCname, getMalePortrait("Sirius"))
+    misn.setNPC(NPCname, "sirius/unique/rodentman")
     misn.setDesc(NPCdesc)
 end
 
