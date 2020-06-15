@@ -5,6 +5,7 @@
 --]]
 
 include "dat/events/tutorial/tutorial-common.lua"
+include "portrait.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -12,61 +13,6 @@ include "dat/events/tutorial/tutorial-common.lua"
 -- of the main universe (Thurion, Proteron).
 nongeneric_factions = { "Pirate", "FLF", "Thurion", "Proteron" }
 
--- Portraits.
--- When adding portraits, make sure to add them to the table of the faction they belong to.
--- Does your faction not have a table? Then just add it. The script will find and use it if it exists.
--- Make sure you spell the faction name exactly the same as in faction.xml though!
-civ_port = {}
-civ_port["general"] =   {"neutral/male1",
-                           "neutral/male2",
-                           "neutral/male3",
-                           "neutral/male4",
-                           "neutral/male5",
-                           "neutral/male6",
-                           "neutral/male7",
-                           "neutral/male8",
-                           "neutral/male9",
-                           "neutral/male10",
-                           "neutral/female1",
-                           "neutral/female2",
-                           "neutral/female3",
-                           "neutral/female4",
-                           "neutral/female5",
-                           "neutral/female6",
-                           "neutral/female7",
-                           "neutral/female8",
-                           "neutral/female9",
-                           "neutral/female10",
-                           "neutral/miner1",
-                           "neutral/miner2",
-                           "neutral/thief1",
-                           "neutral/thief2",
-                           "neutral/thief3",
-                           "neutral/thief4",
-                        }
-civ_port["Sirius"] =    {"sirius/sirius_fyrra_f1",
-                           "sirius/sirius_fyrra_f2",
-                           "sirius/sirius_fyrra_m1",
-                        }
-civ_port["Trader"] =    {"neutral/male1",
-                           "neutral/male2",
-                           "neutral/male3",
-                           "neutral/male4",
-                           "neutral/male5",
-                           "neutral/female1",
-                           "neutral/female2",
-                           "neutral/female3",
-                           "neutral/female4",
-                           "neutral/female5",
-                           "neutral/thief1",
-                           "neutral/thief3",
-                        }
-civ_port["Pirate"] =    {"pirate/pirate1",
-                           "pirate/pirate2",
-                           "pirate/pirate3",
-                           "pirate/pirate4",
-                           "pirate/pirate5",
-                        }
 civ_name = "Civilian"
 
 -- Civilian descriptions for the spaceport bar.
@@ -341,7 +287,7 @@ function spawnNPC()
    end
 
    -- Select a portrait
-   local portrait = getCivPortrait(fac)
+   local portrait = getPortrait(fac)
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
@@ -476,15 +422,6 @@ function getMissionLikeMessage(fac)
       table.remove(msg_combined, sel)
       return pick
    end
-end
-
--- Returns a portrait for a given faction.
-function getCivPortrait(fac)
-   -- Get a factional portrait if possible, otherwise fall back to the generic ones.
-   if civ_port[fac] == nil or #civ_port[fac] == 0 then
-      fac = "general"
-   end
-   return civ_port[fac][rnd.rnd(1, #civ_port[fac])]
 end
 
 function talkNPC(id)

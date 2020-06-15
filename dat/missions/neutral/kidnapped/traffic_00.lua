@@ -5,6 +5,9 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
 --]]
 
+include "portrait.lua"
+
+
 sysname1 = "Arcturus"
 sysname2 = "Goddard"
 sysname3 = "Ogat"
@@ -119,15 +122,15 @@ end
   
 function land1()
   if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
-    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), "neutral/thief1", pir1_disc)
-    bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), "neutral/thief2", pir1_disc)
+    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), getPortrait("Pirate"), pir1_disc)
+    bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), getPortrait("Pirate"), pir1_disc)
   end
 end
 
 function land2()
   if planet.cur() == planet.get(bar2) and eavesdropped1 and not eavesdropped2 then
-    bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), "neutral/thief3", pir2_disc)
-    bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), "neutral/thief1", pir2_disc)
+    bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), getPortrait("Pirate"), pir2_disc)
+    bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), getPortrait("Pirate"), pir2_disc)
   end
 end
 

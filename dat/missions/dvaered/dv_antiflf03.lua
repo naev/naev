@@ -8,6 +8,7 @@
 
 include "fleethelper.lua" 
 include "proximity.lua"
+include "portrait.lua"
 include "dat/missions/dvaered/common.lua"
 
 -- localization stuff, translators would work here
@@ -89,7 +90,7 @@ function create()
         abort()
     end 
 
-    misn.setNPC("Dvaered liaison", "dvaered/dv_military_m1")
+    misn.setNPC("Dvaered liaison", getMaleMilPortrait("Dvaered"))
     misn.setDesc(npc_desc)
 end
 

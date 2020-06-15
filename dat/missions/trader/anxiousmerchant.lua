@@ -11,8 +11,9 @@
 
 ]]--
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+include "cargo_common.lua"
+include "numstring.lua"
+include "portrait.lua"
 
 
 bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")
@@ -44,13 +45,6 @@ full_text = _([[You don't have enough cargo space to accept this mission.]])
 slow_title = _("Too slow")
 slow_text = _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]])
 
--- Portrait Choice
-portrait = {"neutral/male1",
-            "neutral/thief1",
-            "neutral/female1",
-            "neutral/thief3",
-            }
-
 misn_desc = _("You decided to help a fraught merchant by delivering some goods to %s.")
 
 text[1] = _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
@@ -74,7 +68,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Merchant"), portrait[rnd.rnd(1, #portrait)]) -- creates the merchant at the bar
+   misn.setNPC(_("Merchant"), getPortrait("Trader")) -- creates the merchant at the bar
    misn.setDesc(bar_desc) -- merchant's description
 
    stu_distance = 0.2 * travel_dist

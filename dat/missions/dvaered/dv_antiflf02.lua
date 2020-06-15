@@ -8,7 +8,9 @@
 
 -- localization stuff, translators would work here
 
-include("fleethelper.lua")
+include "fleethelper.lua"
+include "portrait.lua"
+
 
 title = {}
 text = {}
@@ -83,7 +85,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", "dvaered/dv_military_m1")
+    misn.setNPC("Dvaered liaison", getMaleMilPortrait("Dvaered"))
     misn.setDesc(npc_desc)
 end
 

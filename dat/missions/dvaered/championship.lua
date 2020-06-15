@@ -11,9 +11,9 @@
 --]]
 
 --Needed scripts
-include "dat/scripts/numstring.lua"
-include "dat/scripts/proximity.lua"
-include "dat/factions/equip/generic.lua"
+include "numstring.lua"
+include "proximity.lua"
+include "portrait.lua"
 
 title = {}
 text = {}
@@ -87,7 +87,7 @@ npc_desc[3] = _("Pilot")
 bar_desc[3] = _("This pilot seems to work as a private combat pilot")
 
 npc_desc[4] = _("Imperial pilot")
-bar_desc[4] = _([[This pilot is one of the few imperial pilots who are good enough to have the right to wear their uniform while taking part in piloting challenges.]])
+bar_desc[4] = _([[This pilot is is clearly from the Empire.]])
 
 npc_desc[5] = _("Dvaered pilot")
 bar_desc[5] = _([[This pilot surely works as a Vendetta pilot.]])
@@ -115,47 +115,27 @@ function create ()
    
    --No system claim
 
-   portrait = {
-      "neutral/female1",
-      "neutral/female2",
-      "neutral/female3",
-      "neutral/female4",
-      "neutral/female5",
-      "neutral/female6",
-      "neutral/female7",
-      "neutral/female8",
-      "neutral/female9",
-      "neutral/female10",
-      "neutral/male1",
-      "neutral/thief1",
-      "neutral/thief2",
-      "neutral/thief3",
-      "neutral/thief4",
-   }
-   officialFace = portrait[rnd.rnd(1, #portrait)]
+   officialFace = getMilPortrait( "Dvaered" )
    official = misn.setNPC(npc_desc[1], officialFace)
    misn.setDesc(bar_desc[1])
 
 end
 
 function populate_bar() --add some random npcs
-
-   portrait = {"neutral/female1", "neutral/male1", "neutral/thief1", "neutral/thief2", "neutral/thief3" }
-
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor1", npc_desc[2], portrait[rnd.rnd(1, #portrait)], bar_desc[2])
+      misn.npcAdd("competitor1", npc_desc[2], getPortrait(), bar_desc[2])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor2", npc_desc[3], portrait[rnd.rnd(1, #portrait)], bar_desc[3])
+      misn.npcAdd("competitor2", npc_desc[3], getPortrait(), bar_desc[3])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", npc_desc[4], "empire/empire1", bar_desc[4])
+      misn.npcAdd("competitor3", npc_desc[4], getPortrait("Empire"), bar_desc[4])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor4", npc_desc[5], "dvaered/dv_military_f1", bar_desc[5])
+      misn.npcAdd("competitor4", npc_desc[5], getPortrait("Dvaered"), bar_desc[5])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor5", npc_desc[6], "pirate/pirate2", bar_desc[6])
+      misn.npcAdd("competitor5", npc_desc[6], getPortrait("Pirate"), bar_desc[6])
    end
 end
 

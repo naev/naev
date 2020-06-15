@@ -2,7 +2,9 @@
 -- This is the first mission in the crazy baron string.
 --]]
 
--- localization stuff, translators would work here
+include "portrait.lua"
+
+
 sysname1 = "Darkstone"
 sysname2 = "Ingot"
 planetname = "Varia"
@@ -132,9 +134,9 @@ end
 
 function land()
    if planet.cur() == planet.get(planetname) and not talked then
-      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), "neutral/thief1", npc_desc)
-      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), "neutral/thief2", npc_desc)
-      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), "neutral/thief3", npc_desc)
+      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
+      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
+      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
    end
 end
 

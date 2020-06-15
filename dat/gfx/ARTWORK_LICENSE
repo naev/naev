@@ -578,14 +578,14 @@
          * ka'def.png
          * vicious.png
          * zolo.png
-       * dv_civilian1.png 
-       * dv_civilian2.png 
-       * dv_general1.png 
-       * dv_military_m1.png 
-       * dv_military_m2.png 
-       * dv_military_m3.png 
-       * dv_military_f1.png 
-       * dv_military_f1.png 
+       * dv_civilian_f1.png
+       * dv_civilian_f2.png
+       * dv_general1.png
+       * dv_military_m1.png
+       * dv_military_m2.png
+       * dv_military_m3.png
+       * dv_military_f1.png
+       * dv_military_f1.png
      * empire
        * unique
          * czesc.png
@@ -647,6 +647,16 @@
 
  * Author: diligentcircle (based on components by Nihilos), License: CC-by 3.0
    * portraits
+     * dvaered
+       * dv_civilian_f3.png
+       * dv_civilian_f4.png
+       * dv_civilian_f5.png
+       * dv_civilian_m1.png
+       * dv_civilian_m2.png
+       * dv_civilian_m3.png
+       * dv_civilian_m4.png
+       * dv_civilian_m5.png
+       * dv_civilian_m6.png
      * neutral
        * unique
          * arnoldsmith.png
@@ -656,6 +666,7 @@
          * fakesister.png
          * laidback.png
          * michal.png
+         * middleaged.png
          * paddy.png
          * shifty_merchant.png
        * female2.png
@@ -667,6 +678,9 @@
        * female8.png
        * female9.png
        * female10.png
+       * female11.png
+       * female12.png
+       * female13.png
        * male2.png
        * male3.png
        * male4.png
@@ -676,10 +690,29 @@
        * male8.png
        * male9.png
        * male10.png
+       * male11.png
+       * male12.png
+       * male13.png
        * thief4.png
      * pirate
        * pirate5.png
+       * pirate6.png
+       * pirate7.png
+       * pirate8.png
+       * pirate9.png
+       * pirate10.png
+       * pirate11.png
+       * pirate12.png
+       * pirate13.png
+       * pirate14.png
      * sirius
+       * sirius_fyrra_f3.png
+       * sirius_fyrra_f4.png
+       * sirius_fyrra_f5.png
+       * sirius_fyrra_m2.png
+       * sirius_fyrra_m3.png
+       * sirius_fyrra_m4.png
+       * sirius_fyrra_m5.png
        * unique
          * draga.png
          * shaman.png
