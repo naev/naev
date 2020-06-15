@@ -190,7 +190,8 @@ int main( int argc, char** argv )
 #endif
 
    /* Set up locales. */
-   setlocale(LC_ALL|~LC_NUMERIC, "");
+   //setlocale(LC_ALL|~LC_NUMERIC, "");
+   setlocale(LC_ALL, "");
    //bindtextdomain("naev", LOCALEDIR);
    bindtextdomain("naev", "po/");
    textdomain("naev");
