@@ -19,14 +19,13 @@ title[2] = _("The crew is home")
 text[2] = _([[The Dvaered crew file out of your ship. You didn't really get to know them on this trip, they kept to themselves. The commanding officer brings up the rear of the departing crew, but he stops when he passes by you.
     "Well done citizen," he says. "You have done your duty as an upstanding member of society by rendering assistance to an official Dvaered patrol. ]])
     
-text[3] = _([[In addition, you complied with your instructions and destroyed a terrorist that threatened the peace and stability of the region. You will be rewarded appropriately."
-]])
+text[3] = _([[In addition, you complied with your instructions and destroyed a terrorist that threatened the peace and stability of the region. You will be rewarded appropriately."]])
 
-text[4] = _([[However, you failed to comply with instructions, and let a potentially dangerous terrorist get away with his crimes. I will not apply any penalties in light of the situation, but consider yourself reprimanded."
-]])
+text[4] = _([[However, you failed to comply with instructions, and let a potentially dangerous terrorist get away with his crimes. I will not apply any penalties in light of the situation, but consider yourself reprimanded."]])
 
-text[5] = _([[The officer turns to leave, but then appears to have remembered something, because he turns back at you again.
-"Incidentally, citizen. The Dvaered authorities are preparing a campaign against the FLF terrorists. You seem to be an able pilot, and we need a civilian ship as part of our strategy. If you are interested, seek out the official Dvaered liaison."
+text[5] = _([[
+    The officer turns to leave, but then appears to have remembered something, because he turns back at you again.
+    "Incidentally, citizen. The Dvaered authorities are preparing a campaign against the FLF terrorists. You seem to be an able pilot, and we need a civilian ship as part of our strategy. If you are interested, seek out the official Dvaered liaison."
     When he is gone, you find yourself wondering what this campaign he mentioned is all about. There is one way to find out - if you are up to it...]])
     
 misn_title = _("Take the Dvaered crew home")
