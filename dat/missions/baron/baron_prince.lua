@@ -3,8 +3,10 @@
 --]]
 
 -- localization stuff, translators would work here
-include("fleethelper.lua")
-include("dat/scripts/numstring.lua")
+include "fleethelper.lua"
+include "numstring.lua"
+include "portrait.lua"
+
 
 title = {}
 text = {}
@@ -115,7 +117,7 @@ osd_msg[3] = _("Take the artefact to Baron Sauterfeldt")
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(npc_desc, "neutral/thief2")
+   misn.setNPC(npc_desc, "none")
    misn.setDesc(bar_desc)
 end
 
@@ -193,11 +195,11 @@ end
 
 function land()
    if planet.cur() == artefactplanetA and not artefactA then
-      sellnpc = misn.npcAdd("seller", _("Artefact seller"), "neutral/thief1", sellerdesc, 4)
+      sellnpc = misn.npcAdd("seller", _("Artefact seller"), getPortrait("Pirate"), sellerdesc, 4)
    elseif planet.cur() == artefactplanetB and not artefactB then
-      sellnpc = misn.npcAdd("seller", _("Artefact seller"), "neutral/thief2", sellerdesc, 4)
+      sellnpc = misn.npcAdd("seller", _("Artefact seller"), getPortrait("Pirate"), sellerdesc, 4)
    elseif planet.cur() == artefactplanetC and not artefactC then
-      sellnpc = misn.npcAdd("seller", _("Artefact seller"), "neutral/thief3", sellerdesc, 4)
+      sellnpc = misn.npcAdd("seller", _("Artefact seller"), getPortrait("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if flintleyfirst then
          flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley", flint_bar1, 4)

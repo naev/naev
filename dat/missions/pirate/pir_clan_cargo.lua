@@ -9,9 +9,9 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
-include "dat/scripts/jumpdist.lua"
-include "dat/missions/pirate/common.lua"
+include "numstring.lua"
+include "jumpdist.lua"
+include "portrait.lua"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")
@@ -46,7 +46,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Pirate Lord"), pir_getLordRandomPortrait() )
+   misn.setNPC( _("Pirate Lord"), getMilPortrait("Pirate") )
    misn.setDesc( bar_desc )
 end
 

@@ -11,6 +11,8 @@
 
 --]]
 
+include "portrait.lua"
+
 
 -- Bar information
 bar_desc = _("The woman waves at you a bit desperately.")

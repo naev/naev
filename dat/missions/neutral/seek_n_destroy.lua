@@ -11,6 +11,7 @@
 
 include "numstring.lua"
 include "jumpdist.lua"
+include "portrait.lua"
 include "pilot/pirate.lua"
 
 clue_title   = _("I know the pilot you're looking at")
@@ -487,8 +488,6 @@ function land ()
 
    -- Player seek for a clue
    elseif system.cur() == mysys[cursys] and stage == 0 then
-      portrait = {"neutral/female1", "neutral/male1", "neutral/thief1", "neutral/thief2", "neutral/thief3" }
-
       if rnd.rnd() < .3 then -- NPC does not know the target
          know = 0
       elseif rnd.rnd() < .5 then -- NPC wants money
@@ -497,7 +496,7 @@ function land ()
       else -- NPC tells the clue
          know = 2
       end
-      mynpc = misn.npcAdd("clue_bar", npc_desc, portrait[rnd.rnd(1, #portrait)], bar_desc)
+      mynpc = misn.npcAdd("clue_bar", npc_desc, getPortrait("Pirate"), bar_desc)
 
    -- Player wants to be paid
    elseif planet.cur():faction() == paying_faction and stage == 4 then

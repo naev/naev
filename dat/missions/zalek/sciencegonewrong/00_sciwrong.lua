@@ -12,7 +12,6 @@
 include "numstring.lua"
 include "proximity.lua"
 include "fleethelper.lua"
-include "dat/missions/empire/common.lua"
 
 -- set mission variables
 t_sys = {}
