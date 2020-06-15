@@ -95,6 +95,14 @@ bar_desc[5] = _([[This pilot surely works as a Vendetta pilot.]])
 npc_desc[6] = _("Strange pilot")
 bar_desc[6] = _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]])
 
+npc_portrait = {}
+npc_portrait[2] = getPortrait()
+npc_portrait[3] = getPortrait()
+npc_portrait[4] = getPortrait("empire")
+npc_portrait[5] = getPortrait("Dvaered")
+npc_portrait[6] = getPortrait("Pirate")
+npc_portrait["__save"] = true
+
 -- OSD
 osd_title = _("The Dvaered Championship, round %n")
 final_title = _("The Dvaered Championship, final")
@@ -123,19 +131,19 @@ end
 
 function populate_bar() --add some random npcs
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor1", npc_desc[2], getPortrait(), bar_desc[2])
+      misn.npcAdd("competitor1", npc_desc[2], npc_portrait[2], bar_desc[2])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor2", npc_desc[3], getPortrait(), bar_desc[3])
+      misn.npcAdd("competitor2", npc_desc[3], npc_portrait[3], bar_desc[3])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", npc_desc[4], getPortrait("Empire"), bar_desc[4])
+      misn.npcAdd("competitor3", npc_desc[4], npc_portrait[4], bar_desc[4])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor4", npc_desc[5], getPortrait("Dvaered"), bar_desc[5])
+      misn.npcAdd("competitor4", npc_desc[5], npc_portrait[5], bar_desc[5])
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor5", npc_desc[6], getPortrait("Pirate"), bar_desc[6])
+      misn.npcAdd("competitor5", npc_desc[6], npc_portrait[6], bar_desc[6])
    end
 end
 
