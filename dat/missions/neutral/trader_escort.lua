@@ -200,7 +200,7 @@ function jumpin()
     
    if system.cur() ~= nextsys then -- player jumped to somewhere other than the next system
       tk.msg(wrongsystitle, wrongsystext)
-      abort()
+      misn.finish(false)
    elseif system.cur() == destsys and misnfail == false then -- player has reached the destination system
       --Make it interesting
       if convoysize == 1 then
@@ -367,7 +367,7 @@ function traderDeath()
       elseif alive[2] then alive[2] = false
       else -- all convoy dead
          tk.msg(convoydeathtitle, convoydeathtext)
-         abort()
+         misn.finish(false)
       end
    elseif convoysize == 2 then
       if alive[4] then alive[4] = false
@@ -375,7 +375,7 @@ function traderDeath()
       elseif alive[2] then alive[2] = false
       else -- all convoy dead
          tk.msg(convoydeathtitle, convoydeathtext)
-         abort()
+         misn.finish(false)
       end
    elseif convoysize == 3 then
       if alive[5] then alive[5] = false
@@ -385,7 +385,7 @@ function traderDeath()
       elseif alive[1] then alive[1] = false
       else -- all convoy dead
          tk.msg(convoydeathtitle, convoydeathtext)
-         abort()
+         misn.finish(false)
       end
    elseif convoysize == 4 then
       if alive[6] then alive[6] = false
@@ -395,7 +395,7 @@ function traderDeath()
       elseif alive[2] then alive[2] = false
       else -- all convoy dead
          tk.msg(convoydeathtitle, convoydeathtext)
-         abort()
+         misn.finish(false)
       end
    elseif convoysize == 5 then
       if alive[8] then alive[8] = false
@@ -407,7 +407,7 @@ function traderDeath()
       elseif alive[2] then alive[2] = false
       else -- all convoy dead
          tk.msg(convoydeathtitle, convoydeathtext)
-         abort()
+         misn.finish(false)
       end
    end
 end
