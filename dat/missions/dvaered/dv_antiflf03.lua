@@ -160,7 +160,7 @@ function enter()
 
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
     elseif system.cur():name() == DVsys and victorious then -- Make sure the player can finish the missions properly.
-        planet.get(DVplanet):landOverride()
+        planet.get(DVplanet):landOverride(true)
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerSingle(-10)
