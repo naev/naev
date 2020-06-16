@@ -850,7 +850,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
    int i, j, b, psx, psy, k, n;
-   unsigned int coll, usePoly;
+   unsigned int coll, usePoly=1;
    glTexture *gfx;
    CollPoly *plg, *polygon;
    Vector2d crash[2];
@@ -869,7 +869,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       polygon = &plg[n];
 
       /* See if the outfit has a collision polygon. */
-      usePoly = 1;
       if (outfit_isBolt(w->outfit)) {
          if (w->outfit->u.blt.npolygon == 0)
             usePoly = 0;
