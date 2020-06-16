@@ -38,7 +38,7 @@ text[3] = _([[You sit down at a table adjacent to these two pirates, ordering a 
 
 title[4] = _("The Dirt")
 text[4] = _([[You don't even bother sitting down too close to these two pirates considering how loudly they're talking. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other.
-    "So this dummy thought he could out-fly me in his stupid Llama! So I took him off-line in like 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Morons think they can even bother to mess with me when I have work to do.
+    "So this dummy thought he could out-fly me in his stupid Llama! So I took him offline in like 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Morons think they can even bother to mess with me when I have work to do.
     "So I took the kids to the %s system where they were loaded into this Trader Koala named the Progeny. Clever name if you ask me! No one will ever even wonder what it's carrying. It looks like the most innocent little guy flying around there. Little does everyone know it's waiting to fill up its load of brats!"
     Having listened to this dirt-bag, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]])
 
@@ -122,7 +122,7 @@ end
   
 function land1()
   if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
-    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), getPortrait("Pirate"), pir1_disc)
+    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), getMalePortrait("Pirate"), pir1_disc)
     bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), getPortrait("Pirate"), pir1_disc)
   end
 end

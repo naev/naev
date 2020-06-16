@@ -131,16 +131,16 @@
   <faction_modifier type="FLF">0.9</faction_modifier>
  </commodity>
  <commodity>
-  <name>Ancient Artefact</name>
+  <name>Ancient Artifact</name>
  </commodity>
  <commodity>
-  <name>Artefact? A</name>
+  <name>Artifact? A</name>
  </commodity>
  <commodity>
-  <name>Artefact? B</name>
+  <name>Artifact? B</name>
  </commodity>
  <commodity>
-  <name>Artefact? C</name>
+  <name>Artifact? C</name>
  </commodity>
  <commodity>
   <name>Box</name>
