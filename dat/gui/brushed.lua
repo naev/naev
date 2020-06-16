@@ -112,6 +112,7 @@ function create()
    top_bar_center = tex.open( base .. "topbarCenter.png" )
    top_bar_center_sheen = tex.open( base .. "topbarSheen.png" )
    top_bar_center_sheen2 = tex.open( base .. "topbarSheen2.png" )
+   bottom_bar = tex.open( base .. "bottombar.png" )
    button_normal = tex.open( base .. "button.png" )
    button_hilighted = tex.open( base .. "buttonHil2.png" )
    button_mouseover = tex.open( base .. "buttonHil.png" )
@@ -184,7 +185,9 @@ function create()
    tbar_w, tbar_h = top_bar:dim()
    tbar_y = screen_h - tbar_h
 
-   gui.viewport( 0, 0, screen_w, screen_h )
+   bbar_w, bbar_h = bottom_bar:dim()
+
+   gui.viewport( 0, 36, screen_w, screen_h - 72 )
 
    fields_y = tbar_y + 15
    if screen_w <=1024 then
@@ -680,6 +683,12 @@ function render( dt )
    autonav = player.autonav()
    lockons = pp:lockon()
 
+   -- Top Bar
+   gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
+
+   -- Bottom Bar
+   gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, bbar_h, 1, 1, 0, 0, 1, 1 )
+
    --Main window right
    if #wset > weapbars then
       wbars_right = weapbars
@@ -836,9 +845,6 @@ function render( dt )
       gfx.renderTex( popup_empty, popup_left_x + mod_x, popup_left_y )
    end
    gfx.renderTex( popup_bottom, popup_left_x + mod_x, popup_left_y - 5 )
-
-   --Top Bar
-   gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
 
    if nav_pnt ~= nil then
       renderField( nav_pnt:name(), fields_x + 4, fields_y, fields_w, col_text, icon_pnt_target )
