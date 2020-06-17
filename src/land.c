@@ -185,7 +185,7 @@ int can_swapEquipment( char* shipname )
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
       diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
       land_errDialogueBuild( ngettext(
-               "You have %d tonnes more cargo than the new ship can hold.",
+               "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
             diff, shipname );
