@@ -187,7 +187,8 @@ function create()
 
    bbar_w, bbar_h = bottom_bar:dim()
 
-   gui.viewport( 0, 36, screen_w, screen_h - 72 )
+   yoffset = 36 -- Exclude top and bottom bars from main area
+   gui.viewport( 0, yoffset, screen_w, screen_h - yoffset*2 )
 
    fields_y = tbar_y + 15
    if screen_w <=1024 then

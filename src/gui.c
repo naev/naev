@@ -2316,7 +2316,8 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mmove)
             break;
          gui_prepFunc( "mouse_move" );
-         gl_windowToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
+         gl_windowToScreenPos( &x, &y, evt->motion.x - gui_viewport_x,
+               evt->motion.y - gui_viewport_y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
@@ -2329,7 +2330,8 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_click" );
          lua_pushnumber( naevL, evt->button.button+1 );
-         gl_windowToScreenPos( &x, &y, evt->button.x, evt->button.y );
+         gl_windowToScreenPos( &x, &y, evt->button.x - gui_viewport_x,
+            evt->button.y - gui_viewport_y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );
