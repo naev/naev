@@ -3,7 +3,7 @@ name: Naev CI
 on: [push, pull_request]
 
 jobs:
-  win32_build:
+  win32:
     runs-on: windows-latest
 
     defaults:
@@ -27,7 +27,7 @@ jobs:
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
 
-  win64_build:
+  win64:
     runs-on: windows-latest
 
     defaults:
@@ -51,7 +51,7 @@ jobs:
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
 
-  lin64_build:
+  lin64:
     runs-on: ubuntu-latest
 
     steps:
@@ -103,12 +103,12 @@ jobs:
     - name: Prepare Artifacts for Deployment
       run: |
         ./config.status --file .travis/bintray.json
-        gzip -9 < src/naev > ".travis/naev-linux$BITS.gz"
+        gzip -9 < src/naev > ".travis/naev-linux64.gz"
     
     - name: Deploy Artifacts
       run: echo "You did it!"
 
-  macos_build:
+  macos:
     runs-on: macos-latest
 
     steps:
@@ -116,27 +116,20 @@ jobs:
       run: |
         brew update
         brew upgrade
-        brew cleanup
 
     - name: Install Additional Build Dependencies
       run: |
         brew install \
           automake \
-          binutils \
           pkg-config \
           fontconfig \
-          freetype \
-          libpng \
-          libvorbis \
-          libzip \
           luajit \
-          libxml2 \
-          gettext \
           intltool \
           sdl2 \
           sdl2_mixer \
+          openal-soft \
           sdl2_image
-          
+
     - name: Install Perl Dependencies
       run: sudo cpan XML::Parser
 
