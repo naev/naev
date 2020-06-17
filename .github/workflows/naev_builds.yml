@@ -5,9 +5,11 @@ on: [push, pull_request]
 jobs:
   win32_build:
     runs-on: windows-latest
+
     defaults:
       run:
         shell: msys2 {0}
+
     steps:
     - name: Setup MINGW32 Environment
       uses: eine/setup-msys2@v1
@@ -27,9 +29,11 @@ jobs:
 
   win64_build:
     runs-on: windows-latest
+
     defaults:
       run:
         shell: msys2 {0}
+
     steps:
     - name: Setup MINGW64 Environment
       uses: eine/setup-msys2@v1
@@ -126,7 +130,6 @@ jobs:
           luajit \
           gettext \
           intltool
-        brew link --force gettext
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
