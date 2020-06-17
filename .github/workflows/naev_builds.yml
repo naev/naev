@@ -1,10 +1,6 @@
-name: Naev Builds
+name: Naev CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   win32_build:
@@ -26,7 +22,7 @@ jobs:
     - name: Test-Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
 
   win64_build:
@@ -48,6 +44,61 @@ jobs:
     - name: Test-Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
-        
+
+  linux64_build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get install \
+          build-essential \
+          automake \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libxml2-dev \
+          libfontconfig1-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          binutils-dev \
+          libzip-dev \
+          libiberty-dev \
+          libluajit-5.1-dev \
+          luarocks \
+          gettext \
+          autopoint \
+          intltool
+
+    - name: Install LuaRocks packages 
+      run: luarocks install --local ldoc
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Test-Build Naev on Linux64
+      run: |
+        ./autogen.sh
+        ./configure --disable-dependency-tracking --disable-debug
+        make -j$(nproc --all)
+
+    - name: Build Naev Lua docs
+      run: |
+        export PATH="$PATH:$HOME/.luarocks/bin"
+        (cd docs && ./luadoc.sh)
+
+    - name: Prepare Artifacts for Deployment
+      run: |
+        ./config.status --file .travis/bintray.json
+        gzip -9 < src/naev > ".travis/naev-linux$BITS.gz"
+    
+    - name: Deploy Artifacts
+      run: echo "You did it!"
