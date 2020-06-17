@@ -251,8 +251,8 @@ function create()
 
    -- Set OSD
    local osd_w = 225
-   local osd_h = screen_h - 275
-   gui.osdInit( 30, screen_h - 50, osd_w, osd_h )
+   local osd_h = screen_h - 289
+   gui.osdInit( 30, screen_h - 64, osd_w, osd_h )
 
    first_time = { true, 2 }
    navstring = _("none")
