@@ -979,7 +979,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("al_efx",conf.al_efx);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Size of the OpenAL music buffer (in kilobytes)."));
+   conf_saveComment(_("Size of the OpenAL music buffer (in kibibytes)."));
    conf_saveInt("al_bufsize",conf.al_bufsize);
    conf_saveEmptyLine();
 
@@ -1036,7 +1036,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Fonts. */
-   conf_saveComment(_("Font sizes (in pixels) for NAEV"));
+   conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
    conf_saveComment(_("Console default: 10"));
    conf_saveInt("font_size_console",conf.font_size_console);

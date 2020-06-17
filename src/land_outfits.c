@@ -443,7 +443,7 @@ void outfits_update( unsigned int wid, char* str )
          "\n"
          "%s\n"
          "%s\n"
-         "%.0f tons\n"
+         "%.0f tonnes\n"
          "\n"
          "%s credits\n"
          "%s credits\n"

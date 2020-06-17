@@ -176,14 +176,19 @@ int can_swapEquipment( char* shipname )
    int failure = 0;
    Pilot *newship;
    newship = player_getShip(shipname);
+   int diff;
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       failure = 1;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( _("You have %d tons more cargo than the new ship can hold."),
-            pilot_cargoUsed(player.p) - pilot_cargoFree(newship), shipname );
+      diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
+      land_errDialogueBuild( ngettext(
+               "You have %d tonnes more cargo than the new ship can hold.",
+               "You have %d tonnes more cargo than the new ship can hold.",
+               diff),
+            diff, shipname );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
@@ -711,7 +716,9 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), _("%s\n%d Tons"), buf, player.p->cargo_free );
+   nsnprintf( txt, sizeof(txt), ngettext(
+            "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
+         buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 

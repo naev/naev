@@ -1779,8 +1779,11 @@ void player_brokeHyperspace (void)
          player_autonavEnd();
       }
       else {
-         player_message( _("\apAutonav continuing until destination (%d jump%s left)."),
-               map_npath, (map_npath==1) ? "" : "s" );
+         player_message( ngettext(
+                  "\apAutonav continuing until destination (%d jump left).",
+                  "\apAutonav continuing until destination (%d jumps left).",
+                  map_npath),
+               map_npath );
       }
    }
 

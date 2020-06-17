@@ -68,7 +68,7 @@ int joystick_use( int indjoystick )
 
    /* Check to see if it exists. */
    if ((indjoystick < 0) || (indjoystick >= SDL_NumJoysticks())) {
-      WARN(_("Joystick of index number %d does not existing, switching to default 0"),
+      WARN(_("Joystick of index number %d does not exist, switching to default 0"),
             indjoystick);
       indjoystick = 0;
    }

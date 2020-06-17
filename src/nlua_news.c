@@ -98,14 +98,14 @@ LuaArticle* luaL_validarticle( lua_State *L, int ind )
       if (news_get(*Larticle))
          return Larticle;
       else
-         NLUA_ERROR(L, _("article is old"));
+         NLUA_ERROR(L, _("Article is old"));
    }
    else {
       luaL_typerror(L, ind, ARTICLE_METATABLE);
       return NULL;
    }
 
-   NLUA_ERROR(L, _("article is invalid."));
+   NLUA_ERROR(L, _("Article is invalid."));
 
    return NULL;
 }
