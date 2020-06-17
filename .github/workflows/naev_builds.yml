@@ -115,6 +115,8 @@ jobs:
     - name: Update Homebrew Cache
       run: |
         brew update
+        brew upgrade
+        brew cleanup
 
     - name: Install Additional Build Dependencies
       run: |
