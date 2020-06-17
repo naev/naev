@@ -115,17 +115,17 @@ jobs:
     - name: Install Build Dependencies
       run: |
         brew install \
-        sdl2 \
-        sdl2_mixer \
-        sdl2_image \
-        fontconfig \
-        freetype \
-        libpng \
-        libvorbis \
-        libzip \
-        luajit \
-        gettext \
-        intltool
+          sdl2 \
+          sdl2_mixer \
+          sdl2_image \
+          fontconfig \
+          freetype \
+          libpng \
+          libvorbis \
+          libzip \
+          luajit \
+          gettext \
+          intltool
         brew link --force gettext
 
     - name: Checkout Naev Repository 
