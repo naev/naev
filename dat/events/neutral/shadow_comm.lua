@@ -86,7 +86,8 @@ function jumpin()
         seiryuu:setHilight(true)
         seiryuu:setVisplayer(true)
         hook.pilot(seiryuu, "board", "board")
-    elseif hail_time == nil or time.get() > hail_time + time.create(0, 100, 0) then
+    elseif (hail_time == nil or time.get() > hail_time + time.create(0, 100, 0))
+            and rnd.rnd() < 0.1 then
         vendetta = pilot.add("Four Winds Vendetta", nil, true)[1]
         vendetta:control()
         vendetta:follow(player.pilot())
