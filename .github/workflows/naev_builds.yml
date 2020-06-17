@@ -143,6 +143,7 @@ jobs:
           intltool \
           sdl2 \
           sdl2_mixer \
+          openal-soft \
           sdl2_image
 
     - name: Install Perl Dependencies
@@ -153,7 +154,9 @@ jobs:
 
     - name: Test-Build Naev on MacOS
       run: |
-       
+        # Tells pkg-config where to look for OpenAL
+        export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
+        
         ./autogen.sh
         ./configure
         make -j$(sysctl -n hw.logicalcpu)
