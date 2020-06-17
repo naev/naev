@@ -121,9 +121,7 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         brew install \
-          sdl2 \
-          sdl2_mixer \
-          sdl2_image \
+          automake \
           fontconfig \
           freetype \
           libpng \
@@ -131,7 +129,10 @@ jobs:
           libzip \
           luajit \
           gettext \
-          intltool
+          intltool \
+          sdl2 \
+          sdl2_mixer \
+          sdl2_image
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
