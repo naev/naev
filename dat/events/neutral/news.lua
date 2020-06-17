@@ -77,7 +77,7 @@ articles["Generic"] = {
    --]]
    {
       title = _("Techs Probe for Sol"),
-      desc = _("Technicians at the Omega Station recently returned from a new effort to understand the Sol Incident. They expect the first data to arrive in two months' time.")
+      desc = _("Technicians at the Omega Station recently returned from a new effort to understand the Sol Incident. They expect the first data to arrive in 50 decaperiods' time.")
    },
    {
       title = _("Sand Monster Caught On Tape"),
@@ -89,7 +89,7 @@ articles["Generic"] = {
    },
    {
       title = _("Experiment Produces Cold Fusion"),
-      desc = _("In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at Eureka labs says he has produced a tabletop atomic reaction. He hopes to publish his results in a science journal later this year.")
+      desc = _("In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at Eureka labs says he has produced a tabletop atomic reaction. He hopes to publish his results in a science journal later this cycle.")
    },
    {
       title = _("Bees Introduced to Emperor's Fist"),
@@ -136,7 +136,7 @@ articles["Generic"] = {
    },
    {
       title = _("Nexus Contract Finalised"),
-      desc = _("The Empire agreed terms with shipbuilder Nexus for a new generation of military craft. The deal extends the partnership with the government for another decade.")
+      desc = _("The Empire agreed to terms with shipbuilder Nexus for a new generation of military craft. The deal extends the partnership with the government for another 10 cycles.")
    },
    {
       title = _("Sneak Peek: the Kestrel"),
@@ -155,7 +155,7 @@ articles["Generic"] = {
    },
    {
       title = _("Election on Caladan Marred by Fraud"),
-      desc = _("As many as two of every hundred votes counted after the recent polling day may be falsified, an ombudsman reports. The opposition party demanded the election be annulled.")
+      desc = _("As many as two of every hundred votes counted after the recent polling decaperiod may be falsified, an ombudsman reports. The opposition party demanded the election be annulled.")
    },
    {
       title = _("Empire Relies on Prison Labour"),
@@ -198,7 +198,7 @@ articles["Generic"] = {
    },
    {
       title = _("Everyone Loves a SuperChimp"),
-      desc = _("For decades used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or low-cost servant.")
+      desc = _("For dozens of cycles used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or a low-cost servant.")
    },
    {
       title = _("Admiral's Ball a Triumph"),
@@ -206,7 +206,7 @@ articles["Generic"] = {
    },
    {
       title = _("Amazing Survival Story"),
-      desc = _("An Xing Long was rescued after two days floating in space. \"I used meditation to slow my breathing,\" Xing Long told us. \"It was hard because I was scared.\"")
+      desc = _("An Xing Long was rescued after two decaperiods floating in space. \"I used meditation to slow my breathing,\" Xing Long told us. \"It was hard because I was scared.\"")
    },
    {
       title = _("The Best Spaceport Bars"),
@@ -214,7 +214,7 @@ articles["Generic"] = {
    },
    {
       title = _("RIP: The Floating Vagabond"),
-      desc = _("Only two years after the mysterious disappearance of its owner, the galaxy's only deep space bar shut down the generators and cycled the airlock one last time.")
+      desc = _("Only two cycles after the mysterious disappearance of its owner, the galaxy's only deep space bar shut down the generators and cycled the airlock one last time.")
    },
    {
       title = _("Games for Young Pilots"),
