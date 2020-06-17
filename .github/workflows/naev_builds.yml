@@ -129,6 +129,7 @@ jobs:
           libvorbis \
           libzip \
           luajit \
+          libxml2 \
           gettext \
           intltool \
           sdl2 \
