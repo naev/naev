@@ -99,14 +99,13 @@ jobs:
       run: |
         export PATH="$PATH:$HOME/.luarocks/bin"
         (cd docs && ./luadoc.sh)
-
-    - name: Prepare Artifacts for Deployment
-      run: |
-        ./config.status --file .travis/bintray.json
-        gzip -9 < src/naev > ".travis/naev-linux64.gz"
     
-    - name: Deploy Artifacts
-      run: echo "You did it!"
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-lin64-${{ github.run_number }}
+        path: ${{ GITHUB_WORKSPACE }}/src/naev
 
   macos:
     runs-on: macos-latest
@@ -138,6 +137,7 @@ jobs:
 
     - name: Test-Build Naev on MacOS
       run: |
+        # Tells pkg-config where to look for OpenAL
         export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
         
         ./autogen.sh
@@ -146,11 +146,9 @@ jobs:
     
     - name: Build MacOS Bundle
       run: ./extras/macos/bundle.sh
-
-    - name: Prepare Artifacts for Deployment
-      run: |
-        ./config.status --file .travis/bintray.json
-        zip -9r .travis/naev-macos.zip Naev.app
     
-    - name: Deploy Artifacts
-      run: echo "You did it!"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-macos-${{ github.run_number }}
+        path: ${{ GITHUB_WORKSPACE }}/Naev.app
