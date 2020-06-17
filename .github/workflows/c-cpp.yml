@@ -1,55 +1,24 @@
 name: C/C++ CI
 
-on: push
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
   build:
-    strategy:
-      matrix:
-        platform: [windows-latest]
 
-    runs-on: ${{ matrix.platform }}
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
-    - name: Setup Msys2 environment
-      uses: numworks/setup-msys2@v1
+    - uses: eine/setup-msys2@v1
       with:
-        # Variant of the environment to set by default: MSYS, MINGW32 or MINGW64
-        msystem: MINGW64 # optional, default is MINGW64
-        # Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal
-        path-type: strict # optional, default is strict
-        # Update MSYS2 installation through pacman
-        update: true # optional
-    - name: Setup Msys2 packages
-      run: |
-        set MSYSTEM=MINGW64
-        msys2do pacman --sync --noconfirm --needed `
-                mingw-w64-x86_64-libtool `
-                mingw-w64-x86_64-toolchain `
-                mingw-w64-x86_64-gcc `
-                mingw-w64-x86_64-SDL2 `
-                mingw-w64-x86_64-SDL2_mixer `
-                mingw-w64-x86_64-SDL2_image `
-                mingw-w64-x86_64-libxml2 `
-                mingw-w64-x86_64-libpng `
-                mingw-w64-x86_64-openal `
-                mingw-w64-x86_64-libvorbis `
-                mingw-w64-x86_64-binutils `
-                mingw-w64-x86_64-freetype `
-                mingw-w64-x86_64-libzip `
-                mingw-w64-x86_64-gettext `
-                mingw-w64-x86_64-luajit `
-                libtool `
-                autoconf `
-                automake `
-                automake-wrapper `
-                git `
-                gettext `
-                pkgconfig `
-                make `
-                intltool
-
+        update: true
+        install: base-devel git
+    #- run: git config --global core.autocrlf input
+    #  shell: bash
     - uses: actions/checkout@v2
-    - name: build
-      run: |
-        msys2do ./autogen.sh
-        msys2do ./configure `
-        msys2do make  
+    - run: git describe --dirty
