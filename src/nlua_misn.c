@@ -31,7 +31,6 @@
 #include "nlua_camera.h"
 #include "nlua_music.h"
 #include "nlua_bkg.h"
-#include "nlua_tut.h"
 #include "player.h"
 #include "mission.h"
 #include "log.h"
@@ -130,8 +129,6 @@ int misn_loadLibs( nlua_env env )
    nlua_loadBackground(env);
    nlua_loadMusic(env);
    nlua_loadTk(env);
-   if (player_isTut())
-      nlua_loadTut(env);
    return 0;
 }
 /*

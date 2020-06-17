@@ -31,7 +31,6 @@
 #include "nlua_bkg.h"
 #include "nlua_tex.h"
 #include "nlua_music.h"
-#include "nlua_tut.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -276,8 +275,6 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadBackground(ev->env);
    nlua_loadMusic(ev->env);
    nlua_loadTk(ev->env);
-   if (player_isTut())
-      nlua_loadTut(ev->env);
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );
@@ -399,10 +396,6 @@ void events_trigger( EventTrigger_t trigger )
 {
    int i, c;
    int created;
-
-   /* Events can't be triggered by tutorial. */
-   if (player_isTut())
-      return;
 
    created = 0;
    for (i=0; i<event_ndata; i++) {
