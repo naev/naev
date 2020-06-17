@@ -18,7 +18,7 @@ jobs:
       with:
         update: true
         install: base-devel git
-    #- run: git config --global core.autocrlf input
-    #  shell: bash
+    - run: git config --global core.autocrlf input
+      shell: bash
     - uses: actions/checkout@v2
     - run: git describe --dirty
