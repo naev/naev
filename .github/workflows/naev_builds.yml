@@ -130,6 +130,7 @@ jobs:
           libzip \
           luajit \
           libxml2 \
+          expat \
           gettext \
           intltool \
           sdl2 \
