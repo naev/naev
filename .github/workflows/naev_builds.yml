@@ -103,3 +103,47 @@ jobs:
     
     - name: Deploy Artifacts
       run: echo "You did it!"
+
+  macos_build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Update Homebrew Cache
+      run: |
+        brew update
+
+    - name: Install Build Dependencies
+      run: |
+        brew install \
+        sdl2 \
+        sdl2_mixer \
+        sdl2_image \
+        fontconfig \
+        freetype \
+        libpng \
+        libvorbis \
+        libzip \
+        luajit \
+        gettext \
+        intltool
+        brew link --force gettext
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Test-Build Naev on MacOS
+      run: |
+        ./autogen.sh
+        ./configure --disable-dependency-tracking --disable-debug
+        make -j$(sysctl -n hw.logicalcpu)
+    
+    - name: Build MacOS Bundle
+      run: ./extras/macos/bundle.sh
+
+    - name: Prepare Artifacts for Deployment
+      run: |
+        ./config.status --file .travis/bintray.json
+        zip -9r .travis/naev-macos.zip Naev.app
+    
+    - name: Deploy Artifacts
+      run: echo "You did it!"
