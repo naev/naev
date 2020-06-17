@@ -32,7 +32,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-win32-${{ github.ref }}
+        name: naev-win32-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
   win64:
@@ -64,7 +64,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-win64-${{ github.ref }}
+        name: naev-win64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
   lin64:
@@ -121,7 +121,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-lin64-${{ github.ref }}
+        name: naev-lin64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev
 
   macos:
@@ -169,5 +169,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-macos-${{ github.ref }}
+        name: naev-macos-${{ github.sha }}
         path: ${{ github.workspace }}/Naev.app/
