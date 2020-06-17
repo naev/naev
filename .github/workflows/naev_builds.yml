@@ -7,37 +7,47 @@ on:
     branches: [ master ]
 
 jobs:
-  windows_build:
+  win32_build:
     runs-on: windows-latest
-
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
-    - name: Setup MINGW Environment
+    - name: Setup MINGW32 Environment
       uses: eine/setup-msys2@v1
       with:
-        msystem: MSYS
+        msystem: MINGW32
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
-
-    - name: Checkout Naev Repository
+        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
+    
+    - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on Win32
       run: |
-        set MSYSTEM=MINGW32
-        msys2 ./autogen.sh
-        set MSYSTEM=MINGW32
-        msys2 ./configure
-        set MSYSTEM=MINGW32
-        msys2 make -j$(nproc --all) 
+        ./autogen.sh
+        ./configure
+        make -j$(nproc --all)
 
-    - name: Make Distclean
-      run: make distclean
+  win64_build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+    - name: Setup MINGW64 Environment
+      uses: eine/setup-msys2@v1
+      with:
+        msystem: MINGW64
+        update: true
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
+    
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
 
     - name: Test-Build Naev on Win64
       run: |
-        set MSYSTEM=MINGW64
-        msys2 ./autogen.sh
-        set MSYSTEM=MINGW64
-        msys2 ./configure
-        set MSYSTEM=MINGW64
-        msys2 make -j$(nproc --all) 
+        ./autogen.sh
+        ./configure
+        make -j$(nproc --all)
+        
