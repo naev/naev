@@ -24,10 +24,16 @@ jobs:
     - name: Test-Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-win32-${{ github.ref }}
+        path: ${{ github.workspace }}/src/naev.exe
 
   win64:
     runs-on: windows-latest
@@ -50,10 +56,16 @@ jobs:
     - name: Test-Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-win64-${{ github.ref }}
+        path: ${{ github.workspace }}/src/naev.exe
 
   lin64:
     runs-on: ubuntu-latest
@@ -96,7 +108,7 @@ jobs:
     - name: Test-Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -106,11 +118,10 @@ jobs:
         export PATH="$PATH:$HOME/.luarocks/bin"
         (cd docs && ./luadoc.sh)
     
-    
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-lin64-${{ github.run_number }}
+        name: naev-lin64-${{ github.ref }}
         path: ${{ github.workspace }}/src/naev
 
   macos:
@@ -147,7 +158,7 @@ jobs:
         export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
         
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure
         make -j$(sysctl -n hw.logicalcpu)
       env:
         CFLAGS: "-O3 -mmacosx-version-min=10.7"
@@ -158,5 +169,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-macos-${{ github.run_number }}
-        path: ${{ github.workspace }}/Naev.app
+        name: naev-macos-${{ github.ref }}
+        path: ${{ github.workspace }}/Naev.app/
