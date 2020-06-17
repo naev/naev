@@ -136,6 +136,7 @@ jobs:
           sdl2 \
           sdl2_mixer \
           sdl2_image
+          
     - name: Install Perl Dependencies
       run: sudo cpan XML::Parser
 
