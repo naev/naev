@@ -1,23 +1,61 @@
 name: C/C++ CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+on: push
 jobs:
   build:
+    strategy:
+      matrix:
+        platform: [windows-latest]
 
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.platform }}
     steps:
+    - name: Setup Msys2 environment
+      uses: numworks/setup-msys2@v1
+      with:
+        # Variant of the environment to set by default: MSYS, MINGW32 or MINGW64
+        msystem: MINGW64 # optional, default is MINGW64
+        # Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal
+        path-type: strict # optional, default is strict
+        # Update MSYS2 installation through pacman
+        update: true # optional
+    - name: Setup Msys2 packages
+      run: |
+        set MSYSTEM=MINGW64
+        msys2do pacman --sync --noconfirm --needed `
+                mingw-w64-x86_64-libtool `
+                mingw-w64-x86_64-toolchain `
+                mingw-w64-x86_64-gcc `
+                mingw-w64-x86_64-SDL2 `
+                mingw-w64-x86_64-SDL2_mixer `
+                mingw-w64-x86_64-SDL2_image `
+                mingw-w64-x86_64-libxml2 `
+                mingw-w64-x86_64-libpng `
+                mingw-w64-x86_64-openal `
+                mingw-w64-x86_64-libvorbis `
+                mingw-w64-x86_64-binutils `
+                mingw-w64-x86_64-freetype `
+                mingw-w64-x86_64-libzip `
+                mingw-w64-x86_64-gettext `
+                mingw-w64-x86_64-luajit `
+                libtool `
+                autoconf `
+                automake `
+                automake-wrapper `
+                git `
+                gettext `
+                pkgconfig `
+                make `
+                intltool
     - uses: actions/checkout@v2
+    - name: autogen.sh
+      run: |
+        msys2do ./autogen.sh
     - name: configure
-      run: ./configure
+      run: |
+        msys2do ./configure
     - name: make
-      run: make
+        msys2do make
     - name: make check
-      run: make check
+      run: msys2do make check
     - name: make distcheck
-      run: make distcheck
+      run: msys2do make distcheck
