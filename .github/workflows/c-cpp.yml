@@ -46,16 +46,10 @@ jobs:
                 pkgconfig `
                 make `
                 intltool
+
     - uses: actions/checkout@v2
-    - name: autogen.sh
+    - name: build
       run: |
         msys2do ./autogen.sh
-    - name: configure
-      run: |
-        msys2do ./configure
-    - name: make
-        msys2do make
-    - name: make check
-      run: msys2do make check
-    - name: make distcheck
-      run: msys2do make distcheck
+        msys2do ./configure `
+        msys2do make  
