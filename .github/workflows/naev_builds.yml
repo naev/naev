@@ -25,7 +25,9 @@ jobs:
       run: |
         set MSYSTEM=MINGW32
         msys2 ./autogen.sh
+        set MSYSTEM=MINGW32
         msys2 ./configure
+        set MSYSTEM=MINGW32
         msys2 make -j$(nproc --all) 
 
     - name: Make Distclean
@@ -35,5 +37,7 @@ jobs:
       run: |
         set MSYSTEM=MINGW64
         msys2 ./autogen.sh
+        set MSYSTEM=MINGW64
         msys2 ./configure
+        set MSYSTEM=MINGW64
         msys2 make -j$(nproc --all) 
