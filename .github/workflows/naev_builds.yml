@@ -26,8 +26,6 @@ jobs:
         ./autogen.sh
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
 
   win64:
     runs-on: windows-latest
@@ -52,9 +50,7 @@ jobs:
         ./autogen.sh
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-        
+
   lin64:
     runs-on: ubuntu-latest
 
@@ -98,8 +94,6 @@ jobs:
         ./autogen.sh
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
 
     - name: Build Naev Lua docs
       run: |
@@ -149,9 +143,7 @@ jobs:
         ./autogen.sh
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(sysctl -n hw.logicalcpu)
-      env:
-        CFLAGS: "-O3 -mmacosx-version-min=10.7"
-
+    
     - name: Build MacOS Bundle
       run: ./extras/macos/bundle.sh
     
