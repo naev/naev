@@ -77,7 +77,7 @@ PKG_PROG_PKG_CONFIG
 
 AC_CHECK_PROG([CUT], [cut], [cut])
 AS_IF([test -z "$CUT"],[
-  AC_ERROR([cut not found])
+  AC_MSG_ERROR([cut not found])
 ])
 
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
@@ -129,7 +129,7 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 # --enable-debug
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_ARG_ENABLE([debug],
-  AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
+  AS_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
      [enable debug mode (default: yes)]), [
     case "$enableval" in
       no)
@@ -162,11 +162,11 @@ AS_IF([test "$enable_debug" != "no"], [
       AC_CHECK_HEADERS([bfd.h], [
       have_bfd=yes
       ], [
-      AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
+      AC_MSG_WARN([debug mode is enabled but bfd.h is missing; disabling])
       have_bfd=no
       ])
       ], [
-      AC_WARN([debug mode is enabled but libbfd is missing; disabling])
+      AC_MSG_WARN([debug mode is enabled but libbfd is missing; disabling])
       have_bfd=no
       ])
       ;;
@@ -176,7 +176,7 @@ AS_IF([test "$enable_debug" != "no"], [
 # --with-openal
 AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
-  AC_HELP_STRING([--with-openal],
+  AS_HELP_STRING([--with-openal],
      [use the OpenAL sound backend (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_openal=yes
@@ -191,7 +191,7 @@ AC_MSG_RESULT([$with_openal])
 # --with-sdlmixer
 AC_MSG_CHECKING([whether to use SDL_mixer])
 AC_ARG_WITH([sdlmixer],
-  AC_HELP_STRING([--with-sdlmixer],
+  AS_HELP_STRING([--with-sdlmixer],
      [use the SDL_mixer sound backend (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdlmixer=yes
@@ -206,7 +206,7 @@ AC_MSG_RESULT([$with_sdlmixer])
 # --with-libzip
 AC_MSG_CHECKING([whether to use libzip])
 AC_ARG_WITH([libzip],
-  AC_HELP_STRING([--with-libzip],
+  AS_HELP_STRING([--with-libzip],
      [use libzip for ndata (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_libzip=yes
@@ -221,7 +221,7 @@ AC_MSG_RESULT([$with_libzip])
 # --with-fontconfig
 AC_MSG_CHECKING([whether to use fontconfig])
 AC_ARG_WITH([fontconfig],
-  AC_HELP_STRING([--with-fontconfig],
+  AS_HELP_STRING([--with-fontconfig],
      [use fontconfig for ndata (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_fontconfig=yes
@@ -236,7 +236,7 @@ AC_MSG_RESULT([$with_fontconfig])
 # --enable-lua
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
-  AC_HELP_STRING([--enable-lua=@<:@internal|shared|luajit@:>@],
+  AS_HELP_STRING([--enable-lua=@<:@internal|shared|luajit@:>@],
      [lua to use (default: luajit)]), [
     case "$enableval" in
       luajit)
@@ -260,11 +260,11 @@ expand_variable ndata_path
 
 AC_MSG_CHECKING([for path to ndata])
 AC_ARG_WITH([ndata-path],
-  AC_HELP_STRING([--with-ndata-path=PATH], [path to the ndata file]),
+  AS_HELP_STRING([--with-ndata-path=PATH], [path to the ndata file]),
   [ndata_path="$withval"], [])
 AC_MSG_RESULT([$ndata_path])
 AS_IF([test -z "$ndata_path" || test "$ndata_path" = "yes"], [
-  AC_ERROR([The data path must be explicitly specified])
+  AC_MSG_ERROR([The data path must be explicitly specified])
 ])
 AC_SUBST([ndata_path])
 
@@ -312,7 +312,7 @@ case "$used_lua" in
       have_lua=yes
       LUA_CFLAGS+=" -DHAVE_LUAJIT"
     ], [
-      AC_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
+      AC_MSG_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
       have_lua=no
     ])
     ;;
@@ -323,7 +323,7 @@ case "$used_lua" in
             PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
         ])
     ])
-    AS_IF([test "x$have_lua" = "xno"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
+    AS_IF([test "x$have_lua" = "xno"], [AC_MSG_WARN([Lua is set to shared but can not find library; using internal Lua])])
     ;;
   *)
     have_lua=no
