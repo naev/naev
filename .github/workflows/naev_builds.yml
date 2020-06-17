@@ -138,6 +138,8 @@ jobs:
 
     - name: Test-Build Naev on MacOS
       run: |
+        export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
+        
         ./autogen.sh
         ./configure --disable-dependency-tracking --disable-debug
         make -j$(sysctl -n hw.logicalcpu)
