@@ -471,6 +471,13 @@ end
 
 
 function add_econ_article ()
+   -- Remove old econ articles (we only want one at a time)
+   for i, article in ipairs( news.get( "Generic" ) ) do
+      if article:title() == econ_title then
+         article:rm()
+      end
+   end
+
    local cur_t = time.get()
    local body = ""
    for i, sys in ipairs( getsysatdistance( system.cur(), 0, 1 ) ) do
