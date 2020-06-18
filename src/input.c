@@ -1262,7 +1262,7 @@ static void input_clickevent( SDL_Event* event )
    myr  = gl_screen.rh - event->button.y;
    gui_radarGetPos( &rx, &ry );
    gui_radarGetDim( &rw, &rh );
-   if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
+   if ((mxr > rx) && (mxr <= rx + rw) && (myr > ry) && (myr <= ry + rh)) { /* Radar */
       zoom = 1.;
       gui_radarGetRes( &res );
       x = (mxr - (rx + rw / 2.)) * res + px;
