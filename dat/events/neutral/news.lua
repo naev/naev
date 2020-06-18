@@ -1,9 +1,11 @@
-
-
 --[[
 -- Event for creating generic news
 --
 --]]
+
+include "numstring.lua"
+include "jumpdist.lua"
+
 
 header_table={}
 
@@ -375,10 +377,13 @@ articles["Proteron"]={}
 articles["Za'lek"]={}
 articles["Thurion"]={}
 
+econ_title = _("Current Market Prices")
+econ_header = _("\n\n%s in %s")
+econ_desc_part = _("\n%s: %s Cr./Tonne")
+
 
    --create generic news
 function create()
-
    local f = planet.cur():faction()
    faction = f ~= nil and f:name() or nil
    if faction == nil then evt.finish(false) end
@@ -389,13 +394,13 @@ function create()
    rm_genericarticles(faction)
 
    add_header(faction)
-   add_articles("Generic",math.random(3,4))
-   add_articles(faction,math.random(1,2))
-
+   add_articles("Generic", math.random(3,4))
+   add_articles(faction, math.random(1,2))
+   add_econ_article()
 end
 
-function add_header(faction)
 
+function add_header(faction)
    remove_header('Generic')
 
    if header_table[faction] == nil then
@@ -406,72 +411,84 @@ function add_header(faction)
    header=header_table[faction][1]
    desc=greet_table[faction][math.random(#greet_table[faction])]
 
-   news.add(faction,header,desc,50000000000005,50000000000005)
-
+   news.add(faction, header, desc, 50000000000005, 50000000000005)
 end
 
-function remove_header(faction)
 
+function remove_header(faction)
    local news_table=news.get(faction)
 
-   for _,v in ipairs(news.get(faction)) do
-
-      for _,v0 in ipairs(header_table[faction]) do
-         if v:title()==v0 then
+   for i, v in ipairs(news.get(faction)) do
+      for i, v0 in ipairs(header_table[faction]) do
+         if v:title() == v0 then
             v:rm()
          end
       end
-
    end
 
    return 0
-
 end
 
 
-function add_articles(faction,num)
-
-   if articles[faction]==nil then
+function add_articles(faction, num)
+   if articles[faction] == nil then
       return 0
    end
 
-   num=math.min(num,#articles[faction])
-   news_table=articles[faction]
+   num = math.min(num, #articles[faction])
+   news_table = articles[faction]
 
    local header
    local desc
    local rnum
 
-   for i=1,num do
+   for i = 1, num do
+      rnum = math.random(#news_table)
+      header = news_table[rnum]["title"]
+      desc = news_table[rnum]["desc"]
 
-      rnum=math.random(#news_table)
-      header=news_table[rnum]["title"]
-      desc=news_table[rnum]["desc"]
+      news.add(faction, header, desc, 500000000000000, 0)
 
-      news.add(faction,header,desc,500000000000000,0)
-
-      table.remove(news_table,rnum)
-
+      table.remove(news_table, rnum)
    end
-
 end
 
+
 function rm_genericarticles(faction)
+   local news_table = news.get(faction)
 
-   local news_table=news.get(faction)
+   if articles[faction] == nil then return 0 end
 
-   if articles[faction]==nil then return 0 end
-
-   for _,v in ipairs(news_table) do
-
-      for _,v0 in ipairs(articles[faction]) do
-         if v:title()==v0["title"] then
+   for i, v in ipairs(news_table) do
+      for i, v0 in ipairs(articles[faction]) do
+         if v:title() == v0["title"] then
             v:rm()
             break
          end
       end
-   
    end
+end
 
 
+function add_econ_article ()
+   local cur_t = time.get()
+   local body = ""
+   for i, sys in ipairs( getsysatdistance( system.cur(), 0, 1 ) ) do
+      for j, plnt in ipairs( sys:planets() ) do
+         local commodities = plnt:commoditiesSold()
+         if #commodities > 0 then
+            body = body .. econ_header:format( plnt:name(), sys:name() )
+            for k, comm in ipairs( commodities ) do
+               body = body .. econ_desc_part:format( comm:name(),
+                     numstring( comm:priceAtTime( plnt, cur_t ) ) )
+            end
+            plnt:recordCommodityPriceAtTime( cur_t )
+            -- Create news, expires immediately when time advances (i.e.
+            -- when you take off from the planet).
+         end
+      end
+   end
+   if body ~= "" then
+      news.add( "Generic", econ_title, body, cur_t + time.create( 0, 0, 1 ) )
+   end
 end

@@ -5,9 +5,7 @@
 --]]
 
 include "dat/events/tutorial/tutorial-common.lua"
-include "jumpdist.lua"
 include "portrait.lua"
-include "numstring.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -320,9 +318,6 @@ function spawnNPC()
    if select <= tip_chance then
       -- Gameplay tip message.
       msg = getTipMessage(fac)
-   elseif select <= 0.3 then
-      -- Economy message
-      msg, func = getEconMessage(fac)
    elseif select <= 0.55 then
       -- Lore message.
       msg = getLoreMessage(fac)
@@ -373,12 +368,12 @@ function getJmpMessage(fac)
    end
 
    if #mytargets == 0 then -- The player already knows all jumps in this system.
-      return getEconMessage(fac)
+      return getLoreMessage(fac), nil
    end
 
    -- All jump messages are valid always.
    if #msg_jmp == 0 then
-      return getEconMessage(fac)
+      return getLoreMessage(fac), nil
    end
    local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
    local sel = rnd.rnd(1, #mytargets)
@@ -390,39 +385,6 @@ function getJmpMessage(fac)
    -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
    seltargets[mytargets[sel]] = true
    return retmsg:format(mytargets[sel]:dest():name()), myfunc
-end
-
--- Returns an economy message, and updates known economy information accordingly.
-function getEconMessage(fac)
-   -- Select a planet in a nearby system which has commodities for sale.
-   sysList = getsysatdistance( system.cur(), 1, 5 )
-   if #sysList == 0 then
-      return getLoreMessage(fac), nil
-   end
-   -- get a message string.
-   local retmsg = msg_econ[rnd.rnd(1, #msg_econ)]
-   -- Select a system - try up to 10 times.
-   for i=1,10,1 do
-      local sys = sysList[rnd.rnd(1, #sysList)]
-      local jumpdist = sys:jumpDist()
-      local t = time.get() - time.create( 0, 2 * jumpdist, 0 )
-      local planetList=sys:planets()
-      if #planetList > 0 then
-         local planet = planetList[rnd.rnd(1, #planetList)]
-         local commodities = planet:commoditiesSold()
-         if #commodities > 0 then
-            local commod = commodities[rnd.rnd(1, #commodities)]
-            local coststr = numstring( commod:priceAtTime(planet,t) )
-            local myfunc = function()
-                              planet:recordCommodityPriceAtTime(t)
-                           end
-            econmsg = retmsg:format(planet:name(), system.get(planet):name(),
-                                    commod:name(), coststr)
-            return econmsg, myfunc
-         end
-      end
-   end 
-   return getLoreMessage(fac), nil
 end
 
 -- Returns a tip message.
