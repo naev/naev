@@ -440,5 +440,6 @@ function continueToDest( p )
       hook.pilot( p, "land", "traderLand" )
    else
       p:hyperspace( getNextSystem( system.cur(), destsys, true ) )
+      hook.pilot( p, "jump", "traderJump" )
    end
 end
