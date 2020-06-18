@@ -63,6 +63,10 @@ text[11] = _("\"You have done very well, %s! As you can see, the trip consumed f
     \"Ah, that reminds me: you can also attempt to bribe hostile ships, such as pirates, by hailing them. Bribes work better on some factions than on others; pirates will happily take your offer and may even sell you fuel afterwards, but many other factions may be less forthcoming.\
     \"And I think that's it! I must say, you are a natural-born pilot and your new Melendez ship suits you well! I wish you good luck in your travels. Thank you for shopping with Melendez Corporation!\" Captain T. Practice ceases contact and you finally let out a sigh of relief. You were starting to think you might go insane with all of the marketing nonsense being poured out at you. At least you learned how to pilot the ship, though!")
 
+misn_title = _("Tutorial")
+misn_desc = _("Captain T. Practice has offered to teach you how to fly your ship.")
+misn_reward = _("None")
+
 osd_title = _("Tutorial")
 osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system with the movement keys")
@@ -85,6 +89,10 @@ function create ()
       print( string.format( "Warning: 'Tutorial' mission was unable to claim system %s!", missys:name() ) )
       misn.finish( false )
    end
+
+   misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
+   misn.setReward( misn_reward )
 
    accept()
 end
