@@ -379,10 +379,13 @@ function hail ()
          elseif tells then
             tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
+            target:setHostile( false )
          else
             space_clue()
          end
       end
+
+      player.commClose()
    end
 end
 
@@ -421,6 +424,7 @@ function space_clue ()
             player.pay(-price)
             tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
+            target:setHostile( false )
             target:comm(thank_comm[rnd.rnd(1,#thank_comm)])
          else
             tk.msg( poor_title, poor_text )
