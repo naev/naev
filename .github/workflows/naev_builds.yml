@@ -78,6 +78,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         name: id_rsa # optional
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      if: ${{ github.event_name == 'push' }}
 
     - name: Update APT Cache
       run: |
@@ -128,7 +129,8 @@ jobs:
     
     - name: Upload Lua docs
       run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-    
+      if: ${{ github.event_name == 'push' }}
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -182,4 +184,3 @@ jobs:
       with:
         name: naev-macos-${{ github.sha }}
         path: ${{ github.workspace }}/Naev.app/
-        
