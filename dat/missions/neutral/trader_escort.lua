@@ -165,105 +165,18 @@ function accept()
 end
 
 function takeoff()
-   --Make it interesting
-   if convoysize == 1 then
-      ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
-   elseif convoysize == 2 then
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
-   elseif convoysize == 3 then
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
-   elseif convoysize == 4 then
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
-   else
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
-   end
-    --Spawn the convoy
-   convoy = pilot.add(convoyname, nil, origin)
-   for i, j in ipairs(convoy) do
-      if not alive[i] then j:rm() end -- Dead trader stays dead.
-      if j:exists() then
-         j:control()
-         j:setHilight(true)
-         j:setInvincPlayer()
-         j:hyperspace(getNextSystem(system.cur(), destsys))
-         n = pilot.cargoFree(j)
-         c = pilot.cargoAdd(j, cargo, n)
-         convoyJump = false
-         hook.pilot(j, "death", "traderDeath")
-         hook.pilot(j, "jump", "traderJump")
-         hook.pilot(j, "attacked", "traderAttacked", j)
-      end
-   end
+   spawnConvoy()
 end
 
 function jumpin()
-    
    if system.cur() ~= nextsys then -- player jumped to somewhere other than the next system
       tk.msg(wrongsystitle, wrongsystext)
       misn.finish(false)
-   elseif system.cur() == destsys and misnfail == false then -- player has reached the destination system
-      --Make it interesting
-      if convoysize == 1 then
-         ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == 2 then
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == 3 then
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == 4 then
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
-      else
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
-      end
-      --Spawn the convoy
-      convoy = pilot.add(convoyname, nil, origin)  
-      for i, j in ipairs(convoy) do
-         if not alive[i] then j:rm() end -- Dead traders stay dead.
-         if j:exists() then
-             j:control()
-             j:setHilight(true)
-             j:setInvincPlayer()
-             j:land(destplanet)
-             n = pilot.cargoFree(j)
-             c = pilot.cargoAdd(j, cargo, n)
-             convoyLand = false
-             hook.pilot(j, "death", "traderDeath")
-             hook.pilot(j, "land", "traderLand")
-             hook.pilot(j, "attacked", "traderAttacked", j)
-         end
-      end
-   elseif misnfail == false then -- Not yet at destination, so traders continue to next system.
-      --Make it interesting
-      if convoysize == 1 then
-         ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == 2 then
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == 3 then
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
-      elseif convoysize == 4 then
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
-      else
-         ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
-      end
-       --Spawn the convoy
-      convoy = pilot.add(convoyname, nil, origin)  
-      for i, j in ipairs(convoy) do
-         if not alive[i] then j:rm() end -- Dead traders stay dead.
-         if j:exists() then
-            j:control()
-            j:setHilight(true)
-            j:setInvincPlayer()
-            j:hyperspace(getNextSystem(system.cur(), destsys))
-            convoyJump = false
-            n = pilot.cargoFree(j)
-            c = pilot.cargoAdd(j, cargo, n)
-            hook.pilot(j, "death", "traderDeath")
-            hook.pilot(j, "jump", "traderJump")
-            hook.pilot(j, "attacked", "traderAttacked", j)
-         end
-      end
-    elseif misnfail == true then -- Jumped ahead of traders. Convoy appears in next system, but reverts to AI
-       hook.timer(4000, "convoyContinues") -- waits 4 secs then has them follow.
-    end
+   elseif misnfail then -- Jumped ahead of traders. Convoy appears in next system,
+      hook.timer(4000, "convoyContinues") -- waits 4 secs then has them follow.
+   else -- Continue convoy
+      spawnConvoy()
+   end
 end
 
 function jumpout()
@@ -285,10 +198,10 @@ function land()
    if planet.cur() ~= destplanet then
       tk.msg(landfailtitle, landfailtext)
       misn.finish(false)
-   elseif planet.cur() == destplanet and convoyLand == false then
+   elseif planet.cur() == destplanet and not convoyLand then
       tk.msg(convoynolandtitle, convoynolandtext)
       misn.finish(false)
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 1 then
+   elseif planet.cur() == destplanet and convoyLand and convoysize == 1 then
       if dead == 0 then
          tk.msg(landsuccesstitle, landsuccesstext)
          player.pay(reward)
@@ -461,4 +374,71 @@ function convoyContinues()
       end
    end 
    misn.finish(false)
+end
+
+function spawnConvoy ()
+   convoyLand = false
+   convoyJump = false
+
+   --Make it interesting
+   if convoysize == 1 then
+      ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
+   elseif convoysize == 2 then
+      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
+   elseif convoysize == 3 then
+      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
+   elseif convoysize == 4 then
+      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
+   else
+      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
+   end
+
+   --Spawn the convoy
+   convoy = pilot.add(convoyname, nil, origin)
+   for i, j in ipairs(convoy) do
+      if not alive[i] then j:rm() end -- Dead traders stay dead.
+         if j:exists() then
+            j:rmOutfit( "cores" )
+            local class = j:ship():class()
+            if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
+                  or class == "Courier" or class == "Fighter" or class == "Bomber"
+                  or class == "Drone" or class == "Heavy Drone" then
+               j:addOutfit( "Unicorp PT-200 Core System" )
+               j:addOutfit( "Melendez Ox XL Engine" )
+               j:addOutfit( "S&K Small Cargo Hull" )
+            elseif class == "Freighter" or class == "Armoured Transport"
+                  or class == "Corvette" or class == "Destroyer" then
+               j:addOutfit( "Unicorp PT-600 Core System" )
+               j:addOutfit( "Melendez Buffalo XL Engine" )
+               j:addOutfit( "S&K Medium Cargo Hull" )
+            elseif class == "Cruiser" or class == "Carrier" then
+               j:addOutfit( "Unicorp PT-600 Core System" )
+               j:addOutfit( "Melendez Mammoth XL Engine" )
+               j:addOutfit( "S&K Large Cargo Hull" )
+            end
+
+            j:setHealth( 100, 100 )
+            j:setEnergy( 100 )
+            j:setTemp( 0 )
+            j:setFuel( true )
+            j:cargoAdd( cargo, j:cargoFree() )
+
+            j:control()
+            j:setHilight(true)
+            j:setInvincPlayer()
+            continueToDest( j )
+
+            hook.pilot(j, "death", "traderDeath")
+            hook.pilot(j, "attacked", "traderAttacked", j)
+      end
+   end
+end
+
+function continueToDest( p )
+   if system.cur() == destsys then
+      p:land( destplanet )
+      hook.pilot( p, "land", "traderLand" )
+   else
+      p:hyperspace( getNextSystem( system.cur(), destsys, true ) )
+   end
 end
