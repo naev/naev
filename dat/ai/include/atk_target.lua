@@ -104,7 +104,6 @@ function atk_heuristic_big_game_think ()
    local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
    local target = ai.target()
-   local dist = ai.dist(target)
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then
@@ -112,6 +111,7 @@ function atk_heuristic_big_game_think ()
       return
    end
 
+   local dist = ai.dist(target)
    local range = ai.getweaprange(3, 0)
    -- Get new target if it's closer
    -- prioritize targets within the size limit

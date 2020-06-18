@@ -116,11 +116,9 @@ function create()
    misn.setDesc(title_p1:format(convoysizestr[convoysize], destplanet:name(), destsys:name()) .. title_p2:format(cargo, numjumps, traveldist, piracyrisk))
    misn.markerAdd(destsys, "computer")
    misn.setReward(misn_reward:format(numstring(reward)))
-    
 end
 
 function accept()
-    
    if convoysize == 1 then
       convoyname = "Trader Convoy 3"
       alive = {true, true, true} -- Keep track of the traders. Update this when they die.
@@ -153,6 +151,7 @@ function accept()
    origin = planet.cur() -- The place where the AI ships spawn from.
    
    misnfail = false
+   unsafe = false
 
    misn.accept()
    misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
@@ -161,7 +160,6 @@ function accept()
    hook.jumpin("jumpin")
    hook.jumpout("jumpout")
    hook.land("land")
-
 end
 
 function takeoff()
@@ -351,17 +349,34 @@ end
 
 
 -- Handle the convoy getting attacked.
-function traderAttacked(j)
-   if shuttingup == true then return
-   else
+function traderAttacked( p, attacker )
+   unsafe = true
+   p:control( false )
+   p:hookClear()
+   p:setNoJump( true )
+   p:setNoLand( true )
+
+   if not shuttingup then
       shuttingup = true
-      j:comm(player.pilot(),traderdistress)
-      hook.timer(5000, "traderShutup") -- Shuts him up for at least 5s.
+      p:comm( player.pilot(), traderdistress )
+      hook.timer( 5000, "traderShutup" ) -- Shuts him up for at least 5s.
    end
 end
 
 function traderShutup()
     shuttingup = false
+end
+
+function timer_traderSafe()
+   hook.timer( 2000, "timer_traderSafe" )
+
+   if unsafe then
+      unsafe = false
+   else
+      for i, j in ipairs( convoy ) do
+         continueToDest( j )
+      end
+   end
 end
 
 function convoyContinues()
@@ -432,14 +447,22 @@ function spawnConvoy ()
             hook.pilot(j, "attacked", "traderAttacked", j)
       end
    end
+
+   hook.timer( 1000, "timer_traderSafe" )
 end
 
 function continueToDest( p )
-   if system.cur() == destsys then
-      p:land( destplanet )
-      hook.pilot( p, "land", "traderLand" )
-   else
-      p:hyperspace( getNextSystem( system.cur(), destsys ), true )
-      hook.pilot( p, "jump", "traderJump" )
+   if p ~= nil and p:exists() then
+      p:control( true )
+      p:setNoJump( false )
+      p:setNoLand( false )
+
+      if system.cur() == destsys then
+         p:land( destplanet )
+         hook.pilot( p, "land", "traderLand" )
+      else
+         p:hyperspace( getNextSystem( system.cur(), destsys ), true )
+         hook.pilot( p, "jump", "traderJump" )
+      end
    end
 end
