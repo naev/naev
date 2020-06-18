@@ -200,26 +200,6 @@ msg_jmp =                  {_([["Hi there, traveler. Is your system map up to da
                               _([["True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."]]),
                               _([["There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
                            }
-
--- Economy messages
--- For giving a tip about prices recently on a nearby system.
--- All messages contain 4 %s.  First is the planet, second is the system,
--- third is commodity name, and fourth is commodity price.
--- All NPCs have a chance to say one of these lines instead of a lore essage.
--- So, make sure the tips are always faction neutral.
-msg_econ =                {_([["I was recently on %s in the %s system, and the cost of %s there was %s credits. Here, I've added all the pricing info from that time to your computer's price history. Hope that helps you make a good trade!"]]),
-                           _([["Trading seems to be getting harder these days, or maybe I'm just getting older. I was on %s in the %s system a few periods ago and the price of %s there was %s credits."]]),
-                           _([["You wanna good tip? When I was on %s in the %s system recently, I took a peek at the commodities on offer. The cost of %s then was %s credits. Hopefully that will help, from one pal to another!"]]),
-                           _([["Did you know that a few periods ago on %s in the %s system, the cost of %s in the trade area was %s credits? The prices do change with time though, so it might be a bit different by the time you get there."]]),
-                           _([["Hey! I'll add some valuable information to your computer which might help you make a good trade. I heard that on %s in the %s system recently, the price of %s there was %s credits. That might help you pay off the ship - or maybe not!"]]),
-                           _([["The times are a'changin, and so it seems are prices. On %s in the %s system, I recently saw the price of %s had changed to %s credits. I guess they'll probably have changed again by the time you get there."]]),
-                           _([["Did you know that commodity costs vary somewhat with time? On some systems, the price fluctuates slowly, while on others it seems to change more quickly. A few periods ago on %s in the %s system, for example, the price of %s was %s credits. But I'm pretty sure it was a bit different before then."]]),
-                           _([["I used to make a bit of profit trading between two systems, but recently it hasn't been as profitable since the prices have been changing with time. I'm not sure why, supply and demand I guess. Anyway, on %s in the %s system, I recently saw that the price of %s was %s credits. Actually, I've found that if I time it right, I can even make a small profit just by buying something, taking off, landing again, and selling it. Only seems to work about half the time though!"]]),
-                           _([["I made a good trade recently on %s in the %s system. The price of %s there was %s credits. I expect it'll have changed by now though!"]]),
-                           _([["I'm no economist, but the way prices change doesn't make sense to me. I regularly travel between here and %s in the %s system, and they just seem to fluctuate around some average value. The last time I was there, the cost of %s was %s credits. It'll be different next time, though my computer will probably have a better idea of its average price."]]),
-                           _([["I studied economics for my PhD, looking at ancient civilisations in the Sol system. Incredible, there seemed to be no rhyme or reason then for when the markets would suddenly crash. Fortunately that doesn't seem to happen here anymore; the prices are a lot more stable, just with a bit of variation. In fact, I've been doing some modelling, and think that prices depend on system type and various other factors. I did a study of %s in the %s system recently, and the price of %s there at that time was %s credits. This fits in pretty well with my sinusoidal model, though not perfectly."]]),
-                           _([["I made an awesome trade recently on %s in the %s system; %s was %s credits. But then I got so hammered I gave all my profits away to a local charity! Fortunately my ship's computer recorded the prices, so I might be able to repeat it."]]),
-            }
             
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
