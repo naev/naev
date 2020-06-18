@@ -441,5 +441,5 @@ function continueToDest( p )
    else
       p:hyperspace( getNextSystem( system.cur(), destsys ), true )
       hook.pilot( p, "jump", "traderJump" )
-   enda
+   end
 end
