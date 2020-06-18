@@ -1,4 +1,5 @@
-# NAEV README
+# Naev: Sea Of Darkness
+![Naev](https://github.com/naev/naev/workflows/Naev/badge.svg)
 
 Naev is a 2D space trading and combat game, taking inspiration from the Escape
 Velocity series, among others.
