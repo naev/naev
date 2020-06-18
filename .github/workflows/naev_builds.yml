@@ -182,3 +182,4 @@ jobs:
       with:
         name: naev-macos-${{ github.sha }}
         path: ${{ github.workspace }}/Naev.app/
+        
