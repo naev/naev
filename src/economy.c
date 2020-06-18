@@ -182,6 +182,29 @@ Commodity* commodity_getW( const char* name )
    return NULL;
 }
 
+/**
+ * @brief Return the number of commodities globally.
+ *
+ *    @return Number of commodities globally.
+ */
+int commodity_getN( )
+{
+   return econ_nprices;
+}
+
+/**
+ * @brief Gets a commodity by index.
+ *
+ *    @param indx Index of the commodity.
+ *    @return Commodity at that index or NULL.
+ */
+Commodity* commodity_getByIndex( const int indx )
+{
+   if ( indx < 0 || indx >= econ_nprices )
+      return NULL;
+   return &commodity_stack[econ_comm[indx]];
+}
+
 
 /**
  * @brief Frees a commodity.

@@ -51,7 +51,7 @@ static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
-
+static int cur_commod         = -1; /**< Current commodity selected. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 static gl_vbo *marker_vbo = NULL;
@@ -65,6 +65,9 @@ extern StarSystem *systems_stack;
 extern int systems_nstack;
 extern int faction_nstack;
 
+/*land.c*/
+extern int landed;
+extern Planet* land_planet;
 
 /*
  * prototypes
@@ -75,6 +78,8 @@ static void map_update( unsigned int wid );
 static void map_render( double bx, double by, double w, double h, void *data );
 static void map_renderPath( double x, double y, double a );
 static void map_renderMarkers( double x, double y, double r, double a );
+static void map_renderCommod( double bx, double by, double x, double y,
+			      double w, double h, double r, int editor);
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
@@ -84,6 +89,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
+static void map_buttonCommodity( unsigned int wid, char* str );
 static void map_selectCur (void);
 
 
@@ -287,9 +293,12 @@ void map_open (void)
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
-   window_addText( wid, 140, 10, w - 80 - 30 - 30, 30, 0,
+   window_addText( wid, 140, 10, w - 80 - 30 - 30 - 50, 30, 0,
          "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
+   /* add commodity button */
+   window_addButton( wid,-20-3*(BUTTON_WIDTH+20), 20, 50, 30, "btnCommod", "Trade", map_buttonCommodity );
+   window_addImage( wid, -23-3*(BUTTON_WIDTH+20), 23, 44, 24, "imgCommod", NULL, 0 );
    /*
     * The map itself.
     */
@@ -324,7 +333,8 @@ static void map_update( unsigned int wid )
    glTexture *logo;
    double w;
    double unknownPresence;
-
+   Commodity *c;
+   
    /* Needs map to update. */
    if (!map_isOpen())
       return;
@@ -338,6 +348,14 @@ static void map_update( unsigned int wid )
       map_selectCur();
       sys = system_getIndex( map_selected );
    }
+
+   /* Economy button */
+   if( cur_commod >= 0 ){
+      c = commodity_getByIndex( cur_commod );
+      window_modifyImage( wid, "imgCommod", c->gfx_store, 44, 24 );
+   }else{
+      window_modifyImage( wid, "imgCommod", NULL, 44, 24 );
+   }     
 
    /*
     * Right Text
@@ -756,6 +774,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Render system markers. */
    map_renderMarkers( x, y, r, col.a );
+
+   /* Render commodity info. */
+   map_renderCommod(  bx, by, x, y, w, h, r, 0 );
 
    /* Initialize with values from cRed */
    col.r = cRed.r;
@@ -1192,6 +1213,124 @@ static void map_renderMarkers( double x, double y, double r, double a )
    }
 }
 
+/*
+ * Renders the economy information
+ */
+
+void map_renderCommod( double bx, double by, double x, double y,
+      double w, double h, double r, int editor)
+{
+  int i,j,k;
+   const glColour *col;
+   StarSystem *sys;
+   double tx, ty;
+   Planet *p;
+   Commodity *c;
+   glColour ccol;
+   double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
+   curMaxPrice=0.;
+   curMinPrice=0.;
+   /* If not plotting commodities, return */
+   if(cur_commod == -1 || map_selected == -1)
+     return;
+   c=commodity_getByIndex(cur_commod);
+   /* Get commodity price in selected system.  If selected system is current
+      system, and if landed, then get price of commodity where we are */
+   sys = system_getIndex( map_selected );
+   if ( sys == cur_system && landed ){
+     printf("################### Currently landed and current system selected\n");
+     for ( k=0; k<land_planet->ncommodities; k++ ){
+       if( land_planet->commodities[k] == c ){
+	 /* current planet has the commodity of interest */
+	 curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
+	 curMaxPrice = curMinPrice;
+	 break;
+       }
+     }
+     if ( k == land_planet->ncommodities ){ /* commodity of interest not found */
+       return;
+     }
+   }else{
+     /* not currently landed, so get max and min price in the selected system. */
+     if ((sys_isKnown(sys)) && (system_hasPlanet(sys))){
+       minPrice=0;
+       maxPrice=0;
+       for( j=0 ; j<sys->nplanets; j++){
+	 p=sys->planets[j];
+	 for( k=0; k<p->ncommodities; k++){
+	   if( p->commodities[k] == c ){
+	     if ( p->commodityPrice[k].cnt > 0 ){//commodity is known about
+	       thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+	       if(thisPrice > maxPrice)maxPrice=thisPrice;
+	       if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
+	       break;
+	     }
+	   }
+	 }
+	 
+       }
+       if( maxPrice == 0 ){/* no prices are known here */
+	 return;
+       }
+       curMaxPrice=maxPrice;
+       curMinPrice=minPrice;
+       printf("################ %s system selected: %g %g\n",sys->name,minPrice,maxPrice);
+     }else{
+       return;
+     }
+   }
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+
+      /* if system is not known, reachable, or marked. and we are not in the editor */
+      if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+           && !space_sysReachable(sys)) && !editor)
+         continue;
+
+      tx = x + sys->pos.x*map_zoom;
+      ty = y + sys->pos.y*map_zoom;
+
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
+         continue;
+
+      /* If system is known fill it. */
+      if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+	minPrice=0;
+	maxPrice=0;
+	for( j=0 ; j<sys->nplanets; j++){
+	  p=sys->planets[j];
+	  for( k=0; k<p->ncommodities; k++){
+	    if( p->commodities[k] == c ){
+	      if ( p->commodityPrice[k].cnt > 0 ){//commodity is known about
+		thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+		if(thisPrice > maxPrice)maxPrice=thisPrice;
+		if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
+		break;
+	      }
+	    }
+	  }
+	  if(k<p->ncommodities){
+	    printf("%s costs %g %g on %s\n",p->commodities[k]->name,minPrice,maxPrice,p->name);
+	  }
+	    
+	}
+	/* Calculate best and worst profits */
+	if( maxPrice > 0 ){
+	  best = maxPrice - curMinPrice ;
+	  worst= minPrice - curMaxPrice ;
+	  best = tanh ( best / 200. ) / 2;
+	  worst= tanh ( worst/ 200. ) / 2;
+	  ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;
+	  gl_drawCircle( tx, ty, 1.3 * r, &ccol, 0 );
+	  ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;
+	  gl_drawCircle( tx, ty, 1.2 * r, &ccol, 0 );
+	}
+      }
+
+   }
+}
+
 
 /**
  * @brief Map custom widget mouse handling.
@@ -1250,7 +1389,10 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
                y = sys->pos.y * map_zoom;
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
-
+                  if (map_selected != -1) {
+		     if ( sys == system_getIndex( map_selected ) )
+		        printf("System already selected - so display solar system map\n");
+		  }
                   map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                   break;
                }
@@ -1304,6 +1446,21 @@ static void map_buttonZoom( unsigned int wid, char* str )
    /* Transform coords back. */
    map_xpos *= map_zoom;
    map_ypos *= map_zoom;
+}
+
+/**
+ * @brief Handles the button commodity clicks.
+ *
+ *    @param wid Unused.
+ *    @param str Name of the button creating the event.
+ */
+static void map_buttonCommodity( unsigned int wid, char* str )
+{
+   int ncommod = commodity_getN();
+   cur_commod ++;
+   if ( cur_commod >= commodity_getN( ) )
+      cur_commod = -1;
+   map_update(wid);
 }
 
 
