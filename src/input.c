@@ -1259,7 +1259,7 @@ static void input_clickevent( SDL_Event* event )
 
    /* Radar targeting requires raw coordinates. */
    mxr = event->button.x;
-   myr  = gl_screen.rh - event->button.y;
+   myr = gl_screen.rh - event->button.y;
    gui_radarGetPos( &rx, &ry );
    gui_radarGetDim( &rw, &rh );
    if ((mxr > rx) && (mxr <= rx + rw) && (myr > ry) && (myr <= ry + rh)) { /* Radar */
