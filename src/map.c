@@ -79,7 +79,7 @@ static void map_render( double bx, double by, double w, double h, void *data );
 static void map_renderPath( double x, double y, double a );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
-			      double w, double h, double r, int editor);
+                              double w, double h, double r, int editor);
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
@@ -294,7 +294,7 @@ void map_open (void)
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
    window_addText( wid, 140, 10, w - 80 - 30 - 30 - 50, 30, 0,
-         "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
+                   "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
    /* add commodity button */
    window_addButton( wid,-20-3*(BUTTON_WIDTH+20), 20, 50, 30, "btnCommod", "Trade", map_buttonCommodity );
@@ -1220,7 +1220,7 @@ static void map_renderMarkers( double x, double y, double r, double a )
 void map_renderCommod( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-  int i,j,k;
+   int i,j,k;
    const glColour *col;
    StarSystem *sys;
    double tx, ty;
@@ -1232,102 +1232,95 @@ void map_renderCommod( double bx, double by, double x, double y,
    curMinPrice=0.;
    /* If not plotting commodities, return */
    if(cur_commod == -1 || map_selected == -1)
-     return;
+      return;
    c=commodity_getByIndex(cur_commod);
    /* Get commodity price in selected system.  If selected system is current
       system, and if landed, then get price of commodity where we are */
    sys = system_getIndex( map_selected );
    if ( sys == cur_system && landed ){
-     printf("################### Currently landed and current system selected\n");
-     for ( k=0; k<land_planet->ncommodities; k++ ){
-       if( land_planet->commodities[k] == c ){
-	 /* current planet has the commodity of interest */
-	 curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
-	 curMaxPrice = curMinPrice;
-	 break;
-       }
-     }
-     if ( k == land_planet->ncommodities ){ /* commodity of interest not found */
-       return;
-     }
+      for ( k=0; k<land_planet->ncommodities; k++ ){
+         if( land_planet->commodities[k] == c ){
+            /* current planet has the commodity of interest */
+            curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
+            curMaxPrice = curMinPrice;
+            break;
+         }
+      }
+      if ( k == land_planet->ncommodities ){ /* commodity of interest not found */
+         return;
+      }
    }else{
-     /* not currently landed, so get max and min price in the selected system. */
-     if ((sys_isKnown(sys)) && (system_hasPlanet(sys))){
-       minPrice=0;
-       maxPrice=0;
-       for( j=0 ; j<sys->nplanets; j++){
-	 p=sys->planets[j];
-	 for( k=0; k<p->ncommodities; k++){
-	   if( p->commodities[k] == c ){
-	     if ( p->commodityPrice[k].cnt > 0 ){//commodity is known about
-	       thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-	       if(thisPrice > maxPrice)maxPrice=thisPrice;
-	       if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
-	       break;
-	     }
-	   }
-	 }
-	 
-       }
-       if( maxPrice == 0 ){/* no prices are known here */
-	 return;
-       }
-       curMaxPrice=maxPrice;
-       curMinPrice=minPrice;
-       printf("################ %s system selected: %g %g\n",sys->name,minPrice,maxPrice);
-     }else{
-       return;
-     }
+      /* not currently landed, so get max and min price in the selected system. */
+      if ((sys_isKnown(sys)) && (system_hasPlanet(sys))){
+         minPrice=0;
+         maxPrice=0;
+         for( j=0 ; j<sys->nplanets; j++){
+            p=sys->planets[j];
+            for( k=0; k<p->ncommodities; k++){
+               if( p->commodities[k] == c ){
+                  if ( p->commodityPrice[k].cnt > 0 ){//commodity is known about
+                     thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+                     if(thisPrice > maxPrice)maxPrice=thisPrice;
+                     if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
+                     break;
+                  }
+               }
+            }
+            
+         }
+         if( maxPrice == 0 ){/* no prices are known here */
+            return;
+         }
+         curMaxPrice=maxPrice;
+         curMinPrice=minPrice;
+      }else{
+         return;
+      }
    }
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
-
+      
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
          continue;
-
+      
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
-
+      
       /* Skip if out of bounds. */
       if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
          continue;
-
+      
       /* If system is known fill it. */
       if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
-	minPrice=0;
-	maxPrice=0;
-	for( j=0 ; j<sys->nplanets; j++){
-	  p=sys->planets[j];
-	  for( k=0; k<p->ncommodities; k++){
-	    if( p->commodities[k] == c ){
-	      if ( p->commodityPrice[k].cnt > 0 ){//commodity is known about
-		thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-		if(thisPrice > maxPrice)maxPrice=thisPrice;
-		if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
-		break;
-	      }
-	    }
-	  }
-	  if(k<p->ncommodities){
-	    printf("%s costs %g %g on %s\n",p->commodities[k]->name,minPrice,maxPrice,p->name);
-	  }
-	    
-	}
-	/* Calculate best and worst profits */
-	if( maxPrice > 0 ){
-	  best = maxPrice - curMinPrice ;
-	  worst= minPrice - curMaxPrice ;
-	  best = tanh ( best / 200. ) / 2;
-	  worst= tanh ( worst/ 200. ) / 2;
-	  ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;
-	  gl_drawCircle( tx, ty, 1.3 * r, &ccol, 0 );
-	  ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;
-	  gl_drawCircle( tx, ty, 1.2 * r, &ccol, 0 );
-	}
+         minPrice=0;
+         maxPrice=0;
+         for( j=0 ; j<sys->nplanets; j++){
+            p=sys->planets[j];
+            for( k=0; k<p->ncommodities; k++){
+               if( p->commodities[k] == c ){
+                  if ( p->commodityPrice[k].cnt > 0 ){//commodity is known about
+                     thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+                     if(thisPrice > maxPrice)maxPrice=thisPrice;
+                     if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
+                     break;
+                  }
+               }
+            }
+         }
+         /* Calculate best and worst profits */
+         if( maxPrice > 0 ){
+            best = maxPrice - curMinPrice ;
+            worst= minPrice - curMaxPrice ;
+            best = tanh ( best / 200. ) / 2;
+            worst= tanh ( worst/ 200. ) / 2;
+            ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;
+            gl_drawCircle( tx, ty, 1.3 * r, &ccol, 0 );
+            ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;
+            gl_drawCircle( tx, ty, 1.2 * r, &ccol, 0 );
+         }
       }
-
    }
 }
 
@@ -1390,9 +1383,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
                   if (map_selected != -1) {
-		     if ( sys == system_getIndex( map_selected ) )
-		        printf("System already selected - so display solar system map\n");
-		  }
+                     if ( sys == system_getIndex( map_selected ) )
+                        printf("System already selected - so display solar system map\n");
+                  }
                   map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                   break;
                }
@@ -1457,9 +1450,25 @@ static void map_buttonZoom( unsigned int wid, char* str )
 static void map_buttonCommodity( unsigned int wid, char* str )
 {
    int ncommod = commodity_getN();
-   cur_commod ++;
-   if ( cur_commod >= commodity_getN( ) )
-      cur_commod = -1;
+   SDL_Keymod mods;
+   static int cur_commod_last = 0;
+   mods = SDL_GetModState();
+   if (mods & (KMOD_LSHIFT | KMOD_RSHIFT)){/* reverse direction */
+      cur_commod --;
+      if ( cur_commod < -1 )
+         cur_commod = ncommod - 1;
+   }else if (mods & (KMOD_LCTRL | KMOD_RCTRL)){/* toggle on/off */
+      if ( cur_commod == -1 )
+         cur_commod = cur_commod_last;
+      else{
+         cur_commod_last = cur_commod;
+         cur_commod = -1;
+      }
+   }else{/* advance 1 commodity */
+      cur_commod ++;
+      if ( cur_commod >= ncommod )
+         cur_commod = -1;
+   }
    map_update(wid);
 }
 
