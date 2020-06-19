@@ -183,11 +183,11 @@ function create()
    tbar_center_x = screen_w/2
    tbar_center_w, tbar_center_h = top_bar_center:dim()
    tbar_w, tbar_h = top_bar:dim()
-   tbar_y = screen_h - tbar_h
+   tbar_y = screen_h - tbar_h - 14
 
    bbar_w, bbar_h = bottom_bar:dim()
 
-   gui.viewport( 0, 36, screen_w, screen_h - 72 )
+   gui.viewport( 0, 0, screen_w, screen_h )
 
    fields_y = tbar_y + 15
    if screen_w <=1024 then
@@ -198,7 +198,7 @@ function create()
       fields_x = (screen_w - 1024)/2
    end
 
-   buttons_y = screen_h - 34
+   buttons_y = tbar_y + tbar_h - 34
    buttons_w, buttons_h = button_normal:dim()
    buttontypes = { "missions", "cargo", "ship", "weapons" }
    buttons = {}
@@ -218,7 +218,7 @@ function create()
    ta_pnt_pane_w_m, ta_pnt_pane_h_m = planet_pane_m:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
    ta_pnt_pane_x = math.max( screen_w - ta_pnt_pane_w - 16, tbar_center_x + tbar_center_w/2 - 10 )
-   ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 32
+   ta_pnt_pane_y = tbar_y + tbar_h - 32 - ta_pnt_pane_h
 
    -- Fleet pane
    ta_flt_pane_w, ta_flt_pane_h = fleet_pane_t:dim()
@@ -229,7 +229,7 @@ function create()
        ta_flt_pane_x = nil
        ta_flt_pane_y = nil
    else
-       ta_flt_pane_y = screen_h - ta_flt_pane_h - 32
+       ta_flt_pane_y = tbar_y + tbar_h - 32 - ta_flt_pane_h
    end
 
    -- Planet faction icon
@@ -249,9 +249,10 @@ function create()
    gui.fpsPos( 10, left_side_h )
 
    -- Set OSD
+   local osd_y = tbar_y + tbar_h - 50
    local osd_w = 225
-   local osd_h = screen_h - 289
-   gui.osdInit( 30, screen_h - 64, osd_w, osd_h )
+   local osd_h = osd_y - 289
+   gui.osdInit( 30, tbar_y + tbar_h - 50, osd_w, osd_h )
 
    first_time = { true, 2 }
    navstring = _("none")
@@ -688,7 +689,7 @@ function render( dt )
    gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
 
    -- Bottom Bar
-   gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, bbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( bottom_bar, 0, 14, screen_w, bbar_h, 1, 1, 0, 0, 1, 1 )
 
    --Main window right
    if #wset > weapbars then
@@ -699,7 +700,7 @@ function render( dt )
    right_side_w = (bar_w + 6)*wbars_right - 1
    gui_w = right_side_w + left_side_w - 10
    mod_x = math.max( 0, math.min( screen_w - math.max( gui_w, 1024 ), math.floor( (screen_w - gui_w)/3 ) ) )
-   mod_y = 32
+   mod_y = 46
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, mod_y )
 
@@ -866,19 +867,19 @@ function render( dt )
    renderField( tostring(cargo) .. "t", tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
 
    --Center
-   gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, screen_h - tbar_center_h )
+   gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, tbar_y + tbar_h - tbar_center_h )
 
    --Time
    local time_str = time.str(time.get())
    local time_str_w = gfx.printDim(false, time_str)
-   gfx.print( false, time_str, screen_w/2 - 78, screen_h - tbar_center_h + 55, col_text, 156, true )
-   gfx.renderTex( top_bar_center_sheen, screen_w/2 - 77, screen_h - 56 )
+   gfx.print( false, time_str, screen_w/2 - 78, tbar_y + tbar_h - tbar_center_h + 55, col_text, 156, true )
+   gfx.renderTex( top_bar_center_sheen, screen_w/2 - 77, tbar_y + tbar_h - 56 )
 
    --System name
    local sysname = system.cur():name()
    local sysname_w = gfx.printDim(false, sysname)
-   gfx.print( false, sysname, screen_w/2 - 67, screen_h - tbar_center_h + 19, col_text, 132, true )
-   gfx.renderTex( top_bar_center_sheen2, screen_w/2 - 66, screen_h - 92 )
+   gfx.print( false, sysname, screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19, col_text, 132, true )
+   gfx.renderTex( top_bar_center_sheen2, screen_w/2 - 66, tbar_y + tbar_h - 92 )
 
    for k, v in ipairs(buttontypes) do
       renderButton( v )
