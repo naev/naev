@@ -35,7 +35,7 @@ title[5] = _("Hail")
 text[5] = _([[The Pacifier commander answers you and stops his ship, waiting to be boarded.]])
 
 title[6] = _("Let's wait")
-text[6] = _([["Mm. It looks like the other ones have not arrived yet." Smith says. "Just wait close to the jump point, they should arrive soon."]])
+text[6] = _([["Mm. It looks like the others have not arrived yet." Smith says. "Just wait close to the jump point, they should arrive soon."]])
 
 -- Mission details
 misn_title = _("A Journey To %s")
@@ -126,16 +126,16 @@ function enter()
    end
 end
 
-function wait_msg()
+function wait_msg ()
    -- Prevents the player from being impatient
-   tk.msg(title[6], text[6])
+   tk.msg( title[6], text[6] )
 end
 
-function flf_people()
-   pacifier = pilot.add( "FLF Pacifier", nil, "Doeston" )[1]
-   pacifier:setFriendly()
-   pacifier:setInvincible(true)
-   hook.pilot(pacifier, "hail", "hail_pacifier")
+function flf_people ()
+   pacifier = pilot.add( "FLF Pacifier", nil, system.get("Doeston") )[1]
+   pacifier:setFriendly( true )
+   pacifier:setInvincible( true )
+   hook.pilot( pacifier, "hail", "hail_pacifier" )
    hook.pilot( pacifier, "death", "dead" )
    hook.pilot( pacifier, "jump", "jump" )
 end
