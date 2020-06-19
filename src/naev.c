@@ -43,9 +43,6 @@
 #include <bfd.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
-/* Locale setting. */
-#include <locale.h>
-
 /* local */
 #include "conf.h"
 #include "physics.h"
@@ -192,9 +189,9 @@ int main( int argc, char** argv )
    /* Set up locales. */
    //setlocale(LC_ALL|~LC_NUMERIC, "");
    setlocale(LC_ALL, "");
-   //bindtextdomain("naev", LOCALEDIR);
-   bindtextdomain("naev", "po/");
-   textdomain("naev");
+   bindtextdomain(PACKAGE_NAME, LOCALEDIR);
+   //bindtextdomain("naev", "po/");
+   textdomain(PACKAGE_NAME);
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);

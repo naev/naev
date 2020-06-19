@@ -3,6 +3,7 @@ SUBDIRS = tk
 bin_PROGRAMS = naev
 
 AM_CFLAGS = $(NAEV_CFLAGS)
+AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
@@ -192,6 +193,7 @@ CODE_SOURCE = \
 	faction.h \
 	fleet.h \
 	font.h \
+	gettext.h \
 	glad.h \
 	gui.h \
 	gui_omsg.h \
