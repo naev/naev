@@ -109,10 +109,14 @@ function create()
    speed_light_double = tex.open( base .. "speedDouble.png" )
    speed_light_off = tex.open( base .. "speedOff.png" )
    top_bar = tex.open( base .. "topbar.png" )
+   top_bar_left = tex.open( base .. "topbar_left.png" )
+   top_bar_right = tex.open( base .. "topbar_right.png" )
    top_bar_center = tex.open( base .. "topbarCenter.png" )
    top_bar_center_sheen = tex.open( base .. "topbarSheen.png" )
    top_bar_center_sheen2 = tex.open( base .. "topbarSheen2.png" )
    bottom_bar = tex.open( base .. "bottombar.png" )
+   bottom_bar_left = tex.open( base .. "bottombar_left.png" )
+   bottom_bar_right = tex.open( base .. "bottombar_right.png" )
    button_normal = tex.open( base .. "button.png" )
    button_hilighted = tex.open( base .. "buttonHil2.png" )
    button_mouseover = tex.open( base .. "buttonHil.png" )
@@ -124,6 +128,8 @@ function create()
 
    --Positions
    --Main is at 0,0
+
+   margin = 14
 
    --Radar
    radar_x = 263
@@ -176,26 +182,30 @@ function create()
    popup_right_x = 432
    popup_right_y = 88
 
-   weapbars = math.max( 3, math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) ) --number of weapon bars that can fit on the screen (minimum 3)
+   weapbars = math.max( 3, math.floor((screen_w - 2*margin - left_side_w - end_right_w + 10)/(bar_w + 6)) ) --number of weapon bars that can fit on the screen (minimum 3)
 
    circle_w, circle_h = icon_refire:dim()
 
    tbar_center_x = screen_w/2
    tbar_center_w, tbar_center_h = top_bar_center:dim()
    tbar_w, tbar_h = top_bar:dim()
-   tbar_y = screen_h - tbar_h - 14
+   tbar_y = screen_h - tbar_h - margin
+   tbar_left_w, tbar_left_h = top_bar_left:dim()
+   tbar_right_w, tbar_right_h = top_bar_right:dim()
 
    bbar_w, bbar_h = bottom_bar:dim()
+   bbar_left_w, bbar_left_h = bottom_bar_left:dim()
+   bbar_right_w, bbar_right_h = bottom_bar_right:dim()
 
    gui.viewport( 0, 0, screen_w, screen_h )
 
    fields_y = tbar_y + 15
-   if screen_w <=1024 then
-      fields_w = (screen_w-tbar_center_w)/4-8
-      fields_x = 0
+   if screen_w <= 1024 + 2*margin then
+      fields_w = (screen_w - tbar_center_w - 2*margin) / 4 - 8
+      fields_x = margin
    else
-      fields_w = (1024-tbar_center_w)/4-8
-      fields_x = (screen_w - 1024)/2
+      fields_w = (1024 - tbar_center_w) / 4 - 8
+      fields_x = (screen_w - 1024) / 2
    end
 
    buttons_y = tbar_y + tbar_h - 34
@@ -686,10 +696,14 @@ function render( dt )
    lockons = pp:lockon()
 
    -- Top Bar
-   gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( top_bar, margin, tbar_y, screen_w - 2*margin, tbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTex( top_bar_left, margin, tbar_y )
+   gfx.renderTex( top_bar_right, screen_w - margin - tbar_right_w, tbar_y )
 
    -- Bottom Bar
-   gfx.renderTexRaw( bottom_bar, 0, 14, screen_w, bbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( bottom_bar, margin, margin, screen_w - 2*margin, bbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTex( bottom_bar_left, margin, margin )
+   gfx.renderTex( bottom_bar_right, screen_w - margin - bbar_right_w, margin )
 
    --Main window right
    if #wset > weapbars then
@@ -699,7 +713,9 @@ function render( dt )
    end
    right_side_w = (bar_w + 6)*wbars_right - 1
    gui_w = right_side_w + left_side_w - 10
-   mod_x = math.max( 0, math.min( screen_w - math.max( gui_w, 1024 ), math.floor( (screen_w - gui_w)/3 ) ) )
+   mod_x = math.max( margin, math.min(
+         screen_w - 2*margin - math.max( gui_w, 1024 ),
+         math.floor( (screen_w - 2*margin - gui_w)/3 ) ) )
    mod_y = 46
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, mod_y )
