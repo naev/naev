@@ -959,15 +959,15 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
  */
 void pilot_setHostile( Pilot* p )
 {
-   if ( !pilot_isHostile( p ) ) {
+   if ( !pilot_isFlag( p, PILOT_HOSTILE ) ) {
       /* Time to play combat music. */
       music_choose("combat");
 
       player.enemies++;
+      pilot_setFlag( p, PILOT_HOSTILE );
    }
    pilot_rmFriendly( p );
    pilot_rmFlag( p, PILOT_BRIBED );
-   pilot_setFlag( p, PILOT_HOSTILE );
 }
 
 
