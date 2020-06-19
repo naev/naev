@@ -2013,7 +2013,6 @@ static int pilotL_setHostile( lua_State *L )
 
    /* Set as hostile. */
    if (state) {
-      pilot_rmFlag(p, PILOT_FRIENDLY);
       pilot_setHostile(p);
    }
    else
@@ -3363,7 +3362,7 @@ static int pilotL_getHostile( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Push value. */
-   lua_pushboolean( L, pilot_isFlag(p, PILOT_HOSTILE) );
+   lua_pushboolean( L, pilot_isHostile( p ) );
    return 1;
 }
 

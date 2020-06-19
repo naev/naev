@@ -523,14 +523,12 @@ static void gui_renderPilotTarget( double dt )
    /* Draw the pilot target. */
    if (pilot_isDisabled(p))
       c = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED))
-      c = &cNeutral;
    else if (pilot_isHostile(p))
       c = &cHostile;
    else if (pilot_isFriendly(p))
       c = &cFriend;
    else
-      c = faction_getColour(p->faction);
+      c = &cNeutral;
 
    x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
    y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;

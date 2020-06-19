@@ -154,11 +154,10 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < pilot_nstack) {
-         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ) &&
-               (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
-                  areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
+               pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p++;
       }
@@ -208,11 +207,10 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    else if (mode == 1) {
       while (p >= 0) {
-         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ) &&
-               (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
-                  areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
+               pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p--;
       }
@@ -259,14 +257,10 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
  */
 static int pilot_validEnemy( const Pilot* p, const Pilot* target )
 {
-   /* Must not be bribed. */
-   if ((target->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
-      return 0;
-
    /* Should either be hostile by faction or by player. */
-   if (!(areEnemies( p->faction, target->faction) ||
-            ((target->id == PLAYER_ID) &&
-             pilot_isFlag(p,PILOT_HOSTILE))))
+   if ( !( areEnemies( p->faction, target->faction )
+            || ( ( target->id == PLAYER_ID )
+               && pilot_isHostile( p ) ) ) )
       return 0;
 
    /* Shouldn't be disabled. */
@@ -626,11 +620,12 @@ void pilot_setTurn( Pilot *p, double turn )
  */
 int pilot_isHostile( const Pilot *p )
 {
-   if (pilot_isFlag(p, PILOT_FRIENDLY))
-      return 0;
-   if (pilot_isFlag(p, PILOT_HOSTILE) ||
-         areEnemies(FACTION_PLAYER,p->faction))
+   if ( !pilot_isFriendly( p )
+         && !pilot_isFlag( p, PILOT_BRIBED )
+         && (pilot_isFlag( p, PILOT_HOSTILE ) ||
+            areEnemies( FACTION_PLAYER, p->faction ) ) )
       return 1;
+   
    return 0;
 }
 
@@ -657,11 +652,10 @@ int pilot_isNeutral( const Pilot *p )
  */
 int pilot_isFriendly( const Pilot *p )
 {
-   if (pilot_isFlag(p, PILOT_HOSTILE))
-      return 0;
-   if (pilot_isFlag(p, PILOT_FRIENDLY) ||
-         areAllies(FACTION_PLAYER,p->faction))
+   if ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
+         areAllies( FACTION_PLAYER,p->faction ) )
       return 1;
+
    return 0;
 }
 
@@ -965,13 +959,15 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
  */
 void pilot_setHostile( Pilot* p )
 {
-   if (!pilot_isFlag(p, PILOT_HOSTILE)) {
+   if ( !pilot_isHostile( p ) ) {
       /* Time to play combat music. */
       music_choose("combat");
 
       player.enemies++;
-      pilot_setFlag(p, PILOT_HOSTILE);
    }
+   pilot_rmFriendly( p );
+   pilot_rmFlag( p, PILOT_BRIBED );
+   pilot_setFlag( p, PILOT_HOSTILE );
 }
 
 
@@ -984,9 +980,9 @@ char pilot_getFactionColourChar( const Pilot *p )
 {
    if (pilot_isDisabled(p))
       return 'I';
-   else if (pilot_isFlag(p, PILOT_BRIBED))
+   else if (pilot_isFriendly(p))
       return 'N';
-   else if (pilot_isFlag(p, PILOT_HOSTILE))
+   else if (pilot_isHostile(p))
       return 'H';
    return faction_getColourChar(p->faction);
 }
@@ -1162,11 +1158,15 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
  */
 void pilot_rmHostile( Pilot* p )
 {
-   if (pilot_isFlag(p, PILOT_HOSTILE)) {
+   if (pilot_isHostile(p)) {
+      if (pilot_isFlag(p, PILOT_HOSTILE))
+         pilot_rmFlag(p, PILOT_HOSTILE);
+      if ( areEnemies( FACTION_PLAYER, p->faction ) )
+         pilot_setFlag(p, PILOT_BRIBED);
+
       player.enemies--;
       if (pilot_isDisabled(p))
          player.disabled_enemies--;
-      pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
       if (player.enemies <= player.disabled_enemies) {
@@ -1223,10 +1223,9 @@ const glColour* pilot_getColour( const Pilot* p )
 
    if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-   else if (pilot_isHostile(p)) col = &cHostile;
    else if (pilot_isFriendly(p)) col = &cFriend;
-   else col = faction_getColour(p->faction);
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else col = &cNeutral;
 
    return col;
 }
