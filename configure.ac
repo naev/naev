@@ -403,7 +403,7 @@ esac
 
 # global
 GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
-GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\" -DLOCALEDIR='\"$(localedir)\"'"
+GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
 GLOBAL_LIBS=
 
 AS_IF([test "$enable_debug" != "no"], [
