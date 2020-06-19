@@ -959,7 +959,8 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
  */
 void pilot_setHostile( Pilot* p )
 {
-   if ( !pilot_isFlag( p, PILOT_HOSTILE ) ) {
+   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED)
+         || !pilot_isFlag( p, PILOT_HOSTILE ) ) {
       /* Time to play combat music. */
       music_choose("combat");
 
@@ -1159,19 +1160,22 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
 void pilot_rmHostile( Pilot* p )
 {
    if (pilot_isHostile(p)) {
-      if (pilot_isFlag(p, PILOT_HOSTILE))
+      if (pilot_isFlag(p, PILOT_HOSTILE)) {
+         player.enemies--;
+         if (pilot_isDisabled(p))
+            player.disabled_enemies--;
+
+         /* Change music back to ambient if no more enemies. */
+         if (player.enemies <= player.disabled_enemies) {
+            music_choose("ambient");
+         }
+
          pilot_rmFlag(p, PILOT_HOSTILE);
+      }
+
+      /* Set "bribed" flag if faction has poor reputation */
       if ( areEnemies( FACTION_PLAYER, p->faction ) )
          pilot_setFlag(p, PILOT_BRIBED);
-
-      player.enemies--;
-      if (pilot_isDisabled(p))
-         player.disabled_enemies--;
-
-      /* Change music back to ambient if no more enemies. */
-      if (player.enemies <= player.disabled_enemies) {
-         music_choose("ambient");
-      }
    }
 }
 

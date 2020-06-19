@@ -2012,9 +2012,8 @@ static int pilotL_setHostile( lua_State *L )
       state = 1;
 
    /* Set as hostile. */
-   if (state) {
+   if (state)
       pilot_setHostile(p);
-   }
    else
       pilot_rmHostile(p);
 
