@@ -545,55 +545,59 @@ static void map_update( unsigned int wid )
    if (sys->nebu_density > 0.) {
 
       /* Volatility */
-      if (sys->nebu_volatility > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Volatile"));
-      else if (sys->nebu_volatility > 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dangerous"));
-      else if (sys->nebu_volatility > 0.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Unstable"));
+      
 
-      /* Density */
-      if (sys->nebu_density > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-      else if (sys->nebu_density < 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Nebula"));
+      if (sys->nebu_density > 700.) {
+         if (sys->nebu_volatility > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Dense Nebula"));
+         else if (sys->nebu_volatility > 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Dense Nebula"));
+         else if (sys->nebu_volatility > 0.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Dense Nebula"));
+         else
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Nebula"));
+      } else if (sys->nebu_density < 300.) {
+         if (sys->nebu_volatility > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Light Nebula"));
+         else if (sys->nebu_volatility > 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Light Nebula"));
+         else if (sys->nebu_volatility > 0.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Light Nebula"));
+         else
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Nebula"));
+      }
    }
    /* Interference. */
    if (sys->interference > 0.) {
 
       if (buf[0] != '\0')
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
 
-      /* Density. */
       if (sys->interference > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
+         p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Interference"));
       else if (sys->interference < 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-
-      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Interference"));
+         p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Interference"));
+      else
+         p += nsnprintf(&buf[p], PATH_MAX-p, _("Interference"));
    }
    /* Asteroids. */
    if (sys->nasteroids > 0) {
       double density;
 
       if (buf[0] != '\0')
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
 
       density = 0.;
       for (i=0; i<sys->nasteroids; i++) {
          density += sys->asteroids[i].area * sys->asteroids[i].density;
       }
 
-      /* TODO vary text based on density. */
-      /*
-      if (density > X)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-      else if (density < X)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-      */
-
-      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Asteroid Field"));
+      if (density >= 1.5)
+         p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Asteroid Field"));
+      else if (density <= 0.5)
+         p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Asteroid Field"));
+      else
+         p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
 
    }
    window_modifyText( wid, "txtSystemStatus", buf );
