@@ -2015,7 +2015,6 @@ static int pilotL_setHostile( lua_State *L )
    if (state) {
       pilot_rmFlag(p, PILOT_FRIENDLY);
       pilot_setHostile(p);
-      pilot_rmFriendly(p);
    }
    else
       pilot_rmHostile(p);
@@ -2051,10 +2050,8 @@ static int pilotL_setFriendly( lua_State *L )
       state = 1;
 
    /* Remove hostile and mark as friendly. */
-   if (state) {
+   if (state)
       pilot_setFriendly(p);
-      pilot_rmHostile(p);
-   }
    /* Remove friendly flag. */
    else
       pilot_rmFriendly(p);
