@@ -755,14 +755,14 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
    double vol, magic;
    char *str;
 
-   str = type ? _("Music") : _("Sound");
+   str = type ? _("Music Volume: %s") : _("Sound Volume: %s");
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      nsnprintf( buf, max, _("%s Volume: Muted"), str );
+      nsnprintf( buf, max, str, _("Muted") );
    else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      nsnprintf( buf, max, _("%s Volume: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
+      nsnprintf( buf, max, str, _("%.2f (%.0f dB)"), pos, log(vol) * magic );
    }
 }
 
