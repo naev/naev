@@ -16,8 +16,6 @@ AM_GNU_GETTEXT_VERSION([0.18])
 GETTEXT_PACKAGE=${PACKAGE_NAME}
 AC_SUBST(GETTEXT_PACKAGE)
 
-AC_DEFINE([LOCALEDIR], "po/", [Locale directory])
-
 IT_PROG_INTLTOOL
 
 AM_INIT_AUTOMAKE([foreign subdir-objects])
@@ -405,7 +403,7 @@ esac
 
 # global
 GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
-GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
+GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\" -DLOCALEDIR='\"$(localedir)\"'"
 GLOBAL_LIBS=
 
 AS_IF([test "$enable_debug" != "no"], [
