@@ -192,6 +192,7 @@ CODE_SOURCE = \
 	faction.h \
 	fleet.h \
 	font.h \
+	gettext.h \
 	glad.h \
 	gui.h \
 	gui_omsg.h \
