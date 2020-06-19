@@ -67,6 +67,11 @@ portraits_m["Dvaered"] = {
    "dvaered/dv_civilian_m4",
    "dvaered/dv_civilian_m5",
    "dvaered/dv_civilian_m6",
+   "dvaered/dv_civilian_m7",
+   "dvaered/dv_civilian_m8",
+   "dvaered/dv_civilian_m9",
+   "dvaered/dv_civilian_m10",
+   "dvaered/dv_civilian_m11",
 }
 portraits_f["Dvaered"] = {
    "dvaered/dv_civilian_f1",
@@ -74,6 +79,12 @@ portraits_f["Dvaered"] = {
    "dvaered/dv_civilian_f3",
    "dvaered/dv_civilian_f4",
    "dvaered/dv_civilian_f5",
+   "dvaered/dv_civilian_f6",
+   "dvaered/dv_civilian_f7",
+   "dvaered/dv_civilian_f8",
+   "dvaered/dv_civilian_f9",
+   "dvaered/dv_civilian_f10",
+   "dvaered/dv_civilian_f11",
 }
 
 portraits_m["Sirius"] = {
@@ -82,6 +93,11 @@ portraits_m["Sirius"] = {
    "sirius/sirius_fyrra_m3",
    "sirius/sirius_fyrra_m4",
    "sirius/sirius_fyrra_m5",
+   "sirius/sirius_shiara_m1",
+   "sirius/sirius_shiara_m2",
+   "sirius/sirius_shiara_m3",
+   "sirius/sirius_shiara_m4",
+   "sirius/sirius_shiara_m5",
 }
 portraits_f["Sirius"] = {
    "sirius/sirius_fyrra_f1",
@@ -89,6 +105,11 @@ portraits_f["Sirius"] = {
    "sirius/sirius_fyrra_f3",
    "sirius/sirius_fyrra_f4",
    "sirius/sirius_fyrra_f5",
+   "sirius/sirius_shiara_f1",
+   "sirius/sirius_shiara_f2",
+   "sirius/sirius_shiara_f3",
+   "sirius/sirius_shiara_f4",
+   "sirius/sirius_shiara_f5",
 }
 
 portraits_m["Pirate"] = {
@@ -122,23 +143,42 @@ portraits_f["Pirate"] = {
 }
 
 portraits_mil_m["Empire"] = {
-   "empire/empire1",
-   "empire/empire2",
-   "empire/empire4",
+   "empire/empire_mil_m1",
+   "empire/empire_mil_m2",
+   "empire/empire_mil_m3",
+   "empire/empire_mil_m4",
+   "empire/empire_mil_m5",
+   "empire/empire_mil_m6",
+   "empire/empire_mil_m7",
+   "empire/empire_mil_m8",
 }
 portraits_mil_f["Empire"] = {
-   "empire/empire3",
+   "empire/empire_mil_f1",
+   "empire/empire_mil_f2",
+   "empire/empire_mil_f3",
+   "empire/empire_mil_f4",
+   "empire/empire_mil_f5",
 }
 
 portraits_mil_m["Dvaered"] = {
-   "dvaered/dv_general1",
    "dvaered/dv_military_m1",
    "dvaered/dv_military_m2",
    "dvaered/dv_military_m3",
+   "dvaered/dv_military_m4",
+   "dvaered/dv_military_m5",
+   "dvaered/dv_military_m6",
+   "dvaered/dv_military_m7",
+   "dvaered/dv_military_m8",
 }
 portraits_mil_f["Dvaered"] = {
    "dvaered/dv_military_f1",
    "dvaered/dv_military_f2",
+   "dvaered/dv_military_f3",
+   "dvaered/dv_military_f4",
+   "dvaered/dv_military_f5",
+   "dvaered/dv_military_f6",
+   "dvaered/dv_military_f7",
+   "dvaered/dv_military_f8",
 }
 
 portraits_mil_m["Pirate"] = portraits_m["Pirate"]

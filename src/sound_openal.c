@@ -615,7 +615,7 @@ static const char* vorbis_getErr( int err )
       case OV_ENOTVORBIS:  return _("Bitstream is not Vorbis data.");
       case OV_EBADHEADER:  return _("Invalid Vorbis bitstream header.");
       case OV_EVERSION:    return _("Vorbis version mismatch.");
-      case OV_EBADLINK:    return _("The given link exists in the Vorbis data stream, but is not decipherable due to garbacge or corruption.");
+      case OV_EBADLINK:    return _("The given link exists in the Vorbis data stream, but is not decipherable due to garbage or corruption.");
       case OV_ENOSEEK:     return _("The given stream is not seekable.");
 
       default: return _("Unknown vorbisfile error.");

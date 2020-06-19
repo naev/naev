@@ -553,7 +553,7 @@ void menu_death (void)
 
    /* Allow the player to continue if the savegame exists, if not, propose to restart */
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   if (!player_isTut() && nfile_fileExists(path))
+   if (nfile_fileExists(path))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else

@@ -1,9 +1,11 @@
-
-
 --[[
 -- Event for creating generic news
 --
 --]]
+
+include "numstring.lua"
+include "jumpdist.lua"
+
 
 header_table={}
 
@@ -77,7 +79,7 @@ articles["Generic"] = {
    --]]
    {
       title = _("Techs Probe for Sol"),
-      desc = _("Technicians at the Omega Station recently returned from a new effort to understand the Sol Incident. They expect the first data to arrive in two months' time.")
+      desc = _("Technicians at the Omega Station recently returned from a new effort to understand the Sol Incident. They expect the first data to arrive in 50 decaperiods' time.")
    },
    {
       title = _("Sand Monster Caught On Tape"),
@@ -89,7 +91,7 @@ articles["Generic"] = {
    },
    {
       title = _("Experiment Produces Cold Fusion"),
-      desc = _("In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at Eureka labs says he has produced a tabletop atomic reaction. He hopes to publish his results in a science journal later this year.")
+      desc = _("In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at Eureka labs says he has produced a tabletop atomic reaction. He hopes to publish his results in a science journal later this cycle.")
    },
    {
       title = _("Bees Introduced to Emperor's Fist"),
@@ -136,7 +138,7 @@ articles["Generic"] = {
    },
    {
       title = _("Nexus Contract Finalised"),
-      desc = _("The Empire agreed terms with shipbuilder Nexus for a new generation of military craft. The deal extends the partnership with the government for another decade.")
+      desc = _("The Empire agreed to terms with shipbuilder Nexus for a new generation of military craft. The deal extends the partnership with the government for another 10 cycles.")
    },
    {
       title = _("Sneak Peek: the Kestrel"),
@@ -155,7 +157,7 @@ articles["Generic"] = {
    },
    {
       title = _("Election on Caladan Marred by Fraud"),
-      desc = _("As many as two of every hundred votes counted after the recent polling day may be falsified, an ombudsman reports. The opposition party demanded the election be annulled.")
+      desc = _("As many as two of every hundred votes counted after the recent polling decaperiod may be falsified, an ombudsman reports. The opposition party demanded the election be annulled.")
    },
    {
       title = _("Empire Relies on Prison Labour"),
@@ -198,7 +200,7 @@ articles["Generic"] = {
    },
    {
       title = _("Everyone Loves a SuperChimp"),
-      desc = _("For decades used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or low-cost servant.")
+      desc = _("For dozens of cycles used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or a low-cost servant.")
    },
    {
       title = _("Admiral's Ball a Triumph"),
@@ -206,7 +208,7 @@ articles["Generic"] = {
    },
    {
       title = _("Amazing Survival Story"),
-      desc = _("An Xing Long was rescued after two days floating in space. \"I used meditation to slow my breathing,\" Xing Long told us. \"It was hard because I was scared.\"")
+      desc = _("An Xing Long was rescued after two decaperiods floating in space. \"I used meditation to slow my breathing,\" Xing Long told us. \"It was hard because I was scared.\"")
    },
    {
       title = _("The Best Spaceport Bars"),
@@ -214,7 +216,7 @@ articles["Generic"] = {
    },
    {
       title = _("RIP: The Floating Vagabond"),
-      desc = _("Only two years after the mysterious disappearance of its owner, the galaxy's only deep space bar shut down the generators and cycled the airlock one last time.")
+      desc = _("Only two cycles after the mysterious disappearance of its owner, the galaxy's only deep space bar shut down the generators and cycled the airlock one last time.")
    },
    {
       title = _("Games for Young Pilots"),
@@ -375,10 +377,13 @@ articles["Proteron"]={}
 articles["Za'lek"]={}
 articles["Thurion"]={}
 
+econ_title = _("Current Market Prices")
+econ_header = _("\n\n%s in %s")
+econ_desc_part = _("\n%s: %s Cr./Tonne")
+
 
    --create generic news
 function create()
-
    local f = planet.cur():faction()
    faction = f ~= nil and f:name() or nil
    if faction == nil then evt.finish(false) end
@@ -389,13 +394,13 @@ function create()
    rm_genericarticles(faction)
 
    add_header(faction)
-   add_articles("Generic",math.random(3,4))
-   add_articles(faction,math.random(1,2))
-
+   add_articles("Generic", math.random(3,4))
+   add_articles(faction, math.random(1,2))
+   add_econ_article()
 end
 
-function add_header(faction)
 
+function add_header(faction)
    remove_header('Generic')
 
    if header_table[faction] == nil then
@@ -406,72 +411,91 @@ function add_header(faction)
    header=header_table[faction][1]
    desc=greet_table[faction][math.random(#greet_table[faction])]
 
-   news.add(faction,header,desc,50000000000005,50000000000005)
-
+   news.add(faction, header, desc, 50000000000005, 50000000000005)
 end
 
-function remove_header(faction)
 
+function remove_header(faction)
    local news_table=news.get(faction)
 
-   for _,v in ipairs(news.get(faction)) do
-
-      for _,v0 in ipairs(header_table[faction]) do
-         if v:title()==v0 then
+   for i, v in ipairs(news.get(faction)) do
+      for i, v0 in ipairs(header_table[faction]) do
+         if v:title() == v0 then
             v:rm()
          end
       end
-
    end
 
    return 0
-
 end
 
 
-function add_articles(faction,num)
-
-   if articles[faction]==nil then
+function add_articles(faction, num)
+   if articles[faction] == nil then
       return 0
    end
 
-   num=math.min(num,#articles[faction])
-   news_table=articles[faction]
+   num = math.min(num, #articles[faction])
+   news_table = articles[faction]
 
    local header
    local desc
    local rnum
 
-   for i=1,num do
+   for i = 1, num do
+      rnum = math.random(#news_table)
+      header = news_table[rnum]["title"]
+      desc = news_table[rnum]["desc"]
 
-      rnum=math.random(#news_table)
-      header=news_table[rnum]["title"]
-      desc=news_table[rnum]["desc"]
+      news.add(faction, header, desc, 500000000000000, 0)
 
-      news.add(faction,header,desc,500000000000000,0)
-
-      table.remove(news_table,rnum)
-
+      table.remove(news_table, rnum)
    end
-
 end
 
+
 function rm_genericarticles(faction)
+   local news_table = news.get(faction)
 
-   local news_table=news.get(faction)
+   if articles[faction] == nil then return 0 end
 
-   if articles[faction]==nil then return 0 end
-
-   for _,v in ipairs(news_table) do
-
-      for _,v0 in ipairs(articles[faction]) do
-         if v:title()==v0["title"] then
+   for i, v in ipairs(news_table) do
+      for i, v0 in ipairs(articles[faction]) do
+         if v:title() == v0["title"] then
             v:rm()
             break
          end
       end
-   
+   end
+end
+
+
+function add_econ_article ()
+   -- Remove old econ articles (we only want one at a time)
+   for i, article in ipairs( news.get( "Generic" ) ) do
+      if article:title() == econ_title then
+         article:rm()
+      end
    end
 
-
+   local cur_t = time.get()
+   local body = ""
+   for i, sys in ipairs( getsysatdistance( system.cur(), 0, 1 ) ) do
+      for j, plnt in ipairs( sys:planets() ) do
+         local commodities = plnt:commoditiesSold()
+         if #commodities > 0 then
+            body = body .. econ_header:format( plnt:name(), sys:name() )
+            for k, comm in ipairs( commodities ) do
+               body = body .. econ_desc_part:format( comm:name(),
+                     numstring( comm:priceAtTime( plnt, cur_t ) ) )
+            end
+            plnt:recordCommodityPriceAtTime( cur_t )
+            -- Create news, expires immediately when time advances (i.e.
+            -- when you take off from the planet).
+         end
+      end
+   end
+   if body ~= "" then
+      news.add( "Generic", econ_title, body, cur_t + time.create( 0, 0, 1 ) )
+   end
 end

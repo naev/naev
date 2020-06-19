@@ -814,21 +814,21 @@
   <ai>baddie</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot name="Genbu" ship="Genbu"></pilot>
+   <pilot name="Genbu" ship="Pirate Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Suzaku">
   <ai>baddie</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot name="Suzaku" ship="Suzaku"></pilot>
+   <pilot name="Suzaku" ship="Pirate Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Byakko">
   <ai>baddie</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot name="Byakko" ship="Byakko"></pilot>
+   <pilot name="Byakko" ship="Pirate Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Shadowvigil Diplomat">

@@ -893,7 +893,6 @@ static int planetL_recordCommodityPriceAtTime( lua_State *L )
 
    p = luaL_validplanet(L,1);
    t = luaL_validtime(L, 2);
-   printf("nlua_planet.c - record commodity prices at %"PRIu64", planet %s\n",t,p->name);
    planet_averageSeenPricesAtTime( p, t );
    return 0;
 }

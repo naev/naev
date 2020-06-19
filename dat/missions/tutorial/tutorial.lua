@@ -25,7 +25,7 @@ title = {}
 text  = {}
 
 title[1] = _("Passing The Sky")
-text[1]  = _([["Congratulations on your first space ship, %s!" the person who sold the %s to you says through the radio. "You have made an excellent decision to purchase from Melendez Corporation! Our ships are prized for their reliability and affordability. I promise, you won't be disappointed!" You are skeptical of the sales pitch, of course; you really only bought this ship because it was the only one you could afford. Still, you tactfully thank the salesperson.
+text[1]  = _([["Congratulations on your first space ship, %s!" Captain T. Practice, who sold the %s to you, says through the radio. "You have made an excellent decision to purchase from Melendez Corporation! Our ships are prized for their reliability and affordability. I promise, you won't be disappointed!" You are skeptical of the sales pitch, of course; you really only bought this ship because it was the only one you could afford. Still, you tactfully thank the salesperson.
     "Now that we have you out in space for the first time, how about I go over your new ship's controls with you real quick? No charge!"]])
 
 title[2] = _("No, thanks")
@@ -39,8 +39,8 @@ text[4] = _("\"Perfect! That was easy enough, right? We at Melendez Corporation 
 
 text[5]  = _("\"On that note, let's go over landing! All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by \abdouble-clicking\a0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on %s? You'll need to first slow down your ship so that the landing procedure can be carried out safely; you can do this either with your regular movement controls or, if you prefer, by pressing %s, which will bring your Melendez Corporation ship to a complete stop. You can then land either by \abdouble-clicking\a0 on the planet, or by targeting the planet with %s and then pressing %s. Give it a try!\"")
 
-text[6]  = _([["Excellent! The landing was successful. Melendez Corporation uses advanced artificial intelligence technology so that you never have to worry about your ship crashing. It may seem like a small thing, but it wasn't long ago when pilots had to land manually and crashes were commonplace! We at Melendez Corporation pride ourselves at protecting the saftety of our valued customers and ensuring that your ship is reliable and resiliant.
-    "When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Feel free to take a look around if you like. When you are done, click the 'Take Off' button so we can continue."]])
+text[6]  = _([["Excellent! The landing was successful. Melendez Corporation uses advanced artificial intelligence technology so that you never have to worry about your ship crashing. It may seem like a small thing, but it wasn't long ago when pilots had to land manually and crashes were commonplace! We at Melendez Corporation pride ourselves at protecting the safety of our valued customers and ensuring that your ship is reliable and resilient.
+    "When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Feel free to take a look around if you like; you might want to talk to the locals at the bar, for instance. When you are done, click the 'Take Off' button so we can continue."]])
 
 text[7]  = _("\"Welcome back to space, %s! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. That is why we at Melendez Corporation always include the latest Autonav technology with all of our ships!\
     \"Autonav is simple and elegant. Simply press %s to open your ship's overlay map, then simply \abright-click\a0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but advanced Melendez Corporation technology allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, our Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's Options menu, which you can access by pressing %s.\
@@ -61,15 +61,19 @@ text[10] = _([["I think we should try venturing outside of this system! There ar
 
 text[11] = _("\"You have done very well, %s! As you can see, the trip consumed fuel. You consume fuel any time you make a jump and can refuel by landing on a friendly planet. If you find yourself in a pinch, you may also be able to buy fuel from other pilots in the system; hail a pilot by \abdouble-clicking\a0 on them, or by selecting them with %s and then pressing %s.\
     \"Ah, that reminds me: you can also attempt to bribe hostile ships, such as pirates, by hailing them. Bribes work better on some factions than on others; pirates will happily take your offer and may even sell you fuel afterwards, but many other factions may be less forthcoming.\
-    \"And I think that's it! I must say, you are a natural-born pilot and your new Melendez ship suits you well! I wish you good luck in your travels. Thank you for shopping with Melendez Corporation!\" The salesperson ceases contact and you finally let out a sigh of relief. You were starting to think you might go insane with all of the marketing nonsense being poured out at you. At least you learned how to pilot the ship, though!")
+    \"And I think that's it! I must say, you are a natural-born pilot and your new Melendez ship suits you well! I wish you good luck in your travels. Thank you for shopping with Melendez Corporation!\" Captain T. Practice ceases contact and you finally let out a sigh of relief. You were starting to think you might go insane with all of the marketing nonsense being poured out at you. At least you learned how to pilot the ship, though!")
+
+misn_title = _("Tutorial")
+misn_desc = _("Captain T. Practice has offered to teach you how to fly your ship.")
+misn_reward = _("None")
 
 osd_title = _("Tutorial")
 osd_desc = {}
-osd_desc[1] = _("Fly to %s in the %s system")
-osd_desc[2] = _("Land on %s in the %s system")
-osd_desc[3] = _("Fly to %s in the %s system")
-osd_desc[4] = _("Destroy the practice drone")
-osd_desc[5] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to %s in the %s system with the movement keys")
+osd_desc[2] = _("Land on %s in the %s system by double-clicking on it")
+osd_desc[3] = _("Go to %s in the %s system by right-clicking it on the overview map")
+osd_desc[4] = _("Destroy the practice drone near %s in the %s system")
+osd_desc[5] = _("Jump to the %s system by using your starmap")
 osd_desc["__save"] = true
 
 
@@ -86,6 +90,10 @@ function create ()
       misn.finish( false )
    end
 
+   misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
+   misn.setReward( misn_reward )
+
    accept()
 end
 
@@ -101,6 +109,7 @@ function accept ()
       osd_desc[1] = osd_desc[1]:format( start_planet:name(), missys:name() )
       osd_desc[2] = osd_desc[2]:format( start_planet:name(), missys:name() )
       osd_desc[3] = osd_desc[3]:format( dest_planet:name(), missys:name() )
+      osd_desc[4] = osd_desc[4]:format( dest_planet:name(), missys:name() )
       osd_desc[5] = osd_desc[5]:format( destsys:name() )
       misn.osdCreate( osd_title, osd_desc )
 
@@ -139,7 +148,7 @@ end
 
 function land ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
-   if stage == 2 and planet.cur() == start_planet then
+   if stage == 2 then
       stage = 3
       tk.msg( title[3], text[6] )
    end
@@ -188,6 +197,13 @@ function spawn_drone ()
    p:addOutfit( "Previous Generation Small Systems" )
    p:addOutfit( "Patchwork Light Plating" )
    p:addOutfit( "Beat Up Small Engine" )
+
+   p:setHealth( 100, 100 )
+   p:setEnergy( 100 )
+   p:setTemp( 0 )
+   p:setFuel( true )
+
+   p:rename( _("Practice Drone") )
    p:setHostile()
    p:setVisplayer()
    p:setHilight()

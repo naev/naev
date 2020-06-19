@@ -272,12 +272,12 @@ static int commodityL_priceAt( lua_State *L )
    p = luaL_validplanet(L,2);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' does not belong to a system"), p->name );
+      NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), p->name );
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'"), p->name, sysname );
+      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'."), p->name, sysname );
       return 0;
    }
 
@@ -308,12 +308,12 @@ static int commodityL_priceAtTime( lua_State *L )
    t = luaL_validtime(L, 3);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' does not belong to a system"), p->name );
+      NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), p->name );
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'"), p->name, sysname );
+      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'."), p->name, sysname );
       return 0;
    }
 

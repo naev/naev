@@ -11,7 +11,7 @@
 include "dat/scripts/cargo_common.lua"
 include "dat/scripts/numstring.lua"
 
-misn_title = _("ZT test of engine %s")
+misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 misn_reward = _("%s credits")
 
@@ -25,15 +25,24 @@ msg_title[2] = _("Too many missions")
 msg_title[3] = _("Successful Landing")
 msg_title[4] = _("Didn't you forget something?")
 
-engines = {_("with phase-change material cooling"), 
-           _("controlled with the Zermatt-Henry theory"),   --Some random scientists names
-           _("using a new electron propelling system"),
-           _("using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
-           _("for a system identification using the fe-method"),
-           _("with uncontrolled geometrical singularities"),
-           _("a 10 years-old child invented himself"),
-           _("using the ancestral propellant technology"),
-           _("built of UHP-nanobond"),
+engines = {_("engine with phase-change material cooling"), 
+           _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
+           _("engine using a new electron propelling system"),
+           _("engine using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
+           _("engine for system identification using the fe-method"),
+           _("engine with uncontrolled geometrical singularities"),
+           _("5-cycle-old child's engine invention"),
+           _("engine using ancestral propellant technology"),
+           _("UHP-nanobond engine"),
+           _("ancient engine discovered at an old crash site"),
+           _("engine controlled by the MegaSys Wondigs operating system"),
+           _("engine controlled by XF Cell-Ethyrial particles"),
+           _("engine with ancient Beeline Technology axis"),
+           _("unnamed engine prototype"),
+           _("engine constructed with experimental Bob-Bens technology"),
+           _("new IDS-1024 experimental engine design"),
+           _("engine with new Dili-Gent Circle conduction"),
+           _("engine with experimental DEI-Z controller"),
            }
 
 znpcs = {}
@@ -45,7 +54,7 @@ znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system t
 msg_msg = {}
 msg_msg[1] = _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine.")
 msg_msg[2] = _("You have too many active missions.")
-msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you. You ask them why they aren't using drones for such missions and they answer that they don't want to risk damaging a drone.")
+msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way.")
 msg_msg[4] = _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.")
 misst = _("Mission failed")
 miss = _("You traveled without the engine.")

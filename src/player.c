@@ -162,7 +162,7 @@ extern int map_npath;
  */
 static void player_checkHail (void);
 /* creation */
-static void player_newSetup( int tutorial );
+static void player_newSetup();
 static int player_newMake (void);
 static Pilot* player_newShipMake( const char* name );
 /* sound */
@@ -204,7 +204,7 @@ int player_init (void)
 /**
  * @brief Sets up a new player.
  */
-static void player_newSetup( int tutorial )
+static void player_newSetup()
 {
    double x, y;
 
@@ -219,12 +219,8 @@ static void player_newSetup( int tutorial )
 
    /* For pretty background. */
    pilots_cleanAll();
-   if (!tutorial) {
-      space_init( start_system() );
-      start_position( &x, &y );
-   }
-   else
-      start_tutPosition( &x, &y );
+   space_init( start_system() );
+   start_position( &x, &y );
 
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
@@ -247,7 +243,7 @@ void player_new (void)
    int r;
 
    /* Set up new player. */
-   player_newSetup( 0 );
+   player_newSetup();
 
    /* Get the name. */
    player.name = dialogue_input( _("Player Name"), 2, 20,
@@ -1779,8 +1775,11 @@ void player_brokeHyperspace (void)
          player_autonavEnd();
       }
       else {
-         player_message( _("\apAutonav continuing until destination (%d jump%s left)."),
-               map_npath, (map_npath==1) ? "" : "s" );
+         player_message( ngettext(
+                  "\apAutonav continuing until destination (%d jump left).",
+                  "\apAutonav continuing until destination (%d jumps left).",
+                  map_npath),
+               map_npath );
       }
    }
 

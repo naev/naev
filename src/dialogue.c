@@ -494,8 +494,10 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
-         dialogue_alert( _("Input must be at least %d character%s long!"),
-               min, (min==1) ? "" : "s" );
+         dialogue_alert( ngettext(
+                  "Input must be at least %d character long!",
+                  "Input must be at least %d characters long!", min),
+               min );
          free(input);
          input = NULL;
       }

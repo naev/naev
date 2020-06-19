@@ -95,13 +95,13 @@ text[15] = [["You can wait for it, won't take longer than half a period," Mia in
 
 -- for use in accept(), if any of the mission's preconditions are not met
 title[16] = _("Not enough cargo space")
-text[16] = [["Aw, I forgot" she adds. "We would of course need 4 tons of free cargo space for our box."]]
+text[16] = [["Aw, I forgot" she adds. "We would of course need 4 tonnes of free cargo space for our box."]]
 title[17] = _("Young People")
 text[17] = [["Sorry, we're busy right now."]]
 
 -- additional text for stage 2 cargo space test
 title[18] = _("Room for the box")
-text[18] = [["Aw %s," Mia complains, "as if you didn't know that our box needs 4 tons of free cargo space. Make room now, and pick us up at the bar."]]
+text[18] = [["Aw %s," Mia complains, "as if you didn't know that our box needs 4 tonnes of free cargo space. Make room now, and pick us up at the bar."]]
 
 title[19] = _("Departure")
 text[19] = [[The nerds follow you to your ship and finally stow away their box. Now, you're all set to go.]]

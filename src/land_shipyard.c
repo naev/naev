@@ -251,8 +251,8 @@ void shipyard_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%.0f teraflops\n"
-         "%.0f tons\n"
-         "%.0f kN/ton\n"
+         "%.0f tonnes\n"
+         "%.0f kN/tonne\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
          "%.0f%%\n"
@@ -261,7 +261,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
-         "%.0f tons\n"
+         "%.0f tonnes\n"
          "%d units\n"
          "%d units\n"
          "%s credits\n"
@@ -420,10 +420,15 @@ int can_swap( char* shipname )
    int failure = 0;
    Ship* ship;
    ship = ship_get( shipname );
+   double diff;
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( _("You have %g tons more cargo than the new ship can hold."),
-            pilot_cargoUsed(player.p) - ship->cap_cargo, ship->name );
+      diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
+      land_errDialogueBuild( ngettext(
+               "You have %g tonne more cargo than the new ship can hold.",
+               "You have %g tonnes more cargo than the new ship can hold.",
+               diff ),
+            diff, ship->name );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */

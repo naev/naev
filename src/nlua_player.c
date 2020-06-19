@@ -1246,7 +1246,7 @@ static int playerL_teleport( lua_State *L )
       pnt   = luaL_validplanet(L,1);
       name  = planet_getSystem( pnt->name );
       if (name == NULL) {
-         NLUA_ERROR( L, _("Planet '%s' does not belong to a system.."), pnt->name );
+         NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pnt->name );
          return 0;
       }
    }
@@ -1264,7 +1264,7 @@ static int playerL_teleport( lua_State *L )
          name = planet_getSystem( name );
          pnt  = planet_get( pntname );
          if (name == NULL) {
-            NLUA_ERROR( L, _("Planet '%s' does not belong to a system.."), pntname );
+            NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pntname );
             return 0;
          }
       }

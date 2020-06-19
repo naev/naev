@@ -63,7 +63,7 @@ text[11] = _([[You find yourself back on the Seiryuu, in the company of Jorek an
     "Welcome back, Jorek, %s," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
     Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.
     "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, %s. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
-    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser man might get nervous.]])
+    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]])
 
 Jorscene[1] = _([[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]])
 Jorscene[2] = _([[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]])
@@ -366,7 +366,7 @@ end
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
     for _, patroller in ipairs(leader) do
-        if vec2.dist(player.pilot():pos(), patroller:pos()) < 1200 then
+        if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
             patroller:broadcast(patrolcomm)
             attacked()
             return

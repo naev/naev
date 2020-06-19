@@ -64,6 +64,7 @@ function pirate_name ()
       _("Mukashi No "),
       _("Murderous "),
       _("Night's "),
+      _("Ninkyōna "),
       _("No Good "),
       _("Numb "),
       _("Oishī "),

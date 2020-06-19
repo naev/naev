@@ -13,7 +13,7 @@
 #include <signal.h>
 
 /* Get text stuff. */
-#include <libintl.h>
+#include "gettext.h"
 #define _(String) gettext(String)
 #define gettext_noop(String) String
 

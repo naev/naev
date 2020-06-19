@@ -36,4 +36,10 @@
     <y>-389.000000</y>
     <detection_radius>100</detection_radius>
   </decorator>
+  <decorator>
+    <image>nebula</image>
+    <x>588.000000</x>
+    <y>94.000000</y>
+    <detection_radius>300</detection_radius>
+  </decorator>
 </map>

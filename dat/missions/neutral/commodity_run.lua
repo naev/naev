@@ -31,7 +31,7 @@ cargo_land_p1[3] = _("The containers of ")
 cargo_land_p2 = {}
 cargo_land_p2[1] = _("%s%s are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid %s credits and summarily dismissed.")
 cargo_land_p2[2] = _("%s%s are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth %s credits.")
-cargo_land_p2[3] = _("%s%s are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering %s credits after the number of tons is determined.")
+cargo_land_p2[3] = _("%s%s are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering %s credits after the number of tonnes is determined.")
 cargo_land_p2[4] = _("%s%s are unloaded by robotic drones that scan and tally the contents. The human overseerer hands you %s credits when they finish.")
 
 osd_title = _("Commodity Delivery")
