@@ -739,7 +739,7 @@ function render( dt, dt_mod )
 
       local button = buttons["formation"]
       button.x = x
-      button.y = y - height
+      button.y = y
       button.w = width
       button.h = height
       button.action = playerform
