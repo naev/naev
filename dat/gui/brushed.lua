@@ -256,7 +256,7 @@ function create()
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
 
     -- Set FPS
-   gui.fpsPos( 10, left_side_h )
+   gui.fpsPos( 18, left_side_h )
 
    -- Set OSD
    local osd_y = tbar_y + tbar_h - 50
