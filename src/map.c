@@ -1313,8 +1313,8 @@ void map_renderCommod( double bx, double by, double x, double y,
          if( maxPrice > 0 ){
             best = maxPrice - curMinPrice ;
             worst= minPrice - curMaxPrice ;
-            best = tanh ( best / 200. ) ;
-            worst= tanh ( worst/ 200. ) ;
+            best = tanh ( best / 100. ) /2 ;
+            worst= tanh ( worst/ 100. ) /2;
             if ( best >= 0 ){/* draw circle above */
                ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;
                gl_drawCircle( tx, ty + r , (0.1 + best) * r, &ccol, 1 );
