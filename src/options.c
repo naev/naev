@@ -242,7 +242,7 @@ static void opt_gameplay( unsigned int wid )
          NULL, &cBlack, _("Compilation Flags") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         NULL, NULL,
+         NULL, &cDarkPurple,
          ""
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
