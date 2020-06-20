@@ -163,6 +163,8 @@ function abort ()
          choices = { "FLF Pacifier", "FLF Vendetta", "FLF Lancelot" }
       elseif f == faction.get( "Pirate" ) then
          choices = { "Pirate Kestrel", "Pirate Phalanx", "Pirate Admonisher" }
+      else
+         choices = { "Vendetta Quartet", "Mercenary Pacifier", "Mercenary Ancestor", "Mercenary Vendetta" }
       end
 
       for i, j in ipairs( system.cur():jumps() ) do
