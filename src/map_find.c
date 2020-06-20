@@ -670,7 +670,7 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
    window_addText( wid, iw + 128 + 20, -60 - gl_defFont.h - 20,
          280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, iw+20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         60, 160, 0, "txtSDesc", &gl_smallFont, &cBlack,
          _("Owned:\n"
          "\n"
          "Slot:\n"
@@ -1083,7 +1083,7 @@ void map_inputFind( unsigned int parent, char* str )
    /* Text. */
    y = -40;
    window_addText( wid, 20, y, 300, gl_defFont.h+4, 0,
-         "txtDescription", &gl_defFont, &cDConsole,
+         "txtDescription", &gl_defFont, &cBlack,
          _("Enter keyword to search for:") );
    y -= 30;
 

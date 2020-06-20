@@ -227,7 +227,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
-         &gl_defFont, &cDConsole, cur->name );
+         &gl_defFont, &cBlack, cur->name );
    y -= 10;
 
    /* Faction image */
@@ -236,35 +236,35 @@ void map_open (void)
 
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
-         &gl_smallFont, &cDConsole, _("Faction:") );
+         &gl_smallFont, &cBlack, _("Faction:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
-         &gl_smallFont, &cDConsole, _("Standing:") );
+         &gl_smallFont, &cBlack, _("Standing:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
-         &gl_smallFont, &cDConsole, _("Presence:") );
+         &gl_smallFont, &cBlack, _("Presence:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, &cDConsole, _("Planets:") );
+         &gl_smallFont, &cBlack, _("Planets:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
-         &gl_smallFont, &cDConsole, _("Services:") );
+         &gl_smallFont, &cBlack, _("Services:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
 

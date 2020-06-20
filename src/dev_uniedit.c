@@ -221,7 +221,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 
    /* Presence. */
    window_addText( wid, -20, -140, 100, 20, 0, "txtSPresence",
-         &gl_smallFont, &cDConsole, _("Presence:") );
+         &gl_smallFont, &cBlack, _("Presence:") );
    window_addText( wid, -10, -140-gl_smallFont.h-5, 110, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, _("N/A") );
 
@@ -1246,7 +1246,7 @@ static void uniedit_editSys (void)
    /* Rename button. */
    y = -45;
    nsnprintf( buf, sizeof(buf), _("Name: \an%s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
-   window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
    /* New row. */

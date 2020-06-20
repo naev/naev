@@ -627,14 +627,14 @@ void loadscreen_render( double done, const char *msg )
    col.a = 0.7;
    gl_renderRect( x-2., y-2., w+4., rh+4., &col );
    /* FG. */
-   col.r = cDConsole.r;
-   col.g = cDConsole.g;
-   col.b = cDConsole.b;
+   col.r = cGreen.r;
+   col.g = cGreen.g;
+   col.b = cGreen.b;
    col.a = 0.2;
    gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
-   col.r = cConsole.r;
-   col.g = cConsole.g;
-   col.b = cConsole.b;
+   col.r = cPrimeGreen.r;
+   col.g = cPrimeGreen.g;
+   col.b = cPrimeGreen.b;
    col.a = 0.7;
    gl_renderRect( x, y, done*w, h, &col );
 

@@ -366,7 +366,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
 
    /* Name. */
    window_addText( wid, 19 + namex, -30 - GRAPHIC_HEIGHT - y + font->h*2 + 10,
-         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cDConsole, name );
+         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cBlack, name );
 
    /* Standing. */
    window_addText( wid, 19 + standx, -30 - GRAPHIC_HEIGHT - y + font->h + 5,

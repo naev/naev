@@ -301,7 +301,7 @@ void equipment_open( unsigned int wid )
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, h+y, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+         100, h+y, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
    x += 100;
    window_addText( wid, x, y,
          w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
