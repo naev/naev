@@ -437,7 +437,7 @@ static void load_menu_load( unsigned int wdw, char *str )
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
             "   Save version: \ar%s\a0\n"
-            "   Naev version: \aD%s\a0\n"
+            "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
             save, version, naev_version(0) ))
          return;
