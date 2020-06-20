@@ -68,6 +68,7 @@ CODE_SOURCE = \
 	load.c \
 	log.c \
 	map.c \
+	map_system.c
 	map_find.c \
 	map_overlay.c \
 	md5.c \
@@ -211,6 +212,7 @@ CODE_SOURCE = \
 	load.h \
 	log.h \
 	map.h \
+	map_system.h
 	mapData.h \
 	map_find.h \
 	map_overlay.h \

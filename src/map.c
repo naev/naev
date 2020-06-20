@@ -30,7 +30,7 @@
 #include "nmath.h"
 #include "nxml.h"
 #include "ndata.h"
-
+#include "map_system.h"
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -297,6 +297,7 @@ void map_open (void)
                    "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
    /* add commodity button */
+   cur_commod = -1;
    window_addButton( wid,-20-3*(BUTTON_WIDTH+20), 20, 50, 30, "btnCommod", "Trade", map_buttonCommodity );
    window_addImage( wid, -23-3*(BUTTON_WIDTH+20), 23, 44, 24, "imgCommod", NULL, 0 );
    /*
@@ -1386,8 +1387,10 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
                   if (map_selected != -1) {
-                     if ( sys == system_getIndex( map_selected ) )
+                     if ( sys == system_getIndex( map_selected ) ){
                         printf("System already selected - so display solar system map\n");
+                        map_system_open(map_selected);
+                     }
                   }
                   map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                   break;

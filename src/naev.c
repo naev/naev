@@ -79,6 +79,7 @@
 #include "news.h"
 #include "nlua_var.h"
 #include "map.h"
+#include "map_system.h"
 #include "event.h"
 #include "cond.h"
 #include "land.h"
@@ -371,6 +372,7 @@ int main( int argc, char** argv )
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
+   map_system_init(); /* Initialise the solar system map */
    cond_init(); /* Initialize conditional subsystem. */
    cli_init(); /* Initialize console. */
 
@@ -507,6 +509,7 @@ int main( int argc, char** argv )
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
    map_exit(); /* Destroys the map. */
+   map_system_exit(); /* Destroys the solar system map. */
    ovr_mrkFree(); /* Clear markers. */
    toolkit_exit(); /* Kills the toolkit */
    ai_exit(); /* Stops the Lua AI magic */
@@ -699,6 +702,7 @@ void load_all (void)
    outfit_mapParse();
    background_init();
    map_load();
+   map_system_load();
    player_init(); /* Initialize player stuff. */
    loadscreen_render( 1., _("Loading Completed!") );
 }
