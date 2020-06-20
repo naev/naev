@@ -59,8 +59,6 @@
   <system name="Sigur">
    <asset name="Sindbad">add</asset>
    <asset name="Virtual Sindbad">remove</asset>
-   <asset name="Virtual Empire Unpresence">add</asset>
-   <asset name="Virtual Soromid Unpresence">add</asset>
   </system>
  </unidiff>
  <unidiff name="Fury_Station">
@@ -108,7 +106,6 @@
    <asset name="Virtual FLF Small">remove</asset>
   </system>
   <system name="Sigur">
-   <asset name="Virtual Sindbad">remove</asset>
    <asset name="Virtual Empire Unpresence">remove</asset>
    <asset name="Virtual Soromid Unpresence">remove</asset>
   </system>
