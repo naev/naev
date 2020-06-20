@@ -1317,10 +1317,10 @@ void map_renderCommod( double bx, double by, double x, double y,
             worst= tanh ( worst/ 200. ) ;
             if ( best >= 0 ){/* draw circle above */
                ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;
-               gl_drawCircle( tx, ty + r * map_zoom, 0.1 + best * r, &ccol, 1 );
+               gl_drawCircle( tx, ty + r , (0.1 + best) * r, &ccol, 1 );
             }else{/* draw circle below */
                ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;
-               gl_drawCircle( tx, ty - r * map_zoom, 0.1 - worst * r, &ccol, 1 );
+               gl_drawCircle( tx, ty - r , (0.1 - worst) * r, &ccol, 1 );
             }
          }
       }
