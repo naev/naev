@@ -441,9 +441,9 @@ int main( int argc, char** argv )
          }
          else { /* I sincerely hope this else is never hit. */
             dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \aD%snebula/\a0\n\n"),
+                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \ag%snebula/\a0\n\n"),
                   home, ".naev/conf.lua", nfile_configPath(),
                   home, ".naev/{saves,screenshots}/", nfile_dataPath(),
                   home, ".naev/gen/*.png", nfile_cachePath() );
