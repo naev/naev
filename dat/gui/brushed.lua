@@ -794,7 +794,7 @@ function render( dt )
          gfx.renderTex( speed_light, pl_speed_x - 5 + mod_x, pl_speed_y - 3 + (i-1)*6 + mod_y )
       else
          local imod = i % nlights
-         gfx.renderTex( speed_light_double, pl_speed_x - 5 + mod_x, pl_speed_y - 3 + (imod-1)*6 + mod_y )
+         gfx.renderTex( speed_light_double, pl_speed_x - 5 + mod_x, pl_speed_y - 3 + imod*6 + mod_y )
       end
    end
    if value < nlights then
