@@ -353,8 +353,13 @@ static void map_update( unsigned int wid )
    if( cur_commod >= 0 ){
       c = commodity_getByIndex( cur_commod );
       window_modifyImage( wid, "imgCommod", c->gfx_store, 44, 24 );
+      if(sys!=NULL){
+	snprintf(buf,PATH_MAX,"%s prices trading from %s shown as circles above (a profit)\nor below (a loss) other systems.  Larger circles show a greater profit or loss.",c->name,sys->name);
+	window_modifyText( wid, "txtSystemStatus", buf );
+      }
    }else{
       window_modifyImage( wid, "imgCommod", NULL, 44, 24 );
+      window_modifyText( wid, "txtSystemStatus", NULL );
    }     
 
    /*
@@ -555,66 +560,68 @@ static void map_update( unsigned int wid )
 
 
    /*
-    * System Status
+    * System Status, if not showing commodity info
     */
-   buf[0] = '\0';
-   p = 0;
-   /* Nebula. */
-   if (sys->nebu_density > 0.) {
-
-      /* Volatility */
-      if (sys->nebu_volatility > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Volatile"));
-      else if (sys->nebu_volatility > 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dangerous"));
-      else if (sys->nebu_volatility > 0.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Unstable"));
-
-      /* Density */
-      if (sys->nebu_density > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-      else if (sys->nebu_density < 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Nebula"));
-   }
-   /* Interference. */
-   if (sys->interference > 0.) {
-
-      if (buf[0] != '\0')
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
-
-      /* Density. */
-      if (sys->interference > 700.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-      else if (sys->interference < 300.)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-
-      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Interference"));
-   }
-   /* Asteroids. */
-   if (sys->nasteroids > 0) {
-      double density;
-
-      if (buf[0] != '\0')
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
-
-      density = 0.;
-      for (i=0; i<sys->nasteroids; i++) {
-         density += sys->asteroids[i].area * sys->asteroids[i].density;
+   if( cur_commod == -1 ){
+      buf[0] = '\0';
+      p = 0;
+      /* Nebula. */
+      if (sys->nebu_density > 0.) {
+         
+         /* Volatility */
+         if (sys->nebu_volatility > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Volatile"));
+         else if (sys->nebu_volatility > 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dangerous"));
+         else if (sys->nebu_volatility > 0.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Unstable"));
+         
+         /* Density */
+         if (sys->nebu_density > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
+         else if (sys->nebu_density < 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Nebula"));
       }
-
-      /* TODO vary text based on density. */
-      /*
-      if (density > X)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-      else if (density < X)
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-      */
-
-      p += nsnprintf(&buf[p], PATH_MAX-p, _(" Asteroid Field"));
-
+      /* Interference. */
+      if (sys->interference > 0.) {
+         
+         if (buf[0] != '\0')
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+         
+         /* Density. */
+         if (sys->interference > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
+         else if (sys->interference < 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
+         
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Interference"));
+      }
+      /* Asteroids. */
+      if (sys->nasteroids > 0) {
+         double density;
+         
+         if (buf[0] != '\0')
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+         
+         density = 0.;
+         for (i=0; i<sys->nasteroids; i++) {
+            density += sys->asteroids[i].area * sys->asteroids[i].density;
+         }
+         
+         /* TODO vary text based on density. */
+         /*
+           if (density > X)
+           p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
+           else if (density < X)
+           p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
+         */
+         
+         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Asteroid Field"));
+         
+      }
+      window_modifyText( wid, "txtSystemStatus", buf );
    }
-   window_modifyText( wid, "txtSystemStatus", buf );
 }
 
 
@@ -1228,6 +1235,11 @@ void map_renderCommod( double bx, double by, double x, double y,
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
+   char buf[80];
+   unsigned int wid;
+   int textw;
+   wid = window_get(MAP_WDWNAME);
+
    curMaxPrice=0.;
    curMinPrice=0.;
    /* If not plotting commodities, return */
@@ -1247,6 +1259,11 @@ void map_renderCommod( double bx, double by, double x, double y,
          }
       }
       if ( k == land_planet->ncommodities ){ /* commodity of interest not found */
+	textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+	snprintf(buf,80,"%s here",c->name);
+	textw = gl_printWidthRaw( &gl_smallFont, buf);
+	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
          return;
       }
    }else{
@@ -1269,11 +1286,22 @@ void map_renderCommod( double bx, double by, double x, double y,
             
          }
          if( maxPrice == 0 ){/* no prices are known here */
-            return;
+	textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+	snprintf(buf,80,"%s here",c->name);
+	textw = gl_printWidthRaw( &gl_smallFont, buf);
+	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+	return;
+
          }
          curMaxPrice=maxPrice;
          curMinPrice=minPrice;
       }else{
+	textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+	snprintf(buf,80,"%s here",c->name);
+	textw = gl_printWidthRaw( &gl_smallFont, buf);
+	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
          return;
       }
    }
@@ -1316,15 +1344,18 @@ void map_renderCommod( double bx, double by, double x, double y,
             best = tanh ( best / 100. ) /2 ;
             worst= tanh ( worst/ 100. ) /2;
             if ( best >= 0 ){/* draw circle above */
-               ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;
+	      /*ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;*//*yellow*/
+               ccol.r=1-2*best; ccol.g=best+0.5; ccol.b=0; ccol.a=1;/*green to orange*/
                gl_drawCircle( tx, ty + r , (0.1 + best) * r, &ccol, 1 );
             }else{/* draw circle below */
-               ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;
+	      /*ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;*//*blue*/
+               ccol.r=1; ccol.g=0.5+worst; ccol.b=0; ccol.a=1;/*orange to red*/
                gl_drawCircle( tx, ty - r , (0.1 - worst) * r, &ccol, 1 );
             }
          }
       }
    }
+
 }
 
 
@@ -2111,7 +2142,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
       map_selectCur();
 
    window_addCust( wid, x, y, w, h,
-         "cstMap", 1, map_render, map_mouse, NULL );
+		   "cstMap", 1, map_render, map_mouse, NULL );
 }
 
 
