@@ -81,7 +81,7 @@ void commodity_exchange_open( unsigned int wid )
 
    /* text */
    window_addText( wid, -20, -190, LAND_BUTTON_WIDTH, 100, 0,
-         "txtSInfo", &gl_smallFont, &cDConsole,
+         "txtSInfo", &gl_smallFont, &cBlack,
          _("You have:\n"
            "Purchased at:\n"
            "Market Price:\n"

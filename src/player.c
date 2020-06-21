@@ -1858,10 +1858,6 @@ void player_targetHostile (void)
    tp = PLAYER_ID;
    d  = 0;
    for (i=0; i<pilot_nstack; i++) {
-      /* Don't get if is bribed. */
-      if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
-         continue;
-
       /* Shouldn't be disabled. */
       if (pilot_isDisabled(pilot_stack[i]))
          continue;
@@ -1870,10 +1866,10 @@ void player_targetHostile (void)
       if (!pilot_validTarget( player.p, pilot_stack[i] ))
          continue;
 
-      /* Normal unbribed check. */
+      /* Must be hostile. */
       if (pilot_isHostile(pilot_stack[i])) {
          td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
-         if ((tp==PLAYER_ID) || (td < d)) {
+         if ((tp == PLAYER_ID) || (td < d)) {
             d  = td;
             tp = pilot_stack[i]->id;
          }

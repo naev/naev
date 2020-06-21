@@ -135,7 +135,7 @@ void shipyard_open( unsigned int wid )
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
-         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+         100, th, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
    window_addText( wid, 40+iw+20+100, y,
          w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    y -= th;

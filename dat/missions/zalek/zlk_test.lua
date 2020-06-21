@@ -86,7 +86,7 @@ function create()
    local routepos = origin_p:pos()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
@@ -105,7 +105,7 @@ function create()
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
    jumpreward = 1000
    distreward = 0.15
-   reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   reward     = (1.5 ^ tier) * (numjumps * jumpreward + traveldist * distreward * avgrisk) * finished_mod * (1. + 0.05*rnd.twosigma())
     
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 

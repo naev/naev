@@ -201,9 +201,7 @@ static void comm_addPilotSpecialButtons( unsigned int wid )
 {
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", _("Greet"), NULL );
-   if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
-         ((faction_getPlayer( comm_pilot->faction ) < 0) || /* Hostile. */
-            pilot_isHostile(comm_pilot)))
+   if ( pilot_isHostile(comm_pilot) )
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribePilot );
    else
@@ -368,7 +366,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
 
    /* Name. */
    window_addText( wid, 19 + namex, -30 - GRAPHIC_HEIGHT - y + font->h*2 + 10,
-         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cDConsole, name );
+         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cBlack, name );
 
    /* Standing. */
    window_addText( wid, 19 + standx, -30 - GRAPHIC_HEIGHT - y + font->h + 5,

@@ -2012,11 +2012,8 @@ static int pilotL_setHostile( lua_State *L )
       state = 1;
 
    /* Set as hostile. */
-   if (state) {
-      pilot_rmFlag(p, PILOT_FRIENDLY);
+   if (state)
       pilot_setHostile(p);
-      pilot_rmFriendly(p);
-   }
    else
       pilot_rmHostile(p);
 
@@ -2051,10 +2048,8 @@ static int pilotL_setFriendly( lua_State *L )
       state = 1;
 
    /* Remove hostile and mark as friendly. */
-   if (state) {
+   if (state)
       pilot_setFriendly(p);
-      pilot_rmHostile(p);
-   }
    /* Remove friendly flag. */
    else
       pilot_rmFriendly(p);
@@ -3366,7 +3361,7 @@ static int pilotL_getHostile( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Push value. */
-   lua_pushboolean( L, pilot_isFlag(p, PILOT_HOSTILE) );
+   lua_pushboolean( L, pilot_isHostile( p ) );
    return 1;
 }
 

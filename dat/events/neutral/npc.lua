@@ -154,7 +154,7 @@ msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just mess
                               _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
                               _([["Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."]]),
-                              _([["I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a \"small-time pirate\"! Sometimes I think I'll never make it in this line of work..."]]),
+                              _([["I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
                               _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]])
                            }
@@ -261,8 +261,7 @@ function create()
 
    -- Chance of a tip message showing up. As this gradually goes down, it is
    -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.55
-   var.push( "npc_tip_chance", math.max( tip_chance - 0.03, 0.1 ) )
+   tip_chance = var.peek( "npc_tip_chance" ) or 0.7
 
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
@@ -318,14 +317,16 @@ function spawnNPC()
    select = rnd.rnd()
    local msg
    if select <= tip_chance then
-      -- Gameplay tip message.
-      msg = getTipMessage(fac)
-   elseif select <= 0.55 then
+      if select > 0.2 and select <= 0.45 then
+         -- Jump point message.
+         msg, func = getJmpMessage(fac)
+      else
+         -- Gameplay tip message.
+         msg = getTipMessage(fac)
+      end
+   elseif select <= 0.8 then
       -- Lore message.
       msg = getLoreMessage(fac)
-   elseif select <= 0.8 then
-      -- Jump point message.
-      msg, func = getJmpMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then
@@ -454,6 +455,9 @@ function talkNPC(id)
    end
 
    tk.msg(npcdata.name, npcdata.msg)
+
+   -- Reduce tip chance
+   var.push( "npc_tip_chance", math.max( tip_chance - 0.05, 0.05 ) )
 end
 
 --[[

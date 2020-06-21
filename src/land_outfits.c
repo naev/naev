@@ -140,7 +140,7 @@ void outfits_open( unsigned int wid )
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
          280, 320, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         60, 160, 0, "txtSDesc", &gl_smallFont, &cBlack,
          _("Owned:\n"
          "\n"
          "Slot:\n"

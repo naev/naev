@@ -233,7 +233,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
-         &gl_defFont, &cDConsole, cur->name );
+         &gl_defFont, &cBlack, cur->name );
    y -= 10;
 
    /* Faction image */
@@ -242,35 +242,35 @@ void map_open (void)
 
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
-         &gl_smallFont, &cDConsole, _("Faction:") );
+         &gl_smallFont, &cBlack, _("Faction:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
-         &gl_smallFont, &cDConsole, _("Standing:") );
+         &gl_smallFont, &cBlack, _("Standing:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
-         &gl_smallFont, &cDConsole, _("Presence:") );
+         &gl_smallFont, &cBlack, _("Presence:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, &cDConsole, _("Planets:") );
+         &gl_smallFont, &cBlack, _("Planets:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
-         &gl_smallFont, &cDConsole, _("Services:") );
+         &gl_smallFont, &cBlack, _("Services:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
 
@@ -569,58 +569,60 @@ static void map_update( unsigned int wid )
       if (sys->nebu_density > 0.) {
          
          /* Volatility */
-         if (sys->nebu_volatility > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Volatile"));
-         else if (sys->nebu_volatility > 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dangerous"));
-         else if (sys->nebu_volatility > 0.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Unstable"));
          
-         /* Density */
-         if (sys->nebu_density > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-         else if (sys->nebu_density < 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Nebula"));
+         
+         if (sys->nebu_density > 700.) {
+            if (sys->nebu_volatility > 700.)
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Dense Nebula"));
+            else if (sys->nebu_volatility > 300.)
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Dense Nebula"));
+            else if (sys->nebu_volatility > 0.)
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Dense Nebula"));
+            else
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Nebula"));
+         } else if (sys->nebu_density < 300.) {
+            if (sys->nebu_volatility > 700.)
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Light Nebula"));
+            else if (sys->nebu_volatility > 300.)
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Light Nebula"));
+            else if (sys->nebu_volatility > 0.)
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Light Nebula"));
+            else
+               p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Nebula"));
+         }
       }
       /* Interference. */
       if (sys->interference > 0.) {
          
          if (buf[0] != '\0')
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
          
-         /* Density. */
          if (sys->interference > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Interference"));
          else if (sys->interference < 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-         
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Interference"));
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Interference"));
+         else
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Interference"));
       }
       /* Asteroids. */
       if (sys->nasteroids > 0) {
          double density;
          
          if (buf[0] != '\0')
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(","));
+            p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
          
          density = 0.;
          for (i=0; i<sys->nasteroids; i++) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
          
-         /* TODO vary text based on density. */
-         /*
-           if (density > X)
-           p += nsnprintf(&buf[p], PATH_MAX-p, _(" Dense"));
-           else if (density < X)
-           p += nsnprintf(&buf[p], PATH_MAX-p, _(" Light"));
-         */
-         
-         p += nsnprintf(&buf[p], PATH_MAX-p, _(" Asteroid Field"));
-         
+         if (density >= 1.5)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Asteroid Field"));
+         else if (density <= 0.5)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Asteroid Field"));
+         else
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
       }
-      window_modifyText( wid, "txtSystemStatus", buf );
    }
 }
 

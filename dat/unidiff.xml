@@ -58,6 +58,7 @@
  <unidiff name="FLF_base">
   <system name="Sigur">
    <asset name="Sindbad">add</asset>
+   <asset name="Virtual Sindbad">remove</asset>
   </system>
  </unidiff>
  <unidiff name="Fury_Station">

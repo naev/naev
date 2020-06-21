@@ -387,20 +387,20 @@ static void load_menu_update( unsigned int wid, char *str )
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
    nsnprintf( buf, sizeof(buf),
-         _("\aDName:\n"
-         "\a0   %s\n"
-         "\aDVersion:\n"
-         "\a0   %s\n"
-         "\aDDate:\n"
-         "\a0   %s\n"
-         "\aDPlanet:\n"
-         "\a0   %s\n"
-         "\aDCredits:\n"
-         "\a0   %s\n"
-         "\aDShip Name:\n"
-         "\a0   %s\n"
-         "\aDShip Model:\n"
-         "\a0   %s"),
+         _("Name:\n"
+         "   %s\n"
+         "Version:\n"
+         "   %s\n"
+         "Date:\n"
+         "   %s\n"
+         "Planet:\n"
+         "   %s\n"
+         "Credits:\n"
+         "   %s\n"
+         "Ship Name:\n"
+         "   %s\n"
+         "Ship Model:\n"
+         "   %s"),
          ns->name, version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
@@ -437,7 +437,7 @@ static void load_menu_load( unsigned int wdw, char *str )
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
             "   Save version: \ar%s\a0\n"
-            "   Naev version: \aD%s\a0\n"
+            "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
             save, version, naev_version(0) ))
          return;

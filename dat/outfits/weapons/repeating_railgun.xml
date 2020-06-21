@@ -24,7 +24,7 @@
   <energy>78</energy>
   <heatup>100</heatup>
   <track>0.6</track>
-  <swivel>16</swivel>
+  <swivel>22</swivel>
   <damage>
    <type>impact</type>
    <penetrate>70</penetrate>

@@ -239,10 +239,10 @@ static void opt_gameplay( unsigned int wid )
    y  = by;
    x  = 20;
    window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
-         NULL, &cDConsole, _("Compilation Flags") );
+         NULL, &cBlack, _("Compilation Flags") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         NULL, NULL,
+         NULL, &cDarkPurple,
          ""
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
@@ -283,7 +283,7 @@ static void opt_gameplay( unsigned int wid )
    /* Autonav abort. */
    x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
-         NULL, &cDConsole, _("Stop Speedup At:") );
+         NULL, &cBlack, _("Stop Speedup At:") );
    y -= 20;
 
    /* Autonav abort fader. */
@@ -295,7 +295,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
 
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
-         NULL, &cDConsole, _("Settings") );
+         NULL, &cBlack, _("Settings") );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -483,7 +483,7 @@ static void opt_keybinds( unsigned int wid )
 
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
-         NULL, &cDConsole, NULL );
+         NULL, &cBlack, NULL );
    window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-70-60-bh,
          0, "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -755,14 +755,14 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
    double vol, magic;
    char *str;
 
-   str = type ? _("Music") : _("Sound");
+   str = type ? _("Music Volume") : _("Sound Volume");
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      nsnprintf( buf, max, _("%s Volume: Muted"), str );
+      nsnprintf( buf, max, str, _("Muted") );
    else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      nsnprintf( buf, max, _("%s Volume: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
+      nsnprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
    }
 }
 
@@ -798,7 +798,7 @@ static void opt_audio( unsigned int wid )
    x = 20;
    y = -60;
    window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
-         NULL, &cDConsole, _("General") );
+         NULL, &cBlack, _("General") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", _("Disable all sound/music"), NULL, conf.nosound );
@@ -828,7 +828,7 @@ static void opt_audio( unsigned int wid )
 
    /* OpenAL options. */
    window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
-         NULL, &cDConsole, _("OpenAL") );
+         NULL, &cBlack, _("OpenAL") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
@@ -838,7 +838,7 @@ static void opt_audio( unsigned int wid )
    x = 20 + cw + 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
-         NULL, &cDConsole, _("Volume Levels") );
+         NULL, &cBlack, _("Volume Levels") );
    y -= 30;
 
    /* Sound fader. */
@@ -1164,7 +1164,7 @@ static void opt_video( unsigned int wid )
    x = 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
-         NULL, &cDConsole, _("Resolution") );
+         NULL, &cBlack, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
    window_setInputFilter( wid, "inpRes",
@@ -1217,7 +1217,7 @@ static void opt_video( unsigned int wid )
 
    /* FPS stuff. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
-         NULL, &cDConsole, _("FPS Control") );
+         NULL, &cBlack, _("FPS Control") );
    y -= 30;
    s = _("FPS Limit");
    l = gl_printWidthRaw( NULL, s );
@@ -1240,7 +1240,7 @@ static void opt_video( unsigned int wid )
    x = 20+cw+20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSGL",
-         NULL, &cDConsole, _("OpenGL") );
+         NULL, &cBlack, _("OpenGL") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
@@ -1260,7 +1260,7 @@ static void opt_video( unsigned int wid )
 
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
-         NULL, &cDConsole, _("Features") );
+         NULL, &cBlack, _("Features") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", _("Engine Glow (More RAM)"), NULL, conf.engineglow );

@@ -187,11 +187,15 @@ function choose_ambient ()
    -- Get information about the current system
    local sys                  = system.cur()
    local factions             = sys:presences()
-   local faction              = sys:faction()
-   if faction then
-      faction = faction:name()
-   end
    local nebu_dens, nebu_vol  = sys:nebula()
+
+   local faction = var.peek("music_ambient_force")
+   if faction == nil then
+      faction = sys:faction()
+      if faction then
+         faction = faction:name()
+      end
+   end
 
    -- Check to see if changing faction zone
    if faction ~= last_sysFaction then
@@ -292,15 +296,17 @@ function choose_combat ()
    -- Get some data about the system
    local sys                  = system.cur()
    local nebu_dens, nebu_vol  = sys:nebula()
-   local presences            = sys:presences()
    
-   local strongest = nil
-   if presences then
-      local strongest_amount = 0
-      for k, v in pairs( presences ) do
-         if faction.get(k):playerStanding() < 0 and v > strongest_amount then
-            strongest = k
-            strongest_amount = v
+   local strongest = var.peek("music_combat_force")
+   if strongest == nil then
+      local presences = sys:presences()
+      if presences then
+         local strongest_amount = 0
+         for k, v in pairs( presences ) do
+            if faction.get(k):playerStanding() < 0 and v > strongest_amount then
+               strongest = k
+               strongest_amount = v
+            end
          end
       end
    end

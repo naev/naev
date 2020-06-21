@@ -193,14 +193,14 @@ void mapedit_open( unsigned int wid_unused, char *unused )
 
    /* Main title. */
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290, 20, 0, "txtSLastLoaded",
-         NULL, &cDConsole, "Last loaded Map" );
+         NULL, &cBlack, "Last loaded Map" );
    textPos++;
    linesPos++;
 
    /* Filename. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSFileName",
-         &gl_smallFont, &cDConsole, "File Name:" );
+         &gl_smallFont, &cBlack, "File Name:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtFileName",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -209,7 +209,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Map name. */
    curLines = 3;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSMapName",
-         &gl_smallFont, &cDConsole, "Map Name:" );
+         &gl_smallFont, &cBlack, "Map Name:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtMapName",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -218,7 +218,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Map description. */
    curLines = 5;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSDescription",
-         &gl_smallFont, &cDConsole, "Description:" );
+         &gl_smallFont, &cBlack, "Description:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtDescription",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -227,7 +227,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Loaded Map # of systems. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSLoadedNumSystems",
-         &gl_smallFont, &cDConsole, "Number of Systems (limited to 100):" );
+         &gl_smallFont, &cBlack, "Number of Systems (limited to 100):" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtLoadedNumSystems",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -235,14 +235,14 @@ void mapedit_open( unsigned int wid_unused, char *unused )
 
    /* Main title */
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290, 20, 0, "txtSCurentMap",
-         NULL, &cDConsole, "Current Map" );
+         NULL, &cBlack, "Current Map" );
    textPos++;
    linesPos++;
 
    /* Current Map # of systems. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSCurrentNumSystems",
-         &gl_smallFont, &cDConsole, "Number of Systems (limited to 100):" );
+         &gl_smallFont, &cBlack, "Number of Systems (limited to 100):" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtCurrentNumSystems",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -251,7 +251,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Presence. */
    curLines = 5;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSPresence",
-         &gl_smallFont, &cDConsole, "Presence:" );
+         &gl_smallFont, &cBlack, "Presence:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtPresence",
          &gl_smallFont, &cBlack, "No selection" );
    textPos++;
@@ -803,7 +803,7 @@ void mapedit_saveMapMenu_open (void)
    /* Filename. */
    curLines = 1;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSFileName",
-         &gl_smallFont, &cDConsole, "File Name (.xml):" );
+         &gl_smallFont, &cBlack, "File Name (.xml):" );
    window_addInput ( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, 5+curLines*(gl_smallFont.h+5), "inpFileName", MAPEDIT_FILENAME_MAX, 1, NULL );
    textPos++;
    linesPos+=curLines+1;
@@ -811,7 +811,7 @@ void mapedit_saveMapMenu_open (void)
    /* Map name. */
    curLines = 3;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSMapName",
-         &gl_smallFont, &cDConsole, "Map Name:" );
+         &gl_smallFont, &cBlack, "Map Name:" );
    window_addInput ( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, 5+curLines*(gl_smallFont.h+5), "inpMapName", MAPEDIT_NAME_MAX, 0, NULL );
    textPos++;
    linesPos+=curLines+1;
@@ -819,7 +819,7 @@ void mapedit_saveMapMenu_open (void)
    /* Map description. */
    curLines = 5;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSDescription",
-         &gl_smallFont, &cDConsole, "Description:" );
+         &gl_smallFont, &cBlack, "Description:" );
    window_addInput( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, 5+curLines*(gl_smallFont.h+5), "inpDescription", MAPEDIT_DESCRIPTION_MAX, 0, NULL );
    textPos++;
    linesPos+=(curLines+1);
@@ -827,7 +827,7 @@ void mapedit_saveMapMenu_open (void)
    /* Loaded Map # of systems. */
    curLines = 1;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSLoadedNumSystems",
-         &gl_smallFont, &cDConsole, "Number of Systems (limited to 100):" );
+         &gl_smallFont, &cBlack, "Number of Systems (limited to 100):" );
    window_addText( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtLoadedNumSystems",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;

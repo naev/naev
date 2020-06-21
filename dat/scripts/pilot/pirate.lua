@@ -233,6 +233,7 @@ function pirate_name ()
       _("Staple Gun"),
       _("Stern"),
       _("Stir-fry"),
+      _("Surströmming"),
       _("Table Saw"),
       _("Tallman"),
       _("Tatsumaki"),
