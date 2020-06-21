@@ -659,25 +659,6 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          }
          else if (lst[i].outfit != NULL) {
             top = 1;
-            if (outfit_isLauncher(lst[i].outfit) ||
-                  (outfit_isFighterBay(lst[i].outfit))) {
-               if ((lst[i].u.ammo.outfit == NULL) ||
-                     (lst[i].u.ammo.quantity == 0)) {
-                  if (outfit_isFighterBay(lst[i].outfit))
-                     display = _("Bay empty");
-                  else
-                     display = _("Out of ammo");
-                  c = &cRed;
-               }
-               else if (lst[i].u.ammo.quantity + lst[i].u.ammo.deployed <
-                     outfit_amount(lst[i].outfit)) {
-                  if (outfit_isFighterBay(lst[i].outfit))
-                     display = _("Bay low");
-                  else
-                     display = _("Low ammo");
-                  c = &cYellow;
-               }
-            }
          }
 
          if (display != NULL) {
