@@ -189,7 +189,7 @@ function choose_ambient ()
    local factions             = sys:presences()
    local nebu_dens, nebu_vol  = sys:nebula()
 
-   local faction = var.peek("music_ambient_force_faction")
+   local faction = var.peek("music_ambient_force")
    if faction == nil then
       faction = sys:faction()
       if faction then
@@ -297,7 +297,7 @@ function choose_combat ()
    local sys                  = system.cur()
    local nebu_dens, nebu_vol  = sys:nebula()
    
-   local strongest = var.peek("music_combat_force_faction")
+   local strongest = var.peek("music_combat_force")
    if strongest == nil then
       local presences = sys:presences()
       if presences then
