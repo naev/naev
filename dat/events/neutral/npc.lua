@@ -244,7 +244,7 @@ function create()
 
    -- Chance of a tip message showing up. As this gradually goes down, it is
    -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.8
+   tip_chance = var.peek( "npc_tip_chance" ) or 0.75
    tip_chance_min = 0.2
 
    local num_npc = rnd.rnd(1, 5)
@@ -301,7 +301,7 @@ function spawnNPC()
    select = rnd.rnd()
    local msg
    if select <= tip_chance then
-      if select > 0.6 then
+      if select > tip_chance_min and select <= tip_chance_min + 0.15 then
          -- Jump point message.
          msg, func = getJmpMessage(fac)
       else
@@ -441,7 +441,7 @@ function talkNPC(id)
    tk.msg(npcdata.name, npcdata.msg)
 
    -- Reduce tip chance
-   var.push( "npc_tip_chance", math.max( tip_chance - 0.05, tip_chance_min ) )
+   var.push( "npc_tip_chance", math.max( tip_chance - 0.025, tip_chance_min ) )
 end
 
 --[[
