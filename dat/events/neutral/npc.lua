@@ -244,7 +244,7 @@ function create()
 
    -- Chance of a tip message showing up. As this gradually goes down, it is
    -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.75
+   tip_chance = var.peek( "npc_tip_chance" ) or 0.6
    tip_chance_min = 0.2
 
    local num_npc = rnd.rnd(1, 5)
