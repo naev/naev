@@ -242,10 +242,11 @@ function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
 
-   -- Chance of a tip message showing up. As this gradually goes down, it is
-   -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.7
-   tip_chance_min = 0.2
+   -- Chance of a jump point message showing up. As this gradually goes
+   -- down, it is replaced by lore messages. See spawnNPC function below.
+   jm_chance_min = 0
+   jm_chance_max = 0.25
+   jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
 
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
@@ -300,17 +301,15 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= tip_chance then
-      if select > tip_chance_min and select <= tip_chance_min + 0.15 then
-         -- Jump point message.
-         msg, func = getJmpMessage(fac)
-      else
-         -- Gameplay tip message.
-         msg = getTipMessage(fac)
-      end
-   elseif select <= 0.85 then
+   if select <= jm_chance then
+      -- Jump point message.
+      msg, func = getJmpMessage(fac)
+   elseif select <= 0.55 then
       -- Lore message.
       msg = getLoreMessage(fac)
+   elseif select <= 0.8 then
+      -- Gameplay tip message.
+      msg = getTipMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then
@@ -440,9 +439,8 @@ function talkNPC(id)
 
    tk.msg(npcdata.name, npcdata.msg)
 
-   -- Reduce tip chance
-   tip_chance = math.max( tip_chance - 0.025, tip_chance_min )
-   var.push( "npc_tip_chance", tip_chance )
+   -- Reduce jump message chance
+   var.push( "npc_tip_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
 end
 
 --[[
