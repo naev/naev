@@ -179,7 +179,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!"]]),
                               _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
                               _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
-                              _([["Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."]]),
+                              _([["Scramblers and jammers make it harder for missiles to track you. They can be very handy if your enemies use missiles."]]),
                               string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"]]), tutGetKey("autobrake") ),
                               _([["If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"]]),
                               _([["You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."]]),
@@ -187,6 +187,11 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["I know it can be tempting to fly the big and powerful ships, but don't underestimate smaller ones! Given their simpler designs and lesser crew size, you have a lot more time to react with a smaller vessel. Some are even so simple to pilot that time seems to slow down all around you!"]]),
                               _([["Mining can be an easy way to earn some extra credits, but every once in a while an asteroid will just randomly explode for no apparent reason, so you have to watch out for that. Yeah, I don't know why they do that either."]]),
                               _([["Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. I don't get it personally; it's all the same no matter what ship you're in."]]),
+                              _([["Different ships should be built and piloted differently. One of the hardest lessons I learned as a pilot was to stop worrying so much about the damage my ship was taking in battle while piloting a large ship. These ships are too slow for dodging, not to mention so complicated that they reduce your reaction time, so you need to learn to just take the hits and focus your attention on firing back at your enemies."]]),
+                              _([["Remember that when you pilot a big ship, you perceive time passing a lot faster than you do when you pilot a small ship. It can be easy to forget just how slow these larger ships are when you're frantically trying to depressurize the exhaust valve while also configuring the capacitance array. In a way the slow speed of the ship becomes a pretty huge relief!"]]),
+                              _([["There's always an exception to the rule, but I wouldn't recommend using forward-facing weapons on larger ships. Large ships' slower turn rates aren't able to keep up with the dashing and dodging of smaller ships, and aiming is harder anyway what with how complex these ships are. Turrets are much better; they aim automatically and usually do a very good job!"]]),
+                              _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
+                              _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
                            }
 
 -- Jump point messages.
@@ -239,7 +244,8 @@ function create()
 
    -- Chance of a tip message showing up. As this gradually goes down, it is
    -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.7
+   tip_chance = var.peek( "npc_tip_chance" ) or 0.8
+   tip_chance_min = 0.2
 
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
@@ -295,14 +301,14 @@ function spawnNPC()
    select = rnd.rnd()
    local msg
    if select <= tip_chance then
-      if select > 0.2 and select <= 0.45 then
+      if select > 0.6 then
          -- Jump point message.
          msg, func = getJmpMessage(fac)
       else
          -- Gameplay tip message.
          msg = getTipMessage(fac)
       end
-   elseif select <= 0.8 then
+   elseif select <= 0.85 then
       -- Lore message.
       msg = getLoreMessage(fac)
    else
@@ -435,7 +441,7 @@ function talkNPC(id)
    tk.msg(npcdata.name, npcdata.msg)
 
    -- Reduce tip chance
-   var.push( "npc_tip_chance", math.max( tip_chance - 0.05, 0.05 ) )
+   var.push( "npc_tip_chance", math.max( tip_chance - 0.05, tip_chance_min ) )
 end
 
 --[[
