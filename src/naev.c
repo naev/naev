@@ -187,11 +187,14 @@ int main( int argc, char** argv )
 #endif
 
    /* Set up locales. */
-   //setlocale(LC_ALL|~LC_NUMERIC, "");
-   setlocale(LC_ALL, "");
-   bindtextdomain(PACKAGE_NAME, LOCALEDIR);
+   /* When using locales with difference in '.' and ',' for splitting numbers it
+    * causes pretty much everything to blow up, so we must refer from loading the
+    * numeric type of the locale. */
+   setlocale( LC_ALL, "" );
+   setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
+   bindtextdomain( PACKAGE_NAME, LOCALEDIR );
    //bindtextdomain("naev", "po/");
-   textdomain(PACKAGE_NAME);
+   textdomain( PACKAGE_NAME );
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
