@@ -175,7 +175,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
                               _("\"Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of them at a time, and \abshift\a0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?\""),
                               _([["If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."]]),
-                              _([["Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship."]]),
+                              _([["Some weapons have a different effect on shields than they do on armor. Keep that in mind when equipping your ship."]]),
                               _([["Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!"]]),
                               _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
                               _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
