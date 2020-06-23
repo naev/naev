@@ -182,7 +182,7 @@ Commodity* commodity_getW( const char* name )
 {
    int i;
    for (i=0; i<commodity_nstack; i++)
-      if (strcmp(commodity_stack[i].name,name)==0)
+      if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
    return NULL;
 }
@@ -1163,22 +1163,33 @@ void economy_destroy (void)
 
 /**
  * @brief Used during startup to set price and variation of the economy, depending on planet information.
+ * 
+ *    @param planet The planet to set price on.
+ *    @param commodity The commodity to set the price of.
+ *    @param commodityPrice Where to write the commodity price to.
+ *    @return 0 on success.
  */
-static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPrice *commodityPrice ){
+static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPrice *commodityPrice ) {
 
    CommodityModifier *cm;
-   double period,base,scale,factor;
+   double period, base, scale, factor;
    char *factionname;
+
+   /* Check the faction is not NULL.*/
+   if ( planet->faction == -1 ) {
+      WARN(_("Planet '%s' appears to have commodity '%s' defined, but no faction."), planet->name, commodity->name);
+      return 1;
+   }
    
    /* Get the cost modifier suitable for planet type/class. */
-   cm=commodity->planet_modifier;
+   cm = commodity->planet_modifier;
    scale = 1.;
-   while ( cm!=NULL ) {
+   while ( cm != NULL ) {
       if ( !strcmp( planet->class, cm->name ) ){
-         scale  = cm->value;
+         scale = cm->value;
          break;
       }
-      cm=cm->next;
+      cm = cm->next;
    }
    commodityPrice->price *= scale;
    commodityPrice->planetVariation = 0.5;
@@ -1186,10 +1197,10 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    commodityPrice->sum = 0.;
    commodityPrice->sum2 = 0.;
    commodityPrice->cnt = 0;
-   commodityPrice->updateTime=0;
+   commodityPrice->updateTime = 0;
    /* Use filename to specify a variation period. */
-   base=100;
-   period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)]%32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1]%32;
+   base = 100;
+   period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)] % 32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1] % 32;
    commodityPrice->planetPeriod = commodity->period + base;
 
    /* Use filename of exterior graphic to modify the variation period.  
@@ -1212,27 +1223,23 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    /* Modify price based on faction (as defined in the xml). 
       Some factions place a higher value on certain goods.
       Some factions are more stable than others.*/
-   scale=1.;
-   cm=commodity->planet_modifier;
+   scale = 1.;
+   cm = commodity->planet_modifier;
 
-   /* Check the faction is not NULL.*/
-   if ( planet->faction == -1 )
-      WARN(_("Some commodities are assignated to an asset without owner."));
-
-   factionname=faction_name(planet->faction);
-   while ( cm!=NULL ) {
-     if ( !strcmp( factionname, cm->name ) ){
-         scale=cm->value;
+   factionname = faction_name(planet->faction);
+   while ( cm != NULL ) {
+     if ( strcmp( factionname, cm->name ) == 0 ){
+         scale = cm->value;
          break;
       }
-      cm=cm->next;
+      cm = cm->next;
    }
-  commodityPrice->price*=scale;
+  commodityPrice->price *= scale;
 
    /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety
      and so lower prices and improve stability*/
-   commodityPrice->price*=(1-planet->presenceRange/30.);
-   commodityPrice->planetPeriod*=1/(1-planet->presenceRange/30.);
+   commodityPrice->price *= (1 - planet->presenceRange/30.);
+   commodityPrice->planetPeriod *= 1 / (1 - planet->presenceRange/30.);
 
    return 0;
 }
@@ -1390,56 +1397,57 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys){
  *
  */
 void economy_initialiseCommodityPrices(void){
-   int i,j,k;
+   int i, j, k;
    Planet *planet;
    StarSystem *sys;
    Commodity *com;
-   CommodityModifier *this,*next;
+   CommodityModifier *this, *next;
    /* First use planet attributes to set prices and variability */
    for (k=0; k<systems_nstack; k++) {
       sys = &systems_stack[k];
       for( j=0; j<sys->nplanets; j++ ){
-         planet=sys->planets[j];
+         planet = sys->planets[j];
          /* Set up the commodity prices on the system, based on its attributes. */
          for( i=0; i<planet->ncommodities; i++ ) {
-            economy_calcPrice(planet,planet->commodities[i],&planet->commodityPrice[i]);
+            if (economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]))
+               return;
          }
       }
    }
    
    /* Modify prices and availability based on system attributes, and do some inter-planet averaging to smooth prices */
-   for ( i=0; i<systems_nstack; i++) {
+   for ( i=0; i<systems_nstack; i++ ) {
       sys = &systems_stack[i];
       economy_modifySystemCommodityPrice(sys);
    }
 
    /* Compute average prices for all systems */
-   for ( i=0; i<systems_nstack; i++) {
+   for ( i=0; i<systems_nstack; i++ ) {
       sys = &systems_stack[i];
       economy_smoothCommodityPrice(sys);
    }
 
    /* Smooth prices based on neighbouring systems */
-   for ( i=0; i<systems_nstack; i++) {
+   for ( i=0; i<systems_nstack; i++ ) {
       sys = &systems_stack[i];
       economy_calcUpdatedCommodityPrice(sys);
    }
    /* And now free temporary commodity information */
-   for ( i=0 ; i<commodity_nstack; i++){
-      com=&commodity_stack[i];
-      next=com->planet_modifier;
-      com->planet_modifier=NULL;
-      while (next != NULL ){
-         this=next;
-         next=this->next;
+   for ( i=0 ; i<commodity_nstack; i++ ) {
+      com = &commodity_stack[i];
+      next = com->planet_modifier;
+      com->planet_modifier = NULL;
+      while (next != NULL) {
+         this = next;
+         next = this->next;
          free(this->name);
          free(this);
       }
-      next=com->faction_modifier;
-      com->faction_modifier=NULL;
-      while (next != NULL ){
-         this=next;
-         next=this->next;
+      next = com->faction_modifier;
+      com->faction_modifier = NULL;
+      while (next != NULL) {
+         this = next;
+         next = this->next;
          free(this->name);
          free(this);
       }
