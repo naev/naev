@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/missions/neutral/commodity_run.lua"
+require "dat/missions/neutral/commodity_run.lua"
 
 misn_title = _("FLF: %s Supply Run")
 misn_desc = _("There is a need for more %s at this base. Find a planet where you can buy this commodity and bring as much of it back as possible.")

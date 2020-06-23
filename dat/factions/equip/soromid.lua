@@ -1,4 +1,4 @@
-include("dat/factions/equip/generic.lua")
+require("dat/factions/equip/generic.lua")
 
 
 equip_typeOutfits_weapons["Brigand"] = {

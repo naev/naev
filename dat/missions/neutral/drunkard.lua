@@ -7,7 +7,7 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 -- Bar Description
 bar_desc = _("You see a drunkard at the bar mumbling about how he was so close to getting his break.")

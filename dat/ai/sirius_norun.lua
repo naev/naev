@@ -1,4 +1,4 @@
-include("dat/ai/sirius.lua")
+require("dat/ai/sirius.lua")
 
 mem.armour_run = 0
 

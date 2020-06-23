@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 misn_title  = _("FLF: %s Dvaered patrol in %s")
 misn_reward = _("%s credits")

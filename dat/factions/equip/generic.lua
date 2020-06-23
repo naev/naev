@@ -1,4 +1,4 @@
-include "jumpdist.lua"
+require "jumpdist.lua"
 
 
 -- Table of available core systems by class.
@@ -1010,7 +1010,7 @@ end
 --    @param set table laying out the set of outfits to equip (see below).
 --
 -- ``set`` is split up into sub-tables that are iterated through. These
--- tables include a "num" field which indicates how many of the chosen outfit
+-- tables require a "num" field which indicates how many of the chosen outfit
 -- to equip before moving on to the next set; if nil, the chosen outfit will be
 -- equipped as many times as possible. For example, if you list 3 tables with
 -- "num" set to 2, 1, and nil respectively, two of an outfit from the first

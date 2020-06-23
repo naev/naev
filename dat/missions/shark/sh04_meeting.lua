@@ -11,9 +11,9 @@
 --]]
 
 --needed scripts
-include "proximity.lua"
-include "numstring.lua"
-include "fleethelper.lua"
+require "proximity.lua"
+require "numstring.lua"
+require "fleethelper.lua"
 
 title = {}
 text = {}

@@ -22,8 +22,8 @@
 
 --]]
 
-include "numstring.lua"
-include "dat/missions/neutral/pirbounty_dead.lua"
+require "numstring.lua"
+require "dat/missions/neutral/pirbounty_dead.lua"
 
 -- Localization
 kill_instead_title   = _("Better Dead than Free")

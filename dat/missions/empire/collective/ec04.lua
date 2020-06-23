@@ -12,9 +12,9 @@
 
 ]]--
 
-include "dat/scripts/nextjump.lua"
-include "proximity.lua"
-include "numstring.lua"
+require "dat/scripts/nextjump.lua"
+require "proximity.lua"
+require "numstring.lua"
 
 misn_title = _("Collective Extraction")
 misn_reward = _("%s credits")

@@ -176,12 +176,13 @@ nlua_env nlua_newEnv(int rw) {
    /* Replace include() function with one that considers fenv */
    lua_pushvalue(naevL, -1);
    lua_pushcclosure(naevL, nlua_packfileLoader, 1);
-   lua_setfield(naevL, -2, "include");
+   lua_setfield(naevL, -2, "require");
 
    /* Some code expect _G to be it's global state, so don't inherit it */
    lua_pushvalue(naevL, -1);
    lua_setfield(naevL, -2, "_G");
 
+   /* Push whether or not the read/write functionality is used for the different libraries. */
    lua_pushboolean(naevL, rw);
    lua_setfield(naevL, -2, "__RW");
 

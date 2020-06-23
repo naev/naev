@@ -1,4 +1,4 @@
-include("dat/ai/include/basic.lua")
+require("dat/ai/include/basic.lua")
 
 
 -- Required control rate

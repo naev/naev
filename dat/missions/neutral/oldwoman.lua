@@ -6,7 +6,7 @@
 --
 --]]
 
-include "dat/scripts/cargo_common.lua"
+require "dat/scripts/cargo_common.lua"
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 title1 = _("An elderly lady")

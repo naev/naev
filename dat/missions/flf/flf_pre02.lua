@@ -19,8 +19,8 @@
 
 --]]
 
-include "fleethelper.lua"
-include "dat/missions/flf/flf_patrol.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_patrol.lua"
 
 title = {}
 text = {}

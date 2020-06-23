@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/missions/flf/flf_rogue.lua"
+require "dat/missions/flf/flf_rogue.lua"
 
 title = {}
 text = {}

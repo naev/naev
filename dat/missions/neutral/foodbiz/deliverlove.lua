@@ -5,7 +5,7 @@ Author: iwaschosen
 Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 
 misn_title = _([[Deliver Love]])

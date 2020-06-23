@@ -9,10 +9,10 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
-include "portrait.lua"
-include "pilot/pirate.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "portrait.lua"
+require "pilot/pirate.lua"
 
 clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}

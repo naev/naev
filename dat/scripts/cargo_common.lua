@@ -1,5 +1,5 @@
-include "dat/scripts/jumpdist.lua"
-include "dat/scripts/nextjump.lua"
+require "dat/scripts/jumpdist.lua"
+require "dat/scripts/nextjump.lua"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
 cargo_use_hidden = false

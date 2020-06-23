@@ -1,5 +1,5 @@
-include("dat/ai/tpl/generic.lua")
-include("dat/ai/personality/miner.lua")
+require("dat/ai/tpl/generic.lua")
+require("dat/ai/personality/miner.lua")
 
 
 -- Sends a distress signal which causes faction loss

@@ -21,7 +21,7 @@
 
 --]]
 
-include "dat/missions/neutral/patrol.lua"
+require "dat/missions/neutral/patrol.lua"
 
 pay_title = _("Mission Completed")
 pay_text    = {}

@@ -17,7 +17,7 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid %s credits. You begin to wonder if accepting this job was really a good idea.")

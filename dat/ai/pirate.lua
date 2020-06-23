@@ -1,5 +1,5 @@
-include("dat/ai/tpl/generic.lua")
-include("dat/ai/personality/patrol.lua")
+require("dat/ai/tpl/generic.lua")
+require("dat/ai/personality/patrol.lua")
 
 --[[
 

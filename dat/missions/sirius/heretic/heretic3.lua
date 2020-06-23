@@ -5,7 +5,7 @@
    space. thanks to nloewen and viashimo for help!]]
    
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
    
 --beginning messages
 bmsg = {}

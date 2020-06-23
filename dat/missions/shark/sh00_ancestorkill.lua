@@ -12,8 +12,8 @@
 --]]
 
 --Needed scripts
-include("dat/scripts/pilot/pirate.lua")
-include("dat/scripts/numstring.lua")
+require("dat/scripts/pilot/pirate.lua")
+require("dat/scripts/numstring.lua")
 
 title = {}
 text = {}

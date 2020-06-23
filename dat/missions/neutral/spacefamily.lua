@@ -58,7 +58,7 @@ osd_msg[1]   = {
 }
 
 
-include("dat/scripts/jumpdist.lua")
+require("dat/scripts/jumpdist.lua")
 
 
 function create ()

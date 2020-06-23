@@ -6,7 +6,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
  on Zeo where he will sell her baked goodies etc. asks if you can take recipes and plans to him on Zeo. Fills you cargo hold with cake which you don’t like. You can sell cake or bring to Michal who will pay a lot of $ for the cake, player doesn’t know that he will get payed for cake he brings.
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 
 -- Dialogue
