@@ -37,6 +37,11 @@
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 
+/*
+ * Internal
+ */
+static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename );
+
 
 /*
  * prototypes
@@ -327,6 +332,31 @@ static int nlua_loadBasic( lua_State* L )
 }
 
 
+/*
+ * Tries to load a file from the lua paths.
+ */
+static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
+{
+   char *buf;
+   char path_filename[PATH_MAX];
+   int len;
+
+   /* Try to locate the data directly */
+   buf = NULL;
+   if (ndata_exists( filename ))
+      buf = ndata_read( filename, bufsize );
+   /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
+   if (buf == NULL) {
+      /* Try to locate the data in the data path */
+      nsnprintf( path_filename, sizeof(path_filename), "%s%s", LUA_INCLUDE_PATH, filename );
+      if (ndata_exists( path_filename ))
+         buf = ndata_read( path_filename, bufsize );
+   }
+
+   return buf;
+}
+
+
 /**
  * @brief include( string module )
  *
@@ -338,9 +368,8 @@ static int nlua_loadBasic( lua_State* L )
 static int nlua_packfileLoader( lua_State* L )
 {
    const char *filename;
-   char *path_filename;
+   char filename_ext[PATH_MAX];
    char *buf;
-   int len;
    size_t bufsize;
    int envtab;
 
@@ -367,20 +396,12 @@ static int nlua_packfileLoader( lua_State* L )
       lua_setfield(L, envtab, "_include"); /* */
    }
 
-   /* Try to locate the data directly */
-   buf = NULL;
-   if (ndata_exists( filename ))
-      buf = ndata_read( filename, &bufsize );
-   /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
-   if (buf == NULL) {
-      /* Try to locate the data in the data path */
-      len           = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
-      path_filename = malloc( len );
-      nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
-      if (ndata_exists( path_filename ))
-         buf = ndata_read( path_filename, &bufsize );
-      free( path_filename );
-   }
+   /* Try to load with extension. */
+   snprintf( filename_ext, sizeof(filename_ext), "%s.lua", filename );
+   buf = nlua_packfileLoaderTryFile( &bufsize, filename_ext );
+   /* Fallback to no extension. */
+   if (buf == NULL)
+      buf = nlua_packfileLoaderTryFile( &bufsize, filename );
 
    /* Must have buf by now. */
    if (buf == NULL) {
