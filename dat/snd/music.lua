@@ -16,7 +16,8 @@ factional = {
    Empire     = { "empire1", "empire2" },
    Sirius     = { "sirius1", "sirius2" },
    Dvaered    = { "dvaered1", "dvaered2" },
-   ["Za'lek"] = { "zalek1", "zalek2" } 
+   ["Za'lek"] = { "zalek1", "zalek2" },
+   Thurion    = { "motherload" },
 }
 
 function choose( str )
