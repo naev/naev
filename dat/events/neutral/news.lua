@@ -3,8 +3,8 @@
 --
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
 
 
 header_table={}
@@ -177,7 +177,7 @@ articles["Generic"] = {
    },
    {
       title = _("Imperial Council Opens Doors"),
-      desc = _("The supreme advisory body invited undergraduates from six top schools to sit in on a day's deliberations. Topics included biodiversity strategy.")
+      desc = _("The supreme advisory body invited undergraduates from six top schools to sit in on a day's deliberations. Topics required biodiversity strategy.")
    },
    {
       title = _("FLF Terrorist Trial Ends"),

@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/events/tutorial/tutorial-common.lua"
+require "dat/events/tutorial/tutorial-common.lua"
 
 
 -- localization stuff, translators would work here
@@ -42,7 +42,7 @@ text[5]  = _("\"On that note, let's go over landing! All kinds of actions, like 
 text[6]  = _([["Excellent! The landing was successful. Melendez Corporation uses advanced artificial intelligence technology so that you never have to worry about your ship crashing. It may seem like a small thing, but it wasn't long ago when pilots had to land manually and crashes were commonplace! We at Melendez Corporation pride ourselves at protecting the safety of our valued customers and ensuring that your ship is reliable and resilient.
     "When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Feel free to take a look around if you like; you might want to talk to the people at the bar, for instance, where fellow pilots can share you tips based on their own experience! When you are done, click the 'Take Off' button so we can continue."]])
 
-text[7]  = _("\"Welcome back to space, %s! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. That is why we at Melendez Corporation always include the latest Autonav technology with all of our ships!\
+text[7]  = _("\"Welcome back to space, %s! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. That is why we at Melendez Corporation always require the latest Autonav technology with all of our ships!\
     \"Autonav is simple and elegant. Simply press %s to open your ship's overlay map, then simply \abright-click\a0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but advanced Melendez Corporation technology allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, our Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's Options menu, which you can access by pressing %s.\
     \"Why don't you try using Autonav to fly over to %s? You should be able to see it on your overlay map.\"")
 

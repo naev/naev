@@ -1,6 +1,6 @@
-include("dat/ai/include/basic.lua")
-include("dat/ai/include/attack.lua")
-local formation = include("dat/scripts/formation.lua")
+require("dat/ai/include/basic.lua")
+require("dat/ai/include/attack.lua")
+local formation = require("dat/scripts/formation.lua")
 
 --[[
 -- Variables to adjust AI

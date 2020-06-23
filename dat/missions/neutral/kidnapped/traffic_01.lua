@@ -11,7 +11,7 @@
 
 --]]
 
-include "portrait.lua"
+require "portrait.lua"
 
 
 -- Bar information

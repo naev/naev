@@ -1,4 +1,4 @@
-include("dat/ai/tpl/generic.lua")
+require("dat/ai/tpl/generic.lua")
 
 -- Don't run away from master ship
 mem.norun = true

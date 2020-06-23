@@ -13,9 +13,9 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-include "jumpdist.lua"
-include "numstring.lua"
-include "portrait.lua"
+require "jumpdist.lua"
+require "numstring.lua"
+require "portrait.lua"
 
 local informer
 local refusal

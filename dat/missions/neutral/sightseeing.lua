@@ -22,8 +22,8 @@
    
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
 
 nolux_title = _("Not Very Luxurious")
 nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s credits. Accept the mission anyway?")

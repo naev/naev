@@ -9,18 +9,18 @@
 --]]
 
 -- Utilities
-include("dat/ai/include/atk_util.lua")
-include("dat/ai/include/atk_target.lua")
+require("dat/ai/include/atk_util.lua")
+require("dat/ai/include/atk_target.lua")
 
 -- Attack profiles
-include("dat/ai/include/atk_generic.lua")
-include("dat/ai/include/atk_fighter.lua")
-include("dat/ai/include/atk_bomber.lua")
-include("dat/ai/include/atk_corvette.lua")
-include("dat/ai/include/atk_capital.lua")
---include("dat/ai/include/atk_cruiser.lua")
---include("dat/ai/include/atk_carrier.lua")
-include("dat/ai/include/atk_drone.lua")
+require("dat/ai/include/atk_generic.lua")
+require("dat/ai/include/atk_fighter.lua")
+require("dat/ai/include/atk_bomber.lua")
+require("dat/ai/include/atk_corvette.lua")
+require("dat/ai/include/atk_capital.lua")
+--require("dat/ai/include/atk_cruiser.lua")
+--require("dat/ai/include/atk_carrier.lua")
+require("dat/ai/include/atk_drone.lua")
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes

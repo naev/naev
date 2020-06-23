@@ -2,7 +2,7 @@
 -- This is the first mission in the crazy baron string.
 --]]
 
-include "portrait.lua"
+require "portrait.lua"
 
 
 sysname1 = "Darkstone"

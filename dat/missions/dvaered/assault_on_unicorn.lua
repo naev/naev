@@ -5,7 +5,7 @@
 
 --]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 misn_title = _("DV: Assault on Unicorn") 
 misn_reward = _("Variable")

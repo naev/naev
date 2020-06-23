@@ -349,7 +349,7 @@ static void outfits_genList( unsigned int wid )
    /* write the outfits stuff */
    outfits_update( wid, NULL );
 
-   if (noutfits > 0 && (strcmp(soutfits[0], "None") != 0)) {
+   if (noutfits > 0 && (strcmp(soutfits[0], _("None")) != 0)) {
       toolkit_setImageArrayQuantity( wid, OUTFITS_IAR, quantity );
       toolkit_setImageArraySlotType( wid, OUTFITS_IAR, slottype );
       toolkit_setImageArrayBackground( wid, OUTFITS_IAR, bg );
@@ -378,7 +378,7 @@ void outfits_update( unsigned int wid, char* str )
 
    /* Get and set parameters. */
    outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
-   if (strcmp(outfitname,"None")==0) { /* No outfits */
+   if (strcmp(outfitname,_("None"))==0) { /* No outfits */
       window_modifyImage( wid, "imgOutfit", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
@@ -659,7 +659,7 @@ static void outfits_buy( unsigned int wid, char* str )
    HookParam hparam[3];
 
    outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
-   if (strcmp(outfitname, "None") == 0)
+   if (strcmp(outfitname, _("None")) == 0)
       return;
 
    outfit = outfit_get( outfitname );
@@ -735,7 +735,7 @@ static void outfits_sell( unsigned int wid, char* str )
    HookParam hparam[3];
 
    outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
-   if (strcmp(outfitname, "None") == 0)
+   if (strcmp(outfitname, _("None")) == 0)
       return;
 
    outfit      = outfit_get( outfitname );

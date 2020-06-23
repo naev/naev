@@ -13,9 +13,9 @@
 
 --]]
 
-include "fleethelper.lua"
-include "numstring.lua"
-include "dat/missions/flf/flf_pirates.lua"
+require "fleethelper.lua"
+require "numstring.lua"
+require "dat/missions/flf/flf_pirates.lua"
 
 title = {}
 text = {}

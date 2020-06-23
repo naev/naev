@@ -4,8 +4,8 @@
 
 ]]--
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
 misn_title = _("ES: Cargo transport (%d tonnes of %s)")
 misn_desc = _("The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left).")

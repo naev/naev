@@ -7,7 +7,7 @@
 --
 --]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 
 misn_title = _("%s Rehabilitation")
@@ -75,7 +75,7 @@ function accept()
     excess = 5 -- The maximum amount of reputation the player can LOSE before the contract is void.
 end
 
--- Function to set the height of the fine. Missions that include this script may override this.
+-- Function to set the height of the fine. Missions that require this script may override this.
 function setFine(standing)
     fine = (-standing)^2 * 1000 -- A value between 0 and 10M credits
 end

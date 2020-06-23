@@ -7,7 +7,7 @@
 --
 --]]
 
-include "jumpdist.lua"
+require "jumpdist.lua"
 
 
 text = {}

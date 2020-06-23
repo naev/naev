@@ -1,5 +1,5 @@
-include("dat/ai/include/basic.lua")
-include("dat/ai/personality/trader.lua")
+require("dat/ai/include/basic.lua")
+require("dat/ai/personality/trader.lua")
 
 --[[
  ===FLEE AI===

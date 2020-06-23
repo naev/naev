@@ -3,8 +3,8 @@
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
 misn_desc = _("%s in the %s system needs a delivery of %d tonnes of %s.")
 misn_reward = _("%s credits")

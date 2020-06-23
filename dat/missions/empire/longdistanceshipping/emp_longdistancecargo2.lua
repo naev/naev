@@ -6,8 +6,8 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
-include "dat/scripts/jumpdist.lua"
+require "dat/scripts/numstring.lua"
+require "dat/scripts/jumpdist.lua"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Dvaered Long Distance Recruitment")

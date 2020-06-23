@@ -9,9 +9,9 @@
 
 ]]--
 
-include "proximity.lua"
-include "fleethelper.lua"
-include "dat/missions/empire/common.lua"
+require "proximity.lua"
+require "fleethelper.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
 misn_title = _("Operation Cold Metal")

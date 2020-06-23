@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/missions/flf/flf_diversion.lua"
+require "dat/missions/flf/flf_diversion.lua"
 
 -- localization stuff
 title = {}

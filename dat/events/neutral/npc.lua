@@ -4,8 +4,8 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 
-include "dat/events/tutorial/tutorial-common.lua"
-include "portrait.lua"
+require "dat/events/tutorial/tutorial-common.lua"
+require "portrait.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.

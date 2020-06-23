@@ -34,8 +34,16 @@
 #include "nstring.h"
 
 
+#define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */
+
+
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
+
+/*
+ * Internal
+ */
+static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename );
 
 
 /*
@@ -171,12 +179,13 @@ nlua_env nlua_newEnv(int rw) {
    /* Replace include() function with one that considers fenv */
    lua_pushvalue(naevL, -1);
    lua_pushcclosure(naevL, nlua_packfileLoader, 1);
-   lua_setfield(naevL, -2, "include");
+   lua_setfield(naevL, -2, "require");
 
    /* Some code expect _G to be it's global state, so don't inherit it */
    lua_pushvalue(naevL, -1);
    lua_setfield(naevL, -2, "_G");
 
+   /* Push whether or not the read/write functionality is used for the different libraries. */
    lua_pushboolean(naevL, rw);
    lua_setfield(naevL, -2, "__RW");
 
@@ -327,6 +336,31 @@ static int nlua_loadBasic( lua_State* L )
 }
 
 
+/*
+ * Tries to load a file from the lua paths.
+ */
+static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
+{
+   char *buf;
+   char path_filename[PATH_MAX];
+   int len;
+
+   /* Try to locate the data directly */
+   buf = NULL;
+   if (ndata_exists( filename ))
+      buf = ndata_read( filename, bufsize );
+   /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
+   if (buf == NULL) {
+      /* Try to locate the data in the data path */
+      nsnprintf( path_filename, sizeof(path_filename), "%s%s", LUA_INCLUDE_PATH, filename );
+      if (ndata_exists( path_filename ))
+         buf = ndata_read( path_filename, bufsize );
+   }
+
+   return buf;
+}
+
+
 /**
  * @brief include( string module )
  *
@@ -338,9 +372,8 @@ static int nlua_loadBasic( lua_State* L )
 static int nlua_packfileLoader( lua_State* L )
 {
    const char *filename;
-   char *path_filename;
+   char filename_ext[PATH_MAX];
    char *buf;
-   int len;
    size_t bufsize;
    int envtab;
 
@@ -351,7 +384,7 @@ static int nlua_packfileLoader( lua_State* L )
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getfield( L, envtab, "_include" ); /* t */
+   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
    if (!lua_isnil(L,-1)) {
       lua_getfield(L,-1,filename); /* t, f */
       /* Already included. */
@@ -361,26 +394,18 @@ static int nlua_packfileLoader( lua_State* L )
       }
       lua_pop(L,2); /* */
    }
-   /* Must create new _include table. */
+   /* Must create new NLUA_LOAD_TABLE table. */
    else {
       lua_newtable(L);              /* t */
-      lua_setfield(L, envtab, "_include"); /* */
+      lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
    }
 
-   /* Try to locate the data directly */
-   buf = NULL;
-   if (ndata_exists( filename ))
-      buf = ndata_read( filename, &bufsize );
-   /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
-   if (buf == NULL) {
-      /* Try to locate the data in the data path */
-      len           = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
-      path_filename = malloc( len );
-      nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
-      if (ndata_exists( path_filename ))
-         buf = ndata_read( path_filename, &bufsize );
-      free( path_filename );
-   }
+   /* Try to load with extension. */
+   snprintf( filename_ext, sizeof(filename_ext), "%s.lua", filename );
+   buf = nlua_packfileLoaderTryFile( &bufsize, filename_ext );
+   /* Fallback to no extension. */
+   if (buf == NULL)
+      buf = nlua_packfileLoaderTryFile( &bufsize, filename );
 
    /* Must have buf by now. */
    if (buf == NULL) {
@@ -410,7 +435,7 @@ static int nlua_packfileLoader( lua_State* L )
       lua_pop(L, 1);
       lua_pushboolean(L, 1);
    }
-   lua_getfield(L, envtab, "_include"); /* val, t */
+   lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
    lua_pushvalue(L, -2); /* val, t, val */
    lua_setfield(L, -2, filename);   /* val, t */
    lua_pop(L, 1); /* val */

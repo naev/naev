@@ -2,7 +2,7 @@
 -- This is the third mission in the "shadow" series, featuring the return of SHITMAN.
 --]]
 
-include ("proximity.lua")
+require ("proximity.lua")
 
 title = {}
 text = {}

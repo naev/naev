@@ -1,4 +1,4 @@
-local formation = include "dat/scripts/formation.lua"
+local formation = require "dat/scripts/formation.lua"
 
 local function playerform()
    local form_names = {}

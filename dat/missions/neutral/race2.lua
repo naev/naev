@@ -5,7 +5,7 @@
    --
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
    
 text = {}

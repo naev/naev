@@ -2,7 +2,7 @@
    The new "brushed" UI.
 --]]
 
-playerform = include "dat/scripts/playerform.lua"
+playerform = require "dat/scripts/playerform.lua"
 
 function create()
 

@@ -3,7 +3,7 @@ This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 npc_name = _("Young Teenager")
 bar_desc = _("A pretty teenager sits alone at a table.")

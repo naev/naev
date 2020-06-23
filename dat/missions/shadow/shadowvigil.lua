@@ -2,10 +2,10 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
-include "proximity.lua"
-include "dat/scripts/nextjump.lua"
-include "chatter.lua"
-include "selectiveclear.lua"
+require "proximity.lua"
+require "dat/scripts/nextjump.lua"
+require "chatter.lua"
+require "selectiveclear.lua"
 
 title = {}
 text = {}

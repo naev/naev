@@ -6,7 +6,7 @@
 -- 3 = player has talked to SHITMAN
 --]]
 
-include "portrait.lua"
+require "portrait.lua"
 
 
 planetname = "Durea" -- The planet where SHITMAN lives
