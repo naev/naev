@@ -1379,21 +1379,23 @@ static int opt_videoSave( unsigned int wid, char *str )
          SDL_SetWindowFullscreen( gl_screen.window, 0 );
    }
 
-   /* Attempt to detect maximized state (doesn't work on X11) */
-   if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
-      dialogue_alert(_("Resolution can't be changed while maximized."));
-   /* Set size. Done second, because it can't be set while fullscreen. */
-   else if ((w != rw) || (h != rh)) {
-      /* Can't change window size while fullscreen. */
-      if (fullscreen && origf)
-         opt_needRestart();
-      else if (!fullscreen) {
-         SDL_SetWindowSize( gl_screen.window, w, h );
-         naev_resize( w, h );
-         SDL_SetWindowPosition( gl_screen.window,
-               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+   if ((w != rw) || (h != rh)) {
+      /* Attempt to detect maximized state (doesn't work on X11) */
+      if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
+         dialogue_alert(_("Resolution can't be changed while maximized."));
+      /* Set size. Done second, because it can't be set while fullscreen. */
+      else {
+         /* Can't change window size while fullscreen. */
+         if (fullscreen && origf)
+            opt_needRestart();
+         else if (!fullscreen) {
+            SDL_SetWindowSize( gl_screen.window, w, h );
+            naev_resize( w, h );
+            SDL_SetWindowPosition( gl_screen.window,
+                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
-         changed = 1;
+            changed = 1;
+         }
       }
    }
 
