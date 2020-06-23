@@ -129,7 +129,7 @@ function create ()
    if planet.cur():faction() == faction.get("Pirate") then
       misn.setDesc( misn_desc:format( target_faction, missys:name(), paying_faction:name() ) )
    else
-      -- We're not on a pirate stronghold, so require a warning that the
+      -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
       misn.setDesc( misn_desc:format( target_faction, missys:name(), paying_faction:name() ) .. "\n\n" .. desc_illegal_warning )
    end
