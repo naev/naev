@@ -154,7 +154,7 @@ msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just mess
                               _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
                               _([["Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."]]),
-                              _([["I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
+                              _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
                               _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]])
                            }
