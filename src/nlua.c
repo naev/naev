@@ -34,6 +34,9 @@
 #include "nstring.h"
 
 
+#define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */
+
+
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 
@@ -381,7 +384,7 @@ static int nlua_packfileLoader( lua_State* L )
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getfield( L, envtab, "_LOADED" ); /* t */
+   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
    if (!lua_isnil(L,-1)) {
       lua_getfield(L,-1,filename); /* t, f */
       /* Already included. */
@@ -391,10 +394,10 @@ static int nlua_packfileLoader( lua_State* L )
       }
       lua_pop(L,2); /* */
    }
-   /* Must create new _LOADED table. */
+   /* Must create new NLUA_LOAD_TABLE table. */
    else {
       lua_newtable(L);              /* t */
-      lua_setfield(L, envtab, "_LOADED"); /* */
+      lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
    }
 
    /* Try to load with extension. */
@@ -432,7 +435,7 @@ static int nlua_packfileLoader( lua_State* L )
       lua_pop(L, 1);
       lua_pushboolean(L, 1);
    }
-   lua_getfield(L, envtab, "_LOADED"); /* val, t */
+   lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
    lua_pushvalue(L, -2); /* val, t, val */
    lua_setfield(L, -2, filename);   /* val, t */
    lua_pop(L, 1); /* val */
