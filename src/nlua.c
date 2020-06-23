@@ -380,7 +380,7 @@ static int nlua_packfileLoader( lua_State* L )
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getfield( L, envtab, "_include" ); /* t */
+   lua_getfield( L, envtab, "_LOADED" ); /* t */
    if (!lua_isnil(L,-1)) {
       lua_getfield(L,-1,filename); /* t, f */
       /* Already included. */
@@ -390,10 +390,10 @@ static int nlua_packfileLoader( lua_State* L )
       }
       lua_pop(L,2); /* */
    }
-   /* Must create new _include table. */
+   /* Must create new _LOADED table. */
    else {
       lua_newtable(L);              /* t */
-      lua_setfield(L, envtab, "_include"); /* */
+      lua_setfield(L, envtab, "_LOADED"); /* */
    }
 
    /* Try to load with extension. */
@@ -431,7 +431,7 @@ static int nlua_packfileLoader( lua_State* L )
       lua_pop(L, 1);
       lua_pushboolean(L, 1);
    }
-   lua_getfield(L, envtab, "_include"); /* val, t */
+   lua_getfield(L, envtab, "_LOADED"); /* val, t */
    lua_pushvalue(L, -2); /* val, t, val */
    lua_setfield(L, -2, filename);   /* val, t */
    lua_pop(L, 1); /* val */
