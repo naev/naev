@@ -140,7 +140,7 @@ static double interference_timer  = 0.; /**< Interference timer. */
  * Internal Prototypes.
  */
 /* planet load */
-static int planet_parse( Planet* planet, const xmlNodePtr parent );
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
@@ -1702,6 +1702,8 @@ static int planets_load ( void )
    Planet *p;
    size_t nfiles;
    size_t i, len;
+   Commodity **stdList;
+   int stdNb;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -1721,6 +1723,9 @@ static int planets_load ( void )
       planet_stack = malloc( sizeof(Planet) * planet_mstack );
       planet_nstack = 0;
    }
+
+   /* Extract the list of standard commodities. */
+   stdList = standard_commodities( &stdNb );
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
@@ -1748,7 +1753,7 @@ static int planets_load ( void )
 
       if (xml_isNode(node,XML_PLANET_TAG)) {
          p = planet_new();
-         planet_parse( p, node );
+         planet_parse( p, node, stdList, stdNb );
       }
 
       /* Clean up. */
@@ -1761,6 +1766,7 @@ static int planets_load ( void )
    for (i=0; i<nfiles; i++)
       free( planet_files[i] );
    free( planet_files );
+   free(stdList);
 
    return 0;
 }
@@ -1929,12 +1935,13 @@ void space_gfxUnload( StarSystem *sys )
  *    @param parent Node that contains planet data.
  *    @return 0 on success.
  */
-static int planet_parse( Planet *planet, const xmlNodePtr parent )
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb )
 {
-   int mem;
+   int mem, i;
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
+   Commodity *com;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -2053,9 +2060,27 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
-               mem = 0;
+
+               /* First, store all the standard commodities and prices. */
+               planet->ncommodities = stdNb;
+               mem = stdNb;
+               if (stdNb > 0) {
+                  planet->commodityPrice = malloc( stdNb * sizeof(CommodityPrice) );
+                  planet->commodities    = malloc( stdNb * sizeof(Commodity*) );
+                  for (i=0; i<stdNb; i++) {
+                     planet->commodities[i]          = stdList[i];
+                     planet->commodityPrice[i].price = planet->commodities[i]->price;
+                  }
+               }
+
                do {
                   if (xml_isNode(ccur,"commodity")) {
+
+                     /* If the commodity is standard, don't re-add it. */
+                     com = commodity_get( xml_get(ccur) );
+                     if (com->standard == 1)
+                        continue;
+
                      planet->ncommodities++;
                      /* Memory must grow. */
                      if (planet->ncommodities > mem) {
@@ -2068,8 +2093,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                         planet->commodityPrice = realloc(planet->commodityPrice,
                               mem * sizeof(CommodityPrice));
                      }
-                     planet->commodities[planet->ncommodities-1] =
-                        commodity_get( xml_get(ccur) );
+                     planet->commodities[planet->ncommodities-1] = com;
                      /* Set commodity price on this planet to the base price */
                      planet->commodityPrice[planet->ncommodities-1].price =
                        planet->commodities[planet->ncommodities-1]->price;

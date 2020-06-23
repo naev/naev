@@ -60,6 +60,11 @@ static Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
 static int commodity_nstack       = 0; /**< Number of commodities in the stack. */
 
 
+/* standard commodities (ie. sellable and buyable anywhere) */
+static int* commodity_standard = NULL; /**< Contains all the standard commoditie's indices. */
+static int commodity_nstandard = 0; /**< Number of standard commodities. */
+
+
 /* systems stack. */
 extern StarSystem *systems_stack; /**< Star system stack. */
 extern int systems_nstack; /**< Number of star systems. */
@@ -247,6 +252,29 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
 
 
 /**
+ * @brief Return the list of standard commodities.
+ *
+ *    @param[out] Commodity* List of commodities.
+ *    @return size of the list.
+ */
+Commodity ** standard_commodities( unsigned int *nb )
+{
+   int i;
+   Commodity **com;
+
+   *nb = commodity_nstandard;
+
+   if (commodity_nstandard == 0)
+      return NULL;
+
+   com = malloc( commodity_nstandard * sizeof(Commodity*) );
+   for (i=0; i<commodity_nstandard; i++) {
+      com[i] = &commodity_stack[ commodity_standard[i] ];
+   }
+   return com;
+}
+
+/**
  * @brief Loads a commodity.
  *
  *    @param temp Commodity to load data into.
@@ -261,6 +289,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    memset( temp, 0, sizeof(Commodity) );
    temp->period=200;
    temp->population_modifier=0.;
+   temp->standard = 0;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -279,6 +308,13 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          } else {
             temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
          }
+         continue;
+      }
+      if (xml_isNode(node, "standard")) {
+         temp->standard = 1;
+         /* There is a shortcut list containing the standard commodities. */
+         commodity_standard = realloc(commodity_standard, sizeof(int)*(++commodity_nstandard));
+         commodity_standard[ commodity_nstandard-1 ] = commodity_nstack-1;
          continue;
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
@@ -617,6 +653,8 @@ void commodity_free (void)
    free( commodity_stack );
    commodity_stack = NULL;
    commodity_nstack = 0;
+   commodity_standard = NULL;
+   commodity_nstandard = 0;
 
    /* More clean up. */
    free( econ_comm );
@@ -1176,6 +1214,11 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
       Some factions are more stable than others.*/
    scale=1.;
    cm=commodity->planet_modifier;
+
+   /* Check the faction is not NULL.*/
+   if ( planet->faction == -1 )
+      WARN(_("Some commodities are assignated to an asset without owner."));
+
    factionname=faction_name(planet->faction);
    while ( cm!=NULL ) {
      if ( !strcmp( factionname, cm->name ) ){
@@ -1413,7 +1456,7 @@ void economy_averageSeenPrices( const Planet *p ){
    for ( i = 0 ; i < p->ncommodities ; i++ ){
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
-      if( cp->updateTime < t ){ //has not yet been updated at present time
+      if( cp->updateTime < t ){ /* has not yet been updated at present time. */
          cp->updateTime = t;
          /* Calculate values for mean and std */
          cp->cnt++;
@@ -1435,7 +1478,7 @@ void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
    for ( i = 0 ; i < p->ncommodities ; i++ ){
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
-      if( cp->updateTime < t ){ //has not yet been updated at present time
+      if( cp->updateTime < t ){ /* has not yet been updated at present time. */
          cp->updateTime = t;
          cp->cnt++;
          price = economy_getPriceAtTime(c, NULL, p, tupdate);
