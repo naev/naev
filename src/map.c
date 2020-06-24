@@ -52,6 +52,7 @@ static StarSystem **map_path  = NULL; /**< The path to current selected system. 
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
+static int commod_counter = 0; /**< used to fade back in the faction smudges */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 static gl_vbo *marker_vbo = NULL;
@@ -169,7 +170,9 @@ void map_open (void)
    unsigned int wid;
    StarSystem *cur;
    int w, h, x, y, rw;
-
+   /* Not displaying commodities */
+   cur_commod = -1;
+   
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
@@ -354,7 +357,7 @@ static void map_update( unsigned int wid )
       c = commodity_getByIndex( cur_commod );
       window_modifyImage( wid, "imgCommod", c->gfx_store, 44, 24 );
       if(sys!=NULL){
-	snprintf(buf,PATH_MAX,"%s prices trading from %s shown as circles above (a profit)\nor below (a loss) other systems.  Larger circles show a greater profit or loss.",c->name,sys->name);
+	snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/green values mean a profit\nwhile negative/red values mean a loss when sold at the corresponding system.",c->name,sys->name);
 	window_modifyText( wid, "txtSystemStatus", buf );
       }
    }else{
@@ -754,17 +757,20 @@ static void map_render( double bx, double by, double w, double h, void *data )
    double x,y,r;
    glColour col;
    StarSystem *sys;
-
+   if ( commod_counter > 0 )
+      commod_counter--;
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   map_renderDecorators( x, y, 0 );
+   if ( cur_commod == -1 )
+      map_renderDecorators( x, y, 0 );
 
    /* Render faction disks. */
-   map_renderFactionDisks( x, y, 0 );
+   if ( cur_commod == -1 )
+      map_renderFactionDisks( x, y, 0 );
 
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
@@ -773,7 +779,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.a = ABS( 500 - (int)SDL_GetTicks() % 1000 ) / 500.;
 
    /* Render the player's jump route. */
-   map_renderPath( x, y, col.a );
+   if ( cur_commod == -1 )
+      map_renderPath( x, y, col.a );
 
    /* Render systems. */
    map_renderSystems( bx, by, x, y, w, h, r, 0 );
@@ -782,7 +789,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderNames( bx, by, x, y, w, h, 0 );
 
    /* Render system markers. */
-   map_renderMarkers( x, y, r, col.a );
+   if ( cur_commod == -1 )
+     map_renderMarkers( x, y, r, col.a );
 
    /* Render commodity info. */
    map_renderCommod(  bx, by, x, y, w, h, r, 0 );
@@ -830,7 +838,12 @@ void map_renderDecorators( double x, double y, int editor)
    int visible;
    MapDecorator *decorator;
    StarSystem *sys;
+   glColour ccol = { .r=1.00, .g=1.00, .b=1.00, .a=1. }; /**< White */
 
+   /* Fade in the decorators to allow toggling between commodity and nothing */
+   double cc = cos ( commod_counter / 200. * M_PI );
+   ccol.a = cc;
+     
    for (i=0; i<decorator_nstack; i++) {
 
       decorator = &decorator_stack[i];
@@ -865,7 +878,7 @@ void map_renderDecorators( double x, double y, int editor)
 
          gl_blitScale(
                decorator->image,
-               tx - sw/2, ty - sh/2, sw, sh, &cWhite );
+               tx - sw/2, ty - sh/2, sw, sh, &ccol );
       }
    }
 }
@@ -882,6 +895,8 @@ void map_renderFactionDisks( double x, double y, int editor)
    StarSystem *sys;
    int sw, sh;
    double tx, ty, presence;
+   /* Fade in the disks to allow toggling between commodity and nothing */
+   double cc = cos ( commod_counter / 200. * M_PI );
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -904,8 +919,8 @@ void map_renderFactionDisks( double x, double y, int editor)
       c.r = col->r;
       c.g = col->g;
       c.b = col->b;
-      c.a = CLAMP( .6, .75, 20 / presence );
-
+      c.a = CLAMP( .6, .75, 20 / presence ) * cc;
+      
       gl_blitTexture(
             gl_faction_disk,
             tx - sw/2, ty - sh/2, sw, sh,
@@ -1240,13 +1255,13 @@ void map_renderCommod( double bx, double by, double x, double y,
    char buf[80];
    unsigned int wid;
    int textw;
-   wid = window_get(MAP_WDWNAME);
-
-   curMaxPrice=0.;
-   curMinPrice=0.;
    /* If not plotting commodities, return */
    if(cur_commod == -1 || map_selected == -1)
       return;
+
+   wid = window_get(MAP_WDWNAME);
+   curMaxPrice=0.;
+   curMinPrice=0.;
    c=commodity_getByIndex(cur_commod);
    /* Get commodity price in selected system.  If selected system is current
       system, and if landed, then get price of commodity where we are */
@@ -1341,20 +1356,28 @@ void map_renderCommod( double bx, double by, double x, double y,
          }
          /* Calculate best and worst profits */
          if( maxPrice > 0 ){
+	   /* Commodity sold at this system */
             best = maxPrice - curMinPrice ;
             worst= minPrice - curMaxPrice ;
-            best = tanh ( best / 100. ) /2 ;
-            worst= tanh ( worst/ 100. ) /2;
             if ( best >= 0 ){/* draw circle above */
-	      /*ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;*//*yellow*/
+	      gl_print(&gl_smallFont, x + (sys->pos.x-2) * map_zoom , y + (sys->pos.y+12)*map_zoom, &cGreen, "%.1f",best);
+               best = tanh ( best / 100. ) /2 ;
+               /*ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;*//*yellow*/
                ccol.r=1-2*best; ccol.g=best+0.5; ccol.b=0; ccol.a=1;/*green to orange*/
-               gl_drawCircle( tx, ty + r , (0.1 + best) * r, &ccol, 1 );
+               gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
             }else{/* draw circle below */
-	      /*ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;*//*blue*/
+	      gl_print(&gl_smallFont, x + (sys->pos.x-2) * map_zoom , y + (sys->pos.y+12)*map_zoom, &cRed, "%.1f",worst);
+               worst= tanh ( worst/ 100. ) /2;
+               /*ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;*//*blue*/
                ccol.r=1; ccol.g=0.5+worst; ccol.b=0; ccol.a=1;/*orange to red*/
-               gl_drawCircle( tx, ty - r , (0.1 - worst) * r, &ccol, 1 );
+               gl_drawCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
             }
-         }
+         }else{
+            /* Commodity not sold here */
+            ccol.r=0.3; ccol.g=0.3; ccol.b=0.3; ccol.a=1;
+            gl_drawCircle( tx, ty , r, &ccol, 1 );
+	   
+	 }
       }
    }
 
@@ -1505,6 +1528,8 @@ static void map_buttonCommodity( unsigned int wid, char* str )
       if ( cur_commod >= ncommod )
          cur_commod = -1;
    }
+   if ( cur_commod == -1 )
+      commod_counter = 101;
    map_update(wid);
 }
 
