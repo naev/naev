@@ -1303,8 +1303,16 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    AsteroidType *at;
    int pntid, jpid, astid, fieid;
 
-   dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-   p  = pilot_get(pid);
+   /* Don't allow selecting a new target with the right mouse button
+    * (prevents pilots from getting in the way of autonav). */
+   if (event->button.button == SDL_BUTTON_RIGHT) {
+      pid = player.p->target;
+      p = pilot_get(pid);
+      dp = pow2(x - p->solid->pos.x) + pow2(y - p->solid->pos.y);
+   } else {
+      dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
+      p  = pilot_get(pid);
+   }
 
    d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
    rp = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
@@ -1332,7 +1340,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       r  = 0.;
 
    /* Reject pilot if it's too far or a valid asset is closer. */
-   if (dp > pow2(rp) || ((d < pow2(r)) && (dp >  d)))
+   if ((dp > pow2(rp)) || ((d < pow2(r)) && (dp >  d)))
       pid = PLAYER_ID;
 
    if (d > pow2(r)) /* Planet or jump point is too far. */
