@@ -17,6 +17,22 @@
   </commodity>
  </asteroid>
  <asteroid>
+  <id>massive</id>
+  <gfx>asteroid-D00</gfx>
+  <gfx>asteroid-D07</gfx>
+  <gfx>asteroid-D08</gfx>
+  <gfx>asteroid-D09</gfx>
+  <gfx>asteroid-D10</gfx>
+  <gfx>asteroid-D11</gfx>
+  <gfx>asteroid-D12</gfx>
+  <gfx>asteroid-D13</gfx>
+  <armour>100</armour>
+  <commodity>
+   <name>Ore</name>
+   <quantity>15</quantity>
+  </commodity>
+ </asteroid>
+ <asteroid>
   <id>golden</id>
   <gfx>asteroid-D01</gfx>
   <gfx>asteroid-D02</gfx>
@@ -25,10 +41,54 @@
   <gfx>asteroid-D05</gfx>
   <gfx>asteroid-D06</gfx>
   <gfx>asteroid-D14</gfx>
-  <armour>100</armour>
+  <armour>70</armour>
   <commodity>
    <name>Ore</name>
-   <quantity>15</quantity>
+   <quantity>4</quantity>
+  </commodity>
+  <commodity>
+   <name>Gold</name>
+   <quantity>3</quantity>
+  </commodity>
+ </asteroid>
+ <asteroid>
+  <id>diamond</id>
+  <gfx>asteroid-D00</gfx>
+  <gfx>asteroid-D07</gfx>
+  <gfx>asteroid-D08</gfx>
+  <gfx>asteroid-D09</gfx>
+  <gfx>asteroid-D10</gfx>
+  <gfx>asteroid-D11</gfx>
+  <gfx>asteroid-D12</gfx>
+  <gfx>asteroid-D13</gfx>
+  <armour>150</armour>
+  <commodity>
+   <name>Ore</name>
+   <quantity>12</quantity>
+  </commodity>
+  <commodity>
+   <name>Diamond</name>
+   <quantity>4</quantity>
+  </commodity>
+ </asteroid>
+ <asteroid>
+  <id>liquid</id>
+  <gfx>asteroid-D00</gfx>
+  <gfx>asteroid-D07</gfx>
+  <gfx>asteroid-D08</gfx>
+  <gfx>asteroid-D09</gfx>
+  <gfx>asteroid-D10</gfx>
+  <gfx>asteroid-D11</gfx>
+  <gfx>asteroid-D12</gfx>
+  <gfx>asteroid-D13</gfx>
+  <armour>40</armour>
+  <commodity>
+   <name>Ore</name>
+   <quantity>4</quantity>
+  </commodity>
+  <commodity>
+   <name>Water</name>
+   <quantity>4</quantity>
   </commodity>
  </asteroid>
 </Asteroid_types>
