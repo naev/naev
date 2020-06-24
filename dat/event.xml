@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Events>
- <event name="Time Dilation Tutorial">
-  <lua>tutorial/time_dilation</lua>
+ <event name="Tutorial Event">
+  <lua>tutorial/tutorial</lua>
   <trigger>land</trigger>
   <chance>100</chance>
-  <flags>
-   <unique />
-  </flags>
  </event>
  <event name="Pirate Fame">
   <lua>pirate_fame</lua>
