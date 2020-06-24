@@ -259,6 +259,11 @@ end
 
 function jumpin ()
    if not found_thurion and system.cur() == system.get("Oriantis") then
+      music.stop()
+      music.load( "intro" )
+      music.play()
+      music.delay( "ambient", 154 )
+      music.delay( "combat", 154 )
       hook.timer( 5000, "timer_thurion" )
    elseif found_thurion and system.cur() == system.get("Metsys") then
       diff.apply( "Thurion_found" )
@@ -282,7 +287,7 @@ function land ()
       tk.msg( title[11], text[13] )
       tk.msg( title[11], text[14]:format( player.name() ) )
       faction.get("Thurion"):setKnown( true )
-   elseif dif.isApplied( "Thurion_found" ) then
+   elseif diff.isApplied( "Thurion_found" ) then
       diff.remove( "Thurion_found" )
    end
    evt.finish( true )
