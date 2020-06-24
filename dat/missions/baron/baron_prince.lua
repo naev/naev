@@ -70,7 +70,7 @@ text[14] = _([[Flintley studies the object on the table for a while, checking th
    
 flintdeftitle = _("Just passing through")
    
-flintdeftext = _([[Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, all right. I'll be here if you need me. Good luck out there."]])
+flintdeftext = _([[Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, alright. I'll be here if you need me. Good luck out there."]])
    
 title[10] = _("From days long gone")
    

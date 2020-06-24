@@ -38,8 +38,8 @@ text[2] = _([[Indeed, you are constantly aware of the furtive glances the other 
     Benito waves her hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]])
 
 title[3] = _("Patrol-B-gone")
-text[3] = _([["I'm happy to hear that. It's good to know we still have the support from the common man. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will go out there and eliminate one of those patrols in the %s system."
-    You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles, and makes a pacifying gesture.
+text[3] = _([["I'm happy to hear that. It's good to know we still have the support from the common pilot. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will go out there and eliminate one of those patrols in the %s system."
+    You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles and makes a pacifying gesture.
     "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]])
 
 title[4] = _("Breaking the ice")
@@ -48,7 +48,7 @@ text[4] = _([[When you left Sindbad Station, it was a cold, lonely place for you
 
 text[5] = _([["Welcome back, %s, and congratulations. I didn't expect the Dvaered to send reinforcements, much less a Vigilance. I certainly wouldn't have sent you alone if I did, and I might not have sent you at all. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"]])
 
-text[6] = _([[Benito takes you to the station's bar, and buys you what for lack of a better word must be called a drink.
+text[6] = _([[Benito takes you to the station's bar and buys you what for lack of a better word must be called a drink.
     "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF doesn't have that big a budget. Financial support is tricky, and the Frontier doesn't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, so from today on, you can call yourself one of us! How about that, huh?"]])
 
 text[7] = _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. I'm sure you'll play an important role in our eventual victory over the Dvaered!"

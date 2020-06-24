@@ -69,7 +69,7 @@ commmsg[4] = _("I just hope Z. knows what he's doing.")
 commmsg[5] = _("Cut the chatter, two, three. This is a low-profile operation. Act the part, please.")
 
 -- Diplomat jumpin.
-commmsg[6] = _("All right boys, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous.")
+commmsg[6] = _("Alright folks, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous.")
 commmsg[7] = _("Two, copy.")
 commmsg[8] = _("Three, copy.")
 
