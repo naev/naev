@@ -25,10 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Ambre was one of the planets that played a key role in the workers' revolts that eventually led to the establishment of House Dvaered. In those days the planet was home to a considerable percentage of the Imperial workforce in this sector of space. Without labourers to work the mines and construction yards, the Empire stood to lose astronomical amounts of money each cycle. This was one of the important reasons the Emperor granted House Dvaered its independence.</description>
   <bar>Ambre's spaceport bar is never quiet. At regular intervals all other noise in the bar is drowned out by the sound of cargo pods trundling along the railway just below. The bar was built relatively late in the planet's development; the Imperial government didn't see the need for one when Ambre was little more than a labour camp. After independence the bar was squeezed into one of the only remaining spaces available, which was right over the freight lines.</bar>
  </general>

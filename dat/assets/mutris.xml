@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Mutris. The very heart of Sirius space. This is where Crater City is to be found, home of Sirichana and the many Sirii pilgrims who will one day become the Touched. Crater City being the most holy of places, the airspace in a wide area around it is closed. The spaceport is located thousands of kilometers away. All approaches happen under a tight escort, and non-Sirii are confined to the commercial district of the planet's political capital.</description>
   <bar>The spaceport bar is the primary meeting place for offworlders on Mutris. Since only Sirii may venture beyond the commercial district, all others are either conducting business or relaxing here. As far as bars go, Mutris' is a fairly accomodating one, though the various religious references make it somewhat uncomfortable to some.</bar>
  </general>

@@ -25,10 +25,7 @@
    <commodity/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Sixbat Station is a marvel of technology. It's not so much a station as it is a gigantic mass replicator, capable of replicating entire spaceships given design blueprints and enough raw materials. The facility is of unknown origin. Some believe it to be alien, but there is no proof of this. So far, mankind has yet to design a ship too big for Sixbat to handle.</description>
   <bar>The bar is where customers come to enjoy a few drinks and pleasant conversation while they select which ship they want and in what color, and then wait for it to finish replicating.</bar>
  </general>

@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Urail is a halfway decently habitable planet. Its proximity to Mutris makes it a very popular place to live for Sirii, which has driven the price of real estate to almost ridiculous heights. Many Sirii believe that living on Urail gives them a better chance of meeting a Touched, or even being called to Crater City themselves. There is no indication that this is indeed the case, however.</description>
   <bar>Every spaceport needs a spaceport bar. That is probably the only reason why Urail has one, since the population would much prefer to use the space so build housing for upper echelon Sirii. Nevertheless, the bar is comfortable enough, despite the pricey drinks.</bar>
  </general>

@@ -23,6 +23,7 @@
    <bar/>
    <missions/>
   </services>
+  <commodities/>
   <description>Acting as the primary gateway for goods traveling to and from Father's Pride, Point Zero Station is a busy commercial port. Many traders are willing to trade here rather than take the trouble of visiting the systems beyond Point Zero themselves, though there's always the entrepreneur who believes the extra jumps will be worth the payout.</description>
   <bar>Reminiscent of the stock markets on pre-Federation Earth, the spacedock bar of Point Zero Station is one of the biggest and most important facilities aboard. People come here on business just as much as to socialize. Commodity exchange rates are displayed on big screens along the walls, and for a small fee a pilot can make use of a private trade booth.</bar>
  </general>

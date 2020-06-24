@@ -23,10 +23,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>These shipyards are one of the places where Za'lek vessels are built and sent out to the defense forces. It also maintains a small contingent of Za'lek vessels at home to serve as a in-system guard.</description>
  </general>
  <tech>

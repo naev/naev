@@ -25,10 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Heii is the rather unattractive moon of Juran. Juran itself is a natural M-class, so first time visitors often wonder why the Soromid chose to settle here and not down below. The reason is actually quite interesting. Juran is home to many amazing life forms, including large creatures not at all unlike the dinosaurs that once roamed ancient Earth. Settling down on Juran would not only be dangerous, it would also mean a disturbance in the natural ecosystem. Thus, the Soromid chose not to inhabit Juran, but instead tap its natural animal life by selling specimens as exotic pets throughout the galaxy.</description>
   <bar>Visitors to Heii spaceport bar can use special consoles to access video feeds from survey satellites deployed all around Juran, to observe the life forms on the surface and perhaps even pick one to take back to their own world.</bar>
  </general>

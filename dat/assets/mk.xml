@@ -25,10 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>M.K., a rather oddly named planet, holds a special place in many Soromid's hearts. It is the closest inhabited world to Sorom that survived the Incident. It has little else to set it apart, however. The local economy is operating along predictable lines, and the population is no better off than on most Soromid worlds. To most traders, M.K. is just another market to make profit in.</description>
   <bar>Both Soromid and non-Soromid frequent this spaceport bar. As Wildwood Station is more of a service utility than a real community, M.K. is often the first real Soromid port most new traders visit. It is therefore here they get their first taste of a full-fledged Soromid society. It's not uncommon to find young pilots looking at the surroundings with a mixture of wonder and nervousness.</bar>
  </general>

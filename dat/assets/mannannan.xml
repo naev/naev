@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Mannannan is one of the more frequently visited Dvaered worlds. Uncharacteristically for a Dvaered planet, its political policies and its economy have remained fairly stable, since none of the Warlords controlling the planet have ever bothered to change the local laws in major ways. This has made Mannannan a favorable place to trade for foreigners. Of course, the Dvaered Warlords seem to be oblivious to this, so Mannannan will likely continue to be a unicum.</description>
   <bar>This bar is one of many. The increase in trade has also brought an increase in tastes, so there are several places that cater to particular tastes, even some very unsavory ones. Fortunately, the most accessible bar seems to be as respectable as bars come.</bar>
  </general>

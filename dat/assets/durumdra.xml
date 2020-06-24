@@ -25,10 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>While Durumdra technically classifies as a P-class ice world, the place can be quite comfortable to live on. Some regions near the equator melt during part of the planet's solar cycle and during this period there is an outburst of life, ranging from vegetation to small hibernating animals. By Dvaered standards, the planet is not so bad at all.</description>
   <bar>Durumdra doesn't have much to distinguish itself by in the galaxy but the spaceport bar goes a long way to helping. It has drinks from all over the galaxy, though Draygar's awkward location means that most of them are rather pricey. Nevertheless, Durumdra has earned itself a footnote in several noted galactic tourist guides.</bar>
  </general>

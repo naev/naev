@@ -11,11 +11,11 @@
   <y>545.000000</y>
  </pos>
  <assets>
+  <asset>HS-54</asset>
   <asset>Kaira</asset>
+  <asset>NS-27</asset>
   <asset>Nasano</asset>
   <asset>Sevlow</asset>
-  <asset>HS-54</asset>
-  <asset>NS-27</asset>
  </assets>
  <jumps>
   <jump target="Aesria">

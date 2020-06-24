@@ -19,8 +19,8 @@
   <asset>Takeru</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Empire Small</asset>
-  <asset>Virtual Trader Local</asset>
   <asset>Virtual Miner Small</asset>
+  <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
   <jump target="Coriolis">
@@ -42,9 +42,8 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <type>default</type>
-   <pos x="0" y="0"/>
-   <radius>5000</radius>
+   <radius>5000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
    <density>0.250000</density>
   </asteroid>
  </asteroids>

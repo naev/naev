@@ -24,11 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
   <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
  </general>

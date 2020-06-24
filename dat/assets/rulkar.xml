@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Rulk'ar is a mining-world with a strong presence of Za'lek universities thanks to its rather isolated nature aesthetic view. It is a center of terraforming research, turning an already inhabitable planet into a full class-M world.</description>
   <bar>This bar has holopaintings of some of Rulk'ar's breathtaking canyons, mountains, and skyline, as well as the progress on the world's terraforming.</bar>
  </general>

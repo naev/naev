@@ -10,8 +10,7 @@
   <x>540.000000</x>
   <y>-45.000000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
   <jump target="Doeston">
    <autopos/>

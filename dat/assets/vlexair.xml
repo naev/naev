@@ -24,12 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Vlexair is a harsh, frozen world. Formerly a lush paradise, an internal cataclysm caused its molten core to solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an extremely dangerous environment, it's proven suitable only to the Dvaered workers.</description>
   <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the standard Dvaered grogs.</bar>
  </general>

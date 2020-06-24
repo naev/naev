@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Solvac Crops is an agricultural station. Its main purpose is to supply nutrients to satisfy the demand for food on nearby planets. The crops here are genetically modified by the Soromid, and are grown in zero-G conditions, which allows for much more potent yields. Unfortunately, the produce is often structurally unsound, collapsing under its own weight in even low-gravity environments. This is why it us usually processed into liquid or dried foods before being sent to the consumer market.</description>
   <bar>The entire station is zero-G, including the spacedock bar. This can be inconvenient, but most spacers worth their salt know how to deal with it.</bar>
  </general>

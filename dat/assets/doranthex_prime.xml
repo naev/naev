@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Doranthex Prime is a mostly-molten planet. One of the few pieces of solid land is a small island drifting around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the planet itself once a ship has landed.</description>
   <bar>The drinks served in 'The Furnace', as the bar calls itself, are a rather curious sort. They are generally very strong and served lukewarm. The house specialties also contain volcanic ash which is harvested from the planet's surface. A strange bar indeed.</bar>
  </general>

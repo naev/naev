@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>There is literally a world of difference between Thymo and Turawee. Unlike its barren cousin, Turawee is a lush, comfortable world that was never charted even during the Third Growth. The Soromid, having few natural M-class planets at their disposal, take good care of this world. While most other factions would struggle with the trade-off between prosperity and ecology, the Soromid have managed to strike a perfect balance. Turawee may be the only inhabited planet in the galaxy whose environment has not been significantly altered in any way by its occupants.</description>
   <bar>The Soromid are very protective of Turawee. Offworlders are allowed to land, but they have to abide by strict local rules. No smoking is allowed in this bar, nor can any unauthorized goods or substances be brought inside.</bar>
  </general>

@@ -27,8 +27,8 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <pos x="2000" y="2000"/>
-   <radius>5000</radius>
+   <radius>5000.000000</radius>
+   <pos x="2000.000000" y="2000.000000"/>
    <density>0.333333</density>
   </asteroid>
  </asteroids>

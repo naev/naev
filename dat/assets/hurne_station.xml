@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Hurne Station is a commercial center for this region of Sirius space. It serves as a local commodity exchange as well as a warehouse for traders with a long-term strategy. Traders coming from the Frontier often stop by this place, as it is the closest commerce station to the Frontier-Sirius border.</description>
   <bar>As is common on commerce stations, the spacedock bar is both a place to do business and a place to hear the latest rumors about the state of the galaxy.</bar>
  </general>

@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Burnan counts as the unofficial local capital. Aesir is far away and many government services are better rendered locally than over a distance of many hyperspace jumps. Burnan has a large political district in its primary city, this also houses one of the largest Sirian temples in all of Sirius space.</description>
   <bar>Burnan doesn't have a separate spaceport bar in the way many other worlds do. The spaceport bar and the main spaceport hall are, instead,  one and the same thing. There are exits to terminals on all sides and the central area is dominated by an island of service interfaces and counters. There is an elevated area that has tables for visitors to sit down at, where they won't get in the way of the bustle and traffic of the main floor.</bar>
  </general>

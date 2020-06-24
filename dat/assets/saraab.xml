@@ -24,11 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Saraab is a small mining colony. The planet's core is comprised of valuable metals and has almost completely cooled, which makes this world one giant strip mine. The planet is slowly being dismantled and taken to various manufacturing plants elsewhere in the galaxy. In fact, since the planet was first settled around the end of the Imperial Golden Age, its gravity has decreased by 17%.</description>
   <bar>Like on many low-gravity worlds, Saraab's spaceport bar has artificial gravity generators installed in various places. The bar is no exception. However, the generators are old and sometimes break down, which can cause serious discomfort for the patrons. The workers don't seem to mind however - they are used to gravitational shifts.</bar>
  </general>

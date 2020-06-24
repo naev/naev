@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Vennis is a planet with characteristics quite close to the Earth Standard. Its gravity, surface area, day-night cycle and annual cycle closely match that of old Earth. It would be a highly suitable planet to live on, were it not for the highly acidic atmosphere. House Sirius has settled a dome colony here, with the intent of eventually terraforming the planet to a high class residential world. It will be many cycles before this ideal will be realized, but the inhabitants of Vennis persevere.</description>
   <bar>Though the planet is many cycles away from being suitable for open-air human life, the spaceport authorities have put up various promotional holovids that showcase the terraforming effort and its predicted effects. It's a mandatory watch for any visitor to the spaceport bar who wishes to use the standard facilities.</bar>
  </general>

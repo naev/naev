@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Beene is rich in all sorts of common minerals, so the Soromid are using this world the same way anyone would: as a source of raw materials. The elements mined here are processed into standard packages that are used by the Soromid bioships. This supply of minerals means Beene is quite an important strategic location for Soromid fleets.</description>
   <bar>Pilots are advised to wear air-sealed suits when visiting Beene's bar. The planet's atmosphere can cause serious problems for normal humans and the Soromid haven't bothered installing decontamination filters for the local population. As such, having a drink in Beene's bar is a bit of an ordeal. It's one of the less popular places among traders looking for a drink.</bar>
  </general>

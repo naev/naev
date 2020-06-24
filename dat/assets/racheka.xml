@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Racheka is a relatively young Sirius colony. Where most Sirius planets are converted planets that once belonged to another faction, Racheka was actually established by Sirius colonists a considerable time after Sirichana settled on Mutris. Perhaps for this reason the Sirian religion can be felt very strongly here, as there are no remnants of other cultures mingling in the lives of the population.</description>
   <bar>The first thing anyone notices when they step into the bar is the ceiling, which is a holographic display of the galaxy, centered around Anarbalis. Though an impressive display as well as a marvel of technology, the bar's proprietor apparently doesn't realize that many of his customers spend all day looking at the stars, and therefore have little desire to look at them when onworld.</bar>
  </general>

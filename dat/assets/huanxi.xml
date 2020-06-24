@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Huan'xi may be a relatively remote planet, but it has a thriving agriculture. The planet's soil is extremely fertile, allowing for multiple crops per cycle. The planet also exports unique foodstuffs that are difficult to produce elsewhere. Indeed, one can find "genuine Huan'xi products" in food outlets all over the galaxy.</description>
   <bar>The rustic feel of this bar is the product of a careful choice of appointments, music and holographic illusions. The owner clearly feels that customers will be attracted by the atmosphere of his establishments, rather than by the drinks he serves.</bar>
  </general>

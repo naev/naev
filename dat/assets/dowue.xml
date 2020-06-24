@@ -25,12 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged exposure to certain visual wavelengths. This was at first attributed to a contaminated shipment of food, but later it was found that the sun in the Apez system emitted abnormal wavelengths whose effects were multiplied by particulate in Dowue's atmosphere. Shortly thereafter, it became mandatory for all personnel to wear special goggles designed to filter out the harmful light.</description>
   <bar>The Dowue Spaceport Bar is better known as the 'Frozen Shrimp' after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. Even with protective goggles, the dangers of Dowue Syndrome persuade most people to stay indoors and the bar lies at the heart of the spaceport.</bar>
  </general>
