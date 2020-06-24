@@ -25,6 +25,8 @@
 #include "tk/toolkit_priv.h"
 #include "dialogue.h"
 #include "map_find.h"
+#include "hook.h"
+#include "land_takeoff.h"
 
 
 /*
@@ -340,6 +342,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[ECON_CRED_STRLEN];
    Ship* ship;
+   HookParam hparam[2];
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    if (strcmp(shipname, _("None")) == 0)
@@ -366,6 +369,14 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = shipname;
+   hparam[1].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_buy", hparam );
+   if (land_takeoff)
+      takeoff(1);
 }
 
 /**

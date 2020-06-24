@@ -49,6 +49,8 @@ static int hook_commbuy( lua_State *L );
 static int hook_commsell( lua_State *L );
 static int hook_outfitbuy( lua_State *L );
 static int hook_outfitsell( lua_State *L );
+static int hook_shipbuy( lua_State *L );
+static int hook_shipsell( lua_State *L );
 static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
@@ -73,6 +75,8 @@ static const luaL_Reg hook_methods[] = {
    { "comm_sell", hook_commsell },
    { "outfit_buy", hook_outfitbuy },
    { "outfit_sell", hook_outfitsell },
+   { "ship_buy", hook_shipbuy },
+   { "ship_sell", hook_shipsell },
    { "input", hook_input },
    { "mouse", hook_mouse },
    { "safe", hook_safe },
@@ -566,7 +570,7 @@ static int hook_outfitbuy( lua_State *L )
 /**
  * @brief Hooks the function to the player selling any sort of outfit.
  *
- * The hook receives the name of the outfit and the quantity being bought.
+ * The hook receives the name of the outfit and the quantity being sold.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -577,6 +581,40 @@ static int hook_outfitsell( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "outfit_sell", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player buying any sort of ship.
+ *
+ * The hook receives the name of the ship type bought.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc ship_buy( funcname, arg )
+ */
+static int hook_shipbuy( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "ship_buy", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player selling any sort of ship.
+ *
+ * The hook receives the name of the ship type sold and the player-given name of the ship.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc ship_sell( funcname, arg )
+ */
+static int hook_shipsell( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "ship_sell", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

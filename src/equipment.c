@@ -33,6 +33,8 @@
 #include "slots.h"
 #include "map.h"
 #include "ndata.h"
+#include "hook.h"
+#include "land_takeoff.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -1910,6 +1912,9 @@ static void equipment_sellShip( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[ECON_CRED_STRLEN], *name;
    credits_t price;
+   Pilot *p;
+   Ship *s;
+   HookParam hparam[3];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
@@ -1925,6 +1930,10 @@ static void equipment_sellShip( unsigned int wid, char* str )
          _("Are you sure you want to sell your ship %s for %s credits?"), shipname, buf))
       return;
 
+   /* Store ship type. */
+   p = player_getShip( shipname );
+   s = p->ship;
+
    /* Sold. */
    name = strdup(shipname);
    player_modCredits( price );
@@ -1935,6 +1944,16 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Display widget. */
    dialogue_msg( _("Ship Sold"), _("You have sold your ship %s for %s credits."), name, buf );
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = s->name;
+   hparam[1].type    = HOOK_PARAM_STRING;
+   hparam[1].u.str   = name;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_sell", hparam );
+   if (land_takeoff)
+      takeoff(1);
    free(name);
 }
 
