@@ -68,6 +68,9 @@ typedef struct PlayerConf_s {
    char *ndata; /**< Ndata path to use. */
    char *datapath; /**< Path for user data (saves, screenshots, etc.). */
 
+   /* Language. */
+   char *language; /**< Language to use. */
+
    /* OpenGL properties. */
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
    int vsync; /**< Whether or not to use vsync. */

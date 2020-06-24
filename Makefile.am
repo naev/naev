@@ -24,19 +24,25 @@ MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
 NAEV	     = naev$(EXEEXT)
 
-EXTRA_DIST = build/config.rpath  LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
+VERSIONFILE = VERSION
+LANGUAGEFILE = dat/LANGUAGES
+
+EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
+CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
 .PHONY: docs utils help install-ndata
 
-all-local: $(NAEV) VERSION
+all-local: $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
 $(NAEV):
 	@echo "  LN    $(NAEV)"
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
-VERSION: src/config.h
+$(VERSIONFILE): src/config.h
 	echo $(VERSION) > $@
+
+$(LANGUAGEFILE): po/LINGUAS
+	tail -n +2 po/LINGUAS > $@
 
 if HAVE_UTILS
 utils: $(MKSPR)
@@ -44,10 +50,10 @@ utils: $(MKSPR)
 $(MKSPR):
 	$(MAKE) -C utils/mkspr
 
-$(DATA_ARCHIVE): VERSION
+$(DATA_ARCHIVE): $(VERSIONFILE) $(LANGUAGEFILE)
 	@echo " ZIP   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
-    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS VERSION naev-confupdate.sh dat/
+    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS $(VERSIONFILE) naev-confupdate.sh dat/
 else
 utils:
 
