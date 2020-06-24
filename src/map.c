@@ -1373,6 +1373,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             mx -= w/2 - map_xpos;
             my -= h/2 - map_ypos;
 
+            map_drag = 1;
             for (i=0; i<systems_nstack; i++) {
                sys = system_getIndex( i );
 
@@ -1389,6 +1390,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
                   if (map_selected != -1) {
                      if ( sys == system_getIndex( map_selected ) ){
                         printf("System already selected - so display solar system map\n");
+			/* System already selected, so display solar system map.  And turn off the mouse-down event. */
+			map_drag = 0;
                         map_system_open(map_selected);
                      }
                   }
@@ -1396,7 +1399,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
                   break;
                }
             }
-            map_drag = 1;
          }
          return 1;
 

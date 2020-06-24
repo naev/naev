@@ -68,9 +68,9 @@ CODE_SOURCE = \
 	load.c \
 	log.c \
 	map.c \
-	map_system.c
 	map_find.c \
 	map_overlay.c \
+	map_system.c \
 	md5.c \
 	menu.c \
 	mission.c \
