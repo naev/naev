@@ -45,7 +45,7 @@ function create ()
    has_phalanx = false
    has_kestrel = false
    flfships = 0
-   reputation = 3
+   reputation = 1
 
    credits = 1000000
 
@@ -92,3 +92,15 @@ function accept ()
    end
 end
 
+
+function land_flf ()
+   leave()
+   last_system = planet.cur()
+   if planet.cur():faction() == faction.get("FLF") then
+      tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
+      player.pay( credits )
+      flf_setReputation( 80 )
+      faction.get("FLF"):modPlayerSingle( reputation )
+      misn.finish( true )
+   end
+end
