@@ -139,6 +139,7 @@ function accept ()
    if player.pilot():ship():class() ~= "Luxury Yacht" then
       if tk.yesno( nolux_title, nolux_text:format( numstring(credits_nolux) ) ) then
          nolux_known = true
+         misn.setReward( misn_reward:format( numstring( credits_nolux ) ) )
       else
          misn.finish()
       end
