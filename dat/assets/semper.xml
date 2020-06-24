@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Though Semper is slightly on the poor side by Imperial standards, the people who live here at least have the comfort of tight Imperial security. For that reason, it is quite popular among immigrants into the Empire, who usually don't have the means to settle on the richer civilian worlds.</description>
   <bar>Semper is an immigrant world, which is reflected in its spaceport bar. The design betrays influences from all over the galaxy, such as a holograph of a Dvaered cruiser, a Sirius crest on some of the furniture and even some Soromid-oriented drinks.</bar>
  </general>

@@ -20,7 +20,7 @@ Make comm chatter appear during the battle
 Add some consequences if the player aborts the mission
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 
 -- This section stores the strings (text) for the mission.

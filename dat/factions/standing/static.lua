@@ -18,7 +18,7 @@
 --]]
 
 
-include "dat/factions/standing/skel.lua"
+require "dat/factions/standing/skel.lua"
 
 
 function faction_hit( current, amount, source, secondary )

@@ -4,7 +4,7 @@
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
     
 --the intro messages
 bmsg = {}

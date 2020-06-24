@@ -22,8 +22,8 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
 
 pay_title = _("Mission Completed")
 pay_text    = {}

@@ -3,9 +3,9 @@
 -- This mission is started from a helper event.
 --]]
 
-include "fleethelper.lua"
-include "proximity.lua"
-include "enum.lua"
+require "fleethelper.lua"
+require "proximity.lua"
+require "enum.lua"
 
 title1 = _("You have mail")
 text1 = _([[Your computer console flashes you a notice. It seems you received a message through the Sirian information exchange network. You play it.

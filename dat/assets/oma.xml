@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Oma is one of the harsher desert worlds. The external temperature varies nearly 400 degrees each day, making it completely incapable of sustaining human life outside of climate-controlled bases. The lack of proper terraforming equipment also makes it hard on the visitors by the drastic temperature changes they endure across the base.</description>
   <bar>The Lost Drunk isn't much of a bar. The high price of most beverages and the low population results in few customers. From what you can see it's mainly shipping pilots and the odd mercenary sitting apart from each other. Not a jolly place.</bar>
  </general>

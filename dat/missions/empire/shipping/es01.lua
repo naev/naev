@@ -7,7 +7,7 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 -- Mission details
 bar_desc = _("You see Commander Soldner who is expecting you.")

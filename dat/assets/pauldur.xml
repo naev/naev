@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Pauldur is a small Sirius community, the only inhabited planet in a remote area of Sirius space. Though economically struggling at the best of times, the people here make the most of their situation. Life isn't bad, but it's hard to get the latest fashion items sometimes.</description>
   <bar>This bar is fairly quiet. Not many people stop by Pauldur who aren't from the moon to begin with, and those who are from here don't usually stop by the spaceport bar.</bar>
  </general>

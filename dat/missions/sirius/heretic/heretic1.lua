@@ -3,7 +3,7 @@
    the player is asked to deliver a message to a "shady character"
    on the wringer in the suna system.]]
    
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 --all the messages before the mission starts
 bmsg = {}

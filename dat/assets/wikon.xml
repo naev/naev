@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Wikon is a high-profile Sirian world, one of the driving economical forces in the core of Sirius space. With planetary characteristics fairly close to ideal class M, it is both attractive for habitation and industry. Land values are rather high, and the population tends toward the Serra class.</description>
   <bar>A better name for the spaceport bar would be "spaceport lounge". The establishment is luxurious even by non-spaceport standards, offering various recreational facilities in addition to the standard ones. It is possible to dine here too, and the menu is far from modest. Of course all this comes with a considerable price tag, but the economic climate allows for that.</bar>
  </general>

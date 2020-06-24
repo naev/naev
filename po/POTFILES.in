@@ -86,7 +86,6 @@ src/nlua_system.c
 src/nlua_tex.c
 src/nlua_time.c
 src/nlua_tk.c
-src/nlua_tut.c
 src/nlua_var.c
 src/nlua_vec2.c
 src/nmath.c
@@ -371,7 +370,6 @@ dat/missions/pirate/pir_cargo.lua
 dat/missions/pirate/pir_clan_cargo.lua
 dat/missions/pirate/pir_ship_stealing.lua
 dat/missions/pirate/pirate_commodity_run.lua
-dat/missions/pirate/ruse.lua
 dat/missions/rehab_common.lua
 dat/missions/shadow/darkshadow.lua
 dat/missions/shadow/shadowrun.lua
@@ -427,6 +425,7 @@ dat/scripts/numstring.lua
 dat/scripts/pilot/generic.lua
 dat/scripts/pilot/pirate.lua
 dat/scripts/playerform.lua
+dat/scripts/portrait.lua
 dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua

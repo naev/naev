@@ -184,14 +184,17 @@ int main( int argc, char** argv )
       setvbuf( stdout, NULL, _IONBF, 0 );
       setvbuf( stderr, NULL, _IONBF, 0 );
    }
-#endif
+#endif /* HAS_WIN32 */
 
    /* Set up locales. */
-   //setlocale(LC_ALL|~LC_NUMERIC, "");
-   setlocale(LC_ALL, "");
-   bindtextdomain(PACKAGE_NAME, LOCALEDIR);
+   /* When using locales with difference in '.' and ',' for splitting numbers it
+    * causes pretty much everything to blow up, so we must refer from loading the
+    * numeric type of the locale. */
+   setlocale( LC_ALL, "" );
+   setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
+   bindtextdomain( PACKAGE_NAME, LOCALEDIR );
    //bindtextdomain("naev", "po/");
-   textdomain(PACKAGE_NAME);
+   textdomain( PACKAGE_NAME );
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
@@ -278,6 +281,17 @@ int main( int argc, char** argv )
    }
    else
       log_purge();
+
+   /* Try to set the language again if Naev is attempting to override the locale stuff.
+    * This is done late because this is the first stage at which we have the conf file
+    * fully loaded. */
+   if (conf.language != NULL) {
+      setlocale( LC_ALL, (strcmp(conf.language,"en")==0) ? "C" : conf.language );
+      setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
+      bindtextdomain( PACKAGE_NAME, LOCALEDIR );
+      textdomain( PACKAGE_NAME );
+      DEBUG(_("Reset language to \"%s\""), conf.language);
+   }
 
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)

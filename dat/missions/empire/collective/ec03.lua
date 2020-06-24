@@ -12,7 +12,7 @@
 
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
 
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")

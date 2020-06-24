@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Though technically an oceanic world, Jaqueline's oceans are filled with algae that absorb light and release toxic fumes into the planet's atmosphere. The organic soup is so thick that the planet appears purple when seen from space. The Soromid, true to form, have taken a great interest in the local ecosystem. Some people believe they are conducting bio-experiments here, treating the whole planet as a laboratory.</description>
   <bar>Though Jaqueline is a fascinating world (according to the Soromid anyway), little can be seen of it for an ordinary ship captain visiting here. The spaceport and its neighboring habitation complex are completely shielded from the outside environment, and any windows would soon be rendered opaque, crusted over with residue from the toxic gases outside.</bar>
  </general>

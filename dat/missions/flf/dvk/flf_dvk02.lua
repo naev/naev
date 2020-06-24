@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- Localization
 title = {}
@@ -132,7 +132,7 @@ function accept ()
 
       ore_needed = 40
       credits = 300000
-      reputation = 10
+      reputation = 1
       pir_reputation = 10
       pir_starting_reputation = faction.get("Pirate"):playerStanding()
 
@@ -292,7 +292,7 @@ function land ()
       diff.apply( "Fury_Station" )
       diff.apply( "flf_pirate_ally" )
       player.pay( credits )
-      flf_setReputation( 55 )
+      flf_setReputation( 50 )
       faction.get("FLF"):modPlayer( reputation )
       faction.get("Pirate"):modPlayerSingle( pir_reputation )
       misn.finish( true )

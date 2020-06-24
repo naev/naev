@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Rather ironically, yet aptly named, Arcadia is a world bombarded by acidic rains and other, equally nasty weather patterns. As such, it was the core world of a successful experiment to see if such an environment can still support a massive crop growing campaign given the proper insulation technology and procedures. The project was in fact so successful that Arcadia became a hub for food distribution throughout localized Za'lek space.</description>
   <bar>Many freight captains, farmers and scientists mingle peacefully here, discussing new and better ways to improve farming technology and get more and better food for less cost.</bar>
  </general>

@@ -24,10 +24,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Brooks is a bustling, highly populated Imperial civilian planet. With the decline of the Empire, it has found itself on the border of dangerous space, a rather uncomfortable position. As Brooks is a rich planet with a lot of economic and political weight within the Empire, the Imperial Navy protects Arcturus for Brooks' sake, as much as for the Imperial core systems.</description>
   <bar>On Brooks everything is expensive, something that comes with most economically booming worlds. However, most traders put up with the inflated prices for refreshments and services at the spaceport bar, Brooks, after all, is a boom world and where profit is to made.</bar>
  </general>

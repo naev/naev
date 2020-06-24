@@ -2,27 +2,21 @@
 <unidiffs>
  <unidiff name="collective_dead">
   <system name="C-00">
-   <asset name="P0125">remove</asset>
    <asset name="S00000">remove</asset>
    <asset name="S23001">remove</asset>
    <asset name="S49588">remove</asset>
   </system>
   <system name="C-14">
-   <asset name="P9234">remove</asset>
    <asset name="S49281">remove</asset>
    <asset name="S49335">remove</asset>
   </system>
   <system name="C-28">
-   <asset name="P2020">remove</asset>
-   <asset name="P2021">remove</asset>
-   <asset name="P2022">remove</asset>
    <asset name="S00018">remove</asset>
    <asset name="S00522">remove</asset>
    <asset name="S00653">remove</asset>
    <asset name="S38729">remove</asset>
   </system>
   <system name="C-59">
-   <asset name="P9122">remove</asset>
    <asset name="S13024">remove</asset>
    <asset name="S72288">remove</asset>
    <asset name="S72839">remove</asset>

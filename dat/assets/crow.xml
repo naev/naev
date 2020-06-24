@@ -22,14 +22,11 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Despite bordering on a dangerous sector of space, the Corvus system, and Crow in particular, are thriving. The planet is a frontier of culture, commerce and prosperity. Even for the Soromid, one of the youngest societies in the galaxy, being away from the core worlds can give people the breathing room to live on the edge.</description>
   <bar>This bar was designed with acoustics in mind. The background music is pervasive, yet unobtrusive and conversations held at one table won't disturb those at another. Given some of the newer customs cropping up here a lot of out-of-system traders are thankful for this.</bar>
  </general>

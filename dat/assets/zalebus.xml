@@ -22,14 +22,11 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Zalebus is a nice planet that was terraformed by the Soromid shortly before the Incident. It was a borderline class M to begin with, so the process was one of the fastest in human history. Now, there are billions of people living here.</description>
   <bar>The age demographic of Zalebus tends toward younger citizens. As a result, the spaceport bar is often full of youngsters preparing for a trip into space, or just returning from one.</bar>
  </general>

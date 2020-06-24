@@ -1,1 +1,1 @@
-include("dat/ai/tpl/generic.lua")
+require("dat/ai/tpl/generic.lua")

@@ -25,11 +25,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Crylo is an oceanic world with very little land surface, but it sports a surprising number of inhabitants. As it happens, the aquatic life found on this world is considered a delicacy in large parts of the galaxy, this has attracted people to settle and spawned a flourishing fishing industry.</description>
   <bar>Fishing is the name of the game on Crylo and the spaceport bar is nothing if not in character. Almost everything in here is fish-themed, including the bar, which has been made out of the spine of some gargantuan aquatic creature. Some of the more experimental drinks might also be better avoided unless you like your ingredients very fresh indeed.</bar>
  </general>

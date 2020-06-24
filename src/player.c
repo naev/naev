@@ -3657,14 +3657,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"commodities")) {
+      else if (xml_isNode(node, "commodities")) {
          cur = node->xmlChildrenNode;
          do {
-            if (xml_isNode(cur,"commodity")) {
-               xmlr_attr(cur,"quantity",q);
-               xmlr_attr(cur,"id",id);
+            if (xml_isNode(cur, "commodity")) {
+               xmlr_attr(cur, "quantity", q);
+               xmlr_attr(cur, "id", id);
                quantity = atoi(q);
-               i = (id==NULL) ? 0 : atoi(id);
+               i = (id == NULL) ? 0 : atoi(id);
                free(q);
                if (id != NULL)
                   free(id);

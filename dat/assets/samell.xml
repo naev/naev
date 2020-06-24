@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Samell is a predominantly industrial world. Heavy industry is often not welcome on densely populated M class planets, so it tends to settle on planets with hostile environments. Samell is no exception to that trend.</description>
   <bar>Whoever designed the spaceport placed the spaceport bar at the outside, adding windows so visitors could look out over the frozen landscape. He didn't realize that the windows would soon become frozen over themselves, making them completely useless.</bar>
  </general>

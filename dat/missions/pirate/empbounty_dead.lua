@@ -27,9 +27,9 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
-include "dat/missions/pirate/common.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "dat/missions/pirate/common.lua"
 
 
 -- Mission details

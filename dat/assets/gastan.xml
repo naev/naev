@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Gastan is one of House Za'leks research worlds that moonlights as a mining world for valuable materials. Many of the labs here are off-limits to outsiders, but the main city and space-port is a popular hub for internal trade and commerce.</description>
   <bar>There is nothing particularly note-worthy about this bar other than the complex machinery on display through meter-thick translucent plasteel. The bar is built underground in a long-drained mining shaft, and the equipment seems to be of interest to many of the patrons.</bar>
  </general>

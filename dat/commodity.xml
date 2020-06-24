@@ -5,6 +5,7 @@
   <description>Evolving from the military rations of centuries past, modern packaged meals are rich in nutrients and able to last decades in their vacuum-sealed packaging.</description>
   <price>140</price>
   <gfx_store>standard_mealpacks</gfx_store>
+  <standard/>
   <planet_modifier type="0">1.1</planet_modifier>
   <planet_modifier type="1">1.05</planet_modifier>
   <planet_modifier type="2">1.2</planet_modifier>
@@ -27,6 +28,7 @@
   <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
   <price>210</price>
   <gfx_store>base</gfx_store>
+  <standard/>
   <planet_modifier type="2">1.1</planet_modifier>
   <planet_modifier type="H">1.05</planet_modifier>
   <planet_modifier type="I">1.2</planet_modifier>
@@ -66,10 +68,53 @@
   <faction_modifier type="Sirius">0.9</faction_modifier>
  </commodity>
  <commodity>
+  <name>Diamond</name>
+  <description>Diamonds are formed in massive telluric planets, deep under the ground, by the high pressure. In the past, diamonds used to be very expensive due to their rarity on the surface of earth. Nowadays, artificial diamonds are so easy to produce that the prices are really low.</description>
+  <price>220</price>
+  <gfx_store>diamonds</gfx_store>
+  <gfx_space>diamonds</gfx_space>
+  <standard/>
+  <planet_modifier type="0">1.2</planet_modifier>
+  <planet_modifier type="1">1.2</planet_modifier>
+  <planet_modifier type="2">1.1</planet_modifier>
+  <planet_modifier type="K">0.9</planet_modifier>
+  <planet_modifier type="L">0.8</planet_modifier>
+  <planet_modifier type="M">0.9</planet_modifier>
+  <planet_modifier type="N">1.05</planet_modifier>
+  <planet_modifier type="O">1.1</planet_modifier>
+  <planet_modifier type="P">0.9</planet_modifier>
+  <period>70</period>
+  <population_modifier>0.05</population_modifier>
+  <faction_modifier type="Dvaered">0.9</faction_modifier>
+  <faction_modifier type="FLF">0.8</faction_modifier>
+ </commodity>
+ <commodity>
+  <name>Water</name>
+  <description>On some desertic or barren planets, and on stations, water is quite expensive due to the high demand.</description>
+  <price>250</price>
+  <gfx_store>heavy_water</gfx_store>
+  <gfx_space>water</gfx_space>
+  <standard/>
+  <planet_modifier type="0">1.2</planet_modifier>
+  <planet_modifier type="1">1.2</planet_modifier>
+  <planet_modifier type="2">1.1</planet_modifier>
+  <planet_modifier type="A">0.7</planet_modifier>
+  <planet_modifier type="B">1.1</planet_modifier>
+  <planet_modifier type="D">1.2</planet_modifier>
+  <planet_modifier type="H">1.3</planet_modifier>
+  <planet_modifier type="M">0.9</planet_modifier>
+  <planet_modifier type="P">0.8</planet_modifier>
+  <period>110</period>
+  <population_modifier>0.05</population_modifier>
+  <faction_modifier type="Dvaered">1.05</faction_modifier>
+  <faction_modifier type="FLF">1.1</faction_modifier>
+ </commodity>
+ <commodity>
   <name>Industrial Goods</name>
   <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
   <price>340</price>
   <gfx_store>recycled_electronics</gfx_store>
+  <standard/>
   <planet_modifier type="1">1.1</planet_modifier>
   <planet_modifier type="2">1.1</planet_modifier>
   <planet_modifier type="3">1.1</planet_modifier>
@@ -93,6 +138,7 @@
   <description>An assortment of medicines suitable for curing all sorts of ailments.</description>
   <price>750</price>
   <gfx_store>vaccines</gfx_store>
+  <standard/>
   <planet_modifier type="1">1.1</planet_modifier>
   <planet_modifier type="2">1.2</planet_modifier>
   <planet_modifier type="H">1.2</planet_modifier>
@@ -114,6 +160,7 @@
   <description>All sorts of high quality luxury goods.</description>
   <price>630</price>
   <gfx_store>first_class_passenger</gfx_store>
+  <standard/>
   <planet_modifier type="0">1.05</planet_modifier>
   <planet_modifier type="1">1.2</planet_modifier>
   <planet_modifier type="2">0.8</planet_modifier>

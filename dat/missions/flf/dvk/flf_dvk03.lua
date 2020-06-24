@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- Localization stuff
 title = {}
@@ -99,7 +99,7 @@ function accept ()
       misn.setReward( misn_reward )
 
       credits = 300000
-      reputation = 10
+      reputation = 5
 
       started = false
       attacked_station = false
@@ -374,7 +374,7 @@ end
 
 function finish ()
    player.pay( credits )
-   flf_setReputation( 75 )
+   flf_setReputation( 70 )
    faction.get("FLF"):modPlayer( reputation )
    misn.finish( true )
 end

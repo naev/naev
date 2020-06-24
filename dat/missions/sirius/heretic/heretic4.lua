@@ -8,7 +8,7 @@
    to be very hard, and slightly combat oriented, but more supposed to
    involve smuggling elements.]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 --beginning messages
 bmsg = {}

@@ -14,7 +14,7 @@
    Commodity delivery missions.
 --]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 --Mission Details
 misn_title = _("%s Delivery")

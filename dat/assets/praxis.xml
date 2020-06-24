@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Praxis is an anomaly in Dvaered culture, known for its commerce rather than production of materials. Beginning as a small colony, it has become increasingly important since the Incident. Praxis is now considered one of the core Dvaered worlds, the gateway through which Dvaered ore and materials flow into Empire space.</description>
   <bar>While not nearly as pristine as many Empire bars, the Praxis bar is remarkably well-kept for a Dvaered bar.</bar>
  </general>

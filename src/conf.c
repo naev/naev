@@ -60,7 +60,12 @@ lua_pop(naevL,1);
 
 
 /* Global configuration. */
-PlayerConf_t conf = { .ndata = NULL, .sound_backend = NULL, .joystick_nam = NULL };
+PlayerConf_t conf = {
+   .ndata = NULL,
+   .language=NULL,
+   .sound_backend = NULL,
+   .joystick_nam = NULL
+};
 
 /* from main.c */
 extern int show_fps;
@@ -121,6 +126,11 @@ void conf_setDefaults (void)
    if (conf.ndata != NULL)
       free(conf.ndata);
    conf.ndata        = NULL;
+
+   /* Language. */
+   if (conf.language != NULL)
+      free(conf.language);
+   conf.language     = NULL;
 
    /* Joystick. */
    conf.joystick_ind = -1;
@@ -284,6 +294,8 @@ void conf_cleanup (void)
 {
    if (conf.ndata != NULL)
       free(conf.ndata);
+   if (conf.language != NULL)
+      free(conf.language);
    if (conf.sound_backend != NULL)
       free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
@@ -341,6 +353,9 @@ int conf_loadConfig ( const char* file )
 
       /* ndata. */
       conf_loadString("data",conf.ndata);
+
+      /* Language. */
+      conf_loadString("language",conf.language);
 
       /* OpenGL. */
       conf_loadInt("fsaa",conf.fsaa);
@@ -885,6 +900,11 @@ int conf_saveConfig ( const char* file )
    /* ndata. */
    conf_saveComment(_("The location of Naev's data pack, usually called 'ndata'"));
    conf_saveString("data",conf.ndata);
+   conf_saveEmptyLine();
+
+   /* Language. */
+   conf_saveComment(_("Language to use. Set to the two character identifier to the language (e.g., \"en\" for English), and nil for autodetect."));
+   conf_saveString("language",conf.language);
    conf_saveEmptyLine();
 
    /* OpenGL. */

@@ -11,9 +11,9 @@
 --]]
 
 --Needed scripts
-include "numstring.lua"
-include "proximity.lua"
-include "portrait.lua"
+require "numstring.lua"
+require "proximity.lua"
+require "portrait.lua"
 
 title = {}
 text = {}

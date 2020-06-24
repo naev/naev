@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Soromid space is low on worlds suitable for agriculture, so the Soromid need to rely on alternative food production. Gaula, an aquatic planet, is one such alternative. Vast stretches of the ocean floor are taken up by enormous submarine farms where certain kinds of underwater flora are cultivated and harvested, to be processed into food by the factory station up above.</description>
   <bar>The spaceport and its accompanying support facilities are floating on a platform above one of the primary farms on Gaula. The water is strictly off-limits, and anyone foolish enough to dump waste into the ocean is harshly penalized.</bar>
  </general>

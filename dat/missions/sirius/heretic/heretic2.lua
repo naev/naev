@@ -3,7 +3,7 @@
    nasin, the wringer/suna. house sirius is sending in recon parties.
    the players job is to take out any and all sirius in the system.]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 bmsg = {}
 --beginning messages

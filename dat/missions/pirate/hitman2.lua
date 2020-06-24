@@ -8,7 +8,7 @@
 
 --]]
 
-include "dat/missions/pirate/common.lua"
+require "dat/missions/pirate/common.lua"
 
 -- Bar information
 bar_desc = _("You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss.")

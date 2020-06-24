@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>From space, Mendez looks like a dustball. Its surface is mostly brown and the only visible clouds are dust storms. It is therefore rather surprising that the Soromid use this planet as a major food growing world. The Soromid have developed a kind of crop that will grow in the harsh conditions of Mendez. Unfortunately, the leaves are brown and tough and, while nutritious, don't taste very good.</description>
   <bar>When there's a dust storm raging outside, the spaceport bar is filled with an eerie noise. This happens quite a lot, but despite the local authorities' best efforts, the sound refuses to be blocked out completely.</bar>
  </general>

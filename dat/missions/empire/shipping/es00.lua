@@ -7,7 +7,7 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
 misn_title = _("Prisoner Exchange")

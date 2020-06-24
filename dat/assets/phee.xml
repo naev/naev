@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Phee is a tad hot, but it's still habitable. The people who live here have to be healthy and robust to stand the environment, and that's the reason why Dvaered High Command likes to conscript new soldiers from this world. But rather than feel dissatisfied about this, the population takes pride in its history of military service. These people are true Dvaered.</description>
   <bar>The owner of the bar has served in several Dvaered campaigns in his day, and it shows. The bar is decorated with trophies and other memorabilia from those days, and the man will tell anyone who will listen about what he calls his glory days.</bar>
  </general>

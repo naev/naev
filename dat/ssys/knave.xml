@@ -11,8 +11,8 @@
   <y>-52.237037</y>
  </pos>
  <assets>
-  <asset>Virtual Pirate Small</asset>
   <asset>Virtual Miner Small</asset>
+  <asset>Virtual Pirate Small</asset>
  </assets>
  <jumps>
   <jump target="Delta Polaris">
@@ -26,9 +26,8 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <type>default</type>
-   <pos x="-4500" y="4000"/>
-   <radius>2000</radius>
+   <radius>2000.000000</radius>
+   <pos x="-4500.000000" y="4000.000000"/>
    <density>0.500000</density>
   </asteroid>
  </asteroids>

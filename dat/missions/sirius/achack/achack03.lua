@@ -2,8 +2,8 @@
 -- This is the third mission in the Academy Hack minor campaign.
 --]]
 
-include "fleethelper.lua"
-include "proximity.lua"
+require "fleethelper.lua"
+require "proximity.lua"
 
 
 title1 = _("Talking to Joanne")

@@ -1,4 +1,4 @@
-include("dat/factions/spawn/common.lua")
+require("dat/factions/spawn/common.lua")
 
 
 -- @brief Spawns a single small ship.

@@ -8,7 +8,7 @@
 
 -- localization stuff, translators would work here
 
-include("fleethelper.lua")
+require("fleethelper.lua")
 
 title = {}
 text = {}

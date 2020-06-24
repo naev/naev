@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Quite a lot of Soromid live on Flach. Where normal humans would have built a mining colony at best, the Soromid found a planet good enough to build extensive megacities and suburban industries.</description>
   <bar>The spaceport bar is one of the few places on the planet that is environmentally conditioned to suit normal humans. Any non-Soromid wishing to visit the actual population centers will need to wear protective clothing ... or suffer the consequences.</bar>
  </general>

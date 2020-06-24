@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Paxadon's population has been estimated at an impressive ten billion in the latest census. For a world not much larger than old Earth, that's a hefty number. Over the cycles, the local authorities have found it necessary to banish all heavy industry from the planet's surface to combat the rapidly increasing levels of pollution. The world's air is cleaner these days, but it's not quite at a comfortable, or even healthy level.</description>
   <bar>This is the main Paxadon spaceport bar. Paxadon has several secondary spaceports, because traffic to and from the world is rather heavy. The main spaceport remains the port of choice for most spacers, though, because it alone offers the various utilities that many need in everyday space life. The spaceport bar is one such utility.</bar>
  </general>

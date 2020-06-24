@@ -22,13 +22,11 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Another gas giant, another Soromid outpost. This particular outpost is rather larger than some due to the large amount of mineral and element extraction performed here. The planet is high in organic matter as well as elements used to produce them, this makes it an, almost literal, gold mine for Soromid building materials.</description>
   <bar>As per the case for many Soromid bars in less than hospitable places, the atmosphere in this bar is rather stuffy with an element of danger for non-Soromids, the air isn't too great either. Most of the drinks here are served with straws, which is a thoughtful touch for those traders who are forced to wear air-breathers.</bar>
  </general>

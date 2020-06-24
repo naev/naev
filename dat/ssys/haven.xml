@@ -41,9 +41,9 @@
    <type>default</type>
    <type>default</type>
    <type>default</type>
-   <type>golden</type>
-   <pos x="6000" y="6000"/>
-   <radius>4000</radius>
+   <type>massive</type>
+   <radius>4000.000000</radius>
+   <pos x="6000.000000" y="6000.000000"/>
    <density>0.500000</density>
   </asteroid>
  </asteroids>

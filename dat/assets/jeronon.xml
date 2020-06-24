@@ -22,13 +22,10 @@
    <refuel/>
    <bar/>
    <missions/>
-   <outfits/>
    <commodity/>
+   <outfits/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Jeronon is a cold, lifeless ball of rock. Geologists claim it was rather cool even in its early days, and now its core barely has any heat left. Worlds like this are not unheard of, but Jeronon is an unusually large specimen. A mining corporation and a spaceship peripheral manufacturer have set up a joint enterprise here, extracting the vast amounts of base metals from the planet's interior and fashioning them into equipment for use on ships.</description>
   <bar>The spaceport bar is probably the most luxurious public facility on the planet. Not that it's a particularly nice spaceport bar, it's just that all the other facilities are even danker and grubbier than it.</bar>
  </general>

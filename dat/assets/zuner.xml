@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Zuner's surface has been dedicated almost entirely to crop growing. While there are some urban centers scattered around the world, their population is low compared to the residential megaplexes of more densely populated worlds. Though the community is to a large extent agricultural, the inhabitants are in no way out of touch with the rest of the galaxy. In fact, Zuner is quite wealthy, given how lucrative food production can be.</description>
   <bar>Many spacers think of agricultural worlds as backwater places that lag some 30 cycles behind the rest of the galaxy. Sometimes, they are right. But not in the case of Zuner. The spaceport is as modern as can be, and the spaceport bar wouldn't be out of place even in the Sirius core.</bar>
  </general>

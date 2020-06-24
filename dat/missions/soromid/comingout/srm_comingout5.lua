@@ -17,8 +17,8 @@
 
 --]]
 
-include "numstring.lua"
-include "dat/missions/soromid/comingout/srm_comingout3.lua"
+require "numstring.lua"
+require "dat/missions/soromid/comingout/srm_comingout3.lua"
 
 title = {}
 text = {}

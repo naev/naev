@@ -27,7 +27,7 @@
 
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")

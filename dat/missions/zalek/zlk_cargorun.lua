@@ -3,7 +3,7 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
 
 -- Bar Description
 bar_desc = _("This Za'lek scientist seems to be looking for someone.")

@@ -11,8 +11,8 @@
 
 ]]--
 
-include "proximity.lua"
-include "numstring.lua"
+require "proximity.lua"
+require "numstring.lua"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")

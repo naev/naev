@@ -17,7 +17,7 @@
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
 
 -- Mission details
 bar_desc = _("Commander Soldner is waiting for you.")
@@ -45,7 +45,7 @@ msg = {}
 msg[1] = _("MISSION FAILED: VIP is dead.")
 msg[2] = _("MISSION FAILED: You abandoned the VIP.")
 
-include "dat/missions/empire/common.lua"
+require "dat/missions/empire/common.lua"
 
 function create ()
    -- Target destination

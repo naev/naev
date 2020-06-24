@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Draconis Epsilon is a densely populated Imperial world. It grew rich in the days before the Incident, when Draconis was still a core system, not at the outer fringes of Imperial controlled territory. The inhabitants here have suffered from the change, but not as much as you might expect. The world maintains a solid consumer base.</description>
   <bar>The spaceport bar on Draconis Epsilon is circular in shape, with exits all around leading to the various spaceport platforms. The place is gigantic, providing seats for up to ten thousand customers at the same time, and more at the bar. Most spacers who have visited Epsilon Draconis agree that few spaceport bars are quite as impressive as this one.</bar>
  </general>

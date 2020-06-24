@@ -4,8 +4,8 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 
-include "dat/events/tutorial/tutorial-common.lua"
-include "portrait.lua"
+require "dat/events/tutorial/tutorial-common.lua"
+require "portrait.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -154,7 +154,7 @@ msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just mess
                               _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
                               _([["Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."]]),
-                              _([["I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
+                              _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
                               _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]])
                            }
@@ -173,13 +173,13 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"]]),
                               _([["These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."]]),
                               _([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
-                              _([["Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of them at a time, and \abshift\a0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?"]]),
+                              _("\"Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of them at a time, and \abshift\a0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?\""),
                               _([["If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."]]),
-                              _([["Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship."]]),
+                              _([["Some weapons have a different effect on shields than they do on armor. Keep that in mind when equipping your ship."]]),
                               _([["Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!"]]),
                               _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
                               _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
-                              _([["Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."]]),
+                              _([["Scramblers and jammers make it harder for missiles to track you. They can be very handy if your enemies use missiles."]]),
                               string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"]]), tutGetKey("autobrake") ),
                               _([["If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"]]),
                               _([["You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."]]),
@@ -187,6 +187,11 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["I know it can be tempting to fly the big and powerful ships, but don't underestimate smaller ones! Given their simpler designs and lesser crew size, you have a lot more time to react with a smaller vessel. Some are even so simple to pilot that time seems to slow down all around you!"]]),
                               _([["Mining can be an easy way to earn some extra credits, but every once in a while an asteroid will just randomly explode for no apparent reason, so you have to watch out for that. Yeah, I don't know why they do that either."]]),
                               _([["Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. I don't get it personally; it's all the same no matter what ship you're in."]]),
+                              _([["Different ships should be built and piloted differently. One of the hardest lessons I learned as a pilot was to stop worrying so much about the damage my ship was taking in battle while piloting a large ship. These ships are too slow for dodging, not to mention so complicated that they reduce your reaction time, so you need to learn to just take the hits and focus your attention on firing back at your enemies."]]),
+                              _([["Remember that when you pilot a big ship, you perceive time passing a lot faster than you do when you pilot a small ship. It can be easy to forget just how slow these larger ships are when you're frantically trying to depressurize the exhaust valve while also configuring the capacitance array. In a way the slow speed of the ship becomes a pretty huge relief!"]]),
+                              _([["There's always an exception to the rule, but I wouldn't recommend using forward-facing weapons on larger ships. Large ships' slower turn rates aren't able to keep up with the dashing and dodging of smaller ships, and aiming is harder anyway what with how complex these ships are. Turrets are much better; they aim automatically and usually do a very good job!"]]),
+                              _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
+                              _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
                            }
 
 -- Jump point messages.
@@ -259,9 +264,11 @@ function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
 
-   -- Chance of a tip message showing up. As this gradually goes down, it is
-   -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.7
+   -- Chance of a jump point message showing up. As this gradually goes
+   -- down, it is replaced by lore messages. See spawnNPC function below.
+   jm_chance_min = 0
+   jm_chance_max = 0.25
+   jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
 
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
@@ -316,17 +323,15 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= tip_chance then
-      if select > 0.2 and select <= 0.45 then
-         -- Jump point message.
-         msg, func = getJmpMessage(fac)
-      else
-         -- Gameplay tip message.
-         msg = getTipMessage(fac)
-      end
-   elseif select <= 0.8 then
+   if select <= jm_chance then
+      -- Jump point message.
+      msg, func = getJmpMessage(fac)
+   elseif select <= 0.55 then
       -- Lore message.
       msg = getLoreMessage(fac)
+   elseif select <= 0.8 then
+      -- Gameplay tip message.
+      msg = getTipMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then
@@ -456,8 +461,8 @@ function talkNPC(id)
 
    tk.msg(npcdata.name, npcdata.msg)
 
-   -- Reduce tip chance
-   var.push( "npc_tip_chance", math.max( tip_chance - 0.05, 0.05 ) )
+   -- Reduce jump message chance
+   var.push( "npc_tip_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
 end
 
 --[[

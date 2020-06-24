@@ -9,9 +9,9 @@
 
 ]]--
 
-include "numstring.lua"
-include "jumpdist.lua"
-include "portrait.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "portrait.lua"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")

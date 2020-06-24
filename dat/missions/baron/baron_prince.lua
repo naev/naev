@@ -3,9 +3,9 @@
 --]]
 
 -- localization stuff, translators would work here
-include "fleethelper.lua"
-include "numstring.lua"
-include "portrait.lua"
+require "fleethelper.lua"
+require "numstring.lua"
+require "portrait.lua"
 
 
 title = {}

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Events>
+ <event name="Tutorial Event">
+  <lua>tutorial/tutorial</lua>
+  <trigger>land</trigger>
+  <chance>100</chance>
+ </event>
  <event name="Pirate Fame">
   <lua>pirate_fame</lua>
   <trigger>enter</trigger>
@@ -106,7 +111,7 @@
   <lua>flf/flf_catastrophe</lua>
   <trigger>enter</trigger>
   <chance>70</chance>
-  <cond>system.cur():name() == "Sigur" and faction.get("FLF"):playerStanding() &gt;= 95 and player.misnDone("The FLF Split")</cond>
+  <cond>system.cur():name() == "Sigur" and faction.get("FLF"):playerStanding() &gt;= 98 and player.misnDone("The FLF Split")</cond>
  </event>
  <event name="Animal trouble">
   <lua>neutral/animaltrouble</lua>
@@ -156,6 +161,6 @@
   <lua>neutral/kidnapped</lua>
   <trigger>enter</trigger>
   <chance>15</chance>
-  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus" and player.numOutfit("Light Combat Vessel License") &gt; 0</cond>
  </event>
 </Events>

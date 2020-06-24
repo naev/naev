@@ -142,6 +142,7 @@
   <item>Map: Pirate strongholds</item>
   <item>Map: Qorel Expanse</item>
   <item>Map: New Haven's hidden jump points</item>
+  <item>Map: Kretogg's hidden jump points</item>
   <item>Map: FLF Hidden Jumps</item>
   <item>Map: FLF-Pirate Route</item>
   <item>Map: Inner Nebula Secret Jump</item>
@@ -651,6 +652,7 @@
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
+  <item>Asteroid Scanner</item>
  </tech>
  <tech name="High Tech Upgrades 2">
   <item>Battery III</item>
@@ -989,5 +991,8 @@
  </tech>
  <tech name="New Haven Maps">
   <item>Map: New Haven's hidden jump points</item>
+ </tech>
+ <tech name="Kretogg Maps">
+  <item>Map: Kretogg's hidden jump points</item>
  </tech>
 </Techs>

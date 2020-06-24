@@ -30,13 +30,15 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <pos x="1200" y="4032"/>
-   <radius>1400</radius>
-   <density>10.0</density>
+   <type>default</type>
+   <type>diamond</type>
+   <radius>1400.000000</radius>
+   <pos x="1200.000000" y="4032.000000"/>
+   <density>10.000000</density>
   </asteroid>
   <exclusion>
-   <pos x="1200" y="4032"/>
-   <radius>1000</radius>
+   <radius>1000.000000</radius>
+   <pos x="1200.000000" y="4032.000000"/>
   </exclusion>
  </asteroids>
 </ssys>

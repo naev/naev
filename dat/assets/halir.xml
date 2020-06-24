@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Before there was Emperor's Fist, before there was even the Incident, there was Halir, located in the Gamma Polaris system. While near the outskirts of the Empire, it served as one of the largest local civilian hubs, with a strong economy and considerable political influence. Then, one day, the new Emperor had Polaris Prime built, renamed most of the worlds in the system, and subsequently started the Emperor's Fist project. Halir was reduced to an economic support role. However, the local government has stubbornly clung on to the right to sovereignty, and so Halir remains a civilian world.</description>
   <bar>Halir's bar has everything the weary traveller could hope for, from drinks to data uplink terminals to per-table sound dampening fields and music generators. In short it is a luxurious place, which is largely due to Halir's long history of economic success. Anything you can't find in the bar you can find in the pleasure district, which is just a single tube station away.</bar>
  </general>

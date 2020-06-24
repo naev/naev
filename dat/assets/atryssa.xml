@@ -26,13 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Atryssa is an economically rich world thanks to Za'lek technology. It is also the closest noteworthy Za'lek planet, where outsiders can land, to Ruadan. Beyond these two things there is little to recommend it (though one of these may, at least, be plenty enough).</description>
   <bar>The archetype of a Za'lek bar, although a very crowded one. The crowd seems to be divided up into groups of people discussing things in hushed tones. There are also one or two people wandering about with notepads, though everyone goes quiet when they approach.</bar>
  </general>

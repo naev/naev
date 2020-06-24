@@ -26,12 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Sabe and Anya are a pair of planets tidally locked to each other, rotating around their shared center of gravity. Sabe is the center of the Thurian government, housing the largest population of both uploaded and biological Thurions, acting as the de-facto capital. The majority of the planet's surface is untouched, as virtually all its inhabitants reside in the multitude of arcologies spread across its surface.</description>
   <bar>The bar here is extremely active, with many biological and uploaded Thurions alike. Of course, as is the custom, biological Thurions do not eat or drink any substances that could harm the brain, meaning that the bar doesn't even offer alcoholic drinks on the menu.</bar>
  </general>

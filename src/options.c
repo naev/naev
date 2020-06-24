@@ -68,6 +68,7 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
 static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
+static char** lang_list( int *n );
 static void opt_gameplay( unsigned int wid );
 static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
@@ -184,6 +185,34 @@ void opt_resize (void)
 }
 
 
+/*
+ * Gets the list of languages available.
+ */
+static char** lang_list( int *n )
+{
+   size_t fs;
+   char *buf;
+   char **ls;
+   int i, j;
+
+   buf = ndata_read( "dat/LANGUAGES", &fs );
+
+   ls = malloc( sizeof(char*)*128 );
+   ls[0] = strdup("en");
+   *n = 1;
+   j = 0;
+   for (i=0; i<fs; i++) {
+      if ((buf[i] != '\n') && (buf[i] != '\0'))
+         continue;
+      buf[i] = '\0';
+      ls[(*n)++] = strdup( &buf[j] );
+      j=i+1;
+   }
+
+   return ls;
+}
+
+
 /**
  * @brief Opens the gameplay menu.
  */
@@ -193,8 +222,9 @@ static void opt_gameplay( unsigned int wid )
    char buf[PATH_MAX];
    const char *path;
    int cw;
-   int w, h, y, x, by, l;
+   int w, h, y, x, by, l, n, i;
    char *s;
+   char **ls;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -238,6 +268,18 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2;
    y  = by;
    x  = 20;
+   s = _("Language");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 0, "txtLanguage",
+         NULL, &cBlack, s );
+   ls = lang_list( &n );
+   for (i=0; i<n; i++)
+      if (strcmp(conf.language,ls[i])==0)
+         break;
+   if (i>=n)
+      i = 0;
+   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL );
+   y -= 90;
    window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
          NULL, &cBlack, _("Compilation Flags") );
    y -= 30;
@@ -337,7 +379,21 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
-   char *vmsg, *tmax;
+   char *vmsg, *tmax, *s;
+
+   /* List. */
+   s = toolkit_getList( wid, "lstLanguage" );
+   if (conf.language != NULL) {
+      if (strcmp(s,conf.language)!=0) {
+         free(conf.language);
+         conf.language = strdup(s);
+         opt_needRestart();
+      }
+   }
+   else {
+      conf.language = strdup(s);
+      opt_needRestart();
+   }
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
@@ -1379,21 +1435,23 @@ static int opt_videoSave( unsigned int wid, char *str )
          SDL_SetWindowFullscreen( gl_screen.window, 0 );
    }
 
-   /* Attempt to detect maximized state (doesn't work on X11) */
-   if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
-      dialogue_alert(_("Resolution can't be changed while maximized."));
-   /* Set size. Done second, because it can't be set while fullscreen. */
-   else if ((w != rw) || (h != rh)) {
-      /* Can't change window size while fullscreen. */
-      if (fullscreen && origf)
-         opt_needRestart();
-      else if (!fullscreen) {
-         SDL_SetWindowSize( gl_screen.window, w, h );
-         naev_resize( w, h );
-         SDL_SetWindowPosition( gl_screen.window,
-               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+   if ((w != rw) || (h != rh)) {
+      /* Attempt to detect maximized state (doesn't work on X11) */
+      if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
+         dialogue_alert(_("Resolution can't be changed while maximized."));
+      /* Set size. Done second, because it can't be set while fullscreen. */
+      else {
+         /* Can't change window size while fullscreen. */
+         if (fullscreen && origf)
+            opt_needRestart();
+         else if (!fullscreen) {
+            SDL_SetWindowSize( gl_screen.window, w, h );
+            naev_resize( w, h );
+            SDL_SetWindowPosition( gl_screen.window,
+                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
-         changed = 1;
+            changed = 1;
+         }
       }
    }
 

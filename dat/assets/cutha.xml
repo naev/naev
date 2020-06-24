@@ -24,11 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Cutha is a marvel of planetary engineering. It started out as a fairly hostile world, its atmosphere filled with toxic substances, but the Soromid have tamed it and turned it into a pretty decent place to live. Of course, even Soromid engineering has its limits, so Cutha isn't quite as nice a world as Turawee in Sarcophagus, but the result is still impressive. Nowadays, Cutha houses most of the Soromid involved in the military operations at Heronus.</description>
   <bar>Cutha's bar is very close to being an open-air bar. The airspace is still fully enclosed but most of the surfaces, that aren't the actual floor, are transparent. The ceiling, in particular, is made of a material that's all but invisible to the naked eye, with the artificial breeze that blows through the bar it's very easy to believe the illusion that one is actually outside. Only on rainy days is the effect spoiled, something the regular patrons, if not the outworlders, appreciate.</bar>
  </general>

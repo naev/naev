@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Solpere is a cold planet with a relatively small population. It only has three seasons: spring, winter, and deep winter. However, there are perks to such a harsh climate. The sky is quite frequently lit up by auroras, and for those who can endure the cold the icy landscape is a magnificent sight to behold.</description>
   <bar>This is a fairly average bar. The service quality is decent enough and all facilities are available. It's not a big place though, since Solpere isn't a very frequently visited port.</bar>
  </general>
