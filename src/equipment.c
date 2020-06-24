@@ -933,9 +933,9 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if it exists. */
          exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
          /* Get the level of the selection. */
-         if (event->button.button== SDL_BUTTON_LEFT)
+         if (event->button.button == SDL_BUTTON_LEFT)
             level = 0;
-         else if (event->button.button== SDL_BUTTON_RIGHT)
+         else if (event->button.button == SDL_BUTTON_RIGHT)
             level = 1;
          else
             return 0; /* We ignore this type of click. */
