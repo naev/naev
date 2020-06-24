@@ -286,7 +286,7 @@ int main( int argc, char** argv )
     * This is done late because this is the first stage at which we have the conf file
     * fully loaded. */
    if (conf.language != NULL) {
-      setlocale( LC_ALL, conf.language );
+      setlocale( LC_ALL, (strcmp(conf.language,"en")==0) ? "C" : conf.language );
       setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
       bindtextdomain( PACKAGE_NAME, LOCALEDIR );
       textdomain( PACKAGE_NAME );

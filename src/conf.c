@@ -903,7 +903,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Language. */
-   conf_saveComment(_("Language to use. Set to the two character identifier to the language. Set to \"C\" for English and nil for autodetect."));
+   conf_saveComment(_("Language to use. Set to the two character identifier to the language (e.g., \"en\" for English), and nil for autodetect."));
    conf_saveString("language",conf.language);
    conf_saveEmptyLine();
 
