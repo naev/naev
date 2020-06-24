@@ -161,6 +161,6 @@
   <lua>neutral/kidnapped</lua>
   <trigger>enter</trigger>
   <chance>15</chance>
-  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus" and player.numOutfit("Light Combat Vessel License") &gt; 0</cond>
  </event>
 </Events>
