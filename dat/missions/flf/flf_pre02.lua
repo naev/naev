@@ -39,7 +39,7 @@ text[2] = _([[Indeed, you are constantly aware of the furtive glances the other 
 
 title[3] = _("Patrol-B-gone")
 text[3] = _([["I'm happy to hear that. It's good to know we still have the support from the common pilot. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will go out there and eliminate one of those patrols in the %s system."
-    You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles, and makes a pacifying gesture.
+    You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles and makes a pacifying gesture.
     "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]])
 
 title[4] = _("Breaking the ice")
