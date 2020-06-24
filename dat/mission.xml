@@ -1452,45 +1452,6 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
- <mission name="Commodity Run">
-  <lua>neutral/commodity_run</lua>
-  <avail>
-   <priority>5</priority>
-   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
-   <chance>90</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Trader</faction>
-   <faction>Za'lek</faction>
-  </avail>
- </mission>
- <mission name="FLF Commodity Run">
-  <lua>flf/flf_commodity_run</lua>
-  <avail>
-   <priority>5</priority>
-   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
-   <chance>90</chance>
-   <location>Computer</location>
-   <faction>FLF</faction>
-  </avail>
- </mission>
- <mission name="Pirate Commodity Run">
-  <lua>pirate/pirate_commodity_run</lua>
-  <avail>
-   <priority>5</priority>
-   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
-   <chance>90</chance>
-   <location>Computer</location>
-   <faction>Pirate</faction>
-  </avail>
- </mission>
  <mission name="Trader Escort">
   <lua>neutral/trader_escort</lua>
   <avail>
