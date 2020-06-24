@@ -111,10 +111,14 @@ int dpl_savePlanet( const Planet *p )
          xmlw_elemEmpty( writer, "blackmarket" );
       xmlw_endElem( writer ); /* "services" */
       if (planet_hasService( p, PLANET_SERVICE_LAND )) {
-         xmlw_startElem( writer, "commodities" );
-         for (i=0; i<p->ncommodities; i++)
-            xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
-         xmlw_endElem( writer ); /* "commodities" */
+         if (p->faction > 0) {
+            xmlw_startElem( writer, "commodities" );
+            for (i=0; i<p->ncommodities; i++){
+               if (p->commodities[i]->standard == 0)
+                  xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
+            }
+            xmlw_endElem( writer ); /* "commodities" */
+         }
 
          xmlw_elem( writer, "description", "%s", p->description );
          if (planet_hasService( p, PLANET_SERVICE_BAR ))
