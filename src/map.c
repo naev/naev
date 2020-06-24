@@ -357,8 +357,8 @@ static void map_update( unsigned int wid )
       c = commodity_getByIndex( cur_commod );
       window_modifyImage( wid, "imgCommod", c->gfx_store, 44, 24 );
       if(sys!=NULL){
-	snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/green values mean a profit\nwhile negative/red values mean a loss when sold at the corresponding system.",c->name,sys->name);
-	window_modifyText( wid, "txtSystemStatus", buf );
+        snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/green values mean a profit\nwhile negative/red values mean a loss when sold at the corresponding system.",c->name,sys->name);
+        window_modifyText( wid, "txtSystemStatus", buf );
       }
    }else{
       window_modifyImage( wid, "imgCommod", NULL, 44, 24 );
@@ -1276,11 +1276,11 @@ void map_renderCommod( double bx, double by, double x, double y,
          }
       }
       if ( k == land_planet->ncommodities ){ /* commodity of interest not found */
-	textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-	snprintf(buf,80,"%s here",c->name);
-	textw = gl_printWidthRaw( &gl_smallFont, buf);
-	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+        textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+        gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+        snprintf(buf,80,"%s here",c->name);
+        textw = gl_printWidthRaw( &gl_smallFont, buf);
+        gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
          return;
       }
    }else{
@@ -1303,22 +1303,22 @@ void map_renderCommod( double bx, double by, double x, double y,
             
          }
          if( maxPrice == 0 ){/* no prices are known here */
-	textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-	snprintf(buf,80,"%s here",c->name);
-	textw = gl_printWidthRaw( &gl_smallFont, buf);
-	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
-	return;
+        textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+        gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+        snprintf(buf,80,"%s here",c->name);
+        textw = gl_printWidthRaw( &gl_smallFont, buf);
+        gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+        return;
 
          }
          curMaxPrice=maxPrice;
          curMinPrice=minPrice;
       }else{
-	textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-	snprintf(buf,80,"%s here",c->name);
-	textw = gl_printWidthRaw( &gl_smallFont, buf);
-	gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+        textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+        gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+        snprintf(buf,80,"%s here",c->name);
+        textw = gl_printWidthRaw( &gl_smallFont, buf);
+        gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
          return;
       }
    }
@@ -1356,17 +1356,17 @@ void map_renderCommod( double bx, double by, double x, double y,
          }
          /* Calculate best and worst profits */
          if( maxPrice > 0 ){
-	   /* Commodity sold at this system */
+           /* Commodity sold at this system */
             best = maxPrice - curMinPrice ;
             worst= minPrice - curMaxPrice ;
             if ( best >= 0 ){/* draw circle above */
-	      gl_print(&gl_smallFont, x + (sys->pos.x-2) * map_zoom , y + (sys->pos.y+12)*map_zoom, &cGreen, "%.1f",best);
+              gl_print(&gl_smallFont, x + (sys->pos.x-2) * map_zoom , y + (sys->pos.y+12)*map_zoom, &cGreen, "%.1f",best);
                best = tanh ( best / 100. ) /2 ;
                /*ccol.r=best+0.5; ccol.g=best+0.5; ccol.b=0.5-best; ccol.a=1;*//*yellow*/
                ccol.r=1-2*best; ccol.g=best+0.5; ccol.b=0; ccol.a=1;/*green to orange*/
                gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
             }else{/* draw circle below */
-	      gl_print(&gl_smallFont, x + (sys->pos.x-2) * map_zoom , y + (sys->pos.y+12)*map_zoom, &cRed, "%.1f",worst);
+              gl_print(&gl_smallFont, x + (sys->pos.x-2) * map_zoom , y + (sys->pos.y+12)*map_zoom, &cRed, "%.1f",worst);
                worst= tanh ( worst/ 100. ) /2;
                /*ccol.r=worst+0.5; ccol.g=worst+0.5; ccol.b=0.5-worst; ccol.a=1;*//*blue*/
                ccol.r=1; ccol.g=0.5+worst; ccol.b=0; ccol.a=1;/*orange to red*/
@@ -1376,8 +1376,8 @@ void map_renderCommod( double bx, double by, double x, double y,
             /* Commodity not sold here */
             ccol.r=0.3; ccol.g=0.3; ccol.b=0.3; ccol.a=1;
             gl_drawCircle( tx, ty , r, &ccol, 1 );
-	   
-	 }
+           
+         }
       }
    }
 
@@ -2169,7 +2169,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
       map_selectCur();
 
    window_addCust( wid, x, y, w, h,
-		   "cstMap", 1, map_render, map_mouse, NULL );
+                   "cstMap", 1, map_render, map_mouse, NULL );
 }
 
 

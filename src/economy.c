@@ -1506,6 +1506,8 @@ void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
    CommodityPrice *cp;
    credits_t price;
    t = ntime_get();
+   if ( tupdate == t )
+      return;
    for ( i = 0 ; i < p->ncommodities ; i++ ){
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
