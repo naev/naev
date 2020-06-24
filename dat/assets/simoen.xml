@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Simoen is the only habitable planet in the Kraft system, just barely. Crops don't grow well here and life is hardly luxurious, but there are reasons for humans to live here all the same. Like many desert planets, Simoen has a lot of space for solar power, which makes energy prices here very low. This makes the world interesting for all kinds of manufacturing operations.</description>
   <bar>This spaceport bar is fairly sandy and grubby. Not that it isn't being kept clean, it's just one of those things you see on most G class worlds. Fortunately all of the facilities here are in working order, and the drinks available at the bar are decent enough, if a bit modest in selection.</bar>
  </general>

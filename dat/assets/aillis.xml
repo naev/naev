@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Aillis is the base of operations for miners who mine Koralis VI. Koralis VI itself is highly radioactive so no human habitation is, or will ever be, possible. However, some of the heavy elements within the planet are quite valuable, and so Aillis offers a fair living for those who don't shun heavy, dangerous labor.</description>
   <bar>Though this bar is not exactly inhospitable, it also doesn't make you feel very welcome. Running costs are kept low which means maintenance and service suffer. Nevertheless, it's quite possible to have a good time here.</bar>
  </general>

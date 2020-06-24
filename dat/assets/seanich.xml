@@ -24,10 +24,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>On the edge of the Delta Pavonis system, unnoticed by all but a few, orbits the tiny world of Seanich. Though technically a registered Imperial colony, this backwater planet does not receive the attention that should come with its status. The population is decidedly upset about this, to the point that the local administration has stopped paying taxes to the central Imperial government in protest. The Imperial government hasn't noticed.</description>
   <bar>Seanich has a pretty well-appointed spaceport bar. It has all the facilities a spacer could need, and many are quite up to date. Sadly, this hasn't helped to make the unfortunate colony more conspicuous in the galaxy. Most of the tables are empty.</bar>
  </general>

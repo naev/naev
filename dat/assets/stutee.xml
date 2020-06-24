@@ -25,10 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Stutee is a former prison world of the Old Empire. Since it had a breathable atmosphere and little else, it was deemed perfect for dropping off criminals and then forgetting about them. However, as the lower class workers rebelled against the Empire, resulting in the inception of House Dvaered, Stutee came to fall under the jurisdiction of the new Great House. House Dvaered decided to settle Stutee more permanently, bringing the former convicts under their rule and setting them to work. Though Stutee is still of little material value, its location one jump off Dvaer makes up for that.</description>
   <bar>Stutee's bar is located right off the spaceport. Though the planet has been settled and proper infrastructure is now present, the world is not very appealing to any who visit. As such, the spaceport bar is arguably the most important meeting place on the face of the moon.</bar>
  </general>

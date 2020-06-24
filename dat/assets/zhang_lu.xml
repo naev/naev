@@ -22,12 +22,10 @@
    <refuel/>
    <bar/>
    <missions/>
-   <outfits/>
    <commodity/>
+   <outfits/>
   </services>
-  <commodities>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Zhang Lu is a world with vast mountain ranges, the biggest of which reaches almost a third of the way around the planet. The world is utterly uninteresting for habitation even by Soromid standards, but the rugged terrain is irresistible for people who like mountaineering. There are countless peaks that have never been conquered, so tourists like to try and be the first to climb one.</description>
   <bar>The spaceport is build in a valley. The reason for this is that tourists arriving will immediately be presented with mountains towering over them on all sides, which really gets them in the mood. Unfortunately this location is less than practical from a pilot's point of view, as having mountains all around the spaceport severely limits the choice in approach vectors.</bar>
  </general>

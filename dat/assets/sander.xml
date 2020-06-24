@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Griffin III's sister world is Sander. Owing to its largely aquatic surface, its population is significantly lower than Griffin III's, but its oceans provide food to many nearby planets, and Imperial mining operations are able to harvest many valuable materials from the sea floor.</description>
   <bar>This underwater bar is quite the spectacle. Large marine creatures swim by the windows, and the main lobby is designed to enhance the aesthetic. A little overdone, but pleasant overall.</bar>
  </general>

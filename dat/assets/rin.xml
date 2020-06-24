@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Rin is a quiet world, far away from the turmoil that plagues most of the galaxy. The inhabitants are friendly, always happy to help a beginning captain get his space legs.</description>
   <bar>If space is just getting a bit too much for you, the spaceport bar on Rin is the place to take a load off. It's a tidy place, and the clientele is well behaved. You will find no unsavory figures here.</bar>
  </general>

@@ -22,13 +22,10 @@
    <refuel/>
    <bar/>
    <missions/>
-   <outfits/>
    <commodity/>
+   <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Smaal is right in Malebolge's sweet spot - the orbital distance that's ideal for the development of life. The planet is covered with plant life and even has a few indigenous species of insects. However, Smaal is a very small world, and so the colony here is inhabited by Soromid who have adapted themselves to the low gravity. These Soromid can't ever set foot on another world - their bodies are no longer capable of withstanding higher gees.</description>
   <bar>Smaal isn't very popular with traders. Life in space inevitably involves periods of working outside the gravity controlled areas of the ship, and the last thing a captain wants when coming to port is to have to deal with low gravity.</bar>
  </general>

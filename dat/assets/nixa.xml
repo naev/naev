@@ -23,9 +23,7 @@
    <bar/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Nixa is a young colony. It was first settled mere years before the Incident occurred. With the galaxy-wide economic collapse that followed in its wake, Nixa's budding growth came close to a halt. The population struggles to make the colonization project a success even so, but now that Dune has become a fringe system, chances of that seem remote.</description>
   <bar>Nixa's bar is still the makeshift affair it was when the planet was first colonized. There haven't been the resources nor the time to replace it with something more solid.</bar>
  </general>

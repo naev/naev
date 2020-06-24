@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Volcanic A class planets aren't usually prime candidates for colonization. But sometimes it can be advantageous for an industry to put a factory or two on a planet like Kaulas. Geothermal energy is available in plentiful supply, and some select spots on the planet's surface are stable enough to set up a natural furnace for producing things that require a lot of heat in their production process.</description>
   <bar>Some spacers are uneasy when coming to Soromid worlds that are inhospitable to normal humans. They fear that the conditions within the public facilities will be unhealthy to them. They have no reason to fear though. The Soromid realize full well that unmodified humans make their economy tick, so they make sure to clearly mark all hazardous areas and keep public spaces unmodified-friendly. This bar, for example, is completely safe.</bar>
  </general>

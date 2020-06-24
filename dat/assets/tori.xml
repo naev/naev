@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>When the thirteenth colony ship, Yamato Nadeshiko, arrived at Tori, it was sterile. Though it had both water and carbon in abundant supply, there was no life to be found. With the arrival of the mostly Asian human colonists, this changed. Human flora thrived on the planet, and within a century the planet had acquired a fully functional ecosystem. This marvel has inspired the inhabitants of Tori to leave much of the world's surface to nature. Though this means Tori's economic potential remains largely untapped, the thriving tourist industry largely compensates.</description>
   <bar>The spaceport bar is more than just functional. Since most new arrivals on the planet come here first, the authorities have taken pains to make the bar appealing and comfortable. Of course, the fact that Tori is a tourist attraction also means drinks are quite expensive in this bar...</bar>
  </general>

@@ -22,12 +22,10 @@
    <refuel/>
    <bar/>
    <missions/>
-   <shipyard/>
    <commodity/>
+   <shipyard/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Jernard is the moon orbiting the first planet of the Kansas system. It's a hot place, but despite that it's remarkably stable. That, combined with the low gravity, has prompted a commercial producer of starships to set up a manufacturing plant here.</description>
   <bar>Though the spaceport bar is constantly air conditioned, the temperature is still uncomfortably high. Some visitors have voiced concerns about the reliability of the cooling system. Should it ever fail, pilots may not make it back to their ships before being cooked alive.</bar>
  </general>

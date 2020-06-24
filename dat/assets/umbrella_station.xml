@@ -23,9 +23,7 @@
    <bar/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Umbrella Station is a space-based clinic. It's common for most worlds to take care of their own health facilities as it is cheaper and faster than lifting patients off-planet, but sometimes medical stations like Umbrella have their uses. Umbrella is primarily a research clinic where unknown ailments are studied in perfect quarantine, in order to develop a cure. Without places such as this, public health would be under constant threat across the galaxy.</description>
   <bar>Though Umbrella Station doesn't have a spacedock bar in the classical sense, it does have a large waiting area equipped with news and recreational facilities. The patrons here aren't patients though, as patients tend to be kept in quarantine. Rather, they are here to visit family or friends, or to do business with the station itself.</bar>
  </general>

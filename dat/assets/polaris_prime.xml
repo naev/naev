@@ -25,13 +25,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Luxury Goods</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Polaris Prime is the service station for the Emperor's Wrath. Normal people are not allowed to set foot on the gargantuan ship, so all official business has to happen on Polaris Prime. The station is a trade hub as well as a center of government, serving as the civilian end of the Empire's capital.</description>
   <bar>A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, this bar is nonetheless kept immaculately clean. It clearly means to set the... bar for all bars in Empire space.</bar>
  </general>

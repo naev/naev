@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Named after the Egyptian god of death, Anubis was established as a mining base by a mining faction even before the Faction Wars. The abundance of radioactive and heavy elements made the planet a good location to produce weapons, a lucrative business given its proximity to Sol. During the Faction Wars, Anubis was annexed by the Empire but the local population subsequently joined the protest movement that eventually led to the establishment of House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light combat ships to supply Raelid Outpost.</description>
   <bar>What is beautiful is often dangerous but sometimes it also works the other way around. The spaceport bar on Anubis has a view over a ravine in the planet's surface and the radioactive storms that frequently rage through it are quite a sight to behold. Only offworlders appreciate it though, most of the locals know how unpleasant it is to have to work in such raging, radioactive conditions.</bar>
  </general>

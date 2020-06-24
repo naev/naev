@@ -22,12 +22,10 @@
    <refuel/>
    <bar/>
    <missions/>
-   <outfits/>
    <commodity/>
+   <outfits/>
   </services>
-  <commodities>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>The Soromid have more or less stabilized as a genetically modified offshoot from humanity, but that doesn't mean research into genetic alteration isn't still ongoing. Woncloak hosts one of the largest bioresearch centers in Soromid space. Many of the commercially sold gene treatments were developed here, and being a researcher on Woncloak carries a lot of prestige with the Soromid.</description>
   <bar>Being such an important location for Soromid society, security on Woncloak is pretty tight. In particular, visitors have their background checked, to make sure they're not here with a Za'lek agenda. The spaceport bar can only be accessed after pilots have passed all the security protocols.</bar>
  </general>

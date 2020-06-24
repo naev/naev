@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Zhiru was once home to Eduard Manuel Goddard, the man who single-handedly designed the then-revolutionary Goddard battlecruiser, and who would establish the minor House Goddard. Now Zhiru has a booming spacecraft industry, specialized in the creation and maintenance of the Goddard ships. This is all possible due to the weak gravity and atmosphere that envelops Zhiru, which allows the massive spacecraft to land and take off with little difficulty.</description>
   <bar>The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous ship, stripped and refitted in the form of a bar. It's surprisingly comfortable and cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
  </general>

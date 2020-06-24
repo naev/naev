@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>This world has suffered from the centralization of Za'lek space particularly hard. With the effective abandonment by the Za'lek authorities beyond a skeleton government, this world has fallen into hard times and struggles to remain afloat.</description>
   <bar>This bar seems very shabby and run-down. It has mismatching furniature and the walls ahve been visibly repaired more than once. THere are few people, and most of them seem to be the types too old and stubborn to leave.</bar>
  </general>

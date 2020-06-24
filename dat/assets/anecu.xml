@@ -26,13 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Luxury Goods</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Anecu is a completely aquatic planet. Its surface is covered completely by water but in the shallow areas great underwater cities are constructed. The climate above the water can be very harsh; waves been recorded to be up to two kilometres high. The planet boasts extensive ship-design facilities which use the high pressure of the water as a benchmark against which ships can be measured.</description>
   <bar>The spaceport bar is approximately three kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar's lighting.</bar>
  </general>

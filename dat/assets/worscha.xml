@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Worscha is a relatively wealthy Sirian world with a mild climate and pleasant planetary conditions. Its rotation is a bit on the long side, about 25% longer than that of old Earth, which has led to the daily rhythm being a little slower than elsewhere.</description>
   <bar>Many Sirian bars have some sort of layout separation for the various echelons, but Worscha's bar doesn't have anything of the sort. This sometimes leads to Sirian traders getting confused, as they are used to placing themselves in the correct section of the bar.</bar>
  </general>

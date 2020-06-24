@@ -25,11 +25,7 @@
    <commodity/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Passir is an aquatic world. A lot of the inhabited areas are under the surface of the ocean. But even there, suitable living space is scarce. Passir's oceans run so deep that large areas of the ocean floor are out of reach even for modern day submarine technology.</description>
   <bar>The spaceport is situated on dry land, and so is the spaceport bar. The bar overlooks the main hall of the spaceport, which is dominated by the massive mega-escalators that take people and goods to and from the nearby submarine settlements.</bar>
  </general>

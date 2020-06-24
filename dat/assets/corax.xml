@@ -21,13 +21,11 @@
    <land/>
    <refuel/>
    <bar/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>Though the world of Corax might, in the distant future, become a semi-inhabitable world there will be precious few ores and minerals left (baring iron) by that point. The Soromid's ability to withstand unusual levels of environmental discomfort has given them a head start on this world in terms of resource extraction. Other life, it seems, will have to wait its turn.</description>
   <bar>Given the relative stability of this world the bar looks rather more Empire standard-issue than on many Soromid worlds. There are tables, chairs, dispensers, a barman and, most importantly, drinks. These there are in profusion, though, this being a smaller world, not in any great variety. If you ask for a cocktail though, you'll likely be directed to one of the local sulphurous hot-water geysers.</bar>
  </general>
