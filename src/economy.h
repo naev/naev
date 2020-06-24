@@ -43,6 +43,7 @@ typedef struct CommodityModifier_ CommodityModifier;
 typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
+   unsigned int standard; /**< Wether or not this commodity is standard. */
    /* Prices. */
    double price; /**< Base price of the commodity. */
    glTexture* gfx_store; /**< Store graphic. */
@@ -120,6 +121,7 @@ void credits2str( char *str, credits_t credits, int decimals );
 void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
+Commodity ** standard_commodities( unsigned int *nb );
 
 /*
  * Calculating the sinusoidal economy values
