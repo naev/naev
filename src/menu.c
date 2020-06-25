@@ -636,8 +636,6 @@ static void menu_editors_open( unsigned int wid, char *unused )
    (void) unused;
    int h, y;
 
-   /*WARN("Entering function.");*/
-
    /* Menu already open, quit. */
    if (menu_isOpen( MENU_EDITORS )) {
       return;
@@ -667,8 +665,6 @@ static void menu_editors_open( unsigned int wid, char *unused )
     /* Editors menu is open. */
    menu_Open( MENU_EDITORS );
 
-   /*WARN("Exiting function.");*/
-
    return;
 }
 
@@ -681,14 +677,11 @@ static void menu_editors_close( unsigned int wid, char* str )
    (void)str;
    
    /* Close the Editors Menu and mark it as closed */
-   /*WARN("Entering function.");*/
    window_destroy( wid );
    menu_Close( MENU_EDITORS );
    
    /* Restores Main Menu */
-   /*WARN("Restoring Main Menu.");*/
    menu_main();
-   /*WARN("Exiting function.");*/
    
    return;
 }
