@@ -453,58 +453,59 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }else{
      /* display planet info */
      p=cur_planetObj_sel;
-     cnt+=nsnprintf(buf,sizeof(buf),"Planet: %s\n",p->name);
+     cnt+=nsnprintf(&buf[cnt],sizeof(buf)-cnt,"Planet: %s\nPopulation: %ld\n%s",p->name,p->population,p->description);
      
      txtHeight=gl_printHeight(&gl_smallFont,(w - nameWidth-pitch-5)/2,buf);
 
 
-   Vector2d pos; /**< position in star system */
-   double radius; /**< Radius of the planet. */
+   /*
+     Vector2d pos; //< position in star system 
+   double radius; //< Radius of the planet. 
 
-   /* Planet details. */
-   char *class; /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
-   int faction; /**< planet faction */
-   uint64_t population; /**< Population of the planet. */
+     //Planet details. 
+   char *class; //< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) 
+   int faction; //< planet faction 
+   uint64_t population; //< Population of the planet. 
 
-   /* Asset details. */
-   double presenceAmount; /**< The amount of presence this asset exerts. */
-   int presenceRange; /**< The range of presence exertion of this asset. */
-   int real; /**< If the asset is tangible or not. */
-   double hide; /**< The ewarfare hide value for an asset. */
+   // Asset details. 
+   double presenceAmount; //< The amount of presence this asset exerts. 
+   int presenceRange; //< The range of presence exertion of this asset. 
+   int real; //< If the asset is tangible or not. 
+   double hide; //< The ewarfare hide value for an asset. 
 
-   /* Landing details. */
-   int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
-   char *land_func; /**< Landing function to execute. */
-   int can_land; /**< Whether or not the player can land. */
-   char *land_msg; /**< Message on landing. */
-   credits_t bribe_price; /**< Cost of bribing. */
-   char *bribe_msg; /**< Bribe message. */
-   char *bribe_ack_msg; /**< Bribe ACK message. */
-   int bribed; /**< If planet has been bribed. */
+   // Landing details. 
+   int land_override; //< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). 
+   char *land_func; //< Landing function to execute. 
+   int can_land; //< Whether or not the player can land. 
+   char *land_msg; //< Message on landing. 
+   credits_t bribe_price; //< Cost of bribing. 
+   char *bribe_msg; //< Bribe message. 
+   char *bribe_ack_msg; //< Bribe ACK message. 
+   int bribed; //< If planet has been bribed. 
 
-   /* Landed details. */
-   char* description; /**< planet description */
-   char* bar_description; /**< spaceport bar description */
-   unsigned int services; /**< what services they offer */
-   Commodity **commodities; /**< what commodities they sell */
-   CommodityPrice *commodityPrice; /**< the base cost of a commodity on this planet */
-   int ncommodities; /**< the amount they have */
-   tech_group_t *tech; /**< Planet tech. */
-   char *gfx_exterior; /**< Don't actually load the texture */
-   char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
+   // Landed details. 
+   char* description; //< planet description 
+   char* bar_description; //< spaceport bar description 
+   unsigned int services; //< what services they offer 
+   Commodity **commodities; //< what commodities they sell 
+   CommodityPrice *commodityPrice; //< the base cost of a commodity on this planet 
+   int ncommodities; //< the amount they have 
+   tech_group_t *tech; //< Planet tech. 
+   char *gfx_exterior; //< Don't actually load the texture 
+   char *gfx_exteriorPath; //< Name of the gfx_exterior for saving purposes. 
 
-#define PLANET_SERVICE_LAND         (1<<0) /**< Can land. */
-#define PLANET_SERVICE_INHABITED    (1<<1) /**< Planet is inhabited. */
-#define PLANET_SERVICE_REFUEL       (1<<2) /**< Has refueling. */
-#define PLANET_SERVICE_BAR          (1<<3) /**< Has bar and thus news. */
-#define PLANET_SERVICE_MISSIONS     (1<<4) /**< Has mission computer. */
-#define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
-#define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
-#define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
-#define PLANET_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
+#define PLANET_SERVICE_LAND         (1<<0) //< Can land. 
+#define PLANET_SERVICE_INHABITED    (1<<1) //< Planet is inhabited. 
+#define PLANET_SERVICE_REFUEL       (1<<2) //< Has refueling. 
+#define PLANET_SERVICE_BAR          (1<<3) //< Has bar and thus news. 
+#define PLANET_SERVICE_MISSIONS     (1<<4) //< Has mission computer. 
+#define PLANET_SERVICE_COMMODITY    (1<<5) //< Can trade commodities. 
+#define PLANET_SERVICE_OUTFITS      (1<<6) //< Can trade outfits. 
+#define PLANET_SERVICE_SHIPYARD     (1<<7) //< Can trade ships. 
+#define PLANET_SERVICE_BLACKMARKET  (1<<8) //< Disables license restrictions on goods. 
 #define PLANET_SERVICES_MAX         (PLANET_SERVICE_BLACKMARKET<<1)
-#define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
-
+#define planet_hasService(p,s)      ((p)->services & s) //< Checks if planet has service. 
+   */
    
 
      gl_printText( &gl_smallFont, (w - nameWidth-pitch-5)/2, txtHeight, bx+10+pitch+nameWidth, by + h - 10-txtHeight, &cWhite, buf);
