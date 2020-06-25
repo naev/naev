@@ -105,6 +105,9 @@ static void menu_editors_close( unsigned int wid, char* str );
 static void menu_options_button( unsigned int wid, char *str );
 
 
+/*
+ * Background system for the menu.
+ */
 static int menu_main_bkg_system (void)
 {
    nsave_t *ns;
@@ -120,8 +123,13 @@ static int menu_main_bkg_system (void)
    /* Refresh saves. */
    load_refresh();
 
-   /* Get start position. */
+   /* Load saves. */
    ns = load_getList( &n );
+
+   /* Try to apply unidiff. */
+   load_gameDiff( ns[0].path );
+
+   /* Get start position. */
    if ((n > 0) && (planet_exists( ns[0].planet ))) {
       pnt = planet_get( ns[0].planet );
       if (pnt != NULL) {
