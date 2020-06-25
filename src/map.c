@@ -52,11 +52,16 @@ static StarSystem **map_path  = NULL; /**< The path to current selected system. 
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
+static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
 static int commod_counter = 0; /**< used to fade back in the faction smudges */
+static Commodity **commod_known = NULL; /**< index of known commodities */
+static int nmap_modes = 0; /**< number of map modes (depends on number of commodities) */
+static char** map_modes = NULL; /**< Holds the names of the different map modes. */
+static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 static gl_vbo *marker_vbo = NULL;
-
+//static unsigned int listwid=0;
 
 /*
  * extern
@@ -92,6 +97,7 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_buttonCommodity( unsigned int wid, char* str );
 static void map_selectCur (void);
+static void map_genModeList();
 
 
 /**
@@ -172,7 +178,8 @@ void map_open (void)
    int w, h, x, y, rw;
    /* Not displaying commodities */
    cur_commod = -1;
-   
+	listMapModeVisible = 0;
+
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
@@ -299,9 +306,11 @@ void map_open (void)
    window_addText( wid, 140, 10, w - 80 - 30 - 30 - 50, 30, 0,
                    "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
+	map_genModeList();
+
    /* add commodity button */
-   window_addButton( wid,-20-3*(BUTTON_WIDTH+20), 20, 50, 30, "btnCommod", "Trade", map_buttonCommodity );
-   window_addImage( wid, -23-3*(BUTTON_WIDTH+20), 23, 44, 24, "imgCommod", NULL, 0 );
+   window_addButton( wid,-20-3*(BUTTON_WIDTH+20), 20, 50, 30, "btnCommod", "Mode", map_buttonCommodity );
+   //window_addImage( wid, -23-3*(BUTTON_WIDTH+20), 23, 44, 24, "imgCommod", NULL, 0 );
    /*
     * The map itself.
     */
@@ -354,14 +363,14 @@ static void map_update( unsigned int wid )
 
    /* Economy button */
    if( cur_commod >= 0 ){
-      c = commodity_getByIndex( cur_commod );
-      window_modifyImage( wid, "imgCommod", c->gfx_store, 44, 24 );
+      c = commod_known[cur_commod];//commodity_getByIndex( cur_commod );
+      //window_modifyImage( wid, "imgCommod", c->gfx_store, 44, 24 );
       if(sys!=NULL){
         snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/green values mean a profit\nwhile negative/red values mean a loss when sold at the corresponding system.",c->name,sys->name);
         window_modifyText( wid, "txtSystemStatus", buf );
       }
    }else{
-      window_modifyImage( wid, "imgCommod", NULL, 44, 24 );
+      //window_modifyImage( wid, "imgCommod", NULL, 44, 24 );
       window_modifyText( wid, "txtSystemStatus", NULL );
    }     
 
@@ -1262,7 +1271,7 @@ void map_renderCommod( double bx, double by, double x, double y,
    wid = window_get(MAP_WDWNAME);
    curMaxPrice=0.;
    curMinPrice=0.;
-   c=commodity_getByIndex(cur_commod);
+   c=commod_known[cur_commod];//commodity_getByIndex(cur_commod);
    /* Get commodity price in selected system.  If selected system is current
       system, and if landed, then get price of commodity where we are */
    sys = system_getIndex( map_selected );
@@ -1404,18 +1413,19 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    StarSystem *sys;
 
    t = 15.*15.; /* threshold */
-
+	
    switch (event->type) {
 
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-
-         if (event->wheel.y > 0)
-            map_buttonZoom( 0, "btnZoomIn" );
-         else
-            map_buttonZoom( 0, "btnZoomOut" );
+			if ( listMapModeVisible == 0 ){
+				if (event->wheel.y > 0)
+					map_buttonZoom( 0, "btnZoomIn" );
+				else
+					map_buttonZoom( 0, "btnZoomOut" );
+			}
          return 1;
 
       case SDL_MOUSEBUTTONDOWN:
@@ -1501,36 +1511,153 @@ static void map_buttonZoom( unsigned int wid, char* str )
 }
 
 /**
+ * @brief Generates the list of map modes, i.e. commodities that have been seen so far.
+ */
+static void map_genModeList(){
+	int indx,i,j,k,l;
+	int tot=0;
+	Planet *p;
+	StarSystem *sys;
+	int totGot = 0;
+	if ( commod_known == NULL )
+		commod_known = malloc(sizeof(Commodity*) * commodity_getN());
+	memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
+	for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+      for( j=0 ; j<sys->nplanets; j++){
+			p=sys->planets[j];
+			tot+=p->ncommodities;
+			for( k=0; k<p->ncommodities; k++){
+				if ( p->commodityPrice[k].cnt > 0 ){/*commodity is known about*/
+					/* find out which commodity this is */
+					for ( l=0 ; l<totGot; l++){
+						if ( p->commodities[k] == commod_known[l] )
+							break;
+					}
+					if ( l == totGot ){
+						commod_known[totGot] = p->commodities[k];
+						totGot++;
+					}
+
+				}
+			}
+		}
+	}
+	printf("total commodities: %d, known %d\n",tot,totGot);
+	if ( map_modes != NULL ){
+		for ( i=0 ; i<nmap_modes ; i++)
+			free( map_modes[i] );
+		free ( map_modes );
+	}
+	nmap_modes = 2*totGot + 1;
+	map_modes = calloc( sizeof(char*), nmap_modes );
+	map_modes[0] = strdup("Default");
+
+	for ( i=0; i<totGot; i++ ){
+		l = strlen(commod_known[i]->name) + 7;
+		map_modes[ 2*i + 1 ] = malloc(l);
+		nsnprintf(map_modes[2*i+1],l, "%s: Cost", commod_known[i]->name );
+		l+=6;
+		map_modes[ 2*i + 2 ] = malloc(l);
+		nsnprintf(map_modes[2*i+2],l, "%s: Difference", commod_known[i]->name );
+
+
+	}
+		
+		
+}
+
+/**
+ * @brief Updates the map mode list.  This is called when the map update list is clicked.
+ *    Unfortunately, also called when scrolled.
+ *    @param wid Window of the map window.
+ *    @param str Unused.
+ */
+static void map_mode_update( unsigned int wid, char* str )
+{
+	int listpos;
+	printf("map_mode_update called: %s\n",str);
+	listpos=toolkit_getListPos( wid, "lstMapMode" );
+	if ( listMapModeVisible==2){
+		listMapModeVisible=1;
+	}else if ( listMapModeVisible == 1 ){
+		//listMapModeVisible = 0;
+		//printf("destroying lstMapMode a\n");
+		//window_destroyWidget( wid, "lstMapMode" );
+		if ( listpos == 0){
+			cur_commod = -1;
+			cur_commod_mode = 0;
+		}else{
+			cur_commod = (listpos - 1 ) / 2;
+			cur_commod_mode = listpos % 2 ; /* if 1, showing cost, if 2 showing difference */
+		}
+	}
+	if ( cur_commod == -1 )
+      commod_counter = 101;
+   map_update(wid);
+
+}
+
+/**
  * @brief Handles the button commodity clicks.
  *
- *    @param wid Unused.
+ *    @param wid Window widget.
  *    @param str Name of the button creating the event.
  */
 static void map_buttonCommodity( unsigned int wid, char* str )
 {
    int ncommod = commodity_getN();
    SDL_Keymod mods;
+	char **this_map_modes;
    static int cur_commod_last = 0;
+	static int cur_commod_mode_last = 0;
+	int defpos;
+   /* Clicking the mode button - by default will show (or remove) the list of map modes.
+      If ctrl is pressed, will toggle between current mode and default */
+   printf("Commod but pressed\n");
    mods = SDL_GetModState();
-   if (mods & (KMOD_LSHIFT | KMOD_RSHIFT)){/* reverse direction */
-      cur_commod --;
-      if ( cur_commod < -1 )
-         cur_commod = ncommod - 1;
-   }else if (mods & (KMOD_LCTRL | KMOD_RCTRL)){/* toggle on/off */
-      if ( cur_commod == -1 )
+   if (mods & (KMOD_LCTRL | KMOD_RCTRL)){/* toggle on/off */
+      if ( cur_commod == -1 ){
          cur_commod = cur_commod_last;
-      else{
+			cur_commod_mode = cur_commod_mode_last;
+		}else{
          cur_commod_last = cur_commod;
+			cur_commod_mode_last = cur_commod_mode;
          cur_commod = -1;
       }
-   }else{/* advance 1 commodity */
-      cur_commod ++;
-      if ( cur_commod >= ncommod )
+      if ( cur_commod >= (nmap_modes-1)/2 )
          cur_commod = -1;
+      /* And hide the list if it was visible. */
+      if ( listMapModeVisible){
+         listMapModeVisible = 0;
+			printf("destroying lstMapMode b\n");
+         window_destroyWidget( wid, "lstMapMode" );
+      }
+      if ( cur_commod == -1 )
+         commod_counter = 101;
+      map_update(wid);
+   }else{/* no keyboard modifier */
+      if ( listMapModeVisible){/* Hide the list widget */
+         listMapModeVisible = 0;
+			printf("destroying lstMapMode c\n");
+         window_destroyWidget( wid, "lstMapMode" );
+      }else{/* show the list widget */
+			printf("Showing\n");
+			this_map_modes = calloc( sizeof(char*), nmap_modes );
+			for(int i=0; i<nmap_modes;i++){
+				this_map_modes[i]=strdup(map_modes[i]);
+			}
+         listMapModeVisible = 2;
+			if ( cur_commod == -1 )
+				defpos = 0;
+			else
+				defpos = cur_commod*2 + 2 - cur_commod_mode;
+					
+         window_addList( wid, -40-1*(BUTTON_WIDTH+20), 60, 230, 200,
+								 "lstMapMode", this_map_modes, nmap_modes, defpos, map_mode_update );
+      }
    }
-   if ( cur_commod == -1 )
-      commod_counter = 101;
-   map_update(wid);
+   printf("Commod but done\n");
 }
 
 
