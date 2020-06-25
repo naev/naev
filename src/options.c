@@ -209,7 +209,8 @@ static char** lang_list( int *n )
       if ((buf[i] != '\n') && (buf[i] != '\0'))
          continue;
       buf[i] = '\0';
-      ls[(*n)++] = strdup( &buf[j] );
+      if (*n < 128)
+         ls[(*n)++] = strdup( &buf[j] );
       j=i+1;
    }
 
