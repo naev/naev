@@ -127,18 +127,20 @@ static int menu_main_bkg_system (void)
    ns = load_getList( &n );
 
    /* Try to apply unidiff. */
-   load_gameDiff( ns[0].path );
+   if (n > 0) {
+      load_gameDiff( ns[0].path );
 
-   /* Get start position. */
-   if ((n > 0) && (planet_exists( ns[0].planet ))) {
-      pnt = planet_get( ns[0].planet );
-      if (pnt != NULL) {
-         sys = planet_getSystem( ns[0].planet );
-         if (sys != NULL) {
-            cx = pnt->pos.x;
-            cy = pnt->pos.y;
-            cx += 300;
-            cy += 200;
+      /* Get start position. */
+      if (planet_exists( ns[0].planet )) {
+         pnt = planet_get( ns[0].planet );
+         if (pnt != NULL) {
+            sys = planet_getSystem( ns[0].planet );
+            if (sys != NULL) {
+               cx = pnt->pos.x;
+               cy = pnt->pos.y;
+               cx += 300;
+               cy += 200;
+            }
          }
       }
    }
