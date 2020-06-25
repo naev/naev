@@ -195,11 +195,15 @@ static char** lang_list( int *n )
    char **ls;
    int i, j;
 
-   buf = ndata_read( "dat/LANGUAGES", &fs );
-
+   /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
    ls[0] = strdup("en");
    *n = 1;
+
+   /* Try to open the available languages. */
+   buf = ndata_read( "dat/LANGUAGES", &fs );
+   if (buf==NULL)
+      return ls;
    j = 0;
    for (i=0; i<fs; i++) {
       if ((buf[i] != '\n') && (buf[i] != '\0'))
