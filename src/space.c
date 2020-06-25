@@ -157,7 +157,6 @@ static void system_parseJumps( const xmlNodePtr parent );
 static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
-static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Render. */
@@ -4129,52 +4128,6 @@ static int getPresenceIndex( StarSystem *sys, int faction )
 
 
 /**
- * @brief Do some cleanup work after presence values have been adjusted.
- *
- *    @param sys Pointer to the system to cleanup.
- */
-static void presenceCleanup( StarSystem *sys )
-{
-   int i;
-
-   /* Reset the spilled variable for the entire universe. */
-   for (i=0; i < systems_nstack; i++)
-      systems_stack[i].spilled = 0;
-
-   /* Check for NULL and display a warning. */
-   if (sys == NULL) {
-      WARN("sys == NULL");
-      return;
-   }
-
-   /* Check the system for 0 and negative-value presences. */
-   for (i=0; i < sys->npresence; i++) {
-      if (sys->presence[i].value > 0.)
-         continue;
-
-      /* Remove the element with invalid value. */
-      memmove(&sys->presence[i], &sys->presence[i + 1],
-              sizeof(SystemPresence) * (sys->npresence - (i + 1)));
-      sys->npresence--;
-      sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
-      i--;  /* We'll want to check the new value we just copied in. */
-   }
-}
-
-
-/**
- * @brief Sloppily sanitize invalid presences across all systems.
- */
-void system_presenceCleanupAll( void )
-{
-   int i;
-
-   for (i=0; i<systems_nstack; i++)
-      presenceCleanup( &systems_stack[i] );
-}
-
-
-/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
@@ -4230,7 +4183,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       /*WARN("q is empty after getting adjacencies of %s.", sys->name);*/
       q_destroy(q);
       q_destroy(qn);
-      presenceCleanup(sys);
+      goto sys_cleanup;
       return;
    }
 
@@ -4267,9 +4220,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    q_destroy(q);
    q_destroy(qn);
 
+sys_cleanup:
    /* Clean up our mess. */
-   presenceCleanup(sys);
-
+   for (i=0; i < systems_nstack; i++)
+      systems_stack[i].spilled = 0;
    return;
 }
 
