@@ -95,7 +95,7 @@ int economy_sysLoad( xmlNodePtr parent );
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
-   /* Get current time in STP.
+   /* Get current time in periods.
     */
    return economy_getPriceAtTime( com, sys, p, ntime_get());
 }
@@ -117,12 +117,12 @@ credits_t economy_getPriceAtTime( const Commodity *com,
    double t;
    CommodityPrice *commPrice;
    (void) sys;
-   /* Get current time in STP.
-    * Note, taking off and landing takes about 1e7 ntime, which is 1 STP.  
+   /* Get current time in periods.
+    * Note, taking off and landing takes about 1e7 ntime, which is 1 period.  
     * Time does not advance when on a planet. 
-    * Journey with a single jump takes approx 3e7, so about 3 STP.
+    * Journey with a single jump takes approx 3e7, so about 3 periods.
     */
-   t = ntime_convertSTU( tme ) / NT_STP_STU;
+   t = ntime_convertSeconds( tme ) / NT_PERIOD_SECONDS;
 
    /* Get position in stack. */
    k = com - commodity_stack;
@@ -147,11 +147,14 @@ credits_t economy_getPriceAtTime( const Commodity *com,
      WARN(_("Price for commodity '%s' not known on this planet."), com->name);
      return 0;
    }
-   commPrice=&p->commodityPrice[i];
+   commPrice = &p->commodityPrice[i];
    /* Calculate price. */
    /* price  = (double) com->price; */
    /* price *= sys->prices[i]; */
-   price=commPrice->price + commPrice->sysVariation*sin(2*M_PI*t/commPrice->sysPeriod) + commPrice->planetVariation*sin(2*M_PI*t/commPrice->planetPeriod);
+   price = (commPrice->price + commPrice->sysVariation
+            * sin(2 * M_PI * t / commPrice->sysPeriod)
+         + commPrice->planetVariation
+            * sin(2 * M_PI * t / commPrice->planetPeriod));
    return (credits_t) (price+0.5);/* +0.5 to round */
 }
 
