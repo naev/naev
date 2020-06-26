@@ -75,4 +75,4 @@ PO_DEPENDS_ON_POT = yes
 # regenerate PO files on "make dist".  Possible values are "yes" and
 # "no".  Set this to no if the POT file and PO files are maintained
 # externally.
-DIST_DEPENDS_ON_UPDATE_PO = yes
+DIST_DEPENDS_ON_UPDATE_PO = no
