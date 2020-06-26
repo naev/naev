@@ -22,7 +22,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 
 IT_PROG_INTLTOOL
 
-AM_INIT_AUTOMAKE([foreign subdir-objects])
+AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
@@ -76,6 +76,7 @@ AC_PROG_CC
 AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
+AM_PROG_AR
 PKG_PROG_PKG_CONFIG
 
 AC_CHECK_PROG([CUT], [cut], [cut])
