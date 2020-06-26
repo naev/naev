@@ -147,7 +147,7 @@ AC_ARG_ENABLE([debug],
 AC_MSG_RESULT([$enable_debug])
 
 AS_IF([test "x$enable_debug" != "xno"], [
-  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"], [])
+  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security -Wformat-truncation=0"], [])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
