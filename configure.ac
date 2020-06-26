@@ -302,7 +302,7 @@ case "$used_lua" in
   luajit)
     PKG_CHECK_MODULES([LUA], [luajit], [
       have_lua=yes
-      LUA_CFLAGS+=" -DHAVE_LUAJIT"
+      LUA_CFLAGS="$LUA_CFLAGS -DHAVE_LUAJIT"
     ], [
       AC_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
       have_lua=no
