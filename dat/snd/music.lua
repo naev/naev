@@ -18,7 +18,7 @@ factional = {
    Sirius     = { "sirius1", "sirius2"; add_neutral = true },
    Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
    ["Za'lek"] = { "zalek1", "zalek2"; add_neutral = true },
-   Thurion    = { "motherload"; add_neutral = true },
+   Thurion    = { "motherload", "dark_city", "ambient1", "ambient3" },
    Proteron   = { "heartofmachine"; add_neutral = true },
 }
 
