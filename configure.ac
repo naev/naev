@@ -2,7 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.8.-1], [bobbens@gmail.com])
+AC_INIT([naev],
+        [0.8.-1],
+        [https://github.com/naev/naev/issues],
+        [naev],
+        [https://naev.org/])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
