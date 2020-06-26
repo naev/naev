@@ -249,6 +249,7 @@ static void outfits_genList( unsigned int wid )
    const glColour *c;
    const char *slotname;
    char *filtertext;
+   int no_outfits = 0;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -300,6 +301,7 @@ static void outfits_genList( unsigned int wid )
       soutfits[0] = strdup(_("None"));
       toutfits[0] = NULL;
       noutfits    = 1;
+      no_outfits  = 1;
    }
    else {
       /* Create the outfit arrays. */
@@ -349,7 +351,7 @@ static void outfits_genList( unsigned int wid )
    /* write the outfits stuff */
    outfits_update( wid, NULL );
 
-   if (noutfits > 0 && (strcmp(soutfits[0], _("None")) != 0)) {
+   if (!no_outfits) {
       toolkit_setImageArrayQuantity( wid, OUTFITS_IAR, quantity );
       toolkit_setImageArraySlotType( wid, OUTFITS_IAR, slottype );
       toolkit_setImageArrayBackground( wid, OUTFITS_IAR, bg );
@@ -431,6 +433,7 @@ void outfits_update( unsigned int wid, char* str )
       strncpy( buf4, outfit->license, sizeof(buf4) );
    else
       nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", outfit->license );
+   buf4[ sizeof(buf4)-1 ] = '\0';
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
