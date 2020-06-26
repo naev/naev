@@ -1,7 +1,5 @@
 ACLOCAL_AMFLAGS = --install -I m4
 
-PACKAGE = @PACKAGE@
-
 SUBDIRS = po lib src
 DIST_SUBDIRS = po lib src
 
