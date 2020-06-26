@@ -13,11 +13,11 @@ last = "idle"
 -- Faction-specific songs.
 factional = {
    Collective = { "collective1", "automat" },
-   Empire     = { "empire1", "empire2" },
-   Sirius     = { "sirius1", "sirius2" },
-   Dvaered    = { "dvaered1", "dvaered2" },
-   ["Za'lek"] = { "zalek1", "zalek2" },
-   Thurion    = { "motherload" },
+   Empire     = { "empire1", "empire2"; add_neutral = true },
+   Sirius     = { "sirius1", "sirius2"; add_neutral = true },
+   Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
+   ["Za'lek"] = { "zalek1", "zalek2"; add_neutral = true },
+   Thurion    = { "motherload"; add_neutral = true },
 }
 
 function choose( str )
@@ -190,23 +190,29 @@ function choose_ambient ()
    local factions             = sys:presences()
    local nebu_dens, nebu_vol  = sys:nebula()
 
-   local faction = var.peek("music_ambient_force")
-   if faction == nil then
-      faction = sys:faction()
-      if faction then
-         faction = faction:name()
+   local strongest = var.peek("music_ambient_force")
+   if strongest == nil then
+      local presences = sys:presences()
+      if presences then
+         local strongest_amount = 0
+         for k, v in pairs( presences ) do
+            if faction.get(k):playerStanding() < 0 and v > strongest_amount then
+               strongest = k
+               strongest_amount = v
+            end
+         end
       end
    end
 
    -- Check to see if changing faction zone
-   if faction ~= last_sysFaction then
+   if strongest ~= last_sysFaction then
       -- Table must not be empty
       if next(factions) ~= nil then
          force = true
       end
 
       if force then
-         last_sysFaction = faction
+         last_sysFaction = strongest
       end
    end
 
@@ -222,9 +228,9 @@ function choose_ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       local neutral_prob = 0.6
-      if factional[faction] then
-         ambient = factional[faction]
-         if faction ~= "Collective" then
+      if factional[strongest] then
+         ambient = factional[strongest]
+         if factional[strongest].add_neutral then
             add_neutral = true
          end
       elseif nebu then
