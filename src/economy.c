@@ -192,17 +192,19 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
    }
    if (i >= p->ncommodities) {
       WARN(_("Price for commodity '%s' not known on this planet."), com->name);
-      *mean=0;
-      *std=0;
+      *mean = 0;
+      *std = 0;
       return -1;
    }
    commPrice = &p->commodityPrice[i];
    if( commPrice->cnt>0 ){
-      *mean=(credits_t)(commPrice->sum/commPrice->cnt + 0.5); /* +0.5 to round*/
-      *std=sqrt(commPrice->sum2/commPrice->cnt-(commPrice->sum*commPrice->sum)/(commPrice->cnt*commPrice->cnt));
+      *mean = (credits_t)(commPrice->sum/commPrice->cnt + 0.5); /* +0.5 to round*/
+      *std = (sqrt(commPrice->sum2 / commPrice->cnt
+               - (commPrice->sum * commPrice->sum)
+                  / (commPrice->cnt * commPrice->cnt)));
    }else{
-      *mean=0;
-      *std=0;
+      *mean = 0;
+      *std = 0;
    }
    return 0;
 }
