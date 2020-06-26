@@ -24,6 +24,7 @@
 #include "nxml.h"
 #include "space.h"
 #include "ndata.h"
+#include "economy.h"
 #include "fleet.h"
 #include "map_overlay.h"
 

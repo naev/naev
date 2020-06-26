@@ -470,11 +470,10 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon **wlayer;
    int *nlayer;
    Weapon *w;
-   int i, j, k;
+   int i;
    int spfx;
    int s;
    Pilot *p;
-   Outfit *o;
 
    /* Choose layer. */
    switch (layer) {
@@ -700,9 +699,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
  */
 static void weapon_render( Weapon* w, const double dt )
 {
-   double x,y, cx,cy, gx,gy;
    glTexture *gfx;
-   double z;
    glColour c = { .r=1., .g=1., .b=1. };
 
    switch (w->outfit->type) {
@@ -1239,7 +1236,8 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
       Vector2d pos[2], const double dt )
 {
-   int s, spfx;
+   (void) layer;
+   int spfx;
    Damage dmg;
    const Damage *odmg;
 

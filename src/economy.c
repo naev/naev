@@ -75,10 +75,6 @@ int econ_nprices       = 0; /**< Number of prices to calculate. */
 //static double econ_calcJumpR( StarSystem *A, StarSystem *B );
 //static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price );
 //static int econ_createGMatrix (void);
-credits_t economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /* externed in land.c */
-credits_t economy_getPriceAtTime( const Commodity *com,
-                                  const StarSystem *sys, const Planet *p, ntime_t t );
 
 /*
  * Externed prototypes.

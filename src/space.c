@@ -38,6 +38,7 @@
 #include "mission.h"
 #include "conf.h"
 #include "queue.h"
+#include "economy.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
@@ -1577,7 +1578,7 @@ void space_init( const char* sysname )
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int i, j, k;
+   int i;
    double mod, theta;
    double angle, radius;
    AsteroidType *at;
@@ -1694,7 +1695,7 @@ static int planets_load ( void )
    size_t nfiles;
    size_t i, len;
    Commodity **stdList;
-   int stdNb;
+   unsigned int stdNb;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -2476,6 +2477,7 @@ StarSystem *system_new (void)
    int realloced, id;
 
    /* Protect current system in case of realloc. */
+   id = -1;
    if (cur_system != NULL)
       id = system_index( cur_system );
 
@@ -2490,7 +2492,7 @@ StarSystem *system_new (void)
    sys = &systems_stack[ systems_nstack-1 ];
 
    /* Reset cur_system. */
-   if (cur_system != NULL)
+   if (id >= 0)
       cur_system = system_getIndex( id );
 
    /* Initialize system and id. */
@@ -2735,6 +2737,9 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    char *buf;
    double x, y;
    StarSystem *target;
+
+   x = 0.;
+   y = 0.;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -3079,7 +3084,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
  */
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
 {
-   int i;
    AsteroidExclusion *a;
    xmlNodePtr cur;
    double x, y;
@@ -3239,7 +3243,7 @@ int space_load (void)
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
 
-   for (i=0; i<nasterogfx; i++)
+   for (i=0; i<(int)nasterogfx; i++)
       free(asteroid_files[i]);
    free(asteroid_files);
 
@@ -3636,7 +3640,7 @@ static void space_renderPlanet( Planet *p )
  */
 static void space_renderAsteroid( Asteroid *a )
 {
-   int i, qtt;
+   int i;
    double scale, nx, ny;
    AsteroidType *at;
    Commodity *com;

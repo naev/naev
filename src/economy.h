@@ -28,6 +28,8 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
 void economy_averageSeenPrices( const Planet *p );
 void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
 void economy_clearKnown (void);
+credits_t economy_getPrice( const Commodity *com, const StarSystem *sys, const Planet *p );
+credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, const Planet *p, ntime_t t );
 
 
 /*
