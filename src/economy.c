@@ -72,8 +72,9 @@ int econ_nprices       = 0; /**< Number of prices to calculate. */
  * Prototypes.
  */
 /* Economy. */
-static double econ_calcJumpR( StarSystem *A, StarSystem *B );
-static int econ_createGMatrix (void);
+//static double econ_calcJumpR( StarSystem *A, StarSystem *B );
+//static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price );
+//static int econ_createGMatrix (void);
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /* externed in land.c */
 credits_t economy_getPriceAtTime( const Commodity *com,
@@ -165,7 +166,8 @@ credits_t economy_getPriceAtTime( const Commodity *com,
  *    @param p Planet to get price of commodity.
  *    @return The average price of the commodity.
  */
-int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std){
+int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std)
+{
    int i,k;
    CommodityPrice *commPrice;
    /* Get position in stack */
@@ -266,6 +268,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
 }
 
 
+#if 0
 /**
  * @brief Calculates the resistance between two star systems.
  *
@@ -305,11 +308,6 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  */
 static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 {
-   (void) dt;
-   (void) sys;
-   (void) price;
-   return 0.;
-#if 0
    int i;
    double I;
    double prodfactor, p;
@@ -344,7 +342,6 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    I = p / ECON_PROD_MODIFIER;
 
    return I;
-#endif
 }
 
 
@@ -405,6 +402,7 @@ static int econ_createGMatrix (void)
 
    return 0;
 }
+#endif
 
 
 /**
@@ -471,8 +469,8 @@ int economy_refresh (void)
       return 0;
 
    /* Create the resistance matrix. */
-   if (econ_createGMatrix())
-      return -1;
+   //if (econ_createGMatrix())
+   //   return -1;
 
    /* Initialize the prices. */
    economy_update( 0 );
@@ -488,7 +486,7 @@ int economy_refresh (void)
  */
 int economy_update( unsigned int dt )
 {
-   int ret;
+   (void)dt;
    int i, j;
    double *X;
    double scale, offset;
@@ -508,6 +506,7 @@ int economy_update( unsigned int dt )
    /* Calculate the results for each price set. */
    for (j=0; j<econ_nprices; j++) {
 
+#if 0
       /* First we must load the vector with intensities. */
       for (i=0; i<systems_nstack; i++)
          X[i] = econ_calcSysI( dt, &systems_stack[i], j );
@@ -523,6 +522,7 @@ int economy_update( unsigned int dt )
       ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
          WARN(_("Failed to solve the Economy System."));
+#endif
 
       /*
        * Get the minimum and maximum to scale.
@@ -599,7 +599,7 @@ void economy_destroy (void)
 static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPrice *commodityPrice ) {
 
    CommodityModifier *cm;
-   double period, base, scale, factor;
+   double base, scale, factor;
    char *factionname;
 
    /* Check the faction is not NULL.*/
@@ -627,7 +627,7 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    commodityPrice->updateTime = 0;
    /* Use filename to specify a variation period. */
    base = 100;
-   period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)] % 32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1] % 32;
+   commodity->period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)] % 32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1] % 32;
    commodityPrice->planetPeriod = commodity->period + base;
 
    /* Use filename of exterior graphic to modify the variation period.  
@@ -881,7 +881,8 @@ void economy_initialiseCommodityPrices(void){
    }
 }
 
-void economy_averageSeenPrices( const Planet *p ){
+void economy_averageSeenPrices( const Planet *p )
+{
    int i;
    ntime_t t;
    Commodity *c;
@@ -903,7 +904,8 @@ void economy_averageSeenPrices( const Planet *p ){
 }
 
 
-void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
+void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
+{
    int i;
    ntime_t t;
    Commodity *c;

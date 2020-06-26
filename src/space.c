@@ -169,14 +169,6 @@ static void space_renderDebris( Debris *d, double x, double y );
  */
 int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
-/*
- * External prototypes.
- */
-extern credits_t economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /**< from economy.c */
-extern credits_t economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std ); /**< from economy.c */
-extern void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
-extern credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, const Planet *p, ntime_t tme );
 
 
 char* planet_getServiceName( int service )

@@ -8,8 +8,7 @@
 #  define ECONOMY_H
 
 
-#include "commodity.h"
-//#include "space.h"
+#include "space.h"
 
 
 /*
@@ -21,6 +20,14 @@ int economy_execQueued (void);
 int economy_update( unsigned int dt );
 int economy_refresh (void);
 void economy_destroy (void);
+
+/*
+ * Price stuff.
+ */
+int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std);
+void economy_averageSeenPrices( const Planet *p );
+void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
+void economy_clearKnown (void);
 
 
 /*
