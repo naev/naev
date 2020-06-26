@@ -232,6 +232,7 @@ dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
 dat/events/start.lua
 dat/events/tutorial/tutorial-common.lua
+dat/events/tutorial/tutorial.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
 dat/factions/equip/generic.lua
@@ -320,7 +321,6 @@ dat/missions/flf/dvk/flf_dvk04.lua
 dat/missions/flf/dvk/flf_dvk05.lua
 dat/missions/flf/dvk/flf_dvk06.lua
 dat/missions/flf/dvk/flf_dvk07.lua
-dat/missions/flf/flf_commodity_run.lua
 dat/missions/flf/flf_common.lua
 dat/missions/flf/flf_diversion.lua
 dat/missions/flf/flf_empatrol.lua
@@ -333,7 +333,6 @@ dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
-dat/missions/neutral/commodity_run.lua
 dat/missions/neutral/crimelord.lua
 dat/missions/neutral/diy-nerds.lua
 dat/missions/neutral/drunkard.lua
@@ -369,7 +368,6 @@ dat/missions/pirate/patrol.lua
 dat/missions/pirate/pir_cargo.lua
 dat/missions/pirate/pir_clan_cargo.lua
 dat/missions/pirate/pir_ship_stealing.lua
-dat/missions/pirate/pirate_commodity_run.lua
 dat/missions/rehab_common.lua
 dat/missions/shadow/darkshadow.lua
 dat/missions/shadow/shadowrun.lua
