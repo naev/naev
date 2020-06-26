@@ -1,11 +1,15 @@
 ACLOCAL_AMFLAGS = --install -I m4
 
-SUBDIRS = po lib src
-DIST_SUBDIRS = po lib src
+SUBDIRS = lib src
+DIST_SUBDIRS = lib src
 
 if HAVE_UTILS
 SUBDIRS += utils
-endif
+endif # HAVE_NLS
+if HAVE_NLS
+SUBDIRS += po
+DIST_SUBDIRS += po
+endif # HAVE_NLS
 
 appicondir = $(datadir)/pixmaps
 appicon_DATA = extras/logos/naev.png
