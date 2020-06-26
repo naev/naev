@@ -51,6 +51,7 @@ Naev.app
 datapath.lua
 core
 ABOUT-NLS                         
+po/naev.pot
 po/POTFILES
 po/Makefile.in.in                 
 po/Makefile.in.in~
