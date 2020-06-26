@@ -41,12 +41,19 @@ CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(XMLPOT)
 
 all-local: $(NAEV) pot $(VERSIONFILE) $(LANGUAGEFILE)
 
+if HAVE_NLS
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	$(ITSTOOL) -i $(TRANSLATIONITS) $(XMLFILES) > $@
 	@echo "ITSTOOL $@"
 
 pot: $(XMLPOT) $(NAEV)
 	$(MAKE) -C po $(PACKAGE).pot
+else # HAVE_NLS
+pot: $(XMLPOT) $(NAEV)
+	@echo "***"
+	@echo "*** You must have NLS enabled to compile translation files"
+	@echo "***"
+endif # HAVE_NLS
 
 $(NAEV):
 	@echo "  LN    $(NAEV)"
@@ -68,7 +75,7 @@ $(DATA_ARCHIVE): $(VERSIONFILE) $(LANGUAGEFILE)
 	@echo " ZIP   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
     zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS $(VERSIONFILE) naev-confupdate.sh dat/
-else
+else # HAVE_UTILS
 utils:
 
 $(DATA_ARCHIVE):
@@ -76,7 +83,7 @@ $(DATA_ARCHIVE):
 	@echo "*** You must clone the full git repo to create $(DATA_ARCHIVE)"
 	@echo "***"
 	@false
-endif
+endif # HAVE_UTILS
 
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \

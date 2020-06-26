@@ -87,7 +87,12 @@ AS_IF([test -z "$CUT"],[
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 AC_CHECK_PROG([LDOC], [ldoc], [ldoc])
 AC_CHECK_PROG([GIT], [git], [git])
-AC_CHECK_PROG([ITSTOOL], [itstool], [itstool])
+AS_IF([test "x$USE_NLS" == "xyes"], [
+   AC_CHECK_PROG([ITSTOOL], [itstool], [itstool])
+   AS_IF([test -z "$ITSTOOL"],[
+      AC_ERROR([itstool not found])
+   ])
+])
 
 #
 # Checks for build environment
@@ -644,6 +649,7 @@ AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "src/shaders_c_gen.c"])
+AM_CONDITIONAL([HAVE_NLS], [test "x$USE_NLS" = "xyes"])
 
 #
 # Output
