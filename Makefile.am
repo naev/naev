@@ -39,13 +39,13 @@ CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(XMLPOT)
 
 .PHONY: pot docs utils help install-ndata
 
-all-local: pot $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+all-local: $(NAEV) pot $(VERSIONFILE) $(LANGUAGEFILE)
 
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	$(ITSTOOL) -i $(TRANSLATIONITS) $(XMLFILES) > $@
-	@echo " ITSTOOL   $@"
+	@echo "ITSTOOL $@"
 
-pot: $(XMLPOT)
+pot: $(XMLPOT) $(NAEV)
 	$(MAKE) -C po $(PACKAGE).pot
 
 $(NAEV):
