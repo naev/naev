@@ -29,6 +29,7 @@ CODE_SOURCE = \
 	collision.c \
 	colour.c \
 	comm.c \
+	commodity.c \
 	cond.c \
 	conf.c \
 	console.c \
@@ -170,6 +171,7 @@ CODE_SOURCE = \
 	collision.h \
 	colour.h \
 	comm.h \
+	commodity.h \
 	cond.h \
 	conf.h \
 	config.h \

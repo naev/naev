@@ -11,7 +11,7 @@
 #include "faction.h"
 #include "opengl.h"
 #include "pilot.h"
-#include "economy.h"
+#include "commodity.h"
 #include "fleet.h"
 #include "mission.h"
 #include "tech.h"

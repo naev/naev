@@ -284,6 +284,7 @@ src/claim.c
 src/collision.c
 src/colour.c
 src/comm.c
+src/commodity.c
 src/cond.c
 src/conf.c
 src/console.c
