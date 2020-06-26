@@ -261,7 +261,7 @@ AC_ARG_WITH([ndata-path],
   AC_HELP_STRING([--with-ndata-path=PATH], [path to the ndata file]),
   [ndata_path="$withval"], [])
 AC_MSG_RESULT([$ndata_path])
-AS_IF([test -z "$ndata_path" || test "$ndata_path" = "yes"], [
+AS_IF([test -z "$ndata_path" || test "x$ndata_path" = "xyes"], [
   AC_ERROR([The data path must be explicitly specified])
 ])
 AC_SUBST([ndata_path])
