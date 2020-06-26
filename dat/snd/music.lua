@@ -13,11 +13,13 @@ last = "idle"
 -- Faction-specific songs.
 factional = {
    Collective = { "collective1", "automat" },
-   Empire     = { "empire1", "empire2" },
-   Sirius     = { "sirius1", "sirius2" },
-   Dvaered    = { "dvaered1", "dvaered2" },
-   ["Za'lek"] = { "zalek1", "zalek2" },
-   Thurion    = { "motherload" },
+   Pirate     = { "pirate1_theme1", "pirates_orchestra" },
+   Empire     = { "empire1", "empire2"; add_neutral = true },
+   Sirius     = { "sirius1", "sirius2"; add_neutral = true },
+   Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
+   ["Za'lek"] = { "zalek1", "zalek2"; add_neutral = true },
+   Thurion    = { "motherload", "dark_city", "ambient1", "ambient3" },
+   Proteron   = { "heartofmachine"; add_neutral = true },
 }
 
 function choose( str )
@@ -166,6 +168,7 @@ ambient_neutral  = { "ambient2", "mission",
 --]]
 function choose_ambient ()
    local force = true
+   local add_neutral = false
 
    -- Check to see if we want to update
    if music.isPlaying() then
@@ -190,23 +193,25 @@ function choose_ambient ()
    local factions             = sys:presences()
    local nebu_dens, nebu_vol  = sys:nebula()
 
-   local faction = var.peek("music_ambient_force")
-   if faction == nil then
-      faction = sys:faction()
-      if faction then
-         faction = faction:name()
+   local strongest = var.peek("music_ambient_force")
+   if strongest == nil then
+      if factions then
+         local strongest_amount = 0
+         for k, v in pairs( factions ) do
+            if v > strongest_amount then
+               strongest = k
+               strongest_amount = v
+            end
+         end
       end
    end
 
    -- Check to see if changing faction zone
-   if faction ~= last_sysFaction then
-      -- Table must not be empty
-      if next(factions) ~= nil then
-         force = true
-      end
+   if strongest ~= last_sysFaction then
+      force = true
 
       if force then
-         last_sysFaction = faction
+         last_sysFaction = strongest
       end
    end
 
@@ -222,11 +227,9 @@ function choose_ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       local neutral_prob = 0.6
-      if factional[faction] then
-         ambient = factional[faction]
-         if faction ~= "Collective" then
-            add_neutral = true
-         end
+      if strongest ~= nil and factional[strongest] then
+         ambient = factional[strongest]
+         add_neutral = factional[strongest].add_neutral
       elseif nebu then
          ambient = { "ambient1", "ambient3" }
          add_neutral = true
