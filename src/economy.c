@@ -1228,13 +1228,13 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
 
    factionname = faction_name(planet->faction);
    while ( cm != NULL ) {
-     if ( strcmp( factionname, cm->name ) == 0 ){
+      if ( strcmp( factionname, cm->name ) == 0 ){
          scale = cm->value;
          break;
       }
       cm = cm->next;
    }
-  commodityPrice->price *= scale;
+   commodityPrice->price *= scale;
 
    /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety
      and so lower prices and improve stability*/
