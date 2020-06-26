@@ -423,16 +423,16 @@ void outfits_update( unsigned int wid, char* str )
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
    /* new text */
-   window_modifyText( wid, "txtDescription", outfit->description );
+   window_modifyText( wid, "txtDescription", _(outfit->description) );
    price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
    if (outfit->license == NULL)
       strncpy( buf4, _("None"), sizeof(buf4) );
    else if (player_hasLicense( outfit->license ))
-      strncpy( buf4, outfit->license, sizeof(buf4) );
+      strncpy( buf4, _(outfit->license), sizeof(buf4) );
    else
-      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", outfit->license );
+      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", _(outfit->license) );
    buf4[ sizeof(buf4)-1 ] = '\0';
 
    mass = outfit->mass;
@@ -452,16 +452,16 @@ void outfits_update( unsigned int wid, char* str )
          "%s credits\n"
          "%s\n"),
          player_outfitOwned(outfit),
-         outfit_slotName(outfit),
-         outfit_slotSize(outfit),
+         _(outfit_slotName(outfit)),
+         _(outfit_slotSize(outfit)),
          mass,
          buf2,
          buf3,
          buf4 );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
-   window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
+   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
    window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );

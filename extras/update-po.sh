@@ -12,7 +12,7 @@ TMPFILE=$(mktemp)
 echo "src/log.h" > "$TMPFILE"
 find src/ -name "*.c" | sort >> "$TMPFILE"
 find dat/ -name "*.lua" | sort >> "$TMPFILE"
-#echo "dat/commodity.xml" >> "$TMPFILE"
+echo "po/xml.pot" >> "$TMPFILE"
 
 cat "$TMPFILE" | sort > po/POTFILES.in
 

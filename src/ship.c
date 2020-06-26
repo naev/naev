@@ -166,49 +166,49 @@ char* ship_class( Ship* s )
 
       /* Civilian. */
       case SHIP_CLASS_YACHT:
-         return "Yacht";
+         return gettext_noop("Yacht");
       case SHIP_CLASS_LUXURY_YACHT:
-         return "Luxury Yacht";
+         return gettext_noop("Luxury Yacht");
       case SHIP_CLASS_CRUISE_SHIP:
-         return "Cruise Ship";
+         return gettext_noop("Cruise Ship");
 
       /* Merchant. */
       case SHIP_CLASS_COURIER:
-         return "Courier";
+         return gettext_noop("Courier");
       case SHIP_CLASS_ARMOURED_TRANSPORT:
-         return "Armoured Transport";
+         return gettext_noop("Armoured Transport");
       case SHIP_CLASS_FREIGHTER:
-         return "Freighter";
+         return gettext_noop("Freighter");
       case SHIP_CLASS_BULK_CARRIER:
-         return "Bulk Carrier";
+         return gettext_noop("Bulk Carrier");
 
       /* Military. */
       case SHIP_CLASS_SCOUT:
-         return "Scout";
+         return gettext_noop("Scout");
       case SHIP_CLASS_FIGHTER:
-         return "Fighter";
+         return gettext_noop("Fighter");
       case SHIP_CLASS_BOMBER:
-         return "Bomber";
+         return gettext_noop("Bomber");
       case SHIP_CLASS_CORVETTE:
-         return "Corvette";
+         return gettext_noop("Corvette");
       case SHIP_CLASS_DESTROYER:
-         return "Destroyer";
+         return gettext_noop("Destroyer");
       case SHIP_CLASS_CRUISER:
-         return "Cruiser";
+         return gettext_noop("Cruiser");
       case SHIP_CLASS_CARRIER:
-         return "Carrier";
+         return gettext_noop("Carrier");
 
       /* Robotic. */
       case SHIP_CLASS_DRONE:
-         return "Drone";
+         return gettext_noop("Drone");
       case SHIP_CLASS_HEAVY_DRONE:
-         return "Heavy Drone";
+         return gettext_noop("Heavy Drone");
       case SHIP_CLASS_MOTHERSHIP:
-         return "Mothership";
+         return gettext_noop("Mothership");
 
       /* Unknown. */
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 

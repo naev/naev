@@ -27,14 +27,25 @@ NAEV	     = $(PACKAGE)$(EXEEXT)
 VERSIONFILE = VERSION
 LANGUAGEFILE = dat/LANGUAGES
 
+XMLBASE     = dat/commodity.xml dat/faction.xml dat/slots.xml
+XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
+XMLSHIPS    = $(wildcard dat/ships/*.xml)
+XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
+TRANSLATIONITS = $(top_srcdir)/po/translation.its 
+XMLPOT      = $(top_srcdir)/po/xml.pot
+
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(XMLPOT)
 
 .PHONY: pot docs utils help install-ndata
 
 all-local: pot $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
-pot:
+$(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
+	$(ITSTOOL) -i $(TRANSLATIONITS) $(XMLFILES) > $@
+	@echo " ITSTOOL   $@"
+
+pot: $(XMLPOT)
 	$(MAKE) -C po $(PACKAGE).pot
 
 $(NAEV):

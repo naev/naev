@@ -445,8 +445,8 @@ static void ship_update( unsigned int wid )
          "\n"),
          /* Generic */
          player.p->name,
-         player.p->ship->name,
-         ship_class(player.p->ship),
+         _(player.p->ship->name),
+         _(ship_class(player.p->ship)),
          (int)floor(player.p->crew),
          player.p->cpu_max,
          /* Movement. */

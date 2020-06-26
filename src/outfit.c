@@ -243,15 +243,15 @@ const char *outfit_slotName( const Outfit* o )
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
-         return "NA";
+         return gettext_noop("NA");
       case OUTFIT_SLOT_STRUCTURE:
-         return "Structure";
+         return gettext_noop("Structure");
       case OUTFIT_SLOT_UTILITY:
-         return "Utility";
+         return gettext_noop("Utility");
       case OUTFIT_SLOT_WEAPON:
-         return "Weapon";
+         return gettext_noop("Weapon");
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 
@@ -268,13 +268,13 @@ const char *outfit_slotSize( const Outfit* o )
       case OUTFIT_SLOT_SIZE_NA:
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
-         return "Small";
+         return gettext_noop("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:
-         return "Medium";
+         return gettext_noop("Medium");
       case OUTFIT_SLOT_SIZE_HEAVY:
-         return "Large";
+         return gettext_noop("Large");
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 
@@ -284,13 +284,13 @@ const char *slotSize( const OutfitSlotSize o )
       case OUTFIT_SLOT_SIZE_NA:
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
-         return "Small";
+         return gettext_noop("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:
-         return "Medium";
+         return gettext_noop("Medium");
       case OUTFIT_SLOT_SIZE_HEAVY:
-         return "Large";
+         return gettext_noop("Large");
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 

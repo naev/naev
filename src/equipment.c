@@ -1643,8 +1643,8 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%s\a0"),
          /* Generic. */
       ship->name,
-      ship->ship->name,
-      ship_class(ship->ship),
+      _(ship->ship->name),
+      _(ship_class(ship->ship)),
       buf2,
       /* Movement. */
       ship->solid->mass,

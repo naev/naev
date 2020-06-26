@@ -22,7 +22,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 
 IT_PROG_INTLTOOL
 
-AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
+AM_INIT_AUTOMAKE([-Wall -Wno-portability foreign subdir-objects])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
@@ -87,6 +87,7 @@ AS_IF([test -z "$CUT"],[
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 AC_CHECK_PROG([LDOC], [ldoc], [ldoc])
 AC_CHECK_PROG([GIT], [git], [git])
+AC_CHECK_PROG([ITSTOOL], [itstool], [itstool])
 
 #
 # Checks for build environment
