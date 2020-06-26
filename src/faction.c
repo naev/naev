@@ -1359,7 +1359,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 static void faction_parseSocial( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
-   char *buf;
    Faction *base;
    int mod;
    int mem;

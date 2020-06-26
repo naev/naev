@@ -28,6 +28,7 @@
 #include "pause.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "economy.h"
 #include "conf.h"
 
 

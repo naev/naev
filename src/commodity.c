@@ -66,13 +66,6 @@ extern int econ_nprices;
 /* Commodity. */
 static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, xmlNodePtr parent );
-/* Economy. */
-static double econ_calcJumpR( StarSystem *A, StarSystem *B );
-static int econ_createGMatrix (void);
-credits_t economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /* externed in land.c */
-credits_t economy_getPriceAtTime( const Commodity *com,
-                                  const StarSystem *sys, const Planet *p, ntime_t t );
 
 
 /**

@@ -962,7 +962,7 @@ void economy_clearKnown (void)
 int economy_sysLoad( xmlNodePtr parent )
 {
    xmlNodePtr node, cur, nodeAsset, nodeCommodity;
-   StarSystem *sys;
+   //StarSystem *sys;
    char *str;
    Planet *planet;
    int i;
@@ -978,7 +978,7 @@ int economy_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur, "system")) {
                xmlr_attr(cur,"name",str);
-               sys = system_get(str);
+               //sys = system_get(str);
                free(str);
                nodeAsset = cur->xmlChildrenNode;
                do{
