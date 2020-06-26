@@ -65,9 +65,6 @@ AS_IF([test "$exec_prefix" = "NONE"], [
   exec_prefix="$prefix"
 ])
 
-# Check if we have custom CFLAGS
-AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
-
 #
 # Checks for programs.
 #
@@ -149,15 +146,8 @@ AC_ARG_ENABLE([debug],
   ])
 AC_MSG_RESULT([$enable_debug])
 
-AS_IF([test "$enable_debug" != "no"], [
-  AS_IF([test "$have_custom_cflags" = "no"], [
-    # Undo the default CFLAGS set by autoconf
-    AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
-      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"
-    ], [
-      CFLAGS=
-    ])
-  ])
+AS_IF([test "x$enable_debug" != "xno"], [
+  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"], [])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
