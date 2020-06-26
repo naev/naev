@@ -28,7 +28,7 @@ local description = _("Land on %s, in the %s system, and escape with your new %s
 
 -- localization stuff, translators would work here
 informer = {
-   description = _("A pirate informer is looking at you. Maybe he has some useful information to sell?"),
+   description = _("A pirate informer is looking at you. Maybe they have some useful information to sell?"),
    title = _("Ship to steal"),
    message = _([["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
     "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
