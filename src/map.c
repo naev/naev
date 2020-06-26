@@ -100,6 +100,7 @@ static void map_buttonCommodity( unsigned int wid, char* str );
 static void map_selectCur (void);
 static void map_genModeList(void);
 static void map_update_commod_av_price();
+static void map_window_close( unsigned int wid, char *str );
 
 
 /**
@@ -213,7 +214,7 @@ void map_open (void)
 
    /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
-   window_setCancel( wid, window_close );
+   window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
 
    /*
@@ -288,7 +289,7 @@ void map_open (void)
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnClose", _("Close"), window_close );
+            "btnClose", _("Close"), map_window_close );
    /* Commodity button */
    window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommod", _("Mode"), map_buttonCommodity );
    /* Find button */
@@ -1740,6 +1741,8 @@ static void map_buttonCommodity( unsigned int wid, char* str )
    if (mods & (KMOD_LCTRL | KMOD_RCTRL)){/* toggle on/off */
       if ( cur_commod == -1 ){
          cur_commod = cur_commod_last;
+         if ( cur_commod == -1 )
+            cur_commod = 0;
          cur_commod_mode = cur_commod_mode_last;
       }else{
          cur_commod_last = cur_commod;
@@ -1781,6 +1784,12 @@ static void map_buttonCommodity( unsigned int wid, char* str )
 /**
  * @brief Cleans up the map stuff.
  */
+static void map_window_close( unsigned int wid, char *str )
+{
+   cur_commod = -1;
+   window_close(wid,str);
+}
+
 void map_cleanup (void)
 {
    map_close();
@@ -1807,7 +1816,7 @@ void map_close (void)
 void map_clear (void)
 {
    map_setZoom(1.);
-
+   cur_commod = -1;
    if (cur_system != NULL) {
       map_xpos = cur_system->pos.x;
       map_ypos = cur_system->pos.y;
