@@ -221,7 +221,6 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
  */
 void equipment_open( unsigned int wid )
 {
-   int i;
    int w, h;
    int sw, sh;
    int ow, oh;
@@ -229,7 +228,6 @@ void equipment_open( unsigned int wid )
    int ew, eh;
    int cw, ch;
    int x, y;
-   GLfloat colour[4*4];
    const char *buf;
 
    /* Mark as generated. */
@@ -825,7 +823,6 @@ static void equipment_renderShip( double bx, double by,
    double pw, ph;
    double w, h;
    Vector2d v;
-   GLshort vertex[2*4];
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -933,9 +930,9 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if it exists. */
          exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
          /* Get the level of the selection. */
-         if (event->button.button== SDL_BUTTON_LEFT)
+         if (event->button.button == SDL_BUTTON_LEFT)
             level = 0;
-         else if (event->button.button== SDL_BUTTON_RIGHT)
+         else if (event->button.button == SDL_BUTTON_RIGHT)
             level = 1;
          else
             return 0; /* We ignore this type of click. */
@@ -1060,7 +1057,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 {
    int ret;
    Outfit *o, *ammo;
-   int q;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -1210,9 +1206,6 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
  */
 void equipment_addAmmo (void)
 {
-   int i;
-   Outfit *o, *ammo;
-   int q;
    Pilot *p;
 
    /* Get player. */
@@ -1598,7 +1591,6 @@ void equipment_updateShips( unsigned int wid, char* str )
    char *shipname;
    Pilot *ship;
    char *nt;
-   credits_t price;
    int onboard;
    int cargo;
 
@@ -1651,8 +1643,8 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%s\a0"),
          /* Generic. */
       ship->name,
-      ship->ship->name,
-      ship_class(ship->ship),
+      _(ship->ship->name),
+      _(ship_class(ship->ship)),
       buf2,
       /* Movement. */
       ship->solid->mass,
@@ -1792,6 +1784,8 @@ static void equipment_changeShip( unsigned int wid )
    toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
    if (widget_exists(wid, EQUIPMENT_FILTER))
       filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
+   else
+      filtertext = NULL;
 
    /* Swap ship. */
    player_swapShip( shipname );

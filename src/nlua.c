@@ -343,7 +343,6 @@ static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
 {
    char *buf;
    char path_filename[PATH_MAX];
-   int len;
 
    /* Try to locate the data directly */
    buf = NULL;

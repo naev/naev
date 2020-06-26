@@ -98,6 +98,9 @@
 #include "dialogue.h"
 #include "slots.h"
 
+#if defined ENABLE_NLS && ENABLE_NLS
+#include <locale.h>
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
@@ -186,6 +189,7 @@ int main( int argc, char** argv )
    }
 #endif /* HAS_WIN32 */
 
+#if defined ENABLE_NLS && ENABLE_NLS
    /* Set up locales. */
    /* When using locales with difference in '.' and ',' for splitting numbers it
     * causes pretty much everything to blow up, so we must refer from loading the
@@ -195,6 +199,7 @@ int main( int argc, char** argv )
    bindtextdomain( PACKAGE_NAME, LOCALEDIR );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
@@ -282,6 +287,7 @@ int main( int argc, char** argv )
    else
       log_purge();
 
+#if defined ENABLE_NLS && ENABLE_NLS
    /* Try to set the language again if Naev is attempting to override the locale stuff.
     * This is done late because this is the first stage at which we have the conf file
     * fully loaded. */
@@ -292,6 +298,7 @@ int main( int argc, char** argv )
       textdomain( PACKAGE_NAME );
       DEBUG(_("Reset language to \"%s\""), conf.language);
    }
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)

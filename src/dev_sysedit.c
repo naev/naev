@@ -23,6 +23,7 @@
 #include "dev_system.h"
 #include "unidiff.h"
 #include "dialogue.h"
+#include "economy.h"
 #include "tk/toolkit_priv.h"
 #include "ndata.h"
 #include "nfile.h"
@@ -714,6 +715,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
  */
 static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
 {
+   (void) selected;
    double tx, ty, z, r, rr;
 
    /* Inits. */

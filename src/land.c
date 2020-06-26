@@ -118,11 +118,6 @@ static char *errorlist_ptr;
 static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
 static void land_stranded (void);
 
-/*
- * Averaging of visited commodity prices
- */
-void economy_averageSeenPrices( Planet *p );
-
 
 /*
  * prototypes

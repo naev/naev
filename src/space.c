@@ -38,6 +38,7 @@
 #include "mission.h"
 #include "conf.h"
 #include "queue.h"
+#include "economy.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
@@ -157,7 +158,6 @@ static void system_parseJumps( const xmlNodePtr parent );
 static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
-static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Render. */
@@ -170,14 +170,6 @@ static void space_renderDebris( Debris *d, double x, double y );
  */
 int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
-/*
- * External prototypes.
- */
-extern credits_t economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /**< from economy.c */
-extern credits_t economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std ); /**< from economy.c */
-extern void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
-extern credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, const Planet *p, ntime_t tme );
 
 
 char* planet_getServiceName( int service )
@@ -1586,7 +1578,7 @@ void space_init( const char* sysname )
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int i, j, k;
+   int i;
    double mod, theta;
    double angle, radius;
    AsteroidType *at;
@@ -1703,7 +1695,7 @@ static int planets_load ( void )
    size_t nfiles;
    size_t i, len;
    Commodity **stdList;
-   int stdNb;
+   unsigned int stdNb;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -2485,6 +2477,7 @@ StarSystem *system_new (void)
    int realloced, id;
 
    /* Protect current system in case of realloc. */
+   id = -1;
    if (cur_system != NULL)
       id = system_index( cur_system );
 
@@ -2499,7 +2492,7 @@ StarSystem *system_new (void)
    sys = &systems_stack[ systems_nstack-1 ];
 
    /* Reset cur_system. */
-   if (cur_system != NULL)
+   if (id >= 0)
       cur_system = system_getIndex( id );
 
    /* Initialize system and id. */
@@ -2744,6 +2737,9 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    char *buf;
    double x, y;
    StarSystem *target;
+
+   x = 0.;
+   y = 0.;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -3088,7 +3084,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
  */
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
 {
-   int i;
    AsteroidExclusion *a;
    xmlNodePtr cur;
    double x, y;
@@ -3248,7 +3243,7 @@ int space_load (void)
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
 
-   for (i=0; i<nasterogfx; i++)
+   for (i=0; i<(int)nasterogfx; i++)
       free(asteroid_files[i]);
    free(asteroid_files);
 
@@ -3645,7 +3640,7 @@ static void space_renderPlanet( Planet *p )
  */
 static void space_renderAsteroid( Asteroid *a )
 {
-   int i, qtt;
+   int i;
    double scale, nx, ny;
    AsteroidType *at;
    Commodity *com;
@@ -4129,52 +4124,6 @@ static int getPresenceIndex( StarSystem *sys, int faction )
 
 
 /**
- * @brief Do some cleanup work after presence values have been adjusted.
- *
- *    @param sys Pointer to the system to cleanup.
- */
-static void presenceCleanup( StarSystem *sys )
-{
-   int i;
-
-   /* Reset the spilled variable for the entire universe. */
-   for (i=0; i < systems_nstack; i++)
-      systems_stack[i].spilled = 0;
-
-   /* Check for NULL and display a warning. */
-   if (sys == NULL) {
-      WARN("sys == NULL");
-      return;
-   }
-
-   /* Check the system for 0 and negative-value presences. */
-   for (i=0; i < sys->npresence; i++) {
-      if (sys->presence[i].value > 0.)
-         continue;
-
-      /* Remove the element with invalid value. */
-      memmove(&sys->presence[i], &sys->presence[i + 1],
-              sizeof(SystemPresence) * (sys->npresence - (i + 1)));
-      sys->npresence--;
-      sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
-      i--;  /* We'll want to check the new value we just copied in. */
-   }
-}
-
-
-/**
- * @brief Sloppily sanitize invalid presences across all systems.
- */
-void system_presenceCleanupAll( void )
-{
-   int i;
-
-   for (i=0; i<systems_nstack; i++)
-      presenceCleanup( &systems_stack[i] );
-}
-
-
-/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
@@ -4230,7 +4179,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       /*WARN("q is empty after getting adjacencies of %s.", sys->name);*/
       q_destroy(q);
       q_destroy(qn);
-      presenceCleanup(sys);
+      goto sys_cleanup;
       return;
    }
 
@@ -4267,9 +4216,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    q_destroy(q);
    q_destroy(qn);
 
+sys_cleanup:
    /* Clean up our mess. */
-   presenceCleanup(sys);
-
+   for (i=0; i < systems_nstack; i++)
+      systems_stack[i].spilled = 0;
    return;
 }
 

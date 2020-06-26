@@ -112,7 +112,7 @@ static int intro_load( const char *text )
          /* Get the length. */
          for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
-         length = strlen( img_src );
+         length = strlen( img_src )+1;
          intro_lines[n] = malloc( length + 2 );
          intro_lines[n][0] = 'i';
          strncpy( &intro_lines[n][1], img_src, length );

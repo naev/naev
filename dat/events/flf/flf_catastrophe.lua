@@ -55,13 +55,13 @@ text[9] = _([["So the FLF is dead, I see. Well, not so much dead as a shadow of 
 text[10] = _([[Before you can even respond, the mysterious figure disappears. You detect no presences nearby, but you notice that your ship has been refueled somehow! Odd. In any case, it looks like you have two choices: do you brave the dangers of the nebula and proceed to Metsys, or do you turn back now? The figure said that you can only make this decision once, so you'd better make sure it's the right one.]])
 
 title[11] = _("Welcome To the Nebula")
-text[11] = _([[As you land on the mysterious station, armed guards immediately surround your ship and order you out into the hangar. You comply, and they take you to a room that appears to an interrogation room, where you wait for a few nerve-wracking hectoseconds. Finally, a holoscreen flickers on, showing the figure you had seen earlier. She looks in your direction.
+text[11] = _([[As you land on the mysterious station, armed guards immediately surround your ship and order you out into the hangar. You comply, and they take you to a room that appears to be an interrogation room, where you wait for a few nerve-wracking hectoseconds. Finally, a holoscreen flickers on, showing the figure you had seen earlier. She looks in your direction.
     "Well met," she says. "I see you have made the right choice and survived the nebula. Very good."]])
 
 text[12] = _([["I'm sure you're wondering who we are. We are the Thurion, a superior people and one of the Empire's former secret projects. Have you met the Za'lek? The Collective? Those too were the Empire's "great projects", as were the now dead Proteron. But we were kept a lot more in the dark.
     "You see, when the Empire gave up on Project Thurion many cycles ago, they tried to kill us so that word of our existence would never get out. They thought us an embarrassment to the Empire. Little did they know, however, that we had discovered a method of uploading the human mind to a computer, and so when they came after us, we uploaded ourselves and escaped into what are now our core systems to rebuild."]])
 
-text[13] = _([["Now, most of us are uploaded, myself required. This face you see and this voice you hear are but projections, a reflection of myself that I have freely chosen. Being uploaded is wonderful, I must say; there is no suffering, we are immortal, and we can have whatever human experiences we desire and much more. And when we decide we have lived to our fullest, we can delete ourselves and disappear into the emptiness just like any other person does when they die. Most choose to self-terminate after they have been uploaded for about 200 cycles or so. I, however, have stuck around from the very beginning. I very much enjoy seeing the biological Thurion grow, learn, and join us in uploaded consciousness when their human bodies grow old and weary.
+text[13] = _([["Now, most of us are uploaded, myself included. This face you see and this voice you hear are but projections, a reflection of myself that I have freely chosen. Being uploaded is wonderful, I must say; there is no suffering, we are immortal, and we can have whatever human experiences we desire and much more. And when we decide we have lived to our fullest, we can delete ourselves and disappear into the emptiness just like any other person does when they die. It's not uncommon for people to choose to self-terminate after they have been uploaded for about 200 cycles or so. I, however, have stuck around from the very beginning. I very much enjoy seeing the biological Thurion grow, learn, and join us in uploaded consciousness when their human bodies grow old and weary.
     "Sadly, I don't think you can be uploaded. The uploading process tends to fail with people who have even the slightest brain damage, and you outsiders usually drink far too many brain-damaging substances. That said, the time to check if you are eligible for uploading is many cycles away anyhow, so we'll see when we get there, should you have an interest in being uploaded."]])
 
 text[14] = _([[Fascinated, you finally speak up, prompting a smile from the uploaded Thurion and a fairly long, friendly discussion about her experiences as an uploaded Thurion and your experience as a pilot on the outside. You find out that her name is Alicia. Somewhere in the conversation, a pair of human Thurion guards enters the room. They ask Alicia how it went, and she says that you've been properly introduced to Thurion culture and can be trusted to roam free. The two guards then smile and shake your hand. "Welcome to the nebula, %s," one of them says. "You now have permission to roam Thurion space freely and conduct your business. Of course, I trust you won't reveal our secret location to anyone. That would be just as bad for you as it would be for us."
@@ -259,6 +259,11 @@ end
 
 function jumpin ()
    if not found_thurion and system.cur() == system.get("Oriantis") then
+      music.stop()
+      music.load( "intro" )
+      music.play()
+      music.delay( "ambient", 154 )
+      music.delay( "combat", 154 )
       hook.timer( 5000, "timer_thurion" )
    elseif found_thurion and system.cur() == system.get("Metsys") then
       diff.apply( "Thurion_found" )
@@ -282,7 +287,7 @@ function land ()
       tk.msg( title[11], text[13] )
       tk.msg( title[11], text[14]:format( player.name() ) )
       faction.get("Thurion"):setKnown( true )
-   elseif dif.isApplied( "Thurion_found" ) then
+   elseif diff.isApplied( "Thurion_found" ) then
       diff.remove( "Thurion_found" )
    end
    evt.finish( true )

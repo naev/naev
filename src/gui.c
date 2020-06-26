@@ -611,6 +611,7 @@ static void gui_renderBorder( double dt )
    double rx,ry;
    double cx,cy;
    const glColour *col;
+   glColour ccol;
    double int_a;
 
    /* Get player position. */
@@ -645,7 +646,11 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPlanetColour(i);
-         gl_drawCircle(cx, cy, 5, col, 0);
+         ccol.r = col->r;
+         ccol.g = col->g;
+         ccol.b = col->b;
+         ccol.a = int_a;
+         gl_drawCircle(cx, cy, 5, &ccol, 0);
       }
    }
 
@@ -667,8 +672,12 @@ static void gui_renderBorder( double dt )
             col = &cGreen;
          else
             col = &cWhite;
+         ccol.r = col->r;
+         ccol.g = col->g;
+         ccol.b = col->b;
+         ccol.a = int_a;
 
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), col);
+         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), &ccol);
          gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 4 );
          gl_endSolidProgram();
@@ -690,7 +699,11 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPilotColour(plt);
-         gl_renderRectEmpty(cx-5, cy-5, 10, 10, col);
+         ccol.r = col->r;
+         ccol.g = col->g;
+         ccol.b = col->b;
+         ccol.a = int_a;
+         gl_renderRectEmpty(cx-5, cy-5, 10, 10, &ccol);
       }
    }
 }
@@ -1071,6 +1084,8 @@ static void gui_renderMessages( double dt )
    vy = y;
 
    /* Must be run here. */
+   hs = 0.;
+   o = 0;
    if (mesg_viewpoint != -1) {
       /* Data. */
       hs = h*(double)conf.mesg_visible/(double)mesg_max;
@@ -1192,12 +1207,9 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int i;
    int x, y, sx, sy;
    double px, py;
    glColour col;
-   GLfloat cx, cy;
-   int rc;
 
    /* Make sure is in range. */
    if (!pilot_inRangePilot( player.p, p ))
@@ -1239,13 +1251,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       w *= 2.;
       h *= 2.;
    }
-
-   if (shape==RADAR_RECT)
-      rc = 0;
-   else if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
-   else
-      return;
 
    /* Draw selection if targeted. */
    if (p->id == player.p->target) {
@@ -1394,6 +1399,10 @@ void gui_forceBlink (void)
  */
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape )
 {
+   (void) w;
+   (void) h;
+   (void) rc;
+   (void) shape;
    glColour col;
    gl_Matrix4 projection;
 
@@ -1471,11 +1480,9 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int i;
    int x, y;
    int cx, cy, r, rc;
-   GLfloat vx, vy, vr;
-   GLfloat a;
+   GLfloat vr;
    glColour col;
    Planet *planet;
 
@@ -1555,11 +1562,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int i;
    int cx, cy, x, y, r, rc;
-   GLfloat a;
-   GLfloat ca, sa;
-   GLfloat vx, vy, vr;
+   GLfloat vr;
    glColour col;
    JumpPoint *jp;
    gl_Matrix4 projection;

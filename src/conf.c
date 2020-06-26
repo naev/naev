@@ -28,35 +28,35 @@
 
 
 #define  conf_loadInt(n,i)    \
-nlua_getenv(env,n); \
+{nlua_getenv(env,n); \
 if (lua_isnumber(naevL, -1)) { \
    i = (int)lua_tonumber(naevL, -1); \
 } \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 #define  conf_loadFloat(n,f)    \
-nlua_getenv(env,n); \
+{nlua_getenv(env,n); \
 if (lua_isnumber(naevL, -1)) { \
    f = (double)lua_tonumber(naevL, -1); \
 } \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 #define  conf_loadBool(n,b)   \
-nlua_getenv(env, n); \
+{nlua_getenv(env, n); \
 if (lua_isnumber(naevL,-1)) \
    b = (lua_tonumber(naevL,-1) != 0.); \
 else if (!lua_isnil(naevL,-1)) \
    b = lua_toboolean(naevL, -1); \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 #define  conf_loadString(n,s) \
-nlua_getenv(env, n); \
+{nlua_getenv(env, n); \
 if (lua_isstring(naevL, -1)) { \
    if (s != NULL) \
       free(s); \
-   s = strdup(lua_tostring(naevL, -1));   \
+   s = strdup(lua_tostring(naevL, -1)); \
 } \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 
 /* Global configuration. */
@@ -513,11 +513,6 @@ int conf_loadConfig ( const char* file )
             lua_pop(naevL,1);
 
             if (str != NULL) { /* keybind is valid */
-               if (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD) {
-                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
-                  continue;
-               }
-
                /* get type */
                if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
@@ -530,6 +525,12 @@ int conf_loadConfig ( const char* file )
                else if (strcmp(str,"jhat_right")==0)  type = KEYBIND_JHAT_RIGHT;
                else {
                   WARN(_("Unknown keybinding of type %s"), str);
+                  continue;
+               }
+
+               /* Check to see if it is valid. */
+               if ((key == SDLK_UNKNOWN) && (type == KEYBIND_KEYBOARD)) {
+                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
                   continue;
                }
 

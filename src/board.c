@@ -19,7 +19,7 @@
 #include "toolkit.h"
 #include "space.h"
 #include "rng.h"
-#include "economy.h"
+#include "commodity.h"
 #include "hook.h"
 #include "damagetype.h"
 #include "nstring.h"

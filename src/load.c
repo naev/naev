@@ -21,6 +21,7 @@
 #include "space.h"
 #include "toolkit.h"
 #include "menu.h"
+#include "economy.h"
 #include "dialogue.h"
 #include "event.h"
 #include "news.h"
@@ -529,6 +530,47 @@ static void load_compatSlots (void)
       free(sships[i]);
    free(sships);
    free(tships);
+}
+
+
+/**
+ * @brief Loads the diffs from game file.
+ *
+ *    @param file File that contains the new game.
+ *    @return 0 on success.
+ */
+int load_gameDiff( const char* file )
+{
+   xmlNodePtr node;
+   xmlDocPtr doc;
+
+   /* Make sure it exists. */
+   if (!nfile_fileExists(file)) {
+      dialogue_alert( _("Savegame file seems to have been deleted.") );
+      return -1;
+   }
+
+   /* Load the XML. */
+   doc   = xmlParseFile(file);
+   if (doc == NULL)
+      goto err;
+   node  = doc->xmlChildrenNode; /* base node */
+   if (node == NULL)
+      goto err_doc;
+
+   /* Diffs should be cleared automatically first. */
+   diff_load(node);
+
+   /* Free. */
+   xmlFreeDoc(doc);
+
+   return 0;
+
+err_doc:
+   xmlFreeDoc(doc);
+err:
+   WARN( _("Savegame '%s' invalid!"), file);
+   return -1;
 }
 
 

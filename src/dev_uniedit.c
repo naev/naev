@@ -28,6 +28,7 @@
 #include "pause.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "economy.h"
 #include "conf.h"
 
 
@@ -125,7 +126,6 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
-static void uniedit_saveMap( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -772,6 +772,7 @@ static void uniedit_toggleJump( StarSystem *sys )
    int i, j, rm;
    StarSystem *isys, *target;
 
+   isys = NULL;
    for (i=0; i<uniedit_nsys; i++) {
       isys  = uniedit_sys[i];
       rm    = 0;
@@ -800,7 +801,8 @@ static void uniedit_toggleJump( StarSystem *sys )
 
    if (conf.devautosave) {
       dsys_saveSystem( sys );
-      dsys_saveSystem( isys );
+      if (isys != NULL)
+         dsys_saveSystem( isys );
    }
 
    /* Update sidebar text. */

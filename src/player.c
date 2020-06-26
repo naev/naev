@@ -1272,7 +1272,7 @@ void player_targetAsteroidSet( int field, int id )
    old = player.p->nav_asteroid;
    player.p->nav_asteroid = id;
    if (old != id) {
-      if (id >= 0)
+      if (id >= 0) {
          player_soundPlayGUI(snd_nav, 1);
 
          /* See if the player has the asteroid scanner. */
@@ -1291,6 +1291,7 @@ void player_targetAsteroidSet( int field, int id )
          }
          else
             player_message( _("Asteroid targeted") );
+      }
    }
 
    player.p->nav_anchor = field;
@@ -2739,7 +2740,7 @@ void player_runHooks (void)
 /**
  * @brief Clears escorts to make sure deployment is sane.
  */
-void player_clearEscorts (void)
+static void player_clearEscorts (void)
 {
    int i;
 
@@ -3721,6 +3722,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
 
    /* Second pass for weapon sets. */
+   active_set = 0;
    node = parent->xmlChildrenNode;
    do {
       if (!xml_isNode(node,"weaponsets"))

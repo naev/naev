@@ -284,7 +284,6 @@ void nebu_render( const double dt )
  */
 static void nebu_renderMultitexture( const double dt )
 {
-   GLfloat col[4];
    int temp;
    double sx, sy, tw, th;
 
@@ -356,9 +355,7 @@ void nebu_renderOverlay( const double dt )
 {
    (void) dt;
    double gx, gy;
-   double ox, oy;
    double z;
-   double sx, sy;
    gl_Matrix4 projection;
 
    /* Get GUI offsets. */
@@ -387,7 +384,6 @@ void nebu_renderOverlay( const double dt )
    projection = gl_Matrix4_Scale(projection, gl_screen.rw, gl_screen.rh, 1);
 
    glUseProgram(shaders.nebula.program);
-   glColour c = cDarkBlue;
    gl_uniformColor(shaders.nebula.color, &cDarkBlue);
    gl_Matrix4_Uniform(shaders.nebula.projection, projection);
    glUniform2f(shaders.nebula.center, gl_screen.rw / 2, gl_screen.rh / 2);

@@ -1424,7 +1424,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  */
 void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 {
-   int mod, h;
+   int mod;
    Pilot *pshooter;
    HookParam hparam;
 
@@ -2337,6 +2337,7 @@ int pilot_refuelStart( Pilot *p )
  */
 static void pilot_refuel( Pilot *p, double dt )
 {
+   (void) dt;
    Pilot *target;
 
    /* Check to see if target exists, remove flag if not. */
@@ -2916,15 +2917,11 @@ void pilot_destroy(Pilot* p)
 {
    int i;
    PilotOutfitSlot* dockslot;
-   unsigned int my_id;
 
    /* find the pilot */
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
-
-   /* Log pilot's ID */
-   my_id = p->id;
 
    /* Remove faction if necessary. */
    if (p->presence > 0) {

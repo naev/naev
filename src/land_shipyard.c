@@ -230,7 +230,7 @@ void shipyard_update( unsigned int wid, char* str )
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
-   window_modifyText( wid, "txtDescription", ship->description );
+   window_modifyText( wid, "txtDescription", _(ship->description) );
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
@@ -269,9 +269,9 @@ void shipyard_update( unsigned int wid, char* str )
          "%s credits\n"
          "%s credits\n"
          "%s\n"),
-         ship->name,
-         ship_class(ship),
-         ship->fabricator,
+         _(ship->name),
+         _(ship_class(ship)),
+         _(ship->fabricator),
          ship->crew,
          /* Weapons & Manoeuvrability */
          ship->cpu,

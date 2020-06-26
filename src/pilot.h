@@ -13,7 +13,7 @@
 #include "outfit.h"
 #include "faction.h"
 #include "sound.h"
-#include "economy.h"
+#include "commodity.h"
 #include "ntime.h"
 
 

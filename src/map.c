@@ -98,7 +98,8 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_buttonCommodity( unsigned int wid, char* str );
 static void map_selectCur (void);
-static void map_genModeList();
+static void map_genModeList(void);
+static void map_update_commod_av_price();
 
 
 /**
@@ -331,7 +332,7 @@ void map_open (void)
  * Prepares economy info for rendering.  Called when cur_commod changes.
  */
 
-void map_update_commod_av_price(){
+static void map_update_commod_av_price(){
    Commodity *c;
    int i,j,k;
    StarSystem *sys;
@@ -607,8 +608,10 @@ static void map_update( unsigned int wid )
       if (p > PATH_MAX)
          break;
    }
-   if(hasPlanets == 0)
+   if (hasPlanets == 0) {
       strncpy( buf, _("None"), PATH_MAX );
+      buf[sizeof(buf)-1] = '\0';
+   }
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", x, y );
@@ -1319,7 +1322,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
    int i,j,k;
-   const glColour *col;
+   //const glColour *col;
    StarSystem *sys;
    double tx, ty;
    Planet *p;
@@ -1327,17 +1330,15 @@ void map_renderCommod( double bx, double by, double x, double y,
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
    char buf[80];
-   unsigned int wid;
    int textw;
    /* If not plotting commodities, return */
    if(cur_commod == -1 || map_selected == -1)
       return;
 
-   wid = window_get(MAP_WDWNAME);
    c=commod_known[cur_commod];//commodity_getByIndex(cur_commod);
-   if ( cur_commod_mode == 0 ){/*showing price difference to selected system
-                                 /* Get commodity price in selected system.  If selected system is current
-                                 system, and if landed, then get price of commodity where we are */
+   if ( cur_commod_mode == 0 ){/*showing price difference to selected system*/
+     /* Get commodity price in selected system.  If selected system is current
+	system, and if landed, then get price of commodity where we are */
       curMaxPrice=0.;
       curMinPrice=0.;
       sys = system_getIndex( map_selected );
@@ -1641,8 +1642,8 @@ static void map_buttonZoom( unsigned int wid, char* str )
 /**
  * @brief Generates the list of map modes, i.e. commodities that have been seen so far.
  */
-static void map_genModeList(){
-   int indx,i,j,k,l;
+static void map_genModeList(void){
+   int i,j,k,l;
    int tot=0;
    Planet *p;
    StarSystem *sys;
@@ -1698,7 +1699,8 @@ static void map_genModeList(){
  */
 static void map_mode_update( unsigned int wid, char* str )
 {
-   int listpos;
+  (void)str;
+  int listpos;
    listpos=toolkit_getListPos( wid, "lstMapMode" );
    if ( listMapModeVisible==2){
       listMapModeVisible=1;
@@ -1725,7 +1727,8 @@ static void map_mode_update( unsigned int wid, char* str )
  */
 static void map_buttonCommodity( unsigned int wid, char* str )
 {
-   int ncommod = commodity_getN();
+   (void)str;
+   //int ncommod = commodity_getN();
    SDL_Keymod mods;
    char **this_map_modes;
    static int cur_commod_last = 0;

@@ -432,7 +432,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    int planetind;
    int jump;
    PilotFlags flags;
-   int ignore_rules, guerilla;
+   int ignore_rules;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -1087,6 +1087,7 @@ static int pilotL_weapset( lua_State *L )
    int id, all, level, level_match;
    int is_lau, is_fb;
    const Damage *dmg;
+   int has_beamid;
 
    /* Defaults. */
    po_list = NULL;
@@ -1184,20 +1185,21 @@ static int pilotL_weapset( lua_State *L )
              * it's the usual 0-1 readiness value.
              */
             lua_pushstring(L,"cooldown");
-            if (slot->u.beamid > 0)
+            has_beamid = (slot->u.beamid > 0);
+            if (has_beamid)
                lua_pushnumber(L, 0.);
             else {
                delay = (slot->timer / outfit_delay(o)) * firemod;
-               lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
+               lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
             }
             lua_rawset(L,-3);
 
             /* When firing, slot->timer represents the remaining duration. */
             lua_pushstring(L,"charge");
-            if (slot->u.beamid > 0)
+            if (has_beamid)
                lua_pushnumber(L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
             else
-               lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
+               lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
             lua_rawset(L,-3);
          }
          else {
@@ -1529,6 +1531,9 @@ static int pilotL_actives( lua_State *L )
             lua_pushstring(L,"cooldown");
             lua_pushnumber(L, d );
             lua_rawset(L,-3);
+            break;
+         default:
+            str = "unknown";
             break;
       }
       lua_pushstring(L,"state");

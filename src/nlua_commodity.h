@@ -9,7 +9,7 @@
 
 #include <lua.h>
 
-#include "economy.h"
+#include "commodity.h"
 #include "nlua.h"
 
 
