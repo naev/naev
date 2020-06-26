@@ -1,5 +1,7 @@
 ACLOCAL_AMFLAGS = --install -I m4
 
+PACKAGE = @PACKAGE@
+
 SUBDIRS = po lib src
 DIST_SUBDIRS = po lib src
 
@@ -22,7 +24,7 @@ DATA_ARCHIVE = ndata.zip
 if HAVE_UTILS
 MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
-NAEV	     = naev$(EXEEXT)
+NAEV	     = $(PACKAGE)$(EXEEXT)
 
 VERSIONFILE = VERSION
 LANGUAGEFILE = dat/LANGUAGES
@@ -30,9 +32,12 @@ LANGUAGEFILE = dat/LANGUAGES
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
-.PHONY: docs utils help install-ndata
+.PHONY: pot docs utils help install-ndata
 
-all-local: $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+all-local: pot $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+
+pot:
+	$(MAKE) -C po $(PACKAGE).pot
 
 $(NAEV):
 	@echo "  LN    $(NAEV)"
