@@ -27,6 +27,7 @@
 
 
 #include "opengl.h"
+#include "opengl_render.h"
 
 #include "naev.h"
 
@@ -55,21 +56,24 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
       const double r, const glColour *c );
 
 
-void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c) {
+void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c)
+{
    glUseProgram(shaders.solid.program);
    glEnableVertexAttribArray(shaders.solid.vertex);
    gl_uniformColor(shaders.solid.color, c);
    gl_Matrix4_Uniform(shaders.solid.projection, projection);
 }
 
-void gl_endSolidProgram() {
+void gl_endSolidProgram (void)
+{
    glDisableVertexAttribArray(shaders.solid.vertex);
    glUseProgram(0);
    gl_checkErr();
 }
 
 
-void gl_beginSmoothProgram(gl_Matrix4 projection) {
+void gl_beginSmoothProgram(gl_Matrix4 projection)
+{
    glUseProgram(shaders.smooth.program);
    glEnableVertexAttribArray(shaders.smooth.vertex);
    glEnableVertexAttribArray(shaders.smooth.vertex_color);
@@ -240,9 +244,6 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c )
 {
-   GLfloat vertex[4*2], tex[4*2], col[4*4];
-   GLfloat mcol[4] = { 0., 0., 0. };
-
    /* No interpolation. */
    if (!conf.interpolate || (tb == NULL)) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );

@@ -122,8 +122,8 @@ static void generate_h_file(FILE *f) {
 
    fprintf(f, "extern Shaders shaders;\n\n");
 
-   fprintf(f, "void shaders_load();\n");
-   fprintf(f, "void shaders_unload();\n");
+   fprintf(f, "void shaders_load (void);\n");
+   fprintf(f, "void shaders_unload (void);\n");
 
    fprintf(f, "#endif\n");
 }
@@ -139,7 +139,7 @@ static void generate_c_file(FILE *f) {
 
    fprintf(f, "Shaders shaders;\n\n");
 
-   fprintf(f, "void shaders_load() {\n");
+   fprintf(f, "void shaders_load (void) {\n");
    for(i = 0; i < nshaders; i++) {
       fprintf(f, "   shaders.%s.program = gl_program_vert_frag(\"%s\", \"%s\");\n",
             shaders[i].name,
@@ -167,7 +167,7 @@ static void generate_c_file(FILE *f) {
    }
    fprintf(f, "}\n\n");
 
-   fprintf(f, "void shaders_unload() {\n");
+   fprintf(f, "void shaders_unload (void) {\n");
    for(i = 0; i < nshaders; i++) {
       fprintf(f, "   glDeleteProgram(shaders.%s.program);\n", shaders[i].name);
 

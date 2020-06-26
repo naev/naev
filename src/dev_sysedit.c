@@ -23,6 +23,7 @@
 #include "dev_system.h"
 #include "unidiff.h"
 #include "dialogue.h"
+#include "economy.h"
 #include "tk/toolkit_priv.h"
 #include "ndata.h"
 #include "nfile.h"

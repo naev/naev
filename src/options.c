@@ -193,7 +193,8 @@ static char** lang_list( int *n )
    size_t fs;
    char *buf;
    char **ls;
-   int i, j;
+   int j;
+   size_t i;
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
