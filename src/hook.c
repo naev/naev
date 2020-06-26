@@ -1337,12 +1337,12 @@ static int hook_parse( xmlNodePtr base )
          if (id != 0) {
             h = hook_get( new_id );
             h->id = id;
-         }
 
-         /* Additional info. */
-         if (is_date) {
-            h->is_date = 1;
-            h->res = res;
+            /* Additional info. */
+            if (is_date) {
+               h->is_date = 1;
+               h->res = res;
+            }
          }
       }
    } while (xml_nextNode(node));
