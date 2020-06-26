@@ -21,6 +21,7 @@
 #include "space.h"
 #include "toolkit.h"
 #include "menu.h"
+#include "economy.h"
 #include "dialogue.h"
 #include "event.h"
 #include "news.h"

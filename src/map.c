@@ -508,8 +508,10 @@ static void map_update( unsigned int wid )
       if (p > PATH_MAX)
          break;
    }
-   if(hasPlanets == 0)
+   if (hasPlanets == 0) {
       strncpy( buf, _("None"), PATH_MAX );
+      buf[sizeof(buf)-1] = '\0';
+   }
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", x, y );

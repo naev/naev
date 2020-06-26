@@ -28,6 +28,7 @@
 #include "dialogue.h"
 #include "map_find.h"
 #include "land_shipyard.h"
+#include "economy.h"
 
 /*
  * Quantity to buy on one click
