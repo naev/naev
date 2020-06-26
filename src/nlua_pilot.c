@@ -1087,6 +1087,7 @@ static int pilotL_weapset( lua_State *L )
    int id, all, level, level_match;
    int is_lau, is_fb;
    const Damage *dmg;
+   int has_beamid;
 
    /* Defaults. */
    po_list = NULL;
@@ -1184,7 +1185,8 @@ static int pilotL_weapset( lua_State *L )
              * it's the usual 0-1 readiness value.
              */
             lua_pushstring(L,"cooldown");
-            if (slot->u.beamid > 0)
+            has_beamid = (slot->u.beamid > 0);
+            if (has_beamid)
                lua_pushnumber(L, 0.);
             else {
                delay = (slot->timer / outfit_delay(o)) * firemod;
@@ -1194,7 +1196,7 @@ static int pilotL_weapset( lua_State *L )
 
             /* When firing, slot->timer represents the remaining duration. */
             lua_pushstring(L,"charge");
-            if (slot->u.beamid > 0)
+            if (has_beamid)
                lua_pushnumber(L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
             else
                lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );

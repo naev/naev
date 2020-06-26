@@ -507,10 +507,6 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
 {
    char base[PATH_MAX], str[PATH_MAX];
    int i;
-   png_uint_32 w, h;
-   SDL_RWops *rw;
-   npng_t *npng;
-   SDL_Surface *surface;
 
    /* Get base path. */
    for (i=0; i<PATH_MAX; i++) {
