@@ -649,6 +649,7 @@ AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "src/shaders_c_gen.c"])
 #
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
+      po/Makevars
       po/Makefile.in
       lib/Makefile
       src/Makefile
