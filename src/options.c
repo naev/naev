@@ -198,8 +198,9 @@ static char** lang_list( int *n )
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
-   ls[0] = strdup("en");
-   *n = 1;
+   ls[0] = strdup(_("system"));
+   ls[1] = strdup("en");
+   *n = 2;
 
    /* Try to open the available languages. */
    buf = ndata_read( "dat/LANGUAGES", &fs );
@@ -280,11 +281,14 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
          NULL, &cBlack, s );
    ls = lang_list( &n );
-   for (i=0; i<n; i++)
-      if (strcmp(conf.language,ls[i])==0)
-         break;
-   if (i>=n)
-      i = 0;
+   i = 0;
+   if (conf.language != NULL) {
+      for (i=0; i<n; i++)
+         if (strcmp(conf.language,ls[i])==0)
+            break;
+      if (i>=n)
+         i = 0;
+   }
    window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL );
    y -= 90;
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
@@ -386,22 +390,32 @@ static void opt_gameplay( unsigned int wid )
 static int opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
-   int f;
+   int f, p;
    char *vmsg, *tmax, *s;
 
    /* List. */
 #if defined ENABLE_NLS && ENABLE_NLS
-   s = toolkit_getList( wid, "lstLanguage" );
-   if (conf.language != NULL) {
-      if (strcmp(s,conf.language)!=0) {
+   p = toolkit_getListPos( wid, "lstLanguage" );
+   if (p==0) {
+      if (conf.language != NULL) {
          free(conf.language);
-         conf.language = strdup(s);
+         conf.language = NULL;
          opt_needRestart();
       }
    }
    else {
-      conf.language = strdup(s);
-      opt_needRestart();
+      s = toolkit_getList( wid, "lstLanguage" );
+      if (conf.language != NULL) {
+         if (strcmp(s,conf.language)!=0) {
+            free(conf.language);
+            conf.language = strdup(s);
+            opt_needRestart();
+         }
+      }
+      else {
+         conf.language = strdup(s);
+         opt_needRestart();
+      }
    }
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
 
