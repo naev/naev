@@ -170,7 +170,7 @@ AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
   AC_HELP_STRING([--with-openal],
      [use the OpenAL sound backend (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_openal=yes
     ], [
       with_openal=no
@@ -185,7 +185,7 @@ AC_MSG_CHECKING([whether to use SDL_mixer])
 AC_ARG_WITH([sdlmixer],
   AC_HELP_STRING([--with-sdlmixer],
      [use the SDL_mixer sound backend (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_sdlmixer=yes
     ], [
       with_sdlmixer=no
@@ -200,7 +200,7 @@ AC_MSG_CHECKING([whether to use libzip])
 AC_ARG_WITH([libzip],
   AC_HELP_STRING([--with-libzip],
      [use libzip for ndata (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_libzip=yes
     ], [
       with_libzip=no
@@ -215,7 +215,7 @@ AC_MSG_CHECKING([whether to use fontconfig])
 AC_ARG_WITH([fontconfig],
   AC_HELP_STRING([--with-fontconfig],
      [use fontconfig for ndata (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_fontconfig=yes
     ], [
       with_fontconfig=no
@@ -279,7 +279,7 @@ PKG_CHECK_MODULES([XML], [libxml-2.0])
 PKG_CHECK_MODULES([FREETYPE], [freetype2])
 
 # FontConfig
-AS_IF([test "$with_fontconfig" = "yes"], [
+AS_IF([test "x$with_fontconfig" = "xyes"], [
   PKG_CHECK_MODULES([FONTCONFIG], [fontconfig])
 ])
 
@@ -293,7 +293,7 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 PKG_CHECK_MODULES([PNG], [libpng])
 
 # libzip
-AS_IF([test "$with_libzip" = "yes"], [
+AS_IF([test "x$with_libzip" = "xyes"], [
   PKG_CHECK_MODULES([ZIP], [libzip])
 ])
 
@@ -335,7 +335,7 @@ AC_SEARCH_LIBS([sqrt], [m])
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
 
-AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
+AS_IF([test "x$have_csparse_lib" = "xyes" -a "x$have_cxsparse_lib" = "xyes"], [
     AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
     AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
 
@@ -349,18 +349,18 @@ AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
    used_csparse=internal
 ])
 
-AS_IF([test "$used_csparse" = "internal"], [
+AS_IF([test "x$used_csparse" = "xinternal"], [
     CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
     CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
 
 # OpenAL
-AS_IF([test "$with_openal" = "yes"], [
+AS_IF([test "x$with_openal" = "xyes"], [
   PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
 ], [have_openal=no])
 
 # SDL_mixer
-AS_IF([test "$with_sdlmixer" = "yes"], [
+AS_IF([test "x$with_sdlmixer" = "xyes"], [
   PKG_CHECK_MODULES([SDLMIXER], [SDL2_mixer], [have_sdlmixer=yes], [have_sdlmixer=no])
 ], [have_sdlmixer=no])
 
@@ -396,7 +396,7 @@ GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
 GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
 GLOBAL_LIBS=
 
-AS_IF([test "$enable_debug" != "no"], [
+AS_IF([test "x$enable_debug" != "xno"], [
   GLOBAL_CFLAGS="$GLOBAL_CFLAGS -DLUA_USE_APICHECK"
 ])
 
@@ -427,10 +427,10 @@ case "$host" in
     ;;
 esac
 
-AS_IF([test "$enable_debug" != "no"], [
+AS_IF([test "x$enable_debug" != "xno"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
-  AS_IF([test "$have_bfd" != "no"], [
+  AS_IF([test "x$have_bfd" != "xno"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
@@ -439,7 +439,7 @@ AS_IF([test "$enable_debug" != "no"], [
      esac
   ])
 ])
-AS_IF([test "$enable_debug" = "paranoid"], [
+AS_IF([test "x$enable_debug" = "xparanoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
 
@@ -451,12 +451,12 @@ NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $FONTCONFIG_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
     $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
-AS_IF([test "$have_openal" = "yes"], [
+AS_IF([test "x$have_openal" = "xyes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
   NAEV_LIBS="$NAEV_LIBS $OPENAL_LIBS"
 ])
 
-AS_IF([test "$have_sdlmixer" = "yes"], [
+AS_IF([test "x$have_sdlmixer" = "xyes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $SDLMIXER_CFLAGS"
   NAEV_LIBS="$NAEV_LIBS $SDLMIXER_LIBS"
 ])
