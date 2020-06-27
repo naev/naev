@@ -1,5 +1,5 @@
 --[[
--- This is the first mission in the crazy baron string.
+-- This is the first mission in the baron string.
 --]]
 
 require "portrait.lua"
@@ -32,7 +32,7 @@ text[7] = _([[You smirk at that. You know from experience that things seldom 'go
 text[8] = _([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet %s.]])
 
 title[9] = _("Cloak and dagger")
-text[9] = _([[The three shifty-looking patrons regard you with apprehension as you approach their table. Clearly they don't know who their contact is supposed to be. You decide to be discreet, asking them if they've ever heard of a certain Sauterfeldt. Upon hearing this, the trio visibly relaxes. They tell you that indeed they know the man you speak of, and that they have something of his in their possession. Things proceed smoothly from that point, and several minutes later you are back at your ship, preparing it for takeoff while you wait for the agents to bring you your cargo.]])
+text[9] = _([[The three shifty-looking patrons regard you with apprehension as you approach their table. Clearly they don't know who their contact is supposed to be. You decide to be discreet, asking them if they've ever heard of a certain Sauterfeldt. Upon hearing this, the trio visibly relaxes. They tell you that indeed they know the man you speak of, and that they have something of his in their possession. Things proceed smoothly from that point, and several hectoseconds later you are back at your ship, preparing it for takeoff while you wait for the agents to bring you your cargo.]])
 
 text[10] = _([[You're halfway through your pre-flight security checks when the three appear in your docking hangar. They have a cart with them on which sits a rectangular chest as tall as a man and as long as two. Clearly this holopainting is fairly sizeable. As you watch them from your bridge's viewport, you can't help but wonder how they managed to get something that big out of a Dvaered museum unnoticed.]])
 

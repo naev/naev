@@ -29,7 +29,7 @@ title[3] = _("Well done!")
 text[3] = _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]])
 
 title[4] = _("The Meeting")
-text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few hours later, he comes back looking satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to %s.]])
+text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few periods later, he comes back looking satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to %s.]])
 
 title[5] = _("Hail")
 text[5] = _([[The Pacifier commander answers you and stops his ship, waiting to be boarded.]])

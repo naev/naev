@@ -223,7 +223,7 @@ msg_ehint =                {{"FLF/DV Derelicts", _([["The FLF and the Dvaered so
 -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 -- This text will be said by NPCs once the player has completed the mission in question.
 -- Make sure the messages are always faction neutral.
-msg_mdone =                {{"Nebula Satellite", _([["Heard some crazy scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
+msg_mdone =                {{"Nebula Satellite", _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
                               {"Shadow Vigil", _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
                               {"Operation Cold Metal", _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
                               {"Baron", _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."]])},
