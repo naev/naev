@@ -66,7 +66,7 @@ text[13] = _([["Now, most of us are uploaded, myself included. This face you see
 
 text[14] = _([[Fascinated, you finally speak up, prompting a smile from the uploaded Thurion and a fairly long, friendly discussion about her experiences as an uploaded Thurion and your experience as a pilot on the outside. You find out that her name is Alicia. Somewhere in the conversation, a pair of human Thurion guards enters the room. They ask Alicia how it went, and she says that you've been properly introduced to Thurion culture and can be trusted to roam free. The two guards then smile and shake your hand. "Welcome to the nebula, %s," one of them says. "You now have permission to roam Thurion space freely and conduct your business. Of course, I trust you won't reveal our secret location to anyone. That would be just as bad for you as it would be for us."
     You affirm that you will keep the Thurion's secret safe. "Yes, welcome," Alicia says. "And do check out our bars and mission computers from time to time. We very well might have some missions for you in the future. In the meantime, buy yourself one of our nebula-resistant ships, and make yourself comfortable. You are our honored guest and, I hope, the first of many outsiders to learn the wonders of our way of life."
-    With that, the guards escort you back to your ship, which has been refueled while you were gone. This should be an interesting experience....]])
+    The guards then promptly but politely escort you back to your ship, which has been refueled while you were gone. This should be an interesting experience....]])
 
 
 function create ()

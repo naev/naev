@@ -499,7 +499,7 @@ static int hook_timer( lua_State *L )
  *
  * The hook receives only the optional argument.
  *
- * @usage hook.date( time.create( 0, 0, 1000 ), "some_func", nil ) -- Hooks with a 1000 STU resolution
+ * @usage hook.date( time.create( 0, 0, 1000 ), "some_func", nil ) -- Hooks with a 1000 second resolution
  *
  *    @luatparam Time resolution Resolution of the timer (should be a time structure).
  *    @luatparam string funcname Name of function to run when hook is triggered.

@@ -61,7 +61,7 @@ text[2] = _([[The portmaster greets the crowd of volunteers on the spaceport cau
 
 -- Stage five: talking afterward in the bar
 title[3] = _("Over drinks")
-text[3] = _([[Many hours later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
+text[3] = _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
     "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]])
 
 -- Other text for the mission
