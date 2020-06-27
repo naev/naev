@@ -100,6 +100,10 @@ msg_lore["Soromid"] =      {_("Hello. Can I interest you in one of our galaxy fa
 msg_lore["Za'lek"] =       {_([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
                               _([["The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."]]),
                               _([["I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!"]]),
+                              _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only trivially because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
+                              _([["There are so many algorithms for solving non-linear eigenvalues problem, that I never know which one to choose... Which one do you prefer?"]]),
+                              _([["Do you know that the NLGMRES algorithm, that is still widely used nowadays, is merely a non-linear generalization of GMRES, that was known even before the beginning of the space age? Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billions degrees of freedom!"]]),
+                              _([["Last time I had to solve a deconvolution problem, its condition number was so high that its inverse reached numerical zero on Octuple Precision!"]]),
                               }
 
 msg_lore["Thurion"] =      {_([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
