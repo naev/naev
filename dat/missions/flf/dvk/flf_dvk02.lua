@@ -42,7 +42,7 @@ text[4] = _([["That's too bad. I understand where you're coming from, though. Pl
 
 title[5] = _("Who are you calling a weakling?")
 text[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why, that's the stupidest thing I've ever heard! Why would I want to talk to a weakling like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
-    With that, the pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
+    The pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
 
 title[6] = _("Mission Failure")
 text[6] = _([[As the Pirate Kestrel is blown out of the sky, it occurs to you that you have made a terrible mistake. Having killed off the leader of the pirate group, you have lost your opportunity to negotiate a trade deal with the pirates. You shamefully transmit your result to Benito via a coded message and abort the mission. Perhaps you will be given another opportunity later.]])

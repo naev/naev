@@ -140,7 +140,7 @@ function taunt ( target, offense )
             _("I can't wait to see you burn."),
             _("Just. Stop. Moving."),
             _("Die already!"),
-            _("Tell you what, if you can keep dodging for 20 minutes I'll let you live."),
+            _("Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."),
             _("Stop dodging!"),
             _("Okay, that's enough of that!"),
       }

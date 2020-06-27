@@ -45,9 +45,9 @@ title[5] = _("Take no prisoners - only their logs")
 text[5] = _([[You successfully board the FLF ship and secure its flight logs. This is what the Dvaered want - you should take it to a Dvaered planet immediately.]])
 
 title[6] = _("X marks the spot")
-text[6] = _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty minutes, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
+text[6] = _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty hectoseconds, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
     Colonel Urnus welcomes you. "Well met, citizen. I have received word of your accomplishment in our recent operation. It seems HQ is quite pleased with the result, and they have instructed me to reward you appropriately."
-    He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the insane plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.
+    He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the dangerous plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.
     "In addition," Urnus resumes, "Dvaered military command has decided that you may participate in the upcoming battle against the FLF stronghold, in recognition of your courage and your skill in battle. You may contact our liaison whenever you're ready."
     That concludes the pleasantries, and you are unceremoniously deposited outside the security compound. But at least you earned some money - and a chance to see some real action.]])
     

@@ -42,7 +42,7 @@ text7 = _([["After the final exams had been taken and we were only days away fro
     Joanne leaves the spaceport bar. You can't help but reflect that even in the highest levels of society, you can find envy and vice.]])
 
 stoptitle = _("Another stop successfully reached")
-stoptext = _("You dock with %s, and the spacedock personnel immediately begins to refuel your ship. You spend a few minutes going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
+stoptext = _("You dock with %s, and the spacedock personnel immediately begins to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
 
 destfailtitle = _("You didn't follow Joanne!")
 sysfailtext = _("You jumped to a system before Joanne did, or you jumped to a different system than Joanne. Your mission is a failure!")

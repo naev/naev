@@ -48,7 +48,7 @@ text[7] = _([["Terrorist, I'd bet you think this latest act of yours is a victor
 
 title[8] = _("Victory on the Horizon")
 text[8] = _([[As you return to the base, you are welcomed with all manner of cheers and enthusiasm. You can understand why, too; this is a huge victory for the FLF, and surely just one of many victories to come. But still...
-    You manage to make your way over to Benito, who is clearly pleased with the outcome. "Outstanding job!" she says. "That base has been a burden on us for so long. Now it is gone, 100% gone! I don't think I need to tell you how fantastic of a victory this is. Victory is within our grasp!" That's when all doubt is erased from your mind. She's right; so what if the Empire is against you now? You exchange some more words with Benito, after which she hands you your pay for a job well done and excuses herself. You, on the other hand, stay behind to celebrate for a few more hours before finally excusing yourself.]])
+    You manage to make your way over to Benito, who is clearly pleased with the outcome. "Outstanding job!" she says. "That base has been a burden on us for so long. Now it is gone, 100% gone! I don't think I need to tell you how fantastic of a victory this is. Victory is within our grasp!" That's when all doubt is erased from your mind. She's right; so what if the Empire is against you now? You exchange some more words with Benito, after which she hands you your pay for a job well done and excuses herself. You, on the other hand, stay behind to celebrate for a few more periods before finally excusing yourself.]])
 
 misn_title = _("Assault on Raelid")
 misn_desc = _("Join with the other FLF pilots for the assault on Raelid Outpost.")
