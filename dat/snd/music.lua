@@ -282,7 +282,7 @@ end
 -- Faction-specific combat songs
 factional_combat = {
    Collective = { "collective2", "galacticbattle", "battlesomething1", "combat3" },
-   Pirate     = { "battlesomething2", add_neutral = true },
+   Pirate     = { "battlesomething2", "blackmoor_tides", add_neutral = true },
    Empire     = { "galacticbattle", "battlesomething2"; add_neutral = true },
    Goddard    = { "flf_battle1", "battlesomething1"; add_neutral = true },
    Dvaered    = { "flf_battle1", "battlesomething1", "battlesomething2"; add_neutral = true },
