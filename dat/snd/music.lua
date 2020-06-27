@@ -13,13 +13,15 @@ last = "idle"
 -- Faction-specific songs.
 factional = {
    Collective = { "collective1", "automat" },
-   Pirate     = { "pirate1_theme1", "pirates_orchestra" },
+   Pirate     = { "pirate1_theme1", "pirates_orchestra", "ambient4",
+                  "terminal" },
    Empire     = { "empire1", "empire2"; add_neutral = true },
    Sirius     = { "sirius1", "sirius2"; add_neutral = true },
    Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
    ["Za'lek"] = { "zalek1", "zalek2"; add_neutral = true },
    Thurion    = { "motherload", "dark_city", "ambient1", "ambient3" },
-   Proteron   = { "heartofmachine"; add_neutral = true },
+   Proteron   = { "heartofmachine", "imminent_threat", "ambient4",
+                  "void_sensor", "terminal" },
 }
 
 function choose( str )
