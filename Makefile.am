@@ -31,15 +31,18 @@ NAEV	     = $(PACKAGE)$(EXEEXT)
 VERSIONFILE = VERSION
 LANGUAGEFILE = dat/LANGUAGES
 
+EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
+CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+
+if HAVE_NLS
 XMLBASE     = dat/commodity.xml dat/faction.xml dat/slots.xml
 XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
 XMLSHIPS    = $(wildcard dat/ships/*.xml)
 XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
 TRANSLATIONITS = $(top_srcdir)/po/translation.its 
 XMLPOT      = $(top_srcdir)/po/xml.pot
-
-EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(XMLPOT)
+CLEANFILES += $(XMLPOT)
+endif # HAVE_NLS
 
 .PHONY: pot docs utils help install-ndata
 
