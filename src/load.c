@@ -88,7 +88,7 @@ static int load_load( nsave_t *save, const char *path )
 {
    xmlDocPtr doc;
    xmlNodePtr root, parent, node, cur;
-   int scu, stp, stu;
+   int cycles, periods, seconds;
    char *version = NULL;
 
    memset( save, 0, sizeof(nsave_t) );
@@ -115,44 +115,44 @@ static int load_load( nsave_t *save, const char *path )
       xml_onlyNodes(parent);
 
       /* Info. */
-      if (xml_isNode(parent,"version")) {
+      if (xml_isNode(parent, "version")) {
          node = parent->xmlChildrenNode;
          do {
-            xmlr_strd(node,"naev",version);
-            xmlr_strd(node,"data",save->data);
+            xmlr_strd(node, "naev", version);
+            xmlr_strd(node, "data", save->data);
          } while (xml_nextNode(node));
          continue;
       }
 
-      if (xml_isNode(parent,"player")) {
+      if (xml_isNode(parent, "player")) {
          /* Get name. */
-         xmlr_attr(parent,"name",save->name);
+         xmlr_attr(parent, "name", save->name);
          /* Parse rest. */
          node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
             /* Player info. */
-            xmlr_strd(node,"location",save->planet);
-            xmlr_ulong(node,"credits",save->credits);
+            xmlr_strd(node, "location", save->planet);
+            xmlr_ulong(node, "credits", save->credits);
 
             /* Time. */
-            if (xml_isNode(node,"time")) {
+            if (xml_isNode(node, "time")) {
                cur = node->xmlChildrenNode;
-               scu = stp = stu = 0;
+               cycles = periods = seconds = 0;
                do {
-                  xmlr_int(cur,"SCU",scu);
-                  xmlr_int(cur,"STP",stp);
-                  xmlr_int(cur,"STU",stu);
+                  xmlr_int(cur, "SCU", cycles);
+                  xmlr_int(cur, "STP", periods);
+                  xmlr_int(cur, "STU", seconds);
                } while (xml_nextNode(cur));
-               save->date = ntime_create( scu, stp, stu );
+               save->date = ntime_create( cycles, periods, seconds );
                continue;
             }
 
             /* Ship info. */
-            if (xml_isNode(node,"ship")) {
-               xmlr_attr(node,"name",save->shipname);
-               xmlr_attr(node,"model",save->shipmodel);
+            if (xml_isNode(node, "ship")) {
+               xmlr_attr(node, "name", save->shipname);
+               xmlr_attr(node, "model", save->shipmodel);
                continue;
             }
          } while (xml_nextNode(node));
