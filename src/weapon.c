@@ -849,6 +849,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    Asteroid *a;
    AsteroidType *at;
 
+   gfx = NULL;
+   polygon = NULL;
+
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
    if (!b) {
@@ -868,8 +871,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             usePoly = 0;
       }
    }
-   else
-      gfx = NULL;
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
