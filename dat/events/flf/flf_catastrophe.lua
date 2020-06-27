@@ -88,9 +88,8 @@ end
 
 function enter_bar ()
    local flf_missions = {
-      "FLF Commodity Run", "Eliminate a Dvaered Patrol",
-      "Divert the Dvaered Forces", "Eliminate an Empire Patrol",
-      "FLF Pirate Disturbance", "Rogue FLF" }
+      "Eliminate a Dvaered Patrol", "Divert the Dvaered Forces",
+      "Eliminate an Empire Patrol", "FLF Pirate Disturbance", "Rogue FLF" }
    if not anyMissionActive( flf_missions ) then
       if bar_hook ~= nil then hook.rm( bar_hook ) end
       if abort_hook ~= nil then hook.rm( abort_hook ) end
