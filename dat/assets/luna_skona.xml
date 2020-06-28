@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Luna Skona">
+ <pos>
+  <x>-11744.645642</x>
+  <y>9301.199184</y>
+ </pos>
+ <GFX>
+  <space>moon-P03.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>P</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>
