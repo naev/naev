@@ -1786,6 +1786,16 @@ static void map_buttonCommodity( unsigned int wid, char* str )
  */
 static void map_window_close( unsigned int wid, char *str )
 {
+   int i;
+   if ( commod_known != NULL )
+      free ( commod_known );
+   commod_known = NULL;
+   if ( map_modes != NULL ){
+      for ( i=0; i<nmap_modes; i++ )
+         free ( map_modes[i] );
+      free ( map_modes );
+      map_modes = NULL;
+   }
    cur_commod = -1;
    window_close(wid,str);
 }
