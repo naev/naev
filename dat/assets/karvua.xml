@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <value>300.000000</value>
-  <range>1</range>
+  <value>600.000000</value>
+  <range>3</range>
  </presence>
  <general>
   <class>Y</class>
@@ -20,6 +20,7 @@
   <services>
    <land/>
    <refuel/>
+   <missions/>
    <commodity/>
   </services>
   <commodities/>

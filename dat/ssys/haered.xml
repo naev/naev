@@ -12,6 +12,8 @@
  </pos>
  <assets>
   <asset>Virtual Proteron Unpresence</asset>
+  <asset>Virtual Proteron Unpresence</asset>
+  <asset>Virtual Proteron Unpresence</asset>
  </assets>
  <jumps>
   <jump target="Cleai">
@@ -20,7 +22,7 @@
   </jump>
   <jump target="Protera">
    <autopos/>
-   <hide>2.500000</hide>
+   <hide>5.000000</hide>
   </jump>
  </jumps>
 </ssys>
