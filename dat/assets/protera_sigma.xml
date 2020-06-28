@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Protera Sigma">
  <pos>
-  <x>1881.178787</x>
-  <y>-2335.239458</y>
+  <x>5541.887113</x>
+  <y>5474.271638</y>
  </pos>
  <GFX>
   <space>M05.png</space>
@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <value>600.000000</value>
-  <range>2</range>
+  <value>800.000000</value>
+  <range>3</range>
  </presence>
  <general>
   <class>M</class>
@@ -24,7 +24,6 @@
    <missions/>
    <commodity/>
    <outfits/>
-   <shipyard/>
   </services>
   <commodities/>
   <description>Protera Sigma is the only original Proteron colony known to have survived the Incident. One of the earlier Proteron settlements, it has an established shipyard and access to the original blueprints, so Proteron shipbuilding traditions live on.</description>
@@ -35,8 +34,6 @@
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>Missiles 2</item>
-  <item>Basic Civilian Ships</item>
-  <item>Basic Trade Ships</item>
   <item>Star Maps</item>
   <item>Systems Low</item>
   <item>Systems Medium</item>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Elpa">
+ <pos>
+  <x>2923.241994</x>
+  <y>-9792.061981</y>
+ </pos>
+ <GFX>
+  <space>H00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>500.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>600000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Elpa was the first post-Incident Proteron colony which was able to sustain human life without significant terraforming, designated for the production of Proteron goods.</description>
+  <bar>The bar hums with activity from traders and workers alike despite the lack of seating arrangements.</bar>
+ </general>
+</asset>

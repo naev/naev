@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Hystera Outpost">
  <pos>
-  <x>5530.207822</x>
-  <y>6429.312839</y>
+  <x>5647.850814</x>
+  <y>6361.203738</y>
  </pos>
  <GFX>
-  <space>001.png</space>
+  <space>station-commerce3.png</space>
   <exterior>traderoom.png</exterior>
  </GFX>
  <presence>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Sigma Station">
  <pos>
-  <x>2358.040483</x>
-  <y>-2770.284319</y>
+  <x>3150.528370</x>
+  <y>-2234.267876</y>
  </pos>
  <GFX>
   <space>station-fleetbase.png</space>
@@ -55,5 +55,11 @@
   <item>Heavy Weapons 2</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
+  <item>Ion 2</item>
  </tech>
 </asset>

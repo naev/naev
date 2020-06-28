@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Hystera I">
+<asset name="Ekta I">
  <pos>
-  <x>-5799.662480</x>
-  <y>4379.456945</y>
+  <x>10276.833832</x>
+  <y>-1905.957803</y>
  </pos>
  <GFX>
-  <space>I00.png</space>
-  <exterior>forest.png</exterior>
+  <space>000.png</space>
+  <exterior>station01.png</exterior>
  </GFX>
  <general>
-  <class>I</class>
+  <class>D</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>

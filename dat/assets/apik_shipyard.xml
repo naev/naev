@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Apik Shipyard">
+ <pos>
+  <x>-4955.450149</x>
+  <y>7007.406875</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Unlike Sigma Station on Protera, Apik Shipyard is designed to cater to the needs of the general population. It efficiently churns out and services civilian vessels on an as-needed basis.</description>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Engines Cargo</item>
+  <item>Hulls High</item>
+  <item>Engines Medium</item>
+  <item>Engines Low</item>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Laser 2</item>
+  <item>Plasma 1</item>
+  <item>Beam 1</item>
+ </tech>
+</asset>

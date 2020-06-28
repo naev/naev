@@ -10,12 +10,12 @@
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <value>500.000000</value>
+  <value>700.000000</value>
   <range>3</range>
  </presence>
  <general>
   <class>M</class>
-  <population>13000000</population>
+  <population>1000000</population>
   <hide>0.250000</hide>
   <services>
    <land/>

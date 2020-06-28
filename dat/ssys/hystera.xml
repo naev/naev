@@ -7,12 +7,13 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>1047.000000</x>
-  <y>568.000000</y>
+  <x>1067.400000</x>
+  <y>562.000000</y>
  </pos>
  <assets>
   <asset>Hystera I</asset>
   <asset>Hystera II</asset>
+  <asset>Hystera Ia</asset>
   <asset>Hystera Outpost</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Trader Area</asset>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Hystera I">
+<asset name="Mida Proxima">
  <pos>
-  <x>-5799.662480</x>
-  <y>4379.456945</y>
+  <x>3088.306661</x>
+  <y>-6629.209987</y>
  </pos>
  <GFX>
-  <space>I00.png</space>
-  <exterior>forest.png</exterior>
+  <space>J08.png</space>
+  <exterior>lava.png</exterior>
  </GFX>
  <general>
-  <class>I</class>
+  <class>J</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>
