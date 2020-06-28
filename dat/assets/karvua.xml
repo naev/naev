@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Karvua">
+ <pos>
+  <x>-9433.020360</x>
+  <y>1832.393286</y>
+ </pos>
+ <GFX>
+  <space>moon-Y00.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>60000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>While not exactly hospitable, Karvua is a rich source of minerals that the Proteron were all too happy to exploit, leading them to turn the planet into a big mining colony.</description>
+ </general>
+</asset>

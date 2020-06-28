@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Megala">
+ <pos>
+  <x>-10147.718927</x>
+  <y>1575.074787</y>
+ </pos>
+ <GFX>
+  <space>S01.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>S</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>
