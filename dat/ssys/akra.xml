@@ -11,8 +11,16 @@
   <y>426.581760</y>
  </pos>
  <assets>
+  <asset>Aera</asset>
+  <asset>Akra III</asset>
+  <asset>Akra Station</asset>
+  <asset>Akra V</asset>
   <asset>Amianta</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Virtual Trader Local</asset>
+  <asset>Zesta</asset>
  </assets>
  <jumps>
   <jump target="Mida">

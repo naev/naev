@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Akra Station">
+ <pos>
+  <x>-2449.716430</x>
+  <y>-2403.495366</y>
+ </pos>
+ <GFX>
+  <space>station-commerce2.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>200000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Built to service ships in the area, Akra Station also serves as an essential communication and trade hub for residents of Akra. People from all over the system congregate here, leading to more inter-planetary personal relationships than normal.</description>
+  <bar>The bar is bustling and seemingly constantly packed, yet never seems to cause anyone any problem due to how efficient everything is.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Systems Low</item>
+  <item>Systems High</item>
+  <item>Engines Low</item>
+  <item>Hulls Low</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Laser 1</item>
+ </tech>
+</asset>
