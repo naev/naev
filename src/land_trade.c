@@ -145,11 +145,11 @@ void commodity_update( unsigned int wid, char* str )
       nsnprintf( buf, PATH_MAX,
          _("NA tonnes\n"
            "\n"
-           "NA credits/tonne\n"
+           "NA credits\n"
            "%d tonnes\n"
            "%s credits\n"
-           "NA credits/tonne\n"
-           "NA credits/tonne"),
+           "NA credits\n"
+           "NA credits"),
          pilot_cargoFree(player.p),
          buf3 );
       window_modifyText( wid, "txtDInfo", buf );
@@ -169,12 +169,12 @@ void commodity_update( unsigned int wid, char* str )
    buf2[0]='\0';
    owned=pilot_cargoOwned( player.p, comname );
    if ( owned > 0 )
-      nsnprintf( buf2, 80, _("%"PRIu64" Cr./Tonne"),com->lastPurchasePrice);
+      nsnprintf( buf2, 80, _("%"PRIu64" credits"),com->lastPurchasePrice);
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
          _("%d tonnes\n"
          "%s\n"
-         "%"PRIu64" credits/tonne\n"
+         "%"PRIu64" credits\n"
          "%d tonnes\n"
          "%s credits\n"
          "%"PRIu64" ± %.1f\n"
