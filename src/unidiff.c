@@ -230,7 +230,9 @@ int diff_apply( const char *name )
             xmlFreeDoc(doc);
             free(buf);
 
+            /* Re-compute the economy. */
             economy_execQueued();
+            economy_initialiseCommodityPrices();
 
             return 0;
          }
