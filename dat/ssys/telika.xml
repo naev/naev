@@ -7,10 +7,16 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>1177.000000</x>
-  <y>431.138560</y>
+  <x>1163.000000</x>
+  <y>401.138560</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Petra</asset>
+  <asset>Telika II</asset>
+  <asset>Telika III</asset>
+  <asset>Telika Station</asset>
+  <asset>Vracha</asset>
+ </assets>
  <jumps>
   <jump target="Ekta">
    <autopos/>

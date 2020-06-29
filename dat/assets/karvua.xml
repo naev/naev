@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <value>600.000000</value>
-  <range>3</range>
+  <value>200.000000</value>
+  <range>2</range>
  </presence>
  <general>
   <class>Y</class>
