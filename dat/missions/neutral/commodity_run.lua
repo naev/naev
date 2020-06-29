@@ -42,7 +42,9 @@ osd_msg["__save"] = true
 
 
 -- TODO: find a better way to index all available commodities
-commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Luxury Goods" }
+commchoices = {
+   "Food", "Ore", "Industrial Goods", "Medicine", "Luxury Goods", "Gold",
+   "Diamond", "Water" }
 
 
 function update_active_runs( change )

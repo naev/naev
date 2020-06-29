@@ -30,5 +30,5 @@ cargo_land_p2[3] = _("%s%s are unloaded from your vessel by a team of FLF soldie
 osd_title = _("FLF Supply Run")
 
 
-commchoices = { "Food", "Ore", "Industrial Goods", "Medicine" }
+commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Water" }
 
