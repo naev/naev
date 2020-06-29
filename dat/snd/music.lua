@@ -36,6 +36,20 @@ function choose( str )
       ["combat"]  = choose_combat
    }
 
+   -- Don't change or play music if a mission or event doesn't want us to
+   if var.peek( "music_off" ) then
+      return
+   end
+
+   -- Allow restricting play of music until a song finishes
+   if var.peek( "music_wait" ) then
+      if music.isPlaying() then
+         return
+      else
+         var.pop( "music_wait" )
+      end
+   end
+
    -- Means to only change song if needed
    if str == nil then
       str = "ambient"
