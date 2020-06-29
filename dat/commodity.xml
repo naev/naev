@@ -87,8 +87,9 @@
   <planet_modifier type="Y">0.5</planet_modifier>
   <period>100</period>
   <population_modifier>-0.5</population_modifier>
-  <faction_modifier type="Dvaered">0.8</faction_modifier>
+  <faction_modifier type="Dvaered">0.5</faction_modifier>
   <faction_modifier type="FLF">1.2</faction_modifier>
+  <faction_modifier type="Soromid">0.8</faction_modifier>
  </commodity>
  <commodity>
   <name>Gold</name>
@@ -106,7 +107,8 @@
   <faction_modifier type="FLF">0.5</faction_modifier>
   <faction_modifier type="Frontier">0.5</faction_modifier>
   <faction_modifier type="Pirate">1.2</faction_modifier>
-  <faction_modifier type="Sirius">0.8</faction_modifier>
+  <faction_modifier type="Sirius">1.1</faction_modifier>
+  <faction_modifier type="Soromid">0.7</faction_modifier>
  </commodity>
  <commodity>
   <name>Diamond</name>
@@ -127,7 +129,8 @@
   <faction_modifier type="FLF">0.4</faction_modifier>
   <faction_modifier type="Frontier">0.4</faction_modifier>
   <faction_modifier type="Pirate">1.2</faction_modifier>
-  <faction_modifier type="Sirius">0.8</faction_modifier>
+  <faction_modifier type="Sirius">1.1</faction_modifier>
+  <faction_modifier type="Soromid">0.8</faction_modifier>
  </commodity>
  <commodity>
   <name>Industrial Goods</name>

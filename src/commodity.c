@@ -166,16 +166,16 @@ static void commodity_freeOne( Commodity* com )
       gl_freeTexture(com->gfx_store);
    if (com->gfx_space)
       gl_freeTexture(com->gfx_space);
-   next=com->planet_modifier;
-   com->planet_modifier=NULL;
+   next = com->planet_modifier;
+   com->planet_modifier = NULL;
    while (next != NULL ){
-      this=next;
-      next=this->next;
+      this = next;
+      next = this->next;
       free(this->name);
       free(this);
    }
-   next=com->faction_modifier;
-   com->faction_modifier=NULL;
+   next = com->faction_modifier;
+   com->faction_modifier = NULL;
    while (next != NULL ){
       this=next;
       next=this->next;
@@ -281,20 +281,20 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
-      if (xml_isNode(node,"planet_modifier")){
-         newdict=malloc(sizeof(CommodityModifier));
-         newdict->next=temp->planet_modifier;
-         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
-         newdict->value=xml_getFloat(node);
-         temp->planet_modifier=newdict;
+      if (xml_isNode(node, "planet_modifier")) {
+         newdict = malloc(sizeof(CommodityModifier));
+         newdict->next = temp->planet_modifier;
+         newdict->name = xml_nodeProp(node,(xmlChar*)"type");
+         newdict->value = xml_getFloat(node);
+         temp->planet_modifier = newdict;
          continue;
       }
-      if (xml_isNode(node,"faction_modifier")){
-         newdict=malloc(sizeof(CommodityModifier));
-         newdict->next=temp->faction_modifier;
-         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
-         newdict->value=xml_getFloat(node);
-         temp->faction_modifier=newdict;
+      if (xml_isNode(node, "faction_modifier")) {
+         newdict = malloc(sizeof(CommodityModifier));
+         newdict->next = temp->faction_modifier;
+         newdict->name = xml_nodeProp(node, (xmlChar*)"type");
+         newdict->value = xml_getFloat(node);
+         temp->faction_modifier = newdict;
       }
    
    } while (xml_nextNode(node));
