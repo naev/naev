@@ -45,6 +45,7 @@ typedef struct Commodity_ {
    char* description; /**< Description of the commodity. */
    unsigned int standard; /**< Wether or not this commodity is standard. */
    /* Prices. */
+   double raw_price; /**< Raw price of the commodity. */
    double price; /**< Base price of the commodity. */
    glTexture* gfx_store; /**< Store graphic. */
    glTexture* gfx_space; /**< Space graphic. */

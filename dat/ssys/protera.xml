@@ -12,13 +12,24 @@
  </pos>
  <assets>
   <asset>Protera Sigma</asset>
+  <asset>Sigma Station</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Local</asset>
   <asset>Virtual Trader Local</asset>
   <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
+  <jump target="Apik">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Haered">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Hystera">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

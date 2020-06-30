@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ekta IIb">
+ <pos>
+  <x>-3109.066511</x>
+  <y>-8609.192014</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

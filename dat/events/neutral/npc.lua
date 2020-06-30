@@ -144,19 +144,22 @@ msg_lore["FLF"] =          {_([["I can't stand Dvaereds. I just want to wipe the
                               _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),
                               _([["No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."]]),
                               _([["Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the stupidest thing I ever heard."]]),
-                              _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to oppress us?"]]),
+                              _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to set up an invasion?"]]),
                            }
 
 msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just messing with you."]]),
                               _([["Hey, look at these new scars I got!"]]),
                               _([["Have you heard of the Pirates' Code? They're more guidelines than rules..."]]),
-                              _([["My gran said 'Never trust a pirate', she was right too, I got a pretty credit chip for her with the slavers."]]),
+                              _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
                               _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
-                              _([["Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."]]),
+                              _([["Stupid Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
                               _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
-                              _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]])
+                              _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
+                              _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
+                              _([["One of my favorite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
+                              _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
                            }
 
 msg_lore["Trader"] =       {_([["Just another link in the Great Chain, right?"]]),
@@ -192,6 +195,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["There's always an exception to the rule, but I wouldn't recommend using forward-facing weapons on larger ships. Large ships' slower turn rates aren't able to keep up with the dashing and dodging of smaller ships, and aiming is harder anyway what with how complex these ships are. Turrets are much better; they aim automatically and usually do a very good job!"]]),
                               _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
                               _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
+                              _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
                            }
 
 -- Jump point messages.

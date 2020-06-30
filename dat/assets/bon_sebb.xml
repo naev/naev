@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Gold</commodity>
-  </commodities>
+  <commodities/>
   <description>Bon Sebb is a mysterious place. Objects from all over the galaxy have a habit of turning up here. In fact, a large area of the planet's surface is a gigantic junk yard, known as the "Junkle", where the locals "hunt" for useful equipment they can sell to each other, or to passing travellers.</description>
   <bar>The bar on Bon Sebb is built out of things scavenged from the Junkle. The walls and furniture are all patchworks of various designs and materials. The only somewhat symmetrical feature of the bar is a holoportrait of the Creator of the Universe, hanging over the lopsided bar.</bar>
  </general>

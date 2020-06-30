@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ekta II">
+ <pos>
+  <x>-4443.719337</x>
+  <y>-7948.916924</y>
+ </pos>
+ <GFX>
+  <space>I03.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -132,7 +132,6 @@ function srm_mil_kataka( pnt )
          _("\"We don't need your money, outsider.\""))
 end
 
-
 -- Za'lek's military assets.
 function zlk_mil_restricted( pnt )
    return land_military(pnt, 30,
@@ -142,10 +141,18 @@ function zlk_mil_restricted( pnt )
          _("Money is irrelevant."))
 end
 
-
 -- Za'lek's military center.
 function zlk_ruadan( pnt )
    return false, "Permission denied. Ruadan space is off-limits to you."
+end
+
+-- Proteron military assets.
+function ptn_mil_restricted( pnt )
+   return land_military(pnt, 50,
+         _("Permission to land granted."),
+         _("You are not authorized to land here."),
+         _("Landing request denied."),
+         _("We Proteron don't take kindly to bribery."))
 end
 
 -- Pirate clanworld.

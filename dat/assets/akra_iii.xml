@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Akra III">
+ <pos>
+  <x>-1987.421180</x>
+  <y>-2782.389652</y>
+ </pos>
+ <GFX>
+  <space>H01.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>H</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

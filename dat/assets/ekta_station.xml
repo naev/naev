@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ekta Station">
+ <pos>
+  <x>9509.385492</x>
+  <y>-2399.956164</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard2.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>5000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>With the influx of Proteron civilians into the planet Thavma, it soon became clear that a local shipyard would be useful. For that purpose, Ekta Station was built. While not as extensive as Apik Shipyard in terms of offerings, Ekta Station nonetheless manages to be a good source of ships and ship maintenance for locals.</description>
+  <bar>Civilians, traders, and military personnel alike meet at this bar as they wait for the repairs and modifications of their ships to be finished. It's a small but cozy bar, with people constantly coming and going.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Low Tech Upgrades</item>
+  <item>Beam 1</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Hulls Low</item>
+  <item>Star Maps</item>
+  <item>Ion 1</item>
+  <item>Missiles 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Engines High</item>
+ </tech>
+</asset>

@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>O</class>
-  <population>0</population>
+  <population>200</population>
   <hide>0.250000</hide>
   <services>
    <land>srm_mil_restricted</land>
