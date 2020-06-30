@@ -9,7 +9,7 @@
   <exterior>station01.png</exterior>
  </GFX>
  <general>
-  <class>3</class>
+  <class>I</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>
