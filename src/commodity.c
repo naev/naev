@@ -167,8 +167,10 @@ int commodity_getN(void )
  */
 Commodity* commodity_getByIndex( const int indx )
 {
-   if ( indx < 0 || indx >= econ_nprices )
+   if ( indx < 0 || indx >= econ_nprices ){
+      WARN(_("Commodity with index %d not found"),indx);
       return NULL;
+   }
    return &commodity_stack[econ_comm[indx]];
 }
 

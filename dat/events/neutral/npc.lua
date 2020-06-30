@@ -206,7 +206,6 @@ msg_jmp =                  {_([["Hi there, traveler. Is your system map up to da
                               _([["There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
                            }
 
-			   
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the hints are always faction neutral.
