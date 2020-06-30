@@ -305,7 +305,7 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= jm_chance then
+   if select < jm_chance then
       -- Jump point message.
       msg, func = getJmpMessage(fac)
    elseif select <= 0.55 then
@@ -444,7 +444,7 @@ function talkNPC(id)
    tk.msg(npcdata.name, npcdata.msg)
 
    -- Reduce jump message chance
-   var.push( "npc_tip_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
+   var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
 end
 
 --[[
