@@ -42,4 +42,10 @@
     <y>94.000000</y>
     <detection_radius>300</detection_radius>
   </decorator>
+  <decorator>
+    <image>proteron</image>
+    <x>1196.000000</x>
+    <y>510.000000</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
 </map>
