@@ -15,7 +15,7 @@
   <planet_modifier type="Q">0.8</planet_modifier>
   <planet_modifier type="R">0.8</planet_modifier>
   <period>80</period>
-  <population_modifier>1.0</population_modifier>
+  <population_modifier>0.75</population_modifier>
   <faction_modifier type="Empire">0.8</faction_modifier>
   <faction_modifier type="FLF">1.2</faction_modifier>
   <faction_modifier type="Frontier">1.2</faction_modifier>
@@ -44,7 +44,7 @@
   <planet_modifier type="Y">1.25</planet_modifier>
   <planet_modifier type="Z">1.25</planet_modifier>
   <period>110</period>
-  <population_modifier>0.75</population_modifier>
+  <population_modifier>0.7</population_modifier>
   <faction_modifier type="FLF">1.2</faction_modifier>
   <faction_modifier type="Frontier">1.2</faction_modifier>
  </commodity>
