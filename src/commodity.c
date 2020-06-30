@@ -249,8 +249,8 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    CommodityModifier *newdict;
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
-   temp->period=200;
-   temp->population_modifier=0.;
+   temp->period = 200;
+   temp->population_modifier = 0.;
    temp->standard = 0;
 
    /* Parse body. */
@@ -300,7 +300,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    } while (xml_nextNode(node));
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
-   if ((temp->price>0)) {
+   if ((temp->price > 0)) {
       if (temp->gfx_store == NULL) {
          WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
          temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
