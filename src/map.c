@@ -1437,12 +1437,12 @@ void map_renderCommod( double bx, double by, double x, double y,
                worst= minPrice - curMaxPrice ;
                if ( best >= 0 ){/* draw circle above */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cBlue, "%.1f",best);
-                  best = tanh ( 10*best / curMinPrice );
+                  best = tanh ( 2*best / curMinPrice );
                   ccol.r=1-best;ccol.g=1-best;ccol.b=best;ccol.a=1;/*yellow (0) to blue (1)*/
                   gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                }else{/* draw circle below */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cOrange, "%.1f",worst);
-                  worst= tanh ( -10*worst/ curMaxPrice );
+                  worst= tanh ( -2*worst/ curMaxPrice );
                   ccol.r=1;ccol.g=1-worst/2;ccol.b=0;ccol.a=1;/*yellow (0) to orange (1)*/
                   gl_drawCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
