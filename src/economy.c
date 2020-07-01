@@ -667,10 +667,13 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    }
    commodityPrice->price *= scale;
 
-   /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety
-     and so lower prices and improve stability*/
+   /* Range seems to go from 0-5, with median being 2.  Increased range
+    * will increase safety and so lower prices and improve stability */
    commodityPrice->price *= (1 - planet->presenceRange/30.);
    commodityPrice->planetPeriod *= 1 / (1 - planet->presenceRange/30.);
+
+   /* Make sure the price is always positive and non-zero */
+   commodityPrice->price = MAX( commodityPrice->price, 1 );
 
    return 0;
 }

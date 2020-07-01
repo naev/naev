@@ -10,7 +10,9 @@
   <x>692.000000</x>
   <y>461.000000</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Thurion Local</asset>
+ </assets>
  <jumps>
   <jump target="Aesria">
    <autopos/>
