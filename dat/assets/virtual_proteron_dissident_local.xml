@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Virtual Proteron Dissident Local">
+ <virtual/>
+ <presence>
+  <faction>Proteron Dissident</faction>
+  <value>10.000000</value>
+  <range>0</range>
+ </presence>
+</asset>

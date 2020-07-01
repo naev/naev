@@ -54,6 +54,24 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
+   <enemy>Proteron Dissident</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Proteron Dissident</name>
+  <display>Civilian</display>
+  <invisible />
+  <player>0</player>
+  <colour>black</colour>
+  <spawn>civilian</spawn>
+  <standing>static</standing>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
+   <enemy>Proteron</enemy>
   </enemies>
  </faction>
  <faction>
@@ -131,6 +149,7 @@
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
+   <enemy>Proteron Dissident</enemy>
    <enemy>Thurion</enemy>
    <enemy>Comingout_associates</enemy>
   </enemies>
@@ -301,6 +320,8 @@
    <enemy>Trader</enemy>
    <enemy>Miner</enemy>
    <enemy>Independent</enemy>
+   <enemy>Proteron</enemy>
+   <enemy>Proteron Dissident</enemy>
   </enemies>
  </faction>
  <faction>
