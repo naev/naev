@@ -1310,13 +1310,43 @@ static void map_renderMarkers( double x, double y, double r, double a )
    }
 }
 
+#define setcolour(R,G,B) ({ccol.r=(R);ccol.g=(G);ccol.b=(B);ccol.a=1;})
+/* 
+ * Makes all systems dark grey.
+ */
+static void map_renderSysBlack(double bx, double by, double x,double y, double w, double h, double r, int editor){
+   int i;
+   StarSystem *sys;
+   double tx,ty;
+   glColour ccol;
 
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+         
+      /* if system is not known, reachable, or marked. and we are not in the editor */
+      if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+           && !space_sysReachable(sys)) && !editor)
+         continue;
+      
+      tx = x + sys->pos.x*map_zoom;
+      ty = y + sys->pos.y*map_zoom;
+         
+      /* Skip if out of bounds. */
+      if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
+         continue;
+      
+      /* If system is known fill it. */
+      if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         setcolour(0.1,0.1,0.1);
+         gl_drawCircle( tx, ty , r, &ccol, 1 );
+      }
+   }
+}
 
 
 /*
  * Renders the economy information
  */
-#define setcolour(R,G,B) ({ccol.r=(R);ccol.g=(G);ccol.b=(B);ccol.a=1;})
 
 void map_renderCommod( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
@@ -1356,6 +1386,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             snprintf(buf,80,"%s here",c->name);
             textw = gl_printWidthRaw( &gl_smallFont, buf);
             gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
       }else{
@@ -1383,6 +1414,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                snprintf(buf,80,"%s here",c->name);
                textw = gl_printWidthRaw( &gl_smallFont, buf);
                gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+               map_renderSysBlack(bx,by,x,y,w,h,r,editor);
                return;
                
             }
@@ -1394,6 +1426,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             snprintf(buf,80,"%s here",c->name);
             textw = gl_printWidthRaw( &gl_smallFont, buf);
             gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
       }
