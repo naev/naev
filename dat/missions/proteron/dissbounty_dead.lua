@@ -126,3 +126,20 @@ function bounty_setup ()
    credits = 150000 + rnd.sigma() * 15000
    reputation = rnd.rnd( 1, 2 )
 end
+
+
+function land ()
+   jumps_permitted = jumps_permitted - 1
+   if job_done and planet.cur():faction() == paying_faction then
+      local pay_text
+      if target_killed then
+         pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]
+      else
+         pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
+      end
+      tk.msg( pay_title, pay_text )
+      player.pay( credits )
+      paying_faction:modPlayerSingle( reputation )
+      misn.finish( true )
+   end
+end
