@@ -1437,7 +1437,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                best = maxPrice - curMinPrice ;
                worst= minPrice - curMaxPrice ;
                if ( best >= 0 ){/* draw circle above */
-                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cBlue, "%.1f",best);
+                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cLightBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
 		  setcolour(1-best,1-best,best);/*yellow (0) to blue (1)*/
                   gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
