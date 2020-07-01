@@ -1143,4 +1143,32 @@
    <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Proteron Dissident Schroedinger">
+  <ai>proteron_dissident</ai>
+  <faction>Proteron Dissident</faction>
+  <pilots>
+   <pilot name="Civilian Schroedinger" ship="Schroedinger"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Proteron Dissident Hyena">
+  <ai>proteron_dissident</ai>
+  <faction>Proteron Dissident</faction>
+  <pilots>
+   <pilot name="Civilian Hyena" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Proteron Dissident Llama">
+  <ai>proteron_dissident</ai>
+  <faction>Proteron Dissident</faction>
+  <pilots>
+   <pilot name="Civilian Llama" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Proteron Dissident Gawain">
+  <ai>proteron_dissident</ai>
+  <faction>Proteron Dissident</faction>
+  <pilots>
+   <pilot name="Civilian Gawain" ship="Gawain"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>

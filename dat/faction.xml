@@ -64,7 +64,7 @@
   <invisible />
   <player>0</player>
   <colour>black</colour>
-  <spawn>civilian</spawn>
+  <spawn>proteron_dissident</spawn>
   <standing>static</standing>
   <allies>
   </allies>
