@@ -32,6 +32,7 @@
    <type>default</type>
    <type>default</type>
    <type>massive</type>
+   <type>golden</type>
    <radius>3000.000000</radius>
    <pos x="4000.000000" y="-1000.000000"/>
    <density>1.000000</density>

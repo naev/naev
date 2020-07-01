@@ -131,6 +131,27 @@
    <asset name="SY-159">add</asset>
    <asset name="SY-256">add</asset>
   </system>
+  <system name="Katami">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
+  <system name="Booster">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
+  <system name="Adran">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
+  <system name="Midoros">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
+  <system name="Seran">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
+  <system name="South Bell">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
+  <system name="Tide">
+   <asset name="Virtual Thurion Local">add</asset>
+  </system>
  </unidiff>
  <unidiff name="test">
   <system name="Hakoi">
