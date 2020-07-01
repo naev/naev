@@ -37,8 +37,8 @@ function cargo_selectPlanets(missdist, routepos)
                   and not (s == system.cur()
                      and ( vec2.dist( v:pos(), routepos ) < 2500 ) )
                   and v:canLand() and cargoValidDest( v )
-                  and ( v:faction() != faction.get("Thurion")
-                     or planet.cur():faction() == faction.get("Thurion") ) ) then
+                  and ( v:faction() ~= faction.get("Thurion")
+                     or planet.cur():faction() == faction.get("Thurion") ) then
                planets[#planets + 1] = {v, s}
             end
          end
