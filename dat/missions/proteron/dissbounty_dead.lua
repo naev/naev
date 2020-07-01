@@ -41,7 +41,7 @@ pay_kill_text[1] = _("After verifying that you killed your target, an officer ha
 pay_kill_text[2] = _("After verifying that the target is indeed dead, the tired-looking officer smiles and hands you your pay.")
 pay_kill_text[3] = _("The officer thanks you and promptly hands you your pay.")
 pay_kill_text[4] = _("The officer takes you into a locked room, where the death of your target is quietly verified. The officer then pays you and sends you off.")
-pay_kill_text[6] = _("The officer verifies the death of your target, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
+pay_kill_text[5] = _("The officer verifies the death of your target, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
 
 pay_capture_text    = {}
 pay_capture_text[1] = _("An officer takes the dissident into custody and hands you your pay.")
@@ -125,21 +125,4 @@ function bounty_setup ()
    ship = choices[ rnd.rnd( 1, #choices ) ]
    credits = 150000 + rnd.sigma() * 15000
    reputation = rnd.rnd( 1, 2 )
-end
-
-
-function land ()
-   jumps_permitted = jumps_permitted - 1
-   if job_done and planet.cur():faction() == paying_faction then
-      local pay_text
-      if target_killed then
-         pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]
-      else
-         pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
-      end
-      tk.msg( pay_title, pay_text )
-      player.pay( credits )
-      paying_faction:modPlayerSingle( reputation )
-      misn.finish( true )
-   end
 end
