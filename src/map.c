@@ -1316,6 +1316,7 @@ static void map_renderMarkers( double x, double y, double r, double a )
 /*
  * Renders the economy information
  */
+#define setcolour(R,G,B) ({ccol.r=(R);ccol.g=(G);ccol.b=(B);ccol.a=1;})
 
 void map_renderCommod( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
@@ -1438,17 +1439,17 @@ void map_renderCommod( double bx, double by, double x, double y,
                if ( best >= 0 ){/* draw circle above */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
-                  ccol.r=1-best;ccol.g=1-best;ccol.b=best;ccol.a=1;/*yellow (0) to blue (1)*/
+		  setcolour(1-best,1-best,best);/*yellow (0) to blue (1)*/
                   gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                }else{/* draw circle below */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cOrange, "%.1f",worst);
                   worst= tanh ( -2*worst/ curMaxPrice );
-                  ccol.r=1;ccol.g=1-worst/2;ccol.b=0;ccol.a=1;/*yellow (0) to orange (1)*/
+		  setcolour(1,1-worst/2,0);/*yellow (0) to orange (1)*/
                   gl_drawCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
             }else{
                /* Commodity not sold here */
-               ccol.r=0.1; ccol.g=0.1; ccol.b=0.1; ccol.a=1;
+               setcolour(0.1,0.1,0.1);
                gl_drawCircle( tx, ty , r, &ccol, 1 );
                
             }
@@ -1498,24 +1499,23 @@ void map_renderCommod( double bx, double by, double x, double y,
                sumPrice/=sumCnt;
                if ( sumPrice < commod_av_gal_price ){
                   frac = tanh(5*(commod_av_gal_price / sumPrice - 1));
-                  ccol.r=1;ccol.g=1-frac/2;ccol.b=0;ccol.a=1;/*orange(1) to yellow(0)*/
-                  
+                  setcolour(1,1-frac/2,0);/*orange(1) to yellow(0)*/
                }else{
                   frac = tanh(5*(sumPrice / commod_av_gal_price - 1));
-                  ccol.r=1-frac; ccol.g=1-frac; ccol.b=frac; ccol.a=1;/*yellow (0) to blue (1)*/
+                  setcolour(1-frac,1-frac,frac);/*yellow (0) to blue (1)*/
                }
                gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &ccol, "%.1f",sumPrice);
                gl_drawCircle( tx, ty , r, &ccol, 1 );
             }else{
                /* Commodity not sold here */
-               ccol.r=0.1; ccol.g=0.1; ccol.b=0.1; ccol.a=1;
+               setcolour(0.1,0.1,0.1);
                gl_drawCircle( tx, ty , r, &ccol, 1 );
             }
          }
       }
    }
 }
-
+#undef setcolour
 
 /**
  * @brief Map custom widget mouse handling.
