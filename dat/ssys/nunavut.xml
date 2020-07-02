@@ -27,6 +27,11 @@
  </jumps>
  <asteroids>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>golden</type>
    <radius>2000.000000</radius>
    <pos x="1000.000000" y="3000.000000"/>
    <density>1.000000</density>
