@@ -14,7 +14,7 @@
 
 
 #include "economy.h"
-
+#include "commodity.h"
 #include "naev.h"
 
 #include <stdio.h>
@@ -147,6 +147,31 @@ Commodity* commodity_getW( const char* name )
       if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
    return NULL;
+}
+
+/**
+ * @brief Return the number of commodities globally.
+ *
+ *    @return Number of commodities globally.
+ */
+int commodity_getN(void )
+{
+   return econ_nprices;
+}
+
+/**
+ * @brief Gets a commodity by index.
+ *
+ *    @param indx Index of the commodity.
+ *    @return Commodity at that index or NULL.
+ */
+Commodity* commodity_getByIndex( const int indx )
+{
+   if ( indx < 0 || indx >= econ_nprices ){
+      WARN(_("Commodity with index %d not found"),indx);
+      return NULL;
+   }
+   return &commodity_stack[econ_comm[indx]];
 }
 
 
