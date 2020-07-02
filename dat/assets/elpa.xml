@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>H00.png</space>
-  <exterior>aquatic.png</exterior>
+  <exterior>desertic.png</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
