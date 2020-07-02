@@ -324,7 +324,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
       /* Tab completion */
       case SDLK_TAB:
          cli_tabComplete(wid);
-	 return 1;
+         return 1;
 
       default:
          break;
