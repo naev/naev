@@ -43,6 +43,7 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, c
  */
 void economy_initialiseCommodityPrices(void);
 int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std );
+void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet );
 
 
 #endif /* ECONOMY_H */

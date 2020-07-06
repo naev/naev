@@ -888,6 +888,19 @@ void economy_initialiseCommodityPrices(void){
    }
 }
 
+/*
+ * Calculates commodity prices for a single planet (e.g. as added by the unidiff), and does some smoothing over the system, but not neighbours.
+ */
+
+void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet ){
+   int i;
+   for( i=0; i<planet->ncommodities; i++ ){
+      economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]);
+   }
+   economy_modifySystemCommodityPrice(sys);
+}
+
+
 void economy_averageSeenPrices( const Planet *p )
 {
    int i;

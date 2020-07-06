@@ -232,7 +232,7 @@ int diff_apply( const char *name )
 
             /* Re-compute the economy. */
             economy_execQueued();
-            economy_initialiseCommodityPrices();
+            /*economy_initialiseCommodityPrices();*/
 
             return 0;
          }

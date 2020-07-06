@@ -2270,7 +2270,8 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    systemname_stack[spacename_nstack-1] = sys->name;
 
    economy_addQueuedUpdate();
-
+   economy_initialiseSingleSystem(sys,planet);
+   
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
