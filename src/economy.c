@@ -625,10 +625,10 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    commodityPrice->price *= scale;
    commodityPrice->planetVariation = 0.5;
    commodityPrice->sysVariation = 0.;
-   commodityPrice->sum = 0.;
+   /*commodityPrice->sum = 0.;
    commodityPrice->sum2 = 0.;
    commodityPrice->cnt = 0;
-   commodityPrice->updateTime = 0;
+   commodityPrice->updateTime = 0;*/
    /* Use filename to specify a variation period. */
    base = 100;
    commodity->period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)] % 32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1] % 32;
@@ -974,6 +974,22 @@ void economy_clearKnown (void)
       commodity_stack[i].lastPurchasePrice=0;
    }
 }
+
+/**
+ * @brief Clears all economy knowledge of a given planet.  Used by the unidiff system.
+ */
+void economy_clearSinglePlanet(Planet *p){
+   CommodityPrice *cp;
+   int k;
+   for ( k=0; k<p->ncommodities; k++ ){
+      cp=&p->commodityPrice[k];
+      cp->cnt=0;
+      cp->sum=0;
+      cp->sum2=0;
+      cp->updateTime=0;
+   }
+}
+
 
 /**
  * @brief Loads player's economy properties from an XML node.

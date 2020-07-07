@@ -27,6 +27,7 @@ int economy_update( unsigned int dt );
 int economy_refresh (void);
 void economy_destroy (void);
 void economy_clearKnown (void);
+void economy_clearSinglePlanet(Planet *p);
 
 /*
  * Price stuff.
