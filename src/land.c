@@ -48,7 +48,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tk.h"
-
+#include "shiplog.h"
 
 /* global/main window */
 #define LAND_WIDTH   800 /**< Land window width. */
@@ -999,7 +999,10 @@ void land_genWindows( int load, int changetab )
       if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
          npc_generate(); /* Generate bar npc. */
    }
+   /* add to the ship log */
+   shiplog_append(0,land_planet->name);
 
+   
    /* 4) Create other tabs. */
 #define should_open(s, w) \
    (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))

@@ -166,6 +166,8 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 
    /* Create id if needed. */
    mission->id    = (genid) ? mission_genID() : 0;
+   /* Not started logging yet. */
+   mission->logid = -1;
    if (id != NULL)
       *id         = mission->id;
    mission->data  = misn;
@@ -994,6 +996,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
          /* data and id are attributes because they must be loaded first */
          xmlw_attr(writer,"data","%s",player_missions[i]->data->name);
          xmlw_attr(writer,"id","%u",player_missions[i]->id);
+         xmlw_attr(writer,"logid","%u",player_missions[i]->logid);
 
          xmlw_elem(writer,"title","%s",player_missions[i]->title);
          xmlw_elem(writer,"desc","%s",player_missions[i]->desc);
@@ -1128,6 +1131,13 @@ static int missions_parseActive( xmlNodePtr parent )
          misn->id = atol(buf);
          free(buf);
 
+	 xmlr_attr(node,"logid",buf);
+	 if ( buf != NULL ){
+	   misn->logid = atol(buf);
+	   free(buf);
+	 }else{/* no logid assigned */
+	   misn->logid = -1;
+	 }
          cur = node->xmlChildrenNode;
          do {
 

@@ -34,7 +34,7 @@
 #include "hook.h"
 #include "nstring.h"
 #include "outfit.h"
-
+#include "shiplog.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     500 /**< Load window height. */
@@ -630,6 +630,10 @@ int load_game( const char* file, int version_diff )
    economy_init();
    economy_sysLoad(node);
 
+   /* Initialise the ship log */
+   shiplog_new();
+   shiplog_load(node);
+   
    /* Check sanity. */
    event_checkSanity();
 
