@@ -30,7 +30,7 @@
 #include "gui.h"
 #include "player_gui.h"
 #include "tk/toolkit_priv.h"
-
+#include "shiplog.h"
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
@@ -41,7 +41,7 @@
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 
-#define INFO_WINDOWS      6 /**< Amount of windows in the tab. */
+#define INFO_WINDOWS      7 /**< Amount of windows in the tab. */
 
 #define INFO_WIN_MAIN      0
 #define INFO_WIN_SHIP      1
@@ -49,13 +49,15 @@
 #define INFO_WIN_CARGO     3
 #define INFO_WIN_MISN      4
 #define INFO_WIN_STAND     5
+#define INFO_WIN_SHIPLOG   6
 static const char *info_names[INFO_WINDOWS] = {
    "Main",
    "Ship",
    "Weapons",
    "Cargo",
    "Missions",
-   "Standings"
+   "Standings",
+   "Ship log"
 }; /**< Name of the tab windows. */
 
 
@@ -66,6 +68,14 @@ static CstSlotWidget info_eq;
 static CstSlotWidget info_eq_weaps;
 static int *info_factions;
 
+static int selectedLog = 0;
+static int selectedLogType = 0;
+static char **logTypes=NULL;
+static int ntypes=0;
+static int nlogs=0;
+static char **logs=NULL;
+static int *logIDs=NULL;
+static int logWidgetsReady=0;
 
 /*
  * prototypes
@@ -97,6 +107,7 @@ static void cargo_jettison( unsigned int wid, char* str );
 static void mission_menu_abort( unsigned int wid, char* str );
 static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, char* str );
+static void info_openShipLog( unsigned int wid );
 
 
 /**
@@ -135,11 +146,12 @@ void menu_info( int window )
    info_openCargo(      info_windows[ INFO_WIN_CARGO ] );
    info_openMissions(   info_windows[ INFO_WIN_MISN ] );
    info_openStandings(  info_windows[ INFO_WIN_STAND ] );
+   info_openShipLog(    info_windows[ INFO_WIN_SHIPLOG ] );
 
    menu_Open(MENU_INFO);
 
    /* Set active window. */
-   window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 5, window ) );
+   window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 6, window ) );
 }
 /**
  * @brief Closes the information menu.
@@ -1086,3 +1098,147 @@ static void mission_menu_abort( unsigned int wid, char* str )
    }
 }
 
+/* amount of screen available for logs: -20 below button, -20 above button, -40 from top, -20 x2 between logs.*/
+#define LOGSPACING (h - 120 - BUTTON_HEIGHT )
+
+/**
+ * @brief Updates the mission menu mission information based on what's selected.
+ *    @param str Unused.
+ */
+static void shiplog_menu_update( unsigned int wid, char* str )
+{
+   (void)str;
+   int regenerateEntries=0;
+   int w, h;
+   int logType,log;
+   int nentries;
+   char **logentries;
+   if(!logWidgetsReady)
+      return;
+   /*This is called when something is selected.
+     If a new log type has been selected, need to regenerate the log lists.
+     If a new log has been selected, need to regenerate the entries.*/
+   window_dimWindow( wid, &w, &h );
+   
+   logType = toolkit_getListPos( wid, "lstLogType" );
+   log = toolkit_getListPos( wid, "lstLogs" );
+
+   if ( logType != selectedLogType ){
+      /* new log type selected */
+      selectedLogType = logType;
+      window_destroyWidget( wid, "lstLogs" );
+      shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+      if ( selectedLog >= nlogs )
+         selectedLog = 0;
+      /*window_addList( wid, 20, -(60+(h-(80+BUTTON_HEIGHT))/3),
+                      w-40, (h-(80+BUTTON_HEIGHT))/3,
+                      "lstLogs", logs, nlogs, 0, shiplog_menu_update );*/
+      window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
+                      w-40, LOGSPACING / 4,
+                      "lstLogs", logs, nlogs, 0, shiplog_menu_update );
+
+      toolkit_setListPos( wid, "lstLogs", selectedLog );
+      regenerateEntries=1;
+   }
+   if ( regenerateEntries || selectedLog != log ){
+      selectedLog = log;
+      /* list log entries of selected log type */
+      window_destroyWidget( wid, "lstLogEntries" );
+      shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries);
+      /*      window_addList( wid, 20, -(80+2*((h-(80+BUTTON_HEIGHT))/3)),
+                      w-40, (h-(80+BUTTON_HEIGHT))/3,
+                      "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );*/
+      window_addList( wid, 20, 40 + BUTTON_HEIGHT,
+                      w-40, LOGSPACING / 2-20,
+                      "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
+      toolkit_setListPos( wid, "lstLogEntries", 0 );
+
+   }
+}
+
+
+/**
+ * @brief Generates the ship log information
+ *    @param first 1 if it's the first time run.
+ */
+static void shiplog_menu_genList( unsigned int wid, int first )
+{
+   int w, h;
+   int nentries;
+   char **logentries;
+   /* Needs 3 lists:
+    * 1. List of log types (and All)
+    * 2. List of logs of the selected type (and All)
+    * 3. Listing of the selected log
+    */
+   if (!first){
+      window_destroyWidget( wid, "lstLogType" );
+      window_destroyWidget( wid, "lstLogs" );
+      window_destroyWidget( wid, "lstLogEntries" );
+   }
+   /* Get the dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* list log types */
+   shiplog_listTypes(&ntypes, &logTypes, 1);
+   if ( selectedLogType >= ntypes )
+      selectedLogType = 0;
+   /* list logs of selected type */
+   shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+   if ( selectedLog >= nlogs )
+      selectedLog = 0;
+   /* list log entries of selected log */
+   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries);
+   logWidgetsReady=0;
+   window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
+                   w-40, LOGSPACING / 4,
+         "lstLogType", logTypes, ntypes, 0, shiplog_menu_update );
+   window_addList( wid, 20, 60 + BUTTON_HEIGHT + LOGSPACING / 2,
+                   w-40, LOGSPACING / 4,
+         "lstLogs", logs, nlogs, 0, shiplog_menu_update );
+   window_addList( wid, 20, 40 + BUTTON_HEIGHT,
+                   w-40, LOGSPACING / 2-20,
+         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
+
+   logWidgetsReady=1;
+}
+
+static void info_shiplogMenuDelete( unsigned int wid, char* str ){
+   printf("todo: shiplogMenuDelete in info.c %d %s\n",wid,str);
+}
+
+
+/**
+ * @brief Shows the player's ship log.
+ *
+ *    @param wid Window widget
+ */
+static void info_openShipLog( unsigned int wid )
+{
+   int w, h, texth;
+   /* Get the dimensions. */
+   window_dimWindow( wid, &w, &h );
+   /* buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "closeShipLog", _("Close"), info_close );
+   window_addButton( wid, -40 - BUTTON_WIDTH, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnDeleteLog", _("Delete"),
+         info_shiplogMenuDelete );
+   /* Description text */
+   texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
+   window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
+                   w - 40, texth, 0,
+                   "logDesc1", &gl_smallFont, &cBlack, _("Select log type:") );
+   
+   window_addText( wid, 20, 60 + BUTTON_HEIGHT + 3* LOGSPACING / 4,
+                   w - 40, texth, 0,
+                   "logDesc2", &gl_smallFont, &cBlack, _("Select title of log of interest:") );
+
+   window_addText( wid, 20, 40 + BUTTON_HEIGHT + LOGSPACING / 2,
+                   w - 40, texth, 0,
+                   "logDesc3", &gl_smallFont, &cBlack, _("Log entries:") );
+
+#undef LOGSPACING
+   /* list */
+   shiplog_menu_genList(wid ,1);
+}

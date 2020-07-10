@@ -148,6 +148,7 @@ CODE_SOURCE = \
 	save.c \
 	shaders.gen.c \
 	ship.c \
+	shiplog.c \
 	shipstats.c \
 	slots.c \
 	sound.c \
@@ -295,6 +296,7 @@ CODE_SOURCE = \
 	save.h \
 	shaders.gen.h \
 	ship.h \
+	shiplog.h \
 	shipstats.h \
 	slots.h \
 	sound.h \

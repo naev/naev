@@ -31,7 +31,7 @@
 #include "land.h"
 #include "gui.h"
 #include "load.h"
-
+#include "shiplog.h"
 
 int save_loaded   = 0; /**< Just loaded the savegame. */
 
@@ -83,6 +83,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (hook_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
    if (economy_sysSave(writer) < 0) return -1;
+   if (shiplog_save(writer) < 0) return -1;
    return 0;
 }
 
