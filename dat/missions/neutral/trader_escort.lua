@@ -372,7 +372,6 @@ function timer_traderSafe()
 
    if unsafe then
       unsafe = false
-   else
       for i, j in ipairs( convoy ) do
          continueToDest( j )
       end
