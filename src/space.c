@@ -2270,7 +2270,9 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    systemname_stack[spacename_nstack-1] = sys->name;
 
    economy_addQueuedUpdate();
-
+   /* This is required to clear the player statistics for this planet */
+   economy_clearSinglePlanet(planet);
+   
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
