@@ -44,6 +44,7 @@
 #include "npc.h"
 #include "array.h"
 #include "ndata.h"
+#include "shiplog.h"
 
 
 /**
@@ -88,6 +89,9 @@ static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
+static int misn_createLog( lua_State *L );
+static int misn_appendLog( lua_State *L );
+static int misn_deleteLog( lua_State *L );
 static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -109,6 +113,9 @@ static const luaL_Reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
+   { "createLog", misn_createLog },
+   { "appendLog", misn_appendLog },
+   { "deleteLog", misn_deleteLog },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -1020,3 +1027,71 @@ static int misn_claim( lua_State *L )
 
 
 
+
+/**
+ * @brief Creates a shiplog for this mission.
+ *
+ *    @luatparam string Name for this log.
+ *    @luatparam string Type of log (e.g travel, trade, etc, can be anything.)
+ *    @luatparam number Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
+ *    @luatreturn number The logid of the mission.
+ * @luafunc createLog( logname, logtype, overwrite )
+ */
+static int misn_createLog( lua_State *L )
+{
+   const char *logname;
+   const char *logtype;
+   int overwrite;
+   Mission *cur_mission;
+   printf("nlua_misn createLog\n");
+   /* Parameters. */
+   logname    = luaL_checkstring(L,1);
+   logtype    = luaL_checkstring(L,2);
+   overwrite = luaL_checkint(L,3);
+
+   cur_mission = misn_getFromLua(L);
+
+   /* Create a new shiplog */
+   cur_mission->logid = shiplog_create( logname, logtype, overwrite );
+
+   lua_pushnumber(L, cur_mission->logid);
+   return 1;
+}
+  
+/**
+ * @brief Appends to the shiplog.
+ *
+ *    @luatparam string message to append to the log.
+ * @luafunc appendLog( message )
+ */
+static int misn_appendLog( lua_State *L )
+{
+   const char *msg;
+   Mission *cur_mission;
+   int ret;
+   printf("nlua_misn appendLog\n");
+   msg = luaL_checkstring(L, 1);
+   cur_mission = misn_getFromLua(L);
+   if ( cur_mission->logid == -1 ){
+      cur_mission->logid = shiplog_create( "Unnamed mission", "Miscellaneous", 0 );
+   }
+   ret = shiplog_append(cur_mission->logid,msg);
+
+   lua_pushnumber(L, ret);/*0 on success, -1 on failure */
+   return 1;
+}
+
+
+/**
+ * @brief Deletes the shiplog.
+ *
+ * @luafunc deleteLog( )
+ */
+static int misn_deleteLog( lua_State *L ){
+   Mission *cur_mission;
+   cur_mission = misn_getFromLua(L);
+   if ( cur_mission->logid > 0 ){ /* cannot delete logid 0 (travel) */
+      shiplog_delete( cur_mission->logid );
+   }
+   return 1;
+}

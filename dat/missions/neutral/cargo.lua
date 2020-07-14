@@ -64,7 +64,6 @@ function create()
    
    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   
    if destplanet == nil then
       misn.finish(false)
    end
@@ -105,6 +104,9 @@ function accept()
       tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
       misn.finish()
    end
+   misn.createLog(buildCargoMissionDescription( nil, amount, cargo, destplanet, destsys ),"Trade",0)
+   origin_p, origin_s = planet.cur()
+   misn.appendLog("Cargo accepted on "..origin_p:name() .. " for " .. destplanet:name())
    misn.accept()
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
    misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
@@ -117,11 +119,14 @@ function land()
       -- Semi-random message.
       tk.msg(cargo_land_title, cargo_land_p2[rnd.rnd(1, #cargo_land_p2)]:format( cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], cargo ))
       player.pay(reward)
+      dest_p, dest_s = planet.cur()
+      misn.appendLog("Cargo delivered to " .. dest_p:name() .. ", payment " .. math.floor(reward) .. " credits")
       misn.finish(true)
    end
 end
 
 function abort ()
+   misn.appendLog("Cargo delivery abandoned!")
    misn.finish(false)
 end
 

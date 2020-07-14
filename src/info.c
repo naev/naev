@@ -1144,7 +1144,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       selectedLog = log;
       /* list log entries of selected log type */
       window_destroyWidget( wid, "lstLogEntries" );
-      shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries);
+      shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
       /*      window_addList( wid, 20, -(80+2*((h-(80+BUTTON_HEIGHT))/3)),
                       w-40, (h-(80+BUTTON_HEIGHT))/3,
                       "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );*/
@@ -1188,7 +1188,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    if ( selectedLog >= nlogs )
       selectedLog = 0;
    /* list log entries of selected log */
-   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries);
+   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
                    w-40, LOGSPACING / 4,
@@ -1198,13 +1198,48 @@ static void shiplog_menu_genList( unsigned int wid, int first )
          "lstLogs", logs, nlogs, 0, shiplog_menu_update );
    window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                    w-40, LOGSPACING / 2-20,
-         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
-
+                   "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
    logWidgetsReady=1;
 }
 
 static void info_shiplogMenuDelete( unsigned int wid, char* str ){
-   printf("todo: shiplogMenuDelete in info.c %d %s\n",wid,str);
+   char buf[256];
+   int ret,logid;
+   (void)str;
+   if ( !strcmp("All",logs[selectedLog] )){/*All logs of selected type*/
+      if ( !strcmp("All",logTypes[selectedLogType]) ){/*All logs! */
+         ret = dialogue_YesNoRaw( _("Delete all mission logs?"), _("Are you sure?  Really?") );
+         if ( ret ){
+            shiplog_clear();
+            selectedLog = 0;
+            selectedLogType = 0;
+            shiplog_menu_genList(wid,0);
+         }
+      }else{
+         nsnprintf(buf,256,"Delete all logs of type %s?",logTypes[selectedLogType]);
+         ret = dialogue_YesNoRaw( buf, _("Are you sure?"));
+         if ( ret ){
+            shiplog_deleteType(logTypes[selectedLogType]);
+            selectedLog = 0;
+            selectedLogType = 0;
+            shiplog_menu_genList(wid,0);
+         }
+      }
+   }else{
+      nsnprintf(buf,256,"Delete all logs for '%s'?", logs[selectedLog]);
+      ret = dialogue_YesNoRaw( buf, _("Are you sure?") );
+      if ( ret ){
+         /* There could be several logs of the same name, so make sure we get the correct one. */
+         /* selectedLog-1 since not including the "All" */
+         logid = shiplog_getIdOfLogOfType ( logTypes[selectedLogType], selectedLog-1 );
+         if ( logid >= 0 )
+            shiplog_delete( logid );
+         selectedLog = 0;
+         selectedLogType = 0;
+         shiplog_menu_genList(wid,0);
+      }
+   }
+   printf("ret: %d\n",ret);
 }
 
 
@@ -1216,6 +1251,10 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str ){
 static void info_openShipLog( unsigned int wid )
 {
    int w, h, texth;
+   /* re-initialise the statics */
+   selectedLog = 0;
+   selectedLogType = 0;
+
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
    /* buttons */
