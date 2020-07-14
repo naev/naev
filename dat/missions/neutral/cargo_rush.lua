@@ -145,6 +145,9 @@ function accept()
          misn.finish()
       end
    end
+   misn.createLog( buildCargoMissionDescription(cargosize[tier], amount, cargo, destplanet, destsys ), "Trade",0)
+   origin_p, origin_s = planet.cur()
+   misn.appendLog("Cargo accepted on "..origin_p:name() .. " for " .. destplanet:name())
    misn.accept()
    intime = true
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
@@ -161,10 +164,12 @@ function land()
       if intime then
       -- Semi-random message.
       tk.msg(cargo_land_title, string.format( cargo_land_p2[rnd.rnd(1, #cargo_land_p2)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo) ))
+      misn.appendLog("Cargo delivered on time to " .. destplanet:name() .. ", payment " .. math.floor(reward) .. " credits")
    else
       -- Semi-random message for being late.
       tk.msg(cargo_land_title, string.format( cargo_land_p3[rnd.rnd(1, #cargo_land_p3)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo), reward/2, reward ))
       reward = reward / 2
+      misn.appendLog("Cargo delivered late to " .. destplanet:name() .. ", payment " .. math.floor(reward) .. " credits")
    end
       player.pay(reward)
       misn.finish(true)

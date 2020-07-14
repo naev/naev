@@ -155,9 +155,13 @@ function accept ()
    osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 
+
    last_sys = system.cur()
    job_done = false
    target_killed = false
+
+   misn.createLog(misn_title:format( misn_level[level], missys:name() ), "Pirate hunt",0)
+   misn.appendLog("Pirate mission in " .. missys:name() .. " accepted on " .. last_sys:name() )
 
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
@@ -185,6 +189,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
+      misn.appendLog("Mission failed, pirate escaped")
       fail( msg[3]:format( last_sys:name() ) )
    end
 end
@@ -200,8 +205,10 @@ function land ()
    if job_done and planet.cur():faction() == paying_faction then
       local pay_text
       if target_killed then
+         misn.appendLog("Payment of " .. math.floor(credits) .. " received for death of pirate")
          pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]
       else
+         misn.appendLog("Payment of " .. math.floor(credits) .. " received for capture of pirate")
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
       tk.msg( pay_title, pay_text:format( name ) )
@@ -227,12 +234,14 @@ function pilot_board ()
       local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
       tk.msg( subdue_title, t )
       succeed()
+      misn.appendLog("Pirate ship boarded")
       target_killed = false
       target_ship:changeAI( "dummy" )
       target_ship:setHilight( false )
       target_ship:disable() -- Stop it from coming back
       if death_hook ~= nil then hook.rm( death_hook ) end
    else
+      misn.appendLog("Failed to board pirate ship") 
       local t = subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ]:format( name )
       tk.msg( subdue_fail_title, t )
       board_fail()
@@ -264,6 +273,7 @@ function pilot_death( p, attacker )
    if attacker == player.pilot() then
       succeed()
       target_killed = true
+      misn.appendLog("Successfully killed the pirate")
    else
       local top_hunter = nil
       local top_hits = 0
@@ -284,6 +294,7 @@ function pilot_death( p, attacker )
       if top_hunter == nil or player_hits >= top_hits then
          succeed()
          target_killed = true
+	 misn.appendLog("Pirate killed, and you did most damage!")
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
          credits = credits * player_hits / total_hits
@@ -295,6 +306,7 @@ function pilot_death( p, attacker )
          hook.timer( 3000, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
+         misn.appendLog("Pirate killed, but not by you")
          fail( msg[2]:format( name ) )
       end
    end
@@ -320,7 +332,7 @@ function hunter_hail( arg )
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
    tk.msg( share_title, text:format( name ) )
-
+   misn.appendLog("Payment of " .. math.floor(credits) .. "made for helping to kill the pirate")
    player.pay( credits )
    misn.finish( true )
 end
@@ -381,6 +393,7 @@ function spawn_pirate( param )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
          pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
 
+	 misn.appendLog("Target pirate ship sighted")
          local pir_crew = target_ship:stats().crew
          local pl_crew = player.pilot():stats().crew
          if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
@@ -389,6 +402,7 @@ function spawn_pirate( param )
             can_capture = false
          end
       else
+         misn.appendLog("No sign of pirate in expected location, you were too late")
          fail( msg[1]:format( name ) )
       end
    end
