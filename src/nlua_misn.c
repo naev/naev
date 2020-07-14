@@ -1043,7 +1043,6 @@ static int misn_createLog( lua_State *L )
    const char *logtype;
    int overwrite;
    Mission *cur_mission;
-   printf("nlua_misn createLog\n");
    /* Parameters. */
    logname    = luaL_checkstring(L,1);
    logtype    = luaL_checkstring(L,2);
@@ -1069,7 +1068,6 @@ static int misn_appendLog( lua_State *L )
    const char *msg;
    Mission *cur_mission;
    int ret;
-   printf("nlua_misn appendLog\n");
    msg = luaL_checkstring(L, 1);
    cur_mission = misn_getFromLua(L);
    if ( cur_mission->logid == -1 ){
