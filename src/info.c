@@ -69,6 +69,7 @@ static CstSlotWidget info_eq_weaps;
 static int *info_factions;
 
 static int selectedLog = 0;
+static int selectedLogMsg = 0;
 static int selectedLogType = 0;
 static char **logTypes=NULL;
 static int ntypes=0;
@@ -1107,52 +1108,62 @@ static void mission_menu_abort( unsigned int wid, char* str )
  */
 static void shiplog_menu_update( unsigned int wid, char* str )
 {
-   (void)str;
    int regenerateEntries=0;
    int w, h;
-   int logType,log;
+   int logType,log, logMsg;
    int nentries;
    char **logentries;
+   char *tmp;
    if(!logWidgetsReady)
       return;
    /*This is called when something is selected.
      If a new log type has been selected, need to regenerate the log lists.
      If a new log has been selected, need to regenerate the entries.*/
-   window_dimWindow( wid, &w, &h );
-   
-   logType = toolkit_getListPos( wid, "lstLogType" );
-   log = toolkit_getListPos( wid, "lstLogs" );
-
-   if ( logType != selectedLogType ){
-      /* new log type selected */
-      selectedLogType = logType;
-      window_destroyWidget( wid, "lstLogs" );
-      shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
-      if ( selectedLog >= nlogs )
-         selectedLog = 0;
-      /*window_addList( wid, 20, -(60+(h-(80+BUTTON_HEIGHT))/3),
-                      w-40, (h-(80+BUTTON_HEIGHT))/3,
-                      "lstLogs", logs, nlogs, 0, shiplog_menu_update );*/
-      window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
-                      w-40, LOGSPACING / 4,
-                      "lstLogs", logs, nlogs, 0, shiplog_menu_update );
-
-      toolkit_setListPos( wid, "lstLogs", selectedLog );
-      regenerateEntries=1;
-   }
-   if ( regenerateEntries || selectedLog != log ){
-      selectedLog = log;
-      /* list log entries of selected log type */
-      window_destroyWidget( wid, "lstLogEntries" );
-      shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
-      /*      window_addList( wid, 20, -(80+2*((h-(80+BUTTON_HEIGHT))/3)),
-                      w-40, (h-(80+BUTTON_HEIGHT))/3,
-                      "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );*/
-      window_addList( wid, 20, 40 + BUTTON_HEIGHT,
-                      w-40, LOGSPACING / 2-20,
-                      "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
-      toolkit_setListPos( wid, "lstLogEntries", 0 );
-
+   if ( !strcmp(str, "lstLogEntries" ) ){
+      /* Has selected a log entry, so display it */
+      logMsg = toolkit_getListPos( wid, "lstLogEntries");
+      if ( logMsg == selectedLogMsg ){
+         /* If already selected, show...*/
+         tmp = toolkit_getList ( wid, "lstLogEntries");
+         if ( tmp != NULL ){
+            dialogue_msgRaw( _("Log message"),tmp);
+         }
+      }
+      selectedLogMsg = logMsg;
+   }else{
+      /* has selected a type of log or a log */
+      window_dimWindow( wid, &w, &h );
+      logWidgetsReady=0;
+      
+      logType = toolkit_getListPos( wid, "lstLogType" );
+      log = toolkit_getListPos( wid, "lstLogs" );
+      
+      if ( logType != selectedLogType ){
+         /* new log type selected */
+         selectedLogType = logType;
+         window_destroyWidget( wid, "lstLogs" );
+         shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+         if ( selectedLog >= nlogs )
+            selectedLog = 0;
+         window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
+                         w-40, LOGSPACING / 4,
+                         "lstLogs", logs, nlogs, 0, shiplog_menu_update );
+         
+         toolkit_setListPos( wid, "lstLogs", selectedLog );
+         regenerateEntries=1;
+      }
+      if ( regenerateEntries || selectedLog != log ){
+         selectedLog = log;
+         /* list log entries of selected log type */
+         window_destroyWidget( wid, "lstLogEntries" );
+         shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
+         window_addList( wid, 20, 40 + BUTTON_HEIGHT,
+                         w-40, LOGSPACING / 2-20,
+                         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
+         toolkit_setListPos( wid, "lstLogEntries", 0 );
+         
+      }
+      logWidgetsReady=1;
    }
 }
 
