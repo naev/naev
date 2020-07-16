@@ -29,7 +29,7 @@ endif
 NAEV	     = $(PACKAGE)$(EXEEXT)
 
 VERSIONFILE = VERSION
-LANGUAGEFILE = dat/LANGUAGES
+LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
@@ -70,7 +70,7 @@ $(VERSIONFILE): src/config.h
 	echo $(VERSION) > $@
 
 $(LANGUAGEFILE): po/LINGUAS
-	tail -n +2 po/LINGUAS > $@
+	tail -n +2 $< > $@
 
 if HAVE_UTILS
 utils: $(MKSPR)
