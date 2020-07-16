@@ -402,7 +402,6 @@ src/player_gui.c
 src/queue.c
 src/rng.c
 src/save.c
-src/shaders.gen.c
 src/shaders_c_gen.c
 src/ship.c
 src/shipstats.c
