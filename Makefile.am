@@ -35,7 +35,7 @@ EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
 if HAVE_NLS
-XMLBASE     = dat/commodity.xml dat/faction.xml dat/slots.xml
+XMLBASE     = $(wildcard dat/*.xml)
 XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
 XMLSHIPS    = $(wildcard dat/ships/*.xml)
 XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
