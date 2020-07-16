@@ -14,5 +14,8 @@ find src/ -name "*.c" | sort >> "$TMPFILE"
 find dat/ -name "*.lua" | sort >> "$TMPFILE"
 echo "po/xml.pot" >> "$TMPFILE"
 
+# Remove file if found
+sed -i '/src\/shaders.gen.c/d' "$TMPFILE"
+
 cat "$TMPFILE" | sort > po/POTFILES.in
 
