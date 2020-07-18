@@ -121,12 +121,14 @@ function land()
       player.pay(reward)
       dest_p, dest_s = planet.cur()
       misn.appendLog("Cargo delivered to " .. dest_p:name() .. ", payment " .. math.floor(reward) .. " credits")
+      misn.setRemoveLog(0)
       misn.finish(true)
    end
 end
 
 function abort ()
    misn.appendLog("Cargo delivery abandoned!")
+   misn.setRemoveLog(0)
    misn.finish(false)
 end
 

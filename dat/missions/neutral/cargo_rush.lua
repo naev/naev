@@ -171,8 +171,9 @@ function land()
       reward = reward / 2
       misn.appendLog("Cargo delivered late to " .. destplanet:name() .. ", payment " .. math.floor(reward) .. " credits")
    end
-      player.pay(reward)
-      misn.finish(true)
+   misn.setRemoveLog(0)
+   player.pay(reward)
+   misn.finish(true)
    end
 end
 
@@ -198,5 +199,7 @@ function tick()
 end
 
 function abort()
+   misn.appendLog("Cargo delivery abandoned!")
+   misn.setRemoveLog(0)
    misn.finish(false)
 end

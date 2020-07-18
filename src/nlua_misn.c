@@ -92,6 +92,7 @@ static int misn_claim( lua_State *L );
 static int misn_createLog( lua_State *L );
 static int misn_appendLog( lua_State *L );
 static int misn_deleteLog( lua_State *L );
+static int misn_setRemoveLog( lua_State *L );
 static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -116,6 +117,7 @@ static const luaL_Reg misn_methods[] = {
    { "createLog", misn_createLog },
    { "appendLog", misn_appendLog },
    { "deleteLog", misn_deleteLog },
+   { "setRemoveLog", misn_setRemoveLog },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -1090,6 +1092,25 @@ static int misn_deleteLog( lua_State *L ){
    cur_mission = misn_getFromLua(L);
    if ( cur_mission->logid > 0 ){ /* cannot delete logid 0 (travel) */
       shiplog_delete( cur_mission->logid );
+   }
+   return 1;
+}
+
+/**
+ * @brief Sets the shiplog for removal
+ *
+ * @luafunc setRemoveLog( t )
+ * @luatparam long When to remove the log.  If 0, means after now. If >0, means at that ntime.  If <0, means at that many periods in the future.
+ */
+static int misn_setRemoveLog( lua_State *L ){
+   Mission *cur_mission;
+   ntime_t when;
+   cur_mission = misn_getFromLua(L);
+   when = luaL_checklong(L,1);
+   if ( when < 0 ) /* convert periods into an ntime.*/
+     when *= (ntime_t)NT_PERIOD_SECONDS * 1000;
+   if ( cur_mission->logid > 0 ){ /* cannot delete logid 0 (travel) */
+     shiplog_setRemove( cur_mission->logid, when );
    }
    return 1;
 }

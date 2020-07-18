@@ -248,8 +248,8 @@ function create()
 
    -- Chance of a jump point message showing up. As this gradually goes
    -- down, it is replaced by lore messages. See spawnNPC function below.
-   jm_chance_min = 0.25
-   jm_chance_max = 0.35
+   jm_chance_min = 0
+   jm_chance_max = 0.25
    jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
 
    local num_npc = rnd.rnd(1, 5)

@@ -211,6 +211,7 @@ function land ()
          misn.appendLog("Payment of " .. math.floor(credits) .. " received for capture of pirate")
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
+      misn.setRemoveLog(0)
       tk.msg( pay_title, pay_text:format( name ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
@@ -314,6 +315,7 @@ end
 
 
 function pilot_jump ()
+   misn.appendLog("Pirate escaped")
    fail( msg[1]:format( name ) )
 end
 
@@ -334,11 +336,13 @@ function hunter_hail( arg )
    tk.msg( share_title, text:format( name ) )
    misn.appendLog("Payment of " .. math.floor(credits) .. "made for helping to kill the pirate")
    player.pay( credits )
+   misn.setRemoveLog(-1)
    misn.finish( true )
 end
 
 
 function hunter_leave ()
+   misn.setRemoveLog(-1)
    misn.finish( false )
 end
 
@@ -448,5 +452,6 @@ function fail( message )
          player.msg( "\ar" .. message .. "\a0" )
       end
    end
+   misn.setRemoveLog(-1)
    misn.finish( false )
 end
