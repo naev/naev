@@ -104,7 +104,6 @@ function accept()
       tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
       misn.finish()
    end
-   origin_p, origin_s = planet.cur()
    misn.accept()
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
    misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
@@ -117,7 +116,6 @@ function land()
       -- Semi-random message.
       tk.msg(cargo_land_title, cargo_land_p2[rnd.rnd(1, #cargo_land_p2)]:format( cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], cargo ))
       player.pay(reward)
-      dest_p, dest_s = planet.cur()
       misn.finish(true)
    end
 end
