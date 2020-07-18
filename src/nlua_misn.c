@@ -1038,6 +1038,8 @@ static int misn_claim( lua_State *L )
  *    @luatparam number Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
  *    @luatreturn number The logid of the mission.
  * @luafunc createLog( logname, logtype, overwrite )
+ * @usage misn.createLog("My mission title","Mission type",0)
+ * @usage misn.createLog("Any title","Anything can be a type",1) with 1 to replace existing missions of this title and type.
  */
 static int misn_createLog( lua_State *L )
 {
@@ -1064,6 +1066,7 @@ static int misn_createLog( lua_State *L )
  *
  *    @luatparam string message to append to the log.
  * @luafunc appendLog( message )
+ * @usage misn.appendLog("Some message here")
  */
 static int misn_appendLog( lua_State *L )
 {
@@ -1086,6 +1089,7 @@ static int misn_appendLog( lua_State *L )
  * @brief Deletes the shiplog.
  *
  * @luafunc deleteLog( )
+ * @usage misn.deleteLog()
  */
 static int misn_deleteLog( lua_State *L ){
    Mission *cur_mission;
@@ -1101,6 +1105,11 @@ static int misn_deleteLog( lua_State *L ){
  *
  * @luafunc setRemoveLog( t )
  * @luatparam long When to remove the log.  If 0, means after now. If >0, means at that ntime.  If <0, means at that many periods in the future.
+ * @usage misn.setRemoveLog(0) to remove the log once time advances (e.g. when take off).  Will be removed instantly if currently in space
+ * @usage misn.setRemoveLog(10000000000) to remove the log at (or any time after) the specified time.  This should be greater than  ntime_get() to be useful, otherwise will be removed instantly.
+ * @usage misn.setRemoveLog(-1) to remove the log 1 period into the future
+ * @usage misn.setRemoveLog(-9) to remove the log 9 periods into the future... 
+
  */
 static int misn_setRemoveLog( lua_State *L ){
    Mission *cur_mission;
