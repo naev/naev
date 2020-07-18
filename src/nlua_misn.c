@@ -1078,9 +1078,9 @@ static int misn_appendLog( lua_State *L )
    if ( cur_mission->logid == -1 ){
       cur_mission->logid = shiplog_create( "Unnamed mission", "Miscellaneous", 0 );
    }
-   ret = shiplog_append(cur_mission->logid,msg);
+   ret = shiplog_append(cur_mission->logid, msg);
 
-   lua_pushnumber(L, ret);/*0 on success, -1 on failure */
+   lua_pushnumber(L, ret); /* 0 on success, -1 on failure */
    return 1;
 }
 
@@ -1091,12 +1091,11 @@ static int misn_appendLog( lua_State *L )
  * @luafunc deleteLog( )
  * @usage misn.deleteLog()
  */
-static int misn_deleteLog( lua_State *L ){
+static int misn_deleteLog( lua_State *L )
+{
    Mission *cur_mission;
    cur_mission = misn_getFromLua(L);
-   if ( cur_mission->logid > 0 ){ /* cannot delete logid 0 (travel) */
-      shiplog_delete( cur_mission->logid );
-   }
+   shiplog_delete( cur_mission->logid );
    return 1;
 }
 
@@ -1111,15 +1110,14 @@ static int misn_deleteLog( lua_State *L ){
  * @usage misn.setRemoveLog(-9) to remove the log 9 periods into the future... 
 
  */
-static int misn_setRemoveLog( lua_State *L ){
+static int misn_setRemoveLog( lua_State *L )
+{
    Mission *cur_mission;
    ntime_t when;
    cur_mission = misn_getFromLua(L);
    when = luaL_checklong(L,1);
    if ( when < 0 ) /* convert periods into an ntime.*/
      when *= (ntime_t)NT_PERIOD_SECONDS * 1000;
-   if ( cur_mission->logid > 0 ){ /* cannot delete logid 0 (travel) */
-     shiplog_setRemove( cur_mission->logid, when );
-   }
+   shiplog_setRemove( cur_mission->logid, when );
    return 1;
 }

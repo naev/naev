@@ -53,7 +53,6 @@
 #include "damagetype.h"
 #include "hook.h"
 #include "dev_uniedit.h"
-#include "shiplog.h"
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
@@ -1433,7 +1432,6 @@ void space_init( const char* sysname )
    AsteroidAnchor *ast;
    Asteroid *a;
    Debris *d;
-   char buf[80];
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1543,11 +1541,6 @@ void space_init( const char* sysname )
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
-   /* add to the shiplog */
-   if ( sysname != NULL ){
-      snprintf(buf,80,"sys: %s",sysname);
-      shiplog_append(0,buf);
-   }
    /* Simulate system. */
    space_simulating = 1;
    if (player.p != NULL)

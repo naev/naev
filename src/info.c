@@ -1177,6 +1177,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    int w, h;
    int nentries;
    char **logentries;
+
    /* Needs 3 lists:
     * 1. List of log types (and All)
     * 2. List of logs of the selected type (and All)
@@ -1213,33 +1214,35 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    logWidgetsReady=1;
 }
 
-static void info_shiplogMenuDelete( unsigned int wid, char* str ){
+static void info_shiplogMenuDelete( unsigned int wid, char* str )
+{
    char buf[256];
-   int ret,logid;
-   (void)str;
-   if ( !strcmp("All",logs[selectedLog] )){/*All logs of selected type*/
-      if ( !strcmp("All",logTypes[selectedLogType]) ){/*All logs! */
+   int ret, logid;
+   (void) str;
+
+   if ( !strcmp("All",logs[selectedLog] )) { /* All logs of selected type */
+      if ( !strcmp("All",logTypes[selectedLogType]) ) { /* All logs! */
          ret = dialogue_YesNoRaw( _("Delete all mission logs?"), _("Are you sure?  Really?") );
-         if ( ret ){
+         if ( ret ) {
             shiplog_clear();
             selectedLog = 0;
             selectedLogType = 0;
             shiplog_menu_genList(wid,0);
          }
-      }else{
-         nsnprintf(buf,256,"Delete all logs of type %s?",logTypes[selectedLogType]);
+      } else {
+         nsnprintf(buf, 256, "Delete all logs of type %s?", logTypes[selectedLogType]);
          ret = dialogue_YesNoRaw( buf, _("Are you sure?"));
-         if ( ret ){
+         if ( ret ) {
             shiplog_deleteType(logTypes[selectedLogType]);
             selectedLog = 0;
             selectedLogType = 0;
-            shiplog_menu_genList(wid,0);
+            shiplog_menu_genList(wid, 0);
          }
       }
-   }else{
-      nsnprintf(buf,256,"Delete all logs for '%s'?", logs[selectedLog]);
+   } else {
+      nsnprintf( buf, 256, "Delete all logs for '%s'?", logs[selectedLog]);
       ret = dialogue_YesNoRaw( buf, _("Are you sure?") );
-      if ( ret ){
+      if ( ret ) {
          /* There could be several logs of the same name, so make sure we get the correct one. */
          /* selectedLog-1 since not including the "All" */
          logid = shiplog_getIdOfLogOfType ( logTypes[selectedLogType], selectedLog-1 );
@@ -1247,10 +1250,9 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str ){
             shiplog_delete( logid );
          selectedLog = 0;
          selectedLogType = 0;
-         shiplog_menu_genList(wid,0);
+         shiplog_menu_genList(wid, 0);
       }
    }
-   printf("ret: %d\n",ret);
 }
 
 
