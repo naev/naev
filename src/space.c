@@ -4279,7 +4279,7 @@ double system_getPresence( StarSystem *sys, int faction )
    /* Go through the array, looking for the faction. */
    for (i = 0; i < sys->npresence; i++) {
       if (sys->presence[i].faction == faction)
-         return sys->presence[i].value;
+         return MAX(sys->presence[i].value, 0);
    }
 
    /* If it's not in there, it's zero. */
