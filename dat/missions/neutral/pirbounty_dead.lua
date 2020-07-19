@@ -155,7 +155,6 @@ function accept ()
    osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 
-
    last_sys = system.cur()
    job_done = false
    target_killed = false
@@ -321,6 +320,7 @@ function hunter_hail( arg )
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
    tk.msg( share_title, text:format( name ) )
+
    player.pay( credits )
    misn.finish( true )
 end

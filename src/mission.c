@@ -1105,11 +1105,11 @@ static int missions_parseActive( xmlNodePtr parent )
    m = 0; /* start with mission 0 */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"mission")) {
+      if (xml_isNode(node, "mission")) {
          misn = player_missions[m];
 
          /* process the attributes to create the mission */
-         xmlr_attr(node,"data",buf);
+         xmlr_attr(node, "data", buf);
          data = mission_get(mission_getID(buf));
          if (data == NULL) {
             WARN(_("Mission '%s' from savegame not found in game - ignoring."), buf);
@@ -1127,15 +1127,15 @@ static int missions_parseActive( xmlNodePtr parent )
          free(buf);
 
          /* this will orphan an identifier */
-         xmlr_attr(node,"id",buf);
+         xmlr_attr(node, "id", buf);
          misn->id = atol(buf);
          free(buf);
 
-	 xmlr_attr(node,"logid",buf);
-	 if ( buf != NULL ){
+	 xmlr_attr(node, "logid", buf);
+	 if ( buf != NULL ) {
 	   misn->logid = atol(buf);
 	   free(buf);
-	 }else{/* no logid assigned */
+	 } else {/* no logid assigned */
 	   misn->logid = -1;
 	 }
          cur = node->xmlChildrenNode;

@@ -145,7 +145,6 @@ function accept()
          misn.finish()
       end
    end
-   origin_p, origin_s = planet.cur()
    misn.accept()
    intime = true
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.

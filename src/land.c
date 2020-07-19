@@ -999,8 +999,6 @@ void land_genWindows( int load, int changetab )
       if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
          npc_generate(); /* Generate bar npc. */
    }
-   /* add to the ship log */
-   shiplog_append(0,land_planet->name);
 
    
    /* 4) Create other tabs. */
