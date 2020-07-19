@@ -148,7 +148,9 @@ function accept()
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
 
     misn.accept()
-    
+    misn.createLog("Shadow vigil","Shadow mission",1);
+    misn.appendLog(misn_desc)
+    misn.appendLog(string.format("Mission accepted on %s",seirsys.name()))
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
@@ -170,6 +172,7 @@ function jumpout()
         abort()
     end
     origin = system.cur()
+    misn.appendLog(string.format("Leaving system %s",system.cur():name()))
     nextsys = getNextSystem(system.cur(), misssys[stage])
 end
 
@@ -215,6 +218,7 @@ end
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
     sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
+    misn.appendLog(string.format("Jumped into system %s",system.cur():name()))
     
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
@@ -369,6 +373,7 @@ end
 
 -- The player has successfully rendezvoused with the diplomat. Now the real work begins.
 function escortNext()
+    misn.appendLog("Rendezvous with the diplomat")
     stage = 4 -- The actual escort begins here.
     misn.osdActive(4)
     diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
@@ -412,6 +417,7 @@ function escortDeath()
     if alive[3] then alive[3] = false
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
+        misn.appendLog(_("All escorts have died!"))
         tk.msg(escortdeathtitle, escortdeathtext)
         abort()
     end
@@ -426,6 +432,7 @@ function diplomatDeath()
             j:control(false)
         end
     end
+    misn.appendLog(_("The diplomat has died - you have failed!"))
     abort()
 end
 
@@ -441,6 +448,7 @@ function diplomatJump()
             j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
+    misn.appendLog(string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
     player.msg(string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
 end
 
@@ -556,6 +564,8 @@ function board()
     seiryuu:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(700000)
+    misn.appendLog(_("You have boarded the Seiryuu.  You receive 700,000 Cr."))
+    misn.appendLog(_("Mission accomplished!"))
     var.pop("shadowvigil_active")
     misn.finish(true)
 end
@@ -563,5 +573,6 @@ end
 -- Handle the unsuccessful end of the mission.
 function abort()
     var.pop("shadowvigil_active")
+    misn.appendLog("Mission unsuccessful")
     misn.finish(false)
 end
