@@ -1,6 +1,6 @@
 #include "shiplog.h"
 /* Limit the journey log to 6 entries */
-#define NJOURNEY 6
+
 static ShipLog *shipLog=NULL;
 ShipLogEntry *shiplog_removeEntry(ShipLogEntry *e);
 
@@ -122,7 +122,7 @@ int shiplog_append(const int logid,const char *msg)
       e = e->next;
    }
    if ( (e = calloc(sizeof(ShipLogEntry),1)) == NULL ) {
-      printf("Error creating new log entry - crash imminent!\n");
+      WARN(_("Error creating new log entry - crash imminent!\n"));
       return -1;
    }
    e->next = shipLog->head;
@@ -261,7 +261,7 @@ void shiplog_new(void)
  * @brief Saves the logfiile
  */
 int shiplog_save( xmlTextWriterPtr writer ){
-   int i,cnt;
+   int i;
    ShipLogEntry *e;
    ntime_t t = ntime_get();
    xmlw_startElem(writer,"shiplog");
@@ -280,18 +280,13 @@ int shiplog_save( xmlTextWriterPtr writer ){
       }
    }
    e=shipLog->head;
-   cnt=0;
    while ( e != NULL ){
       if ( e->id >= 0 ){
-         if(e->id==0)
-            cnt++;
-         if( e->id>0 || cnt<NJOURNEY ){
-            xmlw_startElem(writer, "log");
-            xmlw_attr(writer,"id","%d",e->id);
-            xmlw_attr(writer,"t","%"PRIu64,e->time);
-            xmlw_str(writer,"%s",e->msg);
-            xmlw_endElem(writer);/* log */
-         }
+         xmlw_startElem(writer, "log");
+         xmlw_attr(writer,"id","%d",e->id);
+         xmlw_attr(writer,"t","%"PRIu64,e->time);
+         xmlw_str(writer,"%s",e->msg);
+         xmlw_endElem(writer);/* log */
       }
       e=(ShipLogEntry*)e->next;
    }
@@ -323,7 +318,7 @@ int shiplog_load( xmlNodePtr parent ){
                   free(str);
                } else {
                   id = 0;
-                  printf("Warning - no ID in shipLog entry\n");
+                  WARN(_("Warning - no ID in shipLog entry\n"));
                }
                /* check this ID isn't already present */
                for ( i=0; i<shipLog->nlogs; i++ ) {
@@ -343,7 +338,7 @@ int shiplog_load( xmlNodePtr parent ){
                      shipLog->typeList[shipLog->nlogs-1] = str;
                   } else {
                      shipLog->typeList[shipLog->nlogs-1] = strdup("No type");
-                     printf("No ID in shipLog entry\n");
+                     WARN(_("No ID in shipLog entry"));
                   }
                   xmlr_attr(cur, "r", str);
                   if (str) {
@@ -367,14 +362,14 @@ int shiplog_load( xmlNodePtr parent ){
                   e->id = atoi(str);
                   free(str);
                } else {
-                  printf("Warning - no ID for shipLog entry\n");
+                  WARN(_("Warning - no ID for shipLog entry"));
                }
                xmlr_attr(cur, "t", str);
                if (str) {
                   e->time = atol(str);
                   free(str);
                } else {
-                  printf("Warning - no time for shipLog entry\n");
+                  WARN(_("Warning - no time for shipLog entry"));
                }
                e->msg = strdup(xml_raw(cur));
             }
@@ -510,7 +505,7 @@ ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e )
  */
 void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, int incempty )
 {
-   int i,n = 0,all = 0,cnt;
+   int i,n = 0,all = 0;
    char **entries = NULL;
    ShipLogEntry *e, *use;
    char buf[256];
@@ -520,20 +515,7 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
       /* Match all types if logid == -1 */
       all = 1;
    }
-   cnt = 0;
    while( e != NULL ) {
-      if ( e->id == 0 ) {
-         cnt++;
-         if ( cnt >= NJOURNEY ) {
-            /* remove this journey from the log */
-            while ( e!=NULL && e->id==0 ) {
-               e=shiplog_removeEntry(e);
-            }
-         }
-         if ( e == NULL )
-            break;
-      }
-
       use = NULL;
       if ( logid == -1 ){
          if( all ) { /* add the log */
@@ -555,22 +537,10 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
       if ( use != NULL ){
          n++;
          entries = realloc(entries, sizeof(char*) * n);
-         if ( use->id == 0 ) { /* travel log - special case */
-
-            ntime_prettyBuf(buf, 256, use->time, 2);
-            pos = strlen(buf);
-            if ( !strncmp("sys: ", use->msg, 5) ) {
-               pos+=nsnprintf(&buf[pos], 256-pos, ":  Jumped into %s", &use->msg[5]);
-            } else {
-               pos+=nsnprintf(&buf[pos], 256-pos, ":  Landed on %s", use->msg);
-            }
-            entries[n-1] = strdup(buf);
-         } else {
-            ntime_prettyBuf(buf, 256, use->time, 2);
-            pos = strlen(buf);
-            pos += nsnprintf(&buf[pos], 256-pos, ":  %s", use->msg);
-            entries[n-1] = strdup(buf);
-         }
+         ntime_prettyBuf(buf, 256, use->time, 2);
+         pos = strlen(buf);
+         pos += nsnprintf(&buf[pos], 256-pos, ":  %s", use->msg);
+         entries[n-1] = strdup(buf);
       }
       
       e = e -> next;
