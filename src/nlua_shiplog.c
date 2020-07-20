@@ -86,9 +86,9 @@ int nlua_loadShiplog( nlua_env env )
 /**
  * @brief Creates a shiplog for this mission.
  *
- *    @luatparam string Name for this log.
- *    @luatparam string Type of log (e.g travel, trade, etc, can be anything.)
- *    @luatparam number Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
+ *    @luatparam string name Name for this log.
+ *    @luatparam string type Type of log (e.g travel, trade, etc, can be anything.)
+ *    @luatparam number overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type if 1, or logs of this type if 2.
  *    @luatreturn number The logid of the mission.
  * @luafunc createLog( logname, logtype, overwrite )
  * @usage misn.createLog("My mission title","Mission type",0)
