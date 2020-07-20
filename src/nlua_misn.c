@@ -89,10 +89,8 @@ static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
-static int misn_createLog( lua_State *L );
-static int misn_appendLog( lua_State *L );
-static int misn_deleteLog( lua_State *L );
-static int misn_setRemoveLog( lua_State *L );
+static int misn_setLogID( lua_State *L );
+static int misn_getLogID( lua_State *L );
 static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -114,10 +112,8 @@ static const luaL_Reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
-   { "createLog", misn_createLog },
-   { "appendLog", misn_appendLog },
-   { "deleteLog", misn_deleteLog },
-   { "setRemoveLog", misn_setRemoveLog },
+   { "setLogID", misn_setLogID },
+   { "getLogID", misn_getLogID },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -1028,96 +1024,52 @@ static int misn_claim( lua_State *L )
 }
 
 
-
-
 /**
- * @brief Creates a shiplog for this mission.
+ * @brief Sets the logid.
  *
- *    @luatparam string Name for this log.
- *    @luatparam string Type of log (e.g travel, trade, etc, can be anything.)
- *    @luatparam number Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
- *    @luatreturn number The logid of the mission.
- * @luafunc createLog( logname, logtype, overwrite )
- * @usage misn.createLog("My mission title","Mission type",0)
- * @usage misn.createLog("Any title","Anything can be a type",1) with 1 to replace existing missions of this title and type.
- */
-static int misn_createLog( lua_State *L )
-{
-   const char *logname;
-   const char *logtype;
-   int overwrite;
-   Mission *cur_mission;
-   /* Parameters. */
-   logname    = luaL_checkstring(L,1);
-   logtype    = luaL_checkstring(L,2);
-   overwrite = luaL_checkint(L,3);
-
-   cur_mission = misn_getFromLua(L);
-
-   /* Create a new shiplog */
-   cur_mission->logid = shiplog_create( logname, logtype, overwrite );
-
-   lua_pushnumber(L, cur_mission->logid);
-   return 1;
-}
-  
-/**
- * @brief Appends to the shiplog.
+ * @usage misn.setLogID( id )
  *
- *    @luatparam string message to append to the log.
- * @luafunc appendLog( message )
- * @usage misn.appendLog("Some message here")
+ *    @luatparam number id ID of the log returned from the shiplog createLog function
+ * @luafunc setLogID( id )
  */
-static int misn_appendLog( lua_State *L )
+
+static int misn_setLogID( lua_State *L )
 {
-   const char *msg;
+   int logid;
    Mission *cur_mission;
-   int ret;
-   msg = luaL_checkstring(L, 1);
+
+   logid = luaL_checkint(L, 1);
+   /* Get mission. */
    cur_mission = misn_getFromLua(L);
-   if ( cur_mission->logid == -1 ){
-      cur_mission->logid = shiplog_create( "Unnamed mission", "Miscellaneous", 0 );
+   if ( cur_mission != NULL ){
+      cur_mission->logid=logid;
+   }else{
+      logid = -1;
    }
-   ret = shiplog_append(cur_mission->logid, msg);
-
-   lua_pushnumber(L, ret); /* 0 on success, -1 on failure */
-   return 1;
-}
-
-
-/**
- * @brief Deletes the shiplog.
- *
- * @luafunc deleteLog( )
- * @usage misn.deleteLog()
- */
-static int misn_deleteLog( lua_State *L )
-{
-   Mission *cur_mission;
-   cur_mission = misn_getFromLua(L);
-   shiplog_delete( cur_mission->logid );
+   lua_pushnumber(L,logid);
    return 1;
 }
 
 /**
- * @brief Sets the shiplog for removal
+ * @brief Gets the logid for this mission.
  *
- * @luafunc setRemoveLog( t )
- * @luatparam long When to remove the log.  If 0, means after now. If >0, means at that ntime.  If <0, means at that many periods in the future.
- * @usage misn.setRemoveLog(0) to remove the log once time advances (e.g. when take off).  Will be removed instantly if currently in space
- * @usage misn.setRemoveLog(10000000000) to remove the log at (or any time after) the specified time.  This should be greater than  ntime_get() to be useful, otherwise will be removed instantly.
- * @usage misn.setRemoveLog(-1) to remove the log 1 period into the future
- * @usage misn.setRemoveLog(-9) to remove the log 9 periods into the future... 
-
+ * @usage misn.getLogID( )
+ *
+ * @luafunc setLogID( id )
  */
-static int misn_setRemoveLog( lua_State *L )
+
+static int misn_getLogID( lua_State *L )
 {
+   int logid;
    Mission *cur_mission;
-   ntime_t when;
+
+   /* Get mission. */
    cur_mission = misn_getFromLua(L);
-   when = luaL_checklong(L,1);
-   if ( when < 0 ) /* convert periods into an ntime.*/
-     when *= (ntime_t)NT_PERIOD_SECONDS * 1000;
-   shiplog_setRemove( cur_mission->logid, when );
+   if ( cur_mission != NULL ){
+      logid = cur_mission->logid;
+   }else{
+      logid = -1;
+   }
+   lua_pushnumber(L,logid);
    return 1;
 }
