@@ -367,7 +367,7 @@ int shiplog_load( xmlNodePtr parent ){
                   shipLog->idstrList = realloc( shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
                   shipLog->idList[shipLog->nlogs-1] = id;
                   shipLog->removeAfter[shipLog->nlogs-1] = 0;
-                  shipLog->idstrList[i] = NULL;
+                  shipLog->idstrList[shipLog->nlogs-1] = NULL;
                   xmlr_attr(cur, "t", str);
                   if (str) {
                      shipLog->typeList[shipLog->nlogs-1] = str;
