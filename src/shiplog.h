@@ -6,7 +6,7 @@
 #include "nxml.h"
 #include "ntime.h"
 #include "nstring.h"
-int shiplog_create( const char *logname, const char *type, int overwrite ); /* returns a log ID, for log with specified title.  If overwrite set, and title already exists, the log will be cleared and previous log ID returned, otherwise a new log ID will be created. */
+int shiplog_create( const char *idstr, const char *logname, const char *type, int overwrite ); /* returns a log ID, for log with specified title.  If overwrite set, and title already exists, the log will be cleared and previous log ID returned, otherwise a new log ID will be created. */
 int shiplog_append( const int logid, const char *msg );/* Add a message to the log */
 void shiplog_delete( const int logid ); /* Delete a log.  Use with care (removes all entries with this ID */
 void shiplog_setRemove( const int logid, ntime_t when ); /* Set a log to be removed once time increases */
@@ -39,6 +39,7 @@ typedef struct {
   char **typeList;
   char **nameList;
   ntime_t *removeAfter;
+  char **idstrList;
   int nlogs;
   ShipLogEntry *head;/*The head (newest entry)*/
   ShipLogEntry *tail;/*The tail (oldest entry)*/

@@ -86,6 +86,7 @@ int nlua_loadShiplog( nlua_env env )
 /**
  * @brief Creates a shiplog for this mission.
  *
+ *    @luatparam string idstr ID string to identify this log, or empty string for unnamed logsets.
  *    @luatparam string name Name for this log.
  *    @luatparam string type Type of log (e.g travel, trade, etc, can be anything.)
  *    @luatparam number overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type if 1, or logs of this type if 2.
@@ -99,15 +100,20 @@ static int shiplog_createLog( lua_State *L )
 {
    const char *logname;
    const char *logtype;
+   const char *nidstr;
+   char *idstr=NULL;
    int overwrite,logid;
    /* Parameters. */
-   logname    = luaL_checkstring(L,1);
-   logtype    = luaL_checkstring(L,2);
-   overwrite = luaL_checkint(L,3);
-
+   nidstr      = luaL_checkstring(L,1);
+   logname    = luaL_checkstring(L,2);
+   logtype    = luaL_checkstring(L,3);
+   overwrite = luaL_checkint(L,4);
+   if( nidstr!=NULL && strlen(nidstr) > 0 )
+      idstr = strdup(nidstr);
    /* Create a new shiplog */
-   logid = shiplog_create( logname, logtype, overwrite );
-
+   logid = shiplog_create( idstr, logname, logtype, overwrite );
+   if ( idstr != NULL )
+      free( idstr );
    lua_pushnumber(L, logid);
    return 1;
 }
@@ -115,7 +121,7 @@ static int shiplog_createLog( lua_State *L )
 /**
  * @brief Appends to the shiplog.
  *
- *    @luatparam string message to append to the log.
+ *    @luatparam string message Message to append to the log.
  * @luafunc appendLog( logid, message )
  * @usage misn.appendLog(5, "Some message here")
  */

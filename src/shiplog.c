@@ -7,13 +7,14 @@ ShipLogEntry *shiplog_removeEntry(ShipLogEntry *e);
 /*
  * @brief Creates a new log with given title of given type.
  *
+ *    @param idstr ID string for this logset, or NULL if an ID string not required.
  *    @param logname Name of the log (title)
  *    @param type Type of the log, e.g. travel, shipping, etc
  *    @param overwrite Whether to overwrite an existing log of this type and logname (if 1), or all logs of this type (if 2).
  *    @return log ID.
  */
 
-int shiplog_create(const char *logname,const char *type, const int overwrite)
+int shiplog_create(const char *idstr, const char *logname, const char *type, const int overwrite)
 {
    ShipLogEntry *e;
    int i, id, indx;
@@ -23,12 +24,24 @@ int shiplog_create(const char *logname,const char *type, const int overwrite)
    indx = shipLog->nlogs;
    
    if ( overwrite == 1 ) {
-      /* check to see whether this logname and type has been created before, and if so, remove all entries of that logid */
-      for ( i=0; i<shipLog->nlogs; i++ ) {
-         if ( !strcmp ( type, shipLog->typeList[i] ) && !strcmp ( logname, shipLog->nameList[i] ) ) {
-            id = shipLog->idList[i];
-            indx = i;
-            break;
+      /* check to see whether this idstr or logname and type has been created before, and if so, remove all entries of that logid */
+      if ( idstr != NULL ){
+         /* find the matching logid for this idstr */
+         for ( i=0; i<shipLog->nlogs; i++ ){
+            if ( shipLog->idstrList[i]!=NULL && !strcmp( shipLog->idstrList[i], idstr ) ){
+               /* matching idstr found. */
+               id = shipLog->idList[i];
+               indx = i;
+               break;
+            }
+         }
+      }else{
+         for ( i=0; i<shipLog->nlogs; i++ ) {
+            if ( !strcmp ( type, shipLog->typeList[i] ) && !strcmp ( logname, shipLog->nameList[i] ) ) {
+               id = shipLog->idList[i];
+               indx = i;
+               break;
+            }
          }
       }
       if ( i < shipLog->nlogs ) { /* prev id found - so remove all log entries of this type. */
@@ -47,7 +60,7 @@ int shiplog_create(const char *logname,const char *type, const int overwrite)
       int found = 0;
       id = -1;
       for ( i=0; i<shipLog->nlogs; i++ ) {
-         if ( !strcmp( type, shipLog->typeList[i] ) ) {
+         if ( (idstr!=NULL && shipLog->idstrList[i]!=NULL && !strcmp( idstr, shipLog->idstrList[i] ) ) || ( idstr==NULL && !strcmp( type, shipLog->typeList[i] )) ) {
             e = shipLog->head;
             while ( e != NULL ){
                if ( e->id == shipLog->idList[i] ) {
@@ -64,6 +77,10 @@ int shiplog_create(const char *logname,const char *type, const int overwrite)
                shipLog->nameList[i]=strdup(logname);
             } else { /* a previous entry of this type as been found, so just invalidate this logid. */
                shipLog->idList[i] = -1;
+               if ( shipLog->idstrList[i]!=NULL){
+                  free( shipLog->idstrList[i] );
+                  shipLog->idstrList[i]=NULL;
+               }
             }
          }
       }
@@ -82,10 +99,17 @@ int shiplog_create(const char *logname,const char *type, const int overwrite)
       shipLog->nameList = realloc(shipLog->nameList, sizeof(char*) * shipLog->nlogs);
       shipLog->typeList = realloc(shipLog->typeList, sizeof(char*) * shipLog->nlogs);
       shipLog->removeAfter = realloc(shipLog->removeAfter, sizeof(ntime_t) * shipLog->nlogs);
+      shipLog->idstrList = realloc(shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
+      
       shipLog->removeAfter[indx] = 0;
       shipLog->idList[indx] = id;
       shipLog->nameList[indx] = strdup(logname);
       shipLog->typeList[indx] = strdup(type);
+      if ( idstr == NULL )
+         shipLog->idstrList[indx] = NULL;
+      else
+         shipLog->idstrList[indx] = strdup(idstr);
+            
    }
    return id;
 }
@@ -179,6 +203,11 @@ void shiplog_delete(const int logid)
          shipLog->nameList[i] = NULL;
          free(shipLog->typeList[i]);
          shipLog->typeList[i] = NULL;
+         if ( shipLog->idstrList[i] != NULL ){
+            free ( shipLog->idstrList[i] );
+            shipLog->idstrList[i] = NULL;
+         }
+               
       }
    }
 }
@@ -246,6 +275,8 @@ void shiplog_clear(void)
       free ( shipLog->nameList );
    if ( shipLog->typeList )
       free ( shipLog->typeList );
+   if ( shipLog->idstrList )
+      free ( shipLog->idstrList );
    memset(shipLog, 0, sizeof(ShipLog));
 }
 
@@ -275,6 +306,8 @@ int shiplog_save( xmlTextWriterPtr writer ){
          xmlw_attr(writer,"t","%s",shipLog->typeList[i]);
          if( shipLog->removeAfter[i]!=0 )
             xmlw_attr(writer,"r","%"PRIu64,shipLog->removeAfter[i]);
+         if ( shipLog->idstrList[i] != NULL )
+            xmlw_attr(writer,"s","%s",shipLog->idstrList[i]);
          xmlw_str(writer,"%s",shipLog->nameList[i]);
          xmlw_endElem(writer);/* entry */
       }
@@ -331,8 +364,10 @@ int shiplog_load( xmlNodePtr parent ){
                   shipLog->nameList = realloc( shipLog->nameList, sizeof(char*) * shipLog->nlogs);
                   shipLog->typeList = realloc( shipLog->typeList, sizeof(char*) * shipLog->nlogs);
                   shipLog->removeAfter = realloc( shipLog->removeAfter, sizeof(ntime_t) * shipLog->nlogs);
+                  shipLog->idstrList = realloc( shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
                   shipLog->idList[shipLog->nlogs-1] = id;
                   shipLog->removeAfter[shipLog->nlogs-1] = 0;
+                  shipLog->idstrList[i] = NULL;
                   xmlr_attr(cur, "t", str);
                   if (str) {
                      shipLog->typeList[shipLog->nlogs-1] = str;
@@ -344,6 +379,10 @@ int shiplog_load( xmlNodePtr parent ){
                   if (str) {
                      shipLog->removeAfter[shipLog->nlogs-1] = atol(str);
                      free(str);
+                  }
+                  xmlr_attr(cur, "s", str);
+                  if (str) {
+                     shipLog->idstrList[shipLog->nlogs-1] = str;
                   }
                   shipLog->nameList[shipLog->nlogs-1] = strdup(xml_raw(cur));
                }
