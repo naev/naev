@@ -407,6 +407,7 @@ typedef struct Pilot_ {
    double tcontrol;  /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */
    Task* task;       /**< current action */
+   unsigned int shoot_indicator; /**< Indicator to inform the AI if a seeker has been shot recently. */
 
    /* Misc */
    double comm_msgTimer; /**< Message timer for the comm. */
