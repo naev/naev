@@ -148,7 +148,7 @@ function accept()
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
 
     misn.accept()
-    logid=shiplog.createLog("Shadow","Shadow vigil","Shadow mission",1);
+    logid=shiplog.createLog("Shadow","Shadow vigil","Shadow mission",true);
     misn.setLogID(logid)
     shiplog.appendLog(logid,misn_desc)
     shiplog.appendLog(logid,string.format("Mission accepted on %s",seirsys.name()))

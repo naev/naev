@@ -92,9 +92,8 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam number overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type if 1, or logs of this type if 2.
  *    @luatreturn number The logid of the mission.
  * @luafunc createLog( logname, logtype, overwrite )
- * @usage misn.createLog("My mission title","Mission type",0)
- * @usage misn.createLog("Any title","Anything can be a type",1) with 1 to replace existing missions of this title and type.
- * @usage misn.createLog("Any title","Anything can be a type",2) with 2 to replace existing missions of type.
+ * @usage misn.createLog("MyID","My mission title","Mission type",false) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
+ * @usage misn.createLog("","Any title","Anything can be a type",true) with true to replace existing missions of this title and type.
  */
 static int shiplog_createLog( lua_State *L )
 {
@@ -107,7 +106,8 @@ static int shiplog_createLog( lua_State *L )
    nidstr      = luaL_checkstring(L,1);
    logname    = luaL_checkstring(L,2);
    logtype    = luaL_checkstring(L,3);
-   overwrite = luaL_checkint(L,4);
+   //overwrite = luaL_checkint(L,4);
+   overwrite = lua_toboolean(L,4);
    if( nidstr!=NULL && strlen(nidstr) > 0 )
       idstr = strdup(nidstr);
    /* Create a new shiplog */
