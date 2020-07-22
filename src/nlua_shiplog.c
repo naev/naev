@@ -89,7 +89,7 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam string idstr ID string to identify this log, or empty string for unnamed logsets.
  *    @luatparam string name Name for this log.
  *    @luatparam string type Type of log (e.g travel, trade, etc, can be anything.)
- *    @luatparam number overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type if 1, or logs of this type if 2.
+ *    @luatparam boolean overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type if 1, or logs of this type if 2.
  *    @luatreturn number The logid of the mission.
  * @luafunc createLog( logname, logtype, overwrite )
  * @usage misn.createLog("MyID","My mission title","Mission type",false) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
