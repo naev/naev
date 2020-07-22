@@ -259,6 +259,7 @@ function pirate_name ()
       _("Hammer"),
       _("Headache"),
       _("Hikari"),
+      _("Horobi"),
       _("Horror"),
       _("Hunter"),
       _("Husband"),
