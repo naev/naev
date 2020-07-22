@@ -163,6 +163,7 @@ function pirate_name ()
       _("Crimson "),
       _("Cyan "),
       _("Gelb "),
+      _("Gray "),
       _("Green "),
       _("Grün "),
       _("Kiiroi "),
@@ -173,6 +174,7 @@ function pirate_name ()
       _("Roho "),
       _("Schwarz "),
       _("Shiroi "),
+      _("Silver "),
       _("Violet "),
       _("Yellow "),
    }
