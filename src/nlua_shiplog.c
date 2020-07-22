@@ -93,7 +93,7 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatreturn number The logid of the mission.
  * @luafunc createLog( logname, logtype, overwrite )
  * @usage misn.createLog("MyID","My mission title","Mission type",false) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
- * @usage misn.createLog("","Any title","Anything can be a type",true) with true to replace existing missions of this title and type.
+ * @usage misn.createLog("","Any title","Anything can be a type",true) -- with true to replace existing missions of this title and type.
  */
 static int shiplog_createLog( lua_State *L )
 {
