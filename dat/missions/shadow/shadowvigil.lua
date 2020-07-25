@@ -148,10 +148,9 @@ function accept()
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
 
     misn.accept()
-    logid=shiplog.createLog("Shadow","Shadow vigil","Shadow mission",true);
-    misn.setLogID(logid)
-    shiplog.appendLog(logid,misn_desc)
-    shiplog.appendLog(logid,string.format("Mission accepted on %s",seirsys.name()))
+    shiplog.createLog("Shadow","Shadow vigil","Shadow mission",true);
+    shiplog.appendLog("Shadow",misn_desc)
+    shiplog.appendLog("Shadow",string.format("Mission accepted on %s",seirsys.name()))
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
@@ -174,7 +173,7 @@ function jumpout()
     end
     origin = system.cur()
     logid=misn.getLogID()
-    shiplog.appendLog(logid,string.format("Leaving system %s",system.cur():name()))
+    shiplog.appendLog("Shadow",string.format("Leaving system %s",system.cur():name()))
     nextsys = getNextSystem(system.cur(), misssys[stage])
 end
 
@@ -221,7 +220,7 @@ end
 function jumpin()
     sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
     logid=misn.getLogID()
-    shiplog.appendLog(logid,string.format("Jumped into system %s",system.cur():name()))
+    shiplog.appendLog("Shadow",string.format("Jumped into system %s",system.cur():name()))
     
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
@@ -377,7 +376,7 @@ end
 -- The player has successfully rendezvoused with the diplomat. Now the real work begins.
 function escortNext()
     logid=misn.getLogID()
-    shiplog.appendLog(logid,"Rendezvous with the diplomat")
+    shiplog.appendLog("Shadow","Rendezvous with the diplomat")
     stage = 4 -- The actual escort begins here.
     misn.osdActive(4)
     diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
@@ -422,7 +421,7 @@ function escortDeath()
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
         logid=misn.getLogID()
-        shiplog.appendLog(logid,_("All escorts have died!"))
+        shiplog.appendLog("Shadow",_("All escorts have died!"))
         tk.msg(escortdeathtitle, escortdeathtext)
         abort()
     end
@@ -438,7 +437,7 @@ function diplomatDeath()
         end
     end
     logid=misn.getLogID()
-    shiplog.appendLog(logid,_("The diplomat has died - you have failed!"))
+    shiplog.appendLog("Shadow",_("The diplomat has died - you have failed!"))
     abort()
 end
 
@@ -455,7 +454,7 @@ function diplomatJump()
         end
     end
     logid=misn.getLogID()
-    shiplog.appendLog(logid,string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
+    shiplog.appendLog("Shadow",string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
     player.msg(string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
 end
 
@@ -572,8 +571,8 @@ function board()
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(700000)
     logid=misn.getLogID()
-    shiplog.appendLog(logid,_("You have boarded the Seiryuu.  You receive 700,000 Cr."))
-    shiplog.appendLog(logid,_("Mission accomplished!"))
+    shiplog.appendLog("Shadow",_("You have boarded the Seiryuu.  You receive 700,000 Cr."))
+    shiplog.appendLog("Shadow",_("Mission accomplished!"))
     var.pop("shadowvigil_active")
     misn.finish(true)
 end
@@ -582,6 +581,6 @@ end
 function abort()
     var.pop("shadowvigil_active")
     logid=misn.getLogID()
-    shiplog.appendLog(logid,"Mission unsuccessful")
+    shiplog.appendLog("Shadow","Mission unsuccessful")
     misn.finish(false)
 end

@@ -97,10 +97,9 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam boolean overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
  *    @luatparam number maxLen Optional maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed. 
  *
- *    @luatreturn number The logid of the mission.
  * @luafunc createLog( idstr, logname, logtype, overwrite, maxLen )
- * @usage misn.createLog("MyID","My mission title","Mission type",false, 0) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
- * @usage misn.createLog("","Any title","Anything can be a type",true, 10) -- with true to replace existing missions of this title and type, and 10 to limit this log to 10 entries (pruning when new ones are added beyond this).
+ * @usage misn.createLog("MyLog","My mission title","Mission type",false, 0) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
+ * @usage misn.createLog("MyOtherLog","Any title","Anything can be a type",true, 10) -- with true to replace existing missions of this title and type, and 10 to limit this log to 10 entries (pruning when new ones are added beyond this).
  */
 static int shiplog_createLog( lua_State *L )
 {
@@ -108,7 +107,7 @@ static int shiplog_createLog( lua_State *L )
    const char *logtype;
    const char *nidstr;
    char *idstr=NULL;
-   int overwrite,logid,maxLen;
+   int overwrite,maxLen;
    /* Parameters. */
    nidstr      = luaL_checkstring(L,1);
    logname    = luaL_checkstring(L,2);
@@ -121,10 +120,10 @@ static int shiplog_createLog( lua_State *L )
    if( nidstr!=NULL && strlen(nidstr) > 0 )
       idstr = strdup(nidstr);
    /* Create a new shiplog */
-   logid = shiplog_create( idstr, logname, logtype, overwrite, maxLen );
+   shiplog_create( idstr, logname, logtype, overwrite, maxLen );
    if ( idstr != NULL )
       free( idstr );
-   lua_pushnumber(L, logid);
+   lua_pushnumber(L, 0);
    return 1;
 }
   
@@ -132,17 +131,17 @@ static int shiplog_createLog( lua_State *L )
  * @brief Appends to the shiplog.
  *
  *    @luatparam string message Message to append to the log.
- * @luafunc appendLog( logid, message )
- * @usage misn.appendLog(5, "Some message here")
+ * @luafunc appendLog( idstr, message )
+ * @usage misn.appendLog("MyLog", "Some message here")
  */
 static int shiplog_appendLog( lua_State *L )
 {
    const char *msg;
    int ret;
-   int logid;
-   logid = luaL_checkint(L, 1);
+   const char *idstr;
+   idstr = luaL_checkstring(L, 1);
    msg = luaL_checkstring(L, 2);
-   ret = shiplog_append(logid, msg);
+   ret = shiplog_append(idstr, msg);
 
    lua_pushnumber(L, ret); /* 0 on success, -1 on failure */
    return 1;

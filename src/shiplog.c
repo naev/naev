@@ -130,13 +130,36 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
 }
 
 /*
+ * @brief Appends to the log file
+ *
+ * @param idstr of the log to add to
+ * @param msg Message to be added.
+ * @return 0 on success, -1 on failure.
+ */
+int shiplog_append(const char *idstr, const char *msg)
+{
+   int i;
+   for ( i=0 ; i<shipLog->nlogs; i++ ){
+      if ( (idstr==NULL && shipLog->idstrList[i]==NULL) || !strcmp(idstr, shipLog->idstrList[i]) ){
+         break;
+      }
+   }
+   if ( i==shipLog->nlogs ){
+      WARN(_("Warning - log not found"));
+      return -1;
+   }
+   return shiplog_appendByID( shipLog->idList[i], msg);
+}
+
+
+/*
  * @brief Adds to the log file
  *
  *    @param logid of the log to add to.
  *    @param msg Message to be added.
  *    @return 0 on success, -1 on failure.
  */
-int shiplog_append(const int logid,const char *msg)
+int shiplog_appendByID(const int logid,const char *msg)
 {
    ShipLogEntry *e;
    ntime_t now = ntime_get();

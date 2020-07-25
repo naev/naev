@@ -89,8 +89,6 @@ static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
-static int misn_setLogID( lua_State *L );
-static int misn_getLogID( lua_State *L );
 static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -112,8 +110,6 @@ static const luaL_Reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
-   { "setLogID", misn_setLogID },
-   { "getLogID", misn_getLogID },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -1023,53 +1019,3 @@ static int misn_claim( lua_State *L )
    return 1;
 }
 
-
-/**
- * @brief Sets the logid.
- *
- * @usage misn.setLogID( id )
- *
- *    @luatparam number id ID of the log returned from the shiplog createLog function
- * @luafunc setLogID( id )
- */
-
-static int misn_setLogID( lua_State *L )
-{
-   int logid;
-   Mission *cur_mission;
-
-   logid = luaL_checkint(L, 1);
-   /* Get mission. */
-   cur_mission = misn_getFromLua(L);
-   if ( cur_mission != NULL ){
-      cur_mission->logid=logid;
-   }else{
-      logid = -1;
-   }
-   lua_pushnumber(L,logid);
-   return 1;
-}
-
-/**
- * @brief Gets the logid for this mission.
- *
- * @usage misn.getLogID( )
- *
- * @luafunc setLogID( id )
- */
-
-static int misn_getLogID( lua_State *L )
-{
-   int logid;
-   Mission *cur_mission;
-
-   /* Get mission. */
-   cur_mission = misn_getFromLua(L);
-   if ( cur_mission != NULL ){
-      logid = cur_mission->logid;
-   }else{
-      logid = -1;
-   }
-   lua_pushnumber(L,logid);
-   return 1;
-}
