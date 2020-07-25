@@ -6,6 +6,11 @@
  * @file nlua_shiplog.c
  *
  * @brief Handles the shiplog Lua bindings.
+ *
+ * @code
+ * logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
+ * shiplog.appendLog( logid, "message to append to log" )
+ * @endcode
  */
 
 
@@ -89,11 +94,13 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam string idstr ID string to identify this log, or empty string for unnamed logsets.
  *    @luatparam string name Name for this log.
  *    @luatparam string type Type of log (e.g travel, trade, etc, can be anything.)
- *    @luatparam boolean overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type if 1, or logs of this type if 2.
+ *    @luatparam boolean overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
+ *    @luatparam int maxLen Maximum length of the log (zero for infinite) - if greater than this length, new entries appended will result in old entries being removed.
+ *
  *    @luatreturn number The logid of the mission.
- * @luafunc createLog( logname, logtype, overwrite )
- * @usage misn.createLog("MyID","My mission title","Mission type",false) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
- * @usage misn.createLog("","Any title","Anything can be a type",true) -- with true to replace existing missions of this title and type.
+ * @luafunc createLog( idstr, logname, logtype, overwrite, maxLen )
+ * @usage misn.createLog("MyID","My mission title","Mission type",false, 0) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
+ * @usage misn.createLog("","Any title","Anything can be a type",true, 10) -- with true to replace existing missions of this title and type, and 10 to limit this log to 10 entries (pruning when new ones are added beyond this).
  */
 static int shiplog_createLog( lua_State *L )
 {
@@ -101,17 +108,20 @@ static int shiplog_createLog( lua_State *L )
    const char *logtype;
    const char *nidstr;
    char *idstr=NULL;
-   int overwrite,logid;
+   int overwrite,logid,maxLen;
    /* Parameters. */
    nidstr      = luaL_checkstring(L,1);
    logname    = luaL_checkstring(L,2);
    logtype    = luaL_checkstring(L,3);
    //overwrite = luaL_checkint(L,4);
    overwrite = lua_toboolean(L,4);
+   maxLen = luaL_checkint(L,5);
+   if ( maxLen < 0 )
+      maxLen = 0;
    if( nidstr!=NULL && strlen(nidstr) > 0 )
       idstr = strdup(nidstr);
    /* Create a new shiplog */
-   logid = shiplog_create( idstr, logname, logtype, overwrite );
+   logid = shiplog_create( idstr, logname, logtype, overwrite, maxLen );
    if ( idstr != NULL )
       free( idstr );
    lua_pushnumber(L, logid);
