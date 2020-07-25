@@ -95,7 +95,7 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam string name Name for this log.
  *    @luatparam string type Type of log (e.g travel, trade, etc, can be anything.)
  *    @luatparam boolean overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
- *    @luatparam int maxLen Maximum length of the log (zero for infinite) - if greater than this length, new entries appended will result in old entries being removed.
+ *    @luatparam number maxLen Optional maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed. 
  *
  *    @luatreturn number The logid of the mission.
  * @luafunc createLog( idstr, logname, logtype, overwrite, maxLen )
@@ -114,9 +114,10 @@ static int shiplog_createLog( lua_State *L )
    logname    = luaL_checkstring(L,2);
    logtype    = luaL_checkstring(L,3);
    overwrite = lua_toboolean(L,4);
-   maxLen = luaL_checkint(L,5);
-   if ( maxLen < 0 )
-      maxLen = 0;
+
+   maxLen = 0;
+   if ( lua_gettop(L) > 4 )
+      maxLen = MAX(0, luaL_checkint(L,5));
    if( nidstr!=NULL && strlen(nidstr) > 0 )
       idstr = strdup(nidstr);
    /* Create a new shiplog */

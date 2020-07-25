@@ -245,7 +245,7 @@ void shiplog_delete(const int logid)
             free ( shipLog->idstrList[i] );
             shipLog->idstrList[i] = NULL;
          }
-               
+         shipLog->maxLen[i]=0;
       }
    }
 }
@@ -315,6 +315,8 @@ void shiplog_clear(void)
       free ( shipLog->typeList );
    if ( shipLog->idstrList )
       free ( shipLog->idstrList );
+   if ( shipLog->maxLen )
+      free ( shipLog->maxLen );
    memset(shipLog, 0, sizeof(ShipLog));
 }
 
@@ -346,6 +348,8 @@ int shiplog_save( xmlTextWriterPtr writer ){
             xmlw_attr(writer,"r","%"PRIu64,shipLog->removeAfter[i]);
          if ( shipLog->idstrList[i] != NULL )
             xmlw_attr(writer,"s","%s",shipLog->idstrList[i]);
+         if ( shipLog->maxLen[i] != 0)
+            xmlw_attr(writer,"m","%d",shipLog->maxLen[i]);
          xmlw_str(writer,"%s",shipLog->nameList[i]);
          xmlw_endElem(writer);/* entry */
       }
@@ -403,9 +407,11 @@ int shiplog_load( xmlNodePtr parent ){
                   shipLog->typeList = realloc( shipLog->typeList, sizeof(char*) * shipLog->nlogs);
                   shipLog->removeAfter = realloc( shipLog->removeAfter, sizeof(ntime_t) * shipLog->nlogs);
                   shipLog->idstrList = realloc( shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
+                  shipLog->maxLen = realloc( shipLog->maxLen, sizeof(int) * shipLog->nlogs);
                   shipLog->idList[shipLog->nlogs-1] = id;
                   shipLog->removeAfter[shipLog->nlogs-1] = 0;
                   shipLog->idstrList[shipLog->nlogs-1] = NULL;
+                  shipLog->maxLen[shipLog->nlogs-1] = 0;
                   xmlr_attr(cur, "t", str);
                   if (str) {
                      shipLog->typeList[shipLog->nlogs-1] = str;
@@ -421,6 +427,11 @@ int shiplog_load( xmlNodePtr parent ){
                   xmlr_attr(cur, "s", str);
                   if (str) {
                      shipLog->idstrList[shipLog->nlogs-1] = str;
+                  }
+                  xmlr_attr(cur, "m", str);
+                  if (str) {
+                     shipLog->maxLen[shipLog->nlogs-1] = atoi(str);
+                     free(str);
                   }
                   shipLog->nameList[shipLog->nlogs-1] = strdup(xml_raw(cur));
                }
