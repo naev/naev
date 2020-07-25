@@ -9,7 +9,7 @@
  *
  * @code
  * logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
- * shiplog.appendLog( logid, "message to append to log" )
+ * shiplog.appendLog( "idstring", "message to append to log" )
  * @endcode
  */
 
