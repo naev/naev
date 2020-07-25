@@ -113,7 +113,6 @@ static int shiplog_createLog( lua_State *L )
    nidstr      = luaL_checkstring(L,1);
    logname    = luaL_checkstring(L,2);
    logtype    = luaL_checkstring(L,3);
-   //overwrite = luaL_checkint(L,4);
    overwrite = lua_toboolean(L,4);
    maxLen = luaL_checkint(L,5);
    if ( maxLen < 0 )
