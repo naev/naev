@@ -16,7 +16,7 @@ jobs:
       with:
         msystem: MINGW32
         update: true
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
+        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool autoconf-archive
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -48,7 +48,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool 
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -88,6 +88,7 @@ jobs:
         sudo apt-get install \
           build-essential \
           automake \
+          autoconf-archive \
           libsdl2-dev \
           libsdl2-mixer-dev \
           libsdl2-image-dev \
@@ -105,7 +106,8 @@ jobs:
           luarocks \
           gettext \
           autopoint \
-          intltool
+          intltool \
+          itstool
 
     - name: Install LuaRocks packages 
       run: luarocks install --local ldoc
@@ -149,14 +151,17 @@ jobs:
       run: |
         brew install \
           automake \
+          autoconf-archive \
           pkg-config \
           fontconfig \
           luajit \
           intltool \
+          itstool \
           sdl2 \
           sdl2_mixer \
-          openal-soft \
-          sdl2_image
+          sdl2_image \
+          openal-soft
+
 
     - name: Install Perl Dependencies
       run: sudo cpan XML::Parser
