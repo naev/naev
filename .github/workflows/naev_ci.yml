@@ -1,0 +1,186 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  win32:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+    - name: Setup MINGW32 Environment
+      uses: eine/setup-msys2@v1
+      with:
+        msystem: MINGW32
+        update: true
+        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
+    
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Test-Build Naev on Win32
+      run: |
+        ./autogen.sh
+        ./configure
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-win32-${{ github.sha }}
+        path: ${{ github.workspace }}/src/naev.exe
+
+  win64:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+    - name: Setup MINGW64 Environment
+      uses: eine/setup-msys2@v1
+      with:
+        msystem: MINGW64
+        update: true
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf automake automake-wrapper git gettext pkgconfig make intltool  
+    
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Test-Build Naev on Win64
+      run: |
+        ./autogen.sh
+        ./configure
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3"
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-win64-${{ github.sha }}
+        path: ${{ github.workspace }}/src/naev.exe
+
+  lin64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2.0.3
+      with:
+        key: ${{ secrets.SSH_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      if: ${{ github.event_name == 'push' }}
+
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get install \
+          build-essential \
+          automake \
+          libsdl2-dev \
+          libsdl2-mixer-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libxml2-dev \
+          libfontconfig1-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          binutils-dev \
+          libzip-dev \
+          libiberty-dev \
+          libluajit-5.1-dev \
+          luarocks \
+          gettext \
+          autopoint \
+          intltool
+
+    - name: Install LuaRocks packages 
+      run: luarocks install --local ldoc
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Test-Build Naev on Linux64
+      run: |
+        ./autogen.sh
+        ./configure
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3"
+
+    - name: Build Naev Lua docs
+      run: |
+        export PATH="$PATH:$HOME/.luarocks/bin"
+        (cd docs && ./luadoc.sh)
+    
+    - name: Upload Lua docs
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+      if: ${{ github.event_name == 'push' }}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-lin64-${{ github.sha }}
+        path: ${{ github.workspace }}/src/naev
+
+  macos:
+    runs-on: macos-latest
+
+    steps:
+    - name: Update Homebrew Cache
+      run: |
+        brew update
+        brew upgrade
+
+    - name: Install Additional Build Dependencies
+      run: |
+        brew install \
+          automake \
+          pkg-config \
+          fontconfig \
+          luajit \
+          intltool \
+          sdl2 \
+          sdl2_mixer \
+          openal-soft \
+          sdl2_image
+
+    - name: Install Perl Dependencies
+      run: sudo cpan XML::Parser
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Test-Build Naev on MacOS
+      run: |
+        # Tells pkg-config where to look for OpenAL
+        export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
+        
+        ./autogen.sh
+        ./configure
+        make -j$(sysctl -n hw.logicalcpu)
+      env:
+        CFLAGS: "-O3 -mmacosx-version-min=10.7"
+    
+    - name: Build MacOS Bundle
+      run: ./extras/macos/bundle.sh
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-macos-${{ github.sha }}
+        path: ${{ github.workspace }}/Naev.app/
+        
