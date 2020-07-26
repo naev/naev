@@ -71,13 +71,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.3
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' }}
+    #- name: Install SSH Key
+    #  uses: shimataro/ssh-key-action@v2.0.3
+    #  with:
+    #    key: ${{ secrets.SSH_KEY }}
+    #    name: id_rsa # optional
+    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
+    #  if: ${{ github.event_name == 'push' }}
 
     - name: Update APT Cache
       run: |
@@ -126,9 +126,9 @@ jobs:
         export PATH="$PATH:$HOME/.luarocks/bin"
         (cd docs && ./luadoc.sh)
     
-    - name: Upload Lua docs
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-      if: ${{ github.event_name == 'push' }}
+    #- name: Upload Lua docs
+    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+    #  if: ${{ github.event_name == 'push' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -182,5 +182,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-macos-${{ github.sha }}
-        path: ${{ github.workspace }}/Naev.app/
-        
+        path: ${{ github.workspace }}/Naev.app/ 
