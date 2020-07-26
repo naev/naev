@@ -155,6 +155,7 @@ jobs:
           pkg-config \
           fontconfig \
           luajit \
+          libxml2 \
           intltool \
           itstool \
           sdl2 \
@@ -163,8 +164,8 @@ jobs:
           openal-soft
 
 
-    - name: Install Perl Dependencies
-      run: sudo cpan XML::Parser
+    #- name: Install Perl Dependencies
+    #  run: sudo cpan XML::Parser
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
