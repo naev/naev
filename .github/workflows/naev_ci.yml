@@ -162,6 +162,10 @@ jobs:
           sdl2_mixer \
           sdl2_image \
           openal-soft
+    
+    - name: Force gettext symlink
+      run: |
+        brew link --force gettext
 
 
     #- name: Install Perl Dependencies
