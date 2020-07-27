@@ -198,20 +198,34 @@ function follow_fleet ()
       return
    end
 
+   if mem.app == nil then
+      mem.app = true
+   end
+
    local goal = leader
    if mem.form_pos ~= nil then
       local angle, radius, method = unpack(mem.form_pos)
       goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method)
    end
 
-   
    local dir   = ai.face(goal)
    local dist  = ai.dist(goal)
- 
-   -- Must approach
-   if dir < 10 and dist > 300 then
-      ai.accel()
- 
+
+   if mem.app == true then 
+      if dist > 10 then
+         if dir < 10 then  -- Must approach
+            ai.accel()
+         end
+      else  -- No need to approach anymore
+         mem.app = false
+      end
+   else
+      if dist > 300 then   -- Must approach
+         mem.app = true
+      else   -- Face forward
+         goal = ai.pilot():pos() + leader:vel()
+         ai.face(goal)
+      end
    end
 end
 
