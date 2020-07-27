@@ -2163,7 +2163,8 @@ void map_setZoom(double zoom)
  *    @param[out] njumps Number of jumps in the path.
  *    @param sysstart Name of the system to start from.
  *    @param sysend Name of the system to end at.
- *    @param ignore_known Whether or not to ignore if systems are known.
+ *    @param ignore_known Whether or not to ignore if systems and jump points are known.
+ *    @param show_hidden Whether or not to use hidden jumps points.
  *    @param the old star system (if we're merely extending the list)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
