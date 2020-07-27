@@ -46,7 +46,7 @@ npc_desc = _("Chelsea seems like they're stressed. Maybe you should see how they
 
 function create ()
    misplanet, missys = planet.get( "The Stinker" )
-   if misplanet == nil or missys == nil or missys:jumpDist() > 4 then
+   if misplanet == nil or missys == nil or system.cur():jumpDist(missys) > 4 then
       misn.finish( false )
    end
 

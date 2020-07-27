@@ -120,7 +120,7 @@ function create ()
       misn.finish( false )
    end
 
-   credits = missys:jumpDist() * 2500 + attractions * 4000
+   credits = system.cur():jumpDist(missys) * 2500 + attractions * 4000
    credits_nolux = credits + rnd.sigma() * ( credits / 3 )
    credits = credits * rnd.rnd( 2, 6 )
    credits = credits + rnd.sigma() * ( credits / 5 )
