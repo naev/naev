@@ -145,7 +145,7 @@ jobs:
     - name: Update Homebrew Cache
       run: |
         brew update
-        brew upgrade
+        #brew upgrade
 
     - name: Install Additional Build Dependencies
       run: |
@@ -163,11 +163,10 @@ jobs:
           sdl2_image \
           openal-soft
     
-    - name: Force gettext symlink
-      run: |
-        brew link --force gettext
-
-
+    - name: setup-xcode
+      uses: maxim-lobanov/setup-xcode@1.0
+      with:
+        xcode-version: 10.3
     #- name: Install Perl Dependencies
     #  run: sudo cpan XML::Parser
 
