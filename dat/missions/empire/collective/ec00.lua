@@ -27,9 +27,9 @@ title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You approach the Lt. Commander.
    "Hello %s, we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]])
-text[2] = _([["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments."
+text[2] = _([["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments.
     "You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occured, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik, and the other worlds they hit. We managed to stop them here, in %s, and constructed this base. Since then it's been more or less a stalemate."]])
-text[3] = _([["This week Collective activity has increased heavily. We've been trying to contain them, but a scout broke through to the jump point. It was last detected by a patrol in %s, which saw it jumping out to %s. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a little closer."
+text[3] = _([["Collective activity has increased heavily the last few decaperiods. We've been trying to contain them, but a scout broke through to the jump point. It was last detected by a patrol in %s, which saw it jumping out to %s. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a little closer.
     "It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]])
 text[4] = _([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
     "Well it seems like the drone has some strange fixation on %s. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]])
