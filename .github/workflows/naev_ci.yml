@@ -154,7 +154,6 @@ jobs:
           pkg-config \
           fontconfig \
           luajit \
-          libxml2 \
           intltool \
           itstool \
           sdl2 \
@@ -162,13 +161,8 @@ jobs:
           sdl2_image \
           openal-soft
 
-    - name: Change XCode version
-      uses: maxim-lobanov/setup-xcode@1.0
-      with:
-        xcode-version: 10.3
-
-    #- name: Install Perl Dependencies
-    #  run: sudo cpan XML::Parser
+    - name: Install Perl Dependencies
+      run: sudo cpan XML::Parser
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -177,9 +171,6 @@ jobs:
       run: |
         # PKGCONFIG configuration for OpenAL
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-        
-        # PKGCONFIG configuration for libxml2
-        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/libxml2/lib/pkgconfig"
         
         ./autogen.sh
         ./configure
