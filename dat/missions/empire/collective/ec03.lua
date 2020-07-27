@@ -36,7 +36,7 @@ text[4] = _([[Your ship touches ground and you once again see the face of Lt. Co
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the %s system")
-osd_msg[2] = _("")
+osd_msg[2] = ""
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
 osd_msg2 = _("Destroy at least %d drones (%d remaining)")
