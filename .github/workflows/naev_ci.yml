@@ -21,6 +21,8 @@ jobs:
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
+    - run: |
+        git config --global core.autocrlf false
 
     - name: Test-Build Naev on Win32
       run: |
@@ -54,6 +56,8 @@ jobs:
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
+    - run: |
+        git config --global core.autocrlf false
 
     - name: Test-Build Naev on Win64
       run: |
