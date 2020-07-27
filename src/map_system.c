@@ -616,7 +616,7 @@ void map_system_outfits_update( unsigned int wid, char* str ){
 }
 static void map_system_outfits_rmouse( unsigned int wid, char* widget_name )
 {
-   printf("map_system_outfits_rmouse: %s\n",widget_name);
+   printf("map_system_outfits_rmouse:  %s\n",widget_name);
 }
 
 
