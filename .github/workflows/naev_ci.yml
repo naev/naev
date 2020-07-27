@@ -161,7 +161,12 @@ jobs:
           sdl2_mixer \
           sdl2_image \
           openal-soft
-            
+
+    - name: Change XCode version
+      uses: maxim-lobanov/setup-xcode@1.0
+      with:
+        xcode-version: 10.3
+
     #- name: Install Perl Dependencies
     #  run: sudo cpan XML::Parser
 
