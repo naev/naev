@@ -145,7 +145,6 @@ jobs:
     - name: Update Homebrew Cache
       run: |
         brew update
-        #brew upgrade
 
     - name: Install Additional Build Dependencies
       run: |
@@ -162,16 +161,7 @@ jobs:
           sdl2_mixer \
           sdl2_image \
           openal-soft
-    
-    - name: Change xcode version
-      uses: maxim-lobanov/setup-xcode@1.0
-      with:
-        xcode-version: 10.3
-        
-    - name: Install XCode CLI Tools
-      run: |
-        xcode-select --install
-        
+            
     #- name: Install Perl Dependencies
     #  run: sudo cpan XML::Parser
 
@@ -180,8 +170,11 @@ jobs:
 
     - name: Test-Build Naev on MacOS
       run: |
-        # Tells pkg-config where to look for OpenAL
-        export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
+        # PKGCONFIG configuration for OpenAL
+        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
+        
+        # PKGCONFIG configuration for libxml2
+        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/libxml2/lib/pkgconfig"
         
         ./autogen.sh
         ./configure
