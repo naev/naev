@@ -163,7 +163,7 @@ jobs:
           
     - name: Remove Homebrew Perl
       run: |
-        brew uninstall perl
+        brew uninstall --ignore-dependencies perl
         
     #- name: Install Perl Dependencies
     #  run: sudo cpan XML::Parser
