@@ -163,10 +163,15 @@ jobs:
           sdl2_image \
           openal-soft
     
-    - name: setup-xcode
+    - name: Change xcode version
       uses: maxim-lobanov/setup-xcode@1.0
       with:
         xcode-version: 10.3
+        
+    - name: Install XCode CLI Tools
+      run: |
+        xcode-select --install
+        
     #- name: Install Perl Dependencies
     #  run: sudo cpan XML::Parser
 
