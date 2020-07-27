@@ -22,15 +22,11 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Phosarrus is a pristine civilian world inhabited by the Soromid. The biosphere is very mild even by non-modified standards, so for the Soromid it is a rare gem. The population is estimated at an impressive ten billion, but despite this the planet's ecological system remains in balance. This is in no small thanks to Soromid bioengineering - modified microbiological and plant life help keep the balance from breaking down.</description>
   <bar>For a world as nice as Phosarrus, the spaceport bar is a surprisingly simple affair. The reason for this is that the planet's civilian offworld mass transit is handled via a different terminal, so the only people who use this section of the spaceport are traders and civilians who own their own ships. Lavish recreational facilities would be wasted on them, the thought must have been.</bar>
  </general>

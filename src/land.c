@@ -118,11 +118,6 @@ static char *errorlist_ptr;
 static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
 static void land_stranded (void);
 
-/*
- * Averaging of visited commodity prices
- */
-void economy_averageSeenPrices( Planet *p );
-
 
 /*
  * prototypes
@@ -311,7 +306,7 @@ static void bar_open( unsigned int wid )
    th = -40 - dh - 40;
    window_addText( wid, iw + 40, th,
          w - iw - 60, gl_defFont.h, 1,
-         "txtPortrait", &gl_defFont, &cDConsole, NULL );
+         "txtPortrait", &gl_defFont, &cBlack, NULL );
 
    /* Add mission description text. */
    th -= 20 + PORTRAIT_HEIGHT + 20 + 20;
@@ -564,7 +559,7 @@ static void misn_open( unsigned int wid )
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
-         "txtSDate", NULL, &cDConsole,
+         "txtSDate", NULL, &cBlack,
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
@@ -573,7 +568,7 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, &cDConsole, _("Reward:") );
+         "txtSReward", &gl_smallFont, &cBlack, _("Reward:") );
    window_addText( wid, w/2 + 70, y,
          w/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
@@ -1348,7 +1343,7 @@ void takeoff( int delay )
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
-      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
+      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
    player_message( _("\apTaking off from %s on %s."), land_planet->name, nt);
    free(nt);

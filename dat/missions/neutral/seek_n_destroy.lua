@@ -9,47 +9,50 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
-include "portrait.lua"
-include "pilot/pirate.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "portrait.lua"
+require "pilot/pirate.lua"
 
-clue_title   = _("I know the pilot you're looking at")
+clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}
 clue_text[1] = _("You ask for information about %s and the pilot tells you that this outlaw is supposed to have buisness in %s soon.")
-clue_text[2] = _("%s? Of course I know that scum. I've heard he likes to hang around in %s. Good luck!")
-clue_text[3] = _("%s has owed me 100k credits for dozens of cycles and never paid me back! You can probably catch him in %s.")
-clue_text[4] = _("Sorry, I'm busy these days. If you're looking for %s, I would suggest going to %s and taking a look there; that's where he was last time I heard.")
+clue_text[2] = _([["%s? Yes, I know that scum. I've heard they like to hang around in %s. Good luck!"]])
+clue_text[3] = _([["%s has owed me 500k credits for dozens of cycles and never paid me back! You can probably catch that thief in %s."]])
+clue_text[4] = _([["If you're looking for %s, I would suggest going to %s and taking a look there; that's where that outlaw was last time I heard."]])
+clue_text[5] = _([["If I was looking for %s, I would look in the %s system. That's probably a good bet."]])
+
 
 dono_title   = _("No clue")
 dono_text    = {}
 dono_text[1] = _("This person has never heard of %s. It seems you will have to ask someone else.")
 dono_text[2] = _("This person is also looking for %s, but doesn't seem to know anything you don't.")
-dono_text[3] = _([["%s? Nope, I haven't seen him in many cycles at this point."]])
+dono_text[3] = _([["%s? Nope, I haven't seen that person in many cycles at this point."]])
 dono_text[4] = _([["Sorry, I have no idea where %s is."]])
 dono_text[5] = _([["Oh, hell no, I stay as far away from %s as I possibly can."]])
 dono_text[6] = _([["I haven't a clue where %s is."]])
 dono_text[7] = _([["I don't give a damn about %s. Go away."]])
 dono_text[8] = _([["%s? Don't know, don't care."]])
-dono_text[9] = _("When you ask about %s, the pilot tells you to get lost and cuts communication.")
-dono_text[10] = _([["I'd love to get back at %s for what he did to me, but I haven't seen him in quite some time now."]])
-dono_text[11] = _([["I've not seen %s, but good luck finding him!"]])
-dono_text[12] = _([["Wouldn't it be nice to get back at him? Unfortunately I haven't a clue where %s is, though."]])
-dono_text[13] = _([["I used to work with %s. I haven't seen him since he stole my favorite ship, though."]])
+dono_text[9] = _("When you ask about %s, you are promptly told to get lost.")
+dono_text[10] = _([["I'd love to get back at %s for last cycle, but I haven't seen them in quite some time now."]])
+dono_text[11] = _([["I've not seen %s, but good luck in your search!"]])
+dono_text[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where %s is, though. Sorry!"]])
+dono_text[13] = _([["I used to work with %s. We haven't seen each other since they stole my favorite ship, though."]])
 
 money_title   = _("How much money do you have?")
 money_text    = {}
-money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s credits and I'll tell you where he is; how does that sound?"]])
-money_text[2] = _([["Ah, yes, I know where %s is. I'll tell you for just %s credits. What do you say?"]])
-money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where he was last heading, but it'll cost you. %s credits. Deal?"]])
+money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s credits and I'll tell you where to look; how does that sound?"]])
+money_text[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s credits. What do you say?"]])
+money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s credits. Deal?"]])
 money_text[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s credits should be sufficient."]])
+money_text[5] = _([["You're looking for %s? I tell you what: give me %s credits and I'll tell you. Otherwise, get lost!"]])
 
 IdoPay       = _("Pay the sum")
 IdonnoPay    = _("Give up")
 IkickYourAss = _("Treaten the pilot")
 
 poor_title = _("Not enough money")
-poor_text  = _("It seems you don't have enough money. Too bad.")
+poor_text  = _("You don't have enough money.")
 
 not_scared_title   = _("Not impressed")
 not_scared_text    = {}
@@ -60,13 +63,14 @@ not_scared_text[3] = _([["What a lousy attempt to scare me."]])
 scared_title   = _("You're intimidating!")
 scared_text    = {}
 scared_text[1] = _("As it becomes clear that you have no problem with blasting a ship to smithereens, the pilot tells you that %s is supposed to have buisness in %s soon.")
+scared_text[2] = _([["Ok, ok, I'll tell you! You can find %s in the %s system! Leave me alone!"]])
 
 cold_title   = _("Your track is cold")
 cold_text    = {}
 cold_text[1] = _("When you ask for information about %s, they tell you that this outlaw has already been killed by someone else.")
-cold_text[2] = _([["Didn't you hear? He's dead. Got blown up in an asteroid field is what I heard."]])
-cold_text[3] = _([["Ha ha, you're still looking for him? You're wasting your time; he's already been taken care of."]])
-cold_text[4] = _([["Ah, sorry, he's already dead. Blown to smithereens by a mercenary. I saw the scene, though! It was glorious."]])
+cold_text[2] = _([["Didn't you hear? That outlaw's dead. Got blown up in an asteroid field is what I heard."]])
+cold_text[3] = _([["Ha ha, you're still looking for that outlaw? You're wasting your time; they've already been taken care of."]])
+cold_text[4] = _([["Ah, sorry, that target's already dead. Blown to smithereens by a mercenary. I saw the scene, though! It was glorious."]])
 
 noinfo_title   = _("I won't tell you")
 noinfo_text    = {}
@@ -74,16 +78,17 @@ noinfo_text[1] = _("The pilot asks you to give them one good reason to give you 
 noinfo_text[2] = _([["What if I know where your target is and I don't want to tell you, eh?"]])
 noinfo_text[3] = _([["Piss off! I won't tell anything to the likes of you!"]])
 noinfo_text[4] = _([["And why exactly should I give you that information?"]])
+noinfo_text[5] = _([["And why should I help you, eh? Get lost!"]])
 
 
 advice_title = _("You're looking for someone")
 advice_text  = _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction of your target are most likely to have information, but won't give it easily. Good luck with your task!"]])
 
 thank_comm    = {}
-thank_comm[1] = _("It was a pleasure to deal with you!")
+thank_comm[1] = _("Hehe, pleasure to deal with you!")
 thank_comm[2] = _("Thank you and goodbye!")
-thank_comm[3] = _("See you later!")
-thank_comm[4] = _("Good luck!")
+thank_comm[3] = _("See ya later!")
+thank_comm[4] = _("Haha, good luck!")
 
 not_scared_comm    = {}
 not_scared_comm[1] = _("Mommy, I'm so scared! Har har har!")
@@ -318,7 +323,18 @@ function trigger_ambush()
    ambush[1]:setHostile()
    ambush[2]:setHostile()
    ambush[3]:setHostile()
+   ambush[1]:control()
+   ambush[2]:control()
+   ambush[3]:control()
+   ambush[1]:attack(player.pilot())
+   ambush[2]:attack(player.pilot())
+   ambush[3]:attack(player.pilot())
 
+   msg = hook.timer( 1000, "ambust_msg" )
+end
+
+-- Enemies explain that they are ambushing the player
+function ambust_msg()
    ambush[1]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
    ambush[2]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
    ambush[3]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
@@ -461,6 +477,8 @@ function clue_attacked( p, attacker )
    -- Target was hit sufficiently to get more talkative
    if attacker == player.pilot() and p:health() < 100 then
       p:setHostile( false )
+      p:control()
+      p:runaway(player.pilot())
       tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
       next_sys()
       hook.rm(attack)

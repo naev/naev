@@ -3,7 +3,7 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
 
 -- Bar Description
 bar_desc = _("This Za'lek scientist seems to be looking for someone.")
@@ -40,7 +40,7 @@ text[3] = _([[Once planetside, you find the acceptance area and type in the code
 
 title[4] = _("Success")
 text[4] = _([[You land on the Za'lek planet and find your ship swarmed by dockhands in red and advanced-looking droids rapidly. They unload the equipment and direct you to a rambling edifice for payment.
-    When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech so casually on display as well as the utter chaos of the facility. It takes you a solid ten minutes before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound.]])
+    When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech so casually on display as well as the utter chaos of the facility. It takes a solid ten hectoseconds before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound.]])
 
 title[5] = _("Takeoff")
 text[5] = _([[You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late, especially given the lack of organization you've seen on the planet. Suddenly, you hear a ping on your console, signifying that someone's hailing you.]])

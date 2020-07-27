@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Telika Station">
+ <pos>
+  <x>-6628.943924</x>
+  <y>-5140.913146</y>
+ </pos>
+ <GFX>
+  <space>station-sphere.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>10000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>The Proteron decided that they should have a center for scientific progress, so they built this station. The greatest Proteron scientific minds come together here to further the technological prowess of the Proteron.</description>
+  <bar>The bar is mostly empty, probably due to the busy schedules of the station's scientists. Other than that, it's essentially the same as other Proteron bars.</bar>
+ </general>
+</asset>

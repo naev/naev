@@ -40,8 +40,8 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param id ID of the pilot representing the escort.
  *    @return 0 on success.
  */
-int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id,
-		    int persist )
+int escort_addList( Pilot *p, char *ship, EscortType_t type,
+      unsigned int id, int persist )
 {
    p->nescorts++;
    p->escorts = realloc( p->escorts, sizeof(Escort_t) * p->nescorts );

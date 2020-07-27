@@ -183,7 +183,7 @@ static void info_openMain( unsigned int wid )
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
-         0, "txtDPilot", &gl_smallFont, &cDConsole,
+         0, "txtDPilot", &gl_smallFont, &cBlack,
          _("Pilot:\n"
          "Date:\n"
          "Combat Rating:\n"
@@ -226,7 +226,7 @@ static void info_openMain( unsigned int wid )
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
    window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
-         NULL, &cDConsole, _("Licenses") );
+         NULL, &cBlack, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
 }
@@ -376,7 +376,7 @@ static void info_openShip( unsigned int wid )
 
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
-         &cDConsole,
+         &cBlack,
          _("Name:\n"
          "Model:\n"
          "Class:\n"
@@ -445,8 +445,8 @@ static void ship_update( unsigned int wid )
          "\n"),
          /* Generic */
          player.p->name,
-         player.p->ship->name,
-         ship_class(player.p->ship),
+         _(player.p->ship->name),
+         _(ship_class(player.p->ship)),
          (int)floor(player.p->crew),
          player.p->cpu_max,
          /* Movement. */
@@ -885,7 +885,7 @@ static void info_openStandings( unsigned int wid )
 
    /* Text. */
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
-         &gl_defFont, &cDConsole, NULL );
+         &gl_defFont, &cBlack, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
 
@@ -974,7 +974,7 @@ static void info_openMissions( unsigned int wid )
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
-         &gl_smallFont, &cDConsole, _("Reward:") );
+         &gl_smallFont, &cBlack, _("Reward:") );
    window_addText( wid, 300+100, -60,
          140, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 300+40, -100,

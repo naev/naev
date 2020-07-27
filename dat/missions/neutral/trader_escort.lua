@@ -1,8 +1,8 @@
 --Escort a convoy of traders to a destination--
 
-include "dat/scripts/nextjump.lua"
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/nextjump.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
 misn_title = _("Escort a %s convoy to %s in %s.")
 misn_reward = _("%s credits")
@@ -372,7 +372,6 @@ function timer_traderSafe()
 
    if unsafe then
       unsafe = false
-   else
       for i, j in ipairs( convoy ) do
          continueToDest( j )
       end

@@ -9,9 +9,9 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-include "numstring.lua"
-include "proximity.lua"
-include "fleethelper.lua"
+require "numstring.lua"
+require "proximity.lua"
+require "fleethelper.lua"
 
 -- set mission variables
 t_sys = {}

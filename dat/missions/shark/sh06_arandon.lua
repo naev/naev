@@ -8,7 +8,7 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 title = {}
 text = {}
@@ -29,13 +29,13 @@ title[3] = _("Well done!")
 text[3] = _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]])
 
 title[4] = _("The Meeting")
-text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few hours later, he comes back, satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to %s.]])
+text[4] = _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few periods later, he comes back looking satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to %s.]])
 
 title[5] = _("Hail")
 text[5] = _([[The Pacifier commander answers you and stops his ship, waiting to be boarded.]])
 
 title[6] = _("Let's wait")
-text[6] = _([["Mm. It looks like the other ones have not arrived yet." Smith says. "Just wait close to the jump point, they should arrive soon."]])
+text[6] = _([["Mm. It looks like the others have not arrived yet." Smith says. "Just wait close to the jump point, they should arrive soon."]])
 
 -- Mission details
 misn_title = _("A Journey To %s")
@@ -126,16 +126,17 @@ function enter()
    end
 end
 
-function wait_msg()
+function wait_msg ()
    -- Prevents the player from being impatient
-   tk.msg(title[6], text[6])
+   tk.msg( title[6], text[6] )
 end
 
-function flf_people()
-   pacifier = pilot.add( "FLF Pacifier", nil, "Doeston" )[1]
-   pacifier:setFriendly()
-   pacifier:setInvincible(true)
-   hook.pilot(pacifier, "hail", "hail_pacifier")
+function flf_people ()
+   pacifier = pilot.add( "FLF Pacifier", nil, system.get("Doeston") )[1]
+   pacifier:memory().aggressive = false
+   pacifier:setFriendly( true )
+   pacifier:setInvincible( true )
+   hook.pilot( pacifier, "hail", "hail_pacifier" )
    hook.pilot( pacifier, "death", "dead" )
    hook.pilot( pacifier, "jump", "jump" )
 end
@@ -146,6 +147,8 @@ function hail_pacifier()
    pacifier:control()
    pacifier:brake()
    pacifier:setActiveBoard(true)
+   pacifier:hookClear()
+   hook.pilot( pacifier, "death", "dead" )
    hook.pilot(pacifier, "board", "board")
 end
 

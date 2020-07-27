@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>This barren world has a wealth of minerals buried beneath kilometres of ice, and the Za'lek have deployed considerable resources in order to tap its resources. Unlike more developed Za'lek settlements, there is little in the way of scholarly presence here.</description>
   <bar>This bar serves as a welcome respite from the biting winds and frigid temperatures that pervade the planet. The menu largely consists of hot beverages and hearty food, and the patrons are almost exclusively off-duty Za'lek workers.</bar>
  </general>

@@ -10,7 +10,7 @@ text = {}
 directions = {}
 title[1] = _("Shipwrecked space family")
 text[1] = _([[The airlock opens, and you are greeted by a nervous-looking man, a shy woman, and three neurotic children.
-    "Thank god you are here," the man says. "I don't know how much longer we could've held out. They left us for dead, you know. No fuel, no food and only auxiliary power to sustain us." He then begins to incoherently tell you how much his group has suffered in the past few hours, but you cut him short, not willing to put up with his endless babbling.
+    "Thank god you are here," the man says. "I don't know how much longer we could've held out. They left us for dead, you know. No fuel, no food and only auxiliary power to sustain us." He then begins to incoherently tell you how much his group has suffered in the past few periods, but you cut him short, not willing to put up with his endless babbling.
     With a few to-the-point questions you learn that the man's name is Harrus, and that he and his wife and children live, or at least used to live, aboard their trading vessel. "It was a good life, you know," Harrus tells you. "You get to see the galaxy, meet people and see planets, and all that while working from home because, haha, you take your home with you!"
     You can't help but glance at Harrus' kids, who have begun enthusiastically stampeding through your ship, pressing any buttons low enough for them to reach, despite their mother's hopeless attempts to keep them under control.]])
 text[2] = _([[Harrus is about to launch into another anecdote about his existence as a trader, but you manage to forestall him. You soon learn that his family's lifestyle has come to an abrupt change at the hands of a minor gang of pirates. Though the %s had some weaponry and shielding systems, the attackers were too much for a single cargo ship.
@@ -58,7 +58,7 @@ osd_msg[1]   = {
 }
 
 
-include("dat/scripts/jumpdist.lua")
+require("dat/scripts/jumpdist.lua")
 
 
 function create ()

@@ -23,9 +23,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
  </general>
  <tech>

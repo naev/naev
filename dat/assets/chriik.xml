@@ -25,11 +25,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Chriik is a dead world. Like most desert planets it has no bodies of water and a hot climate but, unlike most desert planets, it doesn't have any indigenous life, what-so-ever. Indeed, there is no reason why anyone or anything would want to live here in the first place. This makes it a perfect planet for heavy industries to set up shop since they can pollute all they want without repercussions.</description>
   <bar>The spaceport bar is a popular place on Chriik, even inside the habitation complexes the air is so dry it will parch you out in record time. The large number of manual workers also contributes to the busy crowd.</bar>
  </general>

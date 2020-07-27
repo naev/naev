@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/missions/flf/flf_diversion.lua"
+require "dat/missions/flf/flf_diversion.lua"
 
 -- localization stuff
 title = {}
@@ -51,7 +51,7 @@ function create ()
 
    dv_attention_target = 40
    credits = 400000
-   reputation = 10
+   reputation = 3
 
    misn.setNPC( npc_name, "flf/unique/benito" )
    misn.setDesc( npc_desc )
@@ -88,7 +88,7 @@ function land ()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
-      flf_setReputation( 85 )
+      flf_setReputation( 75 )
       faction.get("FLF"):modPlayer( reputation )
       misn.finish( true )
    end

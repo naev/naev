@@ -23,7 +23,7 @@
   <energy>40</energy>
   <heatup>35</heatup>
   <track>2</track>
-  <swivel>10</swivel>
+  <swivel>22</swivel>
   <damage>
    <type>normal</type>
    <penetrate>36</penetrate>

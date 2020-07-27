@@ -1,7 +1,6 @@
 --[[
 
    Pirate Patrol
-   Copyright 2014-2019 Julie Marchant
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,7 +21,7 @@
 
 --]]
 
-include "dat/missions/neutral/patrol.lua"
+require "dat/missions/neutral/patrol.lua"
 
 pay_title = _("Mission Completed")
 pay_text    = {}
@@ -50,7 +49,7 @@ msg[4] = _("Patrol complete. You can now collect your pay.")
 msg[5] = _("MISSION FAILURE! You showed up too late.")
 msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
-osd_title  = _("Patrol of %s")
+osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg_2  = _("Go to indicated point (%d remaining)")

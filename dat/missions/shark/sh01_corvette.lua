@@ -9,7 +9,7 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 title = {}
 text = {}
@@ -47,7 +47,7 @@ bar_desc[1] = _([[The Nexus employee seems to be looking for pilots. Maybe he ha
 
 -- OSD
 osd_title = _("Sharkman Is Back")
-osd_msg[1] = _("Jump in %s with a destroyer class ship and let the shark disable you")
+osd_msg[1] = _("Jump in %s with a destroyer class ship and let the Lancelot disable you")
 osd_msg[2] = _("Go to %s in %s to collect your pay")
 
 msg_run = _("MISSION FAILED: You ran away.")

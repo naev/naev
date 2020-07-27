@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Dundrop Station is a commerce oriented station. Traders usually come here to buy and sell goods and then take them elsewhere. Some traders rent out cargo bays to store non-perishable goods, however, then they can be the first to capitalise when a neighbouring planet develops a high demand for them.</description>
   <bar>All the tables in this bar have multiple displays for tracking economic information for the whole of known space. The patrons are mostly engrossed in absorbing the graphs and charts displayed. There is little room for social interaction on Dundrop.</bar>
  </general>

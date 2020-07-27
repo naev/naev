@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aera">
+ <pos>
+  <x>6751.366090</x>
+  <y>-12894.396502</y>
+ </pos>
+ <GFX>
+  <space>I07.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>I</class>
+  <population>100000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>This gas giant is rich enough in valuable minerals that the Proteron decided to establish a mining colony. The minerals are extracted with OOA heat subduction, which coaxes them out of the planet's dangerous core and into the upper atmosphere where they can be safely collected.</description>
+ </general>
+</asset>

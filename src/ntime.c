@@ -7,26 +7,28 @@
  *
  * @brief Handles the Naev time.
  *
- * 1 cycle (SCU)  = 5e3 periods (STP) = 50e6 seconds (STU)
- * 1 period (STP) = 10e3 seconds (STU)
+ * 1 cycle  = 5e3 periods = 50e6 seconds
+ * 1 period = 10e3 seconds
  *
  * Generally displayed as:
- *  <SCU>:<STP>.<STU> UST
- * The number of STU digits can be variable, for example:
+ *  UST <cycles>:<periods>.<seconds>
+ * The number of seconds digits can be variable, for example:
  *
- *  630:3726.1 UST
- *  630:3726.12 UST
- *  630:3726.124 UST
- *  630:3726.1248 UST
- *  630:3726.12489 UST
+ *  UST 630:3726.1
+ *  UST 630:3726.12
+ *  UST 630:3726.124
+ *  UST 630:3726.1248
+ *  UST 630:3726.12489
  *
  * Are all valid.
  *
- * Acronyms:
- *    - UST : Universal Synchronized Time
- *    - STU : Smallest named time unit. Equal to the Earth second.
- *    - STP : Most commonly used time unit. STPs are the new hours. 1 STP = 10,000 STU (about 2.8 Earth hours).
- *    - SCU : Used for long-term time periods. 1 SCU = 5000 STP (about 579 Earth days).
+ * Definitions / abbreviations:
+ *    - UST: Universal Synchronized Time, the name of the time system.
+ *    - seconds: Smallest named time unit. Equal to the Earth second.
+ *    - periods: Most commonly used time unit. Periods are the new hours.
+ *       1 period = 10,000 seconds (about 2.8 Earth hours).
+ *    - cycles: Used for long-term time periods. 1 cycle = 5000 periods
+ *       (about 579 Earth days).
  */
 
 
@@ -42,11 +44,11 @@
 #include "economy.h"
 
 
-#define NT_STU_DIV   (1000)      /* Divider for extracting seconds (STU). */
-#define NT_STU_DT    (30)        /* Update rate, how many seconds (STU) are in a real second. */
-#define NT_SCU_STU   ((ntime_t)NT_SCU_STP*(ntime_t)NT_STP_STU) /* Seconds (STU) in a cycle (SCU) */
-#define NT_STP_DIV   ((ntime_t)NT_STP_STU*(ntime_t)NT_STU_DIV) /* Divider for extracting periods (STP). */
-#define NT_SCU_DIV   ((ntime_t)NT_SCU_STU*(ntime_t)NT_STU_DIV) /* Divider for extracting cycles (SCU). */
+#define NT_SECONDS_DIV   (1000)      /* Divider for extracting seconds. */
+#define NT_SECONDS_DT    (30)        /* Update rate, how many seconds are in a real second. */
+#define NT_CYCLE_SECONDS   ((ntime_t)NT_CYCLE_PERIODS*(ntime_t)NT_PERIOD_SECONDS) /* Seconds in a cycle */
+#define NT_PERIODS_DIV   ((ntime_t)NT_PERIOD_SECONDS*(ntime_t)NT_SECONDS_DIV) /* Divider for extracting periods. */
+#define NT_CYCLES_DIV   ((ntime_t)NT_CYCLE_SECONDS*(ntime_t)NT_SECONDS_DIV) /* Divider for extracting cycles. */
 
 
 /**
@@ -60,7 +62,7 @@ typedef struct NTimeUpdate_s {
 static NTimeUpdate_t *ntime_inclist = NULL; /**< Time increment list. */
 
 
-static ntime_t naev_time = 0; /**< Contains the current time in milliseconds (mSTU). */
+static ntime_t naev_time = 0; /**< Contains the current time in milliseconds. */
 static double naev_remainder = 0.; /**< Remainder when updating, to try to keep in perfect sync. */
 static int ntime_enable = 1; /** Allow updates? */
 
@@ -77,8 +79,8 @@ void ntime_update( double dt )
    if (!ntime_enable)
       return;
 
-   /* Calculate the effective time. */
-   dtt = naev_remainder + dt*NT_STU_DT*NT_STU_DIV;
+   /* Calculate the effective time. */ dtt = naev_remainder + 
+   dt*NT_SECONDS_DT*NT_SECONDS_DIV;
 
    /* Time to update. */
    tu             = floor( dtt );
@@ -100,14 +102,14 @@ ntime_t ntime_create( int scu, int stp, int stu )
    tscu = scu;
    tstp = stp;
    tstu = stu;
-   return tscu*NT_SCU_DIV + tstp*NT_STP_DIV + tstu*NT_STU_DIV;
+   return tscu*NT_CYCLES_DIV + tstp*NT_PERIODS_DIV + tstu*NT_SECONDS_DIV;
 }
 
 
 /**
  * @brief Gets the current time.
  *
- *    @return The current time in milliseconds (mSTU).
+ *    @return The current time in milliseconds.
  */
 ntime_t ntime_get (void)
 {
@@ -118,50 +120,50 @@ ntime_t ntime_get (void)
 /**
  * @brief Gets the current time broken into individual components.
  */
-void ntime_getR( int *scu, int *stp, int *stu, double *rem )
+void ntime_getR( int *cycles, int *periods, int *seconds, double *rem )
 {
-   *scu = ntime_getSCU( naev_time );
-   *stp = ntime_getSTP( naev_time );
-   *stu = ntime_getSTU( naev_time );
+   *cycles = ntime_getCycles( naev_time );
+   *periods = ntime_getPeriods( naev_time );
+   *seconds = ntime_getSeconds( naev_time );
    *rem = ntime_getRemainder( naev_time ) + naev_remainder;
 }
 
 
 /**
- * @brief Gets the cycles (SCU) of a time.
+ * @brief Gets the cycles of a time.
  */
-int ntime_getSCU( ntime_t t )
+int ntime_getCycles( ntime_t t )
 {
-   return (t / NT_SCU_DIV);
+   return (t / NT_CYCLES_DIV);
 }
 
 
 /**
- * @brief Gets the periods (STP) of a time.
+ * @brief Gets the periods of a time.
  */
-int ntime_getSTP( ntime_t t )
+int ntime_getPeriods( ntime_t t )
 {
-   return (t / NT_STP_DIV) % NT_SCU_STP;
+   return (t / NT_PERIODS_DIV) % NT_CYCLE_PERIODS;
 }
 
 
 /**
- * @brief Gets the seconds (STU) of a time.
+ * @brief Gets the seconds of a time.
  */
-int ntime_getSTU( ntime_t t )
+int ntime_getSeconds( ntime_t t )
 {
-   return (t / NT_STU_DIV) % NT_STP_STU;
+   return (t / NT_SECONDS_DIV) % NT_PERIOD_SECONDS;
 }
 
 
 /**
- * @brief Converts the time to seconds (STU).
+ * @brief Converts the time to seconds.
  *    @param t Time to convert.
- *    @return Time in seconds (STU).
+ *    @return Time in seconds.
  */
-double ntime_convertSTU( ntime_t t )
+double ntime_convertSeconds( ntime_t t )
 {
-   return ((double)t / (double)NT_STU_DIV);
+   return ((double)t / (double)NT_SECONDS_DIV);
 }
 
 
@@ -170,14 +172,14 @@ double ntime_convertSTU( ntime_t t )
  */
 double ntime_getRemainder( ntime_t t )
 {
-   return (double)(t % NT_STU_DIV);
+   return (double)(t % NT_SECONDS_DIV);
 }
 
 
 /**
  * @brief Gets the time in a pretty human readable format.
  *
- *    @param t Time to print (in seconds/STU), if 0 it'll use the current time.
+ *    @param t Time to print (in seconds), if 0 it'll use the current time.
  *    @param d Number of digits to use.
  *    @return The time in a human readable format (must free).
  */
@@ -194,37 +196,37 @@ char* ntime_pretty( ntime_t t, int d )
  *
  *    @param[out] str Buffer to use.
  *    @param max Maximum length of the buffer (recommended 64).
- *    @param t Time to print (in seconds/STU), if 0 it'll use the current time.
+ *    @param t Time to print (in seconds), if 0 it'll use the current time.
  *    @param d Number of digits to use.
  *    @return The time in a human readable format (must free).
  */
 void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
 {
    ntime_t nt;
-   int scu, stp, stu;
+   int cycles, periods, seconds;
 
    if (t==0)
       nt = naev_time;
    else
       nt = t;
 
-   /* UST (Universal Synchronized Time) - unit is STU (Synchronized Time Unit, a.k.a. seconds) */
-   scu = ntime_getSCU( nt );
-   stp = ntime_getSTP( nt );
-   stu = ntime_getSTU( nt );
-   if ((scu==0) && (stp==0)) /* only seconds (STU) */
-      nsnprintf( str, max, _("%04ds"), stu );
-   else if ((scu==0) || (d==0))
-      nsnprintf( str, max, _("%.*fp"), d, stp + 0.0001 * stu );
+   /* UST (Universal Synchronized Time) - unit is seconds */
+   cycles = ntime_getCycles( nt );
+   periods = ntime_getPeriods( nt );
+   seconds = ntime_getSeconds( nt );
+   if ((cycles == 0) && (periods == 0)) /* only seconds */
+      nsnprintf( str, max, _("%04ds"), seconds );
+   else if ((cycles == 0) || (d==0))
+      nsnprintf( str, max, _("%.*fp"), d, periods + 0.0001 * seconds );
    else /* UST format */
-      nsnprintf( str, max, _("UST %d:%.*f"), scu, d, stp + 0.0001 * stu );
+      nsnprintf( str, max, _("UST %d:%.*f"), cycles, d, periods + 0.0001 * seconds );
 }
 
 
 /**
  * @brief Sets the time absolutely, does NOT generate an event, used at init.
  *
- *    @param t Absolute time to set to in seconds (STU).
+ *    @param t Absolute time to set to in seconds.
  */
 void ntime_set( ntime_t t )
 {
@@ -236,9 +238,9 @@ void ntime_set( ntime_t t )
 /**
  * @brief Loads time including remainder.
  */
-void ntime_setR( int scu, int stp, int stu, double rem )
+void ntime_setR( int cycles, int periods, int seconds, double rem )
 {
-   naev_time   = ntime_create( scu, stp, stu );
+   naev_time   = ntime_create( cycles, periods, seconds );
    naev_time  += floor(rem);
    naev_remainder = fmod( rem, 1. );
 }
@@ -247,7 +249,7 @@ void ntime_setR( int scu, int stp, int stu, double rem )
 /**
  * @brief Sets the time relatively.
  *
- *    @param t Time modifier in seconds (STU).
+ *    @param t Time modifier in seconds.
  */
 void ntime_inc( ntime_t t )
 {
@@ -277,7 +279,7 @@ void ntime_allowUpdate( int enable )
  * This does NOT call hooks and such, they must be run with ntime_refresh
  *  manually later.
  *
- *    @param t Time modifier in seconds (STU).
+ *    @param t Time modifier in seconds.
  */
 void ntime_incLagged( ntime_t t )
 {

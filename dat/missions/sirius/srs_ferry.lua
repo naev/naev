@@ -22,8 +22,8 @@
 --
 --]]
 
-include "cargo_common.lua"
-include "numstring.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
 misn_desc = _("%s in the %s system requests transport to %s.")

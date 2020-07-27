@@ -25,13 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Jurai is a humble and pleasantly liveable class M world. It is a population center for the Za'lek, and is dotted with universities and laboratories. Many younger people on this world yearn to leave to more exciting worlds, while older Za'lek tend to retire here.</description>
   <bar>The bar is as rambling as many Za'lek institutions, yet seems cozy all the same with booths sunken into the floor and soft lighting. The patrons are disproportionately older.</bar>
  </general>

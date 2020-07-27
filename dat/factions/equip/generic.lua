@@ -1,4 +1,4 @@
-include "jumpdist.lua"
+require "jumpdist.lua"
 
 
 -- Table of available core systems by class.

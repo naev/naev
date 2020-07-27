@@ -22,10 +22,10 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="28" y="0" h="5"/>
-  <weapon size="medium" x="18" y="0" h="5"/>
-  <weapon size="medium" x="-30" y="-8" h="3"/>
-  <weapon size="medium" x="-30" y="8" h="3"/>
+  <weapon size="large" x="28" y="0" h="5"/>
+  <weapon size="large" x="18" y="0" h="5"/>
+  <weapon size="large" x="-30" y="-8" h="3"/>
+  <weapon size="large" x="-30" y="8" h="3"/>
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
   <utility size="large"/>
   <utility size="large"/>

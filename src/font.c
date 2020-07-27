@@ -169,7 +169,6 @@ static glFontStash *gl_fontGetStash( const glFont *font )
 static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *glyph )
 {
    int i, j, n;
-   GLubyte *data;
    glFontRow *r, *gr;
    glFontTex *tex;
    GLfloat *vbo_tex;
@@ -1108,7 +1107,8 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    int idx;
 
    /* Load data from freetype. */
-   font_makeChar( stsh, &ft_char, ch );
+   if (font_makeChar( stsh, &ft_char, ch ))
+      return NULL;
 
    /* Create new character. */
    glyph = &array_grow( &stsh->glyphs );

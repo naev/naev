@@ -62,7 +62,7 @@ text[8] = [[As soon as you get of your ship, you are surrounded by the group of 
 
 -- you pick up the nerds in time, they didn't win
 title[9] = _("Sad nerds")
-text[9] = [[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. "Hey, what's up? Come on, tell me!" you inquire. The nerds warily glance at each other, and finally Mia bursts out:
+text[9] = [[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
     "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt idiots in the jury pretended not to notice!"
     "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to %s.]]
 
@@ -82,7 +82,7 @@ text[12] = [[The nerds, finally exhausted from all the partying, still smile as 
 -- you return the nerds, who did not win the contest
 title[13] = _("Minor Complications")
 text[13] = [[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have no prize money."
-    As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few minutes.
+    As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.
     "Ok, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]]
 
 title[14] = _("So what?")

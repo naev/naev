@@ -1322,6 +1322,16 @@
    <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
+ <mission name="Proteron Dissident Dead Or Alive Bounty">
+  <lua>proteron/dissbounty_dead</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>360</chance>
+   <location>Computer</location>
+   <faction>Proteron</faction>
+  </avail>
+ </mission>
  <mission name="Dead Or Alive Bounty">
   <lua>neutral/pirbounty_dead</lua>
   <avail>
@@ -1367,6 +1377,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
@@ -1445,6 +1456,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
@@ -1464,6 +1476,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
@@ -1503,6 +1516,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
@@ -1521,6 +1535,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>

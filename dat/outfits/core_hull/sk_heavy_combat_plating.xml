@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="S&amp;K Heavy Combat Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>large</size>
+  <priority>3</priority>
+  <mass>1150</mass>
+  <price>2200000</price>
+  <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
+  <gfx_store>combat_hull_l</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>65</cargo>
+  <absorb>34</absorb>
+  <armour>1650</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

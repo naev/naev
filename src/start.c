@@ -51,12 +51,12 @@ int start_load (void)
    char *buf;
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc;
-   int scu, stp, stu;
+   int cycles, periods, seconds;
 
    /* Defaults. */
-   scu = -1;
-   stp = -1;
-   stu = -1;
+   cycles = -1;
+   periods = -1;
+   seconds = -1;
 
    /* Try to read the file. */
    buf = ndata_read( START_DATA_PATH, &bufsize );
@@ -92,10 +92,10 @@ int start_load (void)
             xmlr_strd( cur, "event",   start_data.event );
 
             if (xml_isNode(cur,"ship")) {
-               xmlr_attr( cur, "name",    start_data.shipname);
+               xmlr_attr( cur, "name",    start_data.shipname );
                xmlr_strd( cur, "ship",    start_data.ship );
             }
-            else if (xml_isNode(cur,"system")) {
+            else if (xml_isNode(cur, "system")) {
                tmp = cur->children;
                do {
                   xml_onlyNodes(tmp);
@@ -113,14 +113,14 @@ int start_load (void)
          continue;
       }
 
-      if (xml_isNode(node,"date")) {
+      if (xml_isNode(node, "date")) {
          cur = node->children;
          do {
             xml_onlyNodes(cur);
 
-            xmlr_int( cur, "scu", scu );
-            xmlr_int( cur, "stp", stp );
-            xmlr_int( cur, "stu", stu );
+            xmlr_int( cur, "scu", cycles );
+            xmlr_int( cur, "stp", periods );
+            xmlr_int( cur, "stu", seconds );
             WARN(_("'%s' has unknown date node '%s'."), START_DATA_PATH, cur->name);
          } while (xml_nextNode(cur));
          continue;
@@ -140,13 +140,13 @@ int start_load (void)
    MELEMENT( start_data.credits==0, "credits" );
    MELEMENT( start_data.ship==NULL, "ship" );
    MELEMENT( start_data.system==NULL, "player system" );
-   MELEMENT( scu<0, "scu" );
-   MELEMENT( stp<0, "stp" );
-   MELEMENT( stu<0, "stu" );
+   MELEMENT( cycles<0, "scu" );
+   MELEMENT( periods<0, "stp" );
+   MELEMENT( seconds<0, "stu" );
 #undef MELEMENT
 
    /* Post process. */
-   start_data.date = ntime_create( scu, stp, stu );
+   start_data.date = ntime_create( cycles, periods, seconds );
 
    return 0;
 }

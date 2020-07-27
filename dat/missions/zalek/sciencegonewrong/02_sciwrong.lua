@@ -9,8 +9,8 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-include "fleethelper.lua"
-include "factions/spawn/zalek/lua"
+require "fleethelper.lua"
+require "factions/spawn/zalek/lua"
 
 -- set text variables
 title = {}

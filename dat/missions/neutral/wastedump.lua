@@ -17,7 +17,7 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
 text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid %s credits. You begin to wonder if accepting this job was really a good idea.")
@@ -137,7 +137,18 @@ function abort ()
       end
 
       -- Add some police!
-      local f = system.cur():faction()
+      local presences = system.cur():presences()
+      local f = nil
+      if presences then
+         local strongest_amount = 0
+         for k, v in pairs( presences ) do
+            if v > strongest_amount then
+               f = faction.get(k)
+               strongest_amount = v
+            end
+         end
+      end
+
       local choices
       if f == faction.get( "Empire" ) then
          choices = { "Empire Sml Defense", "Empire Lge Attack", "Empire Med Attack" }
@@ -163,12 +174,16 @@ function abort ()
          choices = { "FLF Pacifier", "FLF Vendetta", "FLF Lancelot" }
       elseif f == faction.get( "Pirate" ) then
          choices = { "Pirate Kestrel", "Pirate Phalanx", "Pirate Admonisher" }
+      else
+         choices = { "Vendetta Quartet", "Mercenary Pacifier", "Mercenary Ancestor", "Mercenary Vendetta" }
       end
 
-      for i, j in ipairs( system.cur():jumps() ) do
-         local p = pilot.add( choices[ rnd.rnd( 1, #choices ) ], nil, j:dest() )
-         for k, v in ipairs( p ) do
-            v:setHostile()
+      for n = 1, rnd.rnd( 2, 4 ) do
+         for i, j in ipairs( system.cur():jumps() ) do
+            local p = pilot.add( choices[ rnd.rnd( 1, #choices ) ], nil, j:dest() )
+            for k, v in ipairs( p ) do
+               v:setHostile()
+            end
          end
       end
 

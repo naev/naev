@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>This station was once the nerve center of the entirety of House Za'lek. It still is to an extent, but with the move of much the Za'lek government to Ruadan, this station's become something of a secondary capital. Most day to day business of running the Great House still takes place here.</description>
   <bar>This bar seems to double as a conference hall, with many Za'lek university deans and government officials (more often than not being represented by the same people) meeting with each other as well as foreign trade leaders and dignitaries. The food and drink here is of course top notch, but not extravagant.</bar>
  </general>

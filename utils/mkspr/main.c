@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 	/* load all the images to ram */
 	for (i=0; i<(ws*hs); i++) {
 		/* names will be 000.png, 001.png, ..., 035.png, ... etc... */
-		sprintf( file, "%d%d%d.png", i/100, (i%100)/10, i%10 );
+		sprintf( file, "%d%d%d.png", (unsigned char)i/100, (unsigned char)(i%100)/10, (unsigned char)i%10 );
 
 		/* load the image properly */
 		temp = IMG_Load( file );
@@ -203,6 +203,11 @@ static int SavePNG( SDL_Surface *surface, const char *file)
 	return r;
 }
 
+static void warning( const char *msg )
+{
+	WARN( "Write_png: could not %s", msg );
+}
+
 static int write_png( const char *file_name, png_bytep *rows, int w, int h,
 		int colortype, int bitdepth )
 {
@@ -210,20 +215,21 @@ static int write_png( const char *file_name, png_bytep *rows, int w, int h,
 	png_structp png_ptr;
 	png_infop info_ptr;
 	FILE *fp = NULL;
-	char *doing = "open for writing";
 
-	if (!(fp = fopen(file_name, "wb")))
-      goto fail;
+	if (!(fp = fopen(file_name, "wb"))) {
+      warning( "open for writing" );
+      return -1;
+   }
 
-	doing = "create png write struct";
-	if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL)))
-		goto fail;
+	if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
+      warning( "create png write struct" );
+      return -1;
+   }
 
-	doing = "create png info struct";
-	if (!(info_ptr = png_create_info_struct(png_ptr)))
-      goto fail;
-	if (setjmp(png_jmpbuf(png_ptr)))
-      goto fail;
+	if (!(info_ptr = png_create_info_struct(png_ptr)) || setjmp(png_jmpbuf(png_ptr))) {
+      warning( "create png info struct" );
+      return -1;
+   }
 
 	/*doing = "init IO";*/
 	png_init_io(png_ptr, fp);
@@ -242,15 +248,12 @@ static int write_png( const char *file_name, png_bytep *rows, int w, int h,
 	/*doing = "write end";*/
 	png_write_end(png_ptr, NULL);
 
-	doing = "closing file";
-	if(0 != fclose(fp))
-      goto fail;
+	if (0 != fclose(fp)) {
+      warning( "closing file" );
+      return -1;
+   }
 
 	return 0;
-
-fail:
-	WARN( "Write_png: could not %s", doing );
-	return -1;
 }
 
 

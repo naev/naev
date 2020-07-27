@@ -4,8 +4,8 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 
-include "dat/events/tutorial/tutorial-common.lua"
-include "portrait.lua"
+require "dat/events/tutorial/tutorial-common.lua"
+require "portrait.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -144,19 +144,22 @@ msg_lore["FLF"] =          {_([["I can't stand Dvaereds. I just want to wipe the
                               _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),
                               _([["No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."]]),
                               _([["Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the stupidest thing I ever heard."]]),
-                              _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to oppress us?"]]),
+                              _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to set up an invasion?"]]),
                            }
 
 msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just messing with you."]]),
                               _([["Hey, look at these new scars I got!"]]),
                               _([["Have you heard of the Pirates' Code? They're more guidelines than rules..."]]),
-                              _([["My gran said 'Never trust a pirate', she was right too, I got a pretty credit chip for her with the slavers."]]),
+                              _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
                               _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
-                              _([["Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."]]),
-                              _([["I tried to get into the pirate clanworlds, but they wouldn't let me in because I'm a \"small-time pirate\"! Sometimes I think I'll never make it in this line of work..."]]),
+                              _([["Stupid Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
+                              _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
-                              _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]])
+                              _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
+                              _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
+                              _([["One of my favorite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
+                              _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
                            }
 
 msg_lore["Trader"] =       {_([["Just another link in the Great Chain, right?"]]),
@@ -173,13 +176,13 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"]]),
                               _([["These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."]]),
                               _([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
-                              _([["Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of them at a time, and \abshift\a0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?"]]),
+                              _("\"Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of them at a time, and \abshift\a0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?\""),
                               _([["If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."]]),
-                              _([["Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship."]]),
+                              _([["Some weapons have a different effect on shields than they do on armor. Keep that in mind when equipping your ship."]]),
                               _([["Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!"]]),
                               _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
                               _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
-                              _([["Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."]]),
+                              _([["Scramblers and jammers make it harder for missiles to track you. They can be very handy if your enemies use missiles."]]),
                               string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"]]), tutGetKey("autobrake") ),
                               _([["If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"]]),
                               _([["You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."]]),
@@ -187,6 +190,12 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["I know it can be tempting to fly the big and powerful ships, but don't underestimate smaller ones! Given their simpler designs and lesser crew size, you have a lot more time to react with a smaller vessel. Some are even so simple to pilot that time seems to slow down all around you!"]]),
                               _([["Mining can be an easy way to earn some extra credits, but every once in a while an asteroid will just randomly explode for no apparent reason, so you have to watch out for that. Yeah, I don't know why they do that either."]]),
                               _([["Rich folk will pay extra to go on an offworld sightseeing tour in a luxury yacht. I don't get it personally; it's all the same no matter what ship you're in."]]),
+                              _([["Different ships should be built and piloted differently. One of the hardest lessons I learned as a pilot was to stop worrying so much about the damage my ship was taking in battle while piloting a large ship. These ships are too slow for dodging, not to mention so complicated that they reduce your reaction time, so you need to learn to just take the hits and focus your attention on firing back at your enemies."]]),
+                              _([["Remember that when you pilot a big ship, you perceive time passing a lot faster than you do when you pilot a small ship. It can be easy to forget just how slow these larger ships are when you're frantically trying to depressurize the exhaust valve while also configuring the capacitance array. In a way the slow speed of the ship becomes a pretty huge relief!"]]),
+                              _([["There's always an exception to the rule, but I wouldn't recommend using forward-facing weapons on larger ships. Large ships' slower turn rates aren't able to keep up with the dashing and dodging of smaller ships, and aiming is harder anyway what with how complex these ships are. Turrets are much better; they aim automatically and usually do a very good job!"]]),
+                              _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
+                              _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
+                              _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
                            }
 
 -- Jump point messages.
@@ -201,28 +210,6 @@ msg_jmp =                  {_([["Hi there, traveler. Is your system map up to da
                               _([["There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
                            }
 
--- Economy messages
--- For giving a tip about prices recently on a nearby system.
--- All messages contain 3 %s.  First is the planet, second is the system, and third is the list of prices there.
--- All NPCs have a chance to say one of these lines instead of a lore essage.
--- So, make sure the tips are always faction neutral.
-msg_econ =                {_("Hi, I was recently on %s in the %s system, and the cost of commodities there was: %s  I've added it to your computer information.  Hope that helps you make a good trade!"),
-                           _("Trading seems to be getting harder these days, or maybe I'm just getting older.  I was on %s in the %s system a few STP ago, and the price of goods there was: %s  Put that in your computer, and it might help you make a profit."),
-                           _("You wanna good tip?  When I was on %s recently, in the %s system, I took a peek at the commodities on offer.  The cost then was: %s  Hopefully that will help, from one pal to another!"),
-                           _("Awesome!  Did you know that a few STP ago on %s in the %s system, the cost of stuff in the trade area was: %s  The prices do change with time though, so it might be a bit different by the time you get there."),
-                           _("Hey!  I'll add some valuable information to your computer, which might help you make a good trade.  I heard that on %s in the %s system recently, prices there were: %sThat might help you pay off the ship - or maybe not!"),
-                           _("The times are a'changin, and so it seems are prices.  On %s in the %s system, I recently saw the prices, though I expect they'll have changed a bit by now!  I'll stick them in your computer for you to help.  They were: %sWill probably have changed again by the time you get there!"),
-                           _("Did you know that commodity costs vary somewhat with time?  On some systems, the price fluctuates slowly, whilst on others it seems to change more quickly.  A few STP ago on %s in the %s system, for example, the prices were: %sBut I'm pretty sure they were a bit different the previous time I was there..."),
-                           _("I used to make a bit of profit trading between two systems, but recently it hasn't been as profitable, since the prices have been changing with time.  I'm not sure why, I guess its something to do with supply and demand.  Or maybe it just happens like the pendulum of life!  Anyway, on %s (thats in the %s system), I recently saw that the commodities were being bought and sold for: %sActually, I've found that if I time it right, I can even make a small profit just by buying something, taking off, landing again, and selling it.  Only seems to work about half the time though!"),
-                           _("I made a good trade recently on %s in the %s system.  The prices there then were %s  I expect they'll have changed by now though!"),
-                           _("I'm not an economist, and the way prices change don't seem to make much sense to me.  I regularly travel between here and %s in the %s system, and they just seem to fluctuate around some average value.  The last time I was there, the cost was: %sThey'll be different next time, though my computer will probably have improved its average price accuracy by then."),
-                           _("I studied economics for my PhD, looking at ancient civilisations in the Sol system.  Incredible, there seemed to be no rhyme or reason then for when the markets would suddenly crash.  Fortunately that doesn't seem to happen here anymore, the prices seem a lot more stable, with just a bit of variation.  In fact, I've been doing some modelling, and think that prices depend a bit on system type, and various other factors.  I did a study of %s in the %s system recently, and the prices there then were %s  This fits in pretty well with my sinusoidal model, though not perfectly!"),
-                           _("I made an awesome trade recently on %s in the %s system, but then got so hammered I gave all my profits away to a local charity there!  Fortunately, I made a note of the prices, so I might be able to repeat it.  If you buy me a drink, I'll tell you what they were: %sNow you owe me a drink!"),
-                           _("Did you know, on the map screen, you can toggle through trade options using the trade button. This will show the commodity prices that you know about compared to the selected system.  If they come up yellow, that means the commodity is cheaper on the selected system, while blue means more expensive, and the more intense the colour, the bigger the price difference. And as you travel more, your knowlege of the prices gets better.  I recently bought some goods on %s in the %s system, and prices were:%sI wish I'd known about the map trade option then!"),
-                           _("I recently had a failed trade on %s (%s system).  Prices were:%sSince then, I've done some reading around, and found out that if you hold down shift while clicking the Trade button on the map screen, you can scroll through commodities in reverse.  If you hold down control while clicking, you can toggle the current commodity on and off, which is useful if you want to find out how prices compare to the selected system.  Useful to know!"),
-                           _("The Trade button on the map screen will show you price differences between the currently selected system and others around (assuming you have an idea what prices are there!).  It shows the smallest difference and the largest difference, as two separate circles, i.e. from the planet with highest or lowest prices within the selected and other systems.  I was able to make a good trade on %s in the %s a few STP ago, when prices there were:%sIf you are currently landed in the selected system, then the map will show price differences with this planet only - useful if you're deciding what to buy."),
-                           }
-			   
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the hints are always faction neutral.
@@ -240,7 +227,7 @@ msg_ehint =                {{"FLF/DV Derelicts", _([["The FLF and the Dvaered so
 -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 -- This text will be said by NPCs once the player has completed the mission in question.
 -- Make sure the messages are always faction neutral.
-msg_mdone =                {{"Nebula Satellite", _([["Heard some crazy scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
+msg_mdone =                {{"Nebula Satellite", _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
                               {"Shadow Vigil", _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
                               {"Operation Cold Metal", _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
                               {"Baron", _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."]])},
@@ -259,10 +246,11 @@ function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
 
-   -- Chance of a tip message showing up. As this gradually goes down, it is
-   -- replaced by lore messages. See spawnNPC function below.
-   tip_chance = var.peek( "npc_tip_chance" ) or 0.55
-   var.push( "npc_tip_chance", math.max( tip_chance - 0.03, 0.1 ) )
+   -- Chance of a jump point message showing up. As this gradually goes
+   -- down, it is replaced by lore messages. See spawnNPC function below.
+   jm_chance_min = 0
+   jm_chance_max = 0.25
+   jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
 
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
@@ -317,15 +305,15 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= tip_chance then
-      -- Gameplay tip message.
-      msg = getTipMessage(fac)
+   if select < jm_chance then
+      -- Jump point message.
+      msg, func = getJmpMessage(fac)
    elseif select <= 0.55 then
       -- Lore message.
       msg = getLoreMessage(fac)
    elseif select <= 0.8 then
-      -- Jump point message.
-      msg, func = getJmpMessage(fac)
+      -- Gameplay tip message.
+      msg = getTipMessage(fac)
    else
       -- Mission hint message.
       if not nongeneric then
@@ -454,6 +442,9 @@ function talkNPC(id)
    end
 
    tk.msg(npcdata.name, npcdata.msg)
+
+   -- Reduce jump message chance
+   var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
 end
 
 --[[

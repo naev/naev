@@ -15,13 +15,13 @@
  </presence>
  <general>
   <class>1</class>
-  <population>0</population>
+  <population>500</population>
   <hide>0.500000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>
-   <missions/>
    <bar/>
+   <missions/>
   </services>
   <commodities/>
   <description>Facett Outpost is little more than a local police station. It was created as a precaution against the pirate threat coming from Khaas, but the Soromid know that no single station could withstand a coordinated attack. Facett is mostly a visible sign of Soromid presence in Hatter. It puts the local population at ease. The real security has to come from Hartwell Station in the neighboring system of Father's Pride.</description>

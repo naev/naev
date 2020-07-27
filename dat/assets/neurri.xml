@@ -25,11 +25,7 @@
    <commodity/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Though life on Neurri is tough, the planet has nevertheless evolved to one of the most prominent pieces of real estate in Soromid space. Kataka's presence implies that Feye gets a lot of traffic, so economically Neurri is in a good position. The world mostly subsists on rendering services to Kataka, though a modest private ship building company has settled here as well.</description>
   <bar>For many non-Soromid, Neurri's bar is a home away from home. Quite a lot of traders come to this planet, so the spaceport bar always has a high number of "regulars" in it. Not that they really mind being around the Soromid, of course. Fine people, the Soromid. They just start giving you the creeps after a while, know what I mean?</bar>
  </general>

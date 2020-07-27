@@ -1,5 +1,5 @@
-include("dat/ai/tpl/generic.lua")
-include("dat/ai/personality/trader.lua")
+require("dat/ai/tpl/generic.lua")
+require("dat/ai/personality/trader.lua")
 
 
 -- Sends a distress signal which causes faction loss

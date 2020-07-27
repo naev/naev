@@ -22,13 +22,11 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Though officially classified as a wintery P class planet, Harnaar isn't all that cold. Temperatures in most areas don't dip below human tolerable levels, and to the local Soromid it is actually quite comfortable. The planet's population isn't immensely high, but Harnaar still has the characteristics of a low-density residential world.</description>
   <bar>As Harnaar isn't an intolerably cold world, conditions lend themselves well to outdoor winter recreation. Tourists from all over Soromid space and beyond visit this planet to indulge in winter sports or outdoor relaxation. The spaceport bar welcomes them with open arms.</bar>
  </general>

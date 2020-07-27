@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "cargo_common.lua"
-include "nextjump.lua"
+require "numstring.lua"
+require "cargo_common.lua"
+require "nextjump.lua"
 
 title = {}
 text = {}

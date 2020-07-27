@@ -115,7 +115,7 @@ static int intro_load( const char *text )
          length = strlen( img_src );
          intro_lines[n] = malloc( length + 2 );
          intro_lines[n][0] = 'i';
-         strncpy( &intro_lines[n][1], img_src, length );
+         strncpy( &intro_lines[n][1], img_src, length + 1 );
          intro_lines[n][length] = '\0';
 
          /* Mark that there are graphics. */

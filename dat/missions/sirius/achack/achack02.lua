@@ -2,10 +2,10 @@
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
-include "dat/scripts/nextjump.lua"
-include "fleethelper.lua"
-include "selectiveclear.lua"
-include "proximity.lua"
+require "dat/scripts/nextjump.lua"
+require "fleethelper.lua"
+require "selectiveclear.lua"
+require "proximity.lua"
 
 title1 = _("An unexpected reunion")
 text1 = _([[When you approach her, the officer greets you with a smile. "What a surprise that we should run into each other again," she says. "I'm afraid to say I don't remember your name. What was it again? Ah yes, %s. I don't think I introduced myself last time, my name is Joanne. Well met. As you can see I'm still doing quite well, no poison in my wine or snakes in my bed or anything." Then her expression turns more serious. "Actually, about that. I think our friend Harja still has it in for me. You had the common sense to use your head, but I'm afraid not everyone is like that. I'm convinced Harja will try to hire more assassins to do what you didn't, so I'm in considerable danger."
@@ -42,7 +42,7 @@ text7 = _([["After the final exams had been taken and we were only days away fro
     Joanne leaves the spaceport bar. You can't help but reflect that even in the highest levels of society, you can find envy and vice.]])
 
 stoptitle = _("Another stop successfully reached")
-stoptext = _("You dock with %s, and the spacedock personnel immediately begins to refuel your ship. You spend a few minutes going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
+stoptext = _("You dock with %s, and the spacedock personnel immediately begins to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
 
 destfailtitle = _("You didn't follow Joanne!")
 sysfailtext = _("You jumped to a system before Joanne did, or you jumped to a different system than Joanne. Your mission is a failure!")

@@ -11,11 +11,11 @@
   <y>473.000000</y>
  </pos>
  <assets>
-  <asset>Vean I</asset>
-  <asset>Vean II</asset>
   <asset>HS-24</asset>
   <asset>NS-63</asset>
   <asset>SY-19</asset>
+  <asset>Vean I</asset>
+  <asset>Vean II</asset>
  </assets>
  <jumps>
   <jump target="Aesria">

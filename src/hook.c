@@ -1259,13 +1259,13 @@ static int hook_parse( xmlNodePtr base )
    HookType_t type;
    Hook *h;
    int is_date;
-   ntime_t res;
+   ntime_t res = 0;
 
    /* Defaults. */
 
    node = base->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"hook")) {
+      if (xml_isNode(node, "hook")) {
          id       = 0;
          parent   = 0;
          func     = NULL;
@@ -1273,17 +1273,17 @@ static int hook_parse( xmlNodePtr base )
          is_date  = 0;
 
          /* Handle the type. */
-         xmlr_attr(node,"type",stype);
+         xmlr_attr(node, "type", stype);
          /* Default to mission for old saves. */
          if (stype == NULL)
             type = HOOK_TYPE_MISN;
          /* Mission type. */
-         else if (strcmp(stype,"misn")==0) {
+         else if (strcmp(stype, "misn") == 0) {
             type = HOOK_TYPE_MISN;
             free(stype);
          }
          /* Event type. */
-         else if (strcmp(stype,"event")==0) {
+         else if (strcmp(stype, "event") == 0) {
             type = HOOK_TYPE_EVENT;
             free(stype);
          }
@@ -1300,15 +1300,15 @@ static int hook_parse( xmlNodePtr base )
             xml_onlyNodes(cur);
 
             /* ID. */
-            xmlr_long(cur,"id",id);
+            xmlr_long(cur, "id", id);
 
             /* Generic. */
-            xmlr_str(cur,"stack",stack);
+            xmlr_str(cur, "stack", stack);
 
             /* Type specific. */
             if ((type == HOOK_TYPE_MISN) || (type == HOOK_TYPE_EVENT)) {
-               xmlr_uint(cur,"parent",parent);
-               xmlr_str(cur,"func",func);
+               xmlr_uint(cur, "parent", parent);
+               xmlr_str(cur, "func", func);
             }
 
             /* Check for date hook. */
@@ -1337,12 +1337,12 @@ static int hook_parse( xmlNodePtr base )
          if (id != 0) {
             h = hook_get( new_id );
             h->id = id;
-         }
 
-         /* Additional info. */
-         if (is_date) {
-            h->is_date = 1;
-            h->res = res;
+            /* Additional info. */
+            if (is_date) {
+               h->is_date = 1;
+               h->res = res;
+            }
          }
       }
    } while (xml_nextNode(node));

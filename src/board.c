@@ -19,7 +19,7 @@
 #include "toolkit.h"
 #include "space.h"
 #include "rng.h"
-#include "economy.h"
+#include "commodity.h"
 #include "hook.h"
 #include "damagetype.h"
 #include "nstring.h"
@@ -149,7 +149,7 @@ void player_board (void)
    wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
    window_addText( wdw, 20, -30, 120, 60,
-         0, "txtCargo", &gl_smallFont, &cDConsole,
+         0, "txtCargo", &gl_smallFont, &cBlack,
          _("Credits:\n"
          "Cargo:\n"
          "Fuel:\n"

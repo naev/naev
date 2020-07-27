@@ -36,23 +36,23 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <pos x="6000" y="-5000"/>
-   <radius>1000</radius>
+   <radius>1000.000000</radius>
+   <pos x="6000.000000" y="-5000.000000"/>
    <density>1.500000</density>
   </asteroid>
   <asteroid>
-   <pos x="6500" y="-2000"/>
-   <radius>2500</radius>
+   <radius>2500.000000</radius>
+   <pos x="6500.000000" y="-2000.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
-   <pos x="7000" y="500"/>
-   <radius>500</radius>
+   <radius>500.000000</radius>
+   <pos x="7000.000000" y="500.000000"/>
    <density>1.500000</density>
   </asteroid>
   <exclusion>
-   <pos x="2000" y="-700"/>
-   <radius>4700</radius>
+   <radius>4700.000000</radius>
+   <pos x="2000.000000" y="-700.000000"/>
   </exclusion>
  </asteroids>
 </ssys>

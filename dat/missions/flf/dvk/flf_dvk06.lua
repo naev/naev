@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- Localization stuff
 title = {}
@@ -37,7 +37,7 @@ text[3] = _([["Excellent!" You take a seat. "So once again, our mission today is
 
 title[4] = _("Another Day, Another Victory")
 text[4] = _([[If your comrades were happy about your victory at Raelid, they are ecstatic about your victory at Haleb. As you enter the station, you are met with cheers from what seems to be everyone. It takes you longer than usual to make it to Benito as a result. "Congratulations," she says. "That was an astounding victory, sure to set back the Dvaered oppressors substantially! This is the first time we've pushed them out of Frontier space, and for that, we all thank you. If you haven't noticed, you've made yourself into a bit of a hero!
-    "Here is your pay, %s. May we have another great victory later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a few hours, and then make your way back to your ship for some much-needed rest.]])
+    "Here is your pay, %s. May we have another great victory later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a period or two, and then make your way back to your ship for some much-needed rest.]])
     
 
 misn_title = _("Assault on Haleb")
@@ -87,7 +87,7 @@ function accept ()
       misn.setReward( misn_reward )
 
       credits = 750000
-      reputation = 10
+      reputation = 5
 
       started = false
       attacked_station = false
@@ -347,7 +347,7 @@ end
 
 function finish ()
    player.pay( credits )
-   flf_setReputation( 92 )
+   flf_setReputation( 90 )
    faction.get("FLF"):modPlayer( reputation )
    misn.finish( true )
 end

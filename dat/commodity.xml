@@ -2,133 +2,171 @@
 <Commodities>
  <commodity>
   <name>Food</name>
-  <description>Evolving from the military rations of centuries past, modern packaged meals are rich in nutrients and able to last decades in their vacuum-sealed packaging.</description>
-  <price>140</price>
+  <description>Evolving from the military rations of the ancient past, modern packaged meals are rich in nutrients and able to last many cycles in their vacuum-sealed packaging.</description>
+  <price>210</price>
   <gfx_store>standard_mealpacks</gfx_store>
-  <planet_modifier type="0">1.1</planet_modifier>
-  <planet_modifier type="1">1.05</planet_modifier>
-  <planet_modifier type="2">1.2</planet_modifier>
-  <planet_modifier type="3">0.95</planet_modifier>
-  <planet_modifier type="B">1.1</planet_modifier>
+  <standard/>
+  <planet_modifier type="H">0.7</planet_modifier>
   <planet_modifier type="K">0.95</planet_modifier>
   <planet_modifier type="L">0.9</planet_modifier>
-  <planet_modifier type="M">0.6</planet_modifier>
-  <planet_modifier type="O">0.7</planet_modifier>
-  <planet_modifier type="P">0.9</planet_modifier>
-  <planet_modifier type="Q">0.9</planet_modifier>
+  <planet_modifier type="M">0.4</planet_modifier>
+  <planet_modifier type="O">0.4</planet_modifier>
+  <planet_modifier type="P">0.5</planet_modifier>
+  <planet_modifier type="Q">0.8</planet_modifier>
+  <planet_modifier type="R">0.8</planet_modifier>
   <period>80</period>
-  <population_modifier>-0.2</population_modifier>
-  <faction_modifier type="Dvaered">1.1</faction_modifier>
+  <population_modifier>0.75</population_modifier>
+  <faction_modifier type="Empire">0.8</faction_modifier>
   <faction_modifier type="FLF">1.2</faction_modifier>
-  <faction_modifier type="Pirate">1.05</faction_modifier>
+  <faction_modifier type="Frontier">1.2</faction_modifier>
  </commodity>
  <commodity>
-  <name>Ore</name>
-  <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
-  <price>210</price>
-  <gfx_store>base</gfx_store>
-  <planet_modifier type="2">1.1</planet_modifier>
-  <planet_modifier type="H">1.05</planet_modifier>
-  <planet_modifier type="I">1.2</planet_modifier>
-  <planet_modifier type="J">1.2</planet_modifier>
-  <planet_modifier type="L">0.8</planet_modifier>
-  <planet_modifier type="M">1.1</planet_modifier>
-  <planet_modifier type="O">1.3</planet_modifier>
-  <planet_modifier type="P">0.9</planet_modifier>
-  <period>100</period>
-  <population_modifier>-0.1</population_modifier>
-  <faction_modifier type="Dvaered">1.1</faction_modifier>
-  <faction_modifier type="Empire">0.9</faction_modifier>
-  <faction_modifier type="Civilian">0.9</faction_modifier>
-  <faction_modifier type="Frontier">0.8</faction_modifier>
-  <faction_modifier type="Miner">0.7</faction_modifier>
-  <faction_modifier type="Proteron">1.2</faction_modifier>
- </commodity>
- <commodity>
-  <name>Gold</name>
-  <description>Despite its limited use in industry, gold has a relative high value due to its role as an universal currency.</description>
-  <price>450</price>
-  <gfx_store>gold</gfx_store>
-  <gfx_space>gold</gfx_space>
-  <planet_modifier type="0">1.2</planet_modifier>
-  <planet_modifier type="1">1.3</planet_modifier>
-  <planet_modifier type="2">1.4</planet_modifier>
-  <planet_modifier type="3">0.8</planet_modifier>
-  <planet_modifier type="L">0.8</planet_modifier>
-  <planet_modifier type="M">0.9</planet_modifier>
-  <planet_modifier type="O">0.85</planet_modifier>
-  <planet_modifier type="P">0.75</planet_modifier>
-  <period>40</period>
-  <population_modifier>0.1</population_modifier>
-  <faction_modifier type="Empire">1.1</faction_modifier>
-  <faction_modifier type="Pirate">1.2</faction_modifier>
-  <faction_modifier type="FLF">0.8</faction_modifier>
-  <faction_modifier type="Sirius">0.9</faction_modifier>
- </commodity>
- <commodity>
-  <name>Industrial Goods</name>
-  <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
-  <price>340</price>
-  <gfx_store>recycled_electronics</gfx_store>
-  <planet_modifier type="1">1.1</planet_modifier>
-  <planet_modifier type="2">1.1</planet_modifier>
-  <planet_modifier type="3">1.1</planet_modifier>
-  <planet_modifier type="H">0.8</planet_modifier>
-  <planet_modifier type="A">0.9</planet_modifier>
-  <planet_modifier type="K">1.1</planet_modifier>
-  <planet_modifier type="L">1.05</planet_modifier>
-  <planet_modifier type="M">0.8</planet_modifier>
-  <planet_modifier type="N">1.1</planet_modifier>
-  <planet_modifier type="O">1.05</planet_modifier>
-  <planet_modifier type="P">0.95</planet_modifier>
-  <period>60</period>
-  <population_modifier>-0.25</population_modifier>
-  <faction_modifier type="Dvaered">0.8</faction_modifier>
-  <faction_modifier type="Proteron">0.9</faction_modifier>
-  <faction_modifier type="Sirius">1.1</faction_modifier>
+  <name>Water</name>
+  <description>An unusual chemical that we humans take for granted, water is necessary for sustaining human life and useful in many industries due to its unique properties. While common, it is not evenly dispersed throughout the galaxy, leading to heavy concentrations in some areas and a complete absence of water in other areas.</description>
+  <price>250</price>
+  <gfx_store>heavy_water</gfx_store>
+  <gfx_space>water</gfx_space>
+  <standard/>
+  <planet_modifier type="A">1.2</planet_modifier>
+  <planet_modifier type="B">1.2</planet_modifier>
+  <planet_modifier type="E">1.2</planet_modifier>
+  <planet_modifier type="F">1.2</planet_modifier>
+  <planet_modifier type="H">1.1</planet_modifier>
+  <planet_modifier type="K">0.95</planet_modifier>
+  <planet_modifier type="L">0.9</planet_modifier>
+  <planet_modifier type="M">0.7</planet_modifier>
+  <planet_modifier type="N">0.9</planet_modifier>
+  <planet_modifier type="O">0.4</planet_modifier>
+  <planet_modifier type="P">0.5</planet_modifier>
+  <planet_modifier type="Q">0.8</planet_modifier>
+  <planet_modifier type="R">0.9</planet_modifier>
+  <planet_modifier type="X">1.25</planet_modifier>
+  <planet_modifier type="Y">1.25</planet_modifier>
+  <planet_modifier type="Z">1.25</planet_modifier>
+  <period>110</period>
+  <population_modifier>0.7</population_modifier>
   <faction_modifier type="FLF">1.2</faction_modifier>
+  <faction_modifier type="Frontier">1.2</faction_modifier>
  </commodity>
  <commodity>
   <name>Medicine</name>
   <description>An assortment of medicines suitable for curing all sorts of ailments.</description>
   <price>750</price>
   <gfx_store>vaccines</gfx_store>
-  <planet_modifier type="1">1.1</planet_modifier>
+  <standard/>
   <planet_modifier type="2">1.2</planet_modifier>
-  <planet_modifier type="H">1.2</planet_modifier>
-  <planet_modifier type="K">0.9</planet_modifier>
-  <planet_modifier type="L">0.8</planet_modifier>
-  <planet_modifier type="M">0.9</planet_modifier>
-  <planet_modifier type="O">0.8</planet_modifier>
-  <planet_modifier type="P">1.05</planet_modifier>
   <period>70</period>
-  <population_modifier>-0.3</population_modifier>
+  <population_modifier>0.75</population_modifier>
+  <faction_modifier type="Dvaered">1.2</faction_modifier>
+  <faction_modifier type="FLF">1.3</faction_modifier>
+  <faction_modifier type="Frontier">1.3</faction_modifier>
+  <faction_modifier type="Pirate">1.5</faction_modifier>
+  <faction_modifier type="Soromid">0.4</faction_modifier>
+  <faction_modifier type="Thurion">0.8</faction_modifier>
+  <faction_modifier type="Za'lek">0.9</faction_modifier>
+ </commodity>
+ <commodity>
+  <name>Ore</name>
+  <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
+  <price>210</price>
+  <gfx_store>base</gfx_store>
+  <standard/>
+  <planet_modifier type="1">1.2</planet_modifier>
+  <planet_modifier type="2">1.2</planet_modifier>
+  <planet_modifier type="A">0.75</planet_modifier>
+  <planet_modifier type="B">0.75</planet_modifier>
+  <planet_modifier type="D">0.8</planet_modifier>
+  <planet_modifier type="E">0.75</planet_modifier>
+  <planet_modifier type="F">0.75</planet_modifier>
+  <planet_modifier type="H">0.9</planet_modifier>
+  <planet_modifier type="I">0.9</planet_modifier>
+  <planet_modifier type="J">0.9</planet_modifier>
+  <planet_modifier type="M">0.8</planet_modifier>
+  <planet_modifier type="P">0.9</planet_modifier>
+  <planet_modifier type="S">0.9</planet_modifier>
+  <planet_modifier type="Y">0.5</planet_modifier>
+  <period>100</period>
+  <population_modifier>-0.5</population_modifier>
+  <faction_modifier type="Dvaered">0.5</faction_modifier>
   <faction_modifier type="FLF">1.2</faction_modifier>
-  <faction_modifier type="Soromid">0.9</faction_modifier>
-  <faction_modifier type="Sirius">0.8</faction_modifier>
-  <faction_modifier type="Empire">1.1</faction_modifier>
+  <faction_modifier type="Soromid">0.8</faction_modifier>
+ </commodity>
+ <commodity>
+  <name>Gold</name>
+  <description>Gold is prized for its combination of resistance to corrosion and conductivity, which is used to enhance the lifetime of electronics, although its most demanding application is as a component in decorative articles, such as jewelry.</description>
+  <price>550</price>
+  <gfx_store>gold</gfx_store>
+  <gfx_space>gold</gfx_space>
+  <standard/>
+  <planet_modifier type="M">1.1</planet_modifier>
+  <planet_modifier type="N">1.25</planet_modifier>
+  <planet_modifier type="Q">1.1</planet_modifier>
+  <period>40</period>
+  <population_modifier>0.5</population_modifier>
+  <faction_modifier type="Dvaered">0.8</faction_modifier>
+  <faction_modifier type="FLF">0.5</faction_modifier>
+  <faction_modifier type="Frontier">0.5</faction_modifier>
   <faction_modifier type="Pirate">1.2</faction_modifier>
+  <faction_modifier type="Sirius">1.1</faction_modifier>
+  <faction_modifier type="Soromid">0.7</faction_modifier>
+ </commodity>
+ <commodity>
+  <name>Diamond</name>
+  <description>Diamond is another form of graphite which has been crystallized due to intense pressure and heat deep beneath the surface of some types of planets. The material is useful in some cutting applications due to its hardness, and it is commonly used in decorative applications, but diamond is now easy enough to produce synthetically that it is not as sought after as much as it once was.</description>
+  <price>220</price>
+  <gfx_store>diamonds</gfx_store>
+  <gfx_space>diamonds</gfx_space>
+  <standard/>
+  <planet_modifier type="F">0.5</planet_modifier>
+  <planet_modifier type="K">0.9</planet_modifier>
+  <planet_modifier type="L">0.9</planet_modifier>
+  <planet_modifier type="M">0.7</planet_modifier>
+  <planet_modifier type="Q">0.8</planet_modifier>
+  <planet_modifier type="Z">0.6</planet_modifier>
+  <period>70</period>
+  <population_modifier>0.25</population_modifier>
+  <faction_modifier type="Dvaered">0.6</faction_modifier>
+  <faction_modifier type="FLF">0.4</faction_modifier>
+  <faction_modifier type="Frontier">0.4</faction_modifier>
+  <faction_modifier type="Pirate">1.2</faction_modifier>
+  <faction_modifier type="Sirius">1.1</faction_modifier>
+  <faction_modifier type="Soromid">0.8</faction_modifier>
+ </commodity>
+ <commodity>
+  <name>Industrial Goods</name>
+  <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
+  <price>340</price>
+  <gfx_store>recycled_electronics</gfx_store>
+  <standard/>
+  <period>60</period>
+  <population_modifier>-0.25</population_modifier>
+  <planet_modifier type="0">1.4</planet_modifier>
+  <planet_modifier type="1">1.5</planet_modifier>
+  <planet_modifier type="2">1.4</planet_modifier>
+  <faction_modifier type="FLF">1.2</faction_modifier>
+  <faction_modifier type="Pirate">1.2</faction_modifier>
+  <faction_modifier type="Sirius">0.8</faction_modifier>
  </commodity>
  <commodity>
   <name>Luxury Goods</name>
   <description>All sorts of high quality luxury goods.</description>
   <price>630</price>
   <gfx_store>first_class_passenger</gfx_store>
-  <planet_modifier type="0">1.05</planet_modifier>
-  <planet_modifier type="1">1.2</planet_modifier>
-  <planet_modifier type="2">0.8</planet_modifier>
-  <planet_modifier type="K">0.9</planet_modifier>
-  <planet_modifier type="L">0.8</planet_modifier>
-  <planet_modifier type="M">1.15</planet_modifier>
-  <planet_modifier type="N">1.05</planet_modifier>
-  <planet_modifier type="O">1.1</planet_modifier>
-  <planet_modifier type="P">0.9</planet_modifier>
+  <standard/>
+  <planet_modifier type="0">0.7</planet_modifier>
+  <planet_modifier type="1">0.7</planet_modifier>
+  <planet_modifier type="2">0.6</planet_modifier>
+  <planet_modifier type="M">1.1</planet_modifier>
   <period>50</period>
-  <population_modifier>0.2</population_modifier>
-  <faction_modifier type="Empire">1.2</faction_modifier>
-  <faction_modifier type="Sirius">0.9</faction_modifier>
+  <population_modifier>0.5</population_modifier>
   <faction_modifier type="Dvaered">0.8</faction_modifier>
-  <faction_modifier type="FLF">0.9</faction_modifier>
+  <faction_modifier type="Empire">1.2</faction_modifier>
+  <faction_modifier type="FLF">0.8</faction_modifier>
+  <faction_modifier type="Frontier">0.8</faction_modifier>
+  <faction_modifier type="Proteron">1.2</faction_modifier>
+  <faction_modifier type="Sirius">1.3</faction_modifier>
+  <faction_modifier type="Thurion">0.8</faction_modifier>
+  <faction_modifier type="Za'lek">0.5</faction_modifier>
  </commodity>
  <commodity>
   <name>Ancient Artifact</name>

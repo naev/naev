@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/missions/neutral/commodity_run.lua"
+require "dat/missions/neutral/commodity_run.lua"
 
 misn_title = _("FLF: %s Supply Run")
 misn_desc = _("There is a need for more %s at this base. Find a planet where you can buy this commodity and bring as much of it back as possible.")
@@ -30,5 +30,5 @@ cargo_land_p2[3] = _("%s%s are unloaded from your vessel by a team of FLF soldie
 osd_title = _("FLF Supply Run")
 
 
-commchoices = { "Food", "Ore", "Industrial Goods", "Medicine" }
+commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Water" }
 

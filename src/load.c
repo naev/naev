@@ -21,6 +21,7 @@
 #include "space.h"
 #include "toolkit.h"
 #include "menu.h"
+#include "economy.h"
 #include "dialogue.h"
 #include "event.h"
 #include "news.h"
@@ -87,7 +88,7 @@ static int load_load( nsave_t *save, const char *path )
 {
    xmlDocPtr doc;
    xmlNodePtr root, parent, node, cur;
-   int scu, stp, stu;
+   int cycles, periods, seconds;
    char *version = NULL;
 
    memset( save, 0, sizeof(nsave_t) );
@@ -114,44 +115,44 @@ static int load_load( nsave_t *save, const char *path )
       xml_onlyNodes(parent);
 
       /* Info. */
-      if (xml_isNode(parent,"version")) {
+      if (xml_isNode(parent, "version")) {
          node = parent->xmlChildrenNode;
          do {
-            xmlr_strd(node,"naev",version);
-            xmlr_strd(node,"data",save->data);
+            xmlr_strd(node, "naev", version);
+            xmlr_strd(node, "data", save->data);
          } while (xml_nextNode(node));
          continue;
       }
 
-      if (xml_isNode(parent,"player")) {
+      if (xml_isNode(parent, "player")) {
          /* Get name. */
-         xmlr_attr(parent,"name",save->name);
+         xmlr_attr(parent, "name", save->name);
          /* Parse rest. */
          node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
             /* Player info. */
-            xmlr_strd(node,"location",save->planet);
-            xmlr_ulong(node,"credits",save->credits);
+            xmlr_strd(node, "location", save->planet);
+            xmlr_ulong(node, "credits", save->credits);
 
             /* Time. */
-            if (xml_isNode(node,"time")) {
+            if (xml_isNode(node, "time")) {
                cur = node->xmlChildrenNode;
-               scu = stp = stu = 0;
+               cycles = periods = seconds = 0;
                do {
-                  xmlr_int(cur,"SCU",scu);
-                  xmlr_int(cur,"STP",stp);
-                  xmlr_int(cur,"STU",stu);
+                  xmlr_int(cur, "SCU", cycles);
+                  xmlr_int(cur, "STP", periods);
+                  xmlr_int(cur, "STU", seconds);
                } while (xml_nextNode(cur));
-               save->date = ntime_create( scu, stp, stu );
+               save->date = ntime_create( cycles, periods, seconds );
                continue;
             }
 
             /* Ship info. */
-            if (xml_isNode(node,"ship")) {
-               xmlr_attr(node,"name",save->shipname);
-               xmlr_attr(node,"model",save->shipmodel);
+            if (xml_isNode(node, "ship")) {
+               xmlr_attr(node, "name", save->shipname);
+               xmlr_attr(node, "model", save->shipmodel);
                continue;
             }
          } while (xml_nextNode(node));
@@ -387,20 +388,20 @@ static void load_menu_update( unsigned int wid, char *str )
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
    nsnprintf( buf, sizeof(buf),
-         _("\aDName:\n"
-         "\a0   %s\n"
-         "\aDVersion:\n"
-         "\a0   %s\n"
-         "\aDDate:\n"
-         "\a0   %s\n"
-         "\aDPlanet:\n"
-         "\a0   %s\n"
-         "\aDCredits:\n"
-         "\a0   %s\n"
-         "\aDShip Name:\n"
-         "\a0   %s\n"
-         "\aDShip Model:\n"
-         "\a0   %s"),
+         _("Name:\n"
+         "   %s\n"
+         "Version:\n"
+         "   %s\n"
+         "Date:\n"
+         "   %s\n"
+         "Planet:\n"
+         "   %s\n"
+         "Credits:\n"
+         "   %s\n"
+         "Ship Name:\n"
+         "   %s\n"
+         "Ship Model:\n"
+         "   %s"),
          ns->name, version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
@@ -437,7 +438,7 @@ static void load_menu_load( unsigned int wdw, char *str )
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
             "   Save version: \ar%s\a0\n"
-            "   Naev version: \aD%s\a0\n"
+            "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
             save, version, naev_version(0) ))
          return;
@@ -529,6 +530,47 @@ static void load_compatSlots (void)
       free(sships[i]);
    free(sships);
    free(tships);
+}
+
+
+/**
+ * @brief Loads the diffs from game file.
+ *
+ *    @param file File that contains the new game.
+ *    @return 0 on success.
+ */
+int load_gameDiff( const char* file )
+{
+   xmlNodePtr node;
+   xmlDocPtr doc;
+
+   /* Make sure it exists. */
+   if (!nfile_fileExists(file)) {
+      dialogue_alert( _("Savegame file seems to have been deleted.") );
+      return -1;
+   }
+
+   /* Load the XML. */
+   doc   = xmlParseFile(file);
+   if (doc == NULL)
+      goto err;
+   node  = doc->xmlChildrenNode; /* base node */
+   if (node == NULL)
+      goto err_doc;
+
+   /* Diffs should be cleared automatically first. */
+   diff_load(node);
+
+   /* Free. */
+   xmlFreeDoc(doc);
+
+   return 0;
+
+err_doc:
+   xmlFreeDoc(doc);
+err:
+   WARN( _("Savegame '%s' invalid!"), file);
+   return -1;
 }
 
 

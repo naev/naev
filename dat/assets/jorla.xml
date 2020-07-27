@@ -26,13 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>This Class-O planet is another purely residential planet in Za'lek space, with a rather large population and several university campuses. The standard of living is rather high, and life expectancy is long, making it a popular place to live out a retirement. Other than that, there isn't much to recommend it to adventurers. Which is just how many of the inhabitants like it.</description>
   <bar>This bar bears a closer resemblance to a family restaurant, with the average patron being about late middle age.</bar>
  </general>

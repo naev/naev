@@ -1,11 +1,11 @@
 --[[
--- This is the second mission in the crazy baron string.
+-- This is the second mission in the baron string.
 --]]
 
 -- localization stuff, translators would work here
-include "fleethelper.lua"
-include "numstring.lua"
-include "portrait.lua"
+require "fleethelper.lua"
+require "numstring.lua"
+require "portrait.lua"
 
 
 title = {}
@@ -70,11 +70,11 @@ text[14] = _([[Flintley studies the object on the table for a while, checking th
    
 flintdeftitle = _("Just passing through")
    
-flintdeftext = _([[Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, all right. I'll be here if you need me. Good luck out there."]])
+flintdeftext = _([[Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, alright. I'll be here if you need me. Good luck out there."]])
    
 title[10] = _("From days long gone")
    
-text[15] = _([[Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several minutes he leans back and whistles. "Well I never. This has to be it, %s. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"
+text[15] = _([[Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several hectoseconds he leans back and whistles. "Well I never. This has to be it, %s. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"
    You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artifact's purpose.
    "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
    Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artifact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]])

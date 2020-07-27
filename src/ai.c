@@ -464,6 +464,7 @@ int ai_pinit( Pilot *p, const char *ai )
    char buf[PATH_MAX];
 
    strncpy(buf, ai, sizeof(buf));
+   buf[sizeof(buf)-1] = '\0';
 
    /* Set up the profile. */
    prof = ai_getProfile(buf);
@@ -1465,7 +1466,7 @@ static int aiL_isbribed( lua_State *L )
 {
    Pilot *p;
    p = luaL_validpilot(L,1);
-   lua_pushboolean(L, (p->id == PLAYER_ID) && pilot_isFlag(cur_pilot,PILOT_BRIBED));
+   lua_pushboolean(L, (p->id == PLAYER_ID) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
    return 1;
 }
 
@@ -2570,7 +2571,7 @@ static int aiL_follow_accurate( lua_State *L )
  */
 static int aiL_face_accurate( lua_State *L )
 {
-   Vector2d point, cons, goal, pv, *pos, *vel;
+   Vector2d point, cons, goal, *pos, *vel;
    double radius, angle, Kp, Kd, angle2;
    Pilot *p;
 

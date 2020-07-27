@@ -470,11 +470,10 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon **wlayer;
    int *nlayer;
    Weapon *w;
-   int i, j, k;
+   int i;
    int spfx;
    int s;
    Pilot *p;
-   Outfit *o;
 
    /* Choose layer. */
    switch (layer) {
@@ -700,9 +699,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
  */
 static void weapon_render( Weapon* w, const double dt )
 {
-   double x,y, cx,cy, gx,gy;
    glTexture *gfx;
-   double z;
    glColour c = { .r=1., .g=1., .b=1. };
 
    switch (w->outfit->type) {
@@ -808,13 +805,8 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (w->faction == FACTION_PLAYER) {
 
       /* Always hit hostiles. */
-      if (pilot_isFlag(p, PILOT_HOSTILE))
+      if (pilot_isHostile(p))
          return 1;
-
-      /* Always hit unbribed enemies. */
-      else if (!pilot_isFlag(p, PILOT_BRIBED) &&
-            areEnemies(w->faction, p->faction))
-        return 1;
 
       /* Miss rest - can be neutral/ally. */
       else
@@ -825,9 +817,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (p->faction == FACTION_PLAYER) {
       parent = pilot_get(w->parent);
       if (parent != NULL) {
-         if (pilot_isFlag(parent, PILOT_BRIBED))
-            return 0;
-         if (pilot_isFlag(parent, PILOT_HOSTILE))
+         if (pilot_isHostile(parent))
             return 1;
       }
    }
@@ -859,6 +849,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    Asteroid *a;
    AsteroidType *at;
 
+   gfx = NULL;
+   polygon = NULL;
+
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
    if (!b) {
@@ -878,8 +871,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             usePoly = 0;
       }
    }
-   else
-      gfx = NULL;
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -1077,8 +1068,6 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
          /* Set as hostile. */
          pilot_setHostile(p);
-         pilot_rmFlag( p, PILOT_BRIBED );
-         pilot_rmFlag( p, PILOT_FRIENDLY );
       }
    }
    /* Otherwise just inform of being attacked. */
@@ -1248,7 +1237,8 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
       Vector2d pos[2], const double dt )
 {
-   int s, spfx;
+   (void) layer;
+   int spfx;
    Damage dmg;
    const Damage *odmg;
 

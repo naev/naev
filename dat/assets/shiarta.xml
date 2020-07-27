@@ -24,11 +24,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Where Oma is too hot, Shiarta is too cold for comfort. Still, the Empire is always in need of raw materials, and Shiarta is rich in same.</description>
   <bar>The spaceport bar sells only a select number of drinks. Like most mining worlds, there is not much in the way of luxury to be found on Shiarta. There is, however, one small piece of good news: ice cubes are free of charge.</bar>
  </general>

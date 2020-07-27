@@ -25,9 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Some planets just don't have the capacity to feed their own populations, despite advanced crop-growing techniques. Reidd is not one of those planets. In fact, Reidd's orbit and axial inclination make it such a good farming world that it can supply many worlds in nearby systems. The local government acknowledges this, and has dedicated 97% of Reidd's land surface to agricultural operations.</description>
   <bar>In what might be a slight case of overreaction, Reidd's bar is underground, so as not to have to sacrifice any land surface. Still, the primary difference between this bar and most others in the galaxy is that pilots have to take an elevator to reach this one.</bar>
  </general>

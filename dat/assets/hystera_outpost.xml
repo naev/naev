@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Hystera Outpost">
+ <pos>
+  <x>5647.850814</x>
+  <y>6361.203738</y>
+ </pos>
+ <GFX>
+  <space>station-commerce3.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>After the Incident, the surviving Proteron on Protera Sigma sought to establish new colonies to replace the ones they had lost. Hystera was the first nearby system to be discovered, but it was found to contain a gas giant and a hostile planet with nothing of interest. The Proteron therefore instead decided to establish an outpost, this one, orbiting Hystera II, with the goal of finding additional systems in the vicinity. With the discovery of Korifa, the station had fulfilled its purpose and was converted for use as a trade hub.</description>
+  <bar>Proteron civilians enter and exit the bar with incredible efficiency, not wasting a moment of their time.</bar>
+ </general>
+</asset>

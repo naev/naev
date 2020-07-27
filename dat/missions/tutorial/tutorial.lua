@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/events/tutorial/tutorial-common.lua"
+require "dat/events/tutorial/tutorial-common.lua"
 
 
 -- localization stuff, translators would work here
@@ -40,9 +40,9 @@ text[4] = _("\"Perfect! That was easy enough, right? We at Melendez Corporation 
 text[5]  = _("\"On that note, let's go over landing! All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by \abdouble-clicking\a0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on %s? You'll need to first slow down your ship so that the landing procedure can be carried out safely; you can do this either with your regular movement controls or, if you prefer, by pressing %s, which will bring your Melendez Corporation ship to a complete stop. You can then land either by \abdouble-clicking\a0 on the planet, or by targeting the planet with %s and then pressing %s. Give it a try!\"")
 
 text[6]  = _([["Excellent! The landing was successful. Melendez Corporation uses advanced artificial intelligence technology so that you never have to worry about your ship crashing. It may seem like a small thing, but it wasn't long ago when pilots had to land manually and crashes were commonplace! We at Melendez Corporation pride ourselves at protecting the safety of our valued customers and ensuring that your ship is reliable and resilient.
-    "When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Feel free to take a look around if you like; you might want to talk to the locals at the bar, for instance. When you are done, click the 'Take Off' button so we can continue."]])
+    "When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Feel free to take a look around if you like; you might want to talk to the people at the bar, for instance, where fellow pilots can share you tips based on their own experience! When you are done, click the 'Take Off' button so we can continue."]])
 
-text[7]  = _("\"Welcome back to space, %s! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. That is why we at Melendez Corporation always include the latest Autonav technology with all of our ships!\
+text[7]  = _("\"Welcome back to space, %s! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. That is why we at Melendez Corporation always require the latest Autonav technology with all of our ships!\
     \"Autonav is simple and elegant. Simply press %s to open your ship's overlay map, then simply \abright-click\a0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but advanced Melendez Corporation technology allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, our Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's Options menu, which you can access by pressing %s.\
     \"Why don't you try using Autonav to fly over to %s? You should be able to see it on your overlay map.\"")
 
@@ -50,7 +50,7 @@ text[8]  = _([["Great job! As you can see, by using Autonav, the perceived durat
     "Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, you are likely to encounter pirate scum if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with state-of-the-art laser cannons for just that reason!
     "I will launch a combat practice drone off of %s now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing %s, then use your weapons, controlled with %s and %s, to take out the drone!"]])
 
-text[9]  =_( [["Great job! As you may have noticed, shield regenerates over time, but armor does not. This is not universal, of course; some ships, particularly larger ships, feature advanced armor repair technology. But even then, armor regeneration is usually much slower than shield regeneration.
+text[9]  =_( [["Excellent work taking out that drone! As you may have noticed, shield regenerates over time, but armor does not. This is not universal, of course; some ships, particularly larger ships, feature advanced armor repair technology. But even then, armor regeneration is usually much slower than shield regeneration.
     "You may have also noticed your heat meters going up as your ship and weapons got hot. This is normal, but too much heat can make your weapons difficult to use, so we at Melendez Corporation recommend using active cooling when it is safe to do so. You can engage active cooling by pressing %s twice. Alternatively, you can cool off your ship instantly by landing on any planet or station.
     "It is also worth noting that you can configure the way your weapons shoot from the Info screen, which can be accessed by pressing %s or through the button on the top of your screen. The Info screen also lets you view information about your ship, cargo, current missions, and reputation with the various factions. You will likely be referencing it a lot."]])
 
@@ -61,7 +61,7 @@ text[10] = _([["I think we should try venturing outside of this system! There ar
 
 text[11] = _("\"You have done very well, %s! As you can see, the trip consumed fuel. You consume fuel any time you make a jump and can refuel by landing on a friendly planet. If you find yourself in a pinch, you may also be able to buy fuel from other pilots in the system; hail a pilot by \abdouble-clicking\a0 on them, or by selecting them with %s and then pressing %s.\
     \"Ah, that reminds me: you can also attempt to bribe hostile ships, such as pirates, by hailing them. Bribes work better on some factions than on others; pirates will happily take your offer and may even sell you fuel afterwards, but many other factions may be less forthcoming.\
-    \"And I think that's it! I must say, you are a natural-born pilot and your new Melendez ship suits you well! I wish you good luck in your travels. Thank you for shopping with Melendez Corporation!\" Captain T. Practice ceases contact and you finally let out a sigh of relief. You were starting to think you might go insane with all of the marketing nonsense being poured out at you. At least you learned how to pilot the ship, though!")
+    \"And I think that's it! I must say, you are a natural-born pilot and your new Melendez ship suits you well! I wish you good luck in your travels. Thank you for shopping with Melendez Corporation!\" Captain T. Practice ceases contact and you finally let out a sigh of relief. You were starting to think you might lose your mind with all of the marketing nonsense being poured out at you. At least you learned how to pilot the ship, though!")
 
 misn_title = _("Tutorial")
 misn_desc = _("Captain T. Practice has offered to teach you how to fly your ship.")

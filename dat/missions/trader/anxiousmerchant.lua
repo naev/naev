@@ -11,9 +11,9 @@
 
 ]]--
 
-include "cargo_common.lua"
-include "numstring.lua"
-include "portrait.lua"
+require "cargo_common.lua"
+require "numstring.lua"
+require "portrait.lua"
 
 
 bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")

@@ -53,6 +53,7 @@ glTexture *gl_sysfaction_disk    = NULL; /**< Texture of the disk representing f
 static int cur_commod         = -1; /**< Current commodity selected. */
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
 static int cur_planet_sel = 0; /**< Current planet selected by user (0 = star). */
+static Planet *cur_planetObj_sel = NULL;
 static int pitch = 0; /**< pitch of planet images. */
 /* VBO. */
 //static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -87,6 +88,7 @@ static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod 
 static void map_system_selectCur (void);
 void map_system_show( int wid, int x, int y, int w, int h);
 
+static void map_system_genOutfitsList( unsigned int wid );
 
 
 /**
@@ -223,6 +225,9 @@ void map_system_open (int sys_selected)
      space_gfxLoad( cur_sys_sel );
    }
    map_system_show( wid, 20, -40, w-40, h-100);
+
+   map_system_genOutfitsList( wid );
+
 }
 
 
@@ -290,7 +295,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    double unknownPresence = 0;
    char t;
    int txtHeight;
-   Planet *cur_planetObj_sel = NULL;
+   int planetObjChanged = 0;
+   cur_planetObj_sel = NULL;
    phase++;
    if( phase > 150 ) phase = 0;
    /* background */
@@ -323,8 +329,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
        textw = gl_printWidthRaw( &gl_smallFont, p->name );
        if( textw > nameWidth ) nameWidth = textw;
        gl_print( &gl_smallFont,bx+5+pitch, by+(nshow-j-0.5)*pitch,cur_planet_sel==j?&cGreen:&cWhite, p->name );
-       if ( cur_planet_sel == j )
-	 cur_planetObj_sel = p;
+       if ( cur_planet_sel == j ){
+          if ( cur_planetObj_sel != p )
+             planetObjChanged=1;
+          cur_planetObj_sel = p;
+       }
 
        
      }
@@ -510,6 +519,10 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
      gl_printText( &gl_smallFont, (w - nameWidth-pitch-5)/2, txtHeight, bx+10+pitch+nameWidth, by + h - 10-txtHeight, &cWhite, buf);
    }
+   if ( planetObjChanged ){
+      map_system_genOutfitsList( wid );
+
+   }
 }
 
 /**
@@ -533,7 +546,7 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
    switch (event->type) {
    case SDL_MOUSEBUTTONDOWN:
      /* Must be in bounds. */
-     printf("%g %g\n",mx,my);
+     printf("mouse down: %g %g\n",mx,my);
      if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
      if (mx < pitch && my > 0){
@@ -596,4 +609,110 @@ static glTexture *gl_genSysFactionDisk( int radius )
 
    /* Return texture. */
    return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
+}
+
+void map_system_outfits_update( unsigned int wid, char* str ){
+   printf("map_system_outfits_update: %s\n",str);
+}
+static void map_system_outfits_rmouse( unsigned int wid, char* widget_name )
+{
+   printf("map_system_outfits_rmouse: %s\n",widget_name);
+}
+
+
+/**
+ * @brief Generates the outfit list.
+ *
+ *    @param wid Window to generate the list on.
+ */
+#define MAPSYS_OUTFITS "mapSysOutfits"
+static void map_system_genOutfitsList( unsigned int wid )
+{
+   int i, active, owned, len;
+   int fx, fy, fw, fh, barw; /* Input filter. */
+   Outfit **outfits;
+   char **soutfits, **slottype, **quantity;
+   glTexture **toutfits;
+   int noutfits, moutfits;
+   int w, h, iw, ih;
+   glColour *bg, blend;
+   const glColour *c;
+   const char *slotname;
+   char *filtertext;
+   int no_outfits = 0;
+
+   printf("cur_planet_sel in genOutfitsList: %d %p\n",cur_planet_sel,cur_planetObj_sel);
+   /* Widget must not already exist. */
+   if (widget_exists( wid, MAPSYS_OUTFITS))
+      return;
+
+   /* set up the outfits to buy/sell */
+   if ( cur_planetObj_sel == NULL ){
+      noutfits = 0;
+      outfits = NULL;
+   }else{
+      outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
+   }
+
+   
+   moutfits = MAX( 1, noutfits );
+   soutfits = malloc( moutfits * sizeof(char*) );
+   toutfits = malloc( moutfits * sizeof(glTexture*) );
+
+   if (noutfits <= 0) { /* No outfits */
+      soutfits[0] = strdup(_("None"));
+      toutfits[0] = NULL;
+      noutfits    = 1;
+      no_outfits  = 1;
+   }
+   else {
+      /* Create the outfit arrays. */
+      quantity = malloc(sizeof(char*)*noutfits);
+      bg       = malloc(sizeof(glColour)*noutfits);
+      slottype = malloc(sizeof(char*)*noutfits);
+      for (i=0; i<noutfits; i++) {
+         soutfits[i] = strdup( outfits[i]->name );
+	 toutfits[i] = outfits[i]->gfx_store;
+         /* Background colour. */
+         c = outfit_slotSizeColour( &outfits[i]->slot );
+         if (c == NULL)
+            c = &cBlack;
+         col_blend( &blend, c, &cGrey70, 0.4 );
+         bg[i] = blend;
+
+         /* Quantity. */
+         owned = player_outfitOwned(outfits[i]);
+         len = owned / 10 + 4;
+         if (owned >= 1) {
+            quantity[i] = malloc( len );
+            nsnprintf( quantity[i], len, "%d", owned );
+         }
+         else
+            quantity[i] = NULL;
+
+
+         /* Get slot name. */
+         slotname = outfit_slotName(outfits[i]);
+         if ((strcmp(slotname,"NA") != 0) && (strcmp(slotname,"NULL") != 0)) {
+            slottype[i]    = malloc( 2 );
+            slottype[i][0] = outfit_slotName(outfits[i])[0];
+            slottype[i][1] = '\0';
+         }
+         else
+            slottype[i] = NULL;
+      }
+   }
+
+   /* Clean up. */
+   free(outfits);
+
+   window_addImageArray( wid, 200, 70,
+         400, 240, MAPSYS_OUTFITS, 64, 64,
+         toutfits, soutfits, noutfits, map_system_outfits_update, map_system_outfits_rmouse );
+
+   if (!no_outfits) {
+      toolkit_setImageArrayQuantity( wid, MAPSYS_OUTFITS, quantity );
+      toolkit_setImageArraySlotType( wid, MAPSYS_OUTFITS, slottype );
+      toolkit_setImageArrayBackground( wid, MAPSYS_OUTFITS, bg );
+   }
 }

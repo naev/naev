@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Trincea is one of the most heavily populated worlds in Dvaered space. As such it is a rather attractive planet for Warlords to fight over, so the laws of the planet are prone to frequent change. The citizens have grown used to it, though, adapting to new legislation as a matter of course. By Dvaered standards, they're exceptionally flexible in their thinking.</description>
   <bar>The spaceport bar is subject to the whims of the Warlords just like anything else on the face of the planet, so it is best to check the local rules every time you set your ship down on Trincea. Fortunately, having drinks and checking the news have never been outlawed so far.</bar>
  </general>

@@ -22,7 +22,7 @@
   <energy>7</energy>
   <heatup>25</heatup>
   <track>2.25</track>
-  <swivel>6</swivel>
+  <swivel>22</swivel>
   <damage>
    <type>ion</type>
    <penetrate>5</penetrate>

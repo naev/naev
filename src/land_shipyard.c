@@ -25,6 +25,8 @@
 #include "tk/toolkit_priv.h"
 #include "dialogue.h"
 #include "map_find.h"
+#include "hook.h"
+#include "land_takeoff.h"
 
 
 /*
@@ -135,7 +137,7 @@ void shipyard_open( unsigned int wid )
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
-         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+         100, th, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
    window_addText( wid, 40+iw+20+100, y,
          w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    y -= th;
@@ -228,7 +230,7 @@ void shipyard_update( unsigned int wid, char* str )
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
-   window_modifyText( wid, "txtDescription", ship->description );
+   window_modifyText( wid, "txtDescription", _(ship->description) );
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
@@ -267,9 +269,9 @@ void shipyard_update( unsigned int wid, char* str )
          "%s credits\n"
          "%s credits\n"
          "%s\n"),
-         ship->name,
-         ship_class(ship),
-         ship->fabricator,
+         _(ship->name),
+         _(ship_class(ship)),
+         _(ship->fabricator),
          ship->crew,
          /* Weapons & Manoeuvrability */
          ship->cpu,
@@ -340,6 +342,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[ECON_CRED_STRLEN];
    Ship* ship;
+   HookParam hparam[2];
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    if (strcmp(shipname, _("None")) == 0)
@@ -366,6 +369,14 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = shipname;
+   hparam[1].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_buy", hparam );
+   if (land_takeoff)
+      takeoff(1);
 }
 
 /**

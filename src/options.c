@@ -68,6 +68,7 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
 static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
+static char** lang_list( int *n );
 static void opt_gameplay( unsigned int wid );
 static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
@@ -184,6 +185,41 @@ void opt_resize (void)
 }
 
 
+/*
+ * Gets the list of languages available.
+ */
+static char** lang_list( int *n )
+{
+   size_t fs;
+   char *buf;
+   char **ls;
+   int j;
+   size_t i;
+
+   /* Default English only. */
+   ls = malloc( sizeof(char*)*128 );
+   ls[0] = strdup(_("system"));
+   ls[1] = strdup("en");
+   *n = 2;
+
+   /* Try to open the available languages. */
+   buf = ndata_read( "dat/LANGUAGES", &fs );
+   if (buf==NULL)
+      return ls;
+   j = 0;
+   for (i=0; i<fs; i++) {
+      if ((buf[i] != '\n') && (buf[i] != '\0'))
+         continue;
+      buf[i] = '\0';
+      if (*n < 128)
+         ls[(*n)++] = strdup( &buf[j] );
+      j=i+1;
+   }
+
+   return ls;
+}
+
+
 /**
  * @brief Opens the gameplay menu.
  */
@@ -193,8 +229,9 @@ static void opt_gameplay( unsigned int wid )
    char buf[PATH_MAX];
    const char *path;
    int cw;
-   int w, h, y, x, by, l;
+   int w, h, y, x, by, l, n, i;
    char *s;
+   char **ls;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -238,11 +275,28 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2;
    y  = by;
    x  = 20;
+#if defined ENABLE_NLS && ENABLE_NLS
+   s = _("Language");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 0, "txtLanguage",
+         NULL, &cBlack, s );
+   ls = lang_list( &n );
+   i = 0;
+   if (conf.language != NULL) {
+      for (i=0; i<n; i++)
+         if (strcmp(conf.language,ls[i])==0)
+            break;
+      if (i>=n)
+         i = 0;
+   }
+   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL );
+   y -= 90;
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
    window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
-         NULL, &cDConsole, _("Compilation Flags") );
+         NULL, &cBlack, _("Compilation Flags") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         NULL, NULL,
+         NULL, &cDarkPurple,
          ""
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
@@ -283,7 +337,7 @@ static void opt_gameplay( unsigned int wid )
    /* Autonav abort. */
    x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
-         NULL, &cDConsole, _("Stop Speedup At:") );
+         NULL, &cBlack, _("Stop Speedup At:") );
    y -= 20;
 
    /* Autonav abort fader. */
@@ -295,7 +349,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
 
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
-         NULL, &cDConsole, _("Settings") );
+         NULL, &cBlack, _("Settings") );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -336,8 +390,34 @@ static void opt_gameplay( unsigned int wid )
 static int opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
-   int f;
-   char *vmsg, *tmax;
+   int f, p;
+   char *vmsg, *tmax, *s;
+
+   /* List. */
+#if defined ENABLE_NLS && ENABLE_NLS
+   p = toolkit_getListPos( wid, "lstLanguage" );
+   if (p==0) {
+      if (conf.language != NULL) {
+         free(conf.language);
+         conf.language = NULL;
+         opt_needRestart();
+      }
+   }
+   else {
+      s = toolkit_getList( wid, "lstLanguage" );
+      if (conf.language != NULL) {
+         if (strcmp(s,conf.language)!=0) {
+            free(conf.language);
+            conf.language = strdup(s);
+            opt_needRestart();
+         }
+      }
+      else {
+         conf.language = strdup(s);
+         opt_needRestart();
+      }
+   }
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
@@ -483,7 +563,7 @@ static void opt_keybinds( unsigned int wid )
 
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
-         NULL, &cDConsole, NULL );
+         NULL, &cBlack, NULL );
    window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-70-60-bh,
          0, "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -755,14 +835,14 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
    double vol, magic;
    char *str;
 
-   str = type ? _("Music") : _("Sound");
+   str = type ? _("Music Volume") : _("Sound Volume");
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      nsnprintf( buf, max, _("%s Volume: Muted"), str );
+      nsnprintf( buf, max, str, _("Muted") );
    else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      nsnprintf( buf, max, _("%s Volume: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
+      nsnprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
    }
 }
 
@@ -798,7 +878,7 @@ static void opt_audio( unsigned int wid )
    x = 20;
    y = -60;
    window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
-         NULL, &cDConsole, _("General") );
+         NULL, &cBlack, _("General") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", _("Disable all sound/music"), NULL, conf.nosound );
@@ -828,7 +908,7 @@ static void opt_audio( unsigned int wid )
 
    /* OpenAL options. */
    window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
-         NULL, &cDConsole, _("OpenAL") );
+         NULL, &cBlack, _("OpenAL") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
@@ -838,7 +918,7 @@ static void opt_audio( unsigned int wid )
    x = 20 + cw + 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
-         NULL, &cDConsole, _("Volume Levels") );
+         NULL, &cBlack, _("Volume Levels") );
    y -= 30;
 
    /* Sound fader. */
@@ -1164,7 +1244,7 @@ static void opt_video( unsigned int wid )
    x = 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
-         NULL, &cDConsole, _("Resolution") );
+         NULL, &cBlack, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
    window_setInputFilter( wid, "inpRes",
@@ -1217,7 +1297,7 @@ static void opt_video( unsigned int wid )
 
    /* FPS stuff. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
-         NULL, &cDConsole, _("FPS Control") );
+         NULL, &cBlack, _("FPS Control") );
    y -= 30;
    s = _("FPS Limit");
    l = gl_printWidthRaw( NULL, s );
@@ -1240,7 +1320,7 @@ static void opt_video( unsigned int wid )
    x = 20+cw+20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSGL",
-         NULL, &cDConsole, _("OpenGL") );
+         NULL, &cBlack, _("OpenGL") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
@@ -1260,7 +1340,7 @@ static void opt_video( unsigned int wid )
 
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
-         NULL, &cDConsole, _("Features") );
+         NULL, &cBlack, _("Features") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", _("Engine Glow (More RAM)"), NULL, conf.engineglow );
@@ -1379,21 +1459,23 @@ static int opt_videoSave( unsigned int wid, char *str )
          SDL_SetWindowFullscreen( gl_screen.window, 0 );
    }
 
-   /* Attempt to detect maximized state (doesn't work on X11) */
-   if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
-      dialogue_alert(_("Resolution can't be changed while maximized."));
-   /* Set size. Done second, because it can't be set while fullscreen. */
-   else if ((w != rw) || (h != rh)) {
-      /* Can't change window size while fullscreen. */
-      if (fullscreen && origf)
-         opt_needRestart();
-      else if (!fullscreen) {
-         SDL_SetWindowSize( gl_screen.window, w, h );
-         naev_resize( w, h );
-         SDL_SetWindowPosition( gl_screen.window,
-               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+   if ((w != rw) || (h != rh)) {
+      /* Attempt to detect maximized state (doesn't work on X11) */
+      if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
+         dialogue_alert(_("Resolution can't be changed while maximized."));
+      /* Set size. Done second, because it can't be set while fullscreen. */
+      else {
+         /* Can't change window size while fullscreen. */
+         if (fullscreen && origf)
+            opt_needRestart();
+         else if (!fullscreen) {
+            SDL_SetWindowSize( gl_screen.window, w, h );
+            naev_resize( w, h );
+            SDL_SetWindowPosition( gl_screen.window,
+                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
-         changed = 1;
+            changed = 1;
+         }
       }
    }
 

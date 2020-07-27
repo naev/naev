@@ -8,7 +8,7 @@
 
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
 
 -- localization stuff, translators would work here
 bar_desc = _("A bunch of scientists seem to be chattering nervously amongst themselves.")

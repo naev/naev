@@ -1,7 +1,7 @@
 
 * 0.8.0 (unreleased)
    * Gameplay
-      * Simple economy model implemented
+      * Simple economy model implemented with map visualizations
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
       * Added asteroids and mining
@@ -19,6 +19,8 @@
       * Made jammers into activated outfits that increase cloaking
       * Added Soromid organic ships that level up organs
       * Improved and expanded NPC portraits
+      * Commodities can be sold/bought everywhere
+      * More music
       * New and/or improved missions
          * Completed the FLF campaign
          * Fixed up the Collective campaign

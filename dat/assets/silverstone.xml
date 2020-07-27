@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>L</class>
-  <population>0</population>
+  <population>200</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Silverstone is one of the Soromid's greatest producers of ships and weapons. Growing bioships is only useful if those ships can be equipped with guns, as the local governor argues.</description>
   <bar>As Silverstone is a semi-military business world, the locals take security seriously. All visitors to the spaceport bar must relinquish any weapons on their persons, and submit to a scan upon entry.</bar>
  </general>

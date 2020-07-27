@@ -26,9 +26,11 @@
    <type>default</type>
    <type>default</type>
    <type>default</type>
+   <type>massive</type>
    <type>golden</type>
-   <pos x="1000" y="-3000"/>
-   <radius>2000</radius>
+   <type>liquid</type>
+   <radius>2000.000000</radius>
+   <pos x="1000.000000" y="-3000.000000"/>
    <density>0.500000</density>
   </asteroid>
  </asteroids>

@@ -84,7 +84,7 @@ link,*)
     Q="  F77   "
     ;;
 *,objc)
-    Q="  OBJC   "
+    Q="  OBJC  "
     ;;
 *,mcs)
     Q="  MCS   "

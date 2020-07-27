@@ -7,8 +7,15 @@ fi
 
 set -x
 
-echo "src/log.h" > po/POTFILES.in
-find src/ -name "*.c" | sort >> po/POTFILES.in
-find dat/ -name "*.lua" | sort >> po/POTFILES.in
-echo "dat/commodity.xml" >> po/POTFILES.in
+TMPFILE=$(mktemp)
+
+echo "src/log.h" > "$TMPFILE"
+find src/ -name "*.c" | sort >> "$TMPFILE"
+find dat/ -name "*.lua" | sort >> "$TMPFILE"
+echo "po/xml.pot" >> "$TMPFILE"
+
+# Remove file if found
+sed -i '/src\/shaders.gen.c/d' "$TMPFILE"
+
+cat "$TMPFILE" | sort > po/POTFILES.in
 

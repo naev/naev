@@ -10,7 +10,7 @@
 
 #include "outfit.h"
 #include "ship.h"
-#include "economy.h"
+#include "commodity.h"
 #include "nxml.h"
 
 

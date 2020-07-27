@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Though Maatsu's surface was never truly tamed, there is a fairly substantial population here. The larger population centres are kept climate neutral by localized weather control systems, while some of the more remote regions are left to the elements. This has made Maatsu a bit of an attraction to adventurous types who like to go out into the wild.</description>
   <bar>Maatsu sees a fair bit of commerce traffic, so its spaceport bar thrives. Prices of food and drink are exorbitant as a result, but that's nothing new to the average interplanetary trader. So long as the basic facilities are present and readily available, bars can get away with quite a lot.</bar>
  </general>

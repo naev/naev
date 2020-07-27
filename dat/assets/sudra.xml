@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Located on the fringes of Dvaered-controlled territory, Sudra has a relatively high amount of illegal activity going on. Though the Dvaered authorities actively try to stamp out criminal elements and make arrests almost every week, they are fighting a futile battle.</description>
   <bar>This spaceport bar is unsavory. No other word will describe the place with the same accuracy. A good portion of the bar's clientele are wearing hoods, masks, or other garments to hide their personal features. The lighting is set to quite a dim level, allowing customers to find corners as dark as they please. Despite these obvious signs, the Dvaered officials that sometimes visit the bar don't seem very keen to investigate.</bar>
  </general>

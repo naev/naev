@@ -14,7 +14,7 @@
    Commodity delivery missions.
 --]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 --Mission Details
 misn_title = _("%s Delivery")
@@ -42,7 +42,9 @@ osd_msg["__save"] = true
 
 
 -- TODO: find a better way to index all available commodities
-commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Luxury Goods" }
+commchoices = {
+   "Food", "Ore", "Industrial Goods", "Medicine", "Luxury Goods", "Gold",
+   "Diamond", "Water" }
 
 
 function update_active_runs( change )

@@ -5,8 +5,8 @@ MISSION: Chase Test
 DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
-include "numstring.lua"
-include "fleethelper.lua"
+require "numstring.lua"
+require "fleethelper.lua"
 
 NPC_name = _("A detective") --NPC params
 bar_desc = _("A private detective is signalling you to come speak with him.")

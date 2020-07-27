@@ -24,10 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Werlen is a world devoted to the cultivation of the raw materials the Soromid use to fabricate their ships. The world is off-limits to casual traffic, and only those trusted by the Soromid are permitted access.</description>
   <bar>Virtually spotless despite being situated on a mining colony, this bar is an anomaly. Its cleanliness appears to be thanks in large part to an automated cleaning apparatus, the sides of which are covered in dire warning labels. The other patrons appear to be giving the machine a wide berth.</bar>
  </general>
