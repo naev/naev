@@ -391,7 +391,7 @@ econ_articles = {
    },
    {
       title = _("Interview with an Economist"),
-      desc = _("One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credits per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%\"")
+      desc = _("One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credits per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%.\"")
    },
    {
       title = _("Economist Describes Sinusoidal Economic Theory"),
