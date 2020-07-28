@@ -640,13 +640,8 @@ static int systemL_asteroidPos( lua_State *L )
 {
    int field, ast;
 
-   if (lua_gettop(L) < 2) {
-      WARN(_("Not enough imput argument for asteroidpos"));
-      return 0;
-   }
-
-   field = lua_tointeger(L,1);
-   ast   = lua_tointeger(L,2);
+   field = luaL_checkint(L,1);
+   ast   = luaL_checkint(L,2);
 
    if ( field >= cur_system->nasteroids ) {
       WARN(_("field index %d too high"), field);
@@ -678,13 +673,8 @@ static int systemL_asteroidDestroyed( lua_State *L )
 {
    int field, ast, isdestroyed;
 
-   if (lua_gettop(L) < 2) {
-      WARN(_("Not enough imput argument for asteroidpos"));
-      return 0;
-   }
-
-   field = lua_tointeger(L,1);
-   ast   = lua_tointeger(L,2);
+   field = luaL_checkint(L,1);
+   ast   = luaL_checkint(L,2);
 
    if ( field >= cur_system->nasteroids ) {
       WARN(_("field index %d too high"), field);

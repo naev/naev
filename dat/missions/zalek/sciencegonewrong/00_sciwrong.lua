@@ -66,7 +66,7 @@ trd_disc = _([[This guy seems to be the trader, surrounded by bodyguards he look
 osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
 osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
 osd_msg[3] = _("Return to the %s system to the trader on %s")
-osd_msg[4] = _("Return to the %s system and deliver to Dr.Geller on %s")
+osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 -- refusetext 
 refusetitle = _("No Science Today")
 refusetext = _("I guess you don't care for science...")

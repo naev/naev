@@ -9,7 +9,7 @@
 require "dat/scripts/numstring.lua"
 require "dat/scripts/jumpdist.lua"
 
-bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
+bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Za'lek Long Distance Recruitment")
 misn_reward = _("500,000 credits")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth system")
@@ -18,7 +18,7 @@ title[1] = _("Spaceport Bar")
 title[2] = _("Za'lek Long Distance Recruitment")
 title[3] = _("Mission Accomplished")
 text = {}
-text[1] = _([[Lieutenant Czesc sits at the bar. He really does seem to handle business all across the Empire. You take the seat next to him. "Thanks to your help, the Empire Aramda Shipping Division will soon operate across the galaxy. Our next mission is to get House Za'lek on board. Interested in helping out again?"]])
+text[1] = _([[Lieutenant Czesc sits at the bar. He really does seem to handle business all across the Empire. You take the seat next to him. "Thanks to your help, the Empire Armada Shipping Division will soon operate across the galaxy. Our next mission is to get House Za'lek on board. Interested in helping out again?"]])
 text[2] = _([["I had a feeling you would!" says Lieutenant Czesc. "I've got another bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, so keep your wits about you. The diplomat only needs to go to the Gerhart Station in the Ganth system. He will let me know when trade relations have been established. There is still more work to be done, so I expect to see you again soon."]])
 text[3] = _([[You drop the diplomat off on Outbound Station, and she hands you a credit chip. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]])
 
