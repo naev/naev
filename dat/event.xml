@@ -5,6 +5,14 @@
   <trigger>land</trigger>
   <chance>100</chance>
  </event>
+ <event name="Travel Log">
+  <lua>shiplog</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="Pirate Fame">
   <lua>pirate_fame</lua>
   <trigger>enter</trigger>
