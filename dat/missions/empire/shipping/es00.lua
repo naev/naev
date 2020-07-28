@@ -7,7 +7,8 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
 misn_title = _("Prisoner Exchange")
@@ -32,6 +33,8 @@ text[5] = _([[All of a sudden a siren blares and you hear shooting break out. Yo
 text[6] = _([[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
     "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
     He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transfered to your bank account."]])
+
+log_text = _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in another mission.]])
 
 
 function create ()
@@ -114,6 +117,8 @@ function land ()
 
       -- Flavour text
       tk.msg(title[3], text[6] )
+
+      emp_addShippingLog( log_text )
 
       misn.finish(true)
    end

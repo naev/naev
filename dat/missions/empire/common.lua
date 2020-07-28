@@ -15,3 +15,7 @@ function emp_modReputation( increment )
 end
 
 
+function emp_addShippingLog( text )
+   shiplog.createLog("empire_shipping", _("Empire Shipping"), _("Empire"))
+   shiplog.appendLog("empire_shipping", text)
+end
