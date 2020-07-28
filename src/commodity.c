@@ -14,7 +14,7 @@
 
 
 #include "economy.h"
-
+#include "commodity.h"
 #include "naev.h"
 
 #include <stdio.h>
@@ -149,6 +149,31 @@ Commodity* commodity_getW( const char* name )
    return NULL;
 }
 
+/**
+ * @brief Return the number of commodities globally.
+ *
+ *    @return Number of commodities globally.
+ */
+int commodity_getN(void )
+{
+   return econ_nprices;
+}
+
+/**
+ * @brief Gets a commodity by index.
+ *
+ *    @param indx Index of the commodity.
+ *    @return Commodity at that index or NULL.
+ */
+Commodity* commodity_getByIndex( const int indx )
+{
+   if ( indx < 0 || indx >= econ_nprices ){
+      WARN(_("Commodity with index %d not found"),indx);
+      return NULL;
+   }
+   return &commodity_stack[econ_comm[indx]];
+}
+
 
 /**
  * @brief Frees a commodity.
@@ -166,16 +191,16 @@ static void commodity_freeOne( Commodity* com )
       gl_freeTexture(com->gfx_store);
    if (com->gfx_space)
       gl_freeTexture(com->gfx_space);
-   next=com->planet_modifier;
-   com->planet_modifier=NULL;
+   next = com->planet_modifier;
+   com->planet_modifier = NULL;
    while (next != NULL ){
-      this=next;
-      next=this->next;
+      this = next;
+      next = this->next;
       free(this->name);
       free(this);
    }
-   next=com->faction_modifier;
-   com->faction_modifier=NULL;
+   next = com->faction_modifier;
+   com->faction_modifier = NULL;
    while (next != NULL ){
       this=next;
       next=this->next;
@@ -249,8 +274,8 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    CommodityModifier *newdict;
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
-   temp->period=200;
-   temp->population_modifier=0.;
+   temp->period = 200;
+   temp->population_modifier = 0.;
    temp->standard = 0;
 
    /* Parse body. */
@@ -281,26 +306,26 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
-      if (xml_isNode(node,"planet_modifier")){
-         newdict=malloc(sizeof(CommodityModifier));
-         newdict->next=temp->planet_modifier;
-         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
-         newdict->value=xml_getFloat(node);
-         temp->planet_modifier=newdict;
+      if (xml_isNode(node, "planet_modifier")) {
+         newdict = malloc(sizeof(CommodityModifier));
+         newdict->next = temp->planet_modifier;
+         newdict->name = xml_nodeProp(node,(xmlChar*)"type");
+         newdict->value = xml_getFloat(node);
+         temp->planet_modifier = newdict;
          continue;
       }
-      if (xml_isNode(node,"faction_modifier")){
-         newdict=malloc(sizeof(CommodityModifier));
-         newdict->next=temp->faction_modifier;
-         newdict->name=xml_nodeProp(node,(xmlChar*)"type");
-         newdict->value=xml_getFloat(node);
-         temp->faction_modifier=newdict;
+      if (xml_isNode(node, "faction_modifier")) {
+         newdict = malloc(sizeof(CommodityModifier));
+         newdict->next = temp->faction_modifier;
+         newdict->name = xml_nodeProp(node, (xmlChar*)"type");
+         newdict->value = xml_getFloat(node);
+         temp->faction_modifier = newdict;
       }
    
    } while (xml_nextNode(node));
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
-   if ((temp->price>0)) {
+   if ((temp->price > 0)) {
       if (temp->gfx_store == NULL) {
          WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
          temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );

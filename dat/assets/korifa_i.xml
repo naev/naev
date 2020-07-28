@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Korifa I">
+ <pos>
+  <x>9393.556393</x>
+  <y>-3499.398679</y>
+ </pos>
+ <GFX>
+  <space>A02.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

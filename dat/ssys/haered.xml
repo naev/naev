@@ -10,7 +10,11 @@
   <x>1018.261333</x>
   <y>466.832000</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Proteron Unpresence</asset>
+  <asset>Virtual Proteron Unpresence</asset>
+  <asset>Virtual Proteron Unpresence</asset>
+ </assets>
  <jumps>
   <jump target="Cleai">
    <autopos/>

@@ -22,7 +22,7 @@ title[3] = _("Mission Report")
 text = {}
 text[1] = _([[You approach the Empire Commander.
     "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]])
-text[2] = _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors."
+text[2] = _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
     "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]])
 text[3] = _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]])
 text[4] = _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.

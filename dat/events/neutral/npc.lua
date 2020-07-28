@@ -100,13 +100,13 @@ msg_lore["Soromid"] =      {_("Hello. Can I interest you in one of our galaxy fa
 msg_lore["Za'lek"] =       {_([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
                               _([["The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."]]),
                               _([["I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!"]]),
-                              _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only trivially because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
-                              _([["There are so many algorithms for solving non-linear eigenvalues problem, that I never know which one to choose... Which one do you prefer?"]]),
-                              _([["I have recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billions degrees of freedom!"]]),
+                              _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
+                              _([["There are so many algorithms for solving the non-linear eigenvalues problem, I never know which one to choose. Which one do you prefer?"]]),
+                              _([["I recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billion degrees of freedom!"]]),
                               _([["Last time I had to solve a deconvolution problem, its condition number was so high that its inverse reached numerical zero on Octuple Precision!"]]),
-                              _([["I am worrying for my sister. She has a trial for 'abusive self-citing' and the public prosecutor has requested life sentence."]]),
-                              _([["They opened two professor positions on precision machining in Atryssa Central Manufacturing Lab, and none on Bedimann Advanced Process Lab, while everyone knows that the BAPL needs rienforcement since three of its professors retired last cycle. People say it's because recently, a member of Atryssa's lab made a positive review on a paper of the president of the Za'lek central scientific recrutement committee."]]),
-                              _([["Even if our labs are the best in the galaxy, all factions have some. For example, 'Dvaer Prime Lab for Advanced Mace Rocket Studies' used to be very successful, until it was nuked by mistake by a warlord during an invasion of the planet."]]),
+                              _([["I am worried about my sister. She's on trial for 'abusive self-citing' and the public prosecutor has requested a life sentence."]]),
+                              _([["They opened two professor positions on precision machining in Atryssa Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but everyone knows that the BAPL needs reinforcement ever since three of its professors retired last cycle. People say it's because a member of Atryssa's lab posted a positive review of the president of the Za'lek central scientific recrutement committee."]]),
+                              _([["Even if our labs are the best in the galaxy, other factions have their own labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies used to be very successful until it was nuked by mistake by a warlord during an invasion of the planet."]]),
                               }
 
 msg_lore["Thurion"] =      {_([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
@@ -145,25 +145,28 @@ msg_lore["Frontier"] =     {_([["We value our autonomy. We don't want to be rule
 msg_lore["FLF"] =          {_([["I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"]]),
                               _([["One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"]]),
                               _([["Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."]]),
-                              _([["I was in charge of a bombing run last week. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."]]),
+                              _([["I was in charge of a bombing run recently. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."]]),
                               _([["What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."]]),
                               _([["Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."]]),
                               _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),
                               _([["No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."]]),
                               _([["Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the stupidest thing I ever heard."]]),
-                              _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to oppress us?"]]),
+                              _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to set up an invasion?"]]),
                            }
 
 msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just messing with you."]]),
                               _([["Hey, look at these new scars I got!"]]),
                               _([["Have you heard of the Pirates' Code? They're more guidelines than rules..."]]),
-                              _([["My gran said 'Never trust a pirate', she was right too, I got a pretty credit chip for her with the slavers."]]),
+                              _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
                               _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
-                              _([["Stupid Empire police stopped my heist a few decaperiods ago. Just wait'll those Empire do-gooders see me again..."]]),
+                              _([["Stupid Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
                               _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
-                              _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]])
+                              _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
+                              _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
+                              _([["One of my favorite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
+                              _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
                            }
 
 msg_lore["Trader"] =       {_([["Just another link in the Great Chain, right?"]]),
@@ -199,6 +202,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["There's always an exception to the rule, but I wouldn't recommend using forward-facing weapons on larger ships. Large ships' slower turn rates aren't able to keep up with the dashing and dodging of smaller ships, and aiming is harder anyway what with how complex these ships are. Turrets are much better; they aim automatically and usually do a very good job!"]]),
                               _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
                               _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
+                              _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
                            }
 
 -- Jump point messages.
@@ -212,7 +216,7 @@ msg_jmp =                  {_([["Hi there, traveler. Is your system map up to da
                               _([["True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."]]),
                               _([["There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
                            }
-            
+
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the hints are always faction neutral.
@@ -308,7 +312,7 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= jm_chance then
+   if select < jm_chance then
       -- Jump point message.
       msg, func = getJmpMessage(fac)
    elseif select <= 0.55 then
@@ -447,7 +451,7 @@ function talkNPC(id)
    tk.msg(npcdata.name, npcdata.msg)
 
    -- Reduce jump message chance
-   var.push( "npc_tip_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
+   var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
 end
 
 --[[

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Amianta">
+ <pos>
+  <x>14165.896522</x>
+  <y>10080.641875</y>
+ </pos>
+ <GFX>
+  <space>P02.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>700.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>600000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>The frigid temperatures of Amianta would drive some people away, but the Proteron colonized it anyway due to the rich source of both food and water found underneath the ice.</description>
+ </general>
+</asset>

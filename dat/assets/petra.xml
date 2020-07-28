@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Petra">
+ <pos>
+  <x>-1490.060305</x>
+  <y>11785.627859</y>
+ </pos>
+ <GFX>
+  <space>G03.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>600.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>400000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>While not the most comfortable planet in Proteron space, Petra is filled with valuable minerals and much easier to mine than the nearby planet Karvua.</description>
+ </general>
+</asset>

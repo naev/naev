@@ -32,26 +32,51 @@
  </jumps>
  <asteroids>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>diamond</type>
    <radius>1000.000000</radius>
    <pos x="-2000.000000" y="-3000.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>diamond</type>
    <radius>1000.000000</radius>
    <pos x="-1000.000000" y="-2500.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>diamond</type>
    <radius>1500.000000</radius>
    <pos x="0.000000" y="-1000.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>diamond</type>
    <radius>1000.000000</radius>
    <pos x="500.000000" y="500.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>diamond</type>
    <radius>500.000000</radius>
    <pos x="1400.000000" y="-2000.000000"/>
    <density>0.750000</density>

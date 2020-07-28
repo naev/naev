@@ -37,7 +37,7 @@ title[3] = _([[In the ship]])
 text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
     You manage to locate a box on a table in the crew's chambers. Apparently nobody expected somebody to be nuts enough to try to do what you are doing. You grab the box and head back to your ship.]])
 
-text[5] = _([["How'd it go?" asks Dr Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
+text[5] = _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
 -- if the player kills the ship before getting the tech
 title[4] = _([[What have you done?]])
 text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]])

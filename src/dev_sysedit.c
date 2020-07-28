@@ -958,7 +958,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   for (j=0; j<sysedit_nselect; j++) {
                      if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                         sysedit_dragSel   = 1;
-			sysedit_tsel      = sel;
+                        sysedit_tsel      = sel;
 
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))

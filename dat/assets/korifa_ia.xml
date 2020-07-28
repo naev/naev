@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Korifa Ia">
+ <pos>
+  <x>9686.394456</x>
+  <y>-2877.319390</y>
+ </pos>
+ <GFX>
+  <space>moon-J00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

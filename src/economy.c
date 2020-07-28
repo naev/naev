@@ -170,7 +170,7 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
    int i,k;
    CommodityPrice *commPrice;
    /* Get position in stack */
-   k=com - commodity_stack;
+   k = com - commodity_stack;
 
    /* Find what commodity this is */
    for ( i=0; i<econ_nprices; i++ )
@@ -217,16 +217,16 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
  *    @return The average price of the commodity.
  */
 
-int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std ){
+int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std ) {
    int i,j,k;
    CommodityPrice *commPrice;
    StarSystem *sys;
    Planet *p;
-   double av=0;
-   double av2=0;
-   int cnt=0;
+   double av = 0;
+   double av2 = 0;
+   int cnt = 0;
    /* Get position in stack */
-   k=com - commodity_stack;
+   k = com - commodity_stack;
 
    /* Find what commodity this is */
    for ( i=0; i<econ_nprices; i++ )
@@ -236,14 +236,14 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    /* Check if found */
    if( i>= econ_nprices) {
       WARN(_("Average price for commodity '%s' not known."), com->name);
-      *mean=0;
-      *std=0;
+      *mean = 0;
+      *std = 0;
       return 1;
    }
    for ( i=0; i<systems_nstack ; i++){
-      sys=&systems_stack[i];
+      sys = &systems_stack[i];
       for ( j=0; j<sys->nplanets; j++){
-         p=sys->planets[j];
+         p = sys->planets[j];
          /* and get the index on this planet */
          for ( k=0; k<p->ncommodities; k++){
             if ( !strcmp(p->commodities[k]->name, com->name ))
@@ -251,7 +251,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
          }
          if (k < p->ncommodities) {
             commPrice=&p->commodityPrice[k];
-            if( commPrice->cnt>0){
+            if( commPrice->cnt>0) {
                av+=commPrice->sum/commPrice->cnt;
                av2+=commPrice->sum*commPrice->sum/(commPrice->cnt*commPrice->cnt);
                cnt++;
@@ -259,12 +259,12 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
          }
       }
    }
-   if(cnt>0){
-      av/=cnt;
-      av2=sqrt(av2/cnt - av*av);
+   if (cnt > 0) {
+      av /= cnt;
+      av2 = sqrt(av2/cnt - av*av);
    }
-   *mean=(credits_t) (av + 0.5);
-   *std=av2;
+   *mean = (credits_t)(av + 0.5);
+   *std = av2;
    return 0;
 }
 
@@ -608,6 +608,9 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
       WARN(_("Planet '%s' appears to have commodity '%s' defined, but no faction."), planet->name, commodity->name);
       return 1;
    }
+
+   /* Reset price to the base commodity price. */
+   commodityPrice->price = commodity->price;
    
    /* Get the cost modifier suitable for planet type/class. */
    cm = commodity->planet_modifier;
@@ -622,10 +625,10 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    commodityPrice->price *= scale;
    commodityPrice->planetVariation = 0.5;
    commodityPrice->sysVariation = 0.;
-   commodityPrice->sum = 0.;
+   /*commodityPrice->sum = 0.;
    commodityPrice->sum2 = 0.;
    commodityPrice->cnt = 0;
-   commodityPrice->updateTime = 0;
+   commodityPrice->updateTime = 0;*/
    /* Use filename to specify a variation period. */
    base = 100;
    commodity->period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)] % 32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1] % 32;
@@ -640,9 +643,9 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
       to +1 (large population), done on a log scale.  Price is then modified by this factor, scaled by a 
       value defined in the xml, as is variation.  So for some commodities, prices increase with population,
       while for others, prices decrease. */
-   factor=-1;
+   factor = -1;
    if ( planet->population > 0 )
-      factor=tanh( ( log((double)planet->population) - log(1e8) ) /2 );
+      factor = tanh( ( log((double)planet->population) - log(1e8) ) / 2 );
    base = commodity->population_modifier;
    commodityPrice->price *= 1 + factor * base;
    commodityPrice->planetVariation *= 0.5 - factor * 0.25;
@@ -656,7 +659,7 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
 
    factionname = faction_name(planet->faction);
    while ( cm != NULL ) {
-      if ( strcmp( factionname, cm->name ) == 0 ){
+      if ( strcmp( factionname, cm->name ) == 0 ) {
          scale = cm->value;
          break;
       }
@@ -664,10 +667,13 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    }
    commodityPrice->price *= scale;
 
-   /*Range seems to go from 0-5, with median being 2.  Increased range will increase safety
-     and so lower prices and improve stability*/
+   /* Range seems to go from 0-5, with median being 2.  Increased range
+    * will increase safety and so lower prices and improve stability */
    commodityPrice->price *= (1 - planet->presenceRange/30.);
    commodityPrice->planetPeriod *= 1 / (1 - planet->presenceRange/30.);
+
+   /* Make sure the price is always positive and non-zero */
+   commodityPrice->price = MAX( commodityPrice->price, 1 );
 
    return 0;
 }
@@ -882,6 +888,19 @@ void economy_initialiseCommodityPrices(void){
    }
 }
 
+/*
+ * Calculates commodity prices for a single planet (e.g. as added by the unidiff), and does some smoothing over the system, but not neighbours.
+ */
+
+void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet ){
+   int i;
+   for( i=0; i<planet->ncommodities; i++ ){
+      economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]);
+   }
+   economy_modifySystemCommodityPrice(sys);
+}
+
+
 void economy_averageSeenPrices( const Planet *p )
 {
    int i;
@@ -913,6 +932,8 @@ void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
    CommodityPrice *cp;
    credits_t price;
    t = ntime_get();
+   if ( tupdate == t )
+      return;
    for ( i = 0 ; i < p->ncommodities ; i++ ){
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
@@ -953,6 +974,22 @@ void economy_clearKnown (void)
       commodity_stack[i].lastPurchasePrice=0;
    }
 }
+
+/**
+ * @brief Clears all economy knowledge of a given planet.  Used by the unidiff system.
+ */
+void economy_clearSinglePlanet(Planet *p){
+   CommodityPrice *cp;
+   int k;
+   for ( k=0; k<p->ncommodities; k++ ){
+      cp=&p->commodityPrice[k];
+      cp->cnt=0;
+      cp->sum=0;
+      cp->sum2=0;
+      cp->updateTime=0;
+   }
+}
+
 
 /**
  * @brief Loads player's economy properties from an XML node.

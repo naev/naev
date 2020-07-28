@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Thavma">
+ <pos>
+  <x>6558.489894</x>
+  <y>9804.611155</y>
+ </pos>
+ <GFX>
+  <space>M10.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>1000.000000</value>
+  <range>4</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Thavma was an unexpected and welcome discovery for the Proteron, an undiscovered lush planet perfect for agriculture. Not being ones to miss an opportunity, the Proteron immediately set to work turning the planet into a supplier of food and water.</description>
+  <bar>A radio permanently installed in this bar constantly delivers important news interspersed with Proteron propaganda. The locals seem used to it.</bar>
+ </general>
+</asset>

@@ -2355,11 +2355,7 @@ static void pilot_refuel( Pilot *p, double dt )
    if (p->ptimer < 0.) {
       /* Move fuel. */
       p->fuel       -= PILOT_REFUEL_QUANTITY;
-      target-> fuel += PILOT_REFUEL_QUANTITY;
-
-	  if (target->fuel > target->fuel_max) {
-	     target->fuel   = target->fuel_max;
-	  }
+      target->fuel   = MIN(target->fuel+PILOT_REFUEL_QUANTITY, target->fuel_max);
 
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);

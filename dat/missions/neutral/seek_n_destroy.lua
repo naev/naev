@@ -323,7 +323,18 @@ function trigger_ambush()
    ambush[1]:setHostile()
    ambush[2]:setHostile()
    ambush[3]:setHostile()
+   ambush[1]:control()
+   ambush[2]:control()
+   ambush[3]:control()
+   ambush[1]:attack(player.pilot())
+   ambush[2]:attack(player.pilot())
+   ambush[3]:attack(player.pilot())
 
+   msg = hook.timer( 1000, "ambust_msg" )
+end
+
+-- Enemies explain that they are ambushing the player
+function ambust_msg()
    ambush[1]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
    ambush[2]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
    ambush[3]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
@@ -466,6 +477,8 @@ function clue_attacked( p, attacker )
    -- Target was hit sufficiently to get more talkative
    if attacker == player.pilot() and p:health() < 100 then
       p:setHostile( false )
+      p:control()
+      p:runaway(player.pilot())
       tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
       next_sys()
       hook.rm(attack)

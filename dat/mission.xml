@@ -1322,6 +1322,16 @@
    <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
+ <mission name="Proteron Dissident Dead Or Alive Bounty">
+  <lua>proteron/dissbounty_dead</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>360</chance>
+   <location>Computer</location>
+   <faction>Proteron</faction>
+  </avail>
+ </mission>
  <mission name="Dead Or Alive Bounty">
   <lua>neutral/pirbounty_dead</lua>
   <avail>
@@ -1367,6 +1377,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
@@ -1445,11 +1456,52 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
    <faction>Trader</faction>
    <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="Commodity Run">
+  <lua>neutral/commodity_run</lua>
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Proteron</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="FLF Commodity Run">
+  <lua>flf/flf_commodity_run</lua>
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
+ <mission name="Pirate Commodity Run">
+  <lua>pirate/pirate_commodity_run</lua>
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
   </avail>
  </mission>
  <mission name="Trader Escort">
@@ -1464,6 +1516,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
@@ -1482,6 +1535,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>

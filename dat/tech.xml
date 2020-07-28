@@ -389,13 +389,6 @@
   <item>Za'lek Hephaestus</item>
   <item>Thurion Certitude</item>
  </tech>
- <tech name="All Commodities">
-  <item>Food</item>
-  <item>Ore</item>
-  <item>Industrial Goods</item>
-  <item>Medicine</item>
-  <item>Luxury Goods</item>
- </tech>
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
@@ -801,7 +794,6 @@
   <item>Pirate Vendetta</item>
  </tech>
  <tech name="Proteron Military Ships">
-  <item>Proteron Watson</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>

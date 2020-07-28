@@ -44,6 +44,7 @@ dat/ai/pirate.lua
 dat/ai/pirate_norun.lua
 dat/ai/player.lua
 dat/ai/proteron.lua
+dat/ai/proteron_dissident.lua
 dat/ai/scout.lua
 dat/ai/sirius.lua
 dat/ai/sirius_norun.lua
@@ -75,6 +76,7 @@ dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shipwreck.lua
 dat/events/pirate_fame.lua
+dat/events/proteron_discovery.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
 dat/events/start.lua
@@ -103,6 +105,7 @@ dat/factions/spawn/miner.lua
 dat/factions/spawn/nasin.lua
 dat/factions/spawn/pirate.lua
 dat/factions/spawn/proteron.lua
+dat/factions/spawn/proteron_dissident.lua
 dat/factions/spawn/sirius.lua
 dat/factions/spawn/soromid.lua
 dat/factions/spawn/thurion.lua
@@ -168,6 +171,7 @@ dat/missions/flf/dvk/flf_dvk04.lua
 dat/missions/flf/dvk/flf_dvk05.lua
 dat/missions/flf/dvk/flf_dvk06.lua
 dat/missions/flf/dvk/flf_dvk07.lua
+dat/missions/flf/flf_commodity_run.lua
 dat/missions/flf/flf_common.lua
 dat/missions/flf/flf_diversion.lua
 dat/missions/flf/flf_empatrol.lua
@@ -180,6 +184,7 @@ dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
+dat/missions/neutral/commodity_run.lua
 dat/missions/neutral/crimelord.lua
 dat/missions/neutral/diy-nerds.lua
 dat/missions/neutral/drunkard.lua
@@ -215,6 +220,8 @@ dat/missions/pirate/patrol.lua
 dat/missions/pirate/pir_cargo.lua
 dat/missions/pirate/pir_clan_cargo.lua
 dat/missions/pirate/pir_ship_stealing.lua
+dat/missions/pirate/pirate_commodity_run.lua
+dat/missions/proteron/dissbounty_dead.lua
 dat/missions/rehab_common.lua
 dat/missions/shadow/darkshadow.lua
 dat/missions/shadow/shadowrun.lua
@@ -402,7 +409,6 @@ src/player_gui.c
 src/queue.c
 src/rng.c
 src/save.c
-src/shaders.gen.c
 src/shaders_c_gen.c
 src/ship.c
 src/shipstats.c

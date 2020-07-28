@@ -1934,11 +1934,15 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
    Commodity *com;
+   Commodity **comms;
+   int ncomms;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
+   comms          = NULL;
+   ncomms         = 0;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -2052,50 +2056,30 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
-
-               /* First, store all the standard commodities and prices. */
-               planet->ncommodities = stdNb;
-               mem = stdNb;
-               if (stdNb > 0) {
-                  planet->commodityPrice = malloc( stdNb * sizeof(CommodityPrice) );
-                  planet->commodities    = malloc( stdNb * sizeof(Commodity*) );
-                  for (i=0; i<stdNb; i++) {
-                     planet->commodities[i]          = stdList[i];
-                     planet->commodityPrice[i].price = planet->commodities[i]->price;
-                  }
-               }
+               mem = 0;
 
                do {
                   if (xml_isNode(ccur,"commodity")) {
-
                      /* If the commodity is standard, don't re-add it. */
                      com = commodity_get( xml_get(ccur) );
                      if (com->standard == 1)
                         continue;
 
-                     planet->ncommodities++;
-                     /* Memory must grow. */
-                     if (planet->ncommodities > mem) {
+                     ncomms++;
+                     if (ncomms > mem) {
                         if (mem == 0)
                            mem = CHUNK_SIZE_SMALL;
                         else
                            mem *= 2;
-                        planet->commodities = realloc(planet->commodities,
-                              mem * sizeof(Commodity*));
-                        planet->commodityPrice = realloc(planet->commodityPrice,
-                              mem * sizeof(CommodityPrice));
+
+                        if (comms == NULL)
+                           comms = malloc( mem * sizeof(Commodity*) );
+                        else
+                           comms = realloc( comms, mem * sizeof(Commodity*) );
                      }
-                     planet->commodities[planet->ncommodities-1] = com;
-                     /* Set commodity price on this planet to the base price */
-                     planet->commodityPrice[planet->ncommodities-1].price =
-                       planet->commodities[planet->ncommodities-1]->price;
+                     comms[ncomms-1] = com;
                   }
                } while (xml_nextNode(ccur));
-               /* Shrink to minimum size. */
-               planet->commodities = realloc(planet->commodities,
-                     planet->ncommodities * sizeof(Commodity*));
-               planet->commodityPrice = realloc(planet->commodityPrice,
-                     planet->ncommodities * sizeof(CommodityPrice));
             }
 
             else if (xml_isNode(cur, "blackmarket")) {
@@ -2142,6 +2126,51 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             "presence" );
    }
 #undef MELEMENT
+
+   /* Build commodities list */
+   if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
+      /* First, store all the standard commodities and prices. */
+      planet->ncommodities = stdNb;
+      mem = stdNb;
+      if (stdNb > 0) {
+         planet->commodityPrice = malloc( stdNb * sizeof(CommodityPrice) );
+         planet->commodities    = malloc( stdNb * sizeof(Commodity*) );
+         for (i=0; i<stdNb; i++) {
+            planet->commodities[i]          = stdList[i];
+            planet->commodityPrice[i].price = planet->commodities[i]->price;
+         }
+      }
+
+      /* Now add extra commodities */
+      for (i=0; i<ncomms; i++) {
+         com = comms[i];
+
+         planet->ncommodities++;
+         /* Memory must grow. */
+         if (planet->ncommodities > mem) {
+            if (mem == 0)
+               mem = CHUNK_SIZE_SMALL;
+            else
+               mem *= 2;
+            planet->commodities = realloc(planet->commodities,
+                  mem * sizeof(Commodity*));
+            planet->commodityPrice = realloc(planet->commodityPrice,
+                  mem * sizeof(CommodityPrice));
+         }
+         planet->commodities[planet->ncommodities-1] = com;
+         /* Set commodity price on this planet to the base price */
+         planet->commodityPrice[planet->ncommodities-1].price
+            = planet->commodities[planet->ncommodities-1]->price;
+      }
+      /* Shrink to minimum size. */
+      planet->commodities = realloc(planet->commodities,
+            planet->ncommodities * sizeof(Commodity*));
+      planet->commodityPrice = realloc(planet->commodityPrice,
+            planet->ncommodities * sizeof(CommodityPrice));
+   }
+   /* Free temporary comms list. */
+   if (comms != NULL)
+      free(comms);
 
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
@@ -2241,7 +2270,9 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    systemname_stack[spacename_nstack-1] = sys->name;
 
    economy_addQueuedUpdate();
-
+   /* This is required to clear the player statistics for this planet */
+   economy_clearSinglePlanet(planet);
+   
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );

@@ -9,7 +9,7 @@
 require "dat/scripts/numstring.lua"
 require "dat/scripts/jumpdist.lua"
 
-bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
+bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Empire Long Distance Recruitment")
 misn_reward = _("50,000 credits")
 misn_desc = _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")
