@@ -156,6 +156,7 @@ function accept()
     shadow_addLog( log_text_intro )
 
     misn.accept()
+
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
