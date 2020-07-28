@@ -484,7 +484,7 @@ function add_econ_article ()
                commod:name(), p:name(), numstring( price ) )
          news.add( "Generic", title, desc, exp, pd )
          p:recordCommodityPriceAtTime( pd )
-         var.push( "news_last_econ_article", time.cur() )
+         var.push( "news_last_econ_article", time.get():tonumber() )
       end
    end
 
