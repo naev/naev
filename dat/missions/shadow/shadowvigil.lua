@@ -3,9 +3,11 @@
 --]]
 
 require "proximity.lua"
-require "dat/scripts/nextjump.lua"
+require "nextjump.lua"
 require "chatter.lua"
 require "selectiveclear.lua"
+require "dat/missions/shadow/common.lua"
+
 
 title = {}
 text = {}
@@ -99,6 +101,11 @@ osd_msg[5] = _("Report back to Rebina")
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
 misn_reward = _("A sum of money.")
 
+log_text_intro = _([[Captain Rebina has revealed some information about the organization she works for. "The organization I'm part of is known as the Four Winds, or rather, not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you."]])
+log_text_success = _([[Your attempt to escort a diplomat for the Four Winds was thwarted by traitors on the inside. Other Four Winds escorts opened fire on the diplomat, killing him. Captain Rebina has said that she may need your help again at a later date.]])
+log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds.]])
+
+
 function create()
     misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refual stop, protegee meeting point, final destination.
     misssys["__save"] = true
@@ -146,11 +153,9 @@ function accept()
 
     var.push("shadowvigil_active", true)
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
+    shadow_addLog( log_text_intro )
 
     misn.accept()
-    shiplog.createLog("Shadow","Shadow vigil","Shadow mission",true);
-    shiplog.appendLog("Shadow",misn_desc)
-    shiplog.appendLog("Shadow",string.format("Mission accepted on %s",seirsys.name()))
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
@@ -169,11 +174,10 @@ end
 function jumpout()
     if stage == 4 and not dpjump then
         tk.msg(diplomatnoruntitle, diplomatnoruntext)
+        shadow_addLog( log_text_fail )
         abort()
     end
     origin = system.cur()
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow",string.format("Leaving system %s",system.cur():name()))
     nextsys = getNextSystem(system.cur(), misssys[stage])
 end
 
@@ -219,11 +223,10 @@ end
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
     sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow",string.format("Jumped into system %s",system.cur():name()))
     
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
+        shadow_addLog( log_text_fail )
         abort()
     end
         
@@ -375,8 +378,6 @@ end
 
 -- The player has successfully rendezvoused with the diplomat. Now the real work begins.
 function escortNext()
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow","Rendezvous with the diplomat")
     stage = 4 -- The actual escort begins here.
     misn.osdActive(4)
     diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
@@ -420,9 +421,8 @@ function escortDeath()
     if alive[3] then alive[3] = false
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
-        logid=misn.getLogID()
-        shiplog.appendLog("Shadow",_("All escorts have died!"))
         tk.msg(escortdeathtitle, escortdeathtext)
+        shadow_addLog( log_text_fail )
         abort()
     end
 end
@@ -436,8 +436,7 @@ function diplomatDeath()
             j:control(false)
         end
     end
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow",_("The diplomat has died - you have failed!"))
+    shadow_addLog( log_text_fail )
     abort()
 end
 
@@ -453,8 +452,6 @@ function diplomatJump()
             j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow",string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
     player.msg(string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
 end
 
@@ -570,17 +567,13 @@ function board()
     seiryuu:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(700000)
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow",_("You have boarded the Seiryuu.  You receive 700,000 Cr."))
-    shiplog.appendLog("Shadow",_("Mission accomplished!"))
     var.pop("shadowvigil_active")
+    shadow_addLog( log_text_success )
     misn.finish(true)
 end
 
 -- Handle the unsuccessful end of the mission.
 function abort()
     var.pop("shadowvigil_active")
-    logid=misn.getLogID()
-    shiplog.appendLog("Shadow","Mission unsuccessful")
     misn.finish(false)
 end
