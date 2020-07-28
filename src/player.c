@@ -60,6 +60,7 @@
 #include "input.h"
 #include "news.h"
 #include "nstring.h"
+#include "shiplog.h"
 
 
 /*
@@ -338,6 +339,9 @@ static int player_newMake (void)
 
    /* Start the economy. */
    economy_init();
+
+   /* clear the shiplog*/
+   shiplog_clear();
 
    /* Start the news */
    news_init();

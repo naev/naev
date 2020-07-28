@@ -54,7 +54,6 @@
 #include "hook.h"
 #include "dev_uniedit.h"
 
-
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
