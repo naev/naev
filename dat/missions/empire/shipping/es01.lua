@@ -26,7 +26,7 @@ title[4] = _("Mission Success")
 text = {}
 text[1] = _([[You approach Commander Soldner, who seems to be waiting for you.
 "Hello, ready for your next mission?"]])
-text[2] = _([[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces."
+text[2] = _([[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces.
     "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %s credits."]])
 text[3] = _([["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]])
 text[4] = _([[The packages labelled "Food" are loaded discreetly onto your ship. Now to deliver them to %s in the %s system.]])
