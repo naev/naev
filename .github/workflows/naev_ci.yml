@@ -68,7 +68,7 @@ jobs:
         path: ${{ github.workspace }}/src/naev.exe
 
   lin64:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     #- name: Install SSH Key
