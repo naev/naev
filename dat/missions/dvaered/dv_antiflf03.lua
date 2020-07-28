@@ -11,7 +11,7 @@ require "proximity.lua"
 require "portrait.lua"
 require "dat/missions/dvaered/common.lua"
 
--- localization stuff, translators would work here
+
 title = {}
 text = {}
 failtitle = {}
@@ -83,6 +83,9 @@ osd_desc[4] = _("Return to %s in the %s system")
 
 misn_desc = _("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory.")
 misn_reward = _("Wealth and glory")
+
+log_text = _([[You aided the Dvaered in the destruction of the secret FLF base, Sindbad. The terrorists are not entirely eliminated, but they have been substantially reduced in number. Colonel Urnus suggested you may be able to help the Dvaered again in a future campaign aimed at "rooting out the source of the problem once and for all".]])
+
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -196,6 +199,7 @@ function land()
         var.pop("flfbase_sysname")
         diff.apply("FLF_base")
         diff.apply("flf_dead")
+        dv_addAntiFLFLog( log_text )
         misn.finish(true)
     end
 end

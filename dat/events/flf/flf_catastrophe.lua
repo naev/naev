@@ -68,6 +68,8 @@ text[14] = _([[Fascinated, you finally speak up, prompting a smile from the uplo
     You affirm that you will keep the Thurion's secret safe. "Yes, welcome," Alicia says. "And do check out our bars and mission computers from time to time. We very well might have some missions for you in the future. In the meantime, buy yourself one of our nebula-resistant ships, and make yourself comfortable. You are our honored guest and, I hope, the first of many outsiders to learn the wonders of our way of life."
     The guards then promptly but politely escort you back to your ship, which has been refueled while you were gone. This should be an interesting experience....]])
 
+log_text_flf = _([[The Empire discovered Sindbad. Try as you might, you and your comrades could not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad erupted in a fiery explosion, killing Benito and all of your other comrades who were within Sindbad. Before the station exploded, Benito gave you a map leading into the unknown reaches of the inner nebula and told you to use the map to find what lies within in the hopes that one day, you can help the FLF rise again and defeat the Dvaereds once and for all. Her last words were short, but memorable: "Goodbye, %s. Stay vigilant."]])
+
 
 function create ()
    if not evt.claim( system.cur() ) then
@@ -219,6 +221,7 @@ function pilot_death_sindbad( pilot, attacker, arg )
    player.pilot():setNoJump( false )
    flf_setReputation( 100 )
    faction.get("FLF"):setPlayerStanding( 100 )
+   flf_addLog( log_text_flf )
    player.addOutfit( "Map: Inner Nebula Secret Jump" )
    hook.jumpin( "jumpin" )
    hook.land( "land" )

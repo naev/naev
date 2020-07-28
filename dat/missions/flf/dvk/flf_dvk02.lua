@@ -95,6 +95,8 @@ osd_apnd[4] = _("Bring %s tonnes of Ore to the Pirate Kestrel in the %s system")
 osd_final   = _("Return to FLF base")
 osd_desc[3] = osd_final
 
+log_text = _([[You helped the Pirates to build a new base in the Anger system and established a trade alliance between the FLF and the Pirates. Benito suggested that you should buy a Skull and Bones ship from the pirates and destroy Dvaered ships in areas where pirates are to keep your reputation with the pirates up. She also suggested you may want to upgrade your ship now that you have access to the black market.]])
+
 
 function create ()
    missys = system.get( "Tormulex" )
@@ -295,6 +297,7 @@ function land ()
       flf_setReputation( 50 )
       faction.get("FLF"):modPlayer( reputation )
       faction.get("Pirate"):modPlayerSingle( pir_reputation )
+      flf_addLog( log_text )
       misn.finish( true )
    end
 end

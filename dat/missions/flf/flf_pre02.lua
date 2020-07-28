@@ -21,6 +21,8 @@
 
 require "fleethelper.lua"
 require "dat/missions/flf/flf_patrol.lua"
+require "dat/missions/flf/flf_common.lua"
+require "dat/missions/dvaered/common.lua"
 
 title = {}
 text = {}
@@ -101,6 +103,9 @@ DVosd["__save"] = true
    
 npc_name = _("FLF petty officer")
 npc_desc = _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.")
+
+log_text_flf = _([[You earned the complete trust of the FLF by eliminating a Dvaered patrol and then refusing to change sides when the Dvaereds pressured you to. You can now consider yourself to be one of the FLF.]])
+log_text_dv = _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liasons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]])
 
 
 function create ()
@@ -360,6 +365,7 @@ function land_flf ()
       flf_setReputation( 10 )
       faction.get("FLF"):modPlayer( 1 )
       var.pop( "flfbase_intro" )
+      flf_addLog( log_text_flf )
       misn.finish( true )
    end
 end
@@ -374,6 +380,7 @@ function land_dv ()
       player.pay( 70000 )
       var.push( "flfbase_intro", 3 )
       if diff.isApplied( "FLF_base" ) then diff.remove( "FLF_base" ) end
+      dv_addAntiFLFLog( log_text_dv )
       misn.finish( true )
    end
 end
