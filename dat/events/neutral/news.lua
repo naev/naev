@@ -424,7 +424,7 @@ function add_article( my_faction )
    local last_article = var.peek( "news_last_article" )
    if last_article ~= nil then
       local t = time.fromnumber( last_article )
-      if t - time.get() < time.create( 0, 1, 5000 ) then
+      if time.get() - t < time.create( 0, 1, 5000 ) then
          return
       end
    end
@@ -458,7 +458,7 @@ function add_econ_article ()
    local last_article = var.peek( "news_last_econ_article" )
    local t = nil
    if last_article ~= nil then t = time.fromnumber( last_article ) end
-   if (t == nil or t - time.get() > time.create( 0, 1, 0 ))
+   if (t == nil or time.get() - t > time.create( 0, 1, 0 ))
          and rnd.rnd() < 0.75 then
       local planets = {}
       for i, s in ipairs( getsysatdistance( system.cur(), 2, 4 ) ) do
@@ -484,6 +484,7 @@ function add_econ_article ()
                commod:name(), p:name(), numstring( price ) )
          news.add( "Generic", title, desc, exp, pd )
          p:recordCommodityPriceAtTime( pd )
+         var.push( "news_last_econ_article", time.cur() )
       end
    end
 
