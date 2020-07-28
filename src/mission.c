@@ -180,6 +180,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    mission->env = nlua_newEnv(1);
 
    misn_loadLibs( mission->env ); /* load our custom libraries */
+
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
    if (buf == NULL) {
