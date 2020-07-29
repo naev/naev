@@ -70,6 +70,10 @@ text[14] = _([[Fascinated, you finally speak up, prompting a smile from the uplo
 
 log_text_flf = _([[The Empire discovered Sindbad. Try as you might, you and your comrades could not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad erupted in a fiery explosion, killing Benito and all of your other comrades who were within Sindbad. Before the station exploded, Benito gave you a map leading into the unknown reaches of the inner nebula and told you to use the map to find what lies within in the hopes that one day, you can help the FLF rise again and defeat the Dvaereds once and for all. Her last words were short, but memorable: "Goodbye, %s. Stay vigilant."]])
 
+log_text_thurion = _([[Having braved the nebula, you were introduced to the Thurion by Alicia, one of many uploaded Thurion. The Thurion are the remnants of a secret project initiated by the Empire, Project Thurion. The Za'lek, the Collective, and the now-dead Proteron were also "great projects" of the Empire, but Project Thurion was seen as an embarrassment, prompting the Empire to attempt to kill the Thurion so word of their existence wouldn't get out. However, the Thurion learned a way to upload the human mind to a computer, allowing them to escape and rebuild.
+    Now, the Thurion have formed a secret civilization. About half of the Thurion population is uploaded and Alicia was quick to extol the virtues of being uploaded, but also noted that you probably can't be uploaded due to a likelihood of excessive brain damage.
+    In any case, you have earned the Thurion's trust and have been granted permission to roam Thurion space freely. You have promised to keep the Thurion's secret safe. Alicia has said that the Thurion may have missions for you in the future and has also recommended that you buy one of the Thurion's nebula-resistant ships.]])
+
 
 function create ()
    if not evt.claim( system.cur() ) then
@@ -290,6 +294,7 @@ function land ()
       tk.msg( title[11], text[13] )
       tk.msg( title[11], text[14]:format( player.name() ) )
       faction.get("Thurion"):setKnown( true )
+      flf_addLog( log_text_thurion )
    elseif diff.isApplied( "Thurion_found" ) then
       diff.remove( "Thurion_found" )
    end
