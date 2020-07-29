@@ -12,3 +12,9 @@ function pir_modDecayFloor( n )
    floor = math.min(floor + n, -1)
    var.push("_ffloor_decay_pirate", floor)
 end
+
+
+function pir_addMiscLog( text )
+   shiplog.createLog("pir_misc", _("Miscellaneous"), _("Pirate"))
+   shiplog.appendLog("pir_misc", text)
+end
