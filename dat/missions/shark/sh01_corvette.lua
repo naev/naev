@@ -10,6 +10,8 @@
 --]]
 
 require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -52,6 +54,9 @@ osd_msg[2] = _("Go to %s in %s to collect your pay")
 
 msg_run = _("MISSION FAILED: You ran away.")
 msg_destroyed = _("MISSION FAILED: You destroyed the Lancelot.")
+
+log_text = _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer-class ship.]])
+
 
 function create ()
 
@@ -122,6 +127,7 @@ function land()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)
+      shark_addLog( log_text )
       misn.finish(true)
    end
 end

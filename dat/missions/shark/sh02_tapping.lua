@@ -11,6 +11,8 @@
 --]]
 
 require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -53,6 +55,9 @@ bar_desc[2] = _([[This guy seems to be the agent Arnold Smith was talking about.
 osd_title = _("Unfair Competition")
 osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
 osd_msg[2] = _("Bring the recording back to %s in the %s system")
+
+log_text = _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]])
+
 
 function create ()
    repeat
@@ -115,6 +120,7 @@ function land()
          misn.osdDestroy(osd)
          hook.rm(enterhook)
          hook.rm(landhook)
+         shark_addLog( log_text )
          misn.finish(true)
       end
    end
