@@ -10,7 +10,7 @@ require "dat/scripts/numstring.lua"
 bmsg = {}
 bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare cooly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
     He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s credits. That's all you need to know." He pauses for a moment. "How about it?"]])
-bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the military and police. I'll let my contacts know to expect you. They'll pay you when you land."
+bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]])
 
 --ending messages
@@ -26,7 +26,7 @@ notenoughcargo = _([["You say you want this job, but you don't have enough cargo
 rejected = _([["Well, that's your choice. Be on your way now. I'm busy."]])
 npc_name = _("A Scrappy Man")
 bar_desc = _("You see a rougher looking man sitting at the bar and guzzling a brownish ale.")
-misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding police.")
+misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships.")
 misn_title = _("The Gauntlet")
 misn_reward = _("%s credits")
 

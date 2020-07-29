@@ -6,7 +6,9 @@
 --
 --]]
 
-require "dat/scripts/cargo_common.lua"
+require "cargo_common.lua"
+require "dat/missions/neutral/common.lua"
+
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 title1 = _("An elderly lady")
@@ -38,6 +40,8 @@ NPCname = _("An old woman")
 NPCdesc = _("You see a wrinkled old lady, a somewhat unusual sight in a spaceport bar. She's purposefully looking around.")
 misndesc = _("An aging lady has asked you to ferry her to %s in the %s system.")
 misnreward = _("Fair monetary compensation")
+
+log_text = _([[You escorted an old woman to her cousin in Sirian space. She was nice, albeit somewhat overly chatty.]])
 
 
 function create ()
@@ -104,6 +108,7 @@ function land()
     if planet.cur() == destplanet then
         tk.msg(title2, text3)
         player.pay(500000) -- 500K
+        addMiscLog( log_text )
         misn.finish(true)
     end
 end

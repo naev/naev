@@ -9,9 +9,11 @@
 ]]--
 
 require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
 
 -- localization stuff, translators would work here
-bar_desc = _("A bunch of scientists seem to be chattering nervously amongst themselves.")
+bar_desc = _("A bunch of scientists seem to be chattering nervously among themselves.")
 mtitle = {}
 mtitle[1] = _("Nebula Satellite")
 misn_reward = _("%s credits")
@@ -25,7 +27,7 @@ title[3] = _("Mission Success")
 text = {}
 text[1] = _([[You approach the scientists. They seem a bit nervous and one mutters something about whether it's a good idea or not. Eventually one of them comes up to you.
     "Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]])
-text[2] = _([["We had a trip scheduled with a space trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got a probe satellite that we have to release in the %s system to monitor the nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
+text[2] = _([["We had a trip scheduled with a space trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we have to release into the %s system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
     He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this satellite we're going to launch."]])
 text[3] = _([["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %s credits when we arrive."]])
 text[4] = _([[The scientists thank you for your help before going back to their home to continue their nebula research.]])
@@ -36,14 +38,15 @@ launch[2] = _("Launch in 5...")
 launch[3] = _("Satellite launch successful!")
 
 articles={}
-articles=
-{
-{
-   "Generic",
-   _("Scientists launch science probe into the nebula"),
-   _("A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from"), 
+articles={
+   {
+      "Generic",
+      _("Scientists Launch Research Probe Into Nebula"),
+      _("A group of scientists have successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."), 
+   }
 }
-}
+
+log_text = _([[You helped a group of scientists launch a research probe into the Nebula.]])
 
 
 function create ()
@@ -106,6 +109,7 @@ function land ()
    if misn_stage == 1 and landed == homeworld then
       tk.msg( title[3], text[4] )
       player.pay( credits )
+      addMiscLog( log_text )
       misn.finish(true)
    end
 end
