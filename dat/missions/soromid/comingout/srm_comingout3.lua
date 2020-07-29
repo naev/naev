@@ -20,6 +20,8 @@
 require "numstring.lua"
 require "cargo_common.lua"
 require "nextjump.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -28,7 +30,7 @@ title[1] = _("A Friend's Aid")
 text[1] = _([[Chelsea gleefully waves you over. "It's nice to see you again!" she says. The two of you chat a bit about her venture into the piloting business; all is well from the sound of it. "Say," she says, "someone offered me a really interesting mission recently, but I had to decline because my ship isn't really up to task. If you could just escort my ship through that mission I could share the pay with you! Your half would be %s credits. How about it?"]])
 
 text[2] = _([["Awesome! I really appreciate it!
-    "So the mission is in theory a pretty simple one: I need to deliver some cargo to %s in the %s system. Trouble is apparently I'll be getting in the middle of some sort of trade dispute with a shady Soromid company that's bribed the local police. Needless to say we can expect to be attacked by some thugs and the local police aren't likely to be of much help.
+    "So the mission is in theory a pretty simple one: I need to deliver some cargo to %s in the %s system. Trouble is apparently I'll be getting in the middle of some sort of trade dispute with a shady Soromid company that's bribed the local Soromid pilots. Needless to say we can expect to be attacked by some thugs and the Soromid military isn't likely to be of much help.
     "That's where you come in. I just need you to follow me along, make sure I finish jumping or landing before you do, and if we encounter any hostilities, help me shoot them down. Shouldn't be too too hard as long as you've got a decent ship. I'll meet you out in space!"]])
 
 text[3] = _([["Ah, OK. Let me know if you change your mind."]])
@@ -57,6 +59,8 @@ chelland_msg = _("Chelsea has landed on %s.")
 chelkill_msg = _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.")
 chelflee_msg = _("MISSION FAILED: Chelsea has abandoned the mission.")
 plflee_msg = _("MISSION FAILED: You have abandoned the mission.")
+
+log_text = _([[You helped escort Chelsea through a dangerous cargo delivery mission where you had to protect her from the thugs of a shady company. She said that she would like to get back in touch with you again sometime for another mission.]])
 
 
 function create ()
@@ -200,6 +204,7 @@ function land ()
    if planet.cur() == misplanet then
       tk.msg( title[6], text[6]:format( numstring( credits ) ) )
       player.pay( credits )
+      srm_addComingOutLog( log_text )
       misn.finish( true )
    else
       tk.msg( title[5], text[5] )

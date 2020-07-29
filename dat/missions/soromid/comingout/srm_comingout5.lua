@@ -19,6 +19,8 @@
 
 require "numstring.lua"
 require "dat/missions/soromid/comingout/srm_comingout3.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -42,6 +44,8 @@ misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("Chelsea seems like they're stressed. Maybe you should see how they're doing?")
+
+log_text = _([[You helped Chelsea get rid of a load of garbage they naively agreed to take to The Stinker as a mission, defending them from thugs along the way.]])
 
 
 function create ()
@@ -159,6 +163,8 @@ function land ()
 
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
+
+      srm_addComingOutLog( log_text )
 
       misn.finish( true )
    else
