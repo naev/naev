@@ -559,6 +559,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
       p  = sys->planets[i];
       if (p->real != ASSET_REAL)
          continue;
+      if (!planet_isKnown(p))
+         continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
       if (td < d) {
          *pnt  = i;
@@ -576,6 +578,10 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
          if (as->appearing == ASTEROID_INVISIBLE)
             continue;
 
+         /* Skip out of range asteroids */
+         if (!pilot_inRangeAsteroid( player.p, k, i ))
+            continue;
+
          td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
          if (td < d) {
             *pnt  = -1; /* We must clear planet target as asteroid is closer. */
@@ -589,6 +595,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    /* Jump points. */
    for (i=0; i<sys->njumps; i++) {
       j  = &sys->jumps[i];
+      if (!jp_isKnown(j))
+         continue;
       td = pow2(x-j->pos.x) + pow2(y-j->pos.y);
       if (td < d) {
          *pnt  = -1; /* We must clear planet target as jump point is closer. */
