@@ -7,6 +7,7 @@
    <ul class="naevlinks">
        <li>
            <a href="https://naev.org/">Blarg</a> &middot;
+           <a href="https://github.com/naev/naev/issues">Issue Tracker</a> &middot;
            <a href="https://github.com/naev/naev/wiki/">Wiki</a> &middot;
            <a href="https://naev.org/downloads/">Downloads</a> &middot;
            <a href="http://api.naev.org/">Lua API</a> &middot;
