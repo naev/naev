@@ -1,17 +1,18 @@
 <div id="naev-header">
    <div id="naev-top">
-       <a href="http://naev.org">
-           <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+       <a href="https://naev.org">
+           <img src="https://naev.org/imgs/naev.png" alt="Home" style="vertical-align:baseline" />
        </a>
    </div>
    <ul class="naevlinks">
        <li>
-           <a href="http://blog.naev.org/">Blog</a> &middot;
-           <a href="http://forum.naev.org/">Forum</a> &middot;
-           <a href="http://wiki.naev.org/">Wiki</a> &middot;
-           <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+           <a href="https://naev.org/">Blarg</a> &middot;
+           <a href="https://github.com/naev/naev/issues">Issue Tracker</a> &middot;
+           <a href="https://github.com/naev/naev/wiki/">Wiki</a> &middot;
+           <a href="https://naev.org/downloads/">Downloads</a> &middot;
            <a href="http://api.naev.org/">Lua API</a> &middot;
-           <a href="http://blog.naev.org/chat/">Chat</a>
+           <a href="https://discord.gg/nd2M5BR">Discord</a> &middot;
+           <a href="https://webchat.freenode.net/#naev">IRC</a>
        </li>
    </ul>
 </div>
