@@ -711,6 +711,7 @@
    <faction>Soromid</faction>
    <faction>Trader</faction>
    <faction>Za'lek</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="A Journey To Arandon">
@@ -724,6 +725,7 @@
    <chance>100</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
   <mission name="The Last Detail">
@@ -737,6 +739,7 @@
    <chance>50</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Crimelord">

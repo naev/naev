@@ -119,7 +119,7 @@ function first_trd()
      return
   else
      tk.msg(title[1], text[3])
-     tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
+     tk.msg(title[1], text[4]:format(t_pla[2], t_sys[2]))
      talked = true
   end
   
@@ -163,7 +163,7 @@ function third_trd()
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3])
-  osd_msg[4] = osd_msg[4]:format(t_sys[3],t_pla[3])
+  osd_msg[4] = osd_msg[4]:format(t_sys[3], t_pla[3])
   misn.osdCreate(misn_title, {osd_msg[4]})
   
   misn.markerMove(misn_mark, system.get(t_sys[3]))

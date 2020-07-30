@@ -70,7 +70,7 @@ function create ()
    end
 
    credits = ships * 30000 - flfships * 1000
-   credits = credits * system.cur():jumpDist( missys ) / 3
+   credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
    local desc

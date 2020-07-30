@@ -101,7 +101,7 @@ function create ()
    credits = ships * 30000 - flfships * 1000
    if has_vigilence then credits = credits + 120000 end
    if has_goddard then credits = credits + 270000 end
-   credits = credits * system.cur():jumpDist( missys ) / 3
+   credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
    local desc

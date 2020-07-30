@@ -457,7 +457,7 @@ function continueToDest( p )
       p:setNoLand( false )
 
       if system.cur() == destsys then
-         p:land( destplanet )
+         p:land( destplanet, true )
          hook.pilot( p, "land", "traderLand" )
       else
          p:hyperspace( getNextSystem( system.cur(), destsys ), true )

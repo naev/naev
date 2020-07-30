@@ -89,7 +89,7 @@ log_text = _([[You have made a new friend, Chelsea. You helped escort her to her
 function create ()
    misplanet, missys = planet.get( "Durea" )
    -- Note: This mission does not make system claims
-   if missys:jumpDist( system.cur(), true ) < #chatter * 3 / 2 then
+   if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )
    end
 
