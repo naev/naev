@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  "Windows (MinGW 32bit)":
+  "Windows-MinGW32":
     runs-on: windows-latest
 
     defaults:
@@ -35,7 +35,7 @@ jobs:
         name: naev-win32-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
-  "Windows (MinGW 64bit)":
+  "Windows-MinGW64":
     runs-on: windows-latest
 
     defaults:
@@ -67,7 +67,7 @@ jobs:
         name: naev-win64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
-  "Linux (64Bit)":
+  "Linux-x86_64":
     runs-on: ubuntu-latest
 
     steps:
@@ -168,7 +168,7 @@ jobs:
         name: naev-macos-${{ github.sha }}
         path: ${{ github.workspace }}/Naev.app/ 
 
-  "Lua Documentation":
+  "Lua-Documentation":
     runs-on: ubuntu-latest
 
     steps:
