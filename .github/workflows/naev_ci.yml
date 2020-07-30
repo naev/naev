@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  win32:
+  "Windows-MinGW32":
     runs-on: windows-latest
 
     defaults:
@@ -35,7 +35,7 @@ jobs:
         name: naev-win32-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
-  win64:
+  "Windows-MinGW64":
     runs-on: windows-latest
 
     defaults:
@@ -67,17 +67,10 @@ jobs:
         name: naev-win64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
-  lin64:
+  "Linux-x86_64":
     runs-on: ubuntu-latest
 
     steps:
-    #- name: Install SSH Key
-    #  uses: shimataro/ssh-key-action@v2.0.3
-    #  with:
-    #    key: ${{ secrets.SSH_KEY }}
-    #    name: id_rsa # optional
-    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    #  if: ${{ github.event_name == 'push' }}
 
     - name: Update APT Cache
       run: |
@@ -103,14 +96,10 @@ jobs:
           libzip-dev \
           libiberty-dev \
           libluajit-5.1-dev \
-          luarocks \
           gettext \
           autopoint \
           intltool \
           itstool
-
-    - name: Install LuaRocks packages 
-      run: luarocks install --local ldoc
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -123,22 +112,13 @@ jobs:
       env:
         CFLAGS: "-O3"
 
-    - name: Build Naev Lua docs
-      run: |
-        export PATH="$PATH:$HOME/.luarocks/bin"
-        (cd docs && ./luadoc.sh)
-    
-    #- name: Upload Lua docs
-    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-    #  if: ${{ github.event_name == 'push' }}
-
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-lin64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev
 
-  macos:
+  "macOS":
     runs-on: macos-latest
 
     steps:
@@ -187,3 +167,44 @@ jobs:
       with:
         name: naev-macos-${{ github.sha }}
         path: ${{ github.workspace }}/Naev.app/ 
+
+  "Lua-Documentation":
+    runs-on: ubuntu-latest
+
+    steps:
+    #- name: Install SSH Key
+    #  uses: shimataro/ssh-key-action@v2.0.3
+    #  with:
+    #    key: ${{ secrets.SSH_KEY }}
+    #    name: id_rsa # optional
+    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
+    #  if: ${{ github.event_name == 'push' }}
+
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install LuaRocks
+      run: |
+        sudo apt-get install luarocks
+
+    - name: Install LuaRocks packages 
+      run: luarocks install --local ldoc
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Build Naev Lua Documentation
+      run: |
+        export PATH="$PATH:$HOME/.luarocks/bin"
+        (cd docs && ./luadoc.sh)
+    
+    #- name: Upload Lua Documentation
+    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+    #  if: ${{ github.event_name == 'push' }}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-luadocs-${{ github.sha }}
+        path: ${{ github.workspace }}/docs/html/
