@@ -2163,7 +2163,8 @@ void map_setZoom(double zoom)
  *    @param[out] njumps Number of jumps in the path.
  *    @param sysstart Name of the system to start from.
  *    @param sysend Name of the system to end at.
- *    @param ignore_known Whether or not to ignore if systems are known.
+ *    @param ignore_known Whether or not to ignore if systems and jump points are known.
+ *    @param show_hidden Whether or not to use hidden jumps points.
  *    @param the old star system (if we're merely extending the list)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
@@ -2247,8 +2248,8 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
-         /* Skip hidden jumps if they're unknown and not specifically requested */
-         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ) && !jp_isKnown(jp))
+         /* Skip hidden jumps if they're not specifically requested */
+         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
             continue;
 
          /* Check to see if it's already in the closed set. */

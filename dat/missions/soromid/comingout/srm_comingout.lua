@@ -84,7 +84,7 @@ osd_desc[1] = _("Go to the %s system and land on the planet %s.")
 function create ()
    misplanet, missys = planet.get( "Durea" )
    -- Note: This mission does not make system claims
-   if missys:jumpDist( system.cur(), true ) < #chatter * 3 / 2 then
+   if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )
    end
 

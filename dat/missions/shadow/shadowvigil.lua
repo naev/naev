@@ -311,8 +311,9 @@ function jumpin()
                 hook.timer(35000, "chatter", {pilot = escorts[1], text = commmsg[5]})
                 chattered = true
             end
-            if misssys[4]:jumpDist() <= 2 and misssys[4]:jumpDist() > 0 then -- Encounter
-                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - misssys[4]:jumpDist()), "baddie_norun", vec2.new(0, 0))
+            jp2go = system.cur():jumpDist(misssys[4])
+            if jp2go <= 2 and jp2go > 0 then -- Encounter
+                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - jp2go), "baddie_norun", vec2.new(0, 0))
                 kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then
