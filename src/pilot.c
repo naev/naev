@@ -2604,6 +2604,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* AI */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
+   pilot->shoot_indicator = 0;
 }
 
 
@@ -2723,20 +2724,21 @@ Pilot* pilot_copy( Pilot* src )
    dest->afterburner = NULL;
 
    /* Hooks get cleared. */
-   dest->hooks          = NULL;
-   dest->nhooks         = 0;
+   dest->hooks           = NULL;
+   dest->nhooks          = 0;
 
    /* Copy has no escorts. */
-   dest->escorts        = NULL;
-   dest->nescorts       = 0;
+   dest->escorts         = NULL;
+   dest->nescorts        = 0;
 
    /* AI is not copied. */
-   dest->task           = NULL;
+   dest->task            = NULL;
+   dest->shoot_indicator = 0;
 
    /* Set pointers and friends to NULL. */
    /* Commodities. */
-   dest->commodities    = NULL;
-   dest->ncommodities   = 0;
+   dest->commodities     = NULL;
+   dest->ncommodities    = 0;
    /* Calculate stats. */
    pilot_calcStats(dest);
 
