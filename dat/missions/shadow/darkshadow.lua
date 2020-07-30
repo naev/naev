@@ -384,6 +384,7 @@ function spawnGenbu(sys)
     genbu:control()
     genbu:setHilight()
     genbu:setVisplayer()
+    genbu:setNoDeath(true)
     genbuspawned = true
 end
 

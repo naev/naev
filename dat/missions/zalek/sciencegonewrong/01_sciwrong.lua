@@ -132,7 +132,7 @@ end
 
 function targetBoard()
    player.unboard()
-   tk.msg(title[2], text[4])
+   tk.msg(title[3], text[4])
    target:setHilight(false)
    target:setVisplayer(false)
    cargoID = misn.cargoAdd("Secret Technology",0)
