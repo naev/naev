@@ -64,7 +64,6 @@ function create()
    
    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   
    if destplanet == nil then
       misn.finish(false)
    end

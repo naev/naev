@@ -166,8 +166,8 @@ function land()
       tk.msg(cargo_land_title, string.format( cargo_land_p3[rnd.rnd(1, #cargo_land_p3)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo), reward/2, reward ))
       reward = reward / 2
    end
-      player.pay(reward)
-      misn.finish(true)
+   player.pay(reward)
+   misn.finish(true)
    end
 end
 

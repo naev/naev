@@ -22,6 +22,7 @@
 #include "nlua_faction.h"
 #include "nlua_ship.h"
 #include "nlua_misn.h"
+#include "nlua_shiplog.h"
 #include "rng.h"
 #include "log.h"
 #include "hook.h"
@@ -166,6 +167,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 
    /* Create id if needed. */
    mission->id    = (genid) ? mission_genID() : 0;
+
    if (id != NULL)
       *id         = mission->id;
    mission->data  = misn;
@@ -178,7 +180,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    mission->env = nlua_newEnv(1);
 
    misn_loadLibs( mission->env ); /* load our custom libraries */
-
+   shiplog_loadLibs( mission->env ); /* load the shiplog libraries */
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
    if (buf == NULL) {
@@ -1102,11 +1104,11 @@ static int missions_parseActive( xmlNodePtr parent )
    m = 0; /* start with mission 0 */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"mission")) {
+      if (xml_isNode(node, "mission")) {
          misn = player_missions[m];
 
          /* process the attributes to create the mission */
-         xmlr_attr(node,"data",buf);
+         xmlr_attr(node, "data", buf);
          data = mission_get(mission_getID(buf));
          if (data == NULL) {
             WARN(_("Mission '%s' from savegame not found in game - ignoring."), buf);
@@ -1124,7 +1126,7 @@ static int missions_parseActive( xmlNodePtr parent )
          free(buf);
 
          /* this will orphan an identifier */
-         xmlr_attr(node,"id",buf);
+         xmlr_attr(node, "id", buf);
          misn->id = atol(buf);
          free(buf);
 
