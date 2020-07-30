@@ -761,7 +761,7 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht"</cond>
+   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
    <chance>10</chance>
    <location>Bar</location>
   </avail>
@@ -864,7 +864,7 @@
   <lua>neutral/race2</lua>
   <avail>
    <priority>3</priority>
-   <cond>player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht"</cond>
+   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
    <done>Racing Skills 1</done>
    <chance>20</chance>
    <location>Bar</location>
