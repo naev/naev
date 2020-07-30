@@ -4,7 +4,9 @@
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/sirius/common.lua"
+
     
 --the intro messages
 bmsg = {}
@@ -29,6 +31,9 @@ bar_desc = _("You see a rougher looking man sitting at the bar and guzzling a br
 misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships.")
 misn_title = _("The Gauntlet")
 misn_reward = _("%s credits")
+
+log_text = _([[You helped a rough-looking man deliver an illegal shipment. After you completed the delivery, another man told you that there may be another mission opportunity and that you should meet some commander in the bar on Margot if you're interested.]])
+
 
 function create()
    --this mission makes no mission claims
@@ -79,11 +84,8 @@ function land ()
       misn.cargoRm(small_arms) --this mission was an act against sirius, and we want sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --nasin rep is used in mission rewards, and I am trying to avoid having the pay skyrocket.
       var.push("heretic_misn_tracker",1) --using "misn_tracker", as later on in-game, i plan on having multiple arcs to the ending.
-      misn.osdDestroy()
+      srs_addHereticLog( log_text )
       misn.finish( true )
    end
 end
 
-function abort ()
-   misn.finish(false)
-end
