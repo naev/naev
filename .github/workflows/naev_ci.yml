@@ -207,4 +207,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-luadocs-${{ github.sha }}
-        path: ${{ github.workspace }}docs/html/
+        path: ${{ github.workspace }}/docs/html/
