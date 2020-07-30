@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="S&amp;K Superheavy Combat Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>1950</mass>
+  <price>2900000</price>
+  <description>Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; Kane Industries is generally found only on important capital ships.</description>
+  <gfx_store>combat_hull_x</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>80</cargo>
+  <absorb>40</absorb>
+  <armour>2400</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

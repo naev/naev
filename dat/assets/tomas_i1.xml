@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tomas I-1">
+ <pos>
+  <x>6745.084430</x>
+  <y>6774.438955</y>
+ </pos>
+ <GFX>
+  <space>I04.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

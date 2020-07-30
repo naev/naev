@@ -2,14 +2,15 @@
 -- This is the third mission in the Academy Hack minor campaign.
 --]]
 
-include "fleethelper.lua"
-include "proximity.lua"
+require "fleethelper.lua"
+require "proximity.lua"
+require "dat/missions/sirius/common.lua"
 
 
 title1 = _("Talking to Joanne")
 text1 = _([["Hello there %s," Joanne greets you. "We do seem to keep running into each other, don't we? Like they say, it's a small galaxy after all."
     You and Joanne spend some time chatting. You learn that Joanne often comes to public spaceport bars to relax. She doesn't seem to enjoy the military cantinas much for some reason. After some small talk, the conversation inevitably gets on the topic of your previous encounter.
-    "Actually, that's still bothering me," Joanne confides. "Like I told you, the whole incident with Harja at the academy was a closed chapter for me until the attempts at my life started. It's been giving me sleepless nights. I don't mind admitting that I'm a little scared that someone out there is trying to kill me, but that's not everything. I know Harja, or at least I knew him for years. These assassinations, the whole fraud, it doesn't add up with the image I had of him. I've been thinking what to do about it, but I'm not sure. I considered reporting the matter to my superiors and let the armed forces handle it, and that would probably be the end of it, but I can't shake the feeling that I would never be free from these doubts I'm having.
+    "Actually, that's still bothering me," Joanne confides. "Like I told you, the whole incident with Harja at the academy was a closed chapter for me until the attempts at my life started. It's been giving me sleepless nights. I don't mind admitting that I'm a little scared that someone out there is trying to kill me, but that's not everything. I know Harja, or at least I knew him for cycles. These assassinations, the whole fraud, it doesn't add up with the image I had of him. I've been thinking what to do about it, but I'm not sure. I considered reporting the matter to my superiors and let the armed forces handle it, and that would probably be the end of it, but I can't shake the feeling that I would never be free from these doubts I'm having.
     "Actually, %s, now that you're here anyway, maybe you can help me figure out what's really happening. I need to know, it's really preying on my mind. Since you've been so helpful in the past, maybe you're willing to make another effort?"]])
 
 text1r = _([["Hi %s," Joanne says. "Good to see you again. Say, I still haven't resolved that issue with Harja and the attempts on my life. Any chance you've changed your mind about helping out a damsel in distress? Let me tell you again what I want you to do."]])
@@ -66,7 +67,10 @@ osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
 misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
-misn_reward = _("Joanne will pay you another 1,000,000 credits.")
+misn_reward = _("1,000,000 credits")
+
+log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an atttempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
+
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -196,7 +200,7 @@ end
 -- Harja's death hook.
 function death()
    tk.msg(deathtitle, deathtext)
-   abort()
+   misn.finish(false)
 end
 
 -- Land hook.
@@ -207,10 +211,8 @@ function land()
       tk.msg(title5, text7:format(player.name()))
       player.pay(1000000) -- 1M
       var.pop("achack03repeat")
+      srs_addAcHackLog( log_text )
       misn.finish(true)
    end
 end
 
-function abort()
-   misn.finish(false)
-end

@@ -22,8 +22,8 @@
    
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
 
 nolux_title = _("Not Very Luxurious")
 nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s credits. Accept the mission anyway?")
@@ -67,7 +67,7 @@ ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
 ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existance above the skies.")
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
-osd_title  = _("Sightseeing tour in %s")
+osd_title  = _("Sightseeing")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg_2  = _("Go to indicated point (%d remaining)")
@@ -120,7 +120,7 @@ function create ()
       misn.finish( false )
    end
 
-   credits = missys:jumpDist() * 2500 + attractions * 4000
+   credits = system.cur():jumpDist(missys) * 2500 + attractions * 4000
    credits_nolux = credits + rnd.sigma() * ( credits / 3 )
    credits = credits * rnd.rnd( 2, 6 )
    credits = credits + rnd.sigma() * ( credits / 5 )
@@ -139,6 +139,7 @@ function accept ()
    if player.pilot():ship():class() ~= "Luxury Yacht" then
       if tk.yesno( nolux_title, nolux_text:format( numstring(credits_nolux) ) ) then
          nolux_known = true
+         misn.setReward( misn_reward:format( numstring( credits_nolux ) ) )
       else
          misn.finish()
       end
@@ -146,7 +147,6 @@ function accept ()
 
    misn.accept()
 
-   osd_title = osd_title:format( missys:name() )
    osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[2] = osd_msg_2:format( #points )
    osd_msg[3] = osd_msg[3]:format( startingplanet:name(),startingsystem:name() )

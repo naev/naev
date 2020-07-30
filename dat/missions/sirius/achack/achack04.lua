@@ -3,9 +3,11 @@
 -- This mission is started from a helper event.
 --]]
 
-include "fleethelper.lua"
-include "proximity.lua"
-include "enum.lua"
+require "fleethelper.lua"
+require "proximity.lua"
+require "enum.lua"
+require "dat/missions/sirius/common.lua"
+
 
 title1 = _("You have mail")
 text1 = _([[Your computer console flashes you a notice. It seems you received a message through the Sirian information exchange network. You play it.
@@ -48,9 +50,9 @@ text8 = _([[You and Harja finish the post-landing protocol and meet up at the te
     There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of Sirichana, I so swear."]])
    
 text9 = _([[There is silence again. Harja's oath sounded practiced and formal, but despite that you feel he was being very sincere when he spoke it.
-    Joanne takes a few breaths. Then, she repeats Harja's oath, almost word for word, claiming that she, too, is innocent of the deeds Harja suspects her of having committed. You get the feeling you've just been witness to something unusual, some sort of demonstration of faith that only true Sirians could hope to comprehend. It certainly has an impact on the two in front of you. Both struggle with the reality of the situation, each finding their personal convictions conflicting with a shared belief that runs much deeper.
-    Joanne is the one to break the silence. "All right," she says. "As one Sirian to another, I accept your oath. I believe that it wasn't you."
-    Harja inclines his head. "As one Sirian to another. You didn't do it." After a few moments, he adds, "But someone did."
+    Joanne takes a few breaths. She repeats Harja's oath, almost word for word, claiming that she, too, is innocent of the deeds Harja suspects her of having committed. You get the feeling you've just been witness to something unusual, some sort of demonstration of faith that only true Sirians could hope to comprehend. It certainly has an impact on the two in front of you. Both struggle with the reality of the situation, each finding their personal convictions conflicting with a shared belief that runs much deeper.
+    Joanne is the one to break the silence. "Alright," she says. "From one Sirian to another, I accept your oath. I believe that it wasn't you."
+    Harja inclines his head. "From one Sirian to another. You didn't do it." After a few moments, he adds, "But someone did."
     Joanne nods. "Someone did. But who? Who could possibly have had any interest in making it happen? It makes no sense."
     After that, there's little more to say for either of them. Joanne turns to you, and tells you that this will be all for now. "This has put a great emotional strain on me, and no doubt on Harja as well. I thank you for your help, %s. I have arranged for some funds to be transferred to your account. It's the least I can do. I will probably call for you again when I've figured out how to proceed from here. I wouldn't dream of leaving you out of this, not after all you've done."
     You take your leave, and head back to the spaceport. Though on the surface it might seem like you accomplished little, you get the feeling this was an important step toward the conclusion of the whole affair.]])
@@ -82,7 +84,10 @@ osd_msg["__save"] = true
 
 misn_desc = _("Joanne has contacted you. She wants to meet you on %s (%s).")
 misn_desc2 = _("Joanne wants you to find Harja and convince him to meet her in person.")
-misn_reward = _("Not specified.")
+misn_reward = _("1,500,000 credits")
+
+log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
+
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -120,6 +125,7 @@ function land()
       tk.msg(title7, text9:format(player.name()))
       player.pay(1500000) -- 1.5M
       var.pop("achack04repeat")
+      srs_addAcHackLog( log_text )
       misn.finish(true)
    end
 end
@@ -182,7 +188,7 @@ function jumpin()
       bhfleet = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
       bhfleet = addRawShips(bhfleet, "baddie_norun", vec2.new(-3000, -7000), "Achack_thugs")
       alive = #bhfleet
-      for _, j in ipairs(bhfleet) do
+      for i, j in ipairs(bhfleet) do
          j:control()
          j:rename(_("Bounty Hunter"))
          j:setHilight(true)
@@ -249,6 +255,6 @@ function hail()
 end
 
 function abort()
+   var.push("achack04repeat", true)
    misn.finish(false)
-   var.push("achack04repeat", time.get():toNumber()) -- This is to ensure the mission won't repeat for a while.
 end

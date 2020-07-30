@@ -1,4 +1,4 @@
-include "jumpdist.lua"
+require "jumpdist.lua"
 
 
 -- Table of available core systems by class.
@@ -544,6 +544,85 @@ equip_typeOutfits_coreSystems = {
    ["Kestrel"] = {
       "Unicorp PT-900 Core System", "Milspec Orion 8601 Core System"
    },
+   ["Brigand"] = {
+      probability = {
+         ["Ultralight Bioship Brain Stage X"] = 2
+      };
+      "Ultralight Bioship Brain Stage 1", "Ultralight Bioship Brain Stage 2",
+      "Ultralight Bioship Brain Stage X"
+   },
+   ["Reaver"] = {
+      probability = {
+         ["Light Bioship Brain Stage X"] = 3
+      };
+      "Light Bioship Brain Stage 1", "Light Bioship Brain Stage 2",
+      "Light Bioship Brain Stage 3", "Light Bioship Brain Stage X"
+   },
+   ["Marauder"] = {
+      probability = {
+         ["Light Bioship Brain Stage X"] = 3
+      };
+      "Light Bioship Brain Stage 1", "Light Bioship Brain Stage 2",
+      "Light Bioship Brain Stage 3", "Light Bioship Brain Stage X"
+   },
+   ["Odium"] = {
+      probability = {
+         ["Medium Bioship Brain Stage X"] = 4
+      };
+      "Medium Bioship Brain Stage 1", "Medium Bioship Brain Stage 2",
+      "Medium Bioship Brain Stage 3", "Medium Bioship Brain Stage 4",
+      "Medium Bioship Brain Stage X"
+   },
+   ["Nyx"] = {
+      probability = {
+         ["Medium-Heavy Bioship Brain Stage X"] = 5
+      };
+      "Medium-Heavy Bioship Brain Stage 1",
+      "Medium-Heavy Bioship Brain Stage 2",
+      "Medium-Heavy Bioship Brain Stage 3",
+      "Medium-Heavy Bioship Brain Stage 4",
+      "Medium-Heavy Bioship Brain Stage 5",
+      "Medium-Heavy Bioship Brain Stage X"
+   },
+   ["Ira"] = {
+      probability = {
+         ["Superheavy Bioship Brain Stage X"] = 7
+      };
+      "Superheavy Bioship Brain Stage 1",
+      "Superheavy Bioship Brain Stage 2",
+      "Superheavy Bioship Brain Stage 3",
+      "Superheavy Bioship Brain Stage 4",
+      "Superheavy Bioship Brain Stage 5",
+      "Superheavy Bioship Brain Stage 6",
+      "Superheavy Bioship Brain Stage 7",
+      "Superheavy Bioship Brain Stage X"
+   },
+   ["Arx"] = {
+      probability = {
+         ["Superheavy Bioship Brain Stage X"] = 7
+      };
+      "Superheavy Bioship Brain Stage 1",
+      "Superheavy Bioship Brain Stage 2",
+      "Superheavy Bioship Brain Stage 3",
+      "Superheavy Bioship Brain Stage 4",
+      "Superheavy Bioship Brain Stage 5",
+      "Superheavy Bioship Brain Stage 6",
+      "Superheavy Bioship Brain Stage 7",
+      "Superheavy Bioship Brain Stage X"
+   },
+   ["Vox"] = {
+      probability = {
+         ["Superheavy Bioship Brain Stage X"] = 7
+      };
+      "Superheavy Bioship Brain Stage 1",
+      "Superheavy Bioship Brain Stage 2",
+      "Superheavy Bioship Brain Stage 3",
+      "Superheavy Bioship Brain Stage 4",
+      "Superheavy Bioship Brain Stage 5",
+      "Superheavy Bioship Brain Stage 6",
+      "Superheavy Bioship Brain Stage 7",
+      "Superheavy Bioship Brain Stage X"
+   },
 }
 
 
@@ -577,6 +656,85 @@ equip_typeOutfits_engines = {
       "Unicorp Eagle 4500 Engine", "Nexus Bolt 4500 Engine",
       "Krain Remige Engine", "Tricon Typhoon Engine"
    },
+   ["Brigand"] = {
+      probability = {
+         ["Ultralight Bioship Fast Fin Stage X"] = 2
+      };
+      "Ultralight Bioship Fast Fin Stage 1", "Ultralight Bioship Fast Fin Stage 2",
+      "Ultralight Bioship Fast Fin Stage X"
+   },
+   ["Reaver"] = {
+      probability = {
+         ["Light Bioship Fast Fin Stage X"] = 3
+      };
+      "Light Bioship Fast Fin Stage 1", "Light Bioship Fast Fin Stage 2",
+      "Light Bioship Fast Fin Stage 3", "Light Bioship Fast Fin Stage X"
+   },
+   ["Marauder"] = {
+      probability = {
+         ["Light Bioship Fast Fin Stage X"] = 3
+      };
+      "Light Bioship Fast Fin Stage 1", "Light Bioship Fast Fin Stage 2",
+      "Light Bioship Fast Fin Stage 3", "Light Bioship Fast Fin Stage X"
+   },
+   ["Odium"] = {
+      probability = {
+         ["Medium Bioship Fast Fin Stage X"] = 4
+      };
+      "Medium Bioship Fast Fin Stage 1", "Medium Bioship Fast Fin Stage 2",
+      "Medium Bioship Fast Fin Stage 3", "Medium Bioship Fast Fin Stage 4",
+      "Medium Bioship Fast Fin Stage X"
+   },
+   ["Nyx"] = {
+      probability = {
+         ["Medium-Heavy Bioship Fast Fin Stage X"] = 5
+      };
+      "Medium-Heavy Bioship Fast Fin Stage 1",
+      "Medium-Heavy Bioship Fast Fin Stage 2",
+      "Medium-Heavy Bioship Fast Fin Stage 3",
+      "Medium-Heavy Bioship Fast Fin Stage 4",
+      "Medium-Heavy Bioship Fast Fin Stage 5",
+      "Medium-Heavy Bioship Fast Fin Stage X"
+   },
+   ["Ira"] = {
+      probability = {
+         ["Superheavy Bioship Fast Fin Stage X"] = 7
+      };
+      "Superheavy Bioship Fast Fin Stage 1",
+      "Superheavy Bioship Fast Fin Stage 2",
+      "Superheavy Bioship Fast Fin Stage 3",
+      "Superheavy Bioship Fast Fin Stage 4",
+      "Superheavy Bioship Fast Fin Stage 5",
+      "Superheavy Bioship Fast Fin Stage 6",
+      "Superheavy Bioship Fast Fin Stage 7",
+      "Superheavy Bioship Fast Fin Stage X"
+   },
+   ["Arx"] = {
+      probability = {
+         ["Superheavy Bioship Strong Fin Stage X"] = 7
+      };
+      "Superheavy Bioship Strong Fin Stage 1",
+      "Superheavy Bioship Strong Fin Stage 2",
+      "Superheavy Bioship Strong Fin Stage 3",
+      "Superheavy Bioship Strong Fin Stage 4",
+      "Superheavy Bioship Strong Fin Stage 5",
+      "Superheavy Bioship Strong Fin Stage 6",
+      "Superheavy Bioship Strong Fin Stage 7",
+      "Superheavy Bioship Strong Fin Stage X"
+   },
+   ["Vox"] = {
+      probability = {
+         ["Superheavy Bioship Strong Fin Stage X"] = 7
+      };
+      "Superheavy Bioship Strong Fin Stage 1",
+      "Superheavy Bioship Strong Fin Stage 2",
+      "Superheavy Bioship Strong Fin Stage 3",
+      "Superheavy Bioship Strong Fin Stage 4",
+      "Superheavy Bioship Strong Fin Stage 5",
+      "Superheavy Bioship Strong Fin Stage 6",
+      "Superheavy Bioship Strong Fin Stage 7",
+      "Superheavy Bioship Strong Fin Stage X"
+   },
 }
 
 
@@ -609,6 +767,85 @@ equip_typeOutfits_hulls = {
    ["Kestrel"] = {
       "Unicorp D-16 Heavy Plating", "Unicorp B-16 Heavy Plating",
       "S&K Heavy Combat Plating"
+   },
+   ["Brigand"] = {
+      probability = {
+         ["Ultralight Bioship Shell Stage X"] = 2
+      };
+      "Ultralight Bioship Shell Stage 1", "Ultralight Bioship Shell Stage 2",
+      "Ultralight Bioship Shell Stage X"
+   },
+   ["Reaver"] = {
+      probability = {
+         ["Light Bioship Shell Stage X"] = 3
+      };
+      "Light Bioship Shell Stage 1", "Light Bioship Shell Stage 2",
+      "Light Bioship Shell Stage 3", "Light Bioship Shell Stage X"
+   },
+   ["Marauder"] = {
+      probability = {
+         ["Light Bioship Shell Stage X"] = 3
+      };
+      "Light Bioship Shell Stage 1", "Light Bioship Shell Stage 2",
+      "Light Bioship Shell Stage 3", "Light Bioship Shell Stage X"
+   },
+   ["Odium"] = {
+      probability = {
+         ["Medium Bioship Shell Stage X"] = 4
+      };
+      "Medium Bioship Shell Stage 1", "Medium Bioship Shell Stage 2",
+      "Medium Bioship Shell Stage 3", "Medium Bioship Shell Stage 4",
+      "Medium Bioship Shell Stage X"
+   },
+   ["Nyx"] = {
+      probability = {
+         ["Medium-Heavy Bioship Shell Stage X"] = 5
+      };
+      "Medium-Heavy Bioship Shell Stage 1",
+      "Medium-Heavy Bioship Shell Stage 2",
+      "Medium-Heavy Bioship Shell Stage 3",
+      "Medium-Heavy Bioship Shell Stage 4",
+      "Medium-Heavy Bioship Shell Stage 5",
+      "Medium-Heavy Bioship Shell Stage X"
+   },
+   ["Ira"] = {
+      probability = {
+         ["Superheavy Bioship Shell Stage X"] = 7
+      };
+      "Superheavy Bioship Shell Stage 1",
+      "Superheavy Bioship Shell Stage 2",
+      "Superheavy Bioship Shell Stage 3",
+      "Superheavy Bioship Shell Stage 4",
+      "Superheavy Bioship Shell Stage 5",
+      "Superheavy Bioship Shell Stage 6",
+      "Superheavy Bioship Shell Stage 7",
+      "Superheavy Bioship Shell Stage X"
+   },
+   ["Arx"] = {
+      probability = {
+         ["Superheavy Bioship Shell Stage X"] = 7
+      };
+      "Superheavy Bioship Shell Stage 1",
+      "Superheavy Bioship Shell Stage 2",
+      "Superheavy Bioship Shell Stage 3",
+      "Superheavy Bioship Shell Stage 4",
+      "Superheavy Bioship Shell Stage 5",
+      "Superheavy Bioship Shell Stage 6",
+      "Superheavy Bioship Shell Stage 7",
+      "Superheavy Bioship Shell Stage X"
+   },
+   ["Vox"] = {
+      probability = {
+         ["Superheavy Bioship Shell Stage X"] = 7
+      };
+      "Superheavy Bioship Shell Stage 1",
+      "Superheavy Bioship Shell Stage 2",
+      "Superheavy Bioship Shell Stage 3",
+      "Superheavy Bioship Shell Stage 4",
+      "Superheavy Bioship Shell Stage 5",
+      "Superheavy Bioship Shell Stage 6",
+      "Superheavy Bioship Shell Stage 7",
+      "Superheavy Bioship Shell Stage X"
    },
 }
 
@@ -760,7 +997,7 @@ function equip_warn( p, outfit, q, bypass )
    if bypass == nil then bypass = false end
    local r = pilot.addOutfit( p, outfit, q, bypass )
    if r <= 0 then
-      warn("Could not equip " .. system .. " on pilot " .. p:name() .. "!")
+      warn("Could not equip " .. outfit .. " on pilot " .. p:name() .. "!")
    end
    return r
 end

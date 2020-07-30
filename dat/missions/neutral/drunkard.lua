@@ -7,7 +7,9 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
 
 -- Bar Description
 bar_desc = _("You see a drunkard at the bar mumbling about how he was so close to getting his break.")
@@ -20,8 +22,8 @@ misn_desc = _("You've decided to help some drunkard at the bar by picking up som
 -- OSD
 OSDtitle = _("Help the Drunkard")
 OSDdesc = {}
-OSDdesc[1] = _("Go pickup some goods at %s in the %s system.")
-OSDdesc[2] = _("Drop off the goods at %s in the %s system.")
+OSDdesc[1] = _("Go pickup some goods at %s in the %s system")
+OSDdesc[2] = _("Drop off the goods at %s in the %s system")
 
 payment = 500000
 
@@ -53,13 +55,16 @@ title[6] = _("Drunkard's Call")
 text[6] = _([["Hello again. It's Willie. I'm just here to inform you that the countess has taken care of your payment and transfered it to your account. And don't worry about me, the countess has covered my portion just fine. I'm just glad to have Ol' Bessy here back."]])
 
 title[7] = _("Bonus")
-text[7] = _([["Oh, and she put in a nice bonus for you of %d credits for such a speedy delivery."]])
+text[7] = _([["Oh, and she put in a nice bonus for you of %s credits for such a speedy delivery."]])
 
 title[8] = _("Check Account")
 text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]])
 
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
+
+log_text = _([[You helped some drunkard deliver goods for some countess. You thought you might get killed along the way, but you survived and got a generous payment.]])
+
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -160,7 +165,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( bonus ) )
+--   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end
@@ -173,6 +178,7 @@ function closehail()
    willie:setHilight(false)
    willie:setInvincible(false) 
    willie:hyperspace()
+   addMiscLog( log_text )
    misn.finish(true)
 end
 

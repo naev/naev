@@ -8,7 +8,8 @@
 
 --]]
 
-include "dat/missions/pirate/common.lua"
+require "dat/missions/pirate/common.lua"
+
 
 -- Bar information
 bar_desc = _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos.")
@@ -32,6 +33,9 @@ text[3] = _([[As you inform your acquaintance that you successfully scared off t
 -- Messages
 msg      = {}
 msg[1]   = _("MISSION SUCCESS! Return for payment.")
+
+log_text = _([[You chased away a shifty merchant's competition and were paid a sum of credits by the shifty merchant for your services.]])
+
 
 function create ()
    -- Note: this mission does not make any system claims. 
@@ -134,6 +138,7 @@ function landed()
       player.pay(150000)
       faction.modPlayerSingle("Pirate",5)
       pir_modDecayFloor( 2 )
+      pir_addMiscLog( log_text )
       misn.finish(true)
    end
 end

@@ -127,7 +127,6 @@ gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z ) {
  * @brief Rotates an angle, in radians, around the z axis.
  */
 gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle ) {
-   int i;
    gl_Matrix4 res;
    double c, s;
 

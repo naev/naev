@@ -35,6 +35,7 @@ typedef struct nsave_s {
 
 
 void load_loadGameMenu (void);
+int load_gameDiff( const char* file );
 int load_game( const char* file, int version_diff );
 
 int load_refresh (void);

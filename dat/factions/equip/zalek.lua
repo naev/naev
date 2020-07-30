@@ -1,4 +1,4 @@
-include("dat/factions/equip/generic.lua")
+require("dat/factions/equip/generic.lua")
 
 
 equip_typeOutfits_coreSystems["Sting"] = {
@@ -56,35 +56,40 @@ equip_typeOutfits_weapons["Sting"] = {
    },
    {
       num = 2;
-      "Orion Lance", "Heavy Ripper Cannon", "Laser Cannon MK3"
+      "Orion Lance"
    },
    {
-      "Orion Lance", "Heavy Ripper Cannon", "Laser Cannon MK3"
-   }
+      num = 1;
+      "Za'lek Hunter Launcher"
+   },
 }
 equip_typeOutfits_weapons["Demon"] = {
    {
       num = 2;
-      "Grave Lance", "Heavy Ripper Cannon"
+      "Grave Lance",
    },
    {
-      "Orion Beam", "Pulse Beam", "Laser Turret MK2", "Laser Turret MK3",
-      "Unicorp Headhunter Launcher", "Unicorp Caesar IV Launcher",
-      "Enygma Systems Turreted Fury Launcher"
+      num = 1;
+      "Za'lek Hunter Launcher"
+   },
+   {
+      "Orion Beam", "Pulse Beam",
+      "Za'lek Hunter Launcher"
    }
 }
 equip_typeOutfits_weapons["Mephisto"] = {
    {
-      num = 4, varied = true;
+      num = 2, varied = true;
       "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam"
    },
    {
       num = 1;
-      "Enygma Systems Turreted Fury Launcher"
+      "Za'lek Hunter Launcher", "Za'lek Reaper Launcher"
    },
    {
       varied = true;
-      "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam"
+      "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam",
+	  "Za'lek Hunter Launcher", "Za'lek Reaper Launcher"
    }
 }
 equip_typeOutfits_weapons["Diablo"] = equip_typeOutfits_weapons["Mephisto"] --[[ {
@@ -173,14 +178,14 @@ function equip_forwardZlkMedLow ()
    return { "Orion Lance" }
 end
 function equip_forwardZlkMed ()
-   return { "Laser Cannon MK3", "Orion Lance", "Grave Lance", "Heavy Ripper Cannon" }
+   return { "Orion Lance", "Grave Lance" }
 end
 -- TURRETS
 function equip_turretZlkLow ()
-   return { "Laser Turret MK2" }
+   return { "Particle Beam" }
 end
 function equip_turretZlkMed ()
-   return { "Pulse Beam", "Laser Turret MK3" }
+   return { "Pulse Beam", "Orion Beam" }
 end
 function equip_turretZlkHig ()
    return { "Grave Beam", "Ragnarok Beam" }
@@ -190,7 +195,7 @@ function equip_rangedZlk ()
    return { "Electron Burst Cannon" }
 end
 function equip_secondaryZlk ()
-   return { "Shattershield Lance", "Unicorp Headhunter Launcher" }
+   return { "Shattershield Lance", "Za'lek Hunter Launcher" }
 end
 -- NON-COMBAT
 --[[

@@ -44,7 +44,7 @@ function create ()
     cursys = system.cur()
     curplanet = planet.cur()
     OSD[2] = OSD[2]:format(planet.cur():name())
-    misn.setNPC(NPCname, "neutral/male1")
+    misn.setNPC(NPCname, "neutral/unique/middleaged")
     misn.setDesc(NPCdesc)
 end
 

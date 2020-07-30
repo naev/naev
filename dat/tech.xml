@@ -42,8 +42,6 @@
   <item>Plasma Blaster MK3</item>
   <item>Plasma Turret MK1</item>
   <item>Plasma Turret MK2</item>
-  <item>BioPlasma Organ Stage 1</item>
-  <item>BioPlasma Organ Stage 2</item>
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
   <item>Plasma Cluster Cannon MK3</item>
@@ -52,6 +50,8 @@
   <item>Orion Beam</item>
   <item>Pulse Beam</item>
   <item>Grave Lance</item>
+  <item>Particle Beam</item>
+  <item>Particle Lance</item>
   <item>Orion Lance</item>
   <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
@@ -81,6 +81,10 @@
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
+  <item>Za'lek Hunter Launcher</item>
+  <item>Za'lek Reaper Launcher</item>
+  <item>BioPlasma Organ Stage 1</item>
+  <item>BioPlasma Organ Stage X</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -138,6 +142,7 @@
   <item>Map: Pirate strongholds</item>
   <item>Map: Qorel Expanse</item>
   <item>Map: New Haven's hidden jump points</item>
+  <item>Map: Kretogg's hidden jump points</item>
   <item>Map: FLF Hidden Jumps</item>
   <item>Map: FLF-Pirate Route</item>
   <item>Map: Inner Nebula Secret Jump</item>
@@ -260,6 +265,54 @@
   <item>S&amp;K Heavy Combat Plating</item>
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Superheavy Combat Plating</item>
+  <item>Ultralight Bioship Brain Stage 1</item>
+  <item>Light Bioship Brain Stage 1</item>
+  <item>Medium Bioship Brain Stage 1</item>
+  <item>Medium-Heavy Bioship Brain Stage 1</item>
+  <item>Heavy Bioship Brain Stage 1</item>
+  <item>Superheavy Bioship Brain Stage 1</item>
+  <item>Ultralight Bioship Shell Stage 1</item>
+  <item>Light Bioship Shell Stage 1</item>
+  <item>Medium Bioship Shell Stage 1</item>
+  <item>Medium-Heavy Bioship Shell Stage 1</item>
+  <item>Heavy Bioship Shell Stage 1</item>
+  <item>Superheavy Bioship Shell Stage 1</item>
+  <item>Ultralight Bioship Fast Fin Stage 1</item>
+  <item>Light Bioship Fast Fin Stage 1</item>
+  <item>Medium Bioship Fast Fin Stage 1</item>
+  <item>Medium-Heavy Bioship Fast Fin Stage 1</item>
+  <item>Heavy Bioship Fast Fin Stage 1</item>
+  <item>Superheavy Bioship Fast Fin Stage 1</item>
+  <item>Ultralight Bioship Strong Fin Stage 1</item>
+  <item>Light Bioship Strong Fin Stage 1</item>
+  <item>Medium Bioship Strong Fin Stage 1</item>
+  <item>Medium-Heavy Bioship Strong Fin Stage 1</item>
+  <item>Heavy Bioship Strong Fin Stage 1</item>
+  <item>Superheavy Bioship Strong Fin Stage 1</item>
+  <item>Ultralight Bioship Brain Stage X</item>
+  <item>Light Bioship Brain Stage X</item>
+  <item>Medium Bioship Brain Stage X</item>
+  <item>Medium-Heavy Bioship Brain Stage X</item>
+  <item>Heavy Bioship Brain Stage X</item>
+  <item>Superheavy Bioship Brain Stage X</item>
+  <item>Ultralight Bioship Shell Stage X</item>
+  <item>Light Bioship Shell Stage X</item>
+  <item>Medium Bioship Shell Stage X</item>
+  <item>Medium-Heavy Bioship Shell Stage X</item>
+  <item>Heavy Bioship Shell Stage X</item>
+  <item>Superheavy Bioship Shell Stage X</item>
+  <item>Ultralight Bioship Fast Fin Stage X</item>
+  <item>Light Bioship Fast Fin Stage X</item>
+  <item>Medium Bioship Fast Fin Stage X</item>
+  <item>Medium-Heavy Bioship Fast Fin Stage X</item>
+  <item>Heavy Bioship Fast Fin Stage X</item>
+  <item>Superheavy Bioship Fast Fin Stage X</item>
+  <item>Ultralight Bioship Strong Fin Stage X</item>
+  <item>Light Bioship Strong Fin Stage X</item>
+  <item>Medium Bioship Strong Fin Stage X</item>
+  <item>Medium-Heavy Bioship Strong Fin Stage X</item>
+  <item>Heavy Bioship Strong Fin Stage X</item>
+  <item>Superheavy Bioship Strong Fin Stage X</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
@@ -336,13 +389,6 @@
   <item>Za'lek Hephaestus</item>
   <item>Thurion Certitude</item>
  </tech>
- <tech name="All Commodities">
-  <item>Food</item>
-  <item>Ore</item>
-  <item>Industrial Goods</item>
-  <item>Medicine</item>
-  <item>Luxury Goods</item>
- </tech>
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
@@ -408,8 +454,6 @@
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
   <item>Plasma Cluster Cannon MK3</item>
-  <item>BioPlasma Organ Stage 1</item>
-  <item>BioPlasma Organ Stage 2</item>
   -->
   <item>Plasma Turret MK2</item>
  </tech>
@@ -601,6 +645,7 @@
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
+  <item>Asteroid Scanner</item>
  </tech>
  <tech name="High Tech Upgrades 2">
   <item>Battery III</item>
@@ -652,6 +697,35 @@
   <item>Map: Sirius Core</item>
   <item>Map: Za'lek Core</item>
   <item>Local System Map</item>
+ </tech>
+
+ <!-- Bioship outfits -->
+ <tech name="Bioship Outfits">
+  <item>BioPlasma Organ Stage 1</item>
+  <item>Ultralight Bioship Brain Stage 1</item>
+  <item>Light Bioship Brain Stage 1</item>
+  <item>Medium Bioship Brain Stage 1</item>
+  <item>Medium-Heavy Bioship Brain Stage 1</item>
+  <item>Heavy Bioship Brain Stage 1</item>
+  <item>Superheavy Bioship Brain Stage 1</item>
+  <item>Ultralight Bioship Shell Stage 1</item>
+  <item>Light Bioship Shell Stage 1</item>
+  <item>Medium Bioship Shell Stage 1</item>
+  <item>Medium-Heavy Bioship Shell Stage 1</item>
+  <item>Heavy Bioship Shell Stage 1</item>
+  <item>Superheavy Bioship Shell Stage 1</item>
+  <item>Ultralight Bioship Fast Fin Stage 1</item>
+  <item>Light Bioship Fast Fin Stage 1</item>
+  <item>Medium Bioship Fast Fin Stage 1</item>
+  <item>Medium-Heavy Bioship Fast Fin Stage 1</item>
+  <item>Heavy Bioship Fast Fin Stage 1</item>
+  <item>Superheavy Bioship Fast Fin Stage 1</item>
+  <item>Ultralight Bioship Strong Fin Stage 1</item>
+  <item>Light Bioship Strong Fin Stage 1</item>
+  <item>Medium Bioship Strong Fin Stage 1</item>
+  <item>Medium-Heavy Bioship Strong Fin Stage 1</item>
+  <item>Heavy Bioship Strong Fin Stage 1</item>
+  <item>Superheavy Bioship Strong Fin Stage 1</item>
  </tech>
 
  <!-- Ships -->
@@ -720,7 +794,6 @@
   <item>Pirate Vendetta</item>
  </tech>
  <tech name="Proteron Military Ships">
-  <item>Proteron Watson</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>
@@ -785,6 +858,11 @@
   <item>Drone Fighter Bay</item>
   <item>Drone</item>
   <item>Heavy Drone</item>
+ </tech>
+ 
+ <tech name="__Za'lek Launchers"> 
+  <item>Za'lek Hunter Launcher</item>
+  <item>Za'lek Reaper Launcher</item>
  </tech>
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>
@@ -905,5 +983,8 @@
  </tech>
  <tech name="New Haven Maps">
   <item>Map: New Haven's hidden jump points</item>
+ </tech>
+ <tech name="Kretogg Maps">
+  <item>Map: Kretogg's hidden jump points</item>
  </tech>
 </Techs>

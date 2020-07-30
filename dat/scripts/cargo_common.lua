@@ -1,5 +1,5 @@
-include "dat/scripts/jumpdist.lua"
-include "dat/scripts/nextjump.lua"
+require "dat/scripts/jumpdist.lua"
+require "dat/scripts/nextjump.lua"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
 cargo_use_hidden = false
@@ -33,9 +33,12 @@ function cargo_selectPlanets(missdist, routepos)
    getsysatdistance(system.cur(), missdist, missdist,
       function(s)
          for i, v in ipairs(s:planets()) do
-            if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 and
-                  not (s==system.cur() and ( vec2.dist( v:pos(), routepos ) < 2500 ) ) and
-                  v:canLand() and cargoValidDest( v ) then
+            if v:services()["inhabited"] and v ~= planet.cur()
+                  and not (s == system.cur()
+                     and ( vec2.dist( v:pos(), routepos ) < 2500 ) )
+                  and v:canLand() and cargoValidDest( v )
+                  and ( v:faction() ~= faction.get("Thurion")
+                     or planet.cur():faction() == faction.get("Thurion") ) then
                planets[#planets + 1] = {v, s}
             end
          end

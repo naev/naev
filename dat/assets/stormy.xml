@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Stormy">
+ <pos>
+  <x>6517.391987</x>
+  <y>7092.455986</y>
+ </pos>
+ <GFX>
+  <space>I02.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>150.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>I</class>
+  <population>3000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This gas giant serves as a resource gathering and advanced atmospheric research node. With stations dotting its orbit as low as is safe (and perhaps a biut lower than that). The facilities here are frequently used in the construction of advanced beam weaponry, allowing a larger-than-usual presence of the Za'lek militiary.</description>
+  <bar>This bar is signifigantly neater than most Za'lek spaceport bars. That is not to say it's orderly. The patrons are overwhelmingly gas miners, manufacturers and a few militia. The drinks glow suspiciously and the bartender smirks as you side-eye them.</bar>
+ </general>
+ <tech>
+  <item>Beam 1</item>
+  <item>Beam 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

@@ -17,7 +17,8 @@
 
 --]]
 
-include "dat/missions/flf/flf_diversion.lua"
+require "dat/missions/flf/flf_diversion.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- localization stuff
 title = {}
@@ -44,6 +45,8 @@ misn_reward = _("%s credits")
 npc_name = _("Benito")
 npc_desc = _("Benito looks in your direction and waves you over. It seems your services are needed again.")
 
+log_text = _([[You diverted Dvaered forces away from Haleb so that other FLF agents could complete an important operation there, most likely planting a bomb on another Dvaered base.]])
+
 
 function create ()
    missys = system.get( "Theras" )
@@ -51,7 +54,7 @@ function create ()
 
    dv_attention_target = 40
    credits = 400000
-   reputation = 10
+   reputation = 3
 
    misn.setNPC( npc_name, "flf/unique/benito" )
    misn.setDesc( npc_desc )
@@ -88,8 +91,9 @@ function land ()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
-      flf_setReputation( 85 )
+      flf_setReputation( 75 )
       faction.get("FLF"):modPlayer( reputation )
+      flf_addLog( log_text )
       misn.finish( true )
    end
 end

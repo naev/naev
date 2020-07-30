@@ -6,7 +6,8 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
  on Zeo where he will sell her baked goodies etc. asks if you can take recipes and plans to him on Zeo. Fills you cargo hold with cake which you don’t like. You can sell cake or bring to Michal who will pay a lot of $ for the cake, player doesn’t know that he will get payed for cake he brings.
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
 
 
 -- Dialogue
@@ -19,9 +20,9 @@ firstcontact = _([[The woman smiles. "Aren't you the pilot that delivered those 
 toobad = _([["Oh, that's too bad. I thought it was such a good idea, too...."]])
 
 objectives = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s credits when you get there. Thank you so much!"
-    When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the grossest cake you've ever tasted. Well, as long as you get paid....]])
+    When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]])
 
-objectives_nocake = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver so cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s credits when you arrive. Thank you so much!"]])
+objectives_nocake = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s credits when you arrive. Thank you so much!"]])
 
 -- Mission Computer text
 misn_desc = _([[Deliver the recipes to Michal on %s in the %s system.]])
@@ -36,6 +37,9 @@ osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
 osd_desc["__save"] = true
 
+log_text = _([[You delivered a whole lot of the most disgusting cake you've ever tasted in your life as well as recipes for making said cake to Michal, the man who had you deliver a literal tonne of love letters before. Supposedly this is for an attempt to start a restaurant, but with food as disgusting as that cake, you're sure the business will fail.]])
+log_text_nocake = _([[You delivered recipes for making some kind of cake to Michal, the man who had you deliver a literal tonne of love letters before.]])
+
 cakes = "Food"
   
 
@@ -45,7 +49,7 @@ function create () --No system shall be claimed by mission
 
    reward = 10000
 
-   misn.setNPC( npc_name, "neutral/female1" )
+   misn.setNPC( npc_name, "neutral/unique/paddy" )
    misn.setDesc( bar_desc )
 end
 
@@ -83,8 +87,10 @@ function land()
    if planet.cur() == targetworld then
       if amount > 0 then
          tk.msg( "", finish )
+         addMiscLog( log_text )
       else
          tk.msg( "", finish_nocake )
+         addMiscLog( log_text_nocake )
       end
 
       player.pay( reward )

@@ -9,8 +9,10 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-include "fleethelper.lua"
-include "factions/spawn/zalek/lua"
+require "fleethelper.lua"
+require "factions/spawn/zalek/lua"
+require "dat/missions/zalek/common.lua"
+
 
 -- set text variables
 title = {}
@@ -20,7 +22,7 @@ osd_msg = {}
 t_sys = {}
 t_pla = {}
 -- Mission details
-reward = 1000000
+reward = 2000000
 -- amount of jumps the drone did to escape. Each jump reduces it's speed
 fled = false
 jumps = 0 
@@ -31,47 +33,47 @@ t_pla[2] = "Gastan"
 misn_title = _("The one with the Runaway")
 misn_reward = _("A peek at the new prototype and some compensation for your efforts")
 misn_desc = _("You've been hired by Dr. Geller to retrieve his prototype that ran away.")
-bar_desc = _("You see Dr.Geller going from one person to the next, apparently asking for something. However he seems to not get the answer he wants...")
+bar_desc = _("You see Dr. Geller going from one person to the next, seemingly asking for something.")
 
 title[1] = _([[In the bar]])
 title[2] = _([[On the intercom]])
 title[3] = _([[On your ship]])
 title[4] = _([[Back on %s]])
-text[1]  = _([["Hey you! Yeah you! I need your help. Ha! I even remember you! I've got another job for you, and I hope you do it as well as the ones before. You see I was finishing up my prototype. It's ingenious I tell you. It is going to be perfect. Yes, indeed." After you give him a confused look he stops for a second. "Your prototype..." you try to get him going again. "Ah, right, I told you about it! Well you see, there was a minor hiccup." You realize you don't really like the sound of that.
-"It's nothing major, it is just, well, that I lost it." You chuckle. You were suspecting that for a long time. "But I would not be Dr. Geller if I had not put a tracking mechanism into it! Ingenious! I told you, didn't I? Well so I want you to catch it, bring it back, ok? You can do that, right?"]])
-text[2] = _([["Excellent, let's go. You were not really thinking I would let you engage my prototype without my supervision? I will show you in which system the drone currently is. But you better be fast, this is the newest generation and I bet it can outrun most of the ships out there. And of course: This is top secret research! Nobody outside of this institution has to know about this!"
-The scientist follows you around to your ship. Going on about how important this research is and pestering you to get going better sooner than later...]])
-text[3] = _([["There! The tracker shows it must be here! It is right next to %s! Amazing, right? If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]])
+text[1]  = _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, ok? You can do that, right?"]])
+text[2] = _([["Excellent! I will join you this time. Let's go."]])
+text[3] = _([["There! The tracker shows it must be here! It is right next to %s! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]])
 text[4] = _([["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]])
-text[5] = _([["Uhm, there seems to be a glitch. Well, sort of. Uhm, if I decipher this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tempered with that weird chip the pirates sold me!"]])
-text[6] = _([["If you can disable the prototype, do it, but I'd rather prefer not to die!"]])
-text[7] = _([["Excellent work, now load it up and let's get out of here!"]])
-text[8] = _([["Interesting, the other drones are running away..."
-"All the better."]])
+text[5] = _([["Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tempered with that weird chip those pirates sold me!"]])
+text[6] = _([["If you can disable the prototype, do it, but I'd prefer not to die at any rate!"]])
+text[7] = _([["Excellent work! Now load it up and let's get out of here!"]])
+text[8] = _([["Interesting, the other drones are running away..."]])
 -- is that the way to go? get person to jump and try again? that sounds a bit annoying maybe to play through
 text[9] = _([["The drone has disappeared from my radar! It must have jumped to the %s system. Let's find it!"]])
-text[10] = _([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should be now much easier to catch it!"]])
+text[10] = _([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]])
 
-text[11] = _([["It seems the drone has found a way to shield itself from the EM pulses, I think I can adjust to that, give me a second."]])
-text[12] = _([["There you go! I am a genius after all! Get it!"]])
-text[13] = _([["There is something strange, the engines are starting to heat up... if they continue like this the drone will explode in about 20 seconds... You better hurry!"]])
-text[14] = _([["NOOOOOOOOO! My drone! You incompetent rice cracker! You failed me!"]])
+text[11] = _([["It seems the drone has found a way to shield itself from the EM pulses. I think I can adjust to that, give me a second."]])
+text[12] = _([["There you go! Get it!"]])
+text[13] = _([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]])
+text[14] = _([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]])
 -- final msg when returning to gastan
-text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" Another payslip and another flight that convinces you that Dr. Geller might be in need of a doctor.]])
+text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" Another credit chip is tossed your way.]])
 
 -- text if the mission is failed
-fail_text = _([["NOOOOOO! What have you done! My prototype! It's going to take me weeks to rebuild it! You incompetent... rice cracker!!!"]])
+fail_text = _([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]])
 -- osd_msg
-osd_msg[1] = _("Go to the %s system and hail the prototype.")
-osd_msg[2] = _("Disable to prototype.")
-osd_msg[3] = _("Return the prototype to %s in the %s system.")
+osd_msg[1] = _("Go to the %s system and hail the prototype")
+osd_msg[2] = _("Disable to prototype")
+osd_msg[3] = _("Return the prototype to %s in the %s system")
 -- refuestext 
 refusetitle = _("No Science Today")
-refusetext = _("I guess you don't care that much about science...")
+refusetext = _("Don't you care about science?...")
+
+log_text = _([[You helped Dr. Geller retrieve his lost prototype drone.]])
+
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek_scientist_placeholder")
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller")
    misn.setDesc( bar_desc )
 end
 function accept()
@@ -282,7 +284,7 @@ function land_home()
    if planet.cur() == planet.get(t_pla[2]) then
       tk.msg(title[4]:format(t_pla[2]),text[15])
       player.pay(reward)
-      -- pay player and do shit here
+      zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

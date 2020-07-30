@@ -522,14 +522,12 @@ static void gui_renderPilotTarget( double dt )
    /* Draw the pilot target. */
    if (pilot_isDisabled(p))
       c = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED))
-      c = &cNeutral;
    else if (pilot_isHostile(p))
       c = &cHostile;
    else if (pilot_isFriendly(p))
       c = &cFriend;
    else
-      c = faction_getColour(p->faction);
+      c = &cNeutral;
 
    x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
    y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
@@ -612,6 +610,7 @@ static void gui_renderBorder( double dt )
    double rx,ry;
    double cx,cy;
    const glColour *col;
+   glColour ccol;
    double int_a;
 
    /* Get player position. */
@@ -646,7 +645,11 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPlanetColour(i);
-         gl_drawCircle(cx, cy, 5, col, 0);
+         ccol.r = col->r;
+         ccol.g = col->g;
+         ccol.b = col->b;
+         ccol.a = int_a;
+         gl_drawCircle(cx, cy, 5, &ccol, 0);
       }
    }
 
@@ -668,8 +671,12 @@ static void gui_renderBorder( double dt )
             col = &cGreen;
          else
             col = &cWhite;
+         ccol.r = col->r;
+         ccol.g = col->g;
+         ccol.b = col->b;
+         ccol.a = int_a;
 
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), col);
+         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), &ccol);
          gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 4 );
          gl_endSolidProgram();
@@ -691,7 +698,11 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPilotColour(plt);
-         gl_renderRectEmpty(cx-5, cy-5, 10, 10, col);
+         ccol.r = col->r;
+         ccol.g = col->g;
+         ccol.b = col->b;
+         ccol.a = int_a;
+         gl_renderRectEmpty(cx-5, cy-5, 10, 10, &ccol);
       }
    }
 }
@@ -1072,6 +1083,8 @@ static void gui_renderMessages( double dt )
    vy = y;
 
    /* Must be run here. */
+   hs = 0.;
+   o = 0;
    if (mesg_viewpoint != -1) {
       /* Data. */
       hs = h*(double)conf.mesg_visible/(double)mesg_max;
@@ -1193,12 +1206,9 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int i;
    int x, y, sx, sy;
    double px, py;
    glColour col;
-   GLfloat cx, cy;
-   int rc;
 
    /* Make sure is in range. */
    if (!pilot_inRangePilot( player.p, p ))
@@ -1241,13 +1251,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       h *= 2.;
    }
 
-   if (shape==RADAR_RECT)
-      rc = 0;
-   else if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
-   else
-      return;
-
    /* Draw selection if targeted. */
    if (p->id == player.p->target) {
       if (blink_pilot < RADAR_BLINK_PILOT/2.) {
@@ -1284,7 +1287,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy;
+   int x, y, sx, sy, i, j, targeted;
    double px, py;
    const glColour *col;
    glColour ccol;
@@ -1293,9 +1296,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    if (a->appearing == ASTEROID_INVISIBLE)
       return;
 
-   /* Make sure is in range. TODO: real detection system for asteroids */
-   if ( MOD( a->pos.x - player.p->solid->pos.x,
-             a->pos.y - player.p->solid->pos.y ) > 4000. )
+   /* Recover the asteroid and field IDs. */
+   i = a->id;
+   j = a->parent;
+
+   /* Make sure is in range. */
+   if (!pilot_inRangeAsteroid( player.p, i, j ))
       return;
 
    /* Get position. */
@@ -1323,12 +1329,26 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
 
-   col = &cWhite;
+   targeted = ((i==player.p->nav_asteroid) && (j==player.p->nav_anchor));
+
+   /* Colour depends if the asteroid is selected. */
+   if (targeted)
+      col = &cWhite;
+   else
+      col = &cGrey70;
+
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+
+   if (targeted && (blink_pilot >= RADAR_BLINK_PILOT/2.)) {
+      gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &ccol);
+      gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINES, 0, 8 );
+      gl_endSolidProgram();
+   }
 }
 
 
@@ -1395,6 +1415,10 @@ void gui_forceBlink (void)
  */
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape )
 {
+   (void) w;
+   (void) h;
+   (void) rc;
+   (void) shape;
    glColour col;
    gl_Matrix4 projection;
 
@@ -1462,11 +1486,9 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int i;
    int x, y;
    int cx, cy, r, rc;
-   GLfloat vx, vy, vr;
-   GLfloat a;
+   GLfloat vr;
    glColour col;
    Planet *planet;
 
@@ -1546,11 +1568,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int i;
    int cx, cy, x, y, r, rc;
-   GLfloat a;
-   GLfloat ca, sa;
-   GLfloat vx, vy, vr;
+   GLfloat vr;
    glColour col;
    JumpPoint *jp;
    gl_Matrix4 projection;
@@ -2293,7 +2312,8 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mmove)
             break;
          gui_prepFunc( "mouse_move" );
-         gl_windowToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
+         gl_windowToScreenPos( &x, &y, evt->motion.x - gui_viewport_x,
+               evt->motion.y - gui_viewport_y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
@@ -2306,7 +2326,8 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_click" );
          lua_pushnumber( naevL, evt->button.button+1 );
-         gl_windowToScreenPos( &x, &y, evt->button.x, evt->button.y );
+         gl_windowToScreenPos( &x, &y, evt->button.x - gui_viewport_x,
+            evt->button.y - gui_viewport_y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );

@@ -3,8 +3,8 @@
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
 misn_desc = _("%s in the %s system needs a delivery of %d tonnes of %s.")
 misn_reward = _("%s credits")
@@ -72,10 +72,10 @@ timeup_2 = _("The delivery to %s has been canceled! You were too late.")
 
 osd_title = _("Rush cargo mission")
 osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s.")
-osd_msg[2] = _("You have %s remaining.")
-osd_msg1 = _("Fly to %s in the %s system before %s.")
-osd_msg2 = _("You have %s remaining.") -- Need to reuse.
+osd_msg[1] = _("Fly to %s in the %s system before %s")
+osd_msg[2] = _("You have %s remaining")
+osd_msg1 = _("Fly to %s in the %s system before %s")
+osd_msg2 = _("You have %s remaining") -- Need to reuse.
 
 -- Create the mission
 function create()
@@ -166,8 +166,8 @@ function land()
       tk.msg(cargo_land_title, string.format( cargo_land_p3[rnd.rnd(1, #cargo_land_p3)], cargo_land_p1[rnd.rnd(1, #cargo_land_p1)], _(cargo), reward/2, reward ))
       reward = reward / 2
    end
-      player.pay(reward)
-      misn.finish(true)
+   player.pay(reward)
+   misn.finish(true)
    end
 end
 

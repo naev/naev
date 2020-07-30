@@ -24,6 +24,7 @@
 #include "nxml.h"
 #include "space.h"
 #include "ndata.h"
+#include "economy.h"
 #include "fleet.h"
 #include "map_overlay.h"
 
@@ -229,7 +230,9 @@ int diff_apply( const char *name )
             xmlFreeDoc(doc);
             free(buf);
 
+            /* Re-compute the economy. */
             economy_execQueued();
+            economy_initialiseCommodityPrices();
 
             return 0;
          }

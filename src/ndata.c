@@ -209,7 +209,7 @@ static int ndata_notfound (void)
 #if SDL_VERSION_ATLEAST(2,0,2)
    SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
    SDL_DetachThread(thread);
-#else
+#else /* SDL_VERSION_ATLEAST(2,0,2) */
    /* Ignore return value because SDL_DetachThread is only present in
     * SDL >= 2.0.2 */
    SDL_CreateThread( &ndata_prompt, "Prompt", window );
@@ -397,7 +397,7 @@ static int ndata_openFile (void)
 
       /* Check ndata with version appended. */
 #if VREV < 0
-      nsnprintf ( pathname, PATH_MAX, _("%s-%d.%d.0-beta%d"), NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
+      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
 #else /* VREV < 0 */
       nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */

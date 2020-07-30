@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vauban I-1">
+ <pos>
+  <x>-4293.811192</x>
+  <y>-7054.118386</y>
+ </pos>
+ <GFX>
+  <space>I07.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -8,7 +8,10 @@
 
 -- localization stuff, translators would work here
 
-include("fleethelper.lua")
+require "fleethelper.lua"
+require "portrait.lua"
+require "dat/missions/dvaered/common.lua"
+
 
 title = {}
 text = {}
@@ -33,19 +36,19 @@ text[3] = _([[As you take the last empty seat at the table, Colonel Urnus starts
     The image on the wall updates again, this time showing several House Dvaered crests near your ship.
     "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtably send reinforcements to help their 'comrade' out of a tight situation."]])
     
-text[4] = _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which will include the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
+text[4] = _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which will require the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
     The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn gray, indicating that they've been disabled.
     "Let me make one thing clear, citizen. You are allowed, even expected to fire on the Dvaered ships that are firing on you. However, you must make it look you're on the losing side, or the FLF will not come to your aid! So, do NOT disable or destroy any Dvaered ships, and make sure your own armor takes a bit of a beating. This is vital to the success of the mission. Do not fail."
-    Colonel Urnus to have concluded his explanation, so you, having spotted the obvious flaw in the Dvaereds' plan, pop the question of what happens if the FLF never show up.
+    Colonel Urnus seems to have concluded his explanation, so you, having spotted the obvious flaw in the Dvaereds' plan, pop the question of what happens if the FLF never show up.
     "Well," the Colonel muses, "That will mean our intel was probably wrong. But don't worry, citizen, we'll get those terrorists eventually! Now, time is of the essence, so get to your ship and follow your orders. Dismissed!"]])
     
 title[5] = _("Take no prisoners - only their logs")
 text[5] = _([[You successfully board the FLF ship and secure its flight logs. This is what the Dvaered want - you should take it to a Dvaered planet immediately.]])
 
 title[6] = _("X marks the spot")
-text[6] = _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty minutes, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
+text[6] = _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty hectoseconds, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
     Colonel Urnus welcomes you. "Well met, citizen. I have received word of your accomplishment in our recent operation. It seems HQ is quite pleased with the result, and they have instructed me to reward you appropriately."
-    He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the insane plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.
+    He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the dangerous plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.
     "In addition," Urnus resumes, "Dvaered military command has decided that you may participate in the upcoming battle against the FLF stronghold, in recognition of your courage and your skill in battle. You may contact our liaison whenever you're ready."
     That concludes the pleasantries, and you are unceremoniously deposited outside the security compound. But at least you earned some money - and a chance to see some real action.]])
     
@@ -70,11 +73,13 @@ osd_desc[3] = _("Fight the Dvaered until the FLF step in")
 osd_desc[4] = _("Disable and board at least one FLF ship")
 osd_desc[5] = _("Return to any Dvaered world")
 
-misn_desc = _("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disabling and boarding one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete.")
+misn_desc = _("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disable and board one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete.")
 misn_reward = _("Serving alongside real Dvaered warlords")
 
 comm_msg["enter"] = _("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!")
 comm_msg["victory"] = _("All targets neutralized. Download the flight log and let's get out of here!")
+
+log_text = _([[You aided the Dvaered in their efforts to locate a secret FLF base. You posed as an FLF pilot, luring real FLF pilots out so that one could be disabled and you could steal its flight logs. The Dvaered are now planning an assault on the terrorist base, and Colonel Urnus said that you can contact a Dvaered liason whenever you're ready for the operation.]])
 
 
 function create()
@@ -83,7 +88,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", "dvaered/dv_military_m1")
+    misn.setNPC("Dvaered liaison", getMaleMilPortrait("Dvaered"))
     misn.setDesc(npc_desc)
 end
 
@@ -141,6 +146,7 @@ function land()
         var.push("flfbase_intro", 3)
         faction.get("Dvaered"):modPlayerSingle(5)
         player.pay(700000) -- 700K
+        dv_addAntiFLFLog( log_text )
         misn.finish(true)
     end
 end

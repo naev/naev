@@ -8,7 +8,9 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -50,6 +52,9 @@ osd_title = _("The FLF Contact")
 osd_msg[1] = _("Hail any FLF ship, or disable and board one if necessary")
 osd_msg[2] = _("Go back to %s in %s")
 
+log_text = _([[You helped Arnold Smith establish a contact with the FLF. He said to meet you at the bar on Alteris when you're ready to take him to Arandon.]])
+
+
 function create ()
 
    --Change here to change the planets and the systems
@@ -60,7 +65,7 @@ function create ()
    paysys = system.get(paysys:name())
    paypla = planet.get(paypla:name())
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
@@ -93,6 +98,7 @@ function land()
    if stage == 1 and planet.cur() == paypla then
       tk.msg(title[3], text[3]:format(nextsys:name()))
       player.pay(reward)
+      shark_addLog( log_text )
       misn.finish(true)
    end
 end

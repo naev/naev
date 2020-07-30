@@ -11,14 +11,15 @@
 
 ]]--
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to him.")
 misn_title = _("Collective Espionage")
 misn_reward = _("%s credits")
 misn_desc = {}
-misn_desc[1] = _("Scan the Collective systems for wireless communications.")
-misn_desc[2] = _("Travel back to %s in %s.")
+misn_desc[1] = _("Scan the Collective systems for wireless communications")
+misn_desc[2] = _("Travel back to %s in %s")
 misn_desc["__save"] = true 
 
 title = {}
@@ -35,6 +36,8 @@ text[3] = _([[After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]])
     
 timermsg = _("Scanning... %ss remaining.")
+
+log_text = _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Station.]])
 
 
 function create ()
@@ -123,6 +126,7 @@ function land()
       tk.msg( title[3], text[3] )
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
+      emp_addCollectiveLog( log_text )
       misn.finish(true)
    end
 end

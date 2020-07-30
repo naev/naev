@@ -259,8 +259,9 @@ int sound_al_init (void)
    alcGetIntegerv( al_device, ALC_FREQUENCY, sizeof(freq), &freq );
 
    /* Try to enable EFX. */
-   if (al_info.efx == AL_TRUE)
+   if (al_info.efx == AL_TRUE) {
       al_enableEFX();
+   }
    else {
       al_info.efx_reverb = AL_FALSE;
       al_info.efx_echo   = AL_FALSE;
@@ -356,11 +357,11 @@ int sound_al_init (void)
    /* debug magic */
    DEBUG(_("OpenAL started: %d Hz"), freq);
    DEBUG(_("Renderer: %s"), alGetString(AL_RENDERER));
-   if (al_info.efx == AL_FALSE)
-      DEBUG(_("Version: %s without EFX"), alGetString(AL_VERSION));
-   else
+   if (al_info.efx)
       DEBUG(_("Version: %s with EFX %d.%d"), alGetString(AL_VERSION),
             al_info.efx_major, al_info.efx_minor);
+   else
+      DEBUG(_("Version: %s without EFX"), alGetString(AL_VERSION));
    DEBUG("");
 
    return ret;
@@ -389,6 +390,14 @@ snderr_dev:
  */
 static int al_enableEFX (void)
 {
+   /* Issues with ALSOFT 1.19.1 crashes so we work around it.
+    * TODO: Disable someday. */
+   if (strcmp(alGetString(AL_VERSION), "1.1 ALSOFT 1.19.1")==0) {
+      DEBUG(_("Crashing ALSOFT version detected, disabling EFX"));
+      al_info.efx = AL_FALSE;
+      return -1;
+   }
+
    /* Get general information. */
    alcGetIntegerv( al_device, ALC_MAX_AUXILIARY_SENDS, 1, &al_info.efx_auxSends );
    alcGetIntegerv( al_device, ALC_EFX_MAJOR_VERSION, 1, &al_info.efx_major );
@@ -606,7 +615,7 @@ static const char* vorbis_getErr( int err )
       case OV_ENOTVORBIS:  return _("Bitstream is not Vorbis data.");
       case OV_EBADHEADER:  return _("Invalid Vorbis bitstream header.");
       case OV_EVERSION:    return _("Vorbis version mismatch.");
-      case OV_EBADLINK:    return _("The given link exists in the Vorbis data stream, but is not decipherable due to garbacge or corruption.");
+      case OV_EBADLINK:    return _("The given link exists in the Vorbis data stream, but is not decipherable due to garbage or corruption.");
       case OV_ENOSEEK:     return _("The given stream is not seekable.");
 
       default: return _("Unknown vorbisfile error.");

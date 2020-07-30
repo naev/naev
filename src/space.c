@@ -38,6 +38,7 @@
 #include "mission.h"
 #include "conf.h"
 #include "queue.h"
+#include "economy.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
@@ -52,7 +53,6 @@
 #include "damagetype.h"
 #include "hook.h"
 #include "dev_uniedit.h"
-
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
@@ -140,7 +140,7 @@ static double interference_timer  = 0.; /**< Interference timer. */
  * Internal Prototypes.
  */
 /* planet load */
-static int planet_parse( Planet* planet, const xmlNodePtr parent );
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
@@ -157,7 +157,6 @@ static void system_parseJumps( const xmlNodePtr parent );
 static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
-static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Render. */
@@ -170,11 +169,6 @@ static void space_renderDebris( Debris *d, double x, double y );
  */
 int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
-/*
- * External prototypes.
- */
-extern credits_t economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
 char* planet_getServiceName( int service )
@@ -234,6 +228,44 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
    return economy_getPrice( c, sys, p );
 }
 
+/**
+ * @brief Gets the price of a commodity at a planet at given time.
+ *
+ *    @param p Planet to get price at.
+ *    @param c Commodity to get price of.
+ *    @param t Time to get price at.
+ */
+credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t )
+{
+   char *sysname;
+   StarSystem *sys;
+
+   sysname = planet_getSystem( p->name );
+   sys = system_get( sysname );
+
+   return economy_getPriceAtTime( c, sys, p, t );
+}
+
+/**
+ * @brief Adds cost of commodities on planet p to known statistics at time t.
+ *
+ *     @param p Planet to get price at
+ *     @param t time to get prices at
+ */
+void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
+   economy_averageSeenPricesAtTime( p, tupdate );
+}
+
+
+/**
+ * @brief Gets the average price of a commodity at a planet that has been seen so far.
+ *
+ * @param p Planet to get average price at.
+ * @param c Commodity to get average price of.
+ */
+int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std){
+  return economy_getAveragePlanetPrice( c, p, mean, std );
+}
 
 /**
  * @brief Changes the planets faction.
@@ -526,6 +558,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
       p  = sys->planets[i];
       if (p->real != ASSET_REAL)
          continue;
+      if (!planet_isKnown(p))
+         continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
       if (td < d) {
          *pnt  = i;
@@ -543,6 +577,10 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
          if (as->appearing == ASTEROID_INVISIBLE)
             continue;
 
+         /* Skip out of range asteroids */
+         if (!pilot_inRangeAsteroid( player.p, k, i ))
+            continue;
+
          td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
          if (td < d) {
             *pnt  = -1; /* We must clear planet target as asteroid is closer. */
@@ -556,6 +594,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    /* Jump points. */
    for (i=0; i<sys->njumps; i++) {
       j  = &sys->jumps[i];
+      if (!jp_isKnown(j))
+         continue;
       td = pow2(x-j->pos.x) + pow2(y-j->pos.y);
       if (td < d) {
          *pnt  = -1; /* We must clear planet target as jump point is closer. */
@@ -1244,7 +1284,7 @@ void space_update( const double dt )
          }
 
          /* Head towards target. */
-         if (fabs(interference_alpha - interference_target) > 1e-05) {
+         if (FABS(interference_alpha - interference_target) > 1e-05) {
             /* Asymptotic. */
             interference_alpha += (interference_target - interference_alpha) * dt;
 
@@ -1303,7 +1343,7 @@ void space_update( const double dt )
 
    /* Update the gatherable objects. */
    gatherable_update(dt);
-
+   
    /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
@@ -1545,7 +1585,7 @@ void space_init( const char* sysname )
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int i, j, k;
+   int i;
    double mod, theta;
    double angle, radius;
    AsteroidType *at;
@@ -1661,6 +1701,8 @@ static int planets_load ( void )
    Planet *p;
    size_t nfiles;
    size_t i, len;
+   Commodity **stdList;
+   unsigned int stdNb;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -1680,6 +1722,9 @@ static int planets_load ( void )
       planet_stack = malloc( sizeof(Planet) * planet_mstack );
       planet_nstack = 0;
    }
+
+   /* Extract the list of standard commodities. */
+   stdList = standard_commodities( &stdNb );
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
@@ -1707,7 +1752,7 @@ static int planets_load ( void )
 
       if (xml_isNode(node,XML_PLANET_TAG)) {
          p = planet_new();
-         planet_parse( p, node );
+         planet_parse( p, node, stdList, stdNb );
       }
 
       /* Clean up. */
@@ -1720,6 +1765,7 @@ static int planets_load ( void )
    for (i=0; i<nfiles; i++)
       free( planet_files[i] );
    free( planet_files );
+   free(stdList);
 
    return 0;
 }
@@ -1888,17 +1934,22 @@ void space_gfxUnload( StarSystem *sys )
  *    @param parent Node that contains planet data.
  *    @return 0 on success.
  */
-static int planet_parse( Planet *planet, const xmlNodePtr parent )
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb )
 {
-   int mem;
+   int mem, i;
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
+   Commodity *com;
+   Commodity **comms;
+   int ncomms;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
+   comms          = NULL;
+   ncomms         = 0;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -2013,25 +2064,29 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
                mem = 0;
+
                do {
                   if (xml_isNode(ccur,"commodity")) {
-                     planet->ncommodities++;
-                     /* Memory must grow. */
-                     if (planet->ncommodities > mem) {
+                     /* If the commodity is standard, don't re-add it. */
+                     com = commodity_get( xml_get(ccur) );
+                     if (com->standard == 1)
+                        continue;
+
+                     ncomms++;
+                     if (ncomms > mem) {
                         if (mem == 0)
                            mem = CHUNK_SIZE_SMALL;
                         else
                            mem *= 2;
-                        planet->commodities = realloc(planet->commodities,
-                              mem * sizeof(Commodity*));
+
+                        if (comms == NULL)
+                           comms = malloc( mem * sizeof(Commodity*) );
+                        else
+                           comms = realloc( comms, mem * sizeof(Commodity*) );
                      }
-                     planet->commodities[planet->ncommodities-1] =
-                        commodity_get( xml_get(ccur) );
+                     comms[ncomms-1] = com;
                   }
                } while (xml_nextNode(ccur));
-               /* Shrink to minimum size. */
-               planet->commodities = realloc(planet->commodities,
-                     planet->ncommodities * sizeof(Commodity*));
             }
 
             else if (xml_isNode(cur, "blackmarket")) {
@@ -2078,6 +2133,51 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             "presence" );
    }
 #undef MELEMENT
+
+   /* Build commodities list */
+   if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
+      /* First, store all the standard commodities and prices. */
+      planet->ncommodities = stdNb;
+      mem = stdNb;
+      if (stdNb > 0) {
+         planet->commodityPrice = malloc( stdNb * sizeof(CommodityPrice) );
+         planet->commodities    = malloc( stdNb * sizeof(Commodity*) );
+         for (i=0; i<stdNb; i++) {
+            planet->commodities[i]          = stdList[i];
+            planet->commodityPrice[i].price = planet->commodities[i]->price;
+         }
+      }
+
+      /* Now add extra commodities */
+      for (i=0; i<ncomms; i++) {
+         com = comms[i];
+
+         planet->ncommodities++;
+         /* Memory must grow. */
+         if (planet->ncommodities > mem) {
+            if (mem == 0)
+               mem = CHUNK_SIZE_SMALL;
+            else
+               mem *= 2;
+            planet->commodities = realloc(planet->commodities,
+                  mem * sizeof(Commodity*));
+            planet->commodityPrice = realloc(planet->commodityPrice,
+                  mem * sizeof(CommodityPrice));
+         }
+         planet->commodities[planet->ncommodities-1] = com;
+         /* Set commodity price on this planet to the base price */
+         planet->commodityPrice[planet->ncommodities-1].price
+            = planet->commodities[planet->ncommodities-1]->price;
+      }
+      /* Shrink to minimum size. */
+      planet->commodities = realloc(planet->commodities,
+            planet->ncommodities * sizeof(Commodity*));
+      planet->commodityPrice = realloc(planet->commodityPrice,
+            planet->ncommodities * sizeof(CommodityPrice));
+   }
+   /* Free temporary comms list. */
+   if (comms != NULL)
+      free(comms);
 
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
@@ -2177,7 +2277,9 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    systemname_stack[spacename_nstack-1] = sys->name;
 
    economy_addQueuedUpdate();
-
+   /* This is required to clear the player statistics for this planet */
+   economy_clearSinglePlanet(planet);
+   
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
@@ -2413,6 +2515,7 @@ StarSystem *system_new (void)
    int realloced, id;
 
    /* Protect current system in case of realloc. */
+   id = -1;
    if (cur_system != NULL)
       id = system_index( cur_system );
 
@@ -2427,7 +2530,7 @@ StarSystem *system_new (void)
    sys = &systems_stack[ systems_nstack-1 ];
 
    /* Reset cur_system. */
-   if (cur_system != NULL)
+   if (id >= 0)
       cur_system = system_getIndex( id );
 
    /* Initialize system and id. */
@@ -2672,6 +2775,9 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    char *buf;
    double x, y;
    StarSystem *target;
+
+   x = 0.;
+   y = 0.;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -3016,7 +3122,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
  */
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
 {
-   int i;
    AsteroidExclusion *a;
    xmlNodePtr cur;
    double x, y;
@@ -3173,6 +3278,13 @@ int space_load (void)
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
+   /* Calculate commodity prices (sinusoidal model). */
+   economy_initialiseCommodityPrices();
+
+   for (i=0; i<(int)nasterogfx; i++)
+      free(asteroid_files[i]);
+   free(asteroid_files);
+
    return 0;
 }
 
@@ -3250,6 +3362,7 @@ static int asteroidTypes_load (void)
                npng  = npng_open( rw );
                npng_dim( npng, &w, &h );
                surface = npng_readSurface( npng, gl_needPOT(), 1 );
+               npng_close(npng);
 
                at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
@@ -3565,7 +3678,7 @@ static void space_renderPlanet( Planet *p )
  */
 static void space_renderAsteroid( Asteroid *a )
 {
-   int i, qtt;
+   int i;
    double scale, nx, ny;
    AsteroidType *at;
    Commodity *com;
@@ -3685,6 +3798,7 @@ void space_exit (void)
 
       /* commodities */
       free(pnt->commodities);
+      free(pnt->commodityPrice);
    }
    free(planet_stack);
    planet_stack = NULL;
@@ -3736,6 +3850,7 @@ void space_exit (void)
       for (j=0; j<at->ngfx; j++) {
          gl_freeTexture(at->gfxs[j]);
       }
+      free(at->gfxs);
    }
    free(asteroid_types);
    asteroid_types = NULL;
@@ -3895,8 +4010,7 @@ int space_rmMarker( int sys, SysMarker type )
  */
 int space_sysSave( xmlTextWriterPtr writer )
 {
-   int i;
-   int j;
+  int i,j;
    StarSystem *sys;
 
    xmlw_startElem(writer,"space");
@@ -4048,52 +4162,6 @@ static int getPresenceIndex( StarSystem *sys, int faction )
 
 
 /**
- * @brief Do some cleanup work after presence values have been adjusted.
- *
- *    @param sys Pointer to the system to cleanup.
- */
-static void presenceCleanup( StarSystem *sys )
-{
-   int i;
-
-   /* Reset the spilled variable for the entire universe. */
-   for (i=0; i < systems_nstack; i++)
-      systems_stack[i].spilled = 0;
-
-   /* Check for NULL and display a warning. */
-   if (sys == NULL) {
-      WARN("sys == NULL");
-      return;
-   }
-
-   /* Check the system for 0 and negative-value presences. */
-   for (i=0; i < sys->npresence; i++) {
-      if (sys->presence[i].value > 0.)
-         continue;
-
-      /* Remove the element with invalid value. */
-      memmove(&sys->presence[i], &sys->presence[i + 1],
-              sizeof(SystemPresence) * (sys->npresence - (i + 1)));
-      sys->npresence--;
-      sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
-      i--;  /* We'll want to check the new value we just copied in. */
-   }
-}
-
-
-/**
- * @brief Sloppily sanitize invalid presences across all systems.
- */
-void system_presenceCleanupAll( void )
-{
-   int i;
-
-   for (i=0; i<systems_nstack; i++)
-      presenceCleanup( &systems_stack[i] );
-}
-
-
-/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
@@ -4149,7 +4217,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       /*WARN("q is empty after getting adjacencies of %s.", sys->name);*/
       q_destroy(q);
       q_destroy(qn);
-      presenceCleanup(sys);
+      goto sys_cleanup;
       return;
    }
 
@@ -4186,9 +4254,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    q_destroy(q);
    q_destroy(qn);
 
+sys_cleanup:
    /* Clean up our mess. */
-   presenceCleanup(sys);
-
+   for (i=0; i < systems_nstack; i++)
+      systems_stack[i].spilled = 0;
    return;
 }
 
@@ -4217,7 +4286,7 @@ double system_getPresence( StarSystem *sys, int faction )
    /* Go through the array, looking for the faction. */
    for (i = 0; i < sys->npresence; i++) {
       if (sys->presence[i].faction == faction)
-         return sys->presence[i].value;
+         return MAX(sys->presence[i].value, 0);
    }
 
    /* If it's not in there, it's zero. */

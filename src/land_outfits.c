@@ -138,9 +138,9 @@ void outfits_open( unsigned int wid )
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
          280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+         280, 320, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         60, 160, 0, "txtSDesc", &gl_smallFont, &cBlack,
          _("Owned:\n"
          "\n"
          "Slot:\n"
@@ -249,6 +249,7 @@ static void outfits_genList( unsigned int wid )
    const glColour *c;
    const char *slotname;
    char *filtertext;
+   int no_outfits = 0;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -300,6 +301,7 @@ static void outfits_genList( unsigned int wid )
       soutfits[0] = strdup(_("None"));
       toutfits[0] = NULL;
       noutfits    = 1;
+      no_outfits  = 1;
    }
    else {
       /* Create the outfit arrays. */
@@ -349,7 +351,7 @@ static void outfits_genList( unsigned int wid )
    /* write the outfits stuff */
    outfits_update( wid, NULL );
 
-   if (noutfits > 0 && (strcmp(soutfits[0], "None") != 0)) {
+   if (!no_outfits) {
       toolkit_setImageArrayQuantity( wid, OUTFITS_IAR, quantity );
       toolkit_setImageArraySlotType( wid, OUTFITS_IAR, slottype );
       toolkit_setImageArrayBackground( wid, OUTFITS_IAR, bg );
@@ -378,7 +380,7 @@ void outfits_update( unsigned int wid, char* str )
 
    /* Get and set parameters. */
    outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
-   if (strcmp(outfitname,"None")==0) { /* No outfits */
+   if (strcmp(outfitname,_("None"))==0) { /* No outfits */
       window_modifyImage( wid, "imgOutfit", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
@@ -421,16 +423,17 @@ void outfits_update( unsigned int wid, char* str )
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
    /* new text */
-   window_modifyText( wid, "txtDescription", outfit->description );
+   window_modifyText( wid, "txtDescription", _(outfit->description) );
    price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
    if (outfit->license == NULL)
       strncpy( buf4, _("None"), sizeof(buf4) );
    else if (player_hasLicense( outfit->license ))
-      strncpy( buf4, outfit->license, sizeof(buf4) );
+      strncpy( buf4, _(outfit->license), sizeof(buf4) );
    else
-      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", outfit->license );
+      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", _(outfit->license) );
+   buf4[ sizeof(buf4)-1 ] = '\0';
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -443,22 +446,22 @@ void outfits_update( unsigned int wid, char* str )
          "\n"
          "%s\n"
          "%s\n"
-         "%.0f tons\n"
+         "%.0f tonnes\n"
          "\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n"),
          player_outfitOwned(outfit),
-         outfit_slotName(outfit),
-         outfit_slotSize(outfit),
+         _(outfit_slotName(outfit)),
+         _(outfit_slotSize(outfit)),
          mass,
          buf2,
          buf3,
          buf4 );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
-   window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
+   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
    window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
@@ -659,7 +662,7 @@ static void outfits_buy( unsigned int wid, char* str )
    HookParam hparam[3];
 
    outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
-   if (strcmp(outfitname, "None") == 0)
+   if (strcmp(outfitname, _("None")) == 0)
       return;
 
    outfit = outfit_get( outfitname );
@@ -735,7 +738,7 @@ static void outfits_sell( unsigned int wid, char* str )
    HookParam hparam[3];
 
    outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
-   if (strcmp(outfitname, "None") == 0)
+   if (strcmp(outfitname, _("None")) == 0)
       return;
 
    outfit      = outfit_get( outfitname );

@@ -9,9 +9,11 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-include "proximity.lua"
-include "fleethelper.lua"
-include "dat/missions/empire/common.lua"
+require "numstring.lua"
+require "proximity.lua"
+require "fleethelper.lua"
+require "dat/missions/zalek/common.lua"
+
 
 -- set mission variables
 t_sys = {}
@@ -23,9 +25,8 @@ t_pla[2] = "Waterhole's Moon"
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
 t_sys[3] = "Seiben"
 t_pla[3] = "Gastan"
--- player makes maximum 490k+, minimum 300k
 pho_mny = 50000
-reward = pho_mny+300000+rnd.rnd(3,4)*100000+rnd.rnd(10)*1000 
+reward = 1000000 
 title = {}
 text = {}
 osd_msg = {}
@@ -33,50 +34,51 @@ osd_msg = {}
 -- Mission details
 misn_title = _("The one with the Shopping")
 misn_reward = _("The gratitude of science and a bit of compensation")
-misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs to build his prototype.")
-bar_desc = _("You see this scientist talking to various pilots. He looks at you with a measuring look.")
-trd1_desc = _("This seems to be a regular trader with some bodyguards. Business is dangerous nowadays...")
-trd2_desc = _("This trader appears to be a bit shifty... no doubt it is the person you are looking for")
+misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs for his research.")
+bar_desc = _("You see a scientist talking to various pilots. Perhaps you should see what he's looking for.")
+trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be ther person you're supposed to get this stuff for ")
+trd2_desc = _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for.")
 
 title[1] = _([[In the bar]])
-text[1]  = _([["Hey you! You are a pilot right? I've got a job for you. You see I am on the brink of revolutionizing science! I basically already did it, there is just some minor fiddling to do. According to the Za'lek council our theories have to be tested. No faith in my abilities... but I will show them! They will learn not to question Dr. Geller. Hah! Anyways. I have some minor errands that I need you to run for me, just some shopping, are you in?]])
-text[2] = _([["Excellent, here is the list" he hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping... Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]])
-text[3] = _([["With what can I help you, my friend?" says the shifty figure, and you hand him the chip the scientist handed you.]])
+text[1]  = _([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]])
+text[2] = _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]])
+text[3] = _([["With what can I help you, my friend?" says the shifty figure. You hand him the memory chip the scientist handed you.]])
 -- dialogue with first trader
-text[4] = _([["Of course I have what you need, but do you have what I need?"]])
-text[5] = _([["No? Well then come back if you can offer me 3t Phosphine you can find it on %s" Phosphine? You ponder... you once knew the reason why that was hard to come by.]])
-text[6] = _([["Ah yes, indeed" he says inspecting a sample in front of him. That will do. And here you get, what was promised: A piece of a ghost ship from the nebula. 100% authentic my supplier claims!" he says, handing you one single chip.]])
-text[7] = _([["What are you still doing here? No Phosphine, no trade...."]])
+text[4] = _([["Of course I have what you need. I'll trade it for some 3t phosphine. You can find it on %s in the %s system."]])
+text[6] = _([["Ah, yes indeed," he says as he inspects a sample in front of him. "That will do. And here, as promised: a piece of a ghost ship from the nebula. 100% authentic! At least, according to my supplier."]])
+text[7] = _([["What are you still doing here? No phosphine, no trade."]])
 -- dialogue with 2nd trader
 -- %s for pho_mny
-text[8] = _([["It seems like I have found myself a customer... 
-well, let me see what you need and I will tell you how much it costs you." he says. "Oh." he says while lowering his voice. "Yes we do have that, but for a corresponding price, as you might understand. It will be %s credits. If anything happens: I have never seen you." You are a bit flabbergasted. Are you willing to pay?]])
+text[8] = _([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be %s credits. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]])
 mnytitle = _([[In the bar]])
-mnytext = _([["You don't have enough money... I don't mean to be rude, but until you show up with some good old bling bling I have nothing to talk about with you..."]])
-text[9] = _([["Very well, always a pleasure to make a business."]])
-text[10] = _([["Then we have nothing to talk about. Come back if you made up your mind and have enough credits with you"]])
+mnytext = _([["You don't have enough money. Stop wasting my time."]])
+text[9] = _([["Pleasure to do business with you."]])
+text[10] = _([["Then we have nothing to to discuss."]])
 -- call of the police
 title[2] = _([[On the intercom]])
-text[11] = _([["You are suspected to be transporting highly toxic materials without a license, please stop your ship and prepare to be boarded."]])
+text[11] = _([["We have reason to believe you are carrying controlled substances without a proper license. Please stop your ship and prepare to be boarded."]])
 text[12] = _([["Stand down for inspection."]])
 title[3] = _([[On your ship]])
-text[13] = _([["Freeze! You are in accused of violating the toxic materials regulation. Your ship will be searched and any suspicious elements confiscated!"]])
-text[14] = _([[The inspectors search through your ship and cargo department. Once they find the containers they confiscate the Phosphine and charge you with a fine of 100 000 credits for violating the transportation regulation on toxic materials.]])
-text[15] = _([[Dr Geller looks at you. "Have you got it?" You present the chip and he begins to glow. "Yes that is it!! Now I can continue my research." You ask him about the ghost ship remark by the trader. "Some people believe this nonsense. There is no scientific explanation of the ghost ships. I think it is some technology related to sol that got blasted off during the incident. They must have done some advanced research on neuronal computing."]])
-text[16] = _([[He turns away and after you clear your throat with a pretty audible "Uh uhm" turns back to you. "Oh, yes, of course you want some payment for your service, right? Well, here you go. I might need you again in the future." He hands you a payment slip and walks away.]])
+text[13] = _([["You are accused of violating regulation on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]])
+text[14] = _([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you %s credits.]])
+text[15] = _([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
+text[16] = _([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]])
 trd_disc = _([[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]])
 -- osd_msg
-osd_msg[1] = _("Go to the %s system and talk to the trader on %s.")
-osd_msg[2] = _("Go to the %s system and talk to the contact person on %s.")
-osd_msg[3] = _("Return to the %s system to the trader on %s.")
-osd_msg[4] = _("Return to the %s system and deliver to Dr.Geller on %s.")
+osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
+osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
+osd_msg[3] = _("Return to the %s system to the trader on %s")
+osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 -- refusetext 
 refusetitle = _("No Science Today")
-refusetext = _("I guess you don't care that much about science...")
+refusetext = _("I guess you don't care for science...")
+
+log_text = _([[You helped Dr. Geller obtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
+
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("A scientist"),  "zalek_scientist_placeholder")
+   misn.setNPC( _("A scientist"), "zalek/unique/geller" )
    misn.setDesc( bar_desc )
 end
 function accept()
@@ -97,17 +99,17 @@ function accept()
 end
 
 function land1()
-  if planet.cur() == planet.get(t_pla[1]) and not talked and not traded then
-    bar1pir1 = misn.npcAdd("first_trd", "Trader", "neutral/thief1", trd1_desc)
-  elseif planet.cur() == planet.get(t_pla[1]) and talked and traded1 then
-    bar1pir1 = misn.npcAdd("third_trd", "Trader", "neutral/thief1", trd1_desc)
-  end
+   if planet.cur() == planet.get(t_pla[1]) and not talked and not traded then
+      bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3", trd1_desc)
+   elseif planet.cur() == planet.get(t_pla[1]) and talked and traded1 then
+      bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3", trd1_desc)
+   end
 end
 
 function land2()
-  if planet.cur() == planet.get(t_pla[2]) and talked and not traded1 then
-    bar2pir1 = misn.npcAdd("second_trd", "Contact Person", "neutral/thief3", trd2_desc)
-  end
+   if planet.cur() == planet.get(t_pla[2]) and talked and not traded1 then
+      bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer", trd2_desc)
+   end
 end
 
 -- first trade: send player 2 2nd system, if he goes back here, tell them to get going...
@@ -117,7 +119,7 @@ function first_trd()
      return
   else
      tk.msg(title[1], text[3])
-     tk.msg(title[1], text[4])
+     tk.msg(title[1], text[4]:format(t_pla[2], t_sys[2]))
      talked = true
   end
   
@@ -133,7 +135,7 @@ end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
-  if not tk.yesno( title[1], text[8]:format(pho_mny) ) then
+  if not tk.yesno( title[1], text[8]:format(numstring(pho_mny)) ) then
      tk.msg(title[1], text[10])
      return
   end
@@ -161,7 +163,7 @@ function third_trd()
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3])
-  osd_msg[4] = osd_msg[4]:format(t_sys[3],t_pla[3])
+  osd_msg[4] = osd_msg[4]:format(t_sys[3], t_pla[3])
   misn.osdCreate(misn_title, {osd_msg[4]})
   
   misn.markerMove(misn_mark, system.get(t_sys[3]))
@@ -178,6 +180,7 @@ function fnl_ld ()
       tk.msg(title[1],text[15])
       tk.msg(title[1],text[16])
       player.pay(reward)
+      zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end
 end
@@ -218,9 +221,6 @@ function spwn_police ()
       lance1:setHostile(true)
       lance2:setHostile(true)
       adm1:setHostile(true)
-      l1ho = hook.pilot(lance1, "death", "lanc1_dead")
-      l2ho = hook.pilot(lance2, "death", "lanc2_dead")
-      admho = hook.pilot(adm1, "death", "adm_dead")
 end
 -- move to the player ship 
 
@@ -246,10 +246,11 @@ function go_board ()
 end
 -- display msgs and have the ships disappear and fail the mission...
 function fine_vanish ()
+   fine = 100000
    tk.msg(title[3],text[13])
-   tk.msg(title[3],text[14])
-   if player.credits() > 100000 then
-      player.pay(-100000)
+   tk.msg(title[3],text[14]:format(numstring(fine)))
+   if player.credits() > fine then
+      player.pay(-fine)
    else
       player.pay(-player.credits())
    end
@@ -269,17 +270,4 @@ function fine_vanish ()
    hook.rm(l2ho)
    hook.rm(admho)
    misn.finish(false)
-end
--- if the player just kills the empire ships he looses emp reputation...
-function lanc1_dead () 
-   faction.modPlayerSingle( "Empire", -2 )
-   lance1 = false
-end
-function lanc2_dead () 
-   faction.modPlayerSingle( "Empire", -2 )
-   lance2 = false
-end
-function adm_dead () 
-   faction.modPlayerSingle( "Empire", -2 )
-   adm1 = false
 end

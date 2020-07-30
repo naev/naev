@@ -6,23 +6,6 @@
 --]]
 
 
---[[
--- @brief Gets a random pirate lord portrait name.
---
--- @return A random pirete lord portrait name.
---]]
-function pir_getLordRandomPortrait ()
-   local portraits = {
-      "pirate/pirate1",
-      "pirate/pirate2",
-      "pirate/pirate3",
-      "pirate/pirate4",
-   }
-
-   return portraits[ rnd.rnd( 1, #portraits ) ]
-end
-
-
 function pir_modDecayFloor( n )
    local floor = var.peek("_ffloor_decay_pirate")
    if floor == nil then floor = -20 end
@@ -30,3 +13,8 @@ function pir_modDecayFloor( n )
    var.push("_ffloor_decay_pirate", floor)
 end
 
+
+function pir_addMiscLog( text )
+   shiplog.createLog("pir_misc", _("Miscellaneous"), _("Pirate"))
+   shiplog.appendLog("pir_misc", text)
+end

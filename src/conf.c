@@ -28,39 +28,44 @@
 
 
 #define  conf_loadInt(n,i)    \
-nlua_getenv(env,n); \
+{nlua_getenv(env,n); \
 if (lua_isnumber(naevL, -1)) { \
    i = (int)lua_tonumber(naevL, -1); \
 } \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 #define  conf_loadFloat(n,f)    \
-nlua_getenv(env,n); \
+{nlua_getenv(env,n); \
 if (lua_isnumber(naevL, -1)) { \
    f = (double)lua_tonumber(naevL, -1); \
 } \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 #define  conf_loadBool(n,b)   \
-nlua_getenv(env, n); \
+{nlua_getenv(env, n); \
 if (lua_isnumber(naevL,-1)) \
    b = (lua_tonumber(naevL,-1) != 0.); \
 else if (!lua_isnil(naevL,-1)) \
    b = lua_toboolean(naevL, -1); \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 #define  conf_loadString(n,s) \
-nlua_getenv(env, n); \
+{nlua_getenv(env, n); \
 if (lua_isstring(naevL, -1)) { \
    if (s != NULL) \
       free(s); \
-   s = strdup(lua_tostring(naevL, -1));   \
+   s = strdup(lua_tostring(naevL, -1)); \
 } \
-lua_pop(naevL,1);
+lua_pop(naevL,1);}
 
 
 /* Global configuration. */
-PlayerConf_t conf = { .ndata = NULL, .sound_backend = NULL, .joystick_nam = NULL };
+PlayerConf_t conf = {
+   .ndata = NULL,
+   .language=NULL,
+   .sound_backend = NULL,
+   .joystick_nam = NULL
+};
 
 /* from main.c */
 extern int show_fps;
@@ -121,6 +126,11 @@ void conf_setDefaults (void)
    if (conf.ndata != NULL)
       free(conf.ndata);
    conf.ndata        = NULL;
+
+   /* Language. */
+   if (conf.language != NULL)
+      free(conf.language);
+   conf.language     = NULL;
 
    /* Joystick. */
    conf.joystick_ind = -1;
@@ -284,6 +294,8 @@ void conf_cleanup (void)
 {
    if (conf.ndata != NULL)
       free(conf.ndata);
+   if (conf.language != NULL)
+      free(conf.language);
    if (conf.sound_backend != NULL)
       free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
@@ -341,6 +353,9 @@ int conf_loadConfig ( const char* file )
 
       /* ndata. */
       conf_loadString("data",conf.ndata);
+
+      /* Language. */
+      conf_loadString("language",conf.language);
 
       /* OpenGL. */
       conf_loadInt("fsaa",conf.fsaa);
@@ -444,7 +459,7 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
+      for (i=0; keybind_info[i][0] != NULL; i++) {
          nlua_getenv(env, keybind_info[i][0]);
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
@@ -498,11 +513,6 @@ int conf_loadConfig ( const char* file )
             lua_pop(naevL,1);
 
             if (str != NULL) { /* keybind is valid */
-               if (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD) {
-                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
-                  continue;
-               }
-
                /* get type */
                if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
@@ -515,6 +525,12 @@ int conf_loadConfig ( const char* file )
                else if (strcmp(str,"jhat_right")==0)  type = KEYBIND_JHAT_RIGHT;
                else {
                   WARN(_("Unknown keybinding of type %s"), str);
+                  continue;
+               }
+
+               /* Check to see if it is valid. */
+               if ((key == SDLK_UNKNOWN) && (type == KEYBIND_KEYBOARD)) {
+                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
                   continue;
                }
 
@@ -887,6 +903,11 @@ int conf_saveConfig ( const char* file )
    conf_saveString("data",conf.ndata);
    conf_saveEmptyLine();
 
+   /* Language. */
+   conf_saveComment(_("Language to use. Set to the two character identifier to the language (e.g., \"en\" for English), and nil for autodetect."));
+   conf_saveString("language",conf.language);
+   conf_saveEmptyLine();
+
    /* OpenGL. */
    conf_saveComment(_("The factor to use in Full-Scene Anti-Aliasing"));
    conf_saveComment(_("Anything lower than 2 will simply disable FSAA"));
@@ -979,7 +1000,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("al_efx",conf.al_efx);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Size of the OpenAL music buffer (in kilobytes)."));
+   conf_saveComment(_("Size of the OpenAL music buffer (in kibibytes)."));
    conf_saveInt("al_bufsize",conf.al_bufsize);
    conf_saveEmptyLine();
 
@@ -1036,7 +1057,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Fonts. */
-   conf_saveComment(_("Font sizes (in pixels) for NAEV"));
+   conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
    conf_saveComment(_("Console default: 10"));
    conf_saveInt("font_size_console",conf.font_size_console);
@@ -1130,7 +1151,7 @@ int conf_saveConfig ( const char* file )
    keyname[sizeof(keyname)-1] = '\0';
 
    /* Iterate over the keybinding names */
-   for (i=0; strcmp(keybind_info[i][0], "end"); i++) {
+   for (i=0; keybind_info[i][0] != NULL; i++) {
       /* Save a comment line containing the description */
       conf_saveComment(input_getKeybindDescription( keybind_info[i][0] ));
 

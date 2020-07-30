@@ -6,8 +6,8 @@
 
 ]]--
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
 -- This is in cargo_common, but we need to increase the range…
 function cargo_selectMissionDistance ()
@@ -30,7 +30,7 @@ osd_msg1 = _("Fly to %s in the %s system before %s.")
 osd_msg2 = _("You have %s remaining.") -- Need to reuse.
 
 misn_title = _("Pirate cargo transport (%d tonnes of %s)")
-misn_desc = _("%d tons of %s needs to be shipped to %s in the %s system by %s (%s left).")
+misn_desc = _("%d tonnes of %s needs to be shipped to %s in the %s system by %s (%s left).")
 misn_reward = _("%s credits")
 title = {}
 title_p1 = _("Pirate: Cargo transport to %s in the %s system")
@@ -41,7 +41,7 @@ Travel distance: %d
 Time limit: %s]])
 full = {}
 full[1] = _("Ship is full")
-full[2] = _("Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission.")
+full[2] = _("Your ship is too full. You need to make room for %d more tonnes if you want to be able to accept the mission.")
 slow = {}
 slow[1] = _("Too slow")
 slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s.
@@ -52,14 +52,12 @@ msg_title[1] = _("Mission Accepted")
 msg_title[2] = _("Too many missions")
 msg_title[3] = _("Successful Delivery")
 msg_msg = {}
-msg_msg[1] = _("%d tons of %s are loaded onto your ship.")
+msg_msg[1] = _("%d tonnes of %s are loaded onto your ship.")
 msg_msg[2] = _("You have too many active missions.")
 msg_msg[3] = _("The %s are unloaded at the docks.")
 msg_msg[4] = _("The %s are passed through the airlock.")
-miss = {}
-miss[1]= _("Cargo Missing")
-miss[2] = _("You are missing the %d tons of %s!.")
-miss[3] = _("MISSION FAILED: You have failed to deliver the goods on time!")
+
+msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
 -- Use hidden jumps
 cargo_use_hidden = true
@@ -183,7 +181,7 @@ function tick()
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(miss[3])
+      player.msg(msg_timeup)
       abort()
    end
 end

@@ -17,6 +17,7 @@
 
 #include "music_sdlmix.h"
 #include "music_openal.h"
+
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_var.h"

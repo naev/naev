@@ -11,7 +11,7 @@
 #include "faction.h"
 #include "opengl.h"
 #include "pilot.h"
-#include "economy.h"
+#include "commodity.h"
 #include "fleet.h"
 #include "mission.h"
 #include "tech.h"
@@ -79,7 +79,7 @@ typedef struct Planet_ {
    double radius; /**< Radius of the planet. */
 
    /* Planet details. */
-   char *class; /**< planet type */
+   char *class; /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
    int faction; /**< planet faction */
    uint64_t population; /**< Population of the planet. */
 
@@ -104,6 +104,7 @@ typedef struct Planet_ {
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
+   CommodityPrice *commodityPrice; /**< the base cost of a commodity on this planet */
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
@@ -312,6 +313,10 @@ struct StarSystem_ {
    int markers_high; /**< Number of high mission markers. */
    int markers_plot; /**< Number of plot level mission markers. */
 
+   /* Economy. */
+   CommodityPrice *averagePrice;
+   int ncommodities;
+  
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
 };
@@ -345,6 +350,9 @@ char **planet_searchFuzzyCase( const char* planetname, int *n );
 char* planet_getServiceName( int service );
 int planet_getService( char *name );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t );
+int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std);
+void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
 /* Misc modification. */
 int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */

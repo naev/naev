@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nera">
+ <pos>
+  <x>5670.230758</x>
+  <y>14988.019003</y>
+ </pos>
+ <GFX>
+  <space>moon-O01.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>750.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>600000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Nera was found by the Proteron not long after Elpa, and it turned out to be a perfect complement. Where Elpa is dry and arid, Nera's surface is almost entirely made up of water, to the point where those who live here have to make do with underwater habitations.</description>
+ </general>
+</asset>

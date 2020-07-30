@@ -3,10 +3,12 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/zalek/common.lua"
+
 
 -- Bar Description
-bar_desc = _("You see a drunkard at the bar mumbling about how he was so close to getting his break.")
+bar_desc = _("This Za'lek scientist seems to be looking for someone.")
 
 -- Mission Details
 misn_title = _("Za'lek Shipping Delivery")
@@ -16,10 +18,10 @@ misn_desc = _("You agreed to help a Za'lek scientist pick up some cargo way out 
 -- OSD
 OSDtitle = _("Za'lek Cargo Monkey")
 OSDdesc = {}
-OSDdesc[1] = _("Go pick up some equipment at %s in the %s system.")
-OSDdesc[2] = _("Drop off the equipment at %s in the %s system.")
+OSDdesc[1] = _("Go pick up some equipment at %s in the %s system")
+OSDdesc[2] = _("Drop off the equipment at %s in the %s system")
 
-payment = 250000
+payment = 2500000
 
 -- Cargo Details
 cargo = "Equipment"
@@ -29,28 +31,27 @@ title = {}  --stage titles
 text = {}   --mission text
 
 title[1] = _("Spaceport Bar")
-text[1] = _([[You walk into the bar and see a scientist wearing a Za'lek badge looking for someone. Unusual, as Za'lek intellectuals rarely leave their own space.
-After a while of listening to him go around, you surmise that he is looking for someone to pick up and drop off some cargo for him. Eventually he sees you and comes up politely. "Excuse me, but do you happen to know a ship captain who can help me with something?"]])
+text[1] = _([[This Za'lek scientist seems to be looking for someone. As you approach, he begins to speak. "Excuse me, but do you happen to know a ship captain who can help me with something?"]])
 
 title[2] = _("A long haul through tough territory")
-text[2] = _([[You say that he is looking at one right now. Rather surprisingly, the pompous-looking man laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan, by the way. I warn you, it'll be simple, but rather dangerous, but I will pay you handsomely for your services.
-    I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that is going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there.]])
+text[2] = _([[You say that he is looking at one right now. Rather surprisingly, the he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan. The job will be a bit dangerous, but I will pay you handsomely for your services.
+    "I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there.]])
 
 title[3] = _("Deliver the Equipment")
 text[3] = _([[Once planetside, you find the acceptance area and type in the code Dr. Logan gave you to pick up the equipment. Swiftly, a group of droids backed by a human overseer loads the heavy reinforced crates on your ship and you are ready to go.]])
 
 title[4] = _("Success")
 text[4] = _([[You land on the Za'lek planet and find your ship swarmed by dockhands in red and advanced-looking droids rapidly. They unload the equipment and direct you to a rambling edifice for payment.
-    When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech on display so casually as well as the utter bedlam of the facility. It takes you a solid ten minutes before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound]])
+    When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech so casually on display as well as the utter chaos of the facility. It takes a solid ten hectoseconds before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound.]])
 
 title[5] = _("Takeoff")
-text[5] = _([[You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late. Especially given the lack of organization you've seen on the planet. Suddenly, a ping sounds on your console, signifying that someone's hailing you!]])
+text[5] = _([[You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late, especially given the lack of organization you've seen on the planet. Suddenly, you hear a ping on your console, signifying that someone's hailing you.]])
 
 title[6] = _("A Small Delay")
-text[6] = _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay, but I got held up. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]])
+text[6] = _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[7] = _("Bonus")
-text[7] = _([["For your trouble, I will add a bonus of %d credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
+text[7] = _([["For your trouble, I will add a bonus of %s credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[8] = _("Check Account")
 text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. A good compensation indeed. You feel better already.]])
@@ -58,11 +59,14 @@ text[8] = _([[You check your account balance as he closes the comm channel to fi
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
 
+log_text = _([[You helped a Za'lek scientist deliver some equipment and were paid generously for the job.]])
+
+
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Za'lek Scientist"), "zalek_scientist_placeholder" )  -- creates the scientist at the bar
-   misn.setDesc( bar_desc )           -- drunkard's description
+   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan" )  -- creates the scientist at the bar
+   misn.setDesc( bar_desc )           -- description
 
    -- Planets
    pickupWorld, pickupSys  = planet.getLandable("Vilati Vilata")
@@ -157,7 +161,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( bonus ) )
+--   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end
@@ -170,7 +174,8 @@ function closehail()
    logan:setHilight(false)
    logan:setInvincible(false) 
    logan:hyperspace()
-   faction.modPlayerSingle("Za'lek",5);
+   faction.modPlayerSingle("Za'lek", 5)
+   zlk_addMiscLog( log_text )
    misn.finish(true)
 end
 

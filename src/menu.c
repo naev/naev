@@ -84,7 +84,6 @@ static int menu_main_bkg_system (void);
 static void main_menu_promptClose( unsigned int wid, char *unused );
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
-static void menu_main_tutorial( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
@@ -106,6 +105,9 @@ static void menu_editors_close( unsigned int wid, char* str );
 static void menu_options_button( unsigned int wid, char *str );
 
 
+/*
+ * Background system for the menu.
+ */
 static int menu_main_bkg_system (void)
 {
    nsave_t *ns;
@@ -121,17 +123,24 @@ static int menu_main_bkg_system (void)
    /* Refresh saves. */
    load_refresh();
 
-   /* Get start position. */
+   /* Load saves. */
    ns = load_getList( &n );
-   if ((n > 0) && (planet_exists( ns[0].planet ))) {
-      pnt = planet_get( ns[0].planet );
-      if (pnt != NULL) {
-         sys = planet_getSystem( ns[0].planet );
-         if (sys != NULL) {
-            cx = pnt->pos.x;
-            cy = pnt->pos.y;
-            cx += 300;
-            cy += 200;
+
+   /* Try to apply unidiff. */
+   if (n > 0) {
+      load_gameDiff( ns[0].path );
+
+      /* Get start position. */
+      if (planet_exists( ns[0].planet )) {
+         pnt = planet_get( ns[0].planet );
+         if (pnt != NULL) {
+            sys = planet_getSystem( ns[0].planet );
+            if (sys != NULL) {
+               cx = pnt->pos.x;
+               cy = pnt->pos.y;
+               cx += 300;
+               cy += 200;
+            }
          }
       }
    }
@@ -181,7 +190,7 @@ void menu_main (void)
    menu_main_bkg_system();
 
    /* Set dimensions */
-   y  = 20 + (BUTTON_HEIGHT+20)*5;
+   y  = 20 + (BUTTON_HEIGHT+20)*4;
    h  = y + 80;
    if (conf.devmode) {
       h += BUTTON_HEIGHT + 20;
@@ -218,9 +227,6 @@ void menu_main (void)
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", _("New Game"), menu_main_new, SDLK_n );
-   y -= BUTTON_HEIGHT+20;
-   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnTutorial", _("Tutorial"), menu_main_tutorial, SDLK_t );
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
       window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -349,19 +355,6 @@ static void menu_main_new( unsigned int wid, char* str )
 
    /* Start the new player. */
    player_new();
-}
-/**
- * @brief Function to active the new game menu.
- *    @param str Unused.
- */
-static void menu_main_tutorial( unsigned int wid, char* str )
-{
-   (void) str;
-   (void) wid;
-   window_destroy( wid );
-   menu_Close(MENU_MAIN);
-   pause_game();
-   player_newTutorial();
 }
 /**
  * @brief Function to exit the main menu and game.
@@ -554,10 +547,7 @@ static void menu_death_restart( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
-   if (player_isTut())
-      player_newTutorial();
-   else
-      player_new();
+   player_new();
 }
 
 /**
@@ -573,7 +563,7 @@ void menu_death (void)
 
    /* Allow the player to continue if the savegame exists, if not, propose to restart */
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   if (!player_isTut() && nfile_fileExists(path))
+   if (nfile_fileExists(path))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else
@@ -656,8 +646,6 @@ static void menu_editors_open( unsigned int wid, char *unused )
    (void) unused;
    int h, y;
 
-   /*WARN("Entering function.");*/
-
    /* Menu already open, quit. */
    if (menu_isOpen( MENU_EDITORS )) {
       return;
@@ -687,8 +675,6 @@ static void menu_editors_open( unsigned int wid, char *unused )
     /* Editors menu is open. */
    menu_Open( MENU_EDITORS );
 
-   /*WARN("Exiting function.");*/
-
    return;
 }
 
@@ -701,14 +687,11 @@ static void menu_editors_close( unsigned int wid, char* str )
    (void)str;
    
    /* Close the Editors Menu and mark it as closed */
-   /*WARN("Entering function.");*/
    window_destroy( wid );
    menu_Close( MENU_EDITORS );
    
    /* Restores Main Menu */
-   /*WARN("Restoring Main Menu.");*/
    menu_main();
-   /*WARN("Exiting function.");*/
    
    return;
 }

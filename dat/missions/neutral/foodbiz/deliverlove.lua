@@ -5,7 +5,8 @@ Author: iwaschosen
 Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
 
 
 misn_title = _([[Deliver Love]])
@@ -20,7 +21,7 @@ acceptornot = _([["It is a nice place I hear!" he exclaims visibly excited. "Say
 
 bargain = _([[The man grabs your arm as you begin to get up. "Alright, how about %s credits? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]])
 
-not_enough_cargospace = _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a ton of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL ton of letters...]])
+not_enough_cargospace = _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL tonne of letters...]])
 
 ask_again = _([["Ah, are you able to deliver my ton of letters for me now?"]])
 
@@ -34,9 +35,10 @@ osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
 osd_desc["__save"] = true
 
+log_text = _([[You delivered a literal tonne of letters for a love-struck, old-fashioned man.]])
+
 cargoname = "Love Letters"
 
---Start Functions
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
@@ -45,7 +47,7 @@ function create () --No system shall be claimed by mission
    reward = 20000
    started = false
 
-   misn.setNPC( npc_name, "neutral/male1" )
+   misn.setNPC( npc_name, "neutral/unique/michal" )
    misn.setDesc( bar_desc )
 end
 
@@ -95,6 +97,7 @@ function land()
    if planet.cur() == targetworld then
       player.pay( reward )
       tk.msg( "", misn_accomplished:format( numstring( reward ) ) )
+      addMiscLog( log_text )
       misn.finish( true )
    end
 end

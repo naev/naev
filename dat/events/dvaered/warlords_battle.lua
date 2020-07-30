@@ -1,9 +1,9 @@
 --  A battle between two dvaered warlords. The player can join one of them and get a reward
 
-include "fleethelper.lua"
-include "fleet_form.lua"
-include "proximity.lua"
-include "numstring.lua"
+require "fleethelper.lua"
+require "fleet_form.lua"
+require "proximity.lua"
+require "numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then

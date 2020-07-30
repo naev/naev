@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Myonei is an industry planet supplying many of the surrounding Soromid worlds with basic necessities. The atmosphere is so dense that it can actually be tapped for raw materials. Most of the infrastructure on the planet is dedicated to the industry, with all of the permanent workforce living up on the moon of Culex.</description>
   <bar>As Myonei has quite a lot of goods to transport offworld at any given time, there is never a lull in the bustle of the spaceport bar. Freighter captains make up most of the clientele, as the workers tend to work continuous shifts and head straight to Culex when they get off.</bar>
  </general>

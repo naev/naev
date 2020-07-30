@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>The sixteenth colony ship to be launched from Earth, Archimedes had many improvements over its predecessors. Though high-yield terraforming was still unknown in those days, the ship did have rather effective atmospheric equalizers and soil enhancers, which allowed it to transform Varaati from a primordial world into a stable class M. Despite this success, Varaati's economic development started relatively late in the game, placing it a good distance behind Dawn and Tori.</description>
   <bar>Varaati's spaceport bar is one of those places where everything is in a state of disrepair, where none of the safety regulations are met and where the air is thick with odors you don't want to guess the origin of. In short, it's a great place to hang out.</bar>
  </general>

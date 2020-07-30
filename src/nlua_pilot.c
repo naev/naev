@@ -432,7 +432,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    int planetind;
    int jump;
    PilotFlags flags;
-   int ignore_rules, guerilla;
+   int ignore_rules;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -1087,6 +1087,7 @@ static int pilotL_weapset( lua_State *L )
    int id, all, level, level_match;
    int is_lau, is_fb;
    const Damage *dmg;
+   int has_beamid;
 
    /* Defaults. */
    po_list = NULL;
@@ -1184,20 +1185,21 @@ static int pilotL_weapset( lua_State *L )
              * it's the usual 0-1 readiness value.
              */
             lua_pushstring(L,"cooldown");
-            if (slot->u.beamid > 0)
+            has_beamid = (slot->u.beamid > 0);
+            if (has_beamid)
                lua_pushnumber(L, 0.);
             else {
                delay = (slot->timer / outfit_delay(o)) * firemod;
-               lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
+               lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
             }
             lua_rawset(L,-3);
 
             /* When firing, slot->timer represents the remaining duration. */
             lua_pushstring(L,"charge");
-            if (slot->u.beamid > 0)
+            if (has_beamid)
                lua_pushnumber(L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
             else
-               lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
+               lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
             lua_rawset(L,-3);
          }
          else {
@@ -1529,6 +1531,9 @@ static int pilotL_actives( lua_State *L )
             lua_pushstring(L,"cooldown");
             lua_pushnumber(L, d );
             lua_rawset(L,-3);
+            break;
+         default:
+            str = "unknown";
             break;
       }
       lua_pushstring(L,"state");
@@ -2012,10 +2017,8 @@ static int pilotL_setHostile( lua_State *L )
       state = 1;
 
    /* Set as hostile. */
-   if (state) {
-      pilot_rmFlag(p, PILOT_FRIENDLY);
+   if (state)
       pilot_setHostile(p);
-   }
    else
       pilot_rmHostile(p);
 
@@ -3142,7 +3145,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "shield_regen", p->shield_regen );
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
-   PUSH_DOUBLE( L, "jump_delay", ntime_convertSTU( pilot_hyperspaceDelay(p) ) );
+   PUSH_DOUBLE( L, "jump_delay", ntime_convertSeconds( pilot_hyperspaceDelay(p) ) );
    PUSH_INT( L, "jumps", pilot_getJumps(p) );
 
    return 1;
@@ -3154,7 +3157,7 @@ static int pilotL_getStats( lua_State *L )
  * @brief Gets the free cargo space the pilot has.
  *
  *    @luatparam Pilot p The pilot to get the free cargo space of.
- *    @luatreturn number The free cargo space in tons of the player.
+ *    @luatreturn number The free cargo space in tonnes of the player.
  * @luafunc cargoFree( p )
  */
 static int pilotL_cargoFree( lua_State *L )
@@ -3168,7 +3171,7 @@ static int pilotL_cargoFree( lua_State *L )
 
 
 /**
- * @brief Checks to see how many tons of a specific type of cargo the pilot has.
+ * @brief Checks to see how many tonnes of a specific type of cargo the pilot has.
  *
  *    @luatparam Pilot p The pilot to get the cargo count of.
  *    @luatparam string type Type of cargo to count.
@@ -3363,7 +3366,7 @@ static int pilotL_getHostile( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Push value. */
-   lua_pushboolean( L, pilot_isFlag(p, PILOT_HOSTILE) );
+   lua_pushboolean( L, pilot_isHostile( p ) );
    return 1;
 }
 
@@ -3955,6 +3958,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to land.
  *    @luatparam[opt] Planet planet Planet to land on, uses random if nil.
+ *    @luatparam[opt] boolean shoot Whether or not to shoot at targets while running away with turrets.
  * @luasee control
  * @luafunc land( p, planet )
  */
@@ -3966,6 +3970,7 @@ static int pilotL_land( lua_State *L )
    int i;
    double a, r;
    Vector2d v;
+   int shoot;
 
    NLUA_CHECKRW(L);
 
@@ -3975,9 +3980,14 @@ static int pilotL_land( lua_State *L )
       pnt = luaL_validplanet( L, 2 );
    else
       pnt = NULL;
+   shoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   t = pilotL_newtask( L, p, "__land" );
+   if (shoot)
+      t = pilotL_newtask( L, p, "__land_shoot" );
+   else
+      t = pilotL_newtask( L, p, "__land" );
+
    if (pnt != NULL) {
       /* Find the jump. */
       for (i=0; i < cur_system->nplanets; i++) {

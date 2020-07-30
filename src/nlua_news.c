@@ -98,14 +98,14 @@ LuaArticle* luaL_validarticle( lua_State *L, int ind )
       if (news_get(*Larticle))
          return Larticle;
       else
-         NLUA_ERROR(L, _("article is old"));
+         NLUA_ERROR(L, _("Article is old"));
    }
    else {
       luaL_typerror(L, ind, ARTICLE_METATABLE);
       return NULL;
    }
 
-   NLUA_ERROR(L, _("article is invalid."));
+   NLUA_ERROR(L, _("Article is invalid."));
 
    return NULL;
 }
@@ -323,6 +323,19 @@ int newsL_rm( lua_State *L )
 
 /**
  * @brief Gets all matching articles in a table.
+ *
+ * characteristic can be any of the following:<br />
+ * <ul>
+ *    <li>Title of the articles</li>
+ *    <li>Body (text) of the articles</li>
+ *    <li>Faction name of the articles ("Generic" for generic)</li>
+ *    <li>Tag of the articles (applied with news.bind())</li>
+ *    <li>Date of the articles in number form</li>
+ * </ul>
+ * <br />
+ * The returned table is populated with all articles matching the
+ *  specified characteristic.
+ *
  *    @luatparam[opt] number|String characteristic characteristic to match, or no parameter for all articles
  *    @luatreturn {Article,...} a table with matching articles
  * @luafunc get(characteristic)
@@ -354,8 +367,8 @@ int newsL_get( lua_State *L )
    k = 1;
    do {
 
-      if (article_ptr->title == NULL || article_ptr->desc == NULL ||
-          article_ptr->faction == NULL)
+      if (article_ptr->title == NULL || article_ptr->desc == NULL
+            || article_ptr->faction == NULL)
          continue;
 
       if (print_all || date == article_ptr->date ||
@@ -372,7 +385,8 @@ int newsL_get( lua_State *L )
 
    } while ((article_ptr = article_ptr->next) != NULL);
 
-   free(characteristic);
+   if (characteristic != NULL)
+      free(characteristic);
 
    return 1;
 }
@@ -496,8 +510,8 @@ int newsL_date( lua_State *L )
 
 /**
  * @brief Tags an article or a table of articles with a string.
- *    @luatparam Article a article to get the faction of
- *    @luatparam string tag
+ *    @luatparam Article a Article to bind
+ *    @luatparam string tag Tag to bind to the article
  * @luafunc bind(a, tag)
  */
 int newsL_bind( lua_State *L )

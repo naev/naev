@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Haurn is a small planet with mild planetary conditions. The Soromid have designated it a dedicated farming world. Apart from a few small settlements, most of the planet's land surface is given to agriculture.</description>
   <bar>This bar is arranged in a coliseum fashion. The facility is circular, with several concentric rings leading down to the center, where the bar is located. The stairways that lead from the center to the upper rings are not gravity conditioned, so moving up them isn't so tiresome.</bar>
  </general>

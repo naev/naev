@@ -5,6 +5,10 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
 --]]
 
+require "portrait.lua"
+require "dat/missions/neutral/common.lua"
+
+
 sysname1 = "Arcturus"
 sysname2 = "Goddard"
 sysname3 = "Ogat"
@@ -18,44 +22,44 @@ text = {}
 osdmsg = {}
 
 title[1] = _("Help!")
-text[1] = _([["Hello %s, thank you so much for answering our hail! We really could use your help." said a haggard sounding man's voice over the comm. The man continued, "It's about our children, my wife's and mine. We were out on a family vacation to Antica, you see, and we were attacked by a gang of pirates." A woman's voice pipes up, "And he thought he could out-fly them! My husband used to be a bit of a pilot, but that was back when we were still dating and he would fly all the way to the Apez system to see me. But that was before we had children..." The woman trailed off as you could hear her filling up with fresh sorrow. 
-    The man quickly speaks up again, "Anyways, the pirates disabled our ship and we thought we were goners, but when they boarded us, they took our three children and left us! I tried to fight them, but they had my children, with knives to their necks... So we got a tow back to Brooks, and now we need to find someone who will rescue our children. We've heard of your skills; will you please help us?]])
+text[1] = _([["Hello %s, thank you so much for answering our hail! We really could use your help," says a haggard sounding man over the comm. "It's about our children, my wife's and mine. We were out on a family vacation to Antica, you see, and we were attacked by a gang of pirates..."
+    "And he thought he could out-fly them," a woman's voice pipes up. "My husband used to be a bit of a pilot, but that was back when we were still dating. He would fly all the way to the Apez system to see me! Before we had children..." The woman trails off.
+    The man quickly speaks up again. "The pirates disabled our ship and we thought we were goners, but when they boarded us, they took our three children and left us! I tried to fight them, but they had my children with knives to their necks... what was I supposed to do? So we got a tow back to Brooks, but now we need to find someone who will rescue our children. We've heard of your skills; will you please help us?"]])
 
 title[2] = _("Thank you!")
-text[2] = _([[The two parents immediately begin thanking you quite profusely, spending a few hectoseconds simply telling you how much they truly appreciate your assistance. After a while, you realize if these children are going to be rescued this cycle you are going to need to get started sooner than later. Prompting the parents over the comm, the father replies, "Yes, quite right! No need to delay any longer than absolutely necessary. I don't know a whole lot, but you should be able to eavesdrop on some pirates sitting in a bar. The bar in %s on %s has been known to serve pirates occasionally, stopping there would be your best course of action in my humble opinion. We will anticipate your return. Again, this means so much to us." Before you know it, the two parents are at it again, thanking you like it's all they know how to do! Before it gets really bad, you bid farewell, break communication, and get on your way.]])
+text[2] = _([[The two parents immediately begin thanking you quite profusely, spending a few hectoseconds simply telling you how much they truly appreciate your assistance. After a while, you realize that if these children are going to be rescued this cycle you are going to need to get started sooner rather than later. "Yes, quite right," the father replies. "No need to delay any longer than absolutely necessary. I don't know a whole lot, but you should be able to eavesdrop on some pirates at a bar. The bar in %s on %s has been known to serve pirates occasionally, so stopping there would be a good course of action. We will anticipate your return. Again, this means so much to us." Before you know it, the two parents are at it again, thanking you like it's all they know how to do. Before it gets really bad, you bid farewell, break communication, and get on your way.]])
 
 title[3] = _("Rumors")
-text[3] = _([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you know how. You catch the pirates in mid-conversation: "...And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2k! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have anymore. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."
-    The other pirate sitting there replies with a glint in his eye, "Actually, I heard in the bar over on %s, that you can make fat stacks doing a little more risky work. You just gotta nab some brats, and you can sell em for 15 big ones a pop!"
-    "Human trafficking? No way man, that stuff gives me the heeby jeebies!" The other pirates replies.
-    "Well," says the other, "whatever man."
+text[3] = _([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you know how. You catch the pirates in mid-conversation. "...And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2k! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have any more. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."
+    The other pirate sitting there replies with a glint in his eye, "Actually, I heard in the bar over on %s that you can make fat stacks doing a little more risky work. You just gotta nab some brats, and you can sell em for 15 big ones a pop!"
+    "Human trafficking? No way man, that stuff gives me the heeby jeebies!" The other pirate replies.
+    "Whatever, man."
     After a brief pause the first pirate starts talking, "So I was seeing the doctor the other day and he said that rash on my back is probably an allergic reaction."
-    From that point you figured the conversation would not be picking up, and having a lead you decide to take it.]])
+    From that point you figure the conversation will not be picking up again, and having a lead you decide to take it.]])
 
 title[4] = _("The Dirt")
-text[4] = _([[You don't even bother sitting down too close to these two pirates, considering they are talking as loudly as they are. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other,
-    "So this dummy thought he could out-fly me in his stupid Llama! So I took him off-line in like 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Morons think they can even bother to mess with me when I have work to do.
-    "So I took the kids to the %s system, where they were loaded into this Trader Koala named the Progeny, clever name if you ask me! No one will ever even wonder what it's carrying, as it seems like the most innocent little guy flying around there. Little does everyone know it's waiting to fill up its load of brats!"
-    Having listened to this dirt-bag who hurt this little family going on vacation, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]])
+text[4] = _([[You don't even bother sitting down too close to these two pirates considering how loudly they're talking. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other.
+    "So this dummy thought he could out-fly me in his stupid Llama! So I took him offline in like 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Morons think they can even bother to mess with me when I have work to do.
+    "So I took the kids to the %s system where they were loaded into this Trader Koala named the Progeny. Clever name if you ask me! No one will ever even wonder what it's carrying. It looks like the most innocent little guy flying around there. Little does everyone know it's waiting to fill up its load of brats!"
+    Having listened to this dirt-bag, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]])
 
 title[5] = _("You did it!")
-text[5] = _([[After disabling the ship you take your small crew along with you and go in ready for a fight! But when you get on the small Koala you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can drive a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to %s and reunite the parents with their children.]])
+text[5] = _([[After disabling the ship, you take your small crew along with you and go in ready for a fight! But when you get on the small Koala you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can drive a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to %s and reunite the parents with their children.]])
 
-title[6] = "Reunited"
-text[6] = _([[As soon as you step off the landing deck with a following of a couple dozen children the two parents you spoke over the comm with come running; from behind you hear a few children yelling, "Mom! Dad!" Three children shove their way out from the other kids and the parents and children meet in a big group of hugs, kisses, tears, and smiles from ear to ear.
-    You and the children stand off to the side and watch one of the most beautiful reunions you have seen. After a little while the father approaches you, wiping a tear from his cheek he stands in front of you for a moment, then suddenly takes you in an embrace. Releasing you he says to you as he dries his eyes, "Thank you so much %s, you have no idea how much this means to my family. I would love to be able to repay you somehow, but I just have no idea how I can do so right now. You have rescued my children, and brought them back to me. Thank you isn't enough, but I'm afraid for now it's the best I can do. If there is anything I can ever do for you, feel free to ask me my friend."
-]])
+title[6] = _("Reunited")
+text[6] = _([[As you step off the landing deck with a couple dozen children in tow, the two parents you spoke with over the comm run up to you. From behind you hear a few children yelling, "Mom! Dad!" Three children shove their way out to the front and the parents and children meet in a big group of hugs, kisses, tears, and smiles from ear to ear.
+    You and the children stand off to the side and watch one of the most beautiful reunions you have ever seen. After a little while the father approaches you, wiping a tear from his cheek, and takes you in an embrace. Releasing you and drying his eyes, he says, "Thank you so much, %s. You have no idea what this means to us. I would love to be able to repay you somehow, but I just have no idea how I can do so right now. You have rescued my children and brought them back to me. Thank you isn't enough, but I'm afraid for now it's the best I can do. If there is anything I can ever do for you, feel free to ask me, my friend."]])
 
 title[7] = _("Reunited")
-text[7] = _([[You assure him that it is all right, and you will not hesitate to take him up on his offer. After a while the smile fades from his face and he says, "You know how happy my family is? Well, look at all these other children here who are still separated from their parents. I want to return them all home, but that will have to wait for another day. I'm also seriously considering trying to put a stop to some of this human trafficking, but that will take a lot of planning. For now, I want to be with my family. Come back soon though, if you'd be willing, I would like to get something organized."
-    The father goes back to his children, and as you start walking back to your ship you notice the father and mother lavishing their children in love, and you look over at the other children now sitting around, looking on the loving family with envy. Sighing, you begin climbing into your ship as the mother runs up to you, "%s, wait a second! We know your name, but you don't know ours. I'm Janice." As she looks to her husband, who's talking animatedly with the children, she smiles and says, "My husband's name is Andrew. Thank you for everything." A tear rolls down her face as she looks at you with her bright hazel eyes and she kisses you on the cheek.
-    You watch her return to her family, as a child jumps into her arms, and you climb up into your ship.]])
+text[7] = _([[You assure him that it is alright, and you will not hesitate to take him up on his offer. After a while the smile fades from his face. "You see how happy my family is? Well, look at all these other children here who are still separated from their parents. I want to return them all home. I'd also like to fight against all this human trafficking, but that will take a lot of planning. For now, I want to be with my family. Come back soon though if you're willing. I would like to get something organized."
+    The father goes back to his children, and as you start walking back to your ship you notice the father and mother lavishing their children in love. You look over to the other children now sitting around, gazing at the loving family with envy. Sighing, you begin climbing into your ship as the mother runs up to you, "%s, wait a second! We know your name, but you don't know ours. I'm Janice." As she looks to her husband, who's talking animatedly with the children, she smiles. "My husband's name is Andrew. Thank you for everything." A tear rolls down her face as she looks at you with her bright hazel eyes and she kisses you on the cheek.
+    You watch her return to her family. A child jumps into her arms, and you climb up into your ship.]])
 
 declinetitle = _("Another Time")
-declinetext = _([[You can hear that the the man is quite disappointed as he says, "I'm sure you have a good reason not to want to help us, perhaps you have something else more pressing..." Before the comm is cut you can hear the woman beginning to sob and the man consoling her.]])
+declinetext = _([[You can hear that the the man is quite disappointed. "I'm sure you have a good reason to not want to help us. Perhaps you have something else more pressing..." Before the comm is cut you can hear the woman beginning to sob and the man consoling her.]])
 
 failedtitle = _("You killed the children")
-failedtext = _([[Having just destroyed the kidnappers, you also just killed the children as well. As you sit there in space, with your head against the dash, a tear rolls down your cheek as you think of the parents and how their children are forever stolen from them. If only you could rewind and try again; you know the next time you would be more cautious. If only it were so easy...]])
+failedtext = _([[Having just destroyed the kidnappers, you also just killed the children. As you sit there in space, with your head against the dash, a tear rolls down your cheek as you think of the parents and how their children are forever stolen from them. If only you could rewind and try again; you know the next time you would be more cautious. If only it were so easy...]])
 
 choice1 = _("Rescue those children!")
 choice2 = _("Politely refuse")
@@ -71,12 +75,15 @@ description = _([[Search for the kidnapped children, then rescue the children an
 osdtitle = _("Kidnapped")
 osdmsg[1] = _("Fly to the %s system and land on planet %s")
 osdmsg[2] = _("Fly to the %s system and land on planet %s")
-osdmsg[3] = _("Fly to the %s system and disable (do not destroy) that Koala!")
+osdmsg[3] = _("Fly to the %s system and disable (do not destroy) that Koala")
 osdmsg[4] = _("Return the children to the %s system on planet %s")
 
 --NPCs
 pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
 pir2_disc = _([[The pirates have both drank their wallet's worth today, so overhearing shouldn't be too much of an issue.]])
+
+log_text = _([[You successfully rescued a couple dozen children who were kidnapped by a child trafficking ring after two parents asked for your help rescuing their own children. Said parents said that they would like to make an effort to fight the human trafficking problem directly and invited you to meet them again in the future on Brooks if you're willing to aid them in this quest.]])
+
 
 function create()
   claimsystem = {system.get("Goddard")}
@@ -119,15 +126,15 @@ end
   
 function land1()
   if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
-    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), "neutral/thief1", pir1_disc)
-    bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), "neutral/thief2", pir1_disc)
+    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), getMalePortrait("Pirate"), pir1_disc)
+    bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), getPortrait("Pirate"), pir1_disc)
   end
 end
 
 function land2()
   if planet.cur() == planet.get(bar2) and eavesdropped1 and not eavesdropped2 then
-    bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), "neutral/thief3", pir2_disc)
-    bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), "neutral/thief1", pir2_disc)
+    bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), getPortrait("Pirate"), pir2_disc)
+    bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), getPortrait("Pirate"), pir2_disc)
   end
 end
 
@@ -240,6 +247,7 @@ function land3()
   if planet.cur() == planet.get(home) and rescued then
     tk.msg(title[6], text[6]:format(player.name()))
     tk.msg(title[7], text[7]:format(player.name()))
+    addMiscLog( log_text )
     misn.finish(true)
   end
 end

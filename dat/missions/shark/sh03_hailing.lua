@@ -9,7 +9,9 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -26,7 +28,7 @@ refusetitle = _("Sorry, not interested")
 refusetext = _([["Ok, come back when you are interested."]])
 
 title[2] = _("Time to go")
-text[2] = _([["Good luck."]])
+text[2] = _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]])
 
 title[3] = _("Good job")
 text[3] = _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system.]])
@@ -49,6 +51,9 @@ osd_title = _("Invitation")
 osd_msg[1] = _("Go to %s, find and hail the Air Force One")
 osd_msg[2] = _("Report back to %s in the %s system")
 
+log_text = _([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on Darkshed when you are ready to transport him to Curie.]])
+
+
 function create ()
 
    --Change here to change the planets and the systems
@@ -63,7 +68,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
@@ -104,6 +109,7 @@ function land()
       misn.osdDestroy(osd)
       hook.rm(enterhook)
       hook.rm(landhook)
+      shark_addLog( log_text )
       misn.finish(true)
    end
 end

@@ -4,8 +4,8 @@
    
 ]]--
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
 misn_title = "ES: Long distance cargo transport (%d tonnes of %s)"
 misn_desc = _("The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left).")
@@ -48,10 +48,10 @@ miss[3] = _("MISSION FAILED: You have failed to deliver the goods to the Empire 
 
 osd_title = _("Long Distance Empire Shipping")
 osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s.")
-osd_msg[2] = _("You have %s remaining.")
-osd_msg1 = _("Fly to %s in the %s system before %s.")
-osd_msg2 = _("You have %s remaining.") -- Need to reuse.
+osd_msg[1] = _("Fly to %s in the %s system before %s")
+osd_msg[2] = _("You have %s remaining")
+osd_msg1 = _("Fly to %s in the %s system before %s")
+osd_msg2 = _("You have %s remaining") -- Need to reuse.
 
 --[[
    -- Empire shipping missions are always timed, but quite lax on the schedules

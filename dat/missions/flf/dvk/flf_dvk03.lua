@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- Localization stuff
 title = {}
@@ -48,7 +48,7 @@ text[7] = _([["Terrorist, I'd bet you think this latest act of yours is a victor
 
 title[8] = _("Victory on the Horizon")
 text[8] = _([[As you return to the base, you are welcomed with all manner of cheers and enthusiasm. You can understand why, too; this is a huge victory for the FLF, and surely just one of many victories to come. But still...
-    You manage to make your way over to Benito, who is clearly pleased with the outcome. "Outstanding job!" she says. "That base has been a burden on us for so long. Now it is gone, 100% gone! I don't think I need to tell you how fantastic of a victory this is. Victory is within our grasp!" That's when all doubt is erased from your mind. She's right; so what if the Empire is against you now? You exchange some more words with Benito, after which she hands you your pay for a job well done and excuses herself. You, on the other hand, stay behind to celebrate for a few more hours before finally excusing yourself.]])
+    You manage to make your way over to Benito, who is clearly pleased with the outcome. "Outstanding job!" she says. "That base has been a burden on us for so long. Now it is gone, 100% gone! I don't think I need to tell you how fantastic of a victory this is. Victory is within our grasp!" That's when all doubt is erased from your mind. She's right; so what if the Empire is against you now? You exchange some more words with Benito, after which she hands you your pay for a job well done and excuses herself. You, on the other hand, stay behind to celebrate for a few more periods before finally excusing yourself.]])
 
 misn_title = _("Assault on Raelid")
 misn_desc = _("Join with the other FLF pilots for the assault on Raelid Outpost.")
@@ -70,6 +70,8 @@ flfcomm[1] = _("You're just in time, %s! The chaos is just about to unfold.")
 flfcomm[2] = _("You heard the boss! Let's grind that station to dust!")
 
 civcomm = _("Help! SOS! We are under attack! In need of immediate assistance!")
+
+log_text = _([[You led the effort to destroy the hated Dvaered base, Raelid Outpost, a major victory for the FLF. This act led to the Empire listing you and the FLF as an enemy of the Empire.]])
 
 
 function create ()
@@ -99,7 +101,7 @@ function accept ()
       misn.setReward( misn_reward )
 
       credits = 300000
-      reputation = 10
+      reputation = 5
 
       started = false
       attacked_station = false
@@ -374,8 +376,9 @@ end
 
 function finish ()
    player.pay( credits )
-   flf_setReputation( 75 )
+   flf_setReputation( 70 )
    faction.get("FLF"):modPlayer( reputation )
+   flf_addLog( log_text )
    misn.finish( true )
 end
 

@@ -3,14 +3,21 @@ SUBDIRS = tk
 bin_PROGRAMS = naev
 
 AM_CFLAGS = $(NAEV_CFLAGS)
+AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
-shaders.gen.c shaders.gen.h: shaders_c_gen
-	./$<
 
+if HAVE_SHADERS_C_GEN
+noinst_PROGRAMS = shaders_c_gen
+nodist_shaders_c_gen_SOURCES = shaders_c_gen.c
+shaders_c_gen_LDADD = $(SDL_LIBS)
+shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
+	./$<
 CLEANFILES = shaders.gen.c shaders.gen.h
-BUILT_SOURCES = shaders.gen.h
+BUILT_SOURCES = shaders.gen.c shaders.gen.h
+endif
+
 
 CODE_SOURCE = \
 	ai.c \
@@ -22,6 +29,7 @@ CODE_SOURCE = \
 	collision.c \
 	colour.c \
 	comm.c \
+	commodity.c \
 	cond.c \
 	conf.c \
 	console.c \
@@ -97,15 +105,16 @@ CODE_SOURCE = \
 	nlua_player.c \
 	nlua_rnd.c \
 	nlua_ship.c \
+	nlua_shiplog.c \
 	nlua_system.c \
 	nlua_tex.c \
 	nlua_time.c \
 	nlua_tk.c \
-	nlua_tut.c \
 	nlua_var.c \
 	nlua_vec2.c \
 	nmath.c \
 	nondata.c \
+	nopenal.c \
 	npng.c \
 	npc.c \
 	nstring.c \
@@ -140,6 +149,7 @@ CODE_SOURCE = \
 	save.c \
 	shaders.gen.c \
 	ship.c \
+	shiplog.c \
 	shipstats.c \
 	slots.c \
 	sound.c \
@@ -163,6 +173,7 @@ CODE_SOURCE = \
 	collision.h \
 	colour.h \
 	comm.h \
+	commodity.h \
 	cond.h \
 	conf.h \
 	config.h \
@@ -176,6 +187,7 @@ CODE_SOURCE = \
 	dev_system.h \
 	dev_sysedit.h \
 	dev_uniedit.h \
+	dev_mapedit.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \
@@ -185,6 +197,7 @@ CODE_SOURCE = \
 	faction.h \
 	fleet.h \
 	font.h \
+	gettext.h \
 	glad.h \
 	gui.h \
 	gui_omsg.h \
@@ -240,11 +253,11 @@ CODE_SOURCE = \
 	nlua_player.h \
 	nlua_rnd.h \
 	nlua_ship.h \
+	nlua_shiplog.h \
 	nlua_system.h \
 	nlua_tex.h \
 	nlua_time.h \
 	nlua_tk.h \
-	nlua_tut.h \
 	nlua_var.h \
 	nlua_vec2.h \
 	nluadef.h \
@@ -285,6 +298,7 @@ CODE_SOURCE = \
 	save.h \
 	shaders.gen.h \
 	ship.h \
+	shiplog.h \
 	shipstats.h \
 	slots.h \
 	sound.h \

@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Draconis Omega was one of the old Empire's best colonies. The planet is large compared to Earth, yet its gravity is comparable. This made it ideal as a population base, which it remains today. Draconis Omega remains firmly loyal to the Empire, despite its now isolated position. The people here believe that the after effects of the Incident are only temporary and that the Empire will, one day, regain its former glory, in which Draconis Omega will, of course, feature prominently.</description>
   <bar>Ever the optimists, the people of Draconis Omega have decorated their spaceport bar with displays of past Imperial power, portraits of former Emperors and charts that show the size of the Empire when it was at its peak. It's certainly a good lesson in history and it's clear that the inhabitants truly believe that the good times will one day return.</bar>
  </general>

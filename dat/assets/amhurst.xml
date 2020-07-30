@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Amhurst">
+ <pos>
+  <x>3546.227993</x>
+  <y>2108.567996</y>
+ </pos>
+ <GFX>
+  <space>H04.png</space>
+  <exterior>desertic4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>50000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>A glorified mining and trading world, this planet is one of the better-off casualties of the brain-drain affecting Za'lek's southern frontier. While it has not been hit as hard as many, it has seen its population dip in recent cycles. Most of the population are miners and other working-class folk. </description>
+  <bar>If one didn't know better, they would assume this was a Dvaered bar. The rough aesthetic, the clientele, almost everything. There is little sign of the usual Za'lek trappings here.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Laser 1</item>
+  <item>Beam 1</item>
+  <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Hulls Low</item>
+ </tech>
+</asset>

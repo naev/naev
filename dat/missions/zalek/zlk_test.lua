@@ -8,11 +8,11 @@
              1 : the player has forgotten the engine
 ]]
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
-misn_title = _("ZT test of an engine %s")
-misn_desc = _("A Za'lek research team need you to travel to %s in %s using an engine in order to test it.")
+misn_title = _("ZT test of %s")
+misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 misn_reward = _("%s credits")
 
 title = _([[ZT: go to %s in the %s system
@@ -25,70 +25,74 @@ msg_title[2] = _("Too many missions")
 msg_title[3] = _("Successful Landing")
 msg_title[4] = _("Didn't you forget something?")
 
-engines = {_("with phase-change material cooling"), 
-           _("controlled with the Zermatt-Henry theory"),   --Some random scientists names
-           _("using a new electron propelling system"),
-           _("using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
-           _("for a system identification using the fe-method"),
-           _("with uncontrolled geometrical singularities"),
-           _("a 10 years-old child invented himself"),
-           _("using the ancestral propellant technology"),
-           _("built of UHP-nanobond"),
+engines = {_("engine with phase-change material cooling"), 
+           _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
+           _("engine using a new electron propelling system"),
+           _("engine using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
+           _("engine for system identification using the fe-method"),
+           _("engine with uncontrolled geometrical singularities"),
+           _("5-cycle-old child's engine invention"),
+           _("engine using ancestral propellant technology"),
+           _("UHP-nanobond engine"),
+           _("ancient engine discovered at an old crash site"),
+           _("engine controlled by the MegaSys Wondigs operating system"),
+           _("engine controlled by XF Cell-Ethyrial particles"),
+           _("engine with ancient Beeline Technology axis"),
+           _("unnamed engine prototype"),
+           _("engine constructed with experimental Bob-Bens technology"),
+           _("new IDS-1024 experimental engine design"),
+           _("engine with new Dili-Gent Circle conduction"),
+           _("engine with experimental DEI-Z controller"),
            }
 
 znpcs = {}
-znpcs[1] = _([[A group of university students greet you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
-znpcs[2] = _([[A very old Za'lek researcher needs you to fly with his instrumented device in order to take measurements.]])
+znpcs[1] = _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
+znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
-znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system he has implemented in this engine.]])
+znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
 
 msg_msg = {}
 msg_msg[1] = _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine.")
 msg_msg[2] = _("You have too many active missions.")
-msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you. You ask them why they aren't using drones for such missions and they answer that they don't want to risk damaging a drone.")
-msg_msg[4] = _("It seems, you forgot the engine you are supposed to test... Land again and put it in your ship")
+msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way.")
+msg_msg[4] = _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.")
 misst = _("Mission failed")
 miss = _("You traveled without the engine.")
 
-teleport_title = _("What the hell happens there?")
-teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going to hyperspace. Then a shock makes you pass out. As you wake up, your ship is damaged and your compass indicates that you are in the %s system!")
+teleport_title = _("What the hell is happening?")
+teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the %s system!")
 
-slow_title = _("Where is the power gone?")
-slow_text = _("The engine doesn't seem to want to propel your ship anymore...")
+slow_title = _("Where has the power gone?")
+slow_text = _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to.")
 speed_title = _("Power is back.")
-speed_text = _("It seems, the engine decided to work properly again.")
+speed_text = _("It seems the engine decided to work properly again.")
 
-outOf_title = _("This wasn't supposed to happened")
-outOf_text = _("Your ship is totally out of control. Apparently, the experimental engine seems to have some defects.")
+outOf_title = _("This wasn't supposed to happen")
+outOf_text = _("Your ship is totally out of control. You curse under your breath at the defective engine.")
 noAn_title = _("Engine is dead")
-noAn_text = _("It seems, the engine doesn't work anymore...")
+noAn_text = _("The engine has stopped working. It had better start working again soon; you don't want to die out here!")
 baTo_title = _("Back to normal")
-baTo_text = _("The engine works again.")
+baTo_text = _("The engine is working again. You breathe a sigh of relief.")
 
-cannot_title = _("You can not accept this mission")
+cannot_title = _("You cannot accept this mission")
 cannot_text = _("You are already testing another engine.")
 
 osd_title = _("Za'lek Test")
-osd_msg = {_("Fly to %s in the %s system.")}
+osd_msg = {_("Fly to %s in the %s system")}
 
 function create()
-   -- Claim core engine slot
-   if not misn.claim( 'outfit_engine_core' ) then
-      misn.finish( false )
-   end
-
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
 
    --All the mission must go to Za'lek planets with a place to change outfits
-   if destplanet:faction() ~= faction.get( "Za'lek" ) or destplanet:services()["outfits"] == nil then
+   if destplanet:faction() ~= faction.get( "Za'lek" ) or not destplanet:services()["outfits"] then
       misn.finish(false)
    end
 
@@ -101,7 +105,7 @@ function create()
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
    jumpreward = 1000
    distreward = 0.15
-   reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   reward     = (1.5 ^ tier) * (numjumps * jumpreward + traveldist * distreward * avgrisk) * finished_mod * (1. + 0.05*rnd.twosigma())
     
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 

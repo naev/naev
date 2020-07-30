@@ -43,9 +43,6 @@
 #include <bfd.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
-/* Locale setting. */
-#include <locale.h>
-
 /* local */
 #include "conf.h"
 #include "physics.h"
@@ -101,6 +98,9 @@
 #include "dialogue.h"
 #include "slots.h"
 
+#if defined ENABLE_NLS && ENABLE_NLS
+#include <locale.h>
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
@@ -187,13 +187,19 @@ int main( int argc, char** argv )
       setvbuf( stdout, NULL, _IONBF, 0 );
       setvbuf( stderr, NULL, _IONBF, 0 );
    }
-#endif
+#endif /* HAS_WIN32 */
 
+#if defined ENABLE_NLS && ENABLE_NLS
    /* Set up locales. */
-   setlocale(LC_ALL|~LC_NUMERIC, "");
-   //bindtextdomain("naev", LOCALEDIR);
-   bindtextdomain("naev", "po/");
-   textdomain("naev");
+   /* When using locales with difference in '.' and ',' for splitting numbers it
+    * causes pretty much everything to blow up, so we must refer from loading the
+    * numeric type of the locale. */
+   setlocale( LC_ALL, "" );
+   setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
+   bindtextdomain( PACKAGE_NAME, LOCALEDIR );
+   //bindtextdomain("naev", "po/");
+   textdomain( PACKAGE_NAME );
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
@@ -280,6 +286,19 @@ int main( int argc, char** argv )
    }
    else
       log_purge();
+
+#if defined ENABLE_NLS && ENABLE_NLS
+   /* Try to set the language again if Naev is attempting to override the locale stuff.
+    * This is done late because this is the first stage at which we have the conf file
+    * fully loaded. */
+   if (conf.language != NULL) {
+      setlocale( LC_ALL, (strcmp(conf.language,"en")==0) ? "C" : conf.language );
+      setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
+      bindtextdomain( PACKAGE_NAME, LOCALEDIR );
+      textdomain( PACKAGE_NAME );
+      DEBUG(_("Reset language to \"%s\""), conf.language);
+   }
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
@@ -443,9 +462,9 @@ int main( int argc, char** argv )
          }
          else { /* I sincerely hope this else is never hit. */
             dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \aD%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \aD%snebula/\a0\n\n"),
+                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
+                  "\ar%s/%s\a0 =>\n   \ag%snebula/\a0\n\n"),
                   home, ".naev/conf.lua", nfile_configPath(),
                   home, ".naev/{saves,screenshots}/", nfile_dataPath(),
                   home, ".naev/gen/*.png", nfile_cachePath() );
@@ -629,14 +648,14 @@ void loadscreen_render( double done, const char *msg )
    col.a = 0.7;
    gl_renderRect( x-2., y-2., w+4., rh+4., &col );
    /* FG. */
-   col.r = cDConsole.r;
-   col.g = cDConsole.g;
-   col.b = cDConsole.b;
+   col.r = cGreen.r;
+   col.g = cGreen.g;
+   col.b = cGreen.b;
    col.a = 0.2;
    gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
-   col.r = cConsole.r;
-   col.g = cConsole.g;
-   col.b = cConsole.b;
+   col.r = cPrimeGreen.r;
+   col.g = cPrimeGreen.g;
+   col.b = cPrimeGreen.b;
    col.a = 0.7;
    gl_renderRect( x, y, done*w, h, &col );
 
@@ -1352,6 +1371,8 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
 
 /**
  * @brief Translates and displays the address as something humans can enjoy.
+ *
+ * @TODO Remove the conditional defines which are to support old BFD (namely Ubuntu 16.04).
  */
 static void debug_translateAddress( const char *symbol, bfd_vma address )
 {
@@ -1360,11 +1381,24 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
    asection *section;
 
    for (section = abfd->sections; section != NULL; section = section->next) {
+#ifdef bfd_get_section_flags
+      if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
+#else /* bfd_get_section_flags */
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
+#endif /* bfd_get_section_flags */
          continue;
 
+#ifdef bfd_get_section_vma
+      bfd_vma vma = bfd_get_section_vma(abfd, section);
+#else /* bfd_get_section_vma */
       bfd_vma vma = bfd_section_vma(section);
+#endif /* bfd_get_section_vma */
+
+#ifdef bfd_get_section_size
+      bfd_size_type size = bfd_get_section_size(section);
+#else /* bfd_get_section_size */
       bfd_size_type size = bfd_section_size(section);
+#endif /* bfd_get_section_size */
       if (address < vma || address >= vma + size)
          continue;
 

@@ -243,15 +243,15 @@ const char *outfit_slotName( const Outfit* o )
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
-         return "NA";
+         return gettext_noop("NA");
       case OUTFIT_SLOT_STRUCTURE:
-         return "Structure";
+         return gettext_noop("Structure");
       case OUTFIT_SLOT_UTILITY:
-         return "Utility";
+         return gettext_noop("Utility");
       case OUTFIT_SLOT_WEAPON:
-         return "Weapon";
+         return gettext_noop("Weapon");
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 
@@ -268,13 +268,13 @@ const char *outfit_slotSize( const Outfit* o )
       case OUTFIT_SLOT_SIZE_NA:
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
-         return "Small";
+         return gettext_noop("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:
-         return "Medium";
+         return gettext_noop("Medium");
       case OUTFIT_SLOT_SIZE_HEAVY:
-         return "Large";
+         return gettext_noop("Large");
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 
@@ -284,13 +284,13 @@ const char *slotSize( const OutfitSlotSize o )
       case OUTFIT_SLOT_SIZE_NA:
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
-         return "Small";
+         return gettext_noop("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:
-         return "Medium";
+         return gettext_noop("Medium");
       case OUTFIT_SLOT_SIZE_HEAVY:
-         return "Large";
+         return gettext_noop("Large");
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 
@@ -1047,7 +1047,10 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    nsnprintf( file, sl, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
-   if (access(file, F_OK) == -1) {
+   if (!ndata_exists(file)) {
+      WARN(_("%s xml collision polygon does not exist!\n \
+               Please use the script 'polygon_from_sprite.py' \
+that can be found in naev's artwork repo."), file);
       free(file);
       return 0;
    }
@@ -1055,6 +1058,7 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    /* Load the XML. */
    buf  = ndata_read( file, &bufsize );
    doc  = xmlParseMemory( buf, bufsize );
+   free(buf);
 
    if (doc == NULL) {
       WARN(_("%s file is invalid xml!"), file);
@@ -1171,6 +1175,13 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          /* Load the collision polygon. */
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 1 );
+
+         /* Sanity check: there must be 1 polygon per sprite. */
+         if (temp->u.blt.npolygon != 36) {
+            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, temp->u.blt.npolygon, 36);
+         }
          continue;
       }
       if (xml_isNode(node,"gfx_end")) {
@@ -1520,6 +1531,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          /* Load the collision polygon. */
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 0 );
+
+         /* Sanity check: there must be 1 polygon per sprite. */
+         if (temp->u.amm.npolygon != 36) {
+            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, temp->u.amm.npolygon, 36);
+         }
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -1565,7 +1583,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "" );
+   temp->desc_short[0]='\0';
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2497,9 +2515,20 @@ void outfit_free (void)
       /* Free slot. */
       outfit_freeSlot( &outfit_stack[i].slot );
 
+      if (outfit_isAmmo(o)) {
+         /* Free collision polygons. */
+         if (o->u.amm.npolygon != 0) {
+            for (j=0; j<o->u.amm.npolygon; j++) {
+               free(o->u.amm.polygon[j].x);
+               free(o->u.amm.polygon[j].y);
+            }
+            free(o->u.amm.polygon);
+         }
+      }
       /* Type specific. */
-      if (outfit_isBolt(o) && o->u.blt.gfx_end) {
-         gl_freeTexture(o->u.blt.gfx_end);
+      if (outfit_isBolt(o)) {
+         if (o->u.blt.gfx_end)
+            gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
          if (o->u.blt.npolygon != 0) {
             for (j=0; j<o->u.blt.npolygon; j++) {

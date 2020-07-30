@@ -142,13 +142,11 @@ npng_t *npng_open( SDL_RWops *rw )
    return npng;
 
 ERR_FAIL:
-#if 0 /* Memory leaks are better than segfaults. */
    if (npng != NULL) {
       if (npng->png_ptr != NULL)
          png_destroy_read_struct( &npng->png_ptr, (npng->info_ptr != NULL) ? &npng->info_ptr : NULL, NULL );
       free(npng);
    }
-#endif
    return NULL;
 }
 

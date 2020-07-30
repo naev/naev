@@ -23,10 +23,7 @@
    <commodity/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Sirius Shipyards is where most of the Sirius fleet is built, though some of the smaller support ships are actually constructed elsewhere. Though Aesir is not an ideal location for mass producing warships, the Sirii believe that building ships in proximity to Mutris will endow some small portion of Sirichana's power on the ships produced.</description>
  </general>
  <tech>

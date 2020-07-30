@@ -31,7 +31,6 @@ enum {
    PLAYER_HOOK_LAND,    /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
    PLAYER_HOOK_JUMPIN,  /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
    PLAYER_HOOK_HYPER,   /**< Hook hack to avoid runving hooks in the middle of the pilot stack. */
-   PLAYER_TUTORIAL,     /**< Player is doing the tutorial. */
    PLAYER_MFLY,         /**< Player has enabled mouse flying. */
    PLAYER_NOSAVE,       /**< Player is not allowed to save. */
    PLAYER_FLAGS_MAX     /* Maximum number of flags. */
@@ -43,9 +42,6 @@ typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 #define player_isFlag(f)   (player.flags[f])
 #define player_setFlag(f)  (player.flags[f] = 1)
 #define player_rmFlag(f)   (player.flags[f] = 0)
-
-/* comfort flags. */
-#define player_isTut()     player_isFlag(PLAYER_TUTORIAL)
 
 
 /* Control restoration reasons. */
@@ -129,7 +125,6 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
  */
 int player_init (void);
 void player_new (void);
-void player_newTutorial (void);
 Pilot* player_newShip( Ship* ship, const char *def_name,
       int trade, int noname );
 void player_cleanup (void);

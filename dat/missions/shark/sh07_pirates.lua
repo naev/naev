@@ -9,9 +9,11 @@
 --]]
 
 --Needed scripts
-include "dat/scripts/pilot/pirate.lua"
-include "dat/scripts/numstring.lua"
-include "dat/scripts/jumpdist.lua"
+require "pilot/pirate.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -55,6 +57,9 @@ osd_title = _("The Last Detail")
 osd_msg[1] = _("Kill the four pirates")
 osd_msg[2] = _("Report back to %s in %s")
 
+log_text = _([[You eliminated some pirates that were about to get in the way of Nexus Shipyards' business.]])
+
+
 function create ()
 
    --Will now pick systems between min and max jumps in distance
@@ -89,7 +94,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
@@ -144,6 +149,7 @@ function land()
       misn.osdDestroy(osd)
       hook.rm(enterhook)
       hook.rm(landhook)
+      shark_addLog( log_text )
       misn.finish(true)
    end
 end

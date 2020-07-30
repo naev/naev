@@ -483,7 +483,7 @@ void osd_render (void)
       for (i=ll->active; i<ll->nitems; i++) {
          x = osd_x;
          w = osd_w;
-         c = (ll->active == i) ? &cConsole : NULL;
+         c = (ll->active == i) ? NULL : &cGrey70;
          for (j=0; j<ll->items[i].nchunks; j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
                   c, ll->items[i].chunks[j] );

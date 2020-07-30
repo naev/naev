@@ -25,6 +25,8 @@
 #include "tk/toolkit_priv.h"
 #include "dialogue.h"
 #include "map_find.h"
+#include "hook.h"
+#include "land_takeoff.h"
 
 
 /*
@@ -106,7 +108,7 @@ void shipyard_open( unsigned int wid )
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -240, 128, 200, 0, "txtStats",
+   window_addText( wid, -40, -240, 128, 400, 0, "txtStats",
          &gl_smallFont, &cBlack, NULL );
 
    /* text */
@@ -135,7 +137,7 @@ void shipyard_open( unsigned int wid )
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
-         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+         100, th, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
    window_addText( wid, 40+iw+20+100, y,
          w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    y -= th;
@@ -228,7 +230,7 @@ void shipyard_update( unsigned int wid, char* str )
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
-   window_modifyText( wid, "txtDescription", ship->description );
+   window_modifyText( wid, "txtDescription", _(ship->description) );
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
@@ -251,8 +253,8 @@ void shipyard_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%.0f teraflops\n"
-         "%.0f tons\n"
-         "%.0f kN/ton\n"
+         "%.0f tonnes\n"
+         "%.0f kN/tonne\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
          "%.0f%%\n"
@@ -261,15 +263,15 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
-         "%.0f tons\n"
+         "%.0f tonnes\n"
          "%d units\n"
          "%d units\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n"),
-         ship->name,
-         ship_class(ship),
-         ship->fabricator,
+         _(ship->name),
+         _(ship_class(ship)),
+         _(ship->fabricator),
          ship->crew,
          /* Weapons & Manoeuvrability */
          ship->cpu,
@@ -340,6 +342,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[ECON_CRED_STRLEN];
    Ship* ship;
+   HookParam hparam[2];
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    if (strcmp(shipname, _("None")) == 0)
@@ -366,6 +369,14 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = shipname;
+   hparam[1].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_buy", hparam );
+   if (land_takeoff)
+      takeoff(1);
 }
 
 /**
@@ -420,10 +431,15 @@ int can_swap( char* shipname )
    int failure = 0;
    Ship* ship;
    ship = ship_get( shipname );
+   double diff;
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( _("You have %g tons more cargo than the new ship can hold."),
-            pilot_cargoUsed(player.p) - ship->cap_cargo, ship->name );
+      diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
+      land_errDialogueBuild( ngettext(
+               "You have %g tonne more cargo than the new ship can hold.",
+               "You have %g tonnes more cargo than the new ship can hold.",
+               diff ),
+            diff, ship->name );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */

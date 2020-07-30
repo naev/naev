@@ -26,11 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Though Coriolis was the second colony ship, it arrived at Lapra well after New Dortmund had been colonized due to technical difficulties and unforeseen incidents during the journey. When it finally did establish orbit around Lapra, it found a world so low on potential for life that the trip almost seemed like a lost cause. However, upon touchdown the colonists found that there were many useful minerals hidden below the surface of the planet. The colony on Lapra has survived, first out of sheer necessity and later by virtue of its exports.</description>
   <bar>Lapra's bar looks more like a market than a place for relaxation, and indeed that is exactly what it is. Not only do traders come here to make transactions, the local population also uses the bar as a center for commerce. That said, one can still find a drink and a news terminal, if one looks hard enough.</bar>
  </general>

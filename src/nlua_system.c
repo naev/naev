@@ -372,16 +372,16 @@ static int systemL_nebula( lua_State *L )
  * @brief Gets jump distance from current system, or to another.
  *
  * Does different things depending on the parameter type:
- *    - nil : Gets distance from current system.
- *    - string : Gets distance from system matching name.
- *    - system : Gets distance from system
+ *    - nil : Gets distance to current system.
+ *    - string : Gets distance to system matching name.
+ *    - system : Gets distance to system
  *
- * @usage d = sys:jumpDist() -- Distance from current system.
- * @usage d = sys:jumpDist( "Draygar" ) -- Distance from system Draygar.
- * @usage d = sys:jumpDist( another_sys ) -- Distance from system another_sys.
+ * @usage d = sys:jumpDist() -- Distance from sys to current system.
+ * @usage d = sys:jumpDist( "Draygar" ) -- Distance from sys to system Draygar.
+ * @usage d = sys:jumpDist( another_sys ) -- Distance from sys to another_sys.
  *
- *    @luatparam System s System to get distance from.
- *    @luatparam nil|string|System param See description.
+ *    @luatparam System s Starting system.
+ *    @luatparam nil|string|Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
  *    @luatparam[opt=false] boolean known Whether or not to consider only jumps known by the player.
  *    @luatreturn number Number of jumps to system.
@@ -424,16 +424,16 @@ static int systemL_jumpdistance( lua_State *L )
  * @brief Gets jump path from current system, or to another.
  *
  * Does different things depending on the parameter type:
- *    - nil : Gets path from current system.
- *    - string : Gets path from system matching name.
- *    - system : Gets path from system
+ *    - nil : Gets path to current system.
+ *    - string : Gets path to system matching name.
+ *    - system : Gets path to system
  *
- * @usage jumps = sys:jumpPath() -- Path to current system.
- * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from current sys to Draygar.
+ * @usage jumps = sys:jumpPath() -- Path from sys to current system.
+ * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from sys to Draygar.
  * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar to another_sys.
  *
- *    @luatparam System s System to get path from.
- *    @luatparam nil|string|System param See description.
+ *    @luatparam System s Starting system.
+ *    @luatparam nil|string|Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
  *    @luatreturn {Jump,...} Table of jumps.
  * @luafunc jumpPath( s, param, hidden )
@@ -640,13 +640,8 @@ static int systemL_asteroidPos( lua_State *L )
 {
    int field, ast;
 
-   if (lua_gettop(L) < 2) {
-      WARN(_("Not enough imput argument for asteroidpos"));
-      return 0;
-   }
-
-   field = lua_tointeger(L,1);
-   ast   = lua_tointeger(L,2);
+   field = luaL_checkint(L,1);
+   ast   = luaL_checkint(L,2);
 
    if ( field >= cur_system->nasteroids ) {
       WARN(_("field index %d too high"), field);
@@ -678,13 +673,8 @@ static int systemL_asteroidDestroyed( lua_State *L )
 {
    int field, ast, isdestroyed;
 
-   if (lua_gettop(L) < 2) {
-      WARN(_("Not enough imput argument for asteroidpos"));
-      return 0;
-   }
-
-   field = lua_tointeger(L,1);
-   ast   = lua_tointeger(L,2);
+   field = luaL_checkint(L,1);
+   ast   = luaL_checkint(L,2);
 
    if ( field >= cur_system->nasteroids ) {
       WARN(_("field index %d too high"), field);

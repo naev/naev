@@ -42,14 +42,12 @@ before_install:
   - |
     # Install macOS dependencies
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      wget -O ~/SDL2.dmg https://www.libsdl.org/release/SDL2-2.0.5.dmg
-      hdiutil attach ~/SDL2.dmg
-      mkdir -p ~/Library/Frameworks
-      cp -r /Volumes/SDL2/SDL2.framework ~/Library/Frameworks/SDL2.framework
-
       brew update
 
       brew install \
+        sdl2 \
+        sdl2_mixer \
+        sdl2_image \
         fontconfig \
         freetype \
         libpng \

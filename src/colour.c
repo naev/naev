@@ -71,13 +71,14 @@ const glColour cAqua       = { .r=0.00, .g=0.75, .b=1.00, .a=1. }; /**< Aqua */
  */
 const glColour cBlackHilight  =  { .r = 0.0, .g = 0.0, .b = 0.0, .a = 0.4 }; /**< Hilight colour over black background. */
 const glColour cConsole       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 1.  }; /**< Console colour */
-const glColour cDConsole      =  { .r = 0.0, .g = 0.7, .b = 0.0, .a = 1.  }; /**< Dark Console colour */
+const glColour cDConsole      =  { .r = 0.0, .g = 0.4, .b = 0.0, .a = 1.  }; /**< Dark Console colour */
 /* toolkit */
 const glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.3 }; /**< Hilight colour */
 /* objects */
 const glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1.  }; /**< Inert object colour */
+const glColour cMapInert      =  { .r = 0.4, .g = 0.4, .b = 0.4, .a = 1. }; /**< Inert object map screen text colour */
 const glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  }; /**< Neutral object colour */
-const glColour cMapNeutral    =  { .r = 0.3, .g = 0.3, .b = 0.3, .a = 1.  }; /**< Neutral object map screen text colour */
+const glColour cMapNeutral    =  { .r = 0.2, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Neutral object map screen text colour */
 const glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
 const glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
 const glColour cRestricted    =  { .r = 1.0, .g = 0.6, .b = 0.0, .a = 1.  }; /**< Restricted object colour. */

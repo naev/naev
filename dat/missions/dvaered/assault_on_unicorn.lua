@@ -5,7 +5,7 @@
 
 --]]
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 misn_title = _("DV: Assault on Unicorn") 
 misn_reward = _("Variable")
@@ -18,7 +18,7 @@ text[2] = _("As you land, you see a Dvaered military official approaching. Thank
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the Unicorn system.")
-osd_msg[2] = _("")
+osd_msg[2] = ""
 osd_msg2 = _("Destroy some pirates! You have killed %d and have earned %s credits. If finished, return to %s.")
 osd_msg3 = _("You have reached your maximum payment. Return to %s.")
 

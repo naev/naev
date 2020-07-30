@@ -166,49 +166,49 @@ char* ship_class( Ship* s )
 
       /* Civilian. */
       case SHIP_CLASS_YACHT:
-         return "Yacht";
+         return gettext_noop("Yacht");
       case SHIP_CLASS_LUXURY_YACHT:
-         return "Luxury Yacht";
+         return gettext_noop("Luxury Yacht");
       case SHIP_CLASS_CRUISE_SHIP:
-         return "Cruise Ship";
+         return gettext_noop("Cruise Ship");
 
       /* Merchant. */
       case SHIP_CLASS_COURIER:
-         return "Courier";
+         return gettext_noop("Courier");
       case SHIP_CLASS_ARMOURED_TRANSPORT:
-         return "Armoured Transport";
+         return gettext_noop("Armoured Transport");
       case SHIP_CLASS_FREIGHTER:
-         return "Freighter";
+         return gettext_noop("Freighter");
       case SHIP_CLASS_BULK_CARRIER:
-         return "Bulk Carrier";
+         return gettext_noop("Bulk Carrier");
 
       /* Military. */
       case SHIP_CLASS_SCOUT:
-         return "Scout";
+         return gettext_noop("Scout");
       case SHIP_CLASS_FIGHTER:
-         return "Fighter";
+         return gettext_noop("Fighter");
       case SHIP_CLASS_BOMBER:
-         return "Bomber";
+         return gettext_noop("Bomber");
       case SHIP_CLASS_CORVETTE:
-         return "Corvette";
+         return gettext_noop("Corvette");
       case SHIP_CLASS_DESTROYER:
-         return "Destroyer";
+         return gettext_noop("Destroyer");
       case SHIP_CLASS_CRUISER:
-         return "Cruiser";
+         return gettext_noop("Cruiser");
       case SHIP_CLASS_CARRIER:
-         return "Carrier";
+         return gettext_noop("Carrier");
 
       /* Robotic. */
       case SHIP_CLASS_DRONE:
-         return "Drone";
+         return gettext_noop("Drone");
       case SHIP_CLASS_HEAVY_DRONE:
-         return "Heavy Drone";
+         return gettext_noop("Heavy Drone");
       case SHIP_CLASS_MOTHERSHIP:
-         return "Mothership";
+         return gettext_noop("Mothership");
 
       /* Unknown. */
       default:
-         return "Unknown";
+         return gettext_noop("Unknown");
    }
 }
 
@@ -507,10 +507,6 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
 {
    char base[PATH_MAX], str[PATH_MAX];
    int i;
-   png_uint_32 w, h;
-   SDL_RWops *rw;
-   npng_t *npng;
-   SDL_Surface *surface;
 
    /* Get base path. */
    for (i=0; i<PATH_MAX; i++) {
@@ -567,7 +563,11 @@ static int ship_loadPLG( Ship *temp, char *buf )
    nsnprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
-   if (access(file, F_OK) == -1) {
+   if (!ndata_exists(file)) {
+      WARN(_("%s xml collision polygon does not exist!\n \
+               Please use the script 'polygon_from_sprite.py' if sprites are used,\n \
+               And 'polygonSTL.py' if 3D model is used in game.\n \
+               These files can be found in naev's artwork repo."), file);
       free(file);
       return 0;
    }
@@ -575,6 +575,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
    /* Load the XML. */
    buf  = ndata_read( file, &bufsize );
    doc  = xmlParseMemory( buf, bufsize );
+   free(buf);
 
    if (doc == NULL) {
       WARN(_("%s file is invalid xml!"), file);
@@ -813,6 +814,13 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Load the polygon. */
          ship_loadPLG( temp, buf );
+
+         /* Sanity check: there must be 1 polygon per sprite. */
+         if (temp->npolygon != sx*sy) {
+            WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, temp->npolygon, sx*sy);
+         }
 
          continue;
       }

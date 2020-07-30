@@ -2,7 +2,9 @@
 -- This is the third mission in the "shadow" series, featuring the return of SHITMAN.
 --]]
 
-include ("proximity.lua")
+require "proximity.lua"
+require "dat/missions/shadow/common.lua"
+
 
 title = {}
 text = {}
@@ -23,11 +25,11 @@ text[3] = _([["The Four Winds are old, %s. Very old indeed. The movement dates b
 
 text[4] = _([[Captain Rebina sits back in her chair and heaves a sigh. "I think that may have been when things started to change. We used to be committed to our purpose, but apparently things are different now. No doubt you remember what happened to the diplomatic exchange between the Empire and the Dvaered some time ago. Well, suffice to say that increasing the tension between the two is definitely not part of our mandate. In fact, it's completely at odds with what we stand for. And that was not just an isolated incident either. Things have been happening that suggest Four Winds involvement, things that bode ill."
     She activates the holotable, and it displays four cruisers, all seemingly identical to the Seiryuu, though you notice subtle differences in the hull designs.
-    "These are our flagships. Including this ship, they are the Seiryuu, Suzaku, Byakko and Genbu. I'm given to understand that these names, as well as our collective name, have their roots in ancient Oriental mythology." The captain touches another control, and four portraits appear, superimposed over the ships. "These are the four captains of the flagships, which by extension makes them the highest level of authority within the Four Winds. You know me. The other three are called Giornio, Zurike and Farett."]])
+    "These are our flagships. Including this ship, they are the Seiryuu, Suzaku, Byakko and Genbu. I'm given to understand that these names, as well as our collective name, have their roots in ancient Asian mythology." The captain touches another control and four portraits appear, superimposed over the ships. "These are the four captains of the flagships, which by extension makes them the highest level of authority within the Four Winds. You know me. The other three are called Giornio, Zurike and Farett."]])
 
 text[5] = _([["It is my belief that one or more of my fellow captains have abandoned their mission, and are misusing their resources for a different agenda. I have been unable to find out the details of Four Winds missions that I did not order myself, which is a bad sign. I am being stonewalled, and I don't like it. I want to know what's going on, %s, and you're going to help me do it."
     The captain turns the holotable back off so she can have your undivided attention. "I have sent Jorek on a recon mission to the planet of %s in the %s system. He hasn't reported back to me so far, and that's bad news. Jorek is a reliable agent. If he fails to meet a deadline, then it means he is tied down by factors outside of his control, or worse. I want you to find him. Your position as an outsider will help you fly below the radar of potentially hostile Four Winds operatives. You must go to %s and contact Jorek if you can, or find out where he is if you can't."
-    Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a grey-uniformed crewman. You sit in your cockpit for a few minutes before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]])
+    Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a gray-uniformed crewman. You sit in your cockpit for a few hectoseconds before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]])
 
 title[3] = _("A tip from the barman")
 text[6] = _([[You meet the barman's stare. He hesitates for a moment, then speaks up.
@@ -63,7 +65,7 @@ text[11] = _([[You find yourself back on the Seiryuu, in the company of Jorek an
     "Welcome back, Jorek, %s," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
     Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.
     "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, %s. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
-    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser man might get nervous.]])
+    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]])
 
 Jorscene[1] = _([[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]])
 Jorscene[2] = _([[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]])
@@ -92,6 +94,18 @@ osd2_msg[2] = _("Return Jorek and the informant to the Seiryuu in the %s system"
 misn_desc1 = _([[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]])
 misn_desc2 = _([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]])
 misn_reward = _("A sum of money.")
+
+log_text_intro = _([[Captain Rebina has further explained the organization she works for.
+    "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
+    "The Four Winds are old, %s. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity, prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
+    "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]])
+log_text_suspicion = _([[Rebina has reported that she suspects there are traitors among the four Four Winds captains. "These are our flagships. Including this ship, they are the Seiryuu, Suzaku, Byakko and Genbu. I'm given to understand that these names, as well as our collective name, have their roots in ancient Asian mythology." The captain touched a control and four portraits appeared, superimposed over the ships. "These are the four captains of the flagships, which by extension makes them the highest level of authority within the Four Winds. You know me. The other three are called Giornio, Zurike and Farett.
+    "It is my belief that one or more of my fellow captains have abandoned their mission, and are misusing their resources for a different agenda. I have been unable to find out the details of Four Winds missions that I did not order myself, which is a bad sign. I am being stonewalled, and I don't like it."]])
+log_text_succeed = _([[You found Jorek and successfully retrieved his informant on behalf of Captain Rebina. The Genbu ambushed you, but you managed to get away and dock the Seiryuu. Captain Rebina remarked on the situation.
+    "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."
+    She said she may need your services again in the future.]])
+log_text_fail = _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]])
+
 
 function create()
     var.push("darkshadow_active", true)
@@ -144,6 +158,7 @@ function seiryuuBoard()
     if stage == 1 then -- Briefing
         tk.msg(title[2], text[2]:format(player.name()))
         tk.msg(title[2], text[3]:format(player.name()))
+        shadow_addLog( log_text_intro:format( player.name() ) )
         tk.msg(title[2], text[4])
         tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
         accept2()
@@ -155,6 +170,7 @@ function seiryuuBoard()
         seiryuu:control()
         seiryuu:hyperspace()
         var.pop("darkshadow_active")
+        shadow_addLog( log_text_succeed )
         misn.finish(true)
     end
 end
@@ -251,6 +267,7 @@ function enter()
         poller = hook.timer(500, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
         tk.msg(joefailtitle, joefailtext:format(player.name()))
+        shadow_addLog( log_text_fail )
         abort()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
@@ -366,7 +383,7 @@ end
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
     for _, patroller in ipairs(leader) do
-        if vec2.dist(player.pilot():pos(), patroller:pos()) < 1200 then
+        if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
             patroller:broadcast(patrolcomm)
             attacked()
             return
@@ -384,6 +401,7 @@ function spawnGenbu(sys)
     genbu:control()
     genbu:setHilight()
     genbu:setVisplayer()
+    genbu:setNoDeath(true)
     genbuspawned = true
 end
 

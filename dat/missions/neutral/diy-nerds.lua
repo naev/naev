@@ -62,7 +62,7 @@ text[8] = [[As soon as you get of your ship, you are surrounded by the group of 
 
 -- you pick up the nerds in time, they didn't win
 title[9] = _("Sad nerds")
-text[9] = [[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. "Hey, what's up? Come on, tell me!" you inquire. The nerds warily glance at each other, and finally Mia bursts out:
+text[9] = [[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
     "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt idiots in the jury pretended not to notice!"
     "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to %s.]]
 
@@ -82,7 +82,7 @@ text[12] = [[The nerds, finally exhausted from all the partying, still smile as 
 -- you return the nerds, who did not win the contest
 title[13] = _("Minor Complications")
 text[13] = [[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have no prize money."
-    As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few minutes.
+    As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.
     "Ok, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]]
 
 title[14] = _("So what?")
@@ -95,13 +95,13 @@ text[15] = [["You can wait for it, won't take longer than half a period," Mia in
 
 -- for use in accept(), if any of the mission's preconditions are not met
 title[16] = _("Not enough cargo space")
-text[16] = [["Aw, I forgot" she adds. "We would of course need 4 tons of free cargo space for our box."]]
+text[16] = [["Aw, I forgot" she adds. "We would of course need 4 tonnes of free cargo space for our box."]]
 title[17] = _("Young People")
 text[17] = [["Sorry, we're busy right now."]]
 
 -- additional text for stage 2 cargo space test
 title[18] = _("Room for the box")
-text[18] = [["Aw %s," Mia complains, "as if you didn't know that our box needs 4 tons of free cargo space. Make room now, and pick us up at the bar."]]
+text[18] = [["Aw %s," Mia complains, "as if you didn't know that our box needs 4 tonnes of free cargo space. Make room now, and pick us up at the bar."]]
 
 title[19] = _("Departure")
 text[19] = [[The nerds follow you to your ship and finally stow away their box. Now, you're all set to go.]]
@@ -113,15 +113,15 @@ text[20] = [[As you enter the bar, the nerds are immediately upon you. "What is 
 textosd = {}
 -- stage 1
 textosd[1] = _("Bring the nerds and their box to %s before %s")
-textosd[2] = _("You have %s remaining.")
-textosd[3] = _("You're late. Mia has started verbally abusing you and your ship. Better land to get rid of the nerds and their box.")
+textosd[2] = _("You have %s remaining")
+textosd[3] = _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")
 -- stage 2
-textosd[4] = _("You are to wait several periods until hailed by the nerds for their return trip.")
-textosd[5] = _("Pick up the nerds on %s for their return trip to %s.")
-textosd[6] = _("The nerds are getting impatient.")
-textosd[7] = _("You didn't pick up the nerds in time.")
+textosd[4] = _("Wait several periods until hailed by the nerds for their return trip")
+textosd[5] = _("Pick up the nerds on %s for their return trip to %s")
+textosd[6] = _("The nerds are getting impatient")
+textosd[7] = _("You didn't pick up the nerds in time")
 -- stage 3
-textosd[8] = _("Return the nerds to %s.")
+textosd[8] = _("Return the nerds to %s")
 
 textmsg = {}
 -- displayed if you leave without the nerd's authorization

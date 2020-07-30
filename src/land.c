@@ -48,7 +48,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tk.h"
-
+#include "shiplog.h"
 
 /* global/main window */
 #define LAND_WIDTH   800 /**< Land window width. */
@@ -171,14 +171,19 @@ int can_swapEquipment( char* shipname )
    int failure = 0;
    Pilot *newship;
    newship = player_getShip(shipname);
+   int diff;
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       failure = 1;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( _("You have %d tons more cargo than the new ship can hold."),
-            pilot_cargoUsed(player.p) - pilot_cargoFree(newship), shipname );
+      diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
+      land_errDialogueBuild( ngettext(
+               "You have %d tonne more cargo than the new ship can hold.",
+               "You have %d tonnes more cargo than the new ship can hold.",
+               diff),
+            diff, shipname );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
@@ -301,7 +306,7 @@ static void bar_open( unsigned int wid )
    th = -40 - dh - 40;
    window_addText( wid, iw + 40, th,
          w - iw - 60, gl_defFont.h, 1,
-         "txtPortrait", &gl_defFont, &cDConsole, NULL );
+         "txtPortrait", &gl_defFont, &cBlack, NULL );
 
    /* Add mission description text. */
    th -= 20 + PORTRAIT_HEIGHT + 20 + 20;
@@ -554,7 +559,7 @@ static void misn_open( unsigned int wid )
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
-         "txtSDate", NULL, &cDConsole,
+         "txtSDate", NULL, &cBlack,
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
@@ -563,7 +568,7 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, &cDConsole, _("Reward:") );
+         "txtSReward", &gl_smallFont, &cBlack, _("Reward:") );
    window_addText( wid, w/2 + 70, y,
          w/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
@@ -706,7 +711,9 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), _("%s\n%d Tons"), buf, player.p->cargo_free );
+   nsnprintf( txt, sizeof(txt), ngettext(
+            "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
+         buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
@@ -993,6 +1000,7 @@ void land_genWindows( int load, int changetab )
          npc_generate(); /* Generate bar npc. */
    }
 
+   
    /* 4) Create other tabs. */
 #define should_open(s, w) \
    (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))
@@ -1096,6 +1104,9 @@ void land( Planet* p, int load )
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
 
+   /* Average economy prices that player has seen */
+   economy_averageSeenPrices( p );
+   
    /* Clear the NPC. */
    npc_clear();
 
@@ -1333,7 +1344,7 @@ void takeoff( int delay )
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
-      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
+      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
    player_message( _("\apTaking off from %s on %s."), land_planet->name, nt);
    free(nt);

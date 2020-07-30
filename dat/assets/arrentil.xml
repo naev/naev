@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>As is typical for Soromid worlds, Arrentil would be considered utterly inhospitable by the rest of humanity. The atmosphere is toxic and the surface unstable, but the Soromid have managed to tame this world. Of course even they need to live in sheltered habitats, but in spite of that the population is thriving and the economy is stable. By all means, Arrentil is an example of Soromid persistence.</description>
   <bar>As the habitats of this inhospitable world were being built little thought was given to less essential amenities. This bar was added by grafting it onto the side of the spaceport. Anywhere else in the galaxy being an afterthought would likely have resulted in a rather cramped, run-down bar but here in Soromid space it has given it a more organic feel, so much so that it almost feels like it is growing.</bar>
  </general>

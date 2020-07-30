@@ -9,6 +9,19 @@
  <specific type="map">
   <sys name="Acheron">
    <jump>Terminus</jump>
+   <jump>Merisi</jump>
+  </sys>
+  <sys name="Merisi">
+   <jump>Borla</jump>
+   <jump>Acheron</jump>
+  </sys>
+  <sys name="Borla">
+   <jump>Merisi</jump>
+   <jump>Mural</jump>
+  </sys>
+  <sys name="Mural">
+   <jump>Borla</jump>
+   <jump>Salvador</jump>
   </sys>
   <sys name="Terminus">
    <jump>Acheron</jump>
@@ -48,6 +61,7 @@
   <sys name="Salvador">
    <jump>Doowa</jump>
    <jump>Hakoi</jump>
+   <jump>Mural</jump>
   </sys>
   <sys name="Doowa">
    <jump>Vlexon</jump>

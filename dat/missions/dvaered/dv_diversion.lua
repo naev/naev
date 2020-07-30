@@ -6,7 +6,9 @@
 
 -- localization stuff, translators would work here
 
-include("fleethelper.lua")
+require "fleethelper.lua"
+require "portrait.lua"
+
 
 destsysname = "Torg"
 destplanetname = "Jorcan"
@@ -58,7 +60,7 @@ osd_desc[2] = _("Fire on the Hawk and flee from the fighter escorts until the Dv
 misn_desc = _("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated.")
 misn_reward = _("Some good money, hopefully")
 
-chatter[0] = _("All right men, this will be Hawk's maiden jump. Continue on course to the %s jump gate.")
+chatter[0] = _("Alright folks, this will be Hawk's maiden jump. Continue on course to the %s jump gate.")
 chatter[1] = _("How dare they attack me! Get them!")
 chatter[2] = _("You heard Warlord Khan, blow them to pieces!")
 chatter[3] = _("They're attacking us, blow them to pieces!")
@@ -79,7 +81,7 @@ function create()
       abort()
    end
    
-   misn.setNPC("Dvaered liaison", "dvaered/dv_military_m1")
+   misn.setNPC("Dvaered liaison", getMaleMilPortrait("Dvaered"))
    misn.setDesc(npc_desc)
 end
 

@@ -3,61 +3,39 @@
    sent in by the threatened sirius. the player attempts to defend,
    when is instead ordered back to the wringer to escape sirius controlled
    space. thanks to nloewen and viashimo for help!]]
-   
 
-include "dat/scripts/numstring.lua"
-   
---beginning messages and choices
+require "numstring.lua"
+require "dat/missions/sirius/common.lua"
+
+
+--beginning messages
 bmsg = {}
-bmsg[1] = _([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you.
-   "Hello, %s. We have a situation, and we need your help."]])
-bmsg[2] = _([[Draga sits back down with the other officials.
-   "Sirius is officially considering us a threat. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it."]])
-bmsg[3] = _([[Draga leans back and smiles ruefully. 
-   "So, you will be outnumbered, outgunned, and officially declared an enemy of the state. Want in? Please note, however, that if you abort the mission, or jump out-system, you will be dismissed. Permanently."]])
---messages for the choice
-bmsgc = {}
-bmsgc[1] = _([[He snorts derisively at your question.
-   "Why, I mean you will no longer be welcome amongst the Nasin. At least, as a pilot."]])
-bmsgc[2] = _([[Sorrow fills Draga's eyes at the question.
-   "Unfortunately, House Sirius and those claiming to represent Sirichana feel that we are a band of heretics out to destroy the Sirius way of life. We aren't out to destroy it, but rather to bring it to completion. They have decided that we need to be eliminated."]])
-bmsgc[3] = _([[Draga eyes you. You can tell he doesn't like the question.
-   "You really like the money, %s? You know, I'd much prefer it if you were just loyal enough to not worry about the money. We will always pay you well. We take care of our own. We can pay you %s. I hope its good enough"]])
-bmsgc[4] = _([[Draga is quite excited at the news, and the surrounding officers mumble their approval. "Great! You should hurry up and take off, we are expecting them any second now. We already have one defensive element in space."]])
-bmsgc[5] = _([[Obviously annoyed beyod belief, Draga doesn't say a word. He makes a shooing guesture with his hand, and doesn't even look as you go.]])
-draga_chooser = _([[Draga looks at you impatiently. "Any more questions or can we get going?"]])
-choice = {}
-choice[1] = _("What do you mean, permanently?")  --this opens up dialog bmsg[4]
-choice[2] = _("Why are they attacking?") --jumps to dialog bmsg[5]
-choice[3] = _("What are you paying?") --jumps to dialog bmsg[6]
-choice[4] = _("I'm in.") --jumps to dialog bmsg[7], and starts mission.
-choice[5] = _("Gimme a minute. I'll be right back.") --jumps to dialog bmsg[8]
+bmsg[1] = _([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, %s," he says. "We have a situation, and we need your help.
+    "The Sirii are starting to take us seriously as a threat. This isn't what we hoped for; we hoped we could go a little longer underground, but it seems we're being forced into battle. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it.
+    "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]])
+bmsg[2] = _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]])
+bmsg[3] = _([["Do you not understand the seriousness of this situation?! I thought you were better than this!" He grumbles and shoos you away.]])
 
 --ending messages
 emsg = {}
-emsg[1] = _([[As you land, you see people running about frantically. Most look as though they've had some sort of military training, but there are a few scrambling civilians as well. You land, and as soon as your feet hit the deck the now familiar face of Draga comes up to you begins to speak.
-   "Get your crap together, %s, and meet me in the bar as soon as you can. We need you. I've already transferred payment." At this, he runs off to helps a group of elderly citizens who are struggling against the tide of people.]])
+emsg[1] = _([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]])
 
 --misn osd
 osd = {}
-osd[1] = _("Defend %s against the oncoming assault!")
-osd[2] = _("Return to %s.")
+osd[1] = _("Defend %s against the Sirius assault")
+osd[2] = _("Return to %s")
 --random odds and ends
 misn_title = _("The Assault")
 npc_name = _("Draga")
 bar_desc = _("The familiar form of Draga is at a table with some officers. They look busy.")
-return_to_base_msg = _([[A clear voice booms in your ship through the comm system.
-   "%s! We need you to return to %s immediately! We are being overwhelmed and are evacuating! Please hurry!" The voice cuts out in a tumult of static.]])
-p_landing = _([[Draga appears with three armed Nasin carrying some serious weaponry. 
-   He points at you and says "I have been more than accomadating with you. Now, you are dismissed. Take care of your business, and leave. And if you don't, my friends here are more than willing to collect that bounty."
-   Draga strides away, exuding annoyance and rage.]]) 
-oos = _([[A voice comes into your comm system. "We need you back in the system now! Hurry!"]])
-oos_failure = _([[A scratchy voice from what sounds like very far away cut in on your comms priority channel. 
-   "We needed you! We are being overrun by Sirius and we aren't gonna make it. Don't bother coming back to us. Ever." 
-   The voice cuts out, and you feel like you've made a horrible mistake.]])
-misn_desc = _([[A Sirius assault fleet has just jumped into %s. Destroy this fleet. WARNING: DO NOT JUMP OUT-SYSTEM OR LAND ON ANY ASSETS.]])
-time_to_come_home = _([[Your comm squeaks as the voice of Draga comes onto the channel. "%s! This is a lot larger of an assault than we thought. There is no way that we can handle this. We need you to get back to the station now! We are evacuating!" The comm goes silent, and you start heading back.]])
+p_landing = _([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]])
+oos_failure = _([[You recieve a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]])
+misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
+time_to_come_home = _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]])
 misn_reward = _("%s credits")
+
+log_text = _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]])
+
 
 function create()
    --this mission makes one mission claim, in suna.
@@ -74,7 +52,7 @@ function create()
    end
    misn.setReward( misn_reward:format( numstring( reward ) ) )
    misn.setTitle( misn_title )
-   misn.setNPC(npc_name,"neutral/thief2")
+   misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(homeasset:name())
@@ -84,44 +62,23 @@ function create()
 end
 
 function accept()
-   -- Only referenced in this function.
-   bmsgc[3] = bmsgc[3]:format(player.name(),numstring(reward))
+   if tk.yesno(misn_title, bmsg[1]:format(player.name())) then
+      tk.msg( misn_title, bmsg[2] )
 
-   tk.msg(misn_title,bmsg[1]:format( player.name() ))
-   tk.msg(misn_title,bmsg[2])
-   while true do --another complicated convo!
-      if checker == nil then
-         chooser = tk.choice(misn_title,bmsg[3],choice[1],choice[2],choice[3],choice[4],choice[5])
-      else
-         chooser = tk.choice(misn_title,draga_chooser,choice[1],choice[2],choice[3],choice[4],choice[5])
-      end
-      if chooser == 1 or chooser == 2 or chooser == 3 or chooser == 4 then
-         tk.msg(misn_title,bmsgc[chooser])
-         if chooser == 3 and rep_check == nil then
-            faction.modPlayer("Nasin",-5) --the nasin prefer loyalty to them over money. rep hurt if player asks about pay.
-            rep_check = 1 --makes sure the rep hit only comes once.
-         end
-      if chooser == 4 then
-         break
-         end
-      else
-         tk.msg(misn_title,bmsgc[chooser])
-         misn.finish()
-         break
-      end
-      checker = _("you been through one time, yo!") --makes sure the intro message to the convos only comes in once
+      misn.accept()
+      misn.setDesc(misn_desc)
+      misn.markerAdd(homesys,"high")
+      misn.osdCreate(misn_title,osd)
+      misn.osdActive(1)
+
+      --hook time.
+      hook.takeoff("takeoff")
+      hook.jumpin("out_sys_failure")
+      hook.land("return_to_base")
+   else
+      tk.msg( misn_title, bmsg[3] )
+      misn.finish( false )
    end
-
-   misn.setDesc(misn_desc) --convo is over! time to set the last of the mission stuff
-   misn.accept()
-   misn.markerAdd(homesys,"plot")
-   misn.osdCreate(misn_title,osd)
-   misn.osdActive(1)
-
-   --hook time.
-   hook.takeoff("takeoff")
-   hook.jumpin("out_sys_failure")
-   hook.land("return_to_base")
 end
 
 function takeoff() --for when the player takes off from the wringer.
@@ -160,14 +117,12 @@ end
 
 function death(p)
    deathcounter = deathcounter + 1
-   if deathcounter == 9 then --9 ships is all the ships in the first fleet minus the 2 cruisers and the carrier. might adjust this later.
+   if deathcounter >= 9 then --9 ships is all the ships in the first fleet minus the 2 cruisers and the carrier. might adjust this later.
       flee()
    end
 end
 
 function flee()
-   tk.msg(misn_title, return_to_base_msg:format( player.name(),homeasset:name() ))
-
    returnchecker = true --used to show that deathcounter has been reached, and that the player is landing 'just because'
    misn.osdActive(2)
    tk.msg(misn_title, time_to_come_home:format( player.name() ))
@@ -190,7 +145,7 @@ end
 
 function out_sys_failure() --feel like jumping out? AWOL! its easier this way. trust me.
    tk.msg(misn_title,oos_failure) 
-   misn.osdDestroy()
+   faction.modPlayerSingle("Nasin",-50)
    misn.finish(false)
 end
 
@@ -208,21 +163,15 @@ end
 function return_to_base()
    if not returnchecker then --feel like landing early? AWOL!
       tk.msg(misn_title,p_landing)
-      misn.osdDestroy()
+      faction.modPlayerSingle("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else
       player.pay(reward)
       tk.msg(misn_title,emsg[1]:format( player.name() ))
       misn_tracker = misn_tracker + 1
-      faction.modPlayer("Nasin",4)
-      faction.modPlayer("Sirius",-5)
+      faction.modPlayer("Nasin",10)
       var.push("heretic_misn_tracker",misn_tracker)
-      misn.osdDestroy()
+      srs_addHereticLog( log_text )
       misn.finish(true)
    end
-end
-
-function abort()
-   misn.osdDestroy()
-   misn.finish(false)
 end

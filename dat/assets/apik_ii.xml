@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Apik II">
+ <pos>
+  <x>-5706.526190</x>
+  <y>7721.039274</y>
+ </pos>
+ <GFX>
+  <space>C00.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

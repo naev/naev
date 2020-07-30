@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Arashu is a peculiar planet, it is both oceanic and highly volcanic. The planet's oceanic crust is prone to earthquakes, this causes tidal waves to wash over the few areas of dry land. A Sirian corporation has invested in harnessing the energies released by this process, turning the planet into a profitable weapons production plant. All manufacturing happens on floating platforms so the workers and equipment are safe from the constant seismic activity.</description>
   <bar>The bar features a big display that shows a geological map of the planet which, due to most of the world being covered in ocean, makes for a rather uninteresting map. The display also shows all the volcanic activity going on at the moment, so it is actually quite fascinating interesting to watch, especially once you can place the spaceport and bar!</bar>
  </general>

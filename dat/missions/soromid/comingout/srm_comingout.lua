@@ -17,7 +17,9 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -81,10 +83,13 @@ npc_desc = _("A stranger is sitting quietly at a table, alone, glancing around t
 osd_desc    = {}
 osd_desc[1] = _("Go to the %s system and land on the planet %s.")
 
+log_text = _([[You have made a new friend, Chelsea. You helped escort her to her parents and helped her feel secure coming out as transgender to her parents. Chelsea has asked you to return to Durea to visit once in a while.]])
+
+
 function create ()
    misplanet, missys = planet.get( "Durea" )
    -- Note: This mission does not make system claims
-   if missys:jumpDist( system.cur(), true ) < #chatter * 3 / 2 then
+   if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )
    end
 
@@ -92,13 +97,7 @@ function create ()
    started = false
    chatter_index = 0
 
-   -- FIXME: Make a portrait for Chelsea. She should have a generally
-   -- androgynous face slightly on the masculine side, with long-ish but
-   -- not that long hair (like someone who used to have short hair but
-   -- has started growing it long recently). She should also have a
-   -- regular human appearance (instead of a Soromid appearance); this
-   -- will come into play in later missions.
-   misn.setNPC( npc_name, "none" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea" )
    misn.setDesc( npc_desc )
 end
 
@@ -176,6 +175,8 @@ function land ()
 
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
+
+      srm_addComingOutLog( log_text )
 
       misn.finish(true)
    end

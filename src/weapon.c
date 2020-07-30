@@ -470,11 +470,10 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon **wlayer;
    int *nlayer;
    Weapon *w;
-   int i, j, k;
+   int i;
    int spfx;
    int s;
    Pilot *p;
-   Outfit *o;
 
    /* Choose layer. */
    switch (layer) {
@@ -700,9 +699,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
  */
 static void weapon_render( Weapon* w, const double dt )
 {
-   double x,y, cx,cy, gx,gy;
    glTexture *gfx;
-   double z;
    glColour c = { .r=1., .g=1., .b=1. };
 
    switch (w->outfit->type) {
@@ -808,13 +805,8 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (w->faction == FACTION_PLAYER) {
 
       /* Always hit hostiles. */
-      if (pilot_isFlag(p, PILOT_HOSTILE))
+      if (pilot_isHostile(p))
          return 1;
-
-      /* Always hit unbribed enemies. */
-      else if (!pilot_isFlag(p, PILOT_BRIBED) &&
-            areEnemies(w->faction, p->faction))
-        return 1;
 
       /* Miss rest - can be neutral/ally. */
       else
@@ -825,9 +817,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (p->faction == FACTION_PLAYER) {
       parent = pilot_get(w->parent);
       if (parent != NULL) {
-         if (pilot_isFlag(parent, PILOT_BRIBED))
-            return 0;
-         if (pilot_isFlag(parent, PILOT_HOSTILE))
+         if (pilot_isHostile(parent))
             return 1;
       }
    }
@@ -850,7 +840,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
    int i, j, b, psx, psy, k, n;
-   unsigned int coll, usePoly;
+   unsigned int coll, usePoly=1;
    glTexture *gfx;
    CollPoly *plg, *polygon;
    Vector2d crash[2];
@@ -858,6 +848,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    AsteroidAnchor *ast;
    Asteroid *a;
    AsteroidType *at;
+
+   gfx = NULL;
+   polygon = NULL;
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -869,7 +862,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       polygon = &plg[n];
 
       /* See if the outfit has a collision polygon. */
-      usePoly = 1;
       if (outfit_isBolt(w->outfit)) {
          if (w->outfit->u.blt.npolygon == 0)
             usePoly = 0;
@@ -879,8 +871,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             usePoly = 0;
       }
    }
-   else
-      gfx = NULL;
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -1078,8 +1068,6 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
          /* Set as hostile. */
          pilot_setHostile(p);
-         pilot_rmFlag( p, PILOT_BRIBED );
-         pilot_rmFlag( p, PILOT_FRIENDLY );
       }
    }
    /* Otherwise just inform of being attacked. */
@@ -1249,7 +1237,8 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
       Vector2d pos[2], const double dt )
 {
-   int s, spfx;
+   (void) layer;
+   int spfx;
    Damage dmg;
    const Damage *odmg;
 
@@ -1335,7 +1324,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if (lead_angle && fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
+      if (lead_angle && FABS( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
          /* the target is moving too fast for the turret to keep up */
          if (ANGLE(x, y) < VANGLE(relative_location))
             rdir = angle_diff(lead_angle, VANGLE(relative_location));
@@ -1346,7 +1335,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    /* Calculate bounds. */
    off = angle_diff( rdir, dir );
-   if (fabs(off) > swivel) {
+   if (FABS(off) > swivel) {
       if (off > 0.)
          rdir = dir - swivel;
       else

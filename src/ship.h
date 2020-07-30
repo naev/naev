@@ -13,7 +13,7 @@
 #include "outfit.h"
 #include "sound.h"
 #include "nxml.h"
-#include "economy.h"
+#include "commodity.h"
 
 
 /* target gfx dimensions */

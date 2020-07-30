@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Modus is an unstable world, but it is surprisingly well populated. Something about the planet is greatly beneficial to human fertility, which makes it a popular destination for couples trying to conceive a child the natural way. Of course this is not without risk, as the planet's volatile nature claims a considerable number of lives each cycle.</description>
   <bar>This bar has chosen to constantly play a heavy beat music track. This is not because people like heavy beat music, but rather to mask the tremors the planet's unstable crust sometimes creates.</bar>
  </general>

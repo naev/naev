@@ -3,6 +3,10 @@ This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
 --]]
 
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
+
 npc_name = _("Young Teenager")
 bar_desc = _("A pretty teenager sits alone at a table.")
 title = _("The Runaway")
@@ -23,6 +27,8 @@ misn_accomplished = _([[As you walk into the docking bay, she warns you to look 
 osd_text = {}
 osd_text[1] = _("Deliver Cynthia to Zhiru in the Goddard system")
 
+log_text = _([[You gave a teenage girl named Cynthia a lift to Zhiru. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]])
+
 
 function create ()
    startworld, startworld_sys = planet.cur()
@@ -30,20 +36,16 @@ function create ()
    targetworld_sys = system.get("Goddard")
    targetworld = planet.get("Zhiru")
 
-   --if not misn.claim ( {targetworld_sys} ) then
-   --   abort()
-   --end
+   reward = 500000
 
-   reward = 75000
-
-   misn.setNPC( npc_name, "neutral/miner2" )
+   misn.setNPC( npc_name, "neutral/unique/cynthia" )
    misn.setDesc( bar_desc )
 end
 
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, numstring(reward), targetworld:name() ) ) then
       misn.finish()
    end
 
@@ -63,7 +65,7 @@ function accept ()
 
    misn.setTitle( title )
 
-   misn.setReward( string.format( reward_desc, reward ) )
+   misn.setReward( string.format( reward_desc, numstring(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.markerAdd( targetworld_sys, "high")
@@ -79,15 +81,11 @@ function land ()
       misn.cargoRm( cargoID )
       player.pay( reward )
 
-      tk.msg( title, string.format(misn_accomplished, reward) )
+      tk.msg( title, string.format( misn_accomplished, numstring(reward) ) )
+
+      addMiscLog( log_text )
 
       misn.finish(true)
    end
 end
 
-function abort ()
-  --Clean up
-   misn.cargoRm( cargoID )
-   misn.osdDestroy()
-   misn.finish( false )
-end

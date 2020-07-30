@@ -154,11 +154,10 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < pilot_nstack) {
-         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ) &&
-               (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
-                  areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
+               pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p++;
       }
@@ -208,11 +207,10 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    else if (mode == 1) {
       while (p >= 0) {
-         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ) &&
-               (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
-                  areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
+               pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p--;
       }
@@ -259,14 +257,10 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
  */
 static int pilot_validEnemy( const Pilot* p, const Pilot* target )
 {
-   /* Must not be bribed. */
-   if ((target->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
-      return 0;
-
    /* Should either be hostile by faction or by player. */
-   if (!(areEnemies( p->faction, target->faction) ||
-            ((target->id == PLAYER_ID) &&
-             pilot_isFlag(p,PILOT_HOSTILE))))
+   if ( !( areEnemies( p->faction, target->faction )
+            || ( ( target->id == PLAYER_ID )
+               && pilot_isHostile( p ) ) ) )
       return 0;
 
    /* Shouldn't be disabled. */
@@ -377,9 +371,9 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
       /* Check distance. */
       temp = range_factor *
                vect_dist2( &target->solid->pos, &p->solid->pos )
-            + fabs( pilot_relsize( p, target ) - mass_factor)
-            + fabs( pilot_relhp(   p, target ) - health_factor)
-            + fabs( pilot_reldps(  p, target ) - damage_factor);
+            + FABS( pilot_relsize( p, target ) - mass_factor)
+            + FABS( pilot_relhp(   p, target ) - health_factor)
+            + FABS( pilot_reldps(  p, target ) - damage_factor);
 
       if ((tp == 0) || (temp < current_heuristic_value)) {
          current_heuristic_value = temp;
@@ -626,11 +620,12 @@ void pilot_setTurn( Pilot *p, double turn )
  */
 int pilot_isHostile( const Pilot *p )
 {
-   if (pilot_isFlag(p, PILOT_FRIENDLY))
-      return 0;
-   if (pilot_isFlag(p, PILOT_HOSTILE) ||
-         areEnemies(FACTION_PLAYER,p->faction))
+   if ( !pilot_isFriendly( p )
+         && !pilot_isFlag( p, PILOT_BRIBED )
+         && (pilot_isFlag( p, PILOT_HOSTILE ) ||
+            areEnemies( FACTION_PLAYER, p->faction ) ) )
       return 1;
+   
    return 0;
 }
 
@@ -657,11 +652,10 @@ int pilot_isNeutral( const Pilot *p )
  */
 int pilot_isFriendly( const Pilot *p )
 {
-   if (pilot_isFlag(p, PILOT_HOSTILE))
-      return 0;
-   if (pilot_isFlag(p, PILOT_FRIENDLY) ||
-         areAllies(FACTION_PLAYER,p->faction))
+   if ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
+         areAllies( FACTION_PLAYER,p->faction ) )
       return 1;
+
    return 0;
 }
 
@@ -1035,13 +1029,16 @@ double pilot_aimAngle( Pilot *p, Pilot *target )
  */
 void pilot_setHostile( Pilot* p )
 {
-   if (!pilot_isFlag(p, PILOT_HOSTILE)) {
+   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED)
+         || !pilot_isFlag( p, PILOT_HOSTILE ) ) {
       /* Time to play combat music. */
       music_choose("combat");
 
       player.enemies++;
-      pilot_setFlag(p, PILOT_HOSTILE);
+      pilot_setFlag( p, PILOT_HOSTILE );
    }
+   pilot_rmFriendly( p );
+   pilot_rmFlag( p, PILOT_BRIBED );
 }
 
 
@@ -1054,9 +1051,9 @@ char pilot_getFactionColourChar( const Pilot *p )
 {
    if (pilot_isDisabled(p))
       return 'I';
-   else if (pilot_isFlag(p, PILOT_BRIBED))
+   else if (pilot_isFriendly(p))
       return 'N';
-   else if (pilot_isFlag(p, PILOT_HOSTILE))
+   else if (pilot_isHostile(p))
       return 'H';
    return faction_getColourChar(p->faction);
 }
@@ -1232,16 +1229,23 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
  */
 void pilot_rmHostile( Pilot* p )
 {
-   if (pilot_isFlag(p, PILOT_HOSTILE)) {
-      player.enemies--;
-      if (pilot_isDisabled(p))
-         player.disabled_enemies--;
-      pilot_rmFlag(p, PILOT_HOSTILE);
+   if (pilot_isHostile(p)) {
+      if (pilot_isFlag(p, PILOT_HOSTILE)) {
+         player.enemies--;
+         if (pilot_isDisabled(p))
+            player.disabled_enemies--;
 
-      /* Change music back to ambient if no more enemies. */
-      if (player.enemies <= player.disabled_enemies) {
-         music_choose("ambient");
+         /* Change music back to ambient if no more enemies. */
+         if (player.enemies <= player.disabled_enemies) {
+            music_choose("ambient");
+         }
+
+         pilot_rmFlag(p, PILOT_HOSTILE);
       }
+
+      /* Set "bribed" flag if faction has poor reputation */
+      if ( areEnemies( FACTION_PLAYER, p->faction ) )
+         pilot_setFlag(p, PILOT_BRIBED);
    }
 }
 
@@ -1293,10 +1297,9 @@ const glColour* pilot_getColour( const Pilot* p )
 
    if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-   else if (pilot_isHostile(p)) col = &cHostile;
    else if (pilot_isFriendly(p)) col = &cFriend;
-   else col = faction_getColour(p->faction);
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else col = &cNeutral;
 
    return col;
 }
@@ -1491,7 +1494,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  */
 void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 {
-   int mod, h;
+   int mod;
    Pilot *pshooter;
    HookParam hparam;
 
@@ -2404,6 +2407,7 @@ int pilot_refuelStart( Pilot *p )
  */
 static void pilot_refuel( Pilot *p, double dt )
 {
+   (void) dt;
    Pilot *target;
 
    /* Check to see if target exists, remove flag if not. */
@@ -2421,11 +2425,7 @@ static void pilot_refuel( Pilot *p, double dt )
    if (p->ptimer < 0.) {
       /* Move fuel. */
       p->fuel       -= PILOT_REFUEL_QUANTITY;
-      target-> fuel += PILOT_REFUEL_QUANTITY;
-
-	  if (target->fuel > target->fuel_max) {
-	     target->fuel   = target->fuel_max;
-	  }
+      target->fuel   = MIN(target->fuel+PILOT_REFUEL_QUANTITY, target->fuel_max);
 
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);
@@ -2442,7 +2442,7 @@ static void pilot_refuel( Pilot *p, double dt )
 ntime_t pilot_hyperspaceDelay( Pilot *p )
 {
    int stu;
-   stu = (int)(NT_STP_STU * p->stats.jump_delay);
+   stu = (int)(NT_PERIOD_SECONDS * p->stats.jump_delay);
    return ntime_create( 0, 0, stu );
 }
 
@@ -2674,6 +2674,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* AI */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
+   pilot->shoot_indicator = 0;
 }
 
 
@@ -2793,20 +2794,21 @@ Pilot* pilot_copy( Pilot* src )
    dest->afterburner = NULL;
 
    /* Hooks get cleared. */
-   dest->hooks          = NULL;
-   dest->nhooks         = 0;
+   dest->hooks           = NULL;
+   dest->nhooks          = 0;
 
    /* Copy has no escorts. */
-   dest->escorts        = NULL;
-   dest->nescorts       = 0;
+   dest->escorts         = NULL;
+   dest->nescorts        = 0;
 
    /* AI is not copied. */
-   dest->task           = NULL;
+   dest->task            = NULL;
+   dest->shoot_indicator = 0;
 
    /* Set pointers and friends to NULL. */
    /* Commodities. */
-   dest->commodities    = NULL;
-   dest->ncommodities   = 0;
+   dest->commodities     = NULL;
+   dest->ncommodities    = 0;
    /* Calculate stats. */
    pilot_calcStats(dest);
 
@@ -2983,15 +2985,11 @@ void pilot_destroy(Pilot* p)
 {
    int i;
    PilotOutfitSlot* dockslot;
-   unsigned int my_id;
 
    /* find the pilot */
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
-
-   /* Log pilot's ID */
-   my_id = p->id;
 
    /* Remove faction if necessary. */
    if (p->presence > 0) {

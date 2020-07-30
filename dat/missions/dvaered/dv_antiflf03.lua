@@ -6,11 +6,12 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-include "fleethelper.lua" 
-include "proximity.lua"
-include "dat/missions/dvaered/common.lua"
+require "fleethelper.lua" 
+require "proximity.lua"
+require "portrait.lua"
+require "dat/missions/dvaered/common.lua"
 
--- localization stuff, translators would work here
+
 title = {}
 text = {}
 failtitle = {}
@@ -34,9 +35,9 @@ title[2] = _("The battlefield awaits")
 text[2] = _([["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
     The liaison hands you a small access card. It bears the emblem of the Dvaered military. It seems you've been granted a level of clearance that goes beyond that of a civilian volunteer.
     The liaison stands up, offers a curt greeting and walks out of the bar. You remain for a while, since you're not due for your briefing for some time yet. You reflect on your recent achievements. Your actions have drastically dipped the balance of power between the Dvaered and the FLF insurgents, and soon you will be able to see the results of your decisions with your own two eyes. You feel a sense of accomplishment to know you're making a difference in this galaxy.
-    Several hours later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]])
+    Several periods later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]])
     
-text[3] = _([["Gentlemen," a stern-looking but otherwise nondescript Dvaered officer addresses the room, "If I may have your attention please. I am here to brief you on the upcoming operation, which as you all know revolves around the destruction of the terrorist base known as Sindbad."
+text[3] = _([["Everyone," a stern-looking but otherwise nondescript Dvaered officer addresses the room, "If I may have your attention please. I am here to brief you on the upcoming operation, which as you all know revolves around the destruction of the terrorist base known as Sindbad."
     The wall behind the officer lights up, showing a schematic representation of the %s system. In the middle sits a red glowing disc with the FLF logo superimposed over it.
     "We're dealing with a fully operational, heavily armed military installation. The FLF may be terrorists, but they're well organized. Since this is their biggest stronghold, we must assume this base is heavily armed, and has a large complement of defensive spacecraft to defend it from attack. We will therefore conduct our assault in two phases."
     The system schematic on the wall updates with a cluster of white Dvaered logos, positioned some distance away from the glowing disc. There are also several white dots which apparently represent the fighter escorts.
@@ -83,13 +84,16 @@ osd_desc[4] = _("Return to %s in the %s system")
 misn_desc = _("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory.")
 misn_reward = _("Wealth and glory")
 
+log_text = _([[You aided the Dvaered in the destruction of the secret FLF base, Sindbad. The terrorists are not entirely eliminated, but they have been substantially reduced in number. Colonel Urnus suggested you may be able to help the Dvaered again in a future campaign aimed at "rooting out the source of the problem once and for all".]])
+
+
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then
         abort()
     end 
 
-    misn.setNPC("Dvaered liaison", "dvaered/dv_military_m1")
+    misn.setNPC("Dvaered liaison", getMaleMilPortrait("Dvaered"))
     misn.setDesc(npc_desc)
 end
 
@@ -159,7 +163,7 @@ function enter()
 
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
     elseif system.cur():name() == DVsys and victorious then -- Make sure the player can finish the missions properly.
-        planet.get(DVplanet):landOverride()
+        planet.get(DVplanet):landOverride(true)
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerSingle(-10)
@@ -195,6 +199,7 @@ function land()
         var.pop("flfbase_sysname")
         diff.apply("FLF_base")
         diff.apply("flf_dead")
+        dv_addAntiFLFLog( log_text )
         misn.finish(true)
     end
 end

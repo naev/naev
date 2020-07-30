@@ -191,7 +191,7 @@ static glFont* dialogue_getSize( const char* title,
 
 
    d = ((double)w/(double)h)*(3./4.); /* deformation factor. */
-   if (fabs(d) > 0.3) {
+   if (FABS(d) > 0.3) {
       if (h > w)
          w = h;
       h = gl_printHeightRaw( font, w-40, msg );
@@ -478,7 +478,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    window_setCancel( input_dialogue.input_wid, dialogue_cancel );
    /* text */
    window_addText( input_dialogue.input_wid, 30, -30, 200, h,  0, "txtInput",
-         &gl_smallFont, &cDConsole, msg );
+         &gl_smallFont, &cBlack, msg );
    /* input */
    window_addInput( input_dialogue.input_wid, 20, -50-h, 200, 20, "inpInput", max, 1, NULL );
    window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
@@ -494,8 +494,10 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
-         dialogue_alert( _("Input must be at least %d character%s long!"),
-               min, (min==1) ? "" : "s" );
+         dialogue_alert( ngettext(
+                  "Input must be at least %d character long!",
+                  "Input must be at least %d characters long!", min),
+               min );
          free(input);
          input = NULL;
       }
@@ -695,7 +697,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    wid = window_create( title, -1, -1, winw, winh );
    window_setData( wid, &done );
    window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
-         font, &cDConsole, msg );
+         font, &cBlack, msg );
    window_setAccept( wid, dialogue_listClose );
    window_setCancel( wid, dialogue_listCancel );
 

@@ -131,8 +131,8 @@ const char *keybind_info[][3] = {
    { "switchtab8", gettext_noop("Switch Tab 8"), gettext_noop("Switches to tab 8.") },
    { "switchtab9", gettext_noop("Switch Tab 9"), gettext_noop("Switches to tab 9.") },
    { "switchtab0", gettext_noop("Switch Tab 0"), gettext_noop("Switches to tab 0.") },
-   /* Must terminate in "end". */
-   { "end", "end", "end" }
+   /* Must terminate in NULL. */
+   { NULL, NULL, NULL }
 }; /**< Names of possible keybindings. */
 
 
@@ -323,7 +323,7 @@ void input_init (void)
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 
    /* Get the number of keybindings. */
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++);
+   for (i=0; keybind_info[i][0] != NULL; i++);
    input_numbinds = i;
    input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
@@ -354,7 +354,7 @@ void input_exit (void)
 void input_enableAll (void)
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+   for (i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 0;
 }
 
@@ -365,7 +365,7 @@ void input_enableAll (void)
 void input_disableAll (void)
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+   for (i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 1;
 }
 
@@ -620,7 +620,7 @@ const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod
 const char* input_getKeybindDescription( const char *keybind )
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+   for (i=0; keybind_info[i][0] != NULL; i++)
       if (strcmp(keybind, input_keybinds[i].name)==0)
          return _(keybind_info[i][2]);
    WARN(_("Unable to get keybinding description '%s', that command doesn't exist"), keybind);
@@ -1061,7 +1061,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
             k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
             if ((k == KEY_PRESS) && input_keybinds[i].disabled)
                continue;
-            input_key( i, k, fabs(((double)value)/32767.), 0 );
+            input_key( i, k, FABS(((double)value)/32767.), 0 );
          }
 
          /* Negative axis keybinding. */
@@ -1070,7 +1070,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
             k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
             if ((k == KEY_PRESS) && input_keybinds[i].disabled)
                continue;
-            input_key( i, k, fabs(((double)value)/32767.), 0 );
+            input_key( i, k, FABS(((double)value)/32767.), 0 );
          }
       }
    }
@@ -1259,10 +1259,10 @@ static void input_clickevent( SDL_Event* event )
 
    /* Radar targeting requires raw coordinates. */
    mxr = event->button.x;
-   myr  = gl_screen.rh - event->button.y;
+   myr = gl_screen.rh - event->button.y;
    gui_radarGetPos( &rx, &ry );
    gui_radarGetDim( &rw, &rh );
-   if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
+   if ((mxr > rx) && (mxr <= rx + rw) && (myr > ry) && (myr <= ry + rh)) { /* Radar */
       zoom = 1.;
       gui_radarGetRes( &res );
       x = (mxr - (rx + rw / 2.)) * res + px;
@@ -1303,8 +1303,16 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    AsteroidType *at;
    int pntid, jpid, astid, fieid;
 
-   dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-   p  = pilot_get(pid);
+   /* Don't allow selecting a new target with the right mouse button
+    * (prevents pilots from getting in the way of autonav). */
+   if (event->button.button == SDL_BUTTON_RIGHT) {
+      pid = player.p->target;
+      p = pilot_get(pid);
+      dp = pow2(x - p->solid->pos.x) + pow2(y - p->solid->pos.y);
+   } else {
+      dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
+      p  = pilot_get(pid);
+   }
 
    d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
    rp = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
@@ -1332,7 +1340,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       r  = 0.;
 
    /* Reject pilot if it's too far or a valid asset is closer. */
-   if (dp > pow2(rp) || ((d < pow2(r)) && (dp >  d)))
+   if ((dp > pow2(rp)) || ((d < pow2(r)) && (dp >  d)))
       pid = PLAYER_ID;
 
    if (d > pow2(r)) /* Planet or jump point is too far. */

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Za'lek Hunter-Killer">
+ <general>
+  <license>Heavy Weapon License</license>
+  <mass>4</mass>
+  <price>0</price>
+  <description>This little drone is little more than a guidance computer with bare-bones AI, a propusion system, and a bomb wrapped in an armored shell.</description>
+  <gfx_store>empgrenade</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>empgrenade</gfx>
+  <sound>grenadefire</sound>
+  <sound_hit>grenade</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <duration blowup="armour">33</duration>
+  <thrust>0</thrust>
+  <turn>50</turn>
+  <speed>550</speed>
+  <resist>35</resist>
+  <damage>
+   <type>ion</type>
+   <penetrate>20</penetrate>
+   <physical>200</physical>
+   <disable>11</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

@@ -1,11 +1,11 @@
 --[[
    --
    -- MISSION: Racing Skills 2
-   -- DESCRIPTION: A man asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
+   -- DESCRIPTION: A person asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
    --
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
 
    
 text = {}
@@ -14,18 +14,18 @@ ftitle = {}
 ftext = {}
 
 title[1] = _("Another race")
-text[1] = _([["Hey man, great to see you back. You want to have another race?"]])   
+text[1] = _([["Hey there, great to see you back! You want to have another race?"]])   
 
 title[5] = _("Choose difficulty")
-text[5] = _([["There are two races you can participate in: an easy one, which is like the 1st race we had, or a hard one, with stock ships and smaller checkpoints.  The prize easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]])
+text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]])
 title[6] = _("Hard Mode")
-text[6] = _([["You want a challenge huh? Remember, no outfits are allowed on your Llama or you will not be allowed to race. Let's go have some fun then."]])
+text[6] = _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]])
 
 choice1 = _("Easy")
 choice2 = _("Hard")
 
 title[2] = _("Easy Mode ")
-text[2] = _([["Let's go have some fun then."]])
+text[2] = _([["Let's go have some fun then!"]])
 
 title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
@@ -44,14 +44,14 @@ ftitle[2] = _("You left the race!")
 ftext[2] = _([["Because you left the race, you have been disqualified."]])
 
 ftitle[3] = _("You failed to win the race.")
-ftext[3] = _([[As you congratulate the winner on a great race, the laid back man comes up to you.
+ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
    
 ftitle[4] = _("Illegal ship!")
 ftext[4] = _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]])
 
-NPCname = _("A laid back man")
-NPCdesc = _("You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
+NPCname = _("A laid back person")
+NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
 
 misndesc = _("You're participating in another race!")
 misnreward = _("%s credits")
@@ -72,7 +72,7 @@ chatter[5] = _("Hooyah")
 chatter[6] = _("Next!")
 timermsg = "%s"
 target = {1,1,1,1}
-marketing = _("This race sponsored by Melendez Corporation.  Have you piloted a Melendez lately?")
+marketing = _("This race is sponsored by Melendez Corporation. Problem-free ships for problem-free voyages!")
 positionmsg = _("%s just reached checkpoint %s")
 landmsg = _("%s just landed at %s and finished the race")
 
@@ -86,7 +86,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/male1")
+   misn.setNPC(NPCname, "neutral/unique/laidback")
    misn.setDesc(NPCdesc)
    credits_easy = rnd.rnd(20000, 100000)
    credits_hard = rnd.rnd(200000, 300000)
@@ -116,17 +116,15 @@ function accept ()
 end
 
 function takeoff()
-   if player.pilot():ship():class() ~= "Yacht" then
+   if player.pilot():ship():class() ~= "Yacht" and player.pilot():ship():class() ~= "Luxury Yacht" then
       tk.msg(ftitle[1], ftext[1])
-      abort()
+      misn.finish(false)
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
-         if (("Unicorp Hawk 150 Engine" ~= v:name())
-         and ("Unicorp PT-100 Core System" ~= v:name())
-         and ("Unicorp D-2 Light Plating" ~= v:name())) then
+         if v:name() == "Generic Afterburner" or v:name() == "Hellburner" then
             tk.msg(ftitle[4], ftext[4])
-            abort()
+            misn.finish(false)
          end
       end
    end
@@ -161,22 +159,24 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "soromid", curplanet, "Soromid")
-   racers[2] = pilot.addRaw("Llama", "empire", curplanet, "Empire")
-   racers[3] = pilot.addRaw("Llama", "dvaered", curplanet, "Dvaered")
+   racers[1] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
+   racers[2] = pilot.addRaw("Gawain", "civilian", curplanet, "Civilian")
+   racers[3] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
       racers[2]:addOutfit("Steering Thrusters")
       racers[3]:addOutfit("Improved Stabilizer")
-      else
-      -- basic loadout
+   else
       for i in pairs(racers) do
          racers[i]:rmOutfit("all")
          racers[i]:rmOutfit("cores")
          
          racers[i]:addOutfit("Unicorp PT-100 Core System")
          racers[i]:addOutfit("Unicorp D-2 Light Plating")
-         racers[i]:addOutfit("Unicorp Hawk 150 Engine")
+         local en_choices = {
+            "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
+            "Tricon Zephyr Engine" }
+         racers[i]:addOutfit(en_choices[rnd.rnd(1, #en_choices)])
       end
    end
    for i, j in ipairs(racers) do
@@ -287,12 +287,13 @@ end
 
 function jumpin()
    tk.msg(ftitle[2], ftext[2])
-   abort()
+   misn.finish(false)
 end
 
 function racerland(p)
    player.msg( string.format(landmsg, p:name(),curplanet:name()))
 end
+
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
@@ -301,14 +302,10 @@ function land()
          misn.finish(true)
       else
          tk.msg(ftitle[3], ftext[3])
-         abort()
+         misn.finish(false)
       end
       else
       tk.msg(ftitle[2], ftext[2])
-      abort()
+      misn.finish(false)
    end
-end
-
-function abort ()
-   misn.finish(false)
 end

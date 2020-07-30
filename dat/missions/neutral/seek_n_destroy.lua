@@ -9,71 +9,92 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
-include "pilot/pirate.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "portrait.lua"
+require "pilot/pirate.lua"
 
-clue_title   = _("I know the pilot you're looking at")
+clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}
-clue_text[1] = _("As you ask for information about %s, the pilot answers that this outlaw is supposed to have buisness in %s soon.")
-clue_text[2] = _("%s? Of course I know that scum. I've heard, he has to do in %s. Good luck!")
-clue_text[3] = _("%s owes me 10 credits for dozens of cycles and never paid. The system where you have the more chances to catch this scum is %s.")
-clue_text[4] = _("I have been tracking %s a few times ago, but right now, I have other buisness to do. If I was you, I would go to %s.")
+clue_text[1] = _("You ask for information about %s and the pilot tells you that this outlaw is supposed to have buisness in %s soon.")
+clue_text[2] = _([["%s? Yes, I know that scum. I've heard they like to hang around in %s. Good luck!"]])
+clue_text[3] = _([["%s has owed me 500k credits for dozens of cycles and never paid me back! You can probably catch that thief in %s."]])
+clue_text[4] = _([["If you're looking for %s, I would suggest going to %s and taking a look there; that's where that outlaw was last time I heard."]])
+clue_text[5] = _([["If I was looking for %s, I would look in the %s system. That's probably a good bet."]])
+
 
 dono_title   = _("No clue")
 dono_text    = {}
-dono_text[1] = _("This person never heard of %s. It seems you will have to ask someone else.")
-dono_text[2] = _("This person is also on the track of %s, but does not seem to have more info than you...")
-dono_text[3] = _("%s? No, I've not seen that ship for cycles...")
-dono_text[4] = _("%s? Let me see... No. I have no damn idea where this pilot is right now!")
+dono_text[1] = _("This person has never heard of %s. It seems you will have to ask someone else.")
+dono_text[2] = _("This person is also looking for %s, but doesn't seem to know anything you don't.")
+dono_text[3] = _([["%s? Nope, I haven't seen that person in many cycles at this point."]])
+dono_text[4] = _([["Sorry, I have no idea where %s is."]])
+dono_text[5] = _([["Oh, hell no, I stay as far away from %s as I possibly can."]])
+dono_text[6] = _([["I haven't a clue where %s is."]])
+dono_text[7] = _([["I don't give a damn about %s. Go away."]])
+dono_text[8] = _([["%s? Don't know, don't care."]])
+dono_text[9] = _("When you ask about %s, you are promptly told to get lost.")
+dono_text[10] = _([["I'd love to get back at %s for last cycle, but I haven't seen them in quite some time now."]])
+dono_text[11] = _([["I've not seen %s, but good luck in your search!"]])
+dono_text[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where %s is, though. Sorry!"]])
+dono_text[13] = _([["I used to work with %s. We haven't seen each other since they stole my favorite ship, though."]])
 
 money_title   = _("How much money do you have?")
 money_text    = {}
-money_text[1] = _("If I know %s... It depends, are you ready to pay %s credits to know it?")
-money_text[2] = _("Let's be clear. I know where %s is, but I want to see if you will spend %s credits to know it as well.")
-money_text[3] = _("%s? Of course I know this pilot. Last time, he told me he was heading to... Hey, but I could have you to pay for that info. %s credits, please.")
+money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s credits and I'll tell you where to look; how does that sound?"]])
+money_text[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s credits. What do you say?"]])
+money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s credits. Deal?"]])
+money_text[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s credits should be sufficient."]])
+money_text[5] = _([["You're looking for %s? I tell you what: give me %s credits and I'll tell you. Otherwise, get lost!"]])
 
 IdoPay       = _("Pay the sum")
 IdonnoPay    = _("Give up")
-IkickYourAss = _("Treaten that bastard")
+IkickYourAss = _("Treaten the pilot")
 
 poor_title = _("Not enough money")
-poor_text  = _("It seems you don't have enough money. Too bad.")
+poor_text  = _("You don't have enough money.")
 
 not_scared_title   = _("Not impressed")
 not_scared_text    = {}
-not_scared_text[1] = _("You would never dare attacking me, idiot!")
-not_scared_text[2] = _("The pilot simply sighs and hang up.")
-not_scared_text[3] = _("Was that an attempt to scare me?")
+not_scared_text[1] = _([["As if the likes of you would ever try to fight me!"]])
+not_scared_text[2] = _("The pilot simply sighs and cuts the connection.")
+not_scared_text[3] = _([["What a lousy attempt to scare me."]])
 
-scared_title   = _("You're scary!")
+scared_title   = _("You're intimidating!")
 scared_text    = {}
-scared_text[1] = _("As it becomes clear that it is no problem for you if you have to destroy his ship and seek for infos elsewhere, the pilot tells you that %s is supposed to have buisness in %s soon.")
+scared_text[1] = _("As it becomes clear that you have no problem with blasting a ship to smithereens, the pilot tells you that %s is supposed to have buisness in %s soon.")
+scared_text[2] = _([["Ok, ok, I'll tell you! You can find %s in the %s system! Leave me alone!"]])
 
 cold_title   = _("Your track is cold")
 cold_text    = {}
-cold_text[1] = _("As you ask for information about %s, the pilot answers that this outlaw has already been killed by someone other.")
+cold_text[1] = _("When you ask for information about %s, they tell you that this outlaw has already been killed by someone else.")
+cold_text[2] = _([["Didn't you hear? That outlaw's dead. Got blown up in an asteroid field is what I heard."]])
+cold_text[3] = _([["Ha ha, you're still looking for that outlaw? You're wasting your time; they've already been taken care of."]])
+cold_text[4] = _([["Ah, sorry, that target's already dead. Blown to smithereens by a mercenary. I saw the scene, though! It was glorious."]])
 
 noinfo_title   = _("I won't tell you")
 noinfo_text    = {}
-noinfo_text[1] = _("The pilot ask you to give him one good reason to give you that information.")
-noinfo_text[2] = _("What if I know where your target is and I don't want to say?")
+noinfo_text[1] = _("The pilot asks you to give them one good reason to give you that information.")
+noinfo_text[2] = _([["What if I know where your target is and I don't want to tell you, eh?"]])
+noinfo_text[3] = _([["Piss off! I won't tell anything to the likes of you!"]])
+noinfo_text[4] = _([["And why exactly should I give you that information?"]])
+noinfo_text[5] = _([["And why should I help you, eh? Get lost!"]])
 
 
 advice_title = _("You're looking for someone")
-advice_text  = _([["Hi there", says the pilot. "You seem to be lost, what happends to you?". As you answer that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions in the bar and second way is to ask pilots in space. By the way, pilots of the same faction of your target are most likely to have information, but won't give it easily. Good luck with your task!" ]])
+advice_text  = _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction of your target are most likely to have information, but won't give it easily. Good luck with your task!"]])
 
 thank_comm    = {}
-thank_comm[1] = _("It was a pleasure to deal with you!")
-thank_comm[2] = _("Thank you and good bye!")
-thank_comm[3] = _("See you later!")
-thank_comm[4] = _("Good luck!")
+thank_comm[1] = _("Hehe, pleasure to deal with you!")
+thank_comm[2] = _("Thank you and goodbye!")
+thank_comm[3] = _("See ya later!")
+thank_comm[4] = _("Haha, good luck!")
 
 not_scared_comm    = {}
-not_scared_comm[1] = _("Mummy, I'm so scared!")
+not_scared_comm[1] = _("Mommy, I'm so scared! Har har har!")
 not_scared_comm[2] = _("Haw haw haw! you're ridiculous!")
-not_scared_comm[3] = _("Just come here if you dare!")
-not_scared_comm[4] = _("You're so pityful!")
+not_scared_comm[3] = _("Just come at me if you dare!")
+not_scared_comm[4] = _("You're so pitiful!")
 
 ambush_comm    = {}
 ambush_comm[1] = _("You want to meet %s? Well he doesn't want to meet you!")
@@ -82,22 +103,22 @@ ambush_comm[3] = _("Why are you following %s?")
 ambush_comm[4] = _("Quit following %s!")
 ambush_comm[5] = _("Your quest for %s ends here!")
 ambush_comm[6] = _("You ask too many questions about %s!")
-ambush_comm[7] = _("You were not supposed to get on the way of %s!")
+ambush_comm[7] = _("You were not supposed to get on the trail of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
-breef_text = _("%s is a %s pilot. The deeds of this pilot caused him to be condamned to death by a civil court. As a consequence, any citizen who will find and neutralize %s by any necessary means will be rewarded by %s credits. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no more there at this time, however, this system is the best place to start to investigate.")
+breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
 
 flee_title = _("You're not going to kill anybody like that")
-flee_text = _("You had a chance to neutralize %s, and you waste it! Now, you have to start all over! Maybe some other pilots in %s know where your target is going to show up again.")
+flee_text = _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going.")
 
 Tflee_title = _("Target ran away")
-Tflee_text = _("That was close, unfortunately, %s ran away. Maybe some other pilots in this system know where your target is going to show up again.")
+Tflee_text = _("That was close, but unfortunately, %s ran away. Maybe some other pilots in this system know where your target is heading.")
 
 pay_title   = _("Good work, pilot!")
 pay_text    = {}
 pay_text[1] = _("An officer hands you your pay.")
-pay_text[2] = _("No one will miss this outlaw pilot! The bounty has been deposited on your account.")
+pay_text[2] = _("No one will miss this outlaw pilot! The bounty has been deposited into your account.")
 
 osd_title = _("Seek and Destroy")
 osd_msg    = {}
@@ -108,12 +129,12 @@ osd_msg[3] = _("Land on any %s planet and collect your bounty")
 osd_msg["__save"] = true
 
 npc_desc = _("Shifty Person")
-bar_desc = _("This person might be an outlaw, a pirate... Or even worse: a bounty hunter. Anyway, it's the kind of person nobody wants to get close to, except if one is seeking for informations on wanted people.")
+bar_desc = _("This person might be an outlaw, a pirate, or even worse, a bounty hunter. You normally wouldn't want to get close to this kind of person, but they may be a useful source of information.")
 
 -- Mission details
 misn_title  = _("Seek And Destroy Mission, starting in %s")
 misn_reward = _("%s credits")
-misn_desc   = _("A %s pilot, known as %s is wanted dead or alive by %s authorities. Track of this ship has been lost in the %s system.")
+misn_desc   = _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
 
 function create ()
    paying_faction = planet.cur():faction()
@@ -132,7 +153,7 @@ function create ()
       misn.finish( false )
    end
 
-   local systems = getsysatdistance( system.cur(), 1, 3,
+   local systems = getsysatdistance( system.cur(), 1, 5,
       function(s)
          local p = s:presences()[target_faction:name()]
          return p ~= nil and p > 0
@@ -207,7 +228,7 @@ function accept ()
    increment = false
    last_sys = system.cur()
    tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, numstring(credits), paying_faction:name(), mysys[1]:name() ) )
-   jumphook = hook.jumpin( "jumpin" )
+   jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
 
@@ -217,7 +238,8 @@ function accept ()
    misn.osdCreate( osd_title, osd_msg )
 end
 
-function jumpin ()
+function enter ()
+   hailed = {}
 
    -- Increment the target if needed
    if increment then
@@ -225,8 +247,7 @@ function jumpin ()
       cursys = cursys + 1
    end
 
-   if system.cur() == mysys[cursys] then
-
+   if stage <= 2 and system.cur() == mysys[cursys] then
       -- This system will contain the pirate
       -- cursys > pisys means the player has failed once (or more).
       if cursys == pisys or (cursys > pisys and rnd.rnd() > .5) then
@@ -234,7 +255,6 @@ function jumpin ()
       end
 
       if stage == 0 then  -- Clue system
-         hailed = {}
          if not var.peek("got_advice") then -- A bountyhunter who explains how it works
             var.push( "got_advice", true )
             spawn_advisor ()
@@ -247,9 +267,13 @@ function jumpin ()
          
          -- Get the position of the target
          jp  = jump.get(system.cur(), last_sys)
-         x = 6000 * rnd.rnd() - 3000
-         y = 6000 * rnd.rnd() - 3000
-         pos = jp:pos() + vec2.new(x,y)
+         if jp ~= nil then
+            x = 6000 * rnd.rnd() - 3000
+            y = 6000 * rnd.rnd() - 3000
+            pos = jp:pos() + vec2.new(x,y)
+         else
+            pos = nil
+         end
 
          -- Spawn the target
          pilot.toggleSpawn( false )
@@ -273,7 +297,6 @@ function jumpin ()
             target_ship:control()
             target_ship:runaway(player.pilot())
          end
-
       end
    end
    last_sys = system.cur()
@@ -300,7 +323,18 @@ function trigger_ambush()
    ambush[1]:setHostile()
    ambush[2]:setHostile()
    ambush[3]:setHostile()
+   ambush[1]:control()
+   ambush[2]:control()
+   ambush[3]:control()
+   ambush[1]:attack(player.pilot())
+   ambush[2]:attack(player.pilot())
+   ambush[3]:attack(player.pilot())
 
+   msg = hook.timer( 1000, "ambust_msg" )
+end
+
+-- Enemies explain that they are ambushing the player
+function ambust_msg()
    ambush[1]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
    ambush[2]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
    ambush[3]:comm(ambush_comm[rnd.rnd(1,#ambush_comm)]:format(name))
@@ -361,10 +395,13 @@ function hail ()
          elseif tells then
             tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
+            target:setHostile( false )
          else
             space_clue()
          end
       end
+
+      player.commClose()
    end
 end
 
@@ -403,6 +440,7 @@ function space_clue ()
             player.pay(-price)
             tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
+            target:setHostile( false )
             target:comm(thank_comm[rnd.rnd(1,#thank_comm)])
          else
             tk.msg( poor_title, poor_text )
@@ -438,6 +476,9 @@ end
 function clue_attacked( p, attacker )
    -- Target was hit sufficiently to get more talkative
    if attacker == player.pilot() and p:health() < 100 then
+      p:setHostile( false )
+      p:control()
+      p:runaway(player.pilot())
       tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
       next_sys()
       hook.rm(attack)
@@ -478,8 +519,6 @@ function land ()
 
    -- Player seek for a clue
    elseif system.cur() == mysys[cursys] and stage == 0 then
-      portrait = {"neutral/female1", "neutral/male1", "neutral/thief1", "neutral/thief2", "neutral/thief3" }
-
       if rnd.rnd() < .3 then -- NPC does not know the target
          know = 0
       elseif rnd.rnd() < .5 then -- NPC wants money
@@ -488,7 +527,7 @@ function land ()
       else -- NPC tells the clue
          know = 2
       end
-      mynpc = misn.npcAdd("clue_bar", npc_desc, portrait[rnd.rnd(1, #portrait)], bar_desc)
+      mynpc = misn.npcAdd("clue_bar", npc_desc, getPortrait("Pirate"), bar_desc)
 
    -- Player wants to be paid
    elseif planet.cur():faction() == paying_faction and stage == 4 then

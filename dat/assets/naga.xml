@@ -26,10 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Naga is a purely aquatic planet. The land closest to the surface is under more than a mile of water. The planet is teeming with life of mind-bogling variety and type. The planets scientific and aesthetic value makes it one of the most favored Za'lek worlds.</description>
   <bar>This bar is built on one of the upper decks of the underwater cities, with the entire ceiling being a window out into Naga's oceans. The sight is nothing short of breathtaking.</bar>
  </general>

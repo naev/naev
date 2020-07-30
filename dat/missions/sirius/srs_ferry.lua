@@ -22,8 +22,8 @@
 --
 --]]
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
 misn_desc = _("%s in the %s system requests transport to %s.")
@@ -97,7 +97,7 @@ no_ship_p3b = _("\"I'm sorry. Your price is reasonable, but piety is of greater 
 -- If you change ships mid-journey
 change_ship_t = _("Altering the deal")
 change_ship = {}
-change_ship[1] = _("On landing, the passenger gives you a brief glare and remarks, \n\"I had paid for transportation in a Sirian ship; this alternate arrangement is quite disappointing.\"\nThey hand you %d credits, but it's definitely less than you were expecting.")
+change_ship[1] = _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you %s credits, but it's definitely less than you were expecting.")
 change_ship[2] = _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!")
 
 --=Landing=--
@@ -116,9 +116,9 @@ ferry_land_p2[1] = _("%s bows briefly in gratitude, and silently places the agre
 ferry_land_p2[2] = _("%s crisply counts out your credits, and nods a momentary farewell.")
 
 ferry_land_p3 = {}
-ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of %d credits.")
-ferry_land_p3[1] = _("%s counts out %d credits with pursed lips, and walks off before you have time to say anything.")
-ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %d credits down on the seat, with a look suggesting they hardly think you deserve that much.")
+ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of %s credits.")
+ferry_land_p3[1] = _("%s counts out %s credits with pursed lips, and walks off before you have time to say anything.")
+ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %s credits down on the seat, with a look suggesting they hardly think you deserve that much.")
 
 accept_title = _("Mission Accepted")
 
@@ -131,10 +131,10 @@ wrongplanet_msg = _("You drop the upset pilgrim off at the nearest spaceport.")
 
 osd_title = _("Pilgrimage transport")
 osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s.")
-osd_msg[2] = _("You have %s remaining.")
-osd_msg1 = _("Fly to %s in the %s system before %s.")
-osd_msg2 = _("You have %s remaining.")
+osd_msg[1] = _("Fly to %s in the %s system before %s")
+osd_msg[2] = _("You have %s remaining")
+osd_msg1 = _("Fly to %s in the %s system before %s")
+osd_msg2 = _("You have %s remaining")
 
 abort_t = _("Passenger transport aborted")
 abort_p = _("Informing the pilgrim that their flight to %s has been canceled, you promise to drop them off at the nearest planet.")
@@ -364,7 +364,7 @@ function land()
         if wants_sirian and not has_sirian_ship then
             change = 1  -- Bad: they wanted a Sirian ship and you switched on them
             reward = reward / (rank+1.5)
-            tk.msg(change_ship_t, change_ship[change]:format(reward) )
+            tk.msg( change_ship_t, change_ship[change]:format( numstring(reward) ) )
             player.pay(reward)
             misn.finish(true)
         elseif not wants_sirian and has_sirian_ship then
@@ -382,7 +382,7 @@ function land()
         else
             -- You were late
             reward = reward / (rank + 1)
-            tk.msg(ferry_land_late, ferry_land_p3[rank]:format( ferry_land_p1[rank], reward))
+            tk.msg(ferry_land_late, ferry_land_p3[rank]:format( ferry_land_p1[rank], numstring(reward)))
         end
 
         if change == 2 then

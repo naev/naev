@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 misn_title  = _("FLF: %s Dvaered patrol in %s")
 misn_reward = _("%s credits")
@@ -101,7 +101,7 @@ function create ()
    credits = ships * 30000 - flfships * 1000
    if has_vigilence then credits = credits + 120000 end
    if has_goddard then credits = credits + 270000 end
-   credits = credits * system.cur():jumpDist( missys ) / 3
+   credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
    local desc

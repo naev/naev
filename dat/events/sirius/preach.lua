@@ -1,13 +1,12 @@
 --Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 --Sudarshan S <ssoxygen@users.sf.net>
 
-include("fleethelper.lua")
+require("fleethelper.lua")
 
 commtitle=_("The preaching begins...")
 commtext=_([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
-"Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
-
-You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]])
+    "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
+    You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]])
 
 althoughEnemy={
 _("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
@@ -365,7 +364,7 @@ function cleanup()
    player.pilot():control(false)
    camera.set()
    player.cinematics(false)
-   evt.finish()
+   evt.finish(true)
 end
 
 --oops, it seems the preacher died. End gracefully
@@ -384,7 +383,7 @@ function badCleanup()
       follower=survivors[rnd.rnd(1,#survivors)]
       follower:broadcast(preacherDead[rnd.rnd(1,#preacherDead)],true)
    end
-   evt.finish()
+   evt.finish(false)
 end
 
 --the preacher has landed. Land all his followers too
@@ -396,7 +395,7 @@ function landCleanup()
          j:land(target)
       end
    end
-   evt.finish()
+   evt.finish(true)
 end
 
 --the preacher has jumped. Jump all his followers too
@@ -409,5 +408,5 @@ function jumpCleanup()
          j:hyperspace(target,true) --attack back as they move away?
       end
    end
-   evt.finish()
+   evt.finish(true)
 end

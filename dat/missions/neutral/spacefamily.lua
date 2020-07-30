@@ -3,14 +3,18 @@
 -- See dat/events/neutral/shipwreck.lua
 --]]
 
+require "jumpdist.lua"
+require "dat/missions/neutral/common.lua"
+
+
 shipname = _("August") --The ship will have a unique name
 
 title = {}
 text = {}
 directions = {}
 title[1] = _("Shipwrecked space family")
-text[1] = _([[The airlock opens, and you are greeted by a nervous-looking man, ditto woman and three neurotic children.
-    "Thank god you are here," the man says. "I don't know how much longer we could've held out. They left us for dead, you know. No fuel, no food and only auxiliary power to sustain us." He then begins to incoherently tell you how much his group has suffered in the past few hours, but you cut him short, not willing to put up with his endless babbling.
+text[1] = _([[The airlock opens, and you are greeted by a nervous-looking man, a shy woman, and three neurotic children.
+    "Thank god you are here," the man says. "I don't know how much longer we could've held out. They left us for dead, you know. No fuel, no food and only auxiliary power to sustain us." He then begins to incoherently tell you how much his group has suffered in the past few periods, but you cut him short, not willing to put up with his endless babbling.
     With a few to-the-point questions you learn that the man's name is Harrus, and that he and his wife and children live, or at least used to live, aboard their trading vessel. "It was a good life, you know," Harrus tells you. "You get to see the galaxy, meet people and see planets, and all that while working from home because, haha, you take your home with you!"
     You can't help but glance at Harrus' kids, who have begun enthusiastically stampeding through your ship, pressing any buttons low enough for them to reach, despite their mother's hopeless attempts to keep them under control.]])
 text[2] = _([[Harrus is about to launch into another anecdote about his existence as a trader, but you manage to forestall him. You soon learn that his family's lifestyle has come to an abrupt change at the hands of a minor gang of pirates. Though the %s had some weaponry and shielding systems, the attackers were too much for a single cargo ship.
@@ -28,7 +32,7 @@ directions[2] = _([[Harrus steps out of your ship and takes a look around the sp
     You heave a sigh, and proceed to the registration desk to get the docking formalities out of the way.]])
 directions[3] = _([["The sky! Have you LOOKED at it?"
     Harrus rounds on you with a furious expression. Your keen understanding of the human body language tells you he isn't happy. You thought he might be satisfied with the state of the spacedock, since it's kept in prime condition, and indeed he was. That changed as soon as he looked up.
-    "It's com-plete-ly the wrong colour," Harrus fumes. "It's a mockery of our standards of living, and it's right there overhead! Do you want my children to grow up believing the sky is supposed to look like, like... like THAT?" Harrus again looks up at the heavens that offend him so. "No, captain, my patience is at an end. I expect you to take me and my family to %s in the %s system. We've got relatives there who will take us in. I will waste my time with this pointless endeavour no longer!" 
+    "It's com-plete-ly the wrong color!" Harrus fumes. "It's a mockery of our standards of living, and it's right there overhead! Do you want my children to grow up believing the sky is supposed to look like, like... like THAT?" Harrus again looks up at the heavens that offend him so. "No, captain, my patience is at an end. I expect you to take me and my family to %s in the %s system. We've got relatives there who will take us in. I will waste my time with this pointless endeavour no longer!" 
     Before you get a chance at making a snappy retort, Harrus storms back to his (your) quarters, leaving you to either vent your anger on his wife, who is hovering nearby, or keep it to yourself. Since the poor woman has done nothing wrong, you grimly return to the bridge.]])
 title[4] = _("Rid of them at last")
 text[3] = _([[You land at your final stop in your quest to take the space family home, and not a moment too soon for both you and Harrus. Harrus stomps off your ship without so much as a greeting, his wife and children in tow, and you are just as happy to see them gone.
@@ -42,7 +46,7 @@ misn_title = _("The Space Family")
 misn_reward = _("A clear conscience.")
 misn_desc = {}
 misn_desc[1] = _("A shipwrecked space family has enlisted your aid. Can you take them to safety?")
-misn_desc[2] = _("Take the space family to %s (%s system).")
+misn_desc[2] = _("Take the space family to %s in the %s system")
 
 -- Aborted mission
 msg_abortTitle = _("A parting of ways")
@@ -57,8 +61,7 @@ osd_msg[1]   = {
    _("A shipwrecked space family has enlisted your aid. Can you take them to safety?")
 }
 
-
-include("dat/scripts/jumpdist.lua")
+log_text = _([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship, the man's wife leaving a generous payment for the trouble.]])
 
 
 function create ()
@@ -87,7 +90,6 @@ function create ()
    destplanet = getlandable(destsys) -- pick a landable planet in the destination system
    destplanetname = destplanet:name()
    tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-   misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
    misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
    misn_marker = misn.markerAdd( destsys, "low" )
 
@@ -124,6 +126,7 @@ function land()
          tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
          player.pay(500000)
          misn.cargoJet(carg_id)
+         addMiscLog( log_text )
          misn.finish(true)
       else
          nextstop = nextstop + 1
@@ -135,7 +138,6 @@ function land()
          destplanet = getlandable(destsys) -- pick a landable planet in the destination system
          destplanetname = destplanet:name()
          tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-         misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
          misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
          misn.markerMove( misn_marker, destsys )
       end

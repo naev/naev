@@ -1,8 +1,12 @@
 --[[
--- This is the first mission in the crazy baron string.
+-- This is the first mission in the baron string.
 --]]
 
--- localization stuff, translators would work here
+require "portrait.lua"
+require "dat/missions/baron/common.lua"
+require "dat/missions/neutral/common.lua"
+
+
 sysname1 = "Darkstone"
 sysname2 = "Ingot"
 planetname = "Varia"
@@ -30,7 +34,7 @@ text[7] = _([[You smirk at that. You know from experience that things seldom 'go
 text[8] = _([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet %s.]])
 
 title[9] = _("Cloak and dagger")
-text[9] = _([[The three shifty-looking patrons regard you with apprehension as you approach their table. Clearly they don't know who their contact is supposed to be. You decide to be discreet, asking them if they've ever heard of a certain Sauterfeldt. Upon hearing this, the trio visibly relaxes. They tell you that indeed they know the man you speak of, and that they have something of his in their possession. Things proceed smoothly from that point, and several minutes later you are back at your ship, preparing it for takeoff while you wait for the agents to bring you your cargo.]])
+text[9] = _([[The three shifty-looking patrons regard you with apprehension as you approach their table. Clearly they don't know who their contact is supposed to be. You decide to be discreet, asking them if they've ever heard of a certain Sauterfeldt. Upon hearing this, the trio visibly relaxes. They tell you that indeed they know the man you speak of, and that they have something of his in their possession. Things proceed smoothly from that point, and several hectoseconds later you are back at your ship, preparing it for takeoff while you wait for the agents to bring you your cargo.]])
 
 text[10] = _([[You're halfway through your pre-flight security checks when the three appear in your docking hangar. They have a cart with them on which sits a rectangular chest as tall as a man and as long as two. Clearly this holopainting is fairly sizeable. As you watch them from your bridge's viewport, you can't help but wonder how they managed to get something that big out of a Dvaered museum unnoticed.]])
 
@@ -44,7 +48,7 @@ text[13] = _([[Your comm is answered by a communications officer on the bridge o
 title[14] = _("No bad deed goes unrewarded")
 text[14] = _([[When you arrive at your ship's airlock, the chest containing the Dvaered holopainting is already being carted onto the Pinnacle by a pair of crewmen. "You'll be wanting your reward, eh? Come along", one of them yells at you. They both chuckle and head off down the corridor.]])
 
-text[15] = _([[You follow the crewmen as they push the cart through the main corridor of the ship. Soon you arrive at a door leading to a large, luxurious compartment. You can tell at a glance that these are Baron Sauterfeldt's personal quarters. The Baron himself is present. He is a fat man, wearing a tailored suit that manages to make him look stately rather than pompous, a monocle and several rings on each finger. In a word, the Baron has a taste for the extravagant.]])
+text[15] = _([[You follow the crewmen as they push the cart through the main corridor of the ship. Soon you arrive at a door leading to a large, luxurious compartment. You can tell at a glance that these are Baron Sauterfeldt's personal quarters. The Baron himself is present. He is a large man, wearing a tailored suit that manages to make him look stately rather than pompous, a monocle, and several rings on each finger. In a word, the Baron has a taste for the extravagant.]])
 
 text[16] = _([["Ah, my holopainting," he coos as the chest is being carried into his quarters. "At last, I've been waiting forever." The Baron does not seem to be aware of your presence at all. He continues to fuss over the holopainting even as his crewman strip away the chest and lift the frame up to the wall.]])
 
@@ -82,6 +86,10 @@ osd_title = _("Baron")
 osd_msg[1] = _("Fly to the %s system and land on planet %s")
 osd_msg[2] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
 
+log_text_succeed = _([[You helped some selfish baron steal a Dvaered holopainting and were paid a measly sum of credits.]])
+log_text_refuse = _([[You were offered a sketchy-looking job by a nondescript pilot, but you angrily refused to accept the job. It seems whoever the pilot worked for won't be contacting you again.]])
+
+
 function create ()
    missys = {system.get("Darkstone")}
    if not misn.claim(missys) then
@@ -100,6 +108,7 @@ function create ()
    else
       tk.msg(angrytitle, angrytext)
       var.push("baron_hated", true)
+      addMiscLog( log_text_refuse )
       abort()
    end
 end
@@ -126,15 +135,15 @@ function accept()
    stopping = false
    
    hook.land("land")
-   hook.jumpin("jumpin")
+   hook.enter("jumpin")
    hook.takeoff("takeoff")
 end
 
 function land()
    if planet.cur() == planet.get(planetname) and not talked then
-      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), "neutral/thief1", npc_desc)
-      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), "neutral/thief2", npc_desc)
-      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), "neutral/thief3", npc_desc)
+      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
+      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
+      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
    end
 end
 
@@ -184,6 +193,7 @@ function board()
    pinnacle:changeAI("flee")
    pinnacle:setHilight(false)
    pinnacle:setActiveBoard(false)
+   baron_addLog( log_text_succeed )
    misn.finish(true)
 end
 

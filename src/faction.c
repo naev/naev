@@ -666,7 +666,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 
    /* Run hook if necessary. */
    delta = faction->player - old;
-   if (fabs(delta) > 1e-10) {
+   if (FABS(delta) > 1e-10) {
       hparam[0].type    = HOOK_PARAM_FACTION;
       hparam[0].u.lf    = f;
       hparam[1].type    = HOOK_PARAM_NUMBER;
@@ -1359,7 +1359,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 static void faction_parseSocial( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
-   char *buf;
    Faction *base;
    int mod;
    int mem;

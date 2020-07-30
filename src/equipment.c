@@ -33,6 +33,8 @@
 #include "slots.h"
 #include "map.h"
 #include "ndata.h"
+#include "hook.h"
+#include "land_takeoff.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -219,7 +221,6 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
  */
 void equipment_open( unsigned int wid )
 {
-   int i;
    int w, h;
    int sw, sh;
    int ow, oh;
@@ -227,7 +228,6 @@ void equipment_open( unsigned int wid )
    int ew, eh;
    int cw, ch;
    int x, y;
-   GLfloat colour[4*4];
    const char *buf;
 
    /* Mark as generated. */
@@ -301,7 +301,7 @@ void equipment_open( unsigned int wid )
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, h+y, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+         100, h+y, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
    x += 100;
    window_addText( wid, x, y,
          w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
@@ -659,25 +659,6 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          }
          else if (lst[i].outfit != NULL) {
             top = 1;
-            if (outfit_isLauncher(lst[i].outfit) ||
-                  (outfit_isFighterBay(lst[i].outfit))) {
-               if ((lst[i].u.ammo.outfit == NULL) ||
-                     (lst[i].u.ammo.quantity == 0)) {
-                  if (outfit_isFighterBay(lst[i].outfit))
-                     display = _("Bay empty");
-                  else
-                     display = _("Out of ammo");
-                  c = &cRed;
-               }
-               else if (lst[i].u.ammo.quantity + lst[i].u.ammo.deployed <
-                     outfit_amount(lst[i].outfit)) {
-                  if (outfit_isFighterBay(lst[i].outfit))
-                     display = _("Bay low");
-                  else
-                     display = _("Low ammo");
-                  c = &cYellow;
-               }
-            }
          }
 
          if (display != NULL) {
@@ -812,7 +793,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
-            _("\n%.0f Tons"),
+            ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
    /* Draw the text. */
@@ -842,7 +823,6 @@ static void equipment_renderShip( double bx, double by,
    double pw, ph;
    double w, h;
    Vector2d v;
-   GLshort vertex[2*4];
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -950,9 +930,9 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if it exists. */
          exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
          /* Get the level of the selection. */
-         if (event->button.button== SDL_BUTTON_LEFT)
+         if (event->button.button == SDL_BUTTON_LEFT)
             level = 0;
-         else if (event->button.button== SDL_BUTTON_RIGHT)
+         else if (event->button.button == SDL_BUTTON_RIGHT)
             level = 1;
          else
             return 0; /* We ignore this type of click. */
@@ -1077,7 +1057,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 {
    int ret;
    Outfit *o, *ammo;
-   int q;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -1227,9 +1206,6 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
  */
 void equipment_addAmmo (void)
 {
-   int i;
-   Outfit *o, *ammo;
-   int q;
    Pilot *p;
 
    /* Get player. */
@@ -1554,7 +1530,7 @@ static void equipment_genOutfitList( unsigned int wid )
             p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
          if ((o->mass > 0.) && (p < l))
             snprintf( &alt[i][p], l-p,
-                  _("\n%.0f Tons"),
+                  _("\n%.0f Tonnes"),
                   mass );
       }
 
@@ -1615,7 +1591,6 @@ void equipment_updateShips( unsigned int wid, char* str )
    char *shipname;
    Pilot *ship;
    char *nt;
-   credits_t price;
    int onboard;
    int cargo;
 
@@ -1668,8 +1643,8 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%s\a0"),
          /* Generic. */
       ship->name,
-      ship->ship->name,
-      ship_class(ship->ship),
+      _(ship->ship->name),
+      _(ship_class(ship->ship)),
       buf2,
       /* Movement. */
       ship->solid->mass,
@@ -1809,6 +1784,8 @@ static void equipment_changeShip( unsigned int wid )
    toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
    if (widget_exists(wid, EQUIPMENT_FILTER))
       filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
+   else
+      filtertext = NULL;
 
    /* Swap ship. */
    player_swapShip( shipname );
@@ -1929,6 +1906,9 @@ static void equipment_sellShip( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[ECON_CRED_STRLEN], *name;
    credits_t price;
+   Pilot *p;
+   Ship *s;
+   HookParam hparam[3];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
@@ -1944,6 +1924,10 @@ static void equipment_sellShip( unsigned int wid, char* str )
          _("Are you sure you want to sell your ship %s for %s credits?"), shipname, buf))
       return;
 
+   /* Store ship type. */
+   p = player_getShip( shipname );
+   s = p->ship;
+
    /* Sold. */
    name = strdup(shipname);
    player_modCredits( price );
@@ -1954,6 +1938,16 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Display widget. */
    dialogue_msg( _("Ship Sold"), _("You have sold your ship %s for %s credits."), name, buf );
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = s->name;
+   hparam[1].type    = HOOK_PARAM_STRING;
+   hparam[1].u.str   = name;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_sell", hparam );
+   if (land_takeoff)
+      takeoff(1);
    free(name);
 }
 

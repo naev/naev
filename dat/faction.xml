@@ -22,6 +22,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -37,6 +38,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -52,6 +54,24 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
+   <enemy>Proteron Dissident</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Proteron Dissident</name>
+  <display>Civilian</display>
+  <invisible />
+  <player>0</player>
+  <colour>black</colour>
+  <spawn>proteron_dissident</spawn>
+  <standing>static</standing>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
+   <enemy>Proteron</enemy>
   </enemies>
  </faction>
  <faction>
@@ -82,6 +102,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -98,6 +119,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -110,6 +132,9 @@
   <spawn>pirate</spawn>
   <standing>pirate</standing>
   <equip>pirate</equip>
+  <allies>
+   <ally>Wanted Pirate</ally>
+  </allies>
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
@@ -124,8 +149,9 @@
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
+   <enemy>Proteron Dissident</enemy>
    <enemy>Thurion</enemy>
-   <enemy>Nasin</enemy>
+   <enemy>Comingout_associates</enemy>
   </enemies>
  </faction>
  <faction>
@@ -183,6 +209,7 @@
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -217,6 +244,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -250,6 +278,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Nasin</enemy>
+   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -267,6 +296,32 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Wanted Pirate</name>
+  <display>Pirate</display>
+  <static />
+  <invisible />
+  <logo>pirate</logo>
+  <longname>Galactic Pirates</longname>
+  <player>-100</player>
+  <colour>red</colour>
+  <standing>static</standing>
+  <equip>pirate</equip>
+  <allies>
+   <ally>Pirate</ally>
+  </allies>
+  <enemies>
+   <enemy>Civilian</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Collective</enemy>
+   <enemy>Sirius</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Proteron</enemy>
+   <enemy>Proteron Dissident</enemy>
   </enemies>
  </faction>
  <faction>
@@ -442,7 +497,6 @@
   <player>0</player>
   <enemies>
    <enemy>Sirius</enemy>
-   <enemy>Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -453,6 +507,7 @@
   <player>70</player>
   <standing>static</standing>
   <enemies>
+   <enemy>Pirate</enemy>
    <enemy>Comingout_thugs</enemy>
   </enemies>
  </faction>

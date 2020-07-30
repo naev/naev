@@ -23,6 +23,7 @@
 #include "dev_system.h"
 #include "unidiff.h"
 #include "dialogue.h"
+#include "economy.h"
 #include "tk/toolkit_priv.h"
 #include "ndata.h"
 #include "nfile.h"
@@ -714,6 +715,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
  */
 static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
 {
+   (void) selected;
    double tx, ty, z, r, rr;
 
    /* Inits. */
@@ -956,7 +958,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   for (j=0; j<sysedit_nselect; j++) {
                      if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                         sysedit_dragSel   = 1;
-			sysedit_tsel      = sel;
+                        sysedit_tsel      = sel;
 
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
@@ -1252,7 +1254,7 @@ static void sysedit_editPnt( void )
    y = -40;
    nsnprintf( buf, sizeof(buf), _("Name: ") );
    w = gl_printWidthRaw( NULL, buf );
-   window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, &cBlack, buf );
    nsnprintf( buf, sizeof(buf), "%s", p->name );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
    window_addButton( wid, -20, y - gl_defFont.h/2. + BUTTON_HEIGHT/2., bw, BUTTON_HEIGHT, "btnRename",
@@ -1262,7 +1264,7 @@ static void sysedit_editPnt( void )
 
    y -= gl_defFont.h + 5;
 
-   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, &cDConsole, _("Faction: ") );
+   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, &cBlack, _("Faction: ") );
    nsnprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : _("None") );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, &cBlack, buf );
    y -= gl_defFont.h + 5;
@@ -1408,7 +1410,7 @@ static void sysedit_editJump( void )
    y = -40;
    nsnprintf( buf, sizeof(buf), _("Target: ") );
    w = gl_printWidthRaw( NULL, buf );
-   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, &cBlack, buf );
    nsnprintf( buf, sizeof(buf), "%s", j->target->name );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
 

@@ -1,96 +1,49 @@
--- Master tutorial script.
--- This script allows the player to choose a tutorial module to run, or return to the main menu.
+--[[
 
--- localization stuff, translators would work here
-menutitle = _("Tutorial Menu")
-menutext = _("Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:")
+   Tutorial Event
 
-menuall = _("Play All")
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-menubasic      = _("Tutorial: Basic Operation")
-menudiscover   = _("Tutorial: Exploration and Discovery")
-menuinterstellar = _("Tutorial: Interstellar Flight")
-menubasiccombat = _("Tutorial: Basic Combat")
-menumisscombat = _("Tutorial: Missile Combat")
-menuheat       = _("Tutorial: Heat")
-menuaoutfits   = _("Tutorial: Activated Outfits")
-menudisable    = _("Tutorial: Disabling")
-menuplanet     = _("Tutorial: The Planetary Screen")
-menutrade      = _("Tutorial: Trade")
-menumissions   = _("Tutorial: Missions and Events")
-menucomms      = _("Tutorial: Communications")
-menux          = _("Quit to Main Menu")
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-function create()
-    -- Set defaults just in case.
-    local pp = player.pilot()
-    player.teleport("Mohawk")
-    player.msgClear()
-    player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
-    player.rmOutfit("all")
-    pp = player.pilot()
-    pp:rmOutfit("all") 
-    pp:addOutfit("Milspec Orion 2301 Core System", 1, true)
-    pp:addOutfit("Nexus Dart 300 Engine", 1, true)
-    pp:addOutfit("S&K Light Combat Plating", 1, true)
-    pp:setEnergy(100)
-    pp:setHealth(100, 100)
-    player.refuel()
-    player.cinematics(true, { no2x = true })
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    pp:setPos(vec2.new(0, 0))
-    pp:setVel(vec2.new(0, 0))
-    pp:setHealth(100, 100)
-    pp:control(false)
-    pp:setNoLand(false)
-    pp:setNoJump(false)
-    
-    system.get("Mohawk"):setKnown(false, true)
-    system.get("Cherokee"):setKnown(false, true)
-    system.get("Iroquois"):setKnown(false, true)
-    system.get("Navajo"):setKnown(false, true)
-    system.get("Sioux"):setKnown(false, true)
+--]]
 
-    -- List of all tutorial modules, in order of appearance.
-    -- HACK: Add "menux" to the end of this table, because the unpack() function has to be at the end of the tk.choice call.
-    local modules = {menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuheat, menuaoutfits, menudisable, menuplanet, menumissions, menux}
 
-    if var.peek("tut_next") then
-        if var.peek("tut_next") == #modules-1 then
-            var.pop("tut_next")
-        else
-            var.push("tut_next", var.peek("tut_next") + 1)
-            startModule(modules[var.peek("tut_next")])
-        end
-    end
+time_dilation_text = _([[The person who sells you the %s looks at your record and pauses. "Ah, I see you haven't owned a large ship before! Sorry to slow you down, but I just wanted to tell you some important things about your ship. I promise I'll be but a moment.
+    "Firstly, you may notice that the ship you bought has a 'Time Dilation' rating. See, when operating a larger ship, you have to expend more time and effort performing the basic operations of the ship, causing your perception of time to speed up. Time Dilation is simply a measure of how fast you will perceive the passage of time compared to a typical small ship; for example, a Time Dilation rating of 200%% means that time appears to pass twice as fast as typical small ships.
+    "This, and the slower speed of your ship, may make it difficult to use forward-facing weapons as well as on smaller ships. For the largest classes - Destroyers and up - I would generally recommend use of turreted weapons, which will automatically aim at your opponent, rather than forward-facing weapons. That's of course up to you, though.
+    "That's all! Sorry to be a bother. I wish you good luck in your travels!" You thank the salesperson and continue on your way.]])
 
-    -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menuall, unpack(modules))
-    
-    startModule(selection)
+
+function create ()
+   hook.ship_buy( "ship_buy" )
+   hook.takeoff( "takeoff" )
 end
 
--- Helper function for starting the tutorial modules
-function startModule(module)
-    if selection == menux then -- Quit to main menu
-        tut.main_menu()
-    elseif selection == menuall then
-        var.push("tut_next", 1)
-        module = menubasic
-    elseif selection == menubasic then module = "Tutorial: Basic Operation"
-    elseif selection == menudiscover then module = "Tutorial: Exploration and Discovery"
-    elseif selection == menuinterstellar then module = "Tutorial: Interstellar Flight"
-    elseif selection == menubasiccombat then module = "Tutorial: Basic Combat"
-    elseif selection == menumisscombat then module = "Tutorial: Missile Combat"
-    elseif selection == menuheat then module = "Tutorial: Heat"
-    elseif selection == menuaoutfits then module = "Tutorial: Activated Outfits"
-    elseif selection == menudisable then module = "Tutorial: Disabling"
-    elseif selection == menuplanet then  module = "Tutorial: The Planetary Screen"
-    elseif selection == menutrade then module = "Tutorial: Trade"
-    elseif selection == menumissions then module = "Tutorial: Missions and Events"
-    elseif selection ==  menucomms then module = "Tutorial: Communications"
-    end
-    player.cinematics(false)
-    naev.eventStart(module)
-    evt.finish(true) -- While the module is running, this event should not.
+
+function ship_buy( shp )
+   if not var.peek( "tutorial_time_dilation" ) then
+      local class = ship.get(shp):class()
+      if class == "Freighter" or class == "Armoured Transport"
+            or class == "Corvette" or class == "Destroyer"
+            or class == "Cruiser" or class == "Carrier" then
+         tk.msg( "", time_dilation_text:format(shp) )
+         var.push( "tutorial_time_dilation", true )
+      end
+   end
 end
+
+
+function takeoff ()
+   evt.finish()
+end
+

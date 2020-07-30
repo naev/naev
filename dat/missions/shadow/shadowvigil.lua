@@ -2,21 +2,23 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
-include "proximity.lua"
-include "dat/scripts/nextjump.lua"
-include "chatter.lua"
-include "selectiveclear.lua"
+require "proximity.lua"
+require "nextjump.lua"
+require "chatter.lua"
+require "selectiveclear.lua"
+require "dat/missions/shadow/common.lua"
+
 
 title = {}
 text = {}
 commmsg = {}
 
 title[1] = _("Reunion with Rebina")
-text[1] = _([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in grey uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
+text[1] = _([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in gray uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
     On the bridge, you immediately spot - who else - the Seiryuu's captain, Rebina, seated in the captain's chair. The chair, too, is designed in the strange fashion that you've been seeing all over the ship. It sports several controls that you can't place, despite the fact that you're an experienced pilot yourself. The rest of the bridge is no different. All the regular stations and consoles seem to be there, but there are some others whose purpose you can only guess.
     Rebina swivels the chair around and smiles when she sees you. "Ah, %s," she says. "How good of you to come. I was hoping you'd get my invitation, since I was quite pleased with your performance last time. And I'm not the only one. As it turns out Jorek seems to have taken a liking to you as well. He may seem rough, but he's a good man at heart."]])
     
-text[2] = _([[You choose not to say anything, but Rebina seems to have no trouble reading what's on your mind. "Ah yes, the ship. It's understandable that you're surprised at how it looks. I can't divulge too much about this technology or how we came to possess it, but suffice to say that we don't buy from the regular outlets. We have need of... an edge in our line of business."
+text[2] = _([[You choose not to say anything, but Rebina seems to have no trouble reading what's on your mind. "Ah yes, the ship. It's understandable that you're surprised at how it looks. I can't divulge too much about this technology or how we came to possess it, but suffice to say that we don't buy from the regular outlets. We have need for... an edge in our line of business."
     Grateful for the opening, you ask Rebina what exactly this line of business is. Rebina flashes you a quick smile and settles into the chair for the explanation.
     "The organization I'm part of is known as the Four Winds, or rather," she gestures dismissively, "not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you." She leans forward and fixes you with a level stare. "Speaking of specific objectives, I have one such objective for you."]])
     
@@ -29,10 +31,10 @@ text[3] = _([["You may not know this, but there are tensions between the Imperia
     
 refusetitle = _("Let sleeping shadows lie")
 refusetext = _([[Captain Rebina sighs. "I see. I don't mind admitting that I hoped you would accept, but it's your decision. I won't force you to do anything you feel uncomfortable with. However, I still hold out the hope that you will change your mind. If you do, come back to see me. You know where to find the Seiryuu."
-    Mere minutes later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]])
+    Mere hectoseconds later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]])
     
 accepttitle = _("Shadow Vigil")
-accepttext = _([["Excellent, %s," Rebina smiles at you. "I've told my crew to provide your ship's computer with the necessary navigation data. Also, note that I've taken the liberty to install a specialized IFF transponder in your ship. Don't pay it any heed, it will only serve to identify you as one of the escorts. For various reasons, it is best that you refrain from communication with the other escorts as much as possible. I think you might have an inkling as to why."
+accepttext = _([["Excellent, %s." Rebina smiles at you. "I've told my crew to provide your ship's computer with the necessary navigation data. Also, note that I've taken the liberty of installing a specialized IFF transponder onto your ship. Don't pay it any heed, it will only serve to identify you as one of the escorts. For various reasons, it is best that you refrain from communication with the other escorts as much as possible. I think you might have an inkling as to why."
     Rebina straightens up. "That will be all for now, %s," she says in a more formal, captain-like manner. "You have your assignment; I suggest you go about it."
     You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]])
     
@@ -69,7 +71,7 @@ commmsg[4] = _("I just hope Z. knows what he's doing.")
 commmsg[5] = _("Cut the chatter, two, three. This is a low-profile operation. Act the part, please.")
 
 -- Diplomat jumpin.
-commmsg[6] = _("All right boys, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous.")
+commmsg[6] = _("Alright folks, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous.")
 commmsg[7] = _("Two, copy.")
 commmsg[8] = _("Three, copy.")
 
@@ -98,6 +100,11 @@ osd_msg[5] = _("Report back to Rebina")
 
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
 misn_reward = _("A sum of money.")
+
+log_text_intro = _([[Captain Rebina has revealed some information about the organization she works for. "The organization I'm part of is known as the Four Winds, or rather, not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you."]])
+log_text_success = _([[Your attempt to escort a diplomat for the Four Winds was thwarted by traitors on the inside. Other Four Winds escorts opened fire on the diplomat, killing him. Captain Rebina has said that she may need your help again at a later date.]])
+log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds.]])
+
 
 function create()
     misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refual stop, protegee meeting point, final destination.
@@ -146,9 +153,10 @@ function accept()
 
     var.push("shadowvigil_active", true)
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
+    shadow_addLog( log_text_intro )
 
     misn.accept()
-    
+
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
@@ -167,6 +175,7 @@ end
 function jumpout()
     if stage == 4 and not dpjump then
         tk.msg(diplomatnoruntitle, diplomatnoruntext)
+        shadow_addLog( log_text_fail )
         abort()
     end
     origin = system.cur()
@@ -218,6 +227,7 @@ function jumpin()
     
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
+        shadow_addLog( log_text_fail )
         abort()
     end
         
@@ -311,8 +321,9 @@ function jumpin()
                 hook.timer(35000, "chatter", {pilot = escorts[1], text = commmsg[5]})
                 chattered = true
             end
-            if misssys[4]:jumpDist() <= 2 and misssys[4]:jumpDist() > 0 then -- Encounter
-                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - misssys[4]:jumpDist()), "baddie_norun", vec2.new(0, 0))
+            jp2go = system.cur():jumpDist(misssys[4])
+            if jp2go <= 2 and jp2go > 0 then -- Encounter
+                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - jp2go), "baddie_norun", vec2.new(0, 0))
                 kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then
@@ -413,6 +424,7 @@ function escortDeath()
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
         tk.msg(escortdeathtitle, escortdeathtext)
+        shadow_addLog( log_text_fail )
         abort()
     end
 end
@@ -426,6 +438,7 @@ function diplomatDeath()
             j:control(false)
         end
     end
+    shadow_addLog( log_text_fail )
     abort()
 end
 
@@ -557,6 +570,7 @@ function board()
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(700000)
     var.pop("shadowvigil_active")
+    shadow_addLog( log_text_success )
     misn.finish(true)
 end
 

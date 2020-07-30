@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- Localization
 title = {}
@@ -42,7 +42,7 @@ text[4] = _([["That's too bad. I understand where you're coming from, though. Pl
 
 title[5] = _("Who are you calling a weakling?")
 text[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why, that's the stupidest thing I've ever heard! Why would I want to talk to a weakling like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
-    With that, the pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
+    The pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
 
 title[6] = _("Mission Failure")
 text[6] = _([[As the Pirate Kestrel is blown out of the sky, it occurs to you that you have made a terrible mistake. Having killed off the leader of the pirate group, you have lost your opportunity to negotiate a trade deal with the pirates. You shamefully transmit your result to Benito via a coded message and abort the mission. Perhaps you will be given another opportunity later.]])
@@ -54,7 +54,7 @@ title[8] = _("Not So Weak After All")
 text[8] = _([[The pirate comes on your view screen once again, but his expression has changed this time. You come to the realization that he is finally willing to talk and suppress a sigh of relief.
     "Perhaps you're not so bad after all," he says. Funny how destroying his "mates" impresses him. Not the slightest hint of devotion to his comrades. Still, you hold back the urge to tell him off. He continues. "I've misjudged you lot. I guess FLF pilots can fight after all."]])
 
-text[9] = _([[You begin to talk to the pirate about what you and the FLF are after. "Supplies, eh? Yeah, we've got supplies, alright. Heh, heh, heh... but it'll cost you!" You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tons of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
+text[9] = _([[You begin to talk to the pirate about what you and the FLF are after. "Supplies, eh? Yeah, we've got supplies, alright. Heh, heh, heh... but it'll cost you!" You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tonnes of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
     "Oh yeah, I almost forgot; you don't know how to get to the Anger system, now, do you? Well, since you've proven yourself worthy, I suppose I'll let you in on our little secret." He transfers a file to your ship's computer. When you look at it, you see that it's a map showing a single hidden jump point. "Now, away with you! Meet me in the %s system when you have the loot."]])
 
 title[10] = _("I knew we could work something out")
@@ -90,10 +90,12 @@ osd_desc["__save"] = true
 
 osd_apnd    = {}
 osd_apnd[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
-osd_apnd[4] = _("Bring %s tons of Ore to the Pirate Kestrel in the %s system")
+osd_apnd[4] = _("Bring %s tonnes of Ore to the Pirate Kestrel in the %s system")
 
 osd_final   = _("Return to FLF base")
 osd_desc[3] = osd_final
+
+log_text = _([[You helped the Pirates to build a new base in the Anger system and established a trade alliance between the FLF and the Pirates. Benito suggested that you should buy a Skull and Bones ship from the pirates and destroy Dvaered ships in areas where pirates are to keep your reputation with the pirates up. She also suggested you may want to upgrade your ship now that you have access to the black market.]])
 
 
 function create ()
@@ -132,7 +134,7 @@ function accept ()
 
       ore_needed = 40
       credits = 300000
-      reputation = 10
+      reputation = 1
       pir_reputation = 10
       pir_starting_reputation = faction.get("Pirate"):playerStanding()
 
@@ -292,9 +294,10 @@ function land ()
       diff.apply( "Fury_Station" )
       diff.apply( "flf_pirate_ally" )
       player.pay( credits )
-      flf_setReputation( 55 )
+      flf_setReputation( 50 )
       faction.get("FLF"):modPlayer( reputation )
       faction.get("Pirate"):modPlayerSingle( pir_reputation )
+      flf_addLog( log_text )
       misn.finish( true )
    end
 end

@@ -6,6 +6,9 @@
    I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
+require "dat/missions/neutral/common.lua"
+
+
 npc_name = _("Old Man")
 bar_desc = _("An old man sits at a table with some missing person papers.")
 title = _("The Search for Cynthia")
@@ -28,15 +31,18 @@ misn_father = _("As Cynthia sees her father, she begins her crying anew. You ove
 
 -- Here are stored the fake texts for the osd
 osd_text = {}
-osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi.")
-osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar.")
-osd_text[3] = _("Search for Cynthia on Selphod in Eridani.")
-osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris.")
+osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
+osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar")
+osd_text[3] = _("Search for Cynthia on Selphod in Eridani")
+osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris")
 
 -- Can't let them see what's coming up, can I?
 osd3 = _("Catch Cynthia on Torloth in Cygnus")
-osd4 = _("Return Cynthia to her father on Zhiru in the Goddard system.")
+osd4 = _("Return Cynthia to her father on Zhiru in the Goddard system")
 osdlie = _("Go to Zhiru in Goddard to lie to Cynthia's father")
+
+log_text_capture = _([[The father of Cynthia, who you had given a lift before, asked you to find her and bring her back to him, thinking that she was kidnapped. Cynthia protested, telling you that she did not want to go back to her parents, but you took her anyway. When she saw her father, she started crying, but seemed to become visibly happier when her father told her that her abusive mother had died.]])
+log_text_release = _([[The father of Cynthia, who you had given a lift before, asked you to find her and bring her back to him, thinking that she was kidnapped. Cynthia protested, telling you that she did not want to go back to her parents. Respecting her wishes, you let her be and lied to her father, saying that you couldn't find her no matter how hard you tried.]])
 
 
 function create ()
@@ -46,7 +52,7 @@ function create ()
    releasereward = 25000
    reward = 100000
 
-   misn.setNPC( npc_name, "neutral/male1" )
+   misn.setNPC( npc_name, "neutral/unique/cynthia_father" )
    misn.setDesc( bar_desc )
 end
 
@@ -132,23 +138,14 @@ function land ()
          tk.msg(title, misn_father)
          player.pay(reward)
          misn.cargoRm(cargoID)
+         addMiscLog( log_text_capture )
       else
          tk.msg(title, misn_release_father)
          player.pay(releasereward)
+         addMiscLog( log_text_release )
       end
 
-      --Clean up and close up shop
-      misn.osdDestroy()
       misn.finish(true)
    end
 end
 
-function abort ()
-  --Clean up
-   if cargoID then
-      misn.cargoRm(cargoID)
-   end
-   misn.markerRm(runawayMarker)
-   misn.osdDestroy()
-   misn.finish(false)
-end

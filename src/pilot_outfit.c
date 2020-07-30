@@ -63,7 +63,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
          x     = t->solid->pos.x - p->solid->pos.x;
          y     = t->solid->pos.y - p->solid->pos.y;
          ang   = ANGLE( x, y );
-         *a    = fabs( angle_diff( ang, p->solid->dir ) );
+         *a    = FABS( angle_diff( ang, p->solid->dir ) );
       }
 
       /* Decay if not in arc. */

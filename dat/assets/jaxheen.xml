@@ -22,13 +22,11 @@
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
-   <commodity/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Jaxheen was established in a time when the Soromid had already settled many of the worlds that make up the Soromid core today. The colonization effort was focused more on building a smoothly functioning society than on pioneering, a mentality that paid off in the long run. Jaxheen doesn't suffer from many of the inefficiencies found in societies that evolved by building on themselves. This has made the world quite powerful economically.</description>
   <bar>There are four main portals leading into and out of this spaceport bar. One leads to the spaceport facility. The second leads to the central public transit hub in this area of the metroplex that spans much of the continent. The third leads directly to the local commercial node, and the final portal is connected to the emergency service network, a separate infrastructure completely dedicated to emergency vehicles.</bar>
  </general>

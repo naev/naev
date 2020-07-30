@@ -26,12 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Sinass is a fairly typical civilian Sirius world. Sirii of all echelons make their home here. Sinass provides most of the supplies needed by Fort Sirius.</description>
   <bar>This bar is divided into three sections. One is blue, one is green and the other is purple. It seems to have some significance, but nobody seems to know exactly what it is. The locals get very upset when you're sitting in the wrong section, though.</bar>
  </general>

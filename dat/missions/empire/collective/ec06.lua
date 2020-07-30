@@ -9,31 +9,31 @@
 
 ]]--
 
-include "proximity.lua"
-include "fleethelper.lua"
-include "dat/missions/empire/common.lua"
+require "proximity.lua"
+require "fleethelper.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
 misn_title = _("Operation Cold Metal")
 misn_reward = _("Fame and Glory")
 misn_desc = {}
-misn_desc[1] = _("Neutralize enemy forces in %s.")
-misn_desc[2] = _("Destroy the Starfire and hostiles in %s.")
-misn_desc[3] = _("Return to %s in the %s system.")
+misn_desc[1] = _("Neutralize enemy forces in %s")
+misn_desc[2] = _("Destroy the Starfire and hostiles in %s")
+misn_desc[3] = _("Return to %s in the %s system")
 title = {}
 title[1] = _("Bar")
 title[2] = _("Operation Cold Metal")
 title[3] = _("Mission Success")
-title[4] = _("Cowardly Behaviour")
+coward_title = _("Cowardly Behavior")
 text = {}
 text[1] = _([[You join Commodore Keer at her table.
     She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]])
 text[2] = _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]])
 text[3] = _([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
     You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]])
-text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
+text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
     And so ends the Collective threat...]])
-text[5] = _([[You recieve a message signed by Commodore Keer as soon as you enter Empire space:
+coward_text = _([[You receive a message signed by Commodore Keer:
     "There is no room for cowards in the Empire's fleet."
     The signature does seem valid.]])
     
@@ -45,6 +45,9 @@ osd_msg[2] = _("Defeat the Starfire")
 osd_msg2alt = _("Defeat the Starfire and the Trinity")
 osd_msg[3] = _("Report back")
 osd_msg["__save"] = true
+
+log_text_succeed = _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]])
+log_text_fail = _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]])
 
 
 function create ()
@@ -164,6 +167,7 @@ function jumpin ()
 
             fleetE[1]:broadcast(start_comm)
             misn.osdActive(2)
+            misn_stage = 1
             player.pilot():setVisible()
         elseif system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
             pilot.clear()
@@ -174,8 +178,22 @@ function jumpin ()
             misn.osdActive(1)
             misn_stage = 0
         end
+    elseif misn_stage == 1 and system.cur() ~= misn_final_sys then
+        pilot.clear()
+        pilot.toggleSpawn(false)
+        misn_stage = 0
+        diff.apply("collective_dead")
+        hook.timer( 4000, "fail_timer" )
     end
 end
+
+
+function fail_timer ()
+   tk.msg( coward_title, coward_text )
+   emp_addCollectiveLog( log_text_fail )
+   misn.finish( true )
+end
+
 
 function refuelBroadcast ()
    if refship:exists() then
@@ -241,6 +259,8 @@ function land ()
       player.pay( 5000000 ) -- 5m
 
       tk.msg( title[3], text[4] )
+
+      emp_addCollectiveLog( log_text_succeed )
 
       misn.finish(true) -- Run last
    end

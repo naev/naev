@@ -17,9 +17,9 @@
 
 --]]
 
-include "numstring.lua"
-include "fleethelper.lua"
-include "dat/missions/flf/flf_common.lua"
+require "numstring.lua"
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
 
 misn_title  = _("FLF: Rogue %s in %s")
 misn_reward = _("%s credits")
@@ -70,7 +70,7 @@ function create ()
    end
 
    credits = ships * 30000 - flfships * 1000
-   credits = credits * system.cur():jumpDist( missys ) / 3
+   credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
    local desc

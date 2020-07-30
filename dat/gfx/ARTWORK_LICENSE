@@ -26,219 +26,219 @@
  
  * Author: Vega Strike, License: GPLv2+
    * commodity
-    * acids.png
-    * advanced_medicines.png
-    * aeranervestimuli.png
-    * aera_ration.png
-    * ai_cores.png
-    * alkali_metals.png
-    * am_magcells.png
-    * animal_meat.png
-    * animal_products.png
-    * anti_corrosives.png
-    * aromatic_scents.png
-    * artificial_limbs.png
-    * artificial_organs.png
-    * assembly_tools.png
-    * astral_gases.png
-    * atasan_furs.png
-    * atmospheric_gases.png
-    * atmospheric_processors.png
-    * atmospheric_scrubbers.png
-    * automated_factories.png
-    * baakgah.png
-    * base.png
-    * beer.png
-    * bioapplicator.png
-    * biocell.png
-    * biogenerators.png
-    * bio_remodeler.png
-    * bipolite.png
-    * blood_plasma.png
-    * bonsai.png
-    * books.png
-    * boring_droids.png
-    * brandy.png
-    * bulk_seeds.png
-    * business_class_passenger.png
-    * butane.png
-    * carbonium.png
-    * cargo-hud.png
-    * cargo_expansion.png
-    * catalysts.png
-    * cellular_accelerant.png
-    * chemfuel.png
-    * chemical_mix.png
-    * chitty-boom.png
-    * classical_instruments.png
-    * cloaking_device_aeramilspec.png
-    * cloaking_device_experimental.png
-    * clones.png
-    * clothing.png
-    * coffee.png
-    * computer_fibres.png
-    * consoles.png
-    * construction_stone.png
-    * construction_vehicles.png
-    * corundum_crystal.png
-    * cotton.png
-    * cryogenic_pods.png
-    * cyborg_mercs.png
-    * diamonds.png
-    * diesel.png
-    * dilithium.png
-    * distillators.png
-    * dna_resequencer.png
-    * duranium.png
-    * dyes.png
-    * earthmover.png
-    * engineered_bacteria.png
-    * engineered_seeds.png
-    * enhanced_limbs.png
-    * enhanced_organs.png
-    * erotica.png
-    * esters.png
-    * ethanol.png
-    * experimental_drugs.png
-    * explosives.png
-    * facing_stone.png
-    * factory_constructors.png
-    * factory_equipment.png
-    * first_aid_kits.png
-    * first_class_passenger.png
-    * forest_regenerators.png
-    * fresh_water.png
-    * fullbody.png
-    * fusion_injectors.png
-    * games.png
-    * gold.png
-    * grains.png
-    * halogen_gases.png
-    * heavy_water.png
-    * holovids.png
-    * home_appliances.png
-    * home_furnishings.png
-    * hull_patches.png
-    * hydrocarbons.png
-    * hydroponics.png
-    * hyposyringes.png
-    * icbinf.png
-    * illegal_weapons.png
-    * incense.png
-    * industrial_gemstones.png
-    * intatouch.png
-    * isometal.png
-    * iso_member.png
-    * jewelry.png
-    * jewels.png
-    * jhurlon.png
-    * khaisalantimin_F62.png
-    * krystal.png
-    * laser_drills.png
-    * light_alls.png
-    * livestock.png
-    * livestock_equipment.png
-    * londegal_silks.png
-    * longevity_drugs.png
-    * luddite_tracts.png
-    * lumber.png
-    * luxury_mealpacks.png
-    * material_processors.png
-    * medical_kit.png
-    * music.png
-    * musical_instruments.png
-    * narcotics.png
-    * natural_gas.png
-    * natural_sculptures.png
-    * neural_computer.png
-    * neural_interface.png
-    * noble_gases.png
-    * nuclear_pods.png
-    * nutripacks.png
-    * obsidisteel.png
-    * oil.png
-    * overeager_immigrants.png
-    * ozone_replacement.png
-    * pai_wetware.png
-    * pearls.png
-    * personal_hygienics.png
-    * personal_transport.png
-    * pesticides.png
-    * petrochems.png
-    * petroleum.png
-    * pilot.png
-    * plasglass.png
-    * plasteel.png
-    * plastics.png
-    * pleasure_borgs.png
-    * political_prisoners.png
-    * polysteel.png
-    * precious.png
-    * prefab_buildings.png
-    * premium_pad.png
-    * produce.png
-    * pseudotherms.png
-    * quantum_processor.png
-    * quartz_crystal.png
-    * radioactives.png
-    * radium.png
-    * rare_artwork.png
-    * rare_catalysts.png
-    * rare_earths.png
-    * ration_mealpacks.png
-    * recycled_electronics.png
-    * recycled_metals.png
-    * recycled_oil.png
-    * recycled_plastics.png
-    * recycling_tanks.png
-    * regen_tank.png
-    * reinforced_rubber.png
-    * repair_droid01.png
-    * repulsor_beam.png
-    * resistant_biologics.png
-    * retrified_salt.png
-    * robotic_surgeons.png
-    * robot_servants.png
-    * robot_workers.png
-    * rubber.png
-    * salted_thok.png
-    * sarakan_tears.png
-    * seafood.png
-    * simple_medicines.png
-    * slaves.png
-    * sorir_lightstones.png
-    * space_grog.png
-    * specialty_wines.png
-    * spices.png
-    * spirits.png
-    * standard_mealpacks.png
-    * standard_PAD.png
-    * steel.png
-    * surgical_techniques.png
-    * sustipacks.png
-    * swj.png
-    * synthetic_fertilizer.png
-    * terraforming_units.png
-    * thermal_boreholes.png
-    * tractor_beam.png
-    * tractor_capability.png
-    * tractor_heavy.png
-    * trilithium_crystal.png
-    * tripezian_premium.png
-    * tritanium.png
-    * ultrapacks.png
-    * uranium.png
-    * vaccines.png
-    * virtual_tunneling_terminal.png
-    * virtuarea.png
-    * waste_recyclers.png
-    * water_dynamo.png
-    * weather_control.png
-    * welding_lasers.png
-    * wine.png
-    * wood_boards.png
-    * xenoforming_units.png
-    * zhollus.png
+     * acids.png
+     * advanced_medicines.png
+     * aeranervestimuli.png
+     * aera_ration.png
+     * ai_cores.png
+     * alkali_metals.png
+     * am_magcells.png
+     * animal_meat.png
+     * animal_products.png
+     * anti_corrosives.png
+     * aromatic_scents.png
+     * artificial_limbs.png
+     * artificial_organs.png
+     * assembly_tools.png
+     * astral_gases.png
+     * atasan_furs.png
+     * atmospheric_gases.png
+     * atmospheric_processors.png
+     * atmospheric_scrubbers.png
+     * automated_factories.png
+     * baakgah.png
+     * base.png
+     * beer.png
+     * bioapplicator.png
+     * biocell.png
+     * biogenerators.png
+     * bio_remodeler.png
+     * bipolite.png
+     * blood_plasma.png
+     * bonsai.png
+     * books.png
+     * boring_droids.png
+     * brandy.png
+     * bulk_seeds.png
+     * business_class_passenger.png
+     * butane.png
+     * carbonium.png
+     * cargo-hud.png
+     * cargo_expansion.png
+     * catalysts.png
+     * cellular_accelerant.png
+     * chemfuel.png
+     * chemical_mix.png
+     * chitty-boom.png
+     * classical_instruments.png
+     * cloaking_device_aeramilspec.png
+     * cloaking_device_experimental.png
+     * clones.png
+     * clothing.png
+     * coffee.png
+     * computer_fibres.png
+     * consoles.png
+     * construction_stone.png
+     * construction_vehicles.png
+     * corundum_crystal.png
+     * cotton.png
+     * cryogenic_pods.png
+     * cyborg_mercs.png
+     * diamonds.png
+     * diesel.png
+     * dilithium.png
+     * distillators.png
+     * dna_resequencer.png
+     * duranium.png
+     * dyes.png
+     * earthmover.png
+     * engineered_bacteria.png
+     * engineered_seeds.png
+     * enhanced_limbs.png
+     * enhanced_organs.png
+     * erotica.png
+     * esters.png
+     * ethanol.png
+     * experimental_drugs.png
+     * explosives.png
+     * facing_stone.png
+     * factory_constructors.png
+     * factory_equipment.png
+     * first_aid_kits.png
+     * first_class_passenger.png
+     * forest_regenerators.png
+     * fresh_water.png
+     * fullbody.png
+     * fusion_injectors.png
+     * games.png
+     * gold.png
+     * grains.png
+     * halogen_gases.png
+     * heavy_water.png
+     * holovids.png
+     * home_appliances.png
+     * home_furnishings.png
+     * hull_patches.png
+     * hydrocarbons.png
+     * hydroponics.png
+     * hyposyringes.png
+     * icbinf.png
+     * illegal_weapons.png
+     * incense.png
+     * industrial_gemstones.png
+     * intatouch.png
+     * isometal.png
+     * iso_member.png
+     * jewelry.png
+     * jewels.png
+     * jhurlon.png
+     * khaisalantimin_F62.png
+     * krystal.png
+     * laser_drills.png
+     * light_alls.png
+     * livestock.png
+     * livestock_equipment.png
+     * londegal_silks.png
+     * longevity_drugs.png
+     * luddite_tracts.png
+     * lumber.png
+     * luxury_mealpacks.png
+     * material_processors.png
+     * medical_kit.png
+     * music.png
+     * musical_instruments.png
+     * narcotics.png
+     * natural_gas.png
+     * natural_sculptures.png
+     * neural_computer.png
+     * neural_interface.png
+     * noble_gases.png
+     * nuclear_pods.png
+     * nutripacks.png
+     * obsidisteel.png
+     * oil.png
+     * overeager_immigrants.png
+     * ozone_replacement.png
+     * pai_wetware.png
+     * pearls.png
+     * personal_hygienics.png
+     * personal_transport.png
+     * pesticides.png
+     * petrochems.png
+     * petroleum.png
+     * pilot.png
+     * plasglass.png
+     * plasteel.png
+     * plastics.png
+     * pleasure_borgs.png
+     * political_prisoners.png
+     * polysteel.png
+     * precious.png
+     * prefab_buildings.png
+     * premium_pad.png
+     * produce.png
+     * pseudotherms.png
+     * quantum_processor.png
+     * quartz_crystal.png
+     * radioactives.png
+     * radium.png
+     * rare_artwork.png
+     * rare_catalysts.png
+     * rare_earths.png
+     * ration_mealpacks.png
+     * recycled_electronics.png
+     * recycled_metals.png
+     * recycled_oil.png
+     * recycled_plastics.png
+     * recycling_tanks.png
+     * regen_tank.png
+     * reinforced_rubber.png
+     * repair_droid01.png
+     * repulsor_beam.png
+     * resistant_biologics.png
+     * retrified_salt.png
+     * robotic_surgeons.png
+     * robot_servants.png
+     * robot_workers.png
+     * rubber.png
+     * salted_thok.png
+     * sarakan_tears.png
+     * seafood.png
+     * simple_medicines.png
+     * slaves.png
+     * sorir_lightstones.png
+     * space_grog.png
+     * specialty_wines.png
+     * spices.png
+     * spirits.png
+     * standard_mealpacks.png
+     * standard_PAD.png
+     * steel.png
+     * surgical_techniques.png
+     * sustipacks.png
+     * swj.png
+     * synthetic_fertilizer.png
+     * terraforming_units.png
+     * thermal_boreholes.png
+     * tractor_beam.png
+     * tractor_capability.png
+     * tractor_heavy.png
+     * trilithium_crystal.png
+     * tripezian_premium.png
+     * tritanium.png
+     * ultrapacks.png
+     * uranium.png
+     * vaccines.png
+     * virtual_tunneling_terminal.png
+     * virtuarea.png
+     * waste_recyclers.png
+     * water_dynamo.png
+     * weather_control.png
+     * welding_lasers.png
+     * wine.png
+     * wood_boards.png
+     * xenoforming_units.png
+     * zhollus.png
    * outfit
      * space
        * ion{M,L}.png
@@ -438,7 +438,7 @@
        * minimal.png
        * minimal_fuel.png
        * minimal_energy.png
- 
+
  * Author: Brian J. Cameron, License: PD
    * outfit
      * store
@@ -560,31 +560,42 @@
      * store
        * gatling.png
 
- * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv3
+ * Author: Ingo Ruhnke <grumbel@gmx.de>, Licence: GPLv3
+   * portraits
+     * none.png
+     * unknown.png
+   * logo
+     * dvaered_*.png
+     * empire_*.png
+     * goddard_*.png
+     * sirius_*.png
+     * zalek_*.png
+
+ * Author: Nihilos <https://opengameart.org/users/nihilos>, License: CC-by 3.0 (based on portraits by Ingo Ruhnke <grumbel@gmx.de>)
    * portraits
      * dvaered
        * unique
          * ka'def.png
          * vicious.png
          * zolo.png
-       * dv_civilian1.png 
-       * dv_civilian2.png 
-       * dv_general1.png 
-       * dv_military_m1.png 
-       * dv_military_m2.png 
-       * dv_military_m3.png 
-       * dv_military_f1.png 
-       * dv_military_f1.png 
+       * dv_civilian_f1.png
+       * dv_civilian_f2.png
+       * dv_general1.png
+       * dv_military_m1.png
+       * dv_military_m2.png
+       * dv_military_m3.png
+       * dv_military_f1.png
+       * dv_military_f1.png
      * empire
        * unique
          * czesc.png
          * dimitri.png
          * keer.png
          * soldner.png
-       * empire1.png
-       * empire2.png
-       * empire3.png
-       * empire4.png
+       * empire_mil_f1.png
+       * empire_mil_m1.png
+       * empire_mil_m2.png
+       * empire_mil_m3.png
      * flf
        * unique
          * benito.png
@@ -593,13 +604,17 @@
          * aristocrat.png
          * drunkard.png
          * flintley.png
+         * hunter.png
          * jorek.png
          * mia.png
+         * neil.png
          * oldwoman.png
          * rebina.png
+         * rebina_casual.png
          * reynir.png
-         * shifty_merchant.png
+         * reynir2.png
          * youngbusinessman.png
+         * youngbusinessman2.png
        * barman.png
        * cyborg1.png
        * cyborg2.png
@@ -609,6 +624,8 @@
        * miner1.png
        * miner2.png
        * scientist.png
+       * scientist2.png
+       * scientist3.png
        * thief1.png
        * thief2.png
        * thief3.png
@@ -621,21 +638,137 @@
        * pirate4.png
      * sirius
        * unique
-         * joanne.png
          * harja.png
+         * joanne.png
          * patrek.png
        * sirius_fyrra_f1.png
        * sirius_fyrra_f2.png
        * sirius_fyrra_m1.png
-     * none.png
-     * unknown.png
-     * zalek_scientist_placeholder.png
-   * logo
-     * dvaered_*.png
-     * empire_*.png
-     * goddard_*.png
-     * sirius_*.png
-     * zalek_*.png
+
+ * Author: Layla Marchant, based on components by Nihilos, License: CC-by 3.0
+   * portraits
+     * dvaered
+       * dv_civilian_f3.png
+       * dv_civilian_f4.png
+       * dv_civilian_f5.png
+       * dv_civilian_f6.png
+       * dv_civilian_f7.png
+       * dv_civilian_f8.png
+       * dv_civilian_f9.png
+       * dv_civilian_f10.png
+       * dv_civilian_f11.png
+       * dv_civilian_m1.png
+       * dv_civilian_m2.png
+       * dv_civilian_m3.png
+       * dv_civilian_m4.png
+       * dv_civilian_m5.png
+       * dv_civilian_m6.png
+       * dv_civilian_m7.png
+       * dv_civilian_m8.png
+       * dv_civilian_m9.png
+       * dv_civilian_m10.png
+       * dv_civilian_m11.png
+       * dv_military_f3.png
+       * dv_military_f4.png
+       * dv_military_f5.png
+       * dv_military_f6.png
+       * dv_military_f7.png
+       * dv_military_f8.png
+       * dv_military_m4.png
+       * dv_military_m5.png
+       * dv_military_m6.png
+       * dv_military_m7.png
+       * dv_military_m8.png
+     * empire
+       * empire_mil_f2.png
+       * empire_mil_f3.png
+       * empire_mil_f4.png
+       * empire_mil_f5.png
+       * empire_mil_m4.png
+       * empire_mil_m5.png
+       * empire_mil_m6.png
+       * empire_mil_m7.png
+       * empire_mil_m8.png
+     * neutral
+       * unique
+         * arnoldsmith.png
+         * cynthia.png
+         * cynthia_father.png
+         * dealer.png
+         * fakesister.png
+         * laidback.png
+         * michal.png
+         * middleaged.png
+         * nexus_agent.png
+         * paddy.png
+         * shifty_merchant.png
+         * unfamiliarman.png
+       * female2.png
+       * female3.png
+       * female4.png
+       * female5.png
+       * female6.png
+       * female7.png
+       * female8.png
+       * female9.png
+       * female10.png
+       * female11.png
+       * female12.png
+       * female13.png
+       * male2.png
+       * male3.png
+       * male4.png
+       * male5.png
+       * male6.png
+       * male7.png
+       * male8.png
+       * male9.png
+       * male10.png
+       * male11.png
+       * male12.png
+       * male13.png
+       * thief4.png
+     * pirate
+       * pirate5.png
+       * pirate6.png
+       * pirate7.png
+       * pirate8.png
+       * pirate9.png
+       * pirate10.png
+       * pirate11.png
+       * pirate12.png
+       * pirate13.png
+       * pirate14.png
+     * sirius
+       * sirius_fyrra_f3.png
+       * sirius_fyrra_f4.png
+       * sirius_fyrra_f5.png
+       * sirius_fyrra_m2.png
+       * sirius_fyrra_m3.png
+       * sirius_fyrra_m4.png
+       * sirius_fyrra_m5.png
+       * sirius_shiara_f1.png
+       * sirius_shiara_f2.png
+       * sirius_shiara_f3.png
+       * sirius_shiara_f4.png
+       * sirius_shiara_f5.png
+       * sirius_shiara_m1.png
+       * sirius_shiara_m2.png
+       * sirius_shiara_m3.png
+       * sirius_shiara_m4.png
+       * sirius_shiara_m5.png
+       * unique
+         * draga.png
+         * rodentman.png
+         * shaman.png
+         * strangeman.png
+     * soromid
+       * unique
+         * chelsea.png
+     * zalek
+       * unique
+         * geller.png
+         * logan.png
 
  * Author: AstroMenace (Viewizard), License: GPLv3
    * outfit
@@ -768,6 +901,7 @@
        * barFrameLight.png
        * barSheen.png
        * beam.png
+       * bottombar.png
        * button.png
        * buttonDis.png
        * buttonHil.png
@@ -848,6 +982,10 @@
        * outfit.png
        * speedDouble.png
 
+* Author: Layla Marchant, based on work from Vega Strike and work by Enigmatic, License: GPLv3
+  * map
+    * proteron.png
+
  * Author: Nikola Whallon <6.saturn.6@gmail.com>, License: GPLv3 / CC-by 3
    * planet
      * space
@@ -883,6 +1021,8 @@
      * nebula31.png
      * nebula32.png
      * nebula33.png
+   * map
+     * nebula.png
 
  * Author: Galileus, License: CC-by-sa 3.0
    * loading
@@ -1001,13 +1141,60 @@
        * convulsion.png
      * store
        * active_plating.png
+       * base_hull_h.png
+       * base_hull_l.png
+       * base_hull_m.png
+       * base_hull_s.png
+       * base_hull_t.png
+       * base_hull_x.png
+       * combat_hull_h.png
+       * combat_hull_l.png
+       * combat_hull_m.png
+       * combat_hull_s.png
+       * combat_hull_t.png
+       * combat_hull_x.png
        * convulsion.png
        * convulsion_launcher.png
-       * core_system01.png
-       * core_system02.png
-       * core_system03.png
-       * core_system04.png
-       * core_system05.png
+       * core_system_basic_l1.png
+       * core_system_basic_l2.png
+       * core_system_basic_m1.png
+       * core_system_basic_m2.png
+       * core_system_basic_m2.png
+       * core_system_basic_s1.png
+       * core_system_basic_s2.png
+       * core_system_cpu_l1.png
+       * core_system_cpu_l2.png
+       * core_system_cpu_m1.png
+       * core_system_cpu_m2.png
+       * core_system_cpu_m2.png
+       * core_system_cpu_s1.png
+       * core_system_cpu_s2.png
+       * core_system_organic_l1.png
+       * core_system_organic_l2.png
+       * core_system_organic_m1.png
+       * core_system_organic_m2.png
+       * core_system_organic_s1.png
+       * core_system_organic_s2.png
+       * core_system_power_l1.png
+       * core_system_power_l2.png
+       * core_system_power_m1.png
+       * core_system_power_m2.png
+       * core_system_power_m2.png
+       * core_system_power_s1.png
+       * core_system_power_s2.png
+       * core_system_refined_l1.png
+       * core_system_refined_l2.png
+       * core_system_refined_m1.png
+       * core_system_refined_m2.png
+       * core_system_refined_s1.png
+       * core_system_refined_s2.png
+       * core_system_shield_l1.png
+       * core_system_shield_l2.png
+       * core_system_shield_m1.png
+       * core_system_shield_m2.png
+       * core_system_shield_m2.png
+       * core_system_shield_s1.png
+       * core_system_shield_s2.png
        * energy_dart.png
        * energy_missile.png
        * energy_torpedo.png
@@ -1026,17 +1213,51 @@
        * engine13.png
        * engine14.png
        * engine15.png
+       * large_cargo_hull.png
+       * medium_cargo_hull.png
        * misc01.png
        * misc02.png
        * misc04.png
-       * misc05.png
+       * organic_engine_fast_l1.png
+       * organic_engine_fast_l2.png
+       * organic_engine_fast_m1.png
+       * organic_engine_fast_m2.png
+       * organic_engine_fast_s1.png
+       * organic_engine_fast_s2.png
+       * organic_engine_strong_l1.png
+       * organic_engine_strong_l2.png
+       * organic_engine_strong_m1.png
+       * organic_engine_strong_m2.png
+       * organic_engine_strong_s1.png
+       * organic_engine_strong_s2.png
+       * organic_hull_h.png
+       * organic_hull_l.png
+       * organic_hull_m.png
+       * organic_hull_s.png
+       * organic_hull_t.png
+       * organic_hull_x.png
        * plating01.png
        * reactor01.png
+       * refined_hull_h.png
+       * refined_hull_l.png
+       * refined_hull_m.png
+       * refined_hull_s.png
+       * refined_hull_t.png
+       * refined_hull_x.png
+       * small_cargo_hull.png
+       * stealth_hull_h.png
+       * stealth_hull_m.png
+       * stealth_hull_s.png
+       * stealth_hull_t.png
        * stealth_plating.png
        * turreted_convulsion_launcher.png
        * weapon01.png
        * weapon02.png
    * ship
+     * apprehension
+       * *
+     * certitude
+       * *
      * perspicacity
        * *
      * scintillation
@@ -1054,11 +1275,6 @@
        * M10.png
        * moon-X00.png
        * O04.png
-
- * Author: PhoenixRiver, License: GPLv3
-   * portraits
-     * neutral
-       * female1.png
 
  * Author: NASA, License: PD
    * bkg
@@ -1078,70 +1294,71 @@
        * D05.png
        * D06.png
        * D07.png
-       * asteroid-D00.png
-       * asteroid-D01.png
-       * asteroid-D02.png
-       * asteroid-D03.png
-       * asteroid-D04.png
-       * asteroid-D05.png
-       * asteroid-D06.png
-       * asteroid-D07.png
-       * asteroid-D08.png
-       * asteroid-D09.png
-       * asteroid-D10.png
-       * asteroid-D11.png
-       * asteroid-D12.png
-       * asteroid-D13.png
-       * asteroid-D14.png
-       * asteroid-D15.png
-       * asteroid-D16.png
-       * asteroid-D17.png
-       * asteroid-D18.png
-       * asteroid-D19.png
-       * asteroid-D20.png
-       * asteroid-D21.png
-       * asteroid-D22.png
-       * asteroid-D23.png
-       * asteroid-D24.png
-       * asteroid-D25.png
-       * asteroid-D26.png
-       * asteroid-D27.png
-       * asteroid-D28.png
-       * asteroid-D29.png
-       * asteroid-D30.png
-       * asteroid-D31.png
-       * asteroid-D32.png
-       * asteroid-D33.png
-       * asteroid-D34.png
-       * asteroid-D35.png
-       * asteroid-D36.png
-       * asteroid-D37.png
-       * asteroid-D38.png
-       * asteroid-D39.png
-       * asteroid-D40.png
-       * asteroid-D41.png
-       * asteroid-D42.png
-       * asteroid-D43.png
-       * asteroid-D44.png
-       * asteroid-D45.png
-       * asteroid-D46.png
-       * asteroid-D47.png
-       * asteroid-D48.png
-       * asteroid-D49.png
-       * asteroid-D50.png
-       * asteroid-D51.png
-       * asteroid-D52.png
-       * asteroid-D53.png
-       * asteroid-D54.png
-       * asteroid-D55.png
-       * asteroid-D56.png
-       * asteroid-D57.png
-       * asteroid-D58.png
-       * asteroid-D59.png
-       * asteroid-D60.png
-       * asteroid-D61.png
-       * asteroid-D62.png
-       * asteroid-D63.png
+       * asteroid
+         * asteroid-D00.png
+         * asteroid-D01.png
+         * asteroid-D02.png
+         * asteroid-D03.png
+         * asteroid-D04.png
+         * asteroid-D05.png
+         * asteroid-D06.png
+         * asteroid-D07.png
+         * asteroid-D08.png
+         * asteroid-D09.png
+         * asteroid-D10.png
+         * asteroid-D11.png
+         * asteroid-D12.png
+         * asteroid-D13.png
+         * asteroid-D14.png
+         * asteroid-D15.png
+         * asteroid-D16.png
+         * asteroid-D17.png
+         * asteroid-D18.png
+         * asteroid-D19.png
+         * asteroid-D20.png
+         * asteroid-D21.png
+         * asteroid-D22.png
+         * asteroid-D23.png
+         * asteroid-D24.png
+         * asteroid-D25.png
+         * asteroid-D26.png
+         * asteroid-D27.png
+         * asteroid-D28.png
+         * asteroid-D29.png
+         * asteroid-D30.png
+         * asteroid-D31.png
+         * asteroid-D32.png
+         * asteroid-D33.png
+         * asteroid-D34.png
+         * asteroid-D35.png
+         * asteroid-D36.png
+         * asteroid-D37.png
+         * asteroid-D38.png
+         * asteroid-D39.png
+         * asteroid-D40.png
+         * asteroid-D41.png
+         * asteroid-D42.png
+         * asteroid-D43.png
+         * asteroid-D44.png
+         * asteroid-D45.png
+         * asteroid-D46.png
+         * asteroid-D47.png
+         * asteroid-D48.png
+         * asteroid-D49.png
+         * asteroid-D50.png
+         * asteroid-D51.png
+         * asteroid-D52.png
+         * asteroid-D53.png
+         * asteroid-D54.png
+         * asteroid-D55.png
+         * asteroid-D56.png
+         * asteroid-D57.png
+         * asteroid-D58.png
+         * asteroid-D59.png
+         * asteroid-D60.png
+         * asteroid-D61.png
+         * asteroid-D62.png
+         * asteroid-D63.png
 
  * Author: Bobbens, License: PD (with modifications by PhoenixRiver, License: PD)
    * planet
@@ -1176,7 +1393,7 @@
 
  * Author: Mutos, License: CC-by 3.0
    * commodity
-    * _default.png
+     * _default.png
 
  * Author: ESA, License: PD
    * planet

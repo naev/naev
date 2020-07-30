@@ -417,7 +417,7 @@ static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
  */
 static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
-   if (fabs(d) < 1e-10)
+   if (FABS(d) < 1e-10)
       return 0;
    return nsnprintf( buf, len, "%s\a%s%+.0f%% %s\a0",
          (newline) ? "\n" : "",
@@ -431,7 +431,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
  */
 static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
-   if (fabs(d) < 1e-10)
+   if (FABS(d) < 1e-10)
       return 0;
    return nsnprintf( buf, len, "%s\a%s%+.0f %s\a0",
          (newline) ? "\n" : "",

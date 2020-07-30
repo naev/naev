@@ -22,9 +22,9 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
-include "pilot/pirate.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "pilot/pirate.lua"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}
@@ -46,17 +46,17 @@ pay_title   = _("Mission Completed")
 pay_kill_text    = {}
 pay_kill_text[1] = _("After verifying that you killed %s, an officer hands you your pay.")
 pay_kill_text[2] = _("After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay.")
-pay_kill_text[3] = _("The officer seems pleased that %s is finally dead. She thanks you and promptly hands you your pay.")
-pay_kill_text[4] = _("The paranoid-looking officer takes you into a locked room, where she quietly verifies the death of %s. She then pays you and sends you off.")
-pay_kill_text[5] = _("When you ask the officer for your bounty on %s, he sighs, leads you into his office, goes through some paperwork, and hands you your pay, mumbling something about how useless the bounty system is.")
+pay_kill_text[3] = _("The officer seems pleased that %s is finally dead. They thank you and promptly hand you your pay.")
+pay_kill_text[4] = _("The paranoid-looking officer takes you into a locked room, where the death of %s is quietly verified. The officer then pays you and sends you off.")
+pay_kill_text[5] = _("When you ask the officer for your bounty on %s, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless the bounty system is.")
 pay_kill_text[6] = _("The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
 
 pay_capture_text    = {}
 pay_capture_text[1] = _("An officer takes %s into custody and hands you your pay.")
-pay_capture_text[2] = _("The officer seems to think your decision to capture %s alive was insane. She carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay")
-pay_capture_text[3] = _("The officer you deal with seems to especially dislike %s. She takes the pirate off your hands and hands you your pay without speaking a word.")
+pay_capture_text[2] = _("The officer seems to think your decision to capture %s alive was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay")
+pay_capture_text[3] = _("The officer you deal with seems to especially dislike %s. The pirate is taken off your hands and you are handed your pay without a word.")
 pay_capture_text[4] = _("A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off.")
-pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you tell him you captured %s alive. Nonetheless, he politely takes the pirate off of your hands and hands you your pay.")
+pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured %s alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay.")
 
 share_title   = _("A Smaller Reward")
 share_text    = {}
@@ -114,7 +114,7 @@ function create ()
    missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   jumps_permitted = missys:jumpDist() + rnd.rnd( 5 )
+   jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 5 )
    if rnd.rnd() < 0.05 then
       jumps_permitted = jumps_permitted - 1
    end
@@ -371,6 +371,7 @@ function spawn_pirate( param )
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
          target_ship = pilot.add( ship, nil, param )[1]
+         set_pirate_faction()
          target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "disable", "pilot_disable" )
@@ -391,6 +392,11 @@ function spawn_pirate( param )
          fail( msg[1]:format( name ) )
       end
    end
+end
+
+
+-- Adjust pirate faction (used for "alive" bounties)
+function set_pirate_faction ()
 end
 
 

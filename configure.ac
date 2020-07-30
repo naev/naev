@@ -2,7 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.7.0], [bobbens@gmail.com])
+AC_INIT([naev],
+        [0.8.-1],
+        [https://github.com/naev/naev/issues],
+        [naev],
+        [https://naev.org/])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -13,10 +17,12 @@ AM_PO_SUBDIRS
 AM_GNU_GETTEXT([external])
 #AM_GNU_GETTEXT_VERSION([0.19.8])
 AM_GNU_GETTEXT_VERSION([0.18])
+GETTEXT_PACKAGE=${PACKAGE_NAME}
+AC_SUBST(GETTEXT_PACKAGE)
 
 IT_PROG_INTLTOOL
 
-AM_INIT_AUTOMAKE([foreign subdir-objects])
+AM_INIT_AUTOMAKE([-Wall -Wno-portability foreign subdir-objects])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
@@ -63,9 +69,6 @@ AS_IF([test "$exec_prefix" = "NONE"], [
   exec_prefix="$prefix"
 ])
 
-# Check if we have custom CFLAGS
-AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
-
 #
 # Checks for programs.
 #
@@ -73,6 +76,7 @@ AC_PROG_CC
 AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
+AM_PROG_AR
 PKG_PROG_PKG_CONFIG
 
 AC_CHECK_PROG([CUT], [cut], [cut])
@@ -83,6 +87,12 @@ AS_IF([test -z "$CUT"],[
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 AC_CHECK_PROG([LDOC], [ldoc], [ldoc])
 AC_CHECK_PROG([GIT], [git], [git])
+AS_IF([test "x$USE_NLS" == "xyes"], [
+   AC_CHECK_PROG([ITSTOOL], [itstool], [itstool])
+   AS_IF([test -z "$ITSTOOL"],[
+      AC_ERROR([itstool not found])
+   ])
+])
 
 #
 # Checks for build environment
@@ -147,15 +157,9 @@ AC_ARG_ENABLE([debug],
   ])
 AC_MSG_RESULT([$enable_debug])
 
-AS_IF([test "$enable_debug" != "no"], [
-  AS_IF([test "$have_custom_cflags" = "no"], [
-    # Undo the default CFLAGS set by autoconf
-    AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
-      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"
-    ], [
-      CFLAGS=
-    ])
-  ])
+AS_IF([test "x$enable_debug" != "xno"], [
+  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"], [])
+  AX_CHECK_COMPILE_FLAG([-Wformat-truncation=0],[CFLAGS="$CFLAGS -Wformat-truncation=0"],[])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
@@ -178,7 +182,7 @@ AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
   AC_HELP_STRING([--with-openal],
      [use the OpenAL sound backend (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_openal=yes
     ], [
       with_openal=no
@@ -193,7 +197,7 @@ AC_MSG_CHECKING([whether to use SDL_mixer])
 AC_ARG_WITH([sdlmixer],
   AC_HELP_STRING([--with-sdlmixer],
      [use the SDL_mixer sound backend (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_sdlmixer=yes
     ], [
       with_sdlmixer=no
@@ -208,7 +212,7 @@ AC_MSG_CHECKING([whether to use libzip])
 AC_ARG_WITH([libzip],
   AC_HELP_STRING([--with-libzip],
      [use libzip for ndata (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_libzip=yes
     ], [
       with_libzip=no
@@ -223,7 +227,7 @@ AC_MSG_CHECKING([whether to use fontconfig])
 AC_ARG_WITH([fontconfig],
   AC_HELP_STRING([--with-fontconfig],
      [use fontconfig for ndata (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
+    AS_IF([test "x$withval" = "xyes"], [
       with_fontconfig=yes
     ], [
       with_fontconfig=no
@@ -263,7 +267,7 @@ AC_ARG_WITH([ndata-path],
   AC_HELP_STRING([--with-ndata-path=PATH], [path to the ndata file]),
   [ndata_path="$withval"], [])
 AC_MSG_RESULT([$ndata_path])
-AS_IF([test -z "$ndata_path" || test "$ndata_path" = "yes"], [
+AS_IF([test -z "$ndata_path" || test "x$ndata_path" = "xyes"], [
   AC_ERROR([The data path must be explicitly specified])
 ])
 AC_SUBST([ndata_path])
@@ -271,6 +275,9 @@ AC_SUBST([ndata_path])
 #
 # Checks for libraries.
 #
+
+# "Newish" GCC
+AC_CHECK_HEADERS([stdalign.h])
 
 # SDL
 AM_PATH_SDL2(2.0.0, [], [
@@ -284,7 +291,7 @@ PKG_CHECK_MODULES([XML], [libxml-2.0])
 PKG_CHECK_MODULES([FREETYPE], [freetype2])
 
 # FontConfig
-AS_IF([test "$with_fontconfig" = "yes"], [
+AS_IF([test "x$with_fontconfig" = "xyes"], [
   PKG_CHECK_MODULES([FONTCONFIG], [fontconfig])
 ])
 
@@ -298,7 +305,7 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 PKG_CHECK_MODULES([PNG], [libpng])
 
 # libzip
-AS_IF([test "$with_libzip" = "yes"], [
+AS_IF([test "x$with_libzip" = "xyes"], [
   PKG_CHECK_MODULES([ZIP], [libzip])
 ])
 
@@ -307,7 +314,7 @@ case "$used_lua" in
   luajit)
     PKG_CHECK_MODULES([LUA], [luajit], [
       have_lua=yes
-      LUA_CFLAGS+=" -DHAVE_LUAJIT"
+      LUA_CFLAGS="$LUA_CFLAGS -DHAVE_LUAJIT"
     ], [
       AC_WARN([Lua is set to LuaJIT but can not find library; using internal Lua])
       have_lua=no
@@ -316,17 +323,17 @@ case "$used_lua" in
   shared)
     have_lua=no
     m4_foreach([pkgname], [lua-5.1, lua5.1, lua51, lua], [
-        AS_IF([test "$have_lua" = "no"], [
+        AS_IF([test "x$have_lua" = "xno"], [
             PKG_CHECK_MODULES([LUA], [pkgname], [have_lua=yes], [have_lua=no])
         ])
     ])
-    AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
+    AS_IF([test "x$have_lua" = "xno"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
     ;;
   *)
     have_lua=no
     ;;
 esac
-AS_IF([test "$have_lua" = "no"], [
+AS_IF([test "x$have_lua" = "xno"], [
   LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
   LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
   have_lua=yes
@@ -340,7 +347,7 @@ AC_SEARCH_LIBS([sqrt], [m])
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
 
-AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
+AS_IF([test "x$have_csparse_lib" = "xyes" -a "x$have_cxsparse_lib" = "xyes"], [
     AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
     AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
 
@@ -354,18 +361,18 @@ AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
    used_csparse=internal
 ])
 
-AS_IF([test "$used_csparse" = "internal"], [
+AS_IF([test "x$used_csparse" = "xinternal"], [
     CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
     CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
 
 # OpenAL
-AS_IF([test "$with_openal" = "yes"], [
-  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
-])
+AS_IF([test "x$with_openal" = "xyes"], [
+  PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
+], [have_openal=no])
 
 # SDL_mixer
-AS_IF([test "$with_sdlmixer" = "yes"], [
+AS_IF([test "x$with_sdlmixer" = "xyes"], [
   PKG_CHECK_MODULES([SDLMIXER], [SDL2_mixer], [have_sdlmixer=yes], [have_sdlmixer=no])
 ], [have_sdlmixer=no])
 
@@ -401,7 +408,7 @@ GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
 GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
 GLOBAL_LIBS=
 
-AS_IF([test "$enable_debug" != "no"], [
+AS_IF([test "x$enable_debug" != "xno"], [
   GLOBAL_CFLAGS="$GLOBAL_CFLAGS -DLUA_USE_APICHECK"
 ])
 
@@ -432,10 +439,10 @@ case "$host" in
     ;;
 esac
 
-AS_IF([test "$enable_debug" != "no"], [
+AS_IF([test "x$enable_debug" != "xno"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
-  AS_IF([test "$have_bfd" != "no"], [
+  AS_IF([test "x$have_bfd" != "xno"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
@@ -444,7 +451,7 @@ AS_IF([test "$enable_debug" != "no"], [
      esac
   ])
 ])
-AS_IF([test "$enable_debug" = "paranoid"], [
+AS_IF([test "x$enable_debug" = "xparanoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
 
@@ -456,12 +463,12 @@ NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $FONTCONFIG_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
     $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
-AS_IF([test "$have_openal" = "yes"], [
+AS_IF([test "x$have_openal" = "xyes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
   NAEV_LIBS="$NAEV_LIBS $OPENAL_LIBS"
 ])
 
-AS_IF([test "$have_sdlmixer" = "yes"], [
+AS_IF([test "x$have_sdlmixer" = "xyes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $SDLMIXER_CFLAGS"
   NAEV_LIBS="$NAEV_LIBS $SDLMIXER_LIBS"
 ])
@@ -479,10 +486,10 @@ esac
 # automake to detect when the binary needs recompiling after a library has been
 # changed.
 NAEV_DEPENDENCIES="$WIDGET_LIBS"
-AS_IF([test "$used_lua" == "internal"], [
+AS_IF([test "x$used_lua" = "xinternal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $LUA_LIBS"
 ])
-AS_IF([test "$used_csparse" == "internal"], [
+AS_IF([test "x$used_csparse" = "xinternal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $CSPARSE_LIBS"
 ])
 
@@ -641,6 +648,11 @@ AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
+AM_CONDITIONAL([HAVE_NLS], [test "x$USE_NLS" = "xyes"])
+AC_CHECK_FILE([$srcdir/src/shaders_c_gen.c],
+   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],true),
+   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],false))
+
 
 #
 # Output

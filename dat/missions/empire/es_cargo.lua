@@ -4,8 +4,8 @@
 
 ]]--
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
 misn_title = _("ES: Cargo transport (%d tonnes of %s)")
 misn_desc = _("The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left).")
@@ -41,17 +41,15 @@ msg_msg = {}
 msg_msg[1] = _("The Empire workers load the %d tonnes of %s onto your ship.")
 msg_msg[2] = _("You have too many active missions.")
 msg_msg[3] = _("The Empire workers unload the %s at the docks.")
-miss = {}
-miss[1]= _("Cargo Missing")
-miss[2] = _("You are missing the %d tonnes of %s!.")
-miss[3] = _("MISSION FAILED: You have failed to deliver the goods to the Empire on time!")
+
+msg_timeup = _("MISSION FAILED: You have failed to deliver the goods to the Empire on time!")
 
 osd_title = _("Empire Shipping")
 osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s.")
-osd_msg[2] = _("You have %s remaining.")
-osd_msg1 = _("Fly to %s in the %s system before %s.")
-osd_msg2 = _("You have %s remaining.") -- Need to reuse.
+osd_msg[1] = _("Fly to %s in the %s system before %s")
+osd_msg[2] = _("You have %s remaining")
+osd_msg1 = _("Fly to %s in the %s system before %s")
+osd_msg2 = _("You have %s remaining") -- Need to reuse.
 
 --[[
 --    Empire shipping missions are always timed, but quite lax on the schedules
@@ -170,7 +168,7 @@ function tick()
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(miss[3])
+      player.msg(msg_timeup)
       abort()
    end
 end

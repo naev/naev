@@ -113,6 +113,7 @@ static void print_MixerVersion (void)
    linked = Mix_Linked_Version();
    const char *drvname = SDL_GetCurrentAudioDriver();
    strncpy( device, drvname, PATH_MAX );
+   device[PATH_MAX-1] = '\0';
 
    /* Version itself. */
    DEBUG(_("SDL_Mixer Started: %d Hz %s"), frequency,

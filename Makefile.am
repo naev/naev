@@ -1,11 +1,15 @@
 ACLOCAL_AMFLAGS = --install -I m4
 
-SUBDIRS = po lib src
-DIST_SUBDIRS = po lib src
+SUBDIRS = lib src
+DIST_SUBDIRS = lib src
 
 if HAVE_UTILS
 SUBDIRS += utils
-endif
+endif # HAVE_NLS
+if HAVE_NLS
+SUBDIRS += po
+DIST_SUBDIRS += po
+endif # HAVE_NLS
 
 appicondir = $(datadir)/pixmaps
 appicon_DATA = extras/logos/naev.png
@@ -22,21 +26,51 @@ DATA_ARCHIVE = ndata.zip
 if HAVE_UTILS
 MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
-NAEV	     = naev$(EXEEXT)
+NAEV	     = $(PACKAGE)$(EXEEXT)
 
-EXTRA_DIST = build/config.rpath  LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
+VERSIONFILE = VERSION
+LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
-.PHONY: docs utils help install-ndata
+EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
+CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
-all-local: $(NAEV) VERSION
+if HAVE_NLS
+XMLBASE     = $(wildcard dat/*.xml)
+XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
+XMLSHIPS    = $(wildcard dat/ships/*.xml)
+XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
+TRANSLATIONITS = $(top_srcdir)/po/translation.its 
+XMLPOT      = $(top_srcdir)/po/xml.pot
+CLEANFILES += $(XMLPOT)
+endif # HAVE_NLS
+
+.PHONY: pot docs utils help install-ndata
+
+all-local: $(NAEV) pot $(VERSIONFILE) $(LANGUAGEFILE)
+
+if HAVE_NLS
+$(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
+	$(ITSTOOL) -i $(TRANSLATIONITS) $(XMLFILES) > $@
+	@echo "ITSTOOL $@"
+
+pot: $(XMLPOT) $(NAEV)
+	$(MAKE) -C po $(PACKAGE).pot
+else # HAVE_NLS
+pot: $(XMLPOT) $(NAEV)
+	@echo "***"
+	@echo "*** You must have NLS enabled to compile translation files"
+	@echo "***"
+endif # HAVE_NLS
 
 $(NAEV):
 	@echo "  LN    $(NAEV)"
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
-VERSION: src/config.h
+$(VERSIONFILE): src/config.h
 	echo $(VERSION) > $@
+
+$(LANGUAGEFILE): po/LINGUAS
+	tail -n +2 $< > $@
 
 if HAVE_UTILS
 utils: $(MKSPR)
@@ -44,11 +78,11 @@ utils: $(MKSPR)
 $(MKSPR):
 	$(MAKE) -C utils/mkspr
 
-$(DATA_ARCHIVE): VERSION
+$(DATA_ARCHIVE): $(VERSIONFILE) $(LANGUAGEFILE)
 	@echo " ZIP   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
-    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS VERSION naev-confupdate.sh dat/
-else
+    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS $(VERSIONFILE) naev-confupdate.sh dat/
+else # HAVE_UTILS
 utils:
 
 $(DATA_ARCHIVE):
@@ -56,7 +90,7 @@ $(DATA_ARCHIVE):
 	@echo "*** You must clone the full git repo to create $(DATA_ARCHIVE)"
 	@echo "***"
 	@false
-endif
+endif # HAVE_UTILS
 
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \

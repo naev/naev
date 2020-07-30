@@ -10,7 +10,7 @@
 
 #include "opengl.h"
 #include "sound.h"
-#include "economy.h"
+#include "commodity.h"
 #include "shipstats.h"
 #include "collision.h"
 

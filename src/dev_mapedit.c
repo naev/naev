@@ -59,10 +59,14 @@
 #define MAPEDIT_SAVE_HEIGHT      500   /**< Open window height. */
 #define MAPEDIT_SAVE_TXT_WIDTH   300   /**< Text width. */
 
+#define MAPEDIT_FILENAME_MAX     128   /**< Max filename length. */
+#define MAPEDIT_NAME_MAX         128   /**< Maximum name length. */
+#define MAPEDIT_DESCRIPTION_MAX 1024   /**< Maximum description length. */
+
 typedef struct mapOutfitsList_s {
-   char sFileName[MAPEDIT_FILENAME_MAX];
-   char sMapName[MAPEDIT_NAME_MAX];
-   char sDescription[MAPEDIT_DESCRIPTION_MAX];
+   char *sFileName;
+   char *sMapName;
+   char *sDescription;
    int iNumSystems;
 } mapOutfitsList_t;
 
@@ -86,10 +90,7 @@ static double mapedit_mx      = 0.; /**< X mouse position. */
 static double mapedit_my      = 0.; /**< Y mouse position. */
 static unsigned int mapedit_widLoad = 0; /**< Load Map Outfit wid. */
 static unsigned int mapedit_widSave = 0; /**< Save Map Outfit wid. */
-static int  mapedit_nLoadSys   = 0;                            /**< Last loaded file number of systems. */
-static char mapedit_sLoadFileName[MAPEDIT_FILENAME_MAX];       /**< Last loaded map filename. */
-static char mapedit_sLoadMapName[MAPEDIT_NAME_MAX];            /**< Last loaded map filename. */
-static char mapedit_sLoadDescription[MAPEDIT_DESCRIPTION_MAX]; /**< Last loaded map filename. */
+static char *mapedit_sLoadMapName = NULL; /**< Loaded Map Outfit. */
 
 
 /*
@@ -122,10 +123,11 @@ void mapedit_saveMapMenu_open (void);
 static void mapedit_saveMapMenu_save( unsigned int wdw, char *str );
 static void mapedit_saveMapMenu_update( unsigned int wdw, char *str );
 /* Management of last loaded/saved Map file. */
-void mapedit_setGlobalLoadedInfos (int nSys, char * sFileName, char * sMapName, char * sDescription);
+void mapedit_setGlobalLoadedInfos (int nSys, char *sFileName, char *sMapName, char *sDescription);
 /* Management of Map files list. */
 static int  mapedit_mapsList_refresh (void);
 static mapOutfitsList_t *mapedit_mapsList_getList ( int *n );
+static void mapsList_free (void);
 
 
 /**
@@ -191,14 +193,14 @@ void mapedit_open( unsigned int wid_unused, char *unused )
 
    /* Main title. */
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290, 20, 0, "txtSLastLoaded",
-         NULL, &cDConsole, "Last loaded Map" );
+         NULL, &cBlack, "Last loaded Map" );
    textPos++;
    linesPos++;
 
    /* Filename. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSFileName",
-         &gl_smallFont, &cDConsole, "File Name:" );
+         &gl_smallFont, &cBlack, "File Name:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtFileName",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -207,7 +209,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Map name. */
    curLines = 3;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSMapName",
-         &gl_smallFont, &cDConsole, "Map Name:" );
+         &gl_smallFont, &cBlack, "Map Name:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtMapName",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -216,7 +218,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Map description. */
    curLines = 5;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSDescription",
-         &gl_smallFont, &cDConsole, "Description:" );
+         &gl_smallFont, &cBlack, "Description:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtDescription",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -225,7 +227,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Loaded Map # of systems. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSLoadedNumSystems",
-         &gl_smallFont, &cDConsole, "Number of Systems (limited to 100):" );
+         &gl_smallFont, &cBlack, "Number of Systems (limited to 100):" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtLoadedNumSystems",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -233,14 +235,14 @@ void mapedit_open( unsigned int wid_unused, char *unused )
 
    /* Main title */
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290, 20, 0, "txtSCurentMap",
-         NULL, &cDConsole, "Current Map" );
+         NULL, &cBlack, "Current Map" );
    textPos++;
    linesPos++;
 
    /* Current Map # of systems. */
    curLines = 1;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSCurrentNumSystems",
-         &gl_smallFont, &cDConsole, "Number of Systems (limited to 100):" );
+         &gl_smallFont, &cBlack, "Number of Systems (limited to 100):" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtCurrentNumSystems",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -249,7 +251,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    /* Presence. */
    curLines = 5;
    window_addText( wid, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSPresence",
-         &gl_smallFont, &cDConsole, "Presence:" );
+         &gl_smallFont, &cBlack, "Presence:" );
    window_addText( wid, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtPresence",
          &gl_smallFont, &cBlack, "No selection" );
    textPos++;
@@ -294,12 +296,7 @@ static void mapedit_close( unsigned int wid, char *wgt )
 {
    /* Frees some memory. */
    mapedit_deselect();
-   if (mapList == NULL) {
-      //WARN("mapList does not exist.");
-   } else {
-      //WARN("mapList exists.");
-      array_free(mapList);
-   }
+   mapsList_free();
 
    /* Reconstruct jumps. */
    systems_reconstructJumps();
@@ -759,6 +756,7 @@ void mapedit_saveMapMenu_open (void)
    int textPos = 0;
    int linesPos = 0;
    int curLines = 0;
+   char *curMap = NULL;
    
    /* Debug log */
    //WARN("Entering function.");
@@ -772,9 +770,11 @@ void mapedit_saveMapMenu_open (void)
    window_setCancel( mapedit_widSave, mapedit_loadMapMenu_close );
 
    /* Load list of map outfits */
+   if (mapedit_sLoadMapName != NULL)
+      curMap = strdup( mapedit_sLoadMapName );
    mapedit_mapsList_refresh();
 
-   /* load the maps */
+   /* Load the maps */
    iCurrent = 0;
    nslist = mapedit_mapsList_getList( &n );
    if (n > 0) {
@@ -783,9 +783,9 @@ void mapedit_saveMapMenu_open (void)
          ns       = &nslist[i];
          /*len      = strlen(ns->sMapName);*/
          names[i] = strdup(ns->sMapName);
-          if (!strcmp(mapedit_sLoadMapName, ns->sMapName)) {
+         if ((curMap != NULL) && !strcmp(curMap, ns->sMapName)) {
             iCurrent = i;
-          }
+         }
       }
    } else {
       /* case there are no files */
@@ -793,6 +793,8 @@ void mapedit_saveMapMenu_open (void)
       names[0] = strdup("None");
       n     = 1;
    }
+   if (curMap != NULL)
+      free( curMap );
 
    /* Debug Log */
    //WARN("List[0] : %s", names[0]);
@@ -801,7 +803,7 @@ void mapedit_saveMapMenu_open (void)
    /* Filename. */
    curLines = 1;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSFileName",
-         &gl_smallFont, &cDConsole, "File Name (.xml):" );
+         &gl_smallFont, &cBlack, "File Name (.xml):" );
    window_addInput ( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, 5+curLines*(gl_smallFont.h+5), "inpFileName", MAPEDIT_FILENAME_MAX, 1, NULL );
    textPos++;
    linesPos+=curLines+1;
@@ -809,7 +811,7 @@ void mapedit_saveMapMenu_open (void)
    /* Map name. */
    curLines = 3;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSMapName",
-         &gl_smallFont, &cDConsole, "Map Name:" );
+         &gl_smallFont, &cBlack, "Map Name:" );
    window_addInput ( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, 5+curLines*(gl_smallFont.h+5), "inpMapName", MAPEDIT_NAME_MAX, 0, NULL );
    textPos++;
    linesPos+=curLines+1;
@@ -817,7 +819,7 @@ void mapedit_saveMapMenu_open (void)
    /* Map description. */
    curLines = 5;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, gl_smallFont.h+5, 0, "txtSDescription",
-         &gl_smallFont, &cDConsole, "Description:" );
+         &gl_smallFont, &cBlack, "Description:" );
    window_addInput( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, 5+curLines*(gl_smallFont.h+5), "inpDescription", MAPEDIT_DESCRIPTION_MAX, 0, NULL );
    textPos++;
    linesPos+=(curLines+1);
@@ -825,7 +827,7 @@ void mapedit_saveMapMenu_open (void)
    /* Loaded Map # of systems. */
    curLines = 1;
    window_addText( mapedit_widSave, -20, -40-textPos*20-linesPos*(gl_smallFont.h+5), 290-10, 20, 0, "txtSLoadedNumSystems",
-         &gl_smallFont, &cDConsole, "Number of Systems (limited to 100):" );
+         &gl_smallFont, &cBlack, "Number of Systems (limited to 100):" );
    window_addText( mapedit_widSave, -20, -40-textPos*20-(linesPos+1)*(gl_smallFont.h+5), 290-20, curLines*(gl_smallFont.h+5), 0, "txtLoadedNumSystems",
          &gl_smallFont, &cBlack, "N/A" );
    textPos++;
@@ -881,13 +883,12 @@ void mapedit_loadMapMenu_open (void)
    /* Load list of map outfits */
    mapedit_mapsList_refresh();
 
-   /* load the maps */
+   /* Load the maps */
    nslist = mapedit_mapsList_getList( &n );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
          ns       = &nslist[i];
-         /*len      = strlen(ns->sMapName);*/
          names[i] = strdup(ns->sMapName);
       }
    }
@@ -941,7 +942,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
    int n;
    mapOutfitsList_t *ns;
    char *save;
-   char buf[256];
+   char buf[1024];
 
     /* Debug log */
    //WARN("Entering function.");
@@ -976,6 +977,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
          "   %i",
          ns->sFileName, ns->sMapName, ns->sDescription, ns->iNumSystems
    );
+   buf[sizeof(buf)-1] = '\0';
 
    /*WARN("Setting text into widget.");*/
    window_modifyText( wdw, "txtMapInfo", buf );
@@ -1077,8 +1079,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    /* Get "name" property from the "outfit" node */
    name = xml_nodeProp( node,"name" );
    /*WARN("\t\tName = \"%s\"", name);*/
-   compareLimit = MAPEDIT_FILENAME_MAX;
-   if (strncmp(ns->sMapName, name, compareLimit)!=0) {
+   if (strcmp(ns->sMapName, name)!=0) {
       //WARN("\t\tInconsistent names between list and file : list=\"%s\", file=\"%s\"", ns->sMapName, name);
       free(file);
       xmlFreeDoc(doc);
@@ -1177,7 +1178,7 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
    int pos, n, len;
    mapOutfitsList_t *ns;
    char *save;
-   char buf[25], sFileName[MAPEDIT_FILENAME_MAX];
+   char buf[64], *sFileName;
 
     /* Debug log */
    //WARN("Entering function.");
@@ -1196,9 +1197,10 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
    ns  = &ns[pos];
    //WARN("\tPosition is : %i.", pos);
 
-   /* Getting file nae without extension */
+   /* Getting file name without extension */
    len = strlen( ns->sFileName );
-   nsnprintf( sFileName, len-3, "%s", ns->sFileName );
+   sFileName = strdup( ns->sFileName );
+   sFileName[len-4] = '\0';
 
    /* Display text. */
    //WARN("Formatting text to display :");
@@ -1213,6 +1215,9 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
    window_setInput  ( wdw, "inpDescription", ns->sDescription );
    window_modifyText( wdw, "txtLoadedNumSystems", buf );
 
+   /* Cleanup. */
+   free( sFileName );
+
     /* Debug log */
    //WARN("Exiting function.");
 }
@@ -1224,10 +1229,10 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
 static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
 {
    (void)str;
-   int pos, n, len;
+   int pos, n;
    mapOutfitsList_t *ns;
    char *save;
-   char sFileName[MAPEDIT_FILENAME_MAX], sMapName[MAPEDIT_NAME_MAX], sDescription[MAPEDIT_DESCRIPTION_MAX];
+   char *sFileName, *sMapName, *sDescription;
 
    /* Debug log */
    //WARN("Entering function.");
@@ -1248,19 +1253,13 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
    /*WARN("\tPosition is : %i.", pos);*/
 
    /* Getting file name without extension from input box */
-   save = window_getInput( wdw, "inpFileName" );
-   len = strlen( save );
-   nsnprintf( sFileName, len+1, "%s", save );
+   sFileName = window_getInput( wdw, "inpFileName" );
 
    /* Getting map name from input box */
-   save = window_getInput( wdw, "inpMapName" );
-   len = strlen( save );
-   nsnprintf( sMapName, len+1, "%s", save );
+   sMapName = window_getInput( wdw, "inpMapName" );
 
    /* Getting description from input box */
-   save = window_getInput( wdw, "inpDescription" );
-   len = strlen( save );
-   nsnprintf( sDescription, len+1, "%s", save );
+   sDescription = window_getInput( wdw, "inpDescription" );
 
    /* Display text. */
    //WARN("Getting file to save :");
@@ -1292,28 +1291,21 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
 /**
  * @brief Set and display the global variables describing last loaded/saved file
  */
-void mapedit_setGlobalLoadedInfos (int nSys, char * sFileName, char * sMapName, char * sDescription) {
+void mapedit_setGlobalLoadedInfos( int nSys, char *sFileName, char *sMapName, char *sDescription )
+{
    char buf[8];
-
-   /* Setting number of systems */
-   mapedit_nLoadSys   = nSys;
-
-   /* Clearing info strings */
-   mapedit_sLoadFileName[0] = '\0';
-   mapedit_sLoadMapName[0] = '\0';
-   mapedit_sLoadDescription[0] = '\0';
-
-   /* Setting info strings */
-   nsnprintf( mapedit_sLoadFileName, MAPEDIT_FILENAME_MAX, "%s", sFileName );
-   nsnprintf( mapedit_sLoadMapName, MAPEDIT_NAME_MAX, "%s", sMapName );
-   nsnprintf( mapedit_sLoadDescription, MAPEDIT_DESCRIPTION_MAX, "%s", sDescription );
-   nsnprintf( buf, 8, "%i", mapedit_nLoadSys );
+   (void) nSys;
 
    /* Displaying info strings */
-   window_modifyText( mapedit_wid, "txtFileName", mapedit_sLoadFileName );
-   window_modifyText( mapedit_wid, "txtMapName", mapedit_sLoadMapName );
-   window_modifyText( mapedit_wid, "txtDescription", mapedit_sLoadDescription );
+   window_modifyText( mapedit_wid, "txtFileName",    sFileName );
+   window_modifyText( mapedit_wid, "txtMapName",     sMapName );
+   window_modifyText( mapedit_wid, "txtDescription", sDescription );
    window_modifyText( mapedit_wid, "txtLoadedNumSystems", buf );
+
+   /* Local information. */
+   if (mapedit_sLoadMapName != NULL)
+      free( mapedit_sLoadMapName );
+   mapedit_sLoadMapName = strdup( sMapName );
 }
 
 
@@ -1334,22 +1326,13 @@ static int mapedit_mapsList_refresh (void)
    /*char *systemName;*/
    mapOutfitsList_t *newMapItem;
 
-   /* Debug log */
-   //WARN("Entering function.");
-
-   if (mapList == NULL) {
-      //WARN("mapList does not exist.");
-   } else {
-      //WARN("mapList exists.");
-      array_free(mapList);
-   }
+   mapsList_free();
    mapList = array_create( mapOutfitsList_t );
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
    newMapItem = NULL;
    for (i=0; i<(int)nfiles; i++) {
 
-      //WARN("\tNew file found");
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
@@ -1360,68 +1343,51 @@ static int mapedit_mapsList_refresh (void)
       /* Get first node, normally "outfit" */
       node = doc->xmlChildrenNode;
       if (node == NULL) {
-         //WARN("\t\tMalformed file \"%s\" : does not contain any elements", map_files[i]);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
          return -1;
-      } else {
-         //WARN("\t\tFile form OK");
       }
 
       if (!xml_isNode(node,"outfit")) {
-         //WARN("\t\tMalformed file \"%s\" : no <outfit> elements", map_files[i]);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
          return -1;
-      } else {
-         //WARN("\t\t<outfit> element found");
       }
 
       /* Get "name" property from the "outfit" node */
       name = xml_nodeProp( node,"name" );
-      //WARN("\t\tName = \"%s\"", name);
 
       /* Loop on the nodes to find <specific> node */
       node = node->xmlChildrenNode;
-      //WARN("\t\tBeginning loop searching for <specific> node");
       do {
          outfitType = "";
+         description = NULL;
          xml_onlyNodes(node);
 
          if (!xml_isNode(node,"specific")) {
             if (xml_isNode(node,"general")) {
-               description = NULL;
-               //WARN("\t\t\t<general> element found");
-               //WARN("\t\t\t\tReading subnode \"description\"");
                cur = node->children;
                do {
                   xml_onlyNodes(cur);
                   xmlr_strd(cur,"description",description);
                } while (xml_nextNode(cur));
-               //WARN("\t\t\t\tFile \"%s\" has description \"%s\"", map_files[i], description);
             } else {
-               //WARN("\t\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
          }
             continue;
          }
 
-         //WARN("\t\t\t<specific> element found");
-
          /* Get the "type" property from "specific" node */
          outfitType = xml_nodeProp( node,"type" );
-         //WARN("\t\t\t\tOutfit type = \"%s\"", outfitType);
 
          /* Break out of the loop, either with a correct outfitType or not */
          break;
       } while (xml_nextNode(node));
-      //WARN("\t\tEnding loop searching for <specific> node");
 
       /* If its not a map, we don't care. */
       compareLimit = 3;
       if (strncmp(outfitType, "map", compareLimit)!=0) {
-         //WARN("\t\tFile is not a regular map");
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1431,58 +1397,38 @@ static int mapedit_mapsList_refresh (void)
       /* Loop on the nodes to find all <sys> node */
       nSystems = 0;
       node = node->xmlChildrenNode;
-      //WARN("\t\tBeginning loop on <sys> nodes");
       do {
          /*systemName = "";*/
          xml_onlyNodes(node);
 
          if (!xml_isNode(node,"sys")) {
-            //WARN("\t\tFile \"%s\" has unknown node \"%s\"", map_files[i], node->name);
             continue;
          }
-         /*WARN("\t\t\t<sys> element found");*/
 
          /* Display "name" property from "sys" node and increment number of systems found */
          nSystems++;
          /*systemName = xml_nodeProp( node,"name" );*/
-         /*WARN("\t\t\t\tSystem name = \"%s\"", systemName);*/
       } while (xml_nextNode(node));
-      //WARN("\t\tEnding loop on <sys> nodes");
-      //WARN("\t\t%i systems found", nSystems);
 
       /* If the map is a regular one, then load it into the list */
      if (nSystems > 0) {
          newMapItem = &array_grow( &mapList );
-         //WARN("\t\tLoading map into list :");
          newMapItem->iNumSystems   = nSystems;
-         len  = strlen(map_files[i])+1;
-       nsnprintf( newMapItem->sFileName, len, "%s", map_files[i] );
-         len  = strlen(name)+1;
-       nsnprintf( newMapItem->sMapName, len, "%s", name );
-         len  = strlen(description)+1;
-       nsnprintf( newMapItem->sDescription, len, "%s", description );
-         //WARN("\t\t\tnewMapItem->iNumSystems  = %i",     newMapItem->iNumSystems);
-         //WARN("\t\t\tnewMapItem->sFileName    = \"%s\"", newMapItem->sFileName);
-         //WARN("\t\t\tnewMapItem->sMapName     = \"%s\"", newMapItem->sMapName);
-         //WARN("\t\t\tnewMapItem->sDescription = \"%s\"", newMapItem->sDescription);
-     } else {
-         //WARN("\t\tFile contains no stellar system");
+         newMapItem->sFileName     = strdup(map_files[i]);
+         newMapItem->sMapName      = strdup(name);
+         newMapItem->sDescription  = strdup( description );
      }
 
       /* Clean up. */
       free(name);
       free(file);
       free(buf);
-      //WARN("\tNew file end");
   }
 
    /* Clean up. */
    for (i=0; i<(int)nfiles; i++)
       free( map_files[i] );
    free( map_files );
-
-    /* Debug log */
-   /*WARN("Exiting function.");*/
 
    return 0;
 }
@@ -1499,5 +1445,29 @@ mapOutfitsList_t *mapedit_mapsList_getList( int *n )
 
    *n = array_size( mapList );
    return mapList;
+}
+
+
+/**
+ * @brief Frees the loaded map.
+ */
+static void mapsList_free (void)
+{
+   unsigned int n, i;
+
+   if (mapList != NULL) {
+      n = array_size( mapList );
+      for (i=0; i<n; i++) {
+         free( mapList[i].sFileName );
+         free( mapList[i].sMapName );
+         free( mapList[i].sDescription );
+      }
+      array_free(mapList);
+   }
+   mapList = NULL;
+
+   if (mapedit_sLoadMapName != NULL)
+      free( mapedit_sLoadMapName );
+   mapedit_sLoadMapName = NULL;
 }
 

@@ -19,7 +19,7 @@
 /*
  * Prototypes
  */
-int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+static int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       float x, float y );
 
 
@@ -76,9 +76,6 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
          polygon->npt = i;
       }
    } while (xml_nextNode(cur));
-
-   free(list);
-   free(ch);
 
    return;
 }
@@ -263,13 +260,10 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
 int CollidePolygon( const CollPoly* at, const Vector2d* ap,
       const CollPoly* bt, const Vector2d* bp, Vector2d* crash )
 {
-   int x,y;
    int i;
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
-   int rbsy;
-   int bbx, bby;
    float xabs, yabs;
 
    /* a - cube coordinates */
@@ -351,7 +345,7 @@ int pointInPolygon( const CollPoly* at, const Vector2d* ap,
    vprod = dxi * dyip - dyi * dxip;
    angle += atan2(vprod, sprod);
 
-   if (abs(angle) < 1e-5)
+   if (FABS(angle) < 1e-5)
       return 0;
 
    return 1;

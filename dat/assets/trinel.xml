@@ -22,11 +22,7 @@
    <refuel/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Trinel is a cold, empty mining world with a single colony upon it. Only the bare minimum of Za'lek forces are here to maintain order. Most of the people working the mines are criminals who are kept here for life. The main spaceport is separated from the prison complex.</description>
  </general>
 </asset>

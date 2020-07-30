@@ -28,10 +28,6 @@ const char* start_system (void);
 void start_position( double *x, double *y );
 const char* start_mission (void);
 const char* start_event (void);
-const char* start_tutMission (void);
-const char* start_tutEvent (void);
-const char* start_tutSystem (void);
-void start_tutPosition( double *x, double *y );
 
 
 #endif /* START_H */

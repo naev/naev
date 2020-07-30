@@ -7,23 +7,6 @@
 
 
 --[[
--- @brief Gets a random official portrait name.
---
--- @return A random official portrait name.
---]]
-function emp_getOfficialRandomPortrait ()
-   local portraits = {
-      "empire/empire1",
-      "empire/empire2",
-      "empire/empire3",
-      "empire/empire4"
-   }
-
-   return portraits[ rnd.rnd( 1, #portraits ) ]
-end
-
-
---[[
    @brief Increases the reputation limit of the player.
 --]]
 function emp_modReputation( increment )
@@ -32,3 +15,13 @@ function emp_modReputation( increment )
 end
 
 
+function emp_addShippingLog( text )
+   shiplog.createLog("empire_shipping", _("Empire Shipping"), _("Empire"))
+   shiplog.appendLog("empire_shipping", text)
+end
+
+
+function emp_addCollectiveLog( text )
+   shiplog.createLog("empire_collective", _("Empire Collective Campaign"), _("Empire"))
+   shiplog.appendLog("empire_collective", text)
+end

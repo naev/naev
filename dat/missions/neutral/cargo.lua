@@ -3,10 +3,10 @@
    -- Most of these missions require BULK ships. Not for small ships!
 --]]
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
+require "dat/scripts/cargo_common.lua"
+require "dat/scripts/numstring.lua"
 
-misn_desc = _("%s in the %s system needs a delivery of %d tons of %s.")
+misn_desc = _("%s in the %s system needs a delivery of %d tonnes of %s.")
 misn_reward = _("%s credits")
 
 cargosize = {}
@@ -24,14 +24,14 @@ title_p1[4] = _(" delivery to %s in the %s system")
 
 -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
 title_p2 = _([[ 
-Cargo: %s (%d tons)
+Cargo: %s (%d tonnes)
 Jumps: %d
 Travel distance: %d
 Piracy Risk: %s]])
 
 full = {}
 full[1] = _("No room in ship")
-full[2] = _("You don't have enough cargo space to accept this mission. You need %d tons of free space (you need %d more).")
+full[2] = _("You don't have enough cargo space to accept this mission. You need %d tonnes of free space (you need %d more).")
 
 piracyrisk = {}
 piracyrisk[1] = _("None")
@@ -56,7 +56,7 @@ cargo_land_p2[4] = _("%s%s are unloaded by a team of robotic drones supervised b
 accept_title = _("Mission Accepted")
 
 osd_title = _("Cargo mission")
-osd_msg = _("Fly to %s in the %s system.")
+osd_msg = _("Fly to %s in the %s system")
 
 -- Create the mission
 function create()
@@ -64,7 +64,6 @@ function create()
    
    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   
    if destplanet == nil then
       misn.finish(false)
    end

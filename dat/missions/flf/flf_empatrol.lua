@@ -17,7 +17,7 @@
 
 --]]
 
-include "dat/missions/flf/flf_patrol.lua"
+require "dat/missions/flf/flf_patrol.lua"
 
 misn_title  = _("FLF: %s Empire patrol in %s")
 

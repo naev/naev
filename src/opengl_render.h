@@ -72,9 +72,9 @@ void gl_blitStatic( const glTexture* texture,
 
 extern gl_vbo *gl_squareVBO;
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c);
-void gl_endSolidProgram();
+void gl_endSolidProgram (void);
 void gl_beginSmoothProgram(gl_Matrix4 projection);
-void gl_endSmoothProgram();
+void gl_endSmoothProgram (void);
 
 
 /* Circles. */

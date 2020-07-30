@@ -1,6 +1,7 @@
 
 * 0.8.0 (unreleased)
    * Gameplay
+      * Simple economy model implemented with map visualizations
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
       * Added asteroids and mining
@@ -16,6 +17,10 @@
       * Made it so AI ships spawn with cargo
       * Added the ability to buy "fake IDs" from pirate strongholds
       * Made jammers into activated outfits that increase cloaking
+      * Added Soromid organic ships that level up organs
+      * Improved and expanded NPC portraits
+      * Commodities can be sold/bought everywhere
+      * More music
       * New and/or improved missions
          * Completed the FLF campaign
          * Fixed up the Collective campaign
@@ -23,7 +28,8 @@
          * Improved the Dvaered anti-FLF campaign
          * Added and improved piracy missions
          * New minor Soromid campaign, "Coming Out"
-         * Improved generic missions
+         * New tutorial mission at the start of a new game
+         * Various newly added and improved generic missions
    * Engine
       * Added shaders to speed up and improve graphics
       * Added support for non-ascii direct character input
@@ -34,3 +40,5 @@
       * Made the OSD compact itself to avoid showing redundant information
       * Made Autonav able to follow ships
       * Consolidated the effects of cloaking and jammers under cloaking
+      * Added workaround for ALSOFT buggy version that crashes
+      * Added a polygon-based collision algorithm

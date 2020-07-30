@@ -38,12 +38,12 @@ Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 ```bash
 apt-get install build-essential automake libsdl2-dev libsdl2-image-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
-libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev
+libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev itstool autoconf-archive
 ```
 
 ### Other \*nix 
 
-See https://github.com/naev/naev/wiki/Compiling-Nix for package lists for several
+See https://github.com/naev/naev/wiki/Compiling-on-*nix for package lists for several
 distributions.
 
 ## COMPILING
@@ -68,7 +68,7 @@ from 16x16 to 256x256 can be found in `extras/logos/`.
 
 ## WINDOWS
 
-See https://github.com/naev/naev/wiki/Compiling-Win for how to compile on windows.
+See https://github.com/naev/naev/wiki/Compiling-on-Windows for how to compile on windows.
 
 ## CRASHES & PROBLEMS
 

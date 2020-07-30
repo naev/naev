@@ -31,7 +31,7 @@
 #include "land.h"
 #include "gui.h"
 #include "load.h"
-
+#include "shiplog.h"
 
 int save_loaded   = 0; /**< Just loaded the savegame. */
 
@@ -56,6 +56,8 @@ extern int pfaction_save( xmlTextWriterPtr writer ); /**< Saves faction data. */
 extern int hook_save( xmlTextWriterPtr writer ); /**< Saves hooks. */
 /* space.c */
 extern int space_sysSave( xmlTextWriterPtr writer ); /**< Saves the space stuff. */
+/* economy.c */
+extern int economy_sysSave( xmlTextWriterPtr writer ); /**< Saves the economy stuff. */
 /* unidiff.c */
 extern int diff_save( xmlTextWriterPtr writer ); /**< Saves the universe diffs. */
 /* static */
@@ -80,7 +82,8 @@ static int save_data( xmlTextWriterPtr writer )
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
-
+   if (economy_sysSave(writer) < 0) return -1;
+   if (shiplog_save(writer) < 0) return -1;
    return 0;
 }
 
@@ -96,8 +99,8 @@ int save_all (void)
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
-   /* Do not save during tutorial. Or if saving is off. */
-   if (player_isTut() || player_isFlag(PLAYER_NOSAVE))
+   /* Do not save if saving is off. */
+   if (player_isFlag(PLAYER_NOSAVE))
       return 0;
 
    /* Create the writer. */

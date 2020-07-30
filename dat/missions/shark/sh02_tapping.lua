@@ -10,7 +10,9 @@
 
 --]]
 
-include "numstring.lua"
+require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -47,12 +49,15 @@ misn_desc = _("Nexus Shipyard is in competition with House Sirius.")
 npc_desc[1] = _("Arnold Smith")
 bar_desc[1] = _([[Arnold Smith is here. Perhaps he might have another job for you.]])
 npc_desc[2] = _("Nexus's agent")
-bar_desc[2] = _([[This guy matches exactly the description that was made to you.]])
+bar_desc[2] = _([[This guy seems to be the agent Arnold Smith was talking about.]])
 
 -- OSD
 osd_title = _("Unfair Competition")
 osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
 osd_msg[2] = _("Bring the recording back to %s in the %s system")
+
+log_text = _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]])
+
 
 function create ()
    repeat
@@ -68,7 +73,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/male1")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
 end
 
@@ -104,7 +109,7 @@ end
 function land()
    --The player is landing on the mission planet to get the box
    if stage == 0 and planet.cur() == mispla then
-      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/scientist", bar_desc[2])
+      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent", bar_desc[2])
    end
 
    --Job is done
@@ -115,6 +120,7 @@ function land()
          misn.osdDestroy(osd)
          hook.rm(enterhook)
          hook.rm(landhook)
+         shark_addLog( log_text )
          misn.finish(true)
       end
    end

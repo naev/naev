@@ -4,6 +4,48 @@
     <image>empire</image>
     <x>-320.200000</x>
     <y>-313.800000</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
+  <decorator>
+    <image>soromid</image>
+    <x>144.000000</x>
+    <y>624.000000</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
+  <decorator>
+    <image>dvaered</image>
+    <x>240.000000</x>
+    <y>-573.000000</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
+  <decorator>
+    <image>zalek</image>
+    <x>-582.606486</x>
+    <y>-881.496039</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
+  <decorator>
+    <image>sirius</image>
+    <x>1015.589870</x>
+    <y>-624.818459</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
+  <decorator>
+    <image>frontier</image>
+    <x>619.000000</x>
+    <y>-389.000000</y>
+    <detection_radius>100</detection_radius>
+  </decorator>
+  <decorator>
+    <image>nebula</image>
+    <x>588.000000</x>
+    <y>94.000000</y>
     <detection_radius>300</detection_radius>
+  </decorator>
+  <decorator>
+    <image>proteron</image>
+    <x>1196.000000</x>
+    <y>510.000000</y>
+    <detection_radius>100</detection_radius>
   </decorator>
 </map>

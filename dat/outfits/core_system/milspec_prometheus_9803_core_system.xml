@@ -8,7 +8,7 @@
   <mass>975</mass>
   <price>2600000</price>
   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The 9803 boasts a heavy duty power generator as well as considerable shielding and subsystem control. Fly safe, fly Milspec.</description>
-  <gfx_store>misc05</gfx_store>
+  <gfx_store>core_system_power_l2</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>235</cpu_max>

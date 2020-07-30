@@ -11,8 +11,8 @@
   <y>604.486667</y>
  </pos>
  <assets>
-  <asset>Virtual Pirate Small</asset>
   <asset>Virtual Miner Small</asset>
+  <asset>Virtual Pirate Small</asset>
  </assets>
  <jumps>
   <jump target="Point Zero">
@@ -26,9 +26,13 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <pos x="3000" y="-1000"/>
-   <radius>5000</radius>
-   <density>0.5</density>
+   <type>default</type>
+   <type>default</type>
+   <type>diamond</type>
+   <type>liquid</type>
+   <radius>5000.000000</radius>
+   <pos x="3000.000000" y="-1000.000000"/>
+   <density>0.500000</density>
   </asteroid>
  </asteroids>
 </ssys>

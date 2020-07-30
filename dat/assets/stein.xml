@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Stein">
+ <pos>
+  <x>2790.961087</x>
+  <y>-2025.740177</y>
+ </pos>
+ <GFX>
+  <space>O05.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>250.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>100000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Probably the largest Za'lek presence left in the south of their space. A moderately prosperous oceanic world with a diverse economy and several prestigious universities. This world has resisted the entropy that has gripped much of this region of Za'lek space.</description>
+  <bar>A ramshakle, rather cheerful place. It has several large aquariums showing off the local marine life. Tables are placed with little rhyme or reason, and the chatter of the patrons adds to the somewhat energetic feel.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Beam 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Engines Cargo</item>
+  <item>Engines Low</item>
+  <item>Hulls Low</item>
+  <item>Systems Low</item>
+  <item>Systems Medium</item>
+ </tech>
+</asset>
