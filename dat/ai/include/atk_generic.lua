@@ -172,10 +172,10 @@ function _atk_g_ranged( target, dist )
       else -- In range
          local dir  = ai.face(target)
          if dir < 30 then
-            mem.totmass = p:stats().mass
+            ai.set_shoot_indicator(false)
             ai.weapset( 4 )
-            -- If he managed to shoot, the mass decreased
-            if p:stats().mass < mem.totmass - 0.01 and not ai.timeup(1) then
+            -- If he managed to shoot, reinitialize the timer
+            if ai.shoot_indicator() and not ai.timeup(1) then
                ai.settimer(1, 13000)
             end
          end

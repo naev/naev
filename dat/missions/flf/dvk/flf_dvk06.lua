@@ -61,6 +61,8 @@ flfcomm[2] = _("You heard the boss! Let's grind that station to dust!")
 
 civcomm = _("Help! SOS! We are under attack! In need of immediate assistance!")
 
+log_text = _([[You led the charge to destroy Raglan Outpost, a source of deep penetration of Dvaered forces into the Frontier. As a result, Dvaered forces have started to be pushed out of Frontier space, the first time the FLF has ever done so and a major victory for the Frontier.]])
+
 
 function create ()
    missys = system.get( "Haleb" )
@@ -349,6 +351,7 @@ function finish ()
    player.pay( credits )
    flf_setReputation( 90 )
    faction.get("FLF"):modPlayer( reputation )
+   flf_addLog( log_text )
    misn.finish( true )
 end
 

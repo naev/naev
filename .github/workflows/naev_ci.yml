@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  win32:
+  "Windows-MinGW32":
     runs-on: windows-latest
 
     defaults:
@@ -15,9 +15,8 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW32
-        release: false
-        update: false
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit mingw-w64-i686-itstool mingw-w64-i686-pkg-config autoconf autoconf-archive automake automake-wrapper intltool 
+        update: true
+        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -36,7 +35,7 @@ jobs:
         name: naev-win32-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
-  win64:
+  "Windows-MinGW64":
     runs-on: windows-latest
 
     defaults:
@@ -48,10 +47,9 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
-        release: false
-        update: false
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-itstool mingw-w64-x86_64-pkg-config autoconf autoconf-archive automake automake-wrapper intltool 
-    
+        update: true
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
@@ -69,17 +67,10 @@ jobs:
         name: naev-win64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
-  lin64:
+  "Linux-x86_64":
     runs-on: ubuntu-latest
 
     steps:
-    #- name: Install SSH Key
-    #  uses: shimataro/ssh-key-action@v2.0.3
-    #  with:
-    #    key: ${{ secrets.SSH_KEY }}
-    #    name: id_rsa # optional
-    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    #  if: ${{ github.event_name == 'push' }}
 
     - name: Update APT Cache
       run: |
@@ -105,14 +96,10 @@ jobs:
           libzip-dev \
           libiberty-dev \
           libluajit-5.1-dev \
-          luarocks \
           gettext \
           autopoint \
           intltool \
           itstool
-
-    - name: Install LuaRocks packages 
-      run: luarocks install --local ldoc
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -125,22 +112,13 @@ jobs:
       env:
         CFLAGS: "-O3"
 
-    - name: Build Naev Lua docs
-      run: |
-        export PATH="$PATH:$HOME/.luarocks/bin"
-        (cd docs && ./luadoc.sh)
-    
-    #- name: Upload Lua docs
-    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-    #  if: ${{ github.event_name == 'push' }}
-
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-lin64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev
 
-  macos:
+  "macOS":
     runs-on: macos-latest
 
     steps:
@@ -189,3 +167,44 @@ jobs:
       with:
         name: naev-macos-${{ github.sha }}
         path: ${{ github.workspace }}/Naev.app/ 
+
+  "Lua-Documentation":
+    runs-on: ubuntu-latest
+
+    steps:
+    #- name: Install SSH Key
+    #  uses: shimataro/ssh-key-action@v2.0.3
+    #  with:
+    #    key: ${{ secrets.SSH_KEY }}
+    #    name: id_rsa # optional
+    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
+    #  if: ${{ github.event_name == 'push' }}
+
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install LuaRocks
+      run: |
+        sudo apt-get install luarocks
+
+    - name: Install LuaRocks packages 
+      run: luarocks install --local ldoc
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Build Naev Lua Documentation
+      run: |
+        export PATH="$PATH:$HOME/.luarocks/bin"
+        (cd docs && ./luadoc.sh)
+    
+    #- name: Upload Lua Documentation
+    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+    #  if: ${{ github.event_name == 'push' }}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-luadocs-${{ github.sha }}
+        path: ${{ github.workspace }}/docs/html/

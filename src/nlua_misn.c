@@ -44,6 +44,7 @@
 #include "npc.h"
 #include "array.h"
 #include "ndata.h"
+#include "shiplog.h"
 
 
 /**
@@ -1017,6 +1018,4 @@ static int misn_claim( lua_State *L )
    lua_pushboolean(L,1);
    return 1;
 }
-
-
 

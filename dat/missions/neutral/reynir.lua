@@ -13,6 +13,9 @@
 
 --]]
 
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
 
 -- This section stores the strings (text) for the mission.
 
@@ -41,7 +44,7 @@ text[4] = _([[Reynir walks out of the ship. You notice that he's bleeding out of
 text[5] = _([["Thank you so much! Here's %s tonnes of hot dogs. They're worth more than their weight in gold, aren't they?"]])
 text[6] = _([[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]])
 text[7] = _([[Reynir doesn't look happy when you meet him outside the ship.
-    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %d tonnes of hot dogs..."]])
+    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %s tonnes of hot dogs..."]])
 
 -- Comm chatter -- ??
 talk = {}
@@ -53,6 +56,9 @@ osd_msg[1] = _("Fly around in the system, preferably near %s")
 osd_msg[2] = _("Take Reynir home to %s")
 msg_abortTitle = "" 
 msg_abort = [[]]
+
+log_text_good = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s tonnes of hot dogs.]])
+log_text_bad = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of %s tonnes of hot dogs.]])
 
 
 function create ()
@@ -101,12 +107,15 @@ function landed()
       if misn_bleeding then
          reward = math.min(1, player.pilot():cargoFree())
          reward_text = text[7]
+         log_text = log_text_bad
       else
          reward = player.pilot():cargoFree()
          reward_text = text[5]
+         log_text = log_text_good
       end
-      tk.msg( title[4], string.format(reward_text, reward) )
+      tk.msg( title[4], string.format(reward_text, numstring(reward)) )
       player.pilot():cargoAdd( cargoname, reward )
+      addMiscLog( log_text:format( numstring(reward) ) )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then

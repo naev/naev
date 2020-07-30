@@ -10,6 +10,7 @@
 
 require "fleethelper.lua"
 require "portrait.lua"
+require "dat/missions/dvaered/common.lua"
 
 
 title = {}
@@ -72,11 +73,13 @@ osd_desc[3] = _("Fight the Dvaered until the FLF step in")
 osd_desc[4] = _("Disable and board at least one FLF ship")
 osd_desc[5] = _("Return to any Dvaered world")
 
-misn_desc = _("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disabling and boarding one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete.")
+misn_desc = _("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disable and board one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete.")
 misn_reward = _("Serving alongside real Dvaered warlords")
 
 comm_msg["enter"] = _("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!")
 comm_msg["victory"] = _("All targets neutralized. Download the flight log and let's get out of here!")
+
+log_text = _([[You aided the Dvaered in their efforts to locate a secret FLF base. You posed as an FLF pilot, luring real FLF pilots out so that one could be disabled and you could steal its flight logs. The Dvaered are now planning an assault on the terrorist base, and Colonel Urnus said that you can contact a Dvaered liason whenever you're ready for the operation.]])
 
 
 function create()
@@ -143,6 +146,7 @@ function land()
         var.push("flfbase_intro", 3)
         faction.get("Dvaered"):modPlayerSingle(5)
         player.pay(700000) -- 700K
+        dv_addAntiFLFLog( log_text )
         misn.finish(true)
     end
 end

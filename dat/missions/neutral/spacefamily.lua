@@ -3,6 +3,10 @@
 -- See dat/events/neutral/shipwreck.lua
 --]]
 
+require "jumpdist.lua"
+require "dat/missions/neutral/common.lua"
+
+
 shipname = _("August") --The ship will have a unique name
 
 title = {}
@@ -57,8 +61,7 @@ osd_msg[1]   = {
    _("A shipwrecked space family has enlisted your aid. Can you take them to safety?")
 }
 
-
-require("dat/scripts/jumpdist.lua")
+log_text = _([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship, the man's wife leaving a generous payment for the trouble.]])
 
 
 function create ()
@@ -123,6 +126,7 @@ function land()
          tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
          player.pay(500000)
          misn.cargoJet(carg_id)
+         addMiscLog( log_text )
          misn.finish(true)
       else
          nextstop = nextstop + 1

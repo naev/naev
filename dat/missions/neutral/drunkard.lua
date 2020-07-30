@@ -7,7 +7,9 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
 
 -- Bar Description
 bar_desc = _("You see a drunkard at the bar mumbling about how he was so close to getting his break.")
@@ -60,6 +62,9 @@ text[8] = _([[You check your account balance as he closes the comm channel to fi
 
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
+
+log_text = _([[You helped some drunkard deliver goods for some countess. You thought you might get killed along the way, but you survived and got a generous payment.]])
+
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -173,6 +178,7 @@ function closehail()
    willie:setHilight(false)
    willie:setInvincible(false) 
    willie:hyperspace()
+   addMiscLog( log_text )
    misn.finish(true)
 end
 

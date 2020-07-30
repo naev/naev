@@ -6,6 +6,7 @@ Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Godda
 --]]
 
 require "numstring.lua"
+require "dat/missions/neutral/common.lua"
 
 
 misn_title = _([[Deliver Love]])
@@ -34,9 +35,10 @@ osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
 osd_desc["__save"] = true
 
+log_text = _([[You delivered a literal tonne of letters for a love-struck, old-fashioned man.]])
+
 cargoname = "Love Letters"
 
---Start Functions
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
@@ -95,6 +97,7 @@ function land()
    if planet.cur() == targetworld then
       player.pay( reward )
       tk.msg( "", misn_accomplished:format( numstring( reward ) ) )
+      addMiscLog( log_text )
       misn.finish( true )
    end
 end

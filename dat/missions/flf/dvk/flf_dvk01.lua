@@ -18,6 +18,7 @@
 --]]
 
 require "dat/missions/flf/flf_diversion.lua"
+require "dat/missions/flf/flf_common.lua"
 
 -- localization stuff
 title = {}
@@ -44,6 +45,8 @@ misn_reward = _("Substantial pay and a great amount of respect")
 
 npc_name = _("Benito")
 npc_desc = _("Benito seems to want to speak with you.")
+
+log_text = _([[You helped the FLF conduct some kind of operation in Raelid by distracting the Dvaereds in another system.]])
 
 
 function create ()
@@ -90,6 +93,7 @@ function land ()
       player.pay( credits )
       flf_setReputation( 30 )
       faction.get("FLF"):modPlayer( reputation )
+      flf_addLog( log_text )
       misn.finish( true )
    end
 end

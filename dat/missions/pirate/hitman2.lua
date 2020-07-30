@@ -10,6 +10,7 @@
 
 require "dat/missions/pirate/common.lua"
 
+
 -- Bar information
 bar_desc = _("You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss.")
 
@@ -32,6 +33,9 @@ text[3] = _([[You glance around, looking for your acquaintance, but he has notic
 -- Messages
 msg      = {}
 msg[1]   = _("MISSION SUCCESS! Return for payment.")
+
+log_text = _([[You assassinated some of the shifty merchant's competition and were paid a sum of credits for your services. He said that he should hopefully not require further services from you.]])
+
 
 function create ()
    -- Note: this mission does not make any system claims. 
@@ -115,6 +119,7 @@ function landed()
       player.pay(500000) -- 500k
       faction.modPlayerSingle("Pirate",5)
       pir_modDecayFloor( 3 )
+      pir_addMiscLog( log_text )
       misn.finish(true)
    end
 end

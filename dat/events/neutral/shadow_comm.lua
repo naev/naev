@@ -3,6 +3,8 @@
 --]]
 
 require "proximity.lua"
+require "dat/missions/shadow/common.lua"
+
 
 -- localization stuff, translators would work here
 title = {}
@@ -14,8 +16,11 @@ text[1] = _([["Greetings, %s," the pilot of the Vendetta says to you as soon as 
     "Fly to the %s system," he replies. "She will meet you there. There's no rush, but I suggest you go see her at the earliest opportunity."
     The screen blinks out and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the %s system.]])
 text[2] = _([["Greetings, %s," the pilot of the Vendetta says. "Sorry to bother you; I've just noticed that it's been quite some time since we contacted you and I wanted to check in on you.
-    "As was mentioned previously, the one sho wishes to meet you can be found in the %s system, which is near Empire space. Again, there's no rush, but I suggest you go to see her at the earliest opportunity."
+    "As was mentioned previously, the one who wishes to meet you can be found in the %s system, which is near Empire space. Again, there's no rush, but I suggest you go to see her at the earliest opportunity."
     The screen blinks out and the Vendetta goes about its business, paying you no more attention. You make a mental note again to try to remember to go to the %s system when you get the chance.]])
+
+log_text = _([[Someone has invited you to meet with her in the Pas system, supposedly an acquaintance of yours. The pilot who told you this said that there's no rush, "but I suggest you go see her at the earliest opportunity".]])
+
 
 function create ()
     sysname = "Pas"
@@ -51,6 +56,7 @@ function hail(p)
     if hail_time == nil then
         hail_time = time.get()
         tk.msg(title[1], text[1]:format(player.name(), sysname, sysname))
+        shadow_addLog( log_text )
 
         -- The event should now remain active until Pas
         -- Clear the hooks that would otherwise finish it

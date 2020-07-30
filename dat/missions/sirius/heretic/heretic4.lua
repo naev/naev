@@ -9,6 +9,8 @@
    involve smuggling elements.]]
 
 require "numstring.lua"
+require "dat/missions/sirius/common.lua"
+
 
 --beginning messages
 bmsg = {}
@@ -31,6 +33,9 @@ npc_name = _("Draga")
 bar_desc = _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out.")
 misn_desc = _("Assist the Nasin refugees by flying to %s in %s, and unloading them there.")
 misn_reward = _("%s credits")
+
+log_text = _([[You helped rescue as many Nasin as your ship could hold to Ulios. Draga was killed by a Sirian soldier as he attempted to rescue his people. When you made it to Ulios, a man named Jimmy gave you a credit chip and said that he "will be forever in your debt".]])
+
 
 function create()
    --this mission make no system claims.
@@ -128,6 +133,7 @@ function misn_over() --arent you glad thats over?
       var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
       player.allowSave(true)
+      srs_addHereticLog( log_text )
       misn.finish(true)
    end
 end

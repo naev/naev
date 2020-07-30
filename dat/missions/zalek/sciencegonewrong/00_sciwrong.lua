@@ -12,6 +12,8 @@
 require "numstring.lua"
 require "proximity.lua"
 require "fleethelper.lua"
+require "dat/missions/zalek/common.lua"
+
 
 -- set mission variables
 t_sys = {}
@@ -71,6 +73,9 @@ osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 refusetitle = _("No Science Today")
 refusetext = _("I guess you don't care for science...")
 
+log_text = _([[You helped Dr. Geller obtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
+
+
 function create ()
    -- Spaceport bar stuff
    misn.setNPC( _("A scientist"), "zalek/unique/geller" )
@@ -114,7 +119,7 @@ function first_trd()
      return
   else
      tk.msg(title[1], text[3])
-     tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
+     tk.msg(title[1], text[4]:format(t_pla[2], t_sys[2]))
      talked = true
   end
   
@@ -158,7 +163,7 @@ function third_trd()
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3])
-  osd_msg[4] = osd_msg[4]:format(t_sys[3],t_pla[3])
+  osd_msg[4] = osd_msg[4]:format(t_sys[3], t_pla[3])
   misn.osdCreate(misn_title, {osd_msg[4]})
   
   misn.markerMove(misn_mark, system.get(t_sys[3]))
@@ -175,6 +180,7 @@ function fnl_ld ()
       tk.msg(title[1],text[15])
       tk.msg(title[1],text[16])
       player.pay(reward)
+      zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

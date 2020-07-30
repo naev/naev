@@ -7,7 +7,8 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 -- Mission details
 bar_desc = _("You see Commander Soldner who is expecting you.")
@@ -38,6 +39,8 @@ errtitle = {}
 errtitle[1] = _("Need More Space")
 err = {}
 err[1] = _("You do not have enough space to load the packages. You need to make room for %d more tons.")
+
+log_text = _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]])
 
 
 function create ()
@@ -135,6 +138,8 @@ function land ()
 
       -- The goods
       diff.apply("heavy_weapons_license")
+
+      emp_addShippingLog( log_text )
 
       misn.finish(true)
    end

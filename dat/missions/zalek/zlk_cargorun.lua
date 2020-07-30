@@ -4,6 +4,8 @@ Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
 require "numstring.lua"
+require "dat/missions/zalek/common.lua"
+
 
 -- Bar Description
 bar_desc = _("This Za'lek scientist seems to be looking for someone.")
@@ -56,6 +58,9 @@ text[8] = _([[You check your account balance as he closes the comm channel to fi
 
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
+
+log_text = _([[You helped a Za'lek scientist deliver some equipment and were paid generously for the job.]])
+
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -169,7 +174,8 @@ function closehail()
    logan:setHilight(false)
    logan:setInvincible(false) 
    logan:hyperspace()
-   faction.modPlayerSingle("Za'lek",5);
+   faction.modPlayerSingle("Za'lek", 5)
+   zlk_addMiscLog( log_text )
    misn.finish(true)
 end
 

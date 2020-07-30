@@ -198,20 +198,34 @@ function follow_fleet ()
       return
    end
 
+   if mem.app == nil then
+      mem.app = true
+   end
+
    local goal = leader
    if mem.form_pos ~= nil then
       local angle, radius, method = unpack(mem.form_pos)
       goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method)
    end
 
-   
    local dir   = ai.face(goal)
    local dist  = ai.dist(goal)
- 
-   -- Must approach
-   if dir < 10 and dist > 300 then
-      ai.accel()
- 
+
+   if mem.app == true then 
+      if dist > 10 then
+         if dir < 10 then  -- Must approach
+            ai.accel()
+         end
+      else  -- No need to approach anymore
+         mem.app = false
+      end
+   else
+      if dist > 300 then   -- Must approach
+         mem.app = true
+      else   -- Face forward
+         goal = ai.pilot():pos() + leader:vel()
+         ai.face(goal)
+      end
    end
 end
 
@@ -248,15 +262,8 @@ function __hyperspace_shoot ()
    ai.pushsubtask( "__hyp_approach_shoot", pos )
 end
 function __hyp_approach_shoot ()
-   -- Shoot
-   if ai.hasturrets() then
-      enemy = ai.getenemy()
-      if enemy ~= nil then
-         ai.weapset( 3 )
-         ai.settarget( enemy )
-         ai.shoot( true )
-      end
-   end
+   -- Shoot and approach
+   __move_shoot()
    __hyp_approach()
 end
 
@@ -265,12 +272,34 @@ function __land ()
    land()
 end
 
+function __land_shoot ()
+   __choose_land_target ()
+   ai.pushsubtask( "__landgo_shoot" )
+end
+
+function __landgo_shoot ()
+   __move_shoot()
+   __landgo()
+end
+
+function __move_shoot ()
+   -- Shoot while going somewhere
+   -- The difference with run_turret is that we pick a new enemy in this one
+   if ai.hasturrets() then
+      enemy = ai.getenemy()
+      if enemy ~= nil then
+         ai.weapset( 3 )
+         ai.settarget( enemy )
+         ai.shoot( true )
+      end
+   end
+end
+
 
 --[[
 -- Attempts to land on a planet.
 --]]
-function land ()
-
+function __choose_land_target ()
    -- Only want to land once, prevents guys from never leaving.
    if mem.landed then
       ai.poptask()
@@ -297,7 +326,10 @@ function land ()
          return
       end
    end
+end
 
+function land ()
+   __choose_land_target ()
    ai.pushsubtask( "__landgo" )
 end
 function __landgo ()

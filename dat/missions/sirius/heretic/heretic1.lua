@@ -3,7 +3,9 @@
    the player is asked to deliver a message to a "shady character"
    on the wringer in the suna system.]]
    
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/sirius/common.lua"
+
 
 --all the messages before the mission starts
 bmsg = {}
@@ -30,6 +32,9 @@ misn_desc = _("Shaman of Nasin has hired you to deliver the message to %s in the
 misn_reward = _("%s credits")
 osd = {}
 osd[1] = _("Fly to %s in the %s system and deliver the message")
+
+log_text = _([[You found out that the organization you delivered an illegal package for is Nasin, a group of followers of Sirichana who the Sirii brand as "heretics". You then delivered a message for Nasin to their base in The Wringer. You were then invited to meet the Nasin officials at the bar on The Wringer.]])
+
 
 function create()
    --this mission makes no system claims
@@ -75,12 +80,8 @@ function landing()
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",5) --once again, the nasin like the fact that we are helping the nasin.
       var.push("heretic_misn_tracker",misn_tracker)
-      misn.osdDestroy()
+      srs_addHereticLog( log_text )
       misn.finish(true)
    end
 end
 
-function abort()
-   misn.osdDestroy()
-   misn.finish(false)
-end

@@ -3,10 +3,11 @@
    sent in by the threatened sirius. the player attempts to defend,
    when is instead ordered back to the wringer to escape sirius controlled
    space. thanks to nloewen and viashimo for help!]]
-   
 
-require "dat/scripts/numstring.lua"
-   
+require "numstring.lua"
+require "dat/missions/sirius/common.lua"
+
+
 --beginning messages
 bmsg = {}
 bmsg[1] = _([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, %s," he says. "We have a situation, and we need your help.
@@ -32,6 +33,9 @@ oos_failure = _([[You recieve a scathing angry message from Draga chastising you
 misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
 time_to_come_home = _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]])
 misn_reward = _("%s credits")
+
+log_text = _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]])
+
 
 function create()
    --this mission makes one mission claim, in suna.
@@ -167,6 +171,7 @@ function return_to_base()
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",10)
       var.push("heretic_misn_tracker",misn_tracker)
+      srs_addHereticLog( log_text )
       misn.finish(true)
    end
 end

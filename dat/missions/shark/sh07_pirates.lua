@@ -9,9 +9,11 @@
 --]]
 
 --Needed scripts
-require "dat/scripts/pilot/pirate.lua"
-require "dat/scripts/numstring.lua"
-require "dat/scripts/jumpdist.lua"
+require "pilot/pirate.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -54,6 +56,9 @@ bar_desc[1] = _([[Perhaps it would be worthwhile to see if he has another job fo
 osd_title = _("The Last Detail")
 osd_msg[1] = _("Kill the four pirates")
 osd_msg[2] = _("Report back to %s in %s")
+
+log_text = _([[You eliminated some pirates that were about to get in the way of Nexus Shipyards' business.]])
+
 
 function create ()
 
@@ -144,6 +149,7 @@ function land()
       misn.osdDestroy(osd)
       hook.rm(enterhook)
       hook.rm(landhook)
+      shark_addLog( log_text )
       misn.finish(true)
    end
 end
