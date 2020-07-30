@@ -21,7 +21,7 @@ title[2] = _("Empire Recruitment")
 title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You approach the Empire Lieutenant.
-"Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]])
+    "Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]])
 text[2] = _([["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, greatest pilot we ever had in the armada."
     He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to %s. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]])
 text[3] = _([[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
