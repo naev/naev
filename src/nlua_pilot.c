@@ -3958,6 +3958,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to land.
  *    @luatparam[opt] Planet planet Planet to land on, uses random if nil.
+ *    @luatparam[opt] boolean shoot Whether or not to shoot at targets while running away with turrets.
  * @luasee control
  * @luafunc land( p, planet )
  */
@@ -3969,6 +3970,7 @@ static int pilotL_land( lua_State *L )
    int i;
    double a, r;
    Vector2d v;
+   int shoot;
 
    NLUA_CHECKRW(L);
 
@@ -3978,9 +3980,14 @@ static int pilotL_land( lua_State *L )
       pnt = luaL_validplanet( L, 2 );
    else
       pnt = NULL;
+   shoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   t = pilotL_newtask( L, p, "__land" );
+   if (shoot)
+      t = pilotL_newtask( L, p, "__land_shoot" );
+   else
+      t = pilotL_newtask( L, p, "__land" );
+
    if (pnt != NULL) {
       /* Find the jump. */
       for (i=0; i < cur_system->nplanets; i++) {
