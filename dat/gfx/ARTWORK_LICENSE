@@ -434,7 +434,7 @@
 
  * Author: Camilo Polymeris <cpolymeris@gmx.net>, License: GPLv3
    * gui
-     * default
+     * legacy
        * minimal.png
        * minimal_fuel.png
        * minimal_energy.png
@@ -522,7 +522,7 @@
 
  * Author: Sean Hildebrand, License: CC-by 3.0
    * gui
-     * default
+     * legacy
        * minimal_planet.png
        * minimal_pilot.png
      * no.png
@@ -585,7 +585,7 @@
        * dv_military_m2.png
        * dv_military_m3.png
        * dv_military_f1.png
-       * dv_military_f1.png
+       * dv_military_f2.png
      * empire
        * unique
          * czesc.png
