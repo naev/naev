@@ -18,6 +18,7 @@
 --]]
 
 require "dat/events/tutorial/tutorial-common.lua"
+require "dat/missions/neutral/common.lua"
 
 
 -- localization stuff, translators would work here
@@ -75,6 +76,8 @@ osd_desc[3] = _("Go to %s in the %s system by right-clicking it on the overview 
 osd_desc[4] = _("Destroy the practice drone near %s in the %s system")
 osd_desc[5] = _("Jump to the %s system by using your starmap")
 osd_desc["__save"] = true
+
+log_text = _([[Captain T. Practice, the Melendez employee who sold you your first ship, gave you a tutorial on how to pilot it, claiming afterwards that you are "a natural-born pilot".]])
 
 
 function create ()
@@ -171,6 +174,9 @@ function enter_timer ()
       spawn_drone()
    elseif stage == 6 and system.cur() == destsys then
       tk.msg( title[3], text[11]:format( player.name(), tutGetKey("target_next"), tutGetKey("hail") ) )
+
+      addMiscLog( log_text )
+
       misn.finish( true )
    end
 end

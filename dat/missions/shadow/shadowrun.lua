@@ -7,6 +7,7 @@
 --]]
 
 require "portrait.lua"
+require "dat/missions/shadow/common.lua"
 
 
 planetname = "Durea" -- The planet where SHITMAN lives
@@ -114,6 +115,9 @@ osd_msg2[1] = _("You could not persuade Jorek to come with you")
 osd_msg2[2] = _("Fly to the %s system and dock with (board) %s to report your result")
 osd_msg2[3] = _("You have %s remaining")
 osd_msg2["__save"] = true
+
+log_text = _([[You participated in an operation for Captain Rebina. You thought you were rescuing a man named Jorek, but it turns out that you were actually helping smuggle something onto Captain Rebina's ship, the Seiryuu. You know next to nothing about Captain Rebina or who she works for.]])
+
 
 function create ()
     if not misn.claim( {sys, sys2} ) then
@@ -300,6 +304,7 @@ function board()
     if var.peek("shadowrun") then
        var.pop("shadowrun") -- in case it was used
     end
+    shadow_addLog( log_text )
     misn.finish(true)
 end
 

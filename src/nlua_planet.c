@@ -883,7 +883,7 @@ static int planetL_setKnown( lua_State *L )
  * @usage p:recordCommodityPriceAtTime( t )
  *    @luatparam Planet p Planet to record prices at
  *    @luatparam ntime_t t Time at which to record prices.
- * @luafunc setKnown( p, t )
+ * @luafunc recordCommodityPriceAtTime( p, t )
  */
 static int planetL_recordCommodityPriceAtTime( lua_State *L )
 {

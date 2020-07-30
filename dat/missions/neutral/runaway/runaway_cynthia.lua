@@ -4,6 +4,8 @@ There will be more missions to detail how you are percieved as the kidnapper of 
 --]]
 
 require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
 
 npc_name = _("Young Teenager")
 bar_desc = _("A pretty teenager sits alone at a table.")
@@ -25,16 +27,14 @@ misn_accomplished = _([[As you walk into the docking bay, she warns you to look 
 osd_text = {}
 osd_text[1] = _("Deliver Cynthia to Zhiru in the Goddard system")
 
+log_text = _([[You gave a teenage girl named Cynthia a lift to Zhiru. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]])
+
 
 function create ()
    startworld, startworld_sys = planet.cur()
 
    targetworld_sys = system.get("Goddard")
    targetworld = planet.get("Zhiru")
-
-   --if not misn.claim ( {targetworld_sys} ) then
-   --   abort()
-   --end
 
    reward = 500000
 
@@ -83,13 +83,9 @@ function land ()
 
       tk.msg( title, string.format( misn_accomplished, numstring(reward) ) )
 
+      addMiscLog( log_text )
+
       misn.finish(true)
    end
 end
 
-function abort ()
-  --Clean up
-   misn.cargoRm( cargoID )
-   misn.osdDestroy()
-   misn.finish( false )
-end

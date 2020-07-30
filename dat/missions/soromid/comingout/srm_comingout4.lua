@@ -18,6 +18,8 @@
 --]]
 
 require "numstring.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -64,6 +66,9 @@ osd_desc["__save"] = true
 
 ambush_msg = _("Don't think you'll get away that easily! Get them!")
 noland_msg = _("It's too dangerous to land here right now.")
+
+log_text = _([[You transported Chelsea, who requests they/them pronouns now, to Durea so that they could see their parents. However, Chelsea's father turned on them because of their gender identity and acceptance of the Soromid, aiming a laser gun at Chelsea before he was tackled and held back by Chelsea's mother. You didn't see what happened, but as you and Chelsea ran away, you heard a gunshot. Chelsea's father then caught up with you as you began launch procedures, attempted to fire his laser gun at your ship, and then sent a group of thugs after you as you transported Chelsea to safety.
+    Traumatized, Chelsea has set off to continue doing what they were doing, but this time, they are partly doing so to prepare for the worst. They said that they will find you if they need your help again.]])
 
 
 function create ()
@@ -139,6 +144,7 @@ function land ()
       player.takeoff()
    elseif stage >= 2 and planet.cur() == misplanet2 then
       tk.msg( "", text[10] )
+      srm_addComingOutLog( log_text )
       misn.finish( true )
    end
 end

@@ -18,6 +18,7 @@
 ]]--
 
 require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 -- Mission details
 bar_desc = _("Commander Soldner is waiting for you.")
@@ -31,7 +32,6 @@ title = {}
 title[1] = _("Commander Soldner")
 title[2] = _("Disabled Ship")
 title[3] = _("Mission Success")
-title[4] = _("Mission Failure")
 text = {}
 text[1] = _([[You meet up once more with Commander Soldner at the bar.
     "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]])
@@ -45,7 +45,9 @@ msg = {}
 msg[1] = _("MISSION FAILED: VIP is dead.")
 msg[2] = _("MISSION FAILED: You abandoned the VIP.")
 
-require "dat/missions/empire/common.lua"
+log_text_success = _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]])
+log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
+
 
 function create ()
    -- Target destination
@@ -120,15 +122,7 @@ function land ()
          -- Flavour text
          tk.msg( title[3], text[5] )
 
-         misn.finish(true)
-
-      -- Mister VIP is dead
-      elseif misn_stage == 3 then
-
-         -- What a disgrace you are, etc...
-         tk.msg( title[4], text[6] )
-         emp_modReputation( 5 ) -- Bump cap a bit
-         diff.apply("heavy_combat_vessel_license")
+         emp_addShippingLog( log_text_success )
 
          misn.finish(true)
       end
@@ -186,6 +180,7 @@ function enter ()
 
       -- Notify of mission failure
       player.msg( msg[2] )
+      emp_addShippingLog( log_text_fail )
       misn.finish(false)
 
    end
@@ -231,9 +226,7 @@ function death ()
    if misn_stage == 1 then
       -- Notify of death
       player.msg( msg[1] )
-
-      -- Update mission details
-      misn_stage = 3
+      emp_addShippingLog( log_text_fail )
       misn.finish(false)
    end
 end
@@ -241,5 +234,6 @@ end
 function abort ()
    -- If aborted you'll also leave the VIP to fate. (A.)
    player.msg( msg[2] )
+   emp_addShippingLog( log_text_fail )
    misn.finish(false)
 end

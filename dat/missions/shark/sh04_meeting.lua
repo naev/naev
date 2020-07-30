@@ -14,6 +14,8 @@
 require "proximity.lua"
 require "numstring.lua"
 require "fleethelper.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -53,6 +55,9 @@ bar_desc[1] = _([[He is waiting for you.]])
 osd_title = _("The Meeting")
 osd_msg[1] = _("Go to the %s system and land on %s")
 osd_msg[2] = _("Bring Smith back to %s in the %s system")
+
+log_text = _([[You transported Arnold Smith to a secret meeting for Nexus Shipyards. The meeting supposedly did not go as well as he hoped, but was a partial success.]])
+
 
 function create ()
 
@@ -121,6 +126,7 @@ function land()
          misn.osdDestroy(osd)
          hook.rm(enterhook)
          hook.rm(landhook)
+         shark_addLog( log_text )
          misn.finish(true)
       end
    end

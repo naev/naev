@@ -75,3 +75,10 @@ end
 function flf_setReputation( newcap )
    var.push( "_fcap_flf", math.max( newcap, var.peek( "_fcap_flf" ) or 5 ) )
 end
+
+
+-- Add an entry to the FLF campaign log.
+function flf_addLog( text )
+   shiplog.createLog( "flf", _("FLF"), _("Frontier") )
+   shiplog.appendLog( "flf", text )
+end

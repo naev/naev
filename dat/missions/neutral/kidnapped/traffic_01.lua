@@ -12,6 +12,7 @@
 --]]
 
 require "portrait.lua"
+require "dat/missions/neutral/common.lua"
 
 
 -- Bar information
@@ -34,23 +35,20 @@ title[2] = _("Wrong system")
 title[3] = _("Right system")
 title[4] = _("Comm Channel")
 title[5] = _("The Deception")
-title[6] = _("Mission Complete")
-text[1]  = _([["I must find my dear brother! Please! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left Could you please help me? Please!!"]])
-text[2] = _([[The woman calms down as you signal your willingness to help. "Oh thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
-   And please hurry. I was told someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]])
-text[3] = _([["I don't thnk he is here. He must be in one of the other systems. Please, hurry!"]])
-text[4] = _([["I think this is it! We found him!" says the woman.]])
-text[5] = _([[You radio the ship with a message saying you have his sister on board and that she has a message for him.]])
-text[6] = _([["My sister? What the heck could she want from me? Prepare for docking."]])
+text[1]  = _([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]])
+text[2] = _([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
+    And please hurry. Someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]])
+text[3] = _([["I don't think he is here. He must be in one of the other systems. Please hurry!"]])
+text[4] = _([["I think this is it! We found him!"]])
+text[5] = _([[You radio the ship with a message saying you have his sister on board and that she has a message for him.
+    "My sister? What the heck could she want from me? Prepare for docking."]])
 text[7] = _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airdock.
-    You find some of the stuff she left in your ship that you can turn to cash and a note: "Sorry"
-    Suddenly, your comm starts beeping. "We've received confirmation that you were invovled in the killing of our associate. Prepare to be boarded."]])
+    You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]])
 refusetitle = _("Sorry, I can't")
-refusetext = _([["How can you be such a heartless person?" asks you the woman half weepingly. " What has this universe become?..."]])
+refusetext = _([["How can you be such a heartless person? What has this universe become?..."]])
 
--- Messages
-msg      = {}
-msg[1]   = _("MISSION SUCCESS!")
+log_text = _([[You were tricked into aiding an assassination. A woman claimed she needed help finding her brother, but when you brought her to her "brother", she killed him and ran off, leaving behind an arrangement of credit chips and a note that simply said, "Sorry."]])
+
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -160,7 +158,6 @@ end
 -- if hailed: stop vessel let it be boarded 
 function got_hailed(shipp)
    tk.msg(title[4], text[5])
-   tk.msg(title[4], text[6])
    shipp:taskClear()
    shipp:brake()
    shipp:setActiveBoard(true)
@@ -182,6 +179,7 @@ function got_boarded(shipp)
    end
 
    player.pay(reward)
+   addMiscLog( log_text )
    misn.finish(true)
 end
 -- idle

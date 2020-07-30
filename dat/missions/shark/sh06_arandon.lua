@@ -9,6 +9,8 @@
 --]]
 
 require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -50,6 +52,9 @@ bar_desc[1] = _([[He's waiting for you.]])
 osd_title = _("A Journey To %s")
 osd_msg[1] = _("Go to %s and wait for the FLF ship, then hail and board it.")
 osd_msg[2] = _("Go back to %s in %s")
+
+log_text = _([[You transported Arnold Smith to a meeting with someone from the FLF. He said that he had good results.]])
+
 
 function create ()
 
@@ -107,6 +112,7 @@ function land()
          misn.osdDestroy(osd)
          hook.rm(enterhook)
          hook.rm(landhook)
+         shark_addLog( log_text )
          misn.finish(true)
       end
    end

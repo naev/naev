@@ -10,6 +10,9 @@
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
+require "dat/missions/zalek/common.lua"
+
+
 -- mission variables
 t_sys = {}
 t_pla = {}
@@ -50,6 +53,8 @@ osd_msg[3] = _("Return to %s in the %s system")
 -- refuestext 
 refusetitle = _("No Science Today")
 refusetext = _("But I really thought you were into science...")
+
+log_text = _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]])
 
 
 function create ()
@@ -149,7 +154,8 @@ function land()
       tk.msg(title[1], text[5])
       hook.rm(hland)
       misn.markerRm(misn_mark)
-      player.pay(reward) -- 30K
+      player.pay(reward)
+      zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

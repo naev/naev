@@ -922,7 +922,7 @@
    <faction>Empire</faction>
   </avail>
  </mission> 
- <mission name="Za’lek Long Distance Recruitment">
+ <mission name="Za'lek Long Distance Recruitment">
   <lua>empire/longdistanceshipping/emp_longdistancecargo3</lua>  
   <flags>
    <unique />
@@ -945,7 +945,7 @@
    <priority>4</priority>
    <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>75</chance>
-   <done>Za’lek Long Distance Recruitment</done>   
+   <done>Za'lek Long Distance Recruitment</done>   
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>

@@ -6,6 +6,7 @@
 --]]
 
 require "portrait.lua"
+require "dat/missions/neutral/common.lua"
 
 
 sysname1 = "Arcturus"
@@ -80,6 +81,9 @@ osdmsg[4] = _("Return the children to the %s system on planet %s")
 --NPCs
 pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
 pir2_disc = _([[The pirates have both drank their wallet's worth today, so overhearing shouldn't be too much of an issue.]])
+
+log_text = _([[You successfully rescued a couple dozen children who were kidnapped by a child trafficking ring after two parents asked for your help rescuing their own children. Said parents said that they would like to make an effort to fight the human trafficking problem directly and invited you to meet them again in the future on Brooks if you're willing to aid them in this quest.]])
+
 
 function create()
   claimsystem = {system.get("Goddard")}
@@ -243,6 +247,7 @@ function land3()
   if planet.cur() == planet.get(home) and rescued then
     tk.msg(title[6], text[6]:format(player.name()))
     tk.msg(title[7], text[7]:format(player.name()))
+    addMiscLog( log_text )
     misn.finish(true)
   end
 end

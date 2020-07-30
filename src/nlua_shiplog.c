@@ -6,11 +6,6 @@
  * @file nlua_shiplog.c
  *
  * @brief Handles the shiplog Lua bindings.
- *
- * @code
- * logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
- * shiplog.appendLog( "idstring", "message to append to log" )
- * @endcode
  */
 
 
@@ -62,18 +57,6 @@ static const luaL_Reg shiplog_methods[] = {
 }; /**< Shiplog Lua methods. */
 
 
-/**
- * @brief Registers the lua libraries.
- *
- *    @param L Lua state.
- *    @return 0 on success.
- */
-int shiplog_loadLibs( nlua_env env )
-{
-   nlua_loadStandard(env);
-   nlua_loadShiplog(env);
-   return 0;
-}
 /*
  * individual library loading
  */
@@ -89,17 +72,29 @@ int nlua_loadShiplog( nlua_env env )
 
 
 /**
+ * @brief Bindings for adding log entries to the ship log.
+ *
+ * A typical example would be:
+ * @code
+ * logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
+ * shiplog.appendLog( "idstring", "message to append to log" )
+ * @endcode
+ *
+ * @luamod shiplog
+ */
+/**
  * @brief Creates a shiplog for this mission.
  *
+ * @usage shiplog.createLog("MyLog", "My mission title", "Mission type") -- Creates log "MyLog" without erasing anything
+ * @usage shiplog.createLog("MyOtherLog", "Any title","Anything can be a type", true, 10) -- Erases any existing MyOtherLog entries and sets a limit of 10 entries
+ *
  *    @luatparam string idstr ID string to identify this log, or empty string for unnamed logsets.
- *    @luatparam string name Name for this log.
- *    @luatparam string type Type of log (e.g travel, trade, etc, can be anything.)
- *    @luatparam boolean overwrite Whether to overwrite existing mission with this logname and logtype.  Warning, removes previous entries of this logname and type.
- *    @luatparam number maxLen Optional maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed. 
+ *    @luatparam string logname Name for this log.
+ *    @luatparam string logtype Type of log (e.g travel, trade, etc, can be anything).
+ *    @luatparam[opt] boolean overwrite Whether to remove previous entries of this logname and type (default false).
+ *    @luatparam[opt] number maxLen Maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed. 
  *
  * @luafunc createLog( idstr, logname, logtype, overwrite, maxLen )
- * @usage misn.createLog("MyLog","My mission title","Mission type",false, 0) -- where myID can be a string for this mission set (e.g. "shadow"), or an empty string.
- * @usage misn.createLog("MyOtherLog","Any title","Anything can be a type",true, 10) -- with true to replace existing missions of this title and type, and 10 to limit this log to 10 entries (pruning when new ones are added beyond this).
  */
 static int shiplog_createLog( lua_State *L )
 {
@@ -130,9 +125,11 @@ static int shiplog_createLog( lua_State *L )
 /**
  * @brief Appends to the shiplog.
  *
+ * @usage shiplog.appendLog("MyLog", "Some message here")
+ *
+ *    @luatparam string idstr ID string of the log to append to.
  *    @luatparam string message Message to append to the log.
  * @luafunc appendLog( idstr, message )
- * @usage misn.appendLog("MyLog", "Some message here")
  */
 static int shiplog_appendLog( lua_State *L )
 {

@@ -13,6 +13,7 @@
 ]]--
 
 require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")
@@ -40,6 +41,8 @@ osd_msg[2] = ""
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
 osd_msg2 = _("Destroy at least %d drones (%d remaining)")
+
+log_text = _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]])
 
 
 function create ()
@@ -118,6 +121,8 @@ function land()
       -- Rewards
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
+
+      emp_addCollectiveLog( log_text )
 
       misn.finish(true)
    end

@@ -8,6 +8,7 @@
 --]]
 
 require "jumpdist.lua"
+require "dat/missions/neutral/common.lua"
 
 
 text = {}
@@ -29,6 +30,8 @@ misnreward = _("You will be paid 200,000 credits on arrival.")
 OSDtitle = _("Animal transport")
 OSD = {}
 OSD[1] = _("Fly to the %s system and land on planet %s")
+
+log_text = _([[You successfully transported a crate of rodents for a Fyrra civilian. You could have swore you heard something squeak.]])
 
 
 function create ()
@@ -79,6 +82,7 @@ function land()
         tk.msg(title[1], text[3])
         player.pay(200000) -- 200K
         var.push("shipinfested", true)
+        addMiscLog( log_text )
         misn.finish(true)
     end
 end
