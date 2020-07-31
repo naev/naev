@@ -1,7 +1,7 @@
 <body class="bg-light">
   <div id="naev-header" class="container-fluid nebula-bg">
     <div class="container">
-      <a href="./"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
+      <a href="https://naev.org/"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
     </div>
   </div>
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
