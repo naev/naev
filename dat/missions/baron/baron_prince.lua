@@ -2,10 +2,10 @@
 -- This is the second mission in the baron string.
 --]]
 
--- localization stuff, translators would work here
 require "fleethelper.lua"
 require "numstring.lua"
 require "portrait.lua"
+require "dat/missions/baron/common.lua"
 
 
 title = {}
@@ -114,6 +114,9 @@ nomoneytext = _("You can't currently afford to buy this artifact. You need %s cr
 osd_msg[1] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
 osd_msg[2] = _("Buy the artifact and take it to Flintley")
 osd_msg[3] = _("Take the artifact to Baron Sauterfeldt")
+
+log_text = _([[Baron Sauterfeldt sent you on a wild goose chase to find some ancient artifact known as a "skate-board", which you found for him.]])
+
 
 function create ()
    -- Note: this mission makes no system claims.

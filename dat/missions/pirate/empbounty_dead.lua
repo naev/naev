@@ -115,7 +115,7 @@ function create ()
       misn.finish( false )
    end
 
-   jumps_permitted = missys:jumpDist() + rnd.rnd( 3, 10 )
+   jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 3, 10 )
    if rnd.rnd() < 0.05 then
       jumps_permitted = jumps_permitted - 1
    end

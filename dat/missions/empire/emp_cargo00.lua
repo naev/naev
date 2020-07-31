@@ -7,8 +7,9 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
-require "dat/scripts/jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
@@ -20,11 +21,13 @@ title[2] = _("Empire Recruitment")
 title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You approach the Empire Lieutenant.
-"Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]])
+    "Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]])
 text[2] = _([["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, greatest pilot we ever had in the armada."
     He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to %s. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]])
 text[3] = _([[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
     You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]])
+
+log_text = _([[You were recruited into the Empire's shipping division and can now do missions labeled ES, which stands for Empire Shipping. You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]])
 
 
 function create ()
@@ -89,6 +92,7 @@ function land()
          tk.msg(title[3], string.format( text[3], dest:name() ))
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);
+         emp_addShippingLog( log_text )
          misn.finish(true)
       end
    end

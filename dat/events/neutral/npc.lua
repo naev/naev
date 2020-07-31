@@ -100,6 +100,13 @@ msg_lore["Soromid"] =      {_("Hello. Can I interest you in one of our galaxy fa
 msg_lore["Za'lek"] =       {_([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
                               _([["The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."]]),
                               _([["I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!"]]),
+                              _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
+                              _([["There are so many algorithms for solving the non-linear eigenvalues problem, I never know which one to choose. Which one do you prefer?"]]),
+                              _([["I recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billion degrees of freedom!"]]),
+                              _([["Last time I had to solve a deconvolution problem, its condition number was so high that its inverse reached numerical zero on Octuple Precision!"]]),
+                              _([["I am worried about my sister. She's on trial for 'abusive self-citing' and the public prosecutor has requested a life sentence."]]),
+                              _([["They opened two professor positions on precision machining in Atryssa Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but everyone knows that the BAPL needs reinforcement ever since three of its professors retired last cycle. People say it's because a member of Atryssa's lab posted a positive review of the president of the Za'lek central scientific recrutement committee."]]),
+                              _([["Even if our labs are the best in the galaxy, other factions have their own labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies used to be very successful until it was nuked by mistake by a warlord during an invasion of the planet."]]),
                               }
 
 msg_lore["Thurion"] =      {_([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
@@ -138,7 +145,7 @@ msg_lore["Frontier"] =     {_([["We value our autonomy. We don't want to be rule
 msg_lore["FLF"] =          {_([["I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"]]),
                               _([["One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"]]),
                               _([["Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."]]),
-                              _([["I was in charge of a bombing run last week. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."]]),
+                              _([["I was in charge of a bombing run recently. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."]]),
                               _([["What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."]]),
                               _([["Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."]]),
                               _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),

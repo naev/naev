@@ -4,6 +4,7 @@
 
 require "fleethelper.lua"
 require "proximity.lua"
+require "dat/missions/sirius/common.lua"
 
 
 title1 = _("Talking to Joanne")
@@ -66,7 +67,10 @@ osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
 misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
-misn_reward = _("Joanne will pay you another 1,000,000 credits.")
+misn_reward = _("1,000,000 credits")
+
+log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an atttempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
+
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -196,7 +200,7 @@ end
 -- Harja's death hook.
 function death()
    tk.msg(deathtitle, deathtext)
-   abort()
+   misn.finish(false)
 end
 
 -- Land hook.
@@ -207,10 +211,8 @@ function land()
       tk.msg(title5, text7:format(player.name()))
       player.pay(1000000) -- 1M
       var.pop("achack03repeat")
+      srs_addAcHackLog( log_text )
       misn.finish(true)
    end
 end
 
-function abort()
-   misn.finish(false)
-end

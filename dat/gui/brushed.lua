@@ -379,7 +379,7 @@ function update_nav()
          navstring = _("Unknown")
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
+         navstring = (navstring .. " (%s)"):format( system.cur():jumpDist(autonav_hyp, true, true) )
       end
    else
       navstring = _("none")
@@ -477,7 +477,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stre
       if name == "fuel" then
          show_light = player.jumps() <= 0
          if autonav_hyp ~= nil then
-            show_light = show_light or player.jumps() < autonav_hyp:jumpDist()
+            show_light = show_light or player.jumps() < system.cur():jumpDist(autonav_hyp, true, true)
          end
       else
          show_light = value < 20
@@ -875,7 +875,7 @@ function render( dt )
       if not autonav_hyp:known() then
          name = "Unknown"
       end
-      renderField( name .. " (" .. tostring(autonav_hyp:jumpDist()) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
+      renderField( name .. " (" .. tostring(system.cur():jumpDist(autonav_hyp, true, true)) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
    else
       renderField( _("None"), fields_x + fields_w + 12, fields_y, fields_w, col_unkn, icon_nav_target )
    end

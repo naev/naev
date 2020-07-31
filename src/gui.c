@@ -1288,7 +1288,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy;
+   int x, y, sx, sy, i, j, targeted;
    double px, py;
    const glColour *col;
    glColour ccol;
@@ -1297,9 +1297,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    if (a->appearing == ASTEROID_INVISIBLE)
       return;
 
-   /* Make sure is in range. TODO: real detection system for asteroids */
-   if ( MOD( a->pos.x - player.p->solid->pos.x,
-             a->pos.y - player.p->solid->pos.y ) > 4000. )
+   /* Recover the asteroid and field IDs. */
+   i = a->id;
+   j = a->parent;
+
+   /* Make sure is in range. */
+   if (!pilot_inRangeAsteroid( player.p, i, j ))
       return;
 
    /* Get position. */
@@ -1327,12 +1330,26 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
 
-   col = &cWhite;
+   targeted = ((i==player.p->nav_asteroid) && (j==player.p->nav_anchor));
+
+   /* Colour depends if the asteroid is selected. */
+   if (targeted)
+      col = &cWhite;
+   else
+      col = &cGrey70;
+
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+
+   if (targeted && (blink_pilot >= RADAR_BLINK_PILOT/2.)) {
+      gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &ccol);
+      gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINES, 0, 8 );
+      gl_endSolidProgram();
+   }
 }
 
 

@@ -3,7 +3,9 @@
    nasin, the wringer/suna. house sirius is sending in recon parties.
    the players job is to take out any and all sirius in the system.]]
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/sirius/common.lua"
+
 
 bmsg = {}
 --beginning messages
@@ -27,6 +29,9 @@ chronic_failure = _([[Draga's face goes red with fury when he sees you. For a mo
 out_sys_failure_msg = _([[As you abandon your mission, you recieve a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]])
 misn_desc = _("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered %s.")
 misn_reward = _("%s credits")
+
+log_text = _([[You eliminated a Sirian patrol for Draga, high commander of Nasin's operations. He said that Nasin will have another mission for you if you meet him in the bar on The Wringer again.]])
+
 
 function create()
    --this mission does make one system claim, in suna.
@@ -117,6 +122,7 @@ function land()
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",7)
       var.push("heretic_misn_tracker",misn_tracker)
+      srs_addHereticLog( log_text )
       misn.finish(true)
    end
 end

@@ -19,7 +19,7 @@ require "dat/scripts/numstring.lua"
 --Mission Details
 misn_title = _("%s Delivery")
 misn_reward = _("%s credits per ton")
-misn_desc = _("There is an insufficient supply of %s on this planet to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
+misn_desc = _("%s has an insufficient supply of %s to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land_title = _("Delivery success!")
 
@@ -88,7 +88,7 @@ function create ()
    -- Set Mission Details
    misn.setTitle( misn_title:format( chosen_comm ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( chosen_comm ) )
+   misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm ) )
    misn.setReward( misn_reward:format( numstring( price ) ) )
     
 end

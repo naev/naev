@@ -56,10 +56,8 @@ msg_msg[1] = _("%d tonnes of %s are loaded onto your ship.")
 msg_msg[2] = _("You have too many active missions.")
 msg_msg[3] = _("The %s are unloaded at the docks.")
 msg_msg[4] = _("The %s are passed through the airlock.")
-miss = {}
-miss[1]= _("Cargo Missing")
-miss[2] = _("You are missing the %d tonnes of %s!.")
-miss[3] = _("MISSION FAILED: You have failed to deliver the goods on time!")
+
+msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
 -- Use hidden jumps
 cargo_use_hidden = true
@@ -183,7 +181,7 @@ function tick()
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(miss[3])
+      player.msg(msg_timeup)
       abort()
    end
 end

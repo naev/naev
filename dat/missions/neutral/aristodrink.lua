@@ -10,8 +10,10 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 
 ]]--
 
-require "dat/scripts/jumpdist.lua"
-require "dat/scripts/numstring.lua"
+require "jumpdist.lua"
+require "numstring.lua"
+require "dat/missions/neutral/common.lua"
+
 
 bar_desc = _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.")
 
@@ -61,6 +63,9 @@ finishedtitle = _("Delivery")
 finishedtxt = _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s credits should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.]])
 
+-- XXX: While this stuff is cool, it also doesn't really lend itself
+-- well to translation. A different method should probably be considered.
+
 gender = {}
 gender[1] = _("man")
 gender[2] = _("woman")
@@ -85,6 +90,9 @@ clothing = {}
 clothing[1] = { _("a suit"), _("a black suit"), _("a purple suit"), _("a blue suit"), _("a beach shirt"), _("a floral shirt"), _("a blue shirt"), _("a red shirt"), _("a white shirt"), _("a white dress shirt"), _("a red vest"), _("a blue vest"), _("a tux"), _("a black tux"), _("robes"), _("brown robes"), _("black robes"), _("blue robes"), _("dark blue robes"), _("all black"), _("all blue"), _("all purple"), _("all red")}
 
 clothing[2] = { _("a dress"), _("a blue dress"), _("a black dress"), _("a purple dress"), _("a red dress"), _("a sexy blue dress"), _("a sexy red dress"), _("a sexy black dress"), _("a short blue dress"), _("a short red dress"), _("a short black dress"), _("a beach shirt"), _("a floral shirt"), _("a blue shirt"), _("a red shirt"), _("a white shirt"), _("a white dress shirt"), _("robes"), _("brown robes"), _("black robes"), _("blue robes"), _("dark blue robes"), _("all black"), _("all blue"), _("all purple"), _("all red")}
+
+log_text = _([[You delivered a special drink called a Swamp Bombing to an aristocrat.]])
+
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -208,6 +216,7 @@ function land ()
 
       hook.rm(landhook)
       hook.rm(takeoffhook)
+      addMiscLog( log_text )
       misn.finish( true )
    end
 end

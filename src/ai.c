@@ -243,6 +243,8 @@ static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_messages( lua_State *L );
 static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( number, number ) */
 static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
+static int aiL_shoot_indicator( lua_State *L ); /* get shoot indicator */
+static int aiL_set_shoot_indicator( lua_State *L ); /* set shoot indicator */
 
 
 static const luaL_Reg aiL_methods[] = {
@@ -328,6 +330,8 @@ static const luaL_Reg aiL_methods[] = {
    { "messages", aiL_messages },
    { "setasterotarget", aiL_setasterotarget },
    { "gatherablepos", aiL_gatherablePos },
+   { "shoot_indicator", aiL_shoot_indicator },
+   { "set_shoot_indicator", aiL_set_shoot_indicator },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -3160,6 +3164,32 @@ static int aiL_timeup( lua_State *L )
    n = luaL_checkint(L,1);
 
    lua_pushboolean(L, cur_pilot->timer[n] < 0.);
+   return 1;
+}
+
+
+/**
+ * @brief Set the seeker shoot indicator.
+ *
+ *    @luatparam boolean value to set the shoot indicator to.
+ *    @luafunc set_shoot_indicator()
+ */
+static int aiL_set_shoot_indicator( lua_State *L )
+{
+   cur_pilot->shoot_indicator = lua_toboolean(L,1);
+   return 0;
+}
+
+
+/**
+ * @brief Access the seeker shoot indicator (that is put to true each time a seeker is shot).
+ *
+ *    @luatreturn boolean true if the shoot_indicator is true.
+ *    @luafunc set_shoot_indicator()
+ */
+static int aiL_shoot_indicator( lua_State *L )
+{
+   lua_pushboolean(L, cur_pilot->shoot_indicator);
    return 1;
 }
 

@@ -18,6 +18,7 @@
 --]]
 
 require "dat/missions/flf/flf_rogue.lua"
+require "dat/missions/flf/flf_common.lua"
 
 title = {}
 text = {}
@@ -35,10 +36,12 @@ pay_text[1] = _([[Upon your return to the station, you are greeted by Benito. "T
 
 misn_title = _("The Split")
 misn_desc = _("A fleet of FLF soldiers has betrayed the FLF. Destroy this fleet.")
-misn_reward = _("Getting rid of traiterous scum")
+misn_reward = _("Getting rid of treacherous scum")
 
 npc_name = _("Benito")
 npc_desc = _("Benito seems to be frantically searching for a pilot.")
+
+log_text = _([[Regrettably, some rogue FLF pilots have turned traitor, forcing you to destroy them. Your action helped to assure fellow FLF pilots that treacherous FLF pilots who turn on their comrades are enemies just like any other.]])
 
 
 function create ()
@@ -94,6 +97,7 @@ function land_flf ()
       tk.msg( "", pay_text[1] )
       player.pay( credits )
       flf_setReputation( 98 )
+      flf_addLog( log_text )
       misn.finish( true )
    end
 end

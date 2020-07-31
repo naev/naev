@@ -482,7 +482,7 @@ static int planetL_name( lua_State *L )
  * @usage radius = p:radius()
  *    @luatparam Planet p Planet to get the radius of.
  *    @luatreturn number The planet's graphics radius.
- * @luafunc name( p )
+ * @luafunc radius( p )
  */
 static int planetL_radius( lua_State *L )
 {
@@ -883,7 +883,7 @@ static int planetL_setKnown( lua_State *L )
  * @usage p:recordCommodityPriceAtTime( t )
  *    @luatparam Planet p Planet to record prices at
  *    @luatparam ntime_t t Time at which to record prices.
- * @luafunc setKnown( p, t )
+ * @luafunc recordCommodityPriceAtTime( p, t )
  */
 static int planetL_recordCommodityPriceAtTime( lua_State *L )
 {
