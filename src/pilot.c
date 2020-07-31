@@ -1624,11 +1624,11 @@ void pilot_render( Pilot* p, const double dt )
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
-      scalew = CLAMP( 0., 1., p->ptimer / PILOT_LANDING_DELAY );
+      scalew = CLAMP( 0., 1., p->ptimer / (PILOT_LANDING_DELAY * player_dt_default()) );
       scaleh = scalew;
    }
    else if (pilot_isFlag( p, PILOT_TAKEOFF )) {
-      scalew = CLAMP( 0., 1., 1. - p->ptimer / PILOT_TAKEOFF_DELAY );
+      scalew = CLAMP( 0., 1., 1. - p->ptimer / (PILOT_TAKEOFF_DELAY * player_dt_default()) );
       scaleh = scalew;
    }
    else {
@@ -2594,7 +2594,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
-      pilot->ptimer = PILOT_TAKEOFF_DELAY;
+      pilot->ptimer = PILOT_TAKEOFF_DELAY * player_dt_default();
    }
 
    /* Create empty table for messages. */
