@@ -6,7 +6,7 @@
   </div>
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
-      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="favicon.png" alt=
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="https://naev.org/favicon.png" alt=
       "Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=
       "#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label=
       "Toggle navigation"><span class="navbar-toggler-icon"></span></button>
