@@ -99,6 +99,7 @@ static void weapons_update( unsigned int wid, char *str );
 static void weapons_autoweap( unsigned int wid, char *str );
 static void weapons_fire( unsigned int wid, char *str );
 static void weapons_inrange( unsigned int wid, char *str );
+static void aim_lines( unsigned int wid, char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
@@ -506,6 +507,8 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-80, wlen, BUTTON_HEIGHT,
+         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.aimLines );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -667,6 +670,19 @@ static void weapons_inrange( unsigned int wid, char *str )
    /* Set state. */
    state = window_checkboxState( wid, str );
    pilot_weapSetInrange( player.p, info_eq_weaps.weapons, state );
+}
+
+
+/**
+ * @brief Sets the aim lines property.
+ */
+static void aim_lines( unsigned int wid, char *str )
+{
+   int state;
+
+   /* Set state. */
+   state = window_checkboxState( wid, str );
+   player.aimLines = state;
 }
 
 

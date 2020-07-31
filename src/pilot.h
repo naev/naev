@@ -478,6 +478,7 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
+double pilot_aimAngle( Pilot *p, Pilot *target );
 
 
 /* Misc. */

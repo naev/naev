@@ -66,6 +66,7 @@ typedef struct Player_s {
    double dt_mod; /**< Static modifier of dt applied to the game as a whole. */
    char *gui; /**< Player's GUI. */
    int guiOverride; /**< GUI is overridden (not default). */
+   int aimLines; /**< Activate aiming helper lines. */
 
    /* Player data. */
    PlayerFlags flags; /**< Player's flags. */

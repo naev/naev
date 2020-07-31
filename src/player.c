@@ -314,6 +314,7 @@ void player_new (void)
 
    /* Load the GUI. */
    gui_load( gui_pick() );
+   player.aimLines = 0;
 }
 
 
@@ -960,6 +961,10 @@ credits_t player_modCredits( credits_t amount )
  */
 void player_render( double dt )
 {
+   double a, b, d, x1, y1, x2, y2, r, theta;
+   glColour c;
+   Pilot *target;
+
    /*
     * Check to see if the death menu should pop up.
     */
@@ -974,8 +979,56 @@ void player_render( double dt )
     * Render the player.
     */
    if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
-         !pilot_isFlag( player.p, PILOT_INVISIBLE))
+         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
+
+      /* Render the aiming lines. */
+      if (player.p->target != PLAYER_ID && player.aimLines) {
+         target = pilot_get(player.p->target);
+         if (target != NULL) {
+            a = player.p->solid->dir;
+            r = 200.;
+            gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+
+            b = pilot_aimAngle( player.p, target );
+
+            theta = 22*M_PI/180;
+
+            /* The angular error will give the exact colour that is used. */
+            d = ABS( angle_diff(a,b) / (2*theta) );
+            d = MIN( 1, d );
+
+            c = cInert;
+            c.a = .1;
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
+                                   player.p->solid->pos.y + r*sin( a+theta ) );
+            gl_drawLine( x1, y1, x2, y2, &c );
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
+                                   player.p->solid->pos.y + r*sin( a-theta ) );
+            gl_drawLine( x1, y1, x2, y2, &c );
+
+            c.r = d*.9;
+            c.g = d*.2 + (1-d)*.8;
+            c.b = (1-d)*.2;
+            c.a = .3;
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
+                                   player.p->solid->pos.y + r*sin( a ) );
+
+            gl_drawLine( x1, y1, x2, y2, &c );
+            c.a = .7;
+            gl_renderCross( x2, y2, 4., &c );
+
+            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
+                                   player.p->solid->pos.y + r*sin( b ) );
+            c.a = .2;
+            gl_drawLine( x1, y1, x2, y2, &c );
+            c.a = .7;
+            gl_drawCircle( x2, y2, 5., &c, 0 );
+         }
+      }
+
+      /* Render the player's pilot. */
       pilot_render(player.p, dt);
+   }
 }
 
 
@@ -2902,6 +2955,7 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
+   xmlw_elem(writer,"aimLines","%d",player.aimLines);
 
    /* Time. */
    xmlw_startElem(writer,"time");
@@ -3154,7 +3208,7 @@ static Planet* player_parse( xmlNodePtr parent )
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
-   int i, map_overlay;
+   int i, map_overlay, aim_lines;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
@@ -3172,6 +3226,7 @@ static Planet* player_parse( xmlNodePtr parent )
    planet      = NULL;
    time_set    = 0;
    map_overlay = 0;
+   aim_lines   = 0;
 
    player.dt_mod = 1.; /* For old saves. */
 
@@ -3193,6 +3248,8 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay);
       ovr_setOpen(map_overlay);
+      xmlr_int(node,"aimLines",aim_lines);
+      player.aimLines = aim_lines;
 
       /* Time. */
       if (xml_isNode(node,"time")) {
