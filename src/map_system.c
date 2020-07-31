@@ -34,7 +34,6 @@
 #include "background.h"
 #include "map_system.h"
 
-
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -112,6 +111,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 static void map_system_array_update( unsigned int wid, char* str );
 static void map_system_array_rmouse( unsigned int wid, char* widget_name );
 
+void map_system_buyCommodPrice( unsigned int wid, char *str );
 
 /**
  * @brief Initializes the map subsystem.
@@ -247,10 +247,6 @@ void map_system_open (int sys_selected)
    cur_system = tmp_sys;
    background_load ( cur_system->background );
    
-   printf("Got %d bg images\n",nBgImgs);
-   for (unsigned int i=0; i<nBgImgs; i++){
-      printf("%g x %g\n",bgImages[i]->w,bgImages[i]->h);
-   }
    map_system_show( wid, 20, 60, w-40, h-100);
 
    map_system_updateSelected( wid );
@@ -582,7 +578,6 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
    switch (event->type) {
    case SDL_MOUSEBUTTONDOWN:
      /* Must be in bounds. */
-     printf("mouse down: %g %g\n",mx,my);
      if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
      if (mx < pitch && my > 0){
@@ -863,6 +858,7 @@ void map_system_updateSelected(unsigned int wid)
          noutfits = 0;
          nships = 0;
          ngoods = 0;
+	 window_disableButton( wid, "btnBuyCommodPrice");
       }else{
          /* get number of each to decide how much space the lists can have */
          outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
@@ -870,6 +866,13 @@ void map_system_updateSelected(unsigned int wid)
          ships = tech_getShip( cur_planetObj_sel->tech, &nships );
          free(ships);
          ngoods = cur_planetObj_sel->ncommodities;
+	 /* to buy commodity info, need to be landed, and the selected system must sell them! */
+	 if ( landed && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY )){
+	   window_enableButton( wid, "btnBuyCommodPrice");
+
+	 }else{
+	   window_disableButton( wid, "btnBuyCommodPrice");
+	 }
       }
       /* determine the ratio of space */
       s=g=o=0;
@@ -1084,18 +1087,46 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 /**
  * @brief Handles the button to buy commodity prices
  */
-static int map_system_buyCommodPrice( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+void map_system_buyCommodPrice( unsigned int wid, char *str )
 {
+   (void)wid;
+   (void)str;
    int njumps=0;
    StarSystem **syslist;
+   int cost,ret;
+   ntime_t t=ntime_get();
    /* find number of jumps */
-   syslist=map_getJumpPath( &njumps, cur_system->name, cur_sys_sel->name,
-                    1, 0, NULL);
-   if ( syslist == NULL ){
-      /* no route */
-      cost = 0;
+   if ( !strcmp( cur_system->name, cur_sys_sel->name ) ){
+      cost = 500;
+      njumps = 0;
    }else{
-      free ( syslist );
-      cost = 500 * (njumps + 1);
+      syslist=map_getJumpPath( &njumps, cur_system->name, cur_sys_sel->name,
+                               1, 0, NULL);
+      if ( syslist == NULL ){
+         /* no route */
+         cost = 0;
+         dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), cur_planetObj_sel->name );
+         return;
+      }else{
+         free ( syslist );
+         cost = 500 * (njumps + 1);
+      }
+   }
+   /* get the time at which this purchase will be made (2 periods per jump ago)*/
+   t-= (njumps*2+0.2)*NT_PERIOD_SECONDS*1000;
+   if (!player_hasCredits( cost )) {
+      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %d credits, which you don't have"), cost );
+   }else if ( cur_planetObj_sel->ncommodities == 0 ){
+      dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here, as far as we are aware!"));
+   }else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ){
+      dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );
+   }else{
+      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %d credits.  The latest information we have is %g periods old."), cur_planetObj_sel->name,cost,njumps*2+0.2);
+      if ( ret ){
+         player_modCredits( -cost );
+         economy_averageSeenPricesAtTime( cur_planetObj_sel, t );
+         map_system_array_update( wid,  MAPSYS_TRADE );
 
+      }
+   }
 }

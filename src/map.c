@@ -1610,7 +1610,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             if ((pow2(mx-x)+pow2(my-y)) < t) {
                if (map_selected != -1) {
                   if ( sys == system_getIndex( map_selected ) ){
-                     printf("System already selected - so display solar system map\n");
                      map_system_open( map_selected );
                      map_drag = 0;
                   }
