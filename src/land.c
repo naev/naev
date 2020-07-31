@@ -1363,7 +1363,8 @@ void takeoff( int delay )
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
-   player.p->ptimer = PILOT_TAKEOFF_DELAY * player_dt_default();
+   player.p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
+   player.p->ptimer = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );

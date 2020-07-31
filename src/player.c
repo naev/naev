@@ -1483,7 +1483,8 @@ void player_land (void)
 
    /* Start landing. */
    player_soundPause();
-   player.p->ptimer = PILOT_LANDING_DELAY * player_dt_default();
+   player.p->landing_delay = PILOT_LANDING_DELAY * player_dt_default();
+   player.p->ptimer = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_LANDING );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );

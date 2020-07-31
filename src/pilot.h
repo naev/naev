@@ -414,6 +414,7 @@ typedef struct Pilot_ {
    double comm_msgWidth; /**< Width of the message. */
    char *comm_msg;   /**< Comm message to display overhead. */
    PilotFlags flags; /**< used for AI and others */
+   double landing_delay; /**< This pilot's current landing delay. */
    double pdata;     /**< generic data for internal pilot use */
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */

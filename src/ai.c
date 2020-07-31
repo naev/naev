@@ -2300,7 +2300,8 @@ static int aiL_land( lua_State *L )
       ret++;
 
    if (!ret) {
-      cur_pilot->ptimer = PILOT_LANDING_DELAY * player_dt_default();
+      cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
+      cur_pilot->ptimer = cur_pilot->landing_delay;
       pilot_setFlag( cur_pilot, PILOT_LANDING );
 
       hparam.type    = HOOK_PARAM_ASSET;
