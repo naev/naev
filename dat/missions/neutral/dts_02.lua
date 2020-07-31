@@ -69,9 +69,9 @@ comm[9] = _("Comm Lancelot> You're a coward, %s. You better hope I never see you
 comm[10] = _("Comm Lancelot> You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[A freighter hails you as you jump into the system.
-    "Thank you for responding %s, are you coming in from %s?  I have a delivery I need to get to %s and I can't wait much longer. Is the system safe now?"
+    "Thank you for responding, %s. Are you coming in from %s?  I have a delivery I need to get to %s and I can't wait much longer. Is the system safe now?"
     You relate the outcome of the space battle.
-    "Oh, that's good news!  You know, these raids are getting worse all the time. I wish the Empire would do something about it. Anyway, thank you for the information. Safe travels."]])
+    "Oh, that's good news! You know, these raids are getting worse all the time. I wish the Empire would do something about it. Anyway, thank you for the information. Safe travels."]])
 title[5] = _("Not fighting")
 text[5] = _([[You stand by the grieving couple as the two cadets lead a group of pilots out of the bar toward the padfield.
     "Oh no!" the woman cries suddenly, looking up into her partner's face. "They're going off to fight. Those young men, they... there'll be more killing because of us."

@@ -21,33 +21,38 @@ require "numstring.lua"
 require "fleethelper.lua"
 require "dat/missions/flf/flf_common.lua"
 
-misn_title  = _("FLF: %s Pirate Disturbance in %s")
+misn_title = {}
+misn_title[1] = _("FLF: Lone Pirate Disturbance in %s")
+misn_title[2] = _("FLF: Minor Pirate Disturbance in %s")
+misn_title[3] = _("FLF: Moderate Pirate Disturbance in %s")
+misn_title[4] = _("FLF: Substantial Pirate Disturbance in %s")
+misn_title[5] = _("FLF: Dangerous Pirate Disturbance in %s")
+misn_title[6] = _("FLF: Highly Dangerous Pirate Disturbance in %s")
 misn_reward = _("%s credits")
 
 pay_text = {}
 pay_text[1] = _("The official mumbles something about the pirates being irritating as a credit chip is pressed into your hand.")
-pay_text[2] = _("While polite,  something seems off about the smile plastered on the official who hands you your pay.")
+pay_text[2] = _("While polite, something seems off about the smile plastered on the official who hands you your pay.")
 pay_text[3] = _("The official thanks you dryly for your service and hands you a credit chip.")
-pay_text[4] = _("The offial takes an inordinate amount of time to do so, but eventually hands you your pay as promised.")
+pay_text[4] = _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised.")
 
 flfcomm = {}
 flfcomm[1] = _("Alright, let's have at them!")
 flfcomm[2] = _("Sorry we're late! Did we miss anything?")
 
-misn_desc = {}
-misn_desc[1] = _("There is a pirate group with %d ships disturbing FLF operations in the %s system. Eliminate this group.")
-misn_desc[2] = _("There is a pirate ship disturbing FLF operations in the %s system. Eliminate this ship.")
-misn_desc[3] = _(" There is a Phalanx among them, so you must proceed with caution.")
-misn_desc[4] = _(" There is a Kestrel among them, so you must be very careful.")
-misn_desc[5] = _(" You will be accompanied by %d other FLF pilots for this mission.")
 
-misn_level = {}
-misn_level[1] = _("Lone")
-misn_level[2] = _("Minor")
-misn_level[3] = _("Moderate")
-misn_level[4] = _("Substantial")
-misn_level[5] = _("Dangerous")
-misn_level[6] = _("Highly Dangerous")
+-- Mission description
+-- ngettext further below
+misn_desc_base_s = "There is %d pirate ship disturbing FLF operations in the %s system. Eliminate this ship."
+misn_desc_base_p = "There is a pirate group with %d ships disturbing FLF operations in the %s system. Eliminate this group."
+
+misn_desc_dangerous = _(" There is a Phalanx among them, so you must proceed with caution.")
+misn_desc_high_dangerous = _(" There is a Kestrel among them, so you must be very careful.")
+
+-- ngettext further below
+misn_desc_friend = " You will be accompanied by %d other FLF pilot for this mission."
+misn_desc_friends = " You will be accompanied by %d other FLF pilots for this mission."
+
 
 osd_title   = _("Pirate Disturbance")
 osd_desc    = {}
@@ -61,7 +66,7 @@ function create ()
    missys = flf_getPirateSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   level = rnd.rnd( 1, #misn_level )
+   level = rnd.rnd( 1, #misn_title )
    ships = 0
    has_boss = false
    has_phalanx = false
@@ -100,22 +105,21 @@ function create ()
    credits = credits + rnd.sigma() * 8000
 
    local desc
-   if ships == 1 then
-      desc = misn_desc[2]:format( missys:name() )
-   else
-      desc = misn_desc[1]:format( ships, missys:name() )
-   end
-   if has_phalanx then desc = desc .. misn_desc[3] end
-   if has_kestrel then desc = desc .. misn_desc[4] end
+   desc = gettext.ngettext( misn_desc_base_s, misn_desc_base_p, ships ):format(
+         ships, missys:name() )
+
+   if has_phalanx then desc = desc .. misn_desc_dangerous end
+   if has_kestrel then desc = desc .. misn_desc_high_dangerous end
    if flfships > 0 then
-      desc = desc .. misn_desc[5]:format( flfships )
+      desc = desc .. gettext.ngettext(
+            misn_desc_friend, misn_desc_friends, flfships ):format( flfships )
    end
 
    late_arrival = rnd.rnd() < 0.05
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
+   misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( desc )
    misn.setReward( misn_reward:format( numstring( credits ) ) )
    marker = misn.markerAdd( missys, "computer" )

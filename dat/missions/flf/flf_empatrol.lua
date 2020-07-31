@@ -19,14 +19,27 @@
 
 require "dat/missions/flf/flf_patrol.lua"
 
-misn_title  = _("FLF: %s Empire patrol in %s")
+misn_title = {}
+misn_title[1] = _("FLF: Single Empire patrol in %s")
+misn_title[2] = _("FLF: Small Empire patrol in %s")
+misn_title[3] = _("FLF: Medium Empire patrol in %s")
+misn_title[4] = _("FLF: Large Empire patrol in %s")
+misn_title[5] = _("FLF: Dangerous Empire patrol in %s")
+misn_title[6] = _("FLF: Highly Dangerous Empire patrol in %s")
 
-misn_desc = {}
-misn_desc[1] = _("There is an Empire patrol with %d ships in the %s system. Eliminate this patrol.")
-misn_desc[2] = _("There is an Empire ship patrolling the %s system. Eliminate this ship.")
-misn_desc[3] = _(" There is a Pacifier among them, so you must proceed with caution.")
-misn_desc[4] = _(" There is a Hawking among them, so you must be very careful.")
-misn_desc[5] = _(" You will be accompanied by %d other FLF pilots for this mission.")
+
+-- Mission description
+-- ngettext further below
+misn_desc_base_s = "There is %d Empire ship patrolling the %s system. Eliminate this ship."
+misn_desc_base_p = "There is an Empire patrol with %d ships in the %s system. Eliminate this patrol."
+
+misn_desc_dangerous = _(" There is a Pacifier among them, so you must proceed with caution.")
+misn_desc_high_dangerous = _(" There is a Hawking among them, so you must be very careful.")
+
+-- ngettext further below
+misn_desc_friend = " You will be accompanied by %d other FLF pilot for this mission."
+misn_desc_friends = " You will be accompanied by %d other FLF pilots for this mission."
+
 
 osd_title   = _("FLF Patrol")
 osd_desc    = {}
