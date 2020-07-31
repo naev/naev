@@ -18,7 +18,7 @@
 </head>
 $(ldoc.include_file("header.ltp"))
 
-<div id="container">
+<div id="lDoc_container">
 
 <div id="main">
 
