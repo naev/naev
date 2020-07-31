@@ -1,3 +1,170 @@
+/* Old LuaDocs CSS. */
+
+#product
+{
+	text-align: center;
+	border-bottom: 1px solid #cccccc;
+	background-color: #ffffff;
+}
+
+#product h2 {
+	font-size: 2em;
+}
+
+#product_description
+{
+   margin: auto;
+   text-align: justify;
+   width: 50%;
+}
+
+#navigation
+{
+	float: left;
+	width: 18em;
+	margin: 0;
+	vertical-align: top;
+	background-color: #f0f0f0;
+	overflow:visible;
+}
+
+#navigation h1, #navigation h2 {
+	background-color:#e7e7e7;
+	font-size:1.1em;
+	color:#000000;
+	text-align:left;
+	margin:0px;
+	padding:0.2em;
+	border-top:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;
+}
+
+#navigation ul
+{
+	font-size:1em;
+	list-style-type: none;
+	padding: 0;
+	margin: 1px;
+}
+
+#navigation li
+{
+	text-indent: -1em;
+	margin: 0em 0em 0em 0.5em;
+	display: block;
+	padding: 3px 0px 0px 12px;
+}
+
+#navigation li li a
+{
+	padding: 0px 3px 0px -1em;
+}
+
+#content
+{
+	margin-left: 18em;
+	padding: 1em;
+	border-left: 2px solid #cccccc;
+	border-right: 2px solid #cccccc;
+	background-color: #ffffff;
+}
+
+pre.example {
+   background-color: rgb(245, 245, 245);
+   border-top-width: 1px;
+   border-right-width: 1px;
+   border-bottom-width: 1px;
+   border-left-width: 1px;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+   border-top-color: silver;
+   border-right-color: silver;
+   border-bottom-color: silver;
+   border-left-color: silver;
+   padding: 1em;
+   margin-left: 1em;
+   margin-right: 1em;
+   font-family: "Andale Mono", monospace; 
+   font-size: smaller;
+}
+
+table.module_list td
+{
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: #cccccc;
+}
+table.module_list td.name
+{
+   background-color: #f0f0f0;
+   white-space: nowrap;
+}
+table.module_list td.summary { width: 100%; }
+
+table.file_list
+{
+	border-width: 1px;
+	border-style: solid;
+	border-color: #cccccc;
+	border-collapse: collapse;
+}
+table.file_list td
+{
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: #cccccc;
+}
+table.file_list td.name {
+   background-color: #f0f0f0;
+   white-space: nowrap;
+}
+table.file_list td.summary { width: 100%; }
+
+
+table.function_list
+{
+	border-width: 1px;
+	border-style: solid;
+	border-color: #cccccc;
+	border-collapse: collapse;
+}
+table.function_list td
+{
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: #cccccc;
+}
+table.function_list td.name
+{
+   background-color: #f0f0f0;
+   white-space: nowrap;
+}
+table.function_list td.summary { width: 100%; }
+
+
+table.table_list
+{
+	border-width: 1px;
+	border-style: solid;
+	border-color: #cccccc;
+	border-collapse: collapse;
+}
+table.table_list td
+{
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: #cccccc;
+}
+table.table_list td.name { background-color: #f0f0f0; }
+table.table_list td.summary { width: 100%; }
+
+/* Naev CSS. */
 :root {
    --blue: #007bff;
    --indigo: #6610f2;
@@ -10683,7 +10850,7 @@ a.text-dark:focus {
 
 .nebula-bg {
    background: #202080;
-   background-image: url(/imgs/nebula-tile.png);
+   background-image: url(https://naev.org/imgs/nebula-tile.png);
    background-repeat: repeat-x
 }
 
