@@ -401,6 +401,22 @@ econ_articles = {
       title = _("Young Pilot Buys Their First Commodity"),
       desc = _("A young pilot has bought some %s as a way of breaking into the freelance piloting business. Born and raised on %s, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of %s isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"")
    },
+   {
+      title = _("Corporate Scandal Rips Through the Galaxy"),
+      desc = _("Economists are attributing the price of %s on %s to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be %s credits per tonne, will go up, down, or remain the same this time.")
+   },
+   {
+      title = _("Commodity Trading Likened to Gambling"),
+      desc = _("In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of %s on %s is %s credits per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"")
+   },
+   {
+      title = _("Leadership Decision Disrupts Prices"),
+      desc = _("The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing the price of %s to %s credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.")
+   },
+   {
+      title = _("Five Cycle Old Child Starts Commodity Trading"),
+      desc = _("A child no more than five cycles old has started commodity trading early, buying 1 tonne of %s. A native of %s, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for %s credits, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"")
+   },
 }
 
 econ_title = _("Current Market Prices")
