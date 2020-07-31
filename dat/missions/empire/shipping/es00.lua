@@ -65,7 +65,6 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   last_sys = nil
    reward = 500000
    misn.setTitle(misn_title)
    misn.setReward( string.format(misn_reward, numstring(reward)) )
@@ -82,6 +81,7 @@ function accept ()
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
+   hook.jumpout("jumpout")
 end
 
 
@@ -127,6 +127,7 @@ end
 function enter ()
    local sys = system.cur()
    if misn_stage == 1 and sys == destsys then
+      -- Force FLF combat music (note: must clear this later on).
       var.push( "music_combat_force", "FLF" )
 
       -- Get a random position near the player
@@ -154,12 +155,15 @@ function enter ()
 
       -- Player should not be able to reland
       player.allowLand(false,_("The docking stabilizers have been damaged by weapons fire!"))
-   elseif last_sys == destsys then
+   end
+end
+
+
+function jumpout ()
+   -- Storing the system the player jumped from.
+   if system.cur() == destsys then
       var.pop( "music_combat_force" )
    end
-
-   -- Record as last system
-   last_sys = sys
 end
 
 
@@ -167,4 +171,5 @@ function abort ()
    if system.cur() == destsys then
       var.pop( "music_combat_force" )
    end
+   misn.finish(false)
 end
