@@ -26,6 +26,11 @@
  
  * Author: Vega Strike, License: GPLv2+
    * commodity
+     * space
+       * _default.png
+       * diamonds.png
+       * gold.png
+       * water.png
      * acids.png
      * advanced_medicines.png
      * aeranervestimuli.png
@@ -1445,3 +1450,7 @@
        * snowy_cliffs.png
        * rocky_small.png
        * uninhabited-jungle.png
+
+ * Author: Kinniken, License: GPLv3
+   * map
+     * empire.png
