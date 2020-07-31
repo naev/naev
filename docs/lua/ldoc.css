@@ -1,5 +1,14 @@
 /* Old LuaDocs CSS. */
 
+#about
+{
+	clear: both;
+	margin: 0;
+	padding: 5px;
+	border-top: 2px solid #cccccc;
+	background-color: #ffffff;
+}
+
 #product
 {
 	text-align: center;
