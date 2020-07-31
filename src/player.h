@@ -63,6 +63,7 @@ typedef struct Player_s {
    /* Player intrinsics. */
    Pilot *p; /**< Player's pilot. */
    char *name; /**< Player's name. */
+   double dt_mod; /**< Static modifier of dt applied to the game as a whole. */
    char *gui; /**< Player's GUI. */
    int guiOverride; /**< GUI is overridden (not default). */
 
