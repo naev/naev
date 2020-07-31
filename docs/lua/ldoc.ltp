@@ -6,7 +6,6 @@
     <title>$(ldoc.title)</title>
     <link rel="stylesheet" href="$(ldoc.css)" type="text/css" />
 </head>
-<body>
 $(ldoc.include_file("header.ltp"))
 
 <div id="container">
