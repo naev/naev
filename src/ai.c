@@ -2041,7 +2041,7 @@ static int aiL_idir( lua_State *L )
    /* Turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in
       some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
       but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
-   else{
+   else {
       /* signal that we're not in a productive direction for thrusting */
       diff        = M_PI;
    }
@@ -2479,7 +2479,7 @@ static int aiL_follow_accurate( lua_State *L )
 
    if (strcmp( method, "absolute" ) == 0)
       angle2 = angle * M_PI/180;
-   else if (strcmp( method, "keepangle" ) == 0){
+   else if (strcmp( method, "keepangle" ) == 0) {
       vect_cset( &pv, p->solid->pos.x - target->solid->pos.x,
             p->solid->pos.y - target->solid->pos.y );
       angle2 = VANGLE(pv);

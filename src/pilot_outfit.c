@@ -562,7 +562,7 @@ const char* pilot_checkSpaceworthy( Pilot *p )
  *    @return Number of issues encountered.
  */
 #define SPACEWORTHY_CHECK(cond,msg) \
-if (cond){ ret++; \
+if (cond) { ret++; \
    if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
 int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 {

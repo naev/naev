@@ -252,7 +252,8 @@ credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntim
  *     @param p Planet to get price at
  *     @param t time to get prices at
  */
-void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
+void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
+{
    economy_averageSeenPricesAtTime( p, tupdate );
 }
 
@@ -263,7 +264,8 @@ void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
  * @param p Planet to get average price at.
  * @param c Commodity to get average price of.
  */
-int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std){
+int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std)
+{
   return economy_getAveragePlanetPrice( c, p, mean, std );
 }
 
