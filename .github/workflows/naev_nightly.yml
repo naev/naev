@@ -151,7 +151,6 @@ jobs:
           libpng-dev:i386 \
           libopenal-dev:i386 \
           libvorbis-dev:i386 \
-          binutils-dev:i386 \
           libzip-dev:i386 \
           libiberty-dev:i386 \
           libluajit-5.1-dev:i386 \
