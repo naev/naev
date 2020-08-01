@@ -137,6 +137,10 @@ jobs:
       run: |
         sudo apt-get install \
           multiarch-support \
+          binutils:i386 \
+          gcc:i386 \
+          g++:i386 \
+          make:i386 \
           build-essential:i386 \
           automake:i386 \
           autoconf-archive:i386 \
