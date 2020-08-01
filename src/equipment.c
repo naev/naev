@@ -1920,8 +1920,10 @@ static void equipment_sellShip( unsigned int wid, char* str )
    credits2str( buf, price, 2 );
 
    /* Check if player really wants to sell. */
-   if (!dialogue_YesNo( _("Sell Ship"),
-         _("Are you sure you want to sell your ship %s for %s credits?"), shipname, buf))
+   if (!dialogue_YesNo( _("Sell Ship"), ngettext(
+            "Are you sure you want to sell your ship %s for %s credit?",
+            "Are you sure you want to sell your ship %s for %s credits?",
+            price), shipname, buf))
       return;
 
    /* Store ship type. */
@@ -1937,7 +1939,9 @@ static void equipment_sellShip( unsigned int wid, char* str )
    equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
-   dialogue_msg( _("Ship Sold"), _("You have sold your ship %s for %s credits."), name, buf );
+   dialogue_msg( _("Ship Sold"), ngettext(
+         "You have sold your ship %s for %s credit.",
+         "You have sold your ship %s for %s credits.", price), name, buf );
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;

@@ -585,7 +585,9 @@ void pilot_boardComplete( Pilot *p )
       p->credits       += worth;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
-      player_message( _("\a%c%s\a0 has plundered %s credits from your ship!"),
+      player_message( ngettext(
+               "\a%c%s\a0 has plundered %s credit from your ship!",
+               "\a%c%s\a0 has plundered %s credits from your ship!", worth),
             pilot_getFactionColourChar(p), p->name, creds );
    }
    else {

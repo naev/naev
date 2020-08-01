@@ -428,7 +428,7 @@ static void map_update( unsigned int wid )
             window_modifyText( wid, "txtSystemStatus", buf );
          }
       }else{
-         snprintf(buf,PATH_MAX,"Known %s prices shown: The average price across the galaxy is %.2f Cr./Ton",c->name,commod_av_gal_price);
+         snprintf(buf,PATH_MAX,"Known %s prices shown. Galaxy-wide average: %.2f",c->name,commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
          
       }
