@@ -58,8 +58,14 @@ for F in ../src/nlua_*.c ../src/ai.c; do
          }' > lua/"$(basename $F)".luadoc
 done
 
-# Run Luadoc, put HTML files into html/ dir
 cd lua
+
+# Generate CSS based on current CSS from Naev Site
+wget https://naev.org/style.css
+$(echo cat LDocCSS.txt) | cat - style.css > tmpfile && mv tmpfile ldoc.css
+rm style.css
+
+# Run Luadoc, put HTML files into html/ dir
 ldoc .
 error=$?
 rm *.luadoc
