@@ -137,7 +137,7 @@ static void iar_render( Widget* iar, double bx, double by )
    int xelem, yelem;
    double xspace;
    const glColour *c, *dc, *lc;
-   glColour tc, fontcolour;
+   glColour fontcolour;
    int is_selected;
    double d;
 
@@ -201,22 +201,15 @@ static void iar_render( Widget* iar, double bx, double by )
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
                      w - 5., h - 5., &cDarkBlue, NULL );
-               fontcolour = cWhite;
             } else {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
                      w - 5., h - 5., &iar->dat.iar.background[pos], NULL );
-
-               tc = iar->dat.iar.background[pos];
-
-               if (((tc.r + tc.g + tc.b) / 3) > 0.5)
-                  fontcolour = cBlack;
             }
          } else if (is_selected) {
             toolkit_drawRect( xcurs + 2.,
                   ycurs + 2.,
                   w - 5., h - 5., &cGreen, NULL );
-            fontcolour = cBlack;
          }
 
          /* image */
