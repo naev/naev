@@ -29,8 +29,6 @@ misn_title[4] = _("FLF: Large Dvaered patrol in %s")
 misn_title[5] = _("FLF: Dangerous Dvaered patrol in %s")
 misn_title[6] = _("FLF: Highly Dangerous Dvaered patrol in %s")
 
-misn_reward = _("%s credits")
-
 text = {}
 text[1] = _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work.")
 text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you for your victory.")
@@ -40,25 +38,35 @@ flfcomm = {}
 flfcomm[1] = _("Alright, let's have at them!")
 flfcomm[2] = _("Sorry we're late! Did we miss anything?")
 
--- Mission description
--- ngettext further below
-misn_desc_base_s = "There is %d Dvaered ship patrolling the %s system. Eliminate this ship."
-misn_desc_base_p = "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol."
-
-misn_desc_dangerous = _(" There is a Vigilance among them, so you must proceed with caution.")
-misn_desc_high_dangerous = _(" There is a Goddard among them, so you must be very careful.")
-
--- ngettext further below
-misn_desc_friend = " You will be accompanied by %d other FLF pilot for this mission."
-misn_desc_friends = " You will be accompanied by %d other FLF pilots for this mission."
-
-
 osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
+
+
+function setDescription ()
+   local desc
+   desc = gettext.ngettext(
+         "There is %d Dvaered ship patrolling the %s system. Eliminate this ship.",
+         "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol.",
+         ships ):format( ships, missys:name() )
+
+   if has_vigilance then
+      desc = desc .. _(" There is a Vigilance among them, so you must proceed with caution.")
+   end
+   if has_goddard then
+      desc = desc .. _(" There is a Goddard among them, so you must be very careful.")
+   end
+   if flfships > 0 then
+      desc = desc .. gettext.ngettext(
+            " You will be accompanied by %d other FLF pilot for this mission.",
+            " You will be accompanied by %d other FLF pilots for this mission.",
+            flfships ):format( flfships )
+   end
+   return desc
+end
 
 
 function patrol_getSystem ()
@@ -109,16 +117,7 @@ function create ()
    credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
-   local desc
-   desc = gettext.ngettext( misn_desc_base_s, misn_desc_base_p, ships ):format(
-         ships, missys:name() )
-
-   if has_vigilance then desc = desc .. misn_desc_dangerous end
-   if has_goddard then desc = desc .. misn_desc_high_dangerous end
-   if flfships > 0 then
-      desc = desc .. gettext.ngettext(
-            misn_desc_friend, misn_desc_friends, flfships ):format( flfships )
-   end
+   local desc = setDescription()
 
    late_arrival = rnd.rnd() < 0.05
    late_arrival_delay = rnd.rnd( 10000, 120000 )
@@ -126,7 +125,8 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( desc )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( ngettext(
+         "%s credit", "%s credits", credits ):format( numstring( credits ) ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

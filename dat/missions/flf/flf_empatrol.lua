@@ -27,26 +27,35 @@ misn_title[4] = _("FLF: Large Empire patrol in %s")
 misn_title[5] = _("FLF: Dangerous Empire patrol in %s")
 misn_title[6] = _("FLF: Highly Dangerous Empire patrol in %s")
 
-
--- Mission description
--- ngettext further below
-misn_desc_base_s = "There is %d Empire ship patrolling the %s system. Eliminate this ship."
-misn_desc_base_p = "There is an Empire patrol with %d ships in the %s system. Eliminate this patrol."
-
-misn_desc_dangerous = _(" There is a Pacifier among them, so you must proceed with caution.")
-misn_desc_high_dangerous = _(" There is a Hawking among them, so you must be very careful.")
-
--- ngettext further below
-misn_desc_friend = " You will be accompanied by %d other FLF pilot for this mission."
-misn_desc_friends = " You will be accompanied by %d other FLF pilots for this mission."
-
-
 osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Empire patrol")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
+
+
+function setDescription ()
+   local desc
+   desc = gettext.ngettext(
+         "There is %d Empire ship patrolling the %s system. Eliminate this ship.",
+         "There is an Empire patrol with %d ships in the %s system. Eliminate this patrol.",
+         ships ):format( ships, missys:name() )
+
+   if has_vigilance then
+      desc = desc .. _(" There is a Pacifier among them, so you must proceed with caution.")
+   end
+   if has_goddard then
+      desc = desc .. _(" There is a Hawking among them, so you must be very careful.")
+   end
+   if flfships > 0 then
+      desc = desc .. gettext.ngettext(
+            " You will be accompanied by %d other FLF pilot for this mission.",
+            " You will be accompanied by %d other FLF pilots for this mission.",
+            flfships ):format( flfships )
+   end
+   return desc
+end
 
 
 function patrol_getSystem ()
