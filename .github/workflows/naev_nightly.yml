@@ -119,6 +119,62 @@ jobs:
         name: naev-lin64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev
 
+
+  lin32:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Enable MultiLib
+      run: |
+        sudo dpkg --add-architecture i386
+
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get install \
+          multiarch-support \
+          build-essential:i386 \
+          automake:i386 \
+          autoconf-archive:i386 \
+          libsdl2-dev:i386 \
+          libsdl2-mixer-dev:i386 \
+          libsdl2-image-dev:i386 \
+          libgl1-mesa-dev:i386 \
+          libxml2-dev:i386 \
+          libfontconfig1-dev:i386 \
+          libfreetype6-dev:i386 \
+          libpng-dev:i386 \
+          libopenal-dev:i386 \
+          libvorbis-dev:i386 \
+          binutils-dev:i386 \
+          libzip-dev:i386 \
+          libiberty-dev:i386 \
+          libluajit-5.1-dev:i386 \
+          gettext:i386 \
+          autopoint:i386 \
+          intltool:i386 \
+          itstool:i386
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Build Naev on Linux32
+      run: |
+        ./autogen.sh
+        ./configure --build=i386 --host=i386
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-lin32-${{ github.sha }}
+        path: ${{ github.workspace }}/src/naev
+
   macos:
     runs-on: macos-latest
 
