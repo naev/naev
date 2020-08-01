@@ -380,51 +380,90 @@ articles["Proteron"] = {}
 articles["Za'lek"] = {}
 articles["Thurion"] = {}
 
-econ_articles = {
-   {
-      title = _("Unfortunate Merchant Goes Bankrupt"),
-      desc = _("A merchant was forced into bankruptcy due to a badly timed trade of %s on %s. \"I thought %s credits per tonne was a good deal, but it turns out I should have waited,\" the merchant said.")
-   },
-   {
-      title = _("Shipping Company Goes Out of Business"),
-      desc = _("A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of %s on %s for %s credits per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"")
-   },
-   {
-      title = _("Interview with an Economist"),
-      desc = _("One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credits per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%.\"")
-   },
-   {
-      title = _("Economist Describes Sinusoidal Economic Theory"),
-      desc = _("A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of %s on %s is now %s credits per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.")
-   },
-   {
-      title = _("Young Pilot Buys Their First Commodity"),
-      desc = _("A young pilot has bought some %s as a way of breaking into the freelance piloting business. Born and raised on %s, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of %s isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"")
-   },
-   {
-      title = _("Corporate Scandal Rips Through the Galaxy"),
-      desc = _("Economists are attributing the price of %s on %s to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be %s credits per tonne, will go up, down, or remain the same this time.")
-   },
-   {
-      title = _("Commodity Trading Likened to Gambling"),
-      desc = _("In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of %s on %s is %s credits per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"")
-   },
-   {
-      title = _("Leadership Decision Disrupts Prices"),
-      desc = _("The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing the price of %s to %s credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.")
-   },
-   {
-      title = _("Five Cycle Old Child Starts Commodity Trading"),
-      desc = _("A child no more than five cycles old has started commodity trading early, buying 1 tonne of %s. A native of %s, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for %s credits, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"")
-   },
-}
-
 econ_title = _("Current Market Prices")
 econ_header = _("\n\n%s in %s")
 econ_desc_part = _("\n%s: %s Cr./Tonne")
 
 
-   --create generic news
+-- Return an economy article based on the given commodity name, planet
+-- name, and number of credits. Wrapper for gettext.ngettext.
+function get_econ_article( commod_name, plnt_name, credits )
+   local econ_articles = {
+      {
+         title = _("Unfortunate Merchant Goes Bankrupt"),
+         desc = gettext.ngettext(
+            "A merchant was forced into bankruptcy due to a badly timed trade of %s on %s. \"I thought %s credit per tonne was a good deal, but it turns out I should have waited,\" the merchant said.",
+            "A merchant was forced into bankruptcy due to a badly timed trade of %s on %s. \"I thought %s credits per tonne was a good deal, but it turns out I should have waited,\" the merchant said.",
+            credits )
+      },
+      {
+         title = _("Shipping Company Goes Out of Business"),
+         desc = gettext.ngettext(
+            "A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of %s on %s for %s credit per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"",
+            "A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of %s on %s for %s credits per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"",
+            credits )
+      },
+      {
+         title = _("Interview with an Economist"),
+         desc = gettext.ngettext(
+            "One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credit per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%.\"",
+            "One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credits per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%.\"",
+            credits )
+      },
+      {
+         title = _("Economist Describes Sinusoidal Economic Theory"),
+         desc = gettext.ngettext(
+            "A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of %s on %s is now %s credit per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.",
+            "A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of %s on %s is now %s credits per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.",
+            credits )
+      },
+      {
+         title = _("Young Pilot Buys Their First Commodity"),
+         desc = gettext.ngettext(
+            "A young pilot has bought some %s as a way of breaking into the freelance piloting business. Born and raised on %s, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of %s credit per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"",
+            "A young pilot has bought some %s as a way of breaking into the freelance piloting business. Born and raised on %s, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of %s credits per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"",
+            credits )
+      },
+      {
+         title = _("Corporate Scandal Rips Through the Galaxy"),
+         desc = gettext.ngettext(
+            "Economists are attributing the price of %s on %s to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be %s credit per tonne, will go up, down, or remain the same this time.",
+            "Economists are attributing the price of %s on %s to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be %s credits per tonne, will go up, down, or remain the same this time.",
+            credits )
+      },
+      {
+         title = _("Commodity Trading Likened to Gambling"),
+         desc = gettext.ngettext(
+            "In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of %s on %s is %s credit per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"",
+            "In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of %s on %s is %s credits per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"",
+            credits )
+      },
+      {
+         title = _("Leadership Decision Disrupts Prices"),
+         desc = gettext.ngettext(
+            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing the price of %s to %s credit per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
+            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing the price of %s to %s credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
+            credits )
+      },
+      {
+         title = _("Five Cycle Old Child Starts Commodity Trading"),
+         desc = gettext.ngettext(
+            "A child no more than five cycles old has started commodity trading early, buying 1 tonne of %s. A native of %s, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for %s credit, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"",
+            "A child no more than five cycles old has started commodity trading early, buying 1 tonne of %s. A native of %s, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for %s credits, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"",
+            credits )
+      },
+   }
+
+   local i = rnd.rnd( 1, #econ_articles )
+   local title = econ_articles[i]["title"]
+   local desc = econ_articles[i]["desc"]:format(
+      commod_name, plnt_name, numstring(credits) )
+
+   return title, desc
+end
+
+
+-- create news
 function create()
    local f = planet.cur():faction()
    local my_faction = f ~= nil and f:name() or "Generic"
@@ -494,10 +533,7 @@ function add_econ_article ()
          local commchoices = p:commoditiesSold()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
-         local i = rnd.rnd( 1, #econ_articles )
-         local title = econ_articles[i]["title"]
-         local desc = econ_articles[i]["desc"]:format(
-               commod:name(), p:name(), numstring( price ) )
+         local title, desc = get_econ_article( commod:name(), p:name(), price )
          news.add( "Generic", title, desc, exp, pd )
          p:recordCommodityPriceAtTime( pd )
          var.push( "news_last_econ_article", time.get():tonumber() )
