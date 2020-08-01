@@ -660,7 +660,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, msg );
 
    /* Flip buffers. */
    SDL_GL_SwapWindow( gl_screen.window );

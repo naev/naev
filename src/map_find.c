@@ -589,12 +589,6 @@ static char map_getPlanetColourChar( Planet *p )
    planet_updateLand(p);
    colcode = planet_getColourChar(p);
 
-   /* Remap colour codes bit for simplicity and contrast. */
-   if (colcode == 'N' || colcode == 'F')
-      colcode = 'M';
-   else if (colcode == 'R')
-      colcode = 'S';
-
    return colcode;
 }
 

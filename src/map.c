@@ -560,7 +560,7 @@ static void map_update( unsigned int wid )
          /* Use map grey instead of default neutral colour */
          l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
                         (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-                        (t=='N')?'M':t, sys->presence[i].value);
+                        t, sys->presence[i].value);
       }
       else
          unknownPresence += sys->presence[i].value;
@@ -569,7 +569,7 @@ static void map_update( unsigned int wid )
    }
    if (unknownPresence != 0)
       l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
-                     (l==0)?"":"\n", _("Unknown"), 'M', unknownPresence);
+                     (l==0)?"":"\n", _("Unknown"), 'N', unknownPresence);
    if (hasPresence == 0)
       nsnprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -592,10 +592,6 @@ static void map_update( unsigned int wid )
       /* Colourize output. */
       planet_updateLand(sys->planets[i]);
       t = planet_getColourChar(sys->planets[i]);
-      if (t == 'N')
-         t = 'M';
-      else if (t == 'R')
-         t = 'S';
 
       if (!hasPlanets)
          p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s\an",

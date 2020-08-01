@@ -1047,20 +1047,18 @@ static const glColour* gl_fontGetColour( uint32_t ch )
       case 'r': col = &cFontRed; break;
       case 'g': col = &cFontGreen; break;
       case 'b': col = &cFontBlue; break;
+      case 'o': col = &cFontOrange; break;
       case 'y': col = &cFontYellow; break;
       case 'w': col = &cFontWhite; break;
       case 'p': col = &cFontPurple; break;
       case 'n': col = &cBlack; break;
       /* Fancy states. */
-      case 'F': col = &cFriend; break;
-      case 'H': col = &cHostile; break;
-      case 'N': col = &cNeutral; break;
-      case 'I': col = &cMapInert; break;
-      case 'R': col = &cRestricted; break;
-      case 'S': col = &cDRestricted; break;
-      case 'M': col = &cMapNeutral; break;
-      case 'C': col = &cConsole; break;
-      case 'D': col = &cDConsole; break;
+      case 'F': col = &cFontGreen; break; /**< Friendly */
+      case 'H': col = &cFontRed; break; /**< Hostile */
+      case 'N': col = &cFontYellow; break; /**< Neutral */
+      case 'I': col = &cFontGrey; break; /**< Inert */
+      case 'R': col = &cFontOrange; break; /**< Restricted */
+      case 'C': col = &cFontGreen; break; /**< Console */
       case '0': col = NULL; break;
       default: col = NULL; break;
    }

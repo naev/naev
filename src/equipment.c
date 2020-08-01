@@ -367,7 +367,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Render text. */
    if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
-      c = &cDConsole;
+      c = &cGreen;
    else
       c = &cBlack;
    gl_printMidRaw( &gl_smallFont, 60.,
@@ -398,7 +398,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       bc = *dc;
       bc.a = 0.4;
       if (i==selected)
-         c = &cDConsole;
+         c = &cGreen;
       else
          c = &bc;
       toolkit_drawRect( x, y, w, h, c, NULL );
@@ -642,7 +642,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                   c = &cRed;
                else {
                   display = _("Right click to remove");
-                  c = &cDConsole;
+                  c = &cGreen;
                }
             }
             else if ((wgt->outfit != NULL) &&
@@ -653,7 +653,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                   c = &cRed;
                else {
                   display = _("Right click to add");
-                  c = &cDConsole;
+                  c = &cGreen;
                }
             }
          }
@@ -763,7 +763,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\aS%s", sp_display( slot->sslot->slot.spid ) );
+            "\aR%s", sp_display( slot->sslot->slot.spid ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
@@ -787,7 +787,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          o->name );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aSSlot %s\a0"),
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
             sp_display( o->slot.spid ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
@@ -1524,7 +1524,7 @@ static void equipment_genOutfitList( unsigned int wid )
          alt[i] = malloc( l );
          p  = snprintf( &alt[i][0], l, "%s\n", o->name );
          if ((o->slot.spid!=0) && (p < l))
-            p += snprintf( &alt[i][p], l-p, _("\aSSlot %s\a0\n"),
+            p += snprintf( &alt[i][p], l-p, _("\aRSlot %s\a0\n"),
                   sp_display( o->slot.spid ) );
          if (p < l)
             p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
@@ -1569,9 +1569,9 @@ static void equipment_genOutfitList( unsigned int wid )
 static char eq_qCol( double cur, double base, int inv )
 {
    if (cur > 1.2*base)
-      return (inv) ? 'r' : 'D';
+      return (inv) ? 'r' : 'g';
    else if (cur < 0.8*base)
-      return (inv) ? 'D' : 'r';
+      return (inv) ? 'g' : 'r';
    return '0';
 }
 
