@@ -386,7 +386,6 @@ int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
       float x1, float y1, float x2, float y2, Vector2d* crash )
 {
    float xi, xip, yi, yip;
-   Vector2d tmp_crash;
    int i;
 
    /* In this function, we are only looking for one collision point. */
@@ -395,23 +394,15 @@ int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
    xip = at->x[0]         + ap->x;
    yi  = at->y[at->npt-1] + ap->y;
    yip = at->y[0]         + ap->y;
-   if ( CollideLineLine(x1, y1, x2, y2,
-        xi, yi, xip, yip, &tmp_crash) ) {
-      crash->x = tmp_crash.x;
-      crash->y = tmp_crash.y;
+   if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
       return 1;
-   }
    for (i=0; i<=at->npt-2; i++) {
       xi  = at->x[i]   + ap->x;
       xip = at->x[i+1] + ap->x;
       yi  = at->y[i]   + ap->y;
       yip = at->y[i+1] + ap->y;
-      if ( CollideLineLine(x1, y1, x2, y2,
-           xi, yi, xip, yip, &tmp_crash) ) {
-         crash->x = tmp_crash.x;
-         crash->y = tmp_crash.y;
+      if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
          return 1;
-      }
    }
 
    return 0;
