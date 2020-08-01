@@ -6,60 +6,14 @@ matrix:
       dist: bionic
       compiler: gcc
       sudo: false
-      env:
-        - BITS=64
-        - CFLAGs="-O3"
-    - os: osx
-      osx_image: xcode9.4
-      compiler: clang
-      env:
-        - CFLAGS="-O3 -mmacosx-version-min=10.7"
 
 addons:
   apt:
     packages:
       - build-essential
-      - automake
-      - libsdl2-dev
-      - libsdl2-image-dev
-      - libgl1-mesa-dev
-      - libxml2-dev
-      - libfontconfig1-dev
-      - libfreetype6-dev
-      - libpng-dev
-      - libopenal-dev
-      - libvorbis-dev
-      - binutils-dev
-      - libzip-dev
-      - libiberty-dev
-      - libluajit-5.1-dev
       - luarocks
-      - gettext
-      - autopoint
-      - intltool
 
 before_install:
-  - |
-    # Install macOS dependencies
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew update
-
-      brew install \
-        sdl2 \
-        sdl2_mixer \
-        sdl2_image \
-        fontconfig \
-        freetype \
-        libpng \
-        libvorbis \
-        libzip \
-        luajit \
-        gettext \
-        intltool
-
-      brew link --force gettext
-    fi
-
   - |
     # Install LuaRocks packages
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -68,41 +22,13 @@ before_install:
 
 script:
   - |
-    # Build Naev
-    ./autogen.sh
-    ./configure --disable-dependency-tracking --disable-debug
-    make -j2
-  - |
-    # Build Naev macOS bundle
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      ./extras/macos/bundle.sh
-    fi
-  - |
     # Build Naev Lua docs
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       export PATH="$PATH:$HOME/.luarocks/bin"
       (cd docs && ./luadoc.sh)
     fi
 
-before_deploy:
-  - |
-    ./config.status --file .travis/bintray.json
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      gzip -9 < src/naev > ".travis/naev-linux$BITS.gz"
-    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      zip -9r .travis/naev-macos.zip Naev.app
-    else
-      echo "Don't know how to deploy this target!"
-      exit 1
-    fi
-
 deploy:
-  - provider: bintray
-    file: .travis/bintray.json
-    skip_cleanup: true
-    user: stephank
-    key:
-      secure: "GWamsTqHNn0sb+ON+OOESSOwmxBeCyYGyId83IWluHtbvb0kZjVWVoZ2ZiGwo7uFwaPM25SpFneGLlXwsEe2KMEs/pLUDzucfGWErIp1Y0MYh6VXrzyFZa2Vsa7nNDZhAP2u1bvrG6Er3gxLGqfSy6X4YnGTg67Frt823nbdKAs="
   - provider: script
     script: .travis/deploy.sh
     skip_cleanup: true
