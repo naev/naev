@@ -165,7 +165,7 @@ jobs:
     - name: Build Naev on Linux32
       run: |
         ./autogen.sh
-        ./configure --build=i386 --host=i386
+        ./configure --build=x86_64-pc-linux-gnu --host=i686-pc-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
