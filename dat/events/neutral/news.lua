@@ -382,7 +382,7 @@ articles["Thurion"] = {}
 
 econ_title = _("Current Market Prices")
 econ_header = _("\n\n%s in %s")
-econ_desc_part = _("\n%s: %s Cr./Tonne")
+econ_desc_part = _("\n%s: %s")
 
 
 -- Return an economy article based on the given commodity name, planet
