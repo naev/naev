@@ -211,7 +211,7 @@ void map_system_open( int sys_selected )
    background_clear();
    background_load ( cur_system->background );
    background_getTextures( &nBgImgs, &bgImages);
-   if ( nBgImgs < 1 ){
+   if ( nBgImgs <= 1 ){
       starCnt = 0;
    }
    background_clear();
@@ -386,7 +386,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       int infopos=0;
      /* display sun information */
      /* Nebula. */
-      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), sys->name, nBgImgs-1 );
+      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), sys->name, nBgImgs>0 ? nBgImgs-1 : 0 );
      
       if (sys->nebu_density > 0. ){
          /* Volatility */
