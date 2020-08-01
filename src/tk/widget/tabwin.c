@@ -404,7 +404,7 @@ static void tab_render( Widget* tab, double bx, double by )
       }
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + 5,
-            y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cBlack,
+            y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cFontWhite,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */

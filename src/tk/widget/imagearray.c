@@ -194,7 +194,7 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
-         fontcolour = cWhite;
+         fontcolour = cFontWhite;
          /* Draw background. */
          if (iar->dat.iar.background != NULL) {
             if (is_selected) {

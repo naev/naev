@@ -259,7 +259,7 @@ static void btn_updateHotkey( Widget *btn )
    display[match] = '\0'; /* Cuts the string into two. */
 
    /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\ab%c\a0%s", display, target, &display[match+1] );
+   nsnprintf( buf, sizeof(buf), "%s\an%c\a0%s", display, target, &display[match+1] );
 
    /* Should never be NULL. */
    free(btn->dat.btn.display);
@@ -312,10 +312,10 @@ static void btn_render( Widget* btn, double bx, double by )
       lc = &cGrey60;
       c  = &cGrey20;
       dc = &cGrey40;
-      fc = &cRed;
+      fc = &cGrey80;
    }
    else {
-      fc = &cDarkRed;
+      fc = &cFontWhite;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
             lc = &cGrey90;
