@@ -27,11 +27,10 @@ jobs:
     - name: Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure --enable-static
+        ./configure
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-        LDFLAGS: "-static"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -60,11 +59,10 @@ jobs:
     - name: Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure --enable-static
+        ./configure
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-        LDFLAGS: "-static"
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -90,6 +88,7 @@ jobs:
           libsdl2-mixer-dev \
           libsdl2-image-dev \
           libgl1-mesa-dev \
+          libglu1-mesa-dev \
           libxml2-dev \
           libfontconfig1-dev \
           libfreetype6-dev \
