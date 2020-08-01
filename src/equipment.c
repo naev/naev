@@ -301,16 +301,16 @@ void equipment_open( unsigned int wid )
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, h+y, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
+         100, h+y, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    x += 100;
    window_addText( wid, x, y,
-         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_defFont, &cBlack, _("Available Ships") );
+         130, 200, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_defFont, &cBlack, _("Available Outfits") );
+         130, 200, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -369,7 +369,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
       c = &cGreen;
    else
-      c = &cBlack;
+      c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
          x-15., y+h+10., c, txt );
 
@@ -556,7 +556,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cBlack, _("CPU Free") );
+      x, y + h + 10., &cFontWhite, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
@@ -565,12 +565,12 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
-      &cBlack, "%d / %d", p->cpu, p->cpu_max );
+      &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
 
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cBlack, _("Mass Limit Left") );
+      x, y, &cFontWhite, _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
@@ -582,7 +582,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
-      &cBlack, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
+      &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
 
    if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
       y -= h;

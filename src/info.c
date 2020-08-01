@@ -197,7 +197,7 @@ static void info_openMain( unsigned int wid )
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
-         0, "txtDPilot", &gl_smallFont, &cBlack,
+         0, "txtDPilot", &gl_smallFont, NULL,
          _("Pilot:\n"
          "Date:\n"
          "Combat Rating:\n"
@@ -223,7 +223,7 @@ static void info_openMain( unsigned int wid )
          player.p->fuel, pilot_getJumps(player.p) );
    window_addText( wid, 140, 20,
          200, h-80,
-         0, "txtPilot", &gl_smallFont, &cBlack, str );
+         0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
 
    /* menu */
@@ -240,7 +240,7 @@ static void info_openMain( unsigned int wid )
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
    window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
-         NULL, &cBlack, _("Licenses") );
+         NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
 }
@@ -390,7 +390,7 @@ static void info_openShip( unsigned int wid )
 
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
-         &cBlack,
+         NULL,
          _("Name:\n"
          "Model:\n"
          "Class:\n"
@@ -414,7 +414,7 @@ static void info_openShip( unsigned int wid )
          "Stats:\n")
          );
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
-         &cBlack, NULL );
+         NULL, NULL );
 
    /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
@@ -697,19 +697,19 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    double y;
 
    y = by+bh-20;
-   gl_print( &gl_defFont, bx, y, &cBlack, _("Legend") );
+   gl_print( &gl_defFont, bx, y, &cFontWhite, _("Legend") );
 
    y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Outfit that can be activated") );
+   gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Outfit that can be activated") );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Secondary Weapon (Right click toggles)") );
+   gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Secondary Weapon (Right click toggles)") );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Primary Weapon (Left click toggles)") );
+   gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Primary Weapon (Left click toggles)") );
 }
 
 
@@ -914,9 +914,9 @@ static void info_openStandings( unsigned int wid )
 
    /* Text. */
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
-         &gl_defFont, &cBlack, NULL );
+         &gl_defFont, NULL, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
 
    /* Gets the faction standings. */
    info_factions  = faction_getKnown( &n );
@@ -1003,12 +1003,12 @@ static void info_openMissions( unsigned int wid )
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
-         &gl_smallFont, &cBlack, _("Reward:") );
+         &gl_smallFont, NULL, _("Reward:") );
    window_addText( wid, 300+100, -60,
-         140, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
+         140, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
    window_addText( wid, 300+40, -100,
          w - (300+40+40), h - BUTTON_HEIGHT - 120, 0,
-         "txtDesc", &gl_smallFont, &cBlack, NULL );
+         "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* Put a map. */
    map_show( wid, 20, 20, 300, 260, 0.75 );
@@ -1296,15 +1296,15 @@ static void info_openShipLog( unsigned int wid )
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
                    w - 40, texth, 0,
-                   "logDesc1", &gl_smallFont, &cBlack, _("Select log type:") );
+                   "logDesc1", &gl_smallFont, NULL, _("Select log type:") );
    
    window_addText( wid, 20, 60 + BUTTON_HEIGHT + 3* LOGSPACING / 4,
                    w - 40, texth, 0,
-                   "logDesc2", &gl_smallFont, &cBlack, _("Select title of log of interest:") );
+                   "logDesc2", &gl_smallFont, NULL, _("Select title of log of interest:") );
 
    window_addText( wid, 20, 40 + BUTTON_HEIGHT + LOGSPACING / 2,
                    w - 40, texth, 0,
-                   "logDesc3", &gl_smallFont, &cBlack, _("Log entries:") );
+                   "logDesc3", &gl_smallFont, NULL, _("Log entries:") );
 
 #undef LOGSPACING
    /* list */

@@ -248,7 +248,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
    for (i=start; i<array_size(cli_buffer); i++)
       gl_printMaxRaw( cli_font, w, bx,
             by + h - (i+1-start)*(cli_font->h+5),
-            &cBlack, cli_buffer[i] );
+            &cFontWhite, cli_buffer[i] );
 }
 
 

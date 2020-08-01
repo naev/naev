@@ -110,7 +110,7 @@ static void lst_render( Widget* lst, double bx, double by )
    y = by + lst->y;
 
    /* lst bg */
-   toolkit_drawRect( x, y, lst->w, lst->h, &cGrey90, NULL );
+   toolkit_drawRect( x, y, lst->w, lst->h, &cBlack, NULL );
 
    /* inner outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
@@ -130,19 +130,19 @@ static void lst_render( Widget* lst, double bx, double by )
    }
 
    /* draw selected */
-   toolkit_drawRect( x, y - 1. + lst->h -
-         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_defFont.h+2.),
-         w-1, gl_defFont.h + 2., &cHilight, NULL );
+   toolkit_drawRect( x, y - 3. + lst->h -
+         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_defFont.h+5.),
+         w-1, gl_defFont.h + 6., &cHilight, NULL );
 
    /* draw content */
    tx = x + 2.;
-   ty = y + lst->h - 2. - gl_defFont.h;
-   miny = ty - lst->h + 2 + gl_defFont.h;
+   ty = y + lst->h - 5. - gl_defFont.h;
+   miny = ty - lst->h + 5 + gl_defFont.h;
    w -= 4;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
       gl_printMaxRaw( &gl_defFont, (int)w,
-            tx, ty, &cBlack, lst->dat.lst.options[i] );
-      ty -= 2 + gl_defFont.h;
+            tx, ty, &cFontWhite, lst->dat.lst.options[i] );
+      ty -= 5 + gl_defFont.h;
 
       /* Check if out of bounds. */
       if (ty < miny)
@@ -238,7 +238,7 @@ static int lst_focus( Widget* lst, double bx, double by )
       w -= 10.;
 
    if (bx < w) {
-      i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 2.);
+      i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 5.);
       if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
          lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
@@ -246,7 +246,7 @@ static int lst_focus( Widget* lst, double bx, double by )
    }
    else {
       /* Get bar position (center). */
-      scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
+      scroll_pos  = (double)(lst->dat.lst.pos * (5 + gl_defFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
       y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
 

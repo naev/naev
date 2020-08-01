@@ -221,13 +221,13 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 
    /* Presence. */
    window_addText( wid, -20, -140, 100, 20, 0, "txtSPresence",
-         &gl_smallFont, &cBlack, _("Presence:") );
+         &gl_smallFont, NULL, _("Presence:") );
    window_addText( wid, -10, -140-gl_smallFont.h-5, 110, 100, 0, "txtPresence",
-         &gl_smallFont, &cBlack, _("N/A") );
+         &gl_smallFont, NULL, _("N/A") );
 
    /* Selected text. */
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
-         "txtSelected", &gl_smallFont, &cBlack, NULL );
+         "txtSelected", &gl_smallFont, NULL, NULL );
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
@@ -1248,7 +1248,7 @@ static void uniedit_editSys (void)
    /* Rename button. */
    y = -45;
    nsnprintf( buf, sizeof(buf), _("Name: \an%s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
-   window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
    /* New row. */
@@ -1258,7 +1258,7 @@ static void uniedit_editSys (void)
    s = _("Radius");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtRadius",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1266,7 +1266,7 @@ static void uniedit_editSys (void)
    s = _("(Scales asset positions)");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtRadiusComment",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
 
    /* New row. */
    x = 20;
@@ -1275,7 +1275,7 @@ static void uniedit_editSys (void)
    s = _("Stars");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtStars",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 50, 20, "inpStars", 4, 1, NULL );
    window_setInputFilter( wid, "inpStars",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1284,7 +1284,7 @@ static void uniedit_editSys (void)
    s = _("Interference");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtInterference",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 55, 20, "inpInterference", 5, 1, NULL );
    window_setInputFilter( wid, "inpInterference",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1296,7 +1296,7 @@ static void uniedit_editSys (void)
    s = _("Nebula");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtNebula",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 50, 20, "inpNebula", 4, 1, NULL );
    window_setInputFilter( wid, "inpNebula",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1305,7 +1305,7 @@ static void uniedit_editSys (void)
    s = _("Volatility");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtVolatility",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 50, 20, "inpVolatility", 4, 1, NULL );
    window_setInputFilter( wid, "inpVolatility",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );

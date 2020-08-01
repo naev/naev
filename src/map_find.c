@@ -660,11 +660,11 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
    window_addImage( wid, iw, -50-128, 0, 0, "imgOutfit", NULL, 1 );
 
    window_addText( wid, iw + 128 + 20, -60,
-         280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+         280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
    window_addText( wid, iw + 128 + 20, -60 - gl_defFont.h - 20,
-         280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+         280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, &cBlack,
+         60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("Owned:\n"
          "\n"
          "Slot:\n"
@@ -675,7 +675,7 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          "Money:\n"
          "License:\n") );
    window_addText( wid, iw+20, -60-128-10,
-         280, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         280, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10-160,
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
@@ -1077,7 +1077,7 @@ void map_inputFind( unsigned int parent, char* str )
    /* Text. */
    y = -40;
    window_addText( wid, 20, y, 300, gl_defFont.h+4, 0,
-         "txtDescription", &gl_defFont, &cBlack,
+         "txtDescription", &gl_defFont, NULL,
          _("Enter keyword to search for:") );
    y -= 30;
 

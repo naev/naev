@@ -245,7 +245,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
-         &gl_defFont, &cBlack, cur->name );
+         &gl_defFont, NULL, cur->name );
    y -= 10;
 
    /* Faction image */
@@ -254,37 +254,37 @@ void map_open (void)
 
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
-         &gl_smallFont, &cBlack, _("Faction:") );
+         &gl_smallFont, NULL, _("Faction:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
-         &gl_smallFont, &cBlack, _("Standing:") );
+         &gl_smallFont, NULL, _("Standing:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
-         &gl_smallFont, &cBlack, _("Presence:") );
+         &gl_smallFont, NULL, _("Presence:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, &cBlack, _("Planets:") );
+         &gl_smallFont, NULL, _("Planets:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
-         &gl_smallFont, &cBlack, _("Services:") );
+         &gl_smallFont, NULL, _("Services:") );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -308,7 +308,7 @@ void map_open (void)
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
    window_addText( wid, 140, 10, w - 80 - 30 - 30 - 60, 30, 0,
-                   "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
+                   "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
 
