@@ -216,10 +216,10 @@ CODE_SOURCE = \
 	load.h \
 	log.h \
 	map.h \
-	map_system.h
 	mapData.h \
 	map_find.h \
 	map_overlay.h \
+	map_system.h
 	md5.h \
 	menu.h \
 	mission.h \
