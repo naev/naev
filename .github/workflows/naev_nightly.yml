@@ -137,13 +137,10 @@ jobs:
       run: |
         sudo apt-get install \
           multiarch-support \
-          binutils:i386 \
-          gcc:i386 \
-          g++:i386 \
-          make:i386 \
-          build-essential:i386 \
-          automake:i386 \
-          autoconf-archive:i386 \
+          gcc-multilib \
+          build-essential \
+          automake \
+          autoconf-archive \
           libsdl2-dev:i386 \
           libsdl2-mixer-dev:i386 \
           libsdl2-image-dev:i386 \
