@@ -193,7 +193,7 @@ void background_renderStars( const double dt )
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
-      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
+      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ) {
          shade_mode = 1;
 
          /* Very short lines tend to flicker horribly. A stock Llama at 2x

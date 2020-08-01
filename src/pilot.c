@@ -458,7 +458,7 @@ unsigned int pilot_getBoss( const Pilot* p )
       if (ppower >= curpower )
          continue;
 
-      if (relpower < curpower ){
+      if (relpower < curpower ) {
          relpower = curpower;
          t = pilot_stack[i]->id;
       }

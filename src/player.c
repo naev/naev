@@ -1135,7 +1135,7 @@ void player_think( Pilot* pplayer, const double dt )
        */
       if (player.p->stats.misc_reverse_thrust)
          player_accel( -PILOT_REVERSE_THRUST );
-      else if (!facing){
+      else if (!facing) {
          pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
          /* Disable turning. */
          facing = 1;

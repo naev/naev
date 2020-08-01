@@ -333,16 +333,16 @@ static int shipL_getSlots( lua_State *L )
 
    lua_newtable(L);
    k=1;
-   for (i=0; i < s->outfit_nstructure + s->outfit_nutility + s->outfit_nweapon ; i++){
+   for (i=0; i < s->outfit_nstructure + s->outfit_nutility + s->outfit_nweapon ; i++) {
 
          /* get the slot */
-      if (i < s->outfit_nstructure){
+      if (i < s->outfit_nstructure) {
          j     = i;
          slot  = &s->outfit_structure[j].slot;
          sslot = &s->outfit_structure[j];
          outfit_type = 0;
       }
-      else if (i < s->outfit_nstructure + s->outfit_nutility){
+      else if (i < s->outfit_nstructure + s->outfit_nutility) {
          j     = i - s->outfit_nstructure;
          slot  = &s->outfit_utility[j].slot;
          sslot = &s->outfit_utility[j];

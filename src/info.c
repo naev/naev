@@ -1135,18 +1135,18 @@ static void shiplog_menu_update( unsigned int wid, char* str )
    /*This is called when something is selected.
      If a new log type has been selected, need to regenerate the log lists.
      If a new log has been selected, need to regenerate the entries.*/
-   if ( !strcmp(str, "lstLogEntries" ) ){
+   if ( !strcmp(str, "lstLogEntries" ) ) {
       /* Has selected a log entry, so display it */
       logMsg = toolkit_getListPos( wid, "lstLogEntries");
-      if ( logMsg == selectedLogMsg ){
+      if ( logMsg == selectedLogMsg ) {
          /* If already selected, show...*/
          tmp = toolkit_getList ( wid, "lstLogEntries");
-         if ( tmp != NULL ){
+         if ( tmp != NULL ) {
             dialogue_msgRaw( _("Log message"),tmp);
          }
       }
       selectedLogMsg = logMsg;
-   }else{
+   } else {
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;
@@ -1154,7 +1154,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       logType = toolkit_getListPos( wid, "lstLogType" );
       log = toolkit_getListPos( wid, "lstLogs" );
       
-      if ( logType != selectedLogType ){
+      if ( logType != selectedLogType ) {
          /* new log type selected */
          selectedLogType = logType;
          window_destroyWidget( wid, "lstLogs" );
@@ -1168,7 +1168,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
       }
-      if ( regenerateEntries || selectedLog != log ){
+      if ( regenerateEntries || selectedLog != log ) {
          selectedLog = log;
          /* list log entries of selected log type */
          window_destroyWidget( wid, "lstLogEntries" );
@@ -1199,7 +1199,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
     * 2. List of logs of the selected type (and All)
     * 3. Listing of the selected log
     */
-   if (!first){
+   if (!first) {
       window_destroyWidget( wid, "lstLogType" );
       window_destroyWidget( wid, "lstLogs" );
       window_destroyWidget( wid, "lstLogEntries" );

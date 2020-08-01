@@ -113,7 +113,7 @@ int dpl_savePlanet( const Planet *p )
       if (planet_hasService( p, PLANET_SERVICE_LAND )) {
          if (p->faction > 0) {
             xmlw_startElem( writer, "commodities" );
-            for (i=0; i<p->ncommodities; i++){
+            for (i=0; i<p->ncommodities; i++) {
                if (p->commodities[i]->standard == 0)
                   xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
             }
