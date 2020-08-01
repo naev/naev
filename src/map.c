@@ -1616,8 +1616,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
                      map_system_open( map_selected );
                      map_drag = 0;
                   }
-		  
-
                }
                map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                break;
