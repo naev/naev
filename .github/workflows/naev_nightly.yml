@@ -27,7 +27,7 @@ jobs:
     - name: Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --enable-static
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -59,7 +59,7 @@ jobs:
     - name: Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --enable-static
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -108,7 +108,7 @@ jobs:
     - name: Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --enable-static
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
