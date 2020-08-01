@@ -219,7 +219,7 @@ CODE_SOURCE = \
 	mapData.h \
 	map_find.h \
 	map_overlay.h \
-	map_system.h
+	map_system.h \
 	md5.h \
 	menu.h \
 	mission.h \
