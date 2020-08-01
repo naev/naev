@@ -45,7 +45,6 @@
 //static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
 //static int decorator_nstack       = 0; /**< Number of map decorators in the stack. */
 
-static glTexture *gl_sysfaction_disk    = NULL; /**< Texture of the disk representing factions. */
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
 static int cur_planet_sel = 0; /**< Current planet selected by user (0 = star). */
 static Planet *cur_planetObj_sel = NULL;
@@ -98,7 +97,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
-static glTexture *gl_genSysFactionDisk( int radius );
 static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 //static void map_system_selectCur (void);
 void map_system_show( int wid, int x, int y, int w, int h);
@@ -120,12 +118,11 @@ void map_system_buyCommodPrice( unsigned int wid, char *str );
  */
 int map_system_init (void)
 {
-   gl_sysfaction_disk = gl_genSysFactionDisk( 150. );
    return 0;
 }
 
 /**
- * @brief Loads all the map decorators.
+ * @brief Placemarker for when required.
  *
  *    @return 0 on success.
  */
@@ -139,12 +136,12 @@ int map_system_load (void)
  */
 void map_system_exit (void)
 {
-   if (gl_sysfaction_disk != NULL)
-      gl_freeTexture( gl_sysfaction_disk );
    for( unsigned int i=0; i<nBgImgs; i++ ){
       gl_freeTexture ( bgImages[i] );
    }
+   nBgImgs = 0;
    free ( bgImages );
+   bgImages=NULL;
 }
 
 /**
@@ -159,6 +156,7 @@ void map_system_close( unsigned int wid, char *str ){
    }
    nBgImgs = 0;
    free ( bgImages );
+   bgImages=NULL;
 
    window_close(wid,str);
 
@@ -248,7 +246,6 @@ void map_system_open (int sys_selected)
    background_load ( cur_system->background );
    
    map_system_show( wid, 20, 60, w-40, h-100);
-
    map_system_updateSelected( wid );
 
 }
@@ -592,59 +589,6 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
    return 0;
 }
 
-/**
- * @brief Generates a texture to represent factions
- *
- * @param radius radius of the disk
- * @return the texture
- */
-static glTexture *gl_genSysFactionDisk( int radius )
-{
-   int i, j;
-   uint8_t *pixels;
-   SDL_Surface *sur;
-   int dist;
-   double alpha;
-
-   /* Calculate parameters. */
-   const int w = 2 * radius + 1;
-   const int h = 2 * radius + 1;
-
-   /* Create the surface. */
-   sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
-
-   pixels = sur->pixels;
-   memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
-
-   /* Generate the circle. */
-   SDL_LockSurface( sur );
-
-   /* Draw the circle with filter. */
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* Calculate blur. */
-         dist = (i - radius) * (i - radius) + (j - radius) * (j - radius);
-         alpha = 0.;
-
-         if (dist < radius * radius) {
-            /* Computes alpha with an empirically chosen formula.
-             * This formula accounts for the fact that the eyes
-             * has a logarithmic sensitivity to light */
-            alpha = 1. * dist / (radius * radius);
-            alpha = (exp(1 / (alpha + 1) - 0.5) - 1) * 0xFF;
-         }
-
-         /* Sets the pixel alpha which is the forth byte
-          * in the pixel representation. */
-         pixels[i*sur->pitch + j*4 + 3] = (uint8_t)alpha;
-      }
-   }
-
-   SDL_UnlockSurface( sur );
-
-   /* Return texture. */
-   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
-}
 
 static void map_system_array_update( unsigned int wid, char* str ){
    char *name;
