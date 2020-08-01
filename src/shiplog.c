@@ -140,7 +140,7 @@ int shiplog_append(const char *idstr, const char *msg)
 {
    int i;
    for ( i=0 ; i<shipLog->nlogs; i++ ){
-      if ( (idstr==NULL && shipLog->idstrList[i]==NULL) || !strcmp(idstr, shipLog->idstrList[i]) ){
+      if ( (idstr==NULL && shipLog->idstrList[i]==NULL) || ( idstr!=NULL && shipLog->idstrList[i]!=NULL && !strcmp(idstr, shipLog->idstrList[i])) ){
          break;
       }
    }

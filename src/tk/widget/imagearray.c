@@ -377,7 +377,7 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
  */
 static void iar_centerSelected( Widget *iar )
 {
-   int y;
+   int y=0;
    double h;
    double hmax;
    double ypos;
@@ -391,7 +391,8 @@ static void iar_centerSelected( Widget *iar )
 
    /* Move if needed. */
    hmax = h * (iar->dat.iar.yelem - (int)(iar->h / h));
-   y = iar->dat.iar.selected / iar->dat.iar.xelem;
+   if ( iar->dat.iar.selected >= 0 )
+     y = iar->dat.iar.selected / iar->dat.iar.xelem;
    ypos = y * h;
    /* Below. */
    if (ypos < iar->dat.iar.pos)
@@ -736,7 +737,7 @@ static char* toolkit_getNameById( Widget *wgt, int elem )
 char* toolkit_getImageArray( const unsigned int wid, const char* name )
 {
    Widget *wgt = iar_getWidget( wid, name );
-   if (wgt == NULL)
+   if (wgt == NULL || wgt->dat.iar.selected < 0 )
       return NULL;
 
    return toolkit_getNameById( wgt, wgt->dat.iar.selected );
@@ -993,4 +994,21 @@ int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
    iar_data->offset = wgt->dat.iar.pos;
 
    return 0;
+}
+
+/**
+ * @brief Unsets the selection
+ *
+ *    @param wid Window containing the image array.
+ *    @param name Name of the image array widget.
+ */
+
+int toolkit_unsetSelection( const unsigned int wid, const char *name )
+{
+  Widget *wgt = iar_getWidget( wid, name );
+
+  /* unset the selection */
+  wgt->dat.iar.selected = -1;
+
+  return 0;
 }
