@@ -441,8 +441,8 @@ function get_econ_article( commod_name, plnt_name, credits )
       {
          title = _("Leadership Decision Disrupts Prices"),
          desc = gettext.ngettext(
-            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing the price of %s to %s credit per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
-            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing the price of %s to %s credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
+            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing it to %s credit per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
+            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing it to %s credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
             credits )
       },
       {
