@@ -763,7 +763,7 @@ static void opt_keyDefaults( unsigned int wid, char *str )
    title   = _("Restore Defaults");
    caption = _("Which layout do you want to use?");
 
-   dialogue_makeChoice( title, caption, 3 );
+   dialogue_makeChoice( title, caption, n );
 
    for (i=0; i<n; i++)
       dialogue_addChoice( title, caption, opts[i] );

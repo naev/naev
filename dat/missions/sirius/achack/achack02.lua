@@ -6,11 +6,13 @@ require "dat/scripts/nextjump.lua"
 require "fleethelper.lua"
 require "selectiveclear.lua"
 require "proximity.lua"
+require "dat/missions/sirius/common.lua"
+
 
 title1 = _("An unexpected reunion")
 text1 = _([[When you approach her, the officer greets you with a smile. "What a surprise that we should run into each other again," she says. "I'm afraid to say I don't remember your name. What was it again? Ah yes, %s. I don't think I introduced myself last time, my name is Joanne. Well met. As you can see I'm still doing quite well, no poison in my wine or snakes in my bed or anything." Then her expression turns more serious. "Actually, about that. I think our friend Harja still has it in for me. You had the common sense to use your head, but I'm afraid not everyone is like that. I'm convinced Harja will try to hire more assassins to do what you didn't, so I'm in considerable danger."
     You sympathize with Joanne, but you wonder aloud why she hasn't asked the local authorities for protection. Joanne gives you a somewhat uncomfortable look.
-    "Pride, I suppose. I'm a military officer. It wouldn't look too handsome if I asked for personal protection when the navy is already stretched thin out there, trying to protect our civilians from pirates and other criminals every day. Besides, my conflict with Harja is a personal matter. I feel I should resolve this with my own resources." She gives you a wan smile. "That being said, I wouldn't say no to a helping hand."]])
+    "Pride, I suppose. I'm a military officer. It wouldn't look too handsome if I asked for personal protection when the navy is already stretched thin out there, trying to protect our civilians from pirates and other criminals every day. Besides, my conflict with Harja is a personal matter. I feel I should resolve this with my own resources." She gives you a tired smile. "That being said, I wouldn't say no to a helping hand."]])
     
 text1r = _([["Hello again, %s," Joanne greets you. "I'm afraid I still find myself under threat from mercenary assassins. Have you reconsidered my offer? Let me tell you again what I need."]])
    
@@ -33,10 +35,10 @@ text5 = _([[After you both land your ships, you meet Joanne in the spaceport bar
     "Thank you, %s," Joanne says, "I appreciate it. Well, I guess I should start at the beginning."]])
     
 title5 = _("Joanne and Harja")
-text6 = _([["Several cycles ago, I and Harja were both students at the High Academy on Sinass. It's a very prestigious place among us Sirii, as you may or may not know. It's only one jump away from Mutris itself and... Well, anyway, it's one of the best academies in all of Sirius space, and only the most capable students are even allowed to attend. Now, I don't mean to brag, you understand, but even in that environment I was among the top rated students. And, believe it or not, so was Harja. We were in the same study unit, actually.
-    "Another thing you should know is that the High Academy offers the very best among its students the chance to advance to the Serra echelon. You're not Sirian so you might not understand, but it's an exceptional honor for those born into the Shaira or Fyrra echelons to rise to a higher echelon. It's extremely valuable to us. So you see, the prospect of being rewarded like that is a very strong motivation for most of the students. It was no different for Harja and myself, since we were both Fyrra echelon. With our abilities, each of us had a good chance of earning the promotion. However, since we were in the same study unit, only one of us could be promoted, since only one promotion is awarded per study unit each curriculum. That meant that Harja and I were rivals, but we were rivals in good sport. We each had every intention of winning the promotion through fair competition... Or so I thought."]])
+text6 = _([[She continues. "Several cycles ago, I and Harja were both students at the High Academy on Sinass. It's a very prestigious place among us Sirii, as you may or may not know. It's only one jump away from Mutris itself and... Well, anyway, it's one of the best academies in all of Sirius space, and only the most capable students are even allowed to attend. Now, I don't mean to brag, you understand, but even in that environment I was among the top rated students. And, believe it or not, so was Harja. We were in the same study unit, actually.
+    "Another thing you should know is that the High Academy offers the very best among its students the chance to advance to the Serra echelon. You're not Sirian so you might not understand, but it's an exceptional honor for those born into the Shaira or Fyrra echelons to rise to a higher echelon. It's extremely valuable to us. So you see, the prospect of being rewarded like that is a very strong motivation for most of the students. It was no different for Harja and myself, since we were both Fyrra echelon. With our abilities, each of us had a good chance of earning the promotion. However, since we were in the same study unit, only one of us could be promoted; only one promotion is awarded per study unit each curriculum. That meant that Harja and I were rivals, but we were rivals in good sport. We each had every intention of winning the promotion through fair competition... Or so I thought."]])
     
-text7 = _([["After the final exams had been taken and we were only days away from receiving the results, there was an incident. There had been a security breach in the academy's main computer. Someone had hacked the system and altered the data for the final exams, mine to be exact. My grades had been altered to be straight one hundred per cents, in every subject. Can you believe that? Someone had actually tried to make it look like I was cheating. What were they thinking? The academy staff wasn't fooled for even a moment. Nobody would be stupid enough to alter their own scores that way, so the only reason my scores would have been altered is if someone else did it, no doubt in order to discredit me. And you guessed it, the prime suspect was Harja. After all, if I was disqualified, he would certainly have gotten the promotion. Instead, he got what he deserved, and was expelled for his low attempt to secure his own success."
+text7 = _([["After the final exams had been taken and we were only days away from receiving the results, there was an incident. There had been a security breach in the academy's main computer. Someone had hacked the system and altered the data for the final exams, mine to be exact. My grades had been altered to be straight one hundred percent, in every subject. Can you believe that? Someone had actually tried to make it look like I was cheating. What were they thinking? The academy staff wasn't fooled for even a moment. Nobody would be stupid enough to alter their own scores that way, so the only reason my scores would have been altered is if someone else did it, no doubt in order to discredit me. And you guessed it, the prime suspect was Harja. After all, if I was disqualified, he would certainly have gotten the promotion. Instead, he got what he deserved, and was expelled for his low attempt to secure his own success."
     "That's basically the history between me and Harja. Up until you came to me, I just thought of him as an untrustworthy man whose own underhanded plan backfired on him. But here we are, cycles later, and now he's trying to kill me. Why, I wonder? Could he really be so bitter over what happened that he wants me dead? Even though he has nobody to blame but himself? I just don't understand it, %s, I really don't."
     Joanne remains silent for a moment, then takes a deep breath. "Whew, I feel quite a bit better now for having told this to you. Thanks for listening, it means a lot to me. I shouldn't keep you here any longer though, I'm sure you have a lot of other problems to look after."
     Joanne leaves the spaceport bar. You can't help but reflect that even in the highest levels of society, you can find envy and vice.]])
@@ -74,19 +76,22 @@ osd_final = {_("Land on Sroolu to get your reward")}
 osd_final["__save"] = true
 
 misn_desc = _("Joanne needs you to escort her ship and fight off mercenaries sent to kill her.")
-misn_reward = _("Joanne will pay you another 750,000 credits.")
+misn_reward = _("750,000 credits")
+
+log_text = _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]])
+
 
 function create()
    if not misn.claim ( {system.get("Humdrum"), system.get("Lapis")} ) then
-      abort()
+      misn.finish(false)
    end
    
    if var.peek("achack02repeat") then
-      misn.setNPC(joannename1, "sirius/unique/joanne")
-      misn.setDesc(joannedesc1)
-   else
       misn.setNPC(joannename2, "sirius/unique/joanne")
       misn.setDesc(joannedesc2)
+   else
+      misn.setNPC(joannename1, "sirius/unique/joanne")
+      misn.setDesc(joannedesc1)
    end
 end
 
@@ -153,13 +158,14 @@ function land()
       player.takeoff()
    elseif stage < 4 then
       tk.msg(destfailtitle, planetfailtext)
-      abort()
+      misn.finish(false)
    elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
       tk.msg(title4, text5:format(player.name(), player.name()))
       tk.msg(title5, text6)
       tk.msg(title5, text7:format(player.name()))
       player.pay(750000) -- 750K
       var.pop("achack02repeat")
+      srs_addAcHackLog( log_text )
       misn.finish(true)
    end
 end
@@ -168,11 +174,11 @@ end
 function enter()
    if not (system.cur() == nextsys and joannejumped) then
       tk.msg(destfailtitle, sysfailtext)
-      abort()
+      misn.finish(false)
    end
    if not player_has_fast_ship() then
       tk.msg(toslowshiptitle, toslowshipmsg)
-      abort()
+      misn.finish(false)
    end
    
    joanne = addRawShips("Sirius Fidelity", "sirius_norun", origin, "Achack_sirius")[1]
@@ -272,10 +278,6 @@ end
 
 function joanneDead()
    tk.msg(deathfailtitle, deathfailtext)
-   abort()
-end
-
-function abort()
    misn.finish(false)
 end
 

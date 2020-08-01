@@ -12,9 +12,10 @@
 
 ]]--
 
-require "dat/scripts/nextjump.lua"
+require "nextjump.lua"
 require "proximity.lua"
 require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 misn_title = _("Collective Extraction")
 misn_reward = _("%s credits")
@@ -45,7 +46,9 @@ osd_msg = {}
 osd_msg[1] = _("Fly to %s")
 osd_msg[2] = _("Land on %s")
 osd_msg[3] = _("Return to %s")
-osd_msg["__save"] = true 
+osd_msg["__save"] = true
+
+log_text = _([[You attempted to rescue the commando team on Eiroik, but despite your best efforts, they were already dead by the time you got there. However, you managed to retrieve a datapad from the team's wrecked ship. Lt. Commander Dimitri has asked you to meet him in the bar again in a while.]])
 
 
 function create ()
@@ -239,6 +242,8 @@ function land ()
       -- Rewards
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
+
+      emp_addCollectiveLog( log_text )
 
       misn.finish(true)
    end

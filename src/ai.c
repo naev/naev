@@ -243,6 +243,8 @@ static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_messages( lua_State *L );
 static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( number, number ) */
 static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
+static int aiL_shoot_indicator( lua_State *L ); /* get shoot indicator */
+static int aiL_set_shoot_indicator( lua_State *L ); /* set shoot indicator */
 
 
 static const luaL_Reg aiL_methods[] = {
@@ -328,6 +330,8 @@ static const luaL_Reg aiL_methods[] = {
    { "messages", aiL_messages },
    { "setasterotarget", aiL_setasterotarget },
    { "gatherablepos", aiL_gatherablePos },
+   { "shoot_indicator", aiL_shoot_indicator },
+   { "set_shoot_indicator", aiL_set_shoot_indicator },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -1824,75 +1828,19 @@ static int aiL_careful_face( lua_State *L )
  */
 static int aiL_aim( lua_State *L )
 {
-   double x,y;
-   double t;
    Pilot *p;
-   Vector2d tv, approach_vector, relative_location, orthoradial_vector;
-   double dist, diff;
+   double diff;
    double mod;
-   double speed;
-   double radial_speed;
-   double orthoradial_speed;
+   double angle;
 
    /* Only acceptable parameter is pilot */
    p = luaL_validpilot(L,1);
 
-   /* Get the distance */
-   dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
-
-   /* Check if should recalculate weapon speed with secondary weapon. */
-   speed = pilot_weapSetSpeed( cur_pilot, cur_pilot->active_set, -1 );
-
-   /* determine the radial, or approach speed */
-   /*
-    *approach_vector (denote Va) is the relative velocites of the pilot and target
-    *relative_location (denote Vr) is the vector that points from the target to the pilot
-    *
-    *Va dot Vr is the rate of approach between the target and the pilot.
-    *If this is greater than 0, the target is approaching the pilot, if less than 0, the target is fleeing.
-    *
-    *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
-    *
-    *Position prediction logic is the same as the previous function
-    */
-   vect_cset(&approach_vector, VX(cur_pilot->solid->vel) - VX(p->solid->vel), VY(cur_pilot->solid->vel) - VY(p->solid->vel) );
-   vect_cset(&relative_location, VX(p->solid->pos) -  VX(cur_pilot->solid->pos),  VY(p->solid->pos) - VY(cur_pilot->solid->pos) );
-   vect_cset(&orthoradial_vector, VY(cur_pilot->solid->pos) - VY(p->solid->pos), VX(p->solid->pos) -  VX(cur_pilot->solid->pos) );
-
-   radial_speed = vect_dot(&approach_vector, &relative_location);
-   radial_speed = radial_speed / VMOD(relative_location);
-
-   orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
-   orthoradial_speed = orthoradial_speed / VMOD(relative_location);
-
-   /* Time for shots to reach that distance */
-   /* t is the real positive solution of a 2nd order equation*/
-   /* if the target is not hittable (i.e., fleeing faster than our shots can fly, determinant <= 0), just face the target */
-   if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
-      t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
-            (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
-   else
-      t = 0;
-
-   /* if t < 0, try the other solution*/
-   if (t < 0)
-      t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
-            (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
-
-   /* if t still < 0, no solution*/
-   if (t < 0)
-      t = 0;
-
-   /* Position is calculated on where it should be */
-   x = p->solid->pos.x + p->solid->vel.x*t
-      - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
-   y = p->solid->pos.y + p->solid->vel.y*t
-      - (cur_pilot->solid->pos.y + cur_pilot->solid->vel.y*t);
-   vect_cset( &tv, x, y );
+   angle = pilot_aimAngle( cur_pilot, p );
 
    /* Calculate what we need to turn */
    mod = 10.;
-   diff = angle_diff(cur_pilot->solid->dir, VANGLE(tv));
+   diff = angle_diff(cur_pilot->solid->dir, angle);
    pilot_turn = mod * diff;
 
    /* Return distance to target (in grad) */
@@ -2296,7 +2244,8 @@ static int aiL_land( lua_State *L )
       ret++;
 
    if (!ret) {
-      cur_pilot->ptimer = PILOT_LANDING_DELAY;
+      cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
+      cur_pilot->ptimer = cur_pilot->landing_delay;
       pilot_setFlag( cur_pilot, PILOT_LANDING );
 
       hparam.type    = HOOK_PARAM_ASSET;
@@ -3160,6 +3109,32 @@ static int aiL_timeup( lua_State *L )
    n = luaL_checkint(L,1);
 
    lua_pushboolean(L, cur_pilot->timer[n] < 0.);
+   return 1;
+}
+
+
+/**
+ * @brief Set the seeker shoot indicator.
+ *
+ *    @luatparam boolean value to set the shoot indicator to.
+ *    @luafunc set_shoot_indicator()
+ */
+static int aiL_set_shoot_indicator( lua_State *L )
+{
+   cur_pilot->shoot_indicator = lua_toboolean(L,1);
+   return 0;
+}
+
+
+/**
+ * @brief Access the seeker shoot indicator (that is put to true each time a seeker is shot).
+ *
+ *    @luatreturn boolean true if the shoot_indicator is true.
+ *    @luafunc set_shoot_indicator()
+ */
+static int aiL_shoot_indicator( lua_State *L )
+{
+   lua_pushboolean(L, cur_pilot->shoot_indicator);
    return 1;
 }
 

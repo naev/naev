@@ -407,12 +407,14 @@ typedef struct Pilot_ {
    double tcontrol;  /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */
    Task* task;       /**< current action */
+   unsigned int shoot_indicator; /**< Indicator to inform the AI if a seeker has been shot recently. */
 
    /* Misc */
    double comm_msgTimer; /**< Message timer for the comm. */
    double comm_msgWidth; /**< Width of the message. */
    char *comm_msg;   /**< Comm message to display overhead. */
    PilotFlags flags; /**< used for AI and others */
+   double landing_delay; /**< This pilot's current landing delay. */
    double pdata;     /**< generic data for internal pilot use */
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */
@@ -476,6 +478,7 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
+double pilot_aimAngle( Pilot *p, Pilot *target );
 
 
 /* Misc. */

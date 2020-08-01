@@ -18,6 +18,8 @@
 --]]
 
 require "numstring.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -81,10 +83,13 @@ npc_desc = _("A stranger is sitting quietly at a table, alone, glancing around t
 osd_desc    = {}
 osd_desc[1] = _("Go to the %s system and land on the planet %s.")
 
+log_text = _([[You have made a new friend, Chelsea. You helped escort her to her parents and helped her feel secure coming out as transgender to her parents. Chelsea has asked you to return to Durea to visit once in a while.]])
+
+
 function create ()
    misplanet, missys = planet.get( "Durea" )
    -- Note: This mission does not make system claims
-   if missys:jumpDist( system.cur(), true ) < #chatter * 3 / 2 then
+   if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )
    end
 
@@ -170,6 +175,8 @@ function land ()
 
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
+
+      srm_addComingOutLog( log_text )
 
       misn.finish(true)
    end

@@ -18,6 +18,8 @@
 --]]
 
 require "numstring.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -43,6 +45,8 @@ npc_desc = _("She seems to just be sitting by idly. It's been a while; maybe you
 
 osd_desc    = {}
 osd_desc[1] = _("Go to the %s system and land on the planet %s.")
+
+log_text = _([[You helped transport Chelsea to Crow, where she was able to buy her first ship, a Llama which is in very bad condition, but working. As she went on to start her career as a freelance pilot, she asked you to catch up with her again sometime. She expects that she'll be sticking to Soromid space for the time being.]])
 
 
 function create ()
@@ -94,6 +98,8 @@ function land ()
 
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
+
+      srm_addComingOutLog( log_text )
 
       misn.finish(true)
    end

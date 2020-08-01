@@ -66,18 +66,15 @@ share_text[3] = _([["Hey, thanks for the help back there. I don't know if I woul
 share_text[4] = _([["Heh, thanks! I think I would have been able to take out %s by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]])
 share_text[5] = _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]])
 
-
 -- Mission details
-misn_title  = _("%s Dead or Alive Bounty in %s")
+misn_title = {}
+misn_title[1] = _("Tiny Dead or Alive Bounty in %s")
+misn_title[2] = _("Small Dead or Alive Bounty in %s")
+misn_title[3] = _("Moderate Dead or Alive Bounty in %s")
+misn_title[4] = _("High Dead or Alive Bounty in %s")
+misn_title[5] = _("Dangerous Dead or Alive Bounty in %s")
 misn_reward = _("%s credits")
 misn_desc   = _("The pirate known as %s was recently seen in the %s system. %s authorities want this pirate dead or alive.")
-
-misn_level    = {}
-misn_level[1] = _("Tiny")      -- Pirate Hyena
-misn_level[2] = _("Small")     -- Pirate Shark
-misn_level[3] = _("Moderate")  -- Pirate Vendetta or Pirate Ancestor
-misn_level[4] = _("High")      -- Pirate Admonisher or Pirate Phalanx
-misn_level[5] = _("Dangerous") -- Pirate Kestrel
 
 -- Messages
 msg    = {}
@@ -114,7 +111,7 @@ function create ()
    missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   jumps_permitted = missys:jumpDist() + rnd.rnd( 5 )
+   jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 5 )
    if rnd.rnd() < 0.05 then
       jumps_permitted = jumps_permitted - 1
    end
@@ -129,7 +126,7 @@ function create ()
    elseif num_pirates <= 100 then
       level = rnd.rnd( 3, 4 )
    else
-      level = rnd.rnd( 4, #misn_level )
+      level = rnd.rnd( 4, #misn_title )
    end
 
    name = pirate_name()
@@ -140,7 +137,7 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
+   misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( misn_desc:format( name, missys:name(), paying_faction:name() ) )
    misn.setReward( misn_reward:format( numstring( credits ) ) )
    marker = misn.markerAdd( missys, "computer" )

@@ -3,6 +3,8 @@
 --]]
 
 require "portrait.lua"
+require "dat/missions/baron/common.lua"
+require "dat/missions/neutral/common.lua"
 
 
 sysname1 = "Darkstone"
@@ -84,6 +86,10 @@ osd_title = _("Baron")
 osd_msg[1] = _("Fly to the %s system and land on planet %s")
 osd_msg[2] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
 
+log_text_succeed = _([[You helped some selfish baron steal a Dvaered holopainting and were paid a measly sum of credits.]])
+log_text_refuse = _([[You were offered a sketchy-looking job by a nondescript pilot, but you angrily refused to accept the job. It seems whoever the pilot worked for won't be contacting you again.]])
+
+
 function create ()
    missys = {system.get("Darkstone")}
    if not misn.claim(missys) then
@@ -102,6 +108,7 @@ function create ()
    else
       tk.msg(angrytitle, angrytext)
       var.push("baron_hated", true)
+      addMiscLog( log_text_refuse )
       abort()
    end
 end
@@ -186,6 +193,7 @@ function board()
    pinnacle:changeAI("flee")
    pinnacle:setHilight(false)
    pinnacle:setActiveBoard(false)
+   baron_addLog( log_text_succeed )
    misn.finish(true)
 end
 

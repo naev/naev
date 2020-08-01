@@ -8,7 +8,10 @@
 
 -- localization stuff, translators would work here
 
-require("fleethelper.lua")
+require "fleethelper.lua"
+require "dat/missions/flf/flf_common.lua"
+require "dat/missions/dvaered/common.lua"
+
 
 title = {}
 text = {}
@@ -67,6 +70,10 @@ osd_adddesc = _("Follow the FLF ships to their secret base. Do not lose them!")
 
 misn_desc = _("You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered.")
 misn_reward = _("A chance to learn more about the FLF")
+
+log_text_flf = _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]])
+log_text_dv = _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liason. You may want to scout out this liason.]])
+
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -127,7 +134,7 @@ function enter()
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
         fleetFLF = addShips( "FLF Vendetta", "flf_norun", jumppos, 3 )
         
-        faction.get("FLF"):modPlayerSingle(-200)
+        faction.get("FLF"):setPlayerStanding( -100 )
         
         hook.timer(2000, "commFLF")
         hook.timer(25000, "wakeUpGregarYouLazyBugger")
@@ -142,7 +149,7 @@ function land()
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
-        misn.cargoJet(gregar)
+        flf_addLog( log_text_flf )
         misn.finish(true)
     -- Case Dvaered planet
     elseif planet.cur():faction() == faction.get("Dvaered") and not basefound then
@@ -151,7 +158,7 @@ function land()
             faction.get("Dvaered"):modPlayerSingle(5)
             var.push("flfbase_intro", 1)
             var.pop("flfbase_flfshipkilled")
-            misn.cargoJet(gregar)
+            dv_addAntiFLFLog( log_text_dv )
             misn.finish(true)
         end
     end
@@ -178,7 +185,7 @@ function wakeUpGregarYouLazyBugger()
     if not flfdead then
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
-        faction.get("FLF"):modPlayerSingle(105) -- Small buffer to ensure it doesn't go negative again right away.
+        faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
         misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
         misn.osdActive(2)
         hook.timer(2000, "annai")

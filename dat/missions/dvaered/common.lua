@@ -1,7 +1,3 @@
-
-
-
-
 --[[
    @brief Increases the reputation limit of the player.
 --]]
@@ -11,4 +7,7 @@ function dv_modReputation( increment )
 end
 
 
-
+function dv_addAntiFLFLog( text )
+   shiplog.createLog( "dv_antiflf", _("Anti-FLF Campaign"), _("Dvaered") )
+   shiplog.appendLog( "dv_antiflf", text )
+end

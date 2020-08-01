@@ -6,10 +6,11 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
-require "dat/scripts/jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "dat/missions/empire/common.lua"
 
-bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
+bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Soromid Long Distance Recruitment")
 misn_reward = _("500,000 credits")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Soromid Customs Central in the Oberon system")
@@ -18,9 +19,11 @@ title[1] = _("Spaceport Bar")
 title[2] = _("Soromid Long Distance Recruitment")
 title[3] = _("Mission Accomplished")
 text = {}
-text[1] = _([[You approach Lieutenant Czesc. His demeanour brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions and we have a new exicting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped business potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]])
-text[2] = _([["I knew I could count on you," Lieutenant Czesc exclaims. "These missions will be long distance, meaning that you'll usually have to go at least 3 jumps to make the delivery. In addition, you'll often find yourself in the territory of other factions, where the Empire may not be able to protect you. In return, you will be nicely compensated. He hits a couple buttons on his wrist computer. "First, we need to set up operations with the other factions. We'll need a bureaucrat to handle the red tape and oversee the operations. We will begin with the Soromid. I know those genetically modified beings are kind of creepy, but business is business. Please accompany a bureaucrat to Soromid Customs Central in the Oberon system. He will report back to me when this mission is accomplished. I tend to travel within Empire space handling minor trade disputes, so keep an eye out for me in the bar on Empire controlled planets."]])
+text[1] = _([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped business potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]])
+text[2] = _([["I knew I could count on you," Lieutenant Czesc exclaims. "These missions will be long distance, meaning that you'll usually have to go at least 3 jumps to make the delivery. In addition, you'll often find yourself in the territory of other factions, where the Empire may not be able to protect you. In return, you will be nicely compensated." He hits a couple buttons on his wrist computer. "First, we need to set up operations with the other factions. We'll need a bureaucrat to handle the red tape and oversee the operations. We will begin with the Soromid. I know those genetically modified beings are kind of creepy, but business is business. Please accompany a bureaucrat to Soromid Customs Central in the Oberon system. He will report back to me when this mission is accomplished. I tend to travel within Empire space handling minor trade disputes, so keep an eye out for me in the bar on Empire controlled planets."]])
 text[3] = _([[You drop the bureaucrat off at Soromid Customs Central, and he hands you a credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]])
+
+log_text = _([[You delivered a shipping bureaucrat to Soromid Customs Central for the Empire. Liutenant Czesc told you to keep an eye out out for him in Empire space to continue the operation.]])
 
 
 function create ()
@@ -70,7 +73,8 @@ function land()
          player.pay( reward )
          -- More flavour text
          tk.msg( title[3], text[3] )
-         faction.modPlayerSingle( "Empire",3 );
+         faction.modPlayerSingle( "Empire",3 )
+         emp_addShippingLog( log_text )
          misn.finish(true)
    end
 end

@@ -18,6 +18,7 @@
 ]]--
 
 require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 -- Mission details
 bar_desc = _("Commander Soldner is waiting for you.")
@@ -31,11 +32,10 @@ title = {}
 title[1] = _("Commander Soldner")
 title[2] = _("Disabled Ship")
 title[3] = _("Mission Success")
-title[4] = _("Mission Failure")
 text = {}
 text[1] = _([[You meet up once more with Commander Soldner at the bar.
     "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]])
-text[2] = _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you."
+text[2] = _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.
     "You're going to have to fly to the %s system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]])
 text[3] = _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %s credits when you return with the VIP. Good luck, pilot."]])
 text[4] = _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]])
@@ -45,7 +45,9 @@ msg = {}
 msg[1] = _("MISSION FAILED: VIP is dead.")
 msg[2] = _("MISSION FAILED: You abandoned the VIP.")
 
-require "dat/missions/empire/common.lua"
+log_text_success = _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]])
+log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
+
 
 function create ()
    -- Target destination
@@ -67,7 +69,6 @@ end
 
 
 function accept ()
-
    -- Intro text
    if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
       misn.finish()
@@ -120,15 +121,7 @@ function land ()
          -- Flavour text
          tk.msg( title[3], text[5] )
 
-         misn.finish(true)
-
-      -- Mister VIP is dead
-      elseif misn_stage == 3 then
-
-         -- What a disgrace you are, etc...
-         tk.msg( title[4], text[6] )
-         emp_modReputation( 5 ) -- Bump cap a bit
-         diff.apply("heavy_combat_vessel_license")
+         emp_addShippingLog( log_text_success )
 
          misn.finish(true)
       end
@@ -140,6 +133,8 @@ function enter ()
    sys = system.cur()
 
    if misn_stage == 0 and sys == destsys then
+      -- Force FLF combat music (note: must clear this later on).
+      var.push( "music_combat_force", "FLF" )
 
       -- Put the VIP a ways off of the player but near the jump.
       enter_vect = jump.pos(sys, prevsys)
@@ -183,22 +178,26 @@ function enter ()
 
    -- Can't run away from combat
    elseif misn_stage == 1 then
-
       -- Notify of mission failure
       player.msg( msg[2] )
+      emp_addShippingLog( log_text_fail )
+      var.pop( "music_combat_force" )
       misn.finish(false)
-
    end
 end
+
 
 function jumpout ()
    -- Storing the system the player jumped from.
    prevsys = system.cur()
+
+   if prevsys == destsys then
+      var.pop( "music_combat_force" )
+   end
 end
 
 
 function delay_flf ()
-
    if misn_stage ~= 0 then
       return
    end
@@ -231,15 +230,19 @@ function death ()
    if misn_stage == 1 then
       -- Notify of death
       player.msg( msg[1] )
-
-      -- Update mission details
-      misn_stage = 3
+      emp_addShippingLog( log_text_fail )
+      var.pop( "music_combat_force" )
       misn.finish(false)
    end
 end
 
+
 function abort ()
    -- If aborted you'll also leave the VIP to fate. (A.)
    player.msg( msg[2] )
+   emp_addShippingLog( log_text_fail )
+   if system.cur() == destsys then
+      var.pop( "music_combat_force" )
+   end
    misn.finish(false)
 end

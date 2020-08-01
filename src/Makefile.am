@@ -106,6 +106,7 @@ CODE_SOURCE = \
 	nlua_player.c \
 	nlua_rnd.c \
 	nlua_ship.c \
+	nlua_shiplog.c \
 	nlua_system.c \
 	nlua_tex.c \
 	nlua_time.c \
@@ -149,6 +150,7 @@ CODE_SOURCE = \
 	save.c \
 	shaders.gen.c \
 	ship.c \
+	shiplog.c \
 	shipstats.c \
 	slots.c \
 	sound.c \
@@ -253,6 +255,7 @@ CODE_SOURCE = \
 	nlua_player.h \
 	nlua_rnd.h \
 	nlua_ship.h \
+	nlua_shiplog.h \
 	nlua_system.h \
 	nlua_tex.h \
 	nlua_time.h \
@@ -297,6 +300,7 @@ CODE_SOURCE = \
 	save.h \
 	shaders.gen.h \
 	ship.h \
+	shiplog.h \
 	shipstats.h \
 	slots.h \
 	sound.h \

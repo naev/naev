@@ -11,6 +11,8 @@
 
 require "fleethelper.lua"
 require "factions/spawn/zalek/lua"
+require "dat/missions/zalek/common.lua"
+
 
 -- set text variables
 title = {}
@@ -65,6 +67,9 @@ osd_msg[3] = _("Return the prototype to %s in the %s system")
 -- refuestext 
 refusetitle = _("No Science Today")
 refusetext = _("Don't you care about science?...")
+
+log_text = _([[You helped Dr. Geller retrieve his lost prototype drone.]])
+
 
 function create ()
    -- Spaceport bar stuff
@@ -279,7 +284,7 @@ function land_home()
    if planet.cur() == planet.get(t_pla[2]) then
       tk.msg(title[4]:format(t_pla[2]),text[15])
       player.pay(reward)
-      -- pay player and do shit here
+      zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

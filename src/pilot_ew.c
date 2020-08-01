@@ -231,6 +231,42 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    return 0;
 }
 
+
+/**
+ * @brief Check to see if an asteroid is in sensor range of the pilot.
+ *
+ *    @param p Pilot who is trying to check to see if the asteroid is in sensor range.
+ *    @param ast Asteroid to see if is in sensor range.
+ *    @param fie Field the Asteroid belongs to to see if is in sensor range.
+ *    @return 1 if they are in range, 0 if they aren't.
+ */
+int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
+{
+   double d;
+   Asteroid *as;
+   AsteroidAnchor *f;
+   double sense;
+
+   /* pilot must exist */
+   if ( p == NULL )
+      return 0;
+
+   /* Get the asteroid. */
+   f = &cur_system->asteroids[fie];
+   as = &f->asteroids[ast];
+
+   sense = sensor_curRange * p->ew_detect;
+
+   /* Get distance. */
+   d = vect_dist2( &p->solid->pos, &as->pos );
+
+   if (d < sense ) /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
+      return 1;
+
+   return 0;
+}
+
+
 /**
  * @brief Check to see if a jump point is in sensor range of the pilot.
  *

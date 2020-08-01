@@ -48,7 +48,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_tk.h"
-
+#include "shiplog.h"
 
 /* global/main window */
 #define LAND_WIDTH   800 /**< Land window width. */
@@ -1000,6 +1000,7 @@ void land_genWindows( int load, int changetab )
          npc_generate(); /* Generate bar npc. */
    }
 
+   
    /* 4) Create other tabs. */
 #define should_open(s, w) \
    (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))
@@ -1362,7 +1363,8 @@ void takeoff( int delay )
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
-   player.p->ptimer = PILOT_TAKEOFF_DELAY;
+   player.p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
+   player.p->ptimer = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );

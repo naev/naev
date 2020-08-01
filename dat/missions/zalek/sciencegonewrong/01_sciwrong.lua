@@ -10,6 +10,9 @@
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
+require "dat/missions/zalek/common.lua"
+
+
 -- mission variables
 t_sys = {}
 t_pla = {}
@@ -37,7 +40,7 @@ title[3] = _([[In the ship]])
 text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
     You manage to locate a box on a table in the crew's chambers. Apparently nobody expected somebody to be nuts enough to try to do what you are doing. You grab the box and head back to your ship.]])
 
-text[5] = _([["How'd it go?" asks Dr Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
+text[5] = _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
 -- if the player kills the ship before getting the tech
 title[4] = _([[What have you done?]])
 text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]])
@@ -50,6 +53,8 @@ osd_msg[3] = _("Return to %s in the %s system")
 -- refuestext 
 refusetitle = _("No Science Today")
 refusetext = _("But I really thought you were into science...")
+
+log_text = _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]])
 
 
 function create ()
@@ -132,7 +137,7 @@ end
 
 function targetBoard()
    player.unboard()
-   tk.msg(title[2], text[4])
+   tk.msg(title[3], text[4])
    target:setHilight(false)
    target:setVisplayer(false)
    cargoID = misn.cargoAdd("Secret Technology",0)
@@ -149,7 +154,8 @@ function land()
       tk.msg(title[1], text[5])
       hook.rm(hland)
       misn.markerRm(misn_mark)
-      player.pay(reward) -- 30K
+      player.pay(reward)
+      zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

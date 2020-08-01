@@ -2,6 +2,8 @@
 -- This is the first mission in the Academy Hack minor campaign.
 --]]
 
+require "dat/missions/sirius/common.lua"
+
 
 title1 = _("A Sirian with a grudge")
 text1 = _([[You find a young Fyrra man sitting uncomfortably amidst the uncouth characters that frequent the Wringer. He seems to be here with a purpose, but nobody seems to be giving him the time of day. Curious, you decide to talk to the man and find out why he is here.
@@ -33,7 +35,10 @@ osd_msg[2] = _("Find your target on %s and kill her")
 osd_msg["__save"] = true
 
 misn_desc = _([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]])
-misn_reward = _("Harja promised 400,000 credits.")
+misn_reward = _("400,000 credits")
+
+log_text = _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]])
+
 
 function create()
     -- This mission ONLY spawns if the system it's in is not claimed by another mission. Special hack to mutex with Dark Shadow.
@@ -79,7 +84,8 @@ end
 
 function talkJoanne()
     tk.msg(title2, text3)
-    player.pay(500000) -- 500K
+    player.pay(200000) -- 200K
+    srs_addAcHackLog( log_text )
     misn.finish(true)
 end
 

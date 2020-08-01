@@ -77,6 +77,7 @@ dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shipwreck.lua
 dat/events/pirate_fame.lua
 dat/events/proteron_discovery.lua
+dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
 dat/events/start.lua
@@ -368,6 +369,7 @@ src/nlua_planet.c
 src/nlua_player.c
 src/nlua_rnd.c
 src/nlua_ship.c
+src/nlua_shiplog.c
 src/nlua_system.c
 src/nlua_tex.c
 src/nlua_time.c

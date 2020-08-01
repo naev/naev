@@ -56,8 +56,8 @@ function create ()
    local p, sys
    for i, j in ipairs( dest_planets ) do
       p, sys = planet.get( j )
-      if dist == nil or sys:jumpDist() < dist then
-         dist = sys:jumpDist()
+      if dist == nil or system.cur():jumpDist(sys) < dist then
+         dist = system.cur():jumpDist(sys)
       end
    end
 

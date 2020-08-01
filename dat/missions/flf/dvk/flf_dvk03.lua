@@ -71,6 +71,8 @@ flfcomm[2] = _("You heard the boss! Let's grind that station to dust!")
 
 civcomm = _("Help! SOS! We are under attack! In need of immediate assistance!")
 
+log_text = _([[You led the effort to destroy the hated Dvaered base, Raelid Outpost, a major victory for the FLF. This act led to the Empire listing you and the FLF as an enemy of the Empire.]])
+
 
 function create ()
    missys = system.get( "Raelid" )
@@ -376,6 +378,7 @@ function finish ()
    player.pay( credits )
    flf_setReputation( 70 )
    faction.get("FLF"):modPlayer( reputation )
+   flf_addLog( log_text )
    misn.finish( true )
 end
 

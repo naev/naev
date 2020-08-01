@@ -28,6 +28,7 @@
 ]]--
 
 require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
@@ -51,10 +52,10 @@ text[3] = _([[You accept and she dismisses both of the soldiers, who proceed to 
     "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]])
 text[4] = _([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on %s. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
     She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]])
-text[5] = _([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape."
+text[5] = _([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape.
     "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in %s. You will have to find him there. The other ships will follow your lead to %s. Good luck."]])
 text[6] = _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-    "Congratulations on the success, %s. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]])
+    "Congratulations on the success, %s. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all-out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]])
 text[7] = _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
     "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]])
 
@@ -78,6 +79,10 @@ taunts = {}
 taunts[1] = _("It is too late! The plan is being put into movement!")
 taunts[2] = _("You have no idea who you're messing with!")
 taunts[3] = _("My drones will make mincemeat of you!")
+
+log_text_intro = _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]])
+log_text_succeed = _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Station for an all-out attack on Collective territory.]])
+log_text_fail = _([[You failed to destroy the ESS Trinity, putting a wedge in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]])
 
 
 function create ()
@@ -122,6 +127,7 @@ function accept ()
    
    tk.msg( title[2], string.format(text[3], misn_base:name() ) )
    tk.msg( title[3], string.format(text[4], "Eiroik"))
+   emp_addCollectiveLog( log_text_intro )
    tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
    -- Escorts
@@ -355,10 +361,12 @@ function land ()
          tk.msg( title[5], text[7] )
          var.push("trinity", true)
          credits = credits / 2
+         emp_addCollectiveLog( log_text_fail )
       else
          -- Successfully killed
          tk.msg( title[4], string.format(text[6], player.name()) )
          var.push("trinity", false)
+         emp_addCollectiveLog( log_text_succeed )
       end
 
       -- Rewards

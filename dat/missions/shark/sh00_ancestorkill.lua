@@ -12,8 +12,10 @@
 --]]
 
 --Needed scripts
-require("dat/scripts/pilot/pirate.lua")
-require("dat/scripts/numstring.lua")
+require "pilot/pirate.lua"
+require "numstring.lua"
+require "dat/missions/shark/common.lua"
+
 
 title = {}
 text = {}
@@ -60,6 +62,9 @@ osd_msg[3] = _("Land on %s and collect your fee")
 leave_msg = _("MISSION FAILED: You left the pirate.")
 piratejump_msg = _("MISSION FAILED: The pirate ran away.")
 noshark_msg = _("MISSION FAILED: You were supposed to use a Shark.")
+
+log_text = _([[You helped Nexus Shipyards demonstrate the capabilities of their ships by destroying a Pirate Ancestor.]])
+
 
 function create ()
 
@@ -126,6 +131,7 @@ function land()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)
+      shark_addLog( log_text )
       misn.finish(true)
    end
 end

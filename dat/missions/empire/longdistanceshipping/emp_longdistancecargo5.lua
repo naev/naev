@@ -6,10 +6,11 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
-require "dat/scripts/jumpdist.lua"
+require "numstring.lua"
+require "jumpdist.lua"
+require "dat/missions/empire/common.lua"
 
-bar_desc = _("Lieutenant Czesc from the Empire Aramda Shipping Division is sitting at the bar.")
+bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Sirius Long Distance Recruitment")
 misn_reward = _("500,000 credits")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Madria in the Esker system")
@@ -21,6 +22,8 @@ text = {}
 text[1] = _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favorite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]])
 text[2] = _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at Madria in the Esker system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]])
 text[3] = _([[You drop the diplomat off on Madria, and she hands you a credit chip. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]])
+
+log_text = _([[You delivered a shipping bureaucrat to Madria for the Empire. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]])
 
 
 function create ()
@@ -70,7 +73,8 @@ function land()
          player.pay( reward )
          -- More flavour text
          tk.msg( title[3], text[3] )
-         faction.modPlayerSingle( "Empire",3 );
+         faction.modPlayerSingle( "Empire",3 )
+         emp_addShippingLog( log_text )
          misn.finish(true)
    end
 end

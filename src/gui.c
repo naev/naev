@@ -83,7 +83,6 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static gl_vbo *gui_triangle_vbo = NULL;
 static gl_vbo *gui_planet_vbo = NULL;
 static gl_vbo *gui_radar_select_vbo = NULL;
-static gl_vbo *gui_out_of_range_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
@@ -1288,7 +1287,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy;
+   int x, y, sx, sy, i, j, targeted;
    double px, py;
    const glColour *col;
    glColour ccol;
@@ -1297,9 +1296,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    if (a->appearing == ASTEROID_INVISIBLE)
       return;
 
-   /* Make sure is in range. TODO: real detection system for asteroids */
-   if ( MOD( a->pos.x - player.p->solid->pos.x,
-             a->pos.y - player.p->solid->pos.y ) > 4000. )
+   /* Recover the asteroid and field IDs. */
+   i = a->id;
+   j = a->parent;
+
+   /* Make sure is in range. */
+   if (!pilot_inRangeAsteroid( player.p, i, j ))
       return;
 
    /* Get position. */
@@ -1327,12 +1329,26 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
 
-   col = &cWhite;
+   targeted = ((i==player.p->nav_asteroid) && (j==player.p->nav_anchor));
+
+   /* Colour depends if the asteroid is selected. */
+   if (targeted)
+      col = &cWhite;
+   else
+      col = &cGrey70;
+
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+
+   if (targeted && (blink_pilot >= RADAR_BLINK_PILOT/2.)) {
+      gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &ccol);
+      gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINES, 0, 8 );
+      gl_endSolidProgram();
+   }
 }
 
 
@@ -1425,20 +1441,14 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
  */
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col )
 {
-   /* TODO: create a general line drawing function and use that here */
-
-   double a, x, y;
-   gl_Matrix4 projection;
+   double a, x, y, x2, y2;
    glColour c;
-
-   projection = gl_view_matrix;
 
    /* Draw a line like for pilots. */
    a = ANGLE(cx,cy);
    if (sh == RADAR_CIRCLE) {
-      projection = gl_Matrix4_Rotate2d(projection, a);
-      projection = gl_Matrix4_Translate(projection, w*.85, 0, 0);
-      projection = gl_Matrix4_Scale(projection, .15 * w, .15 * w, 1);
+      x = w * cos(a);
+      y = w * sin(a);
    }
    else {
       int cxa, cya;
@@ -1458,18 +1468,14 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
          x = -w/2.;
          y = -h/2. * (cy*1./cx);
       }
-      projection = gl_Matrix4_Translate(projection, x, y, 0);
-      projection = gl_Matrix4_Scale(projection, -.15 * w, -.15 * w, 1);
-      projection = gl_Matrix4_Rotate2d(projection, a);
    }
+   x2 = x - .15 * w * cos(a);
+   y2 = y - .15 * w * sin(a);
 
    c = *col;
    c.a = 1.-interference_alpha;
 
-   gl_beginSolidProgram(projection, &c);
-   gl_vboActivateAttribOffset( gui_out_of_range_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 2 );
-   gl_endSolidProgram();
+   gl_drawLine( x, y, x2, y2, &c );
 }
 
 
@@ -1780,14 +1786,6 @@ int gui_init (void)
       vertex[14] = -3.3;
       vertex[15] = -3.3;
       gui_radar_select_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 16, vertex );
-   }
-
-   if (gui_out_of_range_vbo == NULL) {
-      vertex[0] = 0;
-      vertex[1] = 0;
-      vertex[2] = 1;
-      vertex[3] = 0;
-      gui_out_of_range_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 4, vertex );
    }
 
    if (gui_planet_blink_vbo == NULL) {
@@ -2208,10 +2206,6 @@ void gui_free (void)
    if (gui_radar_select_vbo != NULL) {
       gl_vboDestroy( gui_radar_select_vbo );
       gui_radar_select_vbo = NULL;
-   }
-   if (gui_out_of_range_vbo != NULL) {
-      gl_vboDestroy( gui_out_of_range_vbo );
-      gui_out_of_range_vbo = NULL;
    }
    if (gui_planet_blink_vbo != NULL) {
       gl_vboDestroy( gui_planet_blink_vbo );

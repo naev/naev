@@ -7,7 +7,8 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
 misn_title = _("Prisoner Exchange")
@@ -22,7 +23,7 @@ title[3] = _("Mission Report")
 text = {}
 text[1] = _([[You approach the Empire Commander.
     "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]])
-text[2] = _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors."
+text[2] = _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
     "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]])
 text[3] = _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]])
 text[4] = _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
@@ -33,13 +34,14 @@ text[6] = _([[After you leave your ship in the starport, you meet up with Comman
     "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
     He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transfered to your bank account."]])
 
+log_text = _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in another mission.]])
+
 
 function create ()
-   -- Note: this mission does not make any system claims.
    -- Target destination
    dest,destsys = planet.getLandable( faction.get("Frontier") )
    ret,retsys   = planet.getLandable( "Halir" )
-   if dest == nil or ret == nil then
+   if dest == nil or ret == nil or not misn.claim(destsys) then
       misn.finish(false)
    end
 
@@ -50,7 +52,6 @@ end
 
 
 function accept ()
-
    -- Intro text
    if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
       misn.finish()
@@ -80,6 +81,7 @@ function accept ()
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
+   hook.jumpout("jumpout")
 end
 
 
@@ -115,14 +117,18 @@ function land ()
       -- Flavour text
       tk.msg(title[3], text[6] )
 
+      emp_addShippingLog( log_text )
+
       misn.finish(true)
    end
 end
 
 
 function enter ()
-   sys = system.cur()
+   local sys = system.cur()
    if misn_stage == 1 and sys == destsys then
+      -- Force FLF combat music (note: must clear this later on).
+      var.push( "music_combat_force", "FLF" )
 
       -- Get a random position near the player
       ang = rnd.rnd(0, 360)
@@ -152,3 +158,18 @@ function enter ()
    end
 end
 
+
+function jumpout ()
+   -- Storing the system the player jumped from.
+   if system.cur() == destsys then
+      var.pop( "music_combat_force" )
+   end
+end
+
+
+function abort ()
+   if system.cur() == destsys then
+      var.pop( "music_combat_force" )
+   end
+   misn.finish(false)
+end

@@ -20,8 +20,7 @@ factional = {
    Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
    ["Za'lek"] = { "zalek1", "zalek2"; add_neutral = true },
    Thurion    = { "motherload", "dark_city", "ambient1", "ambient3" },
-   Proteron   = { "heartofmachine", "imminent_threat", "ambient4",
-                  "void_sensor", "terminal" },
+   Proteron   = { "heartofmachine", "imminent_threat", "ambient4" },
 }
 
 function choose( str )

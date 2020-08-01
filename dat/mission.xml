@@ -711,6 +711,7 @@
    <faction>Soromid</faction>
    <faction>Trader</faction>
    <faction>Za'lek</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="A Journey To Arandon">
@@ -724,6 +725,7 @@
    <chance>100</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
   <mission name="The Last Detail">
@@ -737,6 +739,7 @@
    <chance>50</chance>
    <location>Bar</location>
    <planet>Darkshed</planet>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
  </mission>
  <mission name="Crimelord">
@@ -758,7 +761,7 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht"</cond>
+   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
    <chance>10</chance>
    <location>Bar</location>
   </avail>
@@ -861,7 +864,7 @@
   <lua>neutral/race2</lua>
   <avail>
    <priority>3</priority>
-   <cond>player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht"</cond>
+   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
    <done>Racing Skills 1</done>
    <chance>20</chance>
    <location>Bar</location>
@@ -919,7 +922,7 @@
    <faction>Empire</faction>
   </avail>
  </mission> 
- <mission name="Za’lek Long Distance Recruitment">
+ <mission name="Za'lek Long Distance Recruitment">
   <lua>empire/longdistanceshipping/emp_longdistancecargo3</lua>  
   <flags>
    <unique />
@@ -942,7 +945,7 @@
    <priority>4</priority>
    <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>75</chance>
-   <done>Za’lek Long Distance Recruitment</done>   
+   <done>Za'lek Long Distance Recruitment</done>   
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
@@ -1148,7 +1151,7 @@
    <chance>5</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
-   <cond>planet.cur():class() ~= "0"</cond>
+   <cond>player.numOutfit("Mercenary License") &gt; 0 and planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
   </avail>
  </mission>
  <mission name="Animal transport">
@@ -1161,7 +1164,7 @@
    <chance>10</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
-   <cond>planet.cur():class() ~= "0"</cond>
+   <cond>planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
   </avail>
  </mission>
  <mission name="An old woman">
@@ -1388,6 +1391,7 @@
   <lua>neutral/sightseeing</lua>
   <avail>
    <priority>4</priority>
+   <cond>planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
    <chance>460</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>

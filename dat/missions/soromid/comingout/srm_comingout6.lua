@@ -20,6 +20,8 @@
 require "numstring.lua"
 require "jumpdist.lua"
 require "pilot/pirate.lua"
+require "dat/missions/soromid/common.lua"
+
 
 title = {}
 text = {}
@@ -52,6 +54,8 @@ osd_desc[2] = _("Protect Chelsea and help them kill or capture %s")
 chelkill_msg = _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.")
 chelflee_msg = _("MISSION FAILED: Chelsea has abandoned the mission.")
 plflee_msg = _("MISSION FAILED: You have abandoned the mission.")
+
+log_text = _([[You helped Chelsea hunt down a wanted pirate, earning a bounty for both of you and allowing Chelsea to acquire a retired Dvaered warlord's old Vigilance.]])
 
 
 function create ()
@@ -192,6 +196,8 @@ function win_timer ()
 
    local t = time.get():tonumber()
    var.push( "comingout_time", t )
+
+   srm_addComingOutLog( log_text )
 
    misn.finish( true )
 end

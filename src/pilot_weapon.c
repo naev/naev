@@ -1132,6 +1132,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
 
       pilot_updateMass( p );
 
+      /* Make the AI aware a seeker has been shot */
+      if (outfit_isSeeker(w->outfit))
+         p->shoot_indicator = 1;
+
       /* If last ammo was shot, update the range */
       if (w->u.ammo.quantity <= 0) {
          for (j=0; j<PILOT_WEAPON_SETS; j++)

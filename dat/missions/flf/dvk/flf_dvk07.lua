@@ -18,15 +18,16 @@
 --]]
 
 require "dat/missions/flf/flf_rogue.lua"
+require "dat/missions/flf/flf_common.lua"
 
 title = {}
 text = {}
 
 title[1] = _("The Split")
-text[1] = _([[As you approach, you notice that Benito has an unusually annoyed expression. But when she seems you, she calms down somewhat. "Ah, %s." She sighs. "No one is willing to take up this mission, and while I can understand it's a tough mission, it really has to be taken care of.
+text[1] = _([[As you approach, you notice that Benito has an unusually annoyed expression. But when she sees you, she calms down somewhat. "Ah, %s." She sighs. "No one is willing to take up this mission, and while I can understand it's a tough mission, it really has to be taken care of.
     "See, for some reason, a group of FLF pilots has decided to turn traitor on us. They're hanging around outside of Sindbad and shooting us down. They need to be stopped, but no one wants to get their hands dirty killing fellow FLF pilots. But they're not FLF pilots anymore! They betrayed us! Can't anyone see that?" She takes a deep breath. "Will you do it, please? You'll be paid for the service, of course."]])
 
-text[2] = _([["Yes, finally!" It's as if a massive weight has been lifted off of Benito's chest. "Everyone trusts you a lot, so I'm sure this will convince them that,  yes, killing traitors is the right thing to do. They're no better than Dvaereds, or those Empire scum who started shooting at us recently! Thank you for accepting the mission. Now I should at least be able to get a couple more pilots to join in and help you defend our interests against the traitors. Good luck!"]])
+text[2] = _([["Yes, finally!" It's as if a massive weight has been lifted off of Benito's chest. "Everyone trusts you a lot, so I'm sure this will convince them that, yes, killing traitors is the right thing to do. They're no better than Dvaereds, or those Empire scum who started shooting at us recently! Thank you for accepting the mission. Now I should at least be able to get a couple more pilots to join in and help you defend our interests against the traitors. Good luck!"]])
 
 text[3] = _([["Ugh, this is so annoying... I understand, though. Just let me know if you change your mind, okay?"]])
 
@@ -35,10 +36,12 @@ pay_text[1] = _([[Upon your return to the station, you are greeted by Benito. "T
 
 misn_title = _("The Split")
 misn_desc = _("A fleet of FLF soldiers has betrayed the FLF. Destroy this fleet.")
-misn_reward = _("Getting rid of traiterous scum")
+misn_reward = _("Getting rid of treacherous scum")
 
 npc_name = _("Benito")
 npc_desc = _("Benito seems to be frantically searching for a pilot.")
+
+log_text = _([[Regrettably, some rogue FLF pilots have turned traitor, forcing you to destroy them. Your action helped to assure fellow FLF pilots that treacherous FLF pilots who turn on their comrades are enemies just like any other.]])
 
 
 function create ()
@@ -94,6 +97,7 @@ function land_flf ()
       tk.msg( "", pay_text[1] )
       player.pay( credits )
       flf_setReputation( 98 )
+      flf_addLog( log_text )
       misn.finish( true )
    end
 end
