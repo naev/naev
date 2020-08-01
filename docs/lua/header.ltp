@@ -1,18 +1,27 @@
-<div id="naev-header">
-   <div id="naev-top">
-       <a href="https://naev.org">
-           <img src="https://naev.org/imgs/naev.png" alt="Home" style="vertical-align:baseline" />
-       </a>
-   </div>
-   <ul class="naevlinks">
-       <li>
-           <a href="https://naev.org/">Blarg</a> &middot;
-           <a href="https://github.com/naev/naev/issues">Issue Tracker</a> &middot;
-           <a href="https://github.com/naev/naev/wiki/">Wiki</a> &middot;
-           <a href="https://naev.org/downloads/">Downloads</a> &middot;
-           <a href="http://api.naev.org/">Lua API</a> &middot;
-           <a href="https://discord.gg/nd2M5BR">Discord</a> &middot;
-           <a href="https://webchat.freenode.net/#naev">IRC</a>
-       </li>
-   </ul>
-</div>
+<body class="bg-light">
+  <div id="naev-header" class="container-fluid nebula-bg">
+    <div class="container">
+      <a href="https://naev.org/"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="https://naev.org/favicon.png" alt=
+      "Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=
+      "#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label=
+      "Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/">Blarg</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/about/">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/media/">Media</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/downloads/">Downloads</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev">Github</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev/wiki">Wiki</a></li>
+          <li class="nav-item"><a class="nav-link" href="http://api.naev.org">Lua API</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
