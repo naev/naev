@@ -12,9 +12,10 @@
   <link rel="icon" type="image/png" sizes="64x64" href="https://naev.org/favicon-64.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://naev.org/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://naev.org/favicon-16.png">
-  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico"><!-- CSS -->
-  <link rel="stylesheet" href="$(ldoc.css)"><!-- Website information -->
-  <title>$(ldoc.title)</title>
+  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
+  <link rel="stylesheet" href="$(ldoc.css)"><!-- CSS -->
+  <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <title>$(ldoc.title)</title><!-- Website information -->
 </head>
 $(ldoc.include_file("header.ltp"))
 
