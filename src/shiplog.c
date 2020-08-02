@@ -147,7 +147,7 @@ int shiplog_append(const char *idstr, const char *msg)
    if ( i==shipLog->nlogs ) {
       WARN(_("Warning - log not found: creating it"));
       id = shiplog_create( idstr, _("Please report this log as an error to github.com/naev"), idstr, 0, 0 );
-   }else{
+   } else {
       id = shipLog->idList[i];
    }
    return shiplog_appendByID( id, msg);
@@ -682,7 +682,9 @@ int shiplog_getID( const char *idstr )
    int id = -1;
    int i;
    for ( i=0; i<shipLog->nlogs; i++ ) {
-      if ( (shipLog->idstrList[i]==NULL && idstr==NULL) || (shipLog->idstrList[i]!=NULL && idstr!=NULL && !strcmp( idstr, shipLog->idstrList[i] ) ) ){
+      if ( ( ( shipLog->idstrList[i] == NULL ) && ( idstr == NULL) )
+            || ( ( shipLog->idstrList[i] != NULL ) && ( idstr != NULL )
+               && ( strcmp(idstr, shipLog->idstrList[i]) == 0 ) ) ) {
          id = shipLog->idList[i];
          break;
       }

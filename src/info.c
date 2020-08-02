@@ -1287,17 +1287,17 @@ static void info_shiplogAdd( unsigned int wid, char *str )
    (void) str;
 
    logname = toolkit_getList( wid, "lstLogs" );
-   if ( logname == NULL || !strcmp( "All", logname ) ){
+   if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
       tmp = dialogue_inputRaw( "Add a log entry", 0, 4096, "Add an entry to your diary:" );
-      if ( tmp != NULL && strlen ( tmp ) > 0 ){
+      if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
               shiplog_create( "Diary", "Your diary", "Diary", 0, 0 );
          shiplog_append( "Diary", tmp );
          free( tmp );
       }
-   }else{
+   } else {
       tmp = dialogue_input( "Add a log entry", 0, 4096, "Add an entry to the log titled '%s':", logname );
-      if ( tmp != NULL && strlen ( tmp ) > 0 ){
+      if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
