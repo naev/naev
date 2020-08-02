@@ -1214,25 +1214,17 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
 static void window_renderBorder( Window* w )
 {
    double x, y;
-   const glColour *lc, *c, *dc, *oc;
-   gl_Matrix4 projection;
 
    /* position */
    x = w->x;
    y = w->y;
-
-   /* colours */
-   lc = toolkit_col;
-   c = toolkit_col;
-   dc = toolkit_col;
-   oc = toolkit_colLight;
 
    /*
     * Case fullscreen.
     */
    if (window_isFlag( w, WINDOW_FULLSCREEN )) {
       /* Background. */
-      toolkit_drawRect( x, y, w->w, w->h, c, NULL );
+      toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
       /* Name. */
       gl_printMidRaw( &gl_defFont, w->w,
             x,
@@ -1241,26 +1233,9 @@ static void window_renderBorder( Window* w )
       return;
    }
 
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, w->x, w->y, 0);
-   projection = gl_Matrix4_Scale(projection, w->w, w->h, 1);
-
-   glUseProgram(shaders.tk.program);
-   glEnableVertexAttribArray(shaders.tk.vertex);
-   gl_uniformColor(shaders.tk.dc, dc);
-   gl_uniformColor(shaders.tk.c, c);
-   gl_uniformColor(shaders.tk.oc, oc);
-   gl_uniformColor(shaders.tk.lc, lc);
-   gl_Matrix4_Uniform(shaders.tk.projection, projection);
-   glUniform2f(shaders.tk.wh, w->w, w->h);
-   glUniform1f(shaders.tk.corner_radius, 10. / gl_screen.scale);
-
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.tk.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   glDisableVertexAttribArray(shaders.tk.vertex);
-   glUseProgram(0);
-   gl_checkErr();
+   toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
+   toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark, NULL );
+   toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight, NULL );
 
    /*
     * render window name
