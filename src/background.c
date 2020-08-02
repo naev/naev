@@ -524,3 +524,21 @@ void background_free (void)
 
    nstars = 0;
 }
+
+/**
+ * @brief returns the background images, and number of these
+ */
+void background_getTextures(unsigned int *n, glTexture ***imgs)
+{
+  unsigned int i;
+  background_image_t *bkg;
+  *n = array_size( bkg_image_arr_bk );
+  *imgs = malloc( sizeof(glTexture**)*(*n) );
+  for ( i=0; i<*n; i++ ){
+    bkg = &bkg_image_arr_bk[i];
+    if ( bkg->image != NULL )
+      (*imgs)[i] = gl_dupTexture(bkg->image);
+    else
+      (*imgs)[i] = NULL;
+  }
+}

@@ -71,6 +71,7 @@ CODE_SOURCE = \
 	map.c \
 	map_find.c \
 	map_overlay.c \
+	map_system.c \
 	md5.c \
 	menu.c \
 	mission.c \
@@ -218,6 +219,7 @@ CODE_SOURCE = \
 	mapData.h \
 	map_find.h \
 	map_overlay.h \
+	map_system.h \
 	md5.h \
 	menu.h \
 	mission.h \

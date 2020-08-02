@@ -72,6 +72,7 @@ int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
       glColour *bg );
 int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
       iar_data_t *iar_data );
+int toolkit_unsetSelection( const unsigned int wid, const char *name );
 
 
 #endif /* WGT_IMAGEARRAY_H */
