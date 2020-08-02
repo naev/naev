@@ -30,7 +30,7 @@
 #include "nmath.h"
 #include "nxml.h"
 #include "ndata.h"
-
+#include "map_system.h"
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -1575,7 +1575,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    t = 15.*15.; /* threshold */
 
    switch (event->type) {
-      
    case SDL_MOUSEWHEEL:
       /* Must be in bounds. */
       if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -1597,6 +1596,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       else {
          mx -= w/2 - map_xpos;
          my -= h/2 - map_ypos;
+         map_drag = 1;
          
          for (i=0; i<systems_nstack; i++) {
             sys = system_getIndex( i );
@@ -1611,11 +1611,16 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             y = sys->pos.y * map_zoom;
             
             if ((pow2(mx-x)+pow2(my-y)) < t) {
+               if (map_selected != -1) {
+                  if ( sys == system_getIndex( map_selected ) ){
+                     map_system_open( map_selected );
+                     map_drag = 0;
+                  }
+               }
                map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                break;
             }
          }
-         map_drag = 1;
       }
       return 1;
       
