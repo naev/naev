@@ -57,9 +57,11 @@ static int nlua_errTrace( lua_State *L );
 /* gettext */
 static int nlua_gettext( lua_State *L );
 static int nlua_ngettext( lua_State *L );
+static int nlua_gettext_noop( lua_State *L );
 static const luaL_Reg gettext_methods[] = {
    { "gettext",  nlua_gettext },
    { "ngettext", nlua_ngettext },
+   { "gettext_noop", nlua_gettext_noop },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -80,14 +82,14 @@ static int nlua_gettext( lua_State *L )
 }
 
 /**
- * @brief gettext support.
+ * @brief gettext support for singular and plurals.
  * 
  * @usage ngettext( str )
  *    @luatparam msgid1 Singular form.
  *    @luatparam msgid2 Plural form.
  *    @luatparam n Number of elements.
  *    @luatreturn The string converted to gettext.
- * @luafunc gettext( msgid1, msgid2, n )
+ * @luafunc ngettext( msgid1, msgid2, n )
  */
 static int nlua_ngettext( lua_State *L )
 {
@@ -97,6 +99,22 @@ static int nlua_ngettext( lua_State *L )
    strb = luaL_checkstring(L, 2);
    n    = luaL_checkinteger(L,3);
    lua_pushstring(L, ngettext( stra, strb, n ) );
+   return 1;
+}
+
+/**
+ * @brief gettext support (noop). Does not actually do anything, but gets detected by gettext.
+ * 
+ * @usage _( str )
+ *    @luatparam str String to gettext on.
+ *    @luatreturn The string converted to gettext.
+ * @luafunc gettext_noop( str )
+ */
+static int nlua_gettext_noop( lua_State *L )
+{
+   const char *str;
+   str = luaL_checkstring(L, 1);
+   lua_pushstring(L, str );
    return 1;
 }
 
