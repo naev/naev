@@ -333,7 +333,7 @@ static void btn_render( Widget* btn, double bx, double by )
    /* inner outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 0., toolkit_colLight, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., toolkit_colDark, NULL );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
    gl_printMidRaw( NULL, (int)btn->w,
          bx + btn->x,
