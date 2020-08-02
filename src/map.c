@@ -392,12 +392,13 @@ static void map_update_commod_av_price()
 static void map_update( unsigned int wid )
 {
    int i;
-   StarSystem* sys;
+   StarSystem *sys;
    int f, h, x, y;
    unsigned int services;
    int l;
    int hasPresence, hasPlanets;
    char t;
+   const char *sym;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
@@ -556,7 +557,7 @@ static void map_update( unsigned int wid )
          continue;
       hasPresence = 1;
       if (faction_isKnown( sys->presence[i].faction )) {
-         t           = faction_getColourChar(sys->presence[i].faction);
+         t = faction_getColourChar(sys->presence[i].faction);
          /* Use map grey instead of default neutral colour */
          l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
                         (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
@@ -592,13 +593,14 @@ static void map_update( unsigned int wid )
       /* Colourize output. */
       planet_updateLand(sys->planets[i]);
       t = planet_getColourChar(sys->planets[i]);
+      sym = planet_getSymbol(sys->planets[i]);
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s\an",
-               t, sys->planets[i]->name );
+         p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s%s\an",
+               t, sym, sys->planets[i]->name );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s\an",
-               t, sys->planets[i]->name );
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s%s\an",
+               t, sym, sys->planets[i]->name );
       hasPlanets = 1;
       if (p > PATH_MAX)
          break;
@@ -1608,7 +1610,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             
             if ((pow2(mx-x)+pow2(my-y)) < t) {
                if (map_selected != -1) {
-                  if ( sys == system_getIndex( map_selected ) ){
+                  if ( sys == system_getIndex( map_selected ) ) {
                      map_system_open( map_selected );
                      map_drag = 0;
                   }

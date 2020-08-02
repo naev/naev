@@ -1794,6 +1794,26 @@ char planet_getColourChar( Planet *p )
 
 
 /**
+ * @brief Gets the planet symbol.
+ */
+const char *planet_getSymbol( Planet *p )
+{
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+      return "";
+
+   if (p->can_land || p->bribed) {
+      if (areAllies(FACTION_PLAYER,p->faction))
+         return "+ ";
+      return "~ ";
+   }
+
+   if (areEnemies(FACTION_PLAYER,p->faction))
+      return "!! ";
+   return "* ";
+}
+
+
+/**
  * @brief Gets the planet colour.
  */
 const glColour* planet_getColour( Planet *p )

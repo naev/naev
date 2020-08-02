@@ -357,6 +357,7 @@ void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
 int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );
+const char *planet_getSymbol( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
 int planet_setRadiusFromGFX(Planet* planet);

@@ -586,7 +586,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
       y -= h;
       gl_printMid( &gl_smallFont, w,
-         x, y, &cFontRed, _("%.0f%% Slower"),
+         x, y, &cFontRed, _("!! %.0f%% Slower !!"),
          (1. - p->speed / p->speed_base) * 100);
    }
 
@@ -1398,7 +1398,7 @@ static void equipment_genOutfitList( unsigned int wid )
       equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore")
+      _("All"), "\ab W ", "\ag U ", "\ap S ", _("\aRCore")
    };
 
    int active, i, l, p, noutfits;
@@ -1571,8 +1571,21 @@ static char eq_qCol( double cur, double base, int inv )
 }
 
 
+/**
+ * @brief Gets the symbol for comparing a current value vs a ship base value.
+ */
+static const char* eq_qSym( double cur, double base, int inv )
+{
+   if (cur > 1.2*base)
+      return (inv) ? "!! " : "";
+   else if (cur < 0.8*base)
+      return (inv) ? "" : "!! ";
+   return "";
+}
+
+
 #define EQ_COMP( cur, base, inv ) \
-eq_qCol( cur, base, inv ), cur
+eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
@@ -1622,18 +1635,18 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s credits\n"
          "\n"
          "%.0f\a0 tonnes\n"
-         "\a%c%s\a0 average\n"
-         "\a%c%.0f\a0 kN/tonne\n"
-         "\a%c%.0f\a0 m/s (max \a%c%.0f\a0 m/s)\n"
-         "\a%c%.0f\a0 deg/s\n"
-         "\a%c%.0f%%\n"
+         "%s average\n"
+         "\a%c%s%.0f\a0 kN/tonne\n"
+         "\a%c%s%.0f\a0 m/s (max \a%c%s%.0f\a0 m/s)\n"
+         "\a%c%s%.0f\a0 deg/s\n"
+         "%.0f%%\n"
          "\n"
-         "\a%c%.0f%%\n"
-         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
-         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
-         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
-         "%d / \a%c%d\a0 tonnes\n"
-         "%d / \a%c%d\a0 units (%d jumps)\n"
+         "\a%c%s%.0f%%\n"
+         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
+         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
+         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
+         "%d / \a%c%s%d\a0 tonnes\n"
+         "%d units (%d jumps)\n"
          "\n"
          "\a%c%s\a0"),
          /* Generic. */
@@ -1643,13 +1656,13 @@ void equipment_updateShips( unsigned int wid, char* str )
       buf2,
       /* Movement. */
       ship->solid->mass,
-      '0', nt,
+      nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
-      EQ_COMP( ship->ship->dt_default * 100, ship->ship->dt_default * 100, 0 ),
+      ship->ship->dt_default * 100,
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
@@ -1660,7 +1673,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
+      ship->fuel, pilot_getJumps(ship),
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 
