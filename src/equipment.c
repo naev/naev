@@ -367,7 +367,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Render text. */
    if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
-      c = &cGreen;
+      c = &cFontGreen;
    else
       c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
@@ -385,7 +385,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          else if (lst[i].active)
             dc = &cFontBlue;
          else
-            dc = &cInert;
+            dc = &cFontGrey;
       }
       else
          dc = outfit_slotSizeColour( &lst[i].sslot->slot );
@@ -638,10 +638,10 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], NULL );
                if (display != NULL)
-                  c = &cRed;
+                  c = &cFontRed;
                else {
                   display = _("Right click to remove");
-                  c = &cGreen;
+                  c = &cFontGreen;
                }
             }
             else if ((wgt->outfit != NULL) &&
@@ -649,10 +649,10 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                top = 0;
                display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit );
                if (display != NULL)
-                  c = &cRed;
+                  c = &cFontRed;
                else {
                   display = _("Right click to add");
-                  c = &cGreen;
+                  c = &cFontGreen;
                }
             }
          }
