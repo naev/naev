@@ -13,7 +13,7 @@ require "dat/missions/neutral/common.lua"
 -- Dialogue
 title = _("A Tasty Job")
 npc_name = _("Familiar Face")
-bar_desc = _("A Familiar looking young woman is looking at you")
+bar_desc = _("A familiar looking young woman is looking at you")
 
 firstcontact = _([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy, sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on %s. Would you be interested in giving him a hand?"]])
 

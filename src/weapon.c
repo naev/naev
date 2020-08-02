@@ -929,7 +929,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
       /* dumb weapons hit anything not of the same faction */
       else {
-         if (weapon_checkCanHit(w,p)){
+         if (weapon_checkCanHit(w,p)) {
             if (usePoly) {
                k = p->ship->gfx_space->sx * psy + psx;
                coll = CollidePolygon( &p->ship->polygon[k], &p->solid->pos,

@@ -167,7 +167,7 @@ int commodity_getN(void )
  */
 Commodity* commodity_getByIndex( const int indx )
 {
-   if ( indx < 0 || indx >= econ_nprices ){
+   if ( indx < 0 || indx >= econ_nprices ) {
       WARN(_("Commodity with index %d not found"),indx);
       return NULL;
    }
@@ -193,7 +193,7 @@ static void commodity_freeOne( Commodity* com )
       gl_freeTexture(com->gfx_space);
    next = com->planet_modifier;
    com->planet_modifier = NULL;
-   while (next != NULL ){
+   while (next != NULL ) {
       this = next;
       next = this->next;
       free(this->name);
@@ -201,7 +201,7 @@ static void commodity_freeOne( Commodity* com )
    }
    next = com->faction_modifier;
    com->faction_modifier = NULL;
-   while (next != NULL ){
+   while (next != NULL ) {
       this=next;
       next=this->next;
       free(this->name);

@@ -482,7 +482,7 @@ static int planetL_name( lua_State *L )
  * @usage radius = p:radius()
  *    @luatparam Planet p Planet to get the radius of.
  *    @luatreturn number The planet's graphics radius.
- * @luafunc name( p )
+ * @luafunc radius( p )
  */
 static int planetL_radius( lua_State *L )
 {

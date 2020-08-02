@@ -482,7 +482,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
       gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
-            bx+10, by+y, &cConsole, news_lines[i] );
+            bx+10, by+y, &cFontGreen, news_lines[i] );
 
       /* Increment line and position. */
       y -= news_font->h + 5.;

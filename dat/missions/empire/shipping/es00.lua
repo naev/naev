@@ -38,11 +38,10 @@ log_text = _([[You took part in a prisoner exchange with the FLF on behalf of th
 
 
 function create ()
-   -- Note: this mission does not make any system claims.
    -- Target destination
    dest,destsys = planet.getLandable( faction.get("Frontier") )
    ret,retsys   = planet.getLandable( "Halir" )
-   if dest == nil or ret == nil then
+   if dest == nil or ret == nil or not misn.claim(destsys) then
       misn.finish(false)
    end
 
@@ -53,7 +52,6 @@ end
 
 
 function accept ()
-
    -- Intro text
    if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
       misn.finish()
@@ -83,6 +81,7 @@ function accept ()
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
+   hook.jumpout("jumpout")
 end
 
 
@@ -126,8 +125,10 @@ end
 
 
 function enter ()
-   sys = system.cur()
+   local sys = system.cur()
    if misn_stage == 1 and sys == destsys then
+      -- Force FLF combat music (note: must clear this later on).
+      var.push( "music_combat_force", "FLF" )
 
       -- Get a random position near the player
       ang = rnd.rnd(0, 360)
@@ -157,3 +158,18 @@ function enter ()
    end
 end
 
+
+function jumpout ()
+   -- Storing the system the player jumped from.
+   if system.cur() == destsys then
+      var.pop( "music_combat_force" )
+   end
+end
+
+
+function abort ()
+   if system.cur() == destsys then
+      var.pop( "music_combat_force" )
+   end
+   misn.finish(false)
+end

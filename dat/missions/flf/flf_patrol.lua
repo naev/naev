@@ -21,8 +21,13 @@ require "numstring.lua"
 require "fleethelper.lua"
 require "dat/missions/flf/flf_common.lua"
 
-misn_title  = _("FLF: %s Dvaered patrol in %s")
-misn_reward = _("%s credits")
+misn_title = {}
+misn_title[1] = _("FLF: Single Dvaered patrol in %s")
+misn_title[2] = _("FLF: Small Dvaered patrol in %s")
+misn_title[3] = _("FLF: Medium Dvaered patrol in %s")
+misn_title[4] = _("FLF: Large Dvaered patrol in %s")
+misn_title[5] = _("FLF: Dangerous Dvaered patrol in %s")
+misn_title[6] = _("FLF: Highly Dangerous Dvaered patrol in %s")
 
 text = {}
 text[1] = _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work.")
@@ -33,27 +38,35 @@ flfcomm = {}
 flfcomm[1] = _("Alright, let's have at them!")
 flfcomm[2] = _("Sorry we're late! Did we miss anything?")
 
-misn_desc = {}
-misn_desc[1] = _("There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol.")
-misn_desc[2] = _("There is a Dvaered ship patrolling the %s system. Eliminate this ship.")
-misn_desc[3] = _(" There is a Vigilance among them, so you must proceed with caution.")
-misn_desc[4] = _(" There is a Goddard among them, so you must be very careful.")
-misn_desc[5] = _(" You will be accompanied by %d other FLF pilots for this mission.")
-
-misn_level = {}
-misn_level[1] = _("Single")
-misn_level[2] = _("Small")
-misn_level[3] = _("Medium")
-misn_level[4] = _("Large")
-misn_level[5] = _("Dangerous")
-misn_level[6] = _("Highly Dangerous")
-
 osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
+
+
+function setDescription ()
+   local desc
+   desc = gettext.ngettext(
+         "There is %d Dvaered ship patrolling the %s system. Eliminate this ship.",
+         "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol.",
+         ships ):format( ships, missys:name() )
+
+   if has_vigilance then
+      desc = desc .. _(" There is a Vigilance among them, so you must proceed with caution.")
+   end
+   if has_goddard then
+      desc = desc .. _(" There is a Goddard among them, so you must be very careful.")
+   end
+   if flfships > 0 then
+      desc = desc .. gettext.ngettext(
+            " You will be accompanied by %d other FLF pilot for this mission.",
+            " You will be accompanied by %d other FLF pilots for this mission.",
+            flfships ):format( flfships )
+   end
+   return desc
+end
 
 
 function patrol_getSystem ()
@@ -65,7 +78,7 @@ function create ()
    missys = patrol_getSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   level = rnd.rnd( 1, #misn_level )
+   level = rnd.rnd( 1, #misn_title )
    ships = 0
    has_vigilance = false
    has_goddard = false
@@ -104,25 +117,16 @@ function create ()
    credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
-   local desc
-   if ships == 1 then
-      desc = misn_desc[2]:format( missys:name() )
-   else
-      desc = misn_desc[1]:format( ships, missys:name() )
-   end
-   if has_vigilance then desc = desc .. misn_desc[3] end
-   if has_goddard then desc = desc .. misn_desc[4] end
-   if flfships > 0 then
-      desc = desc .. misn_desc[5]:format( flfships )
-   end
+   local desc = setDescription()
 
    late_arrival = rnd.rnd() < 0.05
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
+   misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( desc )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( gettext.ngettext(
+         "%s credit", "%s credits", credits ):format( numstring( credits ) ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

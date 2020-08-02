@@ -109,7 +109,7 @@ void shipyard_open( unsigned int wid )
 
    /* stat text */
    window_addText( wid, -40, -240, 128, 400, 0, "txtStats",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
 
    /* text */
    buf = _("Model:\n"
@@ -137,9 +137,9 @@ void shipyard_open( unsigned int wid )
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
-         100, th, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
+         100, th, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    window_addText( wid, 40+iw+20+100, y,
-         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    y -= th;
    window_addText( wid, 20+iw+40, y,
          w-(20+iw+40) - 180, 185, 0, "txtDescription",
@@ -565,22 +565,22 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Draw rotated text. */
    y -= 10;
-   gl_print( &gl_smallFont, bx, y, &cBlack, _("Slots:") );
+   gl_print( &gl_smallFont, bx, y, &cFontWhite, _("Slots:") );
 
    x = bx + 10.;
    w = bw - 10.;
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _("W"), ship->outfit_weapon, ship->outfit_nweapon );
+   shipyard_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _("U"), ship->outfit_utility, ship->outfit_nutility );
+   shipyard_renderSlotsRow( x, y, w, "U", ship->outfit_utility, ship->outfit_nutility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _("S"), ship->outfit_structure, ship->outfit_nstructure );
+   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
 }
 
 
@@ -597,7 +597,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
    x = bx;
 
    /* Print text. */
-   gl_print( &gl_smallFont, bx, by, &cBlack, str );
+   gl_print( &gl_smallFont, bx, by, &cFontWhite, str );
 
    /* Draw squares. */
    for (i=0; i<n; i++) {
@@ -609,8 +609,3 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
       toolkit_drawRect( x, by, 10, 10, c, NULL );
    }
 }
-
-
-
-
-

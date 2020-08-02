@@ -114,7 +114,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw text. */
    gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5., ty, &cBlack, &inp->dat.inp.input[ inp->dat.inp.view ] );
+         x+5., ty, &cFontWhite, &inp->dat.inp.input[ inp->dat.inp.view ] );
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
@@ -159,7 +159,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* inner outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
-         toolkit_colLight, toolkit_col );
+         toolkit_colLight, NULL );
    /* outer outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
          toolkit_colDark, NULL );

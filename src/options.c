@@ -279,7 +279,7 @@ static void opt_gameplay( unsigned int wid )
    s = _("Language");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    ls = lang_list( &n );
    i = 0;
    if (conf.language != NULL) {
@@ -293,10 +293,10 @@ static void opt_gameplay( unsigned int wid )
    y -= 90;
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
    window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
-         NULL, &cBlack, _("Compilation Flags") );
+         NULL, NULL, _("Compilation Flags") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         NULL, &cDarkPurple,
+         NULL, &cFontPurple,
          ""
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
@@ -337,7 +337,7 @@ static void opt_gameplay( unsigned int wid )
    /* Autonav abort. */
    x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
-         NULL, &cBlack, _("Stop Speedup At:") );
+         NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
 
    /* Autonav abort fader. */
@@ -349,7 +349,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
 
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
-         NULL, &cBlack, _("Settings") );
+         NULL, NULL, _("Settings") );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -367,18 +367,18 @@ static void opt_gameplay( unsigned int wid )
    s = _("Visible Messages");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, -100, y, l, 20, 1, "txtSMSG",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
    y -= 30;
    s = _("Max Time Compression Factor");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, -100, y, l, 20, 1, "txtTMax",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
+         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -563,7 +563,7 @@ static void opt_keybinds( unsigned int wid )
 
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
-         NULL, &cBlack, NULL );
+         NULL, NULL, NULL );
    window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-70-60-bh,
          0, "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -763,7 +763,7 @@ static void opt_keyDefaults( unsigned int wid, char *str )
    title   = _("Restore Defaults");
    caption = _("Which layout do you want to use?");
 
-   dialogue_makeChoice( title, caption, 3 );
+   dialogue_makeChoice( title, caption, n );
 
    for (i=0; i<n; i++)
       dialogue_addChoice( title, caption, opts[i] );
@@ -878,7 +878,7 @@ static void opt_audio( unsigned int wid )
    x = 20;
    y = -60;
    window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
-         NULL, &cBlack, _("General") );
+         NULL, NULL, _("General") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", _("Disable all sound/music"), NULL, conf.nosound );
@@ -908,7 +908,7 @@ static void opt_audio( unsigned int wid )
 
    /* OpenAL options. */
    window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
-         NULL, &cBlack, _("OpenAL") );
+         NULL, NULL, _("OpenAL") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
@@ -918,7 +918,7 @@ static void opt_audio( unsigned int wid )
    x = 20 + cw + 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
-         NULL, &cBlack, _("Volume Levels") );
+         NULL, NULL, _("Volume Levels") );
    y -= 30;
 
    /* Sound fader. */
@@ -939,7 +939,7 @@ static void opt_audio( unsigned int wid )
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
+         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 
    opt_audioUpdate(wid);
 }
@@ -1174,7 +1174,7 @@ static void opt_setKey( unsigned int wid, char *str )
 
    /* Set text. */
    window_addText( new_wid, 20, -40, w-40, 60, 0, "txtInfo",
-         &gl_smallFont, &cBlack,
+         &gl_smallFont, NULL,
          _("To use a modifier key hit that key twice in a row, otherwise it "
          "will register as a modifier. To set with any modifier click the checkbox.") );
 
@@ -1244,7 +1244,7 @@ static void opt_video( unsigned int wid )
    x = 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
-         NULL, &cBlack, _("Resolution") );
+         NULL, NULL, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
    window_setInputFilter( wid, "inpRes",
@@ -1289,7 +1289,7 @@ static void opt_video( unsigned int wid )
    window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
    y -= 120;
    window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
-         NULL, &cBlack, NULL );
+         NULL, NULL, NULL );
    window_addFader( wid, x+120, y, cw-140, 20, "fadScale", 1., 3.,
          conf.scalefactor, opt_setScalefactor );
    opt_setScalefactor( wid, "fadScale" );
@@ -1297,12 +1297,12 @@ static void opt_video( unsigned int wid )
 
    /* FPS stuff. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
-         NULL, &cBlack, _("FPS Control") );
+         NULL, NULL, _("FPS Control") );
    y -= 30;
    s = _("FPS Limit");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSFPS",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    toolkit_setListPos( wid, "lstRes", res_def);
    window_setInputFilter( wid, "inpFPS",
@@ -1320,7 +1320,7 @@ static void opt_video( unsigned int wid )
    x = 20+cw+20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSGL",
-         NULL, &cBlack, _("OpenGL") );
+         NULL, NULL, _("OpenGL") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
@@ -1335,12 +1335,12 @@ static void opt_video( unsigned int wid )
          "chkNPOT", _("NPOT Textures*"), NULL, conf.npot );
    y -= 30;
    window_addText( wid, x, y, cw, 20, 1,
-         "txtSCompat", NULL, &cBlack, _("*Disable for compatibility.") );
+         "txtSCompat", NULL, NULL, _("*Disable for compatibility.") );
    y -= 40;
 
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
-         NULL, &cBlack, _("Features") );
+         NULL, NULL, _("Features") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", _("Engine Glow (More RAM)"), NULL, conf.engineglow );
@@ -1351,7 +1351,7 @@ static void opt_video( unsigned int wid )
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
+         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 }
 
 /**

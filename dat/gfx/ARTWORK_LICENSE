@@ -26,6 +26,11 @@
  
  * Author: Vega Strike, License: GPLv2+
    * commodity
+     * space
+       * _default.png
+       * diamonds.png
+       * gold.png
+       * water.png
      * acids.png
      * advanced_medicines.png
      * aeranervestimuli.png
@@ -434,7 +439,7 @@
 
  * Author: Camilo Polymeris <cpolymeris@gmx.net>, License: GPLv3
    * gui
-     * default
+     * legacy
        * minimal.png
        * minimal_fuel.png
        * minimal_energy.png
@@ -522,7 +527,7 @@
 
  * Author: Sean Hildebrand, License: CC-by 3.0
    * gui
-     * default
+     * legacy
        * minimal_planet.png
        * minimal_pilot.png
      * no.png
@@ -585,7 +590,7 @@
        * dv_military_m2.png
        * dv_military_m3.png
        * dv_military_f1.png
-       * dv_military_f1.png
+       * dv_military_f2.png
      * empire
        * unique
          * czesc.png
@@ -1445,3 +1450,20 @@
        * snowy_cliffs.png
        * rocky_small.png
        * uninhabited-jungle.png
+
+ * Author: Kinniken, License: GPLv3
+   * map
+     * empire.png
+ 
+ * Author: Unnamed <https://opengameart.org/users/unnamed>, License: CC-by 3.0
+   * intro
+     * faster_than_light.png
+     * first_steps_into_space.png
+
+ * Author: diligentcircle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke), License: GPLv3
+   * intro
+     * reign_of_daedris.png
+
+ * Author: diligentcircle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike), License: GPLv3
+   * intro
+     * questions.png
