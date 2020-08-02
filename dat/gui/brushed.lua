@@ -696,12 +696,12 @@ function render( dt )
    lockons = pp:lockon()
 
    -- Top Bar
-   gfx.renderTexRaw( top_bar, margin, tbar_y, screen_w - 2*margin, tbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( top_bar, margin + tbar_left_w, tbar_y, screen_w - 2*margin - tbar_left_w - tbar_right_w, tbar_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( top_bar_left, margin, tbar_y )
    gfx.renderTex( top_bar_right, screen_w - margin - tbar_right_w, tbar_y )
 
    -- Bottom Bar
-   gfx.renderTexRaw( bottom_bar, margin, margin, screen_w - 2*margin, bbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( bottom_bar, margin + bbar_left_w, margin, screen_w - 2*margin - bbar_left_w - bbar_right_w, bbar_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( bottom_bar_left, margin, margin )
    gfx.renderTex( bottom_bar_right, screen_w - margin - bbar_right_w, margin )
 
