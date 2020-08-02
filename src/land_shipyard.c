@@ -572,15 +572,15 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _("W"), ship->outfit_weapon, ship->outfit_nweapon );
+   shipyard_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _("U"), ship->outfit_utility, ship->outfit_nutility );
+   shipyard_renderSlotsRow( x, y, w, "U", ship->outfit_utility, ship->outfit_nutility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _("S"), ship->outfit_structure, ship->outfit_nstructure );
+   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
 }
 
 
