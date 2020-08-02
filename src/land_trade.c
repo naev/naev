@@ -82,7 +82,7 @@ void commodity_exchange_open( unsigned int wid )
 
    /* text */
    window_addText( wid, -20, -190, LAND_BUTTON_WIDTH, 100, 0,
-         "txtSInfo", &gl_smallFont, &cBlack,
+         "txtSInfo", &gl_smallFont, NULL,
          _("You have:\n"
            "Purchased at:\n"
            "Market Price:\n"
@@ -91,10 +91,10 @@ void commodity_exchange_open( unsigned int wid )
            "Av price here:\n"
            "Av price all:") );
    window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2, 100, 0,
-         "txtDInfo", &gl_smallFont, &cBlack, NULL );
+         "txtDInfo", &gl_smallFont, NULL, NULL );
    window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20,
          h-140-LAND_BUTTON_HEIGHT, 0,
-         "txtDesc", &gl_smallFont, &cBlack, NULL );
+         "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* goods list */
    if (land_planet->ncommodities > 0) {
@@ -372,5 +372,5 @@ void commodity_renderMod( double bx, double by, double w, double h, void *data )
       commodity_mod = q;
    }
    nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
+   gl_printMid( &gl_smallFont, w, bx, by, &cFontWhite, buf );
 }

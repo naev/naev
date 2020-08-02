@@ -150,7 +150,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
  * when gl_fontRenderEnd() is called, saving lots of opengl calls.
  */
 static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c );
-static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state );
+static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state, int forceColor );
 static void gl_fontRenderEnd (void);
 
 
@@ -520,19 +520,18 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
 
 /**
- * @brief Prints text on screen.
- *
- * Defaults ft_font to gl_defFont if NULL.
+ * @brief Wrapped by gl_printRaw.
  *
  *    @param ft_font Font to use
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
- *    @param str String to display.
+ *    @param text String to display.
+ *    @param forceColor Whether or not to force the color.
  */
-void gl_printRaw( const glFont *ft_font,
+static void gl_printRawBase( const glFont *ft_font,
       const double x, const double y,
-      const glColour* c, const char *text )
+      const glColour* c, const char *text, int forceColor )
 {
    int s;
    size_t i;
@@ -547,8 +546,40 @@ void gl_printRaw( const glFont *ft_font,
    i = 0;
    gl_fontRenderStart(stsh, x, y, c);
    while ((ch = u8_nextchar( text, &i )))
-      s = gl_fontRenderGlyph( stsh, ch, c, s );
+      s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
    gl_fontRenderEnd();
+}
+
+
+/**
+ * @brief Prints text on screen.
+ *
+ * Defaults ft_font to gl_defFont if NULL.
+ *
+ *    @param ft_font Font to use
+ *    @param x X position to put text at.
+ *    @param y Y position to put text at.
+ *    @param c Colour to use (uses white if NULL)
+ *    @param str String to display.
+ */
+void gl_printRaw( const glFont *ft_font,
+      const double x, const double y,
+      const glColour* c, const char *text )
+{
+   gl_printRawBase( ft_font, x - 1, y, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x + 1, y, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x, y - 1, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x, y + 1, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x - 2, y, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x + 2, y, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x, y - 2, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x, y + 2, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x - 1, y - 1, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x - 1, y + 1, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x + 1, y - 1, &cBlack, text, 1 );
+   gl_printRawBase( ft_font, x + 1, y + 1, &cBlack, text, 1 );
+
+   gl_printRawBase( ft_font, x, y, c, text, 0 );
 }
 
 
@@ -583,19 +614,20 @@ void gl_print( const glFont *ft_font,
 
 
 /**
- * @brief Behaves like gl_printRaw but stops displaying text after a certain distance.
+ * @brief Wrapped by gl_printMaxRaw.
  *
  *    @param ft_font Font to use.
  *    @param max Maximum length to reach.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use (NULL defaults to white).
- *    @param fmt String to display formatted like printf.
+ *    @param text String to display.
+ *    @param forceColor Whether or not to force the color.
  *    @return The number of characters it had to suppress.
  */
-int gl_printMaxRaw( const glFont *ft_font, const int max,
+static int gl_printMaxRawBase( const glFont *ft_font, const int max,
       const double x, const double y,
-      const glColour* c, const char *text )
+      const glColour* c, const char *text, int forceColor )
 {
    int s;
    size_t ret, i;
@@ -613,11 +645,45 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    gl_fontRenderStart(stsh, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )) && (i <= ret))
-      s = gl_fontRenderGlyph( stsh, ch, c, s );
+      s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
    gl_fontRenderEnd();
 
    return ret;
 }
+
+
+/**
+ * @brief Behaves like gl_printRaw but stops displaying text after a certain distance.
+ *
+ *    @param ft_font Font to use.
+ *    @param max Maximum length to reach.
+ *    @param x X position to display text at.
+ *    @param y Y position to display text at.
+ *    @param c Colour to use (NULL defaults to white).
+ *    @param text String to display.
+ *    @return The number of characters it had to suppress.
+ */
+int gl_printMaxRaw( const glFont *ft_font, const int max,
+      const double x, const double y,
+      const glColour* c, const char *text )
+{
+   gl_printMaxRawBase( ft_font, max, x - 1, y, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x + 1, y, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x, y - 1, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x, y + 1, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x - 2, y, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x + 2, y, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x, y - 2, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x, y + 2, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x - 1, y - 1, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x - 1, y + 1, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x + 1, y - 1, &cBlack, text, 1 );
+   gl_printMaxRawBase( ft_font, max, x + 1, y + 1, &cBlack, text, 1 );
+
+   return gl_printMaxRawBase( ft_font, max, x, y, c, text, 0 );
+}
+
+
 /**
  * @brief Behaves like gl_print but stops displaying text after reaching a certain length.
  *
@@ -649,21 +715,20 @@ int gl_printMax( const glFont *ft_font, const int max,
 
 
 /**
- * @brief Displays text centered in position and width.
- *
- * Will truncate if text is too long.
+ * @brief Wrapped by gl_printMidRaw.
  *
  *    @param ft_font Font to use.
  *    @param width Width of area to center in.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
- *    @param fmt Text to display formatted like printf.
+ *    @param text String to display.
+ *    @param forceColor Whether or not to force the color.
  *    @return The number of characters it had to truncate.
  */
-int gl_printMidRaw( const glFont *ft_font, const int width,
+static int gl_printMidRawBase( const glFont *ft_font, const int width,
       double x, const double y,
-      const glColour* c, const char *text )
+      const glColour* c, const char *text, int forceColor )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    int n, s;
@@ -683,11 +748,47 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    gl_fontRenderStart(stsh, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )) && (i <= ret))
-      s = gl_fontRenderGlyph( stsh, ch, c, s );
+      s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
    gl_fontRenderEnd();
 
    return ret;
 }
+
+
+/**
+ * @brief Displays text centered in position and width.
+ *
+ * Will truncate if text is too long.
+ *
+ *    @param ft_font Font to use.
+ *    @param width Width of area to center in.
+ *    @param x X position to display text at.
+ *    @param y Y position to display text at.
+ *    @param c Colour to use for text (NULL defaults to white).
+ *    @param text String to display.
+ *    @return The number of characters it had to truncate.
+ */
+int gl_printMidRaw( const glFont *ft_font, const int width,
+      double x, const double y,
+      const glColour* c, const char *text )
+{
+   gl_printMidRawBase( ft_font, width, x - 1, y, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x + 1, y, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x, y - 1, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x, y + 1, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x - 2, y, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x + 2, y, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x, y - 2, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x, y + 2, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x - 1, y - 1, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x - 1, y + 1, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x + 1, y - 1, &cBlack, text, 1 );
+   gl_printMidRawBase( ft_font, width, x + 1, y + 1, &cBlack, text, 1 );
+
+   return gl_printMidRawBase( ft_font, width, x, y, c, text, 0 );
+}
+
+
 /**
  * @brief Displays text centered in position and width.
  *
@@ -721,9 +822,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 
 
 /**
- * @brief Prints a block of text that fits in the dimensions given.
- *
- * Positions are based on origin being top-left.
+ * @brief Wrapped by gl_printTextRaw.
  *
  *    @param ft_font Font to use.
  *    @param width Maximum width to print to.
@@ -731,14 +830,14 @@ int gl_printMid( const glFont *ft_font, const int width,
  *    @param bx X position to display text at.
  *    @param by Y position to display text at.
  *    @param c Colour to use (NULL defaults to white).
- *    @param fmt Text to display formatted like printf.
+ *    @param text String to display.
+ *    @param forceColor Whether or not to force the color.
  *    @return 0 on success.
- * prints text with line breaks included to a maximum width and height preset
  */
-int gl_printTextRaw( const glFont *ft_font,
+static int gl_printTextRawBase( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      const glColour* c, const char *text )
+      const glColour* c, const char *text, int forceColor )
 {
    int p, s;
    double x,y;
@@ -768,7 +867,7 @@ int gl_printTextRaw( const glFont *ft_font,
       gl_fontRenderStart(stsh, x, y, c);
       for (i=p; i<ret; ) {
          ch = u8_nextchar( text, &i);
-         s = gl_fontRenderGlyph( stsh, ch, c, s );
+         s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
       }
       gl_fontRenderEnd();
 
@@ -782,6 +881,43 @@ int gl_printTextRaw( const glFont *ft_font,
 
 
    return 0;
+}
+
+
+/**
+ * @brief Prints a block of text that fits in the dimensions given.
+ *
+ * Positions are based on origin being top-left.
+ *
+ *    @param ft_font Font to use.
+ *    @param width Maximum width to print to.
+ *    @param height Maximum height to print to.
+ *    @param bx X position to display text at.
+ *    @param by Y position to display text at.
+ *    @param c Colour to use (NULL defaults to white).
+ *    @param text String to display.
+ *    @return 0 on success.
+ * prints text with line breaks included to a maximum width and height preset
+ */
+int gl_printTextRaw( const glFont *ft_font,
+      const int width, const int height,
+      double bx, double by,
+      const glColour* c, const char *text )
+{
+   gl_printTextRawBase( ft_font, width, height, bx - 1, by, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx + 1, by, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx, by - 1, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx, by + 1, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx - 2, by, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx + 2, by, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx, by - 2, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx, by + 2, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx - 1, by - 1, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx - 1, by + 1, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx + 1, by - 1, &cBlack, text, 1 );
+   gl_printTextRawBase( ft_font, width, height, bx + 1, by + 1, &cBlack, text, 1 );
+
+   return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
 }
 
 
@@ -1047,20 +1183,18 @@ static const glColour* gl_fontGetColour( uint32_t ch )
       case 'r': col = &cFontRed; break;
       case 'g': col = &cFontGreen; break;
       case 'b': col = &cFontBlue; break;
+      case 'o': col = &cFontOrange; break;
       case 'y': col = &cFontYellow; break;
       case 'w': col = &cFontWhite; break;
       case 'p': col = &cFontPurple; break;
-      case 'n': col = &cBlack; break;
+      case 'n': col = &cFontGrey; break;
       /* Fancy states. */
-      case 'F': col = &cFriend; break;
-      case 'H': col = &cHostile; break;
-      case 'N': col = &cNeutral; break;
-      case 'I': col = &cMapInert; break;
-      case 'R': col = &cRestricted; break;
-      case 'S': col = &cDRestricted; break;
-      case 'M': col = &cMapNeutral; break;
-      case 'C': col = &cConsole; break;
-      case 'D': col = &cDConsole; break;
+      case 'F': col = &cFontGreen; break; /**< Friendly */
+      case 'H': col = &cFontRed; break; /**< Hostile */
+      case 'N': col = &cFontYellow; break; /**< Neutral */
+      case 'I': col = &cFontGrey; break; /**< Inert */
+      case 'R': col = &cFontOrange; break; /**< Restricted */
+      case 'C': col = &cFontGreen; break; /**< Console */
       case '0': col = NULL; break;
       default: col = NULL; break;
    }
@@ -1146,7 +1280,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
 /**
  * @brief Renders a character.
  */
-static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state )
+static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state, int forceColor )
 {
    double a;
    const glColour *col;
@@ -1156,17 +1290,19 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       return 1;
    }
    if (state == 1) {
-      col = gl_fontGetColour( ch );
-      a   = (c==NULL) ? 1. : c->a;
-      if (col == NULL) {
-         if (c==NULL)
-            gl_uniformColor(shaders.font.color, &cWhite);
+      if (!forceColor) {
+         col = gl_fontGetColour( ch );
+         a   = (c==NULL) ? 1. : c->a;
+         if (col == NULL) {
+            if (c==NULL)
+               gl_uniformColor(shaders.font.color, &cWhite);
+            else
+               gl_uniformColor(shaders.font.color, c);
+         }
          else
-            gl_uniformColor(shaders.font.color, c);
+            gl_uniformAColor(shaders.font.color, col, a);
+         font_lastCol = col;
       }
-      else
-         gl_uniformAColor(shaders.font.color, col, a);
-      font_lastCol = col;
       return 0;
    }
 

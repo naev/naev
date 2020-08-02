@@ -240,7 +240,7 @@ void sysedit_open( StarSystem *sys )
    /* Selected text. */
    nsnprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
-         "txtSelected", &gl_smallFont, &cBlack, buf );
+         "txtSelected", &gl_smallFont, NULL, buf );
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
@@ -1254,9 +1254,9 @@ static void sysedit_editPnt( void )
    y = -40;
    nsnprintf( buf, sizeof(buf), _("Name: ") );
    w = gl_printWidthRaw( NULL, buf );
-   window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, NULL, buf );
    nsnprintf( buf, sizeof(buf), "%s", p->name );
-   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, -20, y - gl_defFont.h/2. + BUTTON_HEIGHT/2., bw, BUTTON_HEIGHT, "btnRename",
          _("Rename"), sysedit_btnRename );
    window_addButton( wid, -20 - 15 - bw, y - gl_defFont.h/2. + BUTTON_HEIGHT/2., bw, BUTTON_HEIGHT, "btnFaction",
@@ -1264,9 +1264,9 @@ static void sysedit_editPnt( void )
 
    y -= gl_defFont.h + 5;
 
-   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, &cBlack, _("Faction: ") );
+   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, _("Faction: ") );
    nsnprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : _("None") );
-   window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, NULL, buf );
    y -= gl_defFont.h + 5;
 
    /* Input widgets and labels. */
@@ -1274,7 +1274,7 @@ static void sysedit_editPnt( void )
    s = _("Population");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPop",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 80, 20, "inpPop", 12, 1, NULL );
    window_setInputFilter( wid, "inpPop",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
@@ -1283,14 +1283,14 @@ static void sysedit_editPnt( void )
    s = _("Class");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtClass",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 1, 1, NULL );
    x += 30 + 10;
 
    s = _("Land");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtLand",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 150, 20, "inpLand", 20, 1, NULL );
    y -= gl_defFont.h + 15;
 
@@ -1299,7 +1299,7 @@ static void sysedit_editPnt( void )
    s = _("Presence");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresence",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 60, 20, "inpPresence", 5, 1, NULL );
    window_setInputFilter( wid, "inpPresence",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1308,7 +1308,7 @@ static void sysedit_editPnt( void )
    s = _("Range");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
    window_setInputFilter( wid, "inpPresenceRange",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
@@ -1317,7 +1317,7 @@ static void sysedit_editPnt( void )
    s = _("hide");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtHide",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1410,9 +1410,9 @@ static void sysedit_editJump( void )
    y = -40;
    nsnprintf( buf, sizeof(buf), _("Target: ") );
    w = gl_printWidthRaw( NULL, buf );
-   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, NULL, buf );
    nsnprintf( buf, sizeof(buf), "%s", j->target->name );
-   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
 
    y -= gl_defFont.h + 10;
 
@@ -1437,7 +1437,7 @@ static void sysedit_editJump( void )
    s = _("Hide"); /* TODO: if inpType == 0 disable hide box */
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtHide",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1510,7 +1510,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
          "btnClose", _("Close"), sysedit_planetDescClose );
 
    /* Description label and text. */
-   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, &cBlack,
+   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, NULL,
          _("Landing Description") );
    y -= gl_defFont.h + 10;
    window_addInput( wid, x, y, w, h, "txtDescription", 1024, 0,
@@ -1522,7 +1522,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_setInput( wid, "txtDescription", desc );
 
    /* Bar description label and text. */
-   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtBarDescriptionLabel", &gl_defFont, &cBlack,
+   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtBarDescriptionLabel", &gl_defFont, NULL,
          _("Bar Description") );
    y -= gl_defFont.h + 10;
    window_addInput( wid, x, y, w, h, "txtBarDescription", 1024, 0,

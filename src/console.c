@@ -248,7 +248,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
    for (i=start; i<array_size(cli_buffer); i++)
       gl_printMaxRaw( cli_font, w, bx,
             by + h - (i+1-start)*(cli_font->h+5),
-            &cBlack, cli_buffer[i] );
+            &cFontWhite, cli_buffer[i] );
 }
 
 
@@ -266,7 +266,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
       /* Go up in history. */
       case SDLK_UP:
          for (i=cli_history; i>=0; i--) {
-            if (strncmp(cli_buffer[i], "\aD>", 3) == 0) {
+            if (strncmp(cli_buffer[i], "\aC>", 3) == 0) {
                /* Strip escape codes from beginning and end */
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
@@ -292,7 +292,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 
          /* Find next buffer. */
          for (i=cli_history+1; i<array_size(cli_buffer); i++) {
-            if (strncmp(cli_buffer[i], "\aD>", 3) == 0) {
+            if (strncmp(cli_buffer[i], "\aC>", 3) == 0) {
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
@@ -485,7 +485,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   nsnprintf( buf, CLI_MAX_INPUT+7, "\aD%s %s\a0",
+   nsnprintf( buf, CLI_MAX_INPUT+7, "\aC%s %s\a0",
          cli_firstline ? "> " : ">>", str );
    cli_addMessage( buf );
 
