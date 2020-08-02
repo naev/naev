@@ -21,7 +21,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll );
 void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll );
 int shiplog_getIdOfLogOfType ( const char *type, int selectedLog );
 void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries,int incempty );
-
+int shiplog_getID( const char *idstr );
 
 
 /*Hold a single log entry - a double linked list*/

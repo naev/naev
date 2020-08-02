@@ -1273,6 +1273,43 @@ static void info_shiplogView( unsigned int wid, char *str )
       dialogue_msgRaw( _("Log message"), tmp);
 }
 
+/**
+ * @brief Asks the player for an entry to add to the log
+ *
+ * @param wid Window widget
+ * @param str Button widget name
+ */
+static void info_shiplogAdd( unsigned int wid, char *str )
+{
+   char *tmp;
+   char *logname;
+   int logid;
+   (void) str;
+
+   logname = toolkit_getList( wid, "lstLogs" );
+   if ( logname == NULL || !strcmp( "All", logname ) ){
+      tmp = dialogue_inputRaw( "Add a log entry", 0, 4096, "Add an entry to your diary:" );
+      if ( tmp != NULL && strlen ( tmp ) > 0 ){
+         if ( shiplog_getID( "Diary" ) == -1 )
+              shiplog_create( "Diary", "Your diary", "Diary", 0, 0 );
+         shiplog_append( "Diary", tmp );
+         free( tmp );
+      }
+   }else{
+      tmp = dialogue_input( "Add a log entry", 0, 4096, "Add an entry to the log titled '%s':", logname );
+      if ( tmp != NULL && strlen ( tmp ) > 0 ){
+         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+         if ( logid >= 0 )
+            shiplog_appendByID( logid, tmp );
+         else
+            dialogue_msgRaw( "Cannot add log", "Cannot find this log!  Something went wrong here!" );
+         free( tmp );
+      }
+   }
+   shiplog_menu_genList( wid, 0 );
+
+}
+
 
 /**
  * @brief Shows the player's ship log.
@@ -1297,6 +1334,9 @@ static void info_openShipLog( unsigned int wid )
    window_addButton( wid, -60 - BUTTON_WIDTH * 2, 20, BUTTON_WIDTH,
          BUTTON_HEIGHT, "btnViewLog", _("View Entry"),
          info_shiplogView );
+   window_addButton( wid, -80 - BUTTON_WIDTH * 3, 20, BUTTON_WIDTH,
+         BUTTON_HEIGHT, "btnAddLog", _("Add Entry"),
+         info_shiplogAdd );
    /* Description text */
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,

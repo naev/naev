@@ -138,17 +138,19 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
  */
 int shiplog_append(const char *idstr, const char *msg)
 {
-   int i;
+   int i, id;
    for ( i=0 ; i<shipLog->nlogs; i++ ){
       if ( (idstr==NULL && shipLog->idstrList[i]==NULL) || ( idstr!=NULL && shipLog->idstrList[i]!=NULL && !strcmp(idstr, shipLog->idstrList[i])) ){
          break;
       }
    }
    if ( i==shipLog->nlogs ) {
-      WARN(_("Warning - log not found"));
-      return -1;
+      WARN(_("Warning - log not found: creating it"));
+      id = shiplog_create( idstr, _("Please report this log as an error to github.com/naev"), idstr, 0, 0 );
+   }else{
+      id = shipLog->idList[i];
    }
-   return shiplog_appendByID( shipLog->idList[i], msg);
+   return shiplog_appendByID( id, msg);
 }
 
 
@@ -668,4 +670,22 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
    *logentries = entries;
    *nentries = n;
    
+}
+
+/*
+ * @brief Checks to see if the log family exists
+ *
+ * @param idstr ID string for the log family
+ */
+int shiplog_getID( const char *idstr )
+{
+   int id = -1;
+   int i;
+   for ( i=0; i<shipLog->nlogs; i++ ) {
+      if ( (shipLog->idstrList[i]==NULL && idstr==NULL) || (shipLog->idstrList[i]!=NULL && idstr!=NULL && !strcmp( idstr, shipLog->idstrList[i] ) ) ){
+         id = shipLog->idList[i];
+         break;
+      }
+   }
+   return id;
 }
