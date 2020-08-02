@@ -187,7 +187,7 @@ void map_system_open( int sys_selected )
    window_setCancel( wid, map_system_close );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
-         &gl_defFont, &cDConsole, cur_sys_sel->name );
+         &gl_defFont, &cFontGreen, cur_sys_sel->name );
    window_addImage( wid, -90 + 32, h-30, 0, 0, "imgFaction", NULL, 0 );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -312,7 +312,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 	   iw = iw * p->gfx_space->w / p->gfx_space->h;
 	 gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
        }
-       gl_printRaw( &gl_smallFont,bx+5+pitch, by+(nshow-j-0.5)*pitch + offset,cur_planet_sel==j?&cGreen:&cWhite, p->name );
+       gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
+            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), p->name );
      }
    }
    /* draw the star */
@@ -348,9 +349,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }else{
       /* no nebula or star images - probably due to nebula */
       txtHeight=gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
-      gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2), (by+(nshow-0.5)*pitch + offset), &cRed, _("Obscured by the nebula") );
+      gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
+            (by + (nshow-0.5)*pitch + offset), &cFontRed, _("Obscured by the nebula") );
    }
-   gl_printRaw( &gl_smallFont,bx+5+pitch, by+(nshow-0.5)*pitch + offset,cur_planet_sel==0?&cGreen:&cWhite, sys->name );
+   gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
+         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), sys->name );
    if ( cur_planet_sel == 0 && nBgImgs > 0 ){
       /* make use of space to draw a nice nebula */
       double imgw,imgh;
@@ -444,7 +447,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          /* display the logo */
          logo = faction_logoSmall( f );
          if ( logo != NULL ){
-            gl_blitScale( logo, bx+pitch+nameWidth+200, by+h-21, 20, 20, &cWhite );
+            gl_blitScale( logo, bx + pitch + nameWidth + 200,
+                  by + h - 21, 20, 20, &cWhite );
          }
       }
       /* Get presence. */
@@ -468,7 +472,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if (hasPresence == 0)
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
-      gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, txtHeight, bx+10+pitch+nameWidth, by + h - 10-txtHeight, &cWhite, buf );
+      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
+            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
       
       /* Jumps. */
       for(  i=0; i<sys->njumps; i++ ){
@@ -489,10 +494,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         char factionBuf[64];
         logo = faction_logoSmall( p->faction );
         if ( logo != NULL ){
-           gl_blitScale( logo, bx+pitch+nameWidth+200, by+h-21, 20, 20, &cWhite );
+           gl_blitScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
          }
         nsnprintf( factionBuf, 64, "%s", faction_shortname( p->faction ) );
-        gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, 20, bx+pitch+nameWidth+230, by + h - 31, &cWhite, factionBuf );
+        gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
+            bx+pitch+nameWidth + 230, by + h - 31, &cFontWhite, factionBuf );
 
      }
 
@@ -528,13 +534,15 @@ static void map_system_render( double bx, double by, double w, double h, void *d
            infocnt+=nsnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", p->bar_description );
         }
      }
-     gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, txtHeight, bx+10+pitch+nameWidth, by + h - 10-txtHeight, &cWhite, buf );
+     gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
+         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
    }
 
    /* show the trade/outfit/ship info */
    if ( infobuf[0]!='\0' ){
       txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, infobuf );
-      gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, txtHeight, bx+10+pitch+nameWidth, by + 10, &cGrey80, infobuf );
+      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
+            bx + 10 + pitch + nameWidth, by + 10, &cFontGrey, infobuf );
    }
 }
 
