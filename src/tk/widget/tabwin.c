@@ -379,16 +379,16 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Render tabs ontop. */
    x = bx+tab->x+20;
-   y = by+tab->y;
+   y = by+tab->y+2;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i!=tab->dat.tab.active) {
          /* Draw border. */
+         toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 8,
+               TAB_HEIGHT-2, 1., toolkit_col, NULL );
          toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 10,
                TAB_HEIGHT, toolkit_colDark, NULL );
-         toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 8,
-               TAB_HEIGHT-1, 1., toolkit_colDark, NULL );
       }
       else {
          if (i==0)
