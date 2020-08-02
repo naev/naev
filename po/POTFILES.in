@@ -136,6 +136,7 @@ dat/gui/slimv2.lua
 dat/landing.lua
 dat/missions/baron/baron_baron.lua
 dat/missions/baron/baron_prince.lua
+dat/missions/baron/common.lua
 dat/missions/dvaered/assault_on_unicorn.lua
 dat/missions/dvaered/championship.lua
 dat/missions/dvaered/common.lua
@@ -186,6 +187,7 @@ dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
 dat/missions/neutral/commodity_run.lua
+dat/missions/neutral/common.lua
 dat/missions/neutral/crimelord.lua
 dat/missions/neutral/diy-nerds.lua
 dat/missions/neutral/drunkard.lua
@@ -224,9 +226,11 @@ dat/missions/pirate/pir_ship_stealing.lua
 dat/missions/pirate/pirate_commodity_run.lua
 dat/missions/proteron/dissbounty_dead.lua
 dat/missions/rehab_common.lua
+dat/missions/shadow/common.lua
 dat/missions/shadow/darkshadow.lua
 dat/missions/shadow/shadowrun.lua
 dat/missions/shadow/shadowvigil.lua
+dat/missions/shark/common.lua
 dat/missions/shark/sh00_ancestorkill.lua
 dat/missions/shark/sh01_corvette.lua
 dat/missions/shark/sh02_tapping.lua
@@ -239,6 +243,7 @@ dat/missions/sirius/achack/achack01.lua
 dat/missions/sirius/achack/achack02.lua
 dat/missions/sirius/achack/achack03.lua
 dat/missions/sirius/achack/achack04.lua
+dat/missions/sirius/common.lua
 dat/missions/sirius/heretic/heretic0.lua
 dat/missions/sirius/heretic/heretic1.lua
 dat/missions/sirius/heretic/heretic2.lua
@@ -252,10 +257,12 @@ dat/missions/soromid/comingout/srm_comingout3.lua
 dat/missions/soromid/comingout/srm_comingout4.lua
 dat/missions/soromid/comingout/srm_comingout5.lua
 dat/missions/soromid/comingout/srm_comingout6.lua
+dat/missions/soromid/common.lua
 dat/missions/soromid/srm_rehab.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_rehab.lua
 dat/missions/tutorial/tutorial.lua
+dat/missions/zalek/common.lua
 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/01_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
@@ -335,6 +342,7 @@ src/log.h
 src/map.c
 src/map_find.c
 src/map_overlay.c
+src/map_system.c
 src/md5.c
 src/menu.c
 src/mission.c
@@ -413,6 +421,7 @@ src/rng.c
 src/save.c
 src/shaders_c_gen.c
 src/ship.c
+src/shiplog.c
 src/shipstats.c
 src/slots.c
 src/sound.c
