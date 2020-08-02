@@ -212,17 +212,14 @@ static void chk_render( Widget* chk, double bx, double by )
    switch (chk->status) {
       case WIDGET_STATUS_NORMAL:
          lc = &cGrey80;
-         /*c = &cGrey60;*/
          dc = &cGrey40;
          break;
       case WIDGET_STATUS_MOUSEOVER:
          lc = &cWhite;
-         /*c = &cGrey80;*/
          dc = &cGrey60;
          break;
       case WIDGET_STATUS_MOUSEDOWN:
          lc = &cGreen;
-         /*c = &cGreen;*/
          dc = &cGrey40;
          break;
       default:
@@ -231,10 +228,10 @@ static void chk_render( Widget* chk, double bx, double by )
 #endif
 
    /* Draw rect. */
-   toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., &cGrey40, NULL );
-   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., &cGrey90, NULL );
+   toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., toolkit_colDark, NULL );
+   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., toolkit_colLight, NULL );
    if (chk->dat.chk.state)
-      toolkit_drawRect( x+1., y+1. + (chk->h-10.)/2., 8., 8., &cGrey20, NULL );
+      toolkit_drawRect( x+1., y+1. + (chk->h-10.)/2., 8., 8., toolkit_colDark, NULL );
 
 #if 0
    /* Inner outline */
@@ -247,7 +244,7 @@ static void chk_render( Widget* chk, double bx, double by )
    gl_printMaxRaw( NULL, chk->w - 20,
          bx + chk->x + 15,
          by + chk->y + (chk->h - gl_defFont.h)/2.,
-         &cBlack, chk->dat.chk.display );
+         &cFontWhite, chk->dat.chk.display );
 }
 
 

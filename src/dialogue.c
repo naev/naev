@@ -141,7 +141,7 @@ void dialogue_alert( const char *fmt, ... )
    wdw = window_create( _("Warning"), -1, -1, 300, 90 + h );
    window_setData( wdw, &done );
    window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
-         &gl_smallFont, &cBlack, msg );
+         &gl_smallFont, NULL, msg );
    window_addButton( wdw, 135, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
@@ -269,7 +269,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    msg_wid = window_create( caption, -1, -1, w, 110 + h );
    window_setData( msg_wid, &done );
    window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
-         font, &cBlack, msg );
+         font, NULL, msg );
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
@@ -316,7 +316,7 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
 
    /* Add the text box */
    window_addText( msg_wid, img_width+40, -40, w-40, h,  0, "txtMsg",
-         font, &cBlack, msg );
+         font, NULL, msg );
 
    /* Add a placeholder rectangle for the image */
    window_addRect( msg_wid, 20, -40, img_width, img_height,
@@ -379,7 +379,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    window_setData( wid, &done );
    /* text */
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
-         font, &cBlack, msg );
+         font, NULL, msg );
    /* buttons */
    window_addButtonKey( wid, w/2-50-10, 20, 50, 30, "btnYes", _("Yes"),
          dialogue_YesNoClose, SDLK_y );
@@ -478,7 +478,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    window_setCancel( input_dialogue.input_wid, dialogue_cancel );
    /* text */
    window_addText( input_dialogue.input_wid, 30, -30, 200, h,  0, "txtInput",
-         &gl_smallFont, &cBlack, msg );
+         &gl_smallFont, NULL, msg );
    /* input */
    window_addInput( input_dialogue.input_wid, 20, -50-h, 200, 20, "inpInput", max, 1, NULL );
    window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
@@ -697,7 +697,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    wid = window_create( title, -1, -1, winw, winh );
    window_setData( wid, &done );
    window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
-         font, &cBlack, msg );
+         font, NULL, msg );
    window_setAccept( wid, dialogue_listClose );
    window_setCancel( wid, dialogue_listCancel );
 
@@ -757,7 +757,7 @@ void dialogue_makeChoice( const char *caption, const char *msg, int opts )
    choice_wid     = window_create( caption, -1, -1, w, h+100+40*choice_nopts );
    /* text */
    window_addText( choice_wid, 20, -40, w-40, h,  0, "txtChoice",
-         font, &cBlack, msg );
+         font, NULL, msg );
 }
 /**
  * @brief Add a choice to the dialog.

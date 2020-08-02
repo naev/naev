@@ -301,16 +301,16 @@ void equipment_open( unsigned int wid )
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, h+y, 0, "txtSDesc", &gl_smallFont, &cBlack, buf );
+         100, h+y, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    x += 100;
    window_addText( wid, x, y,
-         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_defFont, &cBlack, _("Available Ships") );
+         130, 200, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_defFont, &cBlack, _("Available Outfits") );
+         130, 200, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -367,9 +367,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Render text. */
    if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
-      c = &cDConsole;
+      c = &cFontGreen;
    else
-      c = &cBlack;
+      c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
          x-15., y+h+10., c, txt );
 
@@ -385,7 +385,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          else if (lst[i].active)
             dc = &cFontBlue;
          else
-            dc = &cInert;
+            dc = &cFontGrey;
       }
       else
          dc = outfit_slotSizeColour( &lst[i].sslot->slot );
@@ -398,7 +398,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       bc = *dc;
       bc.a = 0.4;
       if (i==selected)
-         c = &cDConsole;
+         c = &cGreen;
       else
          c = &bc;
       toolkit_drawRect( x, y, w, h, c, NULL );
@@ -538,7 +538,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   const glColour *lc, *c, *dc;
+   const glColour *lc, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -548,7 +548,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    /* Render CPU and energy bars. */
    lc = &cWhite;
-   c = &cGrey80;
    dc = &cGrey60;
    w = 120;
    h = 20;
@@ -556,38 +555,38 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cBlack, _("CPU Free") );
+      x, y + h + 10., &cFontWhite, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
-   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
-   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cFontRed, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
+   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cHostile, NULL );
+   toolkit_drawOutline( x, y, w, h, 1., lc, NULL  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
-      &cBlack, "%d / %d", p->cpu, p->cpu_max );
+      &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
 
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cBlack, _("Mass Limit Left") );
+      x, y, &cFontWhite, _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
       (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
-   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
+   toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
    toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cRestricted, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawOutline( x, y, w, h, 1., lc, NULL  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
-      &cBlack, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
+      &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
 
    if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
       y -= h;
       gl_printMid( &gl_smallFont, w,
-         x, y, &cFontRed, _("%.0f%% Slower"),
+         x, y, &cFontRed, _("!! %.0f%% Slower !!"),
          (1. - p->speed / p->speed_base) * 100);
    }
 
@@ -639,10 +638,10 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], NULL );
                if (display != NULL)
-                  c = &cRed;
+                  c = &cFontRed;
                else {
                   display = _("Right click to remove");
-                  c = &cDConsole;
+                  c = &cFontGreen;
                }
             }
             else if ((wgt->outfit != NULL) &&
@@ -650,10 +649,10 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                top = 0;
                display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit );
                if (display != NULL)
-                  c = &cRed;
+                  c = &cFontRed;
                else {
                   display = _("Right click to add");
-                  c = &cDConsole;
+                  c = &cFontGreen;
                }
             }
          }
@@ -763,7 +762,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\aS%s", sp_display( slot->sslot->slot.spid ) );
+            "\aR%s", sp_display( slot->sslot->slot.spid ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
@@ -787,7 +786,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          o->name );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aSSlot %s\a0"),
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
             sp_display( o->slot.spid ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
@@ -816,7 +815,6 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
 {
    int sx, sy;
-   const glColour *lc, *c, *dc;
    unsigned int tick;
    double dt;
    double px, py;
@@ -864,11 +862,8 @@ static void equipment_renderShip( double bx, double by,
       gl_renderCross(px + v.x, py + v.y, 7, &cRadar_player);
       glLineWidth( 1. );
    }
-   lc = toolkit_colLight;
-   c  = toolkit_col;
-   dc = toolkit_colDark;
-   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., lc, c  );
-   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., dc, NULL  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., toolkit_colLight, NULL  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., toolkit_colDark, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.
@@ -1403,7 +1398,7 @@ static void equipment_genOutfitList( unsigned int wid )
       equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore")
+      _("All"), "\ab W ", "\ag U ", "\ap S ", _("\aRCore")
    };
 
    int active, i, l, p, noutfits;
@@ -1524,7 +1519,7 @@ static void equipment_genOutfitList( unsigned int wid )
          alt[i] = malloc( l );
          p  = snprintf( &alt[i][0], l, "%s\n", o->name );
          if ((o->slot.spid!=0) && (p < l))
-            p += snprintf( &alt[i][p], l-p, _("\aSSlot %s\a0\n"),
+            p += snprintf( &alt[i][p], l-p, _("\aRSlot %s\a0\n"),
                   sp_display( o->slot.spid ) );
          if (p < l)
             p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
@@ -1569,15 +1564,28 @@ static void equipment_genOutfitList( unsigned int wid )
 static char eq_qCol( double cur, double base, int inv )
 {
    if (cur > 1.2*base)
-      return (inv) ? 'r' : 'D';
+      return (inv) ? 'r' : 'g';
    else if (cur < 0.8*base)
-      return (inv) ? 'D' : 'r';
+      return (inv) ? 'g' : 'r';
    return '0';
 }
 
 
+/**
+ * @brief Gets the symbol for comparing a current value vs a ship base value.
+ */
+static const char* eq_qSym( double cur, double base, int inv )
+{
+   if (cur > 1.2*base)
+      return (inv) ? "!! " : "";
+   else if (cur < 0.8*base)
+      return (inv) ? "" : "!! ";
+   return "";
+}
+
+
 #define EQ_COMP( cur, base, inv ) \
-eq_qCol( cur, base, inv ), cur
+eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
@@ -1627,18 +1635,18 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s credits\n"
          "\n"
          "%.0f\a0 tonnes\n"
-         "\a%c%s\a0 average\n"
-         "\a%c%.0f\a0 kN/tonne\n"
-         "\a%c%.0f\a0 m/s (max \a%c%.0f\a0 m/s)\n"
-         "\a%c%.0f\a0 deg/s\n"
-         "\a%c%.0f%%\n"
+         "%s average\n"
+         "\a%c%s%.0f\a0 kN/tonne\n"
+         "\a%c%s%.0f\a0 m/s (max \a%c%s%.0f\a0 m/s)\n"
+         "\a%c%s%.0f\a0 deg/s\n"
+         "%.0f%%\n"
          "\n"
-         "\a%c%.0f%%\n"
-         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
-         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
-         "\a%c%.0f\a0 MJ (\a%c%.1f\a0 MW)\n"
-         "%d / \a%c%d\a0 tonnes\n"
-         "%d / \a%c%d\a0 units (%d jumps)\n"
+         "\a%c%s%.0f%%\n"
+         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
+         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
+         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
+         "%d / \a%c%s%d\a0 tonnes\n"
+         "%d units (%d jumps)\n"
          "\n"
          "\a%c%s\a0"),
          /* Generic. */
@@ -1648,13 +1656,13 @@ void equipment_updateShips( unsigned int wid, char* str )
       buf2,
       /* Movement. */
       ship->solid->mass,
-      '0', nt,
+      nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
-      EQ_COMP( ship->ship->dt_default * 100, ship->ship->dt_default * 100, 0 ),
+      ship->ship->dt_default * 100,
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
@@ -1665,7 +1673,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
+      ship->fuel, pilot_getJumps(ship),
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 

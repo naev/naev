@@ -335,7 +335,7 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
    do {
       if (NULL != list_iter->text) {
          stop = 0;
-         gl_print( &intro_font, x, y, &cConsole, list_iter->text );
+         gl_print( &intro_font, x, y, &cFontGreen, list_iter->text );
       }
 
       y -= line_height;

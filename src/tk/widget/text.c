@@ -54,7 +54,7 @@ void window_addText( const unsigned int wid,
    wgt->render             = txt_render;
    wgt->cleanup            = txt_cleanup;
    wgt->dat.txt.font       = (font==NULL) ? &gl_defFont : font;
-   wgt->dat.txt.colour     = (colour==NULL) ? cBlack : *colour;
+   wgt->dat.txt.colour     = (colour==NULL) ? cFontWhite : *colour;
    wgt->dat.txt.centered   = centered;
    wgt->dat.txt.text       = (string==NULL) ? NULL : strdup(string);
 

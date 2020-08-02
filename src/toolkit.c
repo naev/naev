@@ -59,9 +59,9 @@ static char input_text              = 0; /**< Current character. */
 /*
  * default outline colours
  */
-const glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
-const glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
-const glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
+const glColour* toolkit_colLight = &cGrey60; /**< Light outline colour. */
+const glColour* toolkit_col      = &cGrey40; /**< Normal outline colour. */
+const glColour* toolkit_colDark  = &cGrey20; /**< Dark outline colour. */
 
 
 /*
@@ -1202,7 +1202,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.a = 0.7;
    toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
    toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cBlack, alt );
+   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cFontWhite, alt );
 }
 
 
@@ -1214,54 +1214,28 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
 static void window_renderBorder( Window* w )
 {
    double x, y;
-   const glColour *lc, *c, *dc, *oc;
-   gl_Matrix4 projection;
 
    /* position */
    x = w->x;
    y = w->y;
-
-   /* colours */
-   lc = &cGrey90;
-   c = &cGrey70;
-   dc = &cGrey50;
-   oc = &cGrey30;
 
    /*
     * Case fullscreen.
     */
    if (window_isFlag( w, WINDOW_FULLSCREEN )) {
       /* Background. */
-      toolkit_drawRect( x, y,          w->w, 0.6*w->h, dc, c );
-      toolkit_drawRect( x, y+0.6*w->h, w->w, 0.4*w->h, c, NULL );
+      toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
       /* Name. */
       gl_printMidRaw( &gl_defFont, w->w,
             x,
             y + w->h - 20.,
-            &cBlack, w->name );
+            &cFontWhite, w->name );
       return;
    }
 
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, w->x, w->y, 0);
-   projection = gl_Matrix4_Scale(projection, w->w, w->h, 1);
-
-   glUseProgram(shaders.tk.program);
-   glEnableVertexAttribArray(shaders.tk.vertex);
-   gl_uniformColor(shaders.tk.dc, dc);
-   gl_uniformColor(shaders.tk.c, c);
-   gl_uniformColor(shaders.tk.oc, oc);
-   gl_uniformColor(shaders.tk.lc, lc);
-   gl_Matrix4_Uniform(shaders.tk.projection, projection);
-   glUniform2f(shaders.tk.wh, w->w, w->h);
-   glUniform1f(shaders.tk.corner_radius, 10. / gl_screen.scale);
-
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.tk.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   glDisableVertexAttribArray(shaders.tk.vertex);
-   glUseProgram(0);
-   gl_checkErr();
+   toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
+   toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark, NULL );
+   toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight, NULL );
 
    /*
     * render window name
@@ -1269,7 +1243,7 @@ static void window_renderBorder( Window* w )
    gl_printMidRaw( &gl_defFont, w->w,
          x,
          y + w->h - 20.,
-         &cBlack, w->name );
+         &cFontWhite, w->name );
 }
 
 
@@ -1359,13 +1333,11 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    double sy;
 
    /* scrollbar background */
-   toolkit_drawRect( x, y, w, h, toolkit_colDark, toolkit_col );
-   /* toolkit_drawOutline( x, y, w, h,  0., toolkit_colDark, NULL ); */
-   /* toolkit_drawOutline( x, y, w, h, 0., toolkit_colLight, toolkit_col ); */
+   toolkit_drawRect( x, y, w, h, toolkit_colDark, NULL );
 
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);
-   toolkit_drawRect( x, sy, w, 30., toolkit_colLight, toolkit_col );
+   toolkit_drawRect( x, sy, w, 30., toolkit_colLight, NULL );
    toolkit_drawOutline( x + 1, sy, w - 1, 30., 0., toolkit_colDark, NULL );
 }
 
