@@ -1358,6 +1358,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
+   glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
+   /* XXX: textCol is a hack to prevent the text from overly obscuring
+    * overlay display of other things. Effectively disables outlines for
+    * the text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
 
    if (overlay) {
       x = player.p->solid->pos.x / res + SCREEN_W / 2;
@@ -1374,7 +1380,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
 }
 
 
@@ -1556,6 +1562,12 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    gl_endSolidProgram();
 
    /* Render name. */
+   /* XXX: Hack to prevent the text from overly obscuring overlay
+    * display of other things. Effectively disables outlines for this
+    * text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
+   col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
 }
@@ -1644,6 +1656,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    gl_endSolidProgram();
 
    /* Render name. */
+   /* XXX: Hack to prevent the text from overly obscuring overlay
+    * display of other things. Effectively disables outlines for this
+    * text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
+   col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }

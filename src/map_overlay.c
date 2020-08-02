@@ -192,6 +192,12 @@ void ovr_render( double dt )
    double w, h, res;
    double x,y;
    glColour c = { .r=0., .g=0., .b=0., .a=0.5 };
+   glColour textCol = { cRadar_hilight.r, cRadar_hilight.g, cRadar_hilight.b, 0.99 };
+   /* XXX: textCol is a hack to prevent the text from overly obscuring
+    * overlay display of other things. Effectively disables outlines for
+    * the text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
 
    /* Must be open. */
    if (!ovr_open)
@@ -243,7 +249,7 @@ void ovr_render( double dt )
       x = player.autonav_pos.x / res + w / 2.;
       y = player.autonav_pos.y / res + h / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
-      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("GOTO") );
+      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, _("GOTO") );
    }
 
    /* render the asteroids */
@@ -271,6 +277,12 @@ static void ovr_mrkRenderAll( double res )
    int i;
    ovr_marker_t *mrk;
    double x, y;
+   glColour textCol = { cRadar_hilight.r, cRadar_hilight.g, cRadar_hilight.b, 0.99 };
+   /* XXX: textCol is a hack to prevent the text from overly obscuring
+    * overlay display of other things. Effectively disables outlines for
+    * the text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
 
    if (ovr_markers == NULL)
       return;
@@ -283,7 +295,7 @@ static void ovr_mrkRenderAll( double res )
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
-         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, mrk->text );
    }
 }
 

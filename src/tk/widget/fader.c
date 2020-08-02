@@ -101,7 +101,7 @@ static void fad_render( Widget* fad, double bx, double by )
    ty = by + fad->y + (h < w ? (h - 5.) / 2 : 0);
    tw = (h < w ? w : 5.);
    th = (h > w ? h : 5.);
-   toolkit_drawRect(tx, ty, tw , th, toolkit_colDark, toolkit_colDark);
+   toolkit_drawRect(tx, ty, tw , th, toolkit_colLight, NULL);
 
    /* Knob. */
    kx = bx + fad->x + (h < w ? w * pos - 5. : 0);
@@ -110,8 +110,8 @@ static void fad_render( Widget* fad, double bx, double by )
    kh = (h > w ? 15. : h);
 
    /* Draw. */
-   toolkit_drawRect(kx, ky, kw , kh, toolkit_colDark, toolkit_colLight);
-   toolkit_drawOutline(kx, ky, kw , kh, 1., &cBlack, toolkit_colDark);
+   toolkit_drawRect(kx, ky, kw , kh, toolkit_col, NULL);
+   toolkit_drawOutline(kx, ky, kw , kh, 1., toolkit_colDark, NULL);
 }
 
 

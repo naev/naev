@@ -149,14 +149,14 @@ void player_board (void)
    wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
    window_addText( wdw, 20, -30, 120, 60,
-         0, "txtCargo", &gl_smallFont, &cBlack,
+         0, "txtCargo", &gl_smallFont, NULL,
          _("Credits:\n"
          "Cargo:\n"
          "Fuel:\n"
          "Ammo:\n")
          );
    window_addText( wdw, 80, -30, 120, 60,
-         0, "txtData", &gl_smallFont, &cBlack, NULL );
+         0, "txtData", &gl_smallFont, NULL, NULL );
 
    window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnStealCredits", _("Credits"), board_stealCreds);

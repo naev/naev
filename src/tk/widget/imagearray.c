@@ -136,10 +136,9 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    double xspace;
-   const glColour *c, *dc, *lc;
-   glColour tc, fontcolour;
+   const glColour *dc, *lc;
+   glColour fontcolour;
    int is_selected;
-   int tw;
    double d;
 
    /*
@@ -195,21 +194,22 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
-         fontcolour = cWhite;
+         fontcolour = cFontWhite;
          /* Draw background. */
-         if (is_selected)
+         if (iar->dat.iar.background != NULL) {
+            if (is_selected) {
+               toolkit_drawRect( xcurs + 2.,
+                     ycurs + 2.,
+                     w - 5., h - 5., &cDarkBlue, NULL );
+            } else {
+               toolkit_drawRect( xcurs + 2.,
+                     ycurs + 2.,
+                     w - 5., h - 5., &iar->dat.iar.background[pos], NULL );
+            }
+         } else if (is_selected) {
             toolkit_drawRect( xcurs + 2.,
                   ycurs + 2.,
-                  w - 5., h - 5., &cDConsole, NULL );
-         else if (iar->dat.iar.background != NULL) {
-            toolkit_drawRect( xcurs + 2.,
-                  ycurs + 2.,
-                  w - 5., h - 5., &iar->dat.iar.background[pos], NULL );
-
-            tc = iar->dat.iar.background[pos];
-
-            if (((tc.r + tc.g + tc.b) / 3) > 0.5)
-               fontcolour = cBlack;
+                  w - 5., h - 5., &cGreen, NULL );
          }
 
          /* image */
@@ -221,27 +221,11 @@ static void iar_render( Widget* iar, double bx, double by )
          /* caption */
          if (iar->dat.iar.captions[pos] != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     (is_selected) ? &cBlack : &fontcolour,
-                     iar->dat.iar.captions[pos] );
+                     &fontcolour, iar->dat.iar.captions[pos] );
 
          /* quantity. */
          if (iar->dat.iar.quantity != NULL) {
             if (iar->dat.iar.quantity[pos] != NULL) {
-               /* Rectangle to highlight better. */
-               tw = gl_printWidthRaw( &gl_smallFont,
-                     iar->dat.iar.quantity[pos] );
-
-               if (is_selected)
-                  tc = cDConsole;
-               else if (iar->dat.iar.background != NULL)
-                  tc = iar->dat.iar.background[pos];
-               else
-                  tc = cBlack;
-
-               tc.a = 0.75;
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 5. + iar->dat.iar.ih,
-                     tw + 4., gl_smallFont.h + 4., &tc, NULL );
                /* Quantity number. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                      xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
@@ -252,20 +236,6 @@ static void iar_render( Widget* iar, double bx, double by )
          /* Slot type. */
          if (iar->dat.iar.slottype != NULL) {
             if (iar->dat.iar.slottype[pos] != NULL) {
-               /* Rectangle to highlight better. Width is a hack due to lack of monospace font. */
-               tw = gl_printWidthRaw( &gl_smallFont, "M" );
-
-               if (is_selected)
-                  tc = cDConsole;
-               else if (iar->dat.iar.background != NULL)
-                  tc = iar->dat.iar.background[pos];
-               else
-                  tc = cBlack;
-
-               tc.a = 0.75;
-               toolkit_drawRect( xcurs + iar->dat.iar.iw - 6.,
-                     ycurs + 5. + iar->dat.iar.ih,
-                     tw + 2., gl_smallFont.h + 4., &tc, NULL );
                /* Slot size letter. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                      xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
@@ -276,17 +246,15 @@ static void iar_render( Widget* iar, double bx, double by )
          /* outline */
          if (is_selected) {
             lc = &cWhite;
-            c = &cGrey80;
             dc = &cGrey60;
          }
          else {
             lc = toolkit_colLight;
-            c = toolkit_col;
-            dc = toolkit_colDark;
+            dc = toolkit_col;
          }
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
-               w - 4., h - 4., 1., lc, c );
+               w - 4., h - 4., 1., lc, NULL );
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
@@ -299,7 +267,7 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Final outline.
     */
-   toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, toolkit_col );
+   toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, NULL );
    toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 2., toolkit_colDark, NULL );
 }
 

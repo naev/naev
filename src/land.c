@@ -299,20 +299,20 @@ static void bar_open( unsigned int wid )
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
          w - iw - 60, dh, 0,
-         "txtDescription", &gl_smallFont, &cBlack,
+         "txtDescription", &gl_smallFont, NULL,
          land_planet->bar_description );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
    window_addText( wid, iw + 40, th,
          w - iw - 60, gl_defFont.h, 1,
-         "txtPortrait", &gl_defFont, &cBlack, NULL );
+         "txtPortrait", &gl_defFont, NULL, NULL );
 
    /* Add mission description text. */
    th -= 20 + PORTRAIT_HEIGHT + 20 + 20;
    window_addText( wid, iw + 60, th,
          w - iw - 100, h + th - (2*bh+60), 0,
-         "txtMission", &gl_smallFont, &cBlack, NULL );
+         "txtMission", &gl_smallFont, NULL, NULL );
 
    /* Generate the mission list. */
    bar_genList( wid );
@@ -559,23 +559,23 @@ static void misn_open( unsigned int wid )
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
-         "txtSDate", NULL, &cBlack,
+         "txtSDate", NULL, NULL,
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
          w/2 - 90, 40, 0,
-         "txtDate", NULL, &cBlack, NULL );
+         "txtDate", NULL, NULL, NULL );
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, &cBlack, _("Reward:") );
+         "txtSReward", &gl_smallFont, NULL, _("Reward:") );
    window_addText( wid, w/2 + 70, y,
          w/2 - 90, 20, 0,
-         "txtReward", &gl_smallFont, &cBlack, NULL );
+         "txtReward", &gl_smallFont, NULL, NULL );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, h/2-90, 0,
-         "txtDesc", &gl_smallFont, &cBlack, NULL );
+         "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* map */
    map_show( wid, 20, 20,
@@ -1156,7 +1156,7 @@ static void land_createMainTab( unsigned int wid )
    window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
+         "txtPlanetDesc", &gl_smallFont, NULL, land_planet->description);
 
    /*
     * buttons
@@ -1170,7 +1170,7 @@ static void land_createMainTab( unsigned int wid )
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
       window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
                200, gl_defFont.h, 1, "txtRefuel",
-               &gl_defFont, &cBlack, _("No refueling services.") );
+               &gl_defFont, NULL, _("No refueling services.") );
    }
 }
 
