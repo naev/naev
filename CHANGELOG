@@ -42,3 +42,5 @@
       * Consolidated the effects of cloaking and jammers under cloaking
       * Added workaround for ALSOFT buggy version that crashes
       * Added a polygon-based collision algorithm
+      * Improved and simplified the look of the interface
+      * Added some symbols for partial colorblind accessibility
