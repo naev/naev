@@ -65,20 +65,10 @@ function accept ()
       osd_desc[1] = osd_desc[1]:format( missys:name() )
       misn.osdCreate( osd_title, osd_desc )
 
-      local desc
-      if ships == 1 then
-         desc = misn_desc[2]:format( missys:name() )
-      else
-         desc = misn_desc[1]:format( ships, missys:name() )
-      end
-      if has_ancestor then desc = desc .. misn_desc[3] end
-      if has_kestrel then desc = desc .. misn_desc[4] end
-      if flfships > 0 then
-         desc = desc .. misn_desc[5]:format( flfships )
-      end
+      local desc = setDescription()
       misn.setDesc( desc )
 
-      misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
+      misn.setTitle( misn_title[level]:format( missys:name() ) )
       marker = misn.markerAdd( missys, "high" )
       misn.setReward( misn_rwrd:format( numstring( credits ) ) )
 
