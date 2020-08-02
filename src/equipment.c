@@ -538,7 +538,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   const glColour *lc, *c, *dc;
+   const glColour *lc, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -548,7 +548,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    /* Render CPU and energy bars. */
    lc = &cWhite;
-   c = &cGrey80;
    dc = &cGrey60;
    w = 120;
    h = 20;
@@ -559,9 +558,9 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
       x, y + h + 10., &cFontWhite, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
-   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
-   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cFontRed, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
+   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cHostile, NULL );
+   toolkit_drawOutline( x, y, w, h, 1., lc, NULL  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
@@ -576,9 +575,9 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
       (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
-   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
+   toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
    toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cRestricted, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawOutline( x, y, w, h, 1., lc, NULL  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
@@ -816,7 +815,6 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
 {
    int sx, sy;
-   const glColour *lc, *c, *dc;
    unsigned int tick;
    double dt;
    double px, py;
@@ -864,11 +862,8 @@ static void equipment_renderShip( double bx, double by,
       gl_renderCross(px + v.x, py + v.y, 7, &cRadar_player);
       glLineWidth( 1. );
    }
-   lc = toolkit_colLight;
-   c  = toolkit_col;
-   dc = toolkit_colDark;
-   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., lc, c  );
-   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., dc, NULL  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., toolkit_colLight, NULL  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., toolkit_colDark, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.

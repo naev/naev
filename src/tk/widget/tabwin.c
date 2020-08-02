@@ -366,7 +366,6 @@ static void tab_render( Widget* tab, double bx, double by )
 {
    int i, x, y;
    Window *wdw;
-   const glColour *c, *lc;
 
    /** Get window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
@@ -385,22 +384,19 @@ static void tab_render( Widget* tab, double bx, double by )
       y += tab->h-TAB_HEIGHT;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i!=tab->dat.tab.active) {
-         lc = toolkit_col;
-         c  = toolkit_colDark;
-
          /* Draw border. */
          toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 10,
-               TAB_HEIGHT, lc, c );
+               TAB_HEIGHT, toolkit_colDark, NULL );
          toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 8,
-               TAB_HEIGHT-1, 1., c, &cBlack );
+               TAB_HEIGHT-1, 1., toolkit_colDark, NULL );
       }
       else {
          if (i==0)
             toolkit_drawRect( x-1, y+0,
-                  1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
+                  1, TAB_HEIGHT+1, toolkit_col, NULL );
          else if (i==tab->dat.tab.ntabs-1)
             toolkit_drawRect( x+tab->dat.tab.namelen[i]+9, y+0,
-                  1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
+                  1, TAB_HEIGHT+1, toolkit_col, NULL );
       }
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + 5,

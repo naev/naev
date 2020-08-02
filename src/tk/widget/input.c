@@ -159,7 +159,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* inner outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
-         toolkit_colLight, toolkit_col );
+         toolkit_colLight, NULL );
    /* outer outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
          toolkit_colDark, NULL );

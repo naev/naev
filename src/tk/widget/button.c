@@ -301,56 +301,39 @@ static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod )
  */
 static void btn_render( Widget* btn, double bx, double by )
 {
-   const glColour *c, *dc, *lc, *fc;
+   const glColour *c, *fc;
    double x, y;
 
    x = bx + btn->x;
    y = by + btn->y;
 
    /* set the colours */
-   if (btn->dat.btn.disabled==1) {
-      lc = &cGrey60;
-      c  = &cGrey20;
-      dc = &cGrey40;
+   if (btn->dat.btn.disabled) {
+      c  = toolkit_colDark;
       fc = &cGrey80;
    }
    else {
       fc = &cFontWhite;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
-            lc = &cGrey90;
-            c  = &cGrey70;
-            dc = &cGrey50;
+            c  = toolkit_colLight;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
-            lc = &cGrey90;
-            c  = &cGrey50;
-            dc = &cGrey70;
+            c  = &cGrey30;
             break;
          case WIDGET_STATUS_NORMAL:
          default:
-            lc = &cGrey80;
-            c  = &cGrey60;
-            dc = &cGrey40;
-            break;
+            c  = &cGrey50;
       }
    }
 
 
-   /* shaded base */
-   if (btn->dat.btn.disabled==1) {
-      toolkit_drawRect( x, y,            btn->w, 0.4*btn->h, dc, NULL );
-      toolkit_drawRect( x, y+0.4*btn->h, btn->w, 0.6*btn->h, dc, c );
-   }
-   else {
-      toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
-      toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
-   }
+   toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 0., toolkit_colLight, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 1., toolkit_colDark, NULL );
 
    gl_printMidRaw( NULL, (int)btn->w,
          bx + btn->x,

@@ -114,7 +114,7 @@ static void lst_render( Widget* lst, double bx, double by )
 
    /* inner outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
-         toolkit_colLight, toolkit_col );
+         toolkit_colLight, NULL );
    /* outer outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
 

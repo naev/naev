@@ -136,7 +136,7 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    double xspace;
-   const glColour *c, *dc, *lc;
+   const glColour *dc, *lc;
    glColour fontcolour;
    int is_selected;
    double d;
@@ -246,17 +246,15 @@ static void iar_render( Widget* iar, double bx, double by )
          /* outline */
          if (is_selected) {
             lc = &cWhite;
-            c = &cGrey80;
             dc = &cGrey60;
          }
          else {
             lc = toolkit_colLight;
-            c = toolkit_col;
-            dc = toolkit_colDark;
+            dc = toolkit_col;
          }
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
-               w - 4., h - 4., 1., lc, c );
+               w - 4., h - 4., 1., lc, NULL );
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
@@ -269,7 +267,7 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Final outline.
     */
-   toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, toolkit_col );
+   toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, NULL );
    toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 2., toolkit_colDark, NULL );
 }
 
