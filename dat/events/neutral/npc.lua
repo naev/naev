@@ -158,7 +158,7 @@ msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just mess
                               _([["Hey, look at these new scars I got!"]]),
                               _([["Have you heard of the Pirates' Code? They're more guidelines than rules..."]]),
                               _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
-                              _([["Remember those pirates several cycles ago that used to talk like 16th-century Earth pirates even though that planet is literally dead? Bunch of freaks, I tell you."]]),
+                              _([["I don't understand why some pirates talk like 16th-century Earth pirates even though that planet is literally dead."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
                               _([["Stupid Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
                               _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
