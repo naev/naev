@@ -1129,22 +1129,14 @@ static void shiplog_menu_update( unsigned int wid, char* str )
    int logType,log, logMsg;
    int nentries;
    char **logentries;
-   char *tmp;
+
    if(!logWidgetsReady)
       return;
+
    /*This is called when something is selected.
      If a new log type has been selected, need to regenerate the log lists.
      If a new log has been selected, need to regenerate the entries.*/
-   if ( !strcmp(str, "lstLogEntries" ) ) {
-      /* Has selected a log entry, so display it */
-      logMsg = toolkit_getListPos( wid, "lstLogEntries");
-      if ( logMsg == selectedLogMsg ) {
-         /* If already selected, show...*/
-         tmp = toolkit_getList ( wid, "lstLogEntries");
-         if ( tmp != NULL ) {
-            dialogue_msgRaw( _("Log message"),tmp);
-         }
-      }
+   if ( strcmp(str, "lstLogEntries" ) == 0 ) {
       selectedLogMsg = logMsg;
    } else {
       /* has selected a type of log or a log */
@@ -1236,14 +1228,14 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    int ret, logid;
    (void) str;
 
-   if ( !strcmp("All",logs[selectedLog] )) { /* All logs of selected type */
-      if ( !strcmp("All",logTypes[selectedLogType]) ) { /* All logs! */
+   if ( strcmp("All", logs[selectedLog]) == 0 ) { /* All logs of selected type */
+      if ( strcmp("All", logTypes[selectedLogType]) == 0 ) { /* All logs! */
          ret = dialogue_YesNoRaw( _("Delete all mission logs?"), _("Are you sure?  Really?") );
          if ( ret ) {
             shiplog_clear();
             selectedLog = 0;
             selectedLogType = 0;
-            shiplog_menu_genList(wid,0);
+            shiplog_menu_genList(wid, 0);
          }
       } else {
          nsnprintf(buf, 256, "Delete all logs of type %s?", logTypes[selectedLogType]);
@@ -1261,7 +1253,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
       if ( ret ) {
          /* There could be several logs of the same name, so make sure we get the correct one. */
          /* selectedLog-1 since not including the "All" */
-         logid = shiplog_getIdOfLogOfType ( logTypes[selectedLogType], selectedLog-1 );
+         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
          if ( logid >= 0 )
             shiplog_delete( logid );
          selectedLog = 0;
@@ -1269,6 +1261,16 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
          shiplog_menu_genList(wid, 0);
       }
    }
+}
+
+static void info_shiplogView( unsigned int wid, char *str )
+{
+   char *tmp;
+   (void) str;
+
+   tmp = toolkit_getList( wid, "lstLogEntries");
+   if ( tmp != NULL )
+      dialogue_msgRaw( _("Log message"), tmp);
 }
 
 
@@ -1292,6 +1294,9 @@ static void info_openShipLog( unsigned int wid )
    window_addButton( wid, -40 - BUTTON_WIDTH, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnDeleteLog", _("Delete"),
          info_shiplogMenuDelete );
+   window_addButton( wid, -60 - BUTTON_WIDTH * 2, 20, BUTTON_WIDTH,
+         BUTTON_HEIGHT, "btnViewLog", _("View Entry"),
+         info_shiplogView );
    /* Description text */
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
