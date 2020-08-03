@@ -1,6 +1,9 @@
 
 * 0.8.0 (unreleased)
    * Gameplay
+      * Interface changes
+         * Interface is much more slick
+         * Font uses outlines to be more readable
       * Simple economy model implemented with map visualizations
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
