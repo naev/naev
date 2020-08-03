@@ -559,7 +559,7 @@ static void dialogue_listClose( unsigned int wid, char* str )
  */
 static void select_call_wrapper(unsigned int wid, char* wgtname)
 {
-   if(input_dialogue.item_select_cb)
+   if (input_dialogue.item_select_cb)
       input_dialogue.item_select_cb(wid, wgtname,input_dialogue.x,
             input_dialogue.y, input_dialogue.w,
             input_dialogue.h);
@@ -701,10 +701,10 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    window_setAccept( wid, dialogue_listClose );
    window_setCancel( wid, dialogue_listCancel );
 
-   if(add_widgets)
+   if (add_widgets)
       add_widgets(wid, w, 0, winw, winh);
 
-   if(select_call) {
+   if (select_call) {
       input_dialogue.x = w;
       input_dialogue.y = 0;
       input_dialogue.w = winw;

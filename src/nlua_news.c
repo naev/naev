@@ -367,16 +367,17 @@ int newsL_get( lua_State *L )
    k = 1;
    do {
 
-      if (article_ptr->title == NULL || article_ptr->desc == NULL
-            || article_ptr->faction == NULL)
+      if ( (article_ptr->title == NULL) || (article_ptr->desc == NULL)
+            || (article_ptr->faction == NULL) )
          continue;
 
-      if (print_all || date == article_ptr->date ||
-          (characteristic && (!strcmp(article_ptr->title, characteristic) ||
-                              !strcmp(article_ptr->desc, characteristic) ||
-                              !strcmp(article_ptr->faction, characteristic))) ||
-          (article_ptr->tag != NULL &&
-           !strcmp(article_ptr->tag, characteristic))) {
+      if ( print_all || ( date == article_ptr->date )
+            || ( characteristic
+               && ( ( strcmp(article_ptr->title, characteristic) == 0 )
+                  || ( strcmp(article_ptr->desc, characteristic) == 0 )
+                  || ( strcmp(article_ptr->faction, characteristic) == 0 ) ) )
+            || ( ( article_ptr->tag != NULL )
+               && ( strcmp(article_ptr->tag, characteristic) == 0 ) ) ) {
          lua_pushnumber(L, k++); /* key */
          Larticle = article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */

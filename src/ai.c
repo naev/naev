@@ -1320,9 +1320,9 @@ static int aiL_getnearestpilot( lua_State *L )
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
 
-   for(i = 0; i<pilot_nstack; i++)
+   for (i = 0; i<pilot_nstack; i++)
    {
-       if(pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
+       if (pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
        {
             dist = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
             candidate_id = i;
@@ -1780,7 +1780,7 @@ static int aiL_careful_face( lua_State *L )
    vect_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
-   for(i=0; i<pilot_nstack; i++) {
+   for (i=0; i<pilot_nstack; i++) {
       p_i = pilot_stack[i];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
@@ -1926,7 +1926,7 @@ static int aiL_iface( lua_State *L )
       azimuthal_sign = 1;
 
 
-      if(heading_offset_azimuth >0)
+      if (heading_offset_azimuth >0)
          pilot_turn = azimuthal_sign;
       else
          pilot_turn = -1*azimuthal_sign;

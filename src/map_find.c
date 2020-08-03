@@ -1020,7 +1020,7 @@ static void map_findSearch( unsigned int wid, char* str )
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );
-   if (name == NULL || !strcmp("",name))
+   if ( (name == NULL) || ( strcmp("", name) == 0 ) )
       return;
 
    /* Clean up if necessary. */

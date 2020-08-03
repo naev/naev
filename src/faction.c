@@ -1110,7 +1110,7 @@ int areEnemies( int a, int b)
       if (fa->enemies[i] == b)
          return 1;
    for (i=0;i<fb->nenemies;i++)
-      if(fb->enemies[i] == a)
+      if (fb->enemies[i] == a)
          return 1;
 
    return 0;
@@ -1160,7 +1160,7 @@ int areAllies( int a, int b )
       if (fa->allies[i] == b)
          return 1;
    for (i=0;i<fb->nallies;i++)
-      if(fb->allies[i] == a)
+      if (fb->allies[i] == a)
          return 1;
 
    return 0;
@@ -1682,13 +1682,13 @@ int *faction_getGroup( int *n, int which )
       case 0: /* 'all' */
          *n = faction_nstack;
          group = malloc(sizeof(int) * *n);
-         for(i = 0; i < faction_nstack; i++)
+         for (i = 0; i < faction_nstack; i++)
             group[i] = i;
          break;
 
       case 1: /* 'friendly' */
-         for(i = 0; i < faction_nstack; i++)
-            if(areAllies(FACTION_PLAYER, i)) {
+         for (i = 0; i < faction_nstack; i++)
+            if (areAllies(FACTION_PLAYER, i)) {
                (*n)++;
                group = realloc(group, sizeof(int) * *n);
                group[*n - 1] = i;
@@ -1696,8 +1696,8 @@ int *faction_getGroup( int *n, int which )
          break;
 
       case 2: /* 'neutral' */
-         for(i = 0; i < faction_nstack; i++)
-            if(!areAllies(FACTION_PLAYER, i) && !areEnemies(FACTION_PLAYER, i)) {
+         for (i = 0; i < faction_nstack; i++)
+            if (!areAllies(FACTION_PLAYER, i) && !areEnemies(FACTION_PLAYER, i)) {
                (*n)++;
                group = realloc(group, sizeof(int) * *n);
                group[*n - 1] = i;
@@ -1705,8 +1705,8 @@ int *faction_getGroup( int *n, int which )
          break;
 
       case 3: /* 'hostile' */
-         for(i = 0; i < faction_nstack; i++)
-            if(areEnemies(FACTION_PLAYER, i)) {
+         for (i = 0; i < faction_nstack; i++)
+            if (areEnemies(FACTION_PLAYER, i)) {
                (*n)++;
                group = realloc(group, sizeof(int) * *n);
                group[*n - 1] = i;

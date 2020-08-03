@@ -1130,7 +1130,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
    int nentries;
    char **logentries;
 
-   if(!logWidgetsReady)
+   if (!logWidgetsReady)
       return;
 
    /*This is called when something is selected.

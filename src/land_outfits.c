@@ -177,7 +177,7 @@ void outfits_regenList( unsigned int wid, char *str )
    char *focused;
 
    /* Must exist. */
-   if(land_getWid( LAND_WINDOW_OUTFITS ) == 0)
+   if (land_getWid( LAND_WINDOW_OUTFITS ) == 0)
       return;
 
    /* Save focus. */

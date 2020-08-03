@@ -2169,7 +2169,7 @@ void player_hail (void)
 
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
-   else if(player.p->nav_planet != -1) {
+   else if (player.p->nav_planet != -1) {
       if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
          comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
       else
