@@ -982,7 +982,7 @@ void player_render( double dt )
          !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
 
       /* Render the aiming lines. */
-      if (player.p->target != PLAYER_ID && player.aimLines) {
+      if ((player.p->target != PLAYER_ID) && player.aimLines) {
          target = pilot_get(player.p->target);
          if (target != NULL) {
             a = player.p->solid->dir;
@@ -998,7 +998,7 @@ void player_render( double dt )
             d = MIN( 1, d );
 
             c = cInert;
-            c.a = .1;
+            c.a = .3;
             gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
                                    player.p->solid->pos.y + r*sin( a+theta ) );
             gl_drawLine( x1, y1, x2, y2, &c );
@@ -1009,20 +1009,28 @@ void player_render( double dt )
             c.r = d*.9;
             c.g = d*.2 + (1-d)*.8;
             c.b = (1-d)*.2;
-            c.a = .3;
+            c.a = 0.9;
             gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
                                    player.p->solid->pos.y + r*sin( a ) );
 
             gl_drawLine( x1, y1, x2, y2, &c );
-            c.a = .7;
-            gl_renderCross( x2, y2, 4., &c );
+
+            gl_renderCross( x2 - 1, y2 - 1, 6., &cBlack );
+            gl_renderCross( x2 - 1, y2 + 1, 6., &cBlack );
+            gl_renderCross( x2 + 1, y2 - 1, 6., &cBlack );
+            gl_renderCross( x2 + 1, y2 + 1, 6., &cBlack );
+            gl_renderCross( x2, y2, 7., &cBlack );
+            gl_renderCross( x2, y2, 6., &cWhite );
 
             gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
                                    player.p->solid->pos.y + r*sin( b ) );
-            c.a = .2;
+
+            c.a = .4;
             gl_drawLine( x1, y1, x2, y2, &c );
-            c.a = .7;
-            gl_drawCircle( x2, y2, 5., &c, 0 );
+
+            gl_drawCircle( x2, y2, 8., &cBlack, 0 );
+            gl_drawCircle( x2, y2, 10., &cBlack, 0 );
+            gl_drawCircle( x2, y2, 9., &cWhite, 0 );
          }
       }
 

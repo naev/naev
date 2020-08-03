@@ -145,7 +145,6 @@ static int mesg_max        = 128; /**< Maximum messages onscreen */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
 static int mesg_viewpoint  = -1; /**< Position of viewing. */
 static double mesg_timeout = 15.; /**< Timeout length. */
-static double mesg_fade    = 5.; /**< Fade length. */
 /**
  * @struct Mesg
  *
@@ -1103,26 +1102,17 @@ static void gui_renderMessages( double dt )
       /* Timer handling. */
       if ((mesg_viewpoint != -1) || (mesg_stack[m].t >= 0.)) {
          /* Decrement timer. */
-         if (mesg_viewpoint == -1) {
+         if (mesg_viewpoint == -1)
             mesg_stack[m].t -= dt / dt_mod;
-
-            /* Handle fading out. */
-            if (mesg_stack[m].t - mesg_fade < 0.)
-               c.a = mesg_stack[m].t / mesg_fade;
-            else
-               c.a = 1.;
-         }
-         else
-            c.a = 1.;
 
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &cFontWhite, &mesg_stack[m].str[1] );
             }
             else
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &c, mesg_stack[m].str );
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &cFontWhite, mesg_stack[m].str );
          }
       }
 
@@ -1358,6 +1348,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
+   glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
+   /* XXX: textCol is a hack to prevent the text from overly obscuring
+    * overlay display of other things. Effectively disables outlines for
+    * the text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
 
    if (overlay) {
       x = player.p->solid->pos.x / res + SCREEN_W / 2;
@@ -1374,7 +1370,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
 }
 
 
@@ -1556,6 +1552,12 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    gl_endSolidProgram();
 
    /* Render name. */
+   /* XXX: Hack to prevent the text from overly obscuring overlay
+    * display of other things. Effectively disables outlines for this
+    * text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
+   col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
 }
@@ -1644,6 +1646,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    gl_endSolidProgram();
 
    /* Render name. */
+   /* XXX: Hack to prevent the text from overly obscuring overlay
+    * display of other things. Effectively disables outlines for this
+    * text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
+   col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }

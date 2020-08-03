@@ -1228,38 +1228,24 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    int ret, logid;
    (void) str;
 
-   if ( strcmp("All", logs[selectedLog]) == 0 ) { /* All logs of selected type */
-      if ( strcmp("All", logTypes[selectedLogType]) == 0 ) { /* All logs! */
-         ret = dialogue_YesNoRaw( _("Delete all mission logs?"), _("Are you sure?  Really?") );
-         if ( ret ) {
-            shiplog_clear();
-            selectedLog = 0;
-            selectedLogType = 0;
-            shiplog_menu_genList(wid, 0);
-         }
-      } else {
-         nsnprintf(buf, 256, "Delete all logs of type %s?", logTypes[selectedLogType]);
-         ret = dialogue_YesNoRaw( buf, _("Are you sure?"));
-         if ( ret ) {
-            shiplog_deleteType(logTypes[selectedLogType]);
-            selectedLog = 0;
-            selectedLogType = 0;
-            shiplog_menu_genList(wid, 0);
-         }
-      }
-   } else {
-      nsnprintf( buf, 256, "Delete all logs for '%s'?", logs[selectedLog]);
-      ret = dialogue_YesNoRaw( buf, _("Are you sure?") );
-      if ( ret ) {
-         /* There could be several logs of the same name, so make sure we get the correct one. */
-         /* selectedLog-1 since not including the "All" */
-         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
-         if ( logid >= 0 )
-            shiplog_delete( logid );
-         selectedLog = 0;
-         selectedLogType = 0;
-         shiplog_menu_genList(wid, 0);
-      }
+   if ( strcmp("All", logs[selectedLog]) == 0 ) {
+      dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
+      return;
+   }
+   
+   nsnprintf( buf, 256,
+         _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
+         logs[selectedLog]);
+   ret = dialogue_YesNoRaw( "", buf );
+   if ( ret ) {
+      /* There could be several logs of the same name, so make sure we get the correct one. */
+      /* selectedLog-1 since not including the "All" */
+      logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+      if ( logid >= 0 )
+         shiplog_delete( logid );
+      selectedLog = 0;
+      selectedLogType = 0;
+      shiplog_menu_genList(wid, 0);
    }
 }
 
@@ -1271,6 +1257,43 @@ static void info_shiplogView( unsigned int wid, char *str )
    tmp = toolkit_getList( wid, "lstLogEntries");
    if ( tmp != NULL )
       dialogue_msgRaw( _("Log message"), tmp);
+}
+
+/**
+ * @brief Asks the player for an entry to add to the log
+ *
+ * @param wid Window widget
+ * @param str Button widget name
+ */
+static void info_shiplogAdd( unsigned int wid, char *str )
+{
+   char *tmp;
+   char *logname;
+   int logid;
+   (void) str;
+
+   logname = toolkit_getList( wid, "lstLogs" );
+   if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
+      tmp = dialogue_inputRaw( "Add a log entry", 0, 4096, "Add an entry to your diary:" );
+      if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
+         if ( shiplog_getID( "Diary" ) == -1 )
+              shiplog_create( "Diary", "Your Diary", "Diary", 0, 0 );
+         shiplog_append( "Diary", tmp );
+         free( tmp );
+      }
+   } else {
+      tmp = dialogue_input( "Add a log entry", 0, 4096, "Add an entry to the log titled '%s':", logname );
+      if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
+         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+         if ( logid >= 0 )
+            shiplog_appendByID( logid, tmp );
+         else
+            dialogue_msgRaw( "Cannot add log", "Cannot find this log!  Something went wrong here!" );
+         free( tmp );
+      }
+   }
+   shiplog_menu_genList( wid, 0 );
+
 }
 
 
@@ -1297,6 +1320,9 @@ static void info_openShipLog( unsigned int wid )
    window_addButton( wid, -60 - BUTTON_WIDTH * 2, 20, BUTTON_WIDTH,
          BUTTON_HEIGHT, "btnViewLog", _("View Entry"),
          info_shiplogView );
+   window_addButton( wid, -80 - BUTTON_WIDTH * 3, 20, BUTTON_WIDTH,
+         BUTTON_HEIGHT, "btnAddLog", _("Add Entry"),
+         info_shiplogAdd );
    /* Description text */
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
@@ -1305,9 +1331,9 @@ static void info_openShipLog( unsigned int wid )
    
    window_addText( wid, 20, 60 + BUTTON_HEIGHT + 3* LOGSPACING / 4,
                    w - 40, texth, 0,
-                   "logDesc2", &gl_smallFont, NULL, _("Select title of log of interest:") );
+                   "logDesc2", &gl_smallFont, NULL, _("Select log title:") );
 
-   window_addText( wid, 20, 40 + BUTTON_HEIGHT + LOGSPACING / 2,
+   window_addText( wid, 20, 25 + BUTTON_HEIGHT + LOGSPACING / 2,
                    w - 40, texth, 0,
                    "logDesc3", &gl_smallFont, NULL, _("Log entries:") );
 

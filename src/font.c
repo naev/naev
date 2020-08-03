@@ -566,18 +566,24 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   gl_printRawBase( ft_font, x - 1, y, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x + 1, y, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x, y - 1, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x, y + 1, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x - 2, y, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x + 2, y, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x, y - 2, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x, y + 2, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x - 1, y - 1, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x - 1, y + 1, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x + 1, y - 1, &cBlack, text, 1 );
-   gl_printRawBase( ft_font, x + 1, y + 1, &cBlack, text, 1 );
+   /* TODO: This method works, but is inefficient. Should probably be
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
+   if ( (c == NULL) || (c->a >= 1.) ) {
+      gl_printRawBase( ft_font, x - 1, y, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x + 1, y, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x, y - 1, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x, y + 1, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x - 2, y, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x + 2, y, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x, y - 2, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x, y + 2, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x - 1, y - 1, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x - 1, y + 1, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x + 1, y - 1, &cBlack, text, 1 );
+      gl_printRawBase( ft_font, x + 1, y + 1, &cBlack, text, 1 );
+   }
 
    gl_printRawBase( ft_font, x, y, c, text, 0 );
 }
@@ -667,18 +673,24 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   gl_printMaxRawBase( ft_font, max, x - 1, y, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x + 1, y, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x, y - 1, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x, y + 1, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x - 2, y, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x + 2, y, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x, y - 2, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x, y + 2, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x - 1, y - 1, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x - 1, y + 1, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x + 1, y - 1, &cBlack, text, 1 );
-   gl_printMaxRawBase( ft_font, max, x + 1, y + 1, &cBlack, text, 1 );
+   /* TODO: This method works, but is inefficient. Should probably be
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
+   if ( (c == NULL) || (c->a >= 1.) ) {
+      gl_printMaxRawBase( ft_font, max, x - 1, y, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x + 1, y, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x, y - 1, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x, y + 1, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x - 2, y, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x + 2, y, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x, y - 2, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x, y + 2, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x - 1, y - 1, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x - 1, y + 1, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x + 1, y - 1, &cBlack, text, 1 );
+      gl_printMaxRawBase( ft_font, max, x + 1, y + 1, &cBlack, text, 1 );
+   }
 
    return gl_printMaxRawBase( ft_font, max, x, y, c, text, 0 );
 }
@@ -772,18 +784,24 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       double x, const double y,
       const glColour* c, const char *text )
 {
-   gl_printMidRawBase( ft_font, width, x - 1, y, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x + 1, y, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x, y - 1, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x, y + 1, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x - 2, y, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x + 2, y, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x, y - 2, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x, y + 2, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x - 1, y - 1, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x - 1, y + 1, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x + 1, y - 1, &cBlack, text, 1 );
-   gl_printMidRawBase( ft_font, width, x + 1, y + 1, &cBlack, text, 1 );
+   /* TODO: This method works, but is inefficient. Should probably be
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
+   if ( (c == NULL) || (c->a >= 1.) ) {
+      gl_printMidRawBase( ft_font, width, x - 1, y, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x + 1, y, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x, y - 1, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x, y + 1, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x - 2, y, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x + 2, y, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x, y - 2, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x, y + 2, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x - 1, y - 1, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x - 1, y + 1, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x + 1, y - 1, &cBlack, text, 1 );
+      gl_printMidRawBase( ft_font, width, x + 1, y + 1, &cBlack, text, 1 );
+   }
 
    return gl_printMidRawBase( ft_font, width, x, y, c, text, 0 );
 }
@@ -904,18 +922,24 @@ int gl_printTextRaw( const glFont *ft_font,
       double bx, double by,
       const glColour* c, const char *text )
 {
-   gl_printTextRawBase( ft_font, width, height, bx - 1, by, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx + 1, by, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx, by - 1, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx, by + 1, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx - 2, by, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx + 2, by, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx, by - 2, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx, by + 2, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx - 1, by - 1, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx - 1, by + 1, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx + 1, by - 1, &cBlack, text, 1 );
-   gl_printTextRawBase( ft_font, width, height, bx + 1, by + 1, &cBlack, text, 1 );
+   /* TODO: This method works, but is inefficient. Should probably be
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
+   if ( (c == NULL) || (c->a >= 1.) ) {
+      gl_printTextRawBase( ft_font, width, height, bx - 1, by, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx + 1, by, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx, by - 1, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx, by + 1, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx - 2, by, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx + 2, by, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx, by - 2, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx, by + 2, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx - 1, by - 1, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx - 1, by + 1, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx + 1, by - 1, &cBlack, text, 1 );
+      gl_printTextRawBase( ft_font, width, height, bx + 1, by + 1, &cBlack, text, 1 );
+   }
 
    return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
 }

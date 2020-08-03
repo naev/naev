@@ -121,6 +121,8 @@
   <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
   <item>Cargo Pod</item>
+  <item>Medium Cargo Pod</item>
+  <item>Large Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Targeting Array</item>
@@ -530,6 +532,8 @@
   <item>Engine Reroute</item>
   <item>Generic Afterburner</item>
   <item>Cargo Pod</item>
+  <item>Medium Cargo Pod</item>
+  <item>Large Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
@@ -605,6 +609,8 @@
   <item>Engine Reroute</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
+  <item>Medium Cargo Pod</item>
+  <item>Large Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Star Maps</item>
@@ -633,6 +639,8 @@
   <item>Fuel Pod</item>
   <item>Medium Fuel Pod</item>
   <item>Cargo Pod</item>
+  <item>Medium Cargo Pod</item>
+  <item>Large Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Targeting Array</item>
