@@ -280,7 +280,7 @@ int *generate_news( char* faction )
       }
 
       /* if article is okay */
-      if (!strcmp(article_ptr->faction, "Generic") || !strcmp(article_ptr->faction, faction)) {
+      if (!strcmp(article_ptr->faction, "Generic") || ((faction != NULL) && !strcmp(article_ptr->faction, faction))) {
          if (article_ptr->date && article_ptr->date<40000000000000) {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
