@@ -1208,7 +1208,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    if ( selectedLog >= nlogs )
       selectedLog = 0;
    /* list log entries of selected log */
-   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
+   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries, 1);
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
                    w-40, LOGSPACING / 4,
@@ -1251,10 +1251,21 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
 
 static void info_shiplogView( unsigned int wid, char *str )
 {
+   char **logentries;
+   int nentries;
+   int i;
    char *tmp;
    (void) str;
 
-   tmp = toolkit_getList( wid, "lstLogEntries");
+   i = toolkit_getListPos( wid, "lstLogEntries" );
+   shiplog_listLog(
+         logIDs[selectedLog], logTypes[selectedLogType], &nentries,
+         &logentries, 1);
+
+   tmp = NULL;
+   if ( i < nentries )
+      tmp = logentries[i];
+
    if ( tmp != NULL )
       dialogue_msgRaw( _("Log message"), tmp);
 }
