@@ -186,7 +186,29 @@ jobs:
 
     - name: Install LuaRocks
       run: |
-        sudo apt-get install luarocks
+        sudo apt-get install \
+          build-essential \
+          automake \
+          autoconf-archive \
+          libsdl2-dev \
+          libsdl2-mixer-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libxml2-dev \
+          libfontconfig1-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          binutils-dev \
+          libzip-dev \
+          libiberty-dev \
+          libluajit-5.1-dev \
+          luarocks \
+          gettext \
+          autopoint \
+          intltool \
+          itstool
 
     - name: Install LuaRocks packages 
       run: luarocks install --local ldoc
