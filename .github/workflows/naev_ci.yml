@@ -76,7 +76,7 @@ jobs:
       run: |
         sudo apt-get update
 
-    - name: Install Build Dependencies
+    - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
           build-essential \
@@ -184,7 +184,7 @@ jobs:
       run: |
         sudo apt-get update
 
-    - name: Install LuaRocks
+    - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
           build-essential \
