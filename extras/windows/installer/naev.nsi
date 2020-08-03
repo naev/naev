@@ -8,8 +8,8 @@ Unicode true
 ;!define VERSION_SUFFIX "-beta1" ; This string can be used for betas and release candidates.
 ;!define ARCH "32"
 !define URL "https://naev.org"
-!define MUI_ICON "..\logos\logo.ico"
-;!define MUI_UNICON "..\logos\logo.ico"
+!define MUI_ICON "..\..\logos\logo.ico"
+;!define MUI_UNICON "..\..\logos\logo.ico"
 
 ;Miscellaneous defines
 !define MULTIUSER_EXECUTIONLEVEL Highest
