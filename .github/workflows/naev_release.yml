@@ -112,7 +112,7 @@ jobs:
         ./configure --enable-static
         make -j$(nproc --all)
       env:
-        CFLAGS: "-O3 -L. -llibzip"
+        CFLAGS: "-O3 libzip.a"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
