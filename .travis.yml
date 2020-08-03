@@ -25,7 +25,7 @@ script:
     # Build Naev Lua docs
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       export PATH="$PATH:$HOME/.luarocks/bin"
-      (cd docs && ./luadoc.sh)
+      (make -C docs lua)
     fi
 
 deploy:

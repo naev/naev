@@ -197,7 +197,7 @@ jobs:
     - name: Build Naev Lua Documentation
       run: |
         export PATH="$PATH:$HOME/.luarocks/bin"
-        (cd docs && ./luadoc.sh)
+        (make -C docs lua)
     
     #- name: Upload Lua Documentation
     #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
