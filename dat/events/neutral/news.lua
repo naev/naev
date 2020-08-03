@@ -468,8 +468,8 @@ end
 -- create news
 function create()
    local f = planet.cur():faction()
-   local my_faction = f ~= nil and f:name() or "Generic"
-   if my_faction == nil then evt.finish(false) end
+   if f == nil then evt.finish(false) end
+   local my_faction = f:name()
 
    add_header( my_faction )
    add_article( my_faction )
