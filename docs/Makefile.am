@@ -16,10 +16,10 @@ endif
 if HAVE_LDOC
 lua:
 	@echo "   DOC  docs/lua"
-	@sh luadoc.sh
+	@sh ldoc.sh
 else
 lua:
 	@echo "***"
-	@echo "*** luadoc missing -- not generating lua documentation"
+	@echo "*** ldoc missing -- not generating lua documentation"
 	@echo "***"
 endif

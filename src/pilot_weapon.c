@@ -122,13 +122,13 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* If inrange is set we only fire at targets in range. */
       time = INFINITY;  /* With no target we just set time to infinity. */
 
-      if (p->target != p->id){
+      if (p->target != p->id) {
          pt = pilot_get( p->target );
          if (pt != NULL)
             time = pilot_weapFlyTime( o, p, &pt->solid->pos, &pt->solid->vel);
          }
       /* Looking for a closer targeted asteroid */
-      if (p->nav_asteroid != -1){
+      if (p->nav_asteroid != -1) {
          field = &cur_system->asteroids[p->nav_anchor];
          ast = &field->asteroids[p->nav_asteroid];
          time = MIN( time, pilot_weapFlyTime( o, p, &ast->pos, &ast->vel) );
@@ -1259,7 +1259,7 @@ void pilot_weaponAuto( Pilot *p )
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
-      for (i=0; i<PILOT_WEAPON_SETS; i++){
+      for (i=0; i<PILOT_WEAPON_SETS; i++) {
          pilot_weapSetInrange( p, i, 1 );
          /* Update range and speed (at 0)*/
          pilot_weapSetUpdateRange( &p->weapon_sets[i] );

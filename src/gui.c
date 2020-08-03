@@ -83,7 +83,6 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static gl_vbo *gui_triangle_vbo = NULL;
 static gl_vbo *gui_planet_vbo = NULL;
 static gl_vbo *gui_radar_select_vbo = NULL;
-static gl_vbo *gui_out_of_range_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
@@ -146,7 +145,6 @@ static int mesg_max        = 128; /**< Maximum messages onscreen */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
 static int mesg_viewpoint  = -1; /**< Position of viewing. */
 static double mesg_timeout = 15.; /**< Timeout length. */
-static double mesg_fade    = 5.; /**< Fade length. */
 /**
  * @struct Mesg
  *
@@ -1104,26 +1102,17 @@ static void gui_renderMessages( double dt )
       /* Timer handling. */
       if ((mesg_viewpoint != -1) || (mesg_stack[m].t >= 0.)) {
          /* Decrement timer. */
-         if (mesg_viewpoint == -1) {
+         if (mesg_viewpoint == -1)
             mesg_stack[m].t -= dt / dt_mod;
-
-            /* Handle fading out. */
-            if (mesg_stack[m].t - mesg_fade < 0.)
-               c.a = mesg_stack[m].t / mesg_fade;
-            else
-               c.a = 1.;
-         }
-         else
-            c.a = 1.;
 
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &cFontWhite, &mesg_stack[m].str[1] );
             }
             else
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &c, mesg_stack[m].str );
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &cFontWhite, mesg_stack[m].str );
          }
       }
 
@@ -1359,6 +1348,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
+   glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
+   /* XXX: textCol is a hack to prevent the text from overly obscuring
+    * overlay display of other things. Effectively disables outlines for
+    * the text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
 
    if (overlay) {
       x = player.p->solid->pos.x / res + SCREEN_W / 2;
@@ -1375,7 +1370,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
 }
 
 
@@ -1442,20 +1437,14 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
  */
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col )
 {
-   /* TODO: create a general line drawing function and use that here */
-
-   double a, x, y;
-   gl_Matrix4 projection;
+   double a, x, y, x2, y2;
    glColour c;
-
-   projection = gl_view_matrix;
 
    /* Draw a line like for pilots. */
    a = ANGLE(cx,cy);
    if (sh == RADAR_CIRCLE) {
-      projection = gl_Matrix4_Rotate2d(projection, a);
-      projection = gl_Matrix4_Translate(projection, w*.85, 0, 0);
-      projection = gl_Matrix4_Scale(projection, .15 * w, .15 * w, 1);
+      x = w * cos(a);
+      y = w * sin(a);
    }
    else {
       int cxa, cya;
@@ -1475,18 +1464,14 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
          x = -w/2.;
          y = -h/2. * (cy*1./cx);
       }
-      projection = gl_Matrix4_Translate(projection, x, y, 0);
-      projection = gl_Matrix4_Scale(projection, -.15 * w, -.15 * w, 1);
-      projection = gl_Matrix4_Rotate2d(projection, a);
    }
+   x2 = x - .15 * w * cos(a);
+   y2 = y - .15 * w * sin(a);
 
    c = *col;
    c.a = 1.-interference_alpha;
 
-   gl_beginSolidProgram(projection, &c);
-   gl_vboActivateAttribOffset( gui_out_of_range_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 2 );
-   gl_endSolidProgram();
+   gl_drawLine( x, y, x2, y2, &c );
 }
 
 
@@ -1567,6 +1552,12 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    gl_endSolidProgram();
 
    /* Render name. */
+   /* XXX: Hack to prevent the text from overly obscuring overlay
+    * display of other things. Effectively disables outlines for this
+    * text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
+   col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
 }
@@ -1655,6 +1646,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    gl_endSolidProgram();
 
    /* Render name. */
+   /* XXX: Hack to prevent the text from overly obscuring overlay
+    * display of other things. Effectively disables outlines for this
+    * text. Should ultimately be replaced with some other method of
+    * rendering the text, since the problem could be caused by as little
+    * as a font change, but using this fix for now. */
+   col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
@@ -1797,14 +1794,6 @@ int gui_init (void)
       vertex[14] = -3.3;
       vertex[15] = -3.3;
       gui_radar_select_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 16, vertex );
-   }
-
-   if (gui_out_of_range_vbo == NULL) {
-      vertex[0] = 0;
-      vertex[1] = 0;
-      vertex[2] = 1;
-      vertex[3] = 0;
-      gui_out_of_range_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 4, vertex );
    }
 
    if (gui_planet_blink_vbo == NULL) {
@@ -2225,10 +2214,6 @@ void gui_free (void)
    if (gui_radar_select_vbo != NULL) {
       gl_vboDestroy( gui_radar_select_vbo );
       gui_radar_select_vbo = NULL;
-   }
-   if (gui_out_of_range_vbo != NULL) {
-      gl_vboDestroy( gui_out_of_range_vbo );
-      gui_out_of_range_vbo = NULL;
    }
    if (gui_planet_blink_vbo != NULL) {
       gl_vboDestroy( gui_planet_blink_vbo );

@@ -458,7 +458,7 @@ unsigned int pilot_getBoss( const Pilot* p )
       if (ppower >= curpower )
          continue;
 
-      if (relpower < curpower ){
+      if (relpower < curpower ) {
          relpower = curpower;
          t = pilot_stack[i]->id;
       }
@@ -951,6 +951,76 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    }
 }
 
+
+/**
+ * @brief Returns the angle for a pilot to aim at an other pilot
+ *
+ *    @param p Pilot that aims.
+ *    @param target Pilot that is being aimed at.
+ */
+double pilot_aimAngle( Pilot *p, Pilot *target )
+{
+   double x,y;
+   double t;
+   Vector2d tv, approach_vector, relative_location, orthoradial_vector;
+   double dist;
+   double speed;
+   double radial_speed;
+   double orthoradial_speed;
+
+   /* Get the distance */
+   dist = vect_dist( &p->solid->pos, &target->solid->pos );
+
+   /* Check if should recalculate weapon speed with secondary weapon. */
+   speed = pilot_weapSetSpeed( p, p->active_set, -1 );
+
+   /* determine the radial, or approach speed */
+   /*
+    *approach_vector (denote Va) is the relative velocites of the pilot and target
+    *relative_location (denote Vr) is the vector that points from the target to the pilot
+    *
+    *Va dot Vr is the rate of approach between the target and the pilot.
+    *If this is greater than 0, the target is approaching the pilot, if less than 0, the target is fleeing.
+    *
+    *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
+    */
+   vect_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
+   vect_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
+   vect_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
+
+   radial_speed = vect_dot(&approach_vector, &relative_location);
+   radial_speed = radial_speed / VMOD(relative_location);
+
+   orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
+   orthoradial_speed = orthoradial_speed / VMOD(relative_location);
+
+   /* Time for shots to reach that distance */
+   /* t is the real positive solution of a 2nd order equation*/
+   /* if the target is not hittable (i.e., fleeing faster than our shots can fly, determinant <= 0), just face the target */
+   if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
+      t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
+            (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
+   else
+      t = 0;
+
+   /* if t < 0, try the other solution*/
+   if (t < 0)
+      t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
+            (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
+
+   /* if t still < 0, no solution*/
+   if (t < 0)
+      t = 0;
+
+   /* Position is calculated on where it should be */
+   x = target->solid->pos.x + target->solid->vel.x*t
+      - (p->solid->pos.x + p->solid->vel.x*t);
+   y = target->solid->pos.y + target->solid->vel.y*t
+      - (p->solid->pos.y + p->solid->vel.y*t);
+   vect_cset( &tv, x, y );
+
+   return VANGLE(tv);
+}
 
 /**
  * @brief Marks pilot as hostile to player.
@@ -1624,11 +1694,11 @@ void pilot_render( Pilot* p, const double dt )
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
-      scalew = CLAMP( 0., 1., p->ptimer / PILOT_LANDING_DELAY );
+      scalew = CLAMP( 0., 1., p->ptimer / p->landing_delay );
       scaleh = scalew;
    }
    else if (pilot_isFlag( p, PILOT_TAKEOFF )) {
-      scalew = CLAMP( 0., 1., 1. - p->ptimer / PILOT_TAKEOFF_DELAY );
+      scalew = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
       scaleh = scalew;
    }
    else {
@@ -2594,7 +2664,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
-      pilot->ptimer = PILOT_TAKEOFF_DELAY;
+      pilot->landing_delay = PILOT_TAKEOFF_DELAY * pilot->ship->dt_default;
+      pilot->ptimer = pilot->landing_delay;
    }
 
    /* Create empty table for messages. */

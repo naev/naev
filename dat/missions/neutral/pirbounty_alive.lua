@@ -52,7 +52,12 @@ pay_kill_text[6] = _("The officer verifies the death of %s, goes through the nec
 
 fail_kill_text = _("MISSION FAILURE! %s has been killed.")
 
-misn_title  = _("%s Alive Bounty in %s")
+misn_title = {}
+misn_title[1] = _("Tiny Alive Bounty in %s")
+misn_title[2] = _("Small Alive Bounty in %s")
+misn_title[3] = _("Moderate Alive Bounty in %s")
+misn_title[4] = _("High Alive Bounty in %s")
+misn_title[5] = _("Dangerous Alive Bounty in %s")
 misn_desc   = _("The pirate known as %s was recently seen in the %s system. %s authorities want this pirate alive.")
 
 osd_msg[2] = _("Capture %s")

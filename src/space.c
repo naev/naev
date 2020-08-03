@@ -252,7 +252,8 @@ credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntim
  *     @param p Planet to get price at
  *     @param t time to get prices at
  */
-void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
+void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
+{
    economy_averageSeenPricesAtTime( p, tupdate );
 }
 
@@ -263,7 +264,8 @@ void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate ){
  * @param p Planet to get average price at.
  * @param c Commodity to get average price of.
  */
-int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std){
+int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std)
+{
   return economy_getAveragePlanetPrice( c, p, mean, std );
 }
 
@@ -1788,6 +1790,26 @@ char planet_getColourChar( Planet *p )
    if (areEnemies(FACTION_PLAYER,p->faction))
       return 'H';
    return 'R';
+}
+
+
+/**
+ * @brief Gets the planet symbol.
+ */
+const char *planet_getSymbol( Planet *p )
+{
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+      return "";
+
+   if (p->can_land || p->bribed) {
+      if (areAllies(FACTION_PLAYER,p->faction))
+         return "+ ";
+      return "~ ";
+   }
+
+   if (areEnemies(FACTION_PLAYER,p->faction))
+      return "!! ";
+   return "* ";
 }
 
 
@@ -3708,7 +3730,7 @@ static void space_renderAsteroid( Asteroid *a )
       com = at->material[i];
       gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
       sprintf(c, "x%i", at->quantity[i]);
-      gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontHostile, c );
+      gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, c );
    }
 }
 

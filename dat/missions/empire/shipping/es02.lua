@@ -69,7 +69,6 @@ end
 
 
 function accept ()
-
    -- Intro text
    if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
       misn.finish()
@@ -134,6 +133,8 @@ function enter ()
    sys = system.cur()
 
    if misn_stage == 0 and sys == destsys then
+      -- Force FLF combat music (note: must clear this later on).
+      var.push( "music_combat_force", "FLF" )
 
       -- Put the VIP a ways off of the player but near the jump.
       enter_vect = jump.pos(sys, prevsys)
@@ -177,23 +178,26 @@ function enter ()
 
    -- Can't run away from combat
    elseif misn_stage == 1 then
-
       -- Notify of mission failure
       player.msg( msg[2] )
       emp_addShippingLog( log_text_fail )
+      var.pop( "music_combat_force" )
       misn.finish(false)
-
    end
 end
+
 
 function jumpout ()
    -- Storing the system the player jumped from.
    prevsys = system.cur()
+
+   if prevsys == destsys then
+      var.pop( "music_combat_force" )
+   end
 end
 
 
 function delay_flf ()
-
    if misn_stage ~= 0 then
       return
    end
@@ -227,13 +231,18 @@ function death ()
       -- Notify of death
       player.msg( msg[1] )
       emp_addShippingLog( log_text_fail )
+      var.pop( "music_combat_force" )
       misn.finish(false)
    end
 end
+
 
 function abort ()
    -- If aborted you'll also leave the VIP to fate. (A.)
    player.msg( msg[2] )
    emp_addShippingLog( log_text_fail )
+   if system.cur() == destsys then
+      var.pop( "music_combat_force" )
+   end
    misn.finish(false)
 end

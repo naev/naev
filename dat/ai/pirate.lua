@@ -117,6 +117,7 @@ function taunt ( target, offense )
             _("Seems you're being shot at."),
             _("I'm trying to kill you. Is it working?"),
             _("I'm sorry, I just don't like you."),
+            _("Sorry, but I'm a private tracker."),
       }
    else
       taunts = {
@@ -143,6 +144,7 @@ function taunt ( target, offense )
             _("Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."),
             _("Stop dodging!"),
             _("Okay, that's enough of that!"),
+            _("I'm gonna torrent you to bits!"),
       }
    end
 

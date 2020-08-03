@@ -21,6 +21,8 @@
  */
 static int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       float x, float y );
+static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
+      float x1, float y1, float x2, float y2, Vector2d* crash );
 
 
 /**
@@ -264,7 +266,7 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
-   float xabs, yabs;
+   float xabs, yabs, x1, y1, x2, y2;
 
    /* a - cube coordinates */
    ax1 = (int)VX(*ap) + (int)(at->xmin);
@@ -301,6 +303,22 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
             return 1;
          }
       }
+   }
+
+   /* loop on the lines of bt to see if one of them intersects a line of at. */
+   x1 = bt->x[0] + VX(*bp);
+   y1 = bt->y[0] + VY(*bp);
+   x2 = bt->x[bt->npt-1] + VX(*bp);
+   y2 = bt->y[bt->npt-1] + VY(*bp);
+   if ( LineOnPolygon( at, ap, x1, y1, x2, y2, crash ) )
+      return 1;
+   for (i=0; i<=bt->npt-2; i++) {
+      x1 = bt->x[i] + VX(*bp);
+      y1 = bt->y[i] + VY(*bp);
+      x2 = bt->x[i+1] + VX(*bp);
+      y2 = bt->y[i+1] + VY(*bp);
+      if ( LineOnPolygon( at, ap, x1, y1, x2, y2, crash ) )
+         return 1;
    }
 
    return 0;
@@ -349,6 +367,45 @@ int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       return 0;
 
    return 1;
+}
+
+
+/**
+ * @brief Checks whether or not a line intersects a polygon.
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] x1 Coordiante of point 1.
+ *    @param[in] y1 Coordinate of point 1.
+ *    @param[in] x2 Coordiante of point 2.
+ *    @param[in] y2 Coordinate of point 2.
+ *    @param[out] crash coordinates of the intersection.
+ *    @return 1 on collision, 0 else.
+ */
+int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
+      float x1, float y1, float x2, float y2, Vector2d* crash )
+{
+   float xi, xip, yi, yip;
+   int i;
+
+   /* In this function, we are only looking for one collision point. */
+
+   xi  = at->x[at->npt-1] + ap->x;
+   xip = at->x[0]         + ap->x;
+   yi  = at->y[at->npt-1] + ap->y;
+   yip = at->y[0]         + ap->y;
+   if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
+      return 1;
+   for (i=0; i<=at->npt-2; i++) {
+      xi  = at->x[i]   + ap->x;
+      xip = at->x[i+1] + ap->x;
+      yi  = at->y[i]   + ap->y;
+      yip = at->y[i+1] + ap->y;
+      if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
+         return 1;
+   }
+
+   return 0;
 }
 
 
@@ -569,7 +626,7 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
  *    @param[out] crash Position of the collision.
  *    @return 1 on collision, 0 else.
  *
- * @sa CollidePolygon
+ * @sa CollideLinePolygon
  */
 int CollideLinePolygon( const Vector2d* ap, double ad, double al,
       const CollPoly* bt, const Vector2d* bp, Vector2d crash[2] )

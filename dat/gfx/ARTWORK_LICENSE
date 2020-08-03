@@ -26,6 +26,11 @@
  
  * Author: Vega Strike, License: GPLv2+
    * commodity
+     * space
+       * _default.png
+       * diamonds.png
+       * gold.png
+       * water.png
      * acids.png
      * advanced_medicines.png
      * aeranervestimuli.png
@@ -54,7 +59,6 @@
      * biogenerators.png
      * bio_remodeler.png
      * bipolite.png
-     * blood_plasma.png
      * bonsai.png
      * books.png
      * boring_droids.png
@@ -128,7 +132,6 @@
      * industrial_gemstones.png
      * intatouch.png
      * isometal.png
-     * iso_member.png
      * jewelry.png
      * jewels.png
      * jhurlon.png
@@ -157,7 +160,6 @@
      * nutripacks.png
      * obsidisteel.png
      * oil.png
-     * overeager_immigrants.png
      * ozone_replacement.png
      * pai_wetware.png
      * pearls.png
@@ -170,8 +172,6 @@
      * plasglass.png
      * plasteel.png
      * plastics.png
-     * pleasure_borgs.png
-     * political_prisoners.png
      * polysteel.png
      * precious.png
      * prefab_buildings.png
@@ -205,7 +205,6 @@
      * sarakan_tears.png
      * seafood.png
      * simple_medicines.png
-     * slaves.png
      * sorir_lightstones.png
      * space_grog.png
      * specialty_wines.png
@@ -216,7 +215,6 @@
      * steel.png
      * surgical_techniques.png
      * sustipacks.png
-     * swj.png
      * synthetic_fertilizer.png
      * terraforming_units.png
      * thermal_boreholes.png
@@ -1445,3 +1443,20 @@
        * snowy_cliffs.png
        * rocky_small.png
        * uninhabited-jungle.png
+
+ * Author: Kinniken, License: GPLv3
+   * map
+     * empire.png
+ 
+ * Author: Unnamed <https://opengameart.org/users/unnamed>, License: CC-by 3.0
+   * intro
+     * faster_than_light.png
+     * first_steps_into_space.png
+
+ * Author: diligentcircle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke), License: GPLv3
+   * intro
+     * reign_of_daedris.png
+
+ * Author: diligentcircle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike), License: GPLv3
+   * intro
+     * questions.png

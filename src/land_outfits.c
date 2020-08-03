@@ -136,11 +136,11 @@ void outfits_open( unsigned int wid )
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
-         280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+         280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         280, 320, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+         280, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, &cBlack,
+         60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("Owned:\n"
          "\n"
          "Slot:\n"
@@ -151,7 +151,7 @@ void outfits_open( unsigned int wid )
          "Money:\n"
          "License:\n") );
    window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
-         250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         250, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10-160,
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
@@ -801,7 +801,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    if (q==1) return; /* Ignore no modifier. */
 
    nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
+   gl_printMid( &gl_smallFont, w, bx, by, &cFontWhite, buf );
 }
 
 

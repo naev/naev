@@ -99,6 +99,7 @@ static void weapons_update( unsigned int wid, char *str );
 static void weapons_autoweap( unsigned int wid, char *str );
 static void weapons_fire( unsigned int wid, char *str );
 static void weapons_inrange( unsigned int wid, char *str );
+static void aim_lines( unsigned int wid, char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
@@ -196,7 +197,7 @@ static void info_openMain( unsigned int wid )
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
-         0, "txtDPilot", &gl_smallFont, &cBlack,
+         0, "txtDPilot", &gl_smallFont, NULL,
          _("Pilot:\n"
          "Date:\n"
          "Combat Rating:\n"
@@ -222,7 +223,7 @@ static void info_openMain( unsigned int wid )
          player.p->fuel, pilot_getJumps(player.p) );
    window_addText( wid, 140, 20,
          200, h-80,
-         0, "txtPilot", &gl_smallFont, &cBlack, str );
+         0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
 
    /* menu */
@@ -239,7 +240,7 @@ static void info_openMain( unsigned int wid )
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
    window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
-         NULL, &cBlack, _("Licenses") );
+         NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
 }
@@ -389,7 +390,7 @@ static void info_openShip( unsigned int wid )
 
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
-         &cBlack,
+         NULL,
          _("Name:\n"
          "Model:\n"
          "Class:\n"
@@ -413,7 +414,7 @@ static void info_openShip( unsigned int wid )
          "Stats:\n")
          );
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
-         &cBlack, NULL );
+         NULL, NULL );
 
    /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
@@ -506,6 +507,8 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-80, wlen, BUTTON_HEIGHT,
+         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.aimLines );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -671,6 +674,19 @@ static void weapons_inrange( unsigned int wid, char *str )
 
 
 /**
+ * @brief Sets the aim lines property.
+ */
+static void aim_lines( unsigned int wid, char *str )
+{
+   int state;
+
+   /* Set state. */
+   state = window_checkboxState( wid, str );
+   player.aimLines = state;
+}
+
+
+/**
  * @brief Renders the legend.
  */
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data )
@@ -681,19 +697,19 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    double y;
 
    y = by+bh-20;
-   gl_print( &gl_defFont, bx, y, &cBlack, _("Legend") );
+   gl_print( &gl_defFont, bx, y, &cFontWhite, _("Legend") );
 
    y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Outfit that can be activated") );
+   gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Outfit that can be activated") );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Secondary Weapon (Right click toggles)") );
+   gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Secondary Weapon (Right click toggles)") );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, _("Primary Weapon (Left click toggles)") );
+   gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Primary Weapon (Left click toggles)") );
 }
 
 
@@ -898,9 +914,9 @@ static void info_openStandings( unsigned int wid )
 
    /* Text. */
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
-         &gl_defFont, &cBlack, NULL );
+         &gl_defFont, NULL, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
-         &gl_smallFont, &cBlack, NULL );
+         &gl_smallFont, NULL, NULL );
 
    /* Gets the faction standings. */
    info_factions  = faction_getKnown( &n );
@@ -987,12 +1003,12 @@ static void info_openMissions( unsigned int wid )
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
-         &gl_smallFont, &cBlack, _("Reward:") );
+         &gl_smallFont, NULL, _("Reward:") );
    window_addText( wid, 300+100, -60,
-         140, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
+         140, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
    window_addText( wid, 300+40, -100,
          w - (300+40+40), h - BUTTON_HEIGHT - 120, 0,
-         "txtDesc", &gl_smallFont, &cBlack, NULL );
+         "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* Put a map. */
    map_show( wid, 20, 20, 300, 260, 0.75 );
@@ -1113,24 +1129,16 @@ static void shiplog_menu_update( unsigned int wid, char* str )
    int logType,log, logMsg;
    int nentries;
    char **logentries;
-   char *tmp;
+
    if(!logWidgetsReady)
       return;
+
    /*This is called when something is selected.
      If a new log type has been selected, need to regenerate the log lists.
      If a new log has been selected, need to regenerate the entries.*/
-   if ( !strcmp(str, "lstLogEntries" ) ){
-      /* Has selected a log entry, so display it */
-      logMsg = toolkit_getListPos( wid, "lstLogEntries");
-      if ( logMsg == selectedLogMsg ){
-         /* If already selected, show...*/
-         tmp = toolkit_getList ( wid, "lstLogEntries");
-         if ( tmp != NULL ){
-            dialogue_msgRaw( _("Log message"),tmp);
-         }
-      }
+   if ( strcmp(str, "lstLogEntries" ) == 0 ) {
       selectedLogMsg = logMsg;
-   }else{
+   } else {
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;
@@ -1138,7 +1146,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       logType = toolkit_getListPos( wid, "lstLogType" );
       log = toolkit_getListPos( wid, "lstLogs" );
       
-      if ( logType != selectedLogType ){
+      if ( logType != selectedLogType ) {
          /* new log type selected */
          selectedLogType = logType;
          window_destroyWidget( wid, "lstLogs" );
@@ -1152,7 +1160,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
       }
-      if ( regenerateEntries || selectedLog != log ){
+      if ( regenerateEntries || selectedLog != log ) {
          selectedLog = log;
          /* list log entries of selected log type */
          window_destroyWidget( wid, "lstLogEntries" );
@@ -1183,7 +1191,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
     * 2. List of logs of the selected type (and All)
     * 3. Listing of the selected log
     */
-   if (!first){
+   if (!first) {
       window_destroyWidget( wid, "lstLogType" );
       window_destroyWidget( wid, "lstLogs" );
       window_destroyWidget( wid, "lstLogEntries" );
@@ -1200,7 +1208,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    if ( selectedLog >= nlogs )
       selectedLog = 0;
    /* list log entries of selected log */
-   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
+   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries, 1);
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
                    w-40, LOGSPACING / 4,
@@ -1220,39 +1228,83 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    int ret, logid;
    (void) str;
 
-   if ( !strcmp("All",logs[selectedLog] )) { /* All logs of selected type */
-      if ( !strcmp("All",logTypes[selectedLogType]) ) { /* All logs! */
-         ret = dialogue_YesNoRaw( _("Delete all mission logs?"), _("Are you sure?  Really?") );
-         if ( ret ) {
-            shiplog_clear();
-            selectedLog = 0;
-            selectedLogType = 0;
-            shiplog_menu_genList(wid,0);
-         }
-      } else {
-         nsnprintf(buf, 256, "Delete all logs of type %s?", logTypes[selectedLogType]);
-         ret = dialogue_YesNoRaw( buf, _("Are you sure?"));
-         if ( ret ) {
-            shiplog_deleteType(logTypes[selectedLogType]);
-            selectedLog = 0;
-            selectedLogType = 0;
-            shiplog_menu_genList(wid, 0);
-         }
+   if ( strcmp("All", logs[selectedLog]) == 0 ) {
+      dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
+      return;
+   }
+   
+   nsnprintf( buf, 256,
+         _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
+         logs[selectedLog]);
+   ret = dialogue_YesNoRaw( "", buf );
+   if ( ret ) {
+      /* There could be several logs of the same name, so make sure we get the correct one. */
+      /* selectedLog-1 since not including the "All" */
+      logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+      if ( logid >= 0 )
+         shiplog_delete( logid );
+      selectedLog = 0;
+      selectedLogType = 0;
+      shiplog_menu_genList(wid, 0);
+   }
+}
+
+static void info_shiplogView( unsigned int wid, char *str )
+{
+   char **logentries;
+   int nentries;
+   int i;
+   char *tmp;
+   (void) str;
+
+   i = toolkit_getListPos( wid, "lstLogEntries" );
+   shiplog_listLog(
+         logIDs[selectedLog], logTypes[selectedLogType], &nentries,
+         &logentries, 1);
+
+   tmp = NULL;
+   if ( i < nentries )
+      tmp = logentries[i];
+
+   if ( tmp != NULL )
+      dialogue_msgRaw( _("Log message"), tmp);
+}
+
+/**
+ * @brief Asks the player for an entry to add to the log
+ *
+ * @param wid Window widget
+ * @param str Button widget name
+ */
+static void info_shiplogAdd( unsigned int wid, char *str )
+{
+   char *tmp;
+   char *logname;
+   int logid;
+   (void) str;
+
+   logname = toolkit_getList( wid, "lstLogs" );
+   if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
+      tmp = dialogue_inputRaw( "Add a log entry", 0, 4096, "Add an entry to your diary:" );
+      if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
+         if ( shiplog_getID( "Diary" ) == -1 )
+              shiplog_create( "Diary", "Your Diary", "Diary", 0, 0 );
+         shiplog_append( "Diary", tmp );
+         free( tmp );
       }
    } else {
-      nsnprintf( buf, 256, "Delete all logs for '%s'?", logs[selectedLog]);
-      ret = dialogue_YesNoRaw( buf, _("Are you sure?") );
-      if ( ret ) {
-         /* There could be several logs of the same name, so make sure we get the correct one. */
-         /* selectedLog-1 since not including the "All" */
-         logid = shiplog_getIdOfLogOfType ( logTypes[selectedLogType], selectedLog-1 );
+      tmp = dialogue_input( "Add a log entry", 0, 4096, "Add an entry to the log titled '%s':", logname );
+      if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
+         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
          if ( logid >= 0 )
-            shiplog_delete( logid );
-         selectedLog = 0;
-         selectedLogType = 0;
-         shiplog_menu_genList(wid, 0);
+            shiplog_appendByID( logid, tmp );
+         else
+            dialogue_msgRaw( "Cannot add log", "Cannot find this log!  Something went wrong here!" );
+         free( tmp );
       }
    }
+   shiplog_menu_genList( wid, 0 );
+
 }
 
 
@@ -1276,19 +1328,25 @@ static void info_openShipLog( unsigned int wid )
    window_addButton( wid, -40 - BUTTON_WIDTH, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnDeleteLog", _("Delete"),
          info_shiplogMenuDelete );
+   window_addButton( wid, -60 - BUTTON_WIDTH * 2, 20, BUTTON_WIDTH,
+         BUTTON_HEIGHT, "btnViewLog", _("View Entry"),
+         info_shiplogView );
+   window_addButton( wid, -80 - BUTTON_WIDTH * 3, 20, BUTTON_WIDTH,
+         BUTTON_HEIGHT, "btnAddLog", _("Add Entry"),
+         info_shiplogAdd );
    /* Description text */
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
                    w - 40, texth, 0,
-                   "logDesc1", &gl_smallFont, &cBlack, _("Select log type:") );
+                   "logDesc1", &gl_smallFont, NULL, _("Select log type:") );
    
    window_addText( wid, 20, 60 + BUTTON_HEIGHT + 3* LOGSPACING / 4,
                    w - 40, texth, 0,
-                   "logDesc2", &gl_smallFont, &cBlack, _("Select title of log of interest:") );
+                   "logDesc2", &gl_smallFont, NULL, _("Select log title:") );
 
-   window_addText( wid, 20, 40 + BUTTON_HEIGHT + LOGSPACING / 2,
+   window_addText( wid, 20, 25 + BUTTON_HEIGHT + LOGSPACING / 2,
                    w - 40, texth, 0,
-                   "logDesc3", &gl_smallFont, &cBlack, _("Log entries:") );
+                   "logDesc3", &gl_smallFont, NULL, _("Log entries:") );
 
 #undef LOGSPACING
    /* list */

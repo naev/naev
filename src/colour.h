@@ -51,6 +51,7 @@ extern const glColour cDarkBlue;
 extern const glColour cBlue;
 extern const glColour cLightBlue;
 extern const glColour cPrimeBlue;
+extern const glColour cCyan;
 extern const glColour cPurple;
 extern const glColour cDarkPurple;
 extern const glColour cBrown;
@@ -65,8 +66,6 @@ extern const glColour cAqua;
  * game specific
  */
 extern const glColour cBlackHilight;
-extern const glColour cConsole;
-extern const glColour cDConsole;
 /* toolkit */
 extern const glColour cHilight;
 /* objects */
@@ -93,12 +92,11 @@ extern const glColour cFuel;
 extern const glColour cFontRed;
 extern const glColour cFontGreen;
 extern const glColour cFontBlue;
+extern const glColour cFontOrange;
 extern const glColour cFontYellow;
 extern const glColour cFontWhite;
+extern const glColour cFontGrey;
 extern const glColour cFontPurple;
-extern const glColour cFontFriendly;
-extern const glColour cFontHostile;
-extern const glColour cFontNeutral;
 
 const glColour* col_fromName( const char* name );
 
