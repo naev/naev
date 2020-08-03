@@ -624,7 +624,7 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
    int i,n = 0,all = 0;
    char **entries = NULL;
    ShipLogEntry *e, *use;
-   char buf[256];
+   char buf[5000];
    int pos;
    e = shipLog->head;
    if ( ( logid == -1 ) && ( !strcmp(type, "All") ) ) {
@@ -653,9 +653,9 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
       if ( use != NULL ) {
          n++;
          entries = realloc(entries, sizeof(char*) * n);
-         ntime_prettyBuf(buf, 256, use->time, 2);
+         ntime_prettyBuf(buf, 5000, use->time, 2);
          pos = strlen(buf);
-         pos += nsnprintf(&buf[pos], 256-pos, ":  %s", use->msg);
+         pos += nsnprintf(&buf[pos], 5000-pos, ":  %s", use->msg);
          entries[n-1] = strdup(buf);
       }
       

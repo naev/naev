@@ -26,8 +26,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>(null)</description>
-  <bar>(null)</bar>
+  <description>Ruadan has recently become the nerve center of the Za'lek. Most of the Za'lek's strength is concentrated here, and they don't allow anyone but the highest level captains to land here. Even being allowed to be here is considered a great honor.</description>
+  <bar>Given the the exclusive nature of Ruadan Prime, the atmosphere of the bar is very to-the-point and focused. Everyone here has a reason to be here.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

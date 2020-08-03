@@ -76,7 +76,7 @@ jobs:
       run: |
         sudo apt-get update
 
-    - name: Install Build Dependencies
+    - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
           build-essential \
@@ -172,21 +172,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    #- name: Install SSH Key
-    #  uses: shimataro/ssh-key-action@v2.0.3
-    #  with:
-    #    key: ${{ secrets.SSH_KEY }}
-    #    name: id_rsa # optional
-    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    #  if: ${{ github.event_name == 'push' }}
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2.0.3
+      with:
+        key: ${{ secrets.SSH_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      if: ${{ github.event_name == 'push' }}
 
     - name: Update APT Cache
       run: |
         sudo apt-get update
 
-    - name: Install LuaRocks
+    - name: Install Additional Build Dependencies
       run: |
-        sudo apt-get install luarocks
+        sudo apt-get install \
+          build-essential \
+          automake \
+          autoconf-archive \
+          libsdl2-dev \
+          libsdl2-mixer-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libxml2-dev \
+          libfontconfig1-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          binutils-dev \
+          libzip-dev \
+          libiberty-dev \
+          libluajit-5.1-dev \
+          luarocks \
+          gettext \
+          autopoint \
+          intltool \
+          itstool
 
     - name: Install LuaRocks packages 
       run: luarocks install --local ldoc
@@ -197,11 +219,13 @@ jobs:
     - name: Build Naev Lua Documentation
       run: |
         export PATH="$PATH:$HOME/.luarocks/bin"
-        (cd docs && ./luadoc.sh)
+        ./autogen.sh
+        ./configure
+        make -C docs lua
     
-    #- name: Upload Lua Documentation
-    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-    #  if: ${{ github.event_name == 'push' }}
+    - name: Upload Lua Documentation
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+      if: ${{ github.event_name == 'push' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
