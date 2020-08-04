@@ -381,9 +381,9 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
          font, NULL, msg );
    /* buttons */
-   window_addButtonKey( wid, w/2-50-10, 20, 50, 30, "btnYes", _("Yes"),
+   window_addButtonKey( wid, w/2-100-10, 20, 100, 30, "btnYes", _("Yes"),
          dialogue_YesNoClose, SDLK_y );
-   window_addButtonKey( wid, w/2+10, 20, 50, 30, "btnNo", _("No"),
+   window_addButtonKey( wid, w/2+10, 20, 100, 30, "btnNo", _("No"),
          dialogue_YesNoClose, SDLK_n );
 
    /* tricky secondary loop */
@@ -680,7 +680,10 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
       list_height += gl_defFont.h + 5;
    }
    list_height += 100;
-   h = MAX( 650, list_height );
+   if (list_height > 500)
+      h = (list_height*8)/10;
+   else
+      h = MAX( 300, list_height );
 
    h = MIN( (SCREEN_H*2)/3, h );
    w = MAX( list_width + 60, 200 );
