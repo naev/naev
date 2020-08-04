@@ -1443,10 +1443,22 @@ int factions_load (void)
 {
    int mem;
    size_t bufsize;
-   char *buf = ndata_read( FACTION_DATA_PATH, &bufsize);
-
    xmlNodePtr factions, node;
+   char *buf;
+
+   /* Load and read the data. */
+   buf = ndata_read( FACTION_DATA_PATH, &bufsize);
+   if (buf == NULL) {
+      WARN(_("Unable to read data from '%s'"), EVENT_DATA_PATH);
+      return -1;
+   }
+
+   /* Load the document. */
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN(_("Unable to parse document '%s'"), EVENT_DATA_PATH);
+      return -1;
+   }
 
    node = doc->xmlChildrenNode; /* Factions node */
    if (!xml_isNode(node,XML_FACTION_ID)) {

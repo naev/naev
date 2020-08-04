@@ -221,7 +221,17 @@ int spfx_load (void)
 
    /* Load and read the data. */
    buf = ndata_read( SPFX_DATA_PATH, &bufsize );
+   if (buf == NULL) {
+      WARN(_("Unable to read data from '%s'"), EVENT_DATA_PATH);
+      return -1;
+   }
+
+   /* Load the document. */
    doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN(_("Unable to parse document '%s'"), EVENT_DATA_PATH);
+      return -1;
+   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
