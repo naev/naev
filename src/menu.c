@@ -58,9 +58,6 @@
 #define DEATH_WIDTH     200 /**< Death menu width. */
 #define DEATH_HEIGHT    200 /**< Death menu height. */
 
-#define OPTIONS_WIDTH   360 /**< Options menu width. */
-#define OPTIONS_HEIGHT  90  /**< Options menu height. */
-
 #define BUTTON_WIDTH    160 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
