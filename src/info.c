@@ -508,7 +508,7 @@ static void info_openWeapons( unsigned int wid )
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-70, wlen, BUTTON_HEIGHT,
-         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.aimLines );
+         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -682,7 +682,7 @@ static void aim_lines( unsigned int wid, char *str )
 
    /* Set state. */
    state = window_checkboxState( wid, str );
-   player.aimLines = state;
+   player.p->aimLines = state;
 }
 
 
