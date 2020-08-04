@@ -569,6 +569,9 @@ int ai_load (void)
    /* get the file list */
    files = ndata_list( AI_PATH, &nfiles );
 
+   /* Create array. */
+   profiles = array_create( AI_Profile );
+
    /* load the profiles */
    suflen = strlen(AI_SUFFIX);
    for (i=0; i<nfiles; i++) {
@@ -641,10 +644,6 @@ static int ai_loadProfile( const char* filename )
    nlua_env env;
    AI_Profile *prof;
    size_t len;
-
-   /* Create array if necessary. */
-   if (profiles == NULL)
-      profiles = array_create( AI_Profile );
 
    /* Grow array. */
    prof = &array_grow(&profiles);
