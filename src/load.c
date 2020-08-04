@@ -39,7 +39,7 @@
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     500 /**< Load window height. */
 
-#define BUTTON_WIDTH    80 /**< Button width. */
+#define BUTTON_WIDTH    150 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
 
