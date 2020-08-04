@@ -1004,9 +1004,9 @@ static void info_openMissions( unsigned int wid )
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
          &gl_smallFont, NULL, _("Reward:") );
-   window_addText( wid, 300+100, -60,
-         140, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 300+40, -100,
+   window_addText( wid, 300+40, -80,
+         200, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 300+40, -120,
          w - (300+40+40), h - BUTTON_HEIGHT - 120, 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
