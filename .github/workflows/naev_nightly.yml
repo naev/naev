@@ -244,8 +244,6 @@ jobs:
       needs: [win64, win32, macos, lin64, ndata]
 
       steps:
-      - name: Checkout Naev Repository 
-        uses: actions/checkout@v2
  
       - name: Create Release Staging Area
         run: |
