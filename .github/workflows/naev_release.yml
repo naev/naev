@@ -1,8 +1,10 @@
-on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    #tags:
-    #  - 'naev-*' # Push events to matching naev-*
+# on:  
+ # push:
+ #   # Sequence of patterns matched against refs/tags
+ #   tags:
+ #     - 'naev-*' # Push events to matching naev-*
+
+on: [push, pull_request]
 
 name: Release
 
