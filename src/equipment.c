@@ -308,9 +308,9 @@ void equipment_open( unsigned int wid )
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
+         130, 500, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
+         130, 500, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
