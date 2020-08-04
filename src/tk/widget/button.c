@@ -335,9 +335,9 @@ static void btn_render( Widget* btn, double bx, double by )
    /* outer outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
-   gl_printMidRaw( NULL, (int)btn->w,
+   gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,
-         by + btn->y + (btn->h - gl_defFont.h)/2.,
+         by + btn->y + (btn->h - gl_smallFont.h)/2.,
          fc, btn->dat.btn.display );
 }
 
