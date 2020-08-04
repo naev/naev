@@ -89,3 +89,5 @@ makensis -DVERSION=${BASEVER}.0 -DVERSION_SUFFIX=-beta${BETAVER} -DARCH=$ARCH ex
 
 echo "Cleaning up staging area"
 rm -rf extras/windows/installer/bin
+
+echo "Successfully built Windows Installer"
