@@ -507,7 +507,7 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-80, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-70, wlen, BUTTON_HEIGHT,
          "chkHelper", _("Dogfight aiming helper"), aim_lines, player.aimLines );
 
    /* Custom widget. */
@@ -516,7 +516,7 @@ static void info_openWeapons( unsigned int wid )
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
-   window_addCust( wid, 220, -220, w-200-60, 100, "cstLegend", 0,
+   window_addCust( wid, 220, -240, w-200-60, 100, "cstLegend", 0,
          weapons_renderLegend, NULL, NULL );
 
    /* List. */
@@ -556,7 +556,7 @@ static void weapons_genList( unsigned int wid )
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
-         w - (20+180+20+20), 160,
+         w - (20+180+20+20), 180,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
 
