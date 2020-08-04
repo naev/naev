@@ -32,7 +32,7 @@
 #include "tk/toolkit_priv.h"
 #include "shiplog.h"
 
-#define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH    125 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define SETGUI_WIDTH    400 /**< GUI selection window width. */
@@ -230,7 +230,7 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), info_close );
-   window_addButton( wid, -20 - (15+BUTTON_WIDTH), 20,
+   window_addButton( wid, -20 - (20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui );
 
@@ -1325,13 +1325,13 @@ static void info_openShipLog( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeShipLog", _("Close"), info_close );
-   window_addButton( wid, -40 - BUTTON_WIDTH, 20,
+   window_addButton( wid, -20 - 1*(20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnDeleteLog", _("Delete"),
          info_shiplogMenuDelete );
-   window_addButton( wid, -60 - BUTTON_WIDTH * 2, 20, BUTTON_WIDTH,
+   window_addButton( wid, -20 - 2*(20+BUTTON_WIDTH), 20, BUTTON_WIDTH,
          BUTTON_HEIGHT, "btnViewLog", _("View Entry"),
          info_shiplogView );
-   window_addButton( wid, -80 - BUTTON_WIDTH * 3, 20, BUTTON_WIDTH,
+   window_addButton( wid, -20 - 3*(20+BUTTON_WIDTH), 20, BUTTON_WIDTH,
          BUTTON_HEIGHT, "btnAddLog", _("Add Entry"),
          info_shiplogAdd );
    /* Description text */
