@@ -1,11 +1,19 @@
-name: Nightly Build
 
-on: [push, pull_request]
 #on:
 #  schedule:
 #    - cron: '0 0 * * *'
+# on:  
+ # push:
+ #   # Sequence of patterns matched against refs/tags
+ #   tags:
+ #     - 'naev-*' # Push events to matching naev-*
+
+on: [push, pull_request]
+
+name: Nightly Release
 
 jobs:
+
   win32:
     runs-on: windows-latest
 
@@ -19,7 +27,7 @@ jobs:
       with:
         msystem: MINGW32
         update: true
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit mingw-w64-i686-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool zip unzip
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -27,16 +35,23 @@ jobs:
     - name: Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure
+        ./configure  --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+    - name: Build Windows Installer
+      run: ./extras/windows/packageWindows.sh
+
+    - name: Upload Release Asset
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: naev-win32-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev.exe
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "nightly"
+        prerelease: true
+        title: "Nightly Build"
+        files: |
+          ${{ github.ref }}-win32.exe
 
   win64:
     runs-on: windows-latest
@@ -51,7 +66,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool zip unzip
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -59,19 +74,26 @@ jobs:
     - name: Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-    
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+
+    - name: Build Windows Installer
+      run: ./extras/windows/packageWindows.sh
+
+    - name: Upload Release Asset
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: naev-win64-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev.exe
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "nightly"
+        prerelease: true
+        title: "Nightly Build"
+        files: |
+          ${{ github.ref }}-win64.exe
 
   lin64:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Update APT Cache
@@ -109,17 +131,25 @@ jobs:
     - name: Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure --enable-static
+        ./configure
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-        LDFLAGS: "-static"
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+    - name: Package Linux64 Release
+      run: |
+        mv /src/naev /src/${{ github.ref }}-linux-x86-64
+        tar -czvf ${{ github.ref }}-linux-x86-64.tar.gz /src/${{ github.ref }}-linux-x86-64
+
+    - name: Upload Release Asset
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: naev-lin64-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "nightly"
+        prerelease: true
+        title: "Nightly Build"
+        files: |
+          ${{ github.ref }}-linux-x86-64.tar.gz
 
   macos:
     runs-on: macos-latest
@@ -162,14 +192,20 @@ jobs:
       env:
         CFLAGS: "-O3 -mmacosx-version-min=10.7"
     
-    - name: Build MacOS Bundle
-      run: ./extras/macos/bundle.sh
-    
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+    - name: Package MacOS Release
+      run: |
+        ./extras/macos/bundle.sh
+        zip ${{ github.ref }}-macos Naev.app/
+
+    - name: Upload Release Asset
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: naev-macos-${{ github.sha }}
-        path: ${{ github.workspace }}/Naev.app/ 
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "nightly"
+        prerelease: true
+        title: "Nightly Build"
+        files: |
+          ${{ github.ref }}-macos.zip
 
   ndata:
       runs-on: ubuntu-latest
@@ -212,9 +248,14 @@ jobs:
           ./autogen.sh
           ./configure
           make "ndata.zip"
+          mv ndata.zip ${{ github.ref }}-ndata.zip
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Release Asset
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name: naev-ndata-${{ github.sha }}
-          path: ${{ github.workspace }}/ndata.zip
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "nightly"
+          prerelease: true
+          title: "Nightly Build"
+          files: |
+            ${{ github.ref }}-ndata.zip
