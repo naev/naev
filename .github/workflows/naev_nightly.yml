@@ -50,7 +50,7 @@ jobs:
         prerelease: true
         title: "Nightly Build"
         files: |
-          ${{ github.ref }}-win32.exe
+          naev-${{ github.sha }}-win32.exe
 
   win64:
     runs-on: windows-latest
@@ -89,7 +89,7 @@ jobs:
         prerelease: true
         title: "Nightly Build"
         files: |
-          ${{ github.ref }}-win64.exe
+          naev-${{ github.sha }}-win64.exe
 
   lin64:
     runs-on: ubuntu-20.04
@@ -137,8 +137,8 @@ jobs:
 
     - name: Package Linux64 Release
       run: |
-        mv /src/naev /src/${{ github.ref }}-linux-x86-64
-        tar -czvf ${{ github.ref }}-linux-x86-64.tar.gz /src/${{ github.ref }}-linux-x86-64
+        mv /src/naev /src/naev-${{ github.sha }}-linux-x86-64
+        tar -czvf naev-${{ github.sha }}-linux-x86-64.tar.gz /src/naev-${{ github.sha }}-linux-x86-64
 
     - name: Upload Release Asset
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -148,7 +148,7 @@ jobs:
         prerelease: true
         title: "Nightly Build"
         files: |
-          ${{ github.ref }}-linux-x86-64.tar.gz
+          naev-${{ github.sha }}-linux-x86-64.tar.gz
 
   macos:
     runs-on: macos-latest
@@ -194,7 +194,7 @@ jobs:
     - name: Package MacOS Release
       run: |
         ./extras/macos/bundle.sh
-        zip ${{ github.ref }}-macos Naev.app/
+        zip naev-${{ github.sha }}-macos Naev.app/
 
     - name: Upload Release Asset
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -204,7 +204,7 @@ jobs:
         prerelease: true
         title: "Nightly Build"
         files: |
-          ${{ github.ref }}-macos.zip
+          naev-${{ github.sha }}-macos.zip
 
   ndata:
       runs-on: ubuntu-latest
@@ -247,7 +247,7 @@ jobs:
           ./autogen.sh
           ./configure
           make "ndata.zip"
-          mv ndata.zip ${{ github.ref }}-ndata.zip
+          mv ndata.zip ndata-${{ github.sha }}.zip
 
       - name: Upload Release Asset
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -257,4 +257,4 @@ jobs:
           prerelease: true
           title: "Nightly Build"
           files: |
-            ${{ github.ref }}-ndata.zip
+            ndata-${{ github.sha }}.zip
