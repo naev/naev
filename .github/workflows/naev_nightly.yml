@@ -138,7 +138,7 @@ jobs:
     - name: Package Linux64 Release
       run: |
         mv src/naev src/naev-${{ github.sha }}-linux-x86-64
-        tar -czvf naev-${{ github.sha }}-linux-x86-64.tar.gz /src/naev-${{ github.sha }}-linux-x86-64
+        tar -czvf naev-${{ github.sha }}-linux-x86-64.tar.gz src/naev-${{ github.sha }}-linux-x86-64
 
     - name: Upload Release Asset
       uses: "marvinpinto/action-automatic-releases@latest"
