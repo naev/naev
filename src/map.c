@@ -32,7 +32,7 @@
 #include "ndata.h"
 #include "map_system.h"
 
-#define BUTTON_WIDTH    80 /**< Map button width. */
+#define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
@@ -304,10 +304,10 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
-   window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
+   window_addButton( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom );
+   window_addButton( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
-   window_addText( wid, 140, 10, w - 80 - 30 - 30 - 60, 30, 0,
+   window_addText( wid, 20, 10, w - 80 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
