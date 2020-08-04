@@ -23,7 +23,7 @@
 #define SP_XML_ID     "Slots" /**< XML Document tag. */
 #define SP_XML_TAG    "slot" /**< SP XML node tag. */
 
-#define SP_DATA       "dat/slots.xml" /**< Location of the sp datafile. */
+#define SP_DATA_PATH  "dat/slots.xml" /**< Location of the sp datafile. */
 
 
 /**
@@ -59,20 +59,30 @@ int sp_load (void)
    SlotProperty_t *sp;
 
    /* Load and read the data. */
-   buf = ndata_read( SP_DATA, &bufsize );
+   buf = ndata_read( SP_DATA_PATH, &bufsize );
+   if (buf == NULL) {
+      WARN(_("Unable to read data from '%s'"), SP_DATA_PATH);
+      return -1;
+   }
+
+   /* Load the document. */
    doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN(_("Unable to parse document '%s'"), SP_DATA_PATH);
+      return -1;
+   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,SP_XML_ID)) {
-      ERR(_("Malformed '%s' file: missing root element '%s'"), SP_DATA, SP_XML_ID);
+      ERR(_("Malformed '%s' file: missing root element '%s'"), SP_DATA_PATH, SP_XML_ID);
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR(_("Malformed '%s' file: does not contain elements"), SP_DATA);
+      ERR(_("Malformed '%s' file: does not contain elements"), SP_DATA_PATH);
       return -1;
    }
 
@@ -81,7 +91,7 @@ int sp_load (void)
    do {
       xml_onlyNodes(node);
       if (!xml_isNode(node,SP_XML_TAG)) {
-         WARN(_("'%s' has unknown node '%s'."), SP_DATA, node->name);
+         WARN(_("'%s' has unknown node '%s'."), SP_DATA_PATH, node->name);
          continue;
       }
 

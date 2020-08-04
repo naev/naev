@@ -220,14 +220,14 @@ static int fleet_loadFleets (void)
    /* Load the data. */
    buf = ndata_read( FLEET_DATA_PATH, &bufsize);
    if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), EVENT_DATA_PATH);
+      WARN(_("Unable to read data from '%s'"), FLEET_DATA_PATH);
       return -1;
    }
 
    /* Load the document. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), EVENT_DATA_PATH);
+      WARN(_("Unable to parse document '%s'"), FLEET_DATA_PATH);
       return -1;
    }
 
