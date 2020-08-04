@@ -42,15 +42,11 @@ jobs:
     - name: Build Windows Installer
       run: ./extras/windows/packageWindows.sh
 
-    - name: Upload Release Asset
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "nightly"
-        prerelease: true
-        title: "Nightly Build"
-        files: |
-          ${{ github.workspace }}/extras/windows/installer/naev-${{ github.sha }}-win32.exe
+        name: naev-${{ github.sha }}-win32
+        path: ${{ github.workspace }}/extras/windows/installer/naev-${{ github.sha }}-win32.exe
 
   win64:
     runs-on: windows-latest
@@ -81,15 +77,11 @@ jobs:
     - name: Build Windows Installer
       run: ./extras/windows/packageWindows.sh
 
-    - name: Upload Release Asset
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "nightly"
-        prerelease: true
-        title: "Nightly Build"
-        files: |
-          ${{ github.workspace }}/extras/windows/installer/naev-${{ github.sha }}-win64.exe
+        name: naev-${{ github.sha }}-win64
+        path: ${{ github.workspace }}/extras/windows/installer/naev-${{ github.sha }}-win64.exe
 
   lin64:
     runs-on: ubuntu-20.04
@@ -140,15 +132,11 @@ jobs:
         mv src/naev src/naev-${{ github.sha }}-linux-x86-64
         tar -czvf naev-${{ github.sha }}-linux-x86-64.tar.gz src/naev-${{ github.sha }}-linux-x86-64
 
-    - name: Upload Release Asset
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "nightly"
-        prerelease: true
-        title: "Nightly Build"
-        files: |
-          ${{ github.workspace }}/naev-${{ github.sha }}-linux-x86-64.tar.gz
+        name: naev-${{ github.sha }}-linux-x86-64
+        path: ${{ github.workspace }}/naev-${{ github.sha }}-linux-x86-64.tar.gz
 
   macos:
     runs-on: macos-latest
@@ -196,15 +184,11 @@ jobs:
         ./extras/macos/bundle.sh
         zip naev-${{ github.sha }}-macos Naev.app/
 
-    - name: Upload Release Asset
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "nightly"
-        prerelease: true
-        title: "Nightly Build"
-        files: |
-          ${{ github.workspace }}/naev-${{ github.sha }}-macos.zip
+        name: naev-${{ github.sha }}-macos
+        path: ${{ github.workspace }}/naev-${{ github.sha }}-macos.zip
 
   ndata:
       runs-on: ubuntu-latest
@@ -249,12 +233,40 @@ jobs:
           make "ndata.zip"
           mv ndata.zip ndata-${{ github.sha }}.zip
 
-      - name: Upload Release Asset
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
-          prerelease: true
-          title: "Nightly Build"
-          files: |
-            ${{ github.workspace }}/ndata-${{ github.sha }}.zip
+          name: ndata-${{ github.sha }}
+          path: ${{ github.workspace }}/ndata-${{ github.sha }}.zip
+
+  release:
+      runs-on: ubuntu-latest
+      needs: [win64, win32, macos, lin64, ndata]
+
+      steps:
+      - name: Checkout Naev Repository 
+        uses: actions/checkout@v2
+ 
+      - name: Create Release Staging Area
+        run: |
+          mkdir -p temp
+          cd temp       
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ github.workspace }}/temp/
+          
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ${{ github.workspace }}/temp/
+
+      #- name: Upload Release Assets
+      #  uses: "marvinpinto/action-automatic-releases@latest"
+      #  with:
+      #    repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #    automatic_release_tag: "nightly"
+      #    prerelease: true
+      #    title: "Nightly Build"
+      #    files: |
+      #      ${{ github.workspace }}/ndata-${{ github.sha }}.zip
