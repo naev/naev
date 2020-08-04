@@ -296,10 +296,12 @@ void spfx_free (void)
 
    /* get rid of all the particles and free the stacks */
    spfx_clear();
-   if (spfx_stack_front) free(spfx_stack_front);
+   if (spfx_stack_front)
+      free(spfx_stack_front);
    spfx_stack_front = NULL;
    spfx_mstack_front = 0;
-   if (spfx_stack_back) free(spfx_stack_back);
+   if (spfx_stack_back)
+      free(spfx_stack_back);
    spfx_stack_back = NULL;
    spfx_mstack_back = 0;
 
