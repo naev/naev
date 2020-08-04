@@ -13,7 +13,6 @@ on: [push, pull_request]
 name: Nightly Release
 
 jobs:
-
   win32:
     runs-on: windows-latest
 
