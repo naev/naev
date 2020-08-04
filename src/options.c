@@ -29,7 +29,7 @@
 #include "player.h"
 
 
-#define BUTTON_WIDTH    180 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define OPT_WIN_GAMEPLAY   0

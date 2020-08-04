@@ -19,7 +19,7 @@
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
-#define BUTTON_WIDTH    80 /**< Map button width. */
+#define BUTTON_WIDTH    120 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
@@ -239,9 +239,9 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
          "lstResult", ll, n, 0, NULL );
 
    /* Buttons. */
-   window_addButton( wid, 100, 20, 100, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSelect", _("Select"), map_findDisplayMark );
-   window_addButton( wid, -100, 20, 100, BUTTON_HEIGHT,
+   window_addButton( wid, -20 - BUTTON_WIDTH, 20, BUTTON_HEIGHT, BUTTON_HEIGHT,
          "btnClose", _("Cancel"), window_close );
 }
 
@@ -778,7 +778,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_listPanel( _("Search Results"), list, len, 452, 550,
+      i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
             map_addOutfitDetailFields, map_showOutfitDetail,
             _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
@@ -1063,47 +1063,49 @@ void map_inputFind( unsigned int parent, char* str )
 {
    (void) str;
    unsigned int wid;
-   int x, y;
+   int x, y, w, h;
 
    /* initialize known. */
    map_knownInit();
 
    /* Create the window. */
-   wid = window_create( "Find...", -1, -1, 300, 220 );
+   w = 400;
+   h = 220;
+   wid = window_create( "Find...", -1, -1, w, h );
    window_setAccept( wid, map_findSearch );
    window_setCancel( wid, map_findClose );
    window_setParent( wid, parent );
 
    /* Text. */
    y = -40;
-   window_addText( wid, 20, y, 300, gl_defFont.h+4, 0,
+   window_addText( wid, 20, y, w, gl_defFont.h+4, 0,
          "txtDescription", &gl_defFont, NULL,
          _("Enter keyword to search for:") );
    y -= 30;
 
    /* Create input. */
-   window_addInput( wid, 30, y, 240, 20,
+   window_addInput( wid, 30, y, w - 60, 20,
          "inpSearch", 32, 1, &gl_defFont );
    y -= 40;
 
    /* Create buttons. */
-   window_addButton( wid,300-BUTTON_WIDTH-30, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -30, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSearch", _("Find"), map_findSearch );
-   window_addButton( wid,300-BUTTON_WIDTH-30, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -30, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), map_findClose );
 
    /* Create check boxes. */
    x = 40;
-   window_addCheckbox( wid, x, y, 100, 20,
+   window_addCheckbox( wid, x, y, 160, 20,
          "chkSystem", _("Systems"), map_find_check_update, map_find_systems );
    y -= 20;
-   window_addCheckbox( wid, x, y, 100, 20,
+   window_addCheckbox( wid, x, y, 160, 20,
          "chkPlanet", _("Planets"), map_find_check_update, map_find_planets );
    y -= 20;
-   window_addCheckbox( wid, x, y, 100, 20,
+   window_addCheckbox( wid, x, y, 160, 20,
          "chkOutfit", _("Outfits"), map_find_check_update, map_find_outfits );
    y -= 20;
-   window_addCheckbox( wid, x, y, 100, 20,
+   window_addCheckbox( wid, x, y, 160, 20,
          "chkShip", _("Ships"), map_find_check_update, map_find_ships );
 }
 

@@ -680,10 +680,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
       list_height += gl_defFont.h + 5;
    }
    list_height += 100;
-   if (list_height > 500)
-      h = (list_height*8)/10;
-   else
-      h = MAX( 300, list_height );
+   h = MAX( 650, list_height );
 
    h = MIN( (SCREEN_H*2)/3, h );
    w = MAX( list_width + 60, 200 );
@@ -718,9 +715,9 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
          "lstDialogue", items, nitems, 0, select_call_wrapper );
 
    /* Create the buttons. */
-   window_addButton( wid, -20, 20, 60, 30,
+   window_addButton( wid, -20, 20, 120, 30,
          "btnOK", _("OK"), dialogue_listClose );
-   window_addButton( wid, -20-60-20, 20, 60, 30,
+   window_addButton( wid, -20-120-20, 20, 120, 30,
          "btnCancel", _("Cancel"), dialogue_listCancel );
 
    dialogue_open++;

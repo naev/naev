@@ -39,7 +39,7 @@
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     500 /**< Load window height. */
 
-#define BUTTON_WIDTH    150 /**< Button width. */
+#define BUTTON_WIDTH    200 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
 
@@ -347,7 +347,7 @@ void load_loadGameMenu (void)
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", _("Load"), load_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnDelete", _("Del"), load_menu_delete );
+         "btnDelete", _("Delete"), load_menu_delete );
 }
 /**
  * @brief Closes the load game menu.
