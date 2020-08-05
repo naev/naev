@@ -226,7 +226,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( "Search Results", -1, -1, 500, 452 );
+   wid = window_create( _("Search Results"), -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -241,7 +241,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSelect", _("Select"), map_findDisplayMark );
-   window_addButton( wid, -20 - BUTTON_WIDTH, 20, BUTTON_HEIGHT, BUTTON_HEIGHT,
+   window_addButton( wid, -40 - BUTTON_WIDTH, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Cancel"), window_close );
 }
 
