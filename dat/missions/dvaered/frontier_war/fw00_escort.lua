@@ -9,16 +9,12 @@
    2) Way to second system
    3) Jumpout to ???
    4) Land on fleepla
-   5) Way to third system
-   6) Battle with Hamelsen
-   7) Meeting with the last Warlord
+   5) Way to third system, battle with Hamelsen & such
    8) Land at last system
 --]]
 
 --TODO: Set the priority and conditions of this mission
 -- TODO: dialog to say: we will meet Lady Bitterfight, Lord Battleaddict, Lord Jim
-
--- TODO : problem when loading at first stop ?
 
 require "dat/scripts/nextjump.lua"
 require "proximity.lua"
@@ -71,7 +67,7 @@ ready_text = _([["Anyway, citizen, if you want to take off, I'm ready."]])
 end_title = _("Thank you, citizen")
 end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me before long. I need to report back at the Dvaer High Command station in Dvaer, and I don't need anymore escort. Meanwhile, please recieve those %d credits."]])
 
-explain_title = _("That was really close!") -- TODO: explain why standard Dvaered don't help
+explain_title = _("That was really close!")
 explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He is not in par with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
    You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]])
 
@@ -81,12 +77,13 @@ ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom
 
 saved_title1 = _("Hostiles eliminated")
 saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you recieve the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain Leblanc", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heared of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
-   "By the way, %s, let me introduce you the Capitain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duity and serve the Dvaered Nation."]])
+   Tam responds: "By the way, %s, let me introduce you the Capitain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duity and serve the Dvaered Nation."]])
 
-saved_title1 = _("Two attacks are one too much")
-saved_text1 = _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
-   "We will have to respond to this" answers Tam, "I will refer to the chief."]])
+saved_title2 = _("Two attacks are one too much")
+saved_text2 = _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
+   "He will have to respond for this, trust me." answers Tam, "I will refer to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]])
 
+meeting_broadcast = _("%s should be waiting for us in orbit around %s.")
 
 jumpmsg = _("Major Tam has jumped for the %s system.")
 
@@ -94,9 +91,9 @@ log_text = _("The Major Tam, from the Space Forces Headquarters of Dvaered High 
 
 -- TODO : manage the osd
 osd_title = _("Dvaered Escort")
-osd_msg1 = _("Follow Major Tam")
+osd_msg1 = _("Escort Major Tam")
 osd_msg2 = _("Engage the hostiles")
-osd_msg3 = _("Save Major Tam")
+osd_msg3 = _("Ensure Major Tam safely jumps to %s and follow him")
 osd_msg4 = _("Land on %s")
 
 misn_desc = _("You agreed to escort a senior officer of the Dvaered High Command who is visiting three warlords.")
@@ -134,7 +131,7 @@ function accept()
    tk.msg(accept_title, accept_text:format(destsys1:name(), destsys2:name(), destsys3:name()))
 
    misn.accept()
-   misn.osdCreate( osd_title, {osd_msg1, osd_msg2, osd_msg4:format(destpla1:name())} )
+   misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla1:name())} )
    misn.setDesc(misn_desc)
    misn.setReward(misn_reward)
    misn.markerAdd(destsys1, "low")
@@ -166,12 +163,13 @@ function enter()
    pilot.toggleSpawn("FLF") -- TODO : It's only for testing. It can be removed once FLF is dead
    pilot.clearSelect("FLF")
 
-   pilot.toggleSpawn("Pirate") -- TODO : It's only for testing. I want the pirates to be there
-   pilot.clearSelect("Pirate")
+--   pilot.toggleSpawn("Pirate") -- It was only for testing. I want the pirates to be there
+--   pilot.clearSelect("Pirate")
 
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
          encounterWarlord( "Lady Bitterfight", destpla1 )
+         hook.timer( 2000, "meeting_msg1" )
       else
          nextsys = getNextSystem(system.cur(), destsys1)
          majorTam:control()
@@ -183,6 +181,7 @@ function enter()
       if system.cur() == destsys2 then -- Spawn the Baddies
          encounterWarlord( "Lord Battleaddict", destpla2 ) -- TODO : add Colonel Hamelsen
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
+         hook.timer( 2000, "meeting_msg2" )
       else
          nextsys = getNextSystem(system.cur(), destsys2)
          majorTam:control()
@@ -194,14 +193,16 @@ function enter()
       hook.timer( 2500, "explain_battle") -- Explain what happened
       majorTam:control()
       majorTam:land(fleepla)
-      --landingTam = hook.pilot(majorTam, "land", "tamLand")
       stage = 4
+      misn.osdDestroy()
+      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(fleepla:name())} )
+      misn.osdActive(2)
 
    elseif stage == 5 then  -- Travel to third rendezvous
-      if system.cur() == destsys3 then -- Spawn the Warlord
-         -- TODO : the ambush by Hamelsen
+      if system.cur() == destsys3 then -- Spawn the Warlord and Hamelsen
          hamelsenAmbush()
          encounterWarlord( "Lord Jim", destpla3 )
+         hook.timer( 2000, "meeting_msg3" )
       else
          nextsys = getNextSystem(system.cur(), destsys3)
          majorTam:control()
@@ -223,7 +224,18 @@ function testPlayerSpeed()
 end
 
 function explain_battle()
-   tk.msg(explain_title, explain_text)
+   tk.msg(explain_title, explain_text:format(fleepla:name()))
+end
+
+-- Messages when encountering warlords
+function meeting_msg1()
+   majorTam:comm( meeting_broadcast:format("Lady Bitterfight", destpla1:name()) )
+end
+function meeting_msg2()
+   majorTam:comm( meeting_broadcast:format("Lord Battleaddict", destpla2:name()) )
+end
+function meeting_msg3()
+   majorTam:comm( meeting_broadcast:format("Lord Jim", destpla3:name()) )
 end
 
 function spawnTam( origin )
@@ -312,8 +324,14 @@ end
 function land() -- The player is only allowed to land on special occasions
    if stage == 1 then
       stage = 2
+      misn.osdDestroy()
+      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla2:name())} )
+      misn.markerAdd(destsys2, "low")
    elseif stage == 4 then
       stage = 5
+      misn.osdDestroy()
+      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla3:name())} )
+      misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
       shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: see if it's possible to rename it afterwards
       shiplog.appendLog( "frontier_war", log_text )
@@ -340,7 +358,7 @@ function meeting_timer() -- Delay the triggering of the meeting
    player.cinematics( true )
    player.cinematics( false )
 
-   hook.timer(5000, "meeting")
+   hook.timer(7000, "meeting")
 end
 
 function meeting()
@@ -348,10 +366,11 @@ function meeting()
    player.pilot():control(false) -- Free the player
 
    if stage == 0 then
-      tk.msg(meet_title1, meet_text1)
+      tk.msg(meet_title1, meet_text1:format(destpla1:name()))
       stage = 1
       majorTam:taskClear()
       majorTam:land(destpla1)
+      misn.osdActive(2)
 
    elseif stage == 2 then
       pilot.toggleSpawn("Pirate", false) -- Make sure Pirates dont get on the way
@@ -380,7 +399,7 @@ function meeting()
       majorTam:memory().careful = true
       majorTam:runaway(quickie, true) -- The nojump prevents him to land as well
 
-      hook.timer( 10000, "tamHyperspace" ) -- At some point, he is supposed to jump
+      hook.timer( 15000, "tamHyperspace" ) -- At some point, he is supposed to jump
 
       -- Change the enemies to Warlords in order to make them attack
       for i = 1,#p do
@@ -388,11 +407,15 @@ function meeting()
          p[i]:control(false)
       end
 
+      misn.osdDestroy()
+      misn.osdCreate( osd_title, {osd_msg3:format(fleesys:name())} )
+
    elseif stage == 5 then
-      tk.msg(meet_title1, meet_text1) -- TODO: different text
+      tk.msg(meet_title1, meet_text1:format(destpla3:name())) -- TODO maybe: different text
       stage = 8
       majorTam:taskClear()
       majorTam:land(destpla3)
+      misn.osdActive(2)
    end
 end
 
@@ -409,8 +432,8 @@ function hamelsenAmbush()
    jp     = jump.get(system.cur(), previous)
    ambush = {}
    for i = 1, 3 do
-      x = 1000 * rnd.rnd() + 3000
-      y = 1000 * rnd.rnd() + 3000
+      x = 1000 * rnd.rnd() + 1000
+      y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
       ambush[i] = pilot.addRaw( "Hyena", "baddie_norun", pos, "Warlords" )
@@ -420,12 +443,12 @@ function hamelsenAmbush()
       hook.pilot(ambush[i], "jump", "ambushDied")
    end
 
-   x = 1000 * rnd.rnd() + 3000
-   y = 1000 * rnd.rnd() + 3000
+   x = 1000 * rnd.rnd() + 1000
+   y = 1000 * rnd.rnd() + 1000
    pos = jp:pos() + vec2.new(x,y)
    hamelsen = pilot.addRaw( "Shark", "baddie_norun", pos, "Warlords" )
 
-   -- Nice outfits for Colonel Hamelsen (note the Hellburner)
+   -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
    hamelsen:rename("Colonel Hamelsen")
    hamelsen:rmOutfit("all")
    hamelsen:rmOutfit("cores")
@@ -440,10 +463,11 @@ function hamelsenAmbush()
    hamelsen:setEnergy(100)
    hamelsen:setFuel(true)
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
+   hamelsen:setNodisable()
 
-   hook.pilot(hamelsen, "death", "ambushDied")
-   hook.pilot(hamelsen, "land", "ambushDied")
-   hook.pilot(hamelsen, "jump", "ambushDied")
+--   hook.pilot(hamelsen, "death", "ambushDied")
+--   hook.pilot(hamelsen, "land", "ambushDied")
+--   hook.pilot(hamelsen, "jump", "ambushDied")
    attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
 
    nambush = #ambush + 1
@@ -451,16 +475,17 @@ function hamelsenAmbush()
    -- Pre-position Captain Leblanc and her mates, but as Dvaered
    savers = {}
    for i = 1, 3 do
-      x = 1000 * rnd.rnd() - 3000
-      y = 1000 * rnd.rnd() - 3000
+      x = 1000 * rnd.rnd() - 2000
+      y = 1000 * rnd.rnd() - 2000
       pos = jp:pos() + vec2.new(x,y)
 
       savers[i] = pilot.add( "Dvaered Vendetta", nil, pos )[1]
    end
    savers[1]:rename("Capitain Leblanc")
    savers[1]:setNoDeath()
+   savers[1]:setNodisable()
 
-   msg = hook.timer( 3000, "ambush_msg" )
+   msg = hook.timer( 4000, "ambush_msg" )
    killed_ambush = 0
 end
 
@@ -482,31 +507,31 @@ function hamelsen_attacked( )
    local armour, shield = hamelsen:health()
    if shield < 10 then
       hamelsen:control()
-      hamelsen:runaway(player.pilot())
-      
+      hamelsen:runaway(player.pilot(), true) -- Nojump because I don't want her to try to jump at the beginning
+      hook.timer(15000, "hamelsenHyperspace")
       hook.rm(attack)
+      ambushDied() -- One less
    end
 end
 
---function hamelsenHyperspace()
---   hamelsen:taskClear()
---   hamelsen:hyperspace( system.get("") )
---end
+function hamelsenHyperspace()
+   hamelsen:taskClear()
+   hamelsen:hyperspace( system.get("Radix") )
+end
 
 function ambushDied()
-   -- TODO maybe: adapt the test
    killed_ambush = killed_ambush + 1
    if killed_ambush >= nambush then -- Everything back to normal: we meet Lord Jim
       majorTam:control()
       majorTam:follow(warlord, true)
-      hook.timer(500, "proximity", {anchor = warlord, radius = 2000, funcname = "meeting_timer", focus = majorTam})
-      hook.timer(2000, "ambush_end")
+      hook.timer(500, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
+      hook.timer(3000, "ambush_end")
    end
 end
 
 -- The end of the Ambush: a message that explains what happened
 function ambush_end()
-   tk.msg(saved_title1, saved_text1)
+   tk.msg(saved_title1, saved_text1:format(player.name(), player.name()))
    tk.msg(saved_title2, saved_text2)
 end
 
