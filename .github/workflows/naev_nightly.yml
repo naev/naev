@@ -45,8 +45,8 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ github.sha }}-win32
-        path: ${{ github.workspace }}/extras/windows/installer/naev-${{ github.sha }}-win32.exe
+        name: naev-win32
+        path: ${{ github.workspace }}/naev-win32.exe
 
   win64:
     runs-on: windows-latest
@@ -75,18 +75,22 @@ jobs:
         CFLAGS: "-O3"
 
     - name: Build Windows Installer
-      run: ./extras/windows/packageWindows.sh
+      run: |
+        ./extras/windows/packageWindows.sh
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ github.sha }}-win64
-        path: ${{ github.workspace }}/extras/windows/installer/naev-${{ github.sha }}-win64.exe
+        name: naev-win64
+        path: ${{ github.workspace }}/naev-win64.exe
 
   lin64:
     runs-on: ubuntu-20.04
 
     steps:
+    - name: Get current build date
+      run: |
+
     - name: Update APT Cache
       run: |
         sudo apt-get update
@@ -129,14 +133,13 @@ jobs:
 
     - name: Package Linux64 Release
       run: |
-        mv src/naev src/naev-${{ github.sha }}-linux-x86-64
-        tar -czvf naev-${{ github.sha }}-linux-x86-64.tar.gz src/naev-${{ github.sha }}-linux-x86-64
+        mv src/naev src/naev-linux-x86-64
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ github.sha }}-linux-x86-64
-        path: ${{ github.workspace }}/naev-${{ github.sha }}-linux-x86-64.tar.gz
+        name: naev-linux-x86-64
+        path: ${{ github.workspace }}/src/naev-linux-x86-64
 
   macos:
     runs-on: macos-latest
@@ -182,13 +185,13 @@ jobs:
     - name: Package MacOS Release
       run: |
         ./extras/macos/bundle.sh
-        zip naev-${{ github.sha }}-macos Naev.app/
+        zip naev-macos Naev.app/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-${{ github.sha }}-macos
-        path: ${{ github.workspace }}/naev-${{ github.sha }}-macos.zip
+        path: ${{ github.workspace }}/naev-macos.zip
 
   ndata:
       runs-on: ubuntu-latest
@@ -231,13 +234,12 @@ jobs:
           ./autogen.sh
           ./configure
           make "ndata.zip"
-          mv ndata.zip ndata-${{ github.sha }}.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: ndata-${{ github.sha }}
-          path: ${{ github.workspace }}/ndata-${{ github.sha }}.zip
+          path: ${{ github.workspace }}/ndata.zip
 
   release:
       runs-on: ubuntu-latest

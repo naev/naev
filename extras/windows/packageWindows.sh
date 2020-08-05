@@ -126,14 +126,15 @@ fi
 
 if [[ $NIGHTLY ]]; then
 makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER-$BUILD_DATE -DARCH=$ARCH extras/windows/installer/naev-nightly.nsi
-# Move installer to root directory
 
-mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-$VERSION-$BUILD_DATE-win$ARCH.exe
+# Move installer to root directory
+mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH.exe
+
 elif [[ ! $NIGHTLY ]]; then
 makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH extras/windows/installer/naev.nsi
-# Move installer to root directory
 
-mv extras/windows/installer/naev-$VERSION-win$ARCH.exe naev-$VERSION-win$ARCH.exe
+# Move installer to root directory
+mv extras/windows/installer/naev-$VERSION-win$ARCH.exe naev-win$ARCH.exe
 else
     echo "Cannot think of another movie quote.. again."
     echo "Something went wrong.."
