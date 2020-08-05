@@ -79,7 +79,7 @@ void window_addList( const unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 
    /* check if needs scrollbar. */
-   if (2 + (nitems * (gl_defFont.h + 2)) > (int)wgt->h)
+   if (2 + (nitems * (gl_defFont.h + 6)) > (int)wgt->h)
       wgt->dat.lst.height = (6 + gl_defFont.h) * nitems + 6;
    else
       wgt->dat.lst.height = 0;
