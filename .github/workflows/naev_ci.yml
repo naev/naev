@@ -110,7 +110,7 @@ jobs:
         ./configure --disable-dependency-tracking --disable-debug
         make LDFLAGS="-all-static" -j$(nproc --all) 
       env:
-        CFLAGS: "-O3 -static"
+        CFLAGS: "-DGLEW_STATIC -O3 -static"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
