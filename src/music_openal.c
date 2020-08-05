@@ -496,8 +496,8 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
 
    /* Apply the gain, and any limiting necessary */
    if (scale_factor > max_scale) {
-      for(i = 0; i < channels; i++)
-         for(j = 0; j < samples; j++) {
+      for (i = 0; i < channels; i++)
+         for (j = 0; j < samples; j++) {
             cur_sample = pcm[i][j] * scale_factor;
             /*
              * This is essentially the scaled hard-limiting algorithm
@@ -512,8 +512,8 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
          }
    }
    else if (scale_factor > 0.0)
-      for(i = 0; i < channels; i++)
-         for(j = 0; j < samples; j++)
+      for (i = 0; i < channels; i++)
+         for (j = 0; j < samples; j++)
             pcm[i][j] *= scale_factor;
 }
 #endif /* HAVE_OV_READ_FILTER */

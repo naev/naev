@@ -64,7 +64,6 @@ talk = {}
 talk[1] = _("ESS Trinity: Please turn off your engines and prepare to be boarded.")
 talk[2] = _("You will never take me alive!")
 talk[3] = _("Very well then. All units engage ESS Trinity.")
-talk[4] = _("The Trinity has launched Collective drones!")
 talk[5] = _("Mission Success: Return to base.")
 talk[6] = _("Mission Failure: Return to base.")
 talk[7] = _("Incoming drones from hyperspace detected!")
@@ -76,7 +75,7 @@ osd_msg[3] = _("Report back to %s")
 osd_msg["__save"] = true
 
 taunts = {}
-taunts[1] = _("It is too late! The plan is being put into movement!")
+taunts[1] = _("It is too late! The plan is being put into motion!")
 taunts[2] = _("You have no idea who you're messing with!")
 taunts[3] = _("My drones will make mincemeat of you!")
 
@@ -229,9 +228,7 @@ function final_talk ()
       final_fight = 3
       hook.timer(rnd.int( 4000, 5000 ), "final_talk")
    elseif final_fight == 3 then
-      player.msg( talk[4] )
       tri_flee  = false
-      hook.timer(rnd.int( 3000, 5000 ) , "call_drones")
       hook.timer( 3000, "trinity_check" )
       tri_checked = 0
       for i, j in ipairs( escorts ) do
@@ -256,7 +253,7 @@ function trinity_check ()
    end
 
    local a,s = trinity:health()
-   if s < 70 or tri_checked > 10 then
+   if a < 100 or tri_checked > 100 then
       trinity_flee()
    else
       hook.timer( 3000, "trinity_check" )
@@ -274,16 +271,6 @@ function trinity_flee ()
    hook.timer( rnd.int( 3000, 5000 ), "call_drones_jump" )
 end
 
--- Calls help for the ESS Trinity.
-function call_drones ()
-   local pilots = pilot.add("Collective Sml Swarm", nil, trinity:pos())
-   num_drone = #pilots
-   for k,v in ipairs(pilots) do
-      v:setHostile()
-      v:setNoDisable(true)
-      hook.pilot( v, "death", "drone_dead" )
-   end
-end
 
 -- Jump in support
 function call_drones_jump ()
@@ -300,6 +287,7 @@ function call_drones_jump ()
    end
 end
 
+
 -- Support drones attacked
 function drone_attacked ()
    if drone_controlled then
@@ -311,6 +299,8 @@ function drone_attacked ()
       end
    end
 end
+
+
 -- Drone killed
 function drone_dead ()
    num_drone = num_drone - 1
@@ -387,6 +377,8 @@ function trinity_kill () -- Got killed
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
    misn.markerMove( misn_marker, misn_base_sys )
 end
+
+
 function trinity_jump () -- Got away
    player.msg( talk[6] )
    misn_stage = 2

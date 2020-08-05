@@ -112,7 +112,7 @@ static int shiplog_createLog( lua_State *L )
    maxLen = 0;
    if ( lua_gettop(L) > 4 )
       maxLen = MAX(0, luaL_checkint(L,5));
-   if( nidstr!=NULL && strlen(nidstr) > 0 )
+   if ( nidstr!=NULL && strlen(nidstr) > 0 )
       idstr = strdup(nidstr);
    /* Create a new shiplog */
    shiplog_create( idstr, logname, logtype, overwrite, maxLen );

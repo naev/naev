@@ -32,7 +32,7 @@
 #include "tk/toolkit_priv.h"
 #include "shiplog.h"
 
-#define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH    125 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define SETGUI_WIDTH    400 /**< GUI selection window width. */
@@ -230,7 +230,7 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), info_close );
-   window_addButton( wid, -20 - (15+BUTTON_WIDTH), 20,
+   window_addButton( wid, -20 - (20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui );
 
@@ -507,8 +507,8 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-80, wlen, BUTTON_HEIGHT,
-         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.aimLines );
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-70, wlen, BUTTON_HEIGHT,
+         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -516,7 +516,7 @@ static void info_openWeapons( unsigned int wid )
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
-   window_addCust( wid, 220, -220, w-200-60, 100, "cstLegend", 0,
+   window_addCust( wid, 220, -240, w-200-60, 100, "cstLegend", 0,
          weapons_renderLegend, NULL, NULL );
 
    /* List. */
@@ -556,7 +556,7 @@ static void weapons_genList( unsigned int wid )
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
-         w - (20+180+20+20), 160,
+         w - (20+180+20+20), 180,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
 
@@ -682,7 +682,7 @@ static void aim_lines( unsigned int wid, char *str )
 
    /* Set state. */
    state = window_checkboxState( wid, str );
-   player.aimLines = state;
+   player.p->aimLines = state;
 }
 
 
@@ -1004,9 +1004,9 @@ static void info_openMissions( unsigned int wid )
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
          &gl_smallFont, NULL, _("Reward:") );
-   window_addText( wid, 300+100, -60,
-         140, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 300+40, -100,
+   window_addText( wid, 300+40, -80,
+         200, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 300+40, -120,
          w - (300+40+40), h - BUTTON_HEIGHT - 120, 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -1130,7 +1130,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
    int nentries;
    char **logentries;
 
-   if(!logWidgetsReady)
+   if (!logWidgetsReady)
       return;
 
    /*This is called when something is selected.
@@ -1325,13 +1325,13 @@ static void info_openShipLog( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeShipLog", _("Close"), info_close );
-   window_addButton( wid, -40 - BUTTON_WIDTH, 20,
+   window_addButton( wid, -20 - 1*(20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnDeleteLog", _("Delete"),
          info_shiplogMenuDelete );
-   window_addButton( wid, -60 - BUTTON_WIDTH * 2, 20, BUTTON_WIDTH,
+   window_addButton( wid, -20 - 2*(20+BUTTON_WIDTH), 20, BUTTON_WIDTH,
          BUTTON_HEIGHT, "btnViewLog", _("View Entry"),
          info_shiplogView );
-   window_addButton( wid, -80 - BUTTON_WIDTH * 3, 20, BUTTON_WIDTH,
+   window_addButton( wid, -20 - 3*(20+BUTTON_WIDTH), 20, BUTTON_WIDTH,
          BUTTON_HEIGHT, "btnAddLog", _("Add Entry"),
          info_shiplogAdd );
    /* Description text */

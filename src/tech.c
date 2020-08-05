@@ -190,13 +190,15 @@ void tech_free (void)
 {
    int i, s;
 
-   /* Free all individual techs. */
-   s = array_size( tech_groups );
-   for (i=0; i<s; i++)
-      tech_freeGroup( &tech_groups[i] );
+   if (tech_groups != NULL) {
+      /* Free all individual techs. */
+      s = array_size( tech_groups );
+      for (i=0; i<s; i++)
+         tech_freeGroup( &tech_groups[i] );
 
-   /* Free the tech array. */
-   array_free( tech_groups );
+      /* Free the tech array. */
+      array_free( tech_groups );
+   }
 }
 
 

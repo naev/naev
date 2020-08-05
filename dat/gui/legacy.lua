@@ -117,15 +117,18 @@ end
 function update_target ()
    -- Set target
    ptarget = pp:target()
+   target_gfxFact = nil
    if ptarget ~= nil then
       target_fact = ptarget:faction()
       target_gfx = ptarget:ship():gfxTarget()
       target_gfx_w, target_gfx_h = target_gfx:dim()
-      target_gfxFact = target_fact:logoTiny()
-      if target_gfxFact ~= nil then
-         target_gf_w, target_gf_h = target_gfxFact:dim()
-         target_gf_w = ( target_gf_w + 24 ) / 2
-         target_gf_h = ( target_gf_h + 24 ) / 2
+      if target_fact ~= nil and target_fact:known() then
+         target_gfxFact = target_fact:logoTiny()
+         if target_gfxFact ~= nil then
+            target_gf_w, target_gf_h = target_gfxFact:dim()
+            target_gf_w = ( target_gf_w + 24 ) / 2
+            target_gf_h = ( target_gf_h + 24 ) / 2
+         end
       end
    end
 end
@@ -326,7 +329,7 @@ function render_target ()
    gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
    -- Display faction
-   if scan then
+   if scan and target_fact ~= nil and target_fact:known() then
       local faction = target_fact:name()
       local w = gfx.printDim( nil, faction )
       gfx.print( true, faction, target_x, target_y-26, col_white, target_w )
@@ -347,7 +350,7 @@ function render_target ()
 
    -- Render faction logo.
    if scan and target_gfxFact ~= nil then
-      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h + 3 )
+      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - 2*target_gf_h + 3 )
    end
 end
 function render_targetnone ()

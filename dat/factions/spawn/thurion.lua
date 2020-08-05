@@ -105,6 +105,12 @@ function spawn ( presence, max )
   
    -- Actually spawn the pilots
    pilots = scom.spawn( spawn_data, "Thurion" )
+   
+   if not faction.get("Thurion"):known() then
+      for i, s in ipairs( pilots ) do
+         s.pilot:rename(_("Unknown"))
+      end
+   end
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

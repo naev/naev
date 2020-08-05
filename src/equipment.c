@@ -308,9 +308,9 @@ void equipment_open( unsigned int wid )
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
+         130, 500, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
+         130, 500, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -1673,7 +1673,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel, pilot_getJumps(ship),
+      ship->fuel_max, ship->fuel_max / ship->fuel_consumption,
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 

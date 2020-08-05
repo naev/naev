@@ -1947,7 +1947,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    Planet *p;
    glColour *bg, c;
 
-   land = !strcmp(wgt,"btnLandGFX");
+   land = (strcmp(wgt,"btnLandGFX") == 0);
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
    /* Create the window. */
@@ -2023,7 +2023,7 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
    char *str, *path, buf[PATH_MAX];
    int land;
 
-   land = !strcmp(wgt,"btnApplyLand");
+   land = (strcmp(wgt,"btnApplyLand") == 0);
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Get output. */

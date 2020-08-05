@@ -327,7 +327,9 @@ function update_target()
          ptarget_gfx_draw_h = math.min( 62, 62 / ptarget_gfx_aspect )
       end
 
-      ptarget_faction_gfx = ptargetfact:logoTiny()
+      if ptargetfact ~= nil and ptargetfact:known() then
+         ptarget_faction_gfx = ptargetfact:logoTiny()
+      end
    end
 end
 
@@ -351,7 +353,7 @@ function update_nav()
       end
 
       ta_pnt_faction_gfx = nil
-      if ta_pntfact then
+      if ta_pntfact and ta_pntfact:known() then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
       end
 
