@@ -10,3 +10,20 @@ function numstring(number)
     numberstring = number % 1000 .. numberstring
     return numberstring
 end
+
+
+--[[
+-- @brief Properly converts a number of credits to a string, utilizing ngettext.
+--
+-- This adds "credits" to the output of numstring in a translatable way.
+-- Should be used everywhere a number of credits is displayed.
+--
+-- @usage tk.msg( "", _("You have been paid %s."):format( creditstring(credits) ) )
+--
+--    @param credits Number of credits.
+--    @return A string taking the form of "X credit" or "X credits".
+--]]
+function creditstring( credits )
+   return gettext.ngettext( "%s credit", "%s credits", credits ):format(
+         numstring(credits) )
+end
