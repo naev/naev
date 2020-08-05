@@ -14,7 +14,6 @@
 --]]
 
 --TODO: Set the priority and conditions of this mission
--- TODO: dialog to say: we will meet Lady Bitterfight, Lord Battleaddict, Lord Jim
 
 require "dat/scripts/nextjump.lua"
 require "proximity.lua"
@@ -76,7 +75,7 @@ ambush_text = _([[As your ship starts to recover its normal speed after jumping 
 ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom instead?")
 
 saved_title1 = _("Hostiles eliminated")
-saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you recieve the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain Leblanc", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heared of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
+saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you recieve the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heared of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
    Tam responds: "By the way, %s, let me introduce you the Capitain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duity and serve the Dvaered Nation."]])
 
 saved_title2 = _("Two attacks are one too much")
@@ -89,7 +88,6 @@ jumpmsg = _("Major Tam has jumped for the %s system.")
 
 log_text = _("The Major Tam, from the Space Forces Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate dvaered warlords is a really dangerous job.")
 
--- TODO : manage the osd
 osd_title = _("Dvaered Escort")
 osd_msg1 = _("Escort Major Tam")
 osd_msg2 = _("Engage the hostiles")
@@ -163,9 +161,6 @@ function enter()
    pilot.toggleSpawn("FLF") -- TODO : It's only for testing. It can be removed once FLF is dead
    pilot.clearSelect("FLF")
 
---   pilot.toggleSpawn("Pirate") -- It was only for testing. I want the pirates to be there
---   pilot.clearSelect("Pirate")
-
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
          encounterWarlord( "Lady Bitterfight", destpla1 )
@@ -179,7 +174,7 @@ function enter()
 
    elseif stage == 2 then  -- Travel to second rendezvous
       if system.cur() == destsys2 then -- Spawn the Baddies
-         encounterWarlord( "Lord Battleaddict", destpla2 ) -- TODO : add Colonel Hamelsen
+         encounterWarlord( "Lord Battleaddict", destpla2 )
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
          hook.timer( 2000, "meeting_msg2" )
       else
@@ -243,12 +238,11 @@ function spawnTam( origin )
 --      hook.rm(diyingTam)
 --   end
 
-   majorTam = pilot.add("Dvaered Vendetta", nil, origin, "DHC")[1] -- TODO: Tam should be player faction
+   majorTam = pilot.add("Dvaered Vendetta", nil, origin, "DHC")[1]
    majorTam:rename("Major Tam")
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction("DHC")
-   -- TODO : something to remove his cargo
 
    majorTam:rmOutfit("all")
    majorTam:rmOutfit("cores")
@@ -262,7 +256,7 @@ function spawnTam( origin )
    majorTam:setEnergy(100)
    majorTam:setFuel(true)
 
-   diyingTam = hook.pilot(majorTam, "death", "tamDied") --TODO: exploded would be better, but it makes shitty warnings
+   diyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
 
 function encounterWarlord( name, origin )
@@ -280,38 +274,19 @@ function encounterWarlord( name, origin )
    p = {}
    for i = 1, 2 do
       p[i] = pilot.add("Dvaered Vendetta", nil, origin)[1]
-      --p[i]:setSpeedLimit (p, 200)
       p[i]:control(true)
       p[i]:goto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
-      -- TODO maybe: control the Vendettas equipment so that they don't outrun Tam
-
---      p[i]:rmOutfit("cores")
---      p[i]:addOutfit("S&K Light Combat Plating")
---      p[i]:addOutfit("Milspec Aegis 3601 Core System")
---      p[i]:addOutfit("Unicorp Hawk 300 Engine")  -- Otherwise, Tam is dead
-
---      p[i]:setHealth(100,100)
---      p[i]:setEnergy(100)
---      p[i]:setFuel(true)
    end
 
    majorTam:control()
-   --majorTam:goto(warlord:pos())
    majorTam:memory().radius = 0
    majorTam:follow(warlord, true)
-   --hook.timer(10000, "tamGoto")
-   -- TODO : add messages
+
    proxHook = hook.timer(500, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
 end
 
---function tamGoto()
---   majorTam:taskClear()
---   majorTam:goto(warlord:pos()) -- Because its position has probably changed
---end
-
 function tamJump()
    tamJumped = true
-   --hook.rm(jumpingTam)
    player.msg(jumpmsg:format(nextsys:name()))
 end
 
@@ -322,10 +297,6 @@ function tamDied()
    tk.msg(fail_title, fail_text)
    misn.finish(false)
 end
-
---function tamLand()
---   tamJumped = true
---end
 
 function land() -- The player is only allowed to land on special occasions
    if stage == 1 then
@@ -385,7 +356,7 @@ function meeting()
       nextsys = fleesys
       tk.msg(meet_title2, meet_text2:format(nextsys:name()))
       stage = 3
-      quickie = pilot.add("Dvaered Vendetta", nil, destpla2)[1] -- TODO: give this pilot quick outfit to force the player to dispatch him
+      quickie = pilot.add("Dvaered Vendetta", nil, destpla2)[1]
       quickie:setFaction("Warlords")
 
       quickie:rmOutfit("all")
@@ -396,10 +367,12 @@ function meeting()
       quickie:addOutfit("Reactor Class I")
       quickie:addOutfit("Improved Stabilizer")
       quickie:addOutfit("Shredder",3)
-      quickie:addOutfit("Vulcan Gun",3) -- TODO : use generic afterburner
-      quickie:setHealth(100,100)
+      quickie:addOutfit("Vulcan Gun",3)
+      quickie:setHealth(100,100)  -- TODO: does it give health to the player somehow ?!?
       quickie:setEnergy(100)
       quickie:setFuel(true)
+
+      hook.timer( 5000, "moreBadGuys" )
 
       majorTam:control()
       majorTam:memory().careful = true
@@ -417,12 +390,26 @@ function meeting()
       misn.osdCreate( osd_title, {osd_msg3:format(fleesys:name())} )
 
    elseif stage == 5 then
-      tk.msg(meet_title1, meet_text1:format(destpla3:name())) -- TODO maybe: different text
+      tk.msg(meet_title1, meet_text1:format(destpla3:name()))
       stage = 8
       majorTam:taskClear()
       majorTam:land(destpla3)
       misn.osdActive(2)
    end
+end
+
+-- Battleaddict's bros
+function moreBadGuys()
+   for i = 1, 3 do
+      buff = pilot.add("Dvaered Ancestor", nil, destpla2)[1]
+      buff:setFaction("Warlords")
+   end
+   buff = pilot.add("Dvaered Vigilance", nil, destpla2)[1]
+   buff:setFaction("Warlords")
+   buff = pilot.add("Dvaered Phalanx", nil, destpla2)[1]
+   buff:setFaction("Warlords")
+   warlord:setFaction("Warlords")
+   warlord:control(false)
 end
 
 function tamHyperspace()
@@ -442,7 +429,7 @@ function hamelsenAmbush()
 
       ambush[i] = pilot.addRaw( "Hyena", "baddie_norun", pos, "Warlords" )
       ambush[i]:setHostile()
-      hook.pilot(ambush[i], "death", "ambushDied") -- TODO: is there an other way for them to despawn?
+      hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
       hook.pilot(ambush[i], "jump", "ambushDied")
    end
@@ -469,9 +456,6 @@ function hamelsenAmbush()
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
    hamelsen:setNoDisable()
 
---   hook.pilot(hamelsen, "death", "ambushDied")
---   hook.pilot(hamelsen, "land", "ambushDied")
---   hook.pilot(hamelsen, "jump", "ambushDied")
    attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
 
    nambush = #ambush + 1
