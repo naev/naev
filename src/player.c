@@ -271,9 +271,6 @@ void player_new (void)
       }
    }
 
-   if (player_newMake())
-      return;
-
    /* Set game speed. */
    title = _("Game Speed");
    caption = _("Your game can be set to normal speed or slow speed. Slow speed"
@@ -290,6 +287,9 @@ void player_new (void)
    player.dt_mod = 1.;
    if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
       player.dt_mod = 0.5;
+
+   if (player_newMake())
+      return;
 
    /* Display the intro. */
    intro_display( "dat/intro", "intro" );

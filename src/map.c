@@ -502,6 +502,8 @@ static void map_update( unsigned int wid )
          continue;
       if (!planet_isKnown(sys->planets[i]))
          continue;
+      if (!faction_isKnown(sys->planets[i]->faction))
+         continue;
 
       if ((f==-1) && (sys->planets[i]->faction>0)) {
          f = sys->planets[i]->faction;
