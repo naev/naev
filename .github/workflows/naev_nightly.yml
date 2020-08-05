@@ -246,6 +246,43 @@ jobs:
       needs: [win64, win32, macos, lin64, ndata]
 
       steps:
+      - name: Update APT Cache
+        run: |
+          sudo apt-get update
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get install \
+            build-essential \
+            automake \
+            autoconf-archive \
+            libsdl2-dev \
+            libsdl2-mixer-dev \
+            libsdl2-image-dev \
+            libgl1-mesa-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libopenal-dev \
+            libvorbis-dev \
+            binutils-dev \
+            libzip-dev \
+            libiberty-dev \
+            libluajit-5.1-dev \
+            gettext \
+            autopoint \
+            intltool \
+            itstool
+
+      - name: Checkout Naev Repository 
+        uses: actions/checkout@v2
+
+      - name: Get VERSION
+        run: |
+          ./autogen.sh
+          ./configure
+
       - name: Create Release Staging Area
         run: |
           mkdir -p temp   
@@ -255,16 +292,34 @@ jobs:
         with:
           path: ${{ github.workspace }}/temp/
           
-      - name: Display structure of downloaded files
-        run: ls -R
+      - name: Collect files for distribution
+        run: |
+          mkdir -p dist
+
+          BUILD_DATE="$(date +%m_%d_%Y)"
+
+          VERSION="$(cat ../VERSION)"
+           # Get version, negative minors mean betas
+          if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
+              BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
+              BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
+              VERSION="${BASEVER}.0-beta${BETAVER}"
+          fi
+
+          mv linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-$BUILD_DATE-linux-x86-64
+          mv macos/naev-macos.zip dist/naev-$VERSION-$BUILD_DATE-macos.zip
+          mv ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
+          mv win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
+          mv win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
+
         working-directory: ${{ github.workspace }}/temp/
 
-      #- name: Upload Release Assets
-      #  uses: "marvinpinto/action-automatic-releases@latest"
-      #  with:
-      #    repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #    automatic_release_tag: "nightly"
-      #    prerelease: true
-      #    title: "Nightly Build"
-      #    files: |
-      #      ${{ github.workspace }}/ndata-${{ github.sha }}.zip
+      - name: Upload Release Assets
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "nightly"
+          prerelease: true
+          title: "Nightly Build"
+          files: |
+            ${{ github.workspace }}/temp/dist/*
