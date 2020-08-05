@@ -93,8 +93,7 @@ Section "Naev Engine" BinarySection
    SectionIn RO
 
    SetOutPath "$INSTDIR"
-   File bin\*.dll
-   File bin\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe
+   File bin\*.*
    File ..\..\logos\logo.ico
    
    IntOp $PortID $PortID & ${SF_SELECTED}
