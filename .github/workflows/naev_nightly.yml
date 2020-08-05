@@ -307,11 +307,11 @@ jobs:
               VERSION="${BASEVER}.0-beta${BETAVER}"
           fi
 
-          mv temp/linux-x86-64/naev-linux-x86-64 temp/dist/naev-$VERSION-$BUILD_DATE-linux-x86-64
-          mv temp/macos/naev-macos.zip temp/dist/naev-$VERSION-$BUILD_DATE-macos.zip
-          mv temp/ndata/ndata.zip temp/dist/ndata-$VERSION-$BUILD_DATE.zip
-          mv temp/win32/naev-win32.exe temp/dist/naev-$VERSION-$BUILD_DATE-win32.exe
-          mv temp/win64/naev-win64.exe temp/dist/naev-$VERSION-$BUILD_DATE-win64.exe
+          mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-$BUILD_DATE-linux-x86-64
+          mv temp/macos/naev-macos.zip dist/naev-$VERSION-$BUILD_DATE-macos.zip
+          mv temp/ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
+          mv temp/win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
+          mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
