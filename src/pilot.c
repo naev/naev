@@ -1437,33 +1437,31 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    if (p->stress > p->armour)
       p->stress = p->armour;
 
+   /* Do not let pilot die. */
+   if ((p->armour <= 0.) && pilot_isFlag( p, PILOT_NODEATH ))
+      p->armour = 1.;
+
    /* Disabled always run before dead to ensure combat rating boost. */
    pilot_updateDisable(p, shooter);
 
+   /* Officially dead. */
    if (p->armour <= 0.) {
-      /* Do not let pilot die. */
-      if (pilot_isFlag( p, PILOT_NODEATH ))
-         p->armour = 1.;
+      p->armour = 0.;
+      dam_mod   = 0.;
 
-      /* Officially dead. */
-      else {
-         p->armour = 0.;
-         dam_mod   = 0.;
+      if (!pilot_isFlag(p, PILOT_DEAD)) {
+         pilot_dead( p, shooter );
 
-         if (!pilot_isFlag(p, PILOT_DEAD)) {
-            pilot_dead( p, shooter );
+         /* adjust the combat rating based on pilot mass and ditto faction */
+         if (pshooter == NULL)
+            pshooter = pilot_get(shooter);
+         if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
-            /* adjust the combat rating based on pilot mass and ditto faction */
-            if (pshooter == NULL)
-               pshooter = pilot_get(shooter);
-            if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
+            /* About 6 for a llama, 52 for hawking. */
+            mod = 2 * (pow(p->base_mass, 0.4) - 1.);
 
-               /* About 6 for a llama, 52 for hawking. */
-               mod = 2 * (pow(p->base_mass, 0.4) - 1.);
-
-               /* Modify faction for him and friends. */
-               faction_modPlayer( p->faction, -mod, "kill" );
-            }
+            /* Modify faction for him and friends. */
+            faction_modPlayer( p->faction, -mod, "kill" );
          }
       }
    }
