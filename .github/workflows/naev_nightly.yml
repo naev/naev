@@ -321,4 +321,4 @@ jobs:
           prerelease: true
           title: "Nightly Build"
           files: |
-            ${{ github.workspace }}/temp/dist/*
+            ${{ github.workspace }}/dist/*
