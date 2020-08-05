@@ -256,23 +256,6 @@ void player_new (void)
    player.name = dialogue_input( _("Player Name"), 2, 20,
          _("Please write your name:") );
 
-   /* Set game speed. */
-   title = _("Game Speed");
-   caption = _("Your game can be set to normal speed or slow speed. Slow speed"
-         " causes time in space to pass at half the rate it would in normal"
-         " speed, which may be helpful if you have difficulty playing the game"
-         " at normal speed. Would you like to use normal speed or slow speed"
-         " for this profile? (If unsure, normal speed is probably what you"
-         " want.)");
-
-   dialogue_makeChoice( title, caption, 2 );
-   dialogue_addChoice( title, caption, speed_opts[0] );
-   dialogue_addChoice( title, caption, speed_opts[1] );
-   ret = dialogue_runChoice();
-   player.dt_mod = 1.;
-   if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
-      player.dt_mod = 0.5;
-
    /* Player cancelled dialogue. */
    if (player.name == NULL) {
       menu_main();
@@ -290,6 +273,23 @@ void player_new (void)
 
    if (player_newMake())
       return;
+
+   /* Set game speed. */
+   title = _("Game Speed");
+   caption = _("Your game can be set to normal speed or slow speed. Slow speed"
+         " causes time in space to pass at half the rate it would in normal"
+         " speed, which may be helpful if you have difficulty playing the game"
+         " at normal speed. Would you like to use normal speed or slow speed"
+         " for this profile? (If unsure, normal speed is probably what you"
+         " want.)");
+
+   dialogue_makeChoice( title, caption, 2 );
+   dialogue_addChoice( title, caption, speed_opts[0] );
+   dialogue_addChoice( title, caption, speed_opts[1] );
+   ret = dialogue_runChoice();
+   player.dt_mod = 1.;
+   if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
+      player.dt_mod = 0.5;
 
    /* Display the intro. */
    intro_display( "dat/intro", "intro" );
