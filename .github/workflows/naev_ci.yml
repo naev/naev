@@ -24,7 +24,7 @@ jobs:
     - name: Test-Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug --disable-shared
+        ./configure --disable-dependency-tracking --disable-debug --disable-shared --enable-static
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -56,7 +56,7 @@ jobs:
     - name: Test-Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug --disable-shared
+        ./configure --disable-dependency-tracking --disable-debug --disable-shared --enable-static
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -107,7 +107,7 @@ jobs:
     - name: Test-Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug --disable-shared
+        ./configure --disable-dependency-tracking --disable-debug --disable-shared --enable-static
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
