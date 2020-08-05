@@ -96,10 +96,7 @@ mkdir -p extras/windows/installer/bin
 # Collect DLLs
 
 if [[ $ARCH == "32" ]]; then
-for fn in `cygcheck src/naev.exe | grep -i "mingw32"`; do
-    echo "copying $fn to staging area"
-    cp $fn extras/windows/installer/bin
-done
+    echo "mingw32 is apparently statically built"
 elif [[ $ARCH == "64" ]]; then
 for fn in `cygcheck src/naev.exe | grep -i "mingw64"`; do
     echo "copying $fn to staging area"
