@@ -9,8 +9,8 @@ require "numstring.lua"
 
 misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
-misn_desc[0] = _("Small delivery to %s in the %s system.")
-misn_desc[1] = _("Medium delivery to %s in the %s system.")
+misn_desc[0] = _("Small shipment to %s in the %s system.")
+misn_desc[1] = _("Medium shipment to %s in the %s system.")
 misn_desc[2] = _("Sizable cargo delivery to %s in the %s system.")
 misn_desc[3] = _("Large cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Bulk freight delivery to %s in the %s system.")
@@ -39,8 +39,6 @@ cargo_land[1] = _("The containers of %s are carried out of your ship by a sullen
 cargo_land[2] = _("The containers of %s are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs.")
 cargo_land[3] = _("The containers of %s are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job.")
 cargo_land[4] = _("The containers of %s are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay when they finish.")
-
-accept_title = _("Mission Accepted")
 
 osd_title = _("Cargo mission")
 osd_msg = _("Fly to %s in the %s system")
