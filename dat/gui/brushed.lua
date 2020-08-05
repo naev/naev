@@ -349,7 +349,7 @@ function update_nav()
       end
 
       ta_pnt_faction_gfx = nil
-      if ta_pntfact then
+      if ta_pntfact and ta_pntfact:known() then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
       end
 
