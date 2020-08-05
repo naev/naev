@@ -390,7 +390,7 @@ AC_SEARCH_LIBS([IMG_Load], [SDL2_image], [
 VAR_RESTORE([LIBS])
 
 # OpenGL
-PKG_CHECK_MODULES([OPENGL], [OPENGL])
+PKG_CHECK_MODULES([GL], [GL])
 
 #
 # Compiler flags
