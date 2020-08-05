@@ -134,7 +134,7 @@ function accept()
    misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla1:name())} )
    misn.setDesc(misn_desc)
    misn.setReward(misn_reward)
-   misn.markerAdd(destsys1, "low")
+   mark1 = misn.markerAdd(destsys1, "low")
 
    stage = 0
    nextsys = system.cur()
@@ -265,7 +265,10 @@ function spawnTam( origin )
    diyingTam = hook.pilot(majorTam, "death", "tamDied") --TODO: exploded would be better, but it makes shitty warnings
 end
 
-function encounterWarlord( name, origin ) -- TODO: ensure the warlords dont get attacked by pirates
+function encounterWarlord( name, origin )
+
+   pilot.toggleSpawn("Pirate", false) -- Make sure Pirates dont get on the way
+   pilot.clearSelect("Pirate")
 
    warlord = pilot.add("Dvaered Goddard", nil, origin)[1]
    warlord:rename( name )
@@ -313,6 +316,9 @@ function tamJump()
 end
 
 function tamDied()
+   if hamelsen ~= nil then
+      hamelsen:rm() -- Because she is immortal and could kill the player
+   end
    tk.msg(fail_title, fail_text)
    misn.finish(false)
 end
@@ -326,12 +332,14 @@ function land() -- The player is only allowed to land on special occasions
       stage = 2
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla2:name())} )
-      misn.markerAdd(destsys2, "low")
+      misn.markerRm(mark1)
+      mark2 = misn.markerAdd(destsys2, "low")
    elseif stage == 4 then
       stage = 5
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla3:name())} )
-      misn.markerAdd(destsys3, "low")
+      misn.markerRm(mark2)
+      mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
       shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: see if it's possible to rename it afterwards
       shiplog.appendLog( "frontier_war", log_text )
@@ -373,8 +381,6 @@ function meeting()
       misn.osdActive(2)
 
    elseif stage == 2 then
-      pilot.toggleSpawn("Pirate", false) -- Make sure Pirates dont get on the way
-      pilot.clearSelect("Pirate")
 
       nextsys = fleesys
       tk.msg(meet_title2, meet_text2:format(nextsys:name()))
@@ -426,8 +432,6 @@ end
 
 -- Spawn colonel Hamelsen and her mates
 function hamelsenAmbush()
-   pilot.toggleSpawn("Pirate", false) -- Make sure Pirates dont get on the way
-   pilot.clearSelect("Pirate")
 
    jp     = jump.get(system.cur(), previous)
    ambush = {}
@@ -463,7 +467,7 @@ function hamelsenAmbush()
    hamelsen:setEnergy(100)
    hamelsen:setFuel(true)
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
-   hamelsen:setNodisable()
+   hamelsen:setNoDisable()
 
 --   hook.pilot(hamelsen, "death", "ambushDied")
 --   hook.pilot(hamelsen, "land", "ambushDied")
@@ -483,7 +487,7 @@ function hamelsenAmbush()
    end
    savers[1]:rename("Capitain Leblanc")
    savers[1]:setNoDeath()
-   savers[1]:setNodisable()
+   savers[1]:setNoDisable()
 
    msg = hook.timer( 4000, "ambush_msg" )
    killed_ambush = 0
