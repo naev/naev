@@ -390,9 +390,7 @@ AC_SEARCH_LIBS([IMG_Load], [SDL2_image], [
 VAR_RESTORE([LIBS])
 
 # OpenGL
-AM_PATH_OPENGL([], [
-  AC_MSG_ERROR([OpenGL not found])
-])
+PKG_CHECK_MODULES([OPENGL], [OPENGL])
 
 #
 # Compiler flags
