@@ -152,6 +152,7 @@
    <enemy>Proteron Dissident</enemy>
    <enemy>Thurion</enemy>
    <enemy>Comingout_associates</enemy>
+   <enemy>DHC</enemy>
   </enemies>
  </faction>
  <faction>
@@ -226,6 +227,7 @@
    <enemy>Dvaered</enemy>
    <enemy>Rogue FLF</enemy>
    <enemy>Rogue Pirate</enemy>
+   <enemy>DHC</enemy>
   </enemies>
  </faction>
  <faction>
@@ -521,6 +523,32 @@
   <equip>pirate</equip>
   <enemies>
    <enemy>Comingout_associates</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>DHC</name>
+  <logo>dvaered</logo>
+  <colour>brown</colour>
+  <longname>Dvaered High Command</longname>
+  <player>10</player>
+  <standing>static</standing>
+  <equip>dvaered</equip>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>FLF</enemy>
+   <enemy>Warlords</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Warlords</name>
+  <logo>dvaered</logo>
+  <colour>brown</colour>
+  <longname>Dvaered Warlords</longname>
+  <player>-10</player>
+  <standing>static</standing>
+  <equip>dvaered</equip>
+  <enemies>
+   <enemy>DHC</enemy>
   </enemies>
  </faction>
 </Factions>

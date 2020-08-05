@@ -206,6 +206,18 @@
    <faction>Dvaered</faction>
   </avail>
  </mission>
+ <mission name="Dvaered Escort">
+  <lua>dvaered/frontier_war/fw00_escort</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
  <mission name="Deal with the FLF agent">
   <lua>flf/flf_pre01</lua>
   <flags>
