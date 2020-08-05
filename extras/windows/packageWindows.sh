@@ -112,9 +112,9 @@ else
 fi
 
 echo "copying naev binary to staging area"
-if [[ $NIGHTLY ]]; then
+if [[ $NIGHTLY == true ]]; then
 cp src/naev.exe extras/windows/installer/bin/naev-$VERSION-$BUILD_DATE-win$ARCH.exe
-elif [[ ! $NIGHTLY ]]; then
+elif [[ $NIGHTLY == false ]]; then
 cp src/naev.exe extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe
 else
     echo "Cannot think of another movie quote."
@@ -124,13 +124,13 @@ fi
 
 # Build installer
 
-if [[ $NIGHTLY ]]; then
+if [[ $NIGHTLY == true ]]; then
 makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER-$BUILD_DATE -DARCH=$ARCH extras/windows/installer/naev-nightly.nsi
 
 # Move installer to root directory
 mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH.exe
 
-elif [[ ! $NIGHTLY ]]; then
+elif [[ $NIGHTLY == false ]]; then
 makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH extras/windows/installer/naev.nsi
 
 # Move installer to root directory
