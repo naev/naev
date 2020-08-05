@@ -28,6 +28,7 @@ jobs:
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
+        LDFLAGS: "-Wl,-Bstatic"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -60,6 +61,7 @@ jobs:
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
+        LDFLAGS: "-Wl,-Bstatic"
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -111,6 +113,7 @@ jobs:
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
+        LDFLAGS: "-Wl,-Bstatic"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -172,13 +175,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.3
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' }}
+    #- name: Install SSH Key
+    #  uses: shimataro/ssh-key-action@v2.0.3
+    #  with:
+    #    key: ${{ secrets.SSH_KEY }}
+    #    name: id_rsa # optional
+    #    known_hosts: ${{ secrets.KNOWN_HOSTS }}
+    #  if: ${{ github.event_name == 'push' }}
 
     - name: Update APT Cache
       run: |
@@ -223,9 +226,9 @@ jobs:
         ./configure
         make -C docs lua
     
-    - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-      if: ${{ github.event_name == 'push' }}
+    #- name: Upload Lua Documentation
+    #  run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+    #  if: ${{ github.event_name == 'push' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
