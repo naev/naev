@@ -24,11 +24,10 @@ jobs:
     - name: Test-Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure --disable-dependency-tracking --disable-debug --disable-shared
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-        LDFLAGS: "-Wl,-Bstatic"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -57,11 +56,10 @@ jobs:
     - name: Test-Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure --disable-dependency-tracking --disable-debug --disable-shared
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-        LDFLAGS: "-Wl,-Bstatic"
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -109,11 +107,10 @@ jobs:
     - name: Test-Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure --disable-dependency-tracking --disable-debug
+        ./configure --disable-dependency-tracking --disable-debug --disable-shared
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-        LDFLAGS: "-Wl,-Bstatic"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
