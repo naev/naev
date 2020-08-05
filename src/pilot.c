@@ -1437,12 +1437,14 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    if (p->stress > p->armour)
       p->stress = p->armour;
 
+   /* Do not let pilot die. */
+   if ((p->armour <= 0.) && pilot_isFlag( p, PILOT_NODEATH )) {
+      p->armour = 1.;
+      p->stress = 1.;
+   }
+
    /* Disabled always run before dead to ensure combat rating boost. */
    pilot_updateDisable(p, shooter);
-
-   /* Do not let pilot die. */
-   if (pilot_isFlag( p, PILOT_NODEATH ))
-      p->armour = 1.;
 
    /* Officially dead. */
    if (p->armour <= 0.) {

@@ -181,7 +181,7 @@ function enter ( from_sys )
          trinity:setVisplayer()
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile
-         trinity:setNodisable(true)
+         trinity:setNoDisable(true)
          hook.pilot( trinity, "death", "trinity_kill" )
          hook.pilot( trinity, "jump", "trinity_jump" )
 
@@ -279,7 +279,7 @@ function call_drones_jump ()
    local tp = trinity:pos()
    for k,v in ipairs(drone_reinforcements) do
       v:setHostile()
-      v:setNodisable(true)
+      v:setNoDisable(true)
       v:control()
       v:goto( tp )
       hook.pilot( v, "attacked", "drone_attacked" )

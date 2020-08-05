@@ -121,7 +121,7 @@ static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
-static int pilotL_setNodisable( lua_State *L );
+static int pilotL_setNoDisable( lua_State *L );
 static int pilotL_setSpeedLimit( lua_State *L);
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
@@ -196,7 +196,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setHealth", pilotL_setHealth },
    { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
-   { "setNodisable", pilotL_setNodisable },
+   { "setNoDisable", pilotL_setNoDisable },
    { "setSpeedLimit", pilotL_setSpeedLimit },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
@@ -2934,14 +2934,14 @@ static int pilotL_setNoboard( lua_State *L )
  *
  * No parameter is equivalent to true.
  *
- * @usage p:setNodisable( true ) -- Pilot can not be disabled anymore.
+ * @usage p:setNoDisable( true ) -- Pilot can not be disabled anymore.
  *
  *    @luatparam Pilot p Pilot to set disable disabling.
  *    @luatparam[opt=true] boolean disable If true it disallows disabled of the pilot, otherwise
  *              it allows disabling which is the default.
- * @luafunc setNodisable( p, disable )
+ * @luafunc setNoDisable( p, disable )
  */
-static int pilotL_setNodisable( lua_State *L )
+static int pilotL_setNoDisable( lua_State *L )
 {
    Pilot *p;
    int disable;
