@@ -298,7 +298,7 @@ jobs:
 
           BUILD_DATE="$(date +%m_%d_%Y)"
 
-          VERSION="$(cat ../VERSION)"
+          VERSION="$(cat ${{ github.workspace }}/VERSION)"
            # Get version, negative minors mean betas
           if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
               BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
