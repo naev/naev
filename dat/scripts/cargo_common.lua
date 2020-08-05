@@ -135,19 +135,6 @@ function cargo_calculateRoute ()
 end
 
 
--- Construct the cargo mission description text
-function buildCargoMissionDescription( priority, amount, ctype, destplanet, destsys )
-   str = _("Shipment to %s")
-   if priority ~= nil then
-      str = priority .. _(" transport to %s")
-   end
-   if system.cur() ~= destsys then
-      str = string.format( _("%s in %s"), str, destsys:name() )
-   end
-   return string.format( _("%s (%s tonnes)"), str:format( destplanet:name()), amount )
-end
-
-
 -- Calculates the minimum possible time taken for the player to reach a destination.
 function cargoGetTransit( timelimit, numjumps, traveldist )
    local pstats   = player.pilot():stats()
