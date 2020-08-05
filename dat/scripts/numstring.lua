@@ -27,3 +27,20 @@ function creditstring( credits )
    return gettext.ngettext( "%s credit", "%s credits", credits ):format(
          numstring(credits) )
 end
+
+
+--[[
+-- @brief Properly converts a number of tonnes to a string, utilizing ngettext.
+--
+-- This adds "tonnes" to the output of numstring in a translatable way.
+-- Should be used everywhere a number of tonnes is displayed.
+--
+-- @usage tk.msg( "", _("You are carrying %s."):format( tonnestring(credits) ) )
+--
+--    @param tonnes Number of tonnes.
+--    @return A string taking the form of "X tonne" or "X tonnes".
+--]]
+function tonnestring( tonnes )
+   return gettext.ngettext( "%s tonne", "%s tonnes", tonnes ):format(
+         numstring(tonnes) )
+end
