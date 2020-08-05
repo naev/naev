@@ -238,7 +238,7 @@ static int lst_focus( Widget* lst, double bx, double by )
       w -= 10.;
 
    if (bx < w) {
-      i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 6.);
+      i = lst->dat.lst.pos + (lst->h - by - 4) / (gl_defFont.h + 6.);
       if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
          lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
