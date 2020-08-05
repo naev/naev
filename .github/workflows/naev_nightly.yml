@@ -45,7 +45,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-win32
+        name: win32
         path: ${{ github.workspace }}/naev-win32.exe
 
   win64:
@@ -81,7 +81,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-win64
+        name: win64
         path: ${{ github.workspace }}/naev-win64.exe
 
   lin64:
@@ -138,7 +138,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-linux-x86-64
+        name: linux-x86-64
         path: ${{ github.workspace }}/src/naev-linux-x86-64
 
   macos:
@@ -190,7 +190,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ github.sha }}-macos
+        name: macos
         path: ${{ github.workspace }}/naev-macos.zip
 
   ndata:
@@ -238,7 +238,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ndata-${{ github.sha }}
+          name: ndata
           path: ${{ github.workspace }}/ndata.zip
 
   release:
@@ -246,11 +246,9 @@ jobs:
       needs: [win64, win32, macos, lin64, ndata]
 
       steps:
- 
       - name: Create Release Staging Area
         run: |
-          mkdir -p temp
-          cd temp       
+          mkdir -p temp   
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
