@@ -13,16 +13,7 @@ function cargo_selectMissionDistance ()
 
    -- 70% chance of 0-3 jump distance
    if seed < 0.7 then
-      seed = rnd.rnd()
-      if seed < 0.30 then
-         missdist = 0
-      elseif seed < 0.50 then
-         missdist = 1
-      elseif seed < 0.60 then
-         missdist = 2
-      else
-         missdist = 3
-      end
+      missdist = rnd.rnd(0, 3)
    else
       missdist = rnd.rnd(4, 6)
    end
