@@ -14,11 +14,14 @@ function cargo_selectMissionDistance ()
    -- 70% chance of 0-3 jump distance
    if seed < 0.7 then
       seed = rnd.rnd()
-      if seed < 0.30 then missdist = 0
-      -- I assume this is supposed to be 50 and not 2 times 60
-      elseif seed < 0.50 then missdist = 1
-      elseif seed < 0.60 then missdist = 2
-      else missdist = 3
+      if seed < 0.30 then
+         missdist = 0
+      elseif seed < 0.50 then
+         missdist = 1
+      elseif seed < 0.60 then
+         missdist = 2
+      else
+         missdist = 3
       end
    else
       missdist = rnd.rnd(4, 6)
@@ -36,9 +39,7 @@ function cargo_selectPlanets(missdist, routepos)
             if v:services()["inhabited"] and v ~= planet.cur()
                   and not (s == system.cur()
                      and ( vec2.dist( v:pos(), routepos ) < 2500 ) )
-                  and v:canLand() and cargoValidDest( v )
-                  and ( v:faction() ~= faction.get("Thurion")
-                     or planet.cur():faction() == faction.get("Thurion") ) then
+                  and v:canLand() and cargoValidDest( v ) then
                planets[#planets + 1] = {v, s}
             end
          end
@@ -145,13 +146,15 @@ function cargoGetTransit( timelimit, numjumps, traveldist )
 end
 
 function cargoValidDest( targetplanet )
-   -- The blacklist are factions which cannot be delivered to by factions other than themselves, i.e. the Thurion and Proteron.
-   local blacklist = {
-                     faction.get("Proteron"),
-                     faction.get("Thurion"),
-                     }
-   for i,f in ipairs( blacklist ) do
-      if planet.cur():faction() == blacklist[i] and targetplanet:faction() ~= blacklist[i] then
+   -- factions which cannot be delivered to by factions other than themselves
+   local hidden = {
+      faction.get("FLF"),
+      faction.get("Pirate"),
+      faction.get("Proteron"),
+      faction.get("Thurion"),
+   }
+   for i, f in ipairs( hidden ) do
+      if targetplanet:faction() == f and planet.cur():faction() ~= f then
          return false
       end
    end

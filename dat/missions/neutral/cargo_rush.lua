@@ -3,8 +3,8 @@
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-require "dat/scripts/cargo_common.lua"
-require "dat/scripts/numstring.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
 
 misn_title = {}
@@ -39,7 +39,7 @@ piracyrisk[4] = _("Piracy Risk: High")
 
 --=Landing=--
 
-cargo_land_title = _("Delivery success!")
+cargo_land_title = _("Successful Delivery")
 
 cargo_land = {}
 cargo_land[1] = _("The containers of %s are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")

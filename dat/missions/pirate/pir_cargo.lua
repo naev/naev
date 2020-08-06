@@ -9,18 +9,6 @@
 require "cargo_common.lua"
 require "numstring.lua"
 
--- This is in cargo_common, but we need to increase the range…
-function cargo_selectMissionDistance ()
-   local seed = rnd.rnd()
-   if     seed < 0.20 then missdist = 3
-   elseif seed < 0.40 then missdist = 4
-   elseif seed < 0.60 then missdist = 5
-   elseif seed < 0.80 then missdist = 6
-   else                    missdist = 7
-   end
-
-   return missdist
-end
 
 misn_desc = _("Pirate cargo transport of contraband goods to %s in the %s system.")
 
@@ -45,6 +33,12 @@ cargo_always_available = true
 --   Pirates shipping missions are always timed, but quite lax on the schedules
 --   and pays a lot more then the rush missions
 --]]
+
+
+-- This is in cargo_common, but we need to increase the range
+function cargo_selectMissionDistance ()
+   return rnd.rnd( 3, 10 )
+end
 
 
 function create()
@@ -140,7 +134,7 @@ end
 function land()
    if planet.cur() == destplanet then
          tk.msg( _("Successful Delivery"), string.format(
-            _("The %s are unloaded at the docks."), cargo ) )
+            _("The containers of %s are unloaded at the docks."), cargo ) )
       player.pay(reward)
       n = var.peek("ps_misn")
       if n ~= nil then
