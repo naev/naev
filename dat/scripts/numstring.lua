@@ -35,7 +35,7 @@ end
 -- This adds "tonnes" to the output of numstring in a translatable way.
 -- Should be used everywhere a number of tonnes is displayed.
 --
--- @usage tk.msg( "", _("You are carrying %s."):format( tonnestring(credits) ) )
+-- @usage tk.msg( "", _("You are carrying %s."):format( tonnestring(tonnes) ) )
 --
 --    @param tonnes Number of tonnes.
 --    @return A string taking the form of "X tonne" or "X tonnes".
@@ -43,4 +43,21 @@ end
 function tonnestring( tonnes )
    return gettext.ngettext( "%s tonne", "%s tonnes", tonnes ):format(
          numstring(tonnes) )
+end
+
+
+--[[
+-- @brief Properly converts a number of jumps to a string, utilizing ngettext.
+--
+-- This adds "jumps" to the output of numstring in a translatable way.
+-- Should be used everywhere a number of jumps is displayed.
+--
+-- @usage tk.msg( "", _("The system is %s away."):format( jumpstring(jumps) ) )
+--
+--    @param jumps Number of jumps.
+--    @return A string taking the form of "X jump" or "X jumps".
+--]]
+function jumpstring( jumps )
+   return gettext.ngettext( "%s jump", "%s jumps", jumps ):format(
+         numstring(jumps) )
 end
