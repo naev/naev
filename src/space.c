@@ -1798,8 +1798,11 @@ char planet_getColourChar( Planet *p )
  */
 const char *planet_getSymbol( Planet *p )
 {
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED )) {
+      if (planet_hasService( p, PLANET_SERVICE_LAND ))
+         return "= ";
       return "";
+   }
 
    if (p->can_land || p->bribed) {
       if (areAllies(FACTION_PLAYER,p->faction))
