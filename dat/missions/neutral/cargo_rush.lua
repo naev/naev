@@ -30,14 +30,6 @@ Travel distance: %d
 %s
 Time limit: %s
 ]])
-   
-full = {}
-full[1] = _("No room in ship")
-full[2] = _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have).")
-
-slow = {}
-slow[1] = _("Too slow")
-slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?]])
 
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
@@ -127,14 +119,20 @@ end
 -- Mission is accepted
 function accept()
    if player.pilot():cargoFree() < amount then
-      tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
+      tk.msg( _("No room in ship"), string.format(
+         _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
+         tonnestring(amount),
+         tonnestring( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
    player.pilot():cargoAdd( cargo, amount ) 
    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
    player.pilot():cargoRm( cargo, amount ) 
    if timelimit < playerbest then
-      if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+      if not tk.yesno( _("Too slow"), string.format(
+            _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
+            (timelimit - time.get()):str(), (playerbest - time.get()):str(),
+            destplanet:name() ) ) then
          misn.finish()
       end
    end
