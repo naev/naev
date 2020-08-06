@@ -121,7 +121,7 @@ static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
-static int pilotL_setNodisable( lua_State *L );
+static int pilotL_setNoDisable( lua_State *L );
 static int pilotL_setSpeedLimit( lua_State *L);
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
@@ -196,7 +196,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setHealth", pilotL_setHealth },
    { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
-   { "setNodisable", pilotL_setNodisable },
+   { "setNoDisable", pilotL_setNoDisable },
    { "setSpeedLimit", pilotL_setSpeedLimit },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
@@ -2934,14 +2934,14 @@ static int pilotL_setNoboard( lua_State *L )
  *
  * No parameter is equivalent to true.
  *
- * @usage p:setNodisable( true ) -- Pilot can not be disabled anymore.
+ * @usage p:setNoDisable( true ) -- Pilot can not be disabled anymore.
  *
  *    @luatparam Pilot p Pilot to set disable disabling.
  *    @luatparam[opt=true] boolean disable If true it disallows disabled of the pilot, otherwise
  *              it allows disabling which is the default.
- * @luafunc setNodisable( p, disable )
+ * @luafunc setNoDisable( p, disable )
  */
-static int pilotL_setNodisable( lua_State *L )
+static int pilotL_setNoDisable( lua_State *L )
 {
    Pilot *p;
    int disable;
@@ -4171,7 +4171,7 @@ static int pilotL_setLeader( lua_State *L ) {
       escort_rmList(prev_leader, p->id);
 
    /* If the pilot has followers, they should be given the new leader as well */
-   for(i = 0; i<pilot_nstack; i++) {
+   for (i = 0; i<pilot_nstack; i++) {
       if (pilot_stack[i]->parent == p->id) {
          pilot_stack[i]->parent = p->parent;
       }
@@ -4195,7 +4195,7 @@ static int pilotL_followers( lua_State *L ) {
    p = luaL_validpilot(L, 1);
 
    lua_newtable(L);
-   for(i = 0; i < p->nescorts; i++) {
+   for (i = 0; i < p->nescorts; i++) {
       lua_pushnumber(L, i+1);
       lua_pushpilot(L, p->escorts[i].id);
       lua_rawset(L, -3);

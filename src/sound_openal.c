@@ -448,7 +448,7 @@ static int al_enableEFX (void)
    /* Create reverb effect. */
    nalGenEffects( 1, &efx_reverb );
    nalEffecti( efx_reverb, AL_EFFECT_TYPE, AL_EFFECT_REVERB );
-   if(alGetError() != AL_NO_ERROR) {
+   if (alGetError() != AL_NO_ERROR) {
       DEBUG(_("OpenAL Reverb not found, disabling."));
       al_info.efx_reverb = AL_FALSE;
       nalDeleteEffects( 1, &efx_reverb );
@@ -463,7 +463,7 @@ static int al_enableEFX (void)
    /* Create echo effect. */
    nalGenEffects( 1, &efx_echo );
    nalEffecti( efx_echo, AL_EFFECT_TYPE, AL_EFFECT_ECHO );
-   if(alGetError() != AL_NO_ERROR) {
+   if (alGetError() != AL_NO_ERROR) {
       DEBUG(_("OpenAL Echo not found, disabling."));
       al_info.efx_echo = AL_FALSE;
       nalDeleteEffects( 1, &efx_echo );

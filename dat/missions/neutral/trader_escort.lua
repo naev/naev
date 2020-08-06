@@ -1,66 +1,51 @@
 --Escort a convoy of traders to a destination--
 
-require "dat/scripts/nextjump.lua"
-require "dat/scripts/cargo_common.lua"
-require "dat/scripts/numstring.lua"
+require "nextjump.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
-misn_title = _("Escort a %s convoy to %s in %s.")
-misn_reward = _("%s credits")
 
-convoysizestr = {}
-convoysizestr[1] = _("tiny")
-convoysizestr[2] = _("small") 
-convoysizestr[3] = _("medium")
-convoysizestr[4] = _("large")
-convoysizestr[5] = _("huge")
+misn_title = {}
+misn_title[1] = _("Escort a tiny convoy to %s in %s.")
+misn_title[2] = _("Escort a small convoy to %s in %s.")
+misn_title[3] = _("Escort a medium convoy to %s in %s.")
+misn_title[4] = _("Escort a large convoy to %s in %s.")
+misn_title[5] = _("Escort a huge convoy to %s in %s.")
 
-title_p1 = _("A %s convoy of traders needs protection to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
+misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
    
--- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-title_p2 = _([[
-
+misn_details = _([[
 Cargo: %s
 Jumps: %d
 Travel distance: %d
-Piracy Risk: %s]])
+%s]])
 
 piracyrisk = {}
-piracyrisk[1] = _("None")
-piracyrisk[2] = _("Low")
-piracyrisk[3] = _("Medium")
-piracyrisk[4] = _("High")
-
-accept_title = _("Mission Accepted")
+piracyrisk[1] = _("Piracy Risk: None")
+piracyrisk[2] = _("Piracy Risk: Low")
+piracyrisk[3] = _("Piracy Risk: Medium")
+piracyrisk[4] = _("Piracy Risk: High")
 
 osd_title = _("Convey Escort")
 osd_msg = _("Escort a convoy of traders to %s in the %s system")
 
 slow = {}
 slow[1] = _("Not enough fuel")
-slow[2] = _([[The destination is %s jumps away, but you only have enough fuel for %s jumps. You cannot stop to refuel.
-
-Accept the mission anyway?]])
+slow[2] = _([[The destination is %s away, but you only have enough fuel for %s. You cannot stop to refuel. Accept the mission anyway?]])
 
 landsuccesstitle = _("Success!")
-landsuccesstext = _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount.")
+landsuccesstext = _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount.")
 
 landcasualtytitle = _("Success with Casualities")
 landcasualtytext = {}
-landcasualtytext[1] = _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly to provide compensation for the families of the lost crew members.")
-landcasualtytext[2] = _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. After a moment of silence of the lost crew members, you are paid a steeply discounted amount.")
-
-wrongsystitle = _("You diverged!")
-wrongsystext = _([[You have jumped to the wrong system! You are no longer part of the mission to escort the traders.]])
+landcasualtytext[1] = _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy.")
+landcasualtytext[2] = _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount.")
 
 convoydeathtitle = _("The convoy has been destroyed!")
 convoydeathtext = _([[All of the traders have been killed. You are a terrible escort.]])
 
 landfailtitle = _("You abandoned your mission!")
-landfailtext = _("You have landed, but you were supposed to escort the trading convoy. Your mission is a failure!")
-
-
-convoynoruntitle = _("You have left your convoy behind!")
-convoynoruntext = _([[You jumped before the rest of your convoy and the remaining ships scatter to find cover. You have abandoned your duties, and failed your mission.]])
+landfailtext = _("You have landed, abandoning your mission to escort the trading convoy.")
 
 convoynolandtitle = _("You landed before the convoy!")
 convoynolandtext = _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]])
@@ -112,50 +97,47 @@ function create()
    end
    reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
    
-   misn.setTitle( misn_title:format( convoysizestr[convoysize], destplanet:name(), destsys:name() ) )
-   misn.setDesc(title_p1:format(convoysizestr[convoysize], destplanet:name(), destsys:name()) .. title_p2:format(cargo, numjumps, traveldist, piracyrisk))
+   misn.setTitle( misn_title[convoysize]:format(
+      destplanet:name(), destsys:name() ) )
+   misn.setDesc( misn_desc:format( destplanet:name(), destsys:name() )
+      .. "\n\n" .. misn_details:format(
+         cargo, numjumps, traveldist, piracyrisk ) )
    misn.markerAdd(destsys, "computer")
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward( creditstring(reward) )
 end
 
 function accept()
    if convoysize == 1 then
       convoyname = "Trader Convoy 3"
-      alive = {true, true, true} -- Keep track of the traders. Update this when they die.
-      alive["__save"] = true
    elseif convoysize == 2 then
       convoyname = "Trader Convoy 4"
-      alive = {true, true, true, true}
-      alive["__save"] = true
    elseif convoysize == 3 then
       convoyname = "Trader Convoy 5"
-      alive = {true, true, true, true, true}
-      alive["__save"] = true
    elseif convoysize == 4 then
       convoyname = "Trader Convoy 6"
-      alive = {true, true, true, true, true, true}
-      alive["__save"] = true
    elseif convoysize == 5 then
-      convoyname = "Trader Convoy 8"
-      alive = {true, true, true, true, true, true, true, true}
-      alive["__save"] = true      
+      convoyname = "Trader Convoy 8"  
    end
  
    if player.jumps() < numjumps then
-      if not tk.yesno( slow[1], slow[2]:format( numjumps, player.jumps())) then
+      if not tk.yesno( slow[1], slow[2]:format(
+            jumpstring(numjumps), jumpstring( player.jumps() ) ) ) then
          misn.finish()
       end
    end
     
    nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
    origin = planet.cur() -- The place where the AI ships spawn from.
-   
+
+   orig_alive = nil
+   alive = nil
+   exited = 0
    misnfail = false
    unsafe = false
 
    misn.accept()
    misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
-   
+
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")
    hook.jumpout("jumpout")
@@ -167,183 +149,78 @@ function takeoff()
 end
 
 function jumpin()
-   if system.cur() ~= nextsys then -- player jumped to somewhere other than the next system
-      tk.msg(wrongsystitle, wrongsystext)
-      misn.finish(false)
-   elseif misnfail then -- Jumped ahead of traders. Convoy appears in next system,
-      hook.timer(4000, "convoyContinues") -- waits 4 secs then has them follow.
-   else -- Continue convoy
+   if system.cur() ~= nextsys then
+      fail( _("MISSION FAILED! You jumped into the wrong system.") )
+   else
       spawnConvoy()
    end
 end
 
 function jumpout()
-   if not convoyJump then
-      tk.msg(convoynoruntitle, convoynoruntext)
-      misnfail = true
+   if alive <= 0 or exited <= 0 then
+      fail( _("MISSION FAILED! You jumped before the convoy you were escorting.") )
+   else
+      -- Treat those that didn't exit as dead
+      alive = math.min( alive, exited )
    end
    origin = system.cur()
    nextsys = getNextSystem(system.cur(), destsys)
 end
 
 function land()
-   dead = 0
-   for k,v in pairs(alive) do
-      if v ~= true then
-      dead = dead + 1
-      end
-   end
+   alive = math.min( alive, exited )
+
    if planet.cur() ~= destplanet then
       tk.msg(landfailtitle, landfailtext)
       misn.finish(false)
-   elseif planet.cur() == destplanet and not convoyLand then
+   elseif alive <= 0 then
       tk.msg(convoynolandtitle, convoynolandtext)
       misn.finish(false)
-   elseif planet.cur() == destplanet and convoyLand and convoysize == 1 then
-      if dead == 0 then
-         tk.msg(landsuccesstitle, landsuccesstext)
-         player.pay(reward)
-         misn.finish(true)
-      elseif dead == 1 then
-         tk.msg(landcasualtytitle, landcasualtytext[1])
-         player.pay(reward/2)
-         misn.finish(true)
-      elseif dead == 2 then
-         tk.msg(landcasualtytitle, landcasualtytext[2])
-         player.pay(reward/4)
-         misn.finish(true)
+   else
+      if alive >= orig_alive then
+         tk.msg( landsuccesstitle, landsuccesstext )
+         player.pay( reward )
+      elseif alive / orig_alive >= 0.6 then
+         tk.msg( landcasualtytitle, landcasualtytext[1] )
+         player.pay( reward * alive / orig_alive )
+      else
+         tk.msg( landcasualtytitle, landcasualtytext[2] )
+         player.pay( reward * alive / orig_alive )
       end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 2 then
-      if dead == 0 then
-         tk.msg(landsuccesstitle, landsuccesstext)
-         player.pay(reward)
-         misn.finish(true)
-      elseif dead > 0 and dead < 3 then
-         tk.msg(landcasualtytitle, landcasualtytext[1])
-         player.pay(reward/2)
-         misn.finish(true)
-      elseif dead == 3 then
-         tk.msg(landcasualtytitle, landcasualtytext[2])
-         player.pay(reward/4)
-         misn.finish(true)
-      end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 3 then
-      if dead == 0 then
-         tk.msg(landsuccesstitle, landsuccesstext)
-         player.pay(reward)
-         misn.finish(true)
-      elseif dead > 0 and dead < 3 then
-         tk.msg(landcasualtytitle, landcasualtytext[1])
-         player.pay(reward/2)
-         misn.finish(true)
-      elseif dead >= 3 then
-         tk.msg(landcasualtytitle, landcasualtytext[2])
-         player.pay(reward/4)
-         misn.finish(true)
-      end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 4 then
-      if dead == 0 then
-         tk.msg(landsuccesstitle, landsuccesstext)
-         player.pay(reward)
-         misn.finish(true)
-      elseif dead <= 3 then
-         tk.msg(landcasualtytitle, landcasualtytext[1])
-         player.pay(reward/2)
-         misn.finish(true)
-      elseif dead > 3 then
-         tk.msg(landcasualtytitle, landcasualtytext[2])
-         player.pay(reward/4)
-         misn.finish(true)
-      end
-   elseif planet.cur() == destplanet and convoyLand == true and convoysize == 5 then
-      if dead == 0 then
-         tk.msg(landsuccesstitle, landsuccesstext)
-         player.pay(reward)
-         misn.finish(true)
-      elseif dead <= 4 then
-         tk.msg(landcasualtytitle, landcasualtytext[1])
-         player.pay(reward/2)
-         misn.finish(true)
-      elseif dead > 4 then
-         tk.msg(landcasualtytitle, landcasualtytext[2])
-         player.pay(reward/4)
-         misn.finish(true)
-      end
+      misn.finish( true )
    end
 end
 
 function traderDeath()
-   if convoysize == 1 then
-      if alive[3] then alive[3] = false
-      elseif alive[2] then alive[2] = false
-      else -- all convoy dead
-         tk.msg(convoydeathtitle, convoydeathtext)
-         misn.finish(false)
-      end
-   elseif convoysize == 2 then
-      if alive[4] then alive[4] = false
-      elseif alive[3] then alive[3] = false
-      elseif alive[2] then alive[2] = false
-      else -- all convoy dead
-         tk.msg(convoydeathtitle, convoydeathtext)
-         misn.finish(false)
-      end
-   elseif convoysize == 3 then
-      if alive[5] then alive[5] = false
-      elseif alive[4] then alive[4] = false
-      elseif alive[3] then alive[3] = false
-      elseif alive[2] then alive[2] = false
-      elseif alive[1] then alive[1] = false
-      else -- all convoy dead
-         tk.msg(convoydeathtitle, convoydeathtext)
-         misn.finish(false)
-      end
-   elseif convoysize == 4 then
-      if alive[6] then alive[6] = false
-      elseif alive[5] then alive[5] = false
-      elseif alive[4] then alive[4] = false
-      elseif alive[3] then alive[3] = false
-      elseif alive[2] then alive[2] = false
-      else -- all convoy dead
-         tk.msg(convoydeathtitle, convoydeathtext)
-         misn.finish(false)
-      end
-   elseif convoysize == 5 then
-      if alive[8] then alive[8] = false
-      elseif alive[7] then alive[7] = false
-      elseif alive[6] then alive[6] = false
-      elseif alive[5] then alive[5] = false
-      elseif alive[4] then alive[4] = false
-      elseif alive[3] then alive[3] = false
-      elseif alive[2] then alive[2] = false
-      else -- all convoy dead
-         tk.msg(convoydeathtitle, convoydeathtext)
-         misn.finish(false)
-      end
+   alive = alive - 1
+   if alive <= 0 then
+      fail( _("MISSION FAILED! The convoy you were escorting has been destroyed.") )
    end
 end
 
 -- Handle the jumps of convoy.
-function traderJump()
-   convoyJump = true
-   local broadcast = false
-   for i, j in pairs(convoy) do
-      if j:exists() and broadcast == false then
-         player.msg(string.format("%s has jumped to %s.", j:name(),getNextSystem(system.cur(), destsys):name()))
-         broadcast = true
+function traderJump( p, j )
+   if j:dest() == getNextSystem( system.cur(), destsys ) then
+      exited = exited + 1
+      if p:exists() then
+         player.msg( string.format(
+            "%s has jumped to %s.", p:name(), j:dest():name() ) )
       end
+   else
+      traderDeath()
    end
 end
 
 --Handle landing of convoy
-function traderLand()
-   convoyLand = true
-   local broadcast = false
-   for i, j in pairs(convoy) do
-      if j:exists() and broadcast == false then
-         player.msg(string.format("%s has landed on %s.", j:name(),destplanet:name()))
-         broadcast = true
+function traderLand( p, plnt )
+   if plnt == destplanet then
+      exited = exited + 1
+      if p:exists() then
+         player.msg( string.format(
+            "%s has landed on %s.", p:name(), plnt:name() ) )
       end
+   else
+      traderDeath()
    end
 end
 
@@ -352,7 +229,6 @@ end
 function traderAttacked( p, attacker )
    unsafe = true
    p:control( false )
-   p:hookClear()
    p:setNoJump( true )
    p:setNoLand( true )
 
@@ -378,73 +254,89 @@ function timer_traderSafe()
    end
 end
 
-function convoyContinues()
-   convoy = pilot.add(convoyname, nil, origin) 
-   for i, j in ipairs(convoy) do
-      if not alive[i] then j:rm() end -- Dead traders stay dead.
-      if j:exists() then
-         j:changeAI( "trader" )
-         j:control(false)
-      end
-   end 
-   misn.finish(false)
-end
-
 function spawnConvoy ()
-   convoyLand = false
-   convoyJump = false
-
    --Make it interesting
+   local ambush_src = destplanet
+   if system.cur() ~= destsys then
+      ambush_src = getNextSystem( system.cur(), destsys )
+   end
+
    if convoysize == 1 then
-      ambush = pilot.add("Trader Ambush 1", "baddie_norun", vec2.new(0, 0))
+      ambush = pilot.add("Trader Ambush 1", "baddie_norun", ambush_src)
    elseif convoysize == 2 then
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(1,2)), "baddie_norun", vec2.new(0, 0))
+      ambush = pilot.add(
+         string.format( "Trader Ambush %d", rnd.rnd(1,2) ), "baddie_norun",
+         ambush_src )
    elseif convoysize == 3 then
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,3)), "baddie_norun", vec2.new(0, 0))
+      ambush = pilot.add(
+         string.format( "Trader Ambush %d", rnd.rnd(2,3) ), "baddie_norun",
+         ambush_src )
    elseif convoysize == 4 then
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(2,4)), "baddie_norun", vec2.new(0, 0))
+      ambush = pilot.add(
+         string.format( "Trader Ambush %d", rnd.rnd(2,4) ), "baddie_norun",
+         ambush_src )
    else
-      ambush = pilot.add(string.format("Trader Ambush %i", rnd.rnd(3,5)), "baddie_norun", vec2.new(0, 0))
+      ambush = pilot.add(
+         string.format( "Trader Ambush %d", rnd.rnd(3,5) ), "baddie_norun",
+         ambush_src )
    end
 
    --Spawn the convoy
    convoy = pilot.add(convoyname, nil, origin)
    for i, j in ipairs(convoy) do
-      if not alive[i] then j:rm() end -- Dead traders stay dead.
-         if j:exists() then
-            j:rmOutfit( "cores" )
-            local class = j:ship():class()
-            if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
-                  or class == "Courier" or class == "Fighter" or class == "Bomber"
-                  or class == "Drone" or class == "Heavy Drone" then
-               j:addOutfit( "Unicorp PT-200 Core System" )
-               j:addOutfit( "Melendez Ox XL Engine" )
-               j:addOutfit( "S&K Small Cargo Hull" )
-            elseif class == "Freighter" or class == "Armoured Transport"
-                  or class == "Corvette" or class == "Destroyer" then
-               j:addOutfit( "Unicorp PT-600 Core System" )
-               j:addOutfit( "Melendez Buffalo XL Engine" )
-               j:addOutfit( "S&K Medium Cargo Hull" )
-            elseif class == "Cruiser" or class == "Carrier" then
-               j:addOutfit( "Unicorp PT-600 Core System" )
-               j:addOutfit( "Melendez Mammoth XL Engine" )
-               j:addOutfit( "S&K Large Cargo Hull" )
-            end
-
-            j:setHealth( 100, 100 )
-            j:setEnergy( 100 )
-            j:setTemp( 0 )
-            j:setFuel( true )
-            j:cargoAdd( cargo, j:cargoFree() )
-
-            j:control()
-            j:setHilight(true)
-            j:setInvincPlayer()
-            continueToDest( j )
-
-            hook.pilot(j, "death", "traderDeath")
-            hook.pilot(j, "attacked", "traderAttacked", j)
+      if alive ~= nil and alive < i then
+         j:rm()
       end
+      if j:exists() then
+         j:rmOutfit( "cores" )
+         local class = j:ship():class()
+         if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
+               or class == "Courier" or class == "Fighter" or class == "Bomber"
+               or class == "Drone" or class == "Heavy Drone" then
+            j:addOutfit( "Unicorp PT-200 Core System" )
+            j:addOutfit( "Melendez Ox XL Engine" )
+            j:addOutfit( "S&K Small Cargo Hull" )
+         elseif class == "Freighter" or class == "Armoured Transport"
+               or class == "Corvette" or class == "Destroyer" then
+            j:addOutfit( "Unicorp PT-600 Core System" )
+            j:addOutfit( "Melendez Buffalo XL Engine" )
+            j:addOutfit( "S&K Medium Cargo Hull" )
+         elseif class == "Cruiser" or class == "Carrier" then
+            j:addOutfit( "Unicorp PT-600 Core System" )
+            j:addOutfit( "Melendez Mammoth XL Engine" )
+            j:addOutfit( "S&K Large Cargo Hull" )
+         end
+
+         j:setHealth( 100, 100 )
+         j:setEnergy( 100 )
+         j:setTemp( 0 )
+         j:setFuel( true )
+         j:cargoAdd( cargo, j:cargoFree() )
+
+         j:control()
+         j:setHilight(true)
+         j:setInvincPlayer()
+         continueToDest( j )
+
+         hook.pilot( j, "death", "traderDeath" )
+         hook.pilot( j, "attacked", "traderAttacked", j )
+         hook.pilot( j, "land", "traderLand" )
+         hook.pilot( j, "jump", "traderJump" )
+      end
+   end
+
+   exited = 0
+   if orig_alive == nil then
+      orig_alive = 0
+      for i, p in ipairs( convoy ) do
+         if p ~= nil and p:exists() then
+            orig_alive = orig_alive + 1
+         end
+      end
+      alive = orig_alive
+
+      -- Shouldn't happen
+      if orig_alive <= 0 then misn.finish(false) end
    end
 
    hook.timer( 1000, "timer_traderSafe" )
@@ -458,10 +350,22 @@ function continueToDest( p )
 
       if system.cur() == destsys then
          p:land( destplanet, true )
-         hook.pilot( p, "land", "traderLand" )
       else
          p:hyperspace( getNextSystem( system.cur(), destsys ), true )
-         hook.pilot( p, "jump", "traderJump" )
       end
    end
+end
+
+-- Fail the mission, showing message to the player.
+function fail( message )
+   if message ~= nil then
+      -- Pre-colourized, do nothing.
+      if message:find("\a") then
+         player.msg( message )
+      -- Colourize in red.
+      else
+         player.msg( "\ar" .. message .. "\a0" )
+      end
+   end
+   misn.finish( false )
 end

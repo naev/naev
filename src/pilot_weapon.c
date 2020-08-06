@@ -917,7 +917,7 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel
    orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
    orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
-   if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
+   if ( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
       t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
    else

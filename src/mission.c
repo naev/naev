@@ -890,14 +890,23 @@ int missions_load (void)
    int i, m;
    size_t bufsize;
    char *buf;
+   xmlNodePtr node;
+   xmlDocPtr doc;
 
    for (i=0; i<MISSION_MAX; i++)
       player_missions[i] = calloc(1, sizeof(Mission));
 
    buf = ndata_read( MISSION_DATA_PATH, &bufsize );
+   if (buf == NULL) {
+      WARN(_("Unable to read data from '%s'"), MISSION_DATA_PATH);
+      return -1;
+   }
 
-   xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN(_("Unable to parse document '%s'"), MISSION_DATA_PATH);
+      return -1;
+   }
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_MISSION_ID)) {

@@ -568,10 +568,7 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, NULL, _("Reward:") );
-   window_addText( wid, w/2 + 70, y,
-         w/2 - 90, 20, 0,
-         "txtReward", &gl_smallFont, NULL, NULL );
+         "txtReward", &gl_smallFont, NULL, _("Reward: None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, h/2-90, 0,
@@ -704,7 +701,7 @@ static void misn_update( unsigned int wid, char* str )
    (void) str;
    char *active_misn;
    Mission* misn;
-   char txt[256], *buf;
+   char txt[512], *buf;
 
    /* Clear computer markers. */
    space_clearComputerMarkers();
@@ -719,7 +716,7 @@ static void misn_update( unsigned int wid, char* str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("None") );
+      window_modifyText( wid, "txtReward", _("Reward: None") );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -730,7 +727,8 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   window_modifyText( wid, "txtReward", misn->reward );
+   nsnprintf( txt, sizeof(txt), _("Reward: %s"), misn->reward );
+   window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
 }

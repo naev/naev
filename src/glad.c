@@ -57,7 +57,7 @@ static
 int open_gl(void) {
 #ifndef IS_UWP
     libGL = LoadLibraryW(L"opengl32.dll");
-    if(libGL != NULL) {
+    if (libGL != NULL) {
         void (* tmp)(void);
         tmp = (void(*)(void)) GetProcAddress(libGL, "wglGetProcAddress");
         gladGetProcAddressPtr = (PFNWGLGETPROCADDRESSPROC_PRIVATE) tmp;
@@ -70,7 +70,7 @@ int open_gl(void) {
 
 static
 void close_gl(void) {
-    if(libGL != NULL) {
+    if (libGL != NULL) {
         FreeLibrary((HMODULE) libGL);
         libGL = NULL;
     }
@@ -98,10 +98,10 @@ int open_gl(void) {
 #endif
 
     unsigned int index = 0;
-    for(index = 0; index < (sizeof(NAMES) / sizeof(NAMES[0])); index++) {
+    for (index = 0; index < (sizeof(NAMES) / sizeof(NAMES[0])); index++) {
         libGL = dlopen(NAMES[index], RTLD_NOW | RTLD_GLOBAL);
 
-        if(libGL != NULL) {
+        if (libGL != NULL) {
 #if defined(__APPLE__) || defined(__HAIKU__)
             return 1;
 #else
@@ -117,7 +117,7 @@ int open_gl(void) {
 
 static
 void close_gl(void) {
-    if(libGL != NULL) {
+    if (libGL != NULL) {
         dlclose(libGL);
         libGL = NULL;
     }
@@ -127,14 +127,14 @@ void close_gl(void) {
 static
 void* get_proc(const char *namez) {
     void* result = NULL;
-    if(libGL == NULL) return NULL;
+    if (libGL == NULL) return NULL;
 
 #if !defined(__APPLE__) && !defined(__HAIKU__)
-    if(gladGetProcAddressPtr != NULL) {
+    if (gladGetProcAddressPtr != NULL) {
         result = gladGetProcAddressPtr(namez);
     }
 #endif
-    if(result == NULL) {
+    if (result == NULL) {
 #if defined(_WIN32) || defined(__CYGWIN__)
         result = (void*)GetProcAddress((HMODULE) libGL, namez);
 #else
@@ -148,7 +148,7 @@ void* get_proc(const char *namez) {
 int gladLoadGL(void) {
     int status = 0;
 
-    if(open_gl()) {
+    if (open_gl()) {
         status = gladLoadGLLoader(&get_proc);
         close_gl();
     }
@@ -171,7 +171,7 @@ static char **exts_i = NULL;
 
 static int get_exts(void) {
 #ifdef _GLAD_IS_SOME_NEW_VERSION
-    if(max_loaded_major < 3) {
+    if (max_loaded_major < 3) {
 #endif
         exts = (const char *)glGetString(GL_EXTENSIONS);
 #ifdef _GLAD_IS_SOME_NEW_VERSION
@@ -188,12 +188,12 @@ static int get_exts(void) {
             return 0;
         }
 
-        for(index = 0; index < (unsigned)num_exts_i; index++) {
+        for (index = 0; index < (unsigned)num_exts_i; index++) {
             const char *gl_str_tmp = (const char*)glGetStringi(GL_EXTENSIONS, index);
             size_t len = strlen(gl_str_tmp);
 
             char *local_str = (char*)malloc((len+1) * sizeof(char));
-            if(local_str != NULL) {
+            if (local_str != NULL) {
                 memcpy(local_str, gl_str_tmp, (len+1) * sizeof(char));
             }
             exts_i[index] = local_str;
@@ -206,7 +206,7 @@ static int get_exts(void) {
 static void free_exts(void) {
     if (exts_i != NULL) {
         int index;
-        for(index = 0; index < num_exts_i; index++) {
+        for (index = 0; index < num_exts_i; index++) {
             free((char *)exts_i[index]);
         }
         free((void *)exts_i);
@@ -216,24 +216,24 @@ static void free_exts(void) {
 
 static int has_ext(const char *ext) {
 #ifdef _GLAD_IS_SOME_NEW_VERSION
-    if(max_loaded_major < 3) {
+    if (max_loaded_major < 3) {
 #endif
         const char *extensions;
         const char *loc;
         const char *terminator;
         extensions = exts;
-        if(extensions == NULL || ext == NULL) {
+        if (extensions == NULL || ext == NULL) {
             return 0;
         }
 
-        while(1) {
+        while (1) {
             loc = strstr(extensions, ext);
-            if(loc == NULL) {
+            if (loc == NULL) {
                 return 0;
             }
 
             terminator = loc + strlen(ext);
-            if((loc == extensions || *(loc - 1) == ' ') &&
+            if ((loc == extensions || *(loc - 1) == ' ') &&
                 (*terminator == ' ' || *terminator == '\0')) {
                 return 1;
             }
@@ -242,11 +242,11 @@ static int has_ext(const char *ext) {
 #ifdef _GLAD_IS_SOME_NEW_VERSION
     } else {
         int index;
-        if(exts_i == NULL) return 0;
-        for(index = 0; index < num_exts_i; index++) {
+        if (exts_i == NULL) return 0;
+        for (index = 0; index < num_exts_i; index++) {
             const char *e = exts_i[index];
 
-            if(exts_i[index] != NULL && strcmp(e, ext) == 0) {
+            if (exts_i[index] != NULL && strcmp(e, ext) == 0) {
                 return 1;
             }
         }

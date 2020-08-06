@@ -673,7 +673,7 @@ static int misn_cargoAdd( lua_State *L )
    cargo = commodity_get( cname );
 
    /* Check if the cargo exists. */
-   if(cargo == NULL) {
+   if (cargo == NULL) {
       NLUA_ERROR(L, _("Cargo '%s' not found."), cname);
       return 0;
    }

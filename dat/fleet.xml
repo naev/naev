@@ -320,8 +320,6 @@
    <pilot name="Collective Drone" ship="Drone"></pilot>
    <pilot name="Collective Drone" ship="Drone"></pilot>
    <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
    <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
   </pilots>
  </fleet>

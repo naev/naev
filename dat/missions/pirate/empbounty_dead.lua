@@ -33,18 +33,16 @@ require "dat/missions/pirate/common.lua"
 
 
 -- Mission details
-misn_title  = _("PIRACY: %s Assassination Job in %s")
+misn_title = {}
+misn_title[1] = _("PIRACY: Quick Assassination Job in %s")
+misn_title[2] = _("PIRACY: Small Assassination Job in %s")
+misn_title[3] = _("PIRACY: Moderate Assassination Job in %s")
+misn_title[4] = _("PIRACY: Big Assassination Job in %s")
+misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s")
+misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s")
 misn_reward = _("%s credits")
 misn_desc   = _("A meddlesome %s pilot was recently seen in the %s system. Local crime lords want this pilot dead.")
-desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!!")
-
-misn_level    = {}
-misn_level[1] = _("Quick")            -- Empire Shark
-misn_level[2] = _("Small")            -- Empire Lancelot
-misn_level[3] = _("Moderate")         -- Empire Admonisher
-misn_level[4] = _("Big")              -- Empire Pacifier
-misn_level[5] = _("Dangerous")        -- Empire Hawking
-misn_level[6] = _("Highly Dangerous") -- Empire Peacemaker
+desc_illegal_warning = "\ar" .. _("WARNING: This mission is illegal and will get you in trouble with the authorities!") .. "\a0"
 
 -- Messages
 msg    = {}
@@ -124,14 +122,14 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
+   misn.setTitle( misn_title[level]:format( missys:name() ) )
 
    if planet.cur():faction() == faction.get("Pirate") then
-      misn.setDesc( misn_desc:format( target_faction, missys:name(), paying_faction:name() ) )
+      misn.setDesc( misn_desc:format( target_faction, missys:name() ) )
    else
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
-      misn.setDesc( misn_desc:format( target_faction, missys:name(), paying_faction:name() ) .. "\n\n" .. desc_illegal_warning )
+      misn.setDesc( misn_desc:format( target_faction, missys:name() ) .. "\n\n" .. desc_illegal_warning )
    end
 
    misn.setReward( misn_reward:format( numstring( credits ) ) )
@@ -279,7 +277,7 @@ function level_setup ()
       elseif num_pirates <= 800 then
          level = rnd.rnd( 2, 5 )
       else
-         level = rnd.rnd( 3, #misn_level )
+         level = rnd.rnd( 3, #misn_title )
       end
       -- House Sirius does not have a Destroyer class ship
       if level == 4 then level = 3 end
@@ -291,7 +289,7 @@ function level_setup ()
       elseif num_pirates <= 800 then
          level = rnd.rnd( 3, 5 )
       else
-         level = rnd.rnd( 4, #misn_level )
+         level = rnd.rnd( 4, #misn_title )
       end
    else
       if num_pirates <= 150 then
@@ -305,7 +303,7 @@ function level_setup ()
       elseif num_pirates <= 800 then
          level = rnd.rnd( 2, 5 )
       else
-         level = rnd.rnd( 3, #misn_level )
+         level = rnd.rnd( 3, #misn_title )
       end
    end
 end

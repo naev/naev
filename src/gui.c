@@ -628,7 +628,7 @@ static void gui_renderBorder( double dt )
    /* Draw planets. */
    for (i=0; i<cur_system->nplanets; i++) {
       /* Check that it's real. */
-      if(cur_system->planets[i]->real != ASSET_REAL)
+      if (cur_system->planets[i]->real != ASSET_REAL)
          continue;
 
       pnt = cur_system->planets[i];

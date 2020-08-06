@@ -110,8 +110,8 @@ static void fad_render( Widget* fad, double bx, double by )
    kh = (h > w ? 15. : h);
 
    /* Draw. */
-   toolkit_drawRect(kx, ky, kw , kh, toolkit_col, NULL);
-   toolkit_drawOutline(kx, ky, kw , kh, 1., toolkit_colDark, NULL);
+   toolkit_drawRect(kx, ky, kw, kh, toolkit_colLight, NULL);
+   toolkit_drawOutline(kx + 1, ky, kw - 1, kh - 1, 1., toolkit_colDark, NULL);
 }
 
 

@@ -36,11 +36,10 @@
 --]]
 
 -- require statements go here. Most missions should include
--- numstring.lua, which provides the useful `numstring()` function. We
--- use this function to format numbers properly in Naev, e.g. by
--- applying thousands separators and replacing very very large numbers
--- with shorthands. dat/missions/neutral/common.lua provides the
--- addMiscLog function, which is typically used for non-factional
+-- numstring.lua, which provides the useful `numstring()` and
+-- `creditstring()` functions. We use these functions to format numbers
+-- as text properly in Naev. dat/missions/neutral/common.lua provides
+-- the addMiscLog function, which is typically used for non-factional
 -- unique missions.
 require "numstring.lua"
 require "dat/missions/neutral/common.lua"
@@ -66,6 +65,10 @@ dialog strings, as shown below.
 One thing to keep in mind: the player can be any gender, so keep all
 references to the player gender-neutral. If you need to use a
 third-person pronoun for the player, singular "they" is the best choice.
+
+You may notice instances of "%s" sprinkled throughout the text. These
+are portions that will be filled in later by the mission via the
+`string.format()` function.
 --]]
 ask_text = _([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
     "Actually, that reminds me! There was a special suit on %s in the %s system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you %s for it! What do you say?"]])
@@ -90,17 +93,13 @@ function create ()
    credits = 250000
    talked = false
 
-   -- ngettext is a bit more complicated than regular gettext. We use
-   -- this for anything that has a variable amount (and can thus require
-   -- different terminology in some languages, as with singular vs
-   -- plural in English).
-   --
-   -- string.format (here used as `ngettext(...):format(...)`) is used
-   -- to add the actual number to "%s credits". Notice the usage of the
-   -- `numstring()` function, which converts the number into a pretty
-   -- string.
-   reward_text = gettext.ngettext(
-         "%s credit", "%s credits", credits ):format( numstring(credits) )
+   -- Here we use the `creditstring()` function to convert our credits
+   -- from a number to a string. This function both applies gettext
+   -- correctly for variable amounts (by using the ngettext function),
+   -- and formats the number in a way that is appropriate for Naev (by
+   -- using the numstring function). You should always use this when
+   -- displaying a number of credits.
+   reward_text = creditstring(credits)
    
    -- If we needed to claim a system, we would do that here with
    -- something like the following commented out statement. However,
@@ -116,17 +115,21 @@ end
 
 
 --[[
-This is an *obligatory* part which is run when the player approaches the character.
+This is an *obligatory* part which is run when the player approaches the
+character.
 
-Run misn.accept() here, this enables the mission to run when the player enters the bar.
-If the mission doesn't get accepted, it gets trashed.
-Also set the mission details.
+Run misn.accept() here to internally "accept" the mission. This is
+required; if you don't call misn.accept(), the mission is scrapped.
+This is also where mission details are set.
 --]]
 function accept ()
    -- Use different text if we've already talked to him before than if
    -- this is our first time.
    local text
    if talked then
+      -- We use `string.format()` here to fill in the destination and
+      -- reward text. `s1:format(s2)` is a shorthand for
+      -- `string.format(s1, s2)`.
       text = _([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to %s in the %s system, and I'll pay you %s when we get there. How's that sound?"]]):format( misplanet:name(), missys:name(), reward_text )
    else
       text = ask_text
@@ -136,7 +139,7 @@ function accept ()
    -- This will create the typical "Yes/No" dialogue. It returns true if
    -- yes was selected. 
    if tk.yesno( _("My Suit Collection"),
-         _(ask_text):format( reward_text ) ) then
+         ask_text:format( reward_text ) ) then
       -- Followup text.
       tk.msg( _("My Suit Collection"), _([["Fantastic! I knew you would do it! Like I said, I'll pay you as soon as we get there. No rush! Just bring me there when you're ready.]]) )
 

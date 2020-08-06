@@ -280,8 +280,11 @@ int *generate_news( char* faction )
       }
 
       /* if article is okay */
-      if (!strcmp(article_ptr->faction, "Generic") || ((faction != NULL) && !strcmp(article_ptr->faction, faction))) {
-         if (article_ptr->date && article_ptr->date<40000000000000) {
+      if ( (strcmp(article_ptr->faction, "Generic") == 0)
+            || ( (faction != NULL)
+               && (strcmp(article_ptr->faction, faction) == 0) ) ) {
+         /* XXX: magic number */
+         if (article_ptr->date && (article_ptr->date < 40000000000000)) {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s: %s\a0\n\n"
@@ -297,7 +300,7 @@ int *generate_news( char* faction )
 
       article_ptr = article_ptr->next;
 
-   } while(article_ptr != NULL);
+   } while (article_ptr != NULL);
 
    if (p == 0)
       nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));

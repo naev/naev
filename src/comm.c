@@ -289,8 +289,10 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    }
 
    /* Get faction details. */
-   comm_graphic   = gfx;
-   logo           = faction_logoSmall(faction);
+   comm_graphic = gfx;
+   logo = NULL;
+   if ( faction_isKnown(faction) )
+      logo = faction_logoSmall(faction);
 
    /* Get standing colour / text. */
    stand = faction_getStandingBroad( faction, bribed, override );

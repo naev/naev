@@ -32,7 +32,7 @@
 #include "ndata.h"
 #include "map_system.h"
 
-#define BUTTON_WIDTH    80 /**< Map button width. */
+#define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
@@ -304,10 +304,10 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
-   window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
+   window_addButton( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom );
+   window_addButton( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
-   window_addText( wid, 140, 10, w - 80 - 30 - 30 - 60, 30, 0,
+   window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
@@ -337,7 +337,7 @@ static void map_update_commod_av_price()
    int i,j,k;
    StarSystem *sys;
    Planet *p;
-   if(cur_commod == -1 || map_selected == -1) {
+   if (cur_commod == -1 || map_selected == -1) {
       commod_av_gal_price = 0;
       return;
    }
@@ -356,10 +356,10 @@ static void map_update_commod_av_price()
             double sumPrice=0;
             int sumCnt=0;
             double thisPrice;
-            for( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<sys->nplanets; j++) {
                p=sys->planets[j];
-               for( k=0; k<p->ncommodities; k++) {
-                  if( p->commodities[k] == c ) {
+               for ( k=0; k<p->ncommodities; k++) {
+                  if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
                         sumPrice+=thisPrice;
@@ -369,7 +369,7 @@ static void map_update_commod_av_price()
                   }
                }
             }
-            if( sumCnt>0 ) {
+            if ( sumCnt>0 ) {
                totPrice += sumPrice / sumCnt;
                totPriceCnt++;
             }
@@ -423,10 +423,10 @@ static void map_update( unsigned int wid )
    map_update_commod_av_price();
 
    /* Economy button */
-   if( cur_commod >= 0 ) {
+   if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         if(sys!=NULL) {
+         if (sys!=NULL) {
             snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/blue values mean a profit\nwhile negative/orange values mean a loss when sold at the corresponding system.",c->name,sys->name);
             window_modifyText( wid, "txtSystemStatus", buf );
          }
@@ -501,6 +501,8 @@ static void map_update( unsigned int wid )
       if (sys->planets[i]->real != ASSET_REAL)
          continue;
       if (!planet_isKnown(sys->planets[i]))
+         continue;
+      if (!faction_isKnown(sys->planets[i]->faction))
          continue;
 
       if ((f==-1) && (sys->planets[i]->faction>0)) {
@@ -638,7 +640,7 @@ static void map_update( unsigned int wid )
    /*
     * System Status, if not showing commodity info
     */
-   if( cur_commod == -1 ) {
+   if ( cur_commod == -1 ) {
       buf[0] = '\0';
       p = 0;
       /* Nebula. */
@@ -1362,7 +1364,7 @@ void map_renderCommod( double bx, double by, double x, double y,
    char buf[80];
    int textw;
    /* If not plotting commodities, return */
-   if(cur_commod == -1 || map_selected == -1)
+   if (cur_commod == -1 || map_selected == -1)
       return;
 
    c=commod_known[cur_commod];
@@ -1374,7 +1376,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       sys = system_getIndex( map_selected );
       if ( sys == cur_system && landed ) {
          for ( k=0; k<land_planet->ncommodities; k++ ) {
-            if( land_planet->commodities[k] == c ) {
+            if ( land_planet->commodities[k] == c ) {
                /* current planet has the commodity of interest */
                curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
                curMaxPrice = curMinPrice;
@@ -1395,21 +1397,21 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<sys->nplanets; j++) {
                p=sys->planets[j];
-               for( k=0; k<p->ncommodities; k++) {
-                  if( p->commodities[k] == c ) {
+               for ( k=0; k<p->ncommodities; k++) {
+                  if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-                        if(thisPrice > maxPrice)maxPrice=thisPrice;
-                        if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
+                        if (thisPrice > maxPrice)maxPrice=thisPrice;
+                        if (minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
                         break;
                      }
                   }
                }
                
             }
-            if( maxPrice == 0 ) {/* no prices are known here */
+            if ( maxPrice == 0 ) {/* no prices are known here */
                textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
                gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
                snprintf(buf,80,"%s here",c->name);
@@ -1450,14 +1452,14 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<sys->nplanets; j++) {
                p=sys->planets[j];
-               for( k=0; k<p->ncommodities; k++) {
-                  if( p->commodities[k] == c ) {
+               for ( k=0; k<p->ncommodities; k++) {
+                  if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-                        if(thisPrice > maxPrice)maxPrice=thisPrice;
-                        if(minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
+                        if (thisPrice > maxPrice)maxPrice=thisPrice;
+                        if (minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
                         break;
                      }
                   }
@@ -1466,7 +1468,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             
             
             /* Calculate best and worst profits */
-            if( maxPrice > 0 ) {
+            if ( maxPrice > 0 ) {
                /* Commodity sold at this system */
                best = maxPrice - curMinPrice ;
                worst= minPrice - curMaxPrice ;
@@ -1512,10 +1514,10 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             double sumPrice=0;
             int sumCnt=0;
-            for( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<sys->nplanets; j++) {
                p=sys->planets[j];
-               for( k=0; k<p->ncommodities; k++) {
-                  if( p->commodities[k] == c ) {
+               for ( k=0; k<p->ncommodities; k++) {
+                  if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
                         sumPrice+=thisPrice;
@@ -1526,7 +1528,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                }
             }
             
-            if( sumCnt > 0 ) {
+            if ( sumCnt > 0 ) {
                /* Commodity sold at this system */
                /* Colour as a % of global average */
                double frac;
@@ -1684,10 +1686,10 @@ static void map_genModeList(void)
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
-      for( j=0 ; j<sys->nplanets; j++) {
+      for ( j=0 ; j<sys->nplanets; j++) {
          p=sys->planets[j];
          tot+=p->ncommodities;
-         for( k=0; k<p->ncommodities; k++) {
+         for ( k=0; k<p->ncommodities; k++) {
             if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                /* find out which commodity this is */
                for ( l=0 ; l<totGot; l++) {
@@ -1794,7 +1796,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          window_destroyWidget( wid, "lstMapMode" );
       } else {/* show the list widget */
          this_map_modes = calloc( sizeof(char*), nmap_modes );
-         for(int i=0; i<nmap_modes;i++) {
+         for (int i=0; i<nmap_modes;i++) {
             this_map_modes[i]=strdup(map_modes[i]);
          }
          listMapModeVisible = 2;

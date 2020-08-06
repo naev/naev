@@ -1,5 +1,5 @@
-require "dat/scripts/jumpdist.lua"
-require "dat/scripts/nextjump.lua"
+require "jumpdist.lua"
+require "nextjump.lua"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
 cargo_use_hidden = false
@@ -132,19 +132,6 @@ function cargo_calculateRoute ()
 
    -- Return lots of stuff
    return destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier
-end
-
-
--- Construct the cargo mission description text
-function buildCargoMissionDescription( priority, amount, ctype, destplanet, destsys )
-   str = _("Shipment to %s")
-   if priority ~= nil then
-      str = priority .. _(" transport to %s")
-   end
-   if system.cur() ~= destsys then
-      str = string.format( _("%s in %s"), str, destsys:name() )
-   end
-   return string.format( _("%s (%s tonnes)"), str:format( destplanet:name()), amount )
 end
 
 
