@@ -127,7 +127,6 @@ dat/factions/standing/skel.lua
 dat/factions/standing/soromid.lua
 dat/factions/standing/static.lua
 dat/factions/standing/thurion.lua
-dat/factions/standing/trader.lua
 dat/factions/standing/zalek.lua
 dat/gui/brushed.lua
 dat/gui/legacy.lua
@@ -183,6 +182,7 @@ dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
 dat/missions/neutral/animaltransport.lua
+dat/missions/neutral/anxiousmerchant.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
@@ -259,8 +259,6 @@ dat/missions/soromid/comingout/srm_comingout6.lua
 dat/missions/soromid/comingout/srm_comingout.lua
 dat/missions/soromid/common.lua
 dat/missions/soromid/srm_rehab.lua
-dat/missions/trader/anxiousmerchant.lua
-dat/missions/trader/trader_rehab.lua
 dat/missions/tutorial/tutorial.lua
 dat/missions/zalek/common.lua
 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua
