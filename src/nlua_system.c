@@ -503,7 +503,7 @@ static int systemL_jumpPath( lua_State *L )
 /**
  * @brief Gets all the adjacent systems to a system.
  *
- * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ * @usage for i, s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *
  *    @luatparam System s System to get adjacent systems of.
  *    @luatparam[opt=false] boolean hidden Whether or not to show hidden jumps also.
@@ -542,7 +542,7 @@ static int systemL_adjacent( lua_State *L )
 /**
  * @brief Gets all the jumps in a system.
  *
- * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
+ * @usage for i, s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
  *    @luatparam System s System to get the jumps of.
  *    @luatparam[opt=false] boolean exitonly Whether to exclude exit-only jumps.
