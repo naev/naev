@@ -60,20 +60,16 @@ log_text = _([[You helped Nexus Shipyards gather information in an attempt to sa
 
 
 function create ()
-   local i = 0 -- Prevent infinite loops
-   repeat
-      mispla, missys = planet.getLandable(faction.get("Sirius"))
-      i = i + 1
-   until mispla:services()["bar"] or i > 10000
+   mispla, missys = planet.getLandable(faction.get("Sirius"))
+
+   if not misn.claim(missys) or not mispla:services()["bar"] then
+      misn.finish(false)
+   end
 
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
-
-   if not misn.claim(missys) then
-      misn.finish(false)
-   end
 
    misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
