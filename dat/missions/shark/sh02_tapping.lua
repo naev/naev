@@ -60,9 +60,11 @@ log_text = _([[You helped Nexus Shipyards gather information in an attempt to sa
 
 
 function create ()
+   local i = 0 -- Prevent infinite loops
    repeat
       mispla, missys = planet.getLandable(faction.get("Sirius"))
-   until mispla:services()["bar"]
+      i = i + 1
+   until mispla:services()["bar"] or i > 10000
 
    pplname = "Darkshed"
    psyname = "Alteris"
@@ -100,7 +102,7 @@ function accept()
 
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
-      else
+   else
       tk.msg(refusetitle, refusetext)
       misn.finish(false)
    end
@@ -129,9 +131,9 @@ end
 function enter()
    -- Ambush !
    if stage == 1 and rnd.rnd() < proba then
-      ambush()
+      hook.timer( 2000, "ambush" )
       proba = proba - 0.2
-      elseif stage == 1 then
+   elseif stage == 1 then
       --the probality of an ambush goes up when you cross a system without meeting any ennemy
       proba = proba + 0.1
    end
@@ -150,15 +152,17 @@ function beginrun()
 end
 
 function ambush()
-   --Looking at the player ship's class in order to spawn the most dangerous ennemy to him
+   --Looking at the player ship's class in order to spawn the most dangerous enemy to him
    playerclass = player.pilot():ship():class()
    badguys = {}
 
-   if playerclass == "Scout" or playerclass == "Fighter" or playerclass == "Drone" or playerclass == "Heavy Drone" or playerclass == "Luxury Yacht" or playerclass == "Yacht" or palyerclass == "Courier" then
-
+   if playerclass == "Scout" or playerclass == "Fighter"
+         or playerclass == "Drone" or playerclass == "Heavy Drone"
+         or playerclass == "Luxury Yacht" or playerclass == "Yacht"
+         or palyerclass == "Courier" then
       if rnd.rnd() < 0.7 then
          interceptors()
-         else
+      else
          hvy_intercept()
       end
 
@@ -167,9 +171,9 @@ function ambush()
       local rand = rnd.rnd()
       if rand < 0.5 then
          hvy_intercept()
-         elseif  rand < 0.8 then
+      elseif  rand < 0.8 then
          interceptors()
-         else
+      else
          corvette()
       end
 
@@ -177,7 +181,7 @@ function ambush()
 
       if rnd.rnd() < 0.6 then
          corvette()
-         else
+      else
          cruiser()
       end
 
@@ -186,9 +190,9 @@ function ambush()
       local rand = rnd.rnd()
       if rand < 0.6 then
          cruiser()
-         elseif rand < 0.8 then
+      elseif rand < 0.8 then
          corvette()
-         else
+      else
          hvy_intercept()
       end
 
@@ -196,11 +200,11 @@ function ambush()
 
       if rnd.rnd() < 0.7 then
          bombers()
-         else
+      else
          hvy_intercept()
       end
 
-      else     --The fact you don't have a ship class in the list doesn't means you're safe !
+   else --The fact you don't have a ship class in the list doesn't means you're safe !
       littleofall()
    end
    --and a Llama for variety :
@@ -350,7 +354,7 @@ function littleofall()
    --spawning random ennemies
    if rnd.rnd() < 0.5 then
       interceptors()
-      else
+   else
       hvy_intercept()
    end
 end
