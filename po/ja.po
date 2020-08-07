@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues/\n"
-"POT-Creation-Date: 2020-08-07 12:12-0400\n"
+"POT-Creation-Date: 2020-08-07 14:14-0400\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -6385,10 +6385,6 @@ msgstr ""
 #. Maximum change constraints
 #. Maximum change constraints
 #. Starting mission cap, gets overwritten
-#. Kill cap
-#. Maximum change constraints
-#. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #.
 #. basically just copied skel.lua and made it work.
 #. --
@@ -8409,7 +8405,7 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/dvaered/common.lua:11 dat/faction.xml:233
+#: ../dat/missions/dvaered/common.lua:11 dat/faction.xml:234
 #: dat/mission.xml:193 dat/mission.xml:206 dat/mission.xml:617
 #: dat/mission.xml:638 dat/mission.xml:659 dat/mission.xml:705
 #: dat/mission.xml:775 dat/mission.xml:1078 dat/mission.xml:1102
@@ -10447,7 +10443,7 @@ msgstr ""
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/empire/common.lua:19 ../dat/missions/empire/common.lua:25
-#: dat/faction.xml:159 dat/mission.xml:43 dat/mission.xml:618
+#: dat/faction.xml:160 dat/mission.xml:43 dat/mission.xml:618
 #: dat/mission.xml:639 dat/mission.xml:660 dat/mission.xml:706
 #: dat/mission.xml:776 dat/mission.xml:794 dat/mission.xml:805
 #: dat/mission.xml:894 dat/mission.xml:908 dat/mission.xml:922
@@ -12656,7 +12652,7 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:217
+#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:218
 #: dat/mission.xml:243 dat/mission.xml:257 dat/mission.xml:271
 #: dat/mission.xml:285 dat/mission.xml:299 dat/mission.xml:312
 #: dat/mission.xml:326 dat/mission.xml:835 dat/mission.xml:847
@@ -12670,16 +12666,16 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:95 dat/mission.xml:619
-#: dat/mission.xml:640 dat/mission.xml:661 dat/mission.xml:707
-#: dat/mission.xml:777 dat/mission.xml:836 dat/mission.xml:848
-#: dat/mission.xml:859 dat/mission.xml:1103 dat/mission.xml:1264
-#: dat/mission.xml:1281 dat/mission.xml:1298 dat/mission.xml:1312
-#: dat/mission.xml:1324 dat/mission.xml:1347 dat/mission.xml:1363
-#: dat/mission.xml:1380 dat/mission.xml:1399 dat/mission.xml:1416
-#: dat/mission.xml:1460 dat/mission.xml:1480 dat/mission.xml:1520
-#: dat/mission.xml:1539 dat/mission.xml:1559 dat/fleet.xml:159
-#: dat/fleet.xml:166 dat/fleet.xml:173 dat/fleet.xml:180
+#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:113
+#: dat/mission.xml:619 dat/mission.xml:640 dat/mission.xml:661
+#: dat/mission.xml:707 dat/mission.xml:777 dat/mission.xml:836
+#: dat/mission.xml:848 dat/mission.xml:859 dat/mission.xml:1103
+#: dat/mission.xml:1264 dat/mission.xml:1281 dat/mission.xml:1298
+#: dat/mission.xml:1312 dat/mission.xml:1324 dat/mission.xml:1347
+#: dat/mission.xml:1363 dat/mission.xml:1380 dat/mission.xml:1399
+#: dat/mission.xml:1416 dat/mission.xml:1460 dat/mission.xml:1480
+#: dat/mission.xml:1520 dat/mission.xml:1539 dat/mission.xml:1559
+#: dat/fleet.xml:159 dat/fleet.xml:166 dat/fleet.xml:173 dat/fleet.xml:180
 #, fuzzy
 msgid "Frontier"
 msgstr "続く"
@@ -13661,7 +13657,7 @@ msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: ../dat/missions/flf/flf_rogue.lua:43 dat/faction.xml:330 dat/fleet.xml:208
+#: ../dat/missions/flf/flf_rogue.lua:43 dat/faction.xml:331 dat/fleet.xml:208
 #: dat/fleet.xml:215
 msgid "Rogue FLF"
 msgstr ""
@@ -16032,7 +16028,7 @@ msgstr ""
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:130
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:136
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:137
-#: ../dat/missions/pirate/common.lua:18 dat/faction.xml:127 dat/mission.xml:442
+#: ../dat/missions/pirate/common.lua:18 dat/faction.xml:128 dat/mission.xml:442
 #: dat/mission.xml:880 dat/mission.xml:1431 dat/mission.xml:1440
 #: dat/mission.xml:1508 dat/mission.xml:1620 dat/fleet.xml:222
 #: dat/fleet.xml:229 dat/fleet.xml:236 dat/fleet.xml:243 dat/fleet.xml:250
@@ -16240,7 +16236,7 @@ msgstr ""
 #: ../dat/missions/shark/sh02_tapping.lua:243
 #: ../dat/missions/shark/sh02_tapping.lua:268
 #: ../dat/missions/shark/sh02_tapping.lua:289
-#: ../dat/missions/shark/sh02_tapping.lua:315 dat/faction.xml:358
+#: ../dat/missions/shark/sh02_tapping.lua:315 dat/faction.xml:359
 #: dat/fleet.xml:690 dat/fleet.xml:697 dat/fleet.xml:704
 msgid "Mercenary"
 msgstr ""
@@ -23452,7 +23448,7 @@ msgstr ""
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/sirius/common.lua:22 ../dat/missions/sirius/common.lua:28
-#: dat/faction.xml:268 dat/mission.xml:465 dat/mission.xml:547
+#: dat/faction.xml:269 dat/mission.xml:465 dat/mission.xml:547
 #: dat/mission.xml:560 dat/mission.xml:622 dat/mission.xml:643
 #: dat/mission.xml:710 dat/mission.xml:780 dat/mission.xml:825
 #: dat/mission.xml:1080 dat/mission.xml:1105 dat/mission.xml:1166
@@ -25265,7 +25261,7 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/soromid/common.lua:22 dat/faction.xml:177
+#: ../dat/missions/soromid/common.lua:22 dat/faction.xml:178
 #: dat/mission.xml:339 dat/mission.xml:366 dat/mission.xml:380
 #: dat/mission.xml:393 dat/mission.xml:406 dat/mission.xml:623
 #: dat/mission.xml:644 dat/mission.xml:664 dat/mission.xml:711
@@ -25567,7 +25563,7 @@ msgstr ""
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/zalek/common.lua:21 ../dat/missions/zalek/common.lua:28
-#: dat/faction.xml:252 dat/mission.xml:625 dat/mission.xml:646
+#: dat/faction.xml:253 dat/mission.xml:625 dat/mission.xml:646
 #: dat/mission.xml:666 dat/mission.xml:713 dat/mission.xml:783
 #: dat/mission.xml:815 dat/mission.xml:1352 dat/mission.xml:1368
 #: dat/mission.xml:1387 dat/mission.xml:1404 dat/mission.xml:1421
@@ -29087,10 +29083,22 @@ msgid "Space Traders Guild"
 msgstr ""
 
 #. (itstool) path: faction/name
+#. (itstool) path: fleet/faction
+#: dat/faction.xml:62 dat/fleet.xml:68 dat/fleet.xml:75 dat/fleet.xml:82
+msgid "Miner"
+msgstr ""
+
+#. (itstool) path: faction/longname
+#: dat/faction.xml:66
+#, fuzzy
+msgid "Space Miners"
+msgstr "バー"
+
+#. (itstool) path: faction/name
 #. (itstool) path: faction/longname
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:62 dat/faction.xml:64 dat/mission.xml:1335
+#: dat/faction.xml:80 dat/faction.xml:82 dat/mission.xml:1335
 #: dat/mission.xml:1383 dat/mission.xml:1463 dat/mission.xml:1483
 #: dat/mission.xml:1523 dat/mission.xml:1542 dat/fleet.xml:131
 #: dat/fleet.xml:138 dat/fleet.xml:145 dat/fleet.xml:152
@@ -29099,37 +29107,25 @@ msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:79 dat/fleet.xml:1146 dat/fleet.xml:1153 dat/fleet.xml:1160
+#: dat/faction.xml:97 dat/fleet.xml:1146 dat/fleet.xml:1153 dat/fleet.xml:1160
 #: dat/fleet.xml:1167
 msgid "Proteron Dissident"
 msgstr ""
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:98
+#: dat/faction.xml:116
 msgid "Frontier Alliance"
 msgstr ""
 
-#. (itstool) path: faction/name
-#. (itstool) path: fleet/faction
-#: dat/faction.xml:110 dat/fleet.xml:68 dat/fleet.xml:75 dat/fleet.xml:82
-msgid "Miner"
-msgstr ""
-
 #. (itstool) path: faction/longname
-#: dat/faction.xml:113
-#, fuzzy
-msgid "Space Miners"
-msgstr "バー"
-
-#. (itstool) path: faction/longname
-#: dat/faction.xml:130 dat/faction.xml:309 dat/faction.xml:373
+#: dat/faction.xml:131 dat/faction.xml:310 dat/faction.xml:374
 msgid "Galactic Pirates"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:191 dat/mission.xml:1386 dat/mission.xml:1466
+#: dat/faction.xml:192 dat/mission.xml:1386 dat/mission.xml:1466
 #: dat/mission.xml:1486 dat/mission.xml:1526 dat/mission.xml:1545
 #: dat/mission.xml:1564 dat/fleet.xml:1036 dat/fleet.xml:1043
 #: dat/fleet.xml:1050 dat/fleet.xml:1057 dat/fleet.xml:1064 dat/fleet.xml:1071
@@ -29139,28 +29135,28 @@ msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:203 dat/fleet.xml:278 dat/fleet.xml:285 dat/fleet.xml:292
+#: dat/faction.xml:204 dat/fleet.xml:278 dat/fleet.xml:285 dat/fleet.xml:292
 #: dat/fleet.xml:318
 msgid "Collective"
 msgstr ""
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:220
+#: dat/faction.xml:221
 msgid "Frontier Liberation Front"
 msgstr ""
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:237
+#: dat/faction.xml:238
 msgid "House Dvaered"
 msgstr ""
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:256
+#: dat/faction.xml:257
 msgid "House Za'lek"
 msgstr ""
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:272
+#: dat/faction.xml:273
 msgid "House Sirius"
 msgstr ""
 
@@ -29170,7 +29166,7 @@ msgstr ""
 #. (itstool) path: fleet/faction
 #. (itstool) path: tech/item
 #. (itstool) path: dat/ships/goddard.xml/ship@name
-#: dat/faction.xml:286 dat/mission.xml:620 dat/mission.xml:641
+#: dat/faction.xml:287 dat/mission.xml:620 dat/mission.xml:641
 #: dat/mission.xml:662 dat/mission.xml:708 dat/mission.xml:778
 #: dat/mission.xml:1079 dat/mission.xml:1104 dat/mission.xml:1119
 #: dat/mission.xml:1251 dat/mission.xml:1265 dat/mission.xml:1282
@@ -29183,94 +29179,94 @@ msgid "Goddard"
 msgstr ""
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:290
+#: dat/faction.xml:291
 msgid "House Goddard"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:303
+#: dat/faction.xml:304
 msgid "Wanted Pirate"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:343
+#: dat/faction.xml:344
 msgid "Rogue Pirate"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:368 dat/fleet.xml:711
+#: dat/faction.xml:369 dat/fleet.xml:711
 msgid "Raider"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:383
+#: dat/faction.xml:384
 msgid "Derelict"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:392 dat/fleet.xml:780 dat/fleet.xml:806 dat/fleet.xml:813
+#: dat/faction.xml:393 dat/fleet.xml:780 dat/fleet.xml:806 dat/fleet.xml:813
 #: dat/fleet.xml:820 dat/fleet.xml:827 dat/fleet.xml:841
 msgid "Four Winds"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:405 dat/fleet.xml:787 dat/fleet.xml:797
+#: dat/faction.xml:406 dat/fleet.xml:787 dat/fleet.xml:797
 msgid "Rogue Four Winds"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:418 dat/fleet.xml:850 dat/fleet.xml:859
+#: dat/faction.xml:419 dat/fleet.xml:850 dat/fleet.xml:859
 msgid "Shadow_pirates"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:433 dat/fleet.xml:834
+#: dat/faction.xml:434 dat/fleet.xml:834
 msgid "Diplomatic"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:446
+#: dat/faction.xml:447
 msgid "Associates"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:458
+#: dat/faction.xml:459
 msgid "Thugs"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:470
+#: dat/faction.xml:471
 msgid "Achack_sirius"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:483
+#: dat/faction.xml:484
 msgid "Achack_thugs"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:496
+#: dat/faction.xml:497
 msgid "Kidnappers"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:509 dat/fleet.xml:1113 dat/fleet.xml:1122 dat/fleet.xml:1132
+#: dat/faction.xml:510 dat/fleet.xml:1113 dat/fleet.xml:1122 dat/fleet.xml:1132
 msgid "Nasin"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:520
+#: dat/faction.xml:521
 msgid "Comingout_associates"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:533
+#: dat/faction.xml:534
 msgid "Comingout_thugs"
 msgstr ""
 
