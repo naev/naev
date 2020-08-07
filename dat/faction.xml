@@ -42,6 +42,23 @@
   </enemies>
  </faction>
  <faction>
+  <name>Trader</name>
+  <static />
+  <invisible />
+  <known/>
+  <longname>Space Traders Guild</longname>
+  <player>0</player>
+  <spawn>trader</spawn>
+  <standing>static</standing>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Raider</enemy>
+   <enemy>Wanted Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction>
   <name>Proteron</name>
   <logo>proteron</logo>
   <longname>Proteron</longname>
@@ -87,22 +104,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-  </enemies>
- </faction>
- <faction>
-  <name>Trader</name>
-  <known/>
-  <logo>trader</logo>
-  <longname>Space Traders Guild</longname>
-  <player>3</player>
-  <spawn>trader</spawn>
-  <standing>trader</standing>
-  <allies>
-  </allies>
-  <enemies>
-   <enemy>Pirate</enemy>
-   <enemy>Raider</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>

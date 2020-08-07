@@ -767,7 +767,7 @@
   </avail>
  </mission>
  <mission name="Anxious Merchant">
-  <lua>trader/anxiousmerchant</lua>
+  <lua>neutral/anxiousmerchant</lua>
   <avail>
    <priority>3</priority>
    <chance>1</chance>
@@ -1607,15 +1607,6 @@
   <avail>
    <priority>10</priority>
    <cond>faction.playerStanding("Za'lek") &lt; 0</cond>
-   <chance>100</chance>
-   <location>Computer</location>
-  </avail>
- </mission>
- <mission name="Trader Rehabilitation">
-  <lua>trader/trader_rehab</lua>
-  <avail>
-   <priority>10</priority>
-   <cond>faction.playerStanding("Trader") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
