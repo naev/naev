@@ -106,7 +106,7 @@ function pirate_name ()
       _("Pirate's "),
       _("Pocket "),
       _("Psychic "),
-      _("Raging"),
+      _("Raging "),
       _("Relentless "),
       _("Rostige "),
       _("Rough "),
