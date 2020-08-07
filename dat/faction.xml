@@ -303,6 +303,7 @@
   <display>Pirate</display>
   <static />
   <invisible />
+  <known />
   <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
   <player>-100</player>
@@ -328,6 +329,7 @@
   <name>Rogue FLF</name>
   <static />
   <invisible />
+  <known />
   <player>-100</player>
   <colour>red</colour>
   <standing>static</standing>
@@ -341,6 +343,8 @@
   <display>Pirate</display>
   <static />
   <invisible />
+  <known />
+  <logo>pirate</logo>
   <player>-100</player>
   <colour>red</colour>
   <standing>static</standing>
@@ -353,6 +357,7 @@
   <name>Mercenary</name>
   <static />
   <invisible />
+  <known />
   <player>0</player>
   <standing>static</standing>
   <allies />
@@ -362,6 +367,8 @@
   <name>Raider</name>
   <static />
   <invisible />
+  <known/>
+  <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
   <player>-100</player>
   <colour>red</colour>
@@ -384,6 +391,7 @@
   <name>Four Winds</name>
   <static />
   <invisible />
+  <known />
   <player>0</player>
   <standing>static</standing>
   <allies />
@@ -397,6 +405,7 @@
   <display>Four Winds</display>
   <static />
   <invisible />
+  <known />
   <player>0</player>
   <standing>static</standing>
   <allies />
@@ -409,6 +418,8 @@
   <display>Pirate</display>
   <static />
   <invisible />
+  <known/>
+  <logo>pirate</logo>
   <allies />
   <player>-100</player>
   <standing>static</standing>
@@ -434,6 +445,7 @@
   <name>Associates</name>
   <static />
   <invisible />
+  <known />
   <allies />
   <player>0</player>
   <standing>static</standing>
@@ -445,6 +457,7 @@
   <name>Thugs</name>
   <static />
   <invisible />
+  <known />
   <allies />
   <player>0</player>
   <standing>static</standing>
@@ -457,6 +470,7 @@
   <display>Sirius</display>
   <static />
   <invisible />
+  <known />
   <allies />
   <player>0</player>
   <standing>static</standing>
@@ -469,6 +483,7 @@
   <display>Thugs</display>
   <static />
   <invisible />
+  <known />
   <allies />
   <player>0</player>
   <standing>static</standing>
@@ -481,6 +496,7 @@
   <display>Pirate</display>
   <static />
   <invisible />
+  <known/>
   <logo>pirate</logo>
   <colour>red</colour>
   <allies />
@@ -504,6 +520,7 @@
   <display>Mercenary</display>
   <static />
   <invisible />
+  <known />
   <player>70</player>
   <standing>static</standing>
   <enemies>
@@ -516,6 +533,7 @@
   <display>Thugs</display>
   <static />
   <invisible />
+  <known />
   <player>-20</player>
   <standing>static</standing>
   <equip>pirate</equip>
