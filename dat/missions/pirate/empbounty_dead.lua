@@ -71,10 +71,12 @@ function create ()
    target_factions[3] = "Soromid"
    target_factions[4] = "Civilian"
    target_factions[5] = "Independent"
-   target_factions[6] = "Trader"
+   target_factions[6] = "Traders Guild"
    target_factions[7] = "Frontier"
    target_factions[8] = "Sirius"
    target_factions[9] = "Za'lek"
+   target_factions[10] = "Trader"
+   target_factions[11] = "Miner"
 
    local systems = getsysatdistance( system.cur(), 1, 6,
       function(s)
