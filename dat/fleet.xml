@@ -126,6 +126,48 @@
    <pilot name="Trader Quicksilver" ship="Quicksilver"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Traders Guild Llama">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Trader Llama" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Traders Guild Koala">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Trader Koala" ship="Koala"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Traders Guild Rhino">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Trader Rhino" ship="Rhino"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Traders Guild Mule">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Traders Guild Mule" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Traders Guild Gawain">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Trader Gawain" ship="Gawain"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Traders Guild Quicksilver">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot name="Trader Quicksilver" ship="Quicksilver"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Proteron Kahan">
   <ai>proteron</ai>
   <faction>Proteron</faction>

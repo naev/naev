@@ -94,7 +94,9 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
       return
    end
 
-   if hook_pilot:faction() == faction.get("Trader") and hook_attacker == player.pilot() then
+   if ( hook_pilot:faction() == faction.get("Trader")
+            or hook_pilot:faction() == faction.get("Traders Guild") )
+         and hook_attacker == player.pilot() then
       attackedTraders[#attackedTraders + 1] = hook_pilot
    end
 end
