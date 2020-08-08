@@ -908,7 +908,7 @@
  </fleet>
  <fleet name="Sml Trader Convoy">
   <ai>trader</ai>
-  <faction>Trader</faction>
+  <faction>Traders Guild</faction>
   <pilots>
    <pilot name="Trader Llama" ship="Llama"></pilot>
    <pilot name="Trader Llama" ship="Llama"></pilot>
@@ -917,7 +917,7 @@
  </fleet>
   <fleet name="Trader Convoy 3">
   <ai>trader</ai>
-  <faction>Trader</faction>
+  <faction>Traders Guild</faction>
   <pilots>
    <pilot name="Convoy Llama" ship="Llama"></pilot>
    <pilot name="Convoy Llama" ship="Llama"></pilot>
@@ -926,7 +926,7 @@
  </fleet>
    <fleet name="Trader Convoy 4">
   <ai>trader</ai>
-  <faction>Trader</faction>
+  <faction>Traders Guild</faction>
   <pilots>
    <pilot name="Convoy Koala" ship="Koala"></pilot>
    <pilot name="Convoy Koala" ship="Koala"></pilot>
@@ -936,7 +936,7 @@
  </fleet>
    <fleet name="Trader Convoy 5">
   <ai>trader</ai>
-  <faction>Trader</faction>
+  <faction>Traders Guild</faction>
   <pilots>
    <pilot name="Convoy Rhino" ship="Rhino"></pilot>
    <pilot name="Convoy Rhino" ship="Rhino"></pilot>
@@ -947,7 +947,7 @@
  </fleet>
  <fleet name="Trader Convoy 6">
   <ai>trader</ai>
-  <faction>Trader</faction>
+  <faction>Traders Guild</faction>
   <pilots>
    <pilot name="Convoy Rhino" ship="Rhino"></pilot>
    <pilot name="Convoy Rhino" ship="Rhino"></pilot>
@@ -959,7 +959,7 @@
    </fleet>
  <fleet name="Trader Convoy 8">
   <ai>trader</ai>
-  <faction>Trader</faction>
+  <faction>Traders Guild</faction>
   <pilots>
    <pilot name="Convoy Rhino" ship="Rhino"></pilot>
    <pilot name="Convoy Rhino" ship="Rhino"></pilot>
