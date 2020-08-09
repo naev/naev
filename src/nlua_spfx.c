@@ -58,9 +58,15 @@ int nlua_loadSpfx( nlua_env env )
 /**
  * @brief Plays a sound.
  *
+ * by default, the sound is played at player's current position
+ *
  * @usage spfx.soundPlay( "hail" ) -- Plays the hail sound
+ * @usage spfx.soundPlay( "hail", pos ) -- Plays the hail sound at position pos
+ * @usage spfx.soundPlay( "hail", pos, vel ) -- Plays the hail sound at position pos with velocity vel
  *
  *    @luatparam string s Name of the sound to play
+ *    @luatparam [opt] Vec2 pos Position of the source
+ *    @luatparam [opt] Vec2 vel Velocity of the source
  * @luafunc soundPlay( s )
  */
 static int spfxL_soundPlay( lua_State *L )
