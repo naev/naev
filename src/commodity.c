@@ -80,6 +80,8 @@ void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
       nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+   else if (credits >= 1000000000000000000LL)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fQt", decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
       nsnprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
