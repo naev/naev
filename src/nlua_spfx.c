@@ -49,6 +49,7 @@ int nlua_loadSpfx( nlua_env env )
  *
  * An example would be:
  * @code
+ * spfx.soundPlay( "hail" ) -- Plays the hail sound
  * @endcode
  *
  * @luamod spfx
@@ -65,8 +66,8 @@ int nlua_loadSpfx( nlua_env env )
  * @usage spfx.soundPlay( "hail", pos, vel ) -- Plays the hail sound at position pos with velocity vel
  *
  *    @luatparam string s Name of the sound to play
- *    @luatparam [opt] Vec2 pos Position of the source
- *    @luatparam [opt] Vec2 vel Velocity of the source
+ *    @luatparam[opt] Vec2 pos Position of the source
+ *    @luatparam[opt] Vec2 vel Velocity of the source
  * @luafunc soundPlay( s )
  */
 static int spfxL_soundPlay( lua_State *L )
