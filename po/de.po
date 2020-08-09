@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues/\n"
-"POT-Creation-Date: 2020-08-05 13:24-0400\n"
+"POT-Creation-Date: 2020-08-09 14:32-0400\n"
 "PO-Revision-Date: 2020-07-31 21:15+0200\n"
 "Last-Translator: Wuzzy <Wuzzy2@mail.ru>\n"
 "Language-Team: \n"
@@ -5697,11 +5697,12 @@ msgstr ""
 "sehr nützlich sein, wenn deine Gegner Raketen benutzen.“"
 
 #: ../dat/events/neutral/npc.lua:193
-#, lua-format
+#, fuzzy, lua-format
 msgid ""
 "\"If you're having trouble with overheating weapons or outfits, you can "
-"press %s twice to put your ship into Active Cooldown. Careful though, your "
-"energy and shields won't recharge while you do it!\""
+"press %s twice to put your ship into Active Cooldown; that'll dissipate all "
+"heat from your ship and also refill your rocket ammunition. Careful though, "
+"your energy and shields won't recharge while you do it!\""
 msgstr ""
 "„Wenn du Probleme mit überhitzenden Waffen und Ausstattungen hast, kannst du "
 "%s zwei mal drücken, um die aktive Abkühlung zu aktivieren. Sei jedoch "
@@ -5861,12 +5862,19 @@ msgstr ""
 "Ich benutze diese Funktion gerne für Geleitmissionen. Damit werden sie "
 "wesentlich bequemer.“"
 
+#: ../dat/events/neutral/npc.lua:206
+msgid ""
+"\"The new aiming helper feature is awesome! Simply turn it on in your ship's "
+"weapons configuration and you get little guides telling you where you should "
+"aim to hit your target! I use it a lot.\""
+msgstr ""
+
 #. Jump point messages.
 #. For giving the location of a jump point in the current system to the player for free.
 #. All messages must contain exactly one %s, this is the name of the target system.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
-#: ../dat/events/neutral/npc.lua:213
+#: ../dat/events/neutral/npc.lua:214
 #, lua-format
 msgid ""
 "\"Hi there, traveler. Is your system map up to date? Just in case you didn't "
@@ -5877,7 +5885,7 @@ msgstr ""
 "Fall, dass du es nicht bereits weißt, lass mich dir den Ort des Sprungpunkts "
 "von hier nach %s geben. Ich hoffe, das hilft.“"
 
-#: ../dat/events/neutral/npc.lua:214
+#: ../dat/events/neutral/npc.lua:215
 #, lua-format
 msgid ""
 "\"Quite a lot of people who come in here complain that they don't know how "
@@ -5888,7 +5896,7 @@ msgstr ""
 "wie man nach %s kommt. Ich reise recht oft dort hin, also weiß ich genau, wo "
 "sich der Sprungpunkt befindet. Hier, lass mich ihn dir zeigen.“"
 
-#: ../dat/events/neutral/npc.lua:215
+#: ../dat/events/neutral/npc.lua:216
 #, lua-format
 msgid ""
 "\"So you're still getting to know about this area, huh? Tell you what, I'll "
@@ -5898,7 +5906,7 @@ msgstr ""
 "„Du bist wohl neu hier, oder? Weißt du was? Ich geb dir die Koordinaten des "
 "Sprungs nach %s. Betrachte deine Karte, wenn du das nächste Mal abhebst!“"
 
-#: ../dat/events/neutral/npc.lua:216
+#: ../dat/events/neutral/npc.lua:217
 #, lua-format
 msgid ""
 "\"True fact, there's a direct jump from here to %s. Want to know where it "
@@ -5909,7 +5917,7 @@ msgstr ""
 "wo er sich befindet? Das wird dich etwas kosten! Haha, nur ein Scherz, ich "
 "habe ihn auf deiner Karte markiert.“"
 
-#: ../dat/events/neutral/npc.lua:217
+#: ../dat/events/neutral/npc.lua:218
 #, lua-format
 msgid ""
 "\"There's a system just one jump away by the name of %s. I can tell you "
@@ -5922,7 +5930,7 @@ msgstr ""
 #. Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the hints are always faction neutral.
-#: ../dat/events/neutral/npc.lua:223
+#: ../dat/events/neutral/npc.lua:224
 msgid ""
 "\"Apparently there's a woman who regularly turns up on planets in and around "
 "the Klantar system. I wonder what she's looking for?\""
@@ -5930,7 +5938,7 @@ msgstr ""
 "„Anscheinend gibt es eine Frau, die regelmäßig auf Planeten in und um das "
 "Klantarsystem auftaucht. Ich frag mich, was sie sucht.“"
 
-#: ../dat/events/neutral/npc.lua:224
+#: ../dat/events/neutral/npc.lua:225
 msgid ""
 "\"The Empire is trying to really do something about the Collective, I hear. "
 "Who knows, maybe you can even help them out if you make it to Omega Station."
@@ -5940,7 +5948,7 @@ msgstr ""
 "gehört. Wer weiß, vielleicht kannst du ihnen sogar aushelfen, wenn du es zu "
 "Omega Station schaffst.“"
 
-#: ../dat/events/neutral/npc.lua:225
+#: ../dat/events/neutral/npc.lua:226
 msgid ""
 "\"There are often shady characters hanging out in the Alteris system. I'd "
 "stay away from there if I were you, someone might offer you a dirty kind of "
@@ -5950,7 +5958,7 @@ msgstr ""
 "Stelle von dort fern bleiben, jemand könnte dir einen dreckigen Job "
 "anbieten!“"
 
-#: ../dat/events/neutral/npc.lua:226
+#: ../dat/events/neutral/npc.lua:227
 msgid ""
 "\"So there's some Za'lek scientist looking for a cargo monkey out on "
 "Niflheim in the Dohriabi system. I hear it's pretty good money.\""
@@ -5960,7 +5968,7 @@ msgstr ""
 
 #. Event hint messages. Each element should be a table containing the event name and the corresponding hint.
 #. Make sure the hints are always faction neutral.
-#: ../dat/events/neutral/npc.lua:231
+#: ../dat/events/neutral/npc.lua:232
 msgid ""
 "\"The FLF and the Dvaered sometimes clash in Surano. If you go there, you "
 "might find something of interest... Or not.\""
@@ -5972,7 +5980,7 @@ msgstr ""
 #. Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 #. This text will be said by NPCs once the player has completed the mission in question.
 #. Make sure the messages are always faction neutral.
-#: ../dat/events/neutral/npc.lua:237
+#: ../dat/events/neutral/npc.lua:238
 msgid ""
 "\"Heard some reckless scientists got someone to put a satellite inside the "
 "nebula for them. I thought everyone with half a brain knew to stay out of "
@@ -5982,7 +5990,7 @@ msgstr ""
 "überredet, für sie einen Satelliten in dem Nebel zu platzieren. Ich dachte, "
 "dass jeder mit einem halben Gehirn weiß, von dort fernzubleiben, aber egal.“"
 
-#: ../dat/events/neutral/npc.lua:238
+#: ../dat/events/neutral/npc.lua:239
 msgid ""
 "\"Did you hear? There was some big incident during a diplomatic meeting "
 "between the Empire and the Dvaered. Nobody knows what exactly happened, but "
@@ -5995,7 +6003,7 @@ msgstr ""
 "beide Seiten gegenseitig, ein falsches Spiel zu spielen. Das könnte hässlich "
 "werden.“"
 
-#: ../dat/events/neutral/npc.lua:239
+#: ../dat/events/neutral/npc.lua:240
 msgid ""
 "\"Hey, remember the Collective? They got wiped out! I feel so much better "
 "now that there aren't a bunch of robot ships out there to get me anymore.\""
@@ -6004,7 +6012,7 @@ msgstr ""
 "mich jetzt so viel besser, jetzt, wo es keine Roboterschiffe mehr gibt, die "
 "mich holen könnten.“"
 
-#: ../dat/events/neutral/npc.lua:240
+#: ../dat/events/neutral/npc.lua:241
 msgid ""
 "\"Some thieves broke into a museum on Varia and stole a holopainting! Most "
 "of the thieves were caught, but the one who carried the holopainting "
@@ -6015,7 +6023,7 @@ msgstr ""
 "Hologemälde aus der Welt schaffte, ist immer noch auf freiem Fuß. Keine "
 "Spuren. Verdammte Verbrecher …“"
 
-#: ../dat/events/neutral/npc.lua:241
+#: ../dat/events/neutral/npc.lua:242
 msgid ""
 "\"The Dvaered scored a major victory against the FLF recently. They went "
 "into Sigur and blew the hidden base there to bits! I bet that was a serious "
@@ -6028,7 +6036,7 @@ msgstr ""
 #. Event after-care messages. Each element should be a table containing the event name and a line of text.
 #. This text will be said by NPCs once the player has completed the event in question.
 #. Make sure the messages are always faction neutral.
-#: ../dat/events/neutral/npc.lua:247
+#: ../dat/events/neutral/npc.lua:248
 msgid ""
 "\"What? You had rodents sabotage your ship? Man, you're lucky to be alive. "
 "If it had hit the wrong power line...\""
@@ -6036,7 +6044,7 @@ msgstr ""
 "„Was? Nagetiere sabotierten dein Schiff? Mann, du hast Glück, noch am Leben "
 "zu sein. Wenn sie die falschen Stromkabel erwischt hätten …“"
 
-#: ../dat/events/neutral/npc.lua:248
+#: ../dat/events/neutral/npc.lua:249
 msgid ""
 "\"What do you mean, the world ended and then the creator of the universe "
 "came and fixed it? What kind of illegal substance are you on?\""
@@ -7386,6 +7394,16 @@ msgstr "Unbekannt"
 #. Over limit
 #. Actually spawn the pilots
 #. Calculate spawn data
+#. @brief Spawns a small trade fleet.
+#. @brief Spawns a larger trade fleet.
+#. @brief Creation hook.
+#. Create weights for spawn table
+#. Create spawn table base on weights
+#. Calculate spawn data
+#. @brief Spawning hook
+#. Over limit
+#. Actually spawn the pilots
+#. Calculate spawn data
 #. @brief Spawns a small patrol fleet.
 #. @brief Spawns a medium sized squadron.
 #. @brief Spawns a capship with escorts.
@@ -7455,10 +7473,6 @@ msgstr "Unbekannt"
 #. GNU General Public License for more details.
 #.
 #. --
-#. Kill cap
-#. Maximum change constraints
-#. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
@@ -7739,12 +7753,8 @@ msgstr "Zu groß!"
 #. Case there are none we don't need to do more.
 #. No outfits
 #. No ships
-#: ../dat/gui/brushed.lua:880 ../dat/missions/empire/es_cargo.lua:31
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:31
-#: ../dat/missions/neutral/cargo.lua:37
-#: ../dat/missions/neutral/cargo_rush.lua:44
-#: ../dat/missions/neutral/trader_escort.lua:28
-#: ../dat/missions/pirate/fake_id.lua:26 ../dat/missions/rehab_common.lua:17
+#: ../dat/gui/brushed.lua:880 ../dat/missions/pirate/fake_id.lua:26
+#: ../dat/missions/rehab_common.lua:17
 #: ../dat/missions/soromid/comingout/srm_comingout4.lua:57
 #: ../dat/missions/tutorial/tutorial.lua:69 dat/mission.xml:10
 #: dat/mission.xml:180 dat/mission.xml:217 dat/mission.xml:570
@@ -7760,7 +7770,7 @@ msgstr "Zu groß!"
 #: ../src/dev_sysedit.c:1911 ../src/dev_uniedit.c:973 ../src/dev_uniedit.c:1148
 #: ../src/dev_uniedit.c:1372 ../src/dev_uniedit.c:1437 ../src/equipment.c:131
 #: ../src/equipment.c:1470 ../src/equipment.c:1488 ../src/equipment.c:1707
-#: ../src/info.c:332 ../src/info.c:760 ../src/info.c:1063 ../src/input.c:553
+#: ../src/info.c:332 ../src/info.c:760 ../src/info.c:1063 ../src/input.c:555
 #: ../src/land_outfits.c:301 ../src/land_outfits.c:383
 #: ../src/land_outfits.c:398 ../src/land_outfits.c:431
 #: ../src/land_outfits.c:665 ../src/land_outfits.c:741
@@ -9885,7 +9895,7 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/dvaered/common.lua:11 dat/faction.xml:232
+#: ../dat/missions/dvaered/common.lua:11 dat/faction.xml:251
 #: dat/mission.xml:193 dat/mission.xml:206 dat/mission.xml:617
 #: dat/mission.xml:638 dat/mission.xml:659 dat/mission.xml:705
 #: dat/mission.xml:775 dat/mission.xml:1078 dat/mission.xml:1102
@@ -9894,9 +9904,9 @@ msgstr ""
 #: dat/mission.xml:1345 dat/mission.xml:1378 dat/mission.xml:1397
 #: dat/mission.xml:1414 dat/mission.xml:1458 dat/mission.xml:1478
 #: dat/mission.xml:1518 dat/mission.xml:1537 dat/mission.xml:1557
-#: dat/fleet.xml:419 dat/fleet.xml:426 dat/fleet.xml:433 dat/fleet.xml:440
-#: dat/fleet.xml:447 dat/fleet.xml:454 dat/fleet.xml:464 dat/fleet.xml:475
-#: dat/fleet.xml:484 dat/fleet.xml:756 dat/fleet.xml:763 dat/fleet.xml:1024
+#: dat/fleet.xml:461 dat/fleet.xml:468 dat/fleet.xml:475 dat/fleet.xml:482
+#: dat/fleet.xml:489 dat/fleet.xml:496 dat/fleet.xml:506 dat/fleet.xml:517
+#: dat/fleet.xml:526 dat/fleet.xml:798 dat/fleet.xml:805 dat/fleet.xml:1066
 msgid "Dvaered"
 msgstr "Dvaered"
 
@@ -10356,7 +10366,7 @@ msgstr "Die FLF hervorlocken"
 #: ../dat/missions/neutral/patrol.lua:56
 #: ../dat/missions/neutral/pirbounty_dead.lua:87
 #: ../dat/missions/neutral/sightseeing.lua:72
-#: ../dat/missions/pirate/empbounty_dead.lua:58
+#: ../dat/missions/pirate/empbounty_dead.lua:56
 #: ../dat/missions/pirate/patrol.lua:54
 #: ../dat/missions/proteron/dissbounty_dead.lua:75
 #: ../dat/missions/soromid/comingout/srm_comingout6.lua:51
@@ -11203,16 +11213,13 @@ msgstr "Kollektiv-Aufklärung"
 #: ../dat/missions/empire/collective/ec04.lua:21
 #: ../dat/missions/empire/collective/ec05.lua:35
 #: ../dat/missions/empire/emp_cargo00.lua:16
-#: ../dat/missions/empire/es_cargo.lua:12
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:12
 #: ../dat/missions/empire/shipping/es00.lua:15
 #: ../dat/missions/empire/shipping/es01.lua:16
 #: ../dat/missions/empire/shipping/es02.lua:26
 #: ../dat/missions/flf/dvk/flf_dvk04.lua:43
 #: ../dat/missions/flf/dvk/flf_dvk05.lua:32
 #: ../dat/missions/flf/flf_diversion.lua:25
-#: ../dat/missions/flf/flf_rogue.lua:25 ../dat/missions/neutral/cargo.lua:10
-#: ../dat/missions/neutral/cargo_rush.lua:10
+#: ../dat/missions/flf/flf_rogue.lua:25
 #: ../dat/missions/neutral/foodbiz/delivercake.lua:29
 #: ../dat/missions/neutral/foodbiz/deliverlove.lua:28
 #: ../dat/missions/neutral/nebu_satellite.lua:19
@@ -11221,9 +11228,8 @@ msgstr "Kollektiv-Aufklärung"
 #: ../dat/missions/neutral/race1.lua:47 ../dat/missions/neutral/race2.lua:57
 #: ../dat/missions/neutral/seek_n_destroy.lua:136
 #: ../dat/missions/neutral/sightseeing.lua:53
-#: ../dat/missions/neutral/trader_escort.lua:8
-#: ../dat/missions/pirate/empbounty_dead.lua:37
-#: ../dat/missions/pirate/patrol.lua:40 ../dat/missions/pirate/pir_cargo.lua:34
+#: ../dat/missions/pirate/empbounty_dead.lua:43
+#: ../dat/missions/pirate/patrol.lua:40
 #: ../dat/missions/pirate/pir_clan_cargo.lua:18
 #: ../dat/missions/proteron/dissbounty_dead.lua:64
 #: ../dat/missions/shark/sh00_ancestorkill.lua:46
@@ -12571,7 +12577,7 @@ msgstr "Treibstofftanker"
 #.
 #. @brief Increases the reputation limit of the player.
 #. --
-#: ../dat/missions/empire/common.lua:19 ../dat/missions/empire/es_cargo.lua:47
+#: ../dat/missions/empire/common.lua:19 ../dat/missions/empire/es_cargo.lua:29
 msgid "Empire Shipping"
 msgstr "Imperiale Lieferung"
 
@@ -12579,7 +12585,7 @@ msgstr "Imperiale Lieferung"
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/empire/common.lua:19 ../dat/missions/empire/common.lua:25
-#: dat/faction.xml:158 dat/mission.xml:43 dat/mission.xml:618
+#: dat/faction.xml:129 dat/mission.xml:43 dat/mission.xml:618
 #: dat/mission.xml:639 dat/mission.xml:660 dat/mission.xml:706
 #: dat/mission.xml:776 dat/mission.xml:794 dat/mission.xml:805
 #: dat/mission.xml:894 dat/mission.xml:908 dat/mission.xml:922
@@ -12588,10 +12594,10 @@ msgstr "Imperiale Lieferung"
 #: dat/mission.xml:1118 dat/mission.xml:1346 dat/mission.xml:1362
 #: dat/mission.xml:1379 dat/mission.xml:1398 dat/mission.xml:1415
 #: dat/mission.xml:1459 dat/mission.xml:1479 dat/mission.xml:1519
-#: dat/mission.xml:1538 dat/mission.xml:1558 dat/fleet.xml:504
-#: dat/fleet.xml:511 dat/fleet.xml:518 dat/fleet.xml:525 dat/fleet.xml:532
-#: dat/fleet.xml:544 dat/fleet.xml:563 dat/fleet.xml:577 dat/fleet.xml:587
-#: dat/fleet.xml:599 dat/fleet.xml:606 dat/fleet.xml:676 dat/fleet.xml:683
+#: dat/mission.xml:1538 dat/mission.xml:1558 dat/fleet.xml:546
+#: dat/fleet.xml:553 dat/fleet.xml:560 dat/fleet.xml:567 dat/fleet.xml:574
+#: dat/fleet.xml:586 dat/fleet.xml:605 dat/fleet.xml:619 dat/fleet.xml:629
+#: dat/fleet.xml:641 dat/fleet.xml:648 dat/fleet.xml:718 dat/fleet.xml:725
 msgid "Empire"
 msgstr "Imperium"
 
@@ -12757,196 +12763,79 @@ msgstr "Leutnant"
 #.
 #.
 #.
-#: ../dat/missions/empire/es_cargo.lua:10
-#, lua-format
-msgid "ES: Cargo transport (%d tonnes of %s)"
-msgstr "IL: Frachtlieferung (%d Tonnen %s)"
-
-#. makes sure pilot is not currently on Gamma Polaris
-#. Set marker to a system, visible in any mission computer and the onboard computer.
-#. -Intro Text
-#. Flavour text and mini-briefing
-#. -Accept the mission
-#. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#. Set up the goal
-#. More flavour text
-#.
-#.
-#. Handles the randomly generated Empire long-distance cargo missions.
-#.
-#.
-#.
 #: ../dat/missions/empire/es_cargo.lua:11
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:11
-#, lua-format
-msgid ""
-"The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s "
-"left)."
-msgstr ""
-"Das Imperium muss %d Tonnen %s nach %s im „%s“-System bis zu %s liefern (%s "
-"verbleibend)."
+#, fuzzy, lua-format
+msgid "Official Empire cargo transport to %s in the %s system."
+msgstr "Pirat: Frachtlieferung nach %s im „%s“-System"
 
-#: ../dat/missions/empire/es_cargo.lua:14
-#, lua-format
+#: ../dat/missions/empire/es_cargo.lua:13
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:13
+#: ../dat/missions/neutral/cargo_rush.lua:26
+#, fuzzy, lua-format
 msgid ""
-"ES: Cargo transport to %s in the %s system\n"
-"Cargo: %s (%d tonnes)\n"
+"\n"
+"Cargo: %s (%s)\n"
 "Jumps: %d\n"
 "Travel distance: %d\n"
-"Piracy risk: %s\n"
-"Time limit: %s"
+"%s\n"
+"Time limit: %s\n"
 msgstr ""
-"IL: Frachtlieferung zu %s im „%s“-System\n"
+" \n"
 "Fracht: %s (%d Tonnen)\n"
 "Sprünge: %d\n"
-"Reiseentfernung: %d\n"
-"Pirateriegefahr: %s\n"
-"Zeitlimit: %s"
+"Reisedistanz: %d\n"
+"Pirateriegefahr: %s"
+
+#: ../dat/missions/empire/es_cargo.lua:22
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:22
+#: ../dat/missions/neutral/cargo.lua:25
+#: ../dat/missions/neutral/cargo_rush.lua:35
+#: ../dat/missions/trader/trader_escort.lua:24
+msgid "Piracy Risk: None"
+msgstr ""
 
 #: ../dat/missions/empire/es_cargo.lua:23
 #: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:23
-#: ../dat/missions/pirate/pir_cargo.lua:43
-msgid "Ship is full"
-msgstr "Schiff ist voll"
+#: ../dat/missions/neutral/cargo.lua:26
+#: ../dat/missions/neutral/cargo_rush.lua:36
+#: ../dat/missions/trader/trader_escort.lua:25
+msgid "Piracy Risk: Low"
+msgstr ""
 
 #: ../dat/missions/empire/es_cargo.lua:24
 #: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:24
-#: ../dat/missions/pirate/pir_cargo.lua:44
-#, lua-format
-msgid ""
-"Your ship is too full. You need to make room for %d more tonnes if you want "
-"to be able to accept the mission."
+#: ../dat/missions/neutral/cargo.lua:27
+#: ../dat/missions/neutral/cargo_rush.lua:37
+#: ../dat/missions/trader/trader_escort.lua:26
+msgid "Piracy Risk: Medium"
 msgstr ""
-"Dein Schiff ist zu voll. Du musst Platz für %d weitere Tonnen machen, wenn "
-"du die Mission akzeptieren willst."
 
-#. Note: please leave the trailing space on the line below! Needed to make the newline show up.
+#: ../dat/missions/empire/es_cargo.lua:25
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:25
+#: ../dat/missions/neutral/cargo.lua:28
+#: ../dat/missions/neutral/cargo_rush.lua:38
+#: ../dat/missions/trader/trader_escort.lua:27
+msgid "Piracy Risk: High"
+msgstr ""
+
 #: ../dat/missions/empire/es_cargo.lua:27
 #: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:27
-#: ../dat/missions/neutral/cargo_rush.lua:38
-#: ../dat/missions/pirate/pir_cargo.lua:46
-#: ../dat/missions/sirius/srs_ferry.lua:55
-#: ../dat/missions/trader/anxiousmerchant.lua:45
-msgid "Too slow"
-msgstr "Zu langsam"
-
-#: ../dat/missions/empire/es_cargo.lua:28
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:28
-#, lua-format
-msgid ""
-"This shipment must arrive within %s, but it will take at least %s for your "
-"ship to reach %s, and the Empire is not fond of delays. Accept the mission "
-"anyway?"
-msgstr ""
-"Diese Lieferung muss in %s ankommen, aber es wird mindestens %s brauchen, "
-"bis dein Schiff %s erreicht, und das Imperium mag keine Verspätungen. "
-"Mission trotzdem akzeptieren?"
-
-#: ../dat/missions/empire/es_cargo.lua:32
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:32
-#: ../dat/missions/neutral/cargo.lua:38
-#: ../dat/missions/neutral/cargo_rush.lua:45
-#: ../dat/missions/neutral/trader_escort.lua:29
-msgid "Low"
-msgstr "Niedrig"
-
-#. Note: indexed from 0, to match mission tiers.
-#: ../dat/missions/empire/es_cargo.lua:33
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:33
-#: ../dat/missions/neutral/cargo.lua:14 ../dat/missions/neutral/cargo.lua:39
-#: ../dat/missions/neutral/cargo_rush.lua:46
-#: ../dat/missions/neutral/trader_escort.lua:30 ../src/outfit.c:273
-#: ../src/outfit.c:289
-msgid "Medium"
-msgstr "Mittel"
-
-#: ../dat/missions/empire/es_cargo.lua:34
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:34
-#: ../dat/missions/neutral/cargo.lua:40
-#: ../dat/missions/neutral/cargo_rush.lua:47
-#: ../dat/missions/neutral/trader_escort.lua:31
-msgid "High"
-msgstr "Hoch"
-
-#: ../dat/missions/empire/es_cargo.lua:37
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:37
-#: ../dat/missions/neutral/cargo.lua:56
-#: ../dat/missions/neutral/cargo_rush.lua:68
-#: ../dat/missions/neutral/trader_escort.lua:33
-#: ../dat/missions/pirate/pir_cargo.lua:51
-#: ../dat/missions/sirius/srs_ferry.lua:123
-#: ../dat/missions/zalek/zlk_test.lua:23
-msgid "Mission Accepted"
-msgstr "Mission akzeptiert"
-
-#: ../dat/missions/empire/es_cargo.lua:38
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:38
-#: ../dat/missions/pirate/pir_cargo.lua:52
-#: ../dat/missions/zalek/zlk_test.lua:24
-msgid "Too many missions"
-msgstr "Zu viele Missionen"
-
-#: ../dat/missions/empire/es_cargo.lua:39
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:39
-#: ../dat/missions/pirate/pir_cargo.lua:53
-msgid "Successful Delivery"
-msgstr "Erfolgreiche Lieferung"
-
-#: ../dat/missions/empire/es_cargo.lua:41
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:41
-#, lua-format
-msgid "The Empire workers load the %d tonnes of %s onto your ship."
-msgstr "Die Arbeiter des Imperiums laden die %d Tonnen %s auf dein Schiff."
-
-#: ../dat/missions/empire/es_cargo.lua:42
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:42
-#: ../dat/missions/pirate/pir_cargo.lua:56
-#: ../dat/missions/zalek/zlk_test.lua:56 ../src/land.c:621 ../src/npc.c:565
-msgid "You have too many active missions."
-msgstr "Du hast zu viele aktive Missionen."
-
-#: ../dat/missions/empire/es_cargo.lua:43
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:43
-#, lua-format
-msgid "The Empire workers unload the %s at the docks."
-msgstr "Die Arbeiter des Imperiums entladen die Fracht (%s) zu den Docks."
-
-#: ../dat/missions/empire/es_cargo.lua:45
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:47
 msgid ""
 "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 msgstr ""
 "MISSION FEHLGESCHLAGEN: Du konntest die Güter des Imperiums nicht "
 "rechtzeitig liefern!"
 
-#: ../dat/missions/empire/es_cargo.lua:49
-#: ../dat/missions/empire/es_cargo.lua:51
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:51
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:53
-#: ../dat/missions/neutral/cargo_rush.lua:75
-#: ../dat/missions/neutral/cargo_rush.lua:77
-#: ../dat/missions/sirius/srs_ferry.lua:134
-#: ../dat/missions/sirius/srs_ferry.lua:136
-#, lua-format
-msgid "Fly to %s in the %s system before %s"
+#: ../dat/missions/empire/es_cargo.lua:30
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:30
+#: ../dat/missions/neutral/cargo_rush.lua:57
+#: ../dat/missions/pirate/pir_cargo.lua:24
+#, fuzzy, lua-format
+msgid ""
+"Fly to %s in the %s system before %s\n"
+"(%s remaining)"
 msgstr "Flieg nach %s im „%s“-System vor %s"
 
-#: ../dat/missions/empire/es_cargo.lua:50
-#: ../dat/missions/empire/es_cargo.lua:52
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:52
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:54
-#: ../dat/missions/neutral/cargo_rush.lua:76
-#: ../dat/missions/neutral/cargo_rush.lua:78
-#: ../dat/missions/neutral/diy-nerds.lua:116
-#: ../dat/missions/shadow/shadowrun.lua:111
-#: ../dat/missions/shadow/shadowrun.lua:116
-#: ../dat/missions/sirius/srs_ferry.lua:135
-#: ../dat/missions/sirius/srs_ferry.lua:137
-#, lua-format
-msgid "You have %s remaining"
-msgstr "Du hast noch %s"
-
-#. Need to reuse.
 #.
 #. --    Empire shipping missions are always timed, but quite lax on the schedules
 #. --    pays a bit more then the rush missions
@@ -12959,11 +12848,103 @@ msgstr "Du hast noch %s"
 #. Determine risk of piracy
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as naev is finished as a game
+#: ../dat/missions/empire/es_cargo.lua:89
+#, fuzzy, lua-format
+msgid "ES: Cargo transport (%s of %s)"
+msgstr "IL: Frachtlieferung (%d Tonnen %s)"
+
 #. Mission is accepted
-#. able to accept the mission, hooks BREAK after accepting
+#. Note: please leave the trailing space on the line below! Needed to make the newline show up.
+#: ../dat/missions/empire/es_cargo.lua:104
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:113
+#: ../dat/missions/neutral/cargo_rush.lua:132
+#: ../dat/missions/pirate/pir_cargo.lua:103
+#: ../dat/missions/sirius/srs_ferry.lua:55
+#: ../dat/missions/trader/anxiousmerchant.lua:45
+msgid "Too slow"
+msgstr "Zu langsam"
+
+#: ../dat/missions/empire/es_cargo.lua:105
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:114
+#: ../dat/missions/neutral/cargo_rush.lua:133
+#: ../dat/missions/pirate/pir_cargo.lua:104
+#, fuzzy, lua-format
+msgid ""
+"This shipment must arrive within %s, but it will take at least %s for your "
+"ship to reach %s, missing the deadline. Accept the mission anyway?"
+msgstr ""
+"Diese Lieferung muss innerhalb von %s ankommen, aber es dauert mindestens "
+"%s, bis dein Schiff %s erreicht, wodurch du die Frist versäumst.\n"
+"   \n"
+"Nimmst du die Mission trotzdem an?"
+
+#. Mission is accepted
+#. Create the mission
+#. Note: this mission does not make any system claims.
+#. Calculate the route, distance, jumps, risk of piracy, and cargo to take
+#. Calculate time limit. Depends on tier and distance.
+#. The second time limit is for the reduced reward.
+#. Allow extra time for refuelling stops.
+#. Choose amount of cargo and mission reward. This depends on the mission tier.
+#. Note: Pay is independent from amount by design! Not all deals are equally attractive!
+#. Modifier that should tend towards 1.0 as naev is finished as a game
+#. 45 max (quicksilver)
+#. Mission is accepted
+#: ../dat/missions/empire/es_cargo.lua:112
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:121
+#: ../dat/missions/neutral/cargo.lua:89
+#: ../dat/missions/neutral/cargo_rush.lua:122
+#: ../dat/missions/pirate/pir_cargo.lua:111
+msgid "No room in ship"
+msgstr "Keinen Platz im Schiff"
+
+#: ../dat/missions/empire/es_cargo.lua:113
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:122
+#: ../dat/missions/neutral/cargo.lua:90
+#: ../dat/missions/neutral/cargo_rush.lua:123
+#: ../dat/missions/pirate/pir_cargo.lua:112
+#, fuzzy, lua-format
+msgid ""
+"You don't have enough cargo space to accept this mission. It requires %s of "
+"free space (%s more than you have)."
+msgstr ""
+"Du hast nicht genügend Frachtraum, um diese Mission zu akzeptieren. Du "
+"brauchst %d Tonnen mit freien Raum (du brauchst noch %d)."
+
+#: ../dat/missions/empire/es_cargo.lua:122
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:131
+#: ../dat/missions/pirate/pir_cargo.lua:121
+#: ../dat/missions/sirius/srs_ferry.lua:123
+#: ../dat/missions/zalek/zlk_test.lua:23
+msgid "Mission Accepted"
+msgstr "Mission akzeptiert"
+
+#: ../dat/missions/empire/es_cargo.lua:123
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:132
+#, fuzzy, lua-format
+msgid "The Empire workers load the %s of %s onto your ship."
+msgstr "Die Arbeiter des Imperiums laden die %d Tonnen %s auf dein Schiff."
+
 #. only hook after accepting
 #. 100STU per tick
 #. Land hook
+#. =Landing=--
+#. only hook after accepting
+#. 100STU per tick
+#. Land hook
+#: ../dat/missions/empire/es_cargo.lua:137
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:146
+#: ../dat/missions/neutral/cargo_rush.lua:42
+#: ../dat/missions/pirate/pir_cargo.lua:136
+msgid "Successful Delivery"
+msgstr "Erfolgreiche Lieferung"
+
+#: ../dat/missions/empire/es_cargo.lua:138
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:147
+#, lua-format
+msgid "The Empire workers unload the %s at the docks."
+msgstr "Die Arbeiter des Imperiums entladen die Fracht (%s) zu den Docks."
+
 #. increase faction
 #. Date hook
 #. Case still in time
@@ -13533,41 +13514,34 @@ msgstr ""
 "machen. Nochmals, ich kann Ihnen nicht genug danken! Das Imperium vergisst "
 "solche Hingabe nicht so schnell.“"
 
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:14
-#, lua-format
-msgid ""
-"ES: Long distance cargo transport to %s in the %s system\n"
-"   Cargo: %s (%d tonnes)\n"
-"   Jumps: %d\n"
-"   Travel distance: %d\n"
-"   Piracy risk: %s\n"
-"   Time limit: %s"
-msgstr ""
-"IL: Langstreckenfrachtlieferung zu %s im „%s“-System\n"
-"   Fracht: %s (%d Tonnen)\n"
-"   Sprünge: %d\n"
-"   Reiseentfernung: %d\n"
-"   Pirateriegefahr: %s\n"
-"   Zeitlimit: %s"
+#. makes sure pilot is not currently on Gamma Polaris
+#. Set marker to a system, visible in any mission computer and the onboard computer.
+#. -Intro Text
+#. Flavour text and mini-briefing
+#. -Accept the mission
+#. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
+#. Set up the goal
+#. More flavour text
+#.
+#.
+#. Handles the randomly generated Empire long-distance cargo missions.
+#.
+#.
+#.
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:11
+#, fuzzy, lua-format
+msgid "Official Empire long distance cargo transport to %s in the %s system."
+msgstr "Pirat: Frachtlieferung nach %s im „%s“-System"
 
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:45
-msgid "Cargo Missing"
-msgstr "Fehlende Fracht"
-
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:46
-#, lua-format
-msgid "You are missing the %d tonnes of %s!."
-msgstr "Dir fehlen die %d Tonnen von %s!."
-
-#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:49
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:29
 msgid "Long Distance Empire Shipping"
 msgstr "Imperiale Langstreckenlieferung"
 
-#. Need to reuse.
 #.
 #. -- Empire shipping missions are always timed, but quite lax on the schedules
 #. -- pays a bit more then the rush missions
 #. --
+#. This is in cargo_common, but we need to increase the range
 #. Create the mission
 #. Note: this mission does not make any system claims.
 #. target destination
@@ -13576,11 +13550,11 @@ msgstr "Imperiale Langstreckenlieferung"
 #. Determine risk of piracy
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as naev is finished as a game
-#. Mission is accepted
-#. able to accept the mission, hooks BREAK after accepting
-#. only hook after accepting
-#. 100STU per tick
-#. Land hook
+#: ../dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:97
+#, fuzzy, lua-format
+msgid "ES: Long distance cargo transport (%s of %s)"
+msgstr "IL: Frachtlieferung (%d Tonnen %s)"
+
 #. increase faction
 #. Date hook
 #. Case still in time
@@ -15417,25 +15391,25 @@ msgstr ""
 #: ../dat/missions/flf/flf_commodity_run.lua:26
 #, lua-format
 msgid ""
-"%s%s are carried out of your ship and tallied. After making sure nothing was "
-"missed from your cargo hold, you are paid %s credits, thanked for assisting "
-"the FLF's operations, and dismissed."
+"The containers of %s are carried out of your ship and tallied. After making "
+"sure nothing was missed from your cargo hold, you are paid %s, thanked for "
+"assisting the FLF's operations, and dismissed."
 msgstr ""
 
 #: ../dat/missions/flf/flf_commodity_run.lua:27
 #, lua-format
 msgid ""
-"%s%s are quickly and efficiently unloaded and transported to the storage "
-"facility. The FLF officer in charge thanks you with a credit chip worth %s "
-"credits."
+"The containers of %s are quickly and efficiently unloaded and transported to "
+"the storage facility. The FLF officer in charge thanks you with a credit "
+"chip worth %s."
 msgstr ""
 
 #: ../dat/missions/flf/flf_commodity_run.lua:28
 #, lua-format
 msgid ""
-"%s%s are unloaded from your vessel by a team of FLF soldiers who are in no "
-"rush to finish, eventually delivering %s credits after the number of tonnes "
-"is determined."
+"The containers of %s are unloaded from your vessel by a team of FLF soldiers "
+"who are in no rush to finish, eventually delivering %s after the number of "
+"tonnes is determined."
 msgstr ""
 
 #: ../dat/missions/flf/flf_commodity_run.lua:30
@@ -15470,30 +15444,30 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:216
+#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:235
 #: dat/mission.xml:243 dat/mission.xml:257 dat/mission.xml:271
 #: dat/mission.xml:285 dat/mission.xml:299 dat/mission.xml:312
 #: dat/mission.xml:326 dat/mission.xml:835 dat/mission.xml:847
 #: dat/mission.xml:858 dat/mission.xml:882 dat/mission.xml:1311
-#: dat/mission.xml:1323 dat/mission.xml:1498 dat/fleet.xml:187
-#: dat/fleet.xml:194 dat/fleet.xml:201 dat/fleet.xml:749 dat/fleet.xml:1004
-#: dat/fleet.xml:1013
+#: dat/mission.xml:1323 dat/mission.xml:1498 dat/fleet.xml:229
+#: dat/fleet.xml:236 dat/fleet.xml:243 dat/fleet.xml:791 dat/fleet.xml:1046
+#: dat/fleet.xml:1055
 msgid "FLF"
 msgstr "FLF"
 
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:78 dat/mission.xml:619
-#: dat/mission.xml:640 dat/mission.xml:661 dat/mission.xml:707
-#: dat/mission.xml:777 dat/mission.xml:836 dat/mission.xml:848
-#: dat/mission.xml:859 dat/mission.xml:1103 dat/mission.xml:1264
-#: dat/mission.xml:1281 dat/mission.xml:1298 dat/mission.xml:1312
-#: dat/mission.xml:1324 dat/mission.xml:1347 dat/mission.xml:1363
-#: dat/mission.xml:1380 dat/mission.xml:1399 dat/mission.xml:1416
-#: dat/mission.xml:1460 dat/mission.xml:1480 dat/mission.xml:1520
-#: dat/mission.xml:1539 dat/mission.xml:1559 dat/fleet.xml:159
-#: dat/fleet.xml:166 dat/fleet.xml:173 dat/fleet.xml:180
+#: ../dat/missions/flf/flf_common.lua:82 dat/faction.xml:164
+#: dat/mission.xml:619 dat/mission.xml:640 dat/mission.xml:661
+#: dat/mission.xml:707 dat/mission.xml:777 dat/mission.xml:836
+#: dat/mission.xml:848 dat/mission.xml:859 dat/mission.xml:1103
+#: dat/mission.xml:1264 dat/mission.xml:1281 dat/mission.xml:1298
+#: dat/mission.xml:1312 dat/mission.xml:1324 dat/mission.xml:1347
+#: dat/mission.xml:1363 dat/mission.xml:1380 dat/mission.xml:1399
+#: dat/mission.xml:1416 dat/mission.xml:1460 dat/mission.xml:1480
+#: dat/mission.xml:1520 dat/mission.xml:1539 dat/mission.xml:1559
+#: dat/fleet.xml:201 dat/fleet.xml:208 dat/fleet.xml:215 dat/fleet.xml:222
 msgid "Frontier"
 msgstr "Front"
 
@@ -15768,14 +15742,6 @@ msgid " There is a Goddard among them, so you must be very careful."
 msgstr " Eine Goddard ist unter ihnen, also musst du sehr vorsichtig vorgehen."
 
 #. Set mission details
-#: ../dat/missions/flf/flf_patrol.lua:129
-#: ../dat/missions/flf/flf_pirates.lua:124
-#, fuzzy, lua-format
-msgid "%s credit"
-msgid_plural "%s credits"
-msgstr[0] "%s Credits"
-msgstr[1] "%s Credits"
-
 #. Spawn a Dvaered patrol with n ships.
 #. Spawn n FLF ships at/from the location param.
 #.
@@ -15890,6 +15856,7 @@ msgstr " Eine Phalanx ist unter ihnen, also musst du vorsichtig vorgehen."
 msgid " There is a Kestrel among them, so you must be very careful."
 msgstr " Eine Kestrel ist unter ihnen, also musst du sehr vorsichtig vorgehen."
 
+#. Set mission details
 #. Spawn a pirate patrol with n ships.
 #. Spawn n FLF ships at/from the location param.
 #.
@@ -16809,8 +16776,8 @@ msgstr "Flotte"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: ../dat/missions/flf/flf_rogue.lua:43 dat/faction.xml:328 dat/fleet.xml:208
-#: dat/fleet.xml:215
+#: ../dat/missions/flf/flf_rogue.lua:43 dat/faction.xml:349 dat/fleet.xml:250
+#: dat/fleet.xml:257
 msgid "Rogue FLF"
 msgstr "Abtrünnige FLF"
 
@@ -16940,7 +16907,7 @@ msgstr ""
 #. creates the NPC at the bar to create the mission
 #: ../dat/missions/neutral/aristodrink.lua:21
 #: ../dat/missions/neutral/aristodrink.lua:39
-#: ../dat/missions/neutral/aristodrink.lua:101
+#: ../dat/missions/neutral/aristodrink.lua:81
 msgid "Drinking Aristocrat"
 msgstr "Trinkender Aristokrat"
 
@@ -17043,10 +17010,10 @@ msgstr "Hinweis"
 #: ../dat/missions/neutral/aristodrink.lua:50
 #, fuzzy, lua-format
 msgid ""
-"You walk into the bar and approach the bartender, a %s %s with %s hair, "
-"wearing %s. You describe the drink to %s, but %s doesn't seem to know what "
-"you're talking about. There is another bartender that %s thinks may be able "
-"to help you though, at %s in the %s system."
+"You walk into the bar and approach the bartender. You describe the drink, "
+"but the bartender doesn't seem to know what you're talking about. There is "
+"another bartender that they think may be able to help you though, at %s in "
+"the %s system."
 msgstr ""
 "Du gehst in die Kneipe und näherst dich dem Barkeeper, eine %s %s mit %s "
 "Haaren und %s. Du beschreibst %s den Drink, aber %s scheint nicht zu wissen, "
@@ -17057,16 +17024,15 @@ msgstr ""
 msgid "A bit more info..."
 msgstr "Ein paar weitere Infos …"
 
-#: ../dat/missions/neutral/aristodrink.lua:53
+#: ../dat/missions/neutral/aristodrink.lua:54
 #, fuzzy, lua-format
 msgid ""
-"You walk into the bar and see a %s %s behind the bar wearing %s. When you "
-"approach %s and describe the drink, %s tells you that the drink isn't the "
-"specialty of any one bar, but actually the specialty of a bartender that "
-"used to work here. \"It's called a Swamp Bombing.\" Although %s is not sure "
-"where %s works now, %s can tell you where %s started working after %s left. "
-"If you're lucky, %s will still be working there. With high hopes, you decide "
-"to set off to %s in the %s system."
+"You walk in and see someone behind the bar. When you approach and describe "
+"the drink, they tell you that the drink isn't the specialty of any one bar, "
+"but actually the specialty of a bartender who used to work here. \"It's "
+"called a Swamp Bombing. I don't know where they work now, but they started "
+"working at the bar on %s in the %s system after they left here. Good luck!\" "
+"With high hopes, you decide to head off to there."
 msgstr ""
 "Du gehst in die Kneipe. Hinter dem Tresen ist eine %s %s und %s. Als du dich "
 "%s annäherst und den Drink beschreibst, sagt dir %s, dass der Drink nicht "
@@ -17078,16 +17044,54 @@ msgstr ""
 "beschließt du, dich auf den Weg zu %s im „%s“-System zu machen."
 
 #: ../dat/missions/neutral/aristodrink.lua:55
-msgid "Is this it?"
-msgstr "Ist es das?"
+#, fuzzy, lua-format
+msgid ""
+"You walk in and see someone behind the bar. When you approach and describe "
+"the drink, they tell you that the drink isn't the specialty of any one bar, "
+"but actually the specialty of a bartender who used to work here. \"It's "
+"called a Swamp Bombing. I don't know where he works now, but he started "
+"working at the bar on %s in the %s system after he left here. Good luck!\" "
+"With high hopes, you decide to head off to there."
+msgstr ""
+"Du gehst in die Kneipe. Hinter dem Tresen ist eine %s %s und %s. Als du dich "
+"%s annäherst und den Drink beschreibst, sagt dir %s, dass der Drink nicht "
+"die Spezialität einer bestimmten Bar ist, sondern eigentlich die Spezialität "
+"eines Barkeepers, der früher hier gearbeitet hat. „Sie wird ‚Sumpfbombe‘ "
+"genannt.“ Obwohl %s sich nicht sicher ist, wo %s jetzt arbeitet, kann %s dir "
+"sagen, wo %s angefangen hat zu arbeiten, nachdem %s gegangen ist. Wenn du "
+"Glück hast, wird %s immer noch dort arbeiten. Mit großen Hoffnungen "
+"beschließt du, dich auf den Weg zu %s im „%s“-System zu machen."
 
 #: ../dat/missions/neutral/aristodrink.lua:56
 #, fuzzy, lua-format
 msgid ""
+"You walk in and see someone behind the bar. When you approach and describe "
+"the drink, they tell you that the drink isn't the specialty of any one bar, "
+"but actually the specialty of a bartender who used to work here. \"It's "
+"called a Swamp Bombing. I don't know where she works now, but she started "
+"working at the bar on %s in the %s system after she left here. Good luck!\" "
+"With high hopes, you decide to head off to there."
+msgstr ""
+"Du gehst in die Kneipe. Hinter dem Tresen ist eine %s %s und %s. Als du dich "
+"%s annäherst und den Drink beschreibst, sagt dir %s, dass der Drink nicht "
+"die Spezialität einer bestimmten Bar ist, sondern eigentlich die Spezialität "
+"eines Barkeepers, der früher hier gearbeitet hat. „Sie wird ‚Sumpfbombe‘ "
+"genannt.“ Obwohl %s sich nicht sicher ist, wo %s jetzt arbeitet, kann %s dir "
+"sagen, wo %s angefangen hat zu arbeiten, nachdem %s gegangen ist. Wenn du "
+"Glück hast, wird %s immer noch dort arbeiten. Mit großen Hoffnungen "
+"beschließt du, dich auf den Weg zu %s im „%s“-System zu machen."
+
+#: ../dat/missions/neutral/aristodrink.lua:58
+msgid "Is this it?"
+msgstr "Ist es das?"
+
+#: ../dat/missions/neutral/aristodrink.lua:59
+#, fuzzy, lua-format
+msgid ""
 "You walk into the bar fully confident that this is the bar. You walk up to "
-"the bartender, a %s %s with %s hair wearing %s, and ask for a Swamp Bombing. "
-"\"A wha???\" Guess this isn't the right bar. You get another possible clue, "
-"%s in the %s system, and head on your way."
+"the bartender and ask for a Swamp Bombing. \"A wha???\" Guess this isn't the "
+"right bar. You get another possible clue, %s in the %s system, and head on "
+"your way."
 msgstr ""
 "Du betrittst die Bar im vollen Vertrauen darauf, dass dies die Kneipe ist. "
 "Du gehst auf den Barkeeper zu, eine %s %s mit %s Haaren und %s, und fragst "
@@ -17095,23 +17099,23 @@ msgstr ""
 "richtige Bar. Du bekommst einen weiteren möglichen Hinweis, %s im „%s“-"
 "System, und machst dich auf den Weg."
 
-#: ../dat/missions/neutral/aristodrink.lua:58
+#: ../dat/missions/neutral/aristodrink.lua:61
 msgid "This is it!"
 msgstr "Das ist es!"
 
-#: ../dat/missions/neutral/aristodrink.lua:59
-#, fuzzy, lua-format
+#: ../dat/missions/neutral/aristodrink.lua:63
+#, fuzzy
 msgid ""
 "You walk into the bar and know instantly that you are finally here! This is "
-"the place! You walk up to the bartender, a %s %s with %s hair, wearing %s, "
-"and smile. This has to be %s. You start to describe the drink to %s and %s "
-"interrupts. \"A Swamp Bombing. Of course, that's my specialty.\" You ask if "
-"%s can make it to go, and %s laughs and says \"Sure, I guess.\"\n"
-"    Just as %s is about to start making it though, you stop %s and tell %s "
-"you'll have one here after all. As long as you came all this way, you might "
-"as well try it. You're amazed at how quickly and gracefully %s trained hands "
-"move, flipping bottles and shaking various containers. Before you know it, "
-"%s is setting a drink before you, and closing another container for you to "
+"the place! You walk up to the bartender, who smiles. This has to be them. "
+"You start to describe the drink to them and they interrupt. \"A Swamp "
+"Bombing. Of course, that's my specialty.\" You ask if they can make it to "
+"go, prompting a bit of a chuckle. \"Sure, why not?\"\n"
+"    Just as they're about to start making it, though, you stop them and say "
+"you'll have one here after all. As long as you've come all this way, you "
+"might as well try it. You're amazed at how quickly and gracefully their "
+"trained hands move, flipping bottles and shaking various containers. Before "
+"you know it, they've set a drink before you and closed another container to "
 "take with you. You taste it expecting something incredible. It's alright, "
 "but you doubt it was worth all this trouble."
 msgstr ""
@@ -17131,11 +17135,75 @@ msgstr ""
 "Unglaubliches. Er ist in Ordnung, aber du bezweifelst, dass dies die ganze "
 "Mühe wert war."
 
-#: ../dat/missions/neutral/aristodrink.lua:62
+#: ../dat/missions/neutral/aristodrink.lua:65
+#, fuzzy
+msgid ""
+"You walk into the bar and know instantly that you are finally here! This is "
+"the place! You walk up to the bartender, who smiles. This has to be him. You "
+"start to describe the drink to them and he interrupts. \"A Swamp Bombing. Of "
+"course, that's my specialty.\" You ask if he can make it to go, prompting a "
+"bit of a chuckle. \"Sure, why not?\"\n"
+"    Just as he's about to start making it, though, you stop him and say "
+"you'll have one here after all. As long as you've come all this way, you "
+"might as well try it. You're amazed at how quickly and gracefully his "
+"trained hands move, flipping bottles and shaking various containers. Before "
+"you know it, he's set a drink before you and closed another container to "
+"take with you. You taste it expecting something incredible. It's alright, "
+"but you doubt it was worth all this trouble."
+msgstr ""
+"Du gehst in die Kneipe und weißt sofort, dass du es endlich geschafft hast! "
+"Dies ist der Ort! Du gehst auf den Barkeeper zu, eine %s %s mit %s Haaren "
+"und %s, und lächelst. Das muss %s sein. Du fängst an, %s den Drink zu "
+"beschreiben und %s unterbricht. „Eine Sumpfbombe. Natürlich, das ist meine "
+"Spezialität.“. Du fragst, ob %s dir einen zum Mitnehmen mixen kann, da lacht "
+"%s und sagt: „Sicher, ich denke schon.“\n"
+"    Gerade als %s gerade anfängt, ihn zu mixen, unterbrichst du %s und sagst "
+"%s, dass du dir hier auch einen genehmigen willst. Wenn du schon den ganzen "
+"Weg hierher gekommen bist, kannst du ihn genauso gut probieren. Du bist "
+"erstaunt, wie schnell und anmutig sich die geschulten Hände von %s bewegen, "
+"Flaschen umdrehen und verschiedene Behälter schütteln. Ehe du dich "
+"versiehst, stellt %s einen Drink vor dich hin und schließt einen weiteren "
+"Behälter, den du mitnehmen kannst. Du probierst ihn und erwartest etwas "
+"Unglaubliches. Er ist in Ordnung, aber du bezweifelst, dass dies die ganze "
+"Mühe wert war."
+
+#: ../dat/missions/neutral/aristodrink.lua:67
+#, fuzzy
+msgid ""
+"You walk into the bar and know instantly that you are finally here! This is "
+"the place! You walk up to the bartender, who smiles. This has to be her. You "
+"start to describe the drink to her and she interrupts. \"A Swamp Bombing. Of "
+"course, that's my specialty.\" You ask if she can make it to go, prompting a "
+"bit of a chuckle. \"Sure, why not?\"\n"
+"    Just as she's about to start making it, though, you stop her and say "
+"you'll have one here after all. As long as you've come all this way, you "
+"might as well try it. You're amazed at how quickly and gracefully her "
+"trained hands move, flipping bottles and shaking various containers. Before "
+"you know it, she's set a drink before you and closed another container to "
+"take with you. You taste it expecting something incredible. It's alright, "
+"but you doubt it was worth all this trouble."
+msgstr ""
+"Du gehst in die Kneipe und weißt sofort, dass du es endlich geschafft hast! "
+"Dies ist der Ort! Du gehst auf den Barkeeper zu, eine %s %s mit %s Haaren "
+"und %s, und lächelst. Das muss %s sein. Du fängst an, %s den Drink zu "
+"beschreiben und %s unterbricht. „Eine Sumpfbombe. Natürlich, das ist meine "
+"Spezialität.“. Du fragst, ob %s dir einen zum Mitnehmen mixen kann, da lacht "
+"%s und sagt: „Sicher, ich denke schon.“\n"
+"    Gerade als %s gerade anfängt, ihn zu mixen, unterbrichst du %s und sagst "
+"%s, dass du dir hier auch einen genehmigen willst. Wenn du schon den ganzen "
+"Weg hierher gekommen bist, kannst du ihn genauso gut probieren. Du bist "
+"erstaunt, wie schnell und anmutig sich die geschulten Hände von %s bewegen, "
+"Flaschen umdrehen und verschiedene Behälter schütteln. Ehe du dich "
+"versiehst, stellt %s einen Drink vor dich hin und schließt einen weiteren "
+"Behälter, den du mitnehmen kannst. Du probierst ihn und erwartest etwas "
+"Unglaubliches. Er ist in Ordnung, aber du bezweifelst, dass dies die ganze "
+"Mühe wert war."
+
+#: ../dat/missions/neutral/aristodrink.lua:70
 msgid "Delivery"
 msgstr "Lieferung"
 
-#: ../dat/missions/neutral/aristodrink.lua:63
+#: ../dat/missions/neutral/aristodrink.lua:71
 #, lua-format
 msgid ""
 "\"Ahh! I was just thinking how much I wanted one of those drinks! I'm so "
@@ -17166,572 +17234,7 @@ msgstr ""
 "ein weiteres Wort. Es ist wahrscheinlich sowieso das Meiste, das jemals "
 "jemand für so einen Drink bezahlt hat."
 
-#. XXX: While this stuff is cool, it also doesn't really lend itself
-#. well to translation. A different method should probably be considered.
-#: ../dat/missions/neutral/aristodrink.lua:70
-#, fuzzy
-msgid "man"
-msgstr "männliche Person"
-
-#: ../dat/missions/neutral/aristodrink.lua:71
-#, fuzzy
-msgid "woman"
-msgstr "weibliche Person"
-
 #: ../dat/missions/neutral/aristodrink.lua:74
-msgid "him"
-msgstr "ihn"
-
-#: ../dat/missions/neutral/aristodrink.lua:75
-#: ../dat/missions/neutral/aristodrink.lua:79
-#, fuzzy
-msgid "her"
-msgstr "ihr"
-
-#: ../dat/missions/neutral/aristodrink.lua:78
-#, fuzzy
-msgid "his"
-msgstr "sein"
-
-#: ../dat/missions/neutral/aristodrink.lua:82
-msgid "he"
-msgstr "er"
-
-#: ../dat/missions/neutral/aristodrink.lua:83
-msgid "she"
-msgstr "sie"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#, fuzzy
-msgid "tall"
-msgstr "große"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#: ../dat/missions/neutral/aristodrink.lua:87
-#, fuzzy
-msgid "short"
-msgstr "kleine"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#, fuzzy
-msgid "fat"
-msgstr "dicke"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#, fuzzy
-msgid "ugly"
-msgstr "hässliche"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#, fuzzy
-msgid "scary"
-msgstr "schaurige"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#, fuzzy
-msgid "muscular"
-msgstr "muskulöse"
-
-#: ../dat/missions/neutral/aristodrink.lua:85
-#, fuzzy
-msgid "nice looking"
-msgstr "gut aussehende"
-
-#: ../dat/missions/neutral/aristodrink.lua:87 ../src/opengl.c:461
-#: ../src/opengl.c:464 ../src/opengl.c:465 ../src/opengl.c:466
-#: ../src/opengl.c:467
-#, fuzzy
-msgid "no"
-msgstr "nicht vorhandenen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "brown"
-msgstr "braunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "brunette"
-msgstr "brünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "blonde"
-msgstr "blonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "red"
-msgstr "roten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "strawberry blonde"
-msgstr "erdbeerblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "golden blonde"
-msgstr "goldblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dirty blonde"
-msgstr "graublonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "white"
-msgstr "weißen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "blue"
-msgstr "blauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "orange"
-msgstr "orange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "green"
-msgstr "grünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark"
-msgstr "dunklen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark brown"
-msgstr "dunkelbraunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark brunette"
-msgstr "dunkelbrünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark red"
-msgstr "dunkelroten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark blue"
-msgstr "dunkelblauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark orange"
-msgstr "dunkelorange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dark green"
-msgstr "dunkelgrünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light"
-msgstr "hellen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light brown"
-msgstr "hellbraunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light brunette"
-msgstr "hellbrünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light blonde"
-msgstr "hellblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light strawberry blonde"
-msgstr "hellerdbeerblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light golden blonde"
-msgstr "hellgoldblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light dirty blonde"
-msgstr "hellgraublonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light red"
-msgstr "hellroten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light blue"
-msgstr "hellblauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light orange"
-msgstr "hellorange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "light green"
-msgstr "hellgrünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short brown"
-msgstr "kurzen braunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short brunette"
-msgstr "kurzen brünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short blonde"
-msgstr "kurzen blonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short strawberry blonde"
-msgstr "kurzen erdbeerblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short golden blonde"
-msgstr "kurzen goldblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short dirty blonde"
-msgstr "kurzen graublonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short red"
-msgstr "kurzen roten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short blue"
-msgstr "kurzen blauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short white"
-msgstr "kurzen weißen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short orange"
-msgstr "kurzen orange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short green"
-msgstr "kurzen grünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "short dark"
-msgstr "kurzen dunklen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long"
-msgstr "langen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long brown"
-msgstr "langen braunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long brunette"
-msgstr "langen brünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long blonde"
-msgstr "langen blonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long strawberry blonde"
-msgstr "langen erdbeerblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long golden blonde"
-msgstr "langen goldblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long dirty blonde"
-msgstr "langen graublonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long red"
-msgstr "langen roten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long blue"
-msgstr "langen blauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long white"
-msgstr "langen weißen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long orange"
-msgstr "langen orange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long green"
-msgstr "langen grünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "long dark"
-msgstr "langen dunklen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly"
-msgstr "gelockten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, brown"
-msgstr "gelockten braunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, brunette"
-msgstr "gelockten brünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, blonde"
-msgstr "gelockten blonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, strawberry blonde"
-msgstr "gelockten erdbeerblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, golden blonde"
-msgstr "gelockten goldblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, dirty blonde"
-msgstr "gelockten graublonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, red"
-msgstr "gelockten roten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, blue"
-msgstr "gelockten blauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, white"
-msgstr "gelockten weißen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, orange"
-msgstr "gelockten orange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, green"
-msgstr "gelockten grünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "curly, dark"
-msgstr "gelockten dunklen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy"
-msgstr "gewellten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, brown"
-msgstr "gewellten braunen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, brunette"
-msgstr "gewellten brünetten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, blonde"
-msgstr "gewellten blonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, strawberry blonde"
-msgstr "gewellten erdbeerblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, golden blonde"
-msgstr "gewellten goldblonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, dirty blonde"
-msgstr "gewellten graublonden"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, red"
-msgstr "gewellten roten"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, blue"
-msgstr "gewellten blauen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, white"
-msgstr "gewellten weißen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, orange"
-msgstr "gewellten orange"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, green"
-msgstr "gewellten grünen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "wavy, dark"
-msgstr "gewellten dunklen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "natty"
-msgstr "schicken"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "greasy"
-msgstr "fettigen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "dirty"
-msgstr "dreckigen"
-
-#: ../dat/missions/neutral/aristodrink.lua:87
-msgid "smelly"
-msgstr "stinkenden"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a suit"
-msgstr "einem Anzug"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a black suit"
-msgstr "einem schwarzen Anzug"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a purple suit"
-msgstr "einem violetten Anzug"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a blue suit"
-msgstr "einem blauen Anzug"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a beach shirt"
-msgstr "einem Strandhemd"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a floral shirt"
-msgstr "einem Blumenhemd"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a blue shirt"
-msgstr "einem blauen Hemd"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a red shirt"
-msgstr "einem roten Hemd"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a white shirt"
-msgstr "einem weißen Hemd"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a white dress shirt"
-msgstr "einem weißen Anzugshemd"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a red vest"
-msgstr "einer roten Weste"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a blue vest"
-msgstr "einer blauen Weste"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a tux"
-msgstr "einem Smoking"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-msgid "a black tux"
-msgstr "einem schwarzen Smoking"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "robes"
-msgstr "Roben"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "brown robes"
-msgstr "braunen Roben"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "black robes"
-msgstr "schwarzen Roben"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "blue robes"
-msgstr "blauen Roben"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "dark blue robes"
-msgstr "dunkelblauen Roben"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "all black"
-msgstr "schwarzer Kleidung"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "all blue"
-msgstr "blauer Kleidung"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "all purple"
-msgstr "lila Kleidung"
-
-#: ../dat/missions/neutral/aristodrink.lua:90
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "all red"
-msgstr "roter Kleidung"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a dress"
-msgstr "einem Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a blue dress"
-msgstr "einem blauen Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a black dress"
-msgstr "einem schwarzen Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a purple dress"
-msgstr "einem lila Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a red dress"
-msgstr "einem roten Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a sexy blue dress"
-msgstr "einem sexy blauen Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a sexy red dress"
-msgstr "einem sexy roten Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a sexy black dress"
-msgstr "einem sexy schwarzen Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a short blue dress"
-msgstr "einem kurzen blauen Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a short red dress"
-msgstr "einem kurzen roten Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:92
-msgid "a short black dress"
-msgstr "einem kurzen schwarzen Kleid"
-
-#: ../dat/missions/neutral/aristodrink.lua:94
 #, fuzzy
 msgid "You delivered a special drink called a Swamp Bombing to an aristocrat."
 msgstr "Finde einen ganz bestimmten Drink für einen Aristokraten."
@@ -17742,16 +17245,13 @@ msgstr "Finde einen ganz bestimmten Drink für einen Aristokraten."
 #. final bartender data
 #. hooks
 #. first clue
-#. current bartender data
 #. next planet
 #. find out that it's a bartender's specialty
-#. current bartender data
 #. next planet
 #. find another bar that the bartender used to work at
-#. current bartender data
 #. next planet
 #. get the drink
-#: ../dat/missions/neutral/aristodrink.lua:252
+#: ../dat/missions/neutral/aristodrink.lua:214
 #, lua-format
 msgid "Return the drink to the Aristocrat at %s in the %s system."
 msgstr "Bringe den Drink zum Aristokraten bei %s im „%s“-System zurück."
@@ -17760,78 +17260,40 @@ msgstr "Bringe den Drink zum Aristokraten bei %s im „%s“-System zurück."
 #. -- These are regular cargo delivery missions. Pay is low, but so is difficulty.
 #. -- Most of these missions require BULK ships. Not for small ships!
 #. --
-#. Create the mission
-#. Note: this mission does not make any system claims.
-#. Calculate the route, distance, jumps, risk of piracy, and cargo to take
-#. Choose amount of cargo and mission reward. This depends on the mission tier.
-#. Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
-#. Note: Pay is independent from amount by design! Not all deals are equally attractive!
-#. Modifier that should tend towards 1.0 as naev is finished as a game
-#. Mission is accepted
-#. TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
-#. Land hook
-#. Semi-random message.
-#.
-#. -- These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
-#. -- These missions require fast ships, but higher tiers may also require increased cargo space.
-#. --
-#: ../dat/missions/neutral/cargo.lua:9 ../dat/missions/neutral/cargo_rush.lua:9
-#, lua-format
-msgid "%s in the %s system needs a delivery of %d tonnes of %s."
-msgstr "%s im „%s“-System braucht eine Lieferung von %d Tonnen %s."
+#. Note: indexed from 0 to match mission tiers.
+#: ../dat/missions/neutral/cargo.lua:12
+#, fuzzy, lua-format
+msgid "Small shipment to %s in the %s system."
+msgstr "Bring die Lieferung nach %s im „%s“-System"
 
-#. Empire Shark
 #: ../dat/missions/neutral/cargo.lua:13
-#: ../dat/missions/pirate/empbounty_dead.lua:43 ../src/outfit.c:271
-#: ../src/outfit.c:287
-msgid "Small"
-msgstr "Kleine"
+#, fuzzy, lua-format
+msgid "Medium shipment to %s in the %s system."
+msgstr "Bring die Lieferung nach %s im „%s“-System"
+
+#: ../dat/missions/neutral/cargo.lua:14
+#, fuzzy, lua-format
+msgid "Sizable cargo delivery to %s in the %s system."
+msgstr " Frachtlieferung nach %s im „%s“-System"
 
 #: ../dat/missions/neutral/cargo.lua:15
-msgid "Sizeable"
-msgstr ""
-
-#: ../dat/missions/neutral/cargo.lua:16 ../src/outfit.c:275 ../src/outfit.c:291
-msgid "Large"
-msgstr "Große"
-
-#: ../dat/missions/neutral/cargo.lua:17 ../dat/scripts/pilot/pirate.lua:216
-msgid "Bulk"
-msgstr ""
-
-#: ../dat/missions/neutral/cargo.lua:20
-#: ../dat/missions/neutral/cargo_rush.lua:20
-#, lua-format
-msgid " cargo delivery to %s in the %s system"
+#, fuzzy, lua-format
+msgid "Large cargo delivery to %s in the %s system."
 msgstr " Frachtlieferung nach %s im „%s“-System"
 
-#: ../dat/missions/neutral/cargo.lua:21
-#: ../dat/missions/neutral/cargo_rush.lua:21
-#, lua-format
-msgid " freight delivery to %s in the %s system"
+#: ../dat/missions/neutral/cargo.lua:16
+#, fuzzy, lua-format
+msgid "Bulk freight delivery to %s in the %s system."
 msgstr " Frachtlieferung nach %s im „%s“-System"
 
-#: ../dat/missions/neutral/cargo.lua:22
-#: ../dat/missions/neutral/cargo_rush.lua:22
-#, lua-format
-msgid " transport to %s in the %s system"
-msgstr " Transport nach %s im „%s“-System"
-
-#: ../dat/missions/neutral/cargo.lua:23
-#: ../dat/missions/neutral/cargo_rush.lua:23
-#, lua-format
-msgid " delivery to %s in the %s system"
-msgstr " Lieferung nach %s im „%s“-System"
-
-#. Note: please leave the trailing space on the line below! Needed to make the newline show up.
-#: ../dat/missions/neutral/cargo.lua:26
-#, lua-format
+#: ../dat/missions/neutral/cargo.lua:18
+#, fuzzy, lua-format
 msgid ""
-" \n"
-"Cargo: %s (%d tonnes)\n"
+"\n"
+"Cargo: %s (%s)\n"
 "Jumps: %d\n"
 "Travel distance: %d\n"
-"Piracy Risk: %s"
+"%s"
 msgstr ""
 " \n"
 "Fracht: %s (%d Tonnen)\n"
@@ -17839,225 +17301,190 @@ msgstr ""
 "Reisedistanz: %d\n"
 "Pirateriegefahr: %s"
 
-#: ../dat/missions/neutral/cargo.lua:33
-#: ../dat/missions/neutral/cargo_rush.lua:34
-msgid "No room in ship"
-msgstr "Keinen Platz im Schiff"
-
-#: ../dat/missions/neutral/cargo.lua:34
-#, lua-format
-msgid ""
-"You don't have enough cargo space to accept this mission. You need %d tonnes "
-"of free space (you need %d more)."
-msgstr ""
-"Du hast nicht genügend Frachtraum, um diese Mission zu akzeptieren. Du "
-"brauchst %d Tonnen mit freien Raum (du brauchst noch %d)."
-
 #. =Landing=--
-#: ../dat/missions/neutral/cargo.lua:43
-#: ../dat/missions/neutral/cargo_rush.lua:51
-#: ../dat/missions/neutral/commodity_run.lua:24
+#: ../dat/missions/neutral/cargo.lua:31
+#: ../dat/missions/neutral/commodity_run.lua:23
 msgid "Delivery success!"
 msgstr "Liefererfolg!"
 
-#: ../dat/missions/neutral/cargo.lua:46
-#: ../dat/missions/neutral/cargo_rush.lua:54
-#: ../dat/missions/neutral/commodity_run.lua:27
-msgid "The crates of "
-msgstr "Die Kisten mit "
-
-#. <<-- paired with cargo_accept_p2, don't mix this up!!
-#: ../dat/missions/neutral/cargo.lua:47
-#: ../dat/missions/neutral/cargo_rush.lua:55
-#: ../dat/missions/neutral/commodity_run.lua:28
-msgid "The drums of "
-msgstr "Die Fässer mit "
-
-#: ../dat/missions/neutral/cargo.lua:48
-#: ../dat/missions/neutral/cargo_rush.lua:56
-#: ../dat/missions/neutral/commodity_run.lua:29
-msgid "The containers of "
-msgstr "Die Container mit "
-
-#: ../dat/missions/neutral/cargo.lua:51
-#: ../dat/missions/neutral/cargo_rush.lua:59
-#, lua-format
+#: ../dat/missions/neutral/cargo.lua:34
+#: ../dat/missions/neutral/cargo_rush.lua:45
+#, fuzzy, lua-format
 msgid ""
-"%s%s are carried out of your ship by a sullen group of workers. The job "
-"takes inordinately long to complete, and the leader pays you without "
-"speaking a word."
+"The containers of %s are carried out of your ship by a sullen group of "
+"workers. The job takes inordinately long to complete, and the leader pays "
+"you without speaking a word."
 msgstr ""
 "%s%s werden von einer mürrischen Arbeitergruppe aus deinem Schiff getragen. "
 "Die Arbeit dauert unverhältnismäßig lange, und der Gruppenleiter bezahlt "
 "dich, ohne ein Wort zu sagen."
 
-#: ../dat/missions/neutral/cargo.lua:52
-#: ../dat/missions/neutral/cargo_rush.lua:60
-#, lua-format
+#: ../dat/missions/neutral/cargo.lua:35
+#: ../dat/missions/neutral/cargo_rush.lua:46
+#, fuzzy, lua-format
 msgid ""
-"%s%s are rushed out of your vessel by a team shortly after you land. Before "
-"you can even collect your thoughts, one of them presses a credit chip in "
-"your hand and departs."
+"The containers of %s are rushed out of your vessel by a team shortly after "
+"you land. Before you can even collect your thoughts, one of them presses a "
+"credit chip in your hand and departs."
 msgstr ""
 "%s%s werden kurz nach der Landung von einem Team aus deinem Schiff gehetzt. "
 "Noch bevor du deine Gedanken einsammeln kannst, drückt dir einer von ihnen "
 "einen Credit-Jeton in die Hand und macht sich auf dem Weg."
 
-#: ../dat/missions/neutral/cargo.lua:53
-#: ../dat/missions/neutral/cargo_rush.lua:61
-#, lua-format
+#: ../dat/missions/neutral/cargo.lua:36
+#: ../dat/missions/neutral/cargo_rush.lua:47
+#, fuzzy, lua-format
 msgid ""
-"%s%s are unloaded by an exhausted-looking bunch of dockworkers. Still, they "
-"make fairly good time, delivering your pay upon completion of the job."
+"The containers of %s are unloaded by an exhausted-looking bunch of "
+"dockworkers. Still, they make fairly good time, delivering your pay upon "
+"completion of the job."
 msgstr ""
 "%s%s werden von einem erschöpft aussehenden Haufen von Hafenarbeitern "
 "entladen. Dennoch kommen sie ziemlich gut voran und liefern deinen Lohn nach "
 "Abschluss der Arbeit ab."
 
-#: ../dat/missions/neutral/cargo.lua:54
-#, lua-format
+#: ../dat/missions/neutral/cargo.lua:37
+#, fuzzy, lua-format
 msgid ""
-"%s%s are unloaded by a team of robotic drones supervised by a human "
-"overseer, who hands you your pay when they finish."
+"The containers of %s are unloaded by a team of robotic drones supervised by "
+"a human overseer, who hands you your pay when they finish."
 msgstr ""
 "%s%s werden von einem Team von Roboterdrohnen entladen, die von einem "
 "menschlichen Aufseher beaufsichtigt werden, der dir deinen Lohn übergibt, "
 "nachdem sie fertig sind."
 
-#: ../dat/missions/neutral/cargo.lua:58
+#: ../dat/missions/neutral/cargo.lua:39
 msgid "Cargo mission"
 msgstr "Frachtmission"
 
-#: ../dat/missions/neutral/cargo.lua:59 ../dat/missions/zalek/zlk_test.lua:81
+#: ../dat/missions/neutral/cargo.lua:40 ../dat/missions/zalek/zlk_test.lua:81
 #, lua-format
 msgid "Fly to %s in the %s system"
 msgstr "Flieg nach %s im „%s“-System"
 
-#: ../dat/missions/neutral/cargo_rush.lua:13 ../src/ship.c:177
-msgid "Courier"
-msgstr "Kurier"
+#. Create the mission
+#. Note: this mission does not make any system claims.
+#. Calculate the route, distance, jumps, risk of piracy, and cargo to take
+#. Choose amount of cargo and mission reward. This depends on the mission tier.
+#. Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
+#. Note: Pay is independent from amount by design! Not all deals are equally attractive!
+#. Modifier that should tend towards 1.0 as naev is finished as a game
+#: ../dat/missions/neutral/cargo.lua:75
+#, fuzzy, lua-format
+msgid "Shipment to %s in %s (%s)"
+msgstr "Lieferung nach %s"
 
+#. TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
+#. Land hook
+#. Semi-random message.
+#.
+#. -- These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
+#. -- These missions require fast ships, but higher tiers may also require increased cargo space.
+#. --
 #. Note: indexed from 0, to match mission tiers.
+#: ../dat/missions/neutral/cargo_rush.lua:12
+#, fuzzy, lua-format
+msgid "Courier transport to %s in %s (%s)"
+msgstr " Transport nach %s im „%s“-System"
+
+#: ../dat/missions/neutral/cargo_rush.lua:13
+#, fuzzy, lua-format
+msgid "Priority shipment to %s in %s (%s)"
+msgstr "Bring die Lieferung nach %s im „%s“-System"
+
 #: ../dat/missions/neutral/cargo_rush.lua:14
-#: ../dat/missions/sirius/srs_ferry.lua:43
-msgid "Priority"
-msgstr "Priorität"
+#, fuzzy, lua-format
+msgid "Pressing cargo delivery to %s in %s (%s)"
+msgstr " Frachtlieferung nach %s im „%s“-System"
 
 #: ../dat/missions/neutral/cargo_rush.lua:15
-msgid "Pressing"
-msgstr "Dringende"
+#, fuzzy, lua-format
+msgid "Urgent cargo delivery to %s in %s (%s)"
+msgstr " Frachtlieferung nach %s im „%s“-System"
 
 #: ../dat/missions/neutral/cargo_rush.lua:16
-msgid "Urgent"
-msgstr "Dringend"
+#, fuzzy, lua-format
+msgid "Emergency cargo delivery to %s in %s (%s)"
+msgstr " Frachtlieferung nach %s im „%s“-System"
 
-#: ../dat/missions/neutral/cargo_rush.lua:17
-msgid "Emergency"
-msgstr "Notfall"
+#. Note: indexed from 0, to match mission tiers.
+#: ../dat/missions/neutral/cargo_rush.lua:20
+#, fuzzy, lua-format
+msgid "Courier transport to %s in the %s system."
+msgstr " Transport nach %s im „%s“-System"
 
-#: ../dat/missions/neutral/cargo_rush.lua:25
-#, lua-format
+#: ../dat/missions/neutral/cargo_rush.lua:21
+#, fuzzy, lua-format
+msgid "Priority shipment to %s in the %s system."
+msgstr "Bring die Lieferung nach %s im „%s“-System"
+
+#: ../dat/missions/neutral/cargo_rush.lua:22
+#, fuzzy, lua-format
+msgid "Pressing cargo delivery to %s in the %s system."
+msgstr " Frachtlieferung nach %s im „%s“-System"
+
+#: ../dat/missions/neutral/cargo_rush.lua:23
+#, fuzzy, lua-format
+msgid "Urgent cargo delivery to %s in the %s system."
+msgstr " Frachtlieferung nach %s im „%s“-System"
+
+#: ../dat/missions/neutral/cargo_rush.lua:24
+#, fuzzy, lua-format
+msgid "Emergency cargo delivery to %s in the %s system."
+msgstr " Frachtlieferung nach %s im „%s“-System"
+
+#: ../dat/missions/neutral/cargo_rush.lua:50
+#, fuzzy, lua-format
 msgid ""
-" \n"
-"      Cargo: %s (%d tonnes)\n"
-"      Jumps: %d\n"
-"      Travel distance: %d\n"
-"      Piracy Risk: %s\n"
-"      Time limit: %s\n"
-msgstr ""
-" \n"
-"      Fracht: %s (%d Tonnen)\n"
-"      Sprünge: %d\n"
-"      Reisedistanz: %d\n"
-"      Piraterierisiko: %s\n"
-"      Zeitlimit: %s\n"
-
-#: ../dat/missions/neutral/cargo_rush.lua:35
-#, lua-format
-msgid ""
-"You don't have enough cargo space to accept this mission. It requires %d "
-"tonnes of free space (you need %d more)."
-msgstr ""
-"Du hast nicht genügend Frachtraum, um diese Mission zu akzeptieren. Du "
-"brauchst %d Tonnen mit freien Raum (du brauchst noch %d)."
-
-#: ../dat/missions/neutral/cargo_rush.lua:39
-#, lua-format
-msgid ""
-"This shipment must arrive within %s, but it will take at least %s for your "
-"ship to reach %s, missing the deadline.\n"
-"   \n"
-"Accept the mission anyway?"
-msgstr ""
-"Diese Lieferung muss innerhalb von %s ankommen, aber es dauert mindestens "
-"%s, bis dein Schiff %s erreicht, wodurch du die Frist versäumst.\n"
-"   \n"
-"Nimmst du die Mission trotzdem an?"
-
-#: ../dat/missions/neutral/cargo_rush.lua:64
-#, lua-format
-msgid ""
-"%s%s are carried out of your ship by a sullen group of workers. They are not "
-"happy that they have to work overtime because you were late. You are paid "
-"only %d of the %d you were promised."
+"The containers of %s are carried out of your ship by a sullen group of "
+"workers. They are not happy that they have to work overtime because you were "
+"late. You are paid only %s of the %s you were promised."
 msgstr ""
 "%s%s werden von einer mürrischen Gruppe von Arbeitern aus deinem Schiff "
 "getragen. Sie sind nicht glücklich darüber, dass sie Überstunden machen "
 "müssen, weil du zu spät gekommen bist. Du bekommst nur %d von dem %d "
 "bezahlt, das dir versprochen wurde."
 
-#: ../dat/missions/neutral/cargo_rush.lua:65
-#, lua-format
+#: ../dat/missions/neutral/cargo_rush.lua:51
+#, fuzzy, lua-format
 msgid ""
-"%s%s are rushed out of your vessel by a team shortly after you land. Your "
-"late arrival is stretching quite a few schedules! Your pay is only %d "
-"instead of %d because of that."
+"The containers of %s are rushed out of your vessel by a team shortly after "
+"you land. Your late arrival is stretching quite a few schedules! Your pay is "
+"only %s instead of %s because of that."
 msgstr ""
 "%s%s werden kurz nach der Landung von einem Team aus deinem Schiff gehetzt. "
 "Deine späte Ankunft strapaziert die Zeitpläne! Aus diesem Grund wird als "
 "dein Lohn nur %d statt %d gezahlt."
 
-#: ../dat/missions/neutral/cargo_rush.lua:66
-#, lua-format
+#: ../dat/missions/neutral/cargo_rush.lua:52
+#, fuzzy, lua-format
 msgid ""
-"%s%s are unloaded by an exhausted-looking bunch of dockworkers. You missed "
-"the deadline, so your reward is only %d instead of the %d you were hoping "
-"for."
+"The containers of %s are unloaded by an exhausted-looking bunch of "
+"dockworkers. You missed the deadline, so your reward is only %s instead of "
+"the %s you were hoping for."
 msgstr ""
 "%s%s werden von einem erschöpft aussehenden Haufen von Hafenarbeitern "
 "entladen. Du hast die Frist verpasst, also ist deine Belohnung nur %d statt "
 "der %d, die du dir erhofft hast."
 
-#: ../dat/missions/neutral/cargo_rush.lua:70
-#, lua-format
-msgid ""
-"You've missed the deadline for the delivery to %s! But you can still make a "
-"late delivery if you hurry."
-msgstr ""
-"Du hast die Frist für die Lieferung nach %s verpasst! Aber du kannst immer "
-"noch eine Spätlieferung machen, wenn du dich beeilst."
-
-#: ../dat/missions/neutral/cargo_rush.lua:71
+#: ../dat/missions/neutral/cargo_rush.lua:54
 #, lua-format
 msgid "The delivery to %s has been canceled! You were too late."
 msgstr "Die Lieferung nach %s wurde storniert! Du warst zu spät."
 
-#: ../dat/missions/neutral/cargo_rush.lua:73
+#: ../dat/missions/neutral/cargo_rush.lua:56
 msgid "Rush cargo mission"
 msgstr "Eilige Frachtmission"
 
-#. Need to reuse.
-#. Create the mission
-#. Note: this mission does not make any system claims.
-#. Calculate the route, distance, jumps, risk of piracy, and cargo to take
-#. Calculate time limit. Depends on tier and distance.
-#. The second time limit is for the reduced reward.
-#. Allow extra time for refuelling stops.
-#. Choose amount of cargo and mission reward. This depends on the mission tier.
-#. Note: Pay is independent from amount by design! Not all deals are equally attractive!
-#. Modifier that should tend towards 1.0 as naev is finished as a game
-#. 45 max (quicksilver)
-#. Mission is accepted
+#: ../dat/missions/neutral/cargo_rush.lua:58
+#, fuzzy, lua-format
+msgid ""
+"Fly to %s in the %s system\n"
+"(deadline missed, but you can still make a late delivery if you hurry)"
+msgstr ""
+"Du hast die Frist für die Lieferung nach %s verpasst! Aber du kannst immer "
+"noch eine Spätlieferung machen, wenn du dich beeilst."
+
 #. TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
 #. 100STU per tick
 #. Land hook
@@ -18089,61 +17516,56 @@ msgid "%s Delivery"
 msgstr "Lieferung"
 
 #: ../dat/missions/neutral/commodity_run.lua:21
-#, fuzzy, lua-format
-msgid "%s credits per ton"
-msgstr "%s Credits"
-
-#: ../dat/missions/neutral/commodity_run.lua:22
 #, lua-format
 msgid ""
 "%s has an insufficient supply of %s to satisfy the current demand. Go to any "
 "planet which sells this commodity and bring as much of it back as possible."
 msgstr ""
 
-#: ../dat/missions/neutral/commodity_run.lua:32
+#: ../dat/missions/neutral/commodity_run.lua:26
 #, lua-format
 msgid ""
-"%s%s are carried out of your ship and tallied. After several different men "
-"double-check the register to confirm the amount, you are paid %s credits and "
-"summarily dismissed."
+"The containers of %s are carried out of your ship and tallied. After several "
+"different men double-check the register to confirm the amount, you are paid "
+"%s and summarily dismissed."
 msgstr ""
 
-#: ../dat/missions/neutral/commodity_run.lua:33
+#: ../dat/missions/neutral/commodity_run.lua:27
 #, lua-format
 msgid ""
-"%s%s are quickly and efficiently unloaded, labeled, and readied for "
-"distribution. The delivery manager thanks you with a credit chip worth %s "
-"credits."
+"The containers of %s are quickly and efficiently unloaded, labeled, and "
+"readied for distribution. The delivery manager thanks you with a credit chip "
+"worth %s."
 msgstr ""
 
-#: ../dat/missions/neutral/commodity_run.lua:34
+#: ../dat/missions/neutral/commodity_run.lua:28
 #, lua-format
 msgid ""
-"%s%s are unloaded from your vessel by a team of dockworkers who are in no "
-"rush to finish, eventually delivering %s credits after the number of tonnes "
-"is determined."
+"The containers of %s are unloaded from your vessel by a team of dockworkers "
+"who are in no rush to finish, eventually delivering %s after the number of "
+"tonnes is determined."
 msgstr ""
 
-#: ../dat/missions/neutral/commodity_run.lua:35
+#: ../dat/missions/neutral/commodity_run.lua:29
 #, fuzzy, lua-format
 msgid ""
-"%s%s are unloaded by robotic drones that scan and tally the contents. The "
-"human overseerer hands you %s credits when they finish."
+"The containers of %s are unloaded by robotic drones that scan and tally the "
+"contents. The human overseerer hands you %s when they finish."
 msgstr ""
 "%s%s werden von einem Team von Roboterdrohnen entladen, die von einem "
 "menschlichen Aufseher beaufsichtigt werden, der dir deinen Lohn übergibt, "
 "nachdem sie fertig sind."
 
-#: ../dat/missions/neutral/commodity_run.lua:37
+#: ../dat/missions/neutral/commodity_run.lua:31
 msgid "Commodity Delivery"
 msgstr "Warenlieferung"
 
-#: ../dat/missions/neutral/commodity_run.lua:39
+#: ../dat/missions/neutral/commodity_run.lua:33
 #, lua-format
 msgid "Buy as much %s as possible"
 msgstr ""
 
-#: ../dat/missions/neutral/commodity_run.lua:40
+#: ../dat/missions/neutral/commodity_run.lua:34
 #, lua-format
 msgid "Take the %s to %s in the %s system"
 msgstr "Bringe %s zu %s im „%s“-System"
@@ -18154,6 +17576,13 @@ msgstr "Bringe %s zu %s im „%s“-System"
 #. intentional.
 #. Note: this mission does not make any system claims.
 #. Set Mission Details
+#: ../dat/missions/neutral/commodity_run.lua:87
+#, fuzzy, lua-format
+msgid "%s credit per tonne"
+msgid_plural "%s credits per tonne"
+msgstr[0] "%s Credits"
+msgstr[1] "%s Credits"
+
 #.
 #.
 #. Neutral Common Functions
@@ -18501,6 +17930,15 @@ msgstr "Kein Platz, kein Auftrag"
 #, lua-format
 msgid "Bring the nerds and their box to %s before %s"
 msgstr "Bring die Nerds und ihre Kiste nach %s vor %s"
+
+#: ../dat/missions/neutral/diy-nerds.lua:116
+#: ../dat/missions/shadow/shadowrun.lua:111
+#: ../dat/missions/shadow/shadowrun.lua:116
+#: ../dat/missions/sirius/srs_ferry.lua:135
+#: ../dat/missions/sirius/srs_ferry.lua:137
+#, lua-format
+msgid "You have %s remaining"
+msgstr "Du hast noch %s"
 
 #: ../dat/missions/neutral/diy-nerds.lua:117
 msgid ""
@@ -20224,13 +19662,13 @@ msgstr ""
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:130
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:136
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:137
-#: ../dat/missions/pirate/common.lua:18 dat/faction.xml:126 dat/mission.xml:442
+#: ../dat/missions/pirate/common.lua:18 dat/faction.xml:96 dat/mission.xml:442
 #: dat/mission.xml:880 dat/mission.xml:1431 dat/mission.xml:1440
-#: dat/mission.xml:1508 dat/mission.xml:1629 dat/fleet.xml:222
-#: dat/fleet.xml:229 dat/fleet.xml:236 dat/fleet.xml:243 dat/fleet.xml:250
-#: dat/fleet.xml:257 dat/fleet.xml:264 dat/fleet.xml:271 dat/fleet.xml:934
-#: dat/fleet.xml:944 dat/fleet.xml:956 dat/fleet.xml:967 dat/fleet.xml:980
-#: dat/fleet.xml:994
+#: dat/mission.xml:1508 dat/mission.xml:1629 dat/fleet.xml:264
+#: dat/fleet.xml:271 dat/fleet.xml:278 dat/fleet.xml:285 dat/fleet.xml:292
+#: dat/fleet.xml:299 dat/fleet.xml:306 dat/fleet.xml:313 dat/fleet.xml:976
+#: dat/fleet.xml:986 dat/fleet.xml:998 dat/fleet.xml:1009 dat/fleet.xml:1022
+#: dat/fleet.xml:1036
 msgid "Pirate"
 msgstr "Pirat"
 
@@ -20444,7 +19882,7 @@ msgstr "Poppy Seed"
 #. the probality of an ambush goes up when you cross a system without meeting any ennemy
 #. Adding the cargo
 #. remove the spy
-#. Looking at the player ship's class in order to spawn the most dangerous ennemy to him
+#. Looking at the player ship's class in order to spawn the most dangerous enemy to him
 #. what a strange idea to use a Mule in this situation...
 #. The fact you don't have a ship class in the list doesn't means you're safe !
 #. and a Llama for variety :
@@ -20465,8 +19903,8 @@ msgstr "Poppy Seed"
 #: ../dat/missions/shark/sh02_tapping.lua:243
 #: ../dat/missions/shark/sh02_tapping.lua:268
 #: ../dat/missions/shark/sh02_tapping.lua:289
-#: ../dat/missions/shark/sh02_tapping.lua:315 dat/faction.xml:353
-#: dat/fleet.xml:690 dat/fleet.xml:697 dat/fleet.xml:704
+#: ../dat/missions/shark/sh02_tapping.lua:315 dat/faction.xml:377
+#: dat/fleet.xml:732 dat/fleet.xml:739 dat/fleet.xml:746
 msgid "Mercenary"
 msgstr "Söldner"
 
@@ -20992,7 +20430,7 @@ msgstr "MISSION FEHLGESCHLAGEN! Du kamst zu spät."
 
 #: ../dat/missions/neutral/patrol.lua:52
 #: ../dat/missions/neutral/pirbounty_dead.lua:83
-#: ../dat/missions/pirate/empbounty_dead.lua:53
+#: ../dat/missions/pirate/empbounty_dead.lua:51
 #: ../dat/missions/pirate/patrol.lua:50
 #: ../dat/missions/proteron/dissbounty_dead.lua:71
 #, lua-format
@@ -23451,185 +22889,6 @@ msgstr "Credence"
 #. Fine 20K, or take the player for all he has
 #. I love this statement.
 #. 300K
-#. Escort a convoy of traders to a destination--
-#: ../dat/missions/neutral/trader_escort.lua:7
-#, lua-format
-msgid "Escort a %s convoy to %s in %s."
-msgstr "Begleite einen „%s“-Konvoi nach %s in %s."
-
-#: ../dat/missions/neutral/trader_escort.lua:11
-msgid "tiny"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:12
-msgid "small"
-msgstr "kleine"
-
-#: ../dat/missions/neutral/trader_escort.lua:13
-msgid "medium"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:14
-msgid "large"
-msgstr "große"
-
-#: ../dat/missions/neutral/trader_escort.lua:15
-msgid "huge"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:17
-#, lua-format
-msgid ""
-"A %s convoy of traders needs protection to %s in %s. You must stick with the "
-"convoy at all times, waiting to jump or land until the entire convoy has "
-"done so."
-msgstr ""
-
-#. Note: please leave the trailing space on the line below! Needed to make the newline show up.
-#: ../dat/missions/neutral/trader_escort.lua:20
-#, fuzzy, lua-format
-msgid ""
-"\n"
-"\n"
-"Cargo: %s\n"
-"Jumps: %d\n"
-"Travel distance: %d\n"
-"Piracy Risk: %s"
-msgstr ""
-" \n"
-"Fracht: %s (%d Tonnen)\n"
-"Sprünge: %d\n"
-"Reisedistanz: %d\n"
-"Pirateriegefahr: %s"
-
-#: ../dat/missions/neutral/trader_escort.lua:35
-msgid "Convey Escort"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:36
-#, lua-format
-msgid "Escort a convoy of traders to %s in the %s system"
-msgstr "Begleite einen Handelskonvoi nach %s im „%s“-System"
-
-#: ../dat/missions/neutral/trader_escort.lua:39
-msgid "Not enough fuel"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:40
-#, lua-format
-msgid ""
-"The destination is %s jumps away, but you only have enough fuel for %s "
-"jumps. You cannot stop to refuel.\n"
-"\n"
-"Accept the mission anyway?"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:44
-msgid "Success!"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:45
-msgid ""
-"You successfully escorted the trading convoy to the destination. There "
-"wasn't a single casualty, and you are rewarded the full amount."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:47
-msgid "Success with Casualities"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:49
-msgid ""
-"You've arrived with the trading convoy more or less intact. Your pay is "
-"docked slightly to provide compensation for the families of the lost crew "
-"members."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:50
-msgid ""
-"You arrive with what's left of the convoy. It's not much, but it's better "
-"than nothing. After a moment of silence of the lost crew members, you are "
-"paid a steeply discounted amount."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:52
-#: ../dat/missions/shadow/shadowvigil.lua:47
-msgid "You diverged!"
-msgstr "Du hast dich entfernt!"
-
-#: ../dat/missions/neutral/trader_escort.lua:53
-msgid ""
-"You have jumped to the wrong system! You are no longer part of the mission "
-"to escort the traders."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:55
-msgid "The convoy has been destroyed!"
-msgstr "Der Konvoi wurde zerstört!"
-
-#: ../dat/missions/neutral/trader_escort.lua:56
-msgid "All of the traders have been killed. You are a terrible escort."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:58
-msgid "You abandoned your mission!"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:59
-msgid ""
-"You have landed, but you were supposed to escort the trading convoy. Your "
-"mission is a failure!"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:62
-msgid "You have left your convoy behind!"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:63
-msgid ""
-"You jumped before the rest of your convoy and the remaining ships scatter to "
-"find cover. You have abandoned your duties, and failed your mission."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:65
-msgid "You landed before the convoy!"
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:66
-msgid ""
-"You landed at the planet before ensuring that the rest of your convoy was "
-"safe. You have abandoned your duties, and failed your mission."
-msgstr ""
-
-#: ../dat/missions/neutral/trader_escort.lua:68
-msgid "Convoy ships under attack! Requesting immediate assistance!"
-msgstr "Konvoischiffe unter Beschuss! Sofortige Hilfe erbeten!"
-
-#. This mission does not make any system claims
-#. have to escort them at least one jump!
-#. needs to be a little bit of piracy possible along route
-#. Choose mission reward.
-#. Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
-#. Keep track of the traders. Update this when they die.
-#. This variable holds the system the player is supposed to jump to NEXT.
-#. The place where the AI ships spawn from.
-#. player jumped to somewhere other than the next system
-#. Jumped ahead of traders. Convoy appears in next system,
-#. waits 4 secs then has them follow.
-#. Continue convoy
-#. all convoy dead
-#. all convoy dead
-#. all convoy dead
-#. all convoy dead
-#. all convoy dead
-#. Handle the jumps of convoy.
-#. Handle landing of convoy
-#. Handle the convoy getting attacked.
-#. Shuts him up for at least 5s.
-#. Dead traders stay dead.
-#. Make it interesting
-#. Spawn the convoy
-#. Dead traders stay dead.
 #.
 #.
 #. Waste Dump
@@ -23778,68 +23037,68 @@ msgstr ""
 #.
 #. --
 #. Mission details
-#: ../dat/missions/pirate/empbounty_dead.lua:36
+#: ../dat/missions/pirate/empbounty_dead.lua:37
 #, lua-format
-msgid "PIRACY: %s Assassination Job in %s"
+msgid "PIRACY: Quick Assassination Job in %s"
 msgstr ""
 
 #: ../dat/missions/pirate/empbounty_dead.lua:38
+#, lua-format
+msgid "PIRACY: Small Assassination Job in %s"
+msgstr ""
+
+#: ../dat/missions/pirate/empbounty_dead.lua:39
+#, lua-format
+msgid "PIRACY: Moderate Assassination Job in %s"
+msgstr ""
+
+#: ../dat/missions/pirate/empbounty_dead.lua:40
+#, lua-format
+msgid "PIRACY: Big Assassination Job in %s"
+msgstr ""
+
+#: ../dat/missions/pirate/empbounty_dead.lua:41
+#, lua-format
+msgid "PIRACY: Dangerous Assassination Job in %s"
+msgstr ""
+
+#: ../dat/missions/pirate/empbounty_dead.lua:42
+#, fuzzy, lua-format
+msgid "PIRACY: Highly Dangerous Assassination Job in %s"
+msgstr "FLF: %s Imperiums-Patrouille in %s"
+
+#: ../dat/missions/pirate/empbounty_dead.lua:44
 #, lua-format
 msgid ""
 "A meddlesome %s pilot was recently seen in the %s system. Local crime lords "
 "want this pilot dead."
 msgstr ""
 
-#: ../dat/missions/pirate/empbounty_dead.lua:39
+#: ../dat/missions/pirate/empbounty_dead.lua:45
 msgid ""
 "WARNING: This mission is illegal and will get you in trouble with the "
-"authorities!!"
+"authorities!"
 msgstr ""
 
-#: ../dat/missions/pirate/empbounty_dead.lua:42
-msgid "Quick"
-msgstr ""
-
-#. Empire Lancelot
-#: ../dat/missions/pirate/empbounty_dead.lua:44
-msgid "Moderate"
-msgstr "Mittlere"
-
-#. Empire Admonisher
-#: ../dat/missions/pirate/empbounty_dead.lua:45
-msgid "Big"
-msgstr ""
-
-#. Empire Pacifier
-#: ../dat/missions/pirate/empbounty_dead.lua:46
-msgid "Dangerous"
-msgstr "Gefährliche"
-
-#. Empire Hawking
-#: ../dat/missions/pirate/empbounty_dead.lua:47
-msgid "Highly Dangerous"
-msgstr "Hochgefährliche"
-
-#. Empire Peacemaker
 #. Messages
-#: ../dat/missions/pirate/empbounty_dead.lua:51
+#: ../dat/missions/pirate/empbounty_dead.lua:49
 msgid "MISSION FAILURE! Target got away."
 msgstr ""
 
-#: ../dat/missions/pirate/empbounty_dead.lua:52
+#: ../dat/missions/pirate/empbounty_dead.lua:50
 #: ../dat/missions/proteron/dissbounty_dead.lua:70
 msgid "MISSION FAILURE! Another pilot eliminated your target."
 msgstr ""
 
-#: ../dat/missions/pirate/empbounty_dead.lua:54
+#: ../dat/missions/pirate/empbounty_dead.lua:52
 msgid "MISSION SUCCESS! Pay has been transferred into your account."
 msgstr ""
 
-#: ../dat/missions/pirate/empbounty_dead.lua:56
+#: ../dat/missions/pirate/empbounty_dead.lua:54
 msgid "Assassination"
 msgstr "Attentat"
 
-#: ../dat/missions/pirate/empbounty_dead.lua:59
+#: ../dat/missions/pirate/empbounty_dead.lua:57
 #, lua-format
 msgid "Kill target %s ship"
 msgstr ""
@@ -24163,22 +23422,30 @@ msgstr ""
 
 #: ../dat/missions/pirate/pirate_commodity_run.lua:26
 #, lua-format
-msgid "%s%s are bought by the boatload, eventually earning you %s credits."
+msgid ""
+"The containers of %s are bought by the boatload, eventually earning you %s."
 msgstr ""
 
 #: ../dat/missions/pirate/pirate_commodity_run.lua:27
 #, lua-format
-msgid "%s%s are quickly sold out, earning you %s credits."
+msgid "The containers of %s are quickly sold out, earning you %s."
 msgstr ""
 
 #: ../dat/missions/pirate/pirate_commodity_run.lua:28
 #, lua-format
 msgid ""
-"%s%s are eventually all sold to the pirates, though it takes some time. Your "
-"total earnings in the end amount to %s credits."
+"The containers of %s are eventually all sold to the pirates, though it takes "
+"some time. Your total earnings in the end amount to %s."
 msgstr ""
 
-#: ../dat/missions/pirate/pirate_commodity_run.lua:30
+#: ../dat/missions/pirate/pirate_commodity_run.lua:29
+#, lua-format
+msgid ""
+"Pirates immediately line up to buy your %s. Before you know it, you have "
+"none left, and you find that you're %s richer."
+msgstr ""
+
+#: ../dat/missions/pirate/pirate_commodity_run.lua:31
 #, fuzzy
 msgid "Pirate Sales"
 msgstr "Piraten-Shark"
@@ -24191,76 +23458,32 @@ msgstr "Piraten-Shark"
 #.
 #.
 #.
-#. This is in cargo_common, but we need to increase the range…
-#: ../dat/missions/pirate/pir_cargo.lua:25
-msgid "Pirate Shipping"
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:27
-#: ../dat/missions/pirate/pir_cargo.lua:29
-#, lua-format
-msgid "Fly to %s in the %s system before %s."
-msgstr "Flieg nach %s im „%s“-System vor %s."
-
-#: ../dat/missions/pirate/pir_cargo.lua:28
-#: ../dat/missions/pirate/pir_cargo.lua:30
-#, lua-format
-msgid "You have %s remaining."
-msgstr "Du hast noch %s."
-
-#. Need to reuse.
-#: ../dat/missions/pirate/pir_cargo.lua:32
-#, lua-format
-msgid "Pirate cargo transport (%d tonnes of %s)"
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:33
-#, lua-format
-msgid ""
-"%d tonnes of %s needs to be shipped to %s in the %s system by %s (%s left)."
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:36
-#, lua-format
-msgid "Pirate: Cargo transport to %s in the %s system"
+#: ../dat/missions/pirate/pir_cargo.lua:13
+#, fuzzy, lua-format
+msgid "Pirate cargo transport of contraband goods to %s in the %s system."
 msgstr "Pirat: Frachtlieferung nach %s im „%s“-System"
 
-#: ../dat/missions/pirate/pir_cargo.lua:37
-#, lua-format
+#: ../dat/missions/pirate/pir_cargo.lua:15
+#, fuzzy, lua-format
 msgid ""
-" \n"
-"Cargo: %s (%d tonnes)\n"
+"\n"
+"Cargo: %s (%s)\n"
 "Jumps: %d\n"
 "Travel distance: %d\n"
 "Time limit: %s"
 msgstr ""
+" \n"
+"Fracht: %s (%d Tonnen)\n"
+"Sprünge: %d\n"
+"Reisedistanz: %d\n"
+"Pirateriegefahr: %s"
 
-#: ../dat/missions/pirate/pir_cargo.lua:47
-#, lua-format
-msgid ""
-"This shipment must arrive within %s, but it will take at least %s for your "
-"ship to reach %s.\n"
-"\n"
-"Accept the mission anyway?"
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:55
-#, lua-format
-msgid "%d tonnes of %s are loaded onto your ship."
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:57
-#, lua-format
-msgid "The %s are unloaded at the docks."
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:58
-#, lua-format
-msgid "The %s are passed through the airlock."
-msgstr ""
-
-#: ../dat/missions/pirate/pir_cargo.lua:60
+#: ../dat/missions/pirate/pir_cargo.lua:21
 msgid "MISSION FAILED: You have failed to deliver the goods on time!"
+msgstr ""
+
+#: ../dat/missions/pirate/pir_cargo.lua:23
+msgid "Pirate Shipping"
 msgstr ""
 
 #. Use hidden jumps
@@ -24269,25 +23492,29 @@ msgstr ""
 #. --   Pirates shipping missions are always timed, but quite lax on the schedules
 #. --   and pays a lot more then the rush missions
 #. --
-#. Create the mission
+#. This is in cargo_common, but we need to increase the range
 #. Note: this mission does not make any system claims.
 #. target destination
 #. We’re redefining the cargo
-#. It is my opinion that those cargos should come from Pirate worlds and be
-#. destined to any other worlds, for black markets and such. Besides,
-#. Pirate worlds are too far away from one another.
-#. if destplanet:faction() ~= faction.get( "Pirate" ) then
-#. misn.finish(false)
-#. end
 #. mission generics
 #. Allow extra time for refuelling stops.
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as naev is finished as a game
-#. Mission is accepted
-#. able to accept the mission, hooks BREAK after accepting
-#. only hook after accepting
-#. 100STU per tick
-#. Land hook
+#: ../dat/missions/pirate/pir_cargo.lua:87
+#, fuzzy, lua-format
+msgid "PIRACY: Illegal Cargo transport (%s of %s)"
+msgstr "IL: Frachtlieferung (%d Tonnen %s)"
+
+#: ../dat/missions/pirate/pir_cargo.lua:122
+#, lua-format
+msgid "%s of %s are loaded onto your ship."
+msgstr ""
+
+#: ../dat/missions/pirate/pir_cargo.lua:137
+#, fuzzy, lua-format
+msgid "The containers of %s are unloaded at the docks."
+msgstr "Die Arbeiter des Imperiums entladen die Fracht (%s) zu den Docks."
+
 #. increase faction
 #. Date hook
 #. Case still in time
@@ -25872,6 +25099,10 @@ msgid ""
 "are they, what do they want, and what is your role in all of it? Time will "
 "have to tell."
 msgstr ""
+
+#: ../dat/missions/shadow/shadowvigil.lua:47
+msgid "You diverged!"
+msgstr "Du hast dich entfernt!"
 
 #: ../dat/missions/shadow/shadowvigil.lua:48
 msgid ""
@@ -28174,15 +27405,15 @@ msgstr ""
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/sirius/common.lua:22 ../dat/missions/sirius/common.lua:28
-#: dat/faction.xml:267 dat/mission.xml:465 dat/mission.xml:547
+#: dat/faction.xml:286 dat/mission.xml:465 dat/mission.xml:547
 #: dat/mission.xml:560 dat/mission.xml:622 dat/mission.xml:643
 #: dat/mission.xml:710 dat/mission.xml:780 dat/mission.xml:825
 #: dat/mission.xml:1080 dat/mission.xml:1105 dat/mission.xml:1166
 #: dat/mission.xml:1350 dat/mission.xml:1366 dat/mission.xml:1384
 #: dat/mission.xml:1402 dat/mission.xml:1419 dat/mission.xml:1464
 #: dat/mission.xml:1484 dat/mission.xml:1524 dat/mission.xml:1543
-#: dat/mission.xml:1562 dat/fleet.xml:328 dat/fleet.xml:335 dat/fleet.xml:342
-#: dat/fleet.xml:349 dat/fleet.xml:356 dat/fleet.xml:1085 dat/fleet.xml:1095
+#: dat/mission.xml:1562 dat/fleet.xml:370 dat/fleet.xml:377 dat/fleet.xml:384
+#: dat/fleet.xml:391 dat/fleet.xml:398 dat/fleet.xml:1127 dat/fleet.xml:1137
 msgid "Sirius"
 msgstr "Sirius"
 
@@ -28819,6 +28050,11 @@ msgstr ""
 msgid "Economy"
 msgstr ""
 
+#. Note: indexed from 0, to match mission tiers.
+#: ../dat/missions/sirius/srs_ferry.lua:43
+msgid "Priority"
+msgstr "Priorität"
+
 #: ../dat/missions/sirius/srs_ferry.lua:44
 msgid "Express"
 msgstr ""
@@ -29030,6 +28266,12 @@ msgstr ""
 #: ../dat/missions/sirius/srs_ferry.lua:132
 msgid "Pilgrimage transport"
 msgstr ""
+
+#: ../dat/missions/sirius/srs_ferry.lua:134
+#: ../dat/missions/sirius/srs_ferry.lua:136
+#, lua-format
+msgid "Fly to %s in the %s system before %s"
+msgstr "Flieg nach %s im „%s“-System vor %s"
 
 #: ../dat/missions/sirius/srs_ferry.lua:139
 msgid "Passenger transport aborted"
@@ -30013,7 +29255,7 @@ msgstr ""
 #. (itstool) path: faction/name
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: ../dat/missions/soromid/common.lua:22 dat/faction.xml:176
+#: ../dat/missions/soromid/common.lua:22 dat/faction.xml:195
 #: dat/mission.xml:339 dat/mission.xml:366 dat/mission.xml:380
 #: dat/mission.xml:393 dat/mission.xml:406 dat/mission.xml:623
 #: dat/mission.xml:644 dat/mission.xml:664 dat/mission.xml:711
@@ -30021,9 +29263,9 @@ msgstr ""
 #: dat/mission.xml:1301 dat/mission.xml:1351 dat/mission.xml:1367
 #: dat/mission.xml:1385 dat/mission.xml:1403 dat/mission.xml:1420
 #: dat/mission.xml:1465 dat/mission.xml:1485 dat/mission.xml:1525
-#: dat/mission.xml:1544 dat/mission.xml:1563 dat/fleet.xml:363
-#: dat/fleet.xml:370 dat/fleet.xml:377 dat/fleet.xml:384 dat/fleet.xml:391
-#: dat/fleet.xml:398 dat/fleet.xml:405 dat/fleet.xml:412
+#: dat/mission.xml:1544 dat/mission.xml:1563 dat/fleet.xml:405
+#: dat/fleet.xml:412 dat/fleet.xml:419 dat/fleet.xml:426 dat/fleet.xml:433
+#: dat/fleet.xml:440 dat/fleet.xml:447 dat/fleet.xml:454
 msgid "Soromid"
 msgstr "Soromid"
 
@@ -30097,13 +29339,13 @@ msgid ""
 "You tell the merchant to calm down and offer a drink. \"Jeeze, that's nice "
 "of you... ha, maybe I can cut a break today!\"\n"
 "    You grab a couple of drinks and hand one to the slightly more relaxed "
-"looking merchant as they start to talk. \"So, I work for Wernet Trading and "
-"the deal is I transport stuff for them, they pay me. Only problem is I kinda "
-"strained my engines running from pirates on the way to the pick-up and now "
-"I'm realising that my engines just don't have the speed to get me back to "
-"beat the deadline. And to top it all off, I'm late on my bills as is; I "
-"can't afford new engines now! it's like I'm in the Sol nebula without a "
-"shield generator.\"\n"
+"looking merchant as they start to talk. \"So, I work for the Traders Guild. "
+"I transport stuff for them, they pay me. Only problem is I kinda strained my "
+"engines running from pirates on the way to the pick-up and now I'm realising "
+"that my engines just don't have the speed to get me back to beat the "
+"deadline. And to top it all off, I'm late on my bills as is; I can't afford "
+"new engines now! it's like I'm in the Sol nebula without a shield generator."
+"\"\n"
 "    You attempt to reassure the merchant by telling them that surely the "
 "company will cut some slack. \"Like hell they will! I've already been "
 "scolded by management for this exact same thing before! If I don't get these "
@@ -30124,7 +29366,7 @@ msgstr ""
 
 #: ../dat/missions/trader/anxiousmerchant.lua:56
 msgid ""
-"As you touch down at the spaceport you see the Wernet Trading depot "
+"As you touch down at the spaceport you see the Traders Guild depot "
 "surrounded by a hustle and bustle. The cargo inspector looks at you with "
 "surprise and you explain to him what happened as the cargo is unloaded from "
 "your ship. \"Wow, thanks for the help! You definitely saved us a ton of "
@@ -30134,7 +29376,7 @@ msgstr ""
 
 #: ../dat/missions/trader/anxiousmerchant.lua:58
 msgid ""
-"Landing at the spaceport you see the Wernet Trading depot surrounded by a "
+"Landing at the spaceport you see the Traders Guild depot surrounded by a "
 "fraught hum of activity. The cargo inspector looks at you with surpise and "
 "then anger, \"What the hell is this?! This shipment was supposed to be here "
 "ages ago! We've been shifting stuff around to make up for it and then you "
@@ -30171,6 +29413,164 @@ msgstr ""
 #. 42STU per tick
 #. still in time
 #. missed deadline
+#. Escort a convoy of traders to a destination--
+#: ../dat/missions/trader/trader_escort.lua:9
+#, fuzzy, lua-format
+msgid "Escort a tiny convoy to %s in %s."
+msgstr "Begleite einen „%s“-Konvoi nach %s in %s."
+
+#: ../dat/missions/trader/trader_escort.lua:10
+#, fuzzy, lua-format
+msgid "Escort a small convoy to %s in %s."
+msgstr "Begleite einen „%s“-Konvoi nach %s in %s."
+
+#: ../dat/missions/trader/trader_escort.lua:11
+#, fuzzy, lua-format
+msgid "Escort a medium convoy to %s in %s."
+msgstr "Begleite einen „%s“-Konvoi nach %s in %s."
+
+#: ../dat/missions/trader/trader_escort.lua:12
+#, fuzzy, lua-format
+msgid "Escort a large convoy to %s in %s."
+msgstr "Begleite einen „%s“-Konvoi nach %s in %s."
+
+#: ../dat/missions/trader/trader_escort.lua:13
+#, fuzzy, lua-format
+msgid "Escort a huge convoy to %s in %s."
+msgstr "Begleite einen „%s“-Konvoi nach %s in %s."
+
+#: ../dat/missions/trader/trader_escort.lua:15
+#, lua-format
+msgid ""
+"A convoy of traders needs protection while they go to %s in %s. You must "
+"stick with the convoy at all times, waiting to jump or land until the entire "
+"convoy has done so."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:17
+#, fuzzy, lua-format
+msgid ""
+"\n"
+"Cargo: %s\n"
+"Jumps: %d\n"
+"Travel distance: %d\n"
+"%s"
+msgstr ""
+" \n"
+"Fracht: %s (%d Tonnen)\n"
+"Sprünge: %d\n"
+"Reisedistanz: %d\n"
+"Pirateriegefahr: %s"
+
+#: ../dat/missions/trader/trader_escort.lua:29
+msgid "Convey Escort"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:30
+#, lua-format
+msgid "Escort a convoy of traders to %s in the %s system"
+msgstr "Begleite einen Handelskonvoi nach %s im „%s“-System"
+
+#: ../dat/missions/trader/trader_escort.lua:33
+msgid "Not enough fuel"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:34
+#, lua-format
+msgid ""
+"The destination is %s away, but you only have enough fuel for %s. You cannot "
+"stop to refuel. Accept the mission anyway?"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:36
+msgid "Success!"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:37
+msgid ""
+"You successfully escorted the trading convoy to the destination. There "
+"wasn't a single casualty and you are rewarded the full amount."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:39
+msgid "Success with Casualities"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:41
+msgid ""
+"You've arrived with the trading convoy more or less intact. Your pay is "
+"docked slightly due to the loss of part of the convoy."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:42
+msgid ""
+"You arrive with what's left of the convoy. It's not much, but it's better "
+"than nothing. You are paid a steeply discounted amount."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:44
+msgid "The convoy has been destroyed!"
+msgstr "Der Konvoi wurde zerstört!"
+
+#: ../dat/missions/trader/trader_escort.lua:45
+msgid "All of the traders have been killed. You are a terrible escort."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:47
+msgid "You abandoned your mission!"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:48
+msgid "You have landed, abandoning your mission to escort the trading convoy."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:50
+msgid "You landed before the convoy!"
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:51
+msgid ""
+"You landed at the planet before ensuring that the rest of your convoy was "
+"safe. You have abandoned your duties, and failed your mission."
+msgstr ""
+
+#: ../dat/missions/trader/trader_escort.lua:53
+msgid "Convoy ships under attack! Requesting immediate assistance!"
+msgstr "Konvoischiffe unter Beschuss! Sofortige Hilfe erbeten!"
+
+#. This mission does not make any system claims
+#. have to escort them at least one jump!
+#. needs to be a little bit of piracy possible along route
+#. Choose mission reward.
+#. Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
+#. This variable holds the system the player is supposed to jump to NEXT.
+#. The place where the AI ships spawn from.
+#: ../dat/missions/trader/trader_escort.lua:153
+#, fuzzy
+msgid "MISSION FAILED! You jumped into the wrong system."
+msgstr "MISSION FEHLGESCHLAGEN! Du hast das „%s“-System verlassen."
+
+#: ../dat/missions/trader/trader_escort.lua:161
+#, fuzzy
+msgid "MISSION FAILED! You jumped before the convoy you were escorting."
+msgstr "MISSION FEHLGESCHLAGEN! Du hast das „%s“-System verlassen."
+
+#. Treat those that didn't exit as dead
+#: ../dat/missions/trader/trader_escort.lua:198
+#, fuzzy
+msgid "MISSION FAILED! The convoy you were escorting has been destroyed."
+msgstr "Der Konvoi wurde zerstört!"
+
+#. Handle the jumps of convoy.
+#. Handle landing of convoy
+#. Handle the convoy getting attacked.
+#. Shuts him up for at least 5s.
+#. Make it interesting
+#. Spawn the convoy
+#. Shouldn't happen
+#. Fail the mission, showing message to the player.
+#. Pre-colourized, do nothing.
+#. Colourize in red.
 #.
 #. --
 #. -- Rehabilitation Mission
@@ -30463,14 +29863,14 @@ msgstr ""
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/zalek/common.lua:21 ../dat/missions/zalek/common.lua:28
-#: dat/faction.xml:251 dat/mission.xml:625 dat/mission.xml:646
+#: dat/faction.xml:270 dat/mission.xml:625 dat/mission.xml:646
 #: dat/mission.xml:666 dat/mission.xml:713 dat/mission.xml:783
 #: dat/mission.xml:815 dat/mission.xml:1352 dat/mission.xml:1368
 #: dat/mission.xml:1387 dat/mission.xml:1404 dat/mission.xml:1421
 #: dat/mission.xml:1468 dat/mission.xml:1488 dat/mission.xml:1528
-#: dat/mission.xml:1547 dat/mission.xml:1566 dat/fleet.xml:613
-#: dat/fleet.xml:620 dat/fleet.xml:627 dat/fleet.xml:634 dat/fleet.xml:641
-#: dat/fleet.xml:648 dat/fleet.xml:655 dat/fleet.xml:662 dat/fleet.xml:669
+#: dat/mission.xml:1547 dat/mission.xml:1566 dat/fleet.xml:655
+#: dat/fleet.xml:662 dat/fleet.xml:669 dat/fleet.xml:676 dat/fleet.xml:683
+#: dat/fleet.xml:690 dat/fleet.xml:697 dat/fleet.xml:704 dat/fleet.xml:711
 msgid "Za'lek"
 msgstr "Za'lek"
 
@@ -30701,17 +30101,13 @@ msgstr ""
 
 #. Mission details:
 #. (itstool) path: faction/name
-#. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
 #: ../dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:103
 #: ../dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:105
-#: dat/faction.xml:93 dat/mission.xml:624 dat/mission.xml:645
-#: dat/mission.xml:665 dat/mission.xml:712 dat/mission.xml:782
-#: dat/mission.xml:1467 dat/mission.xml:1487 dat/mission.xml:1527
-#: dat/mission.xml:1546 dat/mission.xml:1565 dat/fleet.xml:89 dat/fleet.xml:96
-#: dat/fleet.xml:103 dat/fleet.xml:110 dat/fleet.xml:117 dat/fleet.xml:124
-#: dat/fleet.xml:735 dat/fleet.xml:869 dat/fleet.xml:878 dat/fleet.xml:887
-#: dat/fleet.xml:897 dat/fleet.xml:908 dat/fleet.xml:920
+#: dat/faction.xml:45 dat/fleet.xml:89 dat/fleet.xml:96 dat/fleet.xml:103
+#: dat/fleet.xml:110 dat/fleet.xml:117 dat/fleet.xml:124 dat/fleet.xml:131
+#: dat/fleet.xml:138 dat/fleet.xml:145 dat/fleet.xml:152 dat/fleet.xml:159
+#: dat/fleet.xml:166 dat/fleet.xml:777
 msgid "Trader"
 msgstr "Händler"
 
@@ -31272,6 +30668,10 @@ msgstr ""
 "Sprünge: %d\n"
 "Reiseentfernung: %d"
 
+#: ../dat/missions/zalek/zlk_test.lua:24
+msgid "Too many missions"
+msgstr "Zu viele Missionen"
+
 #: ../dat/missions/zalek/zlk_test.lua:25
 msgid "Successful Landing"
 msgstr "Erfolgreiche Landung"
@@ -31387,6 +30787,10 @@ msgid ""
 "with this engine. The system will automatically take measures during the "
 "flight. Don't forget to equip the engine."
 msgstr ""
+
+#: ../dat/missions/zalek/zlk_test.lua:56 ../src/land.c:621 ../src/npc.c:565
+msgid "You have too many active missions."
+msgstr "Du hast zu viele aktive Missionen."
 
 #: ../dat/missions/zalek/zlk_test.lua:57
 msgid ""
@@ -31706,7 +31110,6 @@ msgstr ""
 #. By default, only generate if commodities available. Set to true to always generate.
 #. Find an inhabited planet 0-3 jumps away.
 #. 70% chance of 0-3 jump distance
-#. I assume this is supposed to be 50 and not 2 times 60
 #. Build a set of target planets
 #. We have a destination, now we need to calculate how far away it is by simulating the journey there.
 #. Assume shortest route with no interruptions.
@@ -31724,29 +31127,8 @@ msgstr ""
 #. Determine amount of piracy along the route
 #. We now know where. But we don't know what yet. Randomly choose a commodity type.
 #. Return lots of stuff
-#. Construct the cargo mission description text
-#: ../dat/scripts/cargo_common.lua:140
-#, lua-format
-msgid "Shipment to %s"
-msgstr "Lieferung nach %s"
-
-#: ../dat/scripts/cargo_common.lua:142
-#, lua-format
-msgid " transport to %s"
-msgstr " Transport nach %s"
-
-#: ../dat/scripts/cargo_common.lua:145
-#, lua-format
-msgid "%s in %s"
-msgstr "%s in %s"
-
-#: ../dat/scripts/cargo_common.lua:147
-#, lua-format
-msgid "%s (%s tonnes)"
-msgstr "%s (%s Tonnen)"
-
 #. Calculates the minimum possible time taken for the player to reach a destination.
-#. The blacklist are factions which cannot be delivered to by factions other than themselves, i.e. the Thurion and Proteron.
+#. factions which cannot be delivered to by factions other than themselves
 #. Determines the items in table a that are not in table b.
 #. Used to determine what cargo is sold at current planet but not at destination planet.
 #. Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
@@ -32181,6 +31563,60 @@ msgstr ""
 #. Converts an integer into a human readable string, delimiting every third digit with a comma.
 #. Note: rounds input to the nearest integer. Primary use is for payment descriptions.
 #.
+#. -- @brief Properly converts a number of credits to a string, utilizing ngettext.
+#. --
+#. -- This adds "credits" to the output of numstring in a translatable way.
+#. -- Should be used everywhere a number of credits is displayed.
+#. --
+#. -- @usage tk.msg( "", _("You have been paid %s."):format( creditstring(credits) ) )
+#. --
+#. --    @param credits Number of credits.
+#. --    @return A string taking the form of "X credit" or "X credits".
+#. --
+#: ../dat/scripts/numstring.lua:27
+#, fuzzy, lua-format
+msgid "%s credit"
+msgid_plural "%s credits"
+msgstr[0] "%s Credits"
+msgstr[1] "%s Credits"
+
+#.
+#. -- @brief Properly converts a number of tonnes to a string, utilizing ngettext.
+#. --
+#. -- This adds "tonnes" to the output of numstring in a translatable way.
+#. -- Should be used everywhere a number of tonnes is displayed.
+#. --
+#. -- @usage tk.msg( "", _("You are carrying %s."):format( tonnestring(tonnes) ) )
+#. --
+#. --    @param tonnes Number of tonnes.
+#. --    @return A string taking the form of "X tonne" or "X tonnes".
+#. --
+#: ../dat/scripts/numstring.lua:44
+#, fuzzy, lua-format
+msgid "%s tonne"
+msgid_plural "%s tonnes"
+msgstr[0] "%d Tonnen\n"
+msgstr[1] "%d Tonnen\n"
+
+#.
+#. -- @brief Properly converts a number of jumps to a string, utilizing ngettext.
+#. --
+#. -- This adds "jumps" to the output of numstring in a translatable way.
+#. -- Should be used everywhere a number of jumps is displayed.
+#. --
+#. -- @usage tk.msg( "", _("The system is %s away."):format( jumpstring(jumps) ) )
+#. --
+#. --    @param jumps Number of jumps.
+#. --    @return A string taking the form of "X jump" or "X jumps".
+#. --
+#: ../dat/scripts/numstring.lua:61
+#, fuzzy, lua-format
+msgid "%s jump"
+msgid_plural "%s jumps"
+msgstr[0] "%d (%d Sprung)"
+msgstr[1] "%d (%d Sprünge)"
+
+#.
 #. -- @brief Adds an outfit from a list of outfits to the pilot.
 #. --
 #. -- Outfits parameter should be something like:
@@ -32604,7 +32040,7 @@ msgid "Psychic "
 msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:109
-msgid "Raging"
+msgid "Raging "
 msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:110
@@ -33014,6 +32450,10 @@ msgstr "Brain"
 #: ../dat/scripts/pilot/pirate.lua:215
 msgid "Brigand"
 msgstr "Brigand"
+
+#: ../dat/scripts/pilot/pirate.lua:216
+msgid "Bulk"
+msgstr ""
 
 #: ../dat/scripts/pilot/pirate.lua:217
 msgid "Burglar"
@@ -33919,7 +33359,7 @@ msgstr "Dummy"
 #: dat/mission.xml:1382 dat/mission.xml:1401 dat/mission.xml:1418
 #: dat/mission.xml:1462 dat/mission.xml:1482 dat/mission.xml:1522
 #: dat/mission.xml:1541 dat/mission.xml:1561 dat/fleet.xml:5 dat/fleet.xml:12
-#: dat/fleet.xml:19 dat/fleet.xml:770
+#: dat/fleet.xml:19 dat/fleet.xml:812
 msgid "Independent"
 msgstr "Unabhängig"
 
@@ -33931,84 +33371,92 @@ msgid "Civilian"
 msgstr "Zivilist"
 
 #. (itstool) path: faction/name
-#. (itstool) path: faction/longname
-#. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:45 dat/faction.xml:47 dat/mission.xml:1335
-#: dat/mission.xml:1383 dat/mission.xml:1463 dat/mission.xml:1483
-#: dat/mission.xml:1523 dat/mission.xml:1542 dat/fleet.xml:131
-#: dat/fleet.xml:138 dat/fleet.xml:145 dat/fleet.xml:152
-msgid "Proteron"
-msgstr "Proteron"
+#: dat/faction.xml:61 dat/fleet.xml:68 dat/fleet.xml:75 dat/fleet.xml:82
+msgid "Miner"
+msgstr "Bergarbeiter"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:62 dat/fleet.xml:1146 dat/fleet.xml:1153 dat/fleet.xml:1160
-#: dat/fleet.xml:1167
+#: dat/faction.xml:78 dat/fleet.xml:1188 dat/fleet.xml:1195 dat/fleet.xml:1202
+#: dat/fleet.xml:1209
 msgid "Proteron Dissident"
 msgstr "Proteron-Dissident"
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:81
-msgid "Frontier Alliance"
-msgstr "Front-Allianz"
-
-#. (itstool) path: faction/longname
-#: dat/faction.xml:96
-msgid "Space Traders Guild"
-msgstr "Weltraumhändlergilde"
-
-#. (itstool) path: faction/name
-#. (itstool) path: fleet/faction
-#: dat/faction.xml:109 dat/fleet.xml:68 dat/fleet.xml:75 dat/fleet.xml:82
-msgid "Miner"
-msgstr "Bergarbeiter"
-
-#. (itstool) path: faction/longname
-#: dat/faction.xml:112
-msgid "Space Miners"
-msgstr "Weltraumbergbauunion"
-
-#. (itstool) path: faction/longname
-#: dat/faction.xml:129 dat/faction.xml:307 dat/faction.xml:365
+#: dat/faction.xml:99 dat/faction.xml:327 dat/faction.xml:392
 msgid "Galactic Pirates"
 msgstr "Galaktische Piraten"
 
 #. (itstool) path: faction/name
+#. (itstool) path: faction/longname
 #. (itstool) path: avail/faction
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:190 dat/mission.xml:1386 dat/mission.xml:1466
+#: dat/faction.xml:147 dat/faction.xml:149 dat/mission.xml:1335
+#: dat/mission.xml:1383 dat/mission.xml:1463 dat/mission.xml:1483
+#: dat/mission.xml:1523 dat/mission.xml:1542 dat/fleet.xml:173
+#: dat/fleet.xml:180 dat/fleet.xml:187 dat/fleet.xml:194
+msgid "Proteron"
+msgstr "Proteron"
+
+#. (itstool) path: faction/longname
+#: dat/faction.xml:167
+msgid "Frontier Alliance"
+msgstr "Front-Allianz"
+
+#. (itstool) path: faction/name
+#. (itstool) path: avail/faction
+#. (itstool) path: fleet/faction
+#: dat/faction.xml:179 dat/mission.xml:624 dat/mission.xml:645
+#: dat/mission.xml:665 dat/mission.xml:712 dat/mission.xml:782
+#: dat/mission.xml:1467 dat/mission.xml:1487 dat/mission.xml:1527
+#: dat/mission.xml:1546 dat/mission.xml:1565 dat/fleet.xml:911
+#: dat/fleet.xml:920 dat/fleet.xml:929 dat/fleet.xml:939 dat/fleet.xml:950
+#: dat/fleet.xml:962
+#, fuzzy
+msgid "Traders Guild"
+msgstr "Weltraumhändlergilde"
+
+#. (itstool) path: faction/longname
+#: dat/faction.xml:182
+msgid "Space Traders Guild"
+msgstr "Weltraumhändlergilde"
+
+#. (itstool) path: faction/name
+#. (itstool) path: avail/faction
+#. (itstool) path: fleet/faction
+#: dat/faction.xml:209 dat/mission.xml:1386 dat/mission.xml:1466
 #: dat/mission.xml:1486 dat/mission.xml:1526 dat/mission.xml:1545
-#: dat/mission.xml:1564 dat/fleet.xml:1036 dat/fleet.xml:1043
-#: dat/fleet.xml:1050 dat/fleet.xml:1057 dat/fleet.xml:1064 dat/fleet.xml:1071
-#: dat/fleet.xml:1078
+#: dat/mission.xml:1564 dat/fleet.xml:1078 dat/fleet.xml:1085
+#: dat/fleet.xml:1092 dat/fleet.xml:1099 dat/fleet.xml:1106 dat/fleet.xml:1113
+#: dat/fleet.xml:1120
 msgid "Thurion"
 msgstr "Thurion"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:202 dat/fleet.xml:278 dat/fleet.xml:285 dat/fleet.xml:292
-#: dat/fleet.xml:318
+#: dat/faction.xml:221 dat/fleet.xml:320 dat/fleet.xml:327 dat/fleet.xml:334
+#: dat/fleet.xml:360
 msgid "Collective"
 msgstr "Kollektiv"
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:219
+#: dat/faction.xml:238
 msgid "Frontier Liberation Front"
 msgstr "Front-Liberationsfront"
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:236
+#: dat/faction.xml:255
 msgid "House Dvaered"
 msgstr "Haus Dvaered"
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:255
+#: dat/faction.xml:274
 msgid "House Za'lek"
 msgstr "Haus Za'lek"
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:271
+#: dat/faction.xml:290
 msgid "House Sirius"
 msgstr "Haus Sirius"
 
@@ -34018,7 +33466,7 @@ msgstr "Haus Sirius"
 #. (itstool) path: fleet/faction
 #. (itstool) path: tech/item
 #. (itstool) path: dat/ships/goddard.xml/ship@name
-#: dat/faction.xml:285 dat/mission.xml:620 dat/mission.xml:641
+#: dat/faction.xml:304 dat/mission.xml:620 dat/mission.xml:641
 #: dat/mission.xml:662 dat/mission.xml:708 dat/mission.xml:778
 #: dat/mission.xml:1079 dat/mission.xml:1104 dat/mission.xml:1119
 #: dat/mission.xml:1251 dat/mission.xml:1265 dat/mission.xml:1282
@@ -34031,94 +33479,94 @@ msgid "Goddard"
 msgstr "Goddard"
 
 #. (itstool) path: faction/longname
-#: dat/faction.xml:289
+#: dat/faction.xml:308
 msgid "House Goddard"
 msgstr "Haus Goddard"
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:302
+#: dat/faction.xml:321
 msgid "Wanted Pirate"
 msgstr "Gesuchter Pirat"
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:340
+#: dat/faction.xml:362
 msgid "Rogue Pirate"
 msgstr "Feindlicher Pirat"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:362 dat/fleet.xml:711
+#: dat/faction.xml:387 dat/fleet.xml:753
 msgid "Raider"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:375
+#: dat/faction.xml:403
 msgid "Derelict"
 msgstr "Wrack"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:384 dat/fleet.xml:780 dat/fleet.xml:806 dat/fleet.xml:813
-#: dat/fleet.xml:820 dat/fleet.xml:827 dat/fleet.xml:841
+#: dat/faction.xml:412 dat/fleet.xml:822 dat/fleet.xml:848 dat/fleet.xml:855
+#: dat/fleet.xml:862 dat/fleet.xml:869 dat/fleet.xml:883
 msgid "Four Winds"
 msgstr "Vier Winde"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:396 dat/fleet.xml:787 dat/fleet.xml:797
+#: dat/faction.xml:425 dat/fleet.xml:829 dat/fleet.xml:839
 msgid "Rogue Four Winds"
 msgstr "Feindliche Vier Winde"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:408 dat/fleet.xml:850 dat/fleet.xml:859
+#: dat/faction.xml:438 dat/fleet.xml:892 dat/fleet.xml:901
 msgid "Shadow_pirates"
 msgstr ""
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:421 dat/fleet.xml:834
+#: dat/faction.xml:453 dat/fleet.xml:876
 msgid "Diplomatic"
 msgstr "Diplomatisch"
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:434
+#: dat/faction.xml:466
 msgid "Associates"
 msgstr "Partner"
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:445
+#: dat/faction.xml:478
 msgid "Thugs"
 msgstr "Strolche"
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:456
+#: dat/faction.xml:490
 msgid "Achack_sirius"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:468
+#: dat/faction.xml:503
 msgid "Achack_thugs"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:480
+#: dat/faction.xml:516
 msgid "Kidnappers"
 msgstr "Kidnapper"
 
 #. (itstool) path: faction/name
 #. (itstool) path: fleet/faction
-#: dat/faction.xml:492 dat/fleet.xml:1113 dat/fleet.xml:1122 dat/fleet.xml:1132
+#: dat/faction.xml:529 dat/fleet.xml:1155 dat/fleet.xml:1164 dat/fleet.xml:1174
 msgid "Nasin"
 msgstr "Nasin"
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:503
+#: dat/faction.xml:540
 msgid "Comingout_associates"
 msgstr ""
 
 #. (itstool) path: faction/name
-#: dat/faction.xml:515
+#: dat/faction.xml:553
 msgid "Comingout_thugs"
 msgstr ""
 
@@ -36237,7 +35685,7 @@ msgstr ""
 
 #. (itstool) path: mission/lua
 #: dat/mission.xml:1512
-msgid "neutral/trader_escort"
+msgid "trader/trader_escort"
 msgstr ""
 
 #. (itstool) path: mission/lua
@@ -36476,10 +35924,10 @@ msgstr ""
 
 #. (itstool) path: decorator/image
 #. (itstool) path: fleet/ai
-#: dat/map.xml:4 dat/fleet.xml:503 dat/fleet.xml:510 dat/fleet.xml:517
-#: dat/fleet.xml:524 dat/fleet.xml:531 dat/fleet.xml:543 dat/fleet.xml:562
-#: dat/fleet.xml:576 dat/fleet.xml:586 dat/fleet.xml:598 dat/fleet.xml:605
-#: dat/fleet.xml:675 dat/fleet.xml:734
+#: dat/map.xml:4 dat/fleet.xml:545 dat/fleet.xml:552 dat/fleet.xml:559
+#: dat/fleet.xml:566 dat/fleet.xml:573 dat/fleet.xml:585 dat/fleet.xml:604
+#: dat/fleet.xml:618 dat/fleet.xml:628 dat/fleet.xml:640 dat/fleet.xml:647
+#: dat/fleet.xml:717 dat/fleet.xml:776
 #, fuzzy
 msgid "empire"
 msgstr "Imperium"
@@ -36496,9 +35944,9 @@ msgstr ""
 
 #. (itstool) path: decorator/image
 #. (itstool) path: fleet/ai
-#: dat/map.xml:10 dat/fleet.xml:362 dat/fleet.xml:369 dat/fleet.xml:376
-#: dat/fleet.xml:383 dat/fleet.xml:390 dat/fleet.xml:397 dat/fleet.xml:404
-#: dat/fleet.xml:411
+#: dat/map.xml:10 dat/fleet.xml:404 dat/fleet.xml:411 dat/fleet.xml:418
+#: dat/fleet.xml:425 dat/fleet.xml:432 dat/fleet.xml:439 dat/fleet.xml:446
+#: dat/fleet.xml:453
 #, fuzzy
 msgid "soromid"
 msgstr "Soromid"
@@ -36515,9 +35963,9 @@ msgstr ""
 
 #. (itstool) path: decorator/image
 #. (itstool) path: fleet/ai
-#: dat/map.xml:16 dat/fleet.xml:418 dat/fleet.xml:425 dat/fleet.xml:432
-#: dat/fleet.xml:439 dat/fleet.xml:446 dat/fleet.xml:453 dat/fleet.xml:463
-#: dat/fleet.xml:474 dat/fleet.xml:483 dat/fleet.xml:1023
+#: dat/map.xml:16 dat/fleet.xml:460 dat/fleet.xml:467 dat/fleet.xml:474
+#: dat/fleet.xml:481 dat/fleet.xml:488 dat/fleet.xml:495 dat/fleet.xml:505
+#: dat/fleet.xml:516 dat/fleet.xml:525 dat/fleet.xml:1065
 #, fuzzy
 msgid "dvaered"
 msgstr "Dvaered"
@@ -36534,8 +35982,8 @@ msgstr ""
 
 #. (itstool) path: decorator/image
 #. (itstool) path: fleet/ai
-#: dat/map.xml:22 dat/fleet.xml:640 dat/fleet.xml:647 dat/fleet.xml:654
-#: dat/fleet.xml:661 dat/fleet.xml:668
+#: dat/map.xml:22 dat/fleet.xml:682 dat/fleet.xml:689 dat/fleet.xml:696
+#: dat/fleet.xml:703 dat/fleet.xml:710
 msgid "zalek"
 msgstr ""
 
@@ -36551,8 +35999,8 @@ msgstr ""
 
 #. (itstool) path: decorator/image
 #. (itstool) path: fleet/ai
-#: dat/map.xml:28 dat/fleet.xml:327 dat/fleet.xml:334 dat/fleet.xml:341
-#: dat/fleet.xml:348 dat/fleet.xml:355 dat/fleet.xml:1084 dat/fleet.xml:1094
+#: dat/map.xml:28 dat/fleet.xml:369 dat/fleet.xml:376 dat/fleet.xml:383
+#: dat/fleet.xml:390 dat/fleet.xml:397 dat/fleet.xml:1126 dat/fleet.xml:1136
 #, fuzzy
 msgid "sirius"
 msgstr "Sirius"
@@ -36606,8 +36054,8 @@ msgstr ""
 
 #. (itstool) path: decorator/image
 #. (itstool) path: fleet/ai
-#: dat/map.xml:46 dat/fleet.xml:130 dat/fleet.xml:137 dat/fleet.xml:144
-#: dat/fleet.xml:151
+#: dat/map.xml:46 dat/fleet.xml:172 dat/fleet.xml:179 dat/fleet.xml:186
+#: dat/fleet.xml:193
 #, fuzzy
 msgid "proteron"
 msgstr "Proteron"
@@ -36636,7 +36084,7 @@ msgstr "Goddard"
 
 #. (itstool) path: fleet/ai
 #: dat/fleet.xml:39 dat/fleet.xml:46 dat/fleet.xml:53 dat/fleet.xml:60
-#: dat/fleet.xml:1112
+#: dat/fleet.xml:1154
 #, fuzzy
 msgid "civilian"
 msgstr "Zivilist"
@@ -36649,80 +36097,81 @@ msgstr "Bergarbeiter"
 
 #. (itstool) path: fleet/ai
 #: dat/fleet.xml:88 dat/fleet.xml:95 dat/fleet.xml:102 dat/fleet.xml:109
-#: dat/fleet.xml:116 dat/fleet.xml:123 dat/fleet.xml:779 dat/fleet.xml:786
-#: dat/fleet.xml:796 dat/fleet.xml:805 dat/fleet.xml:833 dat/fleet.xml:868
-#: dat/fleet.xml:877 dat/fleet.xml:886 dat/fleet.xml:896 dat/fleet.xml:907
-#: dat/fleet.xml:919
+#: dat/fleet.xml:116 dat/fleet.xml:123 dat/fleet.xml:130 dat/fleet.xml:137
+#: dat/fleet.xml:144 dat/fleet.xml:151 dat/fleet.xml:158 dat/fleet.xml:165
+#: dat/fleet.xml:821 dat/fleet.xml:828 dat/fleet.xml:838 dat/fleet.xml:847
+#: dat/fleet.xml:875 dat/fleet.xml:910 dat/fleet.xml:919 dat/fleet.xml:928
+#: dat/fleet.xml:938 dat/fleet.xml:949 dat/fleet.xml:961
 #, fuzzy
 msgid "trader"
 msgstr "Händler"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:158 dat/fleet.xml:165 dat/fleet.xml:172 dat/fleet.xml:179
+#: dat/fleet.xml:200 dat/fleet.xml:207 dat/fleet.xml:214 dat/fleet.xml:221
 #, fuzzy
 msgid "frontier_police"
 msgstr "Front-Allianz"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:186 dat/fleet.xml:193 dat/fleet.xml:200 dat/fleet.xml:207
-#: dat/fleet.xml:214 dat/fleet.xml:769 dat/fleet.xml:1003 dat/fleet.xml:1012
+#: dat/fleet.xml:228 dat/fleet.xml:235 dat/fleet.xml:242 dat/fleet.xml:249
+#: dat/fleet.xml:256 dat/fleet.xml:811 dat/fleet.xml:1045 dat/fleet.xml:1054
 msgid "flf"
 msgstr ""
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:221 dat/fleet.xml:228 dat/fleet.xml:235 dat/fleet.xml:242
-#: dat/fleet.xml:249 dat/fleet.xml:256 dat/fleet.xml:263 dat/fleet.xml:270
-#: dat/fleet.xml:710 dat/fleet.xml:993
+#: dat/fleet.xml:263 dat/fleet.xml:270 dat/fleet.xml:277 dat/fleet.xml:284
+#: dat/fleet.xml:291 dat/fleet.xml:298 dat/fleet.xml:305 dat/fleet.xml:312
+#: dat/fleet.xml:752 dat/fleet.xml:1035
 #, fuzzy
 msgid "pirate"
 msgstr "Pirat"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:277 dat/fleet.xml:284 dat/fleet.xml:291 dat/fleet.xml:317
-#: dat/fleet.xml:612 dat/fleet.xml:619 dat/fleet.xml:626 dat/fleet.xml:633
-#: dat/fleet.xml:682
+#: dat/fleet.xml:319 dat/fleet.xml:326 dat/fleet.xml:333 dat/fleet.xml:359
+#: dat/fleet.xml:654 dat/fleet.xml:661 dat/fleet.xml:668 dat/fleet.xml:675
+#: dat/fleet.xml:724
 #, fuzzy
 msgid "collective"
 msgstr "Kollektiv"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:689 dat/fleet.xml:696 dat/fleet.xml:703
+#: dat/fleet.xml:731 dat/fleet.xml:738 dat/fleet.xml:745
 #, fuzzy
 msgid "mercenary"
 msgstr "Söldner"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:748
+#: dat/fleet.xml:790
 msgid "base"
 msgstr ""
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:755 dat/fleet.xml:762
+#: dat/fleet.xml:797 dat/fleet.xml:804
 #, fuzzy
 msgid "dvaered_norun"
 msgstr "Dvaered Ancestor"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:812 dat/fleet.xml:819 dat/fleet.xml:826 dat/fleet.xml:1121
-#: dat/fleet.xml:1131
+#: dat/fleet.xml:854 dat/fleet.xml:861 dat/fleet.xml:868 dat/fleet.xml:1163
+#: dat/fleet.xml:1173
 msgid "baddie"
 msgstr ""
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:840 dat/fleet.xml:849 dat/fleet.xml:858 dat/fleet.xml:933
-#: dat/fleet.xml:943 dat/fleet.xml:955 dat/fleet.xml:966 dat/fleet.xml:979
+#: dat/fleet.xml:882 dat/fleet.xml:891 dat/fleet.xml:900 dat/fleet.xml:975
+#: dat/fleet.xml:985 dat/fleet.xml:997 dat/fleet.xml:1008 dat/fleet.xml:1021
 msgid "baddie_norun"
 msgstr ""
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:1035 dat/fleet.xml:1042 dat/fleet.xml:1049 dat/fleet.xml:1056
-#: dat/fleet.xml:1063 dat/fleet.xml:1070 dat/fleet.xml:1077
+#: dat/fleet.xml:1077 dat/fleet.xml:1084 dat/fleet.xml:1091 dat/fleet.xml:1098
+#: dat/fleet.xml:1105 dat/fleet.xml:1112 dat/fleet.xml:1119
 #, fuzzy
 msgid "thurion"
 msgstr "Thurion"
 
 #. (itstool) path: fleet/ai
-#: dat/fleet.xml:1145 dat/fleet.xml:1152 dat/fleet.xml:1159 dat/fleet.xml:1166
+#: dat/fleet.xml:1187 dat/fleet.xml:1194 dat/fleet.xml:1201 dat/fleet.xml:1208
 #, fuzzy
 msgid "proteron_dissident"
 msgstr "Proteron-Dissident"
@@ -42480,7 +41929,7 @@ msgid "Background -> 'background' : %s"
 msgstr "Hintergrund-> „background“: %s"
 
 #: ../src/background.c:435 ../src/gui.c:1886 ../src/nlua_evt.c:140
-#: ../src/nlua_misn.c:249 ../src/sound_openal.c:1520
+#: ../src/nlua_misn.c:251 ../src/sound_openal.c:1520
 msgid "unknown error"
 msgstr "Unbekannter Fehler"
 
@@ -42688,7 +42137,7 @@ msgstr "Auftanken"
 msgid "%s does not respond."
 msgstr "%s antwortet nicht."
 
-#: ../src/comm.c:379 ../src/console.c:601 ../src/dev_sysedit.c:1340
+#: ../src/comm.c:379 ../src/console.c:603 ../src/dev_sysedit.c:1340
 #: ../src/dev_sysedit.c:1448 ../src/dev_sysedit.c:1510
 #: ../src/dev_sysedit.c:1707 ../src/dev_sysedit.c:1882
 #: ../src/dev_sysedit.c:1963 ../src/dev_uniedit.c:1034
@@ -42726,7 +42175,7 @@ msgstr ""
 "\n"
 "%<PRIu64> Credits zahlen?"
 
-#: ../src/comm.c:444 ../src/comm.c:589
+#: ../src/comm.c:444 ../src/comm.c:590
 #, c-format
 msgid ""
 "%s\n"
@@ -42737,7 +42186,7 @@ msgstr ""
 "\n"
 "%<PRIu64> Credits zahlen?"
 
-#: ../src/comm.c:448 ../src/comm.c:514 ../src/comm.c:591
+#: ../src/comm.c:448 ../src/comm.c:514 ../src/comm.c:592
 msgid "You decide not to pay."
 msgstr "Du entscheidest dich, nicht zu zahlen."
 
@@ -42755,9 +42204,9 @@ msgstr "Weltraumhafen bestechen"
 msgid "You have permission to dock."
 msgstr "Du hast die Andockerlaubnis."
 
-#: ../src/comm.c:555 ../src/comm.c:561 ../src/comm.c:567 ../src/comm.c:576
-#: ../src/comm.c:583 ../src/comm.c:589 ../src/comm.c:591 ../src/comm.c:596
-#: ../src/comm.c:600 ../src/comm.c:618
+#: ../src/comm.c:555 ../src/comm.c:561 ../src/comm.c:567 ../src/comm.c:577
+#: ../src/comm.c:584 ../src/comm.c:590 ../src/comm.c:592 ../src/comm.c:597
+#: ../src/comm.c:601 ../src/comm.c:619
 msgid "Request Fuel"
 msgstr "Um Treibstoff bitten"
 
@@ -42771,83 +42220,83 @@ msgstr ""
 "„Es tut mir Leid, aber ich habe nicht genügend Treibstoff, den ich jetzt "
 "abgeben könnte.“"
 
-#: ../src/comm.c:576
+#: ../src/comm.c:577
 msgid "\"Sorry, I'm busy now.\""
 msgstr "„Es tut mir Leid, aber ich bin gerade beschäftigt.“"
 
-#: ../src/comm.c:583
+#: ../src/comm.c:584
 msgid "Pilot is already refueling you."
 msgstr "Der Pilot tankt dich bereits auf."
 
-#: ../src/comm.c:600
+#: ../src/comm.c:601
 #, c-format
 msgid "You need %<PRIu64> more credits!"
 msgstr "Du brauchst noch %<PRIu64> Credits!"
 
-#: ../src/comm.c:618
+#: ../src/comm.c:619
 msgid "\"On my way.\""
 msgstr "„Bin auf dem Weg.“"
 
-#: ../src/commodity.c:132
+#: ../src/commodity.c:134
 #, c-format
 msgid "Commodity '%s' not found in stack"
 msgstr "Ware „%s“ nicht im Stack gefunden"
 
-#: ../src/commodity.c:171
+#: ../src/commodity.c:173
 #, c-format
 msgid "Commodity with index %d not found"
 msgstr "Ware mit Index %d nicht gefunden"
 
-#: ../src/commodity.c:327
+#: ../src/commodity.c:329
 #, c-format
 msgid "Commodity from %s has invalid or no name"
 msgstr "Ware von %s hat ungültigen oder keinen Namen"
 
-#: ../src/commodity.c:330
+#: ../src/commodity.c:332
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
 "Keinen <gfx_store>-Node gefunden, Standardtextur für Ware „%s“ wird benutzt"
 
-#: ../src/commodity.c:541
+#: ../src/commodity.c:543
 #, c-format
 msgid "%d ton of %s gathered"
 msgid_plural "%d tons of %s gathered"
 msgstr[0] "%d Tonne von %s gesammelt"
 msgstr[1] "%d Tonnen von %s gesammelt"
 
-#: ../src/commodity.c:552
+#: ../src/commodity.c:554
 msgid "No more cargo space available"
 msgstr "Kein Frachtraum verfügbar"
 
-#: ../src/commodity.c:556
+#: ../src/commodity.c:558
 msgid "Cannot gather material: no more cargo space available"
 msgstr ""
 "Material kann nicht gesammelt werden: kein weiterer Frachtraum verfügbar"
 
-#: ../src/commodity.c:583
+#: ../src/commodity.c:585
 #, c-format
 msgid "'%s' is not valid XML."
 msgstr "„%s“ ist kein gültiges XML."
 
-#: ../src/commodity.c:589 ../src/faction.c:1465
+#: ../src/commodity.c:591 ../src/faction.c:1465
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „%s“"
 
-#: ../src/commodity.c:595 ../src/faction.c:1471 ../src/outfit.c:1072
-#: ../src/ship.c:589 ../src/ship.c:1120 ../src/space.c:1748 ../src/space.c:3497
+#: ../src/commodity.c:597 ../src/faction.c:1471 ../src/outfit.c:1072
+#: ../src/ship.c:589 ../src/ship.c:1120 ../src/space.c:1748 ../src/space.c:3500
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr "Defekte „%s“-Datei: enthält keine Elemente"
 
-#: ../src/commodity.c:618 ../src/slots.c:94 ../src/spfx.c:267
+#: ../src/commodity.c:620 ../src/slots.c:94 ../src/spfx.c:267
 #: ../src/start.c:129
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr "„%s“ hat unbekannten Node „%s“."
 
-#: ../src/commodity.c:624
+#: ../src/commodity.c:626
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
@@ -43334,29 +42783,29 @@ msgstr ""
 "höchstwahrscheinlich wiederherstellen müssen, indem du aktuelle "
 "Konfiguration mit deiner Sicherheitskopie deiner Konfiguration überschreibst."
 
-#: ../src/console.c:160
+#: ../src/console.c:161
 #, c-format
 msgid "Warning: %s\n"
 msgstr "Warnung: %s\n"
 
-#: ../src/console.c:539
+#: ../src/console.c:541
 msgid "Error printing results."
 msgstr "Fehler beim Ausgeben der Ergebnisse."
 
-#: ../src/console.c:579
+#: ../src/console.c:581
 msgid "\agWelcome to the Lua console!"
 msgstr "\agWillkommen in der Lua-Konsole!"
 
-#: ../src/damagetype.c:193 ../src/event.c:563 ../src/faction.c:1452
+#: ../src/damagetype.c:193 ../src/event.c:565 ../src/faction.c:1452
 #: ../src/fleet.c:223 ../src/mission.c:901 ../src/slots.c:64
-#: ../src/space.c:3335 ../src/spfx.c:225
+#: ../src/space.c:3338 ../src/spfx.c:225
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr "Daten von „%s“ konnten nicht geladen werden"
 
-#: ../src/damagetype.c:200 ../src/event.c:570 ../src/faction.c:1459
+#: ../src/damagetype.c:200 ../src/event.c:572 ../src/faction.c:1459
 #: ../src/fleet.c:230 ../src/mission.c:907 ../src/slots.c:71
-#: ../src/space.c:3342 ../src/spfx.c:232
+#: ../src/space.c:3345 ../src/spfx.c:232
 #, c-format
 msgid "Unable to parse document '%s'"
 msgstr "Dokument „%s“ konnte nicht geparst werden"
@@ -44166,12 +43615,12 @@ msgstr "\agGeleit: \a0Befehle verwerfen."
 msgid "\agEscorts: \a0Jumping."
 msgstr "\agGeleit: \a0Springen."
 
-#: ../src/event.c:282
+#: ../src/event.c:284
 #, c-format
 msgid "Event '%s' Lua script not found."
 msgstr "Ereignis-Lua-Skript „%s“ nicht gefunden."
 
-#: ../src/event.c:286
+#: ../src/event.c:288
 #, c-format
 msgid ""
 "Error loading event file: %s\n"
@@ -44182,78 +43631,78 @@ msgstr ""
 "%s\n"
 "Wahrscheinlich hat die Lua-Datei eine fehlerhafte Syntax, bitte überprüfen"
 
-#: ../src/event.c:352
+#: ../src/event.c:354
 #, c-format
 msgid "Event ID '%u' not valid."
 msgstr "Ereignis-ID „%u“ ungültig."
 
-#: ../src/event.c:419
+#: ../src/event.c:421
 #, c-format
 msgid "Conditional for event '%s' failed to run."
 msgstr "Bedingung für Ereignis „%s“ konnte nicht ausgeführt werden."
 
-#: ../src/event.c:461
+#: ../src/event.c:463
 #, c-format
 msgid "Event in %s has invalid or no name"
 msgstr "Ereignis in %s hat ungültigen oder keinen Namen"
 
-#: ../src/event.c:480
+#: ../src/event.c:482
 #, c-format
 msgid "Event Lua '%s' of event '%s' syntax error: %s"
 msgstr "Ereignis-Lua „%s“ von Ereignis „%s“ hat Syntaxfehler: %s"
 
-#: ../src/event.c:495
+#: ../src/event.c:497
 #, c-format
 msgid "Event '%s': Null trigger type."
 msgstr "Ereignis „%s“: Auslösertyp „Null“."
 
-#: ../src/event.c:505
+#: ../src/event.c:507
 #, c-format
 msgid "Event '%s' has invalid 'trigger' parameter: %s"
 msgstr "Ereignis „%s“ hat ungültigen „trigger“-Parameter: %s"
 
-#: ../src/event.c:519
+#: ../src/event.c:521
 #, c-format
 msgid "Event '%s' has unknown flag node '%s'."
 msgstr "Ereignis „%s“ hat unbekanntes „flag“-Node „%s“."
 
-#: ../src/event.c:530
+#: ../src/event.c:532
 #, c-format
 msgid "Unknown node '%s' in event '%s'"
 msgstr "Unbekanntes Node „%s“ in Ereignis „%s“"
 
-#: ../src/event.c:537 ../src/mission.c:873
+#: ../src/event.c:539 ../src/mission.c:873
 #, c-format
 msgid "Mission '%s' missing/invalid '%s' element"
 msgstr "Mission „%s“ hat fehlendes/ungültiges „%s“-Element"
 
-#: ../src/event.c:577 ../src/mission.c:913 ../src/slots.c:78 ../src/spfx.c:239
+#: ../src/event.c:579 ../src/mission.c:913 ../src/slots.c:78 ../src/spfx.c:239
 #: ../src/start.c:71
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „%s“"
 
-#: ../src/event.c:584 ../src/mission.c:919 ../src/outfit.c:2126
-#: ../src/outfit.c:2403 ../src/slots.c:85 ../src/space.c:3356 ../src/spfx.c:246
+#: ../src/event.c:586 ../src/mission.c:919 ../src/outfit.c:2126
+#: ../src/outfit.c:2403 ../src/slots.c:85 ../src/space.c:3359 ../src/spfx.c:246
 #: ../src/start.c:77
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr "Defekte „%s“-Datei: enthält keine Elemente"
 
-#: ../src/event.c:611
+#: ../src/event.c:613
 #, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] "%d Ereignis geladen"
 msgstr[1] "%d Ereignisse geladen"
 
-#: ../src/event.c:685
+#: ../src/event.c:687
 #, c-format
 msgid "No event data found matching name '%s'."
 msgstr "Keine Ereignisdaten, die auf Namen „%s“ passen, gefunden."
 
 #. Must delete.
-#: ../src/event.c:744
+#: ../src/event.c:746
 #, c-format
 msgid ""
 "Detected event '%s' without any hooks and is therefore insane. Removing "
@@ -44262,11 +43711,11 @@ msgstr ""
 "Ereignis „%s“ ohne jegliche Hooks gefunden, es ist daher absurd. Ereignis "
 "wird entfernt."
 
-#: ../src/event.c:838
+#: ../src/event.c:840
 msgid "Event has missing 'name' attribute, skipping."
 msgstr "Ereignis hat fehlendes „name“-Attribut, wird übersprungen."
 
-#: ../src/event.c:843
+#: ../src/event.c:845
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
@@ -44274,19 +43723,19 @@ msgstr ""
 "Ereignis im Spielstand hat Namen „%s“ aber keine Ereignisdaten, die zum "
 "Namen passen, wurden gefunden. Wird übersprungen."
 
-#: ../src/event.c:850
+#: ../src/event.c:852
 #, c-format
 msgid "Event with data '%s' has missing 'id' attribute, skipping."
 msgstr ""
 "Ereignis mit Daten „%s“ hat fehlendes „id“-Attribut, wird übersprungen."
 
-#: ../src/event.c:856
+#: ../src/event.c:858
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr ""
 "Ereignis mit Daten „%s“ hat ungültiges „id“-Attribut, wird übersprungen."
 
-#: ../src/event.c:864
+#: ../src/event.c:866
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
 msgstr "Ereignis mit Daten „%s“ wurde nicht erzeugt, wird übersprungen."
@@ -44555,36 +44004,36 @@ msgid_plural "Loaded %d Fleets"
 msgstr[0] "%d Flotte geladen"
 msgstr[1] "%d Flotten geladen"
 
-#: ../src/font.c:1129
+#: ../src/font.c:1131
 msgid "FT_Load_Glyph failed."
 msgstr "FT_Load_Glyph fehlgeschlagen."
 
-#: ../src/font.c:1135
+#: ../src/font.c:1137
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
 msgstr "Schrift „%s“ benutzt nicht FT_PIXEL_MODE_GRAY!"
 
-#: ../src/font.c:1338
+#: ../src/font.c:1340
 #, c-format
 msgid "Unable to find glyph '%d'!"
 msgstr "Konnte Schriftzeichen „%d“ nicht finden!"
 
-#: ../src/font.c:1457
+#: ../src/font.c:1459
 #, c-format
 msgid "Unable to read font: %s"
 msgstr "Konnte Schrift %s nicht laden"
 
-#: ../src/font.c:1466
+#: ../src/font.c:1468
 #, c-format
 msgid "Using default font '%s'"
 msgstr "Standardschrift „%s“ wird benutzt"
 
-#: ../src/font.c:1484
+#: ../src/font.c:1486
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
 msgstr "FT_Init_FreeType mit Schrift %s fehlgeschlagen."
 
-#: ../src/font.c:1491
+#: ../src/font.c:1493
 #, c-format
 msgid "FT_New_Face failed loading library from %s"
 msgstr "FT_New_Face scheiterte daran, Bibliothek von %s zu laden"
@@ -44593,19 +44042,19 @@ msgstr "FT_New_Face scheiterte daran, Bibliothek von %s zu laden"
 #. In 1/64th of a pixel.
 #. Create at 96 DPI
 #. Create at 96 DPI
-#: ../src/font.c:1503
+#: ../src/font.c:1505
 msgid "FT_Set_Char_Size failed."
 msgstr "FT_Set_Char_Size fehlgeschlagen."
 
-#: ../src/font.c:1506
+#: ../src/font.c:1508
 msgid "Font isn't resizable!"
 msgstr "Schrift ist nicht skalierbar!"
 
-#: ../src/font.c:1510
+#: ../src/font.c:1512
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr "FT_Select_Charmap scheiterte daran, das Zeichenmapping zu ändern."
 
-#: ../src/gui.c:447 ../src/input.c:1335
+#: ../src/gui.c:447 ../src/input.c:1337
 msgid "Gfx index out of range"
 msgstr "Gfx-Index außerhalf des Wertebereichs"
 
@@ -45559,70 +45008,70 @@ msgstr "Konnte Tastenbelegung „%s“ nicht setzen, dieser Befehl existiert nic
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr "Konnte Tastenbelegung „%s“ nicht holen, dieser Befehl existiert nicht"
 
-#: ../src/input.c:498 ../src/options.c:704
+#: ../src/input.c:500 ../src/options.c:704
 msgid "Not bound"
 msgstr "Nicht gesetzt"
 
-#: ../src/input.c:514
+#: ../src/input.c:516
 #, c-format
 msgid "joy button %d"
 msgstr "Joy-Knopf %d"
 
-#: ../src/input.c:518
+#: ../src/input.c:520
 #, c-format
 msgid "joy hat %d up"
 msgstr "Joy-D-Pad %d hoch"
 
-#: ../src/input.c:522
+#: ../src/input.c:524
 #, c-format
 msgid "joy hat %d down"
 msgstr "Joy-D-Pad %d runter"
 
-#: ../src/input.c:526
+#: ../src/input.c:528
 #, c-format
 msgid "joy hat %d left"
 msgstr "Joy-D-Pad %d links"
 
-#: ../src/input.c:530
+#: ../src/input.c:532
 #, c-format
 msgid "joy hat %d right"
 msgstr "Joy-D-Pad %d rechts"
 
-#: ../src/input.c:534
+#: ../src/input.c:536
 #, c-format
 msgid "joy axis %d-"
 msgstr "Joy-Achse %d-"
 
-#: ../src/input.c:538
+#: ../src/input.c:540
 #, c-format
 msgid "joy axis %d+"
 msgstr "Joy-Achse %d+"
 
-#: ../src/input.c:554
+#: ../src/input.c:556
 msgid "Ctrl"
 msgstr "Strg"
 
-#: ../src/input.c:555
+#: ../src/input.c:557
 msgid "Shift"
 msgstr "Umschalt"
 
-#: ../src/input.c:556
+#: ../src/input.c:558
 msgid "Alt"
 msgstr "Alt"
 
-#: ../src/input.c:557
+#: ../src/input.c:559
 msgid "Meta"
 msgstr "Meta"
 
-#: ../src/input.c:558
+#: ../src/input.c:560
 msgid "Any"
 msgstr "Beliebig"
 
-#: ../src/input.c:559
+#: ../src/input.c:561
 msgid "unknown"
 msgstr "unbekannt"
 
-#: ../src/input.c:626
+#: ../src/input.c:628
 #, c-format
 msgid "Unable to get keybinding description '%s', that command doesn't exist"
 msgstr ""
@@ -46330,7 +45779,17 @@ msgstr "\agWillkommen bei %s!"
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr "Alte Version erfasst. Schiffe werden für Plätze aufgeräumt"
 
-#: ../src/log.c:312
+#: ../src/log.c:132
+#, fuzzy
+msgid "Unable to redirect stdout to file"
+msgstr "Konnte in Vorbis-Datei nicht suchen."
+
+#: ../src/log.c:137
+#, fuzzy
+msgid "Unable to redirect stderr to file"
+msgstr "Konnte in Vorbis-Datei nicht suchen."
+
+#: ../src/log.c:316
 #, c-format
 msgid "An error occurred while buffering %s!"
 msgstr "Ein Fehler trat beim Puffern von %s auf!"
@@ -47109,7 +46568,7 @@ msgstr "SDL_Mixer: %s"
 msgid " git HEAD at %s"
 msgstr " git HEAD bei %s"
 
-#: ../src/naev.c:230 ../src/opengl.c:585
+#: ../src/naev.c:230 ../src/opengl.c:589
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr "Konnte SDL Video nicht initialisieren: %s"
@@ -47762,7 +47221,7 @@ msgstr "Planet „%s“ kann sein System „%s“ nicht finden"
 msgid "Event '%s' -> '%s': %s"
 msgstr "Ereignis „%s“ -> „%s“ %s"
 
-#: ../src/nlua_evt.c:231 ../src/nlua_misn.c:951
+#: ../src/nlua_evt.c:231 ../src/nlua_misn.c:953
 msgid "Invalid NPC ID!"
 msgstr "Ungültige NPC-ID!"
 
@@ -47825,39 +47284,39 @@ msgstr "Sprung ist ungültig"
 msgid "No matching jump points found."
 msgstr "Keine passenden Sprungpunkte gefunden."
 
-#: ../src/nlua_misn.c:248
+#: ../src/nlua_misn.c:250
 #, c-format
 msgid "Mission '%s' -> '%s': %s"
 msgstr "Mission „%s“ -> „%s“: %s"
 
-#: ../src/nlua_misn.c:380
+#: ../src/nlua_misn.c:382
 #, c-format
 msgid "Unknown marker type: %s"
 msgstr "Unbekannter Markertyp: %s"
 
-#: ../src/nlua_misn.c:422
+#: ../src/nlua_misn.c:424
 msgid "Mission has no markers set!"
 msgstr "Mission hat keine gesetzten Marker!"
 
-#: ../src/nlua_misn.c:436
+#: ../src/nlua_misn.c:438
 #, c-format
 msgid "Mission does not have a marker with id '%d'"
 msgstr "Mission hat keinen Marker mit ID „%d“"
 
-#: ../src/nlua_misn.c:599
+#: ../src/nlua_misn.c:601
 msgid "Mission already accepted!"
 msgstr "Mission wurde bereits akzeptiert!"
 
-#: ../src/nlua_misn.c:677
+#: ../src/nlua_misn.c:679
 #, c-format
 msgid "Cargo '%s' not found."
 msgstr "Ware „%s“ nicht gefunden."
 
-#: ../src/nlua_misn.c:773
+#: ../src/nlua_misn.c:775
 msgid "Can't create an OSD on an unaccepted mission!"
 msgstr "Ein OSD für eine nicht akzeptierte Mission kann nicht erzeugt werden!"
 
-#: ../src/nlua_misn.c:983
+#: ../src/nlua_misn.c:985
 msgid "Mission trying to claim but already has."
 msgstr "Mission versucht, zu claimen, hat es aber bereits getan."
 
@@ -48243,45 +47702,45 @@ msgstr "Fehler beim Lesen von %s aus dem Archiv"
 msgid "Error getting file list from archive"
 msgstr "Fehler beim Holen der Dateiliste aus dem Archiv"
 
-#: ../src/opengl.c:168
+#: ../src/opengl.c:170
 msgid "Unable to create RGB surface."
 msgstr "RGB-Surface konnte nicht erzeugt werden."
 
-#: ../src/opengl.c:173 ../src/opengl_tex.c:252
+#: ../src/opengl.c:175 ../src/opengl_tex.c:252
 #, c-format
 msgid "Unable to fill rect: %s"
 msgstr "Rechteck konnte nicht gefüllt werden: %s"
 
-#: ../src/opengl.c:271
+#: ../src/opengl.c:273
 msgid "GL invalid enum"
 msgstr "GL: ungültiges Enum"
 
-#: ../src/opengl.c:274
+#: ../src/opengl.c:276
 msgid "GL invalid value"
 msgstr "GL: ungültiger Wert"
 
-#: ../src/opengl.c:277
+#: ../src/opengl.c:279
 msgid "GL invalid operation"
 msgstr "GL: ungültige Operation"
 
-#: ../src/opengl.c:280
+#: ../src/opengl.c:282
 msgid "GL invalid framebuffer operation"
 msgstr "GL: ungültige Framepuffer-Operation"
 
-#: ../src/opengl.c:283
+#: ../src/opengl.c:285
 msgid "GL out of memory"
 msgstr "GL: Speicher erschöpft"
 
-#: ../src/opengl.c:287
+#: ../src/opengl.c:289
 msgid "GL unknown error"
 msgstr "GL: unbekannter Fehler"
 
-#: ../src/opengl.c:290
+#: ../src/opengl.c:292
 #, c-format
 msgid "OpenGL error [%s:%d]: %s"
 msgstr "OpenGL-Fehler [%s:%d]: %s"
 
-#: ../src/opengl.c:361
+#: ../src/opengl.c:363
 #, c-format
 msgid ""
 "Fullscreen mode %dx%d is not supported by your setup, however no other modes "
@@ -48290,7 +47749,7 @@ msgstr ""
 "Vollbildmodus %d×%d wird auf deinem System nicht unterstützt, allerdings "
 "werden auch keine anderen Modi unterstüzt. Das war wohl nix!"
 
-#: ../src/opengl.c:366
+#: ../src/opengl.c:368
 #, c-format
 msgid ""
 "Fullscreen mode %dx%d is not supported by your setup\n"
@@ -48299,79 +47758,85 @@ msgstr ""
 "Vollbildmodus %d×%d wird auf deinem System nicht unterstützt;\n"
 "   es wird zu %d×%d gewechselt"
 
-#: ../src/opengl.c:393
+#: ../src/opengl.c:395
 msgid "Unable to create window!"
 msgstr "Neues Fenster konnte nicht erstellt werden!"
 
-#: ../src/opengl.c:406
+#: ../src/opengl.c:408
 msgid "Unable to create OpenGL context!"
 msgstr "Neuer OpenGL-Kontext konnte nicht erzeugt werden!"
 
 #. Debug happiness
-#: ../src/opengl.c:457
+#: ../src/opengl.c:459
 #, c-format
 msgid "OpenGL Window Created: %dx%d@%dbpp %s"
 msgstr "OpenGL-Fenster erstellt: %d×%d@%dbpp %s"
 
-#: ../src/opengl.c:458 ../src/options.c:1494 ../src/options.c:1526
+#: ../src/opengl.c:460 ../src/options.c:1494 ../src/options.c:1526
 msgid "fullscreen"
 msgstr "Vollbild"
 
-#: ../src/opengl.c:458
+#: ../src/opengl.c:460
 msgid "window"
 msgstr "Fenster"
 
-#: ../src/opengl.c:459
+#: ../src/opengl.c:461
 #, c-format
 msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 msgstr "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 
-#: ../src/opengl.c:461 ../src/opengl.c:464 ../src/opengl.c:465
-#: ../src/opengl.c:466 ../src/opengl.c:467
+#: ../src/opengl.c:463 ../src/opengl.c:466 ../src/opengl.c:467
+#: ../src/opengl.c:468 ../src/opengl.c:469
 msgid "yes"
 msgstr "Ja"
 
-#: ../src/opengl.c:463
+#: ../src/opengl.c:463 ../src/opengl.c:466 ../src/opengl.c:467
+#: ../src/opengl.c:468 ../src/opengl.c:469
+#, fuzzy
+msgid "no"
+msgstr "nicht vorhandenen"
+
+#: ../src/opengl.c:465
 #, c-format
 msgid "vsync: %s, mm: %s, compress: %s, npot: %s"
 msgstr "vsync: %s, mm: %s, compress: %s, npot: %s"
 
 #. Print other debug info.
-#: ../src/opengl.c:468 ../src/sound_openal.c:359 ../src/sound_sdlmix.c:127
+#: ../src/opengl.c:470 ../src/sound_openal.c:359 ../src/sound_sdlmix.c:127
 #, c-format
 msgid "Renderer: %s"
 msgstr "Renderer: %s"
 
-#: ../src/opengl.c:469
+#: ../src/opengl.c:471
 #, c-format
 msgid "Version: %s"
 msgstr "Version: %s"
 
-#: ../src/opengl.c:473
+#: ../src/opengl.c:475
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
 msgstr "Fehlende Textureneinheiten (%d benötigt, %d gefunden)"
 
-#: ../src/opengl.c:476
+#: ../src/opengl.c:478
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
 msgstr ""
 "Konnte die erbetene FSAA-Stufe nicht erhalten (%d erbeten, %d erhalten)"
 
-#: ../src/opengl.c:516
+#: ../src/opengl.c:518
 msgid "Screen size too small, upscaling..."
 msgstr "Bildschirmgröße zu klein, wird vergrößert …"
 
-#: ../src/opengl.c:773
+#: ../src/opengl.c:777
 #, c-format
 msgid "Unable to open '%s' for writing."
 msgstr "„%s“ konnte nicht zum Schreiben geöffnet werden."
 
-#: ../src/opengl.c:779
+#: ../src/opengl.c:783
 msgid "Unable to create png write struct."
 msgstr "PNG-„write“-Struct konnte nicht erzeugt werden."
 
-#: ../src/opengl.c:783
+#: ../src/opengl.c:787
 msgid "Unable to create PNG info struct."
 msgstr "PNG-„info“-Struct konnte nicht erzeugt werden."
 
@@ -48772,6 +48237,18 @@ msgstr "Skalierung: %.1f×"
 msgid "Outfit '%s' not found in stack."
 msgstr "Ausstattung „%s“ nicht im Stack gefunden."
 
+#: ../src/outfit.c:271 ../src/outfit.c:287
+msgid "Small"
+msgstr "Kleine"
+
+#: ../src/outfit.c:273 ../src/outfit.c:289
+msgid "Medium"
+msgstr "Mittel"
+
+#: ../src/outfit.c:275 ../src/outfit.c:291
+msgid "Large"
+msgstr "Große"
+
 #: ../src/outfit.c:337
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
@@ -48874,7 +48351,7 @@ msgstr ""
 "in Naevs „artwork“-Repository gefunden werden kann."
 
 #: ../src/outfit.c:1064 ../src/ship.c:581 ../src/ship.c:1111
-#: ../src/space.c:1740 ../src/space.c:3490
+#: ../src/space.c:1740 ../src/space.c:3493
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr "„%s“-Datei ist ungültiges XML!"
@@ -49209,30 +48686,30 @@ msgstr "\a%cKomm. %s>\a0 „%s“"
 msgid "\a%cBroadcast %s>\a0 \"%s\""
 msgstr "\a%cRundfunk %s>\a0 „%s“"
 
-#: ../src/pilot.c:2277 ../src/pilot.c:2304
+#: ../src/pilot.c:2279 ../src/pilot.c:2306
 msgid "\arStrayed too far from jump point: jump aborted."
 msgstr "\arZu weit vom Sprungpunkt abgekommen: Sprung abgebrochen."
 
-#: ../src/pilot.c:2284
+#: ../src/pilot.c:2286
 msgid "\arAfterburner active: jump aborted."
 msgstr "\arNachbrenner aktiv: Sprung abgebrochen."
 
-#: ../src/pilot.c:2324
+#: ../src/pilot.c:2326
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 "Pilot „%s“ versuchte, von Nur-Ausgangs-Sprung von „%s“ nach „%s“ zu springen"
 
-#: ../src/pilot.c:2630
+#: ../src/pilot.c:2638
 #, c-format
 msgid "Pilot '%s' failed sanity check: %s"
 msgstr "Pilot „%s“ ist bei der Vernüftigkeitsprüfung durchgefallen: %s"
 
-#: ../src/pilot.c:2701 ../src/pilot.c:2741
+#: ../src/pilot.c:2709 ../src/pilot.c:2749
 msgid "Unable to allocate memory"
 msgstr "Speicher konnte nicht alloziert werden"
 
-#: ../src/pilot.c:2886
+#: ../src/pilot.c:2894
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr ""
 "Erzeuge Pilot im System ohne Sprünge oder Planeten, von denen man abheben "
@@ -50039,6 +49516,10 @@ msgstr "Luxusyacht"
 msgid "Cruise Ship"
 msgstr "Kreuzer"
 
+#: ../src/ship.c:177
+msgid "Courier"
+msgstr "Kurier"
+
 #: ../src/ship.c:179
 msgid "Armoured Transport"
 msgstr "Gepanzerter Transport"
@@ -50227,31 +49708,31 @@ msgid_plural "Loaded %d Ships"
 msgstr[0] "%d Schiff geladen"
 msgstr[1] "%d Schiffe geladen"
 
-#: ../src/shiplog.c:156
+#: ../src/shiplog.c:157
 msgid "Warning - log not found: creating it"
 msgstr ""
 
-#: ../src/shiplog.c:157
+#: ../src/shiplog.c:158
 msgid "Please report this log as an error to github.com/naev"
 msgstr ""
 
-#: ../src/shiplog.c:197
+#: ../src/shiplog.c:198
 msgid "Error creating new log entry - crash imminent!\n"
 msgstr ""
 
-#: ../src/shiplog.c:433
+#: ../src/shiplog.c:434
 msgid "Warning - no ID in shipLog entry\n"
 msgstr ""
 
-#: ../src/shiplog.c:457
+#: ../src/shiplog.c:458
 msgid "No ID in shipLog entry"
 msgstr ""
 
-#: ../src/shiplog.c:490
+#: ../src/shiplog.c:491
 msgid "Warning - no ID for shipLog entry"
 msgstr ""
 
-#: ../src/shiplog.c:497
+#: ../src/shiplog.c:498
 msgid "Warning - no time for shipLog entry"
 msgstr ""
 
@@ -50769,7 +50250,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr "Lua-Spawn-Skript für Fraktion „%s“: %s"
 
-#: ../src/space.c:1160 ../src/space.c:4547
+#: ../src/space.c:1160 ../src/space.c:4550
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
@@ -50831,51 +50312,51 @@ msgstr ""
 "Wahrscheinlich hat die Luadatei eine fehlerhafte Syntax, bitte überprüfen"
 
 #. error has occurred
-#: ../src/space.c:1868
+#: ../src/space.c:1871
 #, c-format
 msgid "Landing: '%s' : %s"
 msgstr "Landen: „%s“: %s"
 
-#: ../src/space.c:1878
+#: ../src/space.c:1881
 #, c-format
 msgid "%s: %s (%s) -> return parameter 2 is not a string!"
 msgstr "%s: %s (%s) -> Rückgabeparameter 2 ist kein String!"
 
-#: ../src/space.c:1879
+#: ../src/space.c:1882
 msgid "Invalid land message"
 msgstr "Ungültige Landenachricht"
 
-#: ../src/space.c:1889
+#: ../src/space.c:1892
 msgid "Invalid bribe message"
 msgstr "Ungültige Bestechungsnachricht"
 
-#: ../src/space.c:1895
+#: ../src/space.c:1898
 #, c-format
 msgid "%s: %s -> return parameter 5 is not a string!"
 msgstr "%s: %s -> Rückgabeparameter 5 ist kein String!"
 
-#: ../src/space.c:1896
+#: ../src/space.c:1899
 msgid "Invalid bribe ack message"
 msgstr "Ungültige Bestechungsbestätigungsnachricht"
 
-#: ../src/space.c:1902
+#: ../src/space.c:1905
 #, c-format
 msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 "%s: %s (%s) -> Rückgabeparameter 3 ist weder Zahl, noch String, noch nil!"
 
-#: ../src/space.c:2059
+#: ../src/space.c:2062
 #, c-format
 msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
 msgstr ""
 "Planet „%s“ hat Landefunktion „%s“, welche nicht in „%s“ gefunden wurde."
 
-#: ../src/space.c:2081
+#: ../src/space.c:2084
 #, c-format
 msgid "Planet '%s' has unknown services tag '%s'"
 msgstr "Planet „%s“ hat unbekanntes „services“-Tag „%s“"
 
-#: ../src/space.c:2125
+#: ../src/space.c:2128
 #, c-format
 msgid "Unknown node '%s' in planet '%s'"
 msgstr "Unbekannter Node „%s“ in Planet „%s“"
@@ -50883,74 +50364,74 @@ msgstr "Unbekannter Node „%s“ in Planet „%s“"
 #.
 #. * verification
 #.
-#: ../src/space.c:2131
+#: ../src/space.c:2134
 #, c-format
 msgid "Planet '%s' missing '%s' element"
 msgstr "Planet „%s“ fehlt „%s“-Element"
 
-#: ../src/space.c:2230
+#: ../src/space.c:2233
 #, c-format
 msgid "Planet '%s' has inexisting graphic '%s'!"
 msgstr "Planet „%s“ hat nicht existente Grafik „%s“!"
 
-#: ../src/space.c:2332
+#: ../src/space.c:2335
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr "Planet „%s“ konnte nicht von NULL-System entfernt werden."
 
-#: ../src/space.c:2344
+#: ../src/space.c:2347
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr "Planet „%s“ nicht im System „%s“ für die Entfernung gefunden."
 
-#: ../src/space.c:2369
+#: ../src/space.c:2372
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 "Planet „%s“ und System „%s“ konnten nicht im „planet<->system“-Stack "
 "gefunden werden."
 
-#: ../src/space.c:2434
+#: ../src/space.c:2437
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr "Sprungpunkt „%s“ konnte nicht von NULL-System entfernt werden."
 
-#: ../src/space.c:2446
+#: ../src/space.c:2449
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr "Sprungpunkt „%s“ nicht im System „%s“ für die Entfernung gefunden."
 
-#: ../src/space.c:2713
+#: ../src/space.c:2716
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr "Unbekannter Node „%s“ im Sternensystem „%s“"
 
-#: ../src/space.c:2716
+#: ../src/space.c:2719
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr "Sternensystem „%s“ fehlt „%s“-Element"
 
-#: ../src/space.c:2717
+#: ../src/space.c:2720
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr "Sternensystem „%s“ fehlt das „name“-Tag"
 
-#: ../src/space.c:2807 ../src/space.c:2900
+#: ../src/space.c:2810 ../src/space.c:2903
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr "JumpPoint-Node für System „%s“ hat kein „target“-Attribut."
 
-#: ../src/space.c:2812 ../src/space.c:2905
+#: ../src/space.c:2815 ../src/space.c:2908
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr "JumpPoint-Node für System „%s“ hat ungültiges Ziel „%s“."
 
-#: ../src/space.c:2824 ../src/space.c:2917
+#: ../src/space.c:2827 ../src/space.c:2920
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr "Sternensystem „%s“ hat doppelten Sprungpunkt nach „%s“."
 
-#: ../src/space.c:2946
+#: ../src/space.c:2949
 #, c-format
 msgid ""
 "JumpPoint for system '%s' has position node missing 'x' position, using 0."
@@ -50958,7 +50439,7 @@ msgstr ""
 "Sprungpunkt für System „%s“ hat Positions-Node, dem die „x“-Position fehlt, "
 "0 wird benutzt."
 
-#: ../src/space.c:2955
+#: ../src/space.c:2958
 #, c-format
 msgid ""
 "JumpPoint for system '%s' has position node missing 'y' position, using 0."
@@ -50966,7 +50447,7 @@ msgstr ""
 "Sprungpunkt für System „%s“ hat Positions-Node, dem die „y“-Position fehlt, "
 "0 wird benutzt."
 
-#: ../src/space.c:2978
+#: ../src/space.c:2981
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
@@ -50975,12 +50456,12 @@ msgstr ""
 "Sprungpunkt für System „%s“ fehlt das „pos“-Element, hat aber kein „autopos“-"
 "Flag."
 
-#: ../src/space.c:3011
+#: ../src/space.c:3014
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr "System „%s“ wurde nicht im Stack aus irgendeinem Grund gefunden"
 
-#: ../src/space.c:3088
+#: ../src/space.c:3091
 #, c-format
 msgid ""
 "Asteroid field for system '%s' has position node missing 'x' position, using "
@@ -50989,7 +50470,7 @@ msgstr ""
 "Asteroidenfeld für System „%s“ hat Positions-Node, dem die „x“-Position "
 "fehlt, 0 wird benutzt."
 
-#: ../src/space.c:3097
+#: ../src/space.c:3100
 #, c-format
 msgid ""
 "Asteroid field for system '%s' has position node missing 'y' position, using "
@@ -50998,17 +50479,17 @@ msgstr ""
 "Asteroidenfeld für System „%s“ hat Positions-Node, dem die „y“-Position "
 "fehlt, 0 wird benutzt."
 
-#: ../src/space.c:3112
+#: ../src/space.c:3115
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr "Asteroidenfeld in %s hat keine Position."
 
-#: ../src/space.c:3115
+#: ../src/space.c:3118
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr "Asteroidenfeld in %s hat keinen Radius."
 
-#: ../src/space.c:3172
+#: ../src/space.c:3175
 #, c-format
 msgid ""
 "Asteroid exclusion for system '%s' has position node missing 'x' position, "
@@ -51017,7 +50498,7 @@ msgstr ""
 "Asteroidenausschließung für System „%s“ hat Positions-Node, dem die „x“-"
 "Position fehlt, 0 wird benutzt."
 
-#: ../src/space.c:3181
+#: ../src/space.c:3184
 #, c-format
 msgid ""
 "Asteroid exclusion for system '%s' has position node missing 'y' position, "
@@ -51026,40 +50507,40 @@ msgstr ""
 "Asteroidenausschließung für System „%s“ hat Positions-Node, dem die „y“-"
 "Position fehlt, 0 wird benutzt."
 
-#: ../src/space.c:3196
+#: ../src/space.c:3199
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr "Asteroidenausschließung in %s hat keine Position."
 
-#: ../src/space.c:3199
+#: ../src/space.c:3202
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr "Asteroidenausschließung in %s hat keinen Radius."
 
-#: ../src/space.c:3349
+#: ../src/space.c:3352
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „Asteroid_types“"
 
-#: ../src/space.c:3430
+#: ../src/space.c:3433
 msgid "Asteroid type has no gfx associated."
 msgstr "Asteroidentyp hat kein gfx zugewiesen."
 
-#: ../src/space.c:3544
+#: ../src/space.c:3547
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] "%d Sternensystem geladen"
 msgstr[1] "%d Sternensysteme geladen"
 
-#: ../src/space.c:3545
+#: ../src/space.c:3548
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] "       mit %d Planet"
 msgstr[1] "       mit %d Planeten"
 
-#: ../src/space.c:3968 ../src/space.c:4012
+#: ../src/space.c:3971 ../src/space.c:4015
 msgid "Unknown marker type."
 msgstr "Unbekannter Markertyp."
 
@@ -51068,7 +50549,7 @@ msgstr "Unbekannter Markertyp."
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: ../src/space.c:4539
+#: ../src/space.c:4542
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr "Lua-Verringerungsskript für Fraktion „%s“: %s"
@@ -51389,6 +50870,560 @@ msgstr "Ungültiger WEAPON_LAYER angegeben"
 #: ../src/weapon.c:1825
 msgid "Trying to destroy weapon not found in stack!"
 msgstr "Versuch, eine Waffe, die nicht im Stack ist, zu zerstören!"
+
+#~ msgid ""
+#~ "The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s "
+#~ "left)."
+#~ msgstr ""
+#~ "Das Imperium muss %d Tonnen %s nach %s im „%s“-System bis zu %s liefern "
+#~ "(%s verbleibend)."
+
+#~ msgid ""
+#~ "ES: Cargo transport to %s in the %s system\n"
+#~ "Cargo: %s (%d tonnes)\n"
+#~ "Jumps: %d\n"
+#~ "Travel distance: %d\n"
+#~ "Piracy risk: %s\n"
+#~ "Time limit: %s"
+#~ msgstr ""
+#~ "IL: Frachtlieferung zu %s im „%s“-System\n"
+#~ "Fracht: %s (%d Tonnen)\n"
+#~ "Sprünge: %d\n"
+#~ "Reiseentfernung: %d\n"
+#~ "Pirateriegefahr: %s\n"
+#~ "Zeitlimit: %s"
+
+#~ msgid "Ship is full"
+#~ msgstr "Schiff ist voll"
+
+#~ msgid ""
+#~ "Your ship is too full. You need to make room for %d more tonnes if you "
+#~ "want to be able to accept the mission."
+#~ msgstr ""
+#~ "Dein Schiff ist zu voll. Du musst Platz für %d weitere Tonnen machen, "
+#~ "wenn du die Mission akzeptieren willst."
+
+#~ msgid ""
+#~ "This shipment must arrive within %s, but it will take at least %s for "
+#~ "your ship to reach %s, and the Empire is not fond of delays. Accept the "
+#~ "mission anyway?"
+#~ msgstr ""
+#~ "Diese Lieferung muss in %s ankommen, aber es wird mindestens %s brauchen, "
+#~ "bis dein Schiff %s erreicht, und das Imperium mag keine Verspätungen. "
+#~ "Mission trotzdem akzeptieren?"
+
+#~ msgid "Low"
+#~ msgstr "Niedrig"
+
+#~ msgid "High"
+#~ msgstr "Hoch"
+
+#~ msgid ""
+#~ "ES: Long distance cargo transport to %s in the %s system\n"
+#~ "   Cargo: %s (%d tonnes)\n"
+#~ "   Jumps: %d\n"
+#~ "   Travel distance: %d\n"
+#~ "   Piracy risk: %s\n"
+#~ "   Time limit: %s"
+#~ msgstr ""
+#~ "IL: Langstreckenfrachtlieferung zu %s im „%s“-System\n"
+#~ "   Fracht: %s (%d Tonnen)\n"
+#~ "   Sprünge: %d\n"
+#~ "   Reiseentfernung: %d\n"
+#~ "   Pirateriegefahr: %s\n"
+#~ "   Zeitlimit: %s"
+
+#~ msgid "Cargo Missing"
+#~ msgstr "Fehlende Fracht"
+
+#~ msgid "You are missing the %d tonnes of %s!."
+#~ msgstr "Dir fehlen die %d Tonnen von %s!."
+
+#, fuzzy
+#~ msgid "man"
+#~ msgstr "männliche Person"
+
+#, fuzzy
+#~ msgid "woman"
+#~ msgstr "weibliche Person"
+
+#~ msgid "him"
+#~ msgstr "ihn"
+
+#, fuzzy
+#~ msgid "her"
+#~ msgstr "ihr"
+
+#, fuzzy
+#~ msgid "his"
+#~ msgstr "sein"
+
+#~ msgid "he"
+#~ msgstr "er"
+
+#~ msgid "she"
+#~ msgstr "sie"
+
+#, fuzzy
+#~ msgid "tall"
+#~ msgstr "große"
+
+#, fuzzy
+#~ msgid "short"
+#~ msgstr "kleine"
+
+#, fuzzy
+#~ msgid "fat"
+#~ msgstr "dicke"
+
+#, fuzzy
+#~ msgid "ugly"
+#~ msgstr "hässliche"
+
+#, fuzzy
+#~ msgid "scary"
+#~ msgstr "schaurige"
+
+#, fuzzy
+#~ msgid "muscular"
+#~ msgstr "muskulöse"
+
+#, fuzzy
+#~ msgid "nice looking"
+#~ msgstr "gut aussehende"
+
+#~ msgid "brown"
+#~ msgstr "braunen"
+
+#~ msgid "brunette"
+#~ msgstr "brünetten"
+
+#~ msgid "blonde"
+#~ msgstr "blonden"
+
+#~ msgid "red"
+#~ msgstr "roten"
+
+#~ msgid "strawberry blonde"
+#~ msgstr "erdbeerblonden"
+
+#~ msgid "golden blonde"
+#~ msgstr "goldblonden"
+
+#~ msgid "dirty blonde"
+#~ msgstr "graublonden"
+
+#~ msgid "white"
+#~ msgstr "weißen"
+
+#~ msgid "blue"
+#~ msgstr "blauen"
+
+#~ msgid "orange"
+#~ msgstr "orange"
+
+#~ msgid "green"
+#~ msgstr "grünen"
+
+#~ msgid "dark"
+#~ msgstr "dunklen"
+
+#~ msgid "dark brown"
+#~ msgstr "dunkelbraunen"
+
+#~ msgid "dark brunette"
+#~ msgstr "dunkelbrünetten"
+
+#~ msgid "dark red"
+#~ msgstr "dunkelroten"
+
+#~ msgid "dark blue"
+#~ msgstr "dunkelblauen"
+
+#~ msgid "dark orange"
+#~ msgstr "dunkelorange"
+
+#~ msgid "dark green"
+#~ msgstr "dunkelgrünen"
+
+#~ msgid "light"
+#~ msgstr "hellen"
+
+#~ msgid "light brown"
+#~ msgstr "hellbraunen"
+
+#~ msgid "light brunette"
+#~ msgstr "hellbrünetten"
+
+#~ msgid "light blonde"
+#~ msgstr "hellblonden"
+
+#~ msgid "light strawberry blonde"
+#~ msgstr "hellerdbeerblonden"
+
+#~ msgid "light golden blonde"
+#~ msgstr "hellgoldblonden"
+
+#~ msgid "light dirty blonde"
+#~ msgstr "hellgraublonden"
+
+#~ msgid "light red"
+#~ msgstr "hellroten"
+
+#~ msgid "light blue"
+#~ msgstr "hellblauen"
+
+#~ msgid "light orange"
+#~ msgstr "hellorange"
+
+#~ msgid "light green"
+#~ msgstr "hellgrünen"
+
+#~ msgid "short brown"
+#~ msgstr "kurzen braunen"
+
+#~ msgid "short brunette"
+#~ msgstr "kurzen brünetten"
+
+#~ msgid "short blonde"
+#~ msgstr "kurzen blonden"
+
+#~ msgid "short strawberry blonde"
+#~ msgstr "kurzen erdbeerblonden"
+
+#~ msgid "short golden blonde"
+#~ msgstr "kurzen goldblonden"
+
+#~ msgid "short dirty blonde"
+#~ msgstr "kurzen graublonden"
+
+#~ msgid "short red"
+#~ msgstr "kurzen roten"
+
+#~ msgid "short blue"
+#~ msgstr "kurzen blauen"
+
+#~ msgid "short white"
+#~ msgstr "kurzen weißen"
+
+#~ msgid "short orange"
+#~ msgstr "kurzen orange"
+
+#~ msgid "short green"
+#~ msgstr "kurzen grünen"
+
+#~ msgid "short dark"
+#~ msgstr "kurzen dunklen"
+
+#~ msgid "long"
+#~ msgstr "langen"
+
+#~ msgid "long brown"
+#~ msgstr "langen braunen"
+
+#~ msgid "long brunette"
+#~ msgstr "langen brünetten"
+
+#~ msgid "long blonde"
+#~ msgstr "langen blonden"
+
+#~ msgid "long strawberry blonde"
+#~ msgstr "langen erdbeerblonden"
+
+#~ msgid "long golden blonde"
+#~ msgstr "langen goldblonden"
+
+#~ msgid "long dirty blonde"
+#~ msgstr "langen graublonden"
+
+#~ msgid "long red"
+#~ msgstr "langen roten"
+
+#~ msgid "long blue"
+#~ msgstr "langen blauen"
+
+#~ msgid "long white"
+#~ msgstr "langen weißen"
+
+#~ msgid "long orange"
+#~ msgstr "langen orange"
+
+#~ msgid "long green"
+#~ msgstr "langen grünen"
+
+#~ msgid "long dark"
+#~ msgstr "langen dunklen"
+
+#~ msgid "curly"
+#~ msgstr "gelockten"
+
+#~ msgid "curly, brown"
+#~ msgstr "gelockten braunen"
+
+#~ msgid "curly, brunette"
+#~ msgstr "gelockten brünetten"
+
+#~ msgid "curly, blonde"
+#~ msgstr "gelockten blonden"
+
+#~ msgid "curly, strawberry blonde"
+#~ msgstr "gelockten erdbeerblonden"
+
+#~ msgid "curly, golden blonde"
+#~ msgstr "gelockten goldblonden"
+
+#~ msgid "curly, dirty blonde"
+#~ msgstr "gelockten graublonden"
+
+#~ msgid "curly, red"
+#~ msgstr "gelockten roten"
+
+#~ msgid "curly, blue"
+#~ msgstr "gelockten blauen"
+
+#~ msgid "curly, white"
+#~ msgstr "gelockten weißen"
+
+#~ msgid "curly, orange"
+#~ msgstr "gelockten orange"
+
+#~ msgid "curly, green"
+#~ msgstr "gelockten grünen"
+
+#~ msgid "curly, dark"
+#~ msgstr "gelockten dunklen"
+
+#~ msgid "wavy"
+#~ msgstr "gewellten"
+
+#~ msgid "wavy, brown"
+#~ msgstr "gewellten braunen"
+
+#~ msgid "wavy, brunette"
+#~ msgstr "gewellten brünetten"
+
+#~ msgid "wavy, blonde"
+#~ msgstr "gewellten blonden"
+
+#~ msgid "wavy, strawberry blonde"
+#~ msgstr "gewellten erdbeerblonden"
+
+#~ msgid "wavy, golden blonde"
+#~ msgstr "gewellten goldblonden"
+
+#~ msgid "wavy, dirty blonde"
+#~ msgstr "gewellten graublonden"
+
+#~ msgid "wavy, red"
+#~ msgstr "gewellten roten"
+
+#~ msgid "wavy, blue"
+#~ msgstr "gewellten blauen"
+
+#~ msgid "wavy, white"
+#~ msgstr "gewellten weißen"
+
+#~ msgid "wavy, orange"
+#~ msgstr "gewellten orange"
+
+#~ msgid "wavy, green"
+#~ msgstr "gewellten grünen"
+
+#~ msgid "wavy, dark"
+#~ msgstr "gewellten dunklen"
+
+#~ msgid "natty"
+#~ msgstr "schicken"
+
+#~ msgid "greasy"
+#~ msgstr "fettigen"
+
+#~ msgid "dirty"
+#~ msgstr "dreckigen"
+
+#~ msgid "smelly"
+#~ msgstr "stinkenden"
+
+#~ msgid "a suit"
+#~ msgstr "einem Anzug"
+
+#~ msgid "a black suit"
+#~ msgstr "einem schwarzen Anzug"
+
+#~ msgid "a purple suit"
+#~ msgstr "einem violetten Anzug"
+
+#~ msgid "a blue suit"
+#~ msgstr "einem blauen Anzug"
+
+#~ msgid "a beach shirt"
+#~ msgstr "einem Strandhemd"
+
+#~ msgid "a floral shirt"
+#~ msgstr "einem Blumenhemd"
+
+#~ msgid "a blue shirt"
+#~ msgstr "einem blauen Hemd"
+
+#~ msgid "a red shirt"
+#~ msgstr "einem roten Hemd"
+
+#~ msgid "a white shirt"
+#~ msgstr "einem weißen Hemd"
+
+#~ msgid "a white dress shirt"
+#~ msgstr "einem weißen Anzugshemd"
+
+#~ msgid "a red vest"
+#~ msgstr "einer roten Weste"
+
+#~ msgid "a blue vest"
+#~ msgstr "einer blauen Weste"
+
+#~ msgid "a tux"
+#~ msgstr "einem Smoking"
+
+#~ msgid "a black tux"
+#~ msgstr "einem schwarzen Smoking"
+
+#~ msgid "robes"
+#~ msgstr "Roben"
+
+#~ msgid "brown robes"
+#~ msgstr "braunen Roben"
+
+#~ msgid "black robes"
+#~ msgstr "schwarzen Roben"
+
+#~ msgid "blue robes"
+#~ msgstr "blauen Roben"
+
+#~ msgid "dark blue robes"
+#~ msgstr "dunkelblauen Roben"
+
+#~ msgid "all black"
+#~ msgstr "schwarzer Kleidung"
+
+#~ msgid "all blue"
+#~ msgstr "blauer Kleidung"
+
+#~ msgid "all purple"
+#~ msgstr "lila Kleidung"
+
+#~ msgid "all red"
+#~ msgstr "roter Kleidung"
+
+#~ msgid "a dress"
+#~ msgstr "einem Kleid"
+
+#~ msgid "a blue dress"
+#~ msgstr "einem blauen Kleid"
+
+#~ msgid "a black dress"
+#~ msgstr "einem schwarzen Kleid"
+
+#~ msgid "a purple dress"
+#~ msgstr "einem lila Kleid"
+
+#~ msgid "a red dress"
+#~ msgstr "einem roten Kleid"
+
+#~ msgid "a sexy blue dress"
+#~ msgstr "einem sexy blauen Kleid"
+
+#~ msgid "a sexy red dress"
+#~ msgstr "einem sexy roten Kleid"
+
+#~ msgid "a sexy black dress"
+#~ msgstr "einem sexy schwarzen Kleid"
+
+#~ msgid "a short blue dress"
+#~ msgstr "einem kurzen blauen Kleid"
+
+#~ msgid "a short red dress"
+#~ msgstr "einem kurzen roten Kleid"
+
+#~ msgid "a short black dress"
+#~ msgstr "einem kurzen schwarzen Kleid"
+
+#~ msgid "%s in the %s system needs a delivery of %d tonnes of %s."
+#~ msgstr "%s im „%s“-System braucht eine Lieferung von %d Tonnen %s."
+
+#~ msgid " delivery to %s in the %s system"
+#~ msgstr " Lieferung nach %s im „%s“-System"
+
+#~ msgid ""
+#~ "You don't have enough cargo space to accept this mission. You need %d "
+#~ "tonnes of free space (you need %d more)."
+#~ msgstr ""
+#~ "Du hast nicht genügend Frachtraum, um diese Mission zu akzeptieren. Du "
+#~ "brauchst %d Tonnen mit freien Raum (du brauchst noch %d)."
+
+#~ msgid "The crates of "
+#~ msgstr "Die Kisten mit "
+
+#~ msgid "The drums of "
+#~ msgstr "Die Fässer mit "
+
+#~ msgid "The containers of "
+#~ msgstr "Die Container mit "
+
+#~ msgid "Pressing"
+#~ msgstr "Dringende"
+
+#~ msgid "Urgent"
+#~ msgstr "Dringend"
+
+#~ msgid "Emergency"
+#~ msgstr "Notfall"
+
+#~ msgid ""
+#~ " \n"
+#~ "      Cargo: %s (%d tonnes)\n"
+#~ "      Jumps: %d\n"
+#~ "      Travel distance: %d\n"
+#~ "      Piracy Risk: %s\n"
+#~ "      Time limit: %s\n"
+#~ msgstr ""
+#~ " \n"
+#~ "      Fracht: %s (%d Tonnen)\n"
+#~ "      Sprünge: %d\n"
+#~ "      Reisedistanz: %d\n"
+#~ "      Piraterierisiko: %s\n"
+#~ "      Zeitlimit: %s\n"
+
+#~ msgid "small"
+#~ msgstr "kleine"
+
+#~ msgid "large"
+#~ msgstr "große"
+
+#~ msgid "Moderate"
+#~ msgstr "Mittlere"
+
+#~ msgid "Dangerous"
+#~ msgstr "Gefährliche"
+
+#~ msgid "Highly Dangerous"
+#~ msgstr "Hochgefährliche"
+
+#~ msgid "Fly to %s in the %s system before %s."
+#~ msgstr "Flieg nach %s im „%s“-System vor %s."
+
+#~ msgid "You have %s remaining."
+#~ msgstr "Du hast noch %s."
+
+#~ msgid " transport to %s"
+#~ msgstr " Transport nach %s"
+
+#~ msgid "%s in %s"
+#~ msgstr "%s in %s"
+
+#~ msgid "%s (%s tonnes)"
+#~ msgstr "%s (%s Tonnen)"
+
+#~ msgid "Space Miners"
+#~ msgstr "Weltraumbergbauunion"
 
 #~ msgid ""
 #~ "\n"
