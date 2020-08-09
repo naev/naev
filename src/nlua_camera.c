@@ -20,12 +20,15 @@
 #include "nlua_pilot.h"
 #include "camera.h"
 #include "player.h"
+#include "spfx.h"
 
 
 /* Camera methods. */
 static int camL_set( lua_State *L );
+static int camL_shake( lua_State *L );
 static const luaL_Reg cameraL_methods[] = {
    { "set", camL_set },
+   { "shake", camL_shake },
    {0,0}
 }; /**< Camera Lua methods. */
 
@@ -104,6 +107,35 @@ static int camL_set( lua_State *L )
       if (player.p != NULL)
          cam_setTargetPilot( player.p->id, soft_over*speed );
    }
+   return 0;
+}
+
+
+/**
+ * @brief Makes the camera shake.
+ *
+ * @usage camera.shake() -- Shakes the camera with amplitude 1.
+ * @usage camera.shake( .5 ) -- Shakes the camera with amplitude .5
+ *
+ *    @luatparam float amplitude: amplitude of the shaking
+ * @luafunc set( amplitude )
+ */
+static int camL_shake( lua_State *L )
+{
+   double amplitude;
+
+   amplitude = 1;
+
+   NLUA_CHECKRW(L);
+
+   if (lua_gettop(L) > 0) {
+      if (lua_isnumber(L,1))
+         amplitude = luaL_checknumber(L,1);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+
+   spfx_shake( SHAKE_MAX * amplitude );
    return 0;
 }
 
