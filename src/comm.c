@@ -132,6 +132,12 @@ int comm_openPilot( unsigned int pilot )
       return 0;
    }
 
+   /* Check for player faction (escorts). */
+   if (comm_pilot->faction == FACTION_PLAYER) {
+      player_message( _("No response.") );
+      return 0;
+   }
+
    /* Check to see if pilot wants to communicate. */
    msg = comm_getString( "comm_no" );
    if (msg != NULL) {
