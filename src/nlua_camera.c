@@ -118,7 +118,7 @@ static int camL_set( lua_State *L )
  * @usage camera.shake( .5 ) -- Shakes the camera with amplitude .5
  *
  *    @luatparam float amplitude: amplitude of the shaking
- * @luafunc set( amplitude )
+ * @luafunc shake( amplitude )
  */
 static int camL_shake( lua_State *L )
 {
