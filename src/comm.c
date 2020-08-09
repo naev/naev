@@ -24,6 +24,7 @@
 #include "opengl.h"
 #include "ai.h"
 #include "hook.h"
+#include "escort.h"
 
 #define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
 
@@ -134,7 +135,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Check for player faction (escorts). */
    if (comm_pilot->faction == FACTION_PLAYER) {
-      player_message( _("No response.") );
+      escort_playerCommand( comm_pilot );
       return 0;
    }
 
