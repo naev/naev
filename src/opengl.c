@@ -511,13 +511,13 @@ static int gl_setupScaling (void)
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
    /* Small windows get handled here. */
    minwh = MIN(gl_screen.nw, gl_screen.nh);
-   if (minwh < 720) {
+   if (minwh < 600) {
       if (gl_screen.scale != 1.)
          DEBUG(_("Screen size too small, upscaling..."));
-      gl_screen.scale = (double)minwh / 720.;
+      gl_screen.scale = (double)minwh / 600.;
       /* Rescale. */
-      gl_screen.nw = (double)gl_screen.rw / gl_screen.scale;
-      gl_screen.nh = (double)gl_screen.rh / gl_screen.scale;
+      gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
+      gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
    }
    /* Viewport matches new window size. */
    gl_screen.w  = gl_screen.nw;
