@@ -3729,7 +3729,7 @@ static int pilotL_face( lua_State *L )
    else
       t     = pilotL_newtask( L, p, "__face" );
    if (pt != NULL) {
-      lua_pushnil(L);
+      lua_pushpilot(L, pt->id);
    }
    else {
       lua_pushvector(L, *vec);
