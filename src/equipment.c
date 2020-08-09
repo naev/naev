@@ -186,7 +186,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    window_dimWindow( wid, w, h );
 
    /* Calculate image array dimensions. */
-   ssw = 200 + (*w-800);
+   ssw = 120 + (*w-800);
    ssh = (*h - 100);
    if (sw != NULL)
       *sw = ssw;
@@ -302,7 +302,7 @@ void equipment_open( unsigned int wid )
    y = -190;
    window_addText( wid, x, y,
          100, h+y, 0, "txtSDesc", &gl_smallFont, NULL, buf );
-   x += 100;
+   x += 150;
    window_addText( wid, x, y,
          w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
 
@@ -551,7 +551,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    dc = &cGrey60;
    w = 120;
    h = 20;
-   x = bx + 10.;
+   x = bx + 50.;
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
@@ -590,7 +590,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
          (1. - p->speed / p->speed_base) * 100);
    }
 
-   x += w/2.;
+   x += w/2. + 50;
 
    /* Render ship graphic. */
    equipment_renderShip( bx, by, bw, bh, x, y, p );
